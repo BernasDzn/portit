@@ -1,0 +1,30 @@
+name: Documentation
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  generate_docs:
+    if: contains(join(github.event.commits.*.message, ' '), 'docs:') || contains(join(github.event.commits.*.message, ' '), 'docs(')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Make script executable
+        run: chmod +x ./generate-plantuml-diagrams.sh
+
+      - name: Run PlantUML diagram generation
+        run: ./generate-plantuml-diagrams.sh
+
+      - name: Commit and push generated diagrams
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add .
+          if ! git diff --cached --quiet; then
+            git commit -m "chore(docs): update generated diagrams"
+            git push
+          fi
