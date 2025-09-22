@@ -8,7 +8,7 @@
 
 ### 2. Planning and Technical Documentation
 
-> [Planning and Technical Documentation](docs/README.md)
+> [Planning and Technical Documentation](docs/readme.md)
 
 ### 3. How to Build
 
