@@ -1,0 +1,117 @@
+@startuml domain
+title Domain Model (DDD)
+hide circle
+
+rectangle "Vessel" {
+	class "**Vessel**\n(Vessel Record [?])" as vessel <<AggregateRoot>><<Entity>>
+	{
+		+ IMO Number
+		+ VesselName
+	}
+
+	class "Vessel Type" as vessel_type <<Value>>
+	{
+		+ Name
+		+ Description
+		+ Capacity
+	}
+
+	class "Operational\nConstraints" as op_constraints <<Value>>
+	{
+		+ maxNumberOfRows
+		+ maxNumberOfBays
+		+ maxNumberOfTiers
+	}
+
+	vessel --> vessel_type
+	vessel_type --> op_constraints
+}
+
+class "**Dock**" as dock <<Entity>>
+{
+	+ DockID
+	+ DockName / DockNumber
+	+ lenght
+	+ depth
+	+ maxDraft
+}
+
+class "**Port**\n**Location**" as port_loc <<Entity>>
+{
+	- Location details \nmight include:
+	+ General Location Name
+	+ Latitude and Longitude
+	+ Cardinal Direction
+	+ etc...
+}
+
+rectangle "Storage Area"{
+	
+	class "**Storage**\n**Area**" as storage_area <<AggregateRoot>><<Entity>>
+	{
+		+ storageAreaID
+		+ maxCapacity
+		+ currentOccupancy
+		+ complementaryInformation
+	}
+
+	class "Storage Area\nType" as storage_area_type <<Value>>{
+		+ typeName
+	}
+
+	storage_area --> storage_area_type
+	storage_area --> port_loc
+	storage_area "1" --> "*" dock : "serves"
+}
+
+class "**Shipping Agent**\n**Organization**" as SAO <<Entity>>
+{
+	+ SAOID
+	+ legalName
+	+ altNames
+	+ address
+	+ taxNumber
+}
+
+class "**SAO Representative**" as SAO_rep <<Entity>>
+{
+	+ name
+	+ citizenID
+	+ nationality
+	+ email
+	+ phoneNumber
+}
+
+class "**Vessel Visit**\n**Notification**" as vesel_visit_notif <<Entity>>
+{
+}
+
+class "Vessel Berth" as vessel_berth
+{
+	+ dime
+	+ day
+	+ duration
+}
+
+class "Notification\nDecision" as notif_dec
+{
+	+ type
+	+ timestamp
+	+ reason
+	+ outcome
+	+ officerID [?]
+}
+
+
+vesel_visit_notif -> "0..*" notif_dec
+vesel_visit_notif --> vessel_berth : "creates a\ntemporary"
+vesel_visit_notif ---> vessel
+vessel_berth --> vessel
+vessel_berth --> dock
+
+
+vessel --> SAO : "Confirm this\nconnection [!]"
+dock --> port_loc
+SAO --> SAO_rep
+
+@enduml
