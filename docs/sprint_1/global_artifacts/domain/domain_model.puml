@@ -1,4 +1,4 @@
-@startuml domain
+@startuml domain_model
 title Domain Model (DDD)
 hide circle
 
@@ -101,6 +101,8 @@ class "Notification\nDecision" as notif_dec
 	+ outcome
 	+ officerID [?]
 }
+
+
 
 
 vesel_visit_notif -> "0..*" notif_dec
