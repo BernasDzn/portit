@@ -1,0 +1,69 @@
+@startuml
+title Business Domain Model
+
+entity "System User" as user
+
+entity "Port Authorities" as PA
+entity "Shipping Agents" as SA
+entity "Logistics Operators" as LO
+entity "Administrator" as AD
+
+class "Staff" as staff
+
+class "Resource" as res
+
+class "Docks" as docks
+class "Ship-To-Shore cranes" as cranes
+class "Yard gantry cranes" as yg_cranes
+class "Trucks and terminal tractors" as trucks
+class "Container yards" as yards
+class "Warehouses" as warehouse
+
+class "Vessels" as vessels
+class "Vessel visit" as vessel_visit
+class "Vessel cargo" as vessel_cargo
+class "Cargo manifest" as cm
+
+class "Tasks" as tasks
+
+user --> PA : "is"
+user --> SA : "is"
+user --> LO : "is"
+user --> AD : "is"
+
+PA --> SA : "registers"
+PA --> vessel_visit : "accepts or rejects"
+
+SA --> vessels : "represent"
+SA --> vessel_visit : "submits"
+SA --> ca : "submits"
+SA --> vessel_cargo : "provides as information"
+LO --> tasks : "schedules"
+
+vessels --> vessel_cargo : "has"
+vessel_visit --> vessels : "notify the berthing of"
+cranes --> vessel_cargo : "unload or load"
+docks --> vessels : "accomodate"
+trucks --> vessel_cargo : "move"
+yg_cranes --> vessel_cargo : "move"
+warehouse --> vessel_cargo : "store for inspection"
+yards --> vessel_cargo : "store temporarily"
+
+cranes --> res : "is"
+yg_cranes --> res : "is"
+trucks --> res : "is"
+
+staff --> cranes : "operates"
+staff --> yg_cranes : "operates"
+staff --> trucks : "drives"
+
+LO --> docks : "manages"
+LO --> cranes : "manages"
+LO --> yg_cranes : "manages"
+LO --> trucks : "manages"
+
+cm --> tasks : "inform"
+tasks --> res : "allocates"
+
+@enduml
+
