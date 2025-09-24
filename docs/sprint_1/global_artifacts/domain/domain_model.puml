@@ -27,13 +27,48 @@ rectangle "Vessel" {
 	vessel_type --> op_constraints
 }
 
-class "**Dock**" as dock <<Entity>>
+class "Physical\nResource" as phys_res
 {
-	+ DockID
-	+ DockName / DockNumber
-	+ lenght
-	+ depth
-	+ maxDraft
+	+ resourceID
+	+ description
+	+ operationalCapacity
+	+ status
+	+ setupTime
+	+ operationalWindow
+}
+
+class "Physical\nResources\nType" as phys_res_type
+{
+	+ typeName
+}
+
+class "Qualification" as quali
+{
+	+ qualificationID
+	+ name
+}
+
+class "Staff" as staff
+{
+	+ staffID
+	+ name
+	+ email
+	+ phoneNumber
+	+ operationalWindow
+	+ status
+}
+
+rectangle "Dock" {
+	class "**Dock**" as dock <<Entity>>
+	{
+		+ DockID
+		+ DockName / DockNumber
+		+ lenght
+		+ depth
+		+ maxDraft
+	}
+
+	dock "1" --> "*" phys_res : "has"
 }
 
 class "**Port**\n**Location**" as port_loc <<Entity>>
@@ -100,32 +135,6 @@ class "Notification\nDecision" as notif_dec
 	+ reason
 	+ outcome
 	+ officerID [?]
-}
-
-class "Physical\nResource" as phys_res{
-	+ resourceID
-	+ description
-	+ operationalCapacity
-	+ status
-	+ setupTime
-}
-
-class "Physical\nResources\nType" as phys_res_type{
-	+ typeName
-}
-
-class "Qualification" as quali{
-	+ qualificationID
-	+ name
-}
-
-class "Staff" as staff{
-	+ staffID
-	+ name
-	+ email
-	+ phoneNumber
-	+ operationalWindow
-	+ status
 }
 
 phys_res -> phys_res_type
