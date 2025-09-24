@@ -102,8 +102,7 @@ class "Notification\nDecision" as notif_dec
 	+ officerID [?]
 }
 
-
-class "Physical\nResources" as phys_res{
+class "Physical\nResource" as phys_res{
 	+ resourceID
 	+ description
 	+ operationalCapacity
@@ -111,14 +110,27 @@ class "Physical\nResources" as phys_res{
 	+ setupTime
 }
 
-class "Physical\nResources\nTypes" as phys_res_types{
+class "Physical\nResources\nType" as phys_res_type{
 	+ typeName
 }
 
-class "Qualifications" as quali{
+class "Qualification" as quali{
 	+ qualificationID
 	+ name
 }
+
+class "Staff" as staff{
+	+ staffID
+	+ name
+	+ email
+	+ phoneNumber
+	+ operationalWindow
+	+ status
+}
+
+phys_res -> phys_res_type
+phys_res --> "*..*" quali : "requires"
+staff --> "*..*" quali : "has"
 
 vesel_visit_notif -> "0..*" notif_dec
 vesel_visit_notif --> vessel_berth : "creates a\ntemporary"
