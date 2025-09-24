@@ -103,7 +103,22 @@ class "Notification\nDecision" as notif_dec
 }
 
 
+class "Physical\nResources" as phys_res{
+	+ resourceID
+	+ description
+	+ operationalCapacity
+	+ status
+	+ setupTime
+}
 
+class "Physical\nResources\nTypes" as phys_res_types{
+	+ typeName
+}
+
+class "Qualifications" as quali{
+	+ qualificationID
+	+ name
+}
 
 vesel_visit_notif -> "0..*" notif_dec
 vesel_visit_notif --> vessel_berth : "creates a\ntemporary"
