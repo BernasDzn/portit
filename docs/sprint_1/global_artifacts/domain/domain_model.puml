@@ -120,7 +120,6 @@ class "**SAO Representative**" as SAO_rep <<Entity>>
 class "**Vessel Visit**\n**Notification**" as vesel_visit_notif <<Entity>>
 {
 }
-
 class "Vessel Berth" as vessel_berth
 {
 	+ dime
@@ -143,10 +142,11 @@ staff --> "*..*" quali : "has"
 
 vesel_visit_notif -> "0..*" notif_dec
 vesel_visit_notif --> vessel_berth : "creates a\ntemporary"
-vesel_visit_notif ---> vessel
+vesel_visit_notif --> vessel
 vessel_berth --> vessel
 vessel_berth --> dock
 
+SAO_rep "1" --> "1" notif_dec : "submits"
 
 vessel --> SAO : "Confirm this\nconnection [!]"
 dock --> port_loc
