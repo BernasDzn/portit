@@ -6,7 +6,7 @@ rectangle "Vessel" {
 	class "**Vessel**\n(Vessel Record [?])" as vessel <<AggregateRoot>><<Entity>>
 	{
 		+ IMO Number
-		+ VesselName
+		+ vesselName
 	}
 
 	class "Vessel Type" as vessel_type <<Value>>
@@ -21,35 +21,45 @@ rectangle "Vessel" {
 	vessel --> vessel_type
 }
 
-class "Physical\nResource" as phys_res
-{
-	+ resourceID
-	+ description
-	+ operationalCapacity
-	+ status
-	+ setupTime
-	+ operationalWindow
-}
+rectangle "Resources and personnel" {
 
-class "Physical\nResources\nType" as phys_res_type
-{
-	+ typeName
-}
+	class "Physical\nResource" as phys_res
+	{
+		+ resourceID
+		+ description
+		+ operationalCapacity
+		+ status
+		+ setupTime
+		+ operationalWindow
+	}
 
-class "Qualification" as quali
-{
-	+ qualificationID
-	+ name
-}
+	class "Physical\nResources\nType" as phys_res_type
+	{
+		+ typeName
+	}
 
-class "Staff" as staff
-{
-	+ staffID
-	+ name
-	+ email
-	+ phoneNumber
-	+ operationalWindow
-	+ status
+	class "Qualification" as quali
+	{
+		+ qualificationID
+		+ name
+	}
+
+	class "Staff" as staff
+	{
+		+ staffID
+		+ name
+		+ email
+		+ phoneNumber
+		+ operationalWindow
+		+ status
+	}
+
+	class "Operational Window" as op_window {
+		+ startDay
+		+ startTime
+		+ endDay
+		+ endTime
+	}
 }
 
 rectangle "Dock" {
@@ -111,36 +121,102 @@ class "**SAO Representative**" as SAO_rep <<Entity>>
 	+ phoneNumber
 }
 
-class "**Vessel Visit**\n**Notification**" as vesel_visit_notif <<Entity>>
-{
-}
-class "Vessel Berth" as vessel_berth
-{
-	+ dime
-	+ day
-	+ duration
+rectangle "Berthing information" {
+
+	class "**Vessel Visit**\n**Notification**" as vesel_visit_notif <<Entity>>
+	{
+		+ ETA
+		+ ETD
+		+ specialRequirements [?]
+		+ captain [?]
+		+ totalCrewMembers [?]
+		+ isCargoHazardous
+		+ loadManifest [?]
+		+ unloadManifest [?]
+	}
+
+	class "Vessel Berth" as vessel_berth
+	{
+		+ dock
+		+ taskSchedule
+		+ status
+	}
+
+	enum "Cargo Type" as cargo_type
+	{
+		REEFERS
+		GCP
+		ELECTRONICS
+		HAZMAT
+		OIM
+		OTHER
+	}
+
+	class "Notification\nDecision" as notif_dec
+	{
+		+ type
+		+ timestamp
+		+ reason
+		+ outcome
+		+ officerID [?]
+	}
+
+	class "Cargo Manifest" as c_manifest {
+		+ ISO
+		+ description
+		+ type
+		+ bay
+		+ row
+		+ tier
+	}
+
+
+		class "Operational Task" as op_task 
+		{
+			+ taskType
+			+ resourceAllocated
+			+ staffAllocated
+			+ observations [?]
+		}
+
+		enum "Task Types" as task_types
+		{
+			LOADING
+			UNLOADING
+			MOVING
+			OTHER
+		}
+
+		enum "Operation Status" as op_status 
+		{
+			SCHEDULED
+			FINISHED
+			FAILED
+			CANCELLED
+		}
 }
 
-class "Notification\nDecision" as notif_dec
-{
-	+ type
-	+ timestamp
-	+ reason
-	+ outcome
-	+ officerID [?]
-}
+phys_res "1" --> "1" op_window : "has"
+vessel_berth "1" -> "1" op_status : "has"
+op_task "1" -> "1" phys_res : "allocates"
+op_task "1" -> "*" staff : "mobilizes"
+op_task "1" -> "1" task_types : "has"
 
-phys_res -> phys_res_type
+staff "1" --> "1" op_window : "has"
+
+vessel_berth "1" --> "*" op_task : "encapsulates"
+vessel_berth "1" --> "1" dock : "happens on"
+phys_res --> phys_res_type : "has"
 phys_res --> "*..*" quali : "requires"
 staff --> "*..*" quali : "has"
 
 vesel_visit_notif -> "0..*" notif_dec
-vesel_visit_notif --> vessel_berth : "creates a\ntemporary"
+vesel_visit_notif <-- vessel_berth : "responds to"
 vesel_visit_notif --> vessel
-vessel_berth --> vessel
-vessel_berth --> dock
 
 SAO_rep "1" --> "1" notif_dec : "submits"
+
+c_manifest "1" -> "1" cargo_type : "has"
 
 vessel --> SAO : "Confirm this\nconnection [!]"
 dock --> port_loc
