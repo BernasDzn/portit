@@ -26,19 +26,24 @@ class "Cargo manifest" as cm
 
 class "Tasks" as tasks
 
-user --> PA : "is"
-user --> SA : "is"
-user --> LO : "is"
-user --> AD : "is"
+user --|> PA
+user --|> SA
+user --|> LO
+user --|> AD
+
+AD --> user : "manages"
 
 PA --> SA : "registers"
 PA --> vessel_visit : "accepts or rejects"
+PA --> warehouse : "regulates"
+PA --> docks : "ensure proper allocation"
+PA --> yards : "monitors capacity"
 
 SA --> vessels : "represent"
 SA --> vessel_visit : "submits"
-SA --> ca : "submits"
+SA --> cm : "submits"
 SA --> vessel_cargo : "provides as information"
-LO --> tasks : "schedules"
+
 
 vessels --> vessel_cargo : "has"
 vessel_visit --> vessels : "notify the berthing of"
@@ -49,14 +54,16 @@ yg_cranes --> vessel_cargo : "move"
 warehouse --> vessel_cargo : "store for inspection"
 yards --> vessel_cargo : "store temporarily"
 
-cranes --> res : "is"
-yg_cranes --> res : "is"
-trucks --> res : "is"
+res --|> cranes
+res --|> yg_cranes
+res --|> trucks
 
 staff --> cranes : "operates"
 staff --> yg_cranes : "operates"
 staff --> trucks : "drives"
 
+LO --> tasks : "schedules"
+LO ---> staff : "manages"
 LO --> docks : "manages"
 LO --> cranes : "manages"
 LO --> yg_cranes : "manages"
