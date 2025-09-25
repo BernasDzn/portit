@@ -2,8 +2,26 @@
 title Domain Model (DDD)
 hide circle
 
+rectangle "System"{
+	class "**User**" as user <<AggregateRoot>><<Entity>>
+	{
+		+ userID
+		+ name
+		+ email
+		+ password
+		+ role
+	}
+	class "User Role" as urole
+	{
+		+ PORT_AUTHORITY_OFFICER
+		+ SHIPPING_AGENT_REPRESENTATIVE
+		+ LOGISTICS_OPERATOR
+		+ ADMINISTRATOR
+	}
+}
+
 rectangle "Vessel" {
-	class "**Vessel**\n(Vessel Record [?])" as vessel <<AggregateRoot>><<Entity>>
+	class "**Vessel**" as vessel <<AggregateRoot>><<Entity>>
 	{
 		+ IMO Number
 		+ vesselName
@@ -18,12 +36,11 @@ rectangle "Vessel" {
 		+ maxNumberOfTiers
 	}
 
-	vessel --> vessel_type
 }
 
 rectangle "Resources and personnel" {
 
-	class "Physical\nResource" as phys_res
+	class "**Physical**\n**Resource**" as phys_res <<Entity>>
 	{
 		+ resourceID
 		+ description
@@ -44,7 +61,7 @@ rectangle "Resources and personnel" {
 		+ name
 	}
 
-	class "Staff" as staff
+	class "**Staff**" as staff <<Entity>>
 	{
 		+ staffID
 		+ name
@@ -54,7 +71,8 @@ rectangle "Resources and personnel" {
 		+ status
 	}
 
-	class "Operational Window" as op_window {
+	class "Operational Window" as op_window
+	{
 		+ startDay
 		+ startTime
 		+ endDay
@@ -85,7 +103,7 @@ class "**Port**\n**Location**" as port_loc <<Entity>>
 }
 
 rectangle "Storage Area"{
-	
+
 	class "**Storage**\n**Area**" as storage_area <<AggregateRoot>><<Entity>>
 	{
 		+ storageAreaID
@@ -97,10 +115,6 @@ rectangle "Storage Area"{
 	class "Storage Area\nType" as storage_area_type <<Value>>{
 		+ typeName
 	}
-
-	storage_area --> storage_area_type
-	storage_area --> port_loc
-	storage_area "1" --> "*" dock : "serves"
 }
 
 class "**Shipping Agent**\n**Organization**" as SAO <<Entity>>
@@ -123,7 +137,7 @@ class "**SAO Representative**" as SAO_rep <<Entity>>
 
 rectangle "Berthing information" {
 
-	class "**Vessel Visit**\n**Notification**" as vesel_visit_notif <<Entity>>
+	class "**Vessel Visit**\n**Notification**" as vessel_visit_notif <<Entity>>
 	{
 		+ ETA
 		+ ETD
@@ -158,7 +172,7 @@ rectangle "Berthing information" {
 		+ timestamp
 		+ reason
 		+ outcome
-		+ officerID [?]
+		+ officerID
 	}
 
 	class "Cargo Manifest" as c_manifest {
@@ -171,30 +185,56 @@ rectangle "Berthing information" {
 	}
 
 
-		class "Operational Task" as op_task 
-		{
-			+ taskType
-			+ resourceAllocated
-			+ staffAllocated
-			+ observations [?]
-		}
+	class "Operational Task" as op_task
+	{
+		+ taskType
+		+ resourceAllocated
+		+ staffAllocated
+		+ observations [?]
+	}
 
-		enum "Task Types" as task_types
-		{
-			LOADING
-			UNLOADING
-			MOVING
-			OTHER
-		}
+	enum "Task Types" as task_types
+	{
+		LOADING
+		UNLOADING
+		MOVING
+		OTHER
+	}
 
-		enum "Operation Status" as op_status 
-		{
-			SCHEDULED
-			FINISHED
-			FAILED
-			CANCELLED
-		}
+	enum "Operation Status" as op_status
+	{
+		SCHEDULED
+		FINISHED
+		FAILED
+		CANCELLED
+	}
+
+
+	class "Crewman" as crewman <<Value>>
+	{
+		+ citizenID
+		+ name
+		+ nationality
+	}
+
 }
+
+user "1" -l-> "1" urole : "has"
+user "1" --> "*" user : "(Admin)\nmanages"
+user "1" ---> "*" dock : "(Port Authority Officer)\nregisters/manages"
+user "1" ---> "*" storage_area : "(Port Authority Officer)\nregisters/manages"
+user "1" ---> "*" vessel_type : "(Port Authority Officer)\nregisters/manages"
+user "1" ---> "*" vessel_visit_notif : "(Port Authority Officer)\nreviews and approves or rejects"
+user "1" ---> "*" op_task : "oversees"
+user "1" ---> "*" SAO : "(Port Authority Officer)\nregisters"
+user "1" ---> "*" SAO_rep : "(Port Authority Officer)\nregisters/manages"
+user "1" ---> "*" vessel : "(Port Authority Officer)\nregisters/manages"
+user "1" --> "*" notif_dec : "(Port Authority Officer)\nsubmits"
+user "1" --> "*" staff : "(Logistics Operator)\nregisters/manages"
+user "1" --> "*" phys_res : "(Logistics Operator)\nregisters/manages"
+user "1" --> "*" quali : "(Logistics Operator)\nregisters/manages"
+user "1" --> "*" op_task : "(Logistics Operator)\ndefines/schedules"
+
 
 phys_res "1" --> "1" op_window : "has"
 vessel_berth "1" -> "1" op_status : "has"
@@ -210,15 +250,22 @@ phys_res --> phys_res_type : "has"
 phys_res --> "*..*" quali : "requires"
 staff --> "*..*" quali : "has"
 
-vesel_visit_notif -> "0..*" notif_dec
-vesel_visit_notif <-- vessel_berth : "responds to"
-vesel_visit_notif --> vessel
+vessel_visit_notif -> "0..*" notif_dec
+vessel_visit_notif <-- vessel_berth : "responds to"
+vessel_visit_notif --> vessel
+vessel_visit_notif --> crewman : "can have a list of"
 
-SAO_rep "1" --> "1" notif_dec : "submits"
+SAO_rep --> vessel_visit_notif : "submits"
 
 c_manifest "1" -> "1" cargo_type : "has"
 
 vessel --> SAO : "Confirm this\nconnection [!]"
+vessel --> vessel_type
+
+storage_area --> storage_area_type
+storage_area --> port_loc
+storage_area "1" --> "*" dock : "serves"
+
 dock --> port_loc
 SAO --> SAO_rep
 
