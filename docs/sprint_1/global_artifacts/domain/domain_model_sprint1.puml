@@ -13,8 +13,8 @@ rectangle "Vessel" {
 
 	class "Vessel Type" as vessel_type <<Value>>
 	{
-		+ Name
-		+ Description
+		+ name
+		+ description
 		+ maxNumberOfRows
 		+ maxNumberOfBays
 		+ maxNumberOfTiers
@@ -35,9 +35,19 @@ rectangle "Resources and personnel" {
 		+ operationalWindow
 	}
 
-	class "Physical\nResources\nType" as phys_res_type
+	enum "Physical\nResources\nType" as phys_res_type
 	{
-		+ typeName
+		FIXED CRANE
+        MOBILE CRANE
+        TRUCKS
+        OTHER
+	}
+
+    enum "Physical\nResources\nStatus" as phys_res_status
+	{
+        ACTIVE
+        INACTIVE
+        UNDER MAINTENANCE
 	}
 
 	class "Qualification" as quali
@@ -52,16 +62,25 @@ rectangle "Resources and personnel" {
 		+ name
 		+ email
 		+ phoneNumber
+        + qualifications
 		+ operationalWindow
 		+ status
 	}
 
-	class "Operational Window" as op_window {
-		+ startDay
-		+ startTime
-		+ endDay
-		+ endTime
-	}
+    enum "Staff status" as staff_status {
+        AVAILABLE
+        UNAVAILABLE
+    }
+
+    class "Operational Window" as op_window <<Value>>{
+        + startDay
+        + startTime
+        + endDay
+        + endTime
+    }
+
+    staff "1" -> "1" staff_status : "has"
+    phys_res "1" -> "1" phys_res_status : "has"
 }
 
 rectangle "Dock" {
@@ -72,18 +91,14 @@ rectangle "Dock" {
 		+ lenght
 		+ depth
 		+ maxDraft
+        + allowedVesselTypes
 	}
-
-	dock "1" --> "*" phys_res : "has"
 }
 
-class "**Port**\n**Location**" as port_loc <<Entity>>
+class "**Port**\n**Location**" as port_loc <<Value>>
 {
-	- Location details \nmight include:
-	+ General Location Name
-	+ Latitude and Longitude
-	+ Cardinal Direction
-	+ etc...
+	+ locationName
+	+ geoLocation
 }
 
 rectangle "Storage Area"{
@@ -96,8 +111,10 @@ rectangle "Storage Area"{
 		+ complementaryInformation
 	}
 
-	class "Storage Area\nType" as storage_area_type <<Value>>{
-		+ typeName
+	enum "Storage Area\nType" as storage_area_type {
+		WAREHOUSE
+        YARD
+        OTHER
 	}
 
 	storage_area --> storage_area_type
@@ -121,6 +138,7 @@ class "**SAO Representative**" as SAO_rep <<Entity>>
 	+ nationality
 	+ email
 	+ phoneNumber
+    + status
 }
 
 rectangle "Berthing information" {
@@ -137,11 +155,31 @@ rectangle "Berthing information" {
 		+ unloadManifest [?]
 	}
 
-	class "Vessel Berth" as vessel_berth
+	class "Notification\nDecision" as notif_dec
 	{
-		+ dock
-		+ taskSchedule
 		+ status
+		+ timestamp [?]
+		+ reason [?]
+        + assignedDock [?]
+		+ officerID [?]
+	}
+
+    note top of notif_dec: Nós podemos ter uma dock que apenas é preenchida quando a notificação é aceite, \nda mesma maneira que temos uma razão apenas quando é rejeitada. \nIsso porque é temporária, quando confirmado teremos outra class "Vessel Visit"
+
+    enum "Notification status" as notif_status {
+        IN PROGRESS
+        APPROVAL PENDING
+        APPROVED
+        REJECTED
+    }
+
+    class "Cargo Manifest" as c_manifest {
+		+ ISO
+		+ description
+		+ type
+		+ bay
+		+ row
+		+ tier
 	}
 
 	enum "Cargo Type" as cargo_type
@@ -154,74 +192,28 @@ rectangle "Berthing information" {
 		OTHER
 	}
 
-	class "Notification\nDecision" as notif_dec
-	{
-		+ type
-		+ timestamp
-		+ reason
-		+ outcome
-		+ officerID [?]
-	}
-
-	class "Cargo Manifest" as c_manifest {
-		+ ISO
-		+ description
-		+ type
-		+ bay
-		+ row
-		+ tier
-	}
-
-
-		class "Operational Task" as op_task 
-		{
-			+ taskType
-			+ resourceAllocated
-			+ staffAllocated
-			+ observations [?]
-		}
-
-		enum "Task Types" as task_types
-		{
-			LOADING
-			UNLOADING
-			MOVING
-			OTHER
-		}
-
-		enum "Operation Status" as op_status 
-		{
-			SCHEDULED
-			FINISHED
-			FAILED
-			CANCELLED
-		}
+    vesel_visit_notif "1" --> "1" c_manifest : "has"
+    c_manifest "1" -> "1" cargo_type : "has"
+    notif_dec "1" -> "1" notif_status : "has"
+    notif_dec "1" -> "0..1" dock : "has"
 }
 
 phys_res "1" --> "1" op_window : "has"
-vessel_berth "1" -> "1" op_status : "has"
-op_task "1" -> "1" phys_res : "allocates"
-op_task "1" -> "*" staff : "mobilizes"
-op_task "1" -> "1" task_types : "has"
+phys_res "0..*" -> "1" dock : "assigned to"
 
 staff "1" --> "1" op_window : "has"
 
-vessel_berth "1" --> "*" op_task : "encapsulates"
-vessel_berth "1" --> "1" dock : "happens on"
 phys_res --> phys_res_type : "has"
 phys_res --> "*..*" quali : "requires"
 staff --> "*..*" quali : "has"
 
 vesel_visit_notif -> "0..*" notif_dec
-vesel_visit_notif <-- vessel_berth : "responds to"
 vesel_visit_notif --> vessel
 
-SAO_rep "1" --> "1" notif_dec : "submits"
-
-c_manifest "1" -> "1" cargo_type : "has"
+SAO_rep "1" --> "1" vesel_visit_notif : "submits"
 
 vessel --> SAO : "owns"
 dock --> port_loc
 SAO --> SAO_rep
 
-@enduml
+@enduml~
