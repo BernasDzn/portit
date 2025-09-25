@@ -4,7 +4,8 @@ title Business Domain Model
 entity "System User" as user
 
 entity "Port Authorities" as PA
-entity "Shipping Agents" as SA
+entity "Shipping Agent\nOrganization (SAO)" as SAO
+entity "SAO Representative" as SAOR
 entity "Logistics Operators" as LO
 entity "Administrator" as AD
 
@@ -27,22 +28,25 @@ class "Cargo manifest" as cm
 class "Tasks" as tasks
 
 user --|> PA
-user --|> SA
+user --|> SAOR
 user --|> LO
 user --|> AD
 
 AD --> user : "manages"
 
-PA --> SA : "registers"
+PA --> SAO : "registers"
+PA --> SAOR : "registers"
 PA --> vessel_visit : "accepts or rejects"
 PA --> warehouse : "regulates"
 PA --> docks : "ensure proper allocation"
 PA --> yards : "monitors capacity"
 
-SA --> vessels : "represent"
-SA --> vessel_visit : "submits"
-SA --> cm : "submits"
-SA --> vessel_cargo : "provides as information"
+SAO --> SAOR : "has"
+
+SAOR --> vessels : "represent"
+SAOR --> vessel_visit : "submits"
+SAOR --> cm : "submits"
+SAOR --> vessel_cargo : "provides as information"
 
 
 vessels --> vessel_cargo : "has"
