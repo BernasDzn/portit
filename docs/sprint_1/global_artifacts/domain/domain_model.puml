@@ -13,18 +13,12 @@ rectangle "Vessel" {
 	{
 		+ Name
 		+ Description
-		+ Capacity
-	}
-
-	class "Operational\nConstraints" as op_constraints <<Value>>
-	{
 		+ maxNumberOfRows
 		+ maxNumberOfBays
 		+ maxNumberOfTiers
 	}
 
 	vessel --> vessel_type
-	vessel_type --> op_constraints
 }
 
 class "Physical\nResource" as phys_res
