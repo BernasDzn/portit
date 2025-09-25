@@ -143,7 +143,7 @@ class "**SAO Representative**" as SAO_rep <<Entity>>
 
 rectangle "Berthing information" {
 
-	class "**Vessel Visit**\n**Notification**" as vesel_visit_notif <<Entity>>
+	class "**Vessel Visit**\n**Notification**" as vessel_visit_notif <<Entity>>
 	{
 		+ ETA
 		+ ETD
@@ -192,7 +192,7 @@ rectangle "Berthing information" {
 		OTHER
 	}
 
-    vesel_visit_notif "1" --> "1" c_manifest : "has"
+    vessel_visit_notif "1" --> "1" c_manifest : "has"
     c_manifest "1" -> "1" cargo_type : "has"
     notif_dec "1" -> "1" notif_status : "has"
     notif_dec "1" -> "0..1" dock : "has"
@@ -207,10 +207,10 @@ phys_res --> phys_res_type : "has"
 phys_res --> "*..*" quali : "requires"
 staff --> "*..*" quali : "has"
 
-vesel_visit_notif -> "0..*" notif_dec
-vesel_visit_notif --> vessel
+vessel_visit_notif -> "0..*" notif_dec
+vessel_visit_notif --> vessel
 
-SAO_rep "1" --> "1" vesel_visit_notif : "submits"
+SAO_rep "1" --> "1" vessel_visit_notif : "submits"
 
 vessel --> SAO : "owns"
 dock --> port_loc

@@ -5,13 +5,24 @@ hide circle
 rectangle "System"{
 	class "**User**" as user <<AggregateRoot>><<Entity>>
 	{
-		+ userID
-		+ name
-		+ email
-		+ password
-		+ role
 	}
-	class "User Role" as urole
+
+	class "User\n**Name**" as user_name <<Value>>
+	{
+		+ name
+	}
+
+	class "User\n**Email**" as user_email <<Value>>
+	{
+		+ email
+	}
+
+	class "User\n**Password**" as user_password <<Value>>
+	{
+		+ password
+	}
+
+	class "User\n**Role**" as user_role <<Enum>>
 	{
 		+ PORT_AUTHORITY_OFFICER
 		+ SHIPPING_AGENT_REPRESENTATIVE
@@ -23,13 +34,19 @@ rectangle "System"{
 rectangle "Vessel" {
 	class "**Vessel**" as vessel <<AggregateRoot>><<Entity>>
 	{
-		+ IMO Number
-		+ vesselName
-		+ vesselType
-		+ owner
 	}
 
-	class "Vessel Type" as vessel_type <<Value>>
+	class "Vessel\n**IMO Number**" as IMO_number <<Value>>
+	{
+		+ IMO Number
+	}
+
+	class "Vessel\n**Name**" as vessel_name <<Value>>
+	{
+		+ Name
+	}
+
+	class "Vessel\n**Type**" as vessel_type <<Entity>>
 	{
 		+ Name
 		+ Description
@@ -40,30 +57,55 @@ rectangle "Vessel" {
 
 }
 
-rectangle "Resources and personnel" {
+rectangle "Physical Resources" {
 
-	class "**Physical**\n**Resource**" as phys_res <<Entity>>
+	class "**Physical**\n**Resource**" as phys_res <<AggregateRoot>><<Entity>>
 	{
-		+ resourceID
-		+ description
-		+ operationalCapacity
-		+ status
-		+ setupTime
-		+ operationalWindow
 	}
 
-	class "Physical\nResources\nType" as phys_res_type
+	class "Physical\nResources\n**Description**" as phys_res_desc <<Value>>
+	{
+		+ description
+	}
+
+	class "Physical\nResources\n**Operational Capacity**" as phys_res_op_cap <<Value>>
+	{
+		+ operationalCapacity
+	}
+
+	class "Physical\nResources\n**Status**" as phys_res_status <<Value>>
+	{
+		+ status
+	}
+
+	class "Physical\nResources\n**Setup Time**" as phys_res_setup_time <<Value>>
+	{
+		+ setupTime
+	}
+
+	class "Physical\nResources\n**Type**" as phys_res_type <<Value>>
 	{
 		+ typeName
 	}
 
-	class "Qualification" as quali
+	class "Physical\nResources\n**Operational Window**" as phys_res_op_window
 	{
-		+ qualificationID
-		+ name
+		+ startDay
+		+ startTime
+		+ endDay
+		+ endTime
 	}
+}
 
-	class "**Staff**" as staff <<Entity>>
+class "Qualification" as quali <<Entity>>
+{
+	+ qualificationID
+	+ name
+}
+
+rectangle "Staff"{
+
+	class "**Staff**" as staff <<AggregateRoot>><<Entity>>
 	{
 		+ staffID
 		+ name
@@ -73,7 +115,7 @@ rectangle "Resources and personnel" {
 		+ status
 	}
 
-	class "Operational Window" as op_window
+	class "Staff\n**Operational Window**" as staff_op_window
 	{
 		+ startDay
 		+ startTime
@@ -91,8 +133,6 @@ rectangle "Dock" {
 		+ depth
 		+ maxDraft
 	}
-
-	dock "1" --> "*" phys_res : "has"
 }
 
 class "**Port**\n**Location**" as port_loc <<Entity>>
@@ -108,57 +148,125 @@ rectangle "Storage Area"{
 
 	class "**Storage**\n**Area**" as storage_area <<AggregateRoot>><<Entity>>
 	{
-		+ storageAreaID
+	}
+
+	class "Storage Area\n**Capacity**" as storage_area_capacity <<Value>>
+	{
 		+ maxCapacity
-		+ currentOccupancy
+		+ currentCapacity
+	}
+
+	class "Storage Area\n**Complementary Information**" as storage_area_comp_info <<Value>>
+	{
 		+ complementaryInformation
 	}
 
-	class "Storage Area\nType" as storage_area_type <<Value>>{
+	class "Storage Area\n**Type**" as storage_area_type <<Value>>
+	{
 		+ typeName
 	}
 }
 
-class "**Shipping Agent**\n**Organization**" as SAO <<Entity>>
-{
-	+ SAOID
-	+ legalName
-	+ altNames
-	+ address
-	+ taxNumber
-}
 
-class "**SAO Representative**" as SAO_rep <<Entity>>
-{
-	+ name
-	+ citizenID
-	+ nationality
-	+ email
-	+ phoneNumber
+rectangle "Shipping Agent Organization"{
+	class "**Shipping Agent**\n**Organization**" as SAO <<AggregateRoot>><<Entity>>
+	{
+	}
+
+	class "Shipping Agent\nOrganization\n**Name**" as SAO_name <<Value>>
+	{
+		+ legalName
+		+ altNames
+	}
+
+	class "Shipping Agent\nOrganization\n**Address**" as SAO_address <<Value>>
+	{
+		+ address
+	}
+
+	class "Shipping Agent\nOrganization\n**Tax Number**" as SAO_tax_number <<Value>>
+	{
+		+ taxNumber
+	}
+
+	class "**SAO Representative**" as SAO_rep <<Entity>>
+	{
+		+ name
+		+ citizenID
+		+ nationality
+		+ email
+		+ phoneNumber
+		+ status
+	}
 }
 
 rectangle "Berthing information" {
 
-	class "**Vessel Visit**\n**Notification**" as vessel_visit_notif <<Entity>>
+	class "**Vessel Visit**\n**Notification**" as vessel_visit_notif <<AggregateRoot>><<Entity>>
+	{
+	}
+
+	class "Vessel Visit\nNotification\n**Expected Time**" as exp_time <<Value>>
 	{
 		+ ETA
 		+ ETD
+	}
+
+	class "Vessel Visit\nNotification\n**Special Requirements**" as spec_rep <<Value>>
+	{
 		+ specialRequirements [?]
+	}
+
+	class "Vessel Visit\nNotification\n**Crew**" as crew <<Value>>
+	{
 		+ captain [?]
 		+ totalCrewMembers [?]
+	}
+
+	class "Vessel Visit\nNotification\n**Cargo Details**" as cargo_details <<Value>>
+	{
 		+ isCargoHazardous
 		+ loadManifest [?]
 		+ unloadManifest [?]
 	}
 
-	class "Vessel Berth" as vessel_berth
+	class "Vessel Visit\nNotification\n**Vessel Berth**" as vessel_berth <<Entity>>
 	{
 		+ dock
 		+ taskSchedule
 		+ status
 	}
 
-	enum "Cargo Type" as cargo_type
+	class "Vessel Visit\nNotification\n**Notification Decision**" as notif_dec <<Entity>>
+	{
+		+ status
+		+ timestamp [?]
+		+ reason [?]
+		+ assignedDock [?]
+		+ officerID [?]
+	}
+
+	note top of notif_dec: Nós podemos ter uma dock que apenas é preenchida quando a notificação é aceite, \nda mesma maneira que temos uma razão apenas quando é rejeitada. \nIsso porque é temporária, quando confirmado teremos outra class "Vessel Visit"
+
+	enum "Vessel Visit\nNotification\n**Notification status**" as notif_status <<Enum>>
+	{
+		IN_PROGRESS
+		APPROVAL_PENDING
+		APPROVED
+		REJECTED
+	}
+
+	class "Vessel Visit\nNotification\n**Cargo Manifest**" as c_manifest <<Entity>>
+	{
+		+ ISO
+		+ description
+		+ type
+		+ bay
+		+ row
+		+ tier
+	}
+
+	enum "Vessel Visit\nNotification\n**Cargo Type**" as cargo_type <<Enum>>
 	{
 		REEFERS
 		GCP
@@ -168,26 +276,8 @@ rectangle "Berthing information" {
 		OTHER
 	}
 
-	class "Notification\nDecision" as notif_dec
-	{
-		+ type
-		+ timestamp
-		+ reason
-		+ outcome
-		+ officerID
-	}
 
-	class "Cargo Manifest" as c_manifest {
-		+ ISO
-		+ description
-		+ type
-		+ bay
-		+ row
-		+ tier
-	}
-
-
-	class "Operational Task" as op_task
+	class "Vessel Visit\nNotification\n**Operational Task**" as op_task <<Entity>>
 	{
 		+ taskType
 		+ resourceAllocated
@@ -195,7 +285,7 @@ rectangle "Berthing information" {
 		+ observations [?]
 	}
 
-	enum "Task Types" as task_types
+	enum "Vessel Visit\nNotification\n**Task Types**" as task_types <<Enum>>
 	{
 		LOADING
 		UNLOADING
@@ -203,7 +293,7 @@ rectangle "Berthing information" {
 		OTHER
 	}
 
-	enum "Operation Status" as op_status
+	enum "Vessel Visit\nNotification\n**Operation Status**" as op_status <<Enum>>
 	{
 		SCHEDULED
 		FINISHED
@@ -212,7 +302,7 @@ rectangle "Berthing information" {
 	}
 
 
-	class "Crewman" as crewman <<Value>>
+	class "Vessel Visit\nNotification\n**Crewman**" as crewman <<Value>>
 	{
 		+ citizenID
 		+ name
@@ -221,41 +311,62 @@ rectangle "Berthing information" {
 
 }
 
-user "1" -l-> "1" urole : "has"
+user -u-> "1" user_name
+user -u-> "1" user_email
+user -u-> "1" user_password
+user -u-> "1" user_role
 user "1" --> "*" user : "(Admin)\nmanages"
 user "1" ---> "*" dock : "(Port Authority Officer)\nregisters/manages"
 user "1" ---> "*" storage_area : "(Port Authority Officer)\nregisters/manages"
-user "1" ---> "*" vessel_type : "(Port Authority Officer)\nregisters/manages"
+user "1" <--- "*" vessel_type : "(Port Authority Officer)\nis registered/managed"
 user "1" ---> "*" vessel_visit_notif : "(Port Authority Officer)\nreviews and approves or rejects"
-user "1" ---> "*" op_task : "oversees"
+user "1" <--- "*" op_task : "(Port Authority Officer)\nis overseed by"
 user "1" ---> "*" SAO : "(Port Authority Officer)\nregisters"
-user "1" ---> "*" SAO_rep : "(Port Authority Officer)\nregisters/manages"
+user "1" <--- "*" SAO_rep : "(Port Authority Officer)\nis registered/managed"
 user "1" ---> "*" vessel : "(Port Authority Officer)\nregisters/manages"
-user "1" --> "*" notif_dec : "(Port Authority Officer)\nsubmits"
-user "1" --> "*" staff : "(Logistics Operator)\nregisters/manages"
-user "1" --> "*" phys_res : "(Logistics Operator)\nregisters/manages"
-user "1" --> "*" quali : "(Logistics Operator)\nregisters/manages"
-user "1" --> "*" op_task : "(Logistics Operator)\ndefines/schedules"
+user "1" ---> "*" notif_dec : "(Port Authority Officer)\nsubmits"
+user "1" ---> "*" staff : "(Logistics Operator)\nregisters/manages"
+user "1" ---> "*" phys_res : "(Logistics Operator)\nregisters/manages"
+user "1" ---> "*" quali : "(Logistics Operator)\nregisters/manages"
+user "1" <--- "*" op_task : "(Logistics Operator)\nis defined/scheduled by"
 
 
-phys_res "1" --> "1" op_window : "has"
+phys_res "1" --> "1" phys_res_op_window : "has"
 vessel_berth "1" -> "1" op_status : "has"
 op_task "1" -> "1" phys_res : "allocates"
 op_task "1" -> "*" staff : "mobilizes"
 op_task "1" -> "1" task_types : "has"
 
-staff "1" --> "1" op_window : "has"
+staff "1" --> "1" staff_op_window : "has"
+staff --> "*..*" quali : "has"
 
 vessel_berth "1" --> "*" op_task : "encapsulates"
 vessel_berth "1" --> "1" dock : "happens on"
+
 phys_res --> phys_res_type : "has"
 phys_res --> "*..*" quali : "requires"
-staff --> "*..*" quali : "has"
+phys_res --> "1" phys_res_desc
+phys_res --> "1" phys_res_op_cap
+phys_res --> "1" phys_res_status
+phys_res --> "1" phys_res_setup_time
 
+vessel_visit_notif --> "1" exp_time
+vessel_visit_notif --> "1" spec_rep
+vessel_visit_notif --> "1" crew
+vessel_visit_notif --> "1" cargo_details
 vessel_visit_notif -> "0..*" notif_dec
 vessel_visit_notif <-- vessel_berth : "responds to"
 vessel_visit_notif --> vessel
-vessel_visit_notif --> crewman : "can have a list of"
+crew --> crewman : "has a list of"
+vessel_visit_notif "1" --> "1" c_manifest : "has"
+
+notif_dec "1" -> "1" notif_status : "has"
+notif_dec "1" -> "0..1" dock : "has"
+
+SAO --> SAO_rep
+SAO --> "1" SAO_name
+SAO --> "1" SAO_address
+SAO --> "1" SAO_tax_number
 
 SAO_rep --> vessel_visit_notif : "submits"
 
@@ -263,12 +374,18 @@ c_manifest "1" -> "1" cargo_type : "has"
 
 vessel --> vessel_type
 
-storage_area --> storage_area_type
-storage_area --> port_loc
+storage_area --> "1" storage_area_type
+storage_area "1" --> "1" port_loc
 storage_area "1" --> "*" dock : "serves"
+storage_area --> "1" storage_area_capacity
+storage_area --> "1" storage_area_comp_info
 
 vessel --> SAO : "owns"
+vessel --> "1" IMO_number
+vessel --> "1" vessel_name
+
 dock --> port_loc
-SAO --> SAO_rep
+dock "1" --> "*" phys_res : "has"
+
 
 @enduml
