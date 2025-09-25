@@ -1,0 +1,219 @@
+@startuml domain_model
+title Domain Model (DDD)
+hide circle
+
+rectangle "Vessel" {
+	class "**Vessel**\n(Vessel Record [?])" as vessel <<AggregateRoot>><<Entity>>
+	{
+		+ IMO Number
+		+ vesselName
+		+ vesselType
+		+ owner
+	}
+
+	class "Vessel Type" as vessel_type <<Value>>
+	{
+		+ name
+		+ description
+		+ maxNumberOfRows
+		+ maxNumberOfBays
+		+ maxNumberOfTiers
+	}
+
+	vessel --> vessel_type
+}
+
+rectangle "Resources and personnel" {
+
+	class "Physical\nResource" as phys_res
+	{
+		+ resourceID
+		+ description
+		+ operationalCapacity
+		+ status
+		+ setupTime
+		+ operationalWindow
+	}
+
+	enum "Physical\nResources\nType" as phys_res_type
+	{
+		FIXED CRANE
+        MOBILE CRANE
+        TRUCKS
+        OTHER
+	}
+
+    enum "Physical\nResources\nStatus" as phys_res_status
+	{
+        ACTIVE
+        INACTIVE
+        UNDER MAINTENANCE
+	}
+
+	class "Qualification" as quali
+	{
+		+ qualificationID
+		+ name
+	}
+
+	class "Staff" as staff
+	{
+		+ staffID
+		+ name
+		+ email
+		+ phoneNumber
+        + qualifications
+		+ operationalWindow
+		+ status
+	}
+
+    enum "Staff status" as staff_status {
+        AVAILABLE
+        UNAVAILABLE
+    }
+
+    class "Operational Window" as op_window <<Value>>{
+        + startDay
+        + startTime
+        + endDay
+        + endTime
+    }
+
+    staff "1" -> "1" staff_status : "has"
+    phys_res "1" -> "1" phys_res_status : "has"
+}
+
+rectangle "Dock" {
+	class "**Dock**" as dock <<Entity>>
+	{
+		+ DockID
+		+ DockName / DockNumber
+		+ lenght
+		+ depth
+		+ maxDraft
+        + allowedVesselTypes
+	}
+}
+
+class "**Port**\n**Location**" as port_loc <<Value>>
+{
+	+ locationName
+	+ geoLocation
+}
+
+rectangle "Storage Area"{
+	
+	class "**Storage**\n**Area**" as storage_area <<AggregateRoot>><<Entity>>
+	{
+		+ storageAreaID
+		+ maxCapacity
+		+ currentOccupancy
+		+ complementaryInformation
+	}
+
+	enum "Storage Area\nType" as storage_area_type {
+		WAREHOUSE
+        YARD
+        OTHER
+	}
+
+	storage_area --> storage_area_type
+	storage_area --> port_loc
+	storage_area "1" --> "*" dock : "serves"
+}
+
+class "**Shipping Agent**\n**Organization**" as SAO <<Entity>>
+{
+	+ SAOID
+	+ legalName
+	+ altNames
+	+ address
+	+ taxNumber
+}
+
+class "**SAO Representative**" as SAO_rep <<Entity>>
+{
+	+ name
+	+ citizenID
+	+ nationality
+	+ email
+	+ phoneNumber
+    + status
+}
+
+rectangle "Berthing information" {
+
+	class "**Vessel Visit**\n**Notification**" as vesel_visit_notif <<Entity>>
+	{
+		+ ETA
+		+ ETD
+		+ specialRequirements [?]
+		+ captain [?]
+		+ totalCrewMembers [?]
+		+ isCargoHazardous
+		+ loadManifest [?]
+		+ unloadManifest [?]
+	}
+
+	class "Notification\nDecision" as notif_dec
+	{
+		+ status
+		+ timestamp [?]
+		+ reason [?]
+        + assignedDock [?]
+		+ officerID [?]
+	}
+
+    note top of notif_dec: Nós podemos ter uma dock que apenas é preenchida quando a notificação é aceite, \nda mesma maneira que temos uma razão apenas quando é rejeitada. \nIsso porque é temporária, quando confirmado teremos outra class "Vessel Visit"
+
+    enum "Notification status" as notif_status {
+        IN PROGRESS
+        APPROVAL PENDING
+        APPROVED
+        REJECTED
+    }
+
+    class "Cargo Manifest" as c_manifest {
+		+ ISO
+		+ description
+		+ type
+		+ bay
+		+ row
+		+ tier
+	}
+
+	enum "Cargo Type" as cargo_type
+	{
+		REEFERS
+		GCP
+		ELECTRONICS
+		HAZMAT
+		OIM
+		OTHER
+	}
+
+    vesel_visit_notif "1" --> "1" c_manifest : "has"
+    c_manifest "1" -> "1" cargo_type : "has"
+    notif_dec "1" -> "1" notif_status : "has"
+    notif_dec "1" -> "0..1" dock : "has"
+}
+
+phys_res "1" --> "1" op_window : "has"
+phys_res "0..*" -> "1" dock : "assigned to"
+
+staff "1" --> "1" op_window : "has"
+
+phys_res --> phys_res_type : "has"
+phys_res --> "*..*" quali : "requires"
+staff --> "*..*" quali : "has"
+
+vesel_visit_notif -> "0..*" notif_dec
+vesel_visit_notif --> vessel
+
+SAO_rep "1" --> "1" vesel_visit_notif : "submits"
+
+vessel --> SAO : "owns"
+dock --> port_loc
+SAO --> SAO_rep
+
+@enduml~

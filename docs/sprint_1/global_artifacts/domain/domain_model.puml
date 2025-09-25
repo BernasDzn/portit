@@ -25,6 +25,8 @@ rectangle "Vessel" {
 	{
 		+ IMO Number
 		+ vesselName
+		+ vesselType
+		+ owner
 	}
 
 	class "Vessel Type" as vessel_type <<Value>>
@@ -259,13 +261,13 @@ SAO_rep --> vessel_visit_notif : "submits"
 
 c_manifest "1" -> "1" cargo_type : "has"
 
-vessel --> SAO : "Confirm this\nconnection [!]"
 vessel --> vessel_type
 
 storage_area --> storage_area_type
 storage_area --> port_loc
 storage_area "1" --> "*" dock : "serves"
 
+vessel --> SAO : "owns"
 dock --> port_loc
 SAO --> SAO_rep
 
