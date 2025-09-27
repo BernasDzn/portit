@@ -1,0 +1,53 @@
+@startuml use_case_diagram
+left to right direction
+skinparam packageStyle rectangle
+title "Sprint 1 Use Case Diagram"
+
+actor "Port Authority\nOfficer" as PortAuthorityOfficer
+actor "Logistics Operator" as LogisticsOperator
+actor "SAO Representative" as SAORepresentative
+
+package "Port Management" <<Subsystem>> {
+	usecase "Register Vessel Types" as UC_register_vtype
+	usecase "Update Vessel Types" as UC_update_vtype
+	usecase "Register Vessel" as UC_register_vessel
+	usecase "Update Vessel" as UC_update_vessel
+	usecase "Update Storage Areas" as UC_update_sa
+	usecase "Register Storage Areas" as UC_register_sa
+	usecase "Register Shipping\nAgent Origanization" as UC_register_SAO
+	usecase "Update Shipping\nAgent Origanization" as UC_update_SAO
+	usecase "Register SAO\nRepresentative" as UC_register_sao_rep
+	usecase "Update SAO\nRepresentative" as UC_update_sao_rep
+	usecase "Aprove/Reject\nVessel Visit Notifications" as UC_review_vvn
+	usecase "Create Vessel\nVisit Notification" as UC_register_vvn
+	usecase "Update Vessel\nVisit Notification" as UC_update_vvn
+	usecase "Submit Vessel\nVisit Notification" as UC_submit_vvn
+	usecase "View  status of \nVessel Visit Notification" as UC_view_vvn_status
+	usecase "Manage staff members" as UC_manage_staff
+	usecase "Manage physical\nResources" as UC_manage_phy_res
+	usecase "Manage Qualifications" as UC_manage_qualif
+}
+
+UC_register_SAO .l.> UC_register_sao_rep : <<includes>>
+
+PortAuthorityOfficer ---> UC_register_vtype
+PortAuthorityOfficer ---> UC_update_vtype
+PortAuthorityOfficer ---> UC_register_vessel
+PortAuthorityOfficer ---> UC_update_vessel
+PortAuthorityOfficer ---> UC_update_sa
+PortAuthorityOfficer ---> UC_register_sa
+PortAuthorityOfficer ---> UC_register_sao_rep
+PortAuthorityOfficer ---> UC_register_SAO
+PortAuthorityOfficer ---> UC_update_SAO
+PortAuthorityOfficer ---> UC_update_sao_rep
+PortAuthorityOfficer ---> UC_review_vvn
+SAORepresentative ---> UC_register_vvn
+SAORepresentative ---> UC_update_vvn
+SAORepresentative ---> UC_submit_vvn
+SAORepresentative --> UC_view_vvn_status
+LogisticsOperator --> UC_manage_phy_res
+LogisticsOperator --> UC_manage_qualif
+LogisticsOperator --> UC_manage_staff
+
+
+@enduml
