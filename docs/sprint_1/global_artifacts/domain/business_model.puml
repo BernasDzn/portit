@@ -1,80 +1,109 @@
 @startuml
 title Business Domain Model
 
-entity "System User" as user
+    abstract "System User" as user
 
-entity "Port Authorities" as PA
-entity "Shipping Agent\nOrganization (SAO)" as SAO
-entity "SAO Representative" as SAOR
-entity "Logistics Operators" as LO
-entity "Administrator" as AD
+    entity "Port Authorities" as PA
+    entity "Shipping Agent\nOrganization (SAO)" as SAO
+    entity "SAO Representative" as SAOR
+    entity "Logistics Operators" as LO
+    entity "Administrator" as AD
 
-class "Staff" as staff
+    class "Staff" as staff
+    abstract "Resource" as res
+    class "Dock" as docks
+    class "Ship-To-Shore cranes" as cranes
+    class "Yard gantry cranes" as yg_cranes
+    class "Trucks and terminal tractors" as trucks
+    class "Tasks" as tasks
+    class "Operational Window" as op_window
+    class "Qualification" as qualification
 
-class "Resource" as res
+    abstract "Storage areas" as storage
+    class "Container yards" as yards
+    class "Warehouses" as warehouse
 
-class "Docks" as docks
-class "Ship-To-Shore cranes" as cranes
-class "Yard gantry cranes" as yg_cranes
-class "Trucks and terminal tractors" as trucks
-class "Container yards" as yards
-class "Warehouses" as warehouse
+    class "Vessels" as vessels
+    class "Vessel types" as vessels_types
 
-class "Vessels" as vessels
-class "Vessel visit" as vessel_visit
-class "Vessel cargo" as vessel_cargo
-class "Cargo manifest" as cm
+    class "Vessel visit notification" as vessel_visit
+    class "Crew" as crew
+    class "Docking schedule" as docking_s
+    class "Cargo manifest" as cm
 
-class "Tasks" as tasks
+    class "Cargo Type" as cargo_type
+    class "Container" as container
 
-user --|> PA
-user --|> SAOR
-user --|> LO
-user --|> AD
+user <|-- PA
+user <|-- SAOR
+user <|-- LO
+user <|-- AD
 
 AD --> user : "manages"
 
+SAO --> vessels : "owns"
+
+vessels --> vessels_types : "have"
+vessels_types -> docks : "dictate"
+
 PA --> SAO : "registers"
 PA --> SAOR : "registers"
-PA --> vessel_visit : "accepts or rejects"
-PA --> warehouse : "regulates"
+PA --> vessel_visit : "reviews and accepts or rejects"
 PA --> docks : "ensure proper allocation"
-PA --> yards : "monitors capacity"
+PA --> storage : "regulates"
+PA -> vessels_types : "manages" 
+PA -> vessels : "keeps registry of"
+PA --> docking_s : "creates after approval"
 
-SAO --> SAOR : "has"
+yards --|> storage
+warehouse --|> storage
 
-SAOR --> vessels : "represent"
+storage --> docks : "serves"
+note "storage areas may be constrained to \nserve only a few docksnusually the closest ones" as N1
+storage .. N1
+N1 .. docks
+
 SAOR --> vessel_visit : "submits"
-SAOR --> cm : "submits"
-SAOR --> vessel_cargo : "provides as information"
+SAOR --> SAO : "represents"
 
-
-vessels --> vessel_cargo : "has"
 vessel_visit --> vessels : "notify the berthing of"
-cranes --> vessel_cargo : "unload or load"
+vessel_visit --> cm : "declare load manifest"
+vessel_visit --> cm : "declare unload manifest"
+vessel_visit --> crew : "informs of"
+vessel_visit --> docking_s : "results in"
+
+docking_s --> vessel_visit : "schedules"
+docking_s --> docks : "assigns"
+docking_s --> tasks : "generates"
+
 docks --> vessels : "accomodate"
-trucks --> vessel_cargo : "move"
-yg_cranes --> vessel_cargo : "move"
-warehouse --> vessel_cargo : "store for inspection"
-yards --> vessel_cargo : "store temporarily"
 
-res --|> cranes
-res --|> yg_cranes
-res --|> trucks
+res <|-- cranes
+res <|-- yg_cranes
+res <|-- trucks
 
-staff --> cranes : "operates"
-staff --> yg_cranes : "operates"
-staff --> trucks : "drives"
+res --> container : "moves"
+cranes --> docks : "exist at"
 
-LO --> tasks : "schedules"
+staff --> res : "operates"
+staff --> qualification : "has"
+
+LO --> tasks : "sequences and allocates resources"
 LO ---> staff : "manages"
-LO --> docks : "manages"
-LO --> cranes : "manages"
-LO --> yg_cranes : "manages"
-LO --> trucks : "manages"
+LO --> docks : "coordinates operations at"
+LO -->  res : "manages"
 
-cm --> tasks : "inform"
 tasks --> res : "allocates"
+
+op_window --> res : "defines availability"
+op_window --> staff : "defines availability"
+
+qualification --> res : "required for"
+
+cargo_type --> container : "categorizes"
+
+container --> cm : "listed in"
+container --> vessels : "carried by"
 
 @enduml
 
