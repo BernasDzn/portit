@@ -59,7 +59,7 @@ yards --|> storage
 warehouse --|> storage
 
 storage --> docks : "serves"
-note "storage areas may be constrained to \nserve only a few docksnusually the closest ones" as N1
+note "storage areas may be constrained to\nserve only a few docks\nusually the closest ones" as N1
 storage .. N1
 N1 .. docks
 

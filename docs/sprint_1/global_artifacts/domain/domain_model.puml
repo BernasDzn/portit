@@ -17,9 +17,9 @@ rectangle "System"{
 		+ email
 	}
 
-	class "User\n**Password**" as user_password <<Value>>
+	class "User\n**Phone Number**" as user_phone_number <<Value>>
 	{
-		+ password
+		+ phoneNumber
 	}
 
 	class "User\n**Role**" as user_role <<Enum>>
@@ -46,12 +46,32 @@ rectangle "Vessel" {
 		+ Name
 	}
 
-	class "Vessel\n**Type**" as vessel_type <<Entity>>
+}
+
+rectangle "Vessel Type"{
+	class "**Vessel Type**" as vessel_type <<AggregateRoot>><<Entity>>
+	{
+	}
+
+	class "Vessel Type\n**Name**" as vessel_type_name <<Value>>
 	{
 		+ Name
+	}
+
+	class "Vessel Type\n**Description**" as vessel_type_description <<Value>>
+	{
 		+ Description
+	}
+	class "Vessel Type\n**Max Number Of Rows**" as vessel_type_max_nr <<Value>>
+	{
 		+ maxNumberOfRows
+	}
+	class "Vessel Type\n**Max Number Of Bays**" as vessel_type_max_nb <<Value>>
+	{
 		+ maxNumberOfBays
+	}
+	class "Vessel Type\n**Max Number Of Tiers**" as vessel_type_max_nt <<Value>>
+	{
 		+ maxNumberOfTiers
 	}
 
@@ -125,14 +145,25 @@ rectangle "Staff"{
 }
 
 rectangle "Dock" {
-	class "**Dock**" as dock <<Entity>>
+	class "**Dock**" as dock <<AggregateRoot>><<Entity>>
 	{
-		+ DockID
-		+ DockName / DockNumber
 		+ lenght
 		+ depth
 		+ maxDraft
 	}
+
+	class "Dock\n**Designation**" as dock_designation <<Value>>
+	{
+		+ nameOrNumber
+	}
+
+	class "Dock\n**Physical Characteristics**" as dock_physical_char <<Value>>
+	{
+		+ length
+		+ depth
+		+ maxDraft
+	}
+
 }
 
 class "**Port**\n**Location**" as port_loc <<Entity>>
@@ -217,7 +248,7 @@ rectangle "Berthing information" {
 		+ specialRequirements [?]
 	}
 
-	class "Vessel Visit\nNotification\n**Crew**" as crew <<Value>>
+	class "Vessel Visit\nNotification\n**Crew**" as crew <<Entity>>
 	{
 		+ captain [?]
 		+ totalCrewMembers [?]
@@ -313,12 +344,12 @@ rectangle "Berthing information" {
 
 user -u-> "1" user_name
 user -u-> "1" user_email
-user -u-> "1" user_password
+user -u-> "1" user_phone_number
 user -u-> "1" user_role
 user "1" --> "*" user : "(Admin)\nmanages"
 user "1" ---> "*" dock : "(Port Authority Officer)\nregisters/manages"
 user "1" ---> "*" storage_area : "(Port Authority Officer)\nregisters/manages"
-user "1" <--- "*" vessel_type : "(Port Authority Officer)\nis registered/managed"
+user "1" ---> "*" vessel_type : "(Port Authority Officer)\nregisters/manages"
 user "1" ---> "*" vessel_visit_notif : "(Port Authority Officer)\nreviews and approves or rejects"
 user "1" <--- "*" op_task : "(Port Authority Officer)\nis overseed by"
 user "1" ---> "*" SAO : "(Port Authority Officer)\nregisters"
@@ -352,27 +383,28 @@ phys_res --> "1" phys_res_setup_time
 
 vessel_visit_notif --> "1" exp_time
 vessel_visit_notif --> "1" spec_rep
-vessel_visit_notif --> "1" crew
+vessel_visit_notif "1..*" --> "1" crew
 vessel_visit_notif --> "1" cargo_details
 vessel_visit_notif -> "0..*" notif_dec
 vessel_visit_notif <-- vessel_berth : "responds to"
 vessel_visit_notif --> vessel
-crew --> crewman : "has a list of"
-vessel_visit_notif "1" --> "1" c_manifest : "has"
+crew --> "*" crewman : "has a list of"
+vessel_visit_notif "1" --> "0..2" c_manifest : "has"
 
 notif_dec "1" -> "1" notif_status : "has"
 notif_dec "1" -> "0..1" dock : "has"
 
-SAO --> SAO_rep
+SAO "1" --> "*" vessel : "owns"
+SAO "0..1" --> "1..*" SAO_rep
 SAO --> "1" SAO_name
 SAO --> "1" SAO_address
 SAO --> "1" SAO_tax_number
 
-SAO_rep --> vessel_visit_notif : "submits"
+SAO_rep "1" --> "*" vessel_visit_notif : "submits"
 
 c_manifest "1" -> "1" cargo_type : "has"
 
-vessel --> vessel_type
+
 
 storage_area --> "1" storage_area_type
 storage_area "1" --> "1" port_loc
@@ -380,12 +412,21 @@ storage_area "1" --> "*" dock : "serves"
 storage_area --> "1" storage_area_capacity
 storage_area --> "1" storage_area_comp_info
 
-vessel --> SAO : "owns"
+
+vessel "*" --> "1" vessel_type
 vessel --> "1" IMO_number
 vessel --> "1" vessel_name
 
-dock --> port_loc
+vessel_type --> "1" vessel_type_name
+vessel_type --> "1" vessel_type_description
+vessel_type --> "1" vessel_type_max_nr
+vessel_type --> "1" vessel_type_max_nb
+vessel_type --> "1" vessel_type_max_nt
+
+dock "1" --> "1" port_loc
 dock "1" --> "*" phys_res : "has"
+dock "1" --> "1" dock_designation
+dock --> "1" dock_physical_char
 
 
 @enduml
