@@ -5,9 +5,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  - name: Discord Webhook Action
-    uses: tsickert/discord-webhook@v7.0.0
-    
+
   generate_docs:
     if: contains(join(github.event.commits.*.message, ' '), 'docs:') || contains(join(github.event.commits.*.message, ' '), 'docs(')
     runs-on: ubuntu-latest
