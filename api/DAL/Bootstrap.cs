@@ -21,8 +21,8 @@ public static class Bootstrap
         BootstrapQualifications(context);
         // Bootstrap Shipping Agent Organizations and Representatives
         BootstrapSAOR(context);
-        // Bootstrap Vessel Types
-        BootstrapVesselTypes(context);
+        // Bootstrap Vessels and Vessel Types
+        BootstrapVessels(context);
         // Bootstrap Docks
         BootstrapDocks(context);
 
@@ -105,17 +105,23 @@ public static class Bootstrap
 
     }
 
-    private static void BootstrapVesselTypes(ApiContext context)
+    private static void BootstrapVessels(ApiContext context)
     {
-        // Check if there are any vessel types already in the database
-        if (context.VesselTypes.Any())
+        // Check if there are any vessels already in the database
+        if (context.Vessels.Any())
             return;
 
         // Add Bootstrap data
-        context.VesselTypes.AddRange(
+        context.Vessels.AddRange(
+            new Vessel(Guid.NewGuid(), "Ever Given", "IMO1234567",
             new VesselType(Guid.NewGuid(), "Panamax", "Max size for Panama Canal", 20, 10, 5),
+            252482890),
+            new Vessel(Guid.NewGuid(), "Maersk Triple E", "IMO7654321",
             new VesselType(Guid.NewGuid(), "Post-Panamax", "Larger than Panamax", 30, 15, 7),
-            new VesselType(Guid.NewGuid(), "Ultra Large Container Vessel (ULCV)", "Largest container ships", 40, 20, 10)
+            252482890),
+            new Vessel(Guid.NewGuid(), "CMA CGM Marco Polo", "IMO1122334",
+            new VesselType(Guid.NewGuid(), "Ultra Large Container Vessel (ULCV)", "Largest container ships", 40, 20, 10),
+            252482918)
         );
     }
 
