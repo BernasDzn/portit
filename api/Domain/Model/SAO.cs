@@ -11,8 +11,8 @@ public class ShippingAgentOrganization : IDTOAble<ShippingAgentOrganizationDto>
     public string TaxId { get; private set; }
     public virtual ICollection<Representative> Representatives { get; private set; }
 
-    // EF Core needs a parameterless constructor
-    public ShippingAgentOrganization() { }
+    // EF Core
+    protected ShippingAgentOrganization() { }
 
     public ShippingAgentOrganization(Guid id, string legalName, List<string> altNames, Address address, string taxId, List<Representative> representatives)
     {

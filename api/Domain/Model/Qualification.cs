@@ -6,7 +6,7 @@ public class Qualification : IDTOAble<QualificationDto>
 	public string QualificationName { get ; private set; }
 
 	//EF Core
-	private Qualification() { }
+	protected Qualification() { }
 
 	public Qualification(Guid id, string qualification_name)
 	{

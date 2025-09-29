@@ -14,7 +14,8 @@ public class Representative : IDTOAble<RepresentativeDto>
     public Guid ShippingAgentOrganizationId { get; private set; }
     public virtual ShippingAgentOrganization ShippingAgentOrganization { get; private set; }
 
-    public Representative() { } // Required for EF
+    // EF Core
+    public Representative() { }
 
 
     public Representative(Guid id, uint citizenshipId, string name, string email, string phone)

@@ -21,7 +21,10 @@ public class QualificationController : ControllerBase
 	[HttpGet(Name = "GetQualifications")]
 	public ActionResult<IEnumerable<Qualification>> GetAll()
 	{
-		return Ok(_context.Qualifications.ToList());
+		var quals = _context.Qualifications.ToList();
+		var qualsDtos = quals.Select(qual => qual.ToDTO()).ToList();
+
+		return Ok(qualsDtos);
 	}
 
 }
