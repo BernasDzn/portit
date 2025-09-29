@@ -31,4 +31,15 @@ public class Vessel : IDTOAble<VesselDto>
             OwnerCitizenshipId = this.OwnerCitizenshipId
         };
     }
+
+    public static Vessel FromDTO(VesselDto dto)
+    {
+        return new Vessel(
+            dto.Id,
+            dto.Name,
+            dto.ImoNumber,
+            dto.Type,
+            dto.OwnerCitizenshipId
+        );
+    }
 }
