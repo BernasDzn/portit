@@ -9,16 +9,19 @@ public class ShippingAgentOrganization
     private List<string> _altNames;
     private Address _address;
     private string _taxId;
-    private List<ShippingAgentOrganizationRepresentative> _representatives;
+    private List<Representative> _representatives;
 
-    public Guid Id { get => _id; }
-    public string LegalName { get => _legalName; }
-    public List<string> AltNames { get => _altNames; }
-    public Address MainAddress { get => _address; }
-    public string TaxId { get => _taxId; }
-    public List<ShippingAgentOrganizationRepresentative> Representatives { get => _representatives; }
+    public Guid Id { get => _id; set => _id = value; }
+    public string LegalName { get => _legalName; set => _legalName = value; }
+    public List<string> AltNames { get => _altNames; set => _altNames = value; }
+    public Address MainAddress { get => _address; set => _address = value; }
+    public string TaxId { get => _taxId; set => _taxId = value; }
+    public List<Representative> Representatives { get => _representatives; set => _representatives = value; }
 
-    public ShippingAgentOrganization(Guid id, string legalName, List<string> altNames, Address address, string taxId, List<ShippingAgentOrganizationRepresentative> representatives)
+    //EF Core
+    private ShippingAgentOrganization() { }
+
+    public ShippingAgentOrganization(Guid id, string legalName, List<string> altNames, Address address, string taxId, List<Representative> representatives)
     {
         _id = id;
         _legalName = legalName;

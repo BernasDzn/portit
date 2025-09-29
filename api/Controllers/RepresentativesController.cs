@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Api.Models;
+using Domain;
 
 namespace Api.Controllers;
 
@@ -7,17 +8,16 @@ namespace Api.Controllers;
 [Route("[controller]")]
 public class RepresentativesController : ControllerBase
 {
-    [HttpGet(Name = "GetRepresentative")]
-    public ActionResult<ShippingAgentOrganizationRepresentative> GetRepresentative()
-    {
-        var rep = new ShippingAgentOrganizationRepresentative(
-            Guid.NewGuid(),
-            "Representante exemplo olá",
-            123456789,
-            "ola@example.com",
-            "1234567890"
-        );
+    private readonly ApiContext _context;
 
-        return Ok(rep);
+    public RepresentativesController(ApiContext context)
+    {
+        _context = context;
+    }
+
+    [HttpGet(Name = "GetAllRepresentatives")]
+    public ActionResult<IEnumerable<Representative>> GetAll()
+    {
+        return Ok(_context.Representatives.ToList());
     }
 }

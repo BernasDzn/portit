@@ -5,10 +5,10 @@ public class Qualification : IQualification
 	public long id;
 
 	private string _qualification_name;
-	public string QualificationName
-	{
-		get { return _qualification_name; }
-	}
+	public string QualificationName { get => _qualification_name; set => _qualification_name = value; }
+
+	//EF Core
+	private Qualification() { }
 
 	public Qualification(string qualification_name)
 	{

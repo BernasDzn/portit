@@ -1,24 +1,23 @@
+using Domain.Model.Generic;
+
 namespace Api.Models;
 
-public class ShippingAgentOrganizationRepresentative
+public class Representative
 {
-    private Guid _id;
-    private string _name;
-    private uint _citizenshipId;
-    private string _email;
-    private string _phone;
+    public Guid Id { get; private set; }
+    public string Name { get; private set; }
+    public uint CitizenshipId { get; private set; }
+    public string EmailAddress { get; private set; }
+    public string Phone { get; private set; }
 
-    public Guid Id { get => _id; }
-    public string Name { get => _name; }
-    public uint CitizenshipId { get => _citizenshipId; }
-    public string Email { get => _email; }
-    public string Phone { get => _phone; }
+    private Representative() { } // Required for EF
 
-    public ShippingAgentOrganizationRepresentative(Guid id, string name, uint citizenshipId, string email, string phone) {
-        _id = id;
-        _name = name;
-        _citizenshipId = citizenshipId;
-        _email = email;
-        _phone = phone;
+    public Representative(Guid id, uint citizenshipId, string name, string email, string phone)
+    {
+        Id = id;
+        CitizenshipId = citizenshipId;
+        Name = name;
+        EmailAddress = email;
+        Phone = phone;
     }
 }
