@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Api.Domain.Model;
@@ -16,8 +17,8 @@ public class Vessel : IDTOAble<VesselDto>
     public Vessel(Guid id, string name, string imoNumber, VesselType type, uint ownerCitizenshipId)
     {
         if(name.IsNullOrEmpty()) throw new ArgumentException("Name cannot be null or empty", nameof(name));
-        if(imoNumber.IsNullOrEmpty()) throw new ArgumentException("IMO Number cannot be null or empty", nameof(imoNumber));
-        if(type == null) throw new ArgumentNullException(nameof(type), "Vessel Type cannot be null");
+        if(!validateIMONumber(imoNumber)) throw new ArgumentException("Invalid IMO Number format", nameof(imoNumber));
+        if (type == null) throw new ArgumentNullException(nameof(type), "Vessel Type cannot be null");
         if(ownerCitizenshipId <= 0) throw new ArgumentException("Owner Citizenship ID must be a positive integer", nameof(ownerCitizenshipId));
         Id = id;
         Name = name;
@@ -25,6 +26,34 @@ public class Vessel : IDTOAble<VesselDto>
         Type = type;
         OwnerCitizenshipId = ownerCitizenshipId;
     }
+
+    private bool validateIMONumber(string imoNumber)
+    {
+        if (imoNumber == null) return false;
+
+        // Must start with "IMO " and then 7 digits
+        var match = Regex.Match(imoNumber, @"^IMO\s?(\d{7})$");
+        if (!match.Success)
+            return false;
+
+        string digits = match.Groups[1].Value;
+
+        // Extract check digit (last digit)
+        int checkDigit = digits[6] - '0';
+
+        // Compute check digit from first 6 digits
+        int sum = 0;
+        for (int i = 0; i < 6; i++)
+        {
+            int digit = digits[i] - '0';
+            sum += digit * (7 - i);
+        }
+
+        int calculated = sum % 10;
+
+        return calculated == checkDigit;
+    }
+
 
     public VesselDto ToDTO()
     {

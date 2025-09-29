@@ -27,6 +27,52 @@ public class VesselController : ControllerBase
         return Ok(vesselDtos);
     }
 
+    [HttpGet("searchByName", Name = "GetVesselByName")]
+    public ActionResult<IEnumerable<VesselDto>> GetByName([FromQuery] string name)
+    {
+        var vessels = _context.Vessels
+            .Where(v => v.Name.Contains(name, StringComparison.OrdinalIgnoreCase))
+            .ToList();
+
+        if (vessels.Count == 0)
+        {
+            return NotFound();
+        }
+
+        var vesselDtos = vessels.Select(vessel => vessel.ToDTO()).ToList();
+        return Ok(vesselDtos);
+    }
+
+    [HttpGet("searchByIMO", Name = "GetVesselByIMO")]
+    public ActionResult<VesselDto> GetByIMO([FromQuery] string imo)
+    {
+        var vessel = _context.Vessels
+            .FirstOrDefault(v => v.ImoNumber.Equals(imo, StringComparison.OrdinalIgnoreCase));
+
+        if (vessel == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(vessel.ToDTO());
+    }
+
+    [HttpGet("searchByOwner", Name = "GetVesselByOwner")]
+    public ActionResult<IEnumerable<VesselDto>> GetByOwner([FromQuery] uint owner)
+    {
+        var vessels = _context.Vessels
+            .Where(v => v.OwnerCitizenshipId == owner)
+            .ToList();
+
+        if (vessels.Count == 0)
+        {
+            return NotFound();
+        }
+
+        var vesselDtos = vessels.Select(vessel => vessel.ToDTO()).ToList();
+        return Ok(vesselDtos);
+    }
+
     [HttpPost(Name = "CreateVessel")]
     public ActionResult<VesselDto> Create(VesselDto vesselDto)
     {

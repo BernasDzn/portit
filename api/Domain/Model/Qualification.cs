@@ -1,3 +1,5 @@
+using Domain.Model.Generic;
+
 namespace Api.Domain.Model;
 
 public class Qualification : IDTOAble<QualificationDto>
@@ -8,27 +10,29 @@ public class Qualification : IDTOAble<QualificationDto>
 	//EF Core
 	protected Qualification() { }
 
-	public Qualification(Guid id, string qualification_name)
+	public Qualification(Guid id, string qualificationName)
 	{
 		Id = id;
-		QualificationName = qualification_name;
+		QualificationName = qualificationName;
 	}
 	
-	public bool UpdateName(string new_qualification_name)
-	{
-		if (string.IsNullOrWhiteSpace(new_qualification_name))
-			return false;
-
-		QualificationName = new_qualification_name;
-		return true;
+	public void UpdateQualificationName(string qualificationName) {
+		QualificationName = qualificationName;
 	}
 
     public QualificationDto ToDTO()
-    {
-        return new QualificationDto
+	{
+		return new QualificationDto
 		{
 			Id = this.Id,
 			QualificationName = this.QualificationName
 		};
+	}
+
+    internal static Qualification FromDTO(QualificationDto qualDto){
+        return new Qualification(
+			qualDto.Id,
+			qualDto.QualificationName
+		);
     }
 }

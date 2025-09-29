@@ -8,9 +8,9 @@ namespace Api.Controllers;
 [Route("[controller]")]
 public class QualificationController : ControllerBase
 {
-	
+
 	private readonly ILogger<QualificationController> _logger;
-	private readonly ApiContext	_context;
+	private readonly ApiContext _context;
 
 	public QualificationController(ApiContext context, ILogger<QualificationController> logger)
 	{
@@ -27,4 +27,15 @@ public class QualificationController : ControllerBase
 		return Ok(qualsDtos);
 	}
 
+	[HttpPut("{id}", Name = "UpdateQualification")]
+	public IActionResult Update(Guid id, QualificationDto qualDto)
+	{
+		Qualification? existingQual = _context.Qualifications.FirstOrDefault(q => q.Id == id);
+		if (existingQual == null)
+			return NotFound("Qualification not found");
+
+		existingQual.UpdateQualificationName(qualDto.QualificationName);
+		_context.SaveChanges();
+		return Ok();
+    }
 }
