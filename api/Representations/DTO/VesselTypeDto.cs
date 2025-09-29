@@ -1,9 +1,9 @@
 public class VesselTypeDto
 {
     public Guid Id { get; set; }
-    public string Name{ get; set; }
-    public string Description{ get; set; }
-    public int MaxNumberOfRows{ get; set; }
-    public int MaxNumberOfBays{ get; set; }
-    public int MaxNumberOfTiers{ get; set; }
+    public required string Name{ get; set; }
+    public required string Description{ get; set; }
+    public required int MaxNumberOfRows{ get; set; }
+    public required int MaxNumberOfBays{ get; set; }
+    public required int MaxNumberOfTiers{ get; set; }
 }

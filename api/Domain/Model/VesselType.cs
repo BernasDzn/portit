@@ -10,6 +10,8 @@ public class VesselType : IDTOAble<VesselTypeDto>
     public int MaxNumberOfBays { get; private set; }
     public int MaxNumberOfTiers { get; private set; }
 
+    //EF Core
+    protected VesselType() { }
     public VesselType(Guid id, string name, string description, int maxNumberOfRows, int maxNumberOfBays, int maxNumberOfTiers)
     {
         if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(description) || maxNumberOfRows < 0 || maxNumberOfBays < 0 || maxNumberOfTiers < 0)
@@ -34,5 +36,5 @@ public class VesselType : IDTOAble<VesselTypeDto>
             MaxNumberOfBays = this.MaxNumberOfBays,
             MaxNumberOfTiers = this.MaxNumberOfTiers
         };
-    } 
+    }
 }
