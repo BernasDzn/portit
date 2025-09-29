@@ -1,3 +1,5 @@
+using Microsoft.IdentityModel.Tokens;
+
 namespace Api.Domain.Model;
 
 public class Vessel : IDTOAble<VesselDto>
@@ -13,6 +15,10 @@ public class Vessel : IDTOAble<VesselDto>
 
     public Vessel(Guid id, string name, string imoNumber, VesselType type, uint ownerCitizenshipId)
     {
+        if(name.IsNullOrEmpty()) throw new ArgumentException("Name cannot be null or empty", nameof(name));
+        if(imoNumber.IsNullOrEmpty()) throw new ArgumentException("IMO Number cannot be null or empty", nameof(imoNumber));
+        if(type == null) throw new ArgumentNullException(nameof(type), "Vessel Type cannot be null");
+        if(ownerCitizenshipId <= 0) throw new ArgumentException("Owner Citizenship ID must be a positive integer", nameof(ownerCitizenshipId));
         Id = id;
         Name = name;
         ImoNumber = imoNumber;
