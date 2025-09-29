@@ -91,4 +91,9 @@ public class Dock : IDTOAble<DockDto>
             SupportedVesselTypes = this.SupportedVesselTypes.Select(vt => vt.ToDTO()).ToList()
         };
     }
+
+    internal static Dock FromDTO(DockDto dockDto)
+    {
+        return new Dock(dockDto.Id, dockDto.Designation, dockDto.Location, dockDto.Length, dockDto.Depth, dockDto.MaxDraft, dockDto.SupportedVesselTypes.Select(VesselType.FromDTO).ToList());
+    }
 }
