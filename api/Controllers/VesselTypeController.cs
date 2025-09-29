@@ -39,6 +39,16 @@ public class VesselTypeController : ControllerBase
 		return Ok(vtypesDtos);
 	}
 
+	[HttpGet("searchByDescription", Name = "GetVesselTypesByDescription")]
+	public ActionResult<IEnumerable<VesselType>> GetByDescription([FromQuery] string description)
+	{
+		var vtypes = _context.VesselTypes
+			.Where(vtype => vtype.Description.Contains(description, StringComparison.OrdinalIgnoreCase))
+			.ToList();
+		var vtypesDtos = vtypes.Select(vtype => vtype.ToDTO()).ToList();
+		return Ok(vtypesDtos);
+	}
+
 	[HttpPost(Name = "CreateVesselType")]
 	public ActionResult<VesselTypeDto> Create(VesselTypeDto vtypeDto)
 	{
