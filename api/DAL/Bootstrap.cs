@@ -21,6 +21,8 @@ public static class Bootstrap
         BootstrapQualifications(context);
         // Bootstrap Shipping Agent Organizations and Representatives
         BootstrapSAOR(context);
+        // Bootstrap Vessel Types
+        BootstrapVesselTypes(context);
 
         context.SaveChanges();
     }
@@ -99,5 +101,19 @@ public static class Bootstrap
             )
         );
 
+    }
+
+    private static void BootstrapVesselTypes(ApiContext context)
+    {
+        // Check if there are any vessel types already in the database
+        if (context.VesselTypes.Any())
+            return;
+
+        // Add Bootstrap data
+        context.VesselTypes.AddRange(
+            new VesselType(Guid.NewGuid(), "Panamax", "Max size for Panama Canal", 20, 10, 5),
+            new VesselType(Guid.NewGuid(), "Post-Panamax", "Larger than Panamax", 30, 15, 7),
+            new VesselType(Guid.NewGuid(), "Ultra Large Container Vessel (ULCV)", "Largest container ships", 40, 20, 10)
+        );
     }
 }

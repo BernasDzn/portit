@@ -14,4 +14,5 @@ public class ApiContext : DbContext
     public DbSet<ShippingAgentOrganization> ShippingAgentOrganizations { get; set; } = null!;
     public DbSet<Representative> Representatives { get; set; } = null!;
     public DbSet<Qualification> Qualifications { get; set; } = null!;
+    public DbSet<VesselType> VesselTypes { get; set; } = null!;
 }
