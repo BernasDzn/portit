@@ -1,6 +1,6 @@
 namespace Api.Domain.Model;
 
-public class VesselType
+public class VesselType : IDTOAble<VesselTypeDto>
 {
     public Guid Id { get; private set; }
 
@@ -22,4 +22,17 @@ public class VesselType
         MaxNumberOfBays = maxNumberOfBays;
         MaxNumberOfTiers = maxNumberOfTiers;
     }
+
+    public VesselTypeDto ToDTO()
+    {
+        return new VesselTypeDto
+        {
+            Id = this.Id,
+            Name = this.Name,
+            Description = this.Description,
+            MaxNumberOfRows = this.MaxNumberOfRows,
+            MaxNumberOfBays = this.MaxNumberOfBays,
+            MaxNumberOfTiers = this.MaxNumberOfTiers
+        };
+    } 
 }
