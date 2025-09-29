@@ -8,14 +8,15 @@ public class Dock : IDTOAble<DockDto>
     public int Length { get; private set; }
     public int Depth { get; private set; }
     public int MaxDraft { get; private set; }
-    public virtual ICollection<VesselType> SupportedVesselTypes { get; private set; } = new List<VesselType>();
+    public virtual ICollection<VesselType> SupportedVesselTypes { get; private set; }
 
 
     //EF Core
     protected Dock() { }
-    public Dock(Guid id, string designation, string location, int length, int depth, int maxDraft)
+    public Dock(Guid id, string designation, string location, int length, int depth, int maxDraft, List<VesselType> supportedVesselTypes)
     {
-        if (string.IsNullOrEmpty(designation) || string.IsNullOrEmpty(location) || length < 0 || depth < 0 || maxDraft < 0)
+        if (string.IsNullOrEmpty(designation) || string.IsNullOrEmpty(location) || length < 0 || depth < 0 || maxDraft < 0
+        || supportedVesselTypes == null || supportedVesselTypes.Count == 0)
             throw new ArgumentException("Invalid arguments!");
 
         Id = id;
@@ -24,6 +25,7 @@ public class Dock : IDTOAble<DockDto>
         Length = length;
         Depth = depth;
         MaxDraft = maxDraft;
+        SupportedVesselTypes = supportedVesselTypes;
     }
 
     public bool UpdateDesignation(string new_designation)

@@ -23,6 +23,8 @@ public static class Bootstrap
         BootstrapSAOR(context);
         // Bootstrap Vessel Types
         BootstrapVesselTypes(context);
+        // Bootstrap Docks
+        BootstrapDocks(context);
 
         context.SaveChanges();
     }
@@ -114,6 +116,26 @@ public static class Bootstrap
             new VesselType(Guid.NewGuid(), "Panamax", "Max size for Panama Canal", 20, 10, 5),
             new VesselType(Guid.NewGuid(), "Post-Panamax", "Larger than Panamax", 30, 15, 7),
             new VesselType(Guid.NewGuid(), "Ultra Large Container Vessel (ULCV)", "Largest container ships", 40, 20, 10)
+        );
+    }
+
+    private static void BootstrapDocks(ApiContext context)
+    {
+        // Check if there are any docks already in the database
+        if (context.Docks.Any())
+            return;
+
+        VesselType vt1 = new VesselType(Guid.NewGuid(), "Panamax", "Max size for Panama Canal", 20, 10, 5);
+        VesselType vt2 = new VesselType(Guid.NewGuid(), "Post-Panamax", "Larger than Panamax", 30, 15, 7);
+        VesselType vt3 = new VesselType(Guid.NewGuid(), "Ultra Large Container Vessel (ULCV)", "Largest container ships", 40, 20, 10);
+        VesselType vt4 = new VesselType(Guid.NewGuid(), "Handymax", "Medium-sized bulk carriers", 15, 8, 4);
+        VesselType vt5 = new VesselType(Guid.NewGuid(), "Capesize", "Too large for Panama and Suez Canals", 50, 25, 12);
+
+        // Add Bootstrap data
+        context.Docks.AddRange(
+            new Dock(Guid.NewGuid(), "Dock A", "North Harbor", 500, 30, 15, new List<VesselType> { vt4, vt1 }),
+            new Dock(Guid.NewGuid(), "Dock B", "East Harbor", 600, 35, 18, new List<VesselType> { vt5 }),
+            new Dock(Guid.NewGuid(), "Dock C", "South Harbor", 700, 40, 20, new List<VesselType> { vt2, vt3 })
         );
     }
 }
