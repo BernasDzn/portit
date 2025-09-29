@@ -1,0 +1,65 @@
+@startuml US2201_Domain_Model
+title US2201 - Domain Model
+hide circle
+
+rectangle "System"{
+	class "**User**" as user <<AggregateRoot>><<Entity>>
+	{
+		...
+	}
+}
+
+rectangle "Vessel" {
+	class "**Vessel**" as vessel <<AggregateRoot>><<Entity>>
+	{
+		...
+	}
+}
+
+rectangle "Vessel Type"{
+	class "**Vessel Type**" as vessel_type <<AggregateRoot>><<Entity>>
+	{
+	}
+
+	class "Vessel Type\n**Id**" as vessel_type_id <<Identifier>>
+	{
+		+ id
+	}
+
+	class "Vessel Type\n**Name**" as vessel_type_name <<Value>>
+	{
+		+ Name
+	}
+
+	class "Vessel Type\n**Description**" as vessel_type_description <<Value>>
+	{
+		+ Description
+	}
+	class "Vessel Type\n**Max Number Of Rows**" as vessel_type_max_nr <<Value>>
+	{
+		+ maxNumberOfRows
+	}
+	class "Vessel Type\n**Max Number Of Bays**" as vessel_type_max_nb <<Value>>
+	{
+		+ maxNumberOfBays
+	}
+	class "Vessel Type\n**Max Number Of Tiers**" as vessel_type_max_nt <<Value>>
+	{
+		+ maxNumberOfTiers
+	}
+
+}
+
+user "1" ---> "*" vessel_type : "(Port Authority Officer)\nregisters/manages"
+
+vessel "*" --> "1" vessel_type
+
+vessel_type --> "1" vessel_type_id
+vessel_type --> "1" vessel_type_name
+vessel_type --> "1" vessel_type_description
+vessel_type --> "1" vessel_type_max_nr
+vessel_type --> "1" vessel_type_max_nb
+vessel_type --> "1" vessel_type_max_nt
+
+
+@enduml
