@@ -34,5 +34,10 @@ public class VesselType : IDTOAble<VesselTypeDto>
             MaxNumberOfBays = this.MaxNumberOfBays,
             MaxNumberOfTiers = this.MaxNumberOfTiers
         };
-    } 
+    }
+
+    internal static VesselType FromDTO(VesselTypeDto vtypeDto)
+    {
+        return new VesselType(vtypeDto.Id, vtypeDto.Name, vtypeDto.Description, vtypeDto.MaxNumberOfRows, vtypeDto.MaxNumberOfBays, vtypeDto.MaxNumberOfTiers);
+    }
 }
