@@ -16,8 +16,7 @@ public class Designation
 
 	public bool UpdateDesignation(string new_designation)
 	{
-		if (string.IsNullOrEmpty(new_designation))
-		{
+		if (string.IsNullOrEmpty(new_designation)) {
 			return false;
 		}
 

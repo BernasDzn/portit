@@ -1,5 +1,7 @@
 namespace Api.Models;
 
+using global::Domain.Model.Generic;
+
 public class ShippingAgentOrganization
 {
     private Guid _id;

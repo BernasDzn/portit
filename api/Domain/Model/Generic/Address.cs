@@ -1,4 +1,4 @@
-namespace Api;
+namespace Domain.Model.Generic;
 
 public class Address
 {
