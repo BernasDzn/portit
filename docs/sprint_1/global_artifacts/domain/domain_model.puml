@@ -117,22 +117,40 @@ rectangle "Physical Resources" {
 	}
 }
 
-class "Qualification" as quali <<Entity>>
-{
-	+ qualificationID
-	+ name
+rectangle "Qualifications" {
+	class "**Qualification**" as quali <<AggregateRoot>><<Entity>>
+	{
+	}
+
+	class "Qualification\n**Name**" as quali_name <<Value>>
+	{
+		+ name
+	}
 }
 
 rectangle "Staff"{
 
 	class "**Staff**" as staff <<AggregateRoot>><<Entity>>
 	{
-		+ staffID
+	}
+
+	class "Staff\n**Name**" as staff_name <<Value>>
+	{
 		+ name
+	}
+	class "Staff\n**Email**" as staff_email <<Value>>
+	{
 		+ email
+	}
+	class "Staff\n**Phone Number**" as staff_phone_number <<Value>>
+	{
 		+ phoneNumber
-		+ operationalWindow
-		+ status
+	}
+
+	class "Staff\n**Status**" as staff_status <<Enum>>
+	{
+		+ ACTIVE
+		+ INACTIVE
 	}
 
 	class "Staff\n**Operational Window**" as staff_op_window
@@ -369,13 +387,19 @@ op_task "1" -> "*" staff : "mobilizes"
 op_task "1" -> "1" task_types : "has"
 
 staff "1" --> "1" staff_op_window : "has"
-staff --> "*..*" quali : "has"
+staff "*" --> "*" quali : "has"
+staff --> "1" staff_name
+staff --> "1" staff_email
+staff --> "1" staff_phone_number
+staff --> "1" staff_status
+
+quali --> quali_name
 
 vessel_berth "1" --> "*" op_task : "encapsulates"
 vessel_berth "1" --> "1" dock : "happens on"
 
 phys_res --> phys_res_type : "has"
-phys_res --> "*..*" quali : "requires"
+phys_res "*" --> "*" quali : "requires"
 phys_res --> "1" phys_res_desc
 phys_res --> "1" phys_res_op_cap
 phys_res --> "1" phys_res_status

@@ -45,8 +45,8 @@ rectangle "Qualifications" {
 
 user "1" ---> "*" quali : "(Logistics Operator)\nregisters/manages"
 
-staff -u-> "*..*" quali : "has"
+staff "*" -u-> "*" quali : "has"
 
-phys_res -u-> "*..*" quali : "requires"
+phys_res "*" -u-> "*" quali : "requires"
 
 @enduml
