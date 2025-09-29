@@ -20,7 +20,7 @@ public static class Bootstrap
         // Bootstrap Qualifications
         BootstrapQualifications(context);
         // Bootstrap Shipping Agent Organizations and Representatives
-        BootstrapSAOR(context);
+        BootstrapSAO(context);
         // Bootstrap Vessels and Vessel Types
         BootstrapVessels(context);
 
@@ -41,7 +41,7 @@ public static class Bootstrap
         );
     }
 
-    private static void BootstrapSAOR(ApiContext context)
+    private static void BootstrapSAO(ApiContext context)
     {
         // Check if there are any representatives already in the database
         if (context.ShippingAgentOrganizations.Any())

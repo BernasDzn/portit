@@ -1,16 +1,11 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Domain.Model.Generic;
 
+[ComplexType]
 public class Designation
 {
-
-	private string _designation;
-	public string Value { get => _designation; set => _designation = value; }
-
-	//EF Core
-	private Designation() { }
-
-	public Designation(string designation)
-	{
-		_designation = designation;
-	}
+	[MaxLength(100)]
+	public required string Value { get; set; }
 }
