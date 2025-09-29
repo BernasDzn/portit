@@ -2,32 +2,41 @@ namespace Api.Models;
 
 using global::Domain.Model.Generic;
 
-public class ShippingAgentOrganization
+public class ShippingAgentOrganization : IDTOAble<ShippingAgentOrganizationDto>
 {
-    private Guid _id;
-    private string _legalName;
-    private List<string> _altNames;
-    private Address _address;
-    private string _taxId;
-    private List<Representative> _representatives;
+    public Guid Id { get; private set; }
+    public string LegalName { get; private set; }
+    public List<string> AltNames { get; private set; }
+    public virtual Address MainAddress { get; private set; }
+    public string TaxId { get; private set; }
+    public virtual ICollection<Representative> Representatives { get; private set; }
 
-    public Guid Id { get => _id; set => _id = value; }
-    public string LegalName { get => _legalName; set => _legalName = value; }
-    public List<string> AltNames { get => _altNames; set => _altNames = value; }
-    public Address MainAddress { get => _address; set => _address = value; }
-    public string TaxId { get => _taxId; set => _taxId = value; }
-    public List<Representative> Representatives { get => _representatives; set => _representatives = value; }
-
-    //EF Core
-    private ShippingAgentOrganization() { }
+    // EF Core needs a parameterless constructor
+    public ShippingAgentOrganization() { }
 
     public ShippingAgentOrganization(Guid id, string legalName, List<string> altNames, Address address, string taxId, List<Representative> representatives)
     {
-        _id = id;
-        _legalName = legalName;
-        _altNames = altNames;
-        _address = address;
-        _taxId = taxId;
-        _representatives = representatives;
+        if (representatives == null || representatives.Count == 0)
+            throw new ArgumentException("An SAO must have at least one representative.");
+
+        Id = id;
+        LegalName = legalName;
+        AltNames = altNames;
+        MainAddress = address;
+        TaxId = taxId;
+        Representatives = representatives;
+    }
+
+    public ShippingAgentOrganizationDto ToDTO()
+    {
+        return new ShippingAgentOrganizationDto
+        {
+            Id = this.Id,
+            Name = this.LegalName,
+            AltNames = this.AltNames.ToArray(),
+            Address = this.MainAddress.ToDTO(),
+            TaxNumber = this.TaxId,
+            Representatives = this.Representatives.Select(r => r.ToDTO()).ToList()
+        };
     }
 }

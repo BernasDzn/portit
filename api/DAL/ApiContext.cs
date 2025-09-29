@@ -1,7 +1,8 @@
+using Api.Domain.Model;
 using Api.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Domain;
+namespace DAL;
 
 public class ApiContext : DbContext
 {
@@ -12,4 +13,10 @@ public class ApiContext : DbContext
     // Repositories
     public DbSet<ShippingAgentOrganization> ShippingAgentOrganizations { get; set; } = null!;
     public DbSet<Representative> Representatives { get; set; } = null!;
+    public DbSet<Qualification> Qualifications { get; set; } = null!;
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        
+    }
 }

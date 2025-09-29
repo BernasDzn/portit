@@ -1,29 +1,34 @@
 namespace Api.Domain.Model;
 
-public class Qualification : IQualification
+public class Qualification : IDTOAble<QualificationDto>
 {
-	public long id;
-
-	private string _qualification_name;
-	public string QualificationName { get => _qualification_name; set => _qualification_name = value; }
+	public Guid Id { get; private set; }
+	public string QualificationName { get ; private set; }
 
 	//EF Core
 	private Qualification() { }
 
-	public Qualification(string qualification_name)
+	public Qualification(Guid id, string qualification_name)
 	{
-		_qualification_name = qualification_name;
+		Id = id;
+		QualificationName = qualification_name;
 	}
-
+	
 	public bool UpdateName(string new_qualification_name)
 	{
-		if (string.IsNullOrEmpty(new_qualification_name))
-		{
+		if (string.IsNullOrWhiteSpace(new_qualification_name))
 			return false;
-		}
 
-		_qualification_name = new_qualification_name;
+		QualificationName = new_qualification_name;
 		return true;
 	}
 
+    public QualificationDto ToDTO()
+    {
+        return new QualificationDto
+		{
+			Id = this.Id,
+			QualificationName = this.QualificationName
+		};
+    }
 }

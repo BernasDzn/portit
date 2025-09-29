@@ -1,8 +1,9 @@
+using System.Text.Json.Serialization;
 using Domain.Model.Generic;
 
 namespace Api.Models;
 
-public class Representative
+public class Representative : IDTOAble<RepresentativeDto>
 {
     public Guid Id { get; private set; }
     public string Name { get; private set; }
@@ -10,7 +11,11 @@ public class Representative
     public string EmailAddress { get; private set; }
     public string Phone { get; private set; }
 
-    private Representative() { } // Required for EF
+    public Guid ShippingAgentOrganizationId { get; private set; }
+    public virtual ShippingAgentOrganization ShippingAgentOrganization { get; private set; }
+
+    public Representative() { } // Required for EF
+
 
     public Representative(Guid id, uint citizenshipId, string name, string email, string phone)
     {
@@ -19,5 +24,17 @@ public class Representative
         Name = name;
         EmailAddress = email;
         Phone = phone;
+    }
+
+    public RepresentativeDto ToDTO()
+    {
+        return new RepresentativeDto
+        {
+            Id = this.Id,
+            Name = this.Name,
+            CitizenshipId = this.CitizenshipId,
+            EmailAddress = this.EmailAddress,
+            Phone = this.Phone
+        };
     }
 }

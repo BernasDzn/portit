@@ -1,6 +1,9 @@
+using Api.Domain.Model;
 using Api.Models;
 using Domain;
 using Domain.Model.Generic;
+
+namespace DAL;
 
 public static class Bootstrap
 {
@@ -14,15 +17,31 @@ public static class Bootstrap
         // Ensure the database is created
         context.Database.EnsureCreated();
 
+        // Bootstrap Qualifications
+        BootstrapQualifications(context);
         // Bootstrap Shipping Agent Organizations and Representatives
         BootstrapSAOR(context);
 
         context.SaveChanges();
     }
 
+    private static void BootstrapQualifications(ApiContext context)
+    {
+        // Check if there are any qualifications already in the database
+        if (context.Qualifications.Any())
+            return;
+
+        // Add Bootstrap data
+        context.Qualifications.AddRange(
+            new Qualification(Guid.NewGuid(), "STS Crane Operator"),
+            new Qualification(Guid.NewGuid(), "Yard Crane Operator"),
+            new Qualification(Guid.NewGuid(), "Truck Driver")
+        );
+    }
+
     private static void BootstrapSAOR(ApiContext context)
     {
-         // Check if there are any representatives already in the database
+        // Check if there are any representatives already in the database
         if (context.ShippingAgentOrganizations.Any())
             return;
 
@@ -36,7 +55,7 @@ public static class Bootstrap
         Representative r7 = new Representative(Guid.NewGuid(), 446072968, "Bernardo Ansty", "bansty7@geocities.com", "350-788-7407");
 
         // Add Bootstrap data
-        context.ShippingAgentOrganizations.AddRange(
+        context.ShippingAgentOrganizations.Add(
             new ShippingAgentOrganization(
                 Guid.NewGuid(),
                 "Global Shipping Co.",
@@ -47,7 +66,7 @@ public static class Bootstrap
             )
         );
 
-        context.ShippingAgentOrganizations.AddRange(
+        context.ShippingAgentOrganizations.Add(
             new ShippingAgentOrganization(
                 Guid.NewGuid(),
                 "Oceanic Freight Ltd.",
@@ -58,7 +77,7 @@ public static class Bootstrap
             )
         );
 
-        context.ShippingAgentOrganizations.AddRange(
+        context.ShippingAgentOrganizations.Add(
             new ShippingAgentOrganization(
                 Guid.NewGuid(),
                 "TransWorld Logistics",
@@ -69,7 +88,7 @@ public static class Bootstrap
             )
         );
 
-        context.ShippingAgentOrganizations.AddRange(
+        context.ShippingAgentOrganizations.Add(
             new ShippingAgentOrganization(
                 Guid.NewGuid(),
                 "Maritime Movers Inc.",
@@ -79,6 +98,6 @@ public static class Bootstrap
                 new List<Representative> { r6, r7 }
             )
         );
-        
+
     }
 }

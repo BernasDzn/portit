@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Api.Domain.Model;
+using DAL;
 
 namespace Api.Controllers;
 
@@ -9,16 +10,18 @@ public class QualificationController : ControllerBase
 {
 	
 	private readonly ILogger<QualificationController> _logger;
+	private readonly ApiContext	_context;
 
-	public QualificationController(ILogger<QualificationController> logger)
+	public QualificationController(ApiContext context, ILogger<QualificationController> logger)
 	{
+		_context = context;
 		_logger = logger;
 	}
 
-	[HttpGet(Name = "GetQualification")]
-	public IEnumerable<Qualification> Get()
+	[HttpGet(Name = "GetQualifications")]
+	public ActionResult<IEnumerable<Qualification>> GetAll()
 	{
-		throw new NotImplementedException();
+		return Ok(_context.Qualifications.ToList());
 	}
 
 }

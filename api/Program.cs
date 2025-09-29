@@ -1,3 +1,4 @@
+using DAL;
 using Domain;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,7 +9,7 @@ builder.Services.AddControllers();
 
 // Add database contexts
 builder.Services.AddDbContext<ApiContext>(opt =>
-    opt.UseInMemoryDatabase("SAOList"));
+    opt.UseLazyLoadingProxies().UseInMemoryDatabase("database"));
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();

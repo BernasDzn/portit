@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Api.Models;
 using Domain;
+using DAL;
 
 namespace Api.Controllers;
 
@@ -18,6 +19,8 @@ public class RepresentativesController : ControllerBase
     [HttpGet(Name = "GetAllRepresentatives")]
     public ActionResult<IEnumerable<Representative>> GetAll()
     {
-        return Ok(_context.Representatives.ToList());
+        var saors = _context.Representatives.ToList();
+        var saorDtos = saors.Select(saor => saor.ToDTO()).ToList();
+        return Ok(saorDtos);
     }
 }

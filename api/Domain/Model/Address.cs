@@ -1,6 +1,6 @@
 namespace Domain.Model.Generic;
 
-public class Address
+public class Address : IDTOAble<AddressDto>
 {
     public Guid Id { get; set; }
     public string Street { get; set; }
@@ -9,7 +9,7 @@ public class Address
     public string Country { get; set; }
 
     //EF Core
-    private Address() { }
+    protected Address() { }
 
     public Address(string street, string city, string zipCode, string country)
     {
@@ -19,8 +19,16 @@ public class Address
         ZipCode = zipCode;
         Country = country;
     }
-
-    public override string ToString() {
-        return $"{Street}, {City}, {ZipCode}, {Country}";
+    
+    public AddressDto ToDTO()
+    {
+        return new AddressDto
+        {
+            Id = this.Id,
+            Street = this.Street,
+            City = this.City,
+            PostalCode = this.ZipCode,
+            Country = this.Country
+        };
     }
 }

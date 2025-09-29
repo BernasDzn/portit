@@ -3,7 +3,6 @@ namespace Domain.Model.Generic;
 public class TaxNumber
 {
     private string _value;
-
     public string Value { get => _value; set => _value = value; }
 
     //EF Core
