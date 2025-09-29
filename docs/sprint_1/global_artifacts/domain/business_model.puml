@@ -72,9 +72,8 @@ vessel_visit --> cm : "declare unload manifest"
 vessel_visit --> crew : "informs of"
 vessel_visit --> docking_s : "results in"
 
-docking_s --> vessel_visit : "schedules"
 docking_s --> docks : "assigns"
-docking_s --> tasks : "generates"
+docking_s <-- tasks : "define"
 
 docks --> vessels : "accomodate"
 
@@ -104,6 +103,8 @@ cargo_type --> container : "categorizes"
 
 container --> cm : "listed in"
 container --> vessels : "carried by"
+
+storage --> container : "stores"
 
 @enduml
 
