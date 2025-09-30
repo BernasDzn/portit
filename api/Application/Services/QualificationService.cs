@@ -19,17 +19,6 @@ public class QualificationService
 		return qualifications.Select(q => q.ToDTO()).ToList();
 	}
 
-	public async Task<QualificationDto> GetQualificationById(Guid id, List<string> errorMessage)
-	{
-		Qualification qualification = await _qualificationRepository.GetQualificationByIdAsync(id);
-		if (qualification == null)
-		{
-			errorMessage.Add("Qualification not found.");
-			return null;
-		}
-		return qualification.ToDTO();
-	}
-
 	public async Task<QualificationDto> GetQualificationByName(string name, List<string> errorMessage)
 	{
 		Qualification qualification = await _qualificationRepository.GetQualificationByNameAsync(name);
@@ -43,14 +32,14 @@ public class QualificationService
 
 	public async Task<QualificationDto> Add(QualificationDto qualificationDto, List<string> errorMessage)
 	{
-		bool exists = await _qualificationRepository.QualificationExists(qualificationDto.Id);
+		bool exists = await _qualificationRepository.QualificationExists(qualificationDto.QualificationName);
 		if (exists)
 		{
 			errorMessage.Add("Qualification with the same ID already exists.");
 			return null;
 		}
 
-		Qualification qualification = Qualification.FromDTO(qualificationDto);
+		Qualification qualification = QualificationDto.ToDomain(qualificationDto);
 		Qualification savedQualification = await _qualificationRepository.Add(qualification);
 		QualificationDto savedQualificationDto = savedQualification.ToDTO();
 
@@ -59,7 +48,7 @@ public class QualificationService
 
 	public async Task<bool> Update(Guid id, QualificationDto qualificationDto, List<string> errorMessage)
 	{
-		Qualification qualification = await _qualificationRepository.GetQualificationByIdAsync(id);
+		Qualification qualification = await _qualificationRepository.GetQualificationByNameAsync(qualificationDto.QualificationName);
 
 		if (qualification == null)
 		{

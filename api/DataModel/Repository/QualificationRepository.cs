@@ -46,7 +46,7 @@ public class QualificationRepository : GenericRepository<Qualification>, IQualif
 	{
 		try
 		{
-			Qualification? qualification = await _context.Set<Qualification>().FirstOrDefaultAsync(q => q.QualificationName.Equals(name));
+			Qualification? qualification = await _context.Set<Qualification>().FirstOrDefaultAsync(q => q.QualificationName == name);
 			return qualification!;
 		}
 		catch
@@ -91,9 +91,9 @@ public class QualificationRepository : GenericRepository<Qualification>, IQualif
 		}
 	}
 	
-	public async Task<bool> QualificationExists(Guid id)
+	public async Task<bool> QualificationExists(string name)
 	{
-		return await _context.Set<Qualification>().AnyAsync(q => q.Id == id);
+		return await _context.Set<Qualification>().AnyAsync(q => q.QualificationName.Equals(name));
 	}
 	
 }

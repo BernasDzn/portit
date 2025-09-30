@@ -34,20 +34,21 @@ public class QualificationController : ControllerBase
 
 		if (qualificationDto != null)
 		{
-			return CreatedAtAction(nameof(GetQualifications), new { id = qualificationDto.Id }, qualificationDto);
+			return CreatedAtAction(nameof(GetQualifications), new { id = qualificationDto }, qualificationDto);
 		}
 		return BadRequest(errors);
 	}
 
 	[HttpPut("{id}", Name = "UpdateQualification")]
-	public IActionResult Update(Guid id, QualificationDto qualDto)
+	public async Task<IActionResult> PutQualification(Guid id, QualificationDto qualDto)
 	{
-		Qualification? existingQual = _context.Qualifications.FirstOrDefault(q => q.Id == id);
-		if (existingQual == null)
-			return NotFound("Qualification not found");
+		bool wasUpdated = await _qualificationService.Update(id, qualDto, errors);
+		if (!wasUpdated)
+		{
+			return BadRequest(errors);
+		}
 
-		existingQual.UpdateQualificationName(qualDto.QualificationName);
-		_context.SaveChanges();
 		return Ok();
-    }
+	}
+	
 }
