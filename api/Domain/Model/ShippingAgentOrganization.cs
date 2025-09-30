@@ -1,20 +1,21 @@
 namespace Api.Models;
 
 using global::Domain.Model.Generic;
+using Microsoft.EntityFrameworkCore;
 
 public class ShippingAgentOrganization : IDTOAble<ShippingAgentOrganizationDto>
 {
     public Guid Id { get; private set; }
-    public string LegalName { get; private set; }
-    public List<string> AltNames { get; private set; }
+    public Designation LegalName { get; private set; }
+    public List<Designation> AltNames { get; private set; }
     public virtual Address MainAddress { get; private set; }
-    public string TaxId { get; private set; }
+    public TaxNumber TaxId { get; private set; }
     public virtual ICollection<Representative> Representatives { get; private set; }
 
     // EF Core
     protected ShippingAgentOrganization() { }
 
-    public ShippingAgentOrganization(Guid id, string legalName, List<string> altNames, Address address, string taxId, List<Representative> representatives)
+    public ShippingAgentOrganization(Guid id, Designation legalName, List<Designation> altNames, Address address, TaxNumber taxId, List<Representative> representatives)
     {
         if (representatives == null || representatives.Count == 0)
             throw new ArgumentException("An SAO must have at least one representative.");
@@ -31,10 +32,10 @@ public class ShippingAgentOrganization : IDTOAble<ShippingAgentOrganizationDto>
     {
         return new ShippingAgentOrganizationDto
         {
-            Name = this.LegalName,
-            AltNames = this.AltNames.ToArray(),
+            Name = this.LegalName.Value,
+            AltNames = this.AltNames.Select(n => n.Value).ToArray(),
             Address = this.MainAddress.ToDTO(),
-            TaxNumber = this.TaxId,
+            TaxNumber = this.TaxId.Value,
             Representatives = this.Representatives.Select(r => r.ToDTO()).ToList()
         };
     }

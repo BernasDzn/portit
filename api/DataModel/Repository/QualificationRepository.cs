@@ -9,35 +9,22 @@ namespace DataModel.Repository;
 
 public class QualificationRepository : GenericRepository<Qualification>, IQualificationRepository
 {
+	private new readonly ApiContext _context = null!;
+
 	public QualificationRepository(ApiContext context) : base(context)
 	{
-
+		_context = context;
 	}
 
 	public async Task<IEnumerable<Qualification>> GetQualificationsAsync()
 	{
 		try
 		{
-			IEnumerable<Qualification> qualifications = await _context.Set<Qualification>().ToListAsync();
+			IEnumerable<Qualification> qualifications = await _context.Qualifications.ToListAsync();
 			return qualifications;
 		}
 		catch
 		{
-
-			throw;
-		}
-	}
-
-	public async Task<Qualification> GetQualificationByIdAsync(Guid id)
-	{
-		try
-		{
-			Qualification? qualification = await _context.Set<Qualification>().FirstOrDefaultAsync(q => q.Id == id);
-			return qualification!;
-		}
-		catch
-		{
-
 			throw;
 		}
 	}
@@ -46,12 +33,12 @@ public class QualificationRepository : GenericRepository<Qualification>, IQualif
 	{
 		try
 		{
-			Qualification? qualification = await _context.Set<Qualification>().FirstOrDefaultAsync(q => q.QualificationName == name);
+			Qualification? qualification = await _context.Qualifications
+				.FirstOrDefaultAsync(q => q.QualificationName.Value.Equals(name));
 			return qualification!;
 		}
 		catch
 		{
-
 			throw;
 		}
 	}
@@ -60,40 +47,36 @@ public class QualificationRepository : GenericRepository<Qualification>, IQualif
 	{
 		try
 		{
-			_context.Set<Qualification>().Add(qualification);
+			_context.Qualifications.Add(qualification);
 			await _context.SaveChangesAsync();
 			return qualification;
 		}
 		catch
 		{
-
 			throw;
 		}
 	}
 
-	public async Task<bool> Update(Qualification qualification, List<string> errorMessage)
+	public async Task<bool> Update(string name, QualificationDto qualificationDto, List<string> errorMessage)
 	{
 		try
 		{
-			_context.Set<Qualification>().Update(qualification);
+			Qualification? qualification =await GetQualificationByNameAsync(name);
+			if (qualification == null)
+			{
+				errorMessage.Add("Qualification not found.");
+				return false;
+			}
+
+			qualification.UpdateQualificationName(qualificationDto.QualificationName);
+
+			_context.Qualifications.Update(qualification);
 			await _context.SaveChangesAsync();
 			return true;
 		}
-		catch (DbUpdateConcurrencyException ex)
+		catch
 		{
-			errorMessage.Add("Concurrency error occurred while updating the qualification: " + ex.Message);
-			return false;
+			throw;
 		}
-		catch (Exception ex)
-		{
-			errorMessage.Add("An error occurred while updating the qualification: " + ex.Message);
-			return false;
-		}
-	}
-	
-	public async Task<bool> QualificationExists(string name)
-	{
-		return await _context.Set<Qualification>().AnyAsync(q => q.QualificationName.Equals(name));
-	}
-	
+	}	
 }

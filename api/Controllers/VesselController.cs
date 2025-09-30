@@ -31,7 +31,7 @@ public class VesselController : ControllerBase
     public ActionResult<IEnumerable<VesselDto>> GetByName([FromQuery] string name)
     {
         var vessels = _context.Vessels
-            .Where(v => v.Name.Contains(name, StringComparison.OrdinalIgnoreCase))
+            .Where(v => v.Name.Value.Contains(name, StringComparison.OrdinalIgnoreCase))
             .ToList();
 
         if (vessels.Count == 0)
@@ -47,7 +47,7 @@ public class VesselController : ControllerBase
     public ActionResult<VesselDto> GetByIMO([FromQuery] string imo)
     {
         var vessel = _context.Vessels
-            .FirstOrDefault(v => v.ImoNumber.Equals(imo, StringComparison.OrdinalIgnoreCase));
+            .FirstOrDefault(v => v.ImoIdentifier.Value.Equals(imo, StringComparison.OrdinalIgnoreCase));
 
         if (vessel == null)
         {
@@ -61,7 +61,7 @@ public class VesselController : ControllerBase
     public ActionResult<IEnumerable<VesselDto>> GetByOwner([FromQuery] string ownerLegalName)
     {
         var vessels = _context.Vessels
-            .Where(v => v.Owner.LegalName.Contains(ownerLegalName, StringComparison.OrdinalIgnoreCase))
+            .Where(v => v.Owner.LegalName.Value.Contains(ownerLegalName, StringComparison.OrdinalIgnoreCase))
             .ToList();
 
         if (vessels.Count == 0)
@@ -84,7 +84,7 @@ public class VesselController : ControllerBase
     [HttpDelete("{ImoNumber}", Name = "DeleteVessel")]
     public IActionResult Delete(string ImoNumber)
     {
-        var vessel = _context.Vessels.FirstOrDefault(v => v.ImoNumber == ImoNumber);
+        var vessel = _context.Vessels.FirstOrDefault(v => v.ImoIdentifier.Value == ImoNumber);
         if (vessel == null)
         {
             return NotFound();
@@ -103,7 +103,7 @@ public class VesselController : ControllerBase
             return BadRequest();
         }
 
-        var vessel = _context.Vessels.FirstOrDefault(v => v.ImoNumber == ImoNumber);
+        var vessel = _context.Vessels.FirstOrDefault(v => v.ImoIdentifier.Value == ImoNumber);
         if (vessel == null)
         {
             return NotFound();

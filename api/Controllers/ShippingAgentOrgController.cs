@@ -25,12 +25,4 @@ public class ShippingAgentOrganizationController : ControllerBase
         var saoDtos = saos.Select(sao => sao.ToDTO()).ToList();
         return Ok(saoDtos);
     }
-
-    [HttpGet("{id}", Name = "GetShippingAgentOrganizationById")]
-    public ActionResult<ShippingAgentOrganization> GetById(Guid id)
-    {
-        var sao = _context.ShippingAgentOrganizations
-            .FirstOrDefault(s => s.Id == id);
-        return Ok(sao?.ToDTO());
-    }
 }

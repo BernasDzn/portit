@@ -1,0 +1,71 @@
+@startuml
+skinparam handwritten true
+skinparam monochrome true
+skinparam packageStyle rect
+skinparam defaultFontName FG Virgil
+skinparam shadowing false
+
+actor User as Actor
+participant "U I" as UI <<presentation>>
+participant API as API <<application>>
+participant XptoController as Controller <<controller>>
+participant XptoService as Service <<service>>
+participant XptoRepository as Repository <<repository>>
+participant XptoContext as Context <<context>>
+participant XptoDto as Dto <<dto>>
+participant XptoModel as Model <<entity>>
+database Database
+
+title Delete Xpto
+
+Actor --> UI: Delete Xpto
+activate UI
+
+    UI --> API: HTTP DELETE /api/xpto/{id}
+
+    activate API
+
+        API --> Controller: route
+        activate Controller
+
+            Controller --> Service: Request deletion
+            activate Service
+
+                Service --> Repository: GetXpto(id)
+                activate Repository
+                
+                    Repository --> Context: Get(id)
+
+                    activate Context
+                        Context --> Database: SELECT
+                        Context --> Repository: result
+                    deactivate Context
+
+                    Repository --> Service: xptoInstance
+                deactivate Repository
+
+                Service --> Repository: Delete(xptoInstance)
+                activate Repository
+                
+                    Repository --> Context: Delete(xptoInstance)
+
+                    activate Context
+                        Context --> Database: DELETE
+                        Context --> Repository: status
+                    deactivate Context
+
+                    Repository --> Service: status
+                deactivate Repository
+
+                Service --> Controller: status
+            deactivate Service
+
+            Controller --> API: Ok(status)
+        deactivate Controller
+
+        API --> UI: HTTP Reponse
+    deactivate API
+
+deactivate UI
+            
+@enduml

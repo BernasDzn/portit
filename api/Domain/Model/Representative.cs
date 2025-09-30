@@ -1,20 +1,22 @@
 using System.Text.Json.Serialization;
 using Domain.Model.Generic;
+using Microsoft.EntityFrameworkCore;
+using Namotion.Reflection;
 
 namespace Api.Models;
 
 public class Representative : IDTOAble<RepresentativeDto>
 {
     public Guid Id { get; private set; }
-    public string Name { get; private set; }
+    public Designation Name { get; private set; }
     public uint CitizenshipId { get; private set; }
-    public string EmailAddress { get; private set; }
-    public string Phone { get; private set; }
+    public Email EmailAddress { get; private set; }
+    public PhoneNumber Phone { get; private set; }
 
     // EF Core
     protected Representative() { }
 
-    public Representative(Guid id, uint citizenshipId, string name, string email, string phone)
+    public Representative(Guid id, uint citizenshipId, Designation name, Email email, PhoneNumber phone)
     {
         Id = id;
         CitizenshipId = citizenshipId;
@@ -27,10 +29,10 @@ public class Representative : IDTOAble<RepresentativeDto>
     {
         return new RepresentativeDto
         {
-            Name = this.Name,
+            Name = this.Name.Value,
             CitizenshipId = this.CitizenshipId,
-            EmailAddress = this.EmailAddress,
-            Phone = this.Phone
+            EmailAddress = this.EmailAddress.Value,
+            Phone = this.Phone.Value
         };
     }
 }

@@ -1,0 +1,77 @@
+@startuml
+skinparam handwritten true
+skinparam monochrome true
+skinparam packageStyle rect
+skinparam defaultFontName FG Virgil
+skinparam shadowing false
+
+actor User as Actor
+participant "U I" as UI <<presentation>>
+participant API as API <<application>>
+participant XptoController as Controller <<controller>>
+participant XptoService as Service <<service>>
+participant XptoRepository as Repository <<repository>>
+participant XptoContext as Context <<context>>
+participant XptoDto as Dto <<dto>>
+participant XptoModel as Model <<entity>>
+database Database
+
+title Update Xpto
+
+Actor --> UI: Update Xpto
+activate UI
+
+    UI --> API: HTTP PUT /api/xpto/{id}
+
+    activate API
+
+        API --> Controller: route
+        activate Controller
+
+            Controller --> Service: Request update
+            activate Service
+
+                Service --> Repository: GetXpto(id)
+                activate Repository
+                
+                    Repository --> Context: Get(id)
+
+                    activate Context
+                        Context --> Database: SELECT
+                        Context --> Repository: result
+                    deactivate Context
+
+                    Repository --> Service: xptoInstance
+                deactivate Repository
+
+                Service --> Repository: Update(data)
+                activate Repository
+                
+                    Repository --> Model: update(data)
+                    Repository --> Context: Save(XptoInstance)
+
+                    activate Context
+                        Context --> Database: UPDATE
+                        Context --> Repository: status
+                    deactivate Context
+
+                    Repository --> Service: xptoInstance
+                deactivate Repository
+
+                Service --> Model: toDto()
+                activate Model
+                    Model --> Service: xptoInstanceDto
+                deactivate Model
+
+                Service --> Controller: xptoInstanceDto
+            deactivate Service
+
+            Controller --> API: Ok(xptoResponseDto)
+        deactivate Controller
+
+        API --> UI: HTTP Reponse
+    deactivate API
+
+deactivate UI
+            
+@enduml

@@ -31,7 +31,7 @@ public class DockController : ControllerBase
 	public ActionResult<IEnumerable<Dock>> GetByName([FromQuery] string designation)
 	{
 		var docks = _context.Docks
-			.Where(dock => dock.Designation.Contains(designation, StringComparison.OrdinalIgnoreCase))
+			.Where(dock => dock.Name.Value.Contains(designation, StringComparison.OrdinalIgnoreCase))
 			.ToList();
 
 		var docksDtos = docks.Select(dock => dock.ToDTO()).ToList();
@@ -43,7 +43,7 @@ public class DockController : ControllerBase
 	public ActionResult<IEnumerable<Dock>> GetByVesselType([FromQuery] string vesselType)
 	{
 		var docks = _context.Docks
-			.Where(dock => dock.SupportedVesselTypes.Any(vt => vt.Name.Contains(vesselType, StringComparison.OrdinalIgnoreCase)))
+			.Where(dock => dock.SupportedVesselTypes.Any(vt => vt.Name.Value.Contains(vesselType, StringComparison.OrdinalIgnoreCase)))
 			.ToList();
 
 		var docksDtos = docks.Select(dock => dock.ToDTO()).ToList();
@@ -55,7 +55,7 @@ public class DockController : ControllerBase
 	public ActionResult<IEnumerable<Dock>> GetByLocation([FromQuery] string location)
 	{
 		var docks = _context.Docks
-			.Where(dock => dock.Location.Contains(location, StringComparison.OrdinalIgnoreCase))
+			.Where(dock => dock.Location.Value.Contains(location, StringComparison.OrdinalIgnoreCase))
 			.ToList();
 
 		var docksDtos = docks.Select(dock => dock.ToDTO()).ToList();

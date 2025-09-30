@@ -2,6 +2,7 @@ namespace Application.Services;
 
 using Api.Domain.Model;
 using Domain.IRepository;
+using Domain.Model.Generic;
 using Microsoft.EntityFrameworkCore;
 
 public class QualificationService
@@ -19,7 +20,7 @@ public class QualificationService
 		return qualifications.Select(q => q.ToDTO()).ToList();
 	}
 
-	public async Task<QualificationDto> GetQualificationByName(string name, List<string> errorMessage)
+	public async Task<QualificationDto?> GetQualificationByName(string name, List<string> errorMessage)
 	{
 		Qualification qualification = await _qualificationRepository.GetQualificationByNameAsync(name);
 		if (qualification == null)
@@ -30,36 +31,31 @@ public class QualificationService
 		return qualification.ToDTO();
 	}
 
-	public async Task<QualificationDto> Add(QualificationDto qualificationDto, List<string> errorMessage)
+	public async Task<QualificationDto?> Add(QualificationDto qualificationDto, List<string> errorMessage)
 	{
-		bool exists = await _qualificationRepository.QualificationExists(qualificationDto.QualificationName);
+		bool exists = await _qualificationRepository.GetQualificationByNameAsync(qualificationDto.QualificationName) != null;
+
 		if (exists)
 		{
-			errorMessage.Add("Qualification with the same ID already exists.");
+			errorMessage.Add("Qualification with the same name already exists.");
 			return null;
 		}
 
-		Qualification qualification = QualificationDto.ToDomain(qualificationDto);
+		Qualification qualification = new Qualification(new Designation { Value = qualificationDto.QualificationName });
 		Qualification savedQualification = await _qualificationRepository.Add(qualification);
 		QualificationDto savedQualificationDto = savedQualification.ToDTO();
 
 		return savedQualificationDto;
 	}
 
-	public async Task<bool> Update(Guid id, QualificationDto qualificationDto, List<string> errorMessage)
+	public async Task<QualificationDto?> Update(string name, QualificationDto qualificationDto, List<string> errorMessage)
 	{
-		Qualification qualification = await _qualificationRepository.GetQualificationByNameAsync(qualificationDto.QualificationName);
-
-		if (qualification == null)
+		bool updateResult = await _qualificationRepository.Update(name, qualificationDto, errorMessage);
+		if (!updateResult)
 		{
-			errorMessage.Add("Qualification not found.");
-			return false;
+			return null;
 		}
 
-		qualification.UpdateQualificationName(qualificationDto.QualificationName);
-		await _qualificationRepository.Update(qualification, errorMessage);
-		return true;
-		
+		return await GetQualificationByName(qualificationDto.QualificationName, errorMessage);
 	}
-
 }

@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Api.Domain.Model;
 using DAL;
+using Domain.Model.Generic;
 
 namespace Api.Controllers;
 
@@ -31,7 +32,7 @@ public class VesselTypeController : ControllerBase
 	public ActionResult<IEnumerable<VesselType>> GetByName([FromQuery] string name)
 	{
 		var vtypes = _context.VesselTypes
-			.Where(vtype => vtype.Name.Contains(name, StringComparison.OrdinalIgnoreCase))
+			.Where(vtype => vtype.Name.Value.Contains(name, StringComparison.OrdinalIgnoreCase))
 			.ToList();
 
 		var vtypesDtos = vtypes.Select(vtype => vtype.ToDTO()).ToList();
@@ -52,7 +53,7 @@ public class VesselTypeController : ControllerBase
 	[HttpPost(Name = "CreateVesselType")]
 	public ActionResult<VesselTypeDto> Create(VesselTypeDto vtypeDto)
 	{
-		var vtype = new VesselType(Guid.NewGuid(), vtypeDto.Name, vtypeDto.Description, vtypeDto.MaxNumberOfRows, vtypeDto.MaxNumberOfBays, vtypeDto.MaxNumberOfTiers);
+		var vtype = new VesselType(Guid.NewGuid(), new Designation {Value = vtypeDto.Name}, vtypeDto.Description, vtypeDto.MaxNumberOfRows, vtypeDto.MaxNumberOfBays, vtypeDto.MaxNumberOfTiers);
 		_context.VesselTypes.Add(vtype);
 		_context.SaveChanges();
 		return CreatedAtAction(nameof(GetAll), new { id = vtype.Id }, vtype.ToDTO());
@@ -80,7 +81,7 @@ public class VesselTypeController : ControllerBase
 			return BadRequest();
 		}
 
-		var vtype = _context.VesselTypes.FirstOrDefault(v => v.Name == name);
+		var vtype = _context.VesselTypes.FirstOrDefault(v => v.Name.Value == name);
 		if (vtype == null)
 		{
 			return NotFound();

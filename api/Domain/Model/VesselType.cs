@@ -1,21 +1,24 @@
+using Domain.Model.Generic;
+using Microsoft.EntityFrameworkCore;
+
 namespace Api.Domain.Model;
 
 public class VesselType : IDTOAble<VesselTypeDto>
 {
     public Guid Id { get; private set; }
 
-    public string Name { get; private set; }
+    public Designation Name { get; private set; }
     public string Description { get; private set; }
-    public int MaxNumberOfRows { get; private set; }
-    public int MaxNumberOfBays { get; private set; }
-    public int MaxNumberOfTiers { get; private set; }
+    public uint MaxNumberOfRows { get; private set; }
+    public uint MaxNumberOfBays { get; private set; }
+    public uint MaxNumberOfTiers { get; private set; }
 
     //EF Core
     protected VesselType() { }
-    public VesselType(Guid id, string name, string description, int maxNumberOfRows, int maxNumberOfBays, int maxNumberOfTiers)
+    public VesselType(Guid id, Designation name, string description, uint maxNumberOfRows, uint maxNumberOfBays, uint maxNumberOfTiers)
     {
-        if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(description) || maxNumberOfRows < 0 || maxNumberOfBays < 0 || maxNumberOfTiers < 0)
-            throw new ArgumentException("Invalid arguments!");
+        if (name == null) throw new ArgumentNullException(nameof(name), "Name cannot be null");
+        if (string.IsNullOrEmpty(description)) throw new ArgumentException("Description cannot be null or empty", nameof(description));
 
         Id = id;
         Name = name;
@@ -29,7 +32,7 @@ public class VesselType : IDTOAble<VesselTypeDto>
     {
         return new VesselTypeDto
         {
-            Name = this.Name,
+            Name = this.Name.Value,
             Description = this.Description,
             MaxNumberOfRows = this.MaxNumberOfRows,
             MaxNumberOfBays = this.MaxNumberOfBays,
@@ -45,7 +48,7 @@ public class VesselType : IDTOAble<VesselTypeDto>
         if (vtype.MaxNumberOfBays < 0) throw new ArgumentException("MaxNumberOfBays cannot be negative", nameof(vtype.MaxNumberOfBays));
         if (vtype.MaxNumberOfTiers < 0) throw new ArgumentException("MaxNumberOfTiers cannot be negative", nameof(vtype.MaxNumberOfTiers));
 
-        Name = vtype.Name;
+        Name = new Designation { Value = vtype.Name };
         Description = vtype.Description;
         MaxNumberOfRows = vtype.MaxNumberOfRows;
         MaxNumberOfBays = vtype.MaxNumberOfBays;

@@ -38,9 +38,9 @@ public static class Bootstrap
 
         // Add Bootstrap data
         context.Qualifications.AddRange(
-            new Qualification("STS Crane Operator"),
-            new Qualification("Yard Crane Operator"),
-            new Qualification("Truck Driver")
+            new Qualification(new Designation { Value = "STS Crane Operator" }),
+            new Qualification(new Designation { Value = "Yard Crane Operator" }),
+            new Qualification(new Designation { Value = "Truck Driver" })
         );
     }
 
@@ -50,23 +50,23 @@ public static class Bootstrap
         if (context.ShippingAgentOrganizations.Any())
             return;
 
-        Representative r = new Representative(Guid.NewGuid(), 908029952, "Patricio Sharply", "psharply0@yolasite.com", "694-730-2134");
-        Representative r1 = new Representative(Guid.NewGuid(), 319982093, "Kayley Begbie", "kbegbie1@spotify.com", "638-228-3741");
-        Representative r2 = new Representative(Guid.NewGuid(), 995128061, "Vivian Llewellin", "vllewellin2@china.com", "201-944-8698");
-        Representative r3 = new Representative(Guid.NewGuid(), 889716996, "Salli Burren", "sburren3@ustream.tv", "215-344-9398");
-        Representative r4 = new Representative(Guid.NewGuid(), 733060890, "Jasmina Willshear", "jwillshear4@netscape.com", "841-607-7007");
-        Representative r5 = new Representative(Guid.NewGuid(), 608839632, "Dore Whytock", "dwhytock5@epa.gov", "522-691-5311");
-        Representative r6 = new Representative(Guid.NewGuid(), 398096220, "Rand Broadbere", "rbroadbere6@springer.com", "161-487-5657");
-        Representative r7 = new Representative(Guid.NewGuid(), 446072968, "Bernardo Ansty", "bansty7@geocities.com", "350-788-7407");
+        Representative r = new Representative(Guid.NewGuid(), 908029952,  new Designation{Value="Patricio Sharply"}, new Email {Value="psharply0@yolasite.com"}, new PhoneNumber {Value="6947302134"});
+        Representative r1 = new Representative(Guid.NewGuid(), 319982093, new Designation{Value="Kayley Begbie"}, new Email {Value="kbegbie1@spotify.com"}, new PhoneNumber {Value="6382283741"});
+        Representative r2 = new Representative(Guid.NewGuid(), 995128061, new Designation{Value="Vivian Llewellin"}, new Email {Value="vllewellin2@china.com"}, new PhoneNumber {Value="2019448698"});
+        Representative r3 = new Representative(Guid.NewGuid(), 889716996, new Designation{Value="Salli Burren"}, new Email {Value="sburren3@ustream.tv"}, new PhoneNumber {Value="2153449398"});
+        Representative r4 = new Representative(Guid.NewGuid(), 733060890, new Designation{Value="Jasmina Willshear"}, new Email {Value="jwillshear4@netscape.com"}, new PhoneNumber {Value="8416077007"});
+        Representative r5 = new Representative(Guid.NewGuid(), 608839632, new Designation{Value="Dore Whytock"}, new Email {Value="dwhytock5@epa.gov"}, new PhoneNumber {Value="5226915311"});
+        Representative r6 = new Representative(Guid.NewGuid(), 398096220, new Designation{Value="Rand Broadbere"}, new Email {Value="rbroadbere6@springer.com"}, new PhoneNumber {Value="1614875657"});
+        Representative r7 = new Representative(Guid.NewGuid(), 446072968, new Designation{Value="Bernardo Ansty"}, new Email {Value="bansty7@geocities.com"}, new PhoneNumber {Value="3507887407"});
 
         // Add Bootstrap data
         context.ShippingAgentOrganizations.Add(
             new ShippingAgentOrganization(
                 Guid.NewGuid(),
-                "Global Shipping Co.",
-                new List<string> { "GSC", "Global Ship" },
+                new Designation{Value= "Global Shipping Co." },
+                new List<Designation> { new Designation{Value= "GSC"}, new Designation{Value="Global Ship" } },
                 new Address("123 Ocean Drive", "Maritime City", "USA", "90210"),
-                "TAX123456",
+                new TaxNumber {Value="TAX123456"},
                 new List<Representative> { r, r1 }
             )
         );
@@ -74,10 +74,10 @@ public static class Bootstrap
         context.ShippingAgentOrganizations.Add(
             new ShippingAgentOrganization(
                 Guid.NewGuid(),
-                "Oceanic Freight Ltd.",
-                new List<string> { "OFL", "Oceanic Freight" },
+                new Designation{Value= "Oceanic Freight Ltd." },
+                new List<Designation> { new Designation{Value= "OFL"}, new Designation{Value="Oceanic Freight" } },
                 new Address("456 Harbor Road", "Seaside Town", "UK", "AB12 3CD"),
-                "TAX654321",
+                new TaxNumber {Value="TAX654321"},
                 new List<Representative> { r2, r3 }
             )
         );
@@ -85,10 +85,10 @@ public static class Bootstrap
         context.ShippingAgentOrganizations.Add(
             new ShippingAgentOrganization(
                 Guid.NewGuid(),
-                "TransWorld Logistics",
-                new List<string> { "TWLogistics", "TWorld" },
+                new Designation{Value= "TransWorld Logistics" },
+                new List<Designation> {new Designation{Value=  "TWLogistics"}, new Designation{Value="TWorld" } },
                 new Address("789 Dockside Ave", "Port City", "Canada", "A1B 2C3"),
-                "TAX789012",
+                new TaxNumber {Value="TAX789012"},
                 new List<Representative> { r4, r5 }
             )
         );
@@ -96,10 +96,10 @@ public static class Bootstrap
         context.ShippingAgentOrganizations.Add(
             new ShippingAgentOrganization(
                 Guid.NewGuid(),
-                "Maritime Movers Inc.",
-                new List<string> { "MMI", "Maritime Movers" },
+                new Designation{Value= "Maritime Movers Inc." },
+                new List<Designation> { new Designation{Value= "MMI"}, new Designation{Value="Maritime Movers" } },
                 new Address("321 Bay Street", "Coastal Village", "Australia", "2000"),
-                "TAX210987",
+                new TaxNumber {Value="TAX210987"},
                 new List<Representative> { r6, r7 }
             )
         );
@@ -114,14 +114,14 @@ public static class Bootstrap
 
         // Add Bootstrap data
         context.Vessels.AddRange(
-            new Vessel(Guid.NewGuid(), "Ever Given", "IMO 7585229",
-            new VesselType(Guid.NewGuid(), "Panamax", "Max size for Panama Canal", 20, 10, 5),
+            new Vessel(Guid.NewGuid(), new Designation { Value = "Ever Given" }, new ImoNumber { Value= "IMO 7585229" },
+            new VesselType(Guid.NewGuid(), new Designation { Value = "Panamax" }, "Max size for Panama Canal", 20, 10, 5),
             context.ShippingAgentOrganizations.First()),
-            new Vessel(Guid.NewGuid(), "Maersk Triple E", "IMO 3815389",
-            new VesselType(Guid.NewGuid(), "Post-Panamax", "Larger than Panamax", 30, 15, 7),
+            new Vessel(Guid.NewGuid(), new Designation { Value = "Maersk Triple E" }, new ImoNumber { Value = "IMO 3815389" },
+            new VesselType(Guid.NewGuid(), new Designation { Value = "Post-Panamax" }, "Larger than Panamax", 30, 15, 7),
             context.ShippingAgentOrganizations.Skip(1).First()),
-            new Vessel(Guid.NewGuid(), "CMA CGM Marco Polo", "IMO 6699530",
-            new VesselType(Guid.NewGuid(), "Ultra Large Container Vessel (ULCV)", "Largest container ships", 40, 20, 10),
+            new Vessel(Guid.NewGuid(), new Designation { Value = "CMA CGM Marco Polo" }, new ImoNumber { Value = "IMO 6699530" },
+            new VesselType(Guid.NewGuid(), new Designation { Value = "Ultra Large Container Vessel (ULCV)" }, "Largest container ships", 40, 20, 10),
             context.ShippingAgentOrganizations.Skip(2).First())
         );
     }
@@ -132,17 +132,17 @@ public static class Bootstrap
         if (context.Docks.Any())
             return;
 
-        VesselType vt1 = new VesselType(Guid.NewGuid(), "Panamax", "Max size for Panama Canal", 20, 10, 5);
-        VesselType vt2 = new VesselType(Guid.NewGuid(), "Post-Panamax", "Larger than Panamax", 30, 15, 7);
-        VesselType vt3 = new VesselType(Guid.NewGuid(), "Ultra Large Container Vessel (ULCV)", "Largest container ships", 40, 20, 10);
-        VesselType vt4 = new VesselType(Guid.NewGuid(), "Handymax", "Medium-sized bulk carriers", 15, 8, 4);
-        VesselType vt5 = new VesselType(Guid.NewGuid(), "Capesize", "Too large for Panama and Suez Canals", 50, 25, 12);
+        VesselType vt1 = new VesselType(Guid.NewGuid(), new Designation{Value="Panamax"}, "Max size for Panama Canal", 20, 10, 5);
+        VesselType vt2 = new VesselType(Guid.NewGuid(), new Designation { Value = "Post-Panamax" }, "Larger than Panamax", 30, 15, 7);
+        VesselType vt3 = new VesselType(Guid.NewGuid(), new Designation { Value = "Ultra Large Container Vessel (ULCV)" } , "Largest container ships", 40, 20, 10);
+        VesselType vt4 = new VesselType(Guid.NewGuid(), new Designation{Value="Handymax"}, "Medium-sized bulk carriers", 15, 8, 4);
+        VesselType vt5 = new VesselType(Guid.NewGuid(), new Designation{Value="Capesize"}, "Too large for Panama and Suez Canals", 50, 25, 12);
 
         // Add Bootstrap data
         context.Docks.AddRange(
-            new Dock(Guid.NewGuid(), "Dock A", "North Harbor", 500, 30, 15, new List<VesselType> { vt4, vt1 }),
-            new Dock(Guid.NewGuid(), "Dock B", "East Harbor", 600, 35, 18, new List<VesselType> { vt5 }),
-            new Dock(Guid.NewGuid(), "Dock C", "South Harbor", 700, 40, 20, new List<VesselType> { vt2, vt3 })
+            new Dock(Guid.NewGuid(), new Designation{Value="Dock A"}, new Designation{Value="North Harbor"}, 500, 30, 15, new List<VesselType> { vt4, vt1 }),
+            new Dock(Guid.NewGuid(), new Designation{Value="Dock B"}, new Designation{Value="East Harbor"}, 600, 35, 18, new List<VesselType> { vt5 }),
+            new Dock(Guid.NewGuid(), new Designation{Value="Dock C"}, new Designation{Value="South Harbor"}, 700, 40, 20, new List<VesselType> { vt2, vt3 })
         );
     }
 }

@@ -12,7 +12,6 @@ public class QualificationController : ControllerBase
 
 	private readonly ILogger<QualificationController> _logger;
 	private readonly QualificationService _qualificationService;
-	List<string> errors = new List<string>();
 
 	public QualificationController(QualificationService qualificationService, ILogger<QualificationController> logger)
 	{
@@ -21,34 +20,44 @@ public class QualificationController : ControllerBase
 	}
 
 	[HttpGet(Name = "GetQualifications")]
-	public async Task<ActionResult<IEnumerable<QualificationDto>>> GetQualifications()
+	public async Task<ActionResult<IEnumerable<QualificationDto>>> GetAll()
 	{
 		IEnumerable<QualificationDto> qualificationsDto = await _qualificationService.GetQualifications();
 		return Ok(qualificationsDto);
 	}
 
+	[HttpGet("{name}", Name = "GetQualificationByName")]
+	public async Task<ActionResult<QualificationDto>> Get(string name)
+	{
+		List<string> errors = new List<string>();
+
+		var qualificationDto = await _qualificationService.GetQualificationByName(name, errors);
+		if (qualificationDto == null)
+			return NotFound(errors);
+		return Ok(qualificationDto);
+	}
+
 	[HttpPost(Name = "PostQualification")]
-	public async Task<ActionResult<QualificationDto>> PostQualification(QualificationDto qualDto)
+	public async Task<ActionResult<QualificationDto>> Create(QualificationDto qualDto)
 	{
-		QualificationDto qualificationDto = await _qualificationService.Add(qualDto, errors);
+		List<string> errors = new List<string>();
 
-		if (qualificationDto != null)
-		{
-			return CreatedAtAction(nameof(GetQualifications), new { id = qualificationDto }, qualificationDto);
-		}
-		return BadRequest(errors);
-	}
-
-	[HttpPut("{id}", Name = "UpdateQualification")]
-	public async Task<IActionResult> PutQualification(Guid id, QualificationDto qualDto)
-	{
-		bool wasUpdated = await _qualificationService.Update(id, qualDto, errors);
-		if (!wasUpdated)
-		{
+		var createdQual = await _qualificationService.Add(qualDto, errors);
+		if (createdQual == null)
 			return BadRequest(errors);
-		}
 
-		return Ok();
+		return CreatedAtAction(nameof(Get), new { name = createdQual?.QualificationName }, createdQual);
 	}
-	
+
+	[HttpPut("{name}", Name = "UpdateQualification")]
+	public async Task<ActionResult<QualificationDto>> Update(string name, QualificationDto qualDto)
+	{
+		List<string> errors = new List<string>();
+
+		var updatedQual = await _qualificationService.Update(name, qualDto, errors);
+		if (updatedQual == null)
+			return BadRequest(errors);
+
+		return Ok(updatedQual);
+	}
 }

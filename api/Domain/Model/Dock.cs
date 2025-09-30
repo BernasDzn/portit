@@ -1,26 +1,24 @@
+using Domain.Model.Generic;
+
 namespace Api.Domain.Model;
 
 public class Dock : IDTOAble<DockDto>
 {
     public Guid Id { get; private set; }
-    public string Designation { get; private set; }
-    public string Location { get; private set; }
-    public int Length { get; private set; }
-    public int Depth { get; private set; }
-    public int MaxDraft { get; private set; }
+    public Designation Name { get; private set; }
+    public Designation Location { get; private set; }
+    public uint Length { get; private set; }
+    public uint Depth { get; private set; }
+    public uint MaxDraft { get; private set; }
     public virtual ICollection<VesselType> SupportedVesselTypes { get; private set; }
 
 
     //EF Core
     protected Dock() { }
-    public Dock(Guid id, string designation, string location, int length, int depth, int maxDraft, List<VesselType> supportedVesselTypes)
+    public Dock(Guid id, Designation designation, Designation location, uint length, uint depth, uint maxDraft, List<VesselType> supportedVesselTypes)
     {
-        if (string.IsNullOrEmpty(designation) || string.IsNullOrEmpty(location) || length < 0 || depth < 0 || maxDraft < 0
-        || supportedVesselTypes == null || supportedVesselTypes.Count == 0)
-            throw new ArgumentException("Invalid arguments!");
-
         Id = id;
-        Designation = designation;
+        Name = designation;
         Location = location;
         Length = length;
         Depth = depth;
@@ -28,44 +26,28 @@ public class Dock : IDTOAble<DockDto>
         SupportedVesselTypes = supportedVesselTypes;
     }
 
-    public bool UpdateDesignation(string new_designation)
-    {
-        if (string.IsNullOrWhiteSpace(new_designation))
-            return false;
-
-        Designation = new_designation;
+    public bool UpdateDesignation(Designation newDesignation) {
+        Name = newDesignation ?? throw new ArgumentNullException(nameof(newDesignation));
         return true;
     }
-    public bool UpdateLocation(string new_location)
-    {
-        if (string.IsNullOrWhiteSpace(new_location))
-            return false;
-
-        Location = new_location;
+    public bool UpdateLocation(Designation newLocation) {
+        
+        Location = newLocation ?? throw new ArgumentNullException(nameof(newLocation));
         return true;
     }
-    public bool UpdateLength(int new_length)
+    public bool UpdateLength(uint newLength)
     {
-        if (new_length < 0)
-            return false;
-
-        Length = new_length;
+        Length = newLength;
         return true;
     }
-    public bool UpdateDepth(int new_depth)
+    public bool UpdateDepth(uint newDepth)
     {
-        if (new_depth < 0)
-            return false;
-
-        Depth = new_depth;
+        Depth = newDepth;
         return true;
     }
-    public bool UpdateMaxDraft(int new_maxDraft)
+    public bool UpdateMaxDraft(uint newMaxDraft)
     {
-        if (new_maxDraft < 0)
-            return false;
-
-        MaxDraft = new_maxDraft;
+        MaxDraft = newMaxDraft;
         return true;
     }
 
@@ -83,8 +65,8 @@ public class Dock : IDTOAble<DockDto>
         return new DockDto
         {
             Id = this.Id,
-            Designation = this.Designation,
-            Location = this.Location,
+            Designation = this.Name.Value,
+            Location = this.Location.Value,
             Length = this.Length,
             Depth = this.Depth,
             MaxDraft = this.MaxDraft,
@@ -96,14 +78,14 @@ public class Dock : IDTOAble<DockDto>
     {
         return new Dock(
             dockDto.Id,
-            dockDto.Designation,
-            dockDto.Location,
+            new Designation { Value = dockDto.Designation },
+            new Designation { Value = dockDto.Location },
             dockDto.Length,
             dockDto.Depth,
             dockDto.MaxDraft,
             dockDto.SupportedVesselTypes.Select(vtDto => new VesselType(
                 Guid.NewGuid(),
-                vtDto.Name,
+                new Designation { Value = vtDto.Name },
                 vtDto.Description,
                 vtDto.MaxNumberOfRows,
                 vtDto.MaxNumberOfBays,
