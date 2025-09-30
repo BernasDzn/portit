@@ -29,7 +29,6 @@ public class VesselType : IDTOAble<VesselTypeDto>
     {
         return new VesselTypeDto
         {
-            Id = this.Id,
             Name = this.Name,
             Description = this.Description,
             MaxNumberOfRows = this.MaxNumberOfRows,
@@ -38,8 +37,18 @@ public class VesselType : IDTOAble<VesselTypeDto>
         };
     }
 
-    internal static VesselType FromDTO(VesselTypeDto vtypeDto)
+    public void Update(VesselTypeDto vtype)
     {
-        return new VesselType(vtypeDto.Id, vtypeDto.Name, vtypeDto.Description, vtypeDto.MaxNumberOfRows, vtypeDto.MaxNumberOfBays, vtypeDto.MaxNumberOfTiers);
+        if (string.IsNullOrEmpty(vtype.Name)) throw new ArgumentException("Name cannot be null or empty", nameof(vtype.Name));
+        if (string.IsNullOrEmpty(vtype.Description)) throw new ArgumentException("Description cannot be null or empty", nameof(vtype.Description));
+        if (vtype.MaxNumberOfRows < 0) throw new ArgumentException("MaxNumberOfRows cannot be negative", nameof(vtype.MaxNumberOfRows));
+        if (vtype.MaxNumberOfBays < 0) throw new ArgumentException("MaxNumberOfBays cannot be negative", nameof(vtype.MaxNumberOfBays));
+        if (vtype.MaxNumberOfTiers < 0) throw new ArgumentException("MaxNumberOfTiers cannot be negative", nameof(vtype.MaxNumberOfTiers));
+
+        Name = vtype.Name;
+        Description = vtype.Description;
+        MaxNumberOfRows = vtype.MaxNumberOfRows;
+        MaxNumberOfBays = vtype.MaxNumberOfBays;
+        MaxNumberOfTiers = vtype.MaxNumberOfTiers;
     }
 }

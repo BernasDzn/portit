@@ -94,6 +94,20 @@ public class Dock : IDTOAble<DockDto>
 
     internal static Dock FromDTO(DockDto dockDto)
     {
-        return new Dock(dockDto.Id, dockDto.Designation, dockDto.Location, dockDto.Length, dockDto.Depth, dockDto.MaxDraft, dockDto.SupportedVesselTypes.Select(VesselType.FromDTO).ToList());
+        return new Dock(
+            dockDto.Id,
+            dockDto.Designation,
+            dockDto.Location,
+            dockDto.Length,
+            dockDto.Depth,
+            dockDto.MaxDraft,
+            dockDto.SupportedVesselTypes.Select(vtDto => new VesselType(
+                Guid.NewGuid(),
+                vtDto.Name,
+                vtDto.Description,
+                vtDto.MaxNumberOfRows,
+                vtDto.MaxNumberOfBays,
+                vtDto.MaxNumberOfTiers)).ToList()
+        );
     }
 }

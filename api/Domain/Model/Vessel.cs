@@ -1,30 +1,34 @@
 using System.Text.RegularExpressions;
+using Api.Controllers;
+using Api.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Api.Domain.Model;
 
+[Index(nameof(ImoNumber), IsUnique = true)]
 public class Vessel : IDTOAble<VesselDto>
 {
     public Guid Id { get; private set; }
     public string Name { get; private set; }
     public string ImoNumber { get; private set; }
     public virtual VesselType Type { get; private set; }
-    public uint OwnerCitizenshipId { get; private set; }
+    public virtual ShippingAgentOrganization Owner { get; private set; }
 
     // EF Core
     protected Vessel() { }
 
-    public Vessel(Guid id, string name, string imoNumber, VesselType type, uint ownerCitizenshipId)
+    public Vessel(Guid id, string name, string imoNumber, VesselType type, ShippingAgentOrganization owner)
     {
-        if(name.IsNullOrEmpty()) throw new ArgumentException("Name cannot be null or empty", nameof(name));
-        if(!validateIMONumber(imoNumber)) throw new ArgumentException("Invalid IMO Number format", nameof(imoNumber));
+        if (name.IsNullOrEmpty()) throw new ArgumentException("Name cannot be null or empty", nameof(name));
+        if (!validateIMONumber(imoNumber)) throw new ArgumentException("Invalid IMO Number format", nameof(imoNumber));
         if (type == null) throw new ArgumentNullException(nameof(type), "Vessel Type cannot be null");
-        if(ownerCitizenshipId <= 0) throw new ArgumentException("Owner Citizenship ID must be a positive integer", nameof(ownerCitizenshipId));
+        if (owner == null) throw new ArgumentException("Owner cannot be null", nameof(owner));
         Id = id;
         Name = name;
         ImoNumber = imoNumber;
         Type = type;
-        OwnerCitizenshipId = ownerCitizenshipId;
+        Owner = owner;
     }
 
     private bool validateIMONumber(string imoNumber)
@@ -59,22 +63,21 @@ public class Vessel : IDTOAble<VesselDto>
     {
         return new VesselDto
         {
-            Id = this.Id,
             Name = this.Name,
             ImoNumber = this.ImoNumber,
             Type = this.Type,
-            OwnerCitizenshipId = this.OwnerCitizenshipId
+            Owner = this.Owner.ToDTO()
         };
     }
 
-    public static Vessel FromDTO(VesselDto dto)
+    internal void Update(VesselDto vessel)
     {
-        return new Vessel(
-            dto.Id,
-            dto.Name,
-            dto.ImoNumber,
-            dto.Type,
-            dto.OwnerCitizenshipId
-        );
+        if (vessel.Name.IsNullOrEmpty()) throw new ArgumentException("Name cannot be null or empty", nameof(vessel.Name));
+        if (!validateIMONumber(vessel.ImoNumber)) throw new ArgumentException("Invalid IMO Number format", nameof(vessel.ImoNumber));
+        if (vessel.Type == null) throw new ArgumentNullException(nameof(vessel.Type), "Vessel Type cannot be null");
+
+        Name = vessel.Name;
+        ImoNumber = vessel.ImoNumber;
+        Type.Update(vessel.Type.ToDTO());
     }
 }

@@ -31,7 +31,6 @@ public class ShippingAgentOrganization : IDTOAble<ShippingAgentOrganizationDto>
     {
         return new ShippingAgentOrganizationDto
         {
-            Id = this.Id,
             Name = this.LegalName,
             AltNames = this.AltNames.ToArray(),
             Address = this.MainAddress.ToDTO(),

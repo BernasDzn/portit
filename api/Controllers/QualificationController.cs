@@ -40,15 +40,14 @@ public class QualificationController : ControllerBase
 	}
 
 	[HttpPut("{id}", Name = "UpdateQualification")]
-	public async Task<IActionResult> PutQualification(Guid id, QualificationDto qualDto)
+	public IActionResult Update(Guid id, QualificationDto qualDto)
 	{
-		bool wasUpdated = await _qualificationService.Update(id, qualDto, errors);
-		if (!wasUpdated)
-		{
-			return BadRequest(errors);
-		}
+		Qualification? existingQual = _context.Qualifications.FirstOrDefault(q => q.Id == id);
+		if (existingQual == null)
+			return NotFound("Qualification not found");
 
+		existingQual.UpdateQualificationName(qualDto.QualificationName);
+		_context.SaveChanges();
 		return Ok();
-	}
-	
+    }
 }

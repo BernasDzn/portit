@@ -24,7 +24,6 @@ public class Address : IDTOAble<AddressDto>
     {
         return new AddressDto
         {
-            Id = this.Id,
             Street = this.Street,
             City = this.City,
             PostalCode = this.ZipCode,
