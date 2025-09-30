@@ -75,10 +75,9 @@ public class Vessel : IDTOAble<VesselDto>
         if (vessel.Name.IsNullOrEmpty()) throw new ArgumentException("Name cannot be null or empty", nameof(vessel.Name));
         if (!validateIMONumber(vessel.ImoNumber)) throw new ArgumentException("Invalid IMO Number format", nameof(vessel.ImoNumber));
         if (vessel.Type == null) throw new ArgumentNullException(nameof(vessel.Type), "Vessel Type cannot be null");
-        if (vessel.Owner != Owner.ToDTO()) throw new ArgumentException("Owner cannot be changed", nameof(vessel.Owner));
 
         Name = vessel.Name;
         ImoNumber = vessel.ImoNumber;
-        Type = vessel.Type;
+        Type.Update(vessel.Type.ToDTO());
     }
 }

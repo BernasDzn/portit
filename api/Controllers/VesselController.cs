@@ -92,7 +92,7 @@ public class VesselController : ControllerBase
 
         _context.Vessels.Remove(vessel);
         _context.SaveChanges();
-        return NoContent();
+        return Ok();
     }
 
     [HttpPut("{ImoNumber}", Name = "UpdateVessel")]
@@ -111,6 +111,6 @@ public class VesselController : ControllerBase
 
         vessel.Update(vesselDto);
         _context.SaveChanges();
-        return NoContent();
+        return Ok();
     }
 }
