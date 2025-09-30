@@ -20,8 +20,6 @@ public class Vessel : IDTOAble<VesselDto>
 
     public Vessel(Guid id, Designation name, ImoNumber imoNumber, VesselType type, ShippingAgentOrganization owner)
     {
-        if (name == null) throw new ArgumentNullException(nameof(name), "Name cannot be null");
-        if (imoNumber == null) throw new ArgumentNullException(nameof(imoNumber), "IMO Number cannot be null");
         if (type == null) throw new ArgumentNullException(nameof(type), "Vessel Type cannot be null");
         if (owner == null) throw new ArgumentException("Owner cannot be null", nameof(owner));
 
@@ -31,7 +29,6 @@ public class Vessel : IDTOAble<VesselDto>
         Type = type;
         Owner = owner;
     }
-
 
     public VesselDto ToDTO()
     {
@@ -46,7 +43,8 @@ public class Vessel : IDTOAble<VesselDto>
 
     internal void Update(VesselDto vessel)
     {
-        if (vessel == null) throw new ArgumentNullException(nameof(vessel), "Vessel DTO cannot be null");
+        if (vessel.Name.IsNullOrEmpty()) throw new ArgumentException("Name cannot be null or empty", nameof(vessel.Name));
+        if (vessel.Type == null) throw new ArgumentNullException(nameof(vessel.Type), "Vessel Type cannot be null");
 
         Name = new Designation { Value = vessel.Name };
         ImoIdentifier = new ImoNumber { Value = vessel.ImoNumber };

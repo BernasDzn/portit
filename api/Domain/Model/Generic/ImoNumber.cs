@@ -6,22 +6,22 @@ namespace Domain.Model.Generic;
 [Owned]
 public class ImoNumber
 {
+    private const string ImoPattern = @"^IMO\s?(\d{7})$";
+
     private string _value;
     public string Value
     {
         get => _value;
         set
         {
-            if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentException("IMO number cannot be null or empty", nameof(value));
-            if (!validateIMONumber(value))
+            if (string.IsNullOrWhiteSpace(value) || !IsValidImoNumber(value))
                 throw new ArgumentException("Invalid IMO number format", nameof(value));
 
             _value = value;
         }
     }
 
-    private bool validateIMONumber(string imoNumber)
+    private bool IsValidImoNumber(string imoNumber)
     {
         if (imoNumber == null) return false;
 
@@ -47,6 +47,4 @@ public class ImoNumber
 
         return calculated == checkDigit;
     }
-
-    public override string ToString() => Value;
 }

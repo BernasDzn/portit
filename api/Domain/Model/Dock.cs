@@ -15,10 +15,13 @@ public class Dock : IDTOAble<DockDto>
 
     //EF Core
     protected Dock() { }
-    public Dock(Guid id, Designation designation, Designation location, uint length, uint depth, uint maxDraft, List<VesselType> supportedVesselTypes)
+    public Dock(Guid id, Designation name, Designation location, uint length, uint depth, uint maxDraft, List<VesselType> supportedVesselTypes)
     {
+        if (supportedVesselTypes == null || supportedVesselTypes.Count == 0)
+            throw new ArgumentException("Invalid arguments!");
+
         Id = id;
-        Name = designation;
+        Name = name;
         Location = location;
         Length = length;
         Depth = depth;
@@ -26,28 +29,29 @@ public class Dock : IDTOAble<DockDto>
         SupportedVesselTypes = supportedVesselTypes;
     }
 
-    public bool UpdateDesignation(Designation newDesignation) {
-        Name = newDesignation ?? throw new ArgumentNullException(nameof(newDesignation));
-        return true;
-    }
-    public bool UpdateLocation(Designation newLocation) {
-        
-        Location = newLocation ?? throw new ArgumentNullException(nameof(newLocation));
-        return true;
-    }
-    public bool UpdateLength(uint newLength)
+    public bool UpdateDesignation(Designation newDesignation)
     {
-        Length = newLength;
+        Name = newDesignation;
         return true;
     }
-    public bool UpdateDepth(uint newDepth)
+    public bool UpdateLocation(Designation newLocation)
     {
-        Depth = newDepth;
+        Location = newLocation;
         return true;
     }
-    public bool UpdateMaxDraft(uint newMaxDraft)
+    public bool UpdateLength(uint new_length)
     {
-        MaxDraft = newMaxDraft;
+        Length = new_length;
+        return true;
+    }
+    public bool UpdateDepth(uint new_depth)
+    {
+        Depth = new_depth;
+        return true;
+    }
+    public bool UpdateMaxDraft(uint new_maxDraft)
+    {
+        MaxDraft = new_maxDraft;
         return true;
     }
 
@@ -86,7 +90,7 @@ public class Dock : IDTOAble<DockDto>
             dockDto.SupportedVesselTypes.Select(vtDto => new VesselType(
                 Guid.NewGuid(),
                 new Designation { Value = vtDto.Name },
-                vtDto.Description,
+                new Designation { Value = vtDto.Description },
                 vtDto.MaxNumberOfRows,
                 vtDto.MaxNumberOfBays,
                 vtDto.MaxNumberOfTiers)).ToList()

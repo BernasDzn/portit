@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Domain.Model.Generic;
@@ -13,9 +14,7 @@ public class Email
         get => _value;
         set
         {
-            if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentException("Email cannot be null or empty", nameof(value));
-            if (!System.Text.RegularExpressions.Regex.IsMatch(value, EmailPattern))
+            if (string.IsNullOrWhiteSpace(value) || !Regex.IsMatch(value, EmailPattern))
                 throw new ArgumentException("Invalid email format", nameof(value));
 
             _value = value;

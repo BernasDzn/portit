@@ -38,9 +38,9 @@ public static class Bootstrap
 
         // Add Bootstrap data
         context.Qualifications.AddRange(
-            new Qualification(new Designation { Value = "STS Crane Operator" }),
-            new Qualification(new Designation { Value = "Yard Crane Operator" }),
-            new Qualification(new Designation { Value = "Truck Driver" })
+            new Qualification(Guid.NewGuid(), new Designation { Value = "STS Crane Operator" }),
+            new Qualification(Guid.NewGuid(), new Designation { Value = "Yard Crane Operator" }),
+            new Qualification(Guid.NewGuid(), new Designation { Value = "Truck Driver" })
         );
     }
 
@@ -74,10 +74,10 @@ public static class Bootstrap
         context.ShippingAgentOrganizations.Add(
             new ShippingAgentOrganization(
                 Guid.NewGuid(),
-                new Designation{Value= "Oceanic Freight Ltd." },
-                new List<Designation> { new Designation{Value= "OFL"}, new Designation{Value="Oceanic Freight" } },
+                new Designation { Value = "Oceanic Freight Ltd." },
+                new List<Designation> { new Designation { Value = "OFL" }, new Designation { Value = "Oceanic Freight" } },
                 new Address("456 Harbor Road", "Seaside Town", "UK", "AB12 3CD"),
-                new TaxNumber {Value="TAX654321"},
+                new TaxNumber { Value= "TAX654321" },
                 new List<Representative> { r2, r3 }
             )
         );
@@ -85,10 +85,10 @@ public static class Bootstrap
         context.ShippingAgentOrganizations.Add(
             new ShippingAgentOrganization(
                 Guid.NewGuid(),
-                new Designation{Value= "TransWorld Logistics" },
-                new List<Designation> {new Designation{Value=  "TWLogistics"}, new Designation{Value="TWorld" } },
+                new Designation { Value = "TransWorld Logistics" },
+                new List<Designation> { new Designation { Value = "TWL" }, new Designation { Value = "TransWorld" } },
                 new Address("789 Dockside Ave", "Port City", "Canada", "A1B 2C3"),
-                new TaxNumber {Value="TAX789012"},
+                new TaxNumber { Value= "TAX789012" },
                 new List<Representative> { r4, r5 }
             )
         );
@@ -96,10 +96,10 @@ public static class Bootstrap
         context.ShippingAgentOrganizations.Add(
             new ShippingAgentOrganization(
                 Guid.NewGuid(),
-                new Designation{Value= "Maritime Movers Inc." },
-                new List<Designation> { new Designation{Value= "MMI"}, new Designation{Value="Maritime Movers" } },
+                new Designation { Value = "Maritime Movers Inc." },
+                new List<Designation> { new Designation { Value = "MMI" }, new Designation { Value = "Maritime Movers" } },
                 new Address("321 Bay Street", "Coastal Village", "Australia", "2000"),
-                new TaxNumber {Value="TAX210987"},
+                new TaxNumber { Value= "TAX210987" },
                 new List<Representative> { r6, r7 }
             )
         );
@@ -114,14 +114,14 @@ public static class Bootstrap
 
         // Add Bootstrap data
         context.Vessels.AddRange(
-            new Vessel(Guid.NewGuid(), new Designation { Value = "Ever Given" }, new ImoNumber { Value= "IMO 7585229" },
-            new VesselType(Guid.NewGuid(), new Designation { Value = "Panamax" }, "Max size for Panama Canal", 20, 10, 5),
+            new Vessel(Guid.NewGuid(), new Designation { Value = "Ever Given" }, new ImoNumber{ Value = "IMO 7585229"},
+            new VesselType(Guid.NewGuid(), new Designation { Value = "Panamax" }, new Designation { Value = "Max sizenew for Panama Canal"}, 20, 10, 5),
             context.ShippingAgentOrganizations.First()),
-            new Vessel(Guid.NewGuid(), new Designation { Value = "Maersk Triple E" }, new ImoNumber { Value = "IMO 3815389" },
-            new VesselType(Guid.NewGuid(), new Designation { Value = "Post-Panamax" }, "Larger than Panamax", 30, 15, 7),
+            new Vessel(Guid.NewGuid(), new Designation { Value = "Maersk Triple E" }, new ImoNumber{ Value = "IMO 3815389"},
+            new VesselType(Guid.NewGuid(), new Designation { Value = "Post-Panamax" }, new Designation { Value = "Larger than Panamax"}, 30, 15, 7),
             context.ShippingAgentOrganizations.Skip(1).First()),
-            new Vessel(Guid.NewGuid(), new Designation { Value = "CMA CGM Marco Polo" }, new ImoNumber { Value = "IMO 6699530" },
-            new VesselType(Guid.NewGuid(), new Designation { Value = "Ultra Large Container Vessel (ULCV)" }, "Largest container ships", 40, 20, 10),
+            new Vessel(Guid.NewGuid(), new Designation { Value = "CMA CGM Marco Polo" }, new ImoNumber{ Value = "IMO 6699530"},
+            new VesselType(Guid.NewGuid(), new Designation { Value = "Ultra Large Container Vessel (ULCV)" }, new Designation { Value = "Largest container ships"}, 40, 20, 10),
             context.ShippingAgentOrganizations.Skip(2).First())
         );
     }
@@ -132,17 +132,17 @@ public static class Bootstrap
         if (context.Docks.Any())
             return;
 
-        VesselType vt1 = new VesselType(Guid.NewGuid(), new Designation{Value="Panamax"}, "Max size for Panama Canal", 20, 10, 5);
-        VesselType vt2 = new VesselType(Guid.NewGuid(), new Designation { Value = "Post-Panamax" }, "Larger than Panamax", 30, 15, 7);
-        VesselType vt3 = new VesselType(Guid.NewGuid(), new Designation { Value = "Ultra Large Container Vessel (ULCV)" } , "Largest container ships", 40, 20, 10);
-        VesselType vt4 = new VesselType(Guid.NewGuid(), new Designation{Value="Handymax"}, "Medium-sized bulk carriers", 15, 8, 4);
-        VesselType vt5 = new VesselType(Guid.NewGuid(), new Designation{Value="Capesize"}, "Too large for Panama and Suez Canals", 50, 25, 12);
+        VesselType vt1 = new VesselType(Guid.NewGuid(), new Designation { Value = "Panamax" }, new Designation { Value = "Max size for Panama Canal" }, 20, 10, 5);
+        VesselType vt2 = new VesselType(Guid.NewGuid(), new Designation { Value = "Post-Panamax" }, new Designation { Value = "Larger than Panamax" }, 30, 15, 7);
+        VesselType vt3 = new VesselType(Guid.NewGuid(), new Designation { Value = "Ultra Large Container Vessel (ULCV)" }, new Designation { Value = "Largest container ships" }, 40, 20, 10);
+        VesselType vt4 = new VesselType(Guid.NewGuid(), new Designation { Value = "Handymax"}, new Designation { Value = "Medium-sized bulk carriers" }, 15, 8, 4);
+        VesselType vt5 = new VesselType(Guid.NewGuid(), new Designation { Value = "Capesize"}, new Designation { Value = "Too large for Panama and Suez Canals" }, 50, 25, 12);
 
         // Add Bootstrap data
         context.Docks.AddRange(
-            new Dock(Guid.NewGuid(), new Designation{Value="Dock A"}, new Designation{Value="North Harbor"}, 500, 30, 15, new List<VesselType> { vt4, vt1 }),
-            new Dock(Guid.NewGuid(), new Designation{Value="Dock B"}, new Designation{Value="East Harbor"}, 600, 35, 18, new List<VesselType> { vt5 }),
-            new Dock(Guid.NewGuid(), new Designation{Value="Dock C"}, new Designation{Value="South Harbor"}, 700, 40, 20, new List<VesselType> { vt2, vt3 })
+            new Dock(Guid.NewGuid(), new Designation { Value = "Dock A" },  new Designation { Value = "North Harbor"}, 500, 30, 15, new List<VesselType> { vt4, vt1 }),
+            new Dock(Guid.NewGuid(), new Designation { Value = "Dock B" },  new Designation { Value = "East Harbor"}, 600, 35, 18, new List<VesselType> { vt5 }),
+            new Dock(Guid.NewGuid(), new Designation { Value = "Dock C" },  new Designation { Value = "South Harbor"}, 700, 40, 20, new List<VesselType> { vt2, vt3 })
         );
     }
 }

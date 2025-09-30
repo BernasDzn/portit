@@ -12,14 +12,12 @@ public class Qualification : IDTOAble<QualificationDto>
 	//EF Core
 	protected Qualification() { }
 
-	public Qualification(Designation qualificationName)
-	{
-		Id = Guid.NewGuid();
+	public Qualification(Guid id, Designation qualificationName) {
+		Id = id;
 		QualificationName = qualificationName;
 	}
 
-	public void UpdateQualificationName(string qualificationName)
-	{
+	public void UpdateQualificationName(string qualificationName) {
 		QualificationName = new Designation { Value = qualificationName };
 	}
 

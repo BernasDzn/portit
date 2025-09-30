@@ -66,7 +66,7 @@ public class DockController : ControllerBase
 	[HttpPost(Name = "CreateDock")]
 	public ActionResult<DockDto> Create(DockDto dockDto)
 	{
-		var dock = Dock.FromDTO(dockDto);
+		Dock dock = Dock.FromDTO(dockDto);
 		_context.Docks.Add(dock);
 		_context.SaveChanges();
 		return CreatedAtAction(nameof(GetAll), new { id = dock.Id }, dock.ToDTO());

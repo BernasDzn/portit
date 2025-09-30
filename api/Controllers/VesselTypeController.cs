@@ -44,7 +44,7 @@ public class VesselTypeController : ControllerBase
 	public ActionResult<IEnumerable<VesselType>> GetByDescription([FromQuery] string description)
 	{
 		var vtypes = _context.VesselTypes
-			.Where(vtype => vtype.Description.Contains(description, StringComparison.OrdinalIgnoreCase))
+			.Where(vtype => vtype.Description.Value.Contains(description, StringComparison.OrdinalIgnoreCase))
 			.ToList();
 		var vtypesDtos = vtypes.Select(vtype => vtype.ToDTO()).ToList();
 		return Ok(vtypesDtos);
@@ -53,7 +53,7 @@ public class VesselTypeController : ControllerBase
 	[HttpPost(Name = "CreateVesselType")]
 	public ActionResult<VesselTypeDto> Create(VesselTypeDto vtypeDto)
 	{
-		var vtype = new VesselType(Guid.NewGuid(), new Designation {Value = vtypeDto.Name}, vtypeDto.Description, vtypeDto.MaxNumberOfRows, vtypeDto.MaxNumberOfBays, vtypeDto.MaxNumberOfTiers);
+		var vtype = new VesselType(Guid.NewGuid(), new Designation { Value = vtypeDto.Name }, new Designation { Value = vtypeDto.Description }, vtypeDto.MaxNumberOfRows, vtypeDto.MaxNumberOfBays, vtypeDto.MaxNumberOfTiers);
 		_context.VesselTypes.Add(vtype);
 		_context.SaveChanges();
 		return CreatedAtAction(nameof(GetAll), new { id = vtype.Id }, vtype.ToDTO());

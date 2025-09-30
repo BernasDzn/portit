@@ -1,6 +1,8 @@
 using Api.Domain.Model;
 using Api.Models;
+using Domain.Model.Generic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL;
 

@@ -41,7 +41,10 @@ public class QualificationService
 			return null;
 		}
 
-		Qualification qualification = new Qualification(new Designation { Value = qualificationDto.QualificationName });
+		Qualification qualification = new Qualification(
+			Guid.NewGuid(),
+			new Designation { Value = qualificationDto.QualificationName }
+		);
 		Qualification savedQualification = await _qualificationRepository.Add(qualification);
 		QualificationDto savedQualificationDto = savedQualification.ToDTO();
 
