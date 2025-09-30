@@ -58,10 +58,10 @@ public class VesselController : ControllerBase
     }
 
     [HttpGet("searchByOwner", Name = "GetVesselByOwner")]
-    public ActionResult<IEnumerable<VesselDto>> GetByOwner([FromQuery] uint owner)
+    public ActionResult<IEnumerable<VesselDto>> GetByOwner([FromQuery] ShippingAgentOrganization owner)
     {
         var vessels = _context.Vessels
-            .Where(v => v.OwnerCitizenshipId == owner)
+            .Where(v => v.Owner.Id == owner.Id)
             .ToList();
 
         if (vessels.Count == 0)
@@ -74,18 +74,17 @@ public class VesselController : ControllerBase
     }
 
     [HttpPost(Name = "CreateVessel")]
-    public ActionResult<VesselDto> Create(VesselDto vesselDto)
+    public ActionResult<VesselDto> Create(Vessel vessel)
     {
-        var vessel = Vessel.FromDTO(vesselDto);
         _context.Vessels.Add(vessel);
         _context.SaveChanges();
         return CreatedAtAction(nameof(GetAll), new { id = vessel.Id }, vessel.ToDTO());
     }
 
-    [HttpDelete("{id}", Name = "DeleteVessel")]
-    public IActionResult Delete(Guid id)
+    [HttpDelete("{ImoNumber}", Name = "DeleteVessel")]
+    public IActionResult Delete(string ImoNumber)
     {
-        var vessel = _context.Vessels.Find(id);
+        var vessel = _context.Vessels.FirstOrDefault(v => v.ImoNumber == ImoNumber);
         if (vessel == null)
         {
             return NotFound();
@@ -96,22 +95,21 @@ public class VesselController : ControllerBase
         return NoContent();
     }
 
-    [HttpPut("{id}", Name = "UpdateVessel")]
-    public IActionResult Update(Guid id, VesselDto vesselDto)
+    [HttpPut("{ImoNumber}", Name = "UpdateVessel")]
+    public IActionResult Update(string ImoNumber, VesselDto vesselDto)
     {
-        if (id != vesselDto.Id)
+        if (ImoNumber != vesselDto.ImoNumber)
         {
             return BadRequest();
         }
 
-        var vessel = _context.Vessels.Find(id);
+        var vessel = _context.Vessels.FirstOrDefault(v => v.ImoNumber == ImoNumber);
         if (vessel == null)
         {
             return NotFound();
         }
 
-        vessel = Vessel.FromDTO(vesselDto);
-        _context.Vessels.Update(vessel);
+        vessel.Update(vesselDto);
         _context.SaveChanges();
         return NoContent();
     }

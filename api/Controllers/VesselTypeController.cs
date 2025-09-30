@@ -52,7 +52,7 @@ public class VesselTypeController : ControllerBase
 	[HttpPost(Name = "CreateVesselType")]
 	public ActionResult<VesselTypeDto> Create(VesselTypeDto vtypeDto)
 	{
-		var vtype = VesselType.FromDTO(vtypeDto);
+		var vtype = new VesselType(Guid.NewGuid(), vtypeDto.Name, vtypeDto.Description, vtypeDto.MaxNumberOfRows, vtypeDto.MaxNumberOfBays, vtypeDto.MaxNumberOfTiers);
 		_context.VesselTypes.Add(vtype);
 		_context.SaveChanges();
 		return CreatedAtAction(nameof(GetAll), new { id = vtype.Id }, vtype.ToDTO());
@@ -72,21 +72,21 @@ public class VesselTypeController : ControllerBase
 		return NoContent();
 	}
 
-	[HttpPut("{id}", Name = "UpdateVesselType")]
-	public IActionResult Update(Guid id, VesselTypeDto vtypeDto)
+	[HttpPut("{name}", Name = "UpdateVesselType")]
+	public IActionResult Update(string name, VesselTypeDto vtypeDto)
 	{
-		if (id != vtypeDto.Id)
+		if (name != vtypeDto.Name)
 		{
 			return BadRequest();
 		}
 
-		var vtype = _context.VesselTypes.Find(id);
+		var vtype = _context.VesselTypes.FirstOrDefault(v => v.Name == name);
 		if (vtype == null)
 		{
 			return NotFound();
 		}
-
-		vtype = VesselType.FromDTO(vtypeDto);
+		
+		vtype = new VesselType(vtype.Id, vtypeDto.Name, vtypeDto.Description, vtypeDto.MaxNumberOfRows, vtypeDto.MaxNumberOfBays, vtypeDto.MaxNumberOfTiers);
 		_context.VesselTypes.Update(vtype);
 		_context.SaveChanges();
 		return NoContent();

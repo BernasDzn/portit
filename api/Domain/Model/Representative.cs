@@ -11,9 +11,6 @@ public class Representative : IDTOAble<RepresentativeDto>
     public string EmailAddress { get; private set; }
     public string Phone { get; private set; }
 
-    public Guid ShippingAgentOrganizationId { get; private set; }
-    public virtual ShippingAgentOrganization ShippingAgentOrganization { get; private set; }
-
     // EF Core
     protected Representative() { }
 

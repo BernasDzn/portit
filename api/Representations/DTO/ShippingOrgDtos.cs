@@ -4,8 +4,8 @@ public class ShippingAgentOrganizationDto
     public required string Name { get; set; }
     public required string[] AltNames { get; set; }
     public required string TaxNumber { get; set; }
-    public required AddressDto Address { get; set; }
-    public required List<RepresentativeDto> Representatives { get; set; }
+    public required virtual AddressDto Address { get; set; }
+    public required virtual List<RepresentativeDto> Representatives { get; set; }
 }
 
 public class RepresentativeDto

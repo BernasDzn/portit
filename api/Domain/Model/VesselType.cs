@@ -29,17 +29,11 @@ public class VesselType : IDTOAble<VesselTypeDto>
     {
         return new VesselTypeDto
         {
-            Id = this.Id,
             Name = this.Name,
             Description = this.Description,
             MaxNumberOfRows = this.MaxNumberOfRows,
             MaxNumberOfBays = this.MaxNumberOfBays,
             MaxNumberOfTiers = this.MaxNumberOfTiers
         };
-    }
-
-    internal static VesselType FromDTO(VesselTypeDto vtypeDto)
-    {
-        return new VesselType(vtypeDto.Id, vtypeDto.Name, vtypeDto.Description, vtypeDto.MaxNumberOfRows, vtypeDto.MaxNumberOfBays, vtypeDto.MaxNumberOfTiers);
     }
 }
