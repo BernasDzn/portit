@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Api.Domain.Model;
 using DAL;
+using NSwag.Annotations;
 
 namespace Api.Controllers;
 
@@ -27,15 +28,15 @@ public class QualificationController : ControllerBase
 		return Ok(qualsDtos);
 	}
 
-	[HttpPut("{id}", Name = "UpdateQualification")]
-	public IActionResult Update(Guid id, QualificationDto qualDto)
+	[HttpPut("{designation}", Name = "UpdateQualification")]
+	public IActionResult Update(string designation, QualificationDto qualDto)
 	{
-		Qualification? existingQual = _context.Qualifications.FirstOrDefault(q => q.Id == id);
+		Qualification? existingQual = _context.Qualifications.FirstOrDefault(q => q.QualificationName.Value.Equals(designation));
 		if (existingQual == null)
 			return NotFound("Qualification not found");
 
 		existingQual.UpdateQualificationName(qualDto.QualificationName);
 		_context.SaveChanges();
 		return Ok();
-    }
+	}
 }

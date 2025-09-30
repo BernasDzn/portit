@@ -27,7 +27,6 @@ public class Representative : IDTOAble<RepresentativeDto>
     {
         return new RepresentativeDto
         {
-            Id = this.Id,
             Name = this.Name,
             CitizenshipId = this.CitizenshipId,
             EmailAddress = this.EmailAddress,
