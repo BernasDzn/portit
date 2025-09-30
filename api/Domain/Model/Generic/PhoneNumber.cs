@@ -1,5 +1,8 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace Domain.Model.Generic;
 
+[Owned]
 public class PhoneNumber
 {
     private string _value;
