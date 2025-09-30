@@ -5,7 +5,9 @@ namespace Api.Domain.Model;
 public class Qualification : IDTOAble<QualificationDto>
 {
 	public Guid Id { get; private set; }
-	public string QualificationName { get ; private set; }
+	public Designation QualificationName { get ; private set; }
+	ICollection<Staff> StaffReference { get; set; }
+
 
 	//EF Core
 	protected Qualification() { }
@@ -13,11 +15,11 @@ public class Qualification : IDTOAble<QualificationDto>
 	public Qualification(Guid id, string qualificationName)
 	{
 		Id = id;
-		QualificationName = qualificationName;
+		QualificationName = new Designation { Value = qualificationName };
 	}
 	
 	public void UpdateQualificationName(string qualificationName) {
-		QualificationName = qualificationName;
+		QualificationName = new Designation { Value = qualificationName };
 	}
 
     public QualificationDto ToDTO()
@@ -25,7 +27,7 @@ public class Qualification : IDTOAble<QualificationDto>
 		return new QualificationDto
 		{
 			Id = this.Id,
-			QualificationName = this.QualificationName
+			QualificationName = this.QualificationName.Value
 		};
 	}
 
