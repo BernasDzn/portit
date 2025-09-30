@@ -8,4 +8,6 @@ public class Designation
 {
 	[MaxLength(100)]
 	public required string Value { get; set; }
+
+	public override string ToString() => Value;
 }

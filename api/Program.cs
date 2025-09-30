@@ -1,5 +1,7 @@
+using Application.Services;
 using DAL;
-using Domain;
+using DataModel.Repository;
+using Domain.IRepository;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +15,9 @@ builder.Services.AddDbContext<ApiContext>(opt =>
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+builder.Services.AddTransient<IQualificationRepository, QualificationRepository>();
+builder.Services.AddTransient<QualificationService>();
 
 var app = builder.Build();
 

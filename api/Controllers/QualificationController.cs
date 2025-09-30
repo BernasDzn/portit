@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Api.Domain.Model;
 using DAL;
+using Application.Services;
 
 namespace Api.Controllers;
 
@@ -10,32 +11,44 @@ public class QualificationController : ControllerBase
 {
 
 	private readonly ILogger<QualificationController> _logger;
-	private readonly ApiContext _context;
+	private readonly QualificationService _qualificationService;
+	List<string> errors = new List<string>();
 
-	public QualificationController(ApiContext context, ILogger<QualificationController> logger)
+	public QualificationController(QualificationService qualificationService, ILogger<QualificationController> logger)
 	{
-		_context = context;
+		_qualificationService = qualificationService;
 		_logger = logger;
 	}
 
 	[HttpGet(Name = "GetQualifications")]
-	public ActionResult<IEnumerable<Qualification>> GetAll()
+	public async Task<ActionResult<IEnumerable<QualificationDto>>> GetQualifications()
 	{
-		var quals = _context.Qualifications.ToList();
-		var qualsDtos = quals.Select(qual => qual.ToDTO()).ToList();
+		IEnumerable<QualificationDto> qualificationsDto = await _qualificationService.GetQualifications();
+		return Ok(qualificationsDto);
+	}
 
-		return Ok(qualsDtos);
+	[HttpPost(Name = "PostQualification")]
+	public async Task<ActionResult<QualificationDto>> PostQualification(QualificationDto qualDto)
+	{
+		QualificationDto qualificationDto = await _qualificationService.Add(qualDto, errors);
+
+		if (qualificationDto != null)
+		{
+			return CreatedAtAction(nameof(GetQualifications), new { id = qualificationDto.Id }, qualificationDto);
+		}
+		return BadRequest(errors);
 	}
 
 	[HttpPut("{id}", Name = "UpdateQualification")]
-	public IActionResult Update(Guid id, QualificationDto qualDto)
+	public async Task<IActionResult> PutQualification(Guid id, QualificationDto qualDto)
 	{
-		Qualification? existingQual = _context.Qualifications.FirstOrDefault(q => q.Id == id);
-		if (existingQual == null)
-			return NotFound("Qualification not found");
+		bool wasUpdated = await _qualificationService.Update(id, qualDto, errors);
+		if (!wasUpdated)
+		{
+			return BadRequest(errors);
+		}
 
-		existingQual.UpdateQualificationName(qualDto.QualificationName);
-		_context.SaveChanges();
 		return Ok();
-    }
+	}
+	
 }
