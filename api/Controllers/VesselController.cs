@@ -58,10 +58,10 @@ public class VesselController : ControllerBase
     }
 
     [HttpGet("searchByOwner", Name = "GetVesselByOwner")]
-    public ActionResult<IEnumerable<VesselDto>> GetByOwner([FromQuery] ShippingAgentOrganization owner)
+    public ActionResult<IEnumerable<VesselDto>> GetByOwner([FromQuery] string ownerLegalName)
     {
         var vessels = _context.Vessels
-            .Where(v => v.Owner.Id == owner.Id)
+            .Where(v => v.Owner.LegalName.Contains(ownerLegalName, StringComparison.OrdinalIgnoreCase))
             .ToList();
 
         if (vessels.Count == 0)
