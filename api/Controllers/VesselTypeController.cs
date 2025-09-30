@@ -85,8 +85,8 @@ public class VesselTypeController : ControllerBase
 		{
 			return NotFound();
 		}
-		
-		vtype = new VesselType(vtype.Id, vtypeDto.Name, vtypeDto.Description, vtypeDto.MaxNumberOfRows, vtypeDto.MaxNumberOfBays, vtypeDto.MaxNumberOfTiers);
+
+		vtype.Update(vtypeDto);
 		_context.VesselTypes.Update(vtype);
 		_context.SaveChanges();
 		return NoContent();
