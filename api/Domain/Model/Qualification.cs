@@ -8,7 +8,6 @@ public class Qualification : IDTOAble<QualificationDto>
 	public Designation QualificationName { get ; private set; }
 	ICollection<Staff> StaffReference { get; set; }
 
-
 	//EF Core
 	protected Qualification() { }
 
@@ -26,15 +25,7 @@ public class Qualification : IDTOAble<QualificationDto>
 	{
 		return new QualificationDto
 		{
-			Id = this.Id,
 			QualificationName = this.QualificationName.Value
 		};
 	}
-
-    internal static Qualification FromDTO(QualificationDto qualDto){
-        return new Qualification(
-			qualDto.Id,
-			qualDto.QualificationName
-		);
-    }
 }
