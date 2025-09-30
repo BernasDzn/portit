@@ -10,100 +10,79 @@ public class DockController : ControllerBase
 {
 
 	private readonly ILogger<DockController> _logger;
-	private readonly ApiContext _context;
+	private readonly DockService _dockService;
 
-	public DockController(ApiContext context, ILogger<DockController> logger)
+	public DockController(DockService dockService, ILogger<DockController> logger)
 	{
-		_context = context;
+		_dockService = dockService;
 		_logger = logger;
 	}
 
 	[HttpGet(Name = "GetDocks")]
-	public ActionResult<IEnumerable<Dock>> GetAll()
+	public async Task<ActionResult<IEnumerable<DockDto>>> GetAll()
 	{
-		var docks = _context.Docks.ToList();
-		var docksDtos = docks.Select(dock => dock.ToDTO()).ToList();
-
-		return Ok(docksDtos);
+		IEnumerable<DockDto> docks = await _dockService.GetDocks();
+		return Ok(docks);
 	}
 
 	[HttpGet("searchByName", Name = "GetDocksByName")]
-	public ActionResult<IEnumerable<Dock>> GetByName([FromQuery] string designation)
+	public async Task<ActionResult<IEnumerable<DockDto>>> GetByName([FromQuery] string designation)
 	{
-		var docks = _context.Docks
-			.Where(dock => dock.Name.Value.Contains(designation, StringComparison.OrdinalIgnoreCase))
-			.ToList();
+		List<string> errors = new List<string>();
+		var dockDto = await _dockService.GetDockByName(designation, errors);
 
-		var docksDtos = docks.Select(dock => dock.ToDTO()).ToList();
+		 if (dockDto == null)
+			return NotFound(errors);
 
-		return Ok(docksDtos);
+		return Ok(dockDto);
 	}
 
 	[HttpGet("searchByVesselType", Name = "GetDocksByVesselType")]
-	public ActionResult<IEnumerable<Dock>> GetByVesselType([FromQuery] string vesselType)
+	public async Task<ActionResult<IEnumerable<DockDto>>> GetByVesselType([FromQuery] string vesselType)
 	{
-		var docks = _context.Docks
-			.Where(dock => dock.SupportedVesselTypes.Any(vt => vt.Name.Value.Contains(vesselType, StringComparison.OrdinalIgnoreCase)))
-			.ToList();
+		List<string> errors = new List<string>();
+		IEnumerable<DockDto>? docksDtos = await _dockService.GetDockByVesselType(vesselType, errors);
 
-		var docksDtos = docks.Select(dock => dock.ToDTO()).ToList();
+		if (docksDtos == null || !docksDtos.Any())
+			return NotFound(errors);
 
 		return Ok(docksDtos);
 	}
 
 	[HttpGet("searchByLocation", Name = "GetDocksByLocation")]
-	public ActionResult<IEnumerable<Dock>> GetByLocation([FromQuery] string location)
+	public async Task<ActionResult<IEnumerable<DockDto>>> GetByLocation([FromQuery] string location)
 	{
-		var docks = _context.Docks
-			.Where(dock => dock.Location.Value.Contains(location, StringComparison.OrdinalIgnoreCase))
-			.ToList();
+		List<string> errors = new List<string>();
+		var dockDto = await _dockService.GetDockByLocation(location, errors);
 
-		var docksDtos = docks.Select(dock => dock.ToDTO()).ToList();
+		if (dockDto == null)
+			return NotFound(errors);
 
-		return Ok(docksDtos);
+		return Ok(dockDto);
 	}
 
 	[HttpPost(Name = "CreateDock")]
-	public ActionResult<DockDto> Create(DockDto dockDto)
+	public async Task<ActionResult<DockDto>> Create(DockDto dockDto)
 	{
-		Dock dock = Dock.FromDTO(dockDto);
-		_context.Docks.Add(dock);
-		_context.SaveChanges();
-		return CreatedAtAction(nameof(GetAll), new { id = dock.Id }, dock.ToDTO());
+		List<string> errors = new List<string>();
+		var createdDock = await _dockService.Add(dockDto, errors);
+
+		if (createdDock == null)
+			return BadRequest(errors);
+
+		return CreatedAtAction(nameof(GetByName), new { name = createdDock?.Name }, createdDock);
 	}
 
-	[HttpDelete("{id}", Name = "DeleteDock")]
-	public IActionResult Delete(Guid id)
+	[HttpPut("{name}", Name = "UpdateDock")]
+	public IActionResult Update(string name, DockDto dockDto)
 	{
-		var dock = _context.Docks.Find(id);
-		if (dock == null)
-		{
-			return NotFound();
-		}
+		List<string> errors = new List<string>();
 
-		_context.Docks.Remove(dock);
-		_context.SaveChanges();
-		return NoContent();
-	}
+		var updatedDock = _dockService.Update(name, dockDto, errors);
+		if (updatedDock == null)
+			return BadRequest(errors);
 
-	[HttpPut("{id}", Name = "UpdateDock")]
-	public IActionResult Update(Guid id, DockDto dockDto)
-	{
-		if (id != dockDto.Id)
-		{
-			return BadRequest();
-		}
-
-		var dock = _context.Docks.Find(id);
-		if (dock == null)
-		{
-			return NotFound();
-		}
-
-		dock = Dock.FromDTO(dockDto);
-		_context.Docks.Update(dock);
-		_context.SaveChanges();
-		return NoContent();
+		return Ok(updatedDock);
 	}
 
 }

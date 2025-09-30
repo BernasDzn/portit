@@ -1,4 +1,5 @@
 using Domain.Model.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.Domain.Model;
 
@@ -29,14 +30,14 @@ public class Dock : IDTOAble<DockDto>
         SupportedVesselTypes = supportedVesselTypes;
     }
 
-    public bool UpdateDesignation(Designation newDesignation)
+    public bool UpdateName(string newName)
     {
-        Name = newDesignation;
+        Name = new Designation { Value = newName };
         return true;
     }
-    public bool UpdateLocation(Designation newLocation)
+    public bool UpdateLocation(string newLocation)
     {
-        Location = newLocation;
+        Location = new Designation { Value = newLocation };
         return true;
     }
     public bool UpdateLength(uint new_length)
@@ -68,32 +69,13 @@ public class Dock : IDTOAble<DockDto>
     {
         return new DockDto
         {
-            Id = this.Id,
-            Designation = this.Name.Value,
+            Name = this.Name.Value,
             Location = this.Location.Value,
             Length = this.Length,
             Depth = this.Depth,
             MaxDraft = this.MaxDraft,
-            SupportedVesselTypes = this.SupportedVesselTypes.Select(vt => vt.ToDTO()).ToList()
+            //SupportedVesselTypes = this.SupportedVesselTypes.Select(vt => vt.ToDTO()).ToList()
+            SupportedVesselTypes = this.SupportedVesselTypes.ToList()
         };
-    }
-
-    internal static Dock FromDTO(DockDto dockDto)
-    {
-        return new Dock(
-            dockDto.Id,
-            new Designation { Value = dockDto.Designation },
-            new Designation { Value = dockDto.Location },
-            dockDto.Length,
-            dockDto.Depth,
-            dockDto.MaxDraft,
-            dockDto.SupportedVesselTypes.Select(vtDto => new VesselType(
-                Guid.NewGuid(),
-                new Designation { Value = vtDto.Name },
-                new Designation { Value = vtDto.Description },
-                vtDto.MaxNumberOfRows,
-                vtDto.MaxNumberOfBays,
-                vtDto.MaxNumberOfTiers)).ToList()
-        );
     }
 }

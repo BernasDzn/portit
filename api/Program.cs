@@ -18,6 +18,8 @@ builder.Services.AddOpenApi();
 
 builder.Services.AddTransient<IQualificationRepository, QualificationRepository>();
 builder.Services.AddTransient<QualificationService>();
+builder.Services.AddTransient<IDockRepository, DockRepository>();
+builder.Services.AddTransient<DockService>();
 
 var app = builder.Build();
 
