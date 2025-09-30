@@ -1,0 +1,90 @@
+@startuml US2203_Domain_Model
+title US2203 - Domain Model
+hide circle
+
+rectangle "System"{
+
+	class "**User**" as user <<AggregateRoot>><<Entity>>
+	{
+		...
+	}
+
+}
+
+rectangle "Dock"{
+
+	class "**Dock**" as dock <<AggregateRoot>><<Entity>>
+	{
+	}
+
+	class "Dock\n**Name**" as dock_name <<Value>>
+	{
+		+ nameOrNumber
+	}
+
+	class "Dock\n**Location**" as dock_loc <<Value>>
+	{
+		+ location
+	}
+
+	class "Dock\n**Physical Characteristics**" as dock_physical_char <<Value>>
+	{
+		+ length
+		+ depth
+		+ maxDraft
+	}
+
+}
+
+rectangle "Physical Resources"{
+
+	class "**Physical**\n**Resource**" as phys_res <<AggregateRoot>><<Entity>>
+	{
+		...
+	}
+
+}
+
+rectangle "Berthing information" {
+
+	class "**Vessel Visit**\n**Notification**" as vessel_visit_notif <<AggregateRoot>><<Entity>>
+	{
+		...
+	}
+
+	class "Vessel Visit\nNotification\n**Vessel Berth**" as vessel_berth <<Entity>>
+	{
+		...
+	}
+
+	class "Vessel Visit\nNotification\n**Notification Decision**" as notif_dec <<Entity>>
+	{
+		...
+	}
+	
+}
+
+rectangle "Storage Area"{
+
+	class "**Storage**\n**Area**" as storage_area <<AggregateRoot>><<Entity>>
+	{
+		...
+	}
+
+}
+
+vessel_visit_notif <-- vessel_berth : "responds to"
+vessel_berth "1" --> "1" dock : "happens on"
+
+notif_dec "1" -> "0..1" dock : "has"
+
+dock "1" --> "1" dock_loc
+dock "1" --> "*" phys_res : "has"
+dock "1" --> "1" dock_name
+dock --> "1" dock_physical_char
+
+user "1" ---> "*" dock : "(Port Authority Officer)\nregisters/manages"
+
+storage_area "1" --> "*" dock : "serves"
+
+@enduml

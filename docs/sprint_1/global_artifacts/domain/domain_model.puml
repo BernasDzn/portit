@@ -165,14 +165,16 @@ rectangle "Staff"{
 rectangle "Dock" {
 	class "**Dock**" as dock <<AggregateRoot>><<Entity>>
 	{
-		+ lenght
-		+ depth
-		+ maxDraft
 	}
 
-	class "Dock\n**Designation**" as dock_designation <<Value>>
+	class "Dock\n**Name**" as dock_name <<Value>>
 	{
 		+ nameOrNumber
+	}
+
+	class "Dock\n**Location**" as dock_loc <<Value>>
+	{
+		+ location
 	}
 
 	class "Dock\n**Physical Characteristics**" as dock_physical_char <<Value>>
@@ -447,9 +449,9 @@ vessel_type --> "1" vessel_type_max_nr
 vessel_type --> "1" vessel_type_max_nb
 vessel_type --> "1" vessel_type_max_nt
 
-dock "1" --> "1" port_loc
+dock "1" --> "1" dock_loc
 dock "1" --> "*" phys_res : "has"
-dock "1" --> "1" dock_designation
+dock "1" --> "1" dock_name
 dock --> "1" dock_physical_char
 
 

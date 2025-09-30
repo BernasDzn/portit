@@ -1,0 +1,29 @@
+@startuml us2203_domain_model
+title US2203 - Class Diagram
+skinparam backgroundColor #F0F0F0
+
+
+
+class Dock
+{
+	- name : Designation
+	- location : Designation
+	- length : uint
+    - depth : uint
+	- maxDraft : uint
+	- supportedVesselTypes : List<VesselType>
+	+ Dock(...) : void
+}
+
+class "Dock\n**Name**" as dock_name <<Value>>
+{
+	+ name
+}
+class "Dock\n**Location**" as dock_location <<Value>>
+{
+	+ location
+}
+
+
+
+@enduml
