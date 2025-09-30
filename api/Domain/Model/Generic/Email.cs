@@ -1,6 +1,9 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace Domain.Model.Generic;
 
-public class Email 
+[Owned]
+public class Email
 {
     private string _value;
     public string Value { get => _value; set => _value = value; }
