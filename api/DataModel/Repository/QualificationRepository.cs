@@ -4,6 +4,7 @@ using Api.Domain.Model;
 using DAL;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Api.Application.Exceptions;
 
 namespace DataModel.Repository;
 
@@ -25,21 +26,21 @@ public class QualificationRepository : GenericRepository<Qualification>, IQualif
 		}
 		catch
 		{
-			throw;
+			throw new PersistencyFailedException("Failed to select qualifications");
 		}
 	}
 
-	public async Task<Qualification> GetQualificationByNameAsync(string name)
+	public async Task<Qualification?> GetQualificationByNameAsync(string name)
 	{
 		try
 		{
 			Qualification? qualification = await _context.Qualifications
 				.FirstOrDefaultAsync(q => q.QualificationName.Value.Equals(name));
-			return qualification!;
+			return qualification;
 		}
 		catch
 		{
-			throw;
+			throw new PersistencyFailedException("Failed to select a qualification by name");
 		}
 	}
 
@@ -53,30 +54,27 @@ public class QualificationRepository : GenericRepository<Qualification>, IQualif
 		}
 		catch
 		{
-			throw;
+			throw new PersistencyFailedException("Failed to add a qualification");
 		}
 	}
 
-	public async Task<bool> Update(string name, QualificationDto qualificationDto, List<string> errorMessage)
+	public async Task<Qualification> Update(string name, QualificationDto qualificationDto)
 	{
 		try
 		{
-			Qualification? qualification =await GetQualificationByNameAsync(name);
+			Qualification? qualification = await GetQualificationByNameAsync(name);
 			if (qualification == null)
-			{
-				errorMessage.Add("Qualification not found.");
-				return false;
-			}
+				throw new EntityNotFoundException("Qualification not found");
 
 			qualification.UpdateQualificationName(qualificationDto.QualificationName);
 
 			_context.Qualifications.Update(qualification);
 			await _context.SaveChangesAsync();
-			return true;
+			return qualification;
 		}
 		catch
 		{
-			throw;
+			throw new PersistencyFailedException("Failed to update a qualification");
 		}
-	}	
+	}
 }

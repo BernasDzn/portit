@@ -26,12 +26,12 @@ public class DockRepository : GenericRepository<Dock>, IDockRepository
         }
     }
 
-    public async Task<Dock> GetDockByNameAsync(string name)
+    public async Task<Dock?> GetDockByNameAsync(string name)
     {
         try
         {
             Dock? dock = await _context.Docks.FirstOrDefaultAsync(d => d.Name.Value.Equals(name));
-            return dock!;
+            return dock;
         }
         catch
         {
@@ -54,12 +54,12 @@ public class DockRepository : GenericRepository<Dock>, IDockRepository
         }
     }
 
-    public async Task<Dock> GetDockByLocationAsync(string location)
+    public async Task<Dock?> GetDockByLocationAsync(string location)
     {
         try
         {
             Dock? dock = await _context.Docks.FirstOrDefaultAsync(d => d.Location.Value.Equals(location));
-            return dock!;
+            return dock;
         }
         catch
         {

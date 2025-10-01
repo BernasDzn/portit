@@ -40,24 +40,34 @@ public class QualificationController : ControllerBase
 	[HttpPost(Name = "PostQualification")]
 	public async Task<ActionResult<QualificationDto>> Create(QualificationDto qualDto)
 	{
-		List<string> errors = new List<string>();
+		try
+		{
+			var createdQual = await _qualificationService.Add(qualDto);
+			if (createdQual == null)
+				return BadRequest("Could not create qualification");
 
-		var createdQual = await _qualificationService.Add(qualDto, errors);
-		if (createdQual == null)
-			return BadRequest(errors);
-
-		return CreatedAtAction(nameof(Get), new { name = createdQual?.QualificationName }, createdQual);
+			return CreatedAtAction(nameof(Get), new { name = createdQual?.QualificationName }, createdQual);
+		}
+		catch (System.Exception e)
+		{
+			return BadRequest(e.Message);
+		}
 	}
 
 	[HttpPut("{name}", Name = "UpdateQualification")]
 	public async Task<ActionResult<QualificationDto>> Update(string name, QualificationDto qualDto)
 	{
-		List<string> errors = new List<string>();
+		try
+		{	
+			var updatedQual = await _qualificationService.Update(name, qualDto);
+			if (updatedQual == null)
+				return BadRequest("Could not update qualification");
 
-		var updatedQual = await _qualificationService.Update(name, qualDto, errors);
-		if (updatedQual == null)
-			return BadRequest(errors);
-
-		return Ok(updatedQual);
+			return Ok(updatedQual);
+		}
+		catch (System.Exception e)
+		{
+			return BadRequest(e.Message);
+		}
 	}
 }

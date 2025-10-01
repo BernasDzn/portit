@@ -4,6 +4,7 @@ using Domain.Model.Generic;
 using Domain;
 using DAL;
 using Api.Domain.Model;
+using Application.Services;
 
 namespace Api.Controllers;
 
@@ -11,106 +12,54 @@ namespace Api.Controllers;
 [Route("[controller]")]
 public class VesselController : ControllerBase
 {
-    private readonly ApiContext _context;
+    private readonly ILogger<VesselController> _logger;
+    private readonly VesselService _vesselService;
 
-    public VesselController(ApiContext context)
+    public VesselController(VesselService vesselService, ILogger<VesselController> logger)
     {
-        _context = context;
+        _vesselService = vesselService;
+        _logger = logger;
     }
 
     [HttpGet(Name = "GetVessels")]
-    public ActionResult<IEnumerable<VesselDto>> GetAll()
+    public async Task<ActionResult<IEnumerable<VesselDto>>> GetAll()
     {
-
-        var vessels = _context.Vessels.ToList();
-        var vesselDtos = vessels.Select(vessel => vessel.ToDTO()).ToList();
-        return Ok(vesselDtos);
+        IEnumerable<VesselDto> vesselsDto = await _vesselService.GetVessels();
+        return Ok(vesselsDto);
     }
 
-    [HttpGet("searchByName", Name = "GetVesselByName")]
-    public ActionResult<IEnumerable<VesselDto>> GetByName([FromQuery] string name)
+    [HttpGet("{name}", Name = "GetVesselByName")]
+    public async Task<ActionResult<VesselDto>> Get(string name)
     {
-        var vessels = _context.Vessels
-            .Where(v => v.Name.Value.Contains(name, StringComparison.OrdinalIgnoreCase))
-            .ToList();
+        List<string> errors = new List<string>();
 
-        if (vessels.Count == 0)
-        {
-            return NotFound();
-        }
-
-        var vesselDtos = vessels.Select(vessel => vessel.ToDTO()).ToList();
-        return Ok(vesselDtos);
+        var vesselDto = await _vesselService.GetVesselByName(name, errors);
+        if (vesselDto == null)
+            return NotFound(errors);
+        return Ok(vesselDto);
     }
 
-    [HttpGet("searchByIMO", Name = "GetVesselByIMO")]
-    public ActionResult<VesselDto> GetByIMO([FromQuery] string imo)
+    [HttpPost(Name = "PostVessel")]
+    public async Task<ActionResult<VesselDto>> Create(VesselDto vesselDto)
     {
-        var vessel = _context.Vessels
-            .FirstOrDefault(v => v.ImoIdentifier.Value.Equals(imo, StringComparison.OrdinalIgnoreCase));
+        List<string> errors = new List<string>();
 
-        if (vessel == null)
-        {
-            return NotFound();
-        }
+        var createdVessel = await _vesselService.Add(vesselDto, errors);
+        if (createdVessel == null)
+            return BadRequest(errors);
 
-        return Ok(vessel.ToDTO());
+        return CreatedAtAction(nameof(Get), new { name = createdVessel?.Name }, createdVessel);
     }
 
-    [HttpGet("searchByOwner", Name = "GetVesselByOwner")]
-    public ActionResult<IEnumerable<VesselDto>> GetByOwner([FromQuery] string ownerLegalName)
+    [HttpPut("{name}", Name = "UpdateVessel")]
+    public async Task<ActionResult<VesselDto>> Update(string name, VesselDto vesselDto)
     {
-        var vessels = _context.Vessels
-            .Where(v => v.Owner.LegalName.Value.Contains(ownerLegalName, StringComparison.OrdinalIgnoreCase))
-            .ToList();
+        List<string> errors = new List<string>();
 
-        if (vessels.Count == 0)
-        {
-            return NotFound();
-        }
+        var updatedVessel = await _vesselService.Update(name, vesselDto, errors);
+        if (updatedVessel == null)
+            return BadRequest(errors);
 
-        var vesselDtos = vessels.Select(vessel => vessel.ToDTO()).ToList();
-        return Ok(vesselDtos);
-    }
-
-    [HttpPost(Name = "CreateVessel")]
-    public ActionResult<VesselDto> Create(Vessel vessel)
-    {
-        _context.Vessels.Add(vessel);
-        _context.SaveChanges();
-        return CreatedAtAction(nameof(GetAll), new { id = vessel.Id }, vessel.ToDTO());
-    }
-
-    [HttpDelete("{ImoNumber}", Name = "DeleteVessel")]
-    public IActionResult Delete(string ImoNumber)
-    {
-        var vessel = _context.Vessels.FirstOrDefault(v => v.ImoIdentifier.Value == ImoNumber);
-        if (vessel == null)
-        {
-            return NotFound();
-        }
-
-        _context.Vessels.Remove(vessel);
-        _context.SaveChanges();
-        return Ok();
-    }
-
-    [HttpPut("{ImoNumber}", Name = "UpdateVessel")]
-    public IActionResult Update(string ImoNumber, VesselDto vesselDto)
-    {
-        if (ImoNumber != vesselDto.ImoNumber)
-        {
-            return BadRequest();
-        }
-
-        var vessel = _context.Vessels.FirstOrDefault(v => v.ImoIdentifier.Value == ImoNumber);
-        if (vessel == null)
-        {
-            return NotFound();
-        }
-
-        vessel.Update(vesselDto);
-        _context.SaveChanges();
-        return Ok();
+        return Ok(updatedVessel);
     }
 }

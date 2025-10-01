@@ -36,7 +36,7 @@ public class Vessel : IDTOAble<VesselDto>
         {
             Name = this.Name.Value,
             ImoNumber = this.ImoIdentifier.Value,
-            Type = this.Type,
+            Type = this.Type.ToDTO(),
             Owner = this.Owner.ToDTO()
         };
     }
@@ -48,6 +48,6 @@ public class Vessel : IDTOAble<VesselDto>
 
         Name = new Designation { Value = vessel.Name };
         ImoIdentifier = new ImoNumber { Value = vessel.ImoNumber };
-        Type.Update(vessel.Type.ToDTO());
+        Type.Update(vessel.Type);
     }
 }

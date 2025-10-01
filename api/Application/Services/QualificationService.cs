@@ -1,5 +1,6 @@
 namespace Application.Services;
 
+using Api.Application.Exceptions;
 using Api.Domain.Model;
 using Domain.IRepository;
 using Domain.Model.Generic;
@@ -31,34 +32,30 @@ public class QualificationService
 		return qualification.ToDTO();
 	}
 
-	public async Task<QualificationDto?> Add(QualificationDto qualificationDto, List<string> errorMessage)
+	public async Task<QualificationDto?> Add(QualificationDto qualificationDto)
 	{
 		bool exists = await _qualificationRepository.GetQualificationByNameAsync(qualificationDto.QualificationName) != null;
 
 		if (exists)
-		{
-			errorMessage.Add("Qualification with the same name already exists.");
-			return null;
-		}
+			throw new EntityAlreadyExistsException("Qualification with the same name already exists.");
 
 		Qualification qualification = new Qualification(
 			Guid.NewGuid(),
 			new Designation { Value = qualificationDto.QualificationName }
 		);
+
 		Qualification savedQualification = await _qualificationRepository.Add(qualification);
 		QualificationDto savedQualificationDto = savedQualification.ToDTO();
 
 		return savedQualificationDto;
 	}
 
-	public async Task<QualificationDto?> Update(string name, QualificationDto qualificationDto, List<string> errorMessage)
+	public async Task<QualificationDto?> Update(string name, QualificationDto qualificationDto)
 	{
-		bool updateResult = await _qualificationRepository.Update(name, qualificationDto, errorMessage);
-		if (!updateResult)
-		{
-			return null;
-		}
+		Qualification? updateResult = await _qualificationRepository.Update(name, qualificationDto);
+		if (updateResult == null)
+			throw new EntityNotFoundException("Qualification to update not found.");
 
-		return await GetQualificationByName(qualificationDto.QualificationName, errorMessage);
+		return updateResult.ToDTO();
 	}
 }
