@@ -8,5 +8,5 @@ public interface IVesselRepository : IGenericRepository<Vessel>
     Task<Vessel> GetVesselByNameAsync(string name);
 
     new Task<Vessel> Add(Vessel vessel);
-    Task<bool> Update(string name, VesselDto vesselDto, List<string> errorMessage);
+    Task<Vessel> Update(string name, VesselDto vesselDto);
 }

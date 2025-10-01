@@ -4,6 +4,7 @@ using Domain.IRepository;
 using Api.Domain.Model;
 using DAL;
 using Microsoft.EntityFrameworkCore;
+using Api.Application.Exceptions;
 
 public class VesselRepository : GenericRepository<Vessel>, IVesselRepository
 {
@@ -55,29 +56,23 @@ public class VesselRepository : GenericRepository<Vessel>, IVesselRepository
         }
     }
 
-    public async Task<bool> Update(string name, VesselDto vesselDto, List<string> errorMessage)
+    public async Task<Vessel> Update(string name, VesselDto vesselDto)
     {
         try
         {
             Vessel? vessel = await GetVesselByNameAsync(name);
             if (vessel == null)
-            {
-                errorMessage.Add("Vessel not found.");
-                return false;
-            }
+                throw new EntityNotFoundException("Vessel not found.");
 
             bool exists = await _context.Vessels
                 .AnyAsync(q => q.Name.Value.Equals(vesselDto.Name) && !q.Name.Value.Equals(name));
 
             if (exists)
-            {
-                errorMessage.Add("Another vessel with the same name already exists.");
-                return false;
-            }
+                throw new EntityAlreadyExistsException("A vessel with this name already exists.");
 
             vessel.Update(vesselDto);
             await _context.SaveChangesAsync();
-            return true;
+            return vessel;
         }
         catch
         {

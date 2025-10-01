@@ -1,5 +1,6 @@
 namespace Application.Services;
 
+using Api.Application.Exceptions;
 using Api.Domain.Model;
 using Api.Models;
 using Domain.IRepository;
@@ -10,11 +11,13 @@ public class VesselService
 {
     private readonly IVesselRepository _vesselRepository;
     private readonly  IVesselTypeRepository _vesselTypeRepository;
+    private readonly IShippingAgentOrgRepository _shippingAgentOrgRepository;
 
-    public VesselService(IVesselRepository vesselRepository)
+    public VesselService(IVesselRepository vesselRepository, IVesselTypeRepository vesselTypeRepository, IShippingAgentOrgRepository shippingAgentOrgRepository)
     {
         _vesselRepository = vesselRepository;
-        _vesselTypeRepository = null;
+        _vesselTypeRepository = vesselTypeRepository;
+        _shippingAgentOrgRepository = shippingAgentOrgRepository;
     }
 
     public async Task<IEnumerable<VesselDto>> GetVessels()
@@ -23,68 +26,47 @@ public class VesselService
         return vessels.Select(v => v.ToDTO()).ToList();
     }
 
-    public async Task<VesselDto?> GetVesselByName(string name, List<string> errorMessage)
+    public async Task<VesselDto?> GetVesselByName(string name)
     {
         Vessel vessel = await _vesselRepository.GetVesselByNameAsync(name);
         if (vessel == null)
-        {
-            errorMessage.Add("Vessel not found.");
-            return null;
-        }
+            throw new EntityNotFoundException("Vessel not found.");
         return vessel.ToDTO();
     }
 
-    public async Task<VesselDto?> Add(VesselDto vesselDto, List<string> errorMessage)
+    public async Task<VesselDto?> Add(VesselDto vesselDto)
     {
         bool exists = await _vesselRepository.GetVesselByNameAsync(vesselDto.Name) != null;
-
         if (exists)
-        {
-            errorMessage.Add("Vessel with the same name already exists.");
-            return null;
-        }
+            throw new EntityAlreadyExistsException("This vessel already exists");
 
         VesselType? vesselType = await _vesselTypeRepository.GetVesselTypeByNameAsync(vesselDto.Type.Name);
+        if (vesselType == null)
+            throw new EntityNotFoundException("The referenced vessel type does not exist");
+
+        ShippingAgentOrganization? org = _shippingAgentOrgRepository.GetByName(vesselDto.Owner.Name);
+        if (org == null)
+            throw new EntityNotFoundException("The referenced shipping agent organization does not exist");
 
         Vessel vessel = new Vessel(
             Guid.NewGuid(),
             new Designation { Value = vesselDto.Name },
             new ImoNumber { Value = vesselDto.ImoNumber },
             vesselType,
-            new ShippingAgentOrganization(
-
-                Guid.NewGuid(),
-                new Designation { Value = vesselDto.Owner.Name },
-                vesselDto.Owner.AltNames?.Select(n => new Designation { Value = n }).ToList() ?? new List<Designation>(),
-                new Address(
-                    vesselDto.Owner.Address.Street,
-                    vesselDto.Owner.Address.City,
-                    vesselDto.Owner.Address.PostalCode,
-                    vesselDto.Owner.Address.Country
-                ),
-                new TaxNumber { Value = vesselDto.Owner.TaxNumber },
-                vesselDto.Owner.Representatives?.Select(r => new Representative(
-                    Guid.NewGuid(),
-                    r.CitizenshipId,
-                    new Designation { Value = r.Name },
-                    new Email { Value = r.EmailAddress },
-                    new PhoneNumber { Value = r.Phone }
-                )).ToList() ?? new List<Representative>()
-            )
+            org
         );
+
         Vessel savedVessel = await _vesselRepository.Add(vessel);
         VesselDto savedVesselDto = savedVessel.ToDTO();
 
         return savedVesselDto;
     }
 
-    public async Task<VesselDto?> Update(string name, VesselDto vesselDto, List<string> errorMessage)
+    public async Task<VesselDto?> Update(string name, VesselDto vesselDto)
     {
-        bool updateResult = await _vesselRepository.Update(name, vesselDto, errorMessage);
-        if (!updateResult)
-        {
-            return null;
-        }
+        Vessel? updateResult = await _vesselRepository.Update(name, vesselDto);
+        if (updateResult == null)
+            throw new PersistencyFailedException("Unable to perform an update");
 
         Vessel updatedVessel = await _vesselRepository.GetVesselByNameAsync(vesselDto.Name);
         return updatedVessel.ToDTO();

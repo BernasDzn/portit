@@ -2,6 +2,8 @@ using Api.Domain.Model;
 using DAL;
 using DataModel.Repository;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
+using Api.Application.Exceptions;
 
 public class VesselTypeRepository : GenericRepository<VesselType>, IVesselTypeRepository
 {
@@ -64,7 +66,7 @@ public class VesselTypeRepository : GenericRepository<VesselType>, IVesselTypeRe
         }
         catch
         {
-            throw;
+            throw new PersistencyFailedException("Failed to select a vessel type by name");
         }
     }
 

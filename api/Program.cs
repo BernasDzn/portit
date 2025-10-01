@@ -1,4 +1,4 @@
-using Api.Domain.Model;
+using Api.Models;
 using Application.Services;
 using DAL;
 using DataModel.Repository;
@@ -24,6 +24,8 @@ builder.Services.AddTransient<DockService>();
 builder.Services.AddTransient<IVesselTypeRepository, VesselTypeRepository>();
 builder.Services.AddTransient<VesselTypeService>();
 builder.Services.AddTransient<IVesselRepository, VesselRepository>();
+builder.Services.AddTransient<IVesselTypeRepository, VesselTypeRepository>();
+builder.Services.AddTransient<IShippingAgentOrgRepository, ShippingAgentOrgRepository>();
 builder.Services.AddTransient<VesselService>();
 
 var app = builder.Build();

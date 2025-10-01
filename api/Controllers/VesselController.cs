@@ -31,35 +31,43 @@ public class VesselController : ControllerBase
     [HttpGet("{name}", Name = "GetVesselByName")]
     public async Task<ActionResult<VesselDto>> Get(string name)
     {
-        List<string> errors = new List<string>();
-
-        var vesselDto = await _vesselService.GetVesselByName(name, errors);
+        var vesselDto = await _vesselService.GetVesselByName(name);
         if (vesselDto == null)
-            return NotFound(errors);
+            return NotFound("Vessel not found");
         return Ok(vesselDto);
     }
 
     [HttpPost(Name = "PostVessel")]
     public async Task<ActionResult<VesselDto>> Create(VesselDto vesselDto)
     {
-        List<string> errors = new List<string>();
+        try
+        {
+            var createdVessel = await _vesselService.Add(vesselDto);
+            if (createdVessel == null)
+                return BadRequest("Could not create vessel");
 
-        var createdVessel = await _vesselService.Add(vesselDto, errors);
-        if (createdVessel == null)
-            return BadRequest(errors);
-
-        return CreatedAtAction(nameof(Get), new { name = createdVessel?.Name }, createdVessel);
+            return CreatedAtAction(nameof(Get), new { name = createdVessel?.Name }, createdVessel);
+        }
+        catch (System.Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
 
     [HttpPut("{name}", Name = "UpdateVessel")]
     public async Task<ActionResult<VesselDto>> Update(string name, VesselDto vesselDto)
     {
-        List<string> errors = new List<string>();
+        try
+        {
+            var updatedVessel = await _vesselService.Update(name, vesselDto);
+            if (updatedVessel == null)
+                return BadRequest("Could not update vessel");
 
-        var updatedVessel = await _vesselService.Update(name, vesselDto, errors);
-        if (updatedVessel == null)
-            return BadRequest(errors);
-
-        return Ok(updatedVessel);
+            return Ok(updatedVessel);
+        }
+        catch (System.Exception e)
+        {
+            return BadRequest(e.Message);
+        }
     }
 }
