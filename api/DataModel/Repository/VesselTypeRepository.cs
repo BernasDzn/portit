@@ -70,16 +70,11 @@ public class VesselTypeRepository : GenericRepository<VesselType>, IVesselTypeRe
         }
     }
 
-    public async Task<bool> Update(string name, VesselTypeDto vesselTypeDto)
+    public async Task<bool> Update(VesselType vesselType)
     {
         try
         {
-            VesselType vtype = await GetVesselTypeByNameAsync(name);
-            if (vtype == null)
-                throw new Exception("Vessel Type not found.");
-
-            vtype.Update(vesselTypeDto);
-            _context.VesselTypes.Update(vtype);
+            _context.VesselTypes.Update(vesselType);
             await _context.SaveChangesAsync();
             return true;
         }

@@ -20,7 +20,7 @@ public class VesselTypeService
     {
         VesselType vtype = await _vesselTypeRepository.GetVesselTypeByNameAsync(name);
         if (vtype == null)
-            throw new Exception("Vessel Type with the specified name not found.");
+            return null;
         
 
         return vtype.ToDTO();
@@ -30,7 +30,7 @@ public class VesselTypeService
     {
         VesselType vtype = await _vesselTypeRepository.GetVesselTypeByDescriptionAsync(description);
         if (vtype == null)
-            throw new Exception("Vessel Type with the specified description not found.");
+            return null;
 
         return vtype.ToDTO();
     }
@@ -52,7 +52,17 @@ public class VesselTypeService
 
     public async Task<VesselTypeDto?> Update(string name, VesselTypeDto vesselTypeDto)
     {
-        bool updated = await _vesselTypeRepository.Update(name, vesselTypeDto);
+        VesselType vesselType = await _vesselTypeRepository.GetVesselTypeByNameAsync(name);
+        if (vesselType == null)
+            throw new Exception("Vessel Type not found.");
+
+        vesselType.UpdateName(vesselTypeDto.Name);
+        vesselType.UpdateDescription(vesselTypeDto.Description);
+        vesselType.UpdateMaxNumberOfRows(vesselTypeDto.MaxNumberOfRows);
+        vesselType.UpdateMaxNumberOfBays(vesselTypeDto.MaxNumberOfBays);
+        vesselType.UpdateMaxNumberOfTiers(vesselTypeDto.MaxNumberOfTiers);
+
+        bool updated = await _vesselTypeRepository.Update(vesselType);
         if (!updated)
         {
             throw new Exception("Failed to update Vessel Type.");

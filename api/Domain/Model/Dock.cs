@@ -16,7 +16,7 @@ public class Dock : IDTOAble<DockDto>
 
     //EF Core
     protected Dock() { }
-    public Dock(Guid id, Designation name, Designation location, uint length, uint depth, uint maxDraft, List<VesselType> supportedVesselTypes)
+    public Dock(Guid id, Designation name, Designation location, uint length, uint depth, uint maxDraft, ICollection<VesselType> supportedVesselTypes)
     {
         if (supportedVesselTypes == null || supportedVesselTypes.Count == 0)
             throw new ArgumentException("Invalid arguments!");
@@ -30,39 +30,40 @@ public class Dock : IDTOAble<DockDto>
         SupportedVesselTypes = supportedVesselTypes;
     }
 
-    public bool UpdateName(string newName)
+    public void UpdateName(string newName)
     {
+        if (string.IsNullOrEmpty(newName))
+            throw new ArgumentException("Name cannot be null or empty", nameof(newName));
+
         Name = new Designation { Value = newName };
-        return true;
     }
-    public bool UpdateLocation(string newLocation)
+    public void UpdateLocation(string newLocation)
     {
+        if (string.IsNullOrEmpty(newLocation))
+            throw new ArgumentException("Location cannot be null or empty", nameof(newLocation));
+            
         Location = new Designation { Value = newLocation };
-        return true;
     }
-    public bool UpdateLength(uint new_length)
+    public void UpdateLength(uint new_length)
     {
         Length = new_length;
-        return true;
     }
-    public bool UpdateDepth(uint new_depth)
+    public void UpdateDepth(uint new_depth)
     {
         Depth = new_depth;
-        return true;
     }
-    public bool UpdateMaxDraft(uint new_maxDraft)
+    public void UpdateMaxDraft(uint new_maxDraft)
     {
         MaxDraft = new_maxDraft;
-        return true;
     }
 
-    public bool UpdateVesselTypes(List<VesselType> new_vesselTypes)
+    public void UpdateVesselTypes(ICollection<VesselType> new_vesselTypes)
     {
         if (new_vesselTypes == null || new_vesselTypes.Count == 0)
-            return false;
+            throw new ArgumentException("Invalid vessel types", nameof(new_vesselTypes));
 
+        SupportedVesselTypes.Clear();
         SupportedVesselTypes = new_vesselTypes;
-        return true;
     }
 
     public DockDto ToDTO()
@@ -74,8 +75,7 @@ public class Dock : IDTOAble<DockDto>
             Length = this.Length,
             Depth = this.Depth,
             MaxDraft = this.MaxDraft,
-            //SupportedVesselTypes = this.SupportedVesselTypes.Select(vt => vt.ToDTO()).ToList()
-            SupportedVesselTypes = this.SupportedVesselTypes.ToList()
+            SupportedVesselTypes = this.SupportedVesselTypes.Select(vt => vt.ToDTO()).ToList()
         };
     }
 }

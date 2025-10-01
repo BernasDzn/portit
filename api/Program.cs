@@ -24,7 +24,6 @@ builder.Services.AddTransient<DockService>();
 builder.Services.AddTransient<IVesselTypeRepository, VesselTypeRepository>();
 builder.Services.AddTransient<VesselTypeService>();
 builder.Services.AddTransient<IVesselRepository, VesselRepository>();
-builder.Services.AddTransient<IVesselTypeRepository, VesselTypeRepository>();
 builder.Services.AddTransient<IShippingAgentOrgRepository, ShippingAgentOrgRepository>();
 builder.Services.AddTransient<VesselService>();
 

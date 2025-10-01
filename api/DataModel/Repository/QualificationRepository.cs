@@ -30,13 +30,13 @@ public class QualificationRepository : GenericRepository<Qualification>, IQualif
 		}
 	}
 
-	public async Task<Qualification?> GetQualificationByNameAsync(string name)
+	public async Task<Qualification> GetQualificationByNameAsync(string name)
 	{
 		try
 		{
 			Qualification? qualification = await _context.Qualifications
 				.FirstOrDefaultAsync(q => q.QualificationName.Value.Equals(name));
-			return qualification;
+			return qualification!;
 		}
 		catch
 		{
@@ -58,16 +58,10 @@ public class QualificationRepository : GenericRepository<Qualification>, IQualif
 		}
 	}
 
-	public async Task<Qualification> Update(string name, QualificationDto qualificationDto)
+	public async Task<Qualification> Update(Qualification qualification)
 	{
 		try
 		{
-			Qualification? qualification = await GetQualificationByNameAsync(name);
-			if (qualification == null)
-				throw new EntityNotFoundException("Qualification not found");
-
-			qualification.UpdateQualificationName(qualificationDto.QualificationName);
-
 			_context.Qualifications.Update(qualification);
 			await _context.SaveChangesAsync();
 			return qualification;

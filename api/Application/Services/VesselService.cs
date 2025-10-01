@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 public class VesselService
 {
     private readonly IVesselRepository _vesselRepository;
-    private readonly  IVesselTypeRepository _vesselTypeRepository;
+    private readonly IVesselTypeRepository _vesselTypeRepository;
     private readonly IShippingAgentOrgRepository _shippingAgentOrgRepository;
 
     public VesselService(IVesselRepository vesselRepository, IVesselTypeRepository vesselTypeRepository, IShippingAgentOrgRepository shippingAgentOrgRepository)
@@ -64,7 +64,24 @@ public class VesselService
 
     public async Task<VesselDto?> Update(string name, VesselDto vesselDto)
     {
-        Vessel? updateResult = await _vesselRepository.Update(name, vesselDto);
+        Vessel vessel = await _vesselRepository.GetVesselByNameAsync(name);
+        if (vessel == null)
+            throw new EntityNotFoundException("Vessel not found.");
+
+        VesselType? vesselType = await _vesselTypeRepository.GetVesselTypeByNameAsync(vesselDto.Type.Name);
+        if (vesselType == null)
+            throw new EntityNotFoundException("The referenced vessel type does not exist");
+
+        ShippingAgentOrganization? org = _shippingAgentOrgRepository.GetByName(vesselDto.Owner.Name);
+        if (org == null)
+            throw new EntityNotFoundException("The referenced shipping agent organization does not exist");
+
+        vessel.UpdateName(vesselDto.Name);
+        vessel.UpdateImoNumber(vesselDto.ImoNumber);
+        vessel.UpdateVesselType(vesselType);
+        vessel.UpdateOwner(org);
+
+        Vessel? updateResult = await _vesselRepository.Update(vessel);
         if (updateResult == null)
             throw new PersistencyFailedException("Unable to perform an update");
 

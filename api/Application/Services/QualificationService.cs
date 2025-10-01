@@ -52,7 +52,13 @@ public class QualificationService
 
 	public async Task<QualificationDto?> Update(string name, QualificationDto qualificationDto)
 	{
-		Qualification? updateResult = await _qualificationRepository.Update(name, qualificationDto);
+		Qualification qualification = await _qualificationRepository.GetQualificationByNameAsync(name);
+		if (qualification == null)
+			throw new EntityNotFoundException("Qualification to update not found.");
+
+		qualification.UpdateQualificationName(qualificationDto.QualificationName);
+
+		Qualification? updateResult = await _qualificationRepository.Update(qualification);
 		if (updateResult == null)
 			throw new EntityNotFoundException("Qualification to update not found.");
 

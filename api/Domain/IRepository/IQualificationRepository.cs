@@ -8,5 +8,5 @@ public interface IQualificationRepository : IGenericRepository<Qualification>
 	Task<Qualification> GetQualificationByNameAsync(string name);
 
 	new Task<Qualification> Add(Qualification qualification);
-	Task<Qualification> Update(string name, QualificationDto qualificationDto);
+	Task<Qualification> Update(Qualification qualification);
 }

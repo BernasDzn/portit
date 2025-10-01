@@ -61,22 +61,36 @@ public class DockController : ControllerBase
 	[HttpPost(Name = "CreateDock")]
 	public async Task<ActionResult<DockDto>> Create(DockDto dockDto)
 	{
-		DockDto? createdDock = await _dockService.Add(dockDto);
+		try
+		{
+			DockDto? createdDock = await _dockService.Add(dockDto);
 
-		if (createdDock == null)
-			return BadRequest();
+			if (createdDock == null)
+				return BadRequest();
 
-		return CreatedAtAction(nameof(GetAll), new { name = createdDock?.Name }, createdDock);
+			return CreatedAtAction(nameof(GetAll), new { name = createdDock?.Name }, createdDock);
+		}
+		catch (System.Exception e)
+		{
+			return BadRequest(e.Message);
+		}
 	}
 
 	[HttpPut("{name}", Name = "UpdateDock")]
 	public async Task<IActionResult> Update(string name, DockDto dockDto)
 	{
-		DockDto? updatedDock = await _dockService.Update(name, dockDto);
-		if (updatedDock == null)
-			return BadRequest();
+		try
+		{
+			DockDto? updatedDock = await _dockService.Update(name, dockDto);
+			if (updatedDock == null)
+				return BadRequest();
 
-		return Ok(updatedDock);
+			return Ok(updatedDock);
+		}
+		catch (System.Exception e)
+		{
+			return BadRequest(e.Message);
+		}
 	}
 
 }

@@ -12,6 +12,7 @@ public class VesselType : IDTOAble<VesselTypeDto>
     public uint MaxNumberOfRows { get; private set; }
     public uint MaxNumberOfBays { get; private set; }
     public uint MaxNumberOfTiers { get; private set; }
+    public virtual ICollection<Dock> Docks { get; private set; }
 
     //EF Core
     protected VesselType() { }
@@ -36,13 +37,31 @@ public class VesselType : IDTOAble<VesselTypeDto>
             MaxNumberOfTiers = this.MaxNumberOfTiers
         };
     }
-
-    public void Update(VesselTypeDto vtype)
+    
+    public void UpdateName(string name)
     {
-        Name = new Designation { Value = vtype.Name };
-        Description = new Designation { Value = vtype.Description };
-        MaxNumberOfRows = vtype.MaxNumberOfRows;
-        MaxNumberOfBays = vtype.MaxNumberOfBays;
-        MaxNumberOfTiers = vtype.MaxNumberOfTiers;
+        if (string.IsNullOrEmpty(name))
+            throw new ArgumentException("Name cannot be null or empty", nameof(name));
+
+        Name = new Designation { Value = name };
+    }
+    public void UpdateDescription(string description)
+    {
+        if (string.IsNullOrEmpty(description))
+            throw new ArgumentException("Description cannot be null or empty", nameof(description));
+
+        Description = new Designation { Value = description };
+    }
+    public void UpdateMaxNumberOfRows(uint maxNumberOfRows)
+    {
+        MaxNumberOfRows = maxNumberOfRows;
+    }
+    public void UpdateMaxNumberOfBays(uint maxNumberOfBays)
+    {
+        MaxNumberOfBays = maxNumberOfBays;
+    }
+    public void UpdateMaxNumberOfTiers(uint maxNumberOfTiers)
+    {
+        MaxNumberOfTiers = maxNumberOfTiers;
     }
 }

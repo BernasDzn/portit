@@ -41,13 +41,33 @@ public class Vessel : IDTOAble<VesselDto>
         };
     }
 
-    internal void Update(VesselDto vessel)
+    public void UpdateName(string name)
     {
-        if (vessel.Name.IsNullOrEmpty()) throw new ArgumentException("Name cannot be null or empty", nameof(vessel.Name));
-        if (vessel.Type == null) throw new ArgumentNullException(nameof(vessel.Type), "Vessel Type cannot be null");
-
-        Name = new Designation { Value = vessel.Name };
-        ImoIdentifier = new ImoNumber { Value = vessel.ImoNumber };
-        Type.Update(vessel.Type);
+        if (string.IsNullOrEmpty(name))
+            throw new ArgumentException("Name cannot be null or empty", nameof(name));
+            
+        Name = new Designation { Value = name };
     }
+    public void UpdateImoNumber(string imoNumber)
+    {
+        if (string.IsNullOrEmpty(imoNumber))
+            throw new ArgumentException("IMO Number cannot be null or empty", nameof(imoNumber));
+
+        ImoIdentifier = new ImoNumber { Value = imoNumber };
+    }
+    public void UpdateVesselType(VesselType vesselType)
+    {
+        if (vesselType == null)
+            throw new ArgumentNullException(nameof(vesselType), "Vessel Type cannot be null");
+
+        Type = vesselType;
+    }
+    public void UpdateOwner(ShippingAgentOrganization owner)
+    {
+        if (owner == null)
+            throw new ArgumentNullException(nameof(owner), "Owner cannot be null");
+
+        Owner = owner;
+    }
+
 }

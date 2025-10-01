@@ -7,5 +7,5 @@ public interface IVesselTypeRepository : IGenericRepository<VesselType>
     Task<VesselType> GetVesselTypeByNameAsync(string name);
     Task<VesselType> GetVesselTypeByDescriptionAsync(string description);
     new Task<VesselType> Add(VesselType vesselType);
-    Task<bool> Update(string name, VesselTypeDto vesselTypeDto);
+    Task<bool> Update(VesselType vesselTypeDto);
 }

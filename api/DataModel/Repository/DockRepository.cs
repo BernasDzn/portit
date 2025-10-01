@@ -1,3 +1,4 @@
+using Api.Application.Exceptions;
 using Api.Domain.Model;
 using DAL;
 using Domain.IRepository;
@@ -26,12 +27,12 @@ public class DockRepository : GenericRepository<Dock>, IDockRepository
         }
     }
 
-    public async Task<Dock?> GetDockByNameAsync(string name)
+    public async Task<Dock> GetDockByNameAsync(string name)
     {
         try
         {
             Dock? dock = await _context.Docks.FirstOrDefaultAsync(d => d.Name.Value.Equals(name));
-            return dock;
+            return dock!;
         }
         catch
         {
@@ -54,12 +55,12 @@ public class DockRepository : GenericRepository<Dock>, IDockRepository
         }
     }
 
-    public async Task<Dock?> GetDockByLocationAsync(string location)
+    public async Task<Dock> GetDockByLocationAsync(string location)
     {
         try
         {
             Dock? dock = await _context.Docks.FirstOrDefaultAsync(d => d.Location.Value.Equals(location));
-            return dock;
+            return dock!;
         }
         catch
         {
@@ -71,9 +72,6 @@ public class DockRepository : GenericRepository<Dock>, IDockRepository
     {
         try
         {
-            foreach (VesselType vt in dock.SupportedVesselTypes)
-                _context.VesselTypes.Attach(vt);
-
             _context.Docks.Add(dock);
             await _context.SaveChangesAsync();
             return dock;
@@ -84,22 +82,10 @@ public class DockRepository : GenericRepository<Dock>, IDockRepository
         }
     }
 
-    public async Task<bool> Update(string name, DockDto dockDto)
+    public async Task<bool> Update(Dock dock)
     {
         try
         {
-            Dock? dock = await GetDockByNameAsync(name);
-
-            if (dock == null)
-                throw new Exception("Dock not found.");
-
-            dock.UpdateName(dockDto.Name);
-            dock.UpdateLocation(dockDto.Location);
-            dock.UpdateDepth(dockDto.Depth);
-            dock.UpdateLength(dockDto.Length);
-            dock.UpdateMaxDraft(dockDto.MaxDraft);
-            dock.UpdateVesselTypes(dockDto.SupportedVesselTypes);
-
             _context.Docks.Update(dock);
             await _context.SaveChangesAsync();
             return true;

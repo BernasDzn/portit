@@ -28,13 +28,13 @@ public class VesselRepository : GenericRepository<Vessel>, IVesselRepository
         }
     }
 
-    public async Task<Vessel?> GetVesselByNameAsync(string name)
+    public async Task<Vessel> GetVesselByNameAsync(string name)
     {
         try
         {
             Vessel? vessel = await _context.Vessels
                 .FirstOrDefaultAsync(q => q.Name.Value.Equals(name));
-            return vessel;
+            return vessel!;
         }
         catch
         {
@@ -56,21 +56,11 @@ public class VesselRepository : GenericRepository<Vessel>, IVesselRepository
         }
     }
 
-    public async Task<Vessel> Update(string name, VesselDto vesselDto)
+    public async Task<Vessel> Update(Vessel vessel)
     {
         try
         {
-            Vessel? vessel = await GetVesselByNameAsync(name);
-            if (vessel == null)
-                throw new EntityNotFoundException("Vessel not found.");
-
-            bool exists = await _context.Vessels
-                .AnyAsync(q => q.Name.Value.Equals(vesselDto.Name) && !q.Name.Value.Equals(name));
-
-            if (exists)
-                throw new EntityAlreadyExistsException("A vessel with this name already exists.");
-
-            vessel.Update(vesselDto);
+            _context.Vessels.Update(vessel);
             await _context.SaveChangesAsync();
             return vessel;
         }
