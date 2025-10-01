@@ -20,6 +20,8 @@ builder.Services.AddTransient<IQualificationRepository, QualificationRepository>
 builder.Services.AddTransient<QualificationService>();
 builder.Services.AddTransient<IDockRepository, DockRepository>();
 builder.Services.AddTransient<DockService>();
+builder.Services.AddTransient<IVesselRepository, VesselRepository>();
+builder.Services.AddTransient<VesselService>();
 
 var app = builder.Build();
 
