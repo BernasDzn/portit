@@ -27,13 +27,13 @@ public class VesselRepository : GenericRepository<Vessel>, IVesselRepository
         }
     }
 
-    public async Task<Vessel> GetVesselByNameAsync(string name)
+    public async Task<Vessel?> GetVesselByNameAsync(string name)
     {
         try
         {
             Vessel? vessel = await _context.Vessels
                 .FirstOrDefaultAsync(q => q.Name.Value.Equals(name));
-            return vessel!;
+            return vessel;
         }
         catch
         {

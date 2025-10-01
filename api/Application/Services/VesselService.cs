@@ -9,10 +9,12 @@ using Microsoft.EntityFrameworkCore;
 public class VesselService
 {
     private readonly IVesselRepository _vesselRepository;
+    private readonly  IVesselTypeRepository _vesselTypeRepository;
 
     public VesselService(IVesselRepository vesselRepository)
     {
         _vesselRepository = vesselRepository;
+        _vesselTypeRepository = null;
     }
 
     public async Task<IEnumerable<VesselDto>> GetVessels()
@@ -42,11 +44,13 @@ public class VesselService
             return null;
         }
 
+        VesselType? vesselType = await _vesselTypeRepository.GetVesselTypeByNameAsync(vesselDto.Type.Name);
+
         Vessel vessel = new Vessel(
             Guid.NewGuid(),
             new Designation { Value = vesselDto.Name },
             new ImoNumber { Value = vesselDto.ImoNumber },
-            vesselDto.Type,
+            vesselType,
             new ShippingAgentOrganization(
 
                 Guid.NewGuid(),
