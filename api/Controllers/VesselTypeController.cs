@@ -11,86 +11,69 @@ public class VesselTypeController : ControllerBase
 {
 
 	private readonly ILogger<VesselTypeController> _logger;
-	private readonly ApiContext _context;
+	private readonly VesselTypeService _vesselTypeService;
 
-	public VesselTypeController(ApiContext context, ILogger<VesselTypeController> logger)
+	public VesselTypeController(VesselTypeService vesselTypeService, ILogger<VesselTypeController> logger)
 	{
-		_context = context;
+		_vesselTypeService = vesselTypeService;
 		_logger = logger;
 	}
 
 	[HttpGet(Name = "GetVesselTypes")]
-	public ActionResult<IEnumerable<VesselType>> GetAll()
+	public async Task<ActionResult<IEnumerable<VesselTypeDto>>> GetAll()
 	{
-		var vtypes = _context.VesselTypes.ToList();
-		var vtypesDtos = vtypes.Select(vtype => vtype.ToDTO()).ToList();
-
-		return Ok(vtypesDtos);
+		IEnumerable<VesselTypeDto> vtypes = await _vesselTypeService.GetVesselTypes();
+		return Ok(vtypes);
 	}
 
 	[HttpGet("searchByName", Name = "GetVesselTypesByName")]
-	public ActionResult<IEnumerable<VesselType>> GetByName([FromQuery] string name)
+	public async Task<ActionResult<VesselTypeDto>> GetByName([FromQuery] string name)
 	{
-		var vtypes = _context.VesselTypes
-			.Where(vtype => vtype.Name.Value.Contains(name, StringComparison.OrdinalIgnoreCase))
-			.ToList();
 
-		var vtypesDtos = vtypes.Select(vtype => vtype.ToDTO()).ToList();
+		VesselTypeDto? vtype = await _vesselTypeService.GetVesselTypeByName(name);
+		if (vtype == null)
+		{
+			return NotFound();
+		}
 
-		return Ok(vtypesDtos);
+		return Ok(vtype);
 	}
 
 	[HttpGet("searchByDescription", Name = "GetVesselTypesByDescription")]
-	public ActionResult<IEnumerable<VesselType>> GetByDescription([FromQuery] string description)
+	public async Task<ActionResult<VesselTypeDto>> GetByDescription([FromQuery] string description)
 	{
-		var vtypes = _context.VesselTypes
-			.Where(vtype => vtype.Description.Value.Contains(description, StringComparison.OrdinalIgnoreCase))
-			.ToList();
-		var vtypesDtos = vtypes.Select(vtype => vtype.ToDTO()).ToList();
-		return Ok(vtypesDtos);
+
+		VesselTypeDto? vtype = await _vesselTypeService.GetVesselTypeByDescription(description);
+
+		if (vtype == null)
+		{
+			return NotFound();
+		}
+
+		return Ok(vtype);
 	}
 
 	[HttpPost(Name = "CreateVesselType")]
-	public ActionResult<VesselTypeDto> Create(VesselTypeDto vtypeDto)
+	public async Task<ActionResult<VesselTypeDto>> Create(VesselTypeDto vesselTypeDto)
 	{
-		var vtype = new VesselType(Guid.NewGuid(), new Designation { Value = vtypeDto.Name }, new Designation { Value = vtypeDto.Description }, vtypeDto.MaxNumberOfRows, vtypeDto.MaxNumberOfBays, vtypeDto.MaxNumberOfTiers);
-		_context.VesselTypes.Add(vtype);
-		_context.SaveChanges();
-		return CreatedAtAction(nameof(GetAll), new { id = vtype.Id }, vtype.ToDTO());
-	}
+		VesselTypeDto? vTypeDto = await _vesselTypeService.Add(vesselTypeDto);
 
-	[HttpDelete("{id}", Name = "DeleteVesselType")]
-	public IActionResult Delete(Guid id)
-	{
-		var vtype = _context.VesselTypes.Find(id);
-		if (vtype == null)
-		{
-			return NotFound();
-		}
+		if (vTypeDto == null)
+			return BadRequest();
 
-		_context.VesselTypes.Remove(vtype);
-		_context.SaveChanges();
-		return NoContent();
+		return CreatedAtAction(nameof(GetAll), new { name = vTypeDto.Name }, vTypeDto);
 	}
 
 	[HttpPut("{name}", Name = "UpdateVesselType")]
-	public IActionResult Update(string name, VesselTypeDto vtypeDto)
+	public async Task<IActionResult> Update(string name, VesselTypeDto vesselTypeDto)
 	{
-		if (name != vtypeDto.Name)
-		{
+
+		VesselTypeDto? vTypeDto = await _vesselTypeService.Update(name, vesselTypeDto);
+
+		if (vTypeDto == null)
 			return BadRequest();
-		}
 
-		var vtype = _context.VesselTypes.FirstOrDefault(v => v.Name.Value == name);
-		if (vtype == null)
-		{
-			return NotFound();
-		}
-
-		vtype.Update(vtypeDto);
-		_context.VesselTypes.Update(vtype);
-		_context.SaveChanges();
-		return NoContent();
+		return Ok(vTypeDto);
 	}
 
 }

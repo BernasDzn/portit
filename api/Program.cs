@@ -1,3 +1,4 @@
+using Api.Domain.Model;
 using Application.Services;
 using DAL;
 using DataModel.Repository;
@@ -20,6 +21,8 @@ builder.Services.AddTransient<IQualificationRepository, QualificationRepository>
 builder.Services.AddTransient<QualificationService>();
 builder.Services.AddTransient<IDockRepository, DockRepository>();
 builder.Services.AddTransient<DockService>();
+builder.Services.AddTransient<IVesselTypeRepository, VesselTypeRepository>();
+builder.Services.AddTransient<VesselTypeService>();
 
 var app = builder.Build();
 
