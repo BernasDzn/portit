@@ -18,50 +18,39 @@ public class DockService
         return docks.Select(d => d.ToDTO()).ToList();
     }
 
-    public async Task<DockDto?> GetDockByName(string name, List<string> errorMessage)
+    public async Task<DockDto?> GetDockByName(string name)
     {
         Dock dock = await _dockRepository.GetDockByNameAsync(name);
         if (dock == null)
-        {
-            errorMessage.Add("Dock with the specified name not found.");
-            return null;
-        }
+            throw new Exception("Dock with the specified name not found.");
 
         return dock.ToDTO();
     }
 
-    public async Task<IEnumerable<DockDto>?> GetDockByVesselType(string vesselType, List<string> errorMessage)
+    public async Task<IEnumerable<DockDto>?> GetDockByVesselType(string vesselType)
     {
         IEnumerable<Dock> docks = await _dockRepository.GetDockByVesselTypeAsync(vesselType);
         if (docks == null || docks.Count() == 0)
-        {
-            errorMessage.Add("Dock(s) with the specified vessel type not found.");
-            return null;
-        }
+            throw new Exception("Dock(s) with the specified vessel type not found.");
 
         return docks.Select(d => d.ToDTO()).ToList();
     }
 
-    public async Task<DockDto?> GetDockByLocation(string location, List<string> errorMessage)
+    public async Task<DockDto?> GetDockByLocation(string location)
     {
         Dock dock = await _dockRepository.GetDockByLocationAsync(location);
         if (dock == null)
-        {
-            errorMessage.Add("Dock with the specified location not found.");
-            return null;
-        }
+            throw new Exception("Dock with the specified location not found.");
 
         return dock.ToDTO();
     }
 
-    public async Task<DockDto?> Add(DockDto dockDto, List<string> errorMessage)
+    public async Task<DockDto?> Add(DockDto dockDto)
     {
         bool exists = await _dockRepository.GetDockByNameAsync(dockDto.Name) != null;
         if (exists)
-        {
-            errorMessage.Add("A dock with that name already exists!");
-            return null;
-        }
+            throw new Exception("Dock add failed.");
+
 
         Dock dock = new Dock(Guid.NewGuid(), new Designation { Value = dockDto.Name }, new Designation { Value = dockDto.Location },
          dockDto.Length, dockDto.Depth, dockDto.MaxDraft, dockDto.SupportedVesselTypes);
@@ -72,16 +61,13 @@ public class DockService
         return savedDockDto;
     }
 
-    public async Task<DockDto?> Update(string name, DockDto dockDto, List<string> errorMessage)
-	{
-		bool updateResult = await _dockRepository.Update(name, dockDto, errorMessage);
-		if (!updateResult)
-		{
-            errorMessage.Add("Failed to update the dock.");
-			return null;
-		}
+    public async Task<DockDto?> Update(string name, DockDto dockDto)
+    {
+        bool updateResult = await _dockRepository.Update(name, dockDto);
+        if (!updateResult)
+            throw new Exception("Dock update failed.");
 
-		return await GetDockByName(dockDto.Name, errorMessage);
-	}
+        return await GetDockByName(dockDto.Name);
+    }
 
 }

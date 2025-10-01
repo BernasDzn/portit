@@ -28,11 +28,10 @@ public class DockController : ControllerBase
 	[HttpGet("searchByName", Name = "GetDocksByName")]
 	public async Task<ActionResult<IEnumerable<DockDto>>> GetByName([FromQuery] string designation)
 	{
-		List<string> errors = new List<string>();
-		var dockDto = await _dockService.GetDockByName(designation, errors);
+		DockDto? dockDto = await _dockService.GetDockByName(designation);
 
-		 if (dockDto == null)
-			return NotFound(errors);
+		if (dockDto == null)
+			return NotFound();
 
 		return Ok(dockDto);
 	}
@@ -40,11 +39,10 @@ public class DockController : ControllerBase
 	[HttpGet("searchByVesselType", Name = "GetDocksByVesselType")]
 	public async Task<ActionResult<IEnumerable<DockDto>>> GetByVesselType([FromQuery] string vesselType)
 	{
-		List<string> errors = new List<string>();
-		IEnumerable<DockDto>? docksDtos = await _dockService.GetDockByVesselType(vesselType, errors);
+		IEnumerable<DockDto>? docksDtos = await _dockService.GetDockByVesselType(vesselType);
 
 		if (docksDtos == null || !docksDtos.Any())
-			return NotFound(errors);
+			return NotFound();
 
 		return Ok(docksDtos);
 	}
@@ -52,11 +50,10 @@ public class DockController : ControllerBase
 	[HttpGet("searchByLocation", Name = "GetDocksByLocation")]
 	public async Task<ActionResult<IEnumerable<DockDto>>> GetByLocation([FromQuery] string location)
 	{
-		List<string> errors = new List<string>();
-		var dockDto = await _dockService.GetDockByLocation(location, errors);
+		DockDto? dockDto = await _dockService.GetDockByLocation(location);
 
 		if (dockDto == null)
-			return NotFound(errors);
+			return NotFound();
 
 		return Ok(dockDto);
 	}
@@ -64,23 +61,20 @@ public class DockController : ControllerBase
 	[HttpPost(Name = "CreateDock")]
 	public async Task<ActionResult<DockDto>> Create(DockDto dockDto)
 	{
-		List<string> errors = new List<string>();
-		var createdDock = await _dockService.Add(dockDto, errors);
+		DockDto? createdDock = await _dockService.Add(dockDto);
 
 		if (createdDock == null)
-			return BadRequest(errors);
+			return BadRequest();
 
-		return CreatedAtAction(nameof(GetByName), new { name = createdDock?.Name }, createdDock);
+		return CreatedAtAction(nameof(GetAll), new { name = createdDock?.Name }, createdDock);
 	}
 
 	[HttpPut("{name}", Name = "UpdateDock")]
-	public IActionResult Update(string name, DockDto dockDto)
+	public async Task<IActionResult> Update(string name, DockDto dockDto)
 	{
-		List<string> errors = new List<string>();
-
-		var updatedDock = _dockService.Update(name, dockDto, errors);
+		DockDto? updatedDock = await _dockService.Update(name, dockDto);
 		if (updatedDock == null)
-			return BadRequest(errors);
+			return BadRequest();
 
 		return Ok(updatedDock);
 	}

@@ -71,6 +71,9 @@ public class DockRepository : GenericRepository<Dock>, IDockRepository
     {
         try
         {
+            foreach (VesselType vt in dock.SupportedVesselTypes)
+                _context.VesselTypes.Attach(vt);
+
             _context.Docks.Add(dock);
             await _context.SaveChangesAsync();
             return dock;
@@ -81,23 +84,21 @@ public class DockRepository : GenericRepository<Dock>, IDockRepository
         }
     }
 
-    public async Task<bool> Update(string name, DockDto dockDto, List<String> errorMessage)
+    public async Task<bool> Update(string name, DockDto dockDto)
     {
         try
         {
             Dock? dock = await GetDockByNameAsync(name);
 
             if (dock == null)
-			{
-				errorMessage.Add("Dock not found.");
-				return false;
-			}
+                throw new Exception("Dock not found.");
 
+            dock.UpdateName(dockDto.Name);
             dock.UpdateLocation(dockDto.Location);
             dock.UpdateDepth(dockDto.Depth);
             dock.UpdateLength(dockDto.Length);
             dock.UpdateMaxDraft(dockDto.MaxDraft);
-            //dock.UpdateVesselTypes(dockDto.SupportedVesselTypes);
+            dock.UpdateVesselTypes(dockDto.SupportedVesselTypes);
 
             _context.Docks.Update(dock);
             await _context.SaveChangesAsync();
