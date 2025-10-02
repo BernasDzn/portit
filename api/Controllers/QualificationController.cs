@@ -40,6 +40,20 @@ public class QualificationController : ControllerBase
 		}
 	}
 
+	[HttpPost("filter")]
+	public async Task<ActionResult<Page<QualificationDto>>> Filter([FromQuery] QualificationFilter filter)
+	{
+		try
+		{
+			var qualificationsDto = await _qualificationService.FilterQualifications(filter);
+			return Ok(qualificationsDto);
+		}
+		catch (System.Exception)
+		{
+			return NotFound();
+		}
+	}
+
 	[HttpPost(Name = "PostQualification")]
 	public async Task<ActionResult<QualificationDto>> Create(QualificationDto qualDto)
 	{

@@ -44,6 +44,20 @@ public class QualificationRepository : GenericRepository<Qualification>, IQualif
 		}
 	}
 
+    public async Task<Qualification?> GetQualificationByIdAsync(string id)
+    {
+        try
+		{
+			Qualification? qualification = await _context.Qualifications
+				.FirstOrDefaultAsync(q => q.NameCode.Value.Equals(id));
+			return qualification;
+		}
+		catch (System.Exception ex)
+		{
+			throw new PersistencyFailedException("Failed to select a qualification by id. " + ex.Message);
+		}
+    }
+
 	public new async Task<Qualification> Add(Qualification qualification)
 	{
 		try
@@ -72,17 +86,19 @@ public class QualificationRepository : GenericRepository<Qualification>, IQualif
 		}
 	}
 
-    public async Task<Qualification?> GetQualificationByIdAsync(string id)
-    {
-        try
-		{
-			Qualification? qualification = await _context.Qualifications
-				.FirstOrDefaultAsync(q => q.NameCode.Value.Equals(id));
-			return qualification;
-		}
-		catch (System.Exception ex)
-		{
-			throw new PersistencyFailedException("Failed to select a qualification by id. " + ex.Message);
-		}
-    }
+	public Task<Page<Qualification>> FilterQualificationsAsync(QualificationFilter filter)
+	{
+		IQueryable<Qualification> query = _context.Qualifications.AsQueryable();
+		if (!string.IsNullOrEmpty(filter.Code))
+			query = query.Where(q => q.NameCode.Value.Contains(filter.Code, StringComparison.OrdinalIgnoreCase));
+
+		if (!string.IsNullOrEmpty(filter.QualificationName))
+			query = query.Where(q => q.QualificationName.Value.Contains(filter.QualificationName, StringComparison.OrdinalIgnoreCase));
+
+		//Console.WriteLine($"Filter PageNumber: {filter.PageNumber}, PageSize: {filter.PageSize}");
+		query = query.Skip((filter.PageNumber - 1) * filter.PageSize).Take(filter.PageSize);
+		return Task.FromResult(
+			Page<Qualification>.Of(query.ToList(), filter)
+		);
+	}
 }

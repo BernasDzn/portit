@@ -26,7 +26,7 @@ public class QualificationService
 		Qualification? qualification = await _qualificationRepository.GetQualificationByNameAsync(name);
 		if (qualification == null)
 			throw new EntityNotFoundException("Qualification not found.");
-		
+
 		return qualification.ToDTO();
 	}
 
@@ -71,5 +71,11 @@ public class QualificationService
 			throw new EntityNotFoundException("Qualification to update not found.");
 
 		return updateResult.ToDTO();
+	}
+
+	public async Task<Page<QualificationDto>> FilterQualifications(QualificationFilter filter)
+	{
+		Page<Qualification> page = await _qualificationRepository.FilterQualificationsAsync(filter);
+		return page.Map<QualificationDto>(q => q.ToDTO());
 	}
 }

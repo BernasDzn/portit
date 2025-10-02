@@ -5,6 +5,8 @@ using Api.Domain.Model;
 public interface IQualificationRepository : IGenericRepository<Qualification>
 {
 	Task<IEnumerable<Qualification>> GetQualificationsAsync();
+	Task<Page<Qualification>> FilterQualificationsAsync(QualificationFilter filter);
+
 	Task<Qualification?> GetQualificationByNameAsync(string name);
 	Task<Qualification?> GetQualificationByIdAsync(string id);
 
