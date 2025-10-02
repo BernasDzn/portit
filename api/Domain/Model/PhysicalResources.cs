@@ -1,6 +1,13 @@
 using Api.Domain.Model;
 using Domain.Model.Generic;
 
+public enum ResourceStatus
+{
+    Available = 0,
+    Maintenance = 1,
+    OutOfService = 2
+}
+
 public class PhysicalResource
 {
     public Guid Id { get; private set; }

@@ -8,7 +8,6 @@ namespace Api.Controllers;
 [Route("[controller]")]
 public class DockController : ControllerBase
 {
-
 	private readonly ILogger<DockController> _logger;
 	private readonly DockService _dockService;
 

@@ -21,11 +21,10 @@ public static class Bootstrap
         BootstrapQualifications(context);
         // Bootstrap Shipping Agent Organizations and Representatives
         BootstrapSAO(context);
-        context.SaveChanges();
         // Bootstrap Vessels, Vessel Types and docks
         BootstrapVesselsAndDocks(context);
-
-        context.SaveChanges();
+        // Bootstrap Storage Areas
+        BootstrapStorageAreas(context);
     }
 
     private static void BootstrapQualifications(ApiContext context)
@@ -36,10 +35,12 @@ public static class Bootstrap
 
         // Add Bootstrap data
         context.Qualifications.AddRange(
-            new Qualification(Guid.NewGuid(), new Code { Value = "STSOP" }, new Designation { Value = "STS Crane Operator" }),
-            new Qualification(Guid.NewGuid(), new Code { Value = "YACOP" },new Designation { Value = "Yard Crane Operator" }),
-            new Qualification(Guid.NewGuid(), new Code { Value = "TRKDR" },new Designation { Value = "Truck Driver" })
+            new Qualification(Guid.NewGuid(), new Code { Value = "STSOP" }, new Designation { Value = " STS Crane Operator" }),
+            new Qualification(Guid.NewGuid(), new Code { Value = "YACOP" }, new Designation { Value = "Yard Crane Operator" }),
+            new Qualification(Guid.NewGuid(), new Code { Value = "TRKDR" }, new Designation { Value = "Truck Driver" })
         );
+
+        context.SaveChanges();
     }
 
     private static void BootstrapSAO(ApiContext context)
@@ -102,6 +103,7 @@ public static class Bootstrap
             )
         );
 
+        context.SaveChanges();
     }
 
     private static void BootstrapVesselsAndDocks(ApiContext context)
@@ -137,5 +139,39 @@ public static class Bootstrap
             new Dock(Guid.NewGuid(), new Designation { Value = "Dock B" }, new Designation { Value = "East Harbor" }, 600, 35, 18, new List<VesselType> { vt5 }),
             new Dock(Guid.NewGuid(), new Designation { Value = "Dock C" }, new Designation { Value = "South Harbor" }, 700, 40, 20, new List<VesselType> { vt2, vt3 })
         );
+
+        context.SaveChanges();
+    }
+
+    private static void BootstrapStorageAreas(ApiContext context)
+    {
+        Dock dock1 = context.Docks.First();
+        Dock dock2 = context.Docks.Skip(1).First();
+        Dock dock3 = context.Docks.Skip(2).First();
+
+        HashSet<StorageArea.DockService> ds1 = new()
+        {
+            new StorageArea.DockService(dock1, 50),
+            new StorageArea.DockService(dock2, 100)
+        };
+
+        HashSet<StorageArea.DockService> ds2 = new()
+        {
+            new StorageArea.DockService(dock2, 60),
+            new StorageArea.DockService(dock3, 120)
+        };
+
+        StorageArea sa1 = new StorageArea(Guid.NewGuid(), new Code { Value = "YARD1" }, new Designation { Value = "North Yard" }, StorageAreaType.Yard, 1000, 200, ds1);
+        StorageArea sa2 = new StorageArea(Guid.NewGuid(), new Code { Value = "YARD2" }, new Designation { Value = "South Yard" }, StorageAreaType.Yard, 1500, 300, ds2);
+        StorageArea sa3 = new StorageArea(Guid.NewGuid(), new Code { Value = "WH1" }, new Designation { Value = "Main Warehouse" }, StorageAreaType.Warehouse, 2000, 500);
+        StorageArea sa4 = new StorageArea(Guid.NewGuid(), new Code { Value = "WH2" }, new Designation { Value = "Secondary Warehouse" }, StorageAreaType.Warehouse, 1200, 400);
+
+        // Check if there are any storage areas already in the database
+        if (context.StorageAreas.Any())
+            return;
+
+        // Add Bootstrap data
+        context.StorageAreas.AddRange(sa1, sa2, sa3, sa4);
+        context.SaveChanges();
     }
 }
