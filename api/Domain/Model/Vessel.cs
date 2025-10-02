@@ -13,16 +13,14 @@ public class Vessel : IDTOAble<VesselDto>
     public Designation Name { get; private set; }
     public ImoNumber ImoIdentifier { get; private set; }
     public virtual VesselType Type { get; private set; }
-    public virtual ShippingAgentOrganization Owner { get; private set; }
+    public virtual ShippingAgentOrganization? Owner { get; private set; }
 
     // EF Core
     protected Vessel() { }
 
-    public Vessel(Guid id, Designation name, ImoNumber imoNumber, VesselType type, ShippingAgentOrganization owner)
+    public Vessel(Guid id, Designation name, ImoNumber imoNumber, VesselType type, ShippingAgentOrganization? owner)
     {
         if (type == null) throw new ArgumentNullException(nameof(type), "Vessel Type cannot be null");
-        if (owner == null) throw new ArgumentException("Owner cannot be null", nameof(owner));
-
         Id = id;
         Name = name;
         ImoIdentifier = imoNumber;
@@ -37,7 +35,7 @@ public class Vessel : IDTOAble<VesselDto>
             Name = this.Name.Value,
             ImoNumber = this.ImoIdentifier.Value,
             Type = this.Type.ToDTO(),
-            Owner = this.Owner.ToDTO()
+            Owner = Owner?.ToDTO()
         };
     }
 
@@ -62,11 +60,8 @@ public class Vessel : IDTOAble<VesselDto>
 
         Type = vesselType;
     }
-    public void UpdateOwner(ShippingAgentOrganization owner)
+    public void UpdateOwner(ShippingAgentOrganization? owner)
     {
-        if (owner == null)
-            throw new ArgumentNullException(nameof(owner), "Owner cannot be null");
-
         Owner = owner;
     }
 
