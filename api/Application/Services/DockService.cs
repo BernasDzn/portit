@@ -8,6 +8,8 @@ public class DockService
     private readonly IDockRepository _dockRepository;
     private readonly IVesselTypeRepository _vesselTypeRepository;
 
+    public bool IsServingDock { get; internal set; }
+
     public DockService(IDockRepository dockRepository, IVesselTypeRepository vesselTypeRepository)
     {
         _dockRepository = dockRepository;

@@ -26,6 +26,8 @@ builder.Services.AddTransient<VesselTypeService>();
 builder.Services.AddTransient<IVesselRepository, VesselRepository>();
 builder.Services.AddTransient<IShippingAgentOrgRepository, ShippingAgentOrgRepository>();
 builder.Services.AddTransient<VesselService>();
+builder.Services.AddTransient<IStorageAreaRepository, StorageAreaRepository>();
+builder.Services.AddTransient<StorageAreaService>();
 
 var app = builder.Build();
 

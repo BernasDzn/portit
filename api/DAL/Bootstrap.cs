@@ -108,6 +108,9 @@ public static class Bootstrap
 
     private static void BootstrapVesselsAndDocks(ApiContext context)
     {
+        // Check if there are any docks already in the database
+        if (context.Docks.Any())
+            return;
 
         VesselType vt1 = new VesselType(Guid.NewGuid(), new Designation { Value = "Panamax" }, new Designation { Value = "Max size for Panama Canal" }, 20, 10, 5);
         VesselType vt2 = new VesselType(Guid.NewGuid(), new Designation { Value = "Post-Panamax" }, new Designation { Value = "Larger than Panamax" }, 30, 15, 7);
@@ -129,10 +132,6 @@ public static class Bootstrap
             vt3, context.ShippingAgentOrganizations.Skip(2).First())
         );
 
-        // Check if there are any docks already in the database
-        if (context.Docks.Any())
-            return;
-
         // Add Bootstrap data
         context.Docks.AddRange(
             new Dock(Guid.NewGuid(), new Designation { Value = "Dock A" }, new Designation { Value = "North Harbor" }, 500, 30, 15, new List<VesselType> { vt4, vt1 }),
@@ -145,30 +144,30 @@ public static class Bootstrap
 
     private static void BootstrapStorageAreas(ApiContext context)
     {
+        // Check if there are any storage areas already in the database
+        if (context.StorageAreas.Any())
+            return;
+
         Dock dock1 = context.Docks.First();
         Dock dock2 = context.Docks.Skip(1).First();
         Dock dock3 = context.Docks.Skip(2).First();
 
-        HashSet<StorageArea.DockService> ds1 = new()
+        HashSet<StorageArea.DockRelation> ds1 = new()
         {
-            new StorageArea.DockService(dock1, 50),
-            new StorageArea.DockService(dock2, 100)
+            new StorageArea.DockRelation(dock1, null, false),
+            new StorageArea.DockRelation(dock2, 100, false)
         };
 
-        HashSet<StorageArea.DockService> ds2 = new()
+        HashSet<StorageArea.DockRelation> ds2 = new()
         {
-            new StorageArea.DockService(dock2, 60),
-            new StorageArea.DockService(dock3, 120)
+            new StorageArea.DockRelation(dock2, 60, true),
+            new StorageArea.DockRelation(dock3, 120, false)
         };
 
         StorageArea sa1 = new StorageArea(Guid.NewGuid(), new Code { Value = "YARD1" }, new Designation { Value = "North Yard" }, StorageAreaType.Yard, 1000, 200, ds1);
         StorageArea sa2 = new StorageArea(Guid.NewGuid(), new Code { Value = "YARD2" }, new Designation { Value = "South Yard" }, StorageAreaType.Yard, 1500, 300, ds2);
         StorageArea sa3 = new StorageArea(Guid.NewGuid(), new Code { Value = "WH1" }, new Designation { Value = "Main Warehouse" }, StorageAreaType.Warehouse, 2000, 500);
         StorageArea sa4 = new StorageArea(Guid.NewGuid(), new Code { Value = "WH2" }, new Designation { Value = "Secondary Warehouse" }, StorageAreaType.Warehouse, 1200, 400);
-
-        // Check if there are any storage areas already in the database
-        if (context.StorageAreas.Any())
-            return;
 
         // Add Bootstrap data
         context.StorageAreas.AddRange(sa1, sa2, sa3, sa4);

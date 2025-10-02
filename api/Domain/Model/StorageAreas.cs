@@ -13,24 +13,28 @@ public class StorageArea : IDTOAble<StorageAreaDto>
 {
     // A dock that this storage area serves, and the distance to it
     [Owned]
-    public class DockService : IDTOAble<DockServiceDto>
+    public class DockRelation : IDTOAble<DockRelationDto>
     {
         public virtual Dock ServingDock { get; set; }
-        public uint Distance { get; set; }
+        public bool IsServingDock { get; set; }
+        // Distance may be null as it is complementary information
+        public uint? Distance { get; set; } // Distance in meters
 
-        protected DockService() { } // EF Core
-        public DockService(Dock servingDock, uint distance)
+        protected DockRelation() { } // EF Core
+        public DockRelation(Dock servingDock, uint? distance, bool isServingDock)
         {
-            ServingDock = servingDock;
+            ServingDock = servingDock ?? throw new ArgumentNullException(nameof(servingDock));
             Distance = distance;
+            IsServingDock = isServingDock;
         }
 
-        public DockServiceDto ToDTO()
+        public DockRelationDto ToDTO()
         {
-            return new DockServiceDto
+            return new DockRelationDto
             {
                 Dock = ServingDock.ToDTO(),
-                Distance = Distance
+                Distance = Distance,
+                IsServingDock = IsServingDock
             };
         }
     }
@@ -55,11 +59,14 @@ public class StorageArea : IDTOAble<StorageAreaDto>
     }
 
     // List of docks this storage area serves
-    public virtual HashSet<DockService> DockServices { get; private set; } = new(); // Empty means it serves all docks
+    // This list will only store the known data about the relation of each dock and this storage area
+    // If a dock is not in this list, it means this storage area does not serve it and does not know anything about it
+    // Unless this storage area is a warehouse, in which case it serves all docks
+    public virtual HashSet<DockRelation> DockServices { get; private set; } = new();
 
     protected StorageArea() { } // EF Core
 
-    public StorageArea(Guid id, Code nameCode, Designation location, StorageAreaType areaType, uint capacity, uint currentOccupancy, HashSet<DockService> dockServices = null!)
+    public StorageArea(Guid id, Code nameCode, Designation location, StorageAreaType areaType, uint capacity, uint currentOccupancy, HashSet<DockRelation> dockServices = null!)
     {
         Id = id;
         NameCode = nameCode;
@@ -74,7 +81,9 @@ public class StorageArea : IDTOAble<StorageAreaDto>
 
     public bool CanServeDock(Dock dock)
     {
-        return DockServices.Count == 0 || DockServices.Any(ds => ds.ServingDock.Id == dock.Id);
+        return
+            AreaType == StorageAreaType.Warehouse ||
+            DockServices.Any(ds => ds.ServingDock.Id == dock.Id && ds.IsServingDock);
     }
 
     public StorageAreaDto ToDTO()

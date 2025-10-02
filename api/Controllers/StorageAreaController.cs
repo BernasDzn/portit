@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Api.Models;
 using Domain;
 using DAL;
+using Application.Services;
 
 namespace Api.Controllers;
 
@@ -9,18 +10,32 @@ namespace Api.Controllers;
 [Route("[controller]")]
 public class StorageAreaController : ControllerBase
 {
-    private readonly ApiContext _context;
+    private readonly StorageAreaService _storageAreaService;
 
-    public StorageAreaController(ApiContext context)
+    public StorageAreaController(StorageAreaService service)
     {
-        _context = context;
+        _storageAreaService = service;
     }
 
     [HttpGet(Name = "GetAllStorageAreas")]
-    public ActionResult<IEnumerable<Representative>> GetAll()
+    public async Task<ActionResult<IEnumerable<StorageAreaDto>>> GetAll()
     {
-        var areas = _context.StorageAreas.ToList();
-        var areasDto = areas.Select(area => area.ToDTO());
-        return Ok(areasDto);
+        IEnumerable<StorageAreaDto> storageAreaDtos = await _storageAreaService.GetStorageAreas();
+        return Ok(storageAreaDtos);
     }
+    
+    [HttpGet("{id}")]
+	public async Task<ActionResult<StorageAreaDto>> Get(string id)
+
+	{
+        try
+        {
+            var storageAreaDto = await _storageAreaService.GetStorageAreaByCode(id);
+            return Ok(storageAreaDto);
+		}
+        catch (System.Exception)
+        {
+            return NotFound();
+        }
+	}
 }
