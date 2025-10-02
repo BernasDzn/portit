@@ -21,4 +21,5 @@ public class TaxNumber
             _value = value;
         }
     }
+    public override string ToString() => Value;
 }

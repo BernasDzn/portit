@@ -21,26 +21,33 @@ public class QualificationService
 		return qualifications.Select(q => q.ToDTO()).ToList();
 	}
 
-	public async Task<QualificationDto?> GetQualificationByName(string name, List<string> errorMessage)
+	public async Task<QualificationDto?> GetQualificationByName(string name)
 	{
-		Qualification qualification = await _qualificationRepository.GetQualificationByNameAsync(name);
+		Qualification? qualification = await _qualificationRepository.GetQualificationByNameAsync(name);
 		if (qualification == null)
-		{
-			errorMessage.Add("Qualification not found.");
-			return null;
-		}
+			throw new EntityNotFoundException("Qualification not found.");
+		
+		return qualification.ToDTO();
+	}
+
+	public async Task<QualificationDto?> GetQualificationById(string id)
+	{
+		Qualification? qualification = await _qualificationRepository.GetQualificationByIdAsync(id);
+		if (qualification == null)
+			throw new EntityNotFoundException("Qualification not found.");
 		return qualification.ToDTO();
 	}
 
 	public async Task<QualificationDto?> Add(QualificationDto qualificationDto)
 	{
-		bool exists = await _qualificationRepository.GetQualificationByNameAsync(qualificationDto.QualificationName) != null;
+		bool exists = await _qualificationRepository.GetQualificationByIdAsync(qualificationDto.IdCode) != null;
 
 		if (exists)
 			throw new EntityAlreadyExistsException("Qualification with the same name already exists.");
 
 		Qualification qualification = new Qualification(
 			Guid.NewGuid(),
+			new Code { Value = qualificationDto.IdCode },
 			new Designation { Value = qualificationDto.QualificationName }
 		);
 
@@ -50,13 +57,14 @@ public class QualificationService
 		return savedQualificationDto;
 	}
 
-	public async Task<QualificationDto?> Update(string name, QualificationDto qualificationDto)
+	public async Task<QualificationDto?> Update(string id, QualificationDto qualificationDto)
 	{
-		Qualification qualification = await _qualificationRepository.GetQualificationByNameAsync(name);
+		Qualification? qualification = await _qualificationRepository.GetQualificationByIdAsync(id);
 		if (qualification == null)
 			throw new EntityNotFoundException("Qualification to update not found.");
 
 		qualification.UpdateQualificationName(qualificationDto.QualificationName);
+		qualification.UpdateIdCode(qualificationDto.IdCode);
 
 		Qualification? updateResult = await _qualificationRepository.Update(qualification);
 		if (updateResult == null)

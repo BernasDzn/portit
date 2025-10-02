@@ -19,7 +19,7 @@ public class Address : IDTOAble<AddressDto>
         ZipCode = zipCode;
         Country = country;
     }
-    
+
     public AddressDto ToDTO()
     {
         return new AddressDto
@@ -30,4 +30,6 @@ public class Address : IDTOAble<AddressDto>
             Country = this.Country
         };
     }
+    
+    public override string ToString() => $"{Street}, {ZipCode} {City}, {Country}";
 }

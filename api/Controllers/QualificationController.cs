@@ -9,7 +9,6 @@ namespace Api.Controllers;
 [Route("[controller]")]
 public class QualificationController : ControllerBase
 {
-
 	private readonly ILogger<QualificationController> _logger;
 	private readonly QualificationService _qualificationService;
 
@@ -26,15 +25,19 @@ public class QualificationController : ControllerBase
 		return Ok(qualificationsDto);
 	}
 
-	[HttpGet("{name}", Name = "GetQualificationByName")]
-	public async Task<ActionResult<QualificationDto>> Get(string name)
-	{
-		List<string> errors = new List<string>();
+	[HttpGet("{id}")]
+	public async Task<ActionResult<QualificationDto>> Get(string id)
 
-		var qualificationDto = await _qualificationService.GetQualificationByName(name, errors);
-		if (qualificationDto == null)
-			return NotFound(errors);
-		return Ok(qualificationDto);
+	{
+		try
+		{
+			var qualificationDto = await _qualificationService.GetQualificationById(id);
+			return Ok(qualificationDto);
+		}
+		catch (System.Exception)
+		{
+			return NotFound();
+		}
 	}
 
 	[HttpPost(Name = "PostQualification")]
@@ -46,7 +49,7 @@ public class QualificationController : ControllerBase
 			if (createdQual == null)
 				return BadRequest("Could not create qualification");
 
-			return CreatedAtAction(nameof(Get), new { name = createdQual?.QualificationName }, createdQual);
+			return CreatedAtAction(nameof(Get), new { id = createdQual?.IdCode }, createdQual);
 		}
 		catch (System.Exception e)
 		{
@@ -54,12 +57,12 @@ public class QualificationController : ControllerBase
 		}
 	}
 
-	[HttpPut("{name}", Name = "UpdateQualification")]
-	public async Task<ActionResult<QualificationDto>> Update(string name, QualificationDto qualDto)
+	[HttpPut("{id}", Name = "UpdateQualification")]
+	public async Task<ActionResult<QualificationDto>> Update(string id, QualificationDto qualDto)
 	{
 		try
 		{	
-			var updatedQual = await _qualificationService.Update(name, qualDto);
+			var updatedQual = await _qualificationService.Update(id, qualDto);
 			if (updatedQual == null)
 				return BadRequest("Could not update qualification");
 

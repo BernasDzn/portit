@@ -36,9 +36,9 @@ public static class Bootstrap
 
         // Add Bootstrap data
         context.Qualifications.AddRange(
-            new Qualification(Guid.NewGuid(), new Designation { Value = "STS Crane Operator" }),
-            new Qualification(Guid.NewGuid(), new Designation { Value = "Yard Crane Operator" }),
-            new Qualification(Guid.NewGuid(), new Designation { Value = "Truck Driver" })
+            new Qualification(Guid.NewGuid(), new Code { Value = "STSOP" }, new Designation { Value = "STS Crane Operator" }),
+            new Qualification(Guid.NewGuid(), new Code { Value = "YACOP" },new Designation { Value = "Yard Crane Operator" }),
+            new Qualification(Guid.NewGuid(), new Code { Value = "TRKDR" },new Designation { Value = "Truck Driver" })
         );
     }
 

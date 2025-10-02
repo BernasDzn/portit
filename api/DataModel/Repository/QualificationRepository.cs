@@ -24,23 +24,23 @@ public class QualificationRepository : GenericRepository<Qualification>, IQualif
 			IEnumerable<Qualification> qualifications = await _context.Qualifications.ToListAsync();
 			return qualifications;
 		}
-		catch
+		catch (System.Exception ex)
 		{
-			throw new PersistencyFailedException("Failed to select qualifications");
+			throw new PersistencyFailedException("Failed to select qualifications" + ex.Message);
 		}
 	}
 
-	public async Task<Qualification> GetQualificationByNameAsync(string name)
+	public async Task<Qualification?> GetQualificationByNameAsync(string name)
 	{
 		try
 		{
 			Qualification? qualification = await _context.Qualifications
-				.FirstOrDefaultAsync(q => q.QualificationName.Value.Equals(name));
-			return qualification!;
+				.FirstOrDefaultAsync(q => q.QualificationName.Equals(name));
+			return qualification;
 		}
-		catch
+		catch (System.Exception ex)
 		{
-			throw new PersistencyFailedException("Failed to select a qualification by name");
+			throw new PersistencyFailedException("Failed to select a qualification by name. " + ex.Message);
 		}
 	}
 
@@ -52,9 +52,9 @@ public class QualificationRepository : GenericRepository<Qualification>, IQualif
 			await _context.SaveChangesAsync();
 			return qualification;
 		}
-		catch
+		catch (System.Exception ex)
 		{
-			throw new PersistencyFailedException("Failed to add a qualification");
+			throw new PersistencyFailedException("Failed to add a qualification" + ex.Message);
 		}
 	}
 
@@ -66,9 +66,23 @@ public class QualificationRepository : GenericRepository<Qualification>, IQualif
 			await _context.SaveChangesAsync();
 			return qualification;
 		}
-		catch
+		catch (System.Exception ex)
 		{
-			throw new PersistencyFailedException("Failed to update a qualification");
+			throw new PersistencyFailedException("Failed to update a qualification" + ex.Message);
 		}
 	}
+
+    public async Task<Qualification?> GetQualificationByIdAsync(string id)
+    {
+        try
+		{
+			Qualification? qualification = await _context.Qualifications
+				.FirstOrDefaultAsync(q => q.NameCode.Value.Equals(id));
+			return qualification;
+		}
+		catch (System.Exception ex)
+		{
+			throw new PersistencyFailedException("Failed to select a qualification by id. " + ex.Message);
+		}
+    }
 }

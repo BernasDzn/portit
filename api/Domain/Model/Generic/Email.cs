@@ -7,7 +7,6 @@ namespace Domain.Model.Generic;
 public class Email
 {
     private static readonly string EmailPattern = @"^[^@\s]+@[^@\s]+\.[^@\s]+$";
-
     private string _value;
     public string Value
     {
@@ -20,4 +19,6 @@ public class Email
             _value = value;
         }
     }
+
+    public override string ToString() => Value;
 }

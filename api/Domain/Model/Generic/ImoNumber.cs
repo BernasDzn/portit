@@ -47,4 +47,6 @@ public class ImoNumber
 
         return calculated == checkDigit;
     }
+
+    public override string ToString() => Value;
 }
