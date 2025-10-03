@@ -25,6 +25,8 @@ public static class Bootstrap
         BootstrapVesselsAndDocks(context);
         // Bootstrap Storage Areas
         BootstrapStorageAreas(context);
+        // Bootstrap Physical Resources
+        BootstrapPhysicalResources(context);
     }
 
     private static void BootstrapQualifications(ApiContext context)
@@ -37,7 +39,8 @@ public static class Bootstrap
         context.Qualifications.AddRange(
             new Qualification(Guid.NewGuid(), new Code { Value = "STSOP" }, new Designation { Value = " STS Crane Operator" }),
             new Qualification(Guid.NewGuid(), new Code { Value = "YACOP" }, new Designation { Value = "Yard Crane Operator" }),
-            new Qualification(Guid.NewGuid(), new Code { Value = "TRKDR" }, new Designation { Value = "Truck Driver" })
+            new Qualification(Guid.NewGuid(), new Code { Value = "TRKDR" }, new Designation { Value = "Truck Driver" }),
+            new Qualification(Guid.NewGuid(), new Code { Value = "YAPLN" }, new Designation { Value = "Yard Planner" })
         );
 
         context.SaveChanges();
@@ -173,4 +176,89 @@ public static class Bootstrap
         context.StorageAreas.AddRange(sa1, sa2, sa3, sa4);
         context.SaveChanges();
     }
+
+    private static void BootstrapPhysicalResources(ApiContext context)
+    {
+        // Check if there are any physical resources already in the database
+        if (context.PhysicalResources.Any())
+            return;
+
+        Qualification stsOp = context.Qualifications.First(q => q.NameCode.Value == "STSOP");
+        Qualification ycOp = context.Qualifications.First(q => q.NameCode.Value == "YACOP");
+        Qualification trkDr = context.Qualifications.First(q => q.NameCode.Value == "TRKDR");
+
+        STSCrane crane1 = new STSCrane(
+            Guid.NewGuid(),
+            new Code { Value = "STS001" },
+            new Designation { Value = "STS Crane 1" },
+            ResourceStatus.Available,
+            TimeSpan.FromMinutes(30),
+            new List<Qualification> { stsOp },
+            40,
+            context.Docks.First(),
+            30
+        );
+
+        STSCrane crane2 = new STSCrane(
+            Guid.NewGuid(),
+            new Code { Value = "STS002" },
+            new Designation { Value = "STS Crane 2" },
+            ResourceStatus.Maintenance,
+            TimeSpan.FromMinutes(45),
+            new List<Qualification> { stsOp },
+            50,
+            context.Docks.Skip(1).First(),
+            25
+        );
+
+        YardCrane yardCrane1 = new YardCrane(
+            Guid.NewGuid(),
+            new Code { Value = "YC001" },
+            new Designation { Value = "Yard Crane 1" },
+            ResourceStatus.Available,
+            TimeSpan.FromMinutes(20),
+            new List<Qualification> { ycOp },
+            20,
+            context.StorageAreas.First(sa => sa.AreaType == StorageAreaType.Yard),
+            40
+        );
+
+        YardCrane yardCrane2 = new YardCrane(
+            Guid.NewGuid(),
+            new Code { Value = "YC002" },
+            new Designation { Value = "Yard Crane 2" },
+            ResourceStatus.OutOfService,
+            TimeSpan.FromMinutes(25),
+            new List<Qualification> { ycOp },
+            25,
+            context.StorageAreas.First(sa => sa.AreaType == StorageAreaType.Yard),
+            35
+        );
+
+        Truck truck1 = new Truck(
+            Guid.NewGuid(),
+            new Code { Value = "TRK001" },
+            new Designation { Value = "Truck 1" },
+            ResourceStatus.Available,
+            TimeSpan.FromMinutes(15),
+            new List<Qualification> { trkDr },
+            30,
+            2
+        );
+
+        Truck truck2 = new Truck(
+            Guid.NewGuid(),
+            new Code { Value = "TRK002" },
+            new Designation { Value = "Truck 2" },
+            ResourceStatus.Maintenance,
+            TimeSpan.FromMinutes(20),
+            new List<Qualification> { trkDr },
+            25,
+            1
+        );
+
+        context.PhysicalResources.AddRange(crane1, crane2, yardCrane1, yardCrane2, truck1, truck2);
+        context.SaveChanges();
+    }
+
 }
