@@ -41,14 +41,22 @@ public class VesselTypeRepository : GenericRepository<VesselType>, IVesselTypeRe
             throw;
         }
     }
-
-    public async Task<VesselType> GetVesselTypeByDescriptionAsync(string description)
+    
+    public Task<Page<VesselType>> FilterVesselTypesAsync(VesselTypeFilter filter)
     {
         try
         {
-            VesselType? vtype = await _context.VesselTypes.FirstOrDefaultAsync(vt => vt.Description.Value.Equals(description));
+            IQueryable<VesselType> query = _context.VesselTypes.AsQueryable();
 
-            return vtype!;
+            if (!string.IsNullOrEmpty(filter.Name))
+                query = query.Where(vt => vt.Name.Value.Contains(filter.Name));
+
+            if (!string.IsNullOrEmpty(filter.Description))
+                query = query.Where(vt => vt.Description != null && vt.Description.Value.Contains(filter.Description));
+
+            query = query.Skip((filter.PageNumber - 1) * filter.PageSize).Take(filter.PageSize);
+
+            return Task.FromResult(Page<VesselType>.Of(query.ToList(), filter));
         }
         catch
         {

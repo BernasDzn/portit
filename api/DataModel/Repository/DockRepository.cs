@@ -40,27 +40,24 @@ public class DockRepository : GenericRepository<Dock>, IDockRepository
         }
     }
 
-    public async Task<IEnumerable<Dock>> GetDockByVesselTypeAsync(string vesselType)
+    public Task<Page<Dock>> FilterDocksAsync(DockFilter filter)
     {
         try
         {
-            IEnumerable<Dock> docks = await _context.Docks
-                .Where(d => d.SupportedVesselTypes.Any(vt => vt.Name.Value.Equals(vesselType)))
-                .ToListAsync();
-            return docks;
-        }
-        catch
-        {
-            throw;
-        }
-    }
+            IQueryable<Dock> query = _context.Docks.AsQueryable();
 
-    public async Task<Dock> GetDockByLocationAsync(string location)
-    {
-        try
-        {
-            Dock? dock = await _context.Docks.FirstOrDefaultAsync(d => d.Location.Value.Equals(location));
-            return dock!;
+            if (!string.IsNullOrEmpty(filter.DockName))
+                query = query.Where(d => d.Name.Value.Contains(filter.DockName, StringComparison.OrdinalIgnoreCase));
+
+            if (!string.IsNullOrEmpty(filter.Location))
+                query = query.Where(d => d.Location.Value.Contains(filter.Location, StringComparison.OrdinalIgnoreCase));
+
+            if (!string.IsNullOrEmpty(filter.VesselTypeName))
+                query = query.Where(d => d.SupportedVesselTypes.Any(vt => vt.Name.Value.Contains(filter.VesselTypeName, StringComparison.OrdinalIgnoreCase)));
+
+            query = query.Skip((filter.PageNumber - 1) * filter.PageSize).Take(filter.PageSize);
+
+            return Task.FromResult(Page<Dock>.Of(query.ToList(), filter));
         }
         catch
         {

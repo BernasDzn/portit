@@ -26,33 +26,20 @@ public class VesselTypeController : ControllerBase
 		return Ok(vtypes);
 	}
 
-	[HttpGet("searchByName", Name = "GetVesselTypesByName")]
-	public async Task<ActionResult<VesselTypeDto>> GetByName([FromQuery] string name)
-	{
+	[HttpGet("filter")]
+    public async Task<ActionResult<Page<VesselTypeDto>>> Filter([FromQuery] VesselTypeFilter filter)
+    {
+        try
+		{
+			var vesselTypesDtos = await _vesselTypeService.FilterVesselTypes(filter);
 
-		VesselTypeDto? vtype = await _vesselTypeService.GetVesselTypeByName(name);
-		if (vtype == null)
+			return Ok(vesselTypesDtos);
+		}
+		catch (System.Exception)
 		{
 			return NotFound();
 		}
-
-		return Ok(vtype);
-	}
-
-	[HttpGet("searchByDescription", Name = "GetVesselTypesByDescription")]
-	public async Task<ActionResult<VesselTypeDto>> GetByDescription([FromQuery] string description)
-	{
-
-		VesselTypeDto? vtype = await _vesselTypeService.GetVesselTypeByDescription(description);
-
-		if (vtype == null)
-		{
-			return NotFound();
-		}
-
-		return Ok(vtype);
-	}
-
+    }
 	[HttpPost(Name = "CreateVesselType")]
 	public async Task<ActionResult<VesselTypeDto>> Create(VesselTypeDto vesselTypeDto)
 	{

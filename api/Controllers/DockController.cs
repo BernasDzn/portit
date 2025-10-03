@@ -24,37 +24,19 @@ public class DockController : ControllerBase
 		return Ok(docks);
 	}
 
-	[HttpGet("searchByName", Name = "GetDocksByName")]
-	public async Task<ActionResult<IEnumerable<DockDto>>> GetByName([FromQuery] string designation)
+	[HttpGet("filter")]
+	public async Task<ActionResult<IEnumerable<DockDto>>> Filter([FromQuery] DockFilter filter)
 	{
-		DockDto? dockDto = await _dockService.GetDockByName(designation);
+		try
+		{
+			var docksDtos = await _dockService.FilterDocks(filter);
 
-		if (dockDto == null)
+			return Ok(docksDtos);
+		}
+		catch (System.Exception)
+		{
 			return NotFound();
-
-		return Ok(dockDto);
-	}
-
-	[HttpGet("searchByVesselType", Name = "GetDocksByVesselType")]
-	public async Task<ActionResult<IEnumerable<DockDto>>> GetByVesselType([FromQuery] string vesselType)
-	{
-		IEnumerable<DockDto>? docksDtos = await _dockService.GetDockByVesselType(vesselType);
-
-		if (docksDtos == null || !docksDtos.Any())
-			return NotFound();
-
-		return Ok(docksDtos);
-	}
-
-	[HttpGet("searchByLocation", Name = "GetDocksByLocation")]
-	public async Task<ActionResult<IEnumerable<DockDto>>> GetByLocation([FromQuery] string location)
-	{
-		DockDto? dockDto = await _dockService.GetDockByLocation(location);
-
-		if (dockDto == null)
-			return NotFound();
-
-		return Ok(dockDto);
+		}
 	}
 
 	[HttpPost(Name = "CreateDock")]
@@ -62,7 +44,7 @@ public class DockController : ControllerBase
 	{
 		try
 		{
-			DockDto? createdDock = await _dockService.Add(dockDto);
+			var createdDock = await _dockService.Add(dockDto);
 
 			if (createdDock == null)
 				return BadRequest();
@@ -80,7 +62,7 @@ public class DockController : ControllerBase
 	{
 		try
 		{
-			DockDto? updatedDock = await _dockService.Update(name, dockDto);
+			var updatedDock = await _dockService.Update(name, dockDto);
 			if (updatedDock == null)
 				return BadRequest();
 

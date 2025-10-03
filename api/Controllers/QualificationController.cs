@@ -25,22 +25,7 @@ public class QualificationController : ControllerBase
 		return Ok(qualificationsDto);
 	}
 
-	[HttpGet("{id}")]
-	public async Task<ActionResult<QualificationDto>> Get(string id)
-
-	{
-		try
-		{
-			var qualificationDto = await _qualificationService.GetQualificationById(id);
-			return Ok(qualificationDto);
-		}
-		catch (System.Exception)
-		{
-			return NotFound();
-		}
-	}
-
-	[HttpPost("filter")]
+	[HttpGet("filter")]
 	public async Task<ActionResult<Page<QualificationDto>>> Filter([FromQuery] QualificationFilter filter)
 	{
 		try
@@ -63,7 +48,7 @@ public class QualificationController : ControllerBase
 			if (createdQual == null)
 				return BadRequest("Could not create qualification");
 
-			return CreatedAtAction(nameof(Get), new { id = createdQual?.IdCode }, createdQual);
+			return CreatedAtAction(nameof(GetAll), new { id = createdQual?.IdCode }, createdQual);
 		}
 		catch (System.Exception e)
 		{

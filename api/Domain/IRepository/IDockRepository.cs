@@ -6,8 +6,7 @@ public interface IDockRepository : IGenericRepository<Dock>
 {
     Task<IEnumerable<Dock>> GetDocksAsync();
 	Task<Dock> GetDockByNameAsync(string name);
-    Task<IEnumerable<Dock>> GetDockByVesselTypeAsync(string vesselType);
-    Task<Dock> GetDockByLocationAsync(string location);
+    Task<Page<Dock>> FilterDocksAsync(DockFilter filter);
 	new Task<Dock> Add(Dock dock);
 	Task<bool> Update(Dock dock);
 }

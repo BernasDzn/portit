@@ -21,23 +21,6 @@ public class QualificationService
 		return qualifications.Select(q => q.ToDTO()).ToList();
 	}
 
-	public async Task<QualificationDto?> GetQualificationByName(string name)
-	{
-		Qualification? qualification = await _qualificationRepository.GetQualificationByNameAsync(name);
-		if (qualification == null)
-			throw new EntityNotFoundException("Qualification not found.");
-
-		return qualification.ToDTO();
-	}
-
-	public async Task<QualificationDto?> GetQualificationById(string id)
-	{
-		Qualification? qualification = await _qualificationRepository.GetQualificationByIdAsync(id);
-		if (qualification == null)
-			throw new EntityNotFoundException("Qualification not found.");
-		return qualification.ToDTO();
-	}
-
 	public async Task<QualificationDto?> Add(QualificationDto qualificationDto)
 	{
 		bool exists = await _qualificationRepository.GetQualificationByIdAsync(qualificationDto.IdCode) != null;

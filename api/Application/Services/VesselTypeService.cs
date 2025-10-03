@@ -16,28 +16,15 @@ public class VesselTypeService
         return vtypes.Select(vt => vt.ToDTO()).ToList();
     }
 
-    public async Task<VesselTypeDto?> GetVesselTypeByName(string name)
+    public async Task<Page<VesselTypeDto>> FilterVesselTypes(VesselTypeFilter filter)
     {
-        VesselType vtype = await _vesselTypeRepository.GetVesselTypeByNameAsync(name);
-        if (vtype == null)
-            return null;
-        
-
-        return vtype.ToDTO();
-    }
-
-    public async Task<VesselTypeDto?> GetVesselTypeByDescription(string description)
-    {
-        VesselType vtype = await _vesselTypeRepository.GetVesselTypeByDescriptionAsync(description);
-        if (vtype == null)
-            return null;
-
-        return vtype.ToDTO();
+        Page<VesselType> page = await _vesselTypeRepository.FilterVesselTypesAsync(filter);
+        return page.Map(vt => vt.ToDTO());
     }
 
     public async Task<VesselTypeDto?> Add(VesselTypeDto vesselTypeDto)
     {
-        bool exists = await GetVesselTypeByName(vesselTypeDto.Name) != null;
+        bool exists = await _vesselTypeRepository.GetVesselTypeByNameAsync(vesselTypeDto.Name) != null;
         if (exists)
         {
             throw new Exception("Vessel Type with the specified name already exists");
@@ -68,7 +55,8 @@ public class VesselTypeService
             throw new Exception("Failed to update Vessel Type.");
         }
 
-        return await GetVesselTypeByName(vesselTypeDto.Name);
+        VesselType updatedVesselType = await _vesselTypeRepository.GetVesselTypeByNameAsync(vesselTypeDto.Name);
+        return updatedVesselType.ToDTO();
     }
 
 }

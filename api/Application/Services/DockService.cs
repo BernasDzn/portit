@@ -23,31 +23,10 @@ public class DockService
         return docks.Select(d => d.ToDTO()).ToList();
     }
 
-    public async Task<DockDto?> GetDockByName(string name)
+    public async Task<Page<DockDto>?> FilterDocks(DockFilter filter)
     {
-        Dock dock = await _dockRepository.GetDockByNameAsync(name);
-        if (dock == null)
-            throw new EntityNotFoundException("Dock with the specified name not found.");
-
-        return dock.ToDTO();
-    }
-
-    public async Task<IEnumerable<DockDto>?> GetDockByVesselType(string vesselType)
-    {
-        IEnumerable<Dock> docks = await _dockRepository.GetDockByVesselTypeAsync(vesselType);
-        if (docks == null || docks.Count() == 0)
-            throw new EntityNotFoundException("Dock(s) with the specified vessel type not found.");
-
-        return docks.Select(d => d.ToDTO()).ToList();
-    }
-
-    public async Task<DockDto?> GetDockByLocation(string location)
-    {
-        Dock dock = await _dockRepository.GetDockByLocationAsync(location);
-        if (dock == null)
-            throw new EntityNotFoundException("Dock with the specified location not found.");
-
-        return dock.ToDTO();
+        Page<Dock> page = await _dockRepository.FilterDocksAsync(filter);
+        return page.Map(d => d.ToDTO());
     }
 
     public async Task<DockDto?> Add(DockDto dockDto)
