@@ -48,6 +48,12 @@ rectangle "Vessel Type"{
 		+ maxNumberOfTiers
 	}
 
+	class "Vessel Type\n**Physical Characteristics**" as vessel_type_physical_char <<Value>>
+	{
+		+ Length
+		+ Depth
+		+ Draft
+	}
 }
 
 user "1" ---> "*" vessel_type : "(Port Authority Officer)\nregisters/manages"
@@ -60,6 +66,6 @@ vessel_type --> "1" vessel_type_description
 vessel_type --> "1" vessel_type_max_nr
 vessel_type --> "1" vessel_type_max_nb
 vessel_type --> "1" vessel_type_max_nt
-
+vessel_type --> "1" vessel_type_physical_char
 
 @enduml

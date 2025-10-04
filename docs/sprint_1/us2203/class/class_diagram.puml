@@ -8,9 +8,6 @@ class Dock
 {
 	- name : Designation
 	- location : Designation
-	- length : uint
-    - depth : uint
-	- maxDraft : uint
 	- supportedVesselTypes : List<VesselType>
 	+ Dock(...) : void
 }
@@ -24,6 +21,12 @@ class "Dock\n**Location**" as dock_location <<Value>>
 	+ location
 }
 
+class "Dock\n**PhysicalCharacteristics**" as dock_physical_characteristics <<Value>>
+{
+	+ length
+	+ width
+	+ depth
+}
 
 
 @enduml

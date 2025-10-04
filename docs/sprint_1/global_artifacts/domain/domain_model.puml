@@ -46,6 +46,12 @@ rectangle "Vessel" {
 		+ Name
 	}
 
+	class "Vessel\n**Physical Characteristics**" as vessel_physical_char <<Value>>
+	{
+		+ Length
+		+ Depth
+		+ Draft
+	}
 }
 
 rectangle "Vessel Type"{
@@ -62,6 +68,7 @@ rectangle "Vessel Type"{
 	{
 		+ Description
 	}
+
 	class "Vessel Type\n**Max Number Of Rows**" as vessel_type_max_nr <<Value>>
 	{
 		+ maxNumberOfRows
@@ -73,6 +80,13 @@ rectangle "Vessel Type"{
 	class "Vessel Type\n**Max Number Of Tiers**" as vessel_type_max_nt <<Value>>
 	{
 		+ maxNumberOfTiers
+	}
+
+	class "Vessel Type\n**Physical Characteristics**" as vessel_type_physical_char <<Value>>
+	{
+		+ Length
+		+ Depth
+		+ Draft
 	}
 
 }
@@ -179,9 +193,9 @@ rectangle "Dock" {
 
 	class "Dock\n**Physical Characteristics**" as dock_physical_char <<Value>>
 	{
-		+ length
-		+ depth
-		+ maxDraft
+		+ Length
+		+ Depth
+		+ Draft
 	}
 
 }
@@ -442,12 +456,14 @@ storage_area --> "1" storage_area_comp_info
 vessel "*" --> "1" vessel_type
 vessel --> "1" IMO_number
 vessel --> "1" vessel_name
+vessel --> "1" vessel_physical_char
 
 vessel_type --> "1" vessel_type_name
 vessel_type --> "1" vessel_type_description
 vessel_type --> "1" vessel_type_max_nr
 vessel_type --> "1" vessel_type_max_nb
 vessel_type --> "1" vessel_type_max_nt
+vessel_type --> "1" vessel_type_physical_char
 
 dock "1" --> "1" dock_loc
 dock "1" --> "*" phys_res : "has"

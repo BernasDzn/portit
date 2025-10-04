@@ -29,9 +29,9 @@ rectangle "Dock"{
 
 	class "Dock\n**Physical Characteristics**" as dock_physical_char <<Value>>
 	{
-		+ length
-		+ depth
-		+ maxDraft
+		+ Length
+		+ Depth
+		+ Draft
 	}
 
 }
