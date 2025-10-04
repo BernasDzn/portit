@@ -9,14 +9,21 @@ rectangle "Staff" #Lavender {
 	{
 	}
 
+	class "Staff\n**Mechanographic**\n**Number**" as staff_id <<ID>><<Value>>
+	{
+		+ id
+	}
+
 	class "Staff\n**Name**" as staff_name <<Value>>
 	{
 		+ name
 	}
+
 	class "Staff\n**Email**" as staff_email <<Value>>
 	{
 		+ email
 	}
+
 	class "Staff\n**Phone Number**" as staff_phone_number <<Value>>
 	{
 		+ phoneNumber
@@ -26,17 +33,19 @@ rectangle "Staff" #Lavender {
 	{
 		+ ACTIVE
 		+ INACTIVE
+		+ TEMPORARILY_REASSIGNED
 	}
 
 	class "Staff\n**Operational**\n**Window**" as staff_op_window
 	{
-		+ startDay
-		+ startTime
-		+ endDay
-		+ endTime
+		+ startWeekDay
+		+ endWeekDay
+		+ dayStartTime
+		+ dayEndTime
 	}
 
 	staff "1" --> staff_op_window
+	staff --> "1" staff_id
 	staff --> "1" staff_name
 	staff --> "1" staff_email
 	staff --> "1" staff_phone_number
