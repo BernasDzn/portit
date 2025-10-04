@@ -19,10 +19,6 @@ public class Qualification : IDTOAble<QualificationDto>
 		QualificationName = qualificationName;
 	}
 
-	public void UpdateIdCode(string idCode) {
-		NameCode = new Code { Value = idCode };
-	}
-
 	public void UpdateQualificationName(string qualificationName)
 	{
 		QualificationName = new Designation { Value = qualificationName };

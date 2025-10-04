@@ -58,7 +58,7 @@ public class StorageArea : IDTOAble<StorageAreaDto>
         }
     }
 
-    public virtual HashSet<DockRelation> DockServices { get; private set; } = new();
+    public virtual ICollection<DockRelation> DockServices { get; private set; } = new HashSet<DockRelation>();
 
     protected StorageArea() { } // EF Core
 

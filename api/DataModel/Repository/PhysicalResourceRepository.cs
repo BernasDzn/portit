@@ -86,7 +86,7 @@ public class PhysicalResourceRepository : GenericRepository<PhysicalResource>, I
         }
     }
 
-    public async Task<PhysicalResource> Update(PhysicalResource resource)
+    private async Task<PhysicalResource> Update(PhysicalResource resource)
     {
         try
         {
@@ -98,5 +98,23 @@ public class PhysicalResourceRepository : GenericRepository<PhysicalResource>, I
         {
             throw new PersistencyFailedException("Failed to update the physical resource in the database.");
         }
+    }
+
+    public Task<STSCrane> UpdateSTSCrane(STSCrane crane)
+    {
+        STSCrane updatedCrane = (STSCrane) Update(crane).Result;
+        return Task.FromResult(updatedCrane);
+    }
+
+    public Task<Truck> UpdateTruck(Truck truck)
+    {
+        Truck updatedTruck = (Truck) Update(truck).Result;
+        return Task.FromResult(updatedTruck);
+    }
+
+    public Task<YardCrane> UpdateYardCrane(YardCrane crane)
+    {
+        YardCrane updatedCrane = (YardCrane) Update(crane).Result;
+        return Task.FromResult(updatedCrane);
     }
 }

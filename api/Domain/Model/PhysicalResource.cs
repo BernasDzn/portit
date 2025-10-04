@@ -20,7 +20,7 @@ public class PhysicalResource : IDTOAble<PhysicalResourceDto>
 
     protected PhysicalResource() { } // EF Core
 
-    internal PhysicalResource(Guid id, Code code, Designation description, ResourceStatus status, TimeSpan setupTime, ICollection<Qualification> qualifications)
+    internal PhysicalResource(Guid id, Code code, Designation description, ResourceStatus status, TimeSpan setupTime, HashSet<Qualification> qualifications)
     {
         Id = id;
         Description = description;
@@ -29,6 +29,11 @@ public class PhysicalResource : IDTOAble<PhysicalResourceDto>
         Code = code;
         Qualifications = qualifications;
     }
+
+    public void UpdateDescription(Designation description) { Description = description; }
+    public void UpdateStatus(ResourceStatus status) { Status = status; }
+    public void UpdateSetupTime(TimeSpan setupTime) { SetupTime = setupTime; }
+    public void UpdateQualifications(HashSet<Qualification> qualifications) { Qualifications = qualifications; }
 
     public PhysicalResourceDto ToDTO()
     {
@@ -51,13 +56,20 @@ public class STSCrane : PhysicalResource, IDTOAble<STSCraneDto>
 
     protected STSCrane() { } // EF Core
 
-    public STSCrane(Guid id, Code code, Designation description, ResourceStatus status, TimeSpan setupTime, ICollection<Qualification> qualifications, uint liftingCapacity, Dock dock, uint averageContainersPerHour)
+    public STSCrane(
+        Guid id, Code code, Designation description, ResourceStatus status, TimeSpan setupTime, HashSet<Qualification> qualifications,
+        uint liftingCapacity, Dock dock, uint averageContainersPerHour
+    )
         : base(id, code, description, status, setupTime, qualifications)
     {
         LiftingCapacity = liftingCapacity;
         ServingDock = dock;
         ContainersPerHour = averageContainersPerHour;
     }
+
+    public void UpdateServingDock(Dock dock) { ServingDock = dock; }
+    public void UpdateLiftingCapacity(uint liftingCapacity) { LiftingCapacity = liftingCapacity; }
+    public void UpdateContainersPerHour(uint containersPerHour) { ContainersPerHour = containersPerHour; }
 
     STSCraneDto IDTOAble<STSCraneDto>.ToDTO()
     {
@@ -79,17 +91,35 @@ public class YardCrane : PhysicalResource, IDTOAble<YardCraneDto>
 {
     public uint ContainersPerHour { get; private set; }
     public uint LiftingCapacity { get; private set; }
-    public virtual StorageArea YardSection { get; private set; }
+    private StorageArea _yardSection;
+    public virtual StorageArea YardSection
+    {
+        get => _yardSection;
+        private set
+        {
+            if (value.AreaType != StorageAreaType.Yard)
+                throw new ArgumentException("The storage area must be of type 'Yard'.");
+
+            _yardSection = value;
+        }
+    }
 
     protected YardCrane() { } // EF Core
 
-    public YardCrane(Guid id, Code code, Designation description, ResourceStatus status, TimeSpan setupTime, ICollection<Qualification> qualifications, uint liftingCapacity, StorageArea yardSection, uint averageContainersPerHour)
+    public YardCrane(
+        Guid id, Code code, Designation description, ResourceStatus status, TimeSpan setupTime, HashSet<Qualification> qualifications,
+        uint liftingCapacity, StorageArea yardSection, uint averageContainersPerHour
+    )
         : base(id, code, description, status, setupTime, qualifications)
     {
         LiftingCapacity = liftingCapacity;
         YardSection = yardSection;
         ContainersPerHour = averageContainersPerHour;
     }
+
+    public void UpdateYardSection(StorageArea yardSection) { YardSection = yardSection; }
+    public void UpdateLiftingCapacity(uint liftingCapacity) { LiftingCapacity = liftingCapacity; }
+    public void UpdateContainersPerHour(uint containersPerHour) { ContainersPerHour = containersPerHour; }
     
     YardCraneDto IDTOAble<YardCraneDto>.ToDTO()
     {
@@ -116,13 +146,20 @@ public class Truck : PhysicalResource, IDTOAble<TruckDto>
 
     protected Truck() { } // EF Core
 
-    public Truck(Guid id, Code code, Designation description, ResourceStatus status, TimeSpan setupTime, ICollection<Qualification> qualifications, uint maxLoadCapacity, uint containersPerTrip, uint averageSpeed)
+    public Truck(
+        Guid id, Code code, Designation description, ResourceStatus status, TimeSpan setupTime, HashSet<Qualification> qualifications,
+        uint maxLoadCapacity, uint containersPerTrip, uint averageSpeed
+    )
         : base(id, code, description, status, setupTime, qualifications)
     {
         MaxLoadCapacity = maxLoadCapacity;
         ContainersPerTrip = containersPerTrip;
         AverageSpeed = averageSpeed;
     }
+
+    public void UpdateContainersPerTrip(uint containersPerTrip) { ContainersPerTrip = containersPerTrip; }
+    public void UpdateAverageSpeed(uint averageSpeed) { AverageSpeed = averageSpeed; }
+    public void UpdateMaxLoadCapacity(uint maxLoadCapacity) { MaxLoadCapacity = maxLoadCapacity; }
 
     TruckDto IDTOAble<TruckDto>.ToDTO()
     {

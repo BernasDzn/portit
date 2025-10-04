@@ -56,7 +56,6 @@ public class QualificationService
 			throw new EntityNotFoundException("Qualification to update not found.");
 
 		qualification.UpdateQualificationName(qualificationDto.QualificationName);
-		qualification.UpdateIdCode(qualificationDto.IdCode);
 
 		Qualification? updateResult = await _qualificationRepository.Update(qualification);
 		if (updateResult == null)

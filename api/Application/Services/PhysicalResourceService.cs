@@ -21,17 +21,37 @@ public class PhysicalResourceService
         _storageAreaRepository = storageAreaRepository;
     }
 
+    private HashSet<Qualification> GetQualificationsAsync(PhysicalResourceDto resourceDto)
+    {
+        HashSet<Qualification> qualifications = new HashSet<Qualification>();
+        foreach (var qualificationDto in resourceDto.Qualifications)
+        {
+            Qualification? qualification = _qualificationRepository.GetQualificationByIdAsync(qualificationDto.IdCode).Result;
+            if (qualification == null)
+                throw new EntityNotFoundException($"The qualification with ID {qualificationDto.IdCode} does not exist.");
+
+            qualifications.Add(qualification);
+        }
+        return qualifications;
+    }
+
+    private static object ConvertToDto(PhysicalResource resource)
+    {
+        if (resource is STSCrane stsCrane) return ((IDTOAble<STSCraneDto>)stsCrane).ToDTO();
+        else if (resource is YardCrane yardCrane) return ((IDTOAble<YardCraneDto>)yardCrane).ToDTO();
+        else if (resource is Truck truck) return ((IDTOAble<TruckDto>)truck).ToDTO();
+
+        throw new UnknownPhysicalResourceType("Unknown physical resource type.");
+    }
+
     public async Task<IEnumerable<object>> GetPhysicalResources()
     {
         IEnumerable<object> resources = await _physicalResourceRepository.GetPhysicalResourcesAsync();
 
-        List<object> resourceDtos = new List<object>();
-        foreach (var resource in resources)
-        {
-            if (resource is STSCrane stsCrane) resourceDtos.Add(((IDTOAble<STSCraneDto>)stsCrane).ToDTO());
-            else if (resource is YardCrane yardCrane) resourceDtos.Add(((IDTOAble<YardCraneDto>)yardCrane).ToDTO());
-            else if (resource is Truck truck) resourceDtos.Add(((IDTOAble<TruckDto>)truck).ToDTO());
-        }
+        List<object> resourceDtos = resources
+            .Select(resource => ConvertToDto((PhysicalResource)resource))
+            .ToList();
+
         return resourceDtos;
     }
 
@@ -40,11 +60,7 @@ public class PhysicalResourceService
         object? resource = await _physicalResourceRepository.GetResourceByCodeAsync(code);
         if (resource == null) return null;
 
-        object? resourceDto = null;
-        if (resource is STSCrane stsCrane) resourceDto = ((IDTOAble<STSCraneDto>)stsCrane).ToDTO();
-        else if (resource is YardCrane yardCrane) resourceDto = ((IDTOAble<YardCraneDto>)yardCrane).ToDTO();
-        else if (resource is Truck truck) resourceDto = ((IDTOAble<TruckDto>)truck).ToDTO();
-
+        object? resourceDto = ConvertToDto((PhysicalResource)resource);
         return resourceDto;
     }
 
@@ -58,15 +74,7 @@ public class PhysicalResourceService
         if (dock == null)
             throw new EntityNotFoundException("The specified dock does not exist.");
 
-        List<Qualification> qualifications = new List<Qualification>();
-        foreach (var qualificationDto in resourceDto.Qualifications)
-        {
-            Qualification? qualification = await _qualificationRepository.GetQualificationByIdAsync(qualificationDto.IdCode);
-            if (qualification == null)
-                throw new EntityNotFoundException($"The qualification with ID {qualificationDto.IdCode} does not exist.");
-
-            qualifications.Add(qualification);
-        }
+        HashSet<Qualification> qualifications = GetQualificationsAsync(resourceDto);
 
         STSCrane crane = new STSCrane(
             Guid.NewGuid(),
@@ -80,7 +88,7 @@ public class PhysicalResourceService
             resourceDto.ContainersPerHour
         );
 
-        return ((IDTOAble<STSCraneDto>) await _physicalResourceRepository.AddSTSCrane(crane)).ToDTO();
+        return ((IDTOAble<STSCraneDto>)await _physicalResourceRepository.AddSTSCrane(crane)).ToDTO();
     }
 
     public async Task<YardCraneDto?> AddYardCraneAsync(YardCraneDto resourceDto)
@@ -89,19 +97,10 @@ public class PhysicalResourceService
         if (exists)
             throw new EntityAlreadyExistsException("A physical resource with this code already exists.");
 
-        List<Qualification> qualifications = new List<Qualification>();
-        foreach (var qualificationDto in resourceDto.Qualifications)
-        {
-            Qualification? qualification = await _qualificationRepository.GetQualificationByIdAsync(qualificationDto.IdCode);
-            if (qualification == null)
-                throw new EntityNotFoundException($"The qualification with ID {qualificationDto.IdCode} does not exist.");
-
-            qualifications.Add(qualification);
-        }
+        HashSet<Qualification> qualifications = GetQualificationsAsync(resourceDto);
 
         StorageArea? storageArea = await _storageAreaRepository.GetStorageAreaByCodeAsync(resourceDto.YardSection.NameCode);
         if (storageArea == null) throw new EntityNotFoundException("The specified storage area does not exist.");
-        else if (storageArea.AreaType != StorageAreaType.Yard) throw new InvalidOperationException("The specified storage area is not a yard section.");
 
         YardCrane crane = new YardCrane(
             Guid.NewGuid(),
@@ -124,15 +123,7 @@ public class PhysicalResourceService
         if (exists)
             throw new EntityAlreadyExistsException("A physical resource with this code already exists.");
 
-        List<Qualification> qualifications = new List<Qualification>();
-        foreach (var qualificationDto in resourceDto.Qualifications)
-        {
-            Qualification? qualification = await _qualificationRepository.GetQualificationByIdAsync(qualificationDto.IdCode);
-            if (qualification == null)
-                throw new EntityNotFoundException($"The qualification with ID {qualificationDto.IdCode} does not exist.");
-
-            qualifications.Add(qualification);
-        }
+        HashSet<Qualification> qualifications = GetQualificationsAsync(resourceDto);
 
         Truck truck = new Truck(
             Guid.NewGuid(),
@@ -147,5 +138,62 @@ public class PhysicalResourceService
         );
 
         return ((IDTOAble<TruckDto>)await _physicalResourceRepository.AddTruck(truck)).ToDTO();
+    }
+
+    public async Task<STSCrane> UpdateSTSCrane(string code, STSCraneDto crane)
+    {
+        PhysicalResource? existingCrane = await _physicalResourceRepository.GetResourceByCodeAsync(code);
+        if (existingCrane == null)
+            throw new EntityNotFoundException("STS Crane to update not found.");
+
+        if (existingCrane is not STSCrane)
+            throw new InvalidOperationException("The physical resource with the specified code is not an STS Crane.");
+
+        List<Qualification> qualifications = GetQualificationsAsync(crane).ToList();
+
+        Dock? dock = await _dockRepository.GetDockByNameAsync(crane.ServingDock.Name);
+        if (dock == null)
+            throw new EntityNotFoundException("The specified dock does not exist.");
+
+        STSCrane craneObject = (existingCrane as STSCrane)!;
+
+        craneObject.UpdateDescription(new Designation { Value = crane.Description });
+        craneObject.UpdateStatus(crane.Status);
+        craneObject.UpdateSetupTime(TimeSpan.FromMinutes(crane.SetupTimeInMinutes));
+        craneObject.UpdateQualifications(qualifications.ToHashSet());
+
+        craneObject.UpdateLiftingCapacity(crane.LiftingCapacity);
+        craneObject.UpdateContainersPerHour(crane.ContainersPerHour);
+        craneObject.UpdateServingDock(dock);
+
+        return await _physicalResourceRepository.UpdateSTSCrane(craneObject);
+    }
+
+    public async Task<YardCrane> UpdateYardCrane(string code, YardCraneDto crane)
+    {
+        PhysicalResource? existingCrane = await _physicalResourceRepository.GetResourceByCodeAsync(code);
+        if (existingCrane == null)
+            throw new EntityNotFoundException("Yard Crane to update not found.");
+
+        if (existingCrane is not YardCrane)
+            throw new InvalidOperationException("The physical resource with the specified code is not a Yard Crane.");
+
+        List<Qualification> qualifications = GetQualificationsAsync(crane).ToList();
+
+        StorageArea? storageArea = await _storageAreaRepository.GetStorageAreaByCodeAsync(crane.YardSection.NameCode);
+        if (storageArea == null) throw new EntityNotFoundException("The specified storage area does not exist.");
+
+        YardCrane craneObject = (existingCrane as YardCrane)!;
+
+        craneObject.UpdateDescription(new Designation { Value = crane.Description });
+        craneObject.UpdateStatus(crane.Status);
+        craneObject.UpdateSetupTime(TimeSpan.FromMinutes(crane.SetupTimeInMinutes));
+        craneObject.UpdateQualifications(qualifications.ToHashSet());
+
+        craneObject.UpdateLiftingCapacity(crane.LiftingCapacity);
+        craneObject.UpdateContainersPerHour(crane.ContainersPerHour);
+        craneObject.UpdateYardSection(storageArea);
+
+        return await _physicalResourceRepository.UpdateYardCrane(craneObject);
     }
 }
