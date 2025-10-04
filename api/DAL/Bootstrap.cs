@@ -178,4 +178,120 @@ public static class Bootstrap
         context.StorageAreas.AddRange(sa1, sa2, sa3, sa4);
         context.SaveChanges();
     }
+
+    private static void BootstrapPhysicalResources(ApiContext context)
+    {
+        // Check if there are any physical resources already in the database
+        if (context.PhysicalResources.Any())
+            return;
+
+        Qualification stsOp = context.Qualifications.First(q => q.NameCode.Value == "STSOP");
+        Qualification ycOp = context.Qualifications.First(q => q.NameCode.Value == "YACOP");
+        Qualification trkDr = context.Qualifications.First(q => q.NameCode.Value == "TRKDR");
+
+        STSCrane crane1 = new STSCrane(
+            Guid.NewGuid(),
+            new Code { Value = "STS001" },
+            new Designation { Value = "STS Crane 1" },
+            ResourceStatus.Available,
+            TimeSpan.FromMinutes(30),
+            new HashSet<Qualification> { stsOp },
+            40,
+            context.Docks.First(),
+            30
+        );
+
+        STSCrane crane2 = new STSCrane(
+            Guid.NewGuid(),
+            new Code { Value = "STS002" },
+            new Designation { Value = "STS Crane 2" },
+            ResourceStatus.Maintenance,
+            TimeSpan.FromMinutes(45),
+            new HashSet<Qualification> { stsOp },
+            50,
+            context.Docks.Skip(1).First(),
+            25
+        );
+
+        YardCrane yardCrane1 = new YardCrane(
+            Guid.NewGuid(),
+            new Code { Value = "YC001" },
+            new Designation { Value = "Yard Crane 1" },
+            ResourceStatus.Available,
+            TimeSpan.FromMinutes(20),
+            new HashSet<Qualification> { ycOp },
+            20,
+            context.StorageAreas.First(sa => sa.AreaType == StorageAreaType.Yard),
+            40
+        );
+
+        YardCrane yardCrane2 = new YardCrane(
+            Guid.NewGuid(),
+            new Code { Value = "YC002" },
+            new Designation { Value = "Yard Crane 2" },
+            ResourceStatus.OutOfService,
+            TimeSpan.FromMinutes(25),
+            new HashSet<Qualification> { ycOp },
+            25,
+            context.StorageAreas.First(sa => sa.AreaType == StorageAreaType.Yard),
+            35
+        );
+
+        Truck truck1 = new Truck(
+            Guid.NewGuid(),
+            new Code { Value = "TRK001" },
+            new Designation { Value = "Truck 1" },
+            ResourceStatus.Available,
+            TimeSpan.FromMinutes(15),
+            new HashSet<Qualification> { trkDr },
+            30,
+            2,
+            80
+        );
+
+        Truck truck2 = new Truck(
+            Guid.NewGuid(),
+            new Code { Value = "TRK002" },
+            new Designation { Value = "Truck 2" },
+            ResourceStatus.Maintenance,
+            TimeSpan.FromMinutes(20),
+            new HashSet<Qualification> { trkDr },
+            25,
+            1,
+            50
+        );
+
+        context.PhysicalResources.AddRange(crane1, crane2, yardCrane1, yardCrane2, truck1, truck2);
+        context.SaveChanges();
+    }
+
+
+    public static void BootstrapStaff(ApiContext context)
+    {
+        var qual1 = context.Qualifications.First();
+        var qual2 = context.Qualifications.Skip(1).First();
+
+        if (context.Staffs.Any())
+            return;
+
+        OperationalWindow opWindow = new OperationalWindow
+        {
+            StartWeekDay = DayOfWeek.Monday,
+            EndWeekDay = DayOfWeek.Friday,
+            DayStartTime = new TimeOnly(8, 0),
+            DayEndTime = new TimeOnly(16, 0)
+        };
+        context.Staffs.Add(
+            new Staff(
+                new StaffMechanograficNumber { Value = "MEC001" },
+                new Designation { Value = "Alice Johnson" },
+                new Email { Value = "alice.johnson@example.com" },
+                new PhoneNumber { Value = "911222333" },
+                opWindow,
+                new List<Qualification> { qual1, qual2 }
+            )
+        );
+        context.SaveChanges();
+    }
+
 }
