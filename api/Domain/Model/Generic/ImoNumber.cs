@@ -21,6 +21,12 @@ public class ImoNumber
         }
     }
 
+    // EF Core expects a foreign-key-like property on owned/value objects when
+    // they participate in unique constraints or indexes referencing the owner.
+    // Adding this property (with at least a setter) allows EF Core to map the
+    // relationship back to the owning Vessel entity (its Id).
+    //public Guid VesselId { get; private set; }
+
     private bool IsValidImoNumber(string imoNumber)
     {
         if (imoNumber == null) return false;

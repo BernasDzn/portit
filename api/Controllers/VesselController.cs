@@ -60,12 +60,12 @@ public class VesselController : ControllerBase
         }
     }
 
-    [HttpPut("{name}", Name = "UpdateVessel")]
-    public async Task<ActionResult<VesselDto>> Update(string name, VesselDto vesselDto)
+    [HttpPut("{imo}", Name = "UpdateVessel")]
+    public async Task<ActionResult<VesselDto>> Update(string imo, VesselDto vesselDto)
     {
         try
         {
-            var updatedVessel = await _vesselService.Update(name, vesselDto);
+            var updatedVessel = await _vesselService.Update(imo, vesselDto);
             if (updatedVessel == null)
                 return BadRequest("Could not update vessel");
 

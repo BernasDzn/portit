@@ -28,7 +28,7 @@ public class VesselService
 
     public async Task<VesselDto?> Add(VesselDto vesselDto)
     {
-        bool exists = await _vesselRepository.GetVesselByNameAsync(vesselDto.Name) != null;
+        bool exists = await _vesselRepository.GetVesselByIMOAsync(vesselDto.ImoNumber) != null;
         if (exists)
             throw new EntityAlreadyExistsException("This vessel already exists");
 
@@ -53,9 +53,9 @@ public class VesselService
         return savedVesselDto;
     }
 
-    public async Task<VesselDto?> Update(string name, VesselDto vesselDto)
+    public async Task<VesselDto?> Update(string imo, VesselDto vesselDto)
     {
-        Vessel vessel = await _vesselRepository.GetVesselByNameAsync(name);
+        Vessel vessel = await _vesselRepository.GetVesselByIMOAsync(imo);
         if (vessel == null)
             throw new EntityNotFoundException("Vessel not found.");
 
@@ -76,7 +76,7 @@ public class VesselService
         if (updateResult == null)
             throw new PersistencyFailedException("Unable to perform an update");
 
-        Vessel updatedVessel = await _vesselRepository.GetVesselByNameAsync(vesselDto.Name);
+        Vessel updatedVessel = await _vesselRepository.GetVesselByIMOAsync(vesselDto.ImoNumber);
         return updatedVessel.ToDTO();
     }
 
