@@ -97,6 +97,38 @@ rectangle "Physical Resources" {
 	{
 	}
 
+	class "Physical\nResources\n**STSCrane**" as sts_crane <<Entity>>
+	{
+	}
+
+	class "Physical\nResources\n**YardCrane**" as yard_crane <<Entity>>
+	{
+	}
+
+	class "Physical\nResources\n**Truck**" as truck <<Entity>>
+	{
+	}
+
+	class "Physical\nResources\n**ContainersPerTrip**" as phys_res_cpt <<Value>>
+	{
+		+ containersPerTrip
+	}
+
+	class "Physical\nResources\n**AverageSpeed**" as phys_res_as <<Value>>
+	{
+		+ averageSpeed
+	}
+
+	class "Physical\nResources\n**ContainersPerHour**" as phys_res_cph <<Value>>
+	{
+		+ containersPerHour
+	}
+
+	class "Physical\nResources\n**LiftingCapacity**" as phys_res_lc <<Value>>
+	{
+		+ liftingCapacity
+	}
+
 	class "Physical\nResources\n**Description**" as phys_res_desc <<Value>>
 	{
 		+ description
@@ -115,11 +147,6 @@ rectangle "Physical Resources" {
 	class "Physical\nResources\n**Setup Time**" as phys_res_setup_time <<Value>>
 	{
 		+ setupTime
-	}
-
-	class "Physical\nResources\n**Type**" as phys_res_type <<Value>>
-	{
-		+ typeName
 	}
 
 	class "Physical\nResources\n**Operational Window**" as phys_res_op_window
@@ -215,15 +242,27 @@ rectangle "Storage Area"{
 	{
 	}
 
+	class "Storage Area\n**Location**" as storage_area_loc <<Value>>
+	{
+		+ location
+	}
+
+	class "Storage Area\n**Name**" as storage_area_name <<Value>>
+	{
+		+ nameOrNumber
+	}
+
 	class "Storage Area\n**Capacity**" as storage_area_capacity <<Value>>
 	{
 		+ maxCapacity
 		+ currentCapacity
 	}
 
-	class "Storage Area\n**Complementary Information**" as storage_area_comp_info <<Value>>
+	class "Storage Area\n**Serving Information**" as storage_area_comp_info <<Value>>
 	{
-		+ complementaryInformation
+		+ dock
+		+ isServing
+		+ distance
 	}
 
 	class "Storage Area\n**Type**" as storage_area_type <<Value>>
@@ -321,7 +360,17 @@ rectangle "Berthing information" {
 		REJECTED
 	}
 
-	class "Vessel Visit\nNotification\n**Cargo Manifest**" as c_manifest <<Entity>>
+	class "Vessel Visit\nNotification\n**Load Cargo Manifest**" as c_manifest_l <<Entity>>
+	{
+		+ ISO
+		+ description
+		+ type
+		+ bay
+		+ row
+		+ tier
+	}
+
+	class "Vessel Visit\nNotification\n**Unload Cargo Manifest**" as c_manifest_u <<Entity>>
 	{
 		+ ISO
 		+ description
@@ -414,7 +463,6 @@ quali --> quali_name
 vessel_berth "1" --> "*" op_task : "encapsulates"
 vessel_berth "1" --> "1" dock : "happens on"
 
-phys_res --> phys_res_type : "has"
 phys_res "*" --> "*" quali : "requires"
 phys_res --> "1" phys_res_desc
 phys_res --> "1" phys_res_op_cap
@@ -429,7 +477,8 @@ vessel_visit_notif -> "0..*" notif_dec
 vessel_visit_notif <-- vessel_berth : "responds to"
 vessel_visit_notif --> vessel
 crew --> "*" crewman : "has a list of"
-vessel_visit_notif "1" --> "0..2" c_manifest : "has"
+vessel_visit_notif "1" --> "0..1" c_manifest_l : "details"
+vessel_visit_notif "1" --> "0..1" c_manifest_u : "details"
 
 notif_dec "1" -> "1" notif_status : "has"
 notif_dec "1" -> "0..1" dock : "has"
@@ -442,16 +491,18 @@ SAO --> "1" SAO_tax_number
 
 SAO_rep "1" --> "*" vessel_visit_notif : "submits"
 
-c_manifest "1" -> "1" cargo_type : "has"
-
-
+c_manifest_l "1" -> "1" cargo_type : "has"
+c_manifest_u "1" -> "1" cargo_type : "has"
 
 storage_area --> "1" storage_area_type
 storage_area "1" --> "1" port_loc
 storage_area "1" --> "*" dock : "serves"
 storage_area --> "1" storage_area_capacity
 storage_area --> "1" storage_area_comp_info
+storage_area --> "1" storage_area_name
+storage_area --> "1" storage_area_loc
 
+storage_area_comp_info --> "1" dock : "isServing"
 
 vessel "*" --> "1" vessel_type
 vessel --> "1" IMO_number
@@ -470,5 +521,19 @@ dock "1" --> "*" phys_res : "has"
 dock "1" --> "1" dock_name
 dock --> "1" dock_physical_char
 
+sts_crane --|> phys_res
+yard_crane --|> phys_res
+truck --|> phys_res
+
+sts_crane --> "1" phys_res_cph
+sts_crane --> "1" phys_res_lc
+sts_crane --> "1" dock
+
+yard_crane --> "1" phys_res_cph
+yard_crane --> "1" phys_res_lc
+yard_crane --> "1" storage_area
+
+truck --> "1" phys_res_cpt
+truck --> "1" phys_res_as
 
 @enduml

@@ -34,7 +34,7 @@ public class ShippingAgentOrganization : IDTOAble<ShippingAgentOrganizationDto>
         {
             Name = this.LegalName.Value,
             AltNames = this.AltNames.Select(n => n.Value).ToArray(),
-            Address = this.MainAddress.ToDTO(),
+            Address = this.MainAddress,
             TaxNumber = this.TaxId.Value,
             Representatives = this.Representatives.Select(r => r.ToDTO()).ToList()
         };

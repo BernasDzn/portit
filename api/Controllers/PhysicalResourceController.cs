@@ -24,7 +24,7 @@ public class PhysicalResourceController : ControllerBase
         return Ok(allResources);
     }
 
-    [HttpGet("GetByCode", Name = "GetByCode")]
+    [HttpGet("{code}", Name = "GetByCode")]
     public async Task<ActionResult<object>> GetByCode([FromQuery] string code)
     {
         try
@@ -111,7 +111,7 @@ public class PhysicalResourceController : ControllerBase
     public async Task<ActionResult<TruckDto>> UpdateTruck(string code, [FromBody] TruckDto resourceDto) =>
         await HandleUpdateAsync<TruckDto>(code, resourceDto, _physicalResourceService.UpdateTruckAsync, "truck");
 
-    [HttpDelete("Deactivate/{code}", Name = "Deactivate")]
+    [HttpDelete("{code}", Name = "Deactivate")]
     public async Task<ActionResult> Deactivate(string code)
     {
         try

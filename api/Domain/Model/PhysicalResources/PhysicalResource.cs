@@ -16,12 +16,13 @@ public class PhysicalResource : IDTOAble<PhysicalResourceDto>
     public Designation Description { get; private set; }
     public ResourceStatus Status { get; private set; }
     public TimeSpan SetupTime { get; private set; } // In minutes
+    public OperationalWindow OperationalWindow { get; private set; }
     public bool Active { get; private set; } = true; // Soft delete
     public virtual ICollection<Qualification> Qualifications { get; private set; } // Needed qualifications to operate the resource
 
     protected PhysicalResource() { } // EF Core
 
-    internal PhysicalResource(Guid id, Code code, Designation description, ResourceStatus status, TimeSpan setupTime, HashSet<Qualification> qualifications)
+    internal PhysicalResource(Guid id, Code code, Designation description, ResourceStatus status, TimeSpan setupTime, HashSet<Qualification> qualifications, OperationalWindow operationalWindow)
     {
         Id = id;
         Description = description;
@@ -29,6 +30,7 @@ public class PhysicalResource : IDTOAble<PhysicalResourceDto>
         SetupTime = setupTime;
         Code = code;
         Qualifications = qualifications;
+        OperationalWindow = operationalWindow;
     }
     
     public void Deactivate() { Active = false; }
@@ -37,6 +39,7 @@ public class PhysicalResource : IDTOAble<PhysicalResourceDto>
     public void UpdateStatus(ResourceStatus status) { Status = status; }
     public void UpdateSetupTime(TimeSpan setupTime) { SetupTime = setupTime; }
     public void UpdateQualifications(HashSet<Qualification> qualifications) { Qualifications = qualifications; }
+    public void UpdateOperationalWindow(OperationalWindow operationalWindow) { OperationalWindow = operationalWindow; }
 
     public PhysicalResourceDto ToDTO()
     {
@@ -46,7 +49,8 @@ public class PhysicalResource : IDTOAble<PhysicalResourceDto>
             Description = this.Description.ToString(),
             Status = this.Status,
             SetupTimeInMinutes = (int)this.SetupTime.TotalMinutes,
-            Qualifications = this.Qualifications.Select(q => q.ToDTO()).ToList()
+            Qualifications = this.Qualifications.Select(q => q.ToDTO()).ToList(),
+            OperationalWindow = this.OperationalWindow
         };
     }
 }
@@ -60,10 +64,10 @@ public class STSCrane : PhysicalResource, IDTOAble<STSCraneDto>
     protected STSCrane() { } // EF Core
 
     public STSCrane(
-        Guid id, Code code, Designation description, ResourceStatus status, TimeSpan setupTime, HashSet<Qualification> qualifications,
+        Guid id, Code code, Designation description, ResourceStatus status, TimeSpan setupTime, HashSet<Qualification> qualifications, OperationalWindow operationalWindow,
         uint liftingCapacity, Dock dock, uint averageContainersPerHour
     )
-        : base(id, code, description, status, setupTime, qualifications)
+        : base(id, code, description, status, setupTime, qualifications, operationalWindow)
     {
         LiftingCapacity = liftingCapacity;
         ServingDock = dock;
@@ -85,7 +89,8 @@ public class STSCrane : PhysicalResource, IDTOAble<STSCraneDto>
             Qualifications = this.Qualifications.Select(q => q.ToDTO()).ToList(),
             ContainersPerHour = this.ContainersPerHour,
             LiftingCapacity = this.LiftingCapacity,
-            ServingDock = this.ServingDock.ToDTO()
+            ServingDock = this.ServingDock.ToDTO(),
+            OperationalWindow = this.OperationalWindow
         };
     }
 }
@@ -110,10 +115,10 @@ public class YardCrane : PhysicalResource, IDTOAble<YardCraneDto>
     protected YardCrane() { } // EF Core
 
     public YardCrane(
-        Guid id, Code code, Designation description, ResourceStatus status, TimeSpan setupTime, HashSet<Qualification> qualifications,
+        Guid id, Code code, Designation description, ResourceStatus status, TimeSpan setupTime, HashSet<Qualification> qualifications, OperationalWindow operationalWindow,
         uint liftingCapacity, StorageArea yardSection, uint averageContainersPerHour
     )
-        : base(id, code, description, status, setupTime, qualifications)
+        : base(id, code, description, status, setupTime, qualifications, operationalWindow)
     {
         LiftingCapacity = liftingCapacity;
         YardSection = yardSection;
@@ -135,7 +140,8 @@ public class YardCrane : PhysicalResource, IDTOAble<YardCraneDto>
             Qualifications = this.Qualifications.Select(q => q.ToDTO()).ToList(),
             ContainersPerHour = this.ContainersPerHour,
             LiftingCapacity = this.LiftingCapacity,
-            YardSection = this.YardSection.ToDTO()
+            YardSection = this.YardSection.ToDTO(),
+            OperationalWindow = this.OperationalWindow
         };
     }
 }
@@ -150,10 +156,10 @@ public class Truck : PhysicalResource, IDTOAble<TruckDto>
     protected Truck() { } // EF Core
 
     public Truck(
-        Guid id, Code code, Designation description, ResourceStatus status, TimeSpan setupTime, HashSet<Qualification> qualifications,
+        Guid id, Code code, Designation description, ResourceStatus status, TimeSpan setupTime, HashSet<Qualification> qualifications, OperationalWindow operationalWindow,
         uint maxLoadCapacity, uint containersPerTrip, uint averageSpeed
     )
-        : base(id, code, description, status, setupTime, qualifications)
+        : base(id, code, description, status, setupTime, qualifications, operationalWindow)
     {
         MaxLoadCapacity = maxLoadCapacity;
         ContainersPerTrip = containersPerTrip;
@@ -175,7 +181,8 @@ public class Truck : PhysicalResource, IDTOAble<TruckDto>
             Qualifications = this.Qualifications.Select(q => q.ToDTO()).ToList(),
             ContainersPerTrip = this.ContainersPerTrip,
             MaxLoadCapacity = this.MaxLoadCapacity,
-            AverageSpeed = this.AverageSpeed
+            AverageSpeed = this.AverageSpeed,
+            OperationalWindow = this.OperationalWindow
         };
     }
 }
