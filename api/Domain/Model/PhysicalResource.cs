@@ -16,6 +16,7 @@ public class PhysicalResource : IDTOAble<PhysicalResourceDto>
     public Designation Description { get; private set; }
     public ResourceStatus Status { get; private set; }
     public TimeSpan SetupTime { get; private set; } // In minutes
+    public bool Active { get; private set; } = true; // Soft delete
     public virtual ICollection<Qualification> Qualifications { get; private set; } // Needed qualifications to operate the resource
 
     protected PhysicalResource() { } // EF Core
@@ -29,6 +30,8 @@ public class PhysicalResource : IDTOAble<PhysicalResourceDto>
         Code = code;
         Qualifications = qualifications;
     }
+    
+    public void Deactivate() { Active = false; }
 
     public void UpdateDescription(Designation description) { Description = description; }
     public void UpdateStatus(ResourceStatus status) { Status = status; }
