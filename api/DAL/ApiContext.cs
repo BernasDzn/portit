@@ -20,4 +20,5 @@ public class ApiContext : DbContext
     public DbSet<VesselType> VesselTypes { get; set; } = null!;
     public DbSet<Dock> Docks { get; set; } = null!;
     public DbSet<StorageArea> StorageAreas { get; set; } = null!;
+    public DbSet<Staff> Staffs { get; set; } = null!;
 }
