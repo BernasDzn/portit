@@ -117,11 +117,11 @@ public static class Bootstrap
         if (context.Docks.Any())
             return;
 
-        VesselType vt1 = new VesselType(Guid.NewGuid(), new Designation { Value = "Panamax" }, new Designation { Value = "Max size for Panama Canal" }, 20, 10, 5);
-        VesselType vt2 = new VesselType(Guid.NewGuid(), new Designation { Value = "Post-Panamax" }, new Designation { Value = "Larger than Panamax" }, 30, 15, 7);
-        VesselType vt3 = new VesselType(Guid.NewGuid(), new Designation { Value = "Ultra Large Container Vessel (ULCV)" }, new Designation { Value = "Largest container ships" }, 40, 20, 10);
-        VesselType vt4 = new VesselType(Guid.NewGuid(), new Designation { Value = "Handymax" }, new Designation { Value = "Medium-sized bulk carriers" }, 15, 8, 4);
-        VesselType vt5 = new VesselType(Guid.NewGuid(), new Designation { Value = "Capesize" }, new Designation { Value = "Too large for Panama and Suez Canals" }, 50, 25, 12);
+        VesselType vt1 = new VesselType(Guid.NewGuid(), new Designation { Value = "Panamax" }, new Designation { Value = "Max size for Panama Canal" }, 20, 10, 5, new PhysicalCharacteristics { Length = 300, Depth = 15, Draft = 12 });
+        VesselType vt2 = new VesselType(Guid.NewGuid(), new Designation { Value = "Post-Panamax" }, new Designation { Value = "Larger than Panamax" }, 30, 15, 7, new PhysicalCharacteristics { Length = 400, Depth = 18, Draft = 14 });
+        VesselType vt3 = new VesselType(Guid.NewGuid(), new Designation { Value = "Ultra Large Container Vessel (ULCV)" }, new Designation { Value = "Largest container ships" }, 40, 20, 10, new PhysicalCharacteristics { Length = 500, Depth = 25, Draft = 18 });
+        VesselType vt4 = new VesselType(Guid.NewGuid(), new Designation { Value = "Handymax" }, new Designation { Value = "Medium-sized bulk carriers" }, 15, 8, 4, new PhysicalCharacteristics { Length = 250, Depth = 12, Draft = 10 });
+        VesselType vt5 = new VesselType(Guid.NewGuid(), new Designation { Value = "Capesize" }, new Designation { Value = "Too large for Panama and Suez Canals" }, 50, 25, 12, new PhysicalCharacteristics { Length = 600, Depth = 30, Draft = 20 });
 
         // Check if there are any vessels already in the database
         if (context.Vessels.Any())
@@ -130,18 +130,18 @@ public static class Bootstrap
         // Add Bootstrap data
         context.Vessels.AddRange(
             new Vessel(Guid.NewGuid(), new Designation { Value = "Ever Given" }, new ImoNumber { Value = "IMO 7585229" },
-            vt1, context.ShippingAgentOrganizations.First()),
+            vt1, context.ShippingAgentOrganizations.First(), new PhysicalCharacteristics { Length = 270, Depth = 13, Draft = 10 }),
             new Vessel(Guid.NewGuid(), new Designation { Value = "Maersk Triple E" }, new ImoNumber { Value = "IMO 3815389" },
-            vt2, context.ShippingAgentOrganizations.Skip(1).First()),
+            vt2, context.ShippingAgentOrganizations.Skip(1).First(), new PhysicalCharacteristics { Length = 370, Depth = 16, Draft = 13 }),
             new Vessel(Guid.NewGuid(), new Designation { Value = "CMA CGM Marco Polo" }, new ImoNumber { Value = "IMO 6699530" },
-            vt3, context.ShippingAgentOrganizations.Skip(2).First())
+            vt3, context.ShippingAgentOrganizations.Skip(2).First(), new PhysicalCharacteristics { Length = 470, Depth = 24, Draft = 15 })
         );
 
         // Add Bootstrap data
         context.Docks.AddRange(
-            new Dock(Guid.NewGuid(), new Designation { Value = "Dock A" }, new Designation { Value = "North Harbor" }, 500, 30, 15, new HashSet<VesselType> { vt4, vt1 }),
-            new Dock(Guid.NewGuid(), new Designation { Value = "Dock B" }, new Designation { Value = "East Harbor" }, 600, 35, 18, new HashSet<VesselType> { vt5 }),
-            new Dock(Guid.NewGuid(), new Designation { Value = "Dock C" }, new Designation { Value = "South Harbor" }, 700, 40, 20, new HashSet<VesselType> { vt2, vt3 })
+            new Dock(Guid.NewGuid(), new Designation { Value = "Dock A" }, new Designation { Value = "North Harbor" }, new PhysicalCharacteristics { Length = 500, Depth = 35, Draft = 20 }, new HashSet<VesselType> { vt4, vt1 }),
+            new Dock(Guid.NewGuid(), new Designation { Value = "Dock B" }, new Designation { Value = "East Harbor" }, new PhysicalCharacteristics { Length = 700, Depth = 35, Draft = 20 }, new HashSet<VesselType> { vt5 }),
+            new Dock(Guid.NewGuid(), new Designation { Value = "Dock C" }, new Designation { Value = "South Harbor" }, new PhysicalCharacteristics { Length = 700, Depth = 40, Draft = 25 }, new HashSet<VesselType> { vt2, vt3 })
         );
 
         context.SaveChanges();

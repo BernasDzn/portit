@@ -30,7 +30,8 @@ public class VesselTypeService
             throw new Exception("Vessel Type with the specified name already exists");
         }
         VesselType vType = new VesselType(Guid.NewGuid(), new Designation { Value = vesselTypeDto.Name }, new Designation { Value = vesselTypeDto.Description },
-         vesselTypeDto.MaxNumberOfRows, vesselTypeDto.MaxNumberOfBays, vesselTypeDto.MaxNumberOfTiers);
+         vesselTypeDto.MaxNumberOfRows, vesselTypeDto.MaxNumberOfBays, vesselTypeDto.MaxNumberOfTiers,
+         new PhysicalCharacteristics { Length = vesselTypeDto.PhysicalCharacteristics.Length, Depth = vesselTypeDto.PhysicalCharacteristics.Depth, Draft = vesselTypeDto.PhysicalCharacteristics.Draft });
 
         VesselType savedVesselType = await _vesselTypeRepository.Add(vType);
 
@@ -48,6 +49,12 @@ public class VesselTypeService
         vesselType.UpdateMaxNumberOfRows(vesselTypeDto.MaxNumberOfRows);
         vesselType.UpdateMaxNumberOfBays(vesselTypeDto.MaxNumberOfBays);
         vesselType.UpdateMaxNumberOfTiers(vesselTypeDto.MaxNumberOfTiers);
+        vesselType.UpdatePhysicalCharacteristics(new PhysicalCharacteristics
+        {
+            Length = vesselTypeDto.PhysicalCharacteristics.Length,
+            Depth = vesselTypeDto.PhysicalCharacteristics.Depth,
+            Draft = vesselTypeDto.PhysicalCharacteristics.Draft
+        });
 
         bool updated = await _vesselTypeRepository.Update(vesselType);
         if (!updated)

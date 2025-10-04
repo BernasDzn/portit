@@ -36,7 +36,12 @@ public class DockService
         HashSet<VesselType> vesselTypes = await GetVesselTypesFromDto(dockDto.SupportedVesselTypes);
 
         Dock dock = new Dock(Guid.NewGuid(), new Designation { Value = dockDto.Name }, new Designation { Value = dockDto.Location },
-         dockDto.Length, dockDto.Depth, dockDto.MaxDraft, vesselTypes);
+         new PhysicalCharacteristics
+         {
+             Length = dockDto.PhysicalCharacteristics.Length,
+             Depth = dockDto.PhysicalCharacteristics.Depth,
+             Draft = dockDto.PhysicalCharacteristics.Draft
+         }, vesselTypes);
 
         Dock savedDock = await _dockRepository.Add(dock);
         DockDto savedDockDto = savedDock.ToDTO();
@@ -55,10 +60,17 @@ public class DockService
 
         HashSet<VesselType> vesselTypes = await GetVesselTypesFromDto(dockDto.SupportedVesselTypes);
 
-        dock.UpdateLocation(dockDto.Location);
-        dock.UpdateDepth(dockDto.Depth);
-        dock.UpdateLength(dockDto.Length);
-        dock.UpdateMaxDraft(dockDto.MaxDraft);
+        dock.UpdateLocation(new Designation { Value = dockDto.Location });
+
+
+        PhysicalCharacteristics newPhysicalCharacteristics = new PhysicalCharacteristics
+        {
+            Length = dockDto.PhysicalCharacteristics.Length,
+            Depth = dockDto.PhysicalCharacteristics.Depth,
+            Draft = dockDto.PhysicalCharacteristics.Draft
+        };
+
+        dock.UpdatePhysicalCharacteristics(newPhysicalCharacteristics);
         dock.UpdateVesselTypes(vesselTypes);
 
         bool updated = await _dockRepository.Update(dock);

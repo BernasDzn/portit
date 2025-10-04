@@ -8,15 +8,13 @@ public class Dock : IDTOAble<DockDto>
     public Guid Id { get; private set; }
     public Designation Name { get; private set; }
     public Designation Location { get; private set; }
-    public uint Length { get; private set; }
-    public uint Depth { get; private set; }
-    public uint MaxDraft { get; private set; }
+    public PhysicalCharacteristics PhysicalCharacteristics { get; private set; }
     public virtual ICollection<VesselType> SupportedVesselTypes { get; private set; }
 
 
     //EF Core
     protected Dock() { }
-    public Dock(Guid id, Designation name, Designation location, uint length, uint depth, uint maxDraft, HashSet<VesselType> supportedVesselTypes)
+    public Dock(Guid id, Designation name, Designation location, PhysicalCharacteristics physicalCharacteristics, HashSet<VesselType> supportedVesselTypes)
     {
         if (supportedVesselTypes == null || supportedVesselTypes.Count == 0)
             throw new ArgumentException("Invalid arguments!");
@@ -24,31 +22,23 @@ public class Dock : IDTOAble<DockDto>
         Id = id;
         Name = name;
         Location = location;
-        Length = length;
-        Depth = depth;
-        MaxDraft = maxDraft;
+        PhysicalCharacteristics = physicalCharacteristics;
         SupportedVesselTypes = supportedVesselTypes;
+        validatePhysicalCharacteristics();
     }
 
-    public void UpdateName(string newName)
+    public void UpdateName(Designation newName)
     {
-        Name = new Designation { Value = newName };
+        Name = newName;
     }
-    public void UpdateLocation(string newLocation)
-    {            
-        Location = new Designation { Value = newLocation };
-    }
-    public void UpdateLength(uint new_length)
+    public void UpdateLocation(Designation newLocation)
     {
-        Length = new_length;
+        Location = newLocation;
     }
-    public void UpdateDepth(uint new_depth)
+    public void UpdatePhysicalCharacteristics(PhysicalCharacteristics physicalCharacteristics)
     {
-        Depth = new_depth;
-    }
-    public void UpdateMaxDraft(uint new_maxDraft)
-    {
-        MaxDraft = new_maxDraft;
+        PhysicalCharacteristics = physicalCharacteristics ?? throw new ArgumentNullException(nameof(physicalCharacteristics));
+        validatePhysicalCharacteristics();
     }
 
     public void UpdateVesselTypes(ICollection<VesselType> new_vesselTypes)
@@ -58,6 +48,7 @@ public class Dock : IDTOAble<DockDto>
 
         SupportedVesselTypes.Clear();
         SupportedVesselTypes = new_vesselTypes;
+        validatePhysicalCharacteristics();
     }
 
     public DockDto ToDTO()
@@ -66,10 +57,21 @@ public class Dock : IDTOAble<DockDto>
         {
             Name = this.Name.Value,
             Location = this.Location.Value,
-            Length = this.Length,
-            Depth = this.Depth,
-            MaxDraft = this.MaxDraft,
+            PhysicalCharacteristics = this.PhysicalCharacteristics.ToDTO(),
             SupportedVesselTypes = this.SupportedVesselTypes.Select(vt => vt.ToDTO()).ToList()
         };
+    }
+
+    private void validatePhysicalCharacteristics()
+    {
+        foreach (var vt in SupportedVesselTypes)
+        {
+            if (PhysicalCharacteristics.Length < vt.PhysicalCharacteristics.Length)
+                throw new ArgumentException($"The dock's length is insufficient for the vessel type {vt.Name}.");
+            if (PhysicalCharacteristics.Depth < vt.PhysicalCharacteristics.Depth)
+                throw new ArgumentException($"The dock's depth is insufficient for the vessel type {vt.Name}.");
+            if (PhysicalCharacteristics.Draft < vt.PhysicalCharacteristics.Draft)
+                throw new ArgumentException($"The dock's max draft is insufficient for the vessel type {vt.Name}.");
+        }
     }
 }

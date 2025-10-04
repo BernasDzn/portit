@@ -44,7 +44,13 @@ public class VesselService
             new Designation { Value = vesselDto.Name },
             new ImoNumber { Value = vesselDto.ImoNumber },
             vesselType,
-            org
+            org,
+            new PhysicalCharacteristics
+            {
+                Length = vesselDto.PhysicalCharacteristics.Length,
+                Depth = vesselDto.PhysicalCharacteristics.Depth,
+                Draft = vesselDto.PhysicalCharacteristics.Draft
+            }
         );
 
         Vessel savedVessel = await _vesselRepository.Add(vessel);
