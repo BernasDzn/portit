@@ -1,9 +1,11 @@
+using Domain.Model.Generic;
+
 public class ShippingAgentOrganizationDto
 {
     public required string Name { get; set; }
     public required string[] AltNames { get; set; }
     public required string TaxNumber { get; set; }
-    public required virtual AddressDto Address { get; set; }
+    public required virtual Address Address { get; set; }
     public required virtual List<RepresentativeDto> Representatives { get; set; }
 }
 

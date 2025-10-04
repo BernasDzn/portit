@@ -1,6 +1,6 @@
 namespace Domain.Model.Generic;
 
-public class Address : IDTOAble<AddressDto>
+public class Address
 {
     public Guid Id { get; set; }
     public string Street { get; set; }
@@ -19,17 +19,5 @@ public class Address : IDTOAble<AddressDto>
         ZipCode = zipCode;
         Country = country;
     }
-
-    public AddressDto ToDTO()
-    {
-        return new AddressDto
-        {
-            Street = this.Street,
-            City = this.City,
-            PostalCode = this.ZipCode,
-            Country = this.Country
-        };
-    }
-    
     public override string ToString() => $"{Street}, {ZipCode} {City}, {Country}";
 }

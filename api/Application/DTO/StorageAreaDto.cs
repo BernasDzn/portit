@@ -15,5 +15,5 @@ public class StorageAreaDto
     public required StorageAreaType Type { get; set; }
     public required uint Capacity { get; set; }
     public required uint CurrentOccupancy { get; set; }
-    public required HashSet<DockRelationDto> DockServices { get; set; }
+    public required HashSet<DockRelationDto>? DockServices { get; set; }
 }

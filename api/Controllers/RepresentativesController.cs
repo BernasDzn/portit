@@ -7,20 +7,42 @@ namespace Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class RepresentativesController : ControllerBase
+public class RepresentativeController : ControllerBase
 {
     private readonly ApiContext _context;
 
-    public RepresentativesController(ApiContext context)
+    public RepresentativeController(ApiContext context)
     {
         _context = context;
     }
 
-    [HttpGet(Name = "GetAllRepresentatives")]
-    public ActionResult<IEnumerable<Representative>> GetAll()
+    [HttpGet(Name = "GetRepresentatives")]
+    public ActionResult<IEnumerable<RepresentativeDto>> GetAll()
     {
-        var saors = _context.Representatives.ToList();
-        var saorDtos = saors.Select(saor => saor.ToDTO()).ToList();
-        return Ok(saorDtos);
+        var reps = _context.Representatives.ToList();
+        var repDtos = reps.Select(rep => rep.ToDTO()).ToList();
+        return Ok(repDtos);
+    }
+
+    [HttpGet("email/{email}")]
+    public ActionResult<RepresentativeDto> GetByEmail(string email)
+    {
+        var rep = _context.Representatives.FirstOrDefault(r => r.EmailAddress.Value == email);
+        if (rep == null)
+        {
+            return NotFound();
+        }
+        return Ok(rep.ToDTO());
+    }
+
+    [HttpGet("citizen/{citizenId}")]
+    public ActionResult<RepresentativeDto> GetByCitizenId(string citizenId)
+    {
+        var rep = _context.Representatives.FirstOrDefault(r => r.CitizenshipId.ToString() == citizenId);
+        if (rep == null)
+        {
+            return NotFound();
+        }
+        return Ok(rep.ToDTO());
     }
 }

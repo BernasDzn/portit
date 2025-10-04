@@ -196,6 +196,7 @@ public static class Bootstrap
             ResourceStatus.Available,
             TimeSpan.FromMinutes(30),
             new HashSet<Qualification> { stsOp },
+            OperationalWindow.FullWeek(),
             40,
             context.Docks.First(),
             30
@@ -208,6 +209,7 @@ public static class Bootstrap
             ResourceStatus.Maintenance,
             TimeSpan.FromMinutes(45),
             new HashSet<Qualification> { stsOp },
+            OperationalWindow.FullWeek(),
             50,
             context.Docks.Skip(1).First(),
             25
@@ -220,6 +222,13 @@ public static class Bootstrap
             ResourceStatus.Available,
             TimeSpan.FromMinutes(20),
             new HashSet<Qualification> { ycOp },
+            new OperationalWindow
+            {
+                StartWeekDay = DayOfWeek.Monday,
+                EndWeekDay = DayOfWeek.Saturday,
+                DayStartTime = new TimeOnly(6, 0),
+                DayEndTime = new TimeOnly(22, 0)
+            },
             20,
             context.StorageAreas.First(sa => sa.AreaType == StorageAreaType.Yard),
             40
@@ -232,6 +241,7 @@ public static class Bootstrap
             ResourceStatus.OutOfService,
             TimeSpan.FromMinutes(25),
             new HashSet<Qualification> { ycOp },
+            OperationalWindow.FullWeek(),
             25,
             context.StorageAreas.First(sa => sa.AreaType == StorageAreaType.Yard),
             35
@@ -244,6 +254,13 @@ public static class Bootstrap
             ResourceStatus.Available,
             TimeSpan.FromMinutes(15),
             new HashSet<Qualification> { trkDr },
+            new OperationalWindow
+            {
+                StartWeekDay = DayOfWeek.Monday,
+                EndWeekDay = DayOfWeek.Friday,
+                DayStartTime = new TimeOnly(7, 0),
+                DayEndTime = new TimeOnly(19, 0)
+            },
             30,
             2,
             80
@@ -256,6 +273,7 @@ public static class Bootstrap
             ResourceStatus.Maintenance,
             TimeSpan.FromMinutes(20),
             new HashSet<Qualification> { trkDr },
+            OperationalWindow.FullWeek(),
             25,
             1,
             50
@@ -268,11 +286,11 @@ public static class Bootstrap
 
     public static void BootstrapStaff(ApiContext context)
     {
-        var qual1 = context.Qualifications.First();
-        var qual2 = context.Qualifications.Skip(1).First();
-
         if (context.Staffs.Any())
             return;
+
+        var qual1 = context.Qualifications.First();
+        var qual2 = context.Qualifications.Skip(1).First();
 
         OperationalWindow opWindow = new OperationalWindow
         {
@@ -281,7 +299,9 @@ public static class Bootstrap
             DayStartTime = new TimeOnly(8, 0),
             DayEndTime = new TimeOnly(16, 0)
         };
-        context.Staffs.Add(
+
+    var staffList = new List<Staff>
+        {
             new Staff(
                 new StaffMechanograficNumber { Value = "MEC001" },
                 new Designation { Value = "Alice Johnson" },
@@ -289,8 +309,42 @@ public static class Bootstrap
                 new PhoneNumber { Value = "911222333" },
                 opWindow,
                 new List<Qualification> { qual1, qual2 }
-            )
-        );
+            ),
+            new Staff(
+                new StaffMechanograficNumber { Value = "MEC002" },
+                new Designation { Value = "Bob Smith" },
+                new Email { Value = "bob.smith@example.com" },
+                new PhoneNumber { Value = "922333444" },
+                opWindow,
+                new List<Qualification> { qual1 }
+            ),
+            new Staff(
+                new StaffMechanograficNumber { Value = "MEC003" },
+                new Designation { Value = "Catherine Lee" },
+                new Email { Value = "catherine.lee@example.com" },
+                new PhoneNumber { Value = "933444555" },
+                opWindow,
+                new List<Qualification> { qual2 }
+            ),
+            new Staff(
+                new StaffMechanograficNumber { Value = "MEC004" },
+                new Designation { Value = "David Wright" },
+                new Email { Value = "david.wright@example.com" },
+                new PhoneNumber { Value = "944555666" },
+                opWindow,
+                new List<Qualification> { qual1, qual2 }
+            ),
+            new Staff(
+                new StaffMechanograficNumber { Value = "MEC005" },
+                new Designation { Value = "Eva Mendes" },
+                new Email { Value = "eva.mendes@example.com" },
+                new PhoneNumber { Value = "955666777" },
+                opWindow,
+                new List<Qualification> { qual2 }
+            ),
+        };
+
+        context.Staffs.AddRange(staffList);
         context.SaveChanges();
     }
 

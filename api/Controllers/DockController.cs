@@ -48,7 +48,7 @@ public class DockController : ControllerBase
 			if (createdDock == null)
 				return BadRequest();
 
-			return CreatedAtAction(nameof(GetAll), new { name = createdDock?.Name }, createdDock);
+			return CreatedAtAction(nameof(GetAll), new { name = createdDock.Name }, createdDock);
 		}
 		catch (System.Exception e)
 		{
