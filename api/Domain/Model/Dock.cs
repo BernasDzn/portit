@@ -32,16 +32,10 @@ public class Dock : IDTOAble<DockDto>
 
     public void UpdateName(string newName)
     {
-        if (string.IsNullOrEmpty(newName))
-            throw new ArgumentException("Name cannot be null or empty", nameof(newName));
-
         Name = new Designation { Value = newName };
     }
     public void UpdateLocation(string newLocation)
-    {
-        if (string.IsNullOrEmpty(newLocation))
-            throw new ArgumentException("Location cannot be null or empty", nameof(newLocation));
-            
+    {            
         Location = new Designation { Value = newLocation };
     }
     public void UpdateLength(uint new_length)

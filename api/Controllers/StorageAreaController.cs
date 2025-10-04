@@ -23,19 +23,51 @@ public class StorageAreaController : ControllerBase
         IEnumerable<StorageAreaDto> storageAreaDtos = await _storageAreaService.GetStorageAreas();
         return Ok(storageAreaDtos);
     }
-    
-    [HttpGet("{id}")]
-	public async Task<ActionResult<StorageAreaDto>> Get(string id)
 
-	{
+    [HttpGet("{id}")]
+    public async Task<ActionResult<StorageAreaDto>> Get(string id)
+
+    {
         try
         {
             var storageAreaDto = await _storageAreaService.GetStorageAreaByCode(id);
             return Ok(storageAreaDto);
-		}
+        }
         catch (System.Exception)
         {
             return NotFound();
         }
-	}
+    }
+
+    [HttpPost(Name = "CreateStorageArea")]
+    public async Task<ActionResult<StorageAreaDto>> Create(StorageAreaDto createStorageAreaDto)
+    {
+        try
+        {
+            var storageAreaDto = await _storageAreaService.CreateStorageArea(createStorageAreaDto);
+            if (storageAreaDto == null)
+                return BadRequest();
+                
+            return CreatedAtAction(nameof(Get), new { id = storageAreaDto.NameCode }, storageAreaDto);
+        }
+        catch (System.Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
+    [HttpPut("{id}")]
+    public async Task<ActionResult<StorageAreaDto>> Update(string id, [FromBody] StorageAreaDto updateStorageAreaDto)
+    {
+        try
+        {
+            var storageAreaDto = await _storageAreaService.UpdateStorageArea(id, updateStorageAreaDto);
+            return Ok(storageAreaDto);
+        }
+        catch (System.Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+    }
+
 }

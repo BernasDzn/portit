@@ -43,7 +43,7 @@ public class StorageArea : IDTOAble<StorageAreaDto>
     public Code NameCode { get; private set; }
     public Designation Location { get; private set; }
     public StorageAreaType AreaType { get; private set; }
-    public uint Capacity { get; set; }
+    public uint Capacity { get; private set; }
 
     private uint _currentOccupancy;
     public uint CurrentOccupancy
@@ -62,11 +62,11 @@ public class StorageArea : IDTOAble<StorageAreaDto>
     // This list will only store the known data about the relation of each dock and this storage area
     // If a dock is not in this list, it means this storage area does not serve it and does not know anything about it
     // Unless this storage area is a warehouse, in which case it serves all docks
-    public virtual HashSet<DockRelation> DockServices { get; private set; } = new();
+    public virtual HashSet<DockRelation>? DockServices { get; private set; }
 
     protected StorageArea() { } // EF Core
 
-    public StorageArea(Guid id, Code nameCode, Designation location, StorageAreaType areaType, uint capacity, uint currentOccupancy, HashSet<DockRelation> dockServices = null!)
+    public StorageArea(Guid id, Code nameCode, Designation location, StorageAreaType areaType, uint capacity, uint currentOccupancy, HashSet<DockRelation>? dockServices = null)
     {
         Id = id;
         NameCode = nameCode;
@@ -74,16 +74,52 @@ public class StorageArea : IDTOAble<StorageAreaDto>
         AreaType = areaType;
         Capacity = capacity;
         CurrentOccupancy = currentOccupancy;
-        
-        if (dockServices != null)
-            DockServices = dockServices;
+
+        if (AreaType == StorageAreaType.Warehouse && dockServices != null && dockServices.Any(ds => !ds.IsServingDock))
+            throw new ArgumentException("A warehouse must serve all docks it is related to.");
+
+        DockServices = dockServices;
+
     }
 
     public bool CanServeDock(Dock dock)
     {
         return
             AreaType == StorageAreaType.Warehouse ||
-            DockServices.Any(ds => ds.ServingDock.Id == dock.Id && ds.IsServingDock);
+            (DockServices != null && DockServices.Any(ds => ds.ServingDock.Id == dock.Id && ds.IsServingDock));
+    }
+
+    public void UpdateNameCode(string newCode)
+    {
+        NameCode = new Code { Value = newCode };
+    }
+    public void UpdateLocation(string newLocation)
+    {
+        Location = new Designation { Value = newLocation };
+    }
+    public void UpdateCapacity(uint newCapacity)
+    {
+        if (newCapacity < CurrentOccupancy)
+            throw new StorageFullException($"New capacity cannot be less than current occupancy. Current Occupancy: {CurrentOccupancy}, New Capacity: {newCapacity}");
+
+        Capacity = newCapacity;
+    }
+    public void UpdateOccupancy(uint newOccupancy)
+    {
+        CurrentOccupancy = newOccupancy;
+    }
+
+    public void UpdateAreaType(StorageAreaType newType)
+    {
+        AreaType = newType;
+    }
+
+    public void UpdateDockServices(HashSet<DockRelation>? newDockServices)
+    {
+        if (AreaType == StorageAreaType.Warehouse && newDockServices != null && newDockServices.Any(ds => !ds.IsServingDock))
+            throw new ArgumentException("A warehouse must serve all docks it is related to.");
+
+        DockServices = newDockServices;
     }
 
     public StorageAreaDto ToDTO()
@@ -95,7 +131,7 @@ public class StorageArea : IDTOAble<StorageAreaDto>
             Type = AreaType,
             Capacity = Capacity,
             CurrentOccupancy = CurrentOccupancy,
-            DockServices = DockServices.Select(ds => ds.ToDTO()).ToHashSet()
+            DockServices = (DockServices ?? Enumerable.Empty<DockRelation>()).Select(ds => ds.ToDTO()).ToHashSet()
         };
     }
 }

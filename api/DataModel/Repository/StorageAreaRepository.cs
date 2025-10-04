@@ -41,13 +41,31 @@ public class StorageAreaRepository : GenericRepository<StorageArea>, IStorageAre
         }
     }
 
-    public Task<StorageArea> Update(StorageArea vessel)
+    public Task<StorageArea> Update(StorageArea storageArea)
     {
-        throw new NotImplementedException();
+        try
+        {
+            _context.StorageAreas.Update(storageArea);
+            _context.SaveChanges();
+            return Task.FromResult(storageArea);
+        }
+        catch
+        {
+            throw;
+        }
     }
 
-    Task<StorageArea> IStorageAreaRepository.Add(StorageArea vessel)
+    public new async Task<StorageArea> Add(StorageArea storageArea)
     {
-        throw new NotImplementedException();
+        try
+        {
+            _context.StorageAreas.Add(storageArea);
+            await _context.SaveChangesAsync();
+            return storageArea;
+        }
+        catch
+        {
+            throw;
+        }
     }
 }
