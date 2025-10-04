@@ -41,54 +41,59 @@ public class PhysicalResourceController : ControllerBase
         }
     }
 
-    [HttpPost("AddSTSCrane", Name = "AddSTSCrane")]
-    public async Task<ActionResult<STSCraneDto>> AddSTSCrane([FromBody] STSCraneDto resourceDto)
+    private async Task<ActionResult> HandleCreationAsync<T>(T resourceDto, Func<T, Task<T>> creationFunc, string resourceName) where T : class
     {
         try
         {
-            var createdResource = await _physicalResourceService.AddSTSCraneAsync(resourceDto);
+            var createdResource = await creationFunc(resourceDto);
             if (createdResource == null)
-                return BadRequest("Could not create the STS crane.");
+                return BadRequest($"Could not create {resourceName}.");
 
-            return CreatedAtAction(nameof(GetByCode), new { code = createdResource.Code }, createdResource);
+            return CreatedAtAction(nameof(GetByCode), new { code = (createdResource as dynamic).Code }, createdResource);
         }
         catch (System.Exception e)
         {
             return BadRequest(e.Message);
         }
     }
+
+    private async Task<ActionResult> HandleUpdateAsync<T>(string code, T resourceDto, Func<string, T, Task<T>> updateFunc, string resourceName) where T : class
+    {
+        try
+        {
+            var updatedResource = await updateFunc(code, resourceDto);
+            if (updatedResource == null)
+                return NotFound($"No {resourceName} found with code: {code}");
+
+            return Ok(updatedResource);
+        }
+        catch (System.Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
+
+    [HttpPost("AddSTSCrane", Name = "AddSTSCrane")]
+    public async Task<ActionResult<STSCraneDto>> AddSTSCrane([FromBody] STSCraneDto resourceDto) =>
+        await HandleCreationAsync<STSCraneDto>(resourceDto, _physicalResourceService.AddSTSCraneAsync, "STS crane");
 
     [HttpPost("AddYardCrane", Name = "AddYardCrane")]
-    public async Task<ActionResult<YardCraneDto>> AddYardCrane([FromBody] YardCraneDto resourceDto)
-    {
-        try
-        {
-            var createdResource = await _physicalResourceService.AddYardCraneAsync(resourceDto);
-            if (createdResource == null)
-                return BadRequest("Could not create the yard crane.");
-
-            return CreatedAtAction(nameof(GetByCode), new { code = createdResource.Code }, createdResource);
-        }
-        catch (System.Exception e)
-        {
-            return BadRequest(e.Message);
-        }
-    }
+    public async Task<ActionResult<YardCraneDto>> AddYardCrane([FromBody] YardCraneDto resourceDto) =>
+        await HandleCreationAsync<YardCraneDto>(resourceDto, _physicalResourceService.AddYardCraneAsync, "yard crane");
 
     [HttpPost("AddTruck", Name = "AddTruck")]
-    public async Task<ActionResult<TruckDto>> AddTruck([FromBody] TruckDto resourceDto)
-    {
-        try
-        {
-            var createdResource = await _physicalResourceService.AddTruckAsync(resourceDto);
-            if (createdResource == null)
-                return BadRequest("Could not create the truck.");
+    public async Task<ActionResult<TruckDto>> AddTruck([FromBody] TruckDto resourceDto) =>
+        await HandleCreationAsync<TruckDto>(resourceDto, _physicalResourceService.AddTruckAsync, "truck");
 
-            return CreatedAtAction(nameof(GetByCode), new { code = createdResource.Code }, createdResource);
-        }
-        catch (System.Exception e)
-        {
-            return BadRequest(e.Message);
-        }
-    }
+    [HttpPut("UpdateSTSCrane/{code}", Name = "UpdateSTSCrane")]
+    public async Task<ActionResult<STSCraneDto>> UpdateSTSCrane(string code, [FromBody] STSCraneDto resourceDto) =>
+        await HandleUpdateAsync<STSCraneDto>(code, resourceDto, _physicalResourceService.UpdateSTSCraneAsync, "STS crane");
+
+    [HttpPut("UpdateYardCrane/{code}", Name = "UpdateYardCrane")]
+    public async Task<ActionResult<YardCraneDto>> UpdateYardCrane(string code, [FromBody] YardCraneDto resourceDto) =>
+        await HandleUpdateAsync<YardCraneDto>(code, resourceDto, _physicalResourceService.UpdateYardCraneAsync, "yard crane");
+
+    [HttpPut("UpdateTruck/{code}", Name = "UpdateTruck")]
+    public async Task<ActionResult<TruckDto>> UpdateTruck(string code, [FromBody] TruckDto resourceDto) =>
+        await HandleUpdateAsync<TruckDto>(code, resourceDto, _physicalResourceService.UpdateTruckAsync, "truck");
 }

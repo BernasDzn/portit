@@ -64,7 +64,7 @@ public class PhysicalResourceService
         return resourceDto;
     }
 
-    public async Task<STSCraneDto?> AddSTSCraneAsync(STSCraneDto resourceDto)
+    public async Task<STSCraneDto> AddSTSCraneAsync(STSCraneDto resourceDto)
     {
         bool exists = await _physicalResourceRepository.GetResourceByCodeAsync(resourceDto.Code) != null;
         if (exists)
@@ -91,7 +91,7 @@ public class PhysicalResourceService
         return ((IDTOAble<STSCraneDto>)await _physicalResourceRepository.AddSTSCrane(crane)).ToDTO();
     }
 
-    public async Task<YardCraneDto?> AddYardCraneAsync(YardCraneDto resourceDto)
+    public async Task<YardCraneDto> AddYardCraneAsync(YardCraneDto resourceDto)
     {
         bool exists = await _physicalResourceRepository.GetResourceByCodeAsync(resourceDto.Code) != null;
         if (exists)
@@ -117,7 +117,7 @@ public class PhysicalResourceService
         return ((IDTOAble<YardCraneDto>)await _physicalResourceRepository.AddYardCrane(crane)).ToDTO();
     }
 
-    public async Task<TruckDto?> AddTruckAsync(TruckDto resourceDto)
+    public async Task<TruckDto> AddTruckAsync(TruckDto resourceDto)
     {
         bool exists = await _physicalResourceRepository.GetResourceByCodeAsync(resourceDto.Code) != null;
         if (exists)
@@ -140,7 +140,7 @@ public class PhysicalResourceService
         return ((IDTOAble<TruckDto>)await _physicalResourceRepository.AddTruck(truck)).ToDTO();
     }
 
-    public async Task<STSCrane> UpdateSTSCrane(string code, STSCraneDto crane)
+    public async Task<STSCraneDto> UpdateSTSCraneAsync(string code, STSCraneDto crane)
     {
         PhysicalResource? existingCrane = await _physicalResourceRepository.GetResourceByCodeAsync(code);
         if (existingCrane == null)
@@ -166,10 +166,10 @@ public class PhysicalResourceService
         craneObject.UpdateContainersPerHour(crane.ContainersPerHour);
         craneObject.UpdateServingDock(dock);
 
-        return await _physicalResourceRepository.UpdateSTSCrane(craneObject);
+        return ((IDTOAble<STSCraneDto>)await _physicalResourceRepository.UpdateSTSCrane(craneObject)).ToDTO();
     }
 
-    public async Task<YardCrane> UpdateYardCrane(string code, YardCraneDto crane)
+    public async Task<YardCraneDto> UpdateYardCraneAsync(string code, YardCraneDto crane)
     {
         PhysicalResource? existingCrane = await _physicalResourceRepository.GetResourceByCodeAsync(code);
         if (existingCrane == null)
@@ -194,6 +194,31 @@ public class PhysicalResourceService
         craneObject.UpdateContainersPerHour(crane.ContainersPerHour);
         craneObject.UpdateYardSection(storageArea);
 
-        return await _physicalResourceRepository.UpdateYardCrane(craneObject);
+        return ((IDTOAble<YardCraneDto>)await _physicalResourceRepository.UpdateYardCrane(craneObject)).ToDTO();
+    }
+
+    public async Task<TruckDto> UpdateTruckAsync(string code, TruckDto truck)
+    {
+        PhysicalResource? existingTruck = await _physicalResourceRepository.GetResourceByCodeAsync(code);
+        if (existingTruck == null)
+            throw new EntityNotFoundException("Truck to update not found.");
+
+        if (existingTruck is not Truck)
+            throw new InvalidOperationException("The physical resource with the specified code is not a Truck.");
+
+        List<Qualification> qualifications = GetQualificationsAsync(truck).ToList();
+
+        Truck truckObject = (existingTruck as Truck)!;
+
+        truckObject.UpdateDescription(new Designation { Value = truck.Description });
+        truckObject.UpdateStatus(truck.Status);
+        truckObject.UpdateSetupTime(TimeSpan.FromMinutes(truck.SetupTimeInMinutes));
+        truckObject.UpdateQualifications(qualifications.ToHashSet());
+
+        truckObject.UpdateMaxLoadCapacity(truck.MaxLoadCapacity);
+        truckObject.UpdateContainersPerTrip(truck.ContainersPerTrip);
+        truckObject.UpdateAverageSpeed(truck.AverageSpeed);
+
+        return ((IDTOAble<TruckDto>)await _physicalResourceRepository.UpdateTruck(truckObject)).ToDTO();
     }
 }
