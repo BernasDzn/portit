@@ -26,14 +26,6 @@ public class VesselService
         return vessels.Select(v => v.ToDTO()).ToList();
     }
 
-    public async Task<VesselDto?> GetVesselByName(string name)
-    {
-        Vessel vessel = await _vesselRepository.GetVesselByNameAsync(name);
-        if (vessel == null)
-            throw new EntityNotFoundException("Vessel not found.");
-        return vessel.ToDTO();
-    }
-
     public async Task<VesselDto?> Add(VesselDto vesselDto)
     {
         bool exists = await _vesselRepository.GetVesselByNameAsync(vesselDto.Name) != null;
@@ -86,5 +78,11 @@ public class VesselService
 
         Vessel updatedVessel = await _vesselRepository.GetVesselByNameAsync(vesselDto.Name);
         return updatedVessel.ToDTO();
+    }
+
+    internal async Task<Page<VesselDto>> FilterVessels(VesselFilter filter)
+    {
+        Page<Vessel> page = await _vesselRepository.FilterVesselsAsync(filter);
+        return page.Map(v => v.ToDTO());
     }
 }
