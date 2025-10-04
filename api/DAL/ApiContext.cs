@@ -20,4 +20,15 @@ public class ApiContext : DbContext
     public DbSet<VesselType> VesselTypes { get; set; } = null!;
     public DbSet<Dock> Docks { get; set; } = null!;
     public DbSet<StorageArea> StorageAreas { get; set; } = null!;
+    public DbSet<PhysicalResource> PhysicalResources { get; set; } = null!;
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        // Discriminator so EF knows to select the correct sub class
+        modelBuilder.Entity<PhysicalResource>()
+            .HasDiscriminator<string>("resource_type")
+            .HasValue<STSCrane>("STSCrane")
+            .HasValue<YardCrane>("YardCrane")
+            .HasValue<Truck>("Truck");
+    }
 }

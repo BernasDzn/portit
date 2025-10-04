@@ -25,6 +25,8 @@ public static class Bootstrap
         BootstrapVesselsAndDocks(context);
         // Bootstrap Storage Areas
         BootstrapStorageAreas(context);
+        // Bootstrap Physical Resources
+        BootstrapPhysicalResources(context);
     }
 
     private static void BootstrapQualifications(ApiContext context)
@@ -37,7 +39,8 @@ public static class Bootstrap
         context.Qualifications.AddRange(
             new Qualification(Guid.NewGuid(), new Code { Value = "STSOP" }, new Designation { Value = " STS Crane Operator" }),
             new Qualification(Guid.NewGuid(), new Code { Value = "YACOP" }, new Designation { Value = "Yard Crane Operator" }),
-            new Qualification(Guid.NewGuid(), new Code { Value = "TRKDR" }, new Designation { Value = "Truck Driver" })
+            new Qualification(Guid.NewGuid(), new Code { Value = "TRKDR" }, new Designation { Value = "Truck Driver" }),
+            new Qualification(Guid.NewGuid(), new Code { Value = "YAPLN" }, new Designation { Value = "Yard Planner" })
         );
 
         context.SaveChanges();
@@ -66,7 +69,7 @@ public static class Bootstrap
                 new List<Designation> { new Designation { Value = "GSC" }, new Designation { Value = "Global Ship" } },
                 new Address("123 Ocean Drive", "Maritime City", "USA", "90210"),
                 new TaxNumber { Value = "TAX123456" },
-                new List<Representative> { r, r1 }
+                new HashSet<Representative> { r, r1 }
             )
         );
 
@@ -77,7 +80,7 @@ public static class Bootstrap
                 new List<Designation> { new Designation { Value = "OFL" }, new Designation { Value = "Oceanic Freight" } },
                 new Address("456 Harbor Road", "Seaside Town", "UK", "AB12 3CD"),
                 new TaxNumber { Value = "TAX654321" },
-                new List<Representative> { r2, r3 }
+                new HashSet<Representative> { r2, r3 }
             )
         );
 
@@ -88,7 +91,7 @@ public static class Bootstrap
                 new List<Designation> { new Designation { Value = "TWL" }, new Designation { Value = "TransWorld" } },
                 new Address("789 Dockside Ave", "Port City", "Canada", "A1B 2C3"),
                 new TaxNumber { Value = "TAX789012" },
-                new List<Representative> { r4, r5 }
+                new HashSet<Representative> { r4, r5 }
             )
         );
 
@@ -99,7 +102,7 @@ public static class Bootstrap
                 new List<Designation> { new Designation { Value = "MMI" }, new Designation { Value = "Maritime Movers" } },
                 new Address("321 Bay Street", "Coastal Village", "Australia", "2000"),
                 new TaxNumber { Value = "TAX210987" },
-                new List<Representative> { r6, r7 }
+                new HashSet<Representative> { r6, r7 }
             )
         );
 
@@ -134,9 +137,9 @@ public static class Bootstrap
 
         // Add Bootstrap data
         context.Docks.AddRange(
-            new Dock(Guid.NewGuid(), new Designation { Value = "Dock A" }, new Designation { Value = "North Harbor" }, 500, 30, 15, new List<VesselType> { vt4, vt1 }),
-            new Dock(Guid.NewGuid(), new Designation { Value = "Dock B" }, new Designation { Value = "East Harbor" }, 600, 35, 18, new List<VesselType> { vt5 }),
-            new Dock(Guid.NewGuid(), new Designation { Value = "Dock C" }, new Designation { Value = "South Harbor" }, 700, 40, 20, new List<VesselType> { vt2, vt3 })
+            new Dock(Guid.NewGuid(), new Designation { Value = "Dock A" }, new Designation { Value = "North Harbor" }, 500, 30, 15, new HashSet<VesselType> { vt4, vt1 }),
+            new Dock(Guid.NewGuid(), new Designation { Value = "Dock B" }, new Designation { Value = "East Harbor" }, 600, 35, 18, new HashSet<VesselType> { vt5 }),
+            new Dock(Guid.NewGuid(), new Designation { Value = "Dock C" }, new Designation { Value = "South Harbor" }, 700, 40, 20, new HashSet<VesselType> { vt2, vt3 })
         );
 
         context.SaveChanges();
@@ -173,4 +176,91 @@ public static class Bootstrap
         context.StorageAreas.AddRange(sa1, sa2, sa3, sa4);
         context.SaveChanges();
     }
+
+    private static void BootstrapPhysicalResources(ApiContext context)
+    {
+        // Check if there are any physical resources already in the database
+        if (context.PhysicalResources.Any())
+            return;
+
+        Qualification stsOp = context.Qualifications.First(q => q.NameCode.Value == "STSOP");
+        Qualification ycOp = context.Qualifications.First(q => q.NameCode.Value == "YACOP");
+        Qualification trkDr = context.Qualifications.First(q => q.NameCode.Value == "TRKDR");
+
+        STSCrane crane1 = new STSCrane(
+            Guid.NewGuid(),
+            new Code { Value = "STS001" },
+            new Designation { Value = "STS Crane 1" },
+            ResourceStatus.Available,
+            TimeSpan.FromMinutes(30),
+            new HashSet<Qualification> { stsOp },
+            40,
+            context.Docks.First(),
+            30
+        );
+
+        STSCrane crane2 = new STSCrane(
+            Guid.NewGuid(),
+            new Code { Value = "STS002" },
+            new Designation { Value = "STS Crane 2" },
+            ResourceStatus.Maintenance,
+            TimeSpan.FromMinutes(45),
+            new HashSet<Qualification> { stsOp },
+            50,
+            context.Docks.Skip(1).First(),
+            25
+        );
+
+        YardCrane yardCrane1 = new YardCrane(
+            Guid.NewGuid(),
+            new Code { Value = "YC001" },
+            new Designation { Value = "Yard Crane 1" },
+            ResourceStatus.Available,
+            TimeSpan.FromMinutes(20),
+            new HashSet<Qualification> { ycOp },
+            20,
+            context.StorageAreas.First(sa => sa.AreaType == StorageAreaType.Yard),
+            40
+        );
+
+        YardCrane yardCrane2 = new YardCrane(
+            Guid.NewGuid(),
+            new Code { Value = "YC002" },
+            new Designation { Value = "Yard Crane 2" },
+            ResourceStatus.OutOfService,
+            TimeSpan.FromMinutes(25),
+            new HashSet<Qualification> { ycOp },
+            25,
+            context.StorageAreas.First(sa => sa.AreaType == StorageAreaType.Yard),
+            35
+        );
+
+        Truck truck1 = new Truck(
+            Guid.NewGuid(),
+            new Code { Value = "TRK001" },
+            new Designation { Value = "Truck 1" },
+            ResourceStatus.Available,
+            TimeSpan.FromMinutes(15),
+            new HashSet<Qualification> { trkDr },
+            30,
+            2,
+            80
+        );
+
+        Truck truck2 = new Truck(
+            Guid.NewGuid(),
+            new Code { Value = "TRK002" },
+            new Designation { Value = "Truck 2" },
+            ResourceStatus.Maintenance,
+            TimeSpan.FromMinutes(20),
+            new HashSet<Qualification> { trkDr },
+            25,
+            1,
+            50
+        );
+
+        context.PhysicalResources.AddRange(crane1, crane2, yardCrane1, yardCrane2, truck1, truck2);
+        context.SaveChanges();
+    }
+
 }

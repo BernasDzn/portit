@@ -16,7 +16,7 @@ public class Dock : IDTOAble<DockDto>
 
     //EF Core
     protected Dock() { }
-    public Dock(Guid id, Designation name, Designation location, uint length, uint depth, uint maxDraft, ICollection<VesselType> supportedVesselTypes)
+    public Dock(Guid id, Designation name, Designation location, uint length, uint depth, uint maxDraft, HashSet<VesselType> supportedVesselTypes)
     {
         if (supportedVesselTypes == null || supportedVesselTypes.Count == 0)
             throw new ArgumentException("Invalid arguments!");

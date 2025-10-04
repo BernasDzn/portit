@@ -30,7 +30,6 @@ public class DockController : ControllerBase
 		try
 		{
 			var docksDtos = await _dockService.FilterDocks(filter);
-
 			return Ok(docksDtos);
 		}
 		catch (System.Exception)
