@@ -41,6 +41,20 @@ public class PhysicalResourceController : ControllerBase
         }
     }
 
+    [HttpGet("filter")]
+    public async Task<ActionResult<Page<object>>> Filter([FromQuery] PhysicalResourceFilter filter)
+    {
+        try
+        {
+            var pagedResources = await _physicalResourceService.FilterPhysicalResources(filter);
+            return Ok(pagedResources);
+        }
+        catch (System.Exception)
+        {
+            return NotFound();
+        }
+    }
+
     private async Task<ActionResult> HandleCreationAsync<T>(T resourceDto, Func<T, Task<T>> creationFunc, string resourceName) where T : class
     {
         try
@@ -96,4 +110,21 @@ public class PhysicalResourceController : ControllerBase
     [HttpPut("UpdateTruck/{code}", Name = "UpdateTruck")]
     public async Task<ActionResult<TruckDto>> UpdateTruck(string code, [FromBody] TruckDto resourceDto) =>
         await HandleUpdateAsync<TruckDto>(code, resourceDto, _physicalResourceService.UpdateTruckAsync, "truck");
+
+    [HttpDelete("Deactivate/{code}", Name = "Deactivate")]
+    public async Task<ActionResult> Deactivate(string code)
+    {
+        try
+        {
+            var success = await _physicalResourceService.DeactivateResource(code);
+            if (!success)
+                return NotFound($"No physical resource found with code: {code}");
+
+            return NoContent();
+        }
+        catch (System.Exception e)
+        {
+            return BadRequest(e.Message);
+        }
+    }
 }

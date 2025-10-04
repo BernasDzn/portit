@@ -221,4 +221,20 @@ public class PhysicalResourceService
 
         return ((IDTOAble<TruckDto>)await _physicalResourceRepository.UpdateTruck(truckObject)).ToDTO();
     }
+
+    public async Task<Page<object>> FilterPhysicalResources(PhysicalResourceFilter filter)
+    {
+        Page<PhysicalResource> page = await _physicalResourceRepository.FilterPhysicalResourcesAsync(filter);
+        return page.Map<object>(resource => ConvertToDto(resource));
+    }
+
+    internal async Task<bool> DeactivateResource(string code)
+    {
+        PhysicalResource? resource = await _physicalResourceRepository.GetResourceByCodeAsync(code);
+        if (resource == null) return false;
+
+        resource.Deactivate();
+        await _physicalResourceRepository.Update(resource);
+        return true;
+    }
 }
