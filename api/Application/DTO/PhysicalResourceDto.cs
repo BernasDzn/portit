@@ -1,9 +1,8 @@
 public class PhysicalResourceDto
 {
-    public required Guid Id { get; set; }
     public required string Code { get; set; }
     public required string Description { get; set; }
-    public required string Status { get; set; }
+    public required ResourceStatus Status { get; set; }
     public required int SetupTimeInMinutes { get; set; }
     public required List<QualificationDto> Qualifications { get; set; }
 }

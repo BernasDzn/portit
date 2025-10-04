@@ -243,7 +243,8 @@ public static class Bootstrap
             TimeSpan.FromMinutes(15),
             new List<Qualification> { trkDr },
             30,
-            2
+            2,
+            80
         );
 
         Truck truck2 = new Truck(
@@ -254,7 +255,8 @@ public static class Bootstrap
             TimeSpan.FromMinutes(20),
             new List<Qualification> { trkDr },
             25,
-            1
+            1,
+            50
         );
 
         context.PhysicalResources.AddRange(crane1, crane2, yardCrane1, yardCrane2, truck1, truck2);

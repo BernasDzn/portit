@@ -34,10 +34,9 @@ public class PhysicalResource : IDTOAble<PhysicalResourceDto>
     {
         return new PhysicalResourceDto
         {
-            Id = this.Id,
             Code = this.Code.ToString(),
             Description = this.Description.ToString(),
-            Status = this.Status.ToString(),
+            Status = this.Status,
             SetupTimeInMinutes = (int)this.SetupTime.TotalMinutes,
             Qualifications = this.Qualifications.Select(q => q.ToDTO()).ToList()
         };
@@ -64,10 +63,9 @@ public class STSCrane : PhysicalResource, IDTOAble<STSCraneDto>
     {
         return new STSCraneDto
         {
-            Id = this.Id,
             Code = this.Code.ToString(),
             Description = this.Description.ToString(),
-            Status = this.Status.ToString(),
+            Status = this.Status,
             SetupTimeInMinutes = (int)this.SetupTime.TotalMinutes,
             Qualifications = this.Qualifications.Select(q => q.ToDTO()).ToList(),
             ContainersPerHour = this.ContainersPerHour,
@@ -97,10 +95,9 @@ public class YardCrane : PhysicalResource, IDTOAble<YardCraneDto>
     {
         return new YardCraneDto
         {
-            Id = this.Id,
             Code = this.Code.ToString(),
             Description = this.Description.ToString(),
-            Status = this.Status.ToString(),
+            Status = this.Status,
             SetupTimeInMinutes = (int)this.SetupTime.TotalMinutes,
             Qualifications = this.Qualifications.Select(q => q.ToDTO()).ToList(),
             ContainersPerHour = this.ContainersPerHour,
@@ -119,26 +116,26 @@ public class Truck : PhysicalResource, IDTOAble<TruckDto>
 
     protected Truck() { } // EF Core
 
-    public Truck(Guid id, Code code, Designation description, ResourceStatus status, TimeSpan setupTime, ICollection<Qualification> qualifications, uint maxLoadCapacity, uint containersPerTrip)
+    public Truck(Guid id, Code code, Designation description, ResourceStatus status, TimeSpan setupTime, ICollection<Qualification> qualifications, uint maxLoadCapacity, uint containersPerTrip, uint averageSpeed)
         : base(id, code, description, status, setupTime, qualifications)
     {
         MaxLoadCapacity = maxLoadCapacity;
         ContainersPerTrip = containersPerTrip;
+        AverageSpeed = averageSpeed;
     }
 
     TruckDto IDTOAble<TruckDto>.ToDTO()
     {
         return new TruckDto
         {
-            Id = this.Id,
             Code = this.Code.ToString(),
             Description = this.Description.ToString(),
-            Status = this.Status.ToString(),
+            Status = this.Status,
             SetupTimeInMinutes = (int)this.SetupTime.TotalMinutes,
             Qualifications = this.Qualifications.Select(q => q.ToDTO()).ToList(),
             ContainersPerTrip = this.ContainersPerTrip,
-            AverageSpeed = this.AverageSpeed,
-            MaxLoadCapacity = this.MaxLoadCapacity
+            MaxLoadCapacity = this.MaxLoadCapacity,
+            AverageSpeed = this.AverageSpeed
         };
     }
 }
