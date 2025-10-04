@@ -8,8 +8,6 @@ public class DockService
     private readonly IDockRepository _dockRepository;
     private readonly IVesselTypeRepository _vesselTypeRepository;
 
-    public bool IsServingDock { get; internal set; }
-
     public DockService(IDockRepository dockRepository, IVesselTypeRepository vesselTypeRepository)
     {
         _dockRepository = dockRepository;
@@ -35,7 +33,7 @@ public class DockService
         if (exists)
             throw new EntityAlreadyExistsException("This dock already exists.");
 
-        List<VesselType> vesselTypes = await GetVesselTypesFromDto(dockDto.SupportedVesselTypes);
+        HashSet<VesselType> vesselTypes = await GetVesselTypesFromDto(dockDto.SupportedVesselTypes);
 
         Dock dock = new Dock(Guid.NewGuid(), new Designation { Value = dockDto.Name }, new Designation { Value = dockDto.Location },
          dockDto.Length, dockDto.Depth, dockDto.MaxDraft, vesselTypes);
@@ -55,7 +53,7 @@ public class DockService
         if (dock == null)
             throw new EntityNotFoundException("A dock with the specified name does not exist.");
 
-        List<VesselType> vesselTypes = await GetVesselTypesFromDto(dockDto.SupportedVesselTypes);
+        HashSet<VesselType> vesselTypes = await GetVesselTypesFromDto(dockDto.SupportedVesselTypes);
 
         dock.UpdateLocation(dockDto.Location);
         dock.UpdateDepth(dockDto.Depth);
@@ -73,9 +71,9 @@ public class DockService
         return updatedDock.ToDTO();
     }
 
-    private async Task<List<VesselType>> GetVesselTypesFromDto(List<VesselTypeDto> vesselTypesDtos)
+    private async Task<HashSet<VesselType>> GetVesselTypesFromDto(List<VesselTypeDto> vesselTypesDtos)
     {
-        List<VesselType> vesselTypes = new List<VesselType>();
+        HashSet<VesselType> vesselTypes = new HashSet<VesselType>();
 
         foreach (VesselTypeDto vtDto in vesselTypesDtos)
         {

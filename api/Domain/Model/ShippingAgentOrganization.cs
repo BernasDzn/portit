@@ -15,7 +15,7 @@ public class ShippingAgentOrganization : IDTOAble<ShippingAgentOrganizationDto>
     // EF Core
     protected ShippingAgentOrganization() { }
 
-    public ShippingAgentOrganization(Guid id, Designation legalName, List<Designation> altNames, Address address, TaxNumber taxId, List<Representative> representatives)
+    public ShippingAgentOrganization(Guid id, Designation legalName, List<Designation> altNames, Address address, TaxNumber taxId, HashSet<Representative> representatives)
     {
         if (representatives == null || representatives.Count == 0)
             throw new ArgumentException("An SAO must have at least one representative.");

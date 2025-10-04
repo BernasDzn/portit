@@ -28,15 +28,6 @@ public class VesselController : ControllerBase
         return Ok(vesselsDto);
     }
 
-    [HttpGet("{name}", Name = "GetVesselByName")]
-    public async Task<ActionResult<VesselDto>> Get(string name)
-    {
-        var vesselDto = await _vesselService.GetVesselByName(name);
-        if (vesselDto == null)
-            return NotFound("Vessel not found");
-        return Ok(vesselDto);
-    }
-
     [HttpPost(Name = "PostVessel")]
     public async Task<ActionResult<VesselDto>> Create(VesselDto vesselDto)
     {
@@ -46,11 +37,26 @@ public class VesselController : ControllerBase
             if (createdVessel == null)
                 return BadRequest("Could not create vessel");
 
-            return CreatedAtAction(nameof(Get), new { name = createdVessel?.Name }, createdVessel);
+            return CreatedAtAction(nameof(GetAll), new { name = createdVessel.Name }, createdVessel);
         }
         catch (System.Exception e)
         {
             return BadRequest(e.Message);
+        }
+    }
+
+    [HttpGet("filter")]
+    public async Task<ActionResult<Page<VesselDto>>> Filter([FromQuery] VesselFilter filter)
+    {
+        try
+        {
+            var vesselDtos = await _vesselService.FilterVessels(filter);
+
+            return Ok(vesselDtos);
+        }
+        catch (System.Exception)
+        {
+            return NotFound();
         }
     }
 

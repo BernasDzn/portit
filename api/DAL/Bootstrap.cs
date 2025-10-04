@@ -25,6 +25,8 @@ public static class Bootstrap
         BootstrapVesselsAndDocks(context);
         // Bootstrap Storage Areas
         BootstrapStorageAreas(context);
+        // Bootstrap Physical Resources
+        BootstrapPhysicalResources(context);
         // Bootstrap Staff
         BootstrapStaff(context);
     }
@@ -39,7 +41,8 @@ public static class Bootstrap
         context.Qualifications.AddRange(
             new Qualification(Guid.NewGuid(), new Code { Value = "STSOP" }, new Designation { Value = " STS Crane Operator" }),
             new Qualification(Guid.NewGuid(), new Code { Value = "YACOP" }, new Designation { Value = "Yard Crane Operator" }),
-            new Qualification(Guid.NewGuid(), new Code { Value = "TRKDR" }, new Designation { Value = "Truck Driver" })
+            new Qualification(Guid.NewGuid(), new Code { Value = "TRKDR" }, new Designation { Value = "Truck Driver" }),
+            new Qualification(Guid.NewGuid(), new Code { Value = "YAPLN" }, new Designation { Value = "Yard Planner" })
         );
 
         context.SaveChanges();
@@ -68,7 +71,7 @@ public static class Bootstrap
                 new List<Designation> { new Designation { Value = "GSC" }, new Designation { Value = "Global Ship" } },
                 new Address("123 Ocean Drive", "Maritime City", "USA", "90210"),
                 new TaxNumber { Value = "TAX123456" },
-                new List<Representative> { r, r1 }
+                new HashSet<Representative> { r, r1 }
             )
         );
 
@@ -79,7 +82,7 @@ public static class Bootstrap
                 new List<Designation> { new Designation { Value = "OFL" }, new Designation { Value = "Oceanic Freight" } },
                 new Address("456 Harbor Road", "Seaside Town", "UK", "AB12 3CD"),
                 new TaxNumber { Value = "TAX654321" },
-                new List<Representative> { r2, r3 }
+                new HashSet<Representative> { r2, r3 }
             )
         );
 
@@ -90,7 +93,7 @@ public static class Bootstrap
                 new List<Designation> { new Designation { Value = "TWL" }, new Designation { Value = "TransWorld" } },
                 new Address("789 Dockside Ave", "Port City", "Canada", "A1B 2C3"),
                 new TaxNumber { Value = "TAX789012" },
-                new List<Representative> { r4, r5 }
+                new HashSet<Representative> { r4, r5 }
             )
         );
 
@@ -101,7 +104,7 @@ public static class Bootstrap
                 new List<Designation> { new Designation { Value = "MMI" }, new Designation { Value = "Maritime Movers" } },
                 new Address("321 Bay Street", "Coastal Village", "Australia", "2000"),
                 new TaxNumber { Value = "TAX210987" },
-                new List<Representative> { r6, r7 }
+                new HashSet<Representative> { r6, r7 }
             )
         );
 
@@ -136,9 +139,9 @@ public static class Bootstrap
 
         // Add Bootstrap data
         context.Docks.AddRange(
-            new Dock(Guid.NewGuid(), new Designation { Value = "Dock A" }, new Designation { Value = "North Harbor" }, 500, 30, 15, new List<VesselType> { vt4, vt1 }),
-            new Dock(Guid.NewGuid(), new Designation { Value = "Dock B" }, new Designation { Value = "East Harbor" }, 600, 35, 18, new List<VesselType> { vt5 }),
-            new Dock(Guid.NewGuid(), new Designation { Value = "Dock C" }, new Designation { Value = "South Harbor" }, 700, 40, 20, new List<VesselType> { vt2, vt3 })
+            new Dock(Guid.NewGuid(), new Designation { Value = "Dock A" }, new Designation { Value = "North Harbor" }, 500, 30, 15, new HashSet<VesselType> { vt4, vt1 }),
+            new Dock(Guid.NewGuid(), new Designation { Value = "Dock B" }, new Designation { Value = "East Harbor" }, 600, 35, 18, new HashSet<VesselType> { vt5 }),
+            new Dock(Guid.NewGuid(), new Designation { Value = "Dock C" }, new Designation { Value = "South Harbor" }, 700, 40, 20, new HashSet<VesselType> { vt2, vt3 })
         );
 
         context.SaveChanges();
@@ -175,33 +178,4 @@ public static class Bootstrap
         context.StorageAreas.AddRange(sa1, sa2, sa3, sa4);
         context.SaveChanges();
     }
-
-    public static void BootstrapStaff(ApiContext context)
-    {
-        var qual1 = context.Qualifications.First();
-        var qual2 = context.Qualifications.Skip(1).First();
-
-        if (context.Staffs.Any())
-            return;
-
-        OperationalWindow opWindow = new OperationalWindow
-        {
-            StartWeekDay = DayOfWeek.Monday,
-            EndWeekDay = DayOfWeek.Friday,
-            DayStartTime = new TimeOnly(8, 0),
-            DayEndTime = new TimeOnly(16, 0)
-        };
-        context.Staffs.Add(
-            new Staff(
-                new StaffMechanograficNumber { Value = "MEC001" },
-                new Designation { Value = "Alice Johnson" },
-                new Email { Value = "alice.johnson@example.com" },
-                new PhoneNumber { Value = "911222333" },
-                opWindow,
-                new List<Qualification> { qual1, qual2 }
-            )
-        );
-        context.SaveChanges();
-    }
-
 }

@@ -39,6 +39,23 @@ public class QualificationController : ControllerBase
 		}
 	}
 
+	[HttpGet("{id}", Name = "GetQualificationById")]
+	public async Task<ActionResult<QualificationDto>> GetById(string id)
+	{
+		try
+		{
+			var qualDto = await _qualificationService.GetQualificationById(id);
+			if (qualDto == null)
+				return NotFound($"No qualification found with id: {id}");
+
+			return Ok(qualDto);
+		}
+		catch (System.Exception e)
+		{
+			return BadRequest(e.Message);
+		}
+	}
+
 	[HttpPost(Name = "PostQualification")]
 	public async Task<ActionResult<QualificationDto>> Create(QualificationDto qualDto)
 	{
@@ -48,7 +65,7 @@ public class QualificationController : ControllerBase
 			if (createdQual == null)
 				return BadRequest("Could not create qualification");
 
-			return CreatedAtAction(nameof(GetAll), new { id = createdQual?.IdCode }, createdQual);
+			return CreatedAtAction(nameof(GetById), new { id = createdQual.IdCode }, createdQual);
 		}
 		catch (System.Exception e)
 		{

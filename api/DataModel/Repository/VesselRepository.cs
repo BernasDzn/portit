@@ -69,4 +69,26 @@ public class VesselRepository : GenericRepository<Vessel>, IVesselRepository
             throw;
         }
     }
+
+    public Task<Page<Vessel>> FilterVesselsAsync(VesselFilter filter)
+    {
+        try
+        {
+            IQueryable<Vessel> query = _context.Vessels.AsQueryable();
+
+            if (!string.IsNullOrEmpty(filter.Name))
+                query = query.Where(v => v.Name.Value.Contains(filter.Name));
+
+            if (!string.IsNullOrEmpty(filter.ImoNumber))
+                query = query.Where(v => v.ImoIdentifier != null && v.ImoIdentifier.Value.Contains(filter.ImoNumber));
+
+            query = query.Skip((filter.PageNumber - 1) * filter.PageSize).Take(filter.PageSize);
+
+            return Task.FromResult(Page<Vessel>.Of(query.ToList(), filter));
+        }
+        catch
+        {
+            throw;
+        }
+    }
 }

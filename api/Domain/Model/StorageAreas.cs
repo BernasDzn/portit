@@ -58,11 +58,7 @@ public class StorageArea : IDTOAble<StorageAreaDto>
         }
     }
 
-    // List of docks this storage area serves
-    // This list will only store the known data about the relation of each dock and this storage area
-    // If a dock is not in this list, it means this storage area does not serve it and does not know anything about it
-    // Unless this storage area is a warehouse, in which case it serves all docks
-    public virtual HashSet<DockRelation> DockServices { get; private set; } = new();
+    public virtual ICollection<DockRelation> DockServices { get; private set; } = new HashSet<DockRelation>();
 
     protected StorageArea() { } // EF Core
 
@@ -82,7 +78,6 @@ public class StorageArea : IDTOAble<StorageAreaDto>
     public bool CanServeDock(Dock dock)
     {
         return
-            AreaType == StorageAreaType.Warehouse ||
             DockServices.Any(ds => ds.ServingDock.Id == dock.Id && ds.IsServingDock);
     }
 

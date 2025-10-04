@@ -21,6 +21,15 @@ public class QualificationService
 		return qualifications.Select(q => q.ToDTO()).ToList();
 	}
 
+	public async Task<QualificationDto?> GetQualificationById(string id)
+	{
+		var qualification = await _qualificationRepository.GetQualificationByIdAsync(id);
+		if (qualification == null)
+			return null;
+
+		return qualification.ToDTO();
+	}
+
 	public async Task<QualificationDto?> Add(QualificationDto qualificationDto)
 	{
 		bool exists = await _qualificationRepository.GetQualificationByIdAsync(qualificationDto.IdCode) != null;
@@ -47,7 +56,6 @@ public class QualificationService
 			throw new EntityNotFoundException("Qualification to update not found.");
 
 		qualification.UpdateQualificationName(qualificationDto.QualificationName);
-		qualification.UpdateIdCode(qualificationDto.IdCode);
 
 		Qualification? updateResult = await _qualificationRepository.Update(qualification);
 		if (updateResult == null)
