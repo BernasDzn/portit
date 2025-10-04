@@ -25,11 +25,15 @@ builder.Services.AddTransient<IVesselTypeRepository, VesselTypeRepository>();
 builder.Services.AddTransient<VesselTypeService>();
 builder.Services.AddTransient<IVesselRepository, VesselRepository>();
 builder.Services.AddTransient<IShippingAgentOrgRepository, ShippingAgentOrgRepository>();
+builder.Services.AddTransient<IRepresentativeRepository, RepresentativeRepository>();
+builder.Services.AddTransient<RepresentativeService>();
 builder.Services.AddTransient<VesselService>();
 builder.Services.AddTransient<IStorageAreaRepository, StorageAreaRepository>();
 builder.Services.AddTransient<StorageAreaService>();
 builder.Services.AddTransient<IPhysicalResourceRepository, PhysicalResourceRepository>();
 builder.Services.AddTransient<PhysicalResourceService>();
+builder.Services.AddTransient<IStaffRepository, StaffRepository>();
+builder.Services.AddTransient<StaffService>();
 
 var app = builder.Build();
 

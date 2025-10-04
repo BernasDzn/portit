@@ -27,6 +27,8 @@ public static class Bootstrap
         BootstrapStorageAreas(context);
         // Bootstrap Physical Resources
         BootstrapPhysicalResources(context);
+        // Bootstrap Staff
+        BootstrapStaff(context);
     }
 
     private static void BootstrapQualifications(ApiContext context)
@@ -260,6 +262,35 @@ public static class Bootstrap
         );
 
         context.PhysicalResources.AddRange(crane1, crane2, yardCrane1, yardCrane2, truck1, truck2);
+        context.SaveChanges();
+    }
+
+
+    public static void BootstrapStaff(ApiContext context)
+    {
+        var qual1 = context.Qualifications.First();
+        var qual2 = context.Qualifications.Skip(1).First();
+
+        if (context.Staffs.Any())
+            return;
+
+        OperationalWindow opWindow = new OperationalWindow
+        {
+            StartWeekDay = DayOfWeek.Monday,
+            EndWeekDay = DayOfWeek.Friday,
+            DayStartTime = new TimeOnly(8, 0),
+            DayEndTime = new TimeOnly(16, 0)
+        };
+        context.Staffs.Add(
+            new Staff(
+                new StaffMechanograficNumber { Value = "MEC001" },
+                new Designation { Value = "Alice Johnson" },
+                new Email { Value = "alice.johnson@example.com" },
+                new PhoneNumber { Value = "911222333" },
+                opWindow,
+                new List<Qualification> { qual1, qual2 }
+            )
+        );
         context.SaveChanges();
     }
 
