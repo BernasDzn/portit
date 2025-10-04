@@ -288,63 +288,56 @@ public static class Bootstrap
     {
         if (context.Staffs.Any())
             return;
-
+        
         var qual1 = context.Qualifications.First();
         var qual2 = context.Qualifications.Skip(1).First();
 
         OperationalWindow opWindow = new OperationalWindow
         {
-            StartWeekDay = DayOfWeek.Monday,
-            EndWeekDay = DayOfWeek.Friday,
-            DayStartTime = new TimeOnly(8, 0),
-            DayEndTime = new TimeOnly(16, 0)
+            StartWeekDay = DayOfWeek.Monday, EndWeekDay = DayOfWeek.Friday,
+            DayStartTime = new TimeOnly(8, 0), DayEndTime = new TimeOnly(16, 0)
         };
 
-    var staffList = new List<Staff>
+        OperationalWindow opWindow2 = new OperationalWindow
         {
-            new Staff(
-                new StaffMechanograficNumber { Value = "MEC001" },
-                new Designation { Value = "Alice Johnson" },
-                new Email { Value = "alice.johnson@example.com" },
-                new PhoneNumber { Value = "911222333" },
-                opWindow,
-                new List<Qualification> { qual1, qual2 }
-            ),
-            new Staff(
-                new StaffMechanograficNumber { Value = "MEC002" },
-                new Designation { Value = "Bob Smith" },
-                new Email { Value = "bob.smith@example.com" },
-                new PhoneNumber { Value = "922333444" },
-                opWindow,
-                new List<Qualification> { qual1 }
-            ),
-            new Staff(
-                new StaffMechanograficNumber { Value = "MEC003" },
-                new Designation { Value = "Catherine Lee" },
-                new Email { Value = "catherine.lee@example.com" },
-                new PhoneNumber { Value = "933444555" },
-                opWindow,
-                new List<Qualification> { qual2 }
-            ),
-            new Staff(
-                new StaffMechanograficNumber { Value = "MEC004" },
-                new Designation { Value = "David Wright" },
-                new Email { Value = "david.wright@example.com" },
-                new PhoneNumber { Value = "944555666" },
-                opWindow,
-                new List<Qualification> { qual1, qual2 }
-            ),
-            new Staff(
-                new StaffMechanograficNumber { Value = "MEC005" },
-                new Designation { Value = "Eva Mendes" },
-                new Email { Value = "eva.mendes@example.com" },
-                new PhoneNumber { Value = "955666777" },
-                opWindow,
-                new List<Qualification> { qual2 }
-            ),
+            StartWeekDay = DayOfWeek.Monday, EndWeekDay = DayOfWeek.Saturday,
+            DayStartTime = new TimeOnly(7, 0), DayEndTime = new TimeOnly(19, 0)
         };
 
-        context.Staffs.AddRange(staffList);
+        OperationalWindow opWindow3 = new OperationalWindow
+        {
+            StartWeekDay = DayOfWeek.Wednesday, EndWeekDay = DayOfWeek.Sunday,
+            DayStartTime = new TimeOnly(10, 0), DayEndTime = new TimeOnly(18, 0)
+        };
+
+        Staff staff1 = new Staff(
+            new StaffMechanograficNumber { Value = "OCEANPMEC001" },
+            new Designation { Value = "João Pedro" },
+            new Email { Value = "joao.pedro@oceanicport.com" },
+            new PhoneNumber { Value = "911222333" },
+            opWindow,
+            new List<Qualification> { qual1, qual2 }
+        );
+
+        Staff staff2 = new Staff(
+            new StaffMechanograficNumber { Value = "OCEANPMEC002" },
+            new Designation { Value = "Maria Silva" },
+            new Email { Value = "maria.silva@oceanicport.com" },
+            new PhoneNumber { Value = "911222444" },
+            opWindow3,
+            new List<Qualification> { qual1, qual2 }
+        );
+
+        Staff staff3 = new Staff(
+            new StaffMechanograficNumber { Value = "OCEANPMEC003" },
+            new Designation { Value = "Carlos Santos" },
+            new Email { Value = "carlos.santos@oceanicport.com" },
+            new PhoneNumber { Value = "911222555" },
+            opWindow2,
+            new List<Qualification> { qual1 }
+        );
+
+        context.Staffs.AddRange(staff1, staff2, staff3);
         context.SaveChanges();
     }
 

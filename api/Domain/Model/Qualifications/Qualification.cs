@@ -12,7 +12,8 @@ public class Qualification : IDTOAble<QualificationDto>
 	//EF Core
 	protected Qualification() { }
 
-	public Qualification(Guid id, Code idCode, Designation qualificationName) {
+	public Qualification(Guid id, Code idCode, Designation qualificationName)
+	{
 		Id = id;
 		NameCode = idCode;
 		QualificationName = qualificationName;
@@ -30,5 +31,10 @@ public class Qualification : IDTOAble<QualificationDto>
 			IdCode = this.NameCode.Value,
 			QualificationName = this.QualificationName.Value
 		};
+	}
+	
+	public override string ToString()
+	{
+		return $"Qualification [Id={Id}, NameCode={NameCode.Value}, QualificationName={QualificationName.Value}]";
 	}
 }

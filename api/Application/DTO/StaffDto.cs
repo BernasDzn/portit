@@ -7,7 +7,7 @@ public class StaffDto
 	public string Email { get; set; }
 	public string PhoneNumber { get; set; }
 	public string Status { get; set; }
-	public OperationalWindowDto OperationWindow { get; set; }
+	public OperationalWindowDto OperationalWindow { get; set; }
 	public ICollection<QualificationDto> Qualifications { get; set; }
 
 }

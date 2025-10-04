@@ -50,10 +50,10 @@ public class StaffService
 			new PhoneNumber { Value = staffDto.PhoneNumber },
 			new OperationalWindow
 			{
-				StartWeekDay = staffDto.OperationWindow.StartWeekDay,
-				EndWeekDay = staffDto.OperationWindow.EndWeekDay,
-				DayStartTime = staffDto.OperationWindow.DayStartTime,
-				DayEndTime = staffDto.OperationWindow.DayEndTime
+				StartWeekDay = staffDto.OperationalWindow.StartWeekDay,
+				EndWeekDay = staffDto.OperationalWindow.EndWeekDay,
+				DayStartTime = staffDto.OperationalWindow.DayStartTime,
+				DayEndTime = staffDto.OperationalWindow.DayEndTime
 			},
 			qualifications
 		);

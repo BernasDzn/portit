@@ -42,17 +42,22 @@ public class Staff : IDTOAble<StaffDto>
 	}
 
 	public StaffDto ToDTO()
-	{ 
+	{
 		return new StaffDto
 		{
- 			MechanograficNumber = MechanograficNumber.Value,
+			MechanograficNumber = MechanograficNumber.Value,
 			Name = Name.Value,
 			Email = Email.Value,
 			PhoneNumber = PhoneNumber.Value,
 			Status = Status.ToString(),
-			OperationWindow = OperationalWindow.ToDTO(),
+			OperationalWindow = OperationalWindow.ToDTO(),
 			Qualifications = Qualifications.Select(q => q.ToDTO()).ToList()
 		};
+	}
+
+	public override string ToString()
+	{
+		return $"Staff [MechanograficNumber={MechanograficNumber.Value}, Name={Name.Value}, Email={Email.Value}, PhoneNumber={PhoneNumber.Value}, Status={Status}, OperationalWindow=({OperationalWindow}), Qualifications=[{string.Join(", ", Qualifications)}]]";
 	}
 
 }
