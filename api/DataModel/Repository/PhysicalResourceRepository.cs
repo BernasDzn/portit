@@ -117,4 +117,38 @@ public class PhysicalResourceRepository : GenericRepository<PhysicalResource>, I
         YardCrane updatedCrane = (YardCrane) Update(crane).Result;
         return Task.FromResult(updatedCrane);
     }
+
+    public Task<Page<PhysicalResource>> FilterPhysicalResourcesAsync(PhysicalResourceFilter filter)
+    {
+        IQueryable<PhysicalResource> query = _context.PhysicalResources.AsQueryable();
+        if (!string.IsNullOrEmpty(filter.Code))
+            query = query.Where(r => r.Code.Value.Contains(filter.Code, StringComparison.OrdinalIgnoreCase));
+
+        if (!string.IsNullOrEmpty(filter.Description))
+            query = query.Where(r => r.Description.Value.Contains(filter.Description, StringComparison.OrdinalIgnoreCase));
+
+        if (filter.Status != null)
+            query = query.Where(r => r.Status == filter.Status);
+
+        if (filter.Type != null)
+        {
+            switch (filter.Type)
+            {
+                case PhysicalResourceFilter.ResourceType.STSCrane:
+                    query = query.OfType<STSCrane>();
+                    break;
+                case PhysicalResourceFilter.ResourceType.YardCrane:
+                    query = query.OfType<YardCrane>();
+                    break;
+                case PhysicalResourceFilter.ResourceType.Truck:
+                    query = query.OfType<Truck>();
+                    break;
+            }
+        }
+
+        query = query.Skip((filter.PageNumber - 1) * filter.PageSize).Take(filter.PageSize);
+		return Task.FromResult(
+			Page<PhysicalResource>.Of(query.ToList(), filter)
+		);
+    }
 }

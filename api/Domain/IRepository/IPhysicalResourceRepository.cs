@@ -6,6 +6,8 @@ public interface IPhysicalResourceRepository : IGenericRepository<PhysicalResour
 {
 	Task<IEnumerable<object>> GetPhysicalResourcesAsync();
 	Task<PhysicalResource?> GetResourceByCodeAsync(string code);
+    Task<Page<PhysicalResource>> FilterPhysicalResourcesAsync(PhysicalResourceFilter filter);
+
 
 	Task<STSCrane> AddSTSCrane(STSCrane crane);
 	Task<YardCrane> AddYardCrane(YardCrane crane);

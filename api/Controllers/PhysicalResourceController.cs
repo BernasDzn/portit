@@ -41,6 +41,20 @@ public class PhysicalResourceController : ControllerBase
         }
     }
 
+    [HttpGet("filter")]
+	public async Task<ActionResult<Page<object>>> Filter([FromQuery] PhysicalResourceFilter filter)
+	{
+		try
+		{
+			var pagedResources = await _physicalResourceService.FilterPhysicalResources(filter);
+            return Ok(pagedResources);
+		}
+		catch (System.Exception)
+		{
+			return NotFound();
+		}
+	}
+
     private async Task<ActionResult> HandleCreationAsync<T>(T resourceDto, Func<T, Task<T>> creationFunc, string resourceName) where T : class
     {
         try
