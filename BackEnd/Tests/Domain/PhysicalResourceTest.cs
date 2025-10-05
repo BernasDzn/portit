@@ -30,7 +30,7 @@ public class PhysicalResourcesTest
                     new VesselType(
                         Guid.NewGuid(),
                         new Designation { Value = "Container Ship" },
-                        new Designation { Value = "A ship designed to carry containerized cargo." },
+                        new Designation { Value = "A ship designed to carry containerized cargo" },
                         10, 10, 10,
                         new PhysicalCharacteristics { Length = 200, Depth = 30, Draft = 10 }
                     )
@@ -65,7 +65,7 @@ public class PhysicalResourcesTest
                         new VesselType(
                             Guid.NewGuid(),
                             new Designation { Value = "Container Ship" },
-                            new Designation { Value = "A ship designed to carry containerized cargo." },
+                            new Designation { Value = "A ship designed to carry containerized cargo" },
                             10, 10, 10,
                             new PhysicalCharacteristics { Length = 200, Depth = 30, Draft = 10 }
                         )
