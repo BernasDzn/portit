@@ -1,0 +1,34 @@
+@startuml vessel_domain
+title Vessel Domain (DDD)
+hide circle
+
+rectangle "Vessel" {
+	class "**Vessel**\n" as vessel <<AggregateRoot>><<Entity>> 
+    {
+		+ IMO Number
+		+ vesselName
+		+ vesselType
+		+ owner
+	}
+
+	class "Vessel Type" as vessel_type <<Value>> 
+    {
+		+ name
+		+ description
+		+ maxNumberOfRows
+		+ maxNumberOfBays
+		+ maxNumberOfTiers
+	}
+
+	vessel --> vessel_type : "has a"
+}
+
+class "**Shipping Agent**\n**Organization**" as SAO <<Entity>>
+class "**SAO Representative**" as SAO_rep <<Entity>>
+class "**Vessel Visit**\n**Notification**" as vessel_visit_notif <<Entity>>
+
+vessel --> SAO : "owned by"
+vessel_visit_notif --> vessel : "for"
+SAO_rep --> vessel_visit_notif : "submits"
+
+@enduml
