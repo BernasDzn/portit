@@ -3,7 +3,8 @@ namespace Api.Application.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Api.Application.Services;
 using Api.Application.DataTransfer;
-
+using Api.Application.DataTransfer.Filters;
+using Api.Infrastructure.Utilities;
 
 [ApiController]
 [Route("[controller]")]
@@ -41,4 +42,35 @@ public class StaffController : ControllerBase
 			return BadRequest(e.Message);
 		}
 	}
+
+	[HttpPut("{mecanographicNumber}", Name = "DeactivateStaff")]
+	public async Task<ActionResult> Deactivate(string mecanographicNumber)
+	{
+		try
+		{
+			StaffDto? deactivatedStaff = await _staffService.Deactivate(mecanographicNumber);
+			if (deactivatedStaff == null)
+				return BadRequest("Could not deactivate staff");
+			return Ok(deactivatedStaff); 
+		}
+		catch (Exception e)
+		{
+			return BadRequest(e.Message);
+		}
+	}
+
+	[HttpGet("filter")]
+	public async Task<ActionResult<IEnumerable<StaffDto>>> Filter([FromQuery] StaffFilter filter)
+	{ 
+		try
+		{
+			var staffsDto = await _staffService.FilterStaffs(filter);
+			return Ok(staffsDto);
+		}
+		catch (System.Exception)
+		{
+			return NotFound();
+		}
+	}
+
 }
