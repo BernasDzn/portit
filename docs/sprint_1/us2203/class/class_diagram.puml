@@ -1,32 +1,167 @@
-@startuml us2203_domain_model
-title US2203 - Class Diagram
-skinparam backgroundColor #F0F0F0
+@startuml Dock_Class_Diagram
 
+!theme plain
+skinparam classAttributeIconSize 0
 
+' Entity Classes
 
-class Dock
-{
-	- name : Designation
-	- location : Designation
-	- supportedVesselTypes : List<VesselType>
-	+ Dock(...) : void
+class Dock {
+    - Id: Guid
+    - Name: Designation
+    - Location: Designation
+    - PhysicalCharacteristics: PhysicalCharacteristics
+    - SupportedVesselTypes: ICollection<VesselType>
+    __
+    + Dock(id, name, location, physicalCharacteristics, supportedVesselTypes)
+    + ToDTO(): DockDto
+    + UpdateName(newName): void
+    + UpdateLocation(newLocation): void
+    + UpdatePhysicalCharacteristics(physicalCharacteristics): void
+    + UpdateVesselTypes(newVesselTypes): void
 }
 
-class "Dock\n**Name**" as dock_name <<Value>>
-{
-	+ name
-}
-class "Dock\n**Location**" as dock_location <<Value>>
-{
-	+ location
+class VesselType {
+    - Id: Guid
+    - Name: Designation
+    - Description: Designation
+    - MaxNumberOfRows: uint
+    - MaxNumberOfBays: uint
+    - MaxNumberOfTiers: uint
+    - PhysicalCharacteristics: PhysicalCharacteristics
+    - Docks: ICollection<Dock>
+    - Vessels: ICollection<Vessel>
+    __
+    + VesselType(id, name, description, maxRows, maxBays, maxTiers, physicalCharacteristics)
+    + ToDTO(): VesselTypeDto
+    + UpdateName(name): void
+    + UpdateDescription(description): void
+    + UpdateMaxNumberOfRows(maxRows): void
+    + UpdateMaxNumberOfBays(maxBays): void
+    + UpdateMaxNumberOfTiers(maxTiers): void
+    + UpdatePhysicalCharacteristics(physicalCharacteristics): void
 }
 
-class "Dock\n**PhysicalCharacteristics**" as dock_physical_characteristics <<Value>>
-{
-	+ length
-	+ width
-	+ depth
+class PhysicalCharacteristics {
+    - Length: double
+    - Depth: double
+    - Draft: double
+    __
+    + ToDTO(): PhysicalCharacteristicsDto
 }
 
+' DTOs
+
+class DockDto {
+    + Name: string
+    + Location: string
+    + PhysicalCharacteristics: PhysicalCharacteristicsDto
+    + SupportedVesselTypes: List<VesselTypeDto>
+}
+
+class VesselTypeDto {
+    + Name: string
+    + Description: string
+    + MaxNumberOfRows: uint
+    + MaxNumberOfBays: uint
+    + MaxNumberOfTiers: uint
+    + PhysicalCharacteristics: PhysicalCharacteristicsDto
+}
+
+class PhysicalCharacteristicsDto {
+    + Length: double
+    + Depth: double
+    + Draft: double
+}
+
+' Controllers
+
+class DockController {
+    - _dockService: DockService
+    - _logger: ILogger<DockController>
+    __
+    + DockController(dockService, logger)
+    + GetAll(): Task<ActionResult<IEnumerable<DockDto>>>
+    + Create(dockDto): Task<ActionResult<DockDto>>
+    + Filter(filter): Task<ActionResult<Page<DockDto>>>
+    + Update(name, dockDto): Task<ActionResult<DockDto>>
+}
+
+class VesselTypeController {
+    - _vesselTypeService: VesselTypeService
+    - _logger: ILogger<VesselTypeController>
+    __
+    + VesselTypeController(vesselTypeService, logger)
+    + GetAll(): Task<ActionResult<IEnumerable<VesselTypeDto>>>
+    + Filter(filter): Task<ActionResult<Page<VesselTypeDto>>>
+    + Create(vesselTypeDto): Task<ActionResult<VesselTypeDto>>
+    + Update(name, vesselTypeDto): Task<IActionResult>
+}
+
+' Services
+
+class DockService {
+    - _dockRepository: IDockRepository
+    - _vesselTypeRepository: IVesselTypeRepository
+    __
+    + DockService(dockRepository, vesselTypeRepository)
+    + GetDocks(): Task<IEnumerable<DockDto>>
+    + Add(dockDto): Task<DockDto?>
+    + Update(name, dockDto): Task<DockDto?>
+    + FilterDocks(filter): Task<Page<DockDto>>
+}
+
+class VesselTypeService {
+    - _vesselTypeRepository: IVesselTypeRepository
+    __
+    + VesselTypeService(vesselTypeRepository)
+    + GetVesselTypes(): Task<IEnumerable<VesselTypeDto>>
+    + FilterVesselTypes(filter): Task<Page<VesselTypeDto>>
+    + Add(vesselTypeDto): Task<VesselTypeDto?>
+    + Update(name, vesselTypeDto): Task<VesselTypeDto?>
+}
+
+' Repository Interfaces
+
+interface IDockRepository {
+    + GetDocksAsync(): Task<IEnumerable<Dock>>
+    + GetDockByNameAsync(name: string): Task<Dock>
+    + Add(dock: Dock): Task<Dock>
+    + Update(dock: Dock): Task<Dock>
+    + FilterDocksAsync(filter: DockFilter): Task<Page<Dock>>
+}
+
+interface IVesselTypeRepository {
+    + GetVesselTypesAsync(): Task<IEnumerable<VesselType>>
+    + GetVesselTypeByNameAsync(name: string): Task<VesselType>
+    + Add(vesselType: VesselType): Task<VesselType>
+    + Update(vesselType: VesselType): Task<bool>
+    + FilterVesselTypesAsync(filter: VesselTypeFilter): Task<Page<VesselType>>
+}
+
+' Relationships
+
+Dock o-- "1" PhysicalCharacteristics : "PhysicalCharacteristics"
+Dock o-- "*" VesselType : "SupportedVesselTypes"
+Dock ..> DockDto : "ToDTO"
+
+VesselType o-- "1" PhysicalCharacteristics : "PhysicalCharacteristics"
+VesselType o-- "*" Dock : "Docks"
+VesselType ..> VesselTypeDto : "ToDTO"
+
+DockDto o-- "1" PhysicalCharacteristicsDto : "PhysicalCharacteristics"
+DockDto o-- "*" VesselTypeDto : "SupportedVesselTypes"
+
+VesselTypeDto o-- "1" PhysicalCharacteristicsDto : "PhysicalCharacteristics"
+
+PhysicalCharacteristics ..> PhysicalCharacteristicsDto : "ToDTO"
+
+DockController --> DockService : uses
+VesselTypeController --> VesselTypeService : uses
+DockService --> IDockRepository : uses
+DockService --> IVesselTypeRepository : uses
+VesselTypeService --> IVesselTypeRepository : uses
+
+IDockRepository --> Dock : manages
+IVesselTypeRepository --> VesselType : manages
 
 @enduml
