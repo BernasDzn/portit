@@ -1,0 +1,1 @@
+dotnet run --project BackEnd/Api/Api.csproj

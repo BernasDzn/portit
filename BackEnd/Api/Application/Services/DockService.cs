@@ -1,0 +1,108 @@
+namespace Api.Application.Services;
+
+using Api.Application.DataTransfer;
+using Api.Application.DataTransfer.Filters;
+using Api.Application.Exceptions;
+using Api.Domain.Entities;
+using Api.Domain.IRepository;
+using Api.Domain.ValueObjects;
+using Api.Infrastructure.Exceptions;
+using Api.Infrastructure.Utilities;
+
+
+public class DockService
+{
+    private readonly IDockRepository _dockRepository;
+    private readonly IVesselTypeRepository _vesselTypeRepository;
+
+    public DockService(IDockRepository dockRepository, IVesselTypeRepository vesselTypeRepository)
+    {
+        _dockRepository = dockRepository;
+        _vesselTypeRepository = vesselTypeRepository;
+    }
+
+    public async Task<IEnumerable<DockDto>> GetDocks()
+    {
+        IEnumerable<Dock> docks = await _dockRepository.GetDocksAsync();
+
+        return docks.Select(d => d.ToDTO()).ToList();
+    }
+
+    public async Task<Page<DockDto>?> FilterDocks(DockFilter filter)
+    {
+        Page<Dock> page = await _dockRepository.FilterDocksAsync(filter);
+        return page.Map(d => d.ToDTO());
+    }
+
+    public async Task<DockDto?> Add(DockDto dockDto)
+    {
+        bool exists = await _dockRepository.GetDockByNameAsync(dockDto.Name) != null;
+        if (exists)
+            throw new EntityAlreadyExistsException("This dock already exists.");
+
+        HashSet<VesselType> vesselTypes = await GetVesselTypesFromDto(dockDto.SupportedVesselTypes);
+
+        Dock dock = new Dock(Guid.NewGuid(), new Designation { Value = dockDto.Name }, new Designation { Value = dockDto.Location },
+         new PhysicalCharacteristics
+         {
+             Length = dockDto.PhysicalCharacteristics.Length,
+             Depth = dockDto.PhysicalCharacteristics.Depth,
+             Draft = dockDto.PhysicalCharacteristics.Draft
+         }, vesselTypes);
+
+        Dock savedDock = await _dockRepository.Add(dock);
+        DockDto savedDockDto = savedDock.ToDTO();
+
+        return savedDockDto;
+    }
+
+    public async Task<DockDto?> Update(string name, DockDto dockDto)
+    {
+        if (name != dockDto.Name)
+            throw new ArgumentException("The provided name does not match the dock to be updated.");
+
+        Dock dock = await _dockRepository.GetDockByNameAsync(dockDto.Name);
+        if (dock == null)
+            throw new EntityNotFoundException("A dock with the specified name does not exist.");
+
+        HashSet<VesselType> vesselTypes = await GetVesselTypesFromDto(dockDto.SupportedVesselTypes);
+
+        dock.UpdateLocation(new Designation { Value = dockDto.Location });
+
+
+        PhysicalCharacteristics newPhysicalCharacteristics = new PhysicalCharacteristics
+        {
+            Length = dockDto.PhysicalCharacteristics.Length,
+            Depth = dockDto.PhysicalCharacteristics.Depth,
+            Draft = dockDto.PhysicalCharacteristics.Draft
+        };
+
+        dock.UpdatePhysicalCharacteristics(newPhysicalCharacteristics);
+        dock.UpdateVesselTypes(vesselTypes);
+
+        bool updated = await _dockRepository.Update(dock);
+
+        if (!updated)
+            throw new PersistencyFailedException("Dock update failed.");
+
+        Dock updatedDock = await _dockRepository.GetDockByNameAsync(name);
+
+        return updatedDock.ToDTO();
+    }
+
+    private async Task<HashSet<VesselType>> GetVesselTypesFromDto(List<VesselTypeDto> vesselTypesDtos)
+    {
+        HashSet<VesselType> vesselTypes = new HashSet<VesselType>();
+
+        foreach (VesselTypeDto vtDto in vesselTypesDtos)
+        {
+            VesselType? vesselType = await _vesselTypeRepository.GetVesselTypeByNameAsync(vtDto.Name);
+            if (vesselType == null)
+                throw new EntityNotFoundException("The referenced vessel type does not exist.");
+
+            vesselTypes.Add(vesselType);
+        }
+
+        return vesselTypes;
+    }
+}
