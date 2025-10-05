@@ -36,7 +36,7 @@ public class StaffController : ControllerBase
 
 			return CreatedAtAction(nameof(GetAll), new { id = createdStaff?.MechanograficNumber }, createdStaff);
 		}
-		catch (System.Exception e)
+		catch (Exception e)
 		{
 			return BadRequest(e.Message);
 		}

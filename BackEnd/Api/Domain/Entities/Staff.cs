@@ -52,7 +52,7 @@ public class Staff : IDTOAble<StaffDto>
 			Email = Email.Value,
 			PhoneNumber = PhoneNumber.Value,
 			Status = Status.ToString(),
-			OperationalWindow = OperationalWindow.ToDTO(),
+			OperationalWindow = OperationalWindow,
 			Qualifications = Qualifications.Select(q => q.ToDTO()).ToList()
 		};
 	}
