@@ -67,7 +67,7 @@ public class DockService
 
         HashSet<VesselType> vesselTypes = await GetVesselTypesFromDto(dockDto.SupportedVesselTypes);
 
-        dock.UpdateLocation(new Designation { Value = dockDto.Location });
+        dock.UpdateLocation(dockDto.Location);
 
 
         PhysicalCharacteristics newPhysicalCharacteristics = new PhysicalCharacteristics

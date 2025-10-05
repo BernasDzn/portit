@@ -21,13 +21,18 @@ public class VesselType : IDTOAble<VesselTypeDto>
     protected VesselType() { }
     public VesselType(Guid id, Designation name, Designation description, uint maxNumberOfRows, uint maxNumberOfBays, uint maxNumberOfTiers, PhysicalCharacteristics physicalCharacteristics)
     {
+
+        if (maxNumberOfBays == 0) throw new ArgumentException("Max number of bays must be greater than zero.");
+        if (maxNumberOfRows == 0) throw new ArgumentException("Max number of rows must be greater than zero.");
+        if (maxNumberOfTiers == 0) throw new ArgumentException("Max number of tiers must be greater than zero.");
+
         Id = id;
-        Name = name;
-        Description = description;
+        Name = name ?? throw new ArgumentNullException(nameof(name));
+        Description = description ?? throw new ArgumentNullException(nameof(description));
         MaxNumberOfRows = maxNumberOfRows;
         MaxNumberOfBays = maxNumberOfBays;
         MaxNumberOfTiers = maxNumberOfTiers;
-        PhysicalCharacteristics = physicalCharacteristics;
+        PhysicalCharacteristics = physicalCharacteristics ?? throw new ArgumentNullException(nameof(physicalCharacteristics));
     }
 
     public VesselTypeDto ToDTO()
@@ -53,38 +58,46 @@ public class VesselType : IDTOAble<VesselTypeDto>
     }
     public void UpdateMaxNumberOfRows(uint maxNumberOfRows)
     {
+        if (maxNumberOfRows == 0) throw new ArgumentException("Max number of rows must be greater than zero.");
         MaxNumberOfRows = maxNumberOfRows;
     }
     public void UpdateMaxNumberOfBays(uint maxNumberOfBays)
     {
+        if (maxNumberOfBays == 0) throw new ArgumentException("Max number of bays must be greater than zero.");
         MaxNumberOfBays = maxNumberOfBays;
     }
     public void UpdateMaxNumberOfTiers(uint maxNumberOfTiers)
     {
+        if (maxNumberOfTiers == 0) throw new ArgumentException("Max number of tiers must be greater than zero.");
         MaxNumberOfTiers = maxNumberOfTiers;
     }
     public void UpdatePhysicalCharacteristics(PhysicalCharacteristics physicalCharacteristics)
     {
-        foreach (var v in Vessels)
+        if (Vessels != null && Vessels.Count > 0)
         {
-            if (v.PhysicalCharacteristics.Length > physicalCharacteristics.Length ||
-               v.PhysicalCharacteristics.Depth > physicalCharacteristics.Depth ||
-               v.PhysicalCharacteristics.Draft > physicalCharacteristics.Draft)
+            foreach (var v in Vessels)
             {
-                throw new InvalidOperationException("Cannot update physical characteristics of a vessel type assigned to vessels with greater physical characteristics.");
+                if (v.PhysicalCharacteristics.Length > physicalCharacteristics.Length ||
+                   v.PhysicalCharacteristics.Depth > physicalCharacteristics.Depth ||
+                   v.PhysicalCharacteristics.Draft > physicalCharacteristics.Draft)
+                {
+                    throw new InvalidOperationException("Cannot update physical characteristics of a vessel type assigned to vessels with greater physical characteristics.");
+                }
             }
         }
 
-        foreach (var d in Docks)
+        if (Docks != null && Docks.Count > 0)
         {
-            if (d.PhysicalCharacteristics.Length < physicalCharacteristics.Length ||
-               d.PhysicalCharacteristics.Depth < physicalCharacteristics.Depth ||
-               d.PhysicalCharacteristics.Draft < physicalCharacteristics.Draft)
+            foreach (var d in Docks)
             {
-                throw new InvalidOperationException("Cannot update physical characteristics of a vessel type assigned to docks with lesser physical characteristics.");
+                if (d.PhysicalCharacteristics.Length < physicalCharacteristics.Length ||
+                   d.PhysicalCharacteristics.Depth < physicalCharacteristics.Depth ||
+                   d.PhysicalCharacteristics.Draft < physicalCharacteristics.Draft)
+                {
+                    throw new InvalidOperationException("Cannot update physical characteristics of a vessel type assigned to docks with lesser physical characteristics.");
+                }
             }
         }
-
         PhysicalCharacteristics = physicalCharacteristics ?? throw new ArgumentNullException(nameof(physicalCharacteristics));
     }
 }

@@ -17,7 +17,7 @@ public class PhysicalCharacteristics : IDTOAble<PhysicalCharacteristicsDto>
 		set
 		{
 			if (value <= 0)
-				throw new Exception("Length must be positive.");
+				throw new ArgumentException("Length must be positive.");
 			_length = value;
 		}
 	}
@@ -29,7 +29,7 @@ public class PhysicalCharacteristics : IDTOAble<PhysicalCharacteristicsDto>
 		set
 		{
 			if (value <= 0)
-				throw new Exception("Depth must be positive.");
+				throw new ArgumentException("Depth must be positive.");
 			_depth = value;
 		}
 	}
@@ -41,7 +41,7 @@ public class PhysicalCharacteristics : IDTOAble<PhysicalCharacteristicsDto>
 		set
 		{
 			if (value <= 0)
-				throw new Exception("Draft must be positive.");
+				throw new ArgumentException("Draft must be positive.");
 			_draft = value;
 		}
 	}

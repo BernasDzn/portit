@@ -17,39 +17,35 @@ public class Dock : IDTOAble<DockDto>
     protected Dock() { }
     public Dock(Guid id, Designation name, Designation location, PhysicalCharacteristics physicalCharacteristics, HashSet<VesselType> supportedVesselTypes)
     {
-        if (supportedVesselTypes == null || supportedVesselTypes.Count == 0)
-            throw new ArgumentException("Invalid arguments!");
+        validatePhysicalCharacteristics(physicalCharacteristics, supportedVesselTypes);
 
         Id = id;
-        Name = name;
-        Location = location;
+        Name = name ?? throw new ArgumentException("Name cannot be null.");
+        Location = location ?? throw new ArgumentException("Location cannot be null.");
         PhysicalCharacteristics = physicalCharacteristics;
         SupportedVesselTypes = supportedVesselTypes;
-        validatePhysicalCharacteristics();
     }
 
-    public void UpdateName(Designation newName)
+    public void UpdateName(string newName)
     {
-        Name = newName;
+        Name = new Designation { Value = newName };
     }
-    public void UpdateLocation(Designation newLocation)
+    public void UpdateLocation(string newLocation)
     {
-        Location = newLocation;
+        Location = new Designation { Value = newLocation };
     }
     public void UpdatePhysicalCharacteristics(PhysicalCharacteristics physicalCharacteristics)
     {
-        PhysicalCharacteristics = physicalCharacteristics ?? throw new ArgumentNullException(nameof(physicalCharacteristics));
-        validatePhysicalCharacteristics();
+        validatePhysicalCharacteristics(physicalCharacteristics, SupportedVesselTypes);
+        PhysicalCharacteristics = physicalCharacteristics;
     }
 
     public void UpdateVesselTypes(ICollection<VesselType> new_vesselTypes)
     {
-        if (new_vesselTypes == null || new_vesselTypes.Count == 0)
-            throw new ArgumentException("Invalid vessel types", nameof(new_vesselTypes));
+        validatePhysicalCharacteristics(PhysicalCharacteristics, new_vesselTypes);
 
         SupportedVesselTypes.Clear();
         SupportedVesselTypes = new_vesselTypes;
-        validatePhysicalCharacteristics();
     }
 
     public DockDto ToDTO()
@@ -63,15 +59,20 @@ public class Dock : IDTOAble<DockDto>
         };
     }
 
-    private void validatePhysicalCharacteristics()
+    private void validatePhysicalCharacteristics(PhysicalCharacteristics physicalCharacteristics, ICollection<VesselType> supportedVesselTypes)
     {
-        foreach (var vt in SupportedVesselTypes)
+        if (physicalCharacteristics == null)
+            throw new ArgumentException("Physical characteristics cannot be null.");
+        if (supportedVesselTypes == null || supportedVesselTypes.Count == 0)
+            throw new ArgumentException("Invalid vessel types", nameof(supportedVesselTypes));
+
+        foreach (var vt in supportedVesselTypes)
         {
-            if (PhysicalCharacteristics.Length < vt.PhysicalCharacteristics.Length)
+            if (physicalCharacteristics.Length < vt.PhysicalCharacteristics.Length)
                 throw new ArgumentException($"The dock's length is insufficient for the vessel type {vt.Name}.");
-            if (PhysicalCharacteristics.Depth < vt.PhysicalCharacteristics.Depth)
+            if (physicalCharacteristics.Depth < vt.PhysicalCharacteristics.Depth)
                 throw new ArgumentException($"The dock's depth is insufficient for the vessel type {vt.Name}.");
-            if (PhysicalCharacteristics.Draft < vt.PhysicalCharacteristics.Draft)
+            if (physicalCharacteristics.Draft < vt.PhysicalCharacteristics.Draft)
                 throw new ArgumentException($"The dock's max draft is insufficient for the vessel type {vt.Name}.");
         }
     }

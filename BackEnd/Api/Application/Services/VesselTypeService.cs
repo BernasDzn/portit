@@ -50,7 +50,7 @@ public class VesselTypeService
         if (vesselType == null)
             throw new Exception("Vessel Type not found.");
 
-        vesselType.UpdateName(vesselTypeDto.Name);
+        vesselType.UpdateName( vesselTypeDto.Name);
         vesselType.UpdateDescription(vesselTypeDto.Description);
         vesselType.UpdateMaxNumberOfRows(vesselTypeDto.MaxNumberOfRows);
         vesselType.UpdateMaxNumberOfBays(vesselTypeDto.MaxNumberOfBays);
