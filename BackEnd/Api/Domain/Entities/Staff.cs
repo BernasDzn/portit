@@ -62,6 +62,13 @@ public class Staff : IDTOAble<StaffDto>
 		return $"Staff [MechanograficNumber={MechanograficNumber.Value}, Name={Name.Value}, Email={Email.Value}, PhoneNumber={PhoneNumber.Value}, Status={Status}, OperationalWindow=({OperationalWindow}), Qualifications=[{string.Join(", ", Qualifications)}]]";
 	}
 
+	public void Deactivate()
+	{
+		if (Status == StaffStatus.Inactive)
+			throw new InvalidOperationException("Trying to deactivate an already inactive staff.");
+		Status = StaffStatus.Inactive;
+	}
+
 }
 
 public enum StaffStatus

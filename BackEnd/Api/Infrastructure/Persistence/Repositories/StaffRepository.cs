@@ -105,9 +105,24 @@ public class StaffRepository : GenericRepository<Staff>, IStaffRepository
 		{
 			IQueryable<Staff> query = _context.Staffs.AsQueryable();
 
+			if (!string.IsNullOrEmpty(filter.MechanograficNumber))
+			{
+				query = query.Where(s => s.MechanograficNumber.Value.Contains(filter.MechanograficNumber, StringComparison.OrdinalIgnoreCase));
+			}
+
 			if (!string.IsNullOrEmpty(filter.Name))
 			{
 				query = query.Where(s => s.Name.Value.Contains(filter.Name, StringComparison.OrdinalIgnoreCase));
+			}
+
+			if (!string.IsNullOrEmpty(filter.Email))
+			{
+				query = query.Where(s => s.Email.Value.Contains(filter.Email, StringComparison.OrdinalIgnoreCase));
+			}
+
+			if (!string.IsNullOrEmpty(filter.PhoneNumber))
+			{
+				query = query.Where(s => s.PhoneNumber.Value.Contains(filter.PhoneNumber, StringComparison.OrdinalIgnoreCase));
 			}
 
 			if (!string.IsNullOrEmpty(filter.Status))

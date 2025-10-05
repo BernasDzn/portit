@@ -4,7 +4,7 @@ using Api.Infrastructure.Utilities;
 
 public class StaffFilter : Pageable
 {
-	public string? Code { get; set; }
+	public string? MechanograficNumber { get; set; }
 	public string? Name { get; set; }
 	public string? Status { get; set; }
 	public string? Email { get; set; }
