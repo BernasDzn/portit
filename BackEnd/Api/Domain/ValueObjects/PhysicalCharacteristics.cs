@@ -46,10 +46,7 @@ public class PhysicalCharacteristics : IDTOAble<PhysicalCharacteristicsDto>
 		}
 	}
 
-	public override string ToString()
-	{
-		return "Physical Characteristics: " + Length + " x " + Depth + " x " + Draft + ".";
-	}
+	public override string ToString() => "Physical Characteristics: " + Length + " x " + Depth + " x " + Draft + ".";
 
 	public PhysicalCharacteristicsDto ToDTO()
 	{

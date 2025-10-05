@@ -1,11 +1,13 @@
 namespace Api.Application.Services;
 
 using Api.Application.DataTransfer;
+using Api.Application.DataTransfer.Filters;
 using Api.Application.Exceptions;
 using Api.Domain.Entities;
 using Api.Domain.IRepository;
 using Api.Domain.ValueObjects;
 using Api.Infrastructure.Exceptions;
+using Api.Infrastructure.Utilities;
 
 public class StaffService
 {
@@ -60,8 +62,26 @@ public class StaffService
 		await _staffRepository.Add(staff);
 		Staff addedStaff = await _staffRepository.GetStaffByMecNumberAsync(staffDto.MechanograficNumber) ?? throw new Exception("Error retrieving the added staff.");
 		StaffDto addedStaffDto = addedStaff.ToDTO();
-		
+
 		return addedStaffDto;
+	}
+
+	public async Task<Page<StaffDto>> FilterStaffs(StaffFilter staffFilter)
+	{
+		Page<Staff> page = await _staffRepository.FilterStaffsAsync(staffFilter);
+		return page.Map<StaffDto>(s => s.ToDTO());
+
+	}
+
+	public async Task<StaffDto?> Deactivate(string mecanographicNumber)
+	{
+		var staff = await _staffRepository.GetStaffByMecNumberAsync(mecanographicNumber);
+		if (staff == null)
+			throw new EntityNotFoundException("Staff not found.");
+
+		staff.Deactivate();
+		await _staffRepository.Update(staff);
+		return staff.ToDTO();
 	}
 
 }

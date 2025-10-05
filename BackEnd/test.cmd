@@ -1,1 +1,1 @@
-dotnet test BackEnd/Tests/Tests.csproj
+dotnet test Tests/Tests.csproj

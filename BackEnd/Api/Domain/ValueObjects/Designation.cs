@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
+using System.Text.RegularExpressions;
 
 namespace Api.Domain.ValueObjects;
 
@@ -14,12 +15,15 @@ public class Designation
 		get => _value;
 		set
 		{
-			if (string.IsNullOrWhiteSpace(value))
+			var trimmed = value?.Trim();
+			if (string.IsNullOrWhiteSpace(trimmed))
 				throw new ArgumentException("Designation cannot be null or empty", nameof(value));
-			if (value.Length > 100 || value.Length < 2)
+			if (trimmed.Length > 100 || trimmed.Length < 2)
 				throw new ArgumentException("Designation must be between 2 and 100 characters", nameof(value));
+			if (!Regex.IsMatch(trimmed, @"^[\p{L}0-9 .\-()]+$", RegexOptions.None))
+				throw new ArgumentException("Designation can only contain alphanumeric characters, spaces, and hyphens", nameof(value));
 
-			_value = value;
+			_value = trimmed;
 		}
 	}
 

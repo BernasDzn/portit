@@ -1,48 +1,152 @@
-@startuml us2211_domain_model
-title US2211 - Class Diagram
-skinparam backgroundColor #F0F0F0
+@startuml Staff_Class_Diagram
+!theme plain
+skinparam classAttributeIconSize 0
 
-
-
-class Staff
-{
-	- name : Designation
-	- email : Email
-	- phoneNumber : PhoneNumber
-	- status : StaffStatus
-	- operationalWindow : OperationalWindow
-	- qualifications : List<Qualification>
-	+ Staff(...) : void
-	+ assignQualification(quali: Qualification)
-	+ removeQualification(quali: Qualification)
+' Main Entity Classes
+class Staff {
+    - Id: Guid
+    - MechanograficNumber: string
+    - Name: string
+    - Email: string
+    - PhoneNumber: string
+    - Status: StaffStatus
+    - OperationalWindow: OperationalWindow
+    - Qualifications: List<Qualification>
+    __
+    + Staff(mechanograficNumber, name, email, phoneNumber, operationalWindow, qualifications)
+    + ToDTO(): StaffDto
+    + Deactivate(): void
+    + ToString(): string
 }
 
-class "Staff\n**Name**" as staff_name <<Value>>
-{
-	+ name
-}
-class "Staff\n**Email**" as staff_email <<Value>>
-{
-	+ email
-}
-class "Staff\n**Phone Number**" as staff_phone_number <<Value>>
-{
-	+ phoneNumber
+enum StaffStatus {
+    Active
+    Inactive
+    Suspended
 }
 
-class "Staff\n**Status**" as staff_status <<Enum>>
-{
-	+ ACTIVE
-	+ INACTIVE
+class Qualification {
+    - Id: Guid
+    - NameCode: string
+    - QualificationName: string
+    __
+    + Qualification(id, idCode, qualificationName)
+    + UpdateQualificationName(qualificationName): void
+    + ToDTO(): QualificationDto
+    + ToString(): string
 }
 
-class "Staff\n**Operational**\n**Window**" as staff_op_window
-{
-	+ startDay
-	+ startTime
-	+ endDay
-	+ endTime
+' DTOs
+class StaffDto {
+    + MechanograficNumber: string
+    + Name: string
+    + Email: string
+    + PhoneNumber: string
+    + Status: string
+    + OperationalWindow: OperationalWindow
+    + Qualifications: List<QualificationDto>
 }
 
+class QualificationDto {
+    + IdCode: string
+    + QualificationName: string
+}
+
+' Services
+class StaffService {
+    - _staffRepository: StaffRepository
+    - _qualificationRepository: QualificationRepository
+    __
+    + StaffService(staffRepository, qualificationRepository)
+    + GetStaffs(): Task<List<StaffDto>>
+    + Add(staffDto): Task<StaffDto>
+    + FilterStaffs(staffFilter): Task<List<StaffDto>>
+    + Deactivate(mechanographicNumber): Task<StaffDto>
+}
+
+class QualificationService {
+    - _qualificationRepository: QualificationRepository
+    __
+    + QualificationService(qualificationRepository)
+    + GetQualifications(): Task<List<QualificationDto>>
+    + GetQualificationById(id): Task<QualificationDto>
+    + Add(qualificationDto): Task<QualificationDto>
+    + Update(id, qualificationDto): Task<QualificationDto>
+    + FilterQualifications(filter): Task<List<QualificationDto>>
+}
+
+' Controllers
+class StaffController {
+    - _staffService: StaffService
+    __
+    + StaffController(staffService)
+    + GetAll(): Task<ActionResult<List<StaffDto>>>
+    + Create(staffDto): Task<ActionResult<StaffDto>>
+    + Filter(filter): Task<ActionResult<List<StaffDto>>>
+    + Deactivate(mechanographicNumber): Task<ActionResult<StaffDto>>
+}
+
+class QualificationController {
+    - _qualificationService: QualificationService
+    __
+    + QualificationController(qualificationService)
+    + GetAll(): Task<ActionResult<List<QualificationDto>>>
+    + GetById(id): Task<ActionResult<QualificationDto>>
+    + Create(qualDto): Task<ActionResult<QualificationDto>>
+    + Update(id, qualDto): Task<ActionResult<QualificationDto>>
+    + Filter(filter): Task<ActionResult<List<QualificationDto>>>
+}
+
+' Repositories
+class StaffRepository {
+    - _context: ApiContext
+    __
+    + StaffRepository(context)
+    + GetStaffsAsync(): Task<List<Staff>>
+    + GetStaffByMecNumberAsync(mecNumber): Task<Staff>
+    + GetStaffByNameAsync(name): Task<Staff>
+    + GetStaffByStatusAsync(status): Task<Staff>
+    + FilterStaffsAsync(filter): Task<List<Staff>>
+    + Add(staff): Task<Staff>
+    + Update(staff): Task<Staff>
+}
+
+class QualificationRepository {
+    - _context: ApiContext
+    __
+    + QualificationRepository(context)
+    + GetQualificationsAsync(): Task<List<Qualification>>
+    + GetQualificationByNameAsync(name): Task<Qualification>
+    + GetQualificationByIdAsync(id): Task<Qualification>
+    + FilterQualificationsAsync(filter): Task<List<Qualification>>
+    + Add(qualification): Task<Qualification>
+    + Update(qualification): Task<Qualification>
+}
+
+' Relationships
+Staff ||--|| StaffStatus : has
+Staff ||--o{ Qualification : "has many"
+
+StaffRepository --> Staff : manages
+QualificationRepository --> Qualification : manages
+
+StaffService --> StaffRepository : uses
+StaffService --> QualificationRepository : uses
+QualificationService --> QualificationRepository : uses
+
+StaffController --> StaffService : uses
+QualificationController --> QualificationService : uses
+
+StaffService --> Staff : creates/updates
+StaffService --> StaffDto : returns
+QualificationService --> Qualification : creates/updates
+QualificationService --> QualificationDto : returns
+
+Staff ..> StaffDto : converts to
+Qualification ..> QualificationDto : converts to
+
+note right of Staff : "Main entity representing\nport staff members with\nqualifications and availability"
+
+note right of Qualification : "Represents skills/certifications\nrequired for staff"
 
 @enduml

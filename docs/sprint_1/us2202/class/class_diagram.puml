@@ -1,0 +1,147 @@
+@startuml Vessel_Class_Diagram
+!theme plain
+skinparam classAttributeIconSize 0
+
+' Entity Classes
+class Vessel {
+    - Id: Guid
+    - Name: Designation
+    - ImoIdentifier: ImoNumber
+    - Type: VesselType
+    - Owner: ShippingAgentOrganization
+    - PhysicalCharacteristics: PhysicalCharacteristics
+    __
+    + Vessel(id, name, imoNumber, type, owner, physicalCharacteristics)
+    + ToDTO(): VesselDto
+    + UpdateName(name): void
+    + UpdateImoNumber(imoNumber): void
+    + UpdateVesselType(type): void
+    + UpdateOwner(owner): void
+    + UpdatePhysicalCharacteristics(physicalCharacteristics): void
+}
+
+class VesselType {
+    - Id: Guid
+    - Name: Designation
+    - Description: Designation
+    - MaxNumberOfRows: uint
+    - MaxNumberOfBays: uint
+    - MaxNumberOfTiers: uint
+    - PhysicalCharacteristics: PhysicalCharacteristics
+    - Docks: ICollection<Dock>
+    - Vessels: ICollection<Vessel>
+    __
+    + VesselType(id, name, description, maxRows, maxBays, maxTiers, physicalCharacteristics)
+    + ToDTO(): VesselTypeDto
+    + UpdateName(name): void
+    + UpdateDescription(description): void
+    + UpdateMaxNumberOfRows(maxRows): void
+    + UpdateMaxNumberOfBays(maxBays): void
+    + UpdateMaxNumberOfTiers(maxTiers): void
+    + UpdatePhysicalCharacteristics(physicalCharacteristics): void
+}
+
+' DTOs
+class VesselDto {
+    + Name: string
+    + ImoNumber: string
+    + Type: VesselTypeDto
+    + Owner: ShippingAgentOrganizationDto
+    + PhysicalCharacteristics: PhysicalCharacteristicsDto
+}
+
+class VesselTypeDto {
+    + Name: string
+    + Description: string
+    + MaxNumberOfRows: uint
+    + MaxNumberOfBays: uint
+    + MaxNumberOfTiers: uint
+    + PhysicalCharacteristics: PhysicalCharacteristicsDto
+}
+
+' Controllers
+class VesselController {
+    - _vesselService: VesselService
+    - _logger: ILogger<VesselController>
+    __
+    + VesselController(vesselService, logger)
+    + GetAll(): Task<ActionResult<IEnumerable<VesselDto>>>
+    + Create(vesselDto): Task<ActionResult<VesselDto>>
+    + Filter(filter): Task<ActionResult<Page<VesselDto>>>
+    + Update(imo, vesselDto): Task<ActionResult<VesselDto>>
+}
+
+class VesselTypeController {
+    - _vesselTypeService: VesselTypeService
+    - _logger: ILogger<VesselTypeController>
+    __
+    + VesselTypeController(vesselTypeService, logger)
+    + GetAll(): Task<ActionResult<IEnumerable<VesselTypeDto>>>
+    + Filter(filter): Task<ActionResult<Page<VesselTypeDto>>>
+    + Create(vesselTypeDto): Task<ActionResult<VesselTypeDto>>
+    + Update(name, vesselTypeDto): Task<IActionResult>
+}
+
+' Services
+class VesselService {
+    - _vesselRepository: IVesselRepository
+    - _vesselTypeRepository: IVesselTypeRepository
+    - _shippingAgentOrgRepository: IShippingAgentOrgRepository
+    __
+    + VesselService(vesselRepository, vesselTypeRepository, shippingAgentOrgRepository)
+    + GetVessels(): Task<IEnumerable<VesselDto>>
+    + Add(vesselDto): Task<VesselDto?>
+    + Update(imo, vesselDto): Task<VesselDto?>
+    + FilterVessels(filter): Task<Page<VesselDto>>
+}
+
+class VesselTypeService {
+    - _vesselTypeRepository: IVesselTypeRepository
+    __
+    + VesselTypeService(vesselTypeRepository)
+    + GetVesselTypes(): Task<IEnumerable<VesselTypeDto>>
+    + FilterVesselTypes(filter): Task<Page<VesselTypeDto>>
+    + Add(vesselTypeDto): Task<VesselTypeDto?>
+    + Update(name, vesselTypeDto): Task<VesselTypeDto?>
+}
+
+' Repository Interfaces
+interface IVesselRepository {
+    + GetVesselsAsync(): Task<IEnumerable<Vessel>>
+    + GetVesselByIMOAsync(imo: string): Task<Vessel>
+    + Add(vessel: Vessel): Task<Vessel>
+    + Update(vessel: Vessel): Task<Vessel>
+    + FilterVesselsAsync(filter: VesselFilter): Task<Page<Vessel>>
+}
+
+interface IVesselTypeRepository {
+    + GetVesselTypesAsync(): Task<IEnumerable<VesselType>>
+    + GetVesselTypeByNameAsync(name: string): Task<VesselType>
+    + Add(vesselType: VesselType): Task<VesselType>
+    + Update(vesselType: VesselType): Task<bool>
+    + FilterVesselTypesAsync(filter: VesselTypeFilter): Task<Page<VesselType>>
+}
+
+interface IShippingAgentOrgRepository {
+    + GetByName(name: string): ShippingAgentOrganization
+}
+
+' Relationships
+Vessel o-- "1" VesselType : "Type"
+Vessel o-- "0..1" ShippingAgentOrganization : "Owner"
+Vessel o-- "1" PhysicalCharacteristics : "PhysicalCharacteristics"
+VesselType o-- "*" Vessel : "Vessels"
+VesselType o-- "1" PhysicalCharacteristics : "PhysicalCharacteristics"
+Vessel ..> VesselDto : "ToDTO"
+VesselType ..> VesselTypeDto : "ToDTO"
+VesselTypeController --> VesselTypeService : uses
+VesselController --> VesselService : uses
+VesselService --> IVesselRepository : uses
+VesselService --> IVesselTypeRepository : uses
+VesselService --> IShippingAgentOrgRepository : uses
+VesselTypeService --> IVesselTypeRepository : uses
+IVesselRepository --> Vessel : manages
+IVesselTypeRepository --> VesselType : manages
+IShippingAgentOrgRepository --> ShippingAgentOrganization : manages
+
+@enduml

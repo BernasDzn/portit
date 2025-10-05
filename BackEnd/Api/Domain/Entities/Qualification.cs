@@ -10,6 +10,7 @@ public class Qualification : IDTOAble<QualificationDto>
 	public Guid Id { get; private set; }
 	public Code NameCode { get; private set; }
 	public Designation QualificationName { get; private set; }
+	public virtual ICollection<Staff> Staffs { get; private set; }
 
 	//EF Core
 	protected Qualification() { }

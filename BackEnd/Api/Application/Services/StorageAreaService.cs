@@ -48,7 +48,7 @@ public class StorageAreaService
             createStorageAreaDto.Type,
             createStorageAreaDto.Capacity,
             createStorageAreaDto.CurrentOccupancy,
-            dockRelations.Count > 0 ? dockRelations : null
+            dockRelations
         );
 
         await _storageAreaRepository.Add(storageArea);

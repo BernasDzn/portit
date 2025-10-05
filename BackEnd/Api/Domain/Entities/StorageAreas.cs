@@ -66,7 +66,7 @@ public class StorageArea : IDTOAble<StorageAreaDto>
 
     protected StorageArea() { } // EF Core
 
-    public StorageArea(Guid id, Code nameCode, Designation location, StorageAreaType areaType, uint capacity, uint currentOccupancy, HashSet<DockRelation>? dockServices = null)
+    public StorageArea(Guid id, Code nameCode, Designation location, StorageAreaType areaType, uint capacity, uint currentOccupancy, HashSet<DockRelation> dockServices)
     {
         Id = id;
         NameCode = nameCode;
@@ -79,7 +79,6 @@ public class StorageArea : IDTOAble<StorageAreaDto>
             throw new ArgumentException("A warehouse must serve all docks it is related to.");
 
         DockServices = dockServices;
-
     }
 
     public bool CanServeDock(Dock dock)

@@ -7,7 +7,7 @@ using Api.Infrastructure.Utilities;
 
 
 [Owned]
-public class OperationalWindow : IDTOAble<OperationalWindowDto>
+public class OperationalWindow
 {
 	public static OperationalWindow FullWeek() => new OperationalWindow
 	{
@@ -56,16 +56,5 @@ public class OperationalWindow : IDTOAble<OperationalWindowDto>
 	}
 
 	public override string ToString() => "Operation Window: " + StartWeekDay + " to " + EndWeekDay + ", between " + DayStartTime + " and " + DayEndTime + ".";
-
-	public OperationalWindowDto ToDTO()
-	{
-		return new OperationalWindowDto
-		{
-			StartWeekDay = StartWeekDay,
-			EndWeekDay = EndWeekDay,
-			DayStartTime = DayStartTime,
-			DayEndTime = DayEndTime
-		};
-	}
 
 }

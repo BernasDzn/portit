@@ -1,3 +1,5 @@
+using Api.Domain.ValueObjects;
+
 namespace Api.Application.DataTransfer;
 
 public class StaffDto
@@ -7,7 +9,7 @@ public class StaffDto
 	public string Email { get; set; }
 	public string PhoneNumber { get; set; }
 	public string Status { get; set; }
-	public OperationalWindowDto OperationalWindow { get; set; }
+	public OperationalWindow OperationalWindow { get; set; }
 	public ICollection<QualificationDto> Qualifications { get; set; }
 
 }
