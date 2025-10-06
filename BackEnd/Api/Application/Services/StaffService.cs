@@ -66,6 +66,44 @@ public class StaffService
 		return addedStaffDto;
 	}
 
+	public async Task<StaffDto?> Update(string mecanographicNumber, StaffDto staffDto)
+	{
+		Staff? staff = await _staffRepository.GetStaffByMecNumberAsync(mecanographicNumber);
+		if (staff == null)
+			throw new EntityNotFoundException("Staff not found.");
+
+		HashSet<Qualification> qualifications = new HashSet<Qualification>();
+		if (staffDto.Qualifications != null)
+		{
+			foreach (var qualification in staffDto.Qualifications)
+			{
+				var qual = await _qualificationRepository.GetQualificationByIdAsync(qualification.IdCode);
+				if (qual == null)
+					throw new EntityNotFoundException($"Qualification with id {qualification.IdCode} not found.");
+				qualifications.Add(qual);
+			}
+		}
+
+		OperationalWindow newOperationalWindow = new OperationalWindow
+		{
+			StartWeekDay = staffDto.OperationalWindow.StartWeekDay,
+			EndWeekDay = staffDto.OperationalWindow.EndWeekDay,
+			DayStartTime = staffDto.OperationalWindow.DayStartTime,
+			DayEndTime = staffDto.OperationalWindow.DayEndTime
+		};
+
+		staff.Update(
+			staffDto.Name,
+			staffDto.Email,
+			staffDto.PhoneNumber,
+			staffDto.Status,
+			newOperationalWindow,
+			qualifications
+		);
+
+		return (await _staffRepository.Update(staff)).ToDTO();
+	}
+
 	public async Task<Page<StaffDto>> FilterStaffs(StaffFilter staffFilter)
 	{
 		Page<Staff> page = await _staffRepository.FilterStaffsAsync(staffFilter);

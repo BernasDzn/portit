@@ -43,7 +43,7 @@ public class StaffController : ControllerBase
 		}
 	}
 
-	[HttpPut("{mecanographicNumber}", Name = "DeactivateStaff")]
+	[HttpDelete("{mecanographicNumber}", Name = "DeactivateStaff")]
 	public async Task<ActionResult> Deactivate(string mecanographicNumber)
 	{
 		try
@@ -52,6 +52,23 @@ public class StaffController : ControllerBase
 			if (deactivatedStaff == null)
 				return BadRequest("Could not deactivate staff");
 			return Ok(deactivatedStaff); 
+		}
+		catch (Exception e)
+		{
+			return BadRequest(e.Message);
+		}
+	}
+
+	[HttpPut("{mecanographicNumber}", Name = "UpdateStaff")]
+	public async Task<ActionResult<StaffDto>> Update(string mecanographicNumber, StaffDto staffDto)
+	{
+		try
+		{
+			var updatedStaff = await _staffService.Update(mecanographicNumber, staffDto);
+			if (updatedStaff == null)
+				return BadRequest("Could not update staff");
+
+			return Ok(updatedStaff);
 		}
 		catch (Exception e)
 		{

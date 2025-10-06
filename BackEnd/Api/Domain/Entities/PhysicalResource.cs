@@ -36,8 +36,12 @@ public class PhysicalResource : IDTOAble<PhysicalResourceDto>
         Qualifications = qualifications;
         OperationalWindow = operationalWindow;
     }
-    
-    public void Deactivate() { Active = false; }
+
+    public void Deactivate()
+    {
+        Active = false;
+        Status = ResourceStatus.OutOfService;
+    }
 
     public void UpdateDescription(Designation description) { Description = description; }
     public void UpdateStatus(ResourceStatus status) { Status = status; }
