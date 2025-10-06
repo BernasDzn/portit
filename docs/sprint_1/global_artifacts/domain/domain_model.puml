@@ -344,7 +344,7 @@ rectangle "Berthing information" {
 	class "Vessel Visit\nNotification\n**Notification Decision**" as notif_dec <<Entity>>
 	{
 		+ status
-		+ timestamp [?]
+		+ timestamp
 		+ reason [?]
 		+ assignedDock [?]
 		+ officerID [?]
