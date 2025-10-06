@@ -50,13 +50,10 @@ public class StaffService
 			new Designation { Value = staffDto.Name },
 			new Email { Value = staffDto.Email },
 			new PhoneNumber { Value = staffDto.PhoneNumber },
-			new OperationalWindow
-			{
-				StartWeekDay = staffDto.OperationalWindow.StartWeekDay,
-				EndWeekDay = staffDto.OperationalWindow.EndWeekDay,
-				DayStartTime = staffDto.OperationalWindow.DayStartTime,
-				DayEndTime = staffDto.OperationalWindow.DayEndTime
-			},
+			new OperationalWindow(
+                new Guid(),
+                staffDto.OperationalWindow.Shifts
+            ),
 			qualifications
 		);
 		await _staffRepository.Add(staff);
@@ -64,6 +61,39 @@ public class StaffService
 		StaffDto addedStaffDto = addedStaff.ToDTO();
 
 		return addedStaffDto;
+	}
+
+	public async Task<StaffDto?> Update(string mecanographicNumber, StaffDto staffDto)
+	{
+		Staff? staff = await _staffRepository.GetStaffByMecNumberAsync(mecanographicNumber);
+		if (staff == null)
+			throw new EntityNotFoundException("Staff not found.");
+
+		HashSet<Qualification> qualifications = new HashSet<Qualification>();
+		if (staffDto.Qualifications != null)
+		{
+			foreach (var qualification in staffDto.Qualifications)
+			{
+				var qual = await _qualificationRepository.GetQualificationByIdAsync(qualification.IdCode);
+				if (qual == null)
+					throw new EntityNotFoundException($"Qualification with id {qualification.IdCode} not found.");
+				qualifications.Add(qual);
+			}
+		}
+
+		staff.Update(
+			staffDto.Name,
+			staffDto.Email,
+			staffDto.PhoneNumber,
+			staffDto.Status,
+			new OperationalWindow(
+                new Guid(),
+                staffDto.OperationalWindow.Shifts
+            ),
+			qualifications
+		);
+
+		return (await _staffRepository.Update(staff)).ToDTO();
 	}
 
 	public async Task<Page<StaffDto>> FilterStaffs(StaffFilter staffFilter)

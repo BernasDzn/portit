@@ -221,13 +221,7 @@ public static class Bootstrap
             ResourceStatus.Available,
             TimeSpan.FromMinutes(20),
             new HashSet<Qualification> { ycOp },
-            new OperationalWindow
-            {
-                StartWeekDay = DayOfWeek.Monday,
-                EndWeekDay = DayOfWeek.Saturday,
-                DayStartTime = new TimeOnly(6, 0),
-                DayEndTime = new TimeOnly(22, 0)
-            },
+            OperationalWindow.Weekdays(new TimeOnly(8, 0), new TimeOnly(18, 0)),
             20,
             context.StorageAreas.First(sa => sa.AreaType == StorageAreaType.Yard),
             40
@@ -253,13 +247,7 @@ public static class Bootstrap
             ResourceStatus.Available,
             TimeSpan.FromMinutes(15),
             new HashSet<Qualification> { trkDr },
-            new OperationalWindow
-            {
-                StartWeekDay = DayOfWeek.Monday,
-                EndWeekDay = DayOfWeek.Friday,
-                DayStartTime = new TimeOnly(7, 0),
-                DayEndTime = new TimeOnly(19, 0)
-            },
+            OperationalWindow.Weekdays(new TimeOnly(6, 0), new TimeOnly(22, 0)),
             30,
             2,
             80
@@ -291,36 +279,12 @@ public static class Bootstrap
         var qual1 = context.Qualifications.First();
         var qual2 = context.Qualifications.Skip(1).First();
 
-        OperationalWindow opWindow = new OperationalWindow
-        {
-            StartWeekDay = DayOfWeek.Monday,
-            EndWeekDay = DayOfWeek.Friday,
-            DayStartTime = new TimeOnly(8, 0),
-            DayEndTime = new TimeOnly(16, 0)
-        };
-
-        OperationalWindow opWindow2 = new OperationalWindow
-        {
-            StartWeekDay = DayOfWeek.Monday,
-            EndWeekDay = DayOfWeek.Saturday,
-            DayStartTime = new TimeOnly(7, 0),
-            DayEndTime = new TimeOnly(19, 0)
-        };
-
-        OperationalWindow opWindow3 = new OperationalWindow
-        {
-            StartWeekDay = DayOfWeek.Wednesday,
-            EndWeekDay = DayOfWeek.Sunday,
-            DayStartTime = new TimeOnly(10, 0),
-            DayEndTime = new TimeOnly(18, 0)
-        };
-
         Staff staff1 = new Staff(
             new StaffMechanograficNumber { Value = "OCEANPMEC001" },
             new Designation { Value = "João Pedro" },
             new Email { Value = "joao.pedro@oceanicport.com" },
             new PhoneNumber { Value = "911222333" },
-            opWindow,
+            OperationalWindow.Weekdays(new TimeOnly(8, 0), new TimeOnly(17, 0)),
             new List<Qualification> { qual1, qual2 }
         );
 
@@ -329,7 +293,7 @@ public static class Bootstrap
             new Designation { Value = "Maria Silva" },
             new Email { Value = "maria.silva@oceanicport.com" },
             new PhoneNumber { Value = "911222444" },
-            opWindow3,
+            OperationalWindow.Weekdays(new TimeOnly(8, 0), new TimeOnly(17, 0)),
             new List<Qualification> { qual1, qual2 }
         );
 
@@ -338,7 +302,7 @@ public static class Bootstrap
             new Designation { Value = "Carlos Santos" },
             new Email { Value = "carlos.santos@oceanicport.com" },
             new PhoneNumber { Value = "911222555" },
-            opWindow2,
+            OperationalWindow.Weekdays(new TimeOnly(10, 0), new TimeOnly(18, 0)),
             new List<Qualification> { qual1 }
         );
 

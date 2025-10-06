@@ -10,7 +10,7 @@ public class PhysicalResourceDto
     public required ResourceStatus Status { get; set; }
     public required int SetupTimeInMinutes { get; set; }
     public required List<QualificationDto> Qualifications { get; set; }
-    public required OperationalWindow OperationalWindow { get; set; }
+    public required OperationalWindowDto OperationalWindow { get; set; }
 }
 
 public class STSCraneDto : PhysicalResourceDto

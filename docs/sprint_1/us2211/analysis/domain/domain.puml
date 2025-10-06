@@ -31,8 +31,8 @@ rectangle "Staff" #Lavender {
 
 	class "Staff\n**Status**" as staff_status <<Enum>>
 	{
-		+ ACTIVE
-		+ INACTIVE
+		+ AVAILABLE
+		+ UNAVAILABLE
 		+ TEMPORARILY_REASSIGNED
 	}
 
