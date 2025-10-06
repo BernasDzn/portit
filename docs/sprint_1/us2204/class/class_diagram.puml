@@ -1,0 +1,150 @@
+@startuml StorageArea_Class_Diagram
+
+!theme plain
+skinparam classAttributeIconSize 0
+
+' Entity Classes
+
+class StorageArea {
+    - Id: Guid
+    - NameCode: Code
+    - Location: Designation
+    - AreaType: StorageAreaType
+    - Capacity: uint
+    - CurrentOccupancy: uint
+    - DockServices: ICollection<DockRelation>
+    __
+    + StorageArea(id, nameCode, location, areaType, capacity, currentOccupancy, dockServices)
+    + ToDTO(): StorageAreaDto
+    + UpdateNameCode(newCode): void
+    + UpdateLocation(newLocation): void
+    + UpdateCapacity(newCapacity): void
+    + UpdateOccupancy(newOccupancy): void
+    + UpdateAreaType(newType): void
+    + UpdateDockServices(newDockServices): void
+    + CanServeDock(dock): bool
+}
+
+class DockRelation {
+    - ServingDock: Dock
+    - Distance: uint?
+    - IsServingDock: bool
+    __
+    + DockRelation(servingDock, distance, isServingDock)
+    + ToDTO(): DockRelationDto
+}
+
+enum StorageAreaType {
+    Yard
+    Warehouse
+}
+
+class Dock {
+    - Id: Guid
+    - Name: Designation
+    - Location: Designation
+    - PhysicalCharacteristics: PhysicalCharacteristics
+    - SupportedVesselTypes: ICollection<VesselType>
+    __
+    + ToDTO(): DockDto
+}
+
+class Code {
+    - Value: string
+    __
+    + Code()
+}
+
+class Designation {
+    - Value: string
+    __
+    + Designation()
+}
+
+' DTOs
+
+class StorageAreaDto {
+    + NameCode: string
+    + Location: string
+    + Type: StorageAreaType
+    + Capacity: uint
+    + CurrentOccupancy: uint
+    + DockServices: HashSet<DockRelationDto>
+}
+
+class DockRelationDto {
+    + Dock: DockDto
+    + Distance: uint?
+    + IsServingDock: bool
+}
+
+class DockDto {
+    + Name: string
+    + Location: string
+    + PhysicalCharacteristics: PhysicalCharacteristicsDto
+    + SupportedVesselTypes: List<VesselTypeDto>
+}
+
+' Controllers
+
+class StorageAreaController {
+    - _storageAreaService: StorageAreaService
+    __
+    + StorageAreaController(service)
+    + GetAll(): Task<ActionResult<IEnumerable<StorageAreaDto>>>
+    + Get(id): Task<ActionResult<StorageAreaDto>>
+    + Create(createStorageAreaDto): Task<ActionResult<StorageAreaDto>>
+    + Update(id, updateStorageAreaDto): Task<ActionResult<StorageAreaDto>>
+}
+
+' Services
+
+class StorageAreaService {
+    - _storageAreaRepository: IStorageAreaRepository
+    - _dockRepository: IDockRepository
+    __
+    + StorageAreaService(storageAreaRepository, dockRepository)
+    + GetStorageAreas(): Task<IEnumerable<StorageAreaDto>>
+    + GetStorageAreaByCode(name): Task<StorageAreaDto?>
+    + CreateStorageArea(createStorageAreaDto): Task<StorageAreaDto>
+    + UpdateStorageArea(id, updateStorageAreaDto): Task<StorageAreaDto>
+    - ConvertToDockRelations(dockRelationDtos): HashSet<DockRelation>
+}
+
+' Repository Interfaces
+
+interface IStorageAreaRepository {
+    + GetStorageAreasAsync(): Task<IEnumerable<StorageArea>>
+    + GetStorageAreaByCodeAsync(code): Task<StorageArea?>
+    + Add(storageArea): Task<StorageArea>
+    + Update(storageArea): Task<StorageArea>
+}
+
+interface IDockRepository {
+    + GetDockByNameAsync(name): Task<Dock>
+}
+
+' Relationships
+
+StorageArea o-- "1" Code : "NameCode"
+StorageArea o-- "1" Designation : "Location"
+StorageArea o-- "1" StorageAreaType : "AreaType"
+StorageArea o-- "*" DockRelation : "DockServices"
+StorageArea ..> StorageAreaDto : "ToDTO"
+
+DockRelation o-- "1" Dock : "ServingDock"
+DockRelation ..> DockRelationDto : "ToDTO"
+
+StorageAreaDto o-- "1" StorageAreaType : "Type"
+StorageAreaDto o-- "*" DockRelationDto : "DockServices"
+
+DockRelationDto o-- "1" DockDto : "Dock"
+
+StorageAreaController --> StorageAreaService : uses
+StorageAreaService --> IStorageAreaRepository : uses
+StorageAreaService --> IDockRepository : uses
+
+IStorageAreaRepository --> StorageArea : manages
+IDockRepository --> Dock : manages
+
+@enduml
