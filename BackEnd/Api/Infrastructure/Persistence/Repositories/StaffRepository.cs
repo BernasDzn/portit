@@ -21,7 +21,8 @@ public class StaffRepository : GenericRepository<Staff>, IStaffRepository
 	{
 		try
 		{
-			IEnumerable<Staff> staffs = await _context.Staffs.ToListAsync();
+			IEnumerable<Staff> staffs = await _context.Staffs
+				.Where(s => s.isActive).ToListAsync();
 			return staffs;
 		}
 		catch (Exception ex)
@@ -35,7 +36,7 @@ public class StaffRepository : GenericRepository<Staff>, IStaffRepository
 		try
 		{
 			Staff? staff = await _context.Staffs
-				.FirstOrDefaultAsync(s => s.MechanograficNumber.Value.Equals(mecNumber));
+				.FirstOrDefaultAsync(s => s.MechanograficNumber.Value.Equals(mecNumber) && s.isActive);
 			return staff;
 		}
 		catch (Exception ex)
@@ -49,7 +50,7 @@ public class StaffRepository : GenericRepository<Staff>, IStaffRepository
 		try
 		{
 			Staff? staff = await _context.Staffs
-				.FirstOrDefaultAsync(s => s.Name.Equals(name));
+				.FirstOrDefaultAsync(s => s.Name.Equals(name) && s.isActive);
 			return staff;
 		}
 		catch (Exception ex)
@@ -63,7 +64,7 @@ public class StaffRepository : GenericRepository<Staff>, IStaffRepository
 		try
 		{
 			Staff? staff = await _context.Staffs
-				.FirstOrDefaultAsync(s => s.Status.Equals(status));
+				.FirstOrDefaultAsync(s => s.Status.Equals(status) && s.isActive);
 			return staff;
 		}
 		catch (Exception ex)
@@ -107,6 +108,7 @@ public class StaffRepository : GenericRepository<Staff>, IStaffRepository
 			if (filter.IsEmpty()) throw new ArgumentException("Filter is empty");
 			
 			IQueryable<Staff> query = _context.Staffs.AsQueryable();
+			query = query.Where(s => s.isActive);
 
 			if (!string.IsNullOrEmpty(filter.MechanograficNumber))
 			{

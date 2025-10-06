@@ -20,9 +20,9 @@ public class PhysicalResource : IDTOAble<PhysicalResourceDto>
     public Designation Description { get; private set; }
     public ResourceStatus Status { get; private set; }
     public TimeSpan SetupTime { get; private set; } // In minutes
-    public OperationalWindow OperationalWindow { get; private set; }
-    public bool Active { get; private set; } = true; // Soft delete
+    public virtual OperationalWindow OperationalWindow { get; private set; }
     public virtual ICollection<Qualification> Qualifications { get; private set; } // Needed qualifications to operate the resource
+    public bool Active { get; private set; } = true; // Soft delete
 
     protected PhysicalResource() { } // EF Core
 
@@ -58,7 +58,7 @@ public class PhysicalResource : IDTOAble<PhysicalResourceDto>
             Status = this.Status,
             SetupTimeInMinutes = (int)this.SetupTime.TotalMinutes,
             Qualifications = this.Qualifications.Select(q => q.ToDTO()).ToList(),
-            OperationalWindow = this.OperationalWindow
+            OperationalWindow = this.OperationalWindow.ToDTO()
         };
     }
 }
@@ -98,7 +98,7 @@ public class STSCrane : PhysicalResource, IDTOAble<STSCraneDto>
             ContainersPerHour = this.ContainersPerHour,
             LiftingCapacity = this.LiftingCapacity,
             ServingDock = this.ServingDock.ToDTO(),
-            OperationalWindow = this.OperationalWindow
+            OperationalWindow = this.OperationalWindow.ToDTO()
         };
     }
 }
@@ -149,7 +149,7 @@ public class YardCrane : PhysicalResource, IDTOAble<YardCraneDto>
             ContainersPerHour = this.ContainersPerHour,
             LiftingCapacity = this.LiftingCapacity,
             YardSection = this.YardSection.ToDTO(),
-            OperationalWindow = this.OperationalWindow
+            OperationalWindow = this.OperationalWindow.ToDTO()
         };
     }
 }
@@ -190,7 +190,7 @@ public class Truck : PhysicalResource, IDTOAble<TruckDto>
             ContainersPerTrip = this.ContainersPerTrip,
             MaxLoadCapacity = this.MaxLoadCapacity,
             AverageSpeed = this.AverageSpeed,
-            OperationalWindow = this.OperationalWindow
+            OperationalWindow = this.OperationalWindow.ToDTO()
         };
     }
 }

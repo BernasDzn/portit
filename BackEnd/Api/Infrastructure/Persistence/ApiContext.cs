@@ -2,6 +2,7 @@ namespace Api.Infrastructure.Persistence;
 
 using Microsoft.EntityFrameworkCore;
 using Api.Domain.Entities;
+using Api.Domain.ValueObjects;
 
 public class ApiContext : DbContext
 {
@@ -28,5 +29,11 @@ public class ApiContext : DbContext
             .HasValue<STSCrane>("STSCrane")
             .HasValue<YardCrane>("YardCrane")
             .HasValue<Truck>("Truck");
+
+        // Operation window shift list config
+        // Because EF Core does not support collections of owned types directly
+        modelBuilder.Entity<OperationalWindow>(ow => {
+            ow.OwnsMany(o => o.Shifts, sb => { });
+        });
     }
 }

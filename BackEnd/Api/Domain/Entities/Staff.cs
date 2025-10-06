@@ -19,7 +19,7 @@ public class Staff : IDTOAble<StaffDto>
 
 	public StaffStatus Status { get; private set; }
 
-	public OperationalWindow OperationalWindow { get; private set; }
+	public virtual OperationalWindow OperationalWindow { get; private set; }
 
 	public virtual ICollection<Qualification> Qualifications { get; private set; }
 
@@ -61,7 +61,7 @@ public class Staff : IDTOAble<StaffDto>
 		UpdateOperationalWindow(newOperationalWindow);
 		UpdateQualifications(newQualifications);
 	}
-	
+
 	public void UpdateName(string name)
 	{
 		Name = new Designation { Value = name };
@@ -101,6 +101,12 @@ public class Staff : IDTOAble<StaffDto>
 		throw new ArgumentException("Trying to update to invalid Status.");
 	}
 
+	public void Deactivate()
+	{
+		isActive = false;
+		Status = StaffStatus.Unavailable;
+	}
+
 	public StaffDto ToDTO()
 	{
 		return new StaffDto
@@ -110,23 +116,12 @@ public class Staff : IDTOAble<StaffDto>
 			Email = Email.Value,
 			PhoneNumber = PhoneNumber.Value,
 			Status = (int)Status,
-			OperationalWindow = OperationalWindow,
+			OperationalWindow = OperationalWindow.ToDTO(),
 			Qualifications = Qualifications.Select(q => q.ToDTO()).ToList()
 		};
-
-	}
-
-	public override string ToString()
-	{
-		return $"Staff [MechanograficNumber={MechanograficNumber.Value}, Name={Name.Value}, Email={Email.Value}, PhoneNumber={PhoneNumber.Value}, Status={Status}, OperationalWindow=({OperationalWindow}), Qualifications=[{string.Join(", ", Qualifications)}]]";
-	}
-
-	public void Deactivate()
-	{
-		isActive = false;
-		Status = StaffStatus.Unavailable;
-	}
-
+	}	
+	public override string ToString() =>
+		$"Staff [MechanograficNumber={MechanograficNumber.Value}, Name={Name.Value}, Email={Email.Value}, PhoneNumber={PhoneNumber.Value}, Status={Status}, OperationalWindow=({OperationalWindow}), Qualifications=[{string.Join(", ", Qualifications)}]]";
 }
 
 public enum StaffStatus

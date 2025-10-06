@@ -50,13 +50,10 @@ public class StaffService
 			new Designation { Value = staffDto.Name },
 			new Email { Value = staffDto.Email },
 			new PhoneNumber { Value = staffDto.PhoneNumber },
-			new OperationalWindow
-			{
-				StartWeekDay = staffDto.OperationalWindow.StartWeekDay,
-				EndWeekDay = staffDto.OperationalWindow.EndWeekDay,
-				DayStartTime = staffDto.OperationalWindow.DayStartTime,
-				DayEndTime = staffDto.OperationalWindow.DayEndTime
-			},
+			new OperationalWindow(
+                new Guid(),
+                staffDto.OperationalWindow.Shifts
+            ),
 			qualifications
 		);
 		await _staffRepository.Add(staff);
@@ -84,20 +81,15 @@ public class StaffService
 			}
 		}
 
-		OperationalWindow newOperationalWindow = new OperationalWindow
-		{
-			StartWeekDay = staffDto.OperationalWindow.StartWeekDay,
-			EndWeekDay = staffDto.OperationalWindow.EndWeekDay,
-			DayStartTime = staffDto.OperationalWindow.DayStartTime,
-			DayEndTime = staffDto.OperationalWindow.DayEndTime
-		};
-
 		staff.Update(
 			staffDto.Name,
 			staffDto.Email,
 			staffDto.PhoneNumber,
 			staffDto.Status,
-			newOperationalWindow,
+			new OperationalWindow(
+                new Guid(),
+                staffDto.OperationalWindow.Shifts
+            ),
 			qualifications
 		);
 

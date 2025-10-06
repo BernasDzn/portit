@@ -1,6 +1,5 @@
 namespace Api.Application.DataTransfer;
 
-
 public class PhysicalCharacteristicsDto
 {
 	public double Length { get; set; }
