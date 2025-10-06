@@ -6,13 +6,7 @@ using Api.Domain.ValueObjects;
 public class StaffTest
 {
 
-	OperationalWindow validOperationalWindow = new OperationalWindow
-	{
-		StartWeekDay = DayOfWeek.Monday,
-		EndWeekDay = DayOfWeek.Friday,
-		DayStartTime = new TimeOnly(9, 0),
-		DayEndTime = new TimeOnly(17, 0)
-	};
+	OperationalWindow validOperationalWindow = OperationalWindow.FullWeek();
 
 	[Theory]
 	[InlineData("AB@42&")]
