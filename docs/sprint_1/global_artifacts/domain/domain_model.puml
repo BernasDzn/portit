@@ -109,6 +109,11 @@ rectangle "Physical Resources" {
 	{
 	}
 
+	class "Physical\nResources\n**Active**" as phys_res_active <<Value>>
+	{
+		+ isActive
+	}
+
 	class "Physical\nResources\n**ContainersPerTrip**" as phys_res_cpt <<Value>>
 	{
 		+ containersPerTrip
@@ -188,10 +193,16 @@ rectangle "Staff"{
 		+ phoneNumber
 	}
 
+	class "Staff\n**Active**" as staff_active <<Value>>
+	{
+		+ isActive
+	}
+
 	class "Staff\n**Status**" as staff_status <<Enum>>
 	{
-		+ ACTIVE
-		+ INACTIVE
+		+ AVAILABLE
+		+ UNAVAILABLE
+		+ TEMPORARILY_REASSIGNED
 	}
 
 	class "Staff\n**Operational Window**" as staff_op_window
@@ -225,15 +236,6 @@ rectangle "Dock" {
 		+ Draft
 	}
 
-}
-
-class "**Port**\n**Location**" as port_loc <<Entity>>
-{
-	- Location details \nmight include:
-	+ General Location Name
-	+ Latitude and Longitude
-	+ Cardinal Direction
-	+ etc...
 }
 
 rectangle "Storage Area"{
@@ -321,10 +323,10 @@ rectangle "Berthing information" {
 		+ specialRequirements [?]
 	}
 
-	class "Vessel Visit\nNotification\n**Crew**" as crew <<Entity>>
+	class "Vessel Visit\nNotification\n**Crew**" as crew <<Value>>
 	{
-		+ captain [?]
-		+ totalCrewMembers [?]
+		+ captain
+		+ totalCrewMembers
 	}
 
 	class "Vessel Visit\nNotification\n**Cargo Details**" as cargo_details <<Value>>
@@ -416,7 +418,7 @@ rectangle "Berthing information" {
 	}
 
 
-	class "Vessel Visit\nNotification\n**Crewman**" as crewman <<Value>>
+	class "Vessel Visit\nNotification\n**Safety Officer**" as safety_officer <<Value>>
 	{
 		+ citizenID
 		+ name
@@ -457,6 +459,7 @@ staff --> "1" staff_name
 staff --> "1" staff_email
 staff --> "1" staff_phone_number
 staff --> "1" staff_status
+staff --> "1" staff_active
 
 quali --> quali_name
 
@@ -468,15 +471,16 @@ phys_res --> "1" phys_res_desc
 phys_res --> "1" phys_res_op_cap
 phys_res --> "1" phys_res_status
 phys_res --> "1" phys_res_setup_time
+phys_res --> "1" phys_res_active
 
 vessel_visit_notif --> "1" exp_time
 vessel_visit_notif --> "1" spec_rep
-vessel_visit_notif "1..*" --> "1" crew
+vessel_visit_notif --> "1" crew
 vessel_visit_notif --> "1" cargo_details
 vessel_visit_notif -> "0..*" notif_dec
 vessel_visit_notif <-- vessel_berth : "responds to"
 vessel_visit_notif --> vessel
-crew --> "*" crewman : "has a list of"
+crew --> "*" safety_officer : "has a list of"
 vessel_visit_notif "1" --> "0..1" c_manifest_l : "details"
 vessel_visit_notif "1" --> "0..1" c_manifest_u : "details"
 
@@ -495,7 +499,6 @@ c_manifest_l "1" -> "1" cargo_type : "has"
 c_manifest_u "1" -> "1" cargo_type : "has"
 
 storage_area --> "1" storage_area_type
-storage_area "1" --> "1" port_loc
 storage_area "1" --> "*" dock : "serves"
 storage_area --> "1" storage_area_capacity
 storage_area --> "1" storage_area_comp_info
