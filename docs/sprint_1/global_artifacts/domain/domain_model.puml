@@ -69,15 +69,15 @@ rectangle "Vessel Type"{
 		+ Description
 	}
 
-	class "Vessel Type\n**Max Number Of Rows**" as vessel_type_max_nr <<Value>>
+	class "Vessel Type\n**Max Number Of Rows**" as vessel_type_max_rows <<Value>>
 	{
 		+ maxNumberOfRows
 	}
-	class "Vessel Type\n**Max Number Of Bays**" as vessel_type_max_nb <<Value>>
+	class "Vessel Type\n**Max Number Of Bays**" as vessel_type_max_bays <<Value>>
 	{
 		+ maxNumberOfBays
 	}
-	class "Vessel Type\n**Max Number Of Tiers**" as vessel_type_max_nt <<Value>>
+	class "Vessel Type\n**Max Number Of Tiers**" as vessel_type_max_tiers <<Value>>
 	{
 		+ maxNumberOfTiers
 	}
@@ -329,11 +329,9 @@ rectangle "Berthing information" {
 		+ totalCrewMembers
 	}
 
-	class "Vessel Visit\nNotification\n**Cargo Details**" as cargo_details <<Value>>
+	class "Vessel Visit\nNotification\n**Hazardous Cargo**" as cargo_details <<Value>>
 	{
 		+ isCargoHazardous
-		+ loadManifest [?]
-		+ unloadManifest [?]
 	}
 
 	class "Vessel Visit\nNotification\n**Vessel Berth**" as vessel_berth <<Entity>>
@@ -362,25 +360,39 @@ rectangle "Berthing information" {
 		REJECTED
 	}
 
-	class "Vessel Visit\nNotification\n**Load Cargo Manifest**" as c_manifest_l <<Entity>>
+	class "Vessel Visit\nNotification\n**Load Cargo Manifest**" as c_manifest_lcm <<Entity>>
 	{
-		+ ISO
-		+ description
-		+ type
-		+ bay
-		+ row
-		+ tier
 	}
 
-	class "Vessel Visit\nNotification\n**Unload Cargo Manifest**" as c_manifest_u <<Entity>>
+	class "Vessel Visit\nNotification\n**Unload Cargo Manifest**" as c_manifest_udm <<Entity>>
+	{
+
+
+	}
+
+	class "Vessel Visit\nNotification\n**Cargo Load**" as c_manifest_cl <<Value>>
+	{
+		+ origin
+		+ numberOfRow
+		+ numberOfBay
+		+ numberOfTier
+	}
+
+	class "Vessel Visit\nNotification\n**Cargo Unload**" as c_manifest_cu <<Value>>
+	{
+		+ numberOfRow
+		+ numberOfBay
+		+ numberOfTier
+		+ destination
+	}
+
+	class "Vessel Visit\nNotification\n**Cargo Item**" as c_manifest_cargo_item <<Value>>
 	{
 		+ ISO
 		+ description
 		+ type
-		+ bay
-		+ row
-		+ tier
 	}
+
 
 	enum "Vessel Visit\nNotification\n**Cargo Type**" as cargo_type <<Enum>>
 	{
@@ -481,8 +493,8 @@ vessel_visit_notif -> "0..*" notif_dec
 vessel_visit_notif <-- vessel_berth : "responds to"
 vessel_visit_notif --> vessel
 crew --> "*" safety_officer : "has a list of"
-vessel_visit_notif "1" --> "0..1" c_manifest_l : "details"
-vessel_visit_notif "1" --> "0..1" c_manifest_u : "details"
+vessel_visit_notif "1" --> "0..1" c_manifest_lcm : "details"
+vessel_visit_notif "1" --> "0..1" c_manifest_udm : "details"
 
 notif_dec "1" -> "1" notif_status : "has"
 notif_dec "1" -> "0..1" dock : "has"
@@ -495,8 +507,11 @@ SAO --> "1" SAO_tax_number
 
 SAO_rep "1" --> "*" vessel_visit_notif : "submits"
 
-c_manifest_l "1" -> "1" cargo_type : "has"
-c_manifest_u "1" -> "1" cargo_type : "has"
+c_manifest_lcm "1" --> "*" c_manifest_cl
+c_manifest_udm "1" --> "*" c_manifest_cu
+c_manifest_cl "1" --> "1" c_manifest_cargo_item
+c_manifest_cu "1" --> "1" c_manifest_cargo_item
+c_manifest_cargo_item "1" -r-> "1" cargo_type : "has a"
 
 storage_area --> "1" storage_area_type
 storage_area "1" --> "*" dock : "serves"
@@ -514,9 +529,9 @@ vessel --> "1" vessel_physical_char
 
 vessel_type --> "1" vessel_type_name
 vessel_type --> "1" vessel_type_description
-vessel_type --> "1" vessel_type_max_nr
-vessel_type --> "1" vessel_type_max_nb
-vessel_type --> "1" vessel_type_max_nt
+vessel_type --> "1" vessel_type_max_rows
+vessel_type --> "1" vessel_type_max_bays
+vessel_type --> "1" vessel_type_max_tiers
 vessel_type --> "1" vessel_type_physical_char
 
 dock "1" --> "1" dock_loc
