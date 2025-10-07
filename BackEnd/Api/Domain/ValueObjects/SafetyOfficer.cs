@@ -2,8 +2,8 @@ namespace Api.Domain.ValueObjects;
 
 public class SafetyOfficer
 {
-    private int _citizenID;
-    public int CitizenID
+    private string _citizenID;
+    public string CitizenID
     {
         get => _citizenID;
         set

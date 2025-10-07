@@ -13,6 +13,8 @@ public class Representative : IDTOAble<RepresentativeDto>
     public Email EmailAddress { get; private set; }
     public PhoneNumber Phone { get; private set; }
 
+    public virtual ICollection<VesselVisitNotification> VesselVisitNotifications { get; private set; }
+
     // EF Core
     protected Representative() { }
 

@@ -20,6 +20,8 @@ public class ApiContext : DbContext
     public DbSet<StorageArea> StorageAreas { get; set; } = null!;
     public DbSet<Staff> Staffs { get; set; } = null!;
     public DbSet<PhysicalResource> PhysicalResources { get; set; } = null!;
+    public DbSet<VesselVisitNotification> VesselVisitNotifications { get; set; } = null!;
+    public DbSet<NotificationDecision> NotificationDecisions { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -32,8 +34,16 @@ public class ApiContext : DbContext
 
         // Operation window shift list config
         // Because EF Core does not support collections of owned types directly
-        modelBuilder.Entity<OperationalWindow>(ow => {
+        modelBuilder.Entity<OperationalWindow>(ow =>
+        {
             ow.OwnsMany(o => o.Shifts, sb => { });
+        });
+
+        // Crew safety officers list config
+        // Because EF Core does not support collections of owned types directly
+        modelBuilder.Entity<Crew>(c =>
+        {
+            c.OwnsMany(c => c.SafetyOfficers, so => { });
         });
     }
 }

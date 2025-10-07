@@ -22,7 +22,7 @@ public class NotificationDecision : IDTOAble<NotificationDecisionDto>
     public virtual VesselVisitNotification VesselVisitNotification { get; private set; }
 
     protected NotificationDecision() { }
-    public NotificationDecision(NotificationDecisionStatus status, string? reason, DateTime decisionDate, int? officerID, Dock? assignedDock, VesselVisitNotification vesselVisitNotification)
+    public NotificationDecision(NotificationDecisionStatus status, DateTime decisionDate, VesselVisitNotification vesselVisitNotification, int? officerID = null, Dock? assignedDock = null, string? reason = null)
     {
         Id = Guid.NewGuid();
         Status = status;
@@ -37,7 +37,6 @@ public class NotificationDecision : IDTOAble<NotificationDecisionDto>
     {
         return new NotificationDecisionDto
         {
-            Id = Id,
             Status = (int)Status,
             Reason = Reason,
             DecisionDate = DecisionDate,

@@ -1,5 +1,6 @@
 using Api.Application;
 using Api.Application.Services;
+using Api.Domain.Entities;
 using Api.Domain.IRepository;
 using Api.Infrastructure.Persistence;
 using Api.Infrastructure.Persistence.Repositories;
@@ -34,6 +35,10 @@ builder.Services.AddTransient<IPhysicalResourceRepository, PhysicalResourceRepos
 builder.Services.AddTransient<PhysicalResourceService>();
 builder.Services.AddTransient<IStaffRepository, StaffRepository>();
 builder.Services.AddTransient<StaffService>();
+builder.Services.AddTransient<IVesselVisitNotificationRepository, VesselVisitNotificationRepository>();
+builder.Services.AddTransient<VesselVisitNotificationService>();
+builder.Services.AddTransient<INotificationDecisionRepository, NotificationDecisionRepository>();
+builder.Services.AddTransient<NotificationDecisionService>();
 
 var app = builder.Build();
 

@@ -28,6 +28,10 @@ public static class Bootstrap
         BootstrapPhysicalResources(context);
         // Bootstrap Staff
         BootstrapStaff(context);
+        // Bootstrap Vessel Visit Notifications
+        BootstrapVVN(context);
+        // Bootstrap Vessel Visit Notification Decisions
+        BootstrapVVNDecision(context);
     }
 
     private static void BootstrapQualifications(ApiContext context)
@@ -307,6 +311,91 @@ public static class Bootstrap
         );
 
         context.Staffs.AddRange(staff1, staff2, staff3);
+        context.SaveChanges();
+    }
+
+    public static void BootstrapVVN(ApiContext context)
+    {
+
+        if (context.VesselVisitNotifications.Any())
+            return;
+
+        var vessel1 = context.Vessels.First();
+        var vessel2 = context.Vessels.Skip(1).First();
+        var vessel3 = context.Vessels.Skip(2).First();
+
+        VesselVisitNotification vvn1 = new VesselVisitNotification(
+            DateTime.UtcNow.AddDays(1),
+            DateTime.UtcNow.AddDays(5),
+            false,
+            vessel1,
+            context.ShippingAgentOrganizations.First().Representatives.First(),
+            "Requires additional security measures",
+            new Crew("Mario Silva", 5, new HashSet<SafetyOfficer>())
+        );
+
+        VesselVisitNotification vvn2 = new VesselVisitNotification(
+            DateTime.UtcNow.AddDays(7),
+            DateTime.UtcNow.AddDays(10),
+            false,
+            vessel2,
+            context.ShippingAgentOrganizations.First().Representatives.First()
+        );
+
+        HashSet<SafetyOfficer> safetyOfficers = new HashSet<SafetyOfficer>
+        {
+            new SafetyOfficer{CitizenID = "CITIZEN001", Name = "John Doe", Nationality = "American" },
+            new SafetyOfficer{CitizenID = "CITIZEN002", Name = "Jane Smith", Nationality = "British" }
+        };
+
+        Crew crewDetails = new Crew("Ana Costa", 3, safetyOfficers);
+
+        VesselVisitNotification vvn3 = new VesselVisitNotification(
+            DateTime.UtcNow.AddDays(12),
+            DateTime.UtcNow.AddDays(15),
+            true,
+            vessel3,
+            context.ShippingAgentOrganizations.First().Representatives.First(),
+            "Handles hazardous materials",
+            crewDetails
+        );
+
+        context.VesselVisitNotifications.AddRange(vvn1, vvn2, vvn3);
+        context.SaveChanges();
+    }
+
+    public static void BootstrapVVNDecision(ApiContext context)
+    {
+        if (context.NotificationDecisions.Any() || !context.VesselVisitNotifications.Any())
+            return;
+
+        var vvn1 = context.VesselVisitNotifications.First();
+        var vvn2 = context.VesselVisitNotifications.Skip(1).First();
+        var vvn3 = context.VesselVisitNotifications.Skip(2).First();
+
+        NotificationDecision decision1 = new NotificationDecision(
+            NotificationDecisionStatus.In_Progress,
+            DateTime.UtcNow,
+            vvn1);
+
+        NotificationDecision decision2 = new NotificationDecision(
+            NotificationDecisionStatus.Rejected,
+            DateTime.UtcNow,
+            vvn2,
+            null,
+            null,
+            "Vessel does not meet safety requirements."
+        );
+
+        NotificationDecision decision3 = new NotificationDecision(
+            NotificationDecisionStatus.Approved,
+            DateTime.UtcNow,
+            vvn3,
+            null,
+            context.Docks.First()
+        );
+
+        context.NotificationDecisions.AddRange(decision1, decision2, decision3);
         context.SaveChanges();
     }
 

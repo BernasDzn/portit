@@ -1,47 +1,34 @@
-using System.ComponentModel.DataAnnotations.Schema;
-using Microsoft.EntityFrameworkCore;
+using Api.Application.DataTransfer;
+using Api.Infrastructure.Utilities;
 
 namespace Api.Domain.ValueObjects;
 
-[Owned]
-public class Crew
+public class Crew : IDTOAble<CrewDto>
 {
-    private Designation _captain;
-    public string Captain
+    public Guid Id { get; private set; } = Guid.NewGuid();
+    public Designation Captain { get; private set; }
+    public int TotalCrewMembers { get; private set; }
+    public ICollection<SafetyOfficer>? SafetyOfficers { get; private set; }
+
+    protected Crew() { }
+    public Crew(string captain, int totalCrewMembers, HashSet<SafetyOfficer>? safetyOfficers = null)
     {
-        get => _captain.Value;
-        set => _captain = new Designation { Value = value };
+        Captain = new Designation { Value = captain };
+
+        if (totalCrewMembers < 1)
+            throw new ArgumentException("Total crew members must be at least 1.");
+
+        if (safetyOfficers != null && safetyOfficers.Count > totalCrewMembers)
+            throw new ArgumentException("Number of safety officers cannot exceed total crew members.");
+
+        TotalCrewMembers = totalCrewMembers;
+        SafetyOfficers = safetyOfficers;
     }
 
-    private int _totalCrewMembers;
-    public int TotalCrewMembers
+    public CrewDto ToDTO() => new CrewDto
     {
-        get => _totalCrewMembers;
-        set
-        {
-            if (value < 1)
-                throw new ArgumentException("Total crew members must be at least 1");
-
-            _totalCrewMembers = value;
-        }
-    }
-
-    //TODO: EF Core does not support collections in owned types, so we need to research how to handle this manually later
-    [NotMapped]
-    private HashSet<SafetyOfficer>? _safetyOfficers;
-    [NotMapped] 
-    public HashSet<SafetyOfficer>? SafetyOfficers
-    {
-        get => _safetyOfficers;
-        set
-        {
-            if (value != null && value.Count > TotalCrewMembers)
-                throw new ArgumentException("Number of safety officers cannot exceed total crew members");
-
-            _safetyOfficers = value;
-        }
-    }
-    
-
-    public override string ToString() => $"{Captain}, {TotalCrewMembers} crew members, Safety Officers: [{string.Join("; ", SafetyOfficers ?? new HashSet<SafetyOfficer>())}]";
+        Captain = Captain.Value,
+        TotalCrewMembers = TotalCrewMembers,
+        SafetyOfficers = SafetyOfficers?.ToHashSet()
+    };
 }

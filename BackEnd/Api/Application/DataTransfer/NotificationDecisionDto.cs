@@ -4,7 +4,6 @@ namespace Api.Application.DataTransfer;
 
 public class NotificationDecisionDto
 {
-    public Guid Id { get; set; }
     public int Status { get; set; }
     public string? Reason { get; set; }
     public DateTime DecisionDate { get; set; }
