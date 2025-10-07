@@ -7,6 +7,9 @@ using Api.Infrastructure.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+// Logging definitions
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -42,11 +45,14 @@ builder.Services.AddTransient<NotificationDecisionService>();
 
 var app = builder.Build();
 
+app.Logger.LogInformation("Starting application");
+app.Logger.LogInformation("Environment: {EnvironmentName}", app.Environment.EnvironmentName);
+
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<ApiContext>();
-    
+
     Bootstrap.Init(context, nukeDatabase: true);
 }
 
@@ -61,9 +67,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

@@ -14,17 +14,18 @@ public class DockService
 {
     private readonly IDockRepository _dockRepository;
     private readonly IVesselTypeRepository _vesselTypeRepository;
+    private readonly ILogger<DockService> _logger;
 
-    public DockService(IDockRepository dockRepository, IVesselTypeRepository vesselTypeRepository)
+    public DockService(IDockRepository dockRepository, IVesselTypeRepository vesselTypeRepository, ILogger<DockService> logger)
     {
         _dockRepository = dockRepository;
         _vesselTypeRepository = vesselTypeRepository;
+        _logger = logger;
     }
 
     public async Task<IEnumerable<DockDto>> GetDocks()
     {
         IEnumerable<Dock> docks = await _dockRepository.GetDocksAsync();
-
         return docks.Select(d => d.ToDTO()).ToList();
     }
 
@@ -53,6 +54,7 @@ public class DockService
         Dock savedDock = await _dockRepository.Add(dock);
         DockDto savedDockDto = savedDock.ToDTO();
 
+        _logger.LogInformation("Dock {DockId} created.", savedDock.Id);
         return savedDockDto;
     }
 
@@ -69,7 +71,6 @@ public class DockService
 
         dock.UpdateLocation(dockDto.Location);
 
-
         PhysicalCharacteristics newPhysicalCharacteristics = new PhysicalCharacteristics
         {
             Length = dockDto.PhysicalCharacteristics.Length,
@@ -80,14 +81,13 @@ public class DockService
         dock.UpdatePhysicalCharacteristics(newPhysicalCharacteristics);
         dock.UpdateVesselTypes(vesselTypes);
 
-        bool updated = await _dockRepository.Update(dock);
+        Dock? updated = await _dockRepository.Update(dock);
 
-        if (!updated)
+        if (updated == null)
             throw new PersistencyFailedException("Dock update failed.");
 
-        Dock updatedDock = await _dockRepository.GetDockByNameAsync(name);
-
-        return updatedDock.ToDTO();
+        _logger.LogInformation("Dock {DockId} updated.", updated.Id);
+        return updated.ToDTO();
     }
 
     private async Task<HashSet<VesselType>> GetVesselTypesFromDto(List<VesselTypeDto> vesselTypesDtos)

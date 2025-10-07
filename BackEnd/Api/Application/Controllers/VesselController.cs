@@ -40,6 +40,7 @@ public class VesselController : ControllerBase
         }
         catch (System.Exception e)
         {
+            _logger.LogError("Error creating vessel, {Message}", e.Message);
             return BadRequest(e.Message);
         }
     }
@@ -53,8 +54,9 @@ public class VesselController : ControllerBase
 
             return Ok(vesselDtos);
         }
-        catch (System.Exception)
+        catch (System.Exception e)
         {
+            _logger.LogError("Error filtering vessels, {Message}", e.Message);
             return NotFound();
         }
     }
@@ -72,6 +74,7 @@ public class VesselController : ControllerBase
         }
         catch (System.Exception e)
         {
+            _logger.LogError("Error updating vessel, {Message}", e.Message);
             return BadRequest(e.Message);
         }
     }

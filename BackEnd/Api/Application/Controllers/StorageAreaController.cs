@@ -10,10 +10,12 @@ using Api.Application.DataTransfer;
 public class StorageAreaController : ControllerBase
 {
     private readonly StorageAreaService _storageAreaService;
+    private readonly ILogger<StorageAreaController> _logger;
 
-    public StorageAreaController(StorageAreaService service)
+    public StorageAreaController(StorageAreaService service, ILogger<StorageAreaController> logger)
     {
         _storageAreaService = service;
+        _logger = logger;
     }
 
     [HttpGet(Name = "GetAllStorageAreas")]
@@ -32,8 +34,9 @@ public class StorageAreaController : ControllerBase
             var storageAreaDto = await _storageAreaService.GetStorageAreaByCode(id);
             return Ok(storageAreaDto);
         }
-        catch (System.Exception)
+        catch (System.Exception e)
         {
+            _logger.LogError("Error retrieving storage area by id, {Message}", e.Message);
             return NotFound();
         }
     }
@@ -45,13 +48,14 @@ public class StorageAreaController : ControllerBase
         {
             var storageAreaDto = await _storageAreaService.CreateStorageArea(createStorageAreaDto);
             if (storageAreaDto == null)
-                return BadRequest();
+                return BadRequest("Unable to create storage area");
                 
             return CreatedAtAction(nameof(Get), new { id = storageAreaDto.NameCode }, storageAreaDto);
         }
-        catch (System.Exception ex)
+        catch (System.Exception e)
         {
-            return BadRequest(ex.Message);
+            _logger.LogError("Error creating storage area, {Message}", e.Message);
+            return BadRequest(e.Message);
         }
     }
 
@@ -63,9 +67,10 @@ public class StorageAreaController : ControllerBase
             var storageAreaDto = await _storageAreaService.UpdateStorageArea(id, updateStorageAreaDto);
             return Ok(storageAreaDto);
         }
-        catch (System.Exception ex)
+        catch (System.Exception e)
         {
-            return BadRequest(ex.Message);
+            _logger.LogError("Error updating storage area, {Message}", e.Message);
+            return BadRequest(e.Message);
         }
     }
 

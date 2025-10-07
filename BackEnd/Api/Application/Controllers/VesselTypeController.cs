@@ -36,32 +36,48 @@ public class VesselTypeController : ControllerBase
 
 			return Ok(vesselTypesDtos);
 		}
-		catch (System.Exception)
+		catch (System.Exception e)
 		{
+			_logger.LogError("Error filtering vessel types, {Message}", e.Message);
 			return NotFound();
 		}
     }
 	[HttpPost(Name = "CreateVesselType")]
 	public async Task<ActionResult<VesselTypeDto>> Create(VesselTypeDto vesselTypeDto)
 	{
-		VesselTypeDto? vTypeDto = await _vesselTypeService.Add(vesselTypeDto);
+		try
+		{	
+			VesselTypeDto? vTypeDto = await _vesselTypeService.Add(vesselTypeDto);
 
-		if (vTypeDto == null)
-			return BadRequest();
+			if (vTypeDto == null)
+				return BadRequest("Cannot create vessel type");
 
-		return CreatedAtAction(nameof(GetAll), new { name = vTypeDto.Name }, vTypeDto);
+			return CreatedAtAction(nameof(GetAll), new { name = vTypeDto.Name }, vTypeDto);
+		}
+		catch (System.Exception e)
+		{
+			_logger.LogError("Error creating vessel type, {Message}", e.Message);
+			return BadRequest(e.Message);
+		}
 	}
 
 	[HttpPut("{name}", Name = "UpdateVesselType")]
 	public async Task<IActionResult> Update(string name, VesselTypeDto vesselTypeDto)
 	{
+		try
+		{
+			VesselTypeDto? vTypeDto = await _vesselTypeService.Update(name, vesselTypeDto);
 
-		VesselTypeDto? vTypeDto = await _vesselTypeService.Update(name, vesselTypeDto);
+			if (vTypeDto == null)
+				return BadRequest("Could not update vessel type");
 
-		if (vTypeDto == null)
-			return BadRequest();
-
-		return Ok(vTypeDto);
+			return Ok(vTypeDto);
+		}
+		catch (System.Exception e)
+		{
+			_logger.LogError("Error updating vessel type, {Message}", e.Message);
+			return BadRequest(e.Message);
+		}
 	}
 
 }

@@ -11,11 +11,13 @@ public class StorageAreaService
 {
     private readonly IStorageAreaRepository _storageAreaRepository;
     private readonly IDockRepository _dockRepository;
+    private readonly ILogger<StorageAreaService> _logger;
 
-    public StorageAreaService(IStorageAreaRepository storageAreaRepository, IDockRepository dockRepository)
+    public StorageAreaService(IStorageAreaRepository storageAreaRepository, IDockRepository dockRepository, ILogger<StorageAreaService> logger)
     {
         _storageAreaRepository = storageAreaRepository;
         _dockRepository = dockRepository;
+        _logger = logger;
     }
 
     public async Task<IEnumerable<StorageAreaDto>> GetStorageAreas()
@@ -52,6 +54,7 @@ public class StorageAreaService
         );
 
         await _storageAreaRepository.Add(storageArea);
+        _logger.LogInformation("Storage area {StorageAreaId} created.", storageArea.Id);
         return storageArea.ToDTO();
     }
 
@@ -69,8 +72,8 @@ public class StorageAreaService
         HashSet<StorageArea.DockRelation> dockRelations = ConvertToDockRelations(updateStorageAreaDto.DockServices);
         storageArea.UpdateDockServices(dockRelations.Count > 0 ? dockRelations : null);
 
-
         await _storageAreaRepository.Update(storageArea);
+        _logger.LogInformation("Storage area {StorageAreaId} updated.", storageArea.Id);
         return storageArea.ToDTO();
     }
 

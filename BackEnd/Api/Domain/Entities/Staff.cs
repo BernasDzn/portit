@@ -103,8 +103,8 @@ public class Staff : IDTOAble<StaffDto>
 
 	public void Deactivate()
 	{
-		isActive = false;
 		Status = StaffStatus.Unavailable;
+		isActive = false;
 	}
 
 	public StaffDto ToDTO()

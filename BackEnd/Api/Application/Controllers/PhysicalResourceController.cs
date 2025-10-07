@@ -12,10 +12,12 @@ using Api.Application.DataTransfer.Filters;
 public class PhysicalResourceController : ControllerBase
 {
     private readonly PhysicalResourceService _physicalResourceService;
+    private readonly ILogger<PhysicalResourceController> _logger;
 
-    public PhysicalResourceController(PhysicalResourceService physicalResourceService)
+    public PhysicalResourceController(PhysicalResourceService physicalResourceService, ILogger<PhysicalResourceController> logger)
     {
         _physicalResourceService = physicalResourceService;
+        _logger = logger;
     }
 
     [HttpGet(Name = "GetAll")]
@@ -38,6 +40,7 @@ public class PhysicalResourceController : ControllerBase
         }
         catch (System.Exception e)
         {
+            _logger.LogError("Error retrieving physical resource by code, {Message}", e.Message);
             return BadRequest(e.Message);
         }
     }
@@ -50,8 +53,9 @@ public class PhysicalResourceController : ControllerBase
             var pagedResources = await _physicalResourceService.FilterPhysicalResources(filter);
             return Ok(pagedResources);
         }
-        catch (System.Exception)
+        catch (System.Exception e)
         {
+            _logger.LogError("Error filtering physical resources, {Message}", e.Message);
             return NotFound();
         }
     }
@@ -68,6 +72,7 @@ public class PhysicalResourceController : ControllerBase
         }
         catch (System.Exception e)
         {
+            _logger.LogError("Error creating {ResourceName}, {Message}", resourceName, e.Message);
             return BadRequest(e.Message);
         }
     }
@@ -84,6 +89,7 @@ public class PhysicalResourceController : ControllerBase
         }
         catch (System.Exception e)
         {
+            _logger.LogError("Error updating {ResourceName}, {Message}", resourceName, e.Message);
             return BadRequest(e.Message);
         }
     }
@@ -125,6 +131,7 @@ public class PhysicalResourceController : ControllerBase
         }
         catch (System.Exception e)
         {
+            _logger.LogError("Error deactivating physical resource, {Message}", e.Message);
             return BadRequest(e.Message);
         }
     }

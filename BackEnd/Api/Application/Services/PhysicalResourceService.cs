@@ -15,16 +15,19 @@ public class PhysicalResourceService
     private readonly IDockRepository _dockRepository;
     private readonly IQualificationRepository _qualificationRepository;
     private readonly IStorageAreaRepository _storageAreaRepository;
+    private readonly ILogger<PhysicalResourceService> _logger;
 
     public PhysicalResourceService(
         IPhysicalResourceRepository physicalResourceRepository, IDockRepository dockRepository,
-        IQualificationRepository qualificationRepository, IStorageAreaRepository storageAreaRepository
+        IQualificationRepository qualificationRepository, IStorageAreaRepository storageAreaRepository,
+        ILogger<PhysicalResourceService> logger
     )
     {
         _physicalResourceRepository = physicalResourceRepository;
         _dockRepository = dockRepository;
         _qualificationRepository = qualificationRepository;
         _storageAreaRepository = storageAreaRepository;
+        _logger = logger;
     }
 
     private HashSet<Qualification> GetQualificationsAsync(PhysicalResourceDto resourceDto)
@@ -98,6 +101,7 @@ public class PhysicalResourceService
             resourceDto.ContainersPerHour
         );
 
+        _logger.LogInformation("Adding new STS Crane with code {CraneCode}", crane.Code.Value);
         return ((IDTOAble<STSCraneDto>)await _physicalResourceRepository.AddSTSCrane(crane)).ToDTO();
     }
 
@@ -128,6 +132,7 @@ public class PhysicalResourceService
             resourceDto.ContainersPerHour
         );
 
+        _logger.LogInformation("Adding new Yard Crane with code {CraneCode}", crane.Code.Value);
         return ((IDTOAble<YardCraneDto>)await _physicalResourceRepository.AddYardCrane(crane)).ToDTO();
     }
 
@@ -155,6 +160,7 @@ public class PhysicalResourceService
             resourceDto.AverageSpeed
         );
 
+        _logger.LogInformation("Adding new Truck with code {TruckCode}", truck.Code.Value);
         return ((IDTOAble<TruckDto>)await _physicalResourceRepository.AddTruck(truck)).ToDTO();
     }
 
@@ -184,6 +190,7 @@ public class PhysicalResourceService
         craneObject.UpdateContainersPerHour(crane.ContainersPerHour);
         craneObject.UpdateServingDock(dock);
 
+        _logger.LogInformation("Updating STS Crane with code {CraneCode}", craneObject.Code.Value);
         return ((IDTOAble<STSCraneDto>)await _physicalResourceRepository.UpdateSTSCrane(craneObject)).ToDTO();
     }
 
@@ -212,6 +219,7 @@ public class PhysicalResourceService
         craneObject.UpdateContainersPerHour(crane.ContainersPerHour);
         craneObject.UpdateYardSection(storageArea);
 
+        _logger.LogInformation("Updating Yard Crane with code {CraneCode}", craneObject.Code.Value);
         return ((IDTOAble<YardCraneDto>)await _physicalResourceRepository.UpdateYardCrane(craneObject)).ToDTO();
     }
 
@@ -237,6 +245,7 @@ public class PhysicalResourceService
         truckObject.UpdateContainersPerTrip(truck.ContainersPerTrip);
         truckObject.UpdateAverageSpeed(truck.AverageSpeed);
 
+        _logger.LogInformation("Updating Truck with code {TruckCode}", truckObject.Code.Value);
         return ((IDTOAble<TruckDto>)await _physicalResourceRepository.UpdateTruck(truckObject)).ToDTO();
     }
 
@@ -253,6 +262,8 @@ public class PhysicalResourceService
 
         resource.Deactivate();
         await _physicalResourceRepository.Update(resource);
+
+        _logger.LogInformation("Deactivated physical resource with code {ResourceCode}", resource.Code.Value);
         return true;
     }
 }

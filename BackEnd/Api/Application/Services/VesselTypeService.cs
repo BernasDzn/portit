@@ -2,18 +2,22 @@ namespace Api.Application.Services;
 
 using Api.Application.DataTransfer;
 using Api.Application.DataTransfer.Filters;
+using Api.Application.Exceptions;
 using Api.Domain.Entities;
 using Api.Domain.IRepository;
 using Api.Domain.ValueObjects;
+using Api.Infrastructure.Exceptions;
 using Api.Infrastructure.Utilities;
 
 public class VesselTypeService
 {
     private readonly IVesselTypeRepository _vesselTypeRepository;
+    private readonly ILogger<VesselTypeService> _logger;
 
-    public VesselTypeService(IVesselTypeRepository vesselTypeRepository)
+    public VesselTypeService(IVesselTypeRepository vesselTypeRepository, ILogger<VesselTypeService> logger)
     {
         _vesselTypeRepository = vesselTypeRepository;
+        _logger = logger;
     }
 
     public async Task<IEnumerable<VesselTypeDto>> GetVesselTypes()
@@ -32,15 +36,15 @@ public class VesselTypeService
     {
         bool exists = await _vesselTypeRepository.GetVesselTypeByNameAsync(vesselTypeDto.Name) != null;
         if (exists)
-        {
-            throw new Exception("Vessel Type with the specified name already exists");
-        }
+            throw new EntityAlreadyExistsException("Vessel Type with the specified name already exists");
+    
         VesselType vType = new VesselType(Guid.NewGuid(), new Designation { Value = vesselTypeDto.Name }, new Designation { Value = vesselTypeDto.Description },
          vesselTypeDto.MaxNumberOfRows, vesselTypeDto.MaxNumberOfBays, vesselTypeDto.MaxNumberOfTiers,
          new PhysicalCharacteristics { Length = vesselTypeDto.PhysicalCharacteristics.Length, Depth = vesselTypeDto.PhysicalCharacteristics.Depth, Draft = vesselTypeDto.PhysicalCharacteristics.Draft });
 
         VesselType savedVesselType = await _vesselTypeRepository.Add(vType);
 
+        _logger.LogInformation("Vessel Type {VesselTypeId} created.", savedVesselType.Id);
         return savedVesselType.ToDTO();
     }
 
@@ -62,14 +66,11 @@ public class VesselTypeService
             Draft = vesselTypeDto.PhysicalCharacteristics.Draft
         });
 
-        bool updated = await _vesselTypeRepository.Update(vesselType);
-        if (!updated)
-        {
-            throw new Exception("Failed to update Vessel Type.");
-        }
+        VesselType? updated = await _vesselTypeRepository.Update(vesselType);
+        if (updated != null)
+            throw new PersistencyFailedException("Failed to update Vessel Type.");
 
-        VesselType updatedVesselType = await _vesselTypeRepository.GetVesselTypeByNameAsync(vesselTypeDto.Name);
-        return updatedVesselType.ToDTO();
+        _logger.LogInformation("Vessel Type {VesselTypeId} updated.", updated!.Id);
+        return updated.ToDTO();
     }
-
 }
