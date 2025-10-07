@@ -81,15 +81,13 @@ public class DockService
         dock.UpdatePhysicalCharacteristics(newPhysicalCharacteristics);
         dock.UpdateVesselTypes(vesselTypes);
 
-        bool updated = await _dockRepository.Update(dock);
+        Dock? updated = await _dockRepository.Update(dock);
 
-        if (!updated)
+        if (updated == null)
             throw new PersistencyFailedException("Dock update failed.");
 
-        Dock updatedDock = await _dockRepository.GetDockByNameAsync(name);
-
-        _logger.LogInformation("Dock {DockId} updated.", updatedDock.Id);
-        return updatedDock.ToDTO();
+        _logger.LogInformation("Dock {DockId} updated.", updated.Id);
+        return updated.ToDTO();
     }
 
     private async Task<HashSet<VesselType>> GetVesselTypesFromDto(List<VesselTypeDto> vesselTypesDtos)

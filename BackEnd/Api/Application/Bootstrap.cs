@@ -6,7 +6,6 @@ using Api.Infrastructure.Persistence;
 
 public static class Bootstrap
 {
-
     public static void Init(ApiContext context, bool nukeDatabase = false)
     {
         // Delete the database if we need that

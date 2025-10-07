@@ -2,6 +2,7 @@ namespace Api.Application.Services;
 
 using Api.Application.DataTransfer;
 using Api.Application.DataTransfer.Filters;
+using Api.Application.Exceptions;
 using Api.Domain.Entities;
 using Api.Domain.IRepository;
 using Api.Domain.ValueObjects;
@@ -65,13 +66,11 @@ public class VesselTypeService
             Draft = vesselTypeDto.PhysicalCharacteristics.Draft
         });
 
-        bool updated = await _vesselTypeRepository.Update(vesselType);
-        if (!updated)
-            throw new EntityAlreadyExistsException("Failed to update Vessel Type.");
+        VesselType? updated = await _vesselTypeRepository.Update(vesselType);
+        if (updated != null)
+            throw new PersistencyFailedException("Failed to update Vessel Type.");
 
-        VesselType updatedVesselType = await _vesselTypeRepository.GetVesselTypeByNameAsync(vesselTypeDto.Name);
-
-        _logger.LogInformation("Vessel Type {VesselTypeId} updated.", updatedVesselType.Id);
-        return updatedVesselType.ToDTO();
+        _logger.LogInformation("Vessel Type {VesselTypeId} updated.", updated!.Id);
+        return updated.ToDTO();
     }
 }

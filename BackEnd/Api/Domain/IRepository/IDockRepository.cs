@@ -10,5 +10,5 @@ public interface IDockRepository : IGenericRepository<Dock>
 	Task<Dock> GetDockByNameAsync(string name);
 	Task<Page<Dock>> FilterDocksAsync(DockFilter filter);
 	new Task<Dock> Add(Dock dock);
-	Task<bool> Update(Dock dock);
+	Task<Dock> Update(Dock dock);
 }

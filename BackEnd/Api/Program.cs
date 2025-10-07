@@ -40,11 +40,14 @@ builder.Services.AddTransient<StaffService>();
 
 var app = builder.Build();
 
+app.Logger.LogInformation("Starting application");
+app.Logger.LogInformation("Environment: {EnvironmentName}", app.Environment.EnvironmentName);
+
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<ApiContext>();
-    
+
     Bootstrap.Init(context, nukeDatabase: true);
 }
 
@@ -59,9 +62,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 app.Run();

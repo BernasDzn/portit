@@ -34,8 +34,9 @@ public class DockController : ControllerBase
 			var docksDtos = await _dockService.FilterDocks(filter);
 			return Ok(docksDtos);
 		}
-		catch (System.Exception)
+		catch (System.Exception e)
 		{
+			_logger.LogError("Error filtering docks, {Message}", e.Message);
 			return NotFound();
 		}
 	}
@@ -48,12 +49,13 @@ public class DockController : ControllerBase
 			var createdDock = await _dockService.Add(dockDto);
 
 			if (createdDock == null)
-				return BadRequest();
+				return BadRequest("Unable to create dock");
 
 			return CreatedAtAction(nameof(GetAll), new { name = createdDock.Name }, createdDock);
 		}
 		catch (System.Exception e)
 		{
+			_logger.LogError("Error creating dock, {Message}", e.Message);
 			return BadRequest(e.Message);
 		}
 	}
@@ -65,12 +67,13 @@ public class DockController : ControllerBase
 		{
 			var updatedDock = await _dockService.Update(name, dockDto);
 			if (updatedDock == null)
-				return BadRequest();
+				return BadRequest("Could not update dock");
 
 			return Ok(updatedDock);
 		}
 		catch (System.Exception e)
 		{
+			_logger.LogError("Error updating dock, {Message}", e.Message);
 			return BadRequest(e.Message);
 		}
 	}

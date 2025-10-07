@@ -80,13 +80,13 @@ public class VesselTypeRepository : GenericRepository<VesselType>, IVesselTypeRe
         }
     }
 
-    public async Task<bool> Update(VesselType vesselType)
+    public async Task<VesselType> Update(VesselType vesselType)
     {
         try
         {
             _context.VesselTypes.Update(vesselType);
             await _context.SaveChangesAsync();
-            return true;
+            return vesselType;
         }
         catch
         {

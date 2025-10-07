@@ -79,13 +79,13 @@ public class DockRepository : GenericRepository<Dock>, IDockRepository
         }
     }
 
-    public async Task<bool> Update(Dock dock)
+    public async Task<Dock> Update(Dock dock)
     {
         try
         {
             _context.Docks.Update(dock);
             await _context.SaveChangesAsync();
-            return true;
+            return dock;
         }
         catch
         {

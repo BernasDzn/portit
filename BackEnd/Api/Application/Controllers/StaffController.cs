@@ -39,6 +39,7 @@ public class StaffController : ControllerBase
 		}
 		catch (Exception e)
 		{
+			_logger.LogError("Error creating staff, {Message}", e.Message);
 			return BadRequest(e.Message);
 		}
 	}
@@ -55,6 +56,7 @@ public class StaffController : ControllerBase
 		}
 		catch (Exception e)
 		{
+			_logger.LogError("Error deactivating staff, {Message}", e.Message);
 			return BadRequest(e.Message);
 		}
 	}
@@ -72,6 +74,7 @@ public class StaffController : ControllerBase
 		}
 		catch (Exception e)
 		{
+			_logger.LogError("Error updating staff, {Message}", e.Message);
 			return BadRequest(e.Message);
 		}
 	}
@@ -84,8 +87,9 @@ public class StaffController : ControllerBase
 			var staffsDto = await _staffService.FilterStaffs(filter);
 			return Ok(staffsDto);
 		}
-		catch (System.Exception)
+		catch (System.Exception e)
 		{
+			_logger.LogError("Error filtering staffs, {Message}", e.Message);
 			return NotFound();
 		}
 	}

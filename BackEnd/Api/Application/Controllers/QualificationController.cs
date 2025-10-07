@@ -35,8 +35,9 @@ public class QualificationController : ControllerBase
 			var qualificationsDto = await _qualificationService.FilterQualifications(filter);
 			return Ok(qualificationsDto);
 		}
-		catch (System.Exception)
+		catch (System.Exception e)
 		{
+			_logger.LogError("Error filtering qualifications, {Message}", e.Message);
 			return NotFound();
 		}
 	}
@@ -54,6 +55,7 @@ public class QualificationController : ControllerBase
 		}
 		catch (System.Exception e)
 		{
+			_logger.LogError("Error retrieving qualification by id, {Message}", e.Message);
 			return BadRequest(e.Message);
 		}
 	}
@@ -71,6 +73,7 @@ public class QualificationController : ControllerBase
 		}
 		catch (System.Exception e)
 		{
+			_logger.LogError("Error creating qualification, {Message}", e.Message);
 			return BadRequest(e.Message);
 		}
 	}
@@ -88,6 +91,7 @@ public class QualificationController : ControllerBase
 		}
 		catch (System.Exception e)
 		{
+			_logger.LogError("Error updating qualification, {Message}", e.Message);
 			return BadRequest(e.Message);
 		}
 	}
