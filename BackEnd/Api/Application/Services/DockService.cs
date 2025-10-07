@@ -14,17 +14,18 @@ public class DockService
 {
     private readonly IDockRepository _dockRepository;
     private readonly IVesselTypeRepository _vesselTypeRepository;
+    private readonly ILogger<DockService> _logger;
 
-    public DockService(IDockRepository dockRepository, IVesselTypeRepository vesselTypeRepository)
+    public DockService(IDockRepository dockRepository, IVesselTypeRepository vesselTypeRepository, ILogger<DockService> logger)
     {
         _dockRepository = dockRepository;
         _vesselTypeRepository = vesselTypeRepository;
+        _logger = logger;
     }
 
     public async Task<IEnumerable<DockDto>> GetDocks()
     {
         IEnumerable<Dock> docks = await _dockRepository.GetDocksAsync();
-
         return docks.Select(d => d.ToDTO()).ToList();
     }
 
@@ -53,6 +54,7 @@ public class DockService
         Dock savedDock = await _dockRepository.Add(dock);
         DockDto savedDockDto = savedDock.ToDTO();
 
+        _logger.LogInformation("Dock {DockId} created.", savedDock.Id);
         return savedDockDto;
     }
 
@@ -68,7 +70,6 @@ public class DockService
         HashSet<VesselType> vesselTypes = await GetVesselTypesFromDto(dockDto.SupportedVesselTypes);
 
         dock.UpdateLocation(dockDto.Location);
-
 
         PhysicalCharacteristics newPhysicalCharacteristics = new PhysicalCharacteristics
         {
@@ -87,6 +88,7 @@ public class DockService
 
         Dock updatedDock = await _dockRepository.GetDockByNameAsync(name);
 
+        _logger.LogInformation("Dock {DockId} updated.", updatedDock.Id);
         return updatedDock.ToDTO();
     }
 

@@ -12,15 +12,16 @@ using Api.Infrastructure.Utilities;
 public class QualificationService
 {
 	private readonly IQualificationRepository _qualificationRepository;
-
-	public QualificationService(IQualificationRepository qualificationRepository)
+	private readonly ILogger<QualificationService> _logger;
+	public QualificationService(IQualificationRepository qualificationRepository, ILogger<QualificationService> logger)
 	{
 		_qualificationRepository = qualificationRepository;
+		_logger = logger;
 	}
 
 	public async Task<IEnumerable<QualificationDto>> GetQualifications()
 	{
-		var qualifications = await _qualificationRepository.GetQualificationsAsync();
+		var qualifications = await _qualificationRepository.GetQualificationsAsync();		
 		return qualifications.Select(q => q.ToDTO()).ToList();
 	}
 
@@ -49,6 +50,7 @@ public class QualificationService
 		Qualification savedQualification = await _qualificationRepository.Add(qualification);
 		QualificationDto savedQualificationDto = savedQualification.ToDTO();
 
+		_logger.LogInformation("Qualification {QualificationId} created.", savedQualification.Id);
 		return savedQualificationDto;
 	}
 
@@ -64,6 +66,7 @@ public class QualificationService
 		if (updateResult == null)
 			throw new EntityNotFoundException("Qualification to update not found.");
 
+		_logger.LogInformation("Qualification {QualificationId} updated.", updateResult.Id);
 		return updateResult.ToDTO();
 	}
 

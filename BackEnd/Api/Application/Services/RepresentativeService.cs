@@ -7,10 +7,12 @@ using Api.Domain.IRepository;
 public class RepresentativeService
 {
     private readonly IRepresentativeRepository _representativeRepository;
+    private readonly ILogger<RepresentativeService> _logger;
 
-    public RepresentativeService(IRepresentativeRepository representativeRepository)
+    public RepresentativeService(IRepresentativeRepository representativeRepository, ILogger<RepresentativeService> logger)
     {
         _representativeRepository = representativeRepository;
+        _logger = logger;
     }
 
     public async Task<IEnumerable<RepresentativeDto>> GetRepresentatives()

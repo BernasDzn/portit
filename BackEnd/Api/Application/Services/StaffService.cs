@@ -14,11 +14,13 @@ public class StaffService
 
 	private readonly IStaffRepository _staffRepository;
 	private readonly IQualificationRepository _qualificationRepository;
+	private readonly ILogger<StaffService> _logger;
 
-	public StaffService(IStaffRepository staffRepository, IQualificationRepository qualificationRepository)
+	public StaffService(IStaffRepository staffRepository, IQualificationRepository qualificationRepository, ILogger<StaffService> logger)
 	{
 		_staffRepository = staffRepository;
 		_qualificationRepository = qualificationRepository;
+		_logger = logger;
 	}
 
 	public async Task<IEnumerable<StaffDto>> GetStaffs()
@@ -60,6 +62,7 @@ public class StaffService
 		Staff addedStaff = await _staffRepository.GetStaffByMecNumberAsync(staffDto.MechanograficNumber) ?? throw new Exception("Error retrieving the added staff.");
 		StaffDto addedStaffDto = addedStaff.ToDTO();
 
+		_logger.LogInformation("Staff {StaffId} created.", addedStaff.Id);
 		return addedStaffDto;
 	}
 
@@ -93,6 +96,7 @@ public class StaffService
 			qualifications
 		);
 
+		_logger.LogInformation("Staff {StaffId} updated.", staff.Id);
 		return (await _staffRepository.Update(staff)).ToDTO();
 	}
 
@@ -111,6 +115,8 @@ public class StaffService
 
 		staff.Deactivate();
 		await _staffRepository.Update(staff);
+
+		_logger.LogInformation("Staff {StaffId} deactivated.", staff.Id);
 		return staff.ToDTO();
 	}
 

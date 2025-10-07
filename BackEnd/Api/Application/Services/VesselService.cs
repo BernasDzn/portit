@@ -14,12 +14,14 @@ public class VesselService
     private readonly IVesselRepository _vesselRepository;
     private readonly IVesselTypeRepository _vesselTypeRepository;
     private readonly IShippingAgentOrgRepository _shippingAgentOrgRepository;
+    private readonly ILogger<VesselService> _logger;
 
-    public VesselService(IVesselRepository vesselRepository, IVesselTypeRepository vesselTypeRepository, IShippingAgentOrgRepository shippingAgentOrgRepository)
+    public VesselService(IVesselRepository vesselRepository, IVesselTypeRepository vesselTypeRepository, IShippingAgentOrgRepository shippingAgentOrgRepository, ILogger<VesselService> logger)
     {
         _vesselRepository = vesselRepository;
         _vesselTypeRepository = vesselTypeRepository;
         _shippingAgentOrgRepository = shippingAgentOrgRepository;
+        _logger = logger;
     }
 
     public async Task<IEnumerable<VesselDto>> GetVessels()
@@ -58,6 +60,7 @@ public class VesselService
         Vessel savedVessel = await _vesselRepository.Add(vessel);
         VesselDto savedVesselDto = savedVessel.ToDTO();
 
+        _logger.LogInformation("Vessel {VesselId} created.", savedVessel.Id);
         return savedVesselDto;
     }
 
@@ -84,8 +87,8 @@ public class VesselService
         if (updateResult == null)
             throw new PersistencyFailedException("Unable to perform an update");
 
-        Vessel updatedVessel = await _vesselRepository.GetVesselByIMOAsync(vesselDto.ImoNumber);
-        return updatedVessel.ToDTO();
+        _logger.LogInformation("Vessel {VesselId} updated.", updateResult.Id);
+        return updateResult.ToDTO();
     }
 
     internal async Task<Page<VesselDto>> FilterVessels(VesselFilter filter)
