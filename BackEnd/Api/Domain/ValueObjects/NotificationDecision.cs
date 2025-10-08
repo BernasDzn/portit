@@ -1,12 +1,12 @@
 using Api.Application.DataTransfer;
 using Api.Infrastructure.Utilities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.Domain.Entities;
 
 
 public enum NotificationDecisionStatus
 {
-    In_Progress = 0,
     Approved = 1,
     Rejected = 2
 }
@@ -19,18 +19,15 @@ public class NotificationDecision : IDTOAble<NotificationDecisionDto>
     public DateTime DecisionDate { get; private set; }
     public int? OfficerID { get; private set; }
     public virtual Dock? AssignedDock { get; private set; }
-    public virtual VesselVisitNotification VesselVisitNotification { get; private set; }
 
     protected NotificationDecision() { }
-    public NotificationDecision(NotificationDecisionStatus status, DateTime decisionDate, VesselVisitNotification vesselVisitNotification, int? officerID = null, Dock? assignedDock = null, string? reason = null)
+    public NotificationDecision(NotificationDecisionStatus status, DateTime decisionDate, int? officerID = null, Dock? assignedDock = null, string? reason = null)
     {
-        Id = Guid.NewGuid();
         Status = status;
         Reason = reason;
         DecisionDate = decisionDate;
         OfficerID = officerID;
         AssignedDock = assignedDock;
-        VesselVisitNotification = vesselVisitNotification;
     }
 
     public NotificationDecisionDto ToDTO()
@@ -41,8 +38,7 @@ public class NotificationDecision : IDTOAble<NotificationDecisionDto>
             Reason = Reason,
             DecisionDate = DecisionDate,
             OfficerID = OfficerID,
-            AssignedDock = AssignedDock?.ToDTO(),
-            VesselVisitNotification = VesselVisitNotification.ToDTO()
+            AssignedDock = AssignedDock?.ToDTO()
         };
     }
 

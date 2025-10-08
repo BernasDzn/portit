@@ -12,6 +12,7 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
         _context = context;
     }
 
+
     public async Task<IEnumerable<VesselVisitNotification>> GetVesselVisitNotificationsAsync()
     {
         try
@@ -38,11 +39,31 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
         }
     }
 
+    public async Task<IEnumerable<NotificationDecision>> GetNotificationDecisionsAsync(Guid notificationId)
+    {
+        try
+        {
+            IEnumerable<NotificationDecision> decisions = await _context.VesselVisitNotifications
+                .Where(n => n.Id == notificationId)
+                .SelectMany(n => n.NotificationDecisions)
+                .ToListAsync();
+
+            if (!decisions.Any()) throw new KeyNotFoundException($"No NotificationDecisions found for VesselVisitNotification ID {notificationId}.");
+
+            return decisions;
+        }
+        catch
+        {
+            throw;
+        }
+    }
+
+
     public new async Task<VesselVisitNotification> Add(VesselVisitNotification vesselVisitNotification)
     {
         try
         {
-            await _context.VesselVisitNotifications.AddAsync(vesselVisitNotification);
+            _context.VesselVisitNotifications.Add(vesselVisitNotification);
             await _context.SaveChangesAsync();
             return vesselVisitNotification;
         }

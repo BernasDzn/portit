@@ -29,8 +29,6 @@ public static class Bootstrap
         BootstrapStaff(context);
         // Bootstrap Vessel Visit Notifications
         BootstrapVVN(context);
-        // Bootstrap Vessel Visit Notification Decisions
-        BootstrapVVNDecision(context);
     }
 
     private static void BootstrapQualifications(ApiContext context)
@@ -359,42 +357,15 @@ public static class Bootstrap
             crewDetails
         );
 
+        NotificationDecision decision1 = new NotificationDecision(NotificationDecisionStatus.Approved, DateTime.UtcNow, null, context.Docks.First());
+        NotificationDecision decision2 = new NotificationDecision(NotificationDecisionStatus.Rejected, DateTime.UtcNow, null, reason: "Insufficient documentation");
+        NotificationDecision decision3 = new NotificationDecision(NotificationDecisionStatus.Approved, DateTime.UtcNow, null, context.Docks.Skip(1).First(), "All requirements met");
+
+        vvn1.AddDecision(decision1);
+        vvn2.AddDecision(decision2);
+        vvn3.AddDecision(decision3);
+
         context.VesselVisitNotifications.AddRange(vvn1, vvn2, vvn3);
-        context.SaveChanges();
-    }
-
-    public static void BootstrapVVNDecision(ApiContext context)
-    {
-        if (context.NotificationDecisions.Any() || !context.VesselVisitNotifications.Any())
-            return;
-
-        var vvn1 = context.VesselVisitNotifications.First();
-        var vvn2 = context.VesselVisitNotifications.Skip(1).First();
-        var vvn3 = context.VesselVisitNotifications.Skip(2).First();
-
-        NotificationDecision decision1 = new NotificationDecision(
-            NotificationDecisionStatus.In_Progress,
-            DateTime.UtcNow,
-            vvn1);
-
-        NotificationDecision decision2 = new NotificationDecision(
-            NotificationDecisionStatus.Rejected,
-            DateTime.UtcNow,
-            vvn2,
-            null,
-            null,
-            "Vessel does not meet safety requirements."
-        );
-
-        NotificationDecision decision3 = new NotificationDecision(
-            NotificationDecisionStatus.Approved,
-            DateTime.UtcNow,
-            vvn3,
-            null,
-            context.Docks.First()
-        );
-
-        context.NotificationDecisions.AddRange(decision1, decision2, decision3);
         context.SaveChanges();
     }
 

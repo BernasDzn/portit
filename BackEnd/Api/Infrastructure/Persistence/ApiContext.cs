@@ -21,7 +21,6 @@ public class ApiContext : DbContext
     public DbSet<Staff> Staffs { get; set; } = null!;
     public DbSet<PhysicalResource> PhysicalResources { get; set; } = null!;
     public DbSet<VesselVisitNotification> VesselVisitNotifications { get; set; } = null!;
-    public DbSet<NotificationDecision> NotificationDecisions { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -45,5 +44,12 @@ public class ApiContext : DbContext
         {
             c.OwnsMany(c => c.SafetyOfficers, so => { });
         });
+
+        // Notification decisions list config
+        // Because EF Core does not support collections of owned types directly
+       /* modelBuilder.Entity<VesselVisitNotification>(v =>
+        {
+            v.OwnsMany(vn => vn.NotificationDecisions, nd => { });
+        });*/
     }
 }
