@@ -1,5 +1,7 @@
 using Api.Application.DataTransfer;
+using Api.Application.Exceptions;
 using Api.Domain.ValueObjects;
+using Api.Infrastructure.Exceptions;
 using Api.Infrastructure.Utilities;
 
 namespace Api.Domain.Entities;
@@ -26,12 +28,14 @@ public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
     public virtual Vessel Vessel { get; private set; }
     public virtual Representative Representative { get; private set; } 
     public NotificationStatus Status { get; private set; } = NotificationStatus.InProgress;
-    public virtual ICollection<NotificationDecision> NotificationDecisions { get; private set; } = new HashSet<NotificationDecision>();
+    public virtual ICollection<NotificationDecision> NotificationDecisions { get; private set; } = new LinkedList<NotificationDecision>();
 
     protected VesselVisitNotification() { }
 
-    public VesselVisitNotification(DateTime expectedArrival, DateTime expectedDeparture, bool isCargoHazardous, Vessel vessel, Representative representative,
-     string? specialRequirements = null, Crew? crewDetails = null, CargoManifest? loadCargoManifest = null, CargoManifest? unloadCargoManifest = null)
+    public VesselVisitNotification(
+        DateTime expectedArrival, DateTime expectedDeparture, bool isCargoHazardous, Vessel vessel, Representative representative,
+        string? specialRequirements = null, Crew? crewDetails = null, CargoManifest? loadCargoManifest = null, CargoManifest? unloadCargoManifest = null
+    )
     {
         Id = Guid.NewGuid();
         ExpectedArrival = expectedArrival;
@@ -45,19 +49,39 @@ public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
         Representative = representative;
     }
 
-    public void UpdateStatus(NotificationStatus newStatus)
+    public void Submit()
     {
-        if (!Enum.IsDefined(typeof(NotificationStatus), newStatus)){throw new ArgumentException("Invalid status value");}
+        if (Status != NotificationStatus.InProgress)
+            throw new InvalidOperationException("Only notifications in progress can be submitted.");
 
-        Status = newStatus;
+        Status = NotificationStatus.ApprovalPending;
+    }
+
+    private void Close()
+    {
+        Status = NotificationStatus.Decided;
     }
 
     public void AddDecision(NotificationDecision decision)
     {
         if (decision == null) { throw new ArgumentNullException(nameof(decision)); }
+        if (Status != NotificationStatus.ApprovalPending) throw new InvalidOperationException("Decisions can only be added to notifications pending approval.");
+
+        // Check if decision is from an older time than last
+        NotificationDecision? latestDecision = GetLatestDecision();
+        if (latestDecision != null && decision.DecisionDate < latestDecision.DecisionDate)
+            throw new OutdatedDecisionException("A newer decision has already been made.");
 
         NotificationDecisions.Add(decision);
-        UpdateStatus(NotificationStatus.Decided);
+
+        // Update current status to reflect decision
+        if (decision.isFinal || decision.Status == NotificationDecisionStatus.Approved) Close();
+        // If rejected but not final, revert to in-progress for modifications
+        else if (decision.Status == NotificationDecisionStatus.Rejected) Status = NotificationStatus.InProgress;
+    }
+
+    private NotificationDecision? GetLatestDecision() {
+        return NotificationDecisions.OrderByDescending(d => d.DecisionDate).FirstOrDefault();
     }
 
     public VesselVisitNotificationDto ToDTO()

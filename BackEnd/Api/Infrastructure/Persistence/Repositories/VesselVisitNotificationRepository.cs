@@ -48,7 +48,8 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
                 .SelectMany(n => n.NotificationDecisions)
                 .ToListAsync();
 
-            if (!decisions.Any()) throw new KeyNotFoundException($"No NotificationDecisions found for VesselVisitNotification ID {notificationId}.");
+            if (!decisions.Any())
+                throw new KeyNotFoundException($"No NotificationDecisions found for VesselVisitNotification ID {notificationId}.");
 
             return decisions;
         }

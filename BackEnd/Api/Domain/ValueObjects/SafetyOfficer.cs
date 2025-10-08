@@ -1,3 +1,6 @@
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
+
 namespace Api.Domain.ValueObjects;
 
 public class SafetyOfficer
@@ -8,7 +11,8 @@ public class SafetyOfficer
         get => _citizenID;
         set
         {
-            // TODO: add Id validation logic
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentException("Citizen ID cannot be empty");
 
             _citizenID = value;
         }
@@ -20,18 +24,13 @@ public class SafetyOfficer
         set => _name = new Designation { Value = value };
     }
 
-    private string _nationality;
-    public string Nationality
-    {
-        get => _nationality;
-        set
-        {
-            if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentException("Nationality cannot be empty");
-
-            _nationality = value;
+    private RegionInfo _nationality;
+    public string Nationality {
+        get => _nationality.TwoLetterISORegionName;
+        set {
+            _nationality = new RegionInfo(value);
         }
     }
 
-    public override string ToString() => $"ID: {CitizenID}, Name:{Name}, Nationality: {Nationality}";
+    public override string ToString() => $"ID: {CitizenID}, Name: {Name}, Nationality: {Nationality}";
 }

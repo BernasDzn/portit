@@ -1,5 +1,6 @@
 namespace Api.Application;
 
+using System.Globalization;
 using Api.Domain.Entities;
 using Api.Domain.ValueObjects;
 using Api.Infrastructure.Persistence;
@@ -341,8 +342,8 @@ public static class Bootstrap
 
         HashSet<SafetyOfficer> safetyOfficers = new HashSet<SafetyOfficer>
         {
-            new SafetyOfficer{CitizenID = "CITIZEN001", Name = "John Doe", Nationality = "American" },
-            new SafetyOfficer{CitizenID = "CITIZEN002", Name = "Jane Smith", Nationality = "British" }
+            new SafetyOfficer{CitizenID = "CITIZEN001", Name = "John Doe", Nationality = "US" },
+            new SafetyOfficer{CitizenID = "CITIZEN002", Name = "Jane Smith", Nationality = "GB" }
         };
 
         Crew crewDetails = new Crew("Ana Costa", 3, safetyOfficers);
@@ -357,13 +358,17 @@ public static class Bootstrap
             crewDetails
         );
 
-        NotificationDecision decision1 = new NotificationDecision(NotificationDecisionStatus.Approved, DateTime.UtcNow, null, context.Docks.First());
-        NotificationDecision decision2 = new NotificationDecision(NotificationDecisionStatus.Rejected, DateTime.UtcNow, null, reason: "Insufficient documentation");
-        NotificationDecision decision3 = new NotificationDecision(NotificationDecisionStatus.Approved, DateTime.UtcNow, null, context.Docks.Skip(1).First(), "All requirements met");
+        NotificationDecision decision1 = NotificationDecisionFactory.CreateAccepted("All criteria met", context.Docks.First());
+        NotificationDecision decision2 = NotificationDecisionFactory.CreateRejected("Insufficient documentation", false);
+        NotificationDecision decision3 = NotificationDecisionFactory.CreateAccepted("Approved after review", context.Docks.Skip(2).First());
 
+        vvn1.Submit();
         vvn1.AddDecision(decision1);
+
+        vvn2.Submit();
         vvn2.AddDecision(decision2);
-        vvn3.AddDecision(decision3);
+        vvn2.Submit();
+        vvn2.AddDecision(decision3);
 
         context.VesselVisitNotifications.AddRange(vvn1, vvn2, vvn3);
         context.SaveChanges();

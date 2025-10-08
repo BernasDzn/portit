@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Domain.Entities;
 
-
 public enum NotificationDecisionStatus
 {
     Approved = 1,
@@ -18,16 +17,22 @@ public class NotificationDecision : IDTOAble<NotificationDecisionDto>
     public string? Reason { get; private set; }
     public DateTime DecisionDate { get; private set; }
     public int? OfficerID { get; private set; }
+    public bool isFinal = false;
     public virtual Dock? AssignedDock { get; private set; }
 
     protected NotificationDecision() { }
-    public NotificationDecision(NotificationDecisionStatus status, DateTime decisionDate, int? officerID = null, Dock? assignedDock = null, string? reason = null)
+    internal NotificationDecision(NotificationDecisionStatus status, DateTime decisionDate, int? officerID = null, Dock? assignedDock = null, string? reason = null)
     {
         Status = status;
         Reason = reason;
         DecisionDate = decisionDate;
         OfficerID = officerID;
         AssignedDock = assignedDock;
+    }
+
+    public void MarkAsFinal()
+    {
+        isFinal = true;
     }
 
     public NotificationDecisionDto ToDTO()
@@ -38,7 +43,8 @@ public class NotificationDecision : IDTOAble<NotificationDecisionDto>
             Reason = Reason,
             DecisionDate = DecisionDate,
             OfficerID = OfficerID,
-            AssignedDock = AssignedDock?.ToDTO()
+            AssignedDock = AssignedDock?.ToDTO(),
+            IsFinal = isFinal
         };
     }
 

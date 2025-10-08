@@ -7,11 +7,11 @@ public class Crew : IDTOAble<CrewDto>
 {
     public Guid Id { get; private set; } = Guid.NewGuid();
     public Designation Captain { get; private set; }
-    public int TotalCrewMembers { get; private set; }
+    public uint TotalCrewMembers { get; private set; }
     public ICollection<SafetyOfficer>? SafetyOfficers { get; private set; }
 
     protected Crew() { }
-    public Crew(string captain, int totalCrewMembers, HashSet<SafetyOfficer>? safetyOfficers = null)
+    public Crew(string captain, uint totalCrewMembers, HashSet<SafetyOfficer>? safetyOfficers = null)
     {
         Captain = new Designation { Value = captain };
 

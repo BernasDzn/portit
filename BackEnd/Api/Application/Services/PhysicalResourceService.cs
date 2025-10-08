@@ -50,7 +50,7 @@ public class PhysicalResourceService
         else if (resource is YardCrane yardCrane) return ((IDTOAble<YardCraneDto>)yardCrane).ToDTO();
         else if (resource is Truck truck) return ((IDTOAble<TruckDto>)truck).ToDTO();
 
-        throw new UnknownPhysicalResourceType("Unknown physical resource type.");
+        throw new UnknownPhysicalResourceTypeException("Unknown physical resource type.");
     }
 
     public async Task<IEnumerable<object>> GetPhysicalResources()

@@ -9,5 +9,5 @@ public class NotificationDecisionDto
     public DateTime DecisionDate { get; set; }
     public int? OfficerID { get; set; }
     public DockDto? AssignedDock { get; set; }
-    
+    public required bool IsFinal { get; set; }
 }
