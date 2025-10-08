@@ -75,7 +75,7 @@ public class VesselVisitNotificationController : ControllerBase
         }
         catch (System.Exception ex)
         {
-            return BadRequest("An error occurred while creating the notification decision." + ex.Message);
+            return BadRequest("An error occurred while creating the notification decision. " + ex.Message);
         }
     }
 }

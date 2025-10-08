@@ -135,7 +135,9 @@ public static class Bootstrap
             new Vessel(Guid.NewGuid(), new Designation { Value = "Maersk Triple E" }, new ImoNumber { Value = "IMO 3815389" },
             vt2, context.ShippingAgentOrganizations.Skip(1).First(), new PhysicalCharacteristics { Length = 370, Depth = 16, Draft = 13 }),
             new Vessel(Guid.NewGuid(), new Designation { Value = "CMA CGM Marco Polo" }, new ImoNumber { Value = "IMO 6699530" },
-            vt3, context.ShippingAgentOrganizations.Skip(2).First(), new PhysicalCharacteristics { Length = 470, Depth = 24, Draft = 15 })
+            vt3, context.ShippingAgentOrganizations.Skip(2).First(), new PhysicalCharacteristics { Length = 470, Depth = 24, Draft = 15 }),
+            new Vessel(Guid.NewGuid(), new Designation { Value = "MSC Oscar" }, new ImoNumber { Value = "IMO 9703318" },
+            vt4, context.ShippingAgentOrganizations.Skip(3).First(), new PhysicalCharacteristics { Length = 200, Depth = 10, Draft = 10 })
         );
 
         // Add Bootstrap data
@@ -321,6 +323,7 @@ public static class Bootstrap
         var vessel1 = context.Vessels.First();
         var vessel2 = context.Vessels.Skip(1).First();
         var vessel3 = context.Vessels.Skip(2).First();
+        var vessel4 = context.Vessels.Skip(3).First();
 
         VesselVisitNotification vvn1 = new VesselVisitNotification(
             "PORTO",
@@ -364,6 +367,18 @@ public static class Bootstrap
             crewDetails
         );
 
+        VesselVisitNotification vvn4 = new VesselVisitNotification(
+            "PORTO",
+            "000004",
+            DateTime.UtcNow.AddDays(12),
+            DateTime.UtcNow.AddDays(15),
+            true,
+            vessel4,
+            context.ShippingAgentOrganizations.First().Representatives.First(),
+            "Handles hazardous materials",
+            crewDetails
+        );
+
         NotificationDecision decision1 = NotificationDecisionFactory.CreateAccepted("All criteria met", context.Docks.First());
         NotificationDecision decision2 = NotificationDecisionFactory.CreateRejected("Insufficient documentation", false);
         NotificationDecision decision3 = NotificationDecisionFactory.CreateAccepted("Approved after review", context.Docks.Skip(2).First());
@@ -376,7 +391,9 @@ public static class Bootstrap
         vvn2.Submit();
         vvn2.AddDecision(decision3);
 
-        context.VesselVisitNotifications.AddRange(vvn1, vvn2, vvn3);
+        vvn4.Submit();
+
+        context.VesselVisitNotifications.AddRange(vvn1, vvn2, vvn3, vvn4);
         context.SaveChanges();
     }
 
