@@ -5,17 +5,16 @@ using Api.Domain.IRepository;
 
 public class NotificationDecisionService
 {
-    private readonly INotificationDecisionRepository _notificationDecisionRepository;
+    private readonly IVesselVisitNotificationRepository _notificationRepository;
 
-    public NotificationDecisionService(INotificationDecisionRepository notificationDecisionRepository)
+    public NotificationDecisionService(IVesselVisitNotificationRepository notificationRepository)
     {
-        _notificationDecisionRepository = notificationDecisionRepository;
+        _notificationRepository = notificationRepository;
     }
 
-    public async Task<IEnumerable<NotificationDecisionDto>> GetNotificationDecisions()
+    public async Task<IEnumerable<NotificationDecisionDto>> GetNotificationDecisions( Guid vesselVisitNotificationId )
     {
-        var decisions = await _notificationDecisionRepository.GetNotificationDecisionsAsync();
+        var decisions = await _notificationRepository.GetNotificationDecisionsAsync( vesselVisitNotificationId );
         return decisions.Select(n => n.ToDTO()).ToList();
     }
-
 }

@@ -4,6 +4,13 @@ using Api.Infrastructure.Utilities;
 
 namespace Api.Domain.Entities;
 
+public enum NotificationStatus
+{
+    InProgress = 0,
+    ApprovalPending = 1,
+    Decided = 2
+}
+
 public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
 {
     public Guid Id { get; private set; }
@@ -16,8 +23,9 @@ public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
     //TODO: Cargo manifest
 
     public virtual Vessel Vessel { get; private set; }
-    public virtual Representative Representative { get; private set; }
-    public virtual ICollection<NotificationDecision> NotificationDecision { get; private set; }
+    public virtual Representative Representative { get; private set; } 
+    public NotificationStatus Status { get; private set; } = NotificationStatus.InProgress;
+    public virtual ICollection<NotificationDecision> NotificationDecisions { get; private set; } = new HashSet<NotificationDecision>();
 
     protected VesselVisitNotification() { }
 
@@ -34,10 +42,25 @@ public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
         Representative = representative;
     }
 
+    public void UpdateStatus(NotificationStatus newStatus)
+    {
+        if (!Enum.IsDefined(typeof(NotificationStatus), newStatus)){throw new ArgumentException("Invalid status value");}
+
+        Status = newStatus;
+    }
+
+    public void AddDecision(NotificationDecision decision)
+    {
+        if (decision == null) { throw new ArgumentNullException(nameof(decision)); }
+
+        NotificationDecisions.Add(decision);
+    }
+
     public VesselVisitNotificationDto ToDTO()
     {
         return new VesselVisitNotificationDto
         {
+            Id = Id,
             ExpectedArrival = ExpectedArrival,
             ExpectedDeparture = ExpectedDeparture,
             IsCargoHazardous = IsCargoHazardous,
