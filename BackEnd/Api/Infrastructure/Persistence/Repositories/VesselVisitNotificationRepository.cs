@@ -40,11 +40,29 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
 
     public new async Task<VesselVisitNotification> Add(VesselVisitNotification vesselVisitNotification)
     {
-        throw new NotImplementedException();
+        try
+        {
+            await _context.VesselVisitNotifications.AddAsync(vesselVisitNotification);
+            await _context.SaveChangesAsync();
+            return vesselVisitNotification;
+        }
+        catch
+        {
+            throw;
+        }
     }
 
     public async Task<bool> Update(VesselVisitNotification vesselVisitNotification)
     {
-        throw new NotImplementedException();
+        try
+        {
+            _context.VesselVisitNotifications.Update(vesselVisitNotification);
+            await _context.SaveChangesAsync();
+            return true;
+        }
+        catch
+        {
+            throw;
+        }
     }
 }
