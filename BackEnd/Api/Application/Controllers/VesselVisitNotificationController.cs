@@ -28,7 +28,7 @@ public class VesselVisitNotificationController : ControllerBase
     }
 
     [HttpGet("decisions", Name = "GetNotificationDecisions")]
-    public async Task<ActionResult<IEnumerable<NotificationDecisionDto>>> GetDecisions([FromQuery] Guid vesselVisitNotificationId)
+    public async Task<ActionResult<IEnumerable<NotificationDecisionDto>>> GetDecisions([FromQuery] string vesselVisitNotificationId)
     {
         try
         {    
