@@ -16,6 +16,7 @@ public enum NotificationStatus
 public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
 {
     public Guid Id { get; private set; }
+    public VesselVisitNotificationId NotificationId { get; private set; }
     public DateTime ExpectedArrival { get; private set; }
     public DateTime ExpectedDeparture { get; private set; }
     public bool IsCargoHazardous { get; private set; }
@@ -32,12 +33,13 @@ public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
 
     protected VesselVisitNotification() { }
 
-    public VesselVisitNotification(
+    public VesselVisitNotification(string IdPortCode, string IdSequenceNumber,
         DateTime expectedArrival, DateTime expectedDeparture, bool isCargoHazardous, Vessel vessel, Representative representative,
         string? specialRequirements = null, Crew? crewDetails = null, CargoManifest? loadCargoManifest = null, CargoManifest? unloadCargoManifest = null
     )
     {
         Id = Guid.NewGuid();
+        NotificationId = new VesselVisitNotificationId(IdPortCode, IdSequenceNumber);
         ExpectedArrival = expectedArrival;
         ExpectedDeparture = expectedDeparture;
         IsCargoHazardous = isCargoHazardous;
@@ -88,7 +90,7 @@ public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
     {
         return new VesselVisitNotificationDto
         {
-            Id = Id,
+            NotificationId = NotificationId.ToString(),
             ExpectedArrival = ExpectedArrival,
             ExpectedDeparture = ExpectedDeparture,
             IsCargoHazardous = IsCargoHazardous,

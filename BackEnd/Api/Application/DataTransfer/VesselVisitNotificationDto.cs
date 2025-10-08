@@ -2,7 +2,7 @@ namespace Api.Application.DataTransfer;
 
 public class VesselVisitNotificationDto
 {
-    public Guid Id { get; set; }
+    public string NotificationId { get; set; }
     public required DateTime ExpectedArrival { get; set; }
     public required DateTime ExpectedDeparture { get; set; }
     public required bool IsCargoHazardous { get; set; }

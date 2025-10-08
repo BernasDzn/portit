@@ -323,6 +323,8 @@ public static class Bootstrap
         var vessel3 = context.Vessels.Skip(2).First();
 
         VesselVisitNotification vvn1 = new VesselVisitNotification(
+            "PORTO",
+            "000001",
             DateTime.UtcNow.AddDays(1),
             DateTime.UtcNow.AddDays(5),
             false,
@@ -333,6 +335,8 @@ public static class Bootstrap
         );
 
         VesselVisitNotification vvn2 = new VesselVisitNotification(
+            "PORTO",
+            "000002",
             DateTime.UtcNow.AddDays(7),
             DateTime.UtcNow.AddDays(10),
             false,
@@ -349,6 +353,8 @@ public static class Bootstrap
         Crew crewDetails = new Crew("Ana Costa", 3, safetyOfficers);
 
         VesselVisitNotification vvn3 = new VesselVisitNotification(
+            "PORTO",
+            "000003",
             DateTime.UtcNow.AddDays(12),
             DateTime.UtcNow.AddDays(15),
             true,

@@ -13,9 +13,9 @@ public class NotificationDecisionService
         _notificationRepository = notificationRepository;
     }
 
-    public async Task<IEnumerable<NotificationDecisionDto>> GetNotificationDecisions(Guid vesselVisitNotificationId)
+    public async Task<IEnumerable<NotificationDecisionDto>> GetNotificationDecisions(string vesselVisitNotificationId )
     {
-        var decisions = await _notificationRepository.GetNotificationDecisionsAsync(vesselVisitNotificationId);
+        var decisions = await _notificationRepository.GetNotificationDecisionsAsync(vesselVisitNotificationId );
         return decisions.Select(n => n.ToDTO()).ToList();
     }
 

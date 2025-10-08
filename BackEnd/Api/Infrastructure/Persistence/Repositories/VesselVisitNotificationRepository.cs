@@ -52,12 +52,12 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
         }
     }
 
-    public async Task<IEnumerable<NotificationDecision>> GetNotificationDecisionsAsync(Guid notificationId)
+    public async Task<IEnumerable<NotificationDecision>> GetNotificationDecisionsAsync(string notificationId)
     {
         try
         {
             IEnumerable<NotificationDecision> decisions = await _context.VesselVisitNotifications
-                .Where(n => n.Id == notificationId)
+                .Where(n => n.NotificationId.Value == notificationId)
                 .SelectMany(n => n.NotificationDecisions)
                 .ToListAsync();
 

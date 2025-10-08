@@ -27,8 +27,7 @@ public class VesselVisitNotificationService
     public async Task<IEnumerable<VesselVisitNotificationDto>> GetVesselVisitNotifications()
     {
         IEnumerable<VesselVisitNotification> notifications = await _notificationRepository.GetVesselVisitNotificationsAsync();
-
-        return notifications.Select(n => n.ToDTO()).ToList();
+        return notifications.Select(n => n.ToDTO());
     }
 
     public async Task<VesselVisitNotificationDto?> Add(VesselVisitNotificationDto vesselVisitNotificationDto)
@@ -183,7 +182,13 @@ public class VesselVisitNotificationService
             unloadCargoManifest = new CargoManifest(unloadCargoManifestItems);
         }
 
+        IEnumerable<VesselVisitNotification> notifications = await _notificationRepository.GetVesselVisitNotificationsAsync();
+        int sequenceNumber = notifications.Count(n => n.ExpectedArrival.Year == DateTime.UtcNow.Year) + 1;
+        string sequenceNumberStr = sequenceNumber.ToString("D6"); // Pad with leading zeros
+        
         VesselVisitNotification notification = new VesselVisitNotification(
+            "PORTO",
+            sequenceNumberStr,
             vesselVisitNotificationDto.ExpectedArrival,
             vesselVisitNotificationDto.ExpectedDeparture,
             vesselVisitNotificationDto.IsCargoHazardous,
