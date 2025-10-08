@@ -26,6 +26,19 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
         }
     }
 
+    public async Task<VesselVisitNotification> GetVesselVisitNotificationByIdAsync(Guid id)
+    {
+        try
+        {
+            VesselVisitNotification? notification = await _context.VesselVisitNotifications.FirstOrDefaultAsync(n => n.Id == id);
+            return notification!;
+        }
+        catch
+        {
+            throw;
+        }
+    }
+
     public async Task<VesselVisitNotification> GetVesselVisitNotificationByVesselIMOAsync(string imoNumber)
     {
         try
@@ -81,6 +94,20 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
             _context.VesselVisitNotifications.Update(vesselVisitNotification);
             await _context.SaveChangesAsync();
             return true;
+        }
+        catch
+        {
+            throw;
+        }
+    }
+
+    public async Task<NotificationDecision> AddNotificationDecisionAsync(VesselVisitNotification notification)
+    {
+        try
+        {
+            _context.VesselVisitNotifications.Update(notification);
+            await _context.SaveChangesAsync();
+            return notification.NotificationDecisions.Last();
         }
         catch
         {

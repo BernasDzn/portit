@@ -88,6 +88,7 @@ public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
     {
         return new VesselVisitNotificationDto
         {
+            Id = Id,
             ExpectedArrival = ExpectedArrival,
             ExpectedDeparture = ExpectedDeparture,
             IsCargoHazardous = IsCargoHazardous,

@@ -31,7 +31,7 @@ public class VesselVisitNotificationController : ControllerBase
     public async Task<ActionResult<IEnumerable<NotificationDecisionDto>>> GetDecisions([FromQuery] Guid vesselVisitNotificationId)
     {
         try
-        {    
+        {
             IEnumerable<NotificationDecisionDto> notificationsDto = await _notificationDecisionService.GetNotificationDecisions(vesselVisitNotificationId);
             return Ok(notificationsDto);
         }
@@ -40,12 +40,12 @@ public class VesselVisitNotificationController : ControllerBase
             return NoContent();
         }
     }
-    
+
     [HttpPost(Name = "CreateVesselVisitNotification")]
     public async Task<ActionResult<VesselVisitNotificationDto>> Create([FromBody] VesselVisitNotificationDto vesselVisitNotificationDto)
     {
         try
-        {    
+        {
             var createdNotification = await _notificationService.Add(vesselVisitNotificationDto);
             if (createdNotification == null)
             {
@@ -57,6 +57,25 @@ public class VesselVisitNotificationController : ControllerBase
         catch (System.Exception)
         {
             return BadRequest("An error occurred while creating the notification.");
+        }
+    }
+    
+    [HttpPost("decisions", Name = "CreateNotificationDecision")]
+    public async Task<ActionResult<NotificationDecisionDto>> CreateDecision([FromQuery] Guid vesselVisitNotificationId, [FromBody] NotificationDecisionDto notificationDecisionDto)
+    {
+        try
+        {
+            var createdDecision = await _notificationDecisionService.Add(notificationDecisionDto, vesselVisitNotificationId);
+            if (createdDecision == null)
+            {
+                return BadRequest("Invalid data provided.");
+            }
+
+            return CreatedAtAction(nameof(GetDecisions), null, createdDecision);
+        }
+        catch (System.Exception)
+        {
+            return BadRequest("An error occurred while creating the notification decision.");
         }
     }
 }
