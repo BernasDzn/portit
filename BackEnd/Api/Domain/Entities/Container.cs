@@ -8,7 +8,7 @@ public class Container : IDTOAble<ContainerDto>
 {
     public Guid Id { get; private set; }
     public ContainerNumber ContainerNumber { get; private set; }
-    public PhysicalCharacteristics PhysicalCharacteristics { get; private set; }
+    public ContainerPosition ContainerPosition { get; private set; }
     public CargoType CargoType { get; private set; }
 
     public ContainerDto ToDTO()
@@ -16,7 +16,7 @@ public class Container : IDTOAble<ContainerDto>
         return new ContainerDto
         {
             ContainerNumber = ContainerNumber.ToString(),
-            PhysicalCharacteristics = PhysicalCharacteristics.ToDTO(),
+            ContainerPosition = ContainerPosition.ToString(),
             CargoType = CargoType.Type.ToString()
         };
     }
