@@ -37,7 +37,7 @@ public class VesselVisitNotificationController : ControllerBase
         }
         catch (System.Exception)
         {
-            return NoContent();
+            return BadRequest("An error occurred while retrieving the notification decisions" );
         }
     }
 
@@ -61,7 +61,7 @@ public class VesselVisitNotificationController : ControllerBase
     }
     
     [HttpPost("decisions", Name = "CreateNotificationDecision")]
-    public async Task<ActionResult<NotificationDecisionDto>> CreateDecision([FromQuery] Guid vesselVisitNotificationId, [FromBody] NotificationDecisionDto notificationDecisionDto)
+    public async Task<ActionResult<NotificationDecisionDto>> CreateDecision([FromQuery] string vesselVisitNotificationId, [FromBody] NotificationDecisionDto notificationDecisionDto)
     {
         try
         {
@@ -73,9 +73,9 @@ public class VesselVisitNotificationController : ControllerBase
 
             return CreatedAtAction(nameof(GetDecisions), null, createdDecision);
         }
-        catch (System.Exception)
+        catch (System.Exception ex)
         {
-            return BadRequest("An error occurred while creating the notification decision.");
+            return BadRequest("An error occurred while creating the notification decision." + ex.Message);
         }
     }
 }

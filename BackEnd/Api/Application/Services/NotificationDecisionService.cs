@@ -16,12 +16,13 @@ public class NotificationDecisionService
     public async Task<IEnumerable<NotificationDecisionDto>> GetNotificationDecisions(string vesselVisitNotificationId )
     {
         var decisions = await _notificationRepository.GetNotificationDecisionsAsync(vesselVisitNotificationId );
+
         return decisions.Select(n => n.ToDTO()).ToList();
     }
 
-    public async Task<NotificationDecisionDto> Add(NotificationDecisionDto notificationDecisionDto, Guid vesselVisitNotificationId)
+    public async Task<NotificationDecisionDto> Add(NotificationDecisionDto notificationDecisionDto, string vesselVisitNotificationId)
     {
-        VesselVisitNotification? notification = await _notificationRepository.GetVesselVisitNotificationByIdAsync(vesselVisitNotificationId);
+        VesselVisitNotification? notification = await _notificationRepository.GetVesselVisitNotificationByNotificationIdAsync(vesselVisitNotificationId);
 
         if (notification == null)
         {

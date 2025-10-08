@@ -26,11 +26,11 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
         }
     }
 
-    public async Task<VesselVisitNotification> GetVesselVisitNotificationByIdAsync(Guid id)
+    public async Task<VesselVisitNotification> GetVesselVisitNotificationByNotificationIdAsync(string notificationId)
     {
         try
         {
-            VesselVisitNotification? notification = await _context.VesselVisitNotifications.FirstOrDefaultAsync(n => n.Id == id);
+            VesselVisitNotification? notification = await _context.VesselVisitNotifications.FirstOrDefaultAsync(n => n.NotificationId.Value == notificationId);
             return notification!;
         }
         catch
@@ -56,13 +56,11 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
     {
         try
         {
+
             IEnumerable<NotificationDecision> decisions = await _context.VesselVisitNotifications
                 .Where(n => n.NotificationId.Value == notificationId)
                 .SelectMany(n => n.NotificationDecisions)
                 .ToListAsync();
-
-            if (!decisions.Any())
-                throw new KeyNotFoundException($"No NotificationDecisions found for VesselVisitNotification ID {notificationId}.");
 
             return decisions;
         }
