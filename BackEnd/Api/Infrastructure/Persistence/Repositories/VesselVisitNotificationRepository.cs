@@ -13,17 +13,6 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
     }
 
 
-    public new async Task<VesselVisitNotification> Add(VesselVisitNotification vesselVisitNotification)
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<bool> Update(VesselVisitNotification vesselVisitNotification)
-    {
-        throw new NotImplementedException();
-    }
-
-
     public async Task<IEnumerable<VesselVisitNotification>> GetVesselVisitNotificationsAsync()
     {
         try
@@ -62,6 +51,35 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
             if (!decisions.Any()) throw new KeyNotFoundException($"No NotificationDecisions found for VesselVisitNotification ID {notificationId}.");
 
             return decisions;
+        }
+        catch
+        {
+            throw;
+        }
+    }
+
+
+    public new async Task<VesselVisitNotification> Add(VesselVisitNotification vesselVisitNotification)
+    {
+        try
+        {
+            _context.VesselVisitNotifications.Add(vesselVisitNotification);
+            await _context.SaveChangesAsync();
+            return vesselVisitNotification;
+        }
+        catch
+        {
+            throw;
+        }
+    }
+
+    public async Task<bool> Update(VesselVisitNotification vesselVisitNotification)
+    {
+        try
+        {
+            _context.VesselVisitNotifications.Update(vesselVisitNotification);
+            await _context.SaveChangesAsync();
+            return true;
         }
         catch
         {

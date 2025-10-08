@@ -341,30 +341,35 @@ rectangle "Berthing information" {
 		+ status
 	}
 
-	class "Vessel Visit\nNotification\n**Notification Decision**" as notif_dec <<Entity>>
+	class "Vessel Visit\nNotification\n**Notification Decision**" as notif_dec <<Value>>
 	{
 		+ status
 		+ timestamp
 		+ reason [?]
 		+ assignedDock [?]
-		+ officerID [?]
+		+ officerID
 	}
 
 	note top of notif_dec: Nós podemos ter uma dock que apenas é preenchida quando a notificação é aceite, \nda mesma maneira que temos uma razão apenas quando é rejeitada. \nIsso porque é temporária, quando confirmado teremos outra class "Vessel Visit"
 
 	enum "Vessel Visit\nNotification\n**Notification status**" as notif_status <<Enum>>
 	{
-		IN_PROGRESS
-		APPROVAL_PENDING
 		APPROVED
 		REJECTED
 	}
 
-	class "Vessel Visit\nNotification\n**Load Cargo Manifest**" as c_manifest_lcm <<Entity>>
+	enum "Vessel Visit\nNotification\n**Status**" as vvn_status <<Enum>>
+	{
+		IN_PROGRESS
+		DECISION_PENDING
+		DECIDED
+	}
+
+	class "Vessel Visit\nNotification\n**Load Cargo Manifest**" as c_manifest_lcm <<Value>>
 	{
 	}
 
-	class "Vessel Visit\nNotification\n**Unload Cargo Manifest**" as c_manifest_udm <<Entity>>
+	class "Vessel Visit\nNotification\n**Unload Cargo Manifest**" as c_manifest_udm <<Value>>
 	{
 
 
@@ -495,6 +500,7 @@ vessel_visit_notif --> vessel
 crew --> "*" safety_officer : "has a list of"
 vessel_visit_notif "1" --> "0..1" c_manifest_lcm : "details"
 vessel_visit_notif "1" --> "0..1" c_manifest_udm : "details"
+vessel_visit_notif --> "1" vvn_status : "has"
 
 notif_dec "1" -> "1" notif_status : "has"
 notif_dec "1" -> "0..1" dock : "has"
