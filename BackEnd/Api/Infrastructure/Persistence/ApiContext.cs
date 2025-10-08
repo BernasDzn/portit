@@ -6,8 +6,12 @@ using Api.Domain.ValueObjects;
 
 public class ApiContext : DbContext
 {
+
+    protected readonly IConfiguration Configuration;
+
     public ApiContext(DbContextOptions<ApiContext> options) : base(options)
     {
+        Database.EnsureCreated();
     }
 
     // Repositories
