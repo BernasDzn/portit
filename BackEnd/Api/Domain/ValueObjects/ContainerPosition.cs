@@ -5,6 +5,7 @@ namespace Api.Domain.ValueObjects;
 
 public class ContainerPosition
 {
+    public Guid Id { get; private set; }
     public string Bay { get; private set; }
     public string Row { get; private set; }
     public string Tier { get; private set; }
@@ -14,6 +15,7 @@ public class ContainerPosition
         if (string.IsNullOrWhiteSpace(bay) || string.IsNullOrWhiteSpace(row) || string.IsNullOrWhiteSpace(tier))
             throw new ArgumentException("Bay, Row, and Tier must be non-empty strings.");
 
+        Id = Guid.NewGuid();
         Bay = bay;
         Row = row;
         Tier = tier;

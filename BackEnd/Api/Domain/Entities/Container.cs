@@ -7,9 +7,10 @@ using Api.Infrastructure.Utilities;
 public class Container : IDTOAble<ContainerDto>
 {
     public Guid Id { get; private set; }
-    public ContainerNumber ContainerNumber { get; private set; }
-    public ContainerPosition ContainerPosition { get; private set; }
-    public CargoType CargoType { get; private set; }
+    public virtual ContainerNumber ContainerNumber { get; private set; }
+    public virtual ContainerPosition ContainerPosition { get; private set; }
+    public virtual CargoType CargoType { get; private set; }
+    public string Description { get; private set; }
 
     public ContainerDto ToDTO()
     {
@@ -17,7 +18,8 @@ public class Container : IDTOAble<ContainerDto>
         {
             ContainerNumber = ContainerNumber.ToString(),
             ContainerPosition = ContainerPosition.ToString(),
-            CargoType = CargoType.Type.ToString()
+            CargoType = CargoType.Type.ToString(),
+            Description = Description
         };
     }
 }

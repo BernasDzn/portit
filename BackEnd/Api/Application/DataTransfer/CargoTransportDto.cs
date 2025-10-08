@@ -1,7 +1,4 @@
-using Api.Domain.ValueObjects;
-namespace Api.Application.DataTransfer;
-
-public class ContainerDto
+public class CargoTransportDto
 {
     public required string ContainerNumber { get; set; }
     public required string ContainerPosition { get; set; }
