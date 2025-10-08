@@ -55,6 +55,7 @@ public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
         if (decision == null) { throw new ArgumentNullException(nameof(decision)); }
 
         NotificationDecisions.Add(decision);
+        UpdateStatus(NotificationStatus.Decided);
     }
 
     public VesselVisitNotificationDto ToDTO()
