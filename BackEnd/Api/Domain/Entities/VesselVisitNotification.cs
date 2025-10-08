@@ -20,8 +20,8 @@ public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
     public string? SpecialRequirements { get; private set; }
     public virtual Crew? CrewDetails { get; private set; }
 
-    public virtual LoadCargoManifest? LoadCargoManifest { get; private set; }
-    public virtual UnloadCargoManifest? UnloadCargoManifest { get; private set; }
+    public virtual CargoManifest? LoadCargoManifest { get; private set; }
+    public virtual CargoManifest? UnloadCargoManifest { get; private set; }
 
     public virtual Vessel Vessel { get; private set; }
     public virtual Representative Representative { get; private set; } 

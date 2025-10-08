@@ -1,20 +1,23 @@
 using Api.Domain.Entities;
 using Api.Domain.ValueObjects;
+using Api.Infrastructure.Utilities;
+
 
 namespace Api.Domain.ValueObjects;
 
 public class CargoTransport
 {
     public Guid Id { get; private set; }
-    public virtual ContainerPosition Position { get; private set; }
-    public virtual StorageArea Area { get; private set; }
+    public virtual Either<StorageArea, ContainerPosition> Source { get; private set; }
+    public virtual Either<StorageArea, ContainerPosition> Destination { get; private set; }
     public virtual Container Container { get; private set; }
 
-    public CargoTransport(ContainerPosition position, StorageArea area, Container container)
+    public CargoTransport(Either<StorageArea, ContainerPosition> source,
+                          Either<StorageArea, ContainerPosition> destination, Container container)
     {
         Id = Guid.NewGuid();
-        Position = position;
-        Area = area;
+        Source = source;
+        Destination = destination;
         Container = container;
     }
 

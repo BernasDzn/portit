@@ -4,27 +4,28 @@ using Api.Infrastructure.Utilities;
 
 namespace Api.Domain.Entities;
 
-public class UnloadCargoManifest : IDTOAble<UnloadCargoManifestDto>
+public class CargoManifest : IDTOAble<CargoManifestDto>
 {
     public Guid Id { get; private set; }
     public virtual ICollection<CargoTransport> Items { get; private set; }
 
-    protected UnloadCargoManifest() { }
+    protected CargoManifest() { }
 
-    public UnloadCargoManifest(ICollection<CargoTransport> items)
+    public CargoManifest(ICollection<CargoTransport> items)
     {
         Id = Guid.NewGuid();
         Items = items;
     }
 
-    public UnloadCargoManifestDto ToDTO()
+    public CargoManifestDto ToDTO()
     {
-        return new UnloadCargoManifestDto
+        return new CargoManifestDto
         {
             Items = Items.Select(item => new CargoTransportDto
             {
                 ContainerNumber = item.Container.ContainerNumber.ToString(),
-                ContainerPosition = item.Position.ToString(),
+                Source = item.Source.ToString(),
+                Destination = item.Destination.ToString(),
                 CargoType = item.Container.CargoType.Type.ToString(),
                 Description = item.Container.Description
             }).ToList()
