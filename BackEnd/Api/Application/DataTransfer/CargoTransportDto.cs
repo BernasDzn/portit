@@ -1,8 +1,10 @@
+using Api.Infrastructure.Utilities;
+
+namespace Api.Application.DataTransfer;
+
 public class CargoTransportDto
 {
-    public required string ContainerNumber { get; set; }
-    public required string Source { get; set; }
-    public required string Destination { get; set; }
-    public required string CargoType { get; set; }
-    public required string Description { get; set; }
+    public required ContainerDto Container { get; set; }
+    public required Either<StorageAreaDto, ContainerPositionDto> Source { get; set; }
+    public required Either<StorageAreaDto, ContainerPositionDto> Destination { get; set; }
 }

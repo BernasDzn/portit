@@ -31,7 +31,7 @@ public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
     protected VesselVisitNotification() { }
 
     public VesselVisitNotification(DateTime expectedArrival, DateTime expectedDeparture, bool isCargoHazardous, Vessel vessel, Representative representative,
-     string? specialRequirements = null, Crew? crewDetails = null)
+     string? specialRequirements = null, Crew? crewDetails = null, CargoManifest? loadCargoManifest = null, CargoManifest? unloadCargoManifest = null)
     {
         Id = Guid.NewGuid();
         ExpectedArrival = expectedArrival;
@@ -39,6 +39,8 @@ public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
         IsCargoHazardous = isCargoHazardous;
         SpecialRequirements = specialRequirements;
         CrewDetails = crewDetails;
+        LoadCargoManifest = loadCargoManifest;
+        UnloadCargoManifest = unloadCargoManifest;
         Vessel = vessel;
         Representative = representative;
     }
@@ -62,12 +64,13 @@ public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
     {
         return new VesselVisitNotificationDto
         {
-            Id = Id,
             ExpectedArrival = ExpectedArrival,
             ExpectedDeparture = ExpectedDeparture,
             IsCargoHazardous = IsCargoHazardous,
             SpecialRequirements = SpecialRequirements,
             CrewDetails = CrewDetails?.ToDTO(),
+            LoadCargoManifest = LoadCargoManifest?.ToDTO(),
+            UnloadCargoManifest = UnloadCargoManifest?.ToDTO(),
             Vessel = Vessel.ToDTO(),
             Representative = Representative.ToDTO()
         };

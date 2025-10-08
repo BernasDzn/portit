@@ -21,14 +21,7 @@ public class CargoManifest : IDTOAble<CargoManifestDto>
     {
         return new CargoManifestDto
         {
-            Items = Items.Select(item => new CargoTransportDto
-            {
-                ContainerNumber = item.Container.ContainerNumber.ToString(),
-                Source = item.Source.ToString(),
-                Destination = item.Destination.ToString(),
-                CargoType = item.Container.CargoType.Type.ToString(),
-                Description = item.Container.Description
-            }).ToList()
+            Items = Items.Select(item => item.ToDTO()).ToList()
         };
     }
 }

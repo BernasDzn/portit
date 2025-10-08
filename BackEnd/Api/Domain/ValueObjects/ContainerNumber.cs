@@ -1,7 +1,11 @@
+using System.Text.RegularExpressions;
+using Microsoft.EntityFrameworkCore;
+
 namespace Api.Domain.ValueObjects;
 
 using System;
 
+[Owned]
 public class ContainerNumber
 {
     public Guid Id { get; set; }

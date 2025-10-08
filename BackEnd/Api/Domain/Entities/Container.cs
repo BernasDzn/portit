@@ -12,12 +12,26 @@ public class Container : IDTOAble<ContainerDto>
     public virtual CargoType CargoType { get; private set; }
     public string Description { get; private set; }
 
+    public Container(ContainerNumber containerNumber, ContainerPosition containerPosition, CargoType cargoType, string description)
+    {
+        Id = Guid.NewGuid();
+        ContainerNumber = containerNumber;
+        ContainerPosition = containerPosition;
+        CargoType = cargoType;
+        Description = description;
+    }
+
+    //EF Core
+    protected Container() { }
+
     public ContainerDto ToDTO()
     {
         return new ContainerDto
         {
             ContainerNumber = ContainerNumber.ToString(),
-            ContainerPosition = ContainerPosition.ToString(),
+            ContainerRow = ContainerPosition.Row,
+            ContainerBay = ContainerPosition.Bay,
+            ContainerTier = ContainerPosition.Tier,
             CargoType = CargoType.Type.ToString(),
             Description = Description
         };

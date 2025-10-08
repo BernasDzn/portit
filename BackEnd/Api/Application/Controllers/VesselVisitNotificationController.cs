@@ -26,12 +26,23 @@ public class VesselVisitNotificationController : ControllerBase
         IEnumerable<VesselVisitNotificationDto> notificationsDto = await _notificationService.GetVesselVisitNotifications();
         return Ok(notificationsDto);
     }
-    
+
     [HttpGet("decisions", Name = "GetNotificationDecisions")]
     public async Task<ActionResult<IEnumerable<NotificationDecisionDto>>> GetDecisions([FromQuery] Guid vesselVisitNotificationId)
     {
-        IEnumerable<NotificationDecisionDto> notificationsDto = await _notificationDecisionService.GetNotificationDecisions( vesselVisitNotificationId );
+        IEnumerable<NotificationDecisionDto> notificationsDto = await _notificationDecisionService.GetNotificationDecisions(vesselVisitNotificationId);
         return Ok(notificationsDto);
     }
+    
+    [HttpPost(Name = "CreateVesselVisitNotification")]
+    public async Task<ActionResult<VesselVisitNotificationDto>> Create([FromBody] VesselVisitNotificationDto vesselVisitNotificationDto)
+    {
+        var createdNotification = await _notificationService.Add(vesselVisitNotificationDto);
+        if (createdNotification == null)
+        {
+            return BadRequest("Invalid data provided.");
+        }
 
+        return CreatedAtAction(nameof(GetAll), null, createdNotification);
+    }
 }

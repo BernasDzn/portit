@@ -1,9 +1,13 @@
 using Api.Application.DataTransfer;
 using Api.Infrastructure.Utilities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.Domain.ValueObjects;
 
-public class ContainerPosition
+using System;
+
+[Owned]
+public class ContainerPosition : IDTOAble<ContainerPositionDto>
 {
     public Guid Id { get; private set; }
     public string Bay { get; private set; }
@@ -22,4 +26,11 @@ public class ContainerPosition
     }
 
     public override string ToString() => $"Bay: {Bay}, Row: {Row}, Tier: {Tier}";
+
+    public ContainerPositionDto ToDTO() => new ContainerPositionDto
+    {
+        Bay = Bay,
+        Row = Row,
+        Tier = Tier
+    };
 }

@@ -59,7 +59,7 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
     }
 
 
-    public new async Task<VesselVisitNotification> Add(VesselVisitNotification vesselVisitNotification)
+    public async Task<VesselVisitNotification> AddAsync(VesselVisitNotification vesselVisitNotification)
     {
         try
         {

@@ -1,11 +1,12 @@
 using Api.Domain.Entities;
 using Api.Domain.ValueObjects;
 using Api.Infrastructure.Utilities;
+using Api.Application.DataTransfer;
 
 
 namespace Api.Domain.ValueObjects;
 
-public class CargoTransport
+public class CargoTransport : IDTOAble<CargoTransportDto>
 {
     public Guid Id { get; private set; }
     public virtual Either<StorageArea, ContainerPosition> Source { get; private set; }
@@ -22,4 +23,9 @@ public class CargoTransport
     }
 
     protected CargoTransport() { }
+
+    public CargoTransportDto ToDTO()
+    {
+        throw new NotImplementedException();
+    }
 }
