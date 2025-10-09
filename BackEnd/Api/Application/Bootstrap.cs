@@ -4,6 +4,7 @@ using System.Globalization;
 using Api.Domain.Entities;
 using Api.Domain.ValueObjects;
 using Api.Infrastructure.Persistence;
+using Api.Infrastructure.Utilities;
 
 public static class Bootstrap
 {
@@ -325,26 +326,50 @@ public static class Bootstrap
         var vessel3 = context.Vessels.Skip(2).First();
         var vessel4 = context.Vessels.Skip(3).First();
 
+        var sa1 = context.StorageAreas.First(sa => sa.AreaType == StorageAreaType.Yard);
+
+        var UnloadCargoManifest = new CargoManifest(new List<CargoTransport>
+        {
+            new CargoTransport(
+                new ContainerPosition("10", "5", "10"),
+                sa1,
+                new Container(
+                    new ContainerNumber("CMAU2468103"),
+                    new ContainerPosition("10", "5", "10"),
+                    new CargoType(CargoTypes.GENERAL_CONSUMER_PRODUCTS),
+                    "chilly yummy food"
+                )
+            )
+        });
+
         VesselVisitNotification vvn1 = new VesselVisitNotification(
-            "PORTO",
-            "000001",
+            new VesselVisitNotificationId(
+                new Designation { Value = "PORTO" },
+                1,
+                (uint)DateTime.UtcNow.Year
+            ),
             DateTime.UtcNow.AddDays(1),
             DateTime.UtcNow.AddDays(5),
             false,
             vessel1,
-            context.ShippingAgentOrganizations.First().Representatives.First(),
+            vessel1.Owner.Representatives.First(),
             "Requires additional security measures",
-            new Crew("Mario Silva", 5, new HashSet<SafetyOfficer>())
+            new Crew("Mario Silva", 5, new HashSet<SafetyOfficer>()),
+            null,
+            UnloadCargoManifest
         );
 
         VesselVisitNotification vvn2 = new VesselVisitNotification(
-            "PORTO",
-            "000002",
+            new VesselVisitNotificationId(
+                new Designation { Value = "PORTO" },
+                2,
+                (uint)DateTime.UtcNow.Year
+            ),
             DateTime.UtcNow.AddDays(7),
             DateTime.UtcNow.AddDays(10),
             false,
             vessel2,
-            context.ShippingAgentOrganizations.First().Representatives.First()
+            vessel2.Owner.Representatives.First()
         );
 
         HashSet<SafetyOfficer> safetyOfficers = new HashSet<SafetyOfficer>
@@ -356,25 +381,31 @@ public static class Bootstrap
         Crew crewDetails = new Crew("Ana Costa", 3, safetyOfficers);
 
         VesselVisitNotification vvn3 = new VesselVisitNotification(
-            "PORTO",
-            "000003",
+            new VesselVisitNotificationId(
+                new Designation { Value = "PORTO" },
+                3,
+                (uint)DateTime.UtcNow.Year
+            ),
             DateTime.UtcNow.AddDays(12),
             DateTime.UtcNow.AddDays(15),
             true,
             vessel3,
-            context.ShippingAgentOrganizations.First().Representatives.First(),
+            vessel3.Owner.Representatives.First(),
             "Handles hazardous materials",
             crewDetails
         );
 
         VesselVisitNotification vvn4 = new VesselVisitNotification(
-            "PORTO",
-            "000004",
+            new VesselVisitNotificationId(
+                new Designation { Value = "PORTO" },
+                4,
+                (uint)DateTime.UtcNow.Year
+            ),
             DateTime.UtcNow.AddDays(12),
             DateTime.UtcNow.AddDays(15),
             true,
             vessel4,
-            context.ShippingAgentOrganizations.First().Representatives.First(),
+            vessel4.Owner.Representatives.First(),
             "Handles hazardous materials",
             crewDetails
         );

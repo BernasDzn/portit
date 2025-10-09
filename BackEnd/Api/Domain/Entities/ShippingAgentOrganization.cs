@@ -30,6 +30,11 @@ public class ShippingAgentOrganization : IDTOAble<ShippingAgentOrganizationDto>
         Representatives = representatives;
     }
 
+    internal bool IsRepresentedBy(Representative representative)
+    {
+        return Representatives.Contains(representative);
+    }
+
     public ShippingAgentOrganizationDto ToDTO()
     {
         return new ShippingAgentOrganizationDto

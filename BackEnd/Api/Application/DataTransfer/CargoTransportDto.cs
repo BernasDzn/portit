@@ -5,6 +5,6 @@ namespace Api.Application.DataTransfer;
 public class CargoTransportDto
 {
     public required ContainerDto Container { get; set; }
-    public required Either<StorageAreaDto, ContainerPositionDto> Source { get; set; }
-    public required Either<StorageAreaDto, ContainerPositionDto> Destination { get; set; }
+    public required ContainerPositionDto Position { get; set; }
+    public required StorageAreaDto Area { get; set; }
 }

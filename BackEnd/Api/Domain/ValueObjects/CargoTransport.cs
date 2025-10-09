@@ -9,23 +9,27 @@ namespace Api.Domain.ValueObjects;
 public class CargoTransport : IDTOAble<CargoTransportDto>
 {
     public Guid Id { get; private set; }
-    public virtual Either<StorageArea, ContainerPosition> Source { get; private set; }
-    public virtual Either<StorageArea, ContainerPosition> Destination { get; private set; }
+    public virtual ContainerPosition Position { get; private set; }
+    public virtual StorageArea Area { get; private set; }
     public virtual Container Container { get; private set; }
 
-    public CargoTransport(Either<StorageArea, ContainerPosition> source,
-                          Either<StorageArea, ContainerPosition> destination, Container container)
+    public CargoTransport(ContainerPosition position, StorageArea area, Container container)
     {
         Id = Guid.NewGuid();
-        Source = source;
-        Destination = destination;
-        Container = container;
+        Position = position ?? throw new ArgumentNullException("Invalid position in CargoTransport: " + position);
+        Area = area ?? throw new ArgumentNullException("Invalid area in CargoTransport: " + area);
+        Container = container ?? throw new ArgumentNullException("Invalid container in CargoTransport: " + container);
     }
 
     protected CargoTransport() { }
 
     public CargoTransportDto ToDTO()
     {
-        throw new NotImplementedException();
+        return new CargoTransportDto
+        {
+            Container = Container.ToDTO(),
+            Area = Area.ToDTO(),
+            Position = Position.ToDTO()
+        };
     }
 }
