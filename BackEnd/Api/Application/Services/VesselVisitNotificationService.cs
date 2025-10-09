@@ -53,134 +53,58 @@ public class VesselVisitNotificationService
         CargoManifest? loadCargoManifest = null;
         if (vesselVisitNotificationDto.LoadCargoManifest != null)
         {
-            var loadCargoManifestItems = new List<CargoTransport>();
+            var loadItems = new List<CargoTransport>();
             foreach (var item in vesselVisitNotificationDto.LoadCargoManifest.Items)
             {
-                Either<StorageArea, ContainerPosition> source;
-                if (item.Source.IsLeft)
-                {
-                    var storageArea = await _storageAreaRepository.GetStorageAreaByCodeAsync(item.Source.Left.NameCode);
-                    if (storageArea == null)
-                    {
-                        continue;
-                    }
-                    source = new Either<StorageArea, ContainerPosition>(storageArea);
-                }
-                else
-                {
-                    var containerPositionDto = item.Source.Right;
-                    var containerPosition = new ContainerPosition(
-                        containerPositionDto.Row,
-                        containerPositionDto.Bay,
-                        containerPositionDto.Tier
-                    );
-                    source = new Either<StorageArea, ContainerPosition>(containerPosition);
-                }
-
-                Either<StorageArea, ContainerPosition> destination;
-                if (item.Destination.IsLeft)
-                {
-                    var storageArea = await _storageAreaRepository.GetStorageAreaByCodeAsync(item.Destination.Left.NameCode);
-                    if (storageArea == null)
-                    {
-                        continue;
-                    }
-                    destination = new Either<StorageArea, ContainerPosition>(storageArea);
-                }
-                else
-                {
-                    var containerPositionDto = item.Destination.Right;
-                    var containerPosition = new ContainerPosition(
-                        containerPositionDto.Row,
-                        containerPositionDto.Bay,
-                        containerPositionDto.Tier
-                    );
-                    destination = new Either<StorageArea, ContainerPosition>(containerPosition);
-                }
-
-                var containerDto = item.Container;
-                var container = new Container(
-                    new ContainerNumber(containerDto.ContainerNumber),
-                    new ContainerPosition(containerDto.ContainerRow, containerDto.ContainerBay, containerDto.ContainerTier),
-                    new CargoType(CargoType.FromString(containerDto.CargoType)),
-                    containerDto.Description
+                Container container = new Container(
+                    new ContainerNumber(item.Container.ContainerNumber),
+                    item.Container.ContainerRow != null && item.Container.ContainerBay != null && item.Container.ContainerTier != null
+                        ? new ContainerPosition(item.Container.ContainerRow, item.Container.ContainerBay, item.Container.ContainerTier)
+                        : null,
+                    new CargoType(CargoType.FromString(item.Container.CargoType)),
+                    item.Container.Description
                 );
 
-                var cargoTransport = new CargoTransport(
-                    source,
-                    destination,
+                StorageArea? area = await _storageAreaRepository.GetStorageAreaByCodeAsync(item.Area.NameCode);
+                if (area == null) throw new ArgumentException("Invalid Storage Area in Load Cargo Manifest: " + item.Area.NameCode);
+
+                CargoTransport cargoTransport = new CargoTransport(
+                    new ContainerPosition(item.Position.Row, item.Position.Bay, item.Position.Tier),
+                    area,
                     container
                 );
-                loadCargoManifestItems.Add(cargoTransport);
+                loadItems.Add(cargoTransport);
             }
-            loadCargoManifest = new CargoManifest(loadCargoManifestItems);
+            loadCargoManifest = new CargoManifest(loadItems);
         }
 
         CargoManifest? unloadCargoManifest = null;
         if (vesselVisitNotificationDto.UnloadCargoManifest != null)
         {
-            var unloadCargoManifestItems = new List<CargoTransport>();
+            var unloadItems = new List<CargoTransport>();
             foreach (var item in vesselVisitNotificationDto.UnloadCargoManifest.Items)
             {
-                Either<StorageArea, ContainerPosition> source;
-                if (item.Source.IsLeft)
-                {
-                    var storageArea = await _storageAreaRepository.GetStorageAreaByCodeAsync(item.Source.Left.NameCode);
-                    if (storageArea == null)
-                    {
-                        continue;
-                    }
-                    source = new Either<StorageArea, ContainerPosition>(storageArea);
-                }
-                else
-                {
-                    var containerPositionDto = item.Source.Right;
-                    var containerPosition = new ContainerPosition(
-                        containerPositionDto.Row,
-                        containerPositionDto.Bay,
-                        containerPositionDto.Tier
-                    );
-                    source = new Either<StorageArea, ContainerPosition>(containerPosition);
-                }
-
-                Either<StorageArea, ContainerPosition> destination;
-                if (item.Destination.IsLeft)
-                {
-                    var storageArea = await _storageAreaRepository.GetStorageAreaByCodeAsync(item.Destination.Left.NameCode);
-                    if (storageArea == null)
-                    {
-                        continue;
-                    }
-                    destination = new Either<StorageArea, ContainerPosition>(storageArea);
-                }
-                else
-                {
-                    var containerPositionDto = item.Destination.Right;
-                    var containerPosition = new ContainerPosition(
-                        containerPositionDto.Row,
-                        containerPositionDto.Bay,
-                        containerPositionDto.Tier
-                    );
-                    destination = new Either<StorageArea, ContainerPosition>(containerPosition);
-                }
-
-                var containerDto = item.Container;
-                var container = new Container(
-                    new ContainerNumber(containerDto.ContainerNumber),
-                    new ContainerPosition(containerDto.ContainerRow, containerDto.ContainerBay, containerDto.ContainerTier),
-                    new CargoType(CargoType.FromString(containerDto.CargoType)),
-                    containerDto.Description
+                Container container = new Container(
+                    new ContainerNumber(item.Container.ContainerNumber),
+                    item.Container.ContainerRow != null && item.Container.ContainerBay != null && item.Container.ContainerTier != null
+                        ? new ContainerPosition(item.Container.ContainerRow, item.Container.ContainerBay, item.Container.ContainerTier)
+                        : null,
+                    new CargoType(CargoType.FromString(item.Container.CargoType)),
+                    item.Container.Description
                 );
 
-                var cargoTransport = new CargoTransport(
-                    source,
-                    destination,
+                StorageArea? area = await _storageAreaRepository.GetStorageAreaByCodeAsync(item.Area.NameCode);
+                if (area == null) throw new ArgumentException("Invalid Storage Area in Unload Cargo Manifest: " + item.Area.NameCode);
+
+                CargoTransport cargoTransport = new CargoTransport(
+                    new ContainerPosition(item.Position.Row, item.Position.Bay, item.Position.Tier),
+                    area,
                     container
                 );
-                unloadCargoManifestItems.Add(cargoTransport);
+                unloadItems.Add(cargoTransport);
             }
-            unloadCargoManifest = new CargoManifest(unloadCargoManifestItems);
-        }
+            unloadCargoManifest = new CargoManifest(unloadItems);
+        } 
 
         IEnumerable<VesselVisitNotification> notifications = await _notificationRepository.GetVesselVisitNotificationsAsync();
         int sequenceNumber = notifications.Count(n => n.ExpectedArrival.Year == DateTime.UtcNow.Year) + 1;

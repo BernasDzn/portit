@@ -4,6 +4,7 @@ using System.Globalization;
 using Api.Domain.Entities;
 using Api.Domain.ValueObjects;
 using Api.Infrastructure.Persistence;
+using Api.Infrastructure.Utilities;
 
 public static class Bootstrap
 {
@@ -325,6 +326,22 @@ public static class Bootstrap
         var vessel3 = context.Vessels.Skip(2).First();
         var vessel4 = context.Vessels.Skip(3).First();
 
+        var sa1 = context.StorageAreas.First(sa => sa.AreaType == StorageAreaType.Yard);
+
+        var UnloadCargoManifest = new CargoManifest(new List<CargoTransport>
+        {
+            new CargoTransport(
+                new ContainerPosition("10", "5", "10"),
+                sa1,
+                new Container(
+                    new ContainerNumber("CMAU2468103"),
+                    new ContainerPosition("10", "5", "10"),
+                    new CargoType(CargoTypes.GENERAL_CONSUMER_PRODUCTS),
+                    "chilly yummy food"
+                )
+            )
+        });
+
         VesselVisitNotification vvn1 = new VesselVisitNotification(
             "PORTO",
             "000001",
@@ -334,7 +351,9 @@ public static class Bootstrap
             vessel1,
             context.ShippingAgentOrganizations.First().Representatives.First(),
             "Requires additional security measures",
-            new Crew("Mario Silva", 5, new HashSet<SafetyOfficer>())
+            new Crew("Mario Silva", 5, new HashSet<SafetyOfficer>()),
+            null,
+            UnloadCargoManifest
         );
 
         VesselVisitNotification vvn2 = new VesselVisitNotification(
