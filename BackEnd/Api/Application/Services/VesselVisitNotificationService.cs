@@ -12,16 +12,21 @@ public class VesselVisitNotificationService
     private readonly IVesselRepository _vesselRepository;
     private readonly IRepresentativeRepository _representativeRepository;
     private readonly IStorageAreaRepository _storageAreaRepository;
+    private readonly VesselVisitNotificationIdGenerator _idGenerator;
 
-    public VesselVisitNotificationService(IVesselVisitNotificationRepository notificationRepository,
-                                          IVesselRepository vesselRepository,
-                                          IRepresentativeRepository representativeRepository,
-                                          IStorageAreaRepository storageAreaRepository)
+    public VesselVisitNotificationService(
+        IVesselVisitNotificationRepository notificationRepository,
+        IVesselRepository vesselRepository,
+        IRepresentativeRepository representativeRepository,
+        IStorageAreaRepository storageAreaRepository,
+        VesselVisitNotificationIdGenerator idGenerator
+    )
     {
         _notificationRepository = notificationRepository;
         _vesselRepository = vesselRepository;
         _representativeRepository = representativeRepository;
         _storageAreaRepository = storageAreaRepository;
+        _idGenerator = idGenerator;
     }
 
     public async Task<IEnumerable<VesselVisitNotificationDto>> GetVesselVisitNotifications()
@@ -36,7 +41,7 @@ public class VesselVisitNotificationService
         if (vessel == null) return null;
 
         Representative representative = await _representativeRepository.GetByCitizenIdAsync(
-            vesselVisitNotificationDto.Representative.CitizenshipId.ToString()
+            vesselVisitNotificationDto.Submitter.CitizenshipId.ToString()
             );
         if (representative == null) return null;
 
@@ -111,8 +116,7 @@ public class VesselVisitNotificationService
         string sequenceNumberStr = sequenceNumber.ToString("D6"); // Pad with leading zeros
         
         VesselVisitNotification notification = new VesselVisitNotification(
-            "PORTO",
-            sequenceNumberStr,
+            _idGenerator.Generate((uint) vesselVisitNotificationDto.ExpectedArrival.Date.Year),
             vesselVisitNotificationDto.ExpectedArrival,
             vesselVisitNotificationDto.ExpectedDeparture,
             vesselVisitNotificationDto.IsCargoHazardous,
