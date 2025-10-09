@@ -11,6 +11,6 @@ public class VesselVisitNotificationDto
     public CargoManifestDto? LoadCargoManifest { get; set; }
     public CargoManifestDto? UnloadCargoManifest { get; set; }
     public required VesselDto Vessel { get; set; }
-    public required RepresentativeDto Representative { get; set; }
+    public required RepresentativeDto Submitter { get; set; }
     
 }

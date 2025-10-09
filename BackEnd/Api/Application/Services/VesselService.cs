@@ -39,9 +39,10 @@ public class VesselService
         VesselType? vesselType = await _vesselTypeRepository.GetVesselTypeByNameAsync(vesselDto.Type.Name);
         if (vesselType == null)
             throw new EntityNotFoundException("The referenced vessel type does not exist");
-        ShippingAgentOrganization? org = null;
-        if (vesselDto.Owner != null)
-            org = _shippingAgentOrgRepository.GetByName(vesselDto.Owner.Name);
+
+        ShippingAgentOrganization? org = _shippingAgentOrgRepository.GetByName(vesselDto.Owner.Name);
+        if (org == null)
+            throw new EntityNotFoundException("The referenced shipping agent organization does not exist");
 
         Vessel vessel = new Vessel(
             Guid.NewGuid(),
@@ -74,9 +75,9 @@ public class VesselService
         if (vesselType == null)
             throw new EntityNotFoundException("The referenced vessel type does not exist");
 
-        ShippingAgentOrganization? org = null;
-        if (vesselDto.Owner != null)
-            org = _shippingAgentOrgRepository.GetByName(vesselDto.Owner.Name);
+        ShippingAgentOrganization? org = _shippingAgentOrgRepository.GetByName(vesselDto.Owner.Name);
+        if (org == null)
+            throw new EntityNotFoundException("The referenced shipping agent organization does not exist");
 
         vessel.UpdateName(vesselDto.Name);
         vessel.UpdateImoNumber(vesselDto.ImoNumber);

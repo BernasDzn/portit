@@ -27,19 +27,27 @@ public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
     public virtual CargoManifest? UnloadCargoManifest { get; private set; }
 
     public virtual Vessel Vessel { get; private set; }
-    public virtual Representative Representative { get; private set; } 
+    public virtual Representative Submitter { get; private set; } 
     public NotificationStatus Status { get; private set; } = NotificationStatus.InProgress;
     public virtual ICollection<NotificationDecision> NotificationDecisions { get; private set; } = new LinkedList<NotificationDecision>();
 
     protected VesselVisitNotification() { }
 
-    public VesselVisitNotification(string IdPortCode, string IdSequenceNumber,
-        DateTime expectedArrival, DateTime expectedDeparture, bool isCargoHazardous, Vessel vessel, Representative representative,
-        string? specialRequirements = null, Crew? crewDetails = null, CargoManifest? loadCargoManifest = null, CargoManifest? unloadCargoManifest = null
+    public VesselVisitNotification(
+        VesselVisitNotificationId notificationId,
+        DateTime expectedArrival,
+        DateTime expectedDeparture,
+        bool isCargoHazardous,
+        Vessel vessel,
+        Representative submitter,
+        string? specialRequirements = null,
+        Crew? crewDetails = null,
+        CargoManifest? loadCargoManifest = null,
+        CargoManifest? unloadCargoManifest = null
     )
     {
         Id = Guid.NewGuid();
-        NotificationId = new VesselVisitNotificationId(IdPortCode, IdSequenceNumber);
+        NotificationId = notificationId ?? throw new ArgumentNullException(nameof(notificationId));
         ExpectedArrival = expectedArrival;
         ExpectedDeparture = expectedDeparture;
         IsCargoHazardous = isCargoHazardous;
@@ -48,7 +56,11 @@ public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
         LoadCargoManifest = loadCargoManifest;
         UnloadCargoManifest = unloadCargoManifest;
         Vessel = vessel;
-        Representative = representative;
+
+        if (!vessel.Owner.IsRepresentedBy(submitter))
+            throw new InvalidRepresentativeException("The provided representative does not represent the vessel owner.");
+
+        Submitter = submitter;
     }
 
     public void Submit()
@@ -99,7 +111,7 @@ public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
             LoadCargoManifest = LoadCargoManifest?.ToDTO(),
             UnloadCargoManifest = UnloadCargoManifest?.ToDTO(),
             Vessel = Vessel.ToDTO(),
-            Representative = Representative.ToDTO()
+            Submitter = Submitter.ToDTO()
         };
     }
 }

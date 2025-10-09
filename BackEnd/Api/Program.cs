@@ -40,6 +40,7 @@ builder.Services.AddTransient<IStaffRepository, StaffRepository>();
 builder.Services.AddTransient<StaffService>();
 builder.Services.AddTransient<IVesselVisitNotificationRepository, VesselVisitNotificationRepository>();
 builder.Services.AddTransient<VesselVisitNotificationService>();
+builder.Services.AddTransient<VesselVisitNotificationIdGenerator>();
 builder.Services.AddTransient<NotificationDecisionService>();
 
 var app = builder.Build();

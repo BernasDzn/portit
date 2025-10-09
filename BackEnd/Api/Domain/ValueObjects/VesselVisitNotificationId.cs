@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Domain.ValueObjects;
@@ -22,21 +23,23 @@ public class VesselVisitNotificationId
     public string Value
     {
         get => _value;
-        set
+        private set
         {
-            if (string.IsNullOrWhiteSpace(value) || !System.Text.RegularExpressions.Regex.IsMatch(value, IdPattern))
-                throw new ArgumentException("Invalid VesselVisitNotificationId format. Expected format: YYYY-PORTCODE-XXXXXX", value);
+            if (!Regex.IsMatch(value, IdPattern))
+                throw new ArgumentException("Invalid Vessel Visit Notification ID format.", nameof(value));
 
             _value = value;
         }
     }
 
-    public VesselVisitNotificationId(string portCode = "PORT", string number = "000001")
+    public VesselVisitNotificationId(Designation portCode, uint number, uint? date = null)
     {
-        if (string.IsNullOrWhiteSpace(portCode) || portCode.Length < 2 || portCode.Length > 10 || !System.Text.RegularExpressions.Regex.IsMatch(portCode, @"^[A-Z0-9]+$"))
-            throw new ArgumentException("Port code must be 3 to 5 uppercase alphanumeric characters", portCode);
+        if (portCode == null || portCode.Value.Length < 2 || portCode.Value.Length > 10 || !Regex.IsMatch(portCode.Value, @"^[A-Z0-9]+$"))
+            throw new ArgumentException("Port code must be 2 to 10 uppercase alphanumeric characters.", nameof(portCode));
 
-        Value = $"{DateTime.UtcNow.Year}-{portCode}-{number}";
+        string year = date.ToString() ?? (DateTime.UtcNow.Year.ToString());
+        string sequentialNumber = number.ToString("D6");
+        Value = $"{year}-{portCode.Value}-{sequentialNumber}";
     }
     public VesselVisitNotificationId() { } // For EF Core
 
