@@ -7,10 +7,12 @@ using Api.Domain.IRepository;
 public class NotificationDecisionService
 {
     private readonly IVesselVisitNotificationRepository _notificationRepository;
+    private readonly IDockRepository _dockRepository;
 
-    public NotificationDecisionService(IVesselVisitNotificationRepository notificationRepository)
+    public NotificationDecisionService(IVesselVisitNotificationRepository notificationRepository, IDockRepository dockRepository)
     {
         _notificationRepository = notificationRepository;
+        _dockRepository = dockRepository;
     }
 
     public async Task<IEnumerable<NotificationDecisionDto>> GetNotificationDecisions(string vesselVisitNotificationId )
@@ -29,12 +31,36 @@ public class NotificationDecisionService
             throw new Exception("Vessel Visit Notification not found.");
         }
 
-        NotificationDecision notificationDecision = new NotificationDecision(notificationDecisionDto.Status == 1 ? NotificationDecisionStatus.Approved : NotificationDecisionStatus.Rejected,
-            notificationDecisionDto.DecisionDate, notificationDecisionDto.OfficerID, null, notificationDecisionDto.Reason);
+        NotificationDecision notificationDecision;
+
+        if (notificationDecisionDto.Status == 1)
+        {
+            if (notificationDecisionDto.AssignedDock == null)
+                throw new ArgumentException("AssignedDock must be provided for accepted decisions.", nameof(notificationDecisionDto.AssignedDock));
+            
+            Dock assignedDock = await _dockRepository.GetDockByNameAsync(notificationDecisionDto.AssignedDock.Name);
+            
+
+            notificationDecision = NotificationDecisionFactory.CreateAccepted(
+                reason: notificationDecisionDto.Reason,
+                assignedDock: assignedDock,
+                decisionDate: notificationDecisionDto.DecisionDate);
+        }
+        else if (notificationDecisionDto.Status == 2)
+        {
+            notificationDecision = NotificationDecisionFactory.CreateRejected(
+                reason: notificationDecisionDto.Reason ?? "No reason provided",
+                isPermanent: notificationDecisionDto.IsFinal,
+                decisionDate: notificationDecisionDto.DecisionDate);
+        }
+        else
+            throw new ArgumentException("Invalid status value.", nameof(notificationDecisionDto.Status));
+
 
         notification.AddDecision(notificationDecision);
 
-        var createdDecision = await _notificationRepository.AddNotificationDecisionAsync(notification);
+        var updatedNotification = await _notificationRepository.Update(notification);
+        var createdDecision = updatedNotification.NotificationDecisions.Last();
         
         return createdDecision.ToDTO();
     }

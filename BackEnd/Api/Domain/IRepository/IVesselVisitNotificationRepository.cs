@@ -11,6 +11,5 @@ public interface IVesselVisitNotificationRepository : IGenericRepository<VesselV
 	Task<VesselVisitNotification> GetVesselVisitNotificationByVesselIMOAsync(string imoNumber);
 	Task<IEnumerable<NotificationDecision>> GetNotificationDecisionsAsync(string notificationId);
 	Task<VesselVisitNotification> AddAsync(VesselVisitNotification VesselVisitNotification);
-	Task<bool> Update(VesselVisitNotification VesselVisitNotification);
-	Task<NotificationDecision> AddNotificationDecisionAsync(VesselVisitNotification notification);
+	Task<VesselVisitNotification> Update(VesselVisitNotification VesselVisitNotification);
 }

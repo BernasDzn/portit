@@ -85,13 +85,13 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
         }
     }
 
-    public async Task<bool> Update(VesselVisitNotification vesselVisitNotification)
+    public async Task<VesselVisitNotification> Update(VesselVisitNotification vesselVisitNotification)
     {
         try
         {
             _context.VesselVisitNotifications.Update(vesselVisitNotification);
             await _context.SaveChangesAsync();
-            return true;
+            return vesselVisitNotification;
         }
         catch
         {
@@ -99,17 +99,4 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
         }
     }
 
-    public async Task<NotificationDecision> AddNotificationDecisionAsync(VesselVisitNotification notification)
-    {
-        try
-        {
-            _context.VesselVisitNotifications.Update(notification);
-            await _context.SaveChangesAsync();
-            return notification.NotificationDecisions.Last();
-        }
-        catch
-        {
-            throw;
-        }
-    }
 }
