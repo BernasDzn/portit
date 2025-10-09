@@ -68,12 +68,12 @@ namespace Api.Tests.Controllers
             response.EnsureSuccessStatusCode();
             var responseBody = await response.Content.ReadAsStringAsync();
             Assert.NotNull(responseBody);
-
-            var jsonDocument = JsonDocument.Parse(responseBody);
-            var jsonArray = jsonDocument.RootElement;
-
-            Assert.True(jsonArray.ValueKind == JsonValueKind.Array, "Response body is not a JSON array");
-            Assert.True(jsonArray.GetArrayLength() >= 0);
+            var docks = JsonSerializer.Deserialize<List<DockDto>>(responseBody, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+            Assert.NotNull(docks);
+            Assert.IsType<List<DockDto>>(docks);
         }
 
 
