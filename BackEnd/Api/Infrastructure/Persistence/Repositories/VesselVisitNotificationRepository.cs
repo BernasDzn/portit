@@ -1,5 +1,6 @@
 namespace Api.Infrastructure.Persistence.Repositories;
 
+using Api.Application.Exceptions;
 using Api.Domain.Entities;
 using Api.Domain.IRepository;
 using Microsoft.EntityFrameworkCore;
@@ -85,7 +86,7 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
         }
     }
 
-    public async Task<VesselVisitNotification> Update(VesselVisitNotification vesselVisitNotification)
+    public async Task<VesselVisitNotification> UpdateAsync(VesselVisitNotification vesselVisitNotification)
     {
         try
         {
@@ -93,9 +94,9 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
             await _context.SaveChangesAsync();
             return vesselVisitNotification;
         }
-        catch
+        catch (Exception ex)
         {
-            throw;
+            throw new PersistencyFailedException($"Failed to update vessel visit notification {vesselVisitNotification.NotificationId}: {ex.Message}");
         }
     }
 

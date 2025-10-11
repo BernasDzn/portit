@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using Api.Application.DataTransfer;
 using Api.Application.Exceptions;
 using Api.Domain.ValueObjects;
@@ -62,6 +63,28 @@ public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
 
         Submitter = submitter;
     }
+
+    public void Update(
+        DateTime expectedArrival,
+        DateTime expectedDeparture,
+        bool isCargoHazardous,
+        string? specialRequirements = null,
+        Crew? crewDetails = null,
+        CargoManifest? loadCargoManifest = null,
+        CargoManifest? unloadCargoManifest = null
+    )
+    {
+        if (Status != NotificationStatus.InProgress)
+            throw new InvalidOperationException("Only notifications in progress can be updated.");
+
+        ExpectedArrival = expectedArrival;
+        ExpectedDeparture = expectedDeparture;
+        IsCargoHazardous = isCargoHazardous;
+        SpecialRequirements = specialRequirements;
+        CrewDetails = crewDetails;
+        LoadCargoManifest = loadCargoManifest;
+        UnloadCargoManifest = unloadCargoManifest;
+	}
 
     public void Submit()
     {

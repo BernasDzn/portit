@@ -1,6 +1,7 @@
 namespace Api.Application.Services;
 
 using Api.Application.DataTransfer;
+using Api.Application.Exceptions;
 using Api.Domain.Entities;
 using Api.Domain.IRepository;
 using Api.Domain.ValueObjects;
@@ -109,14 +110,14 @@ public class VesselVisitNotificationService
                 unloadItems.Add(cargoTransport);
             }
             unloadCargoManifest = new CargoManifest(unloadItems);
-        } 
+        }
 
         IEnumerable<VesselVisitNotification> notifications = await _notificationRepository.GetVesselVisitNotificationsAsync();
         int sequenceNumber = notifications.Count(n => n.ExpectedArrival.Year == DateTime.UtcNow.Year) + 1;
         string sequenceNumberStr = sequenceNumber.ToString("D6"); // Pad with leading zeros
-        
+
         VesselVisitNotification notification = new VesselVisitNotification(
-            _idGenerator.Generate((uint) vesselVisitNotificationDto.ExpectedArrival.Date.Year),
+            _idGenerator.Generate((uint)vesselVisitNotificationDto.ExpectedArrival.Date.Year),
             vesselVisitNotificationDto.ExpectedArrival,
             vesselVisitNotificationDto.ExpectedDeparture,
             vesselVisitNotificationDto.IsCargoHazardous,
@@ -131,4 +132,60 @@ public class VesselVisitNotificationService
         await _notificationRepository.AddAsync(notification);
         return notification.ToDTO();
     }
+
+    public async Task<VesselVisitNotificationDto?> Update(string vvnID, VesselVisitNotificationDto vvnDTO)
+    {
+        var existingNotification =
+            await _notificationRepository.GetVesselVisitNotificationByNotificationIdAsync(vvnID) ??
+            throw new EntityNotFoundException($"Vessel Visit Notification with id {vvnID} was not found.");
+
+        Crew? newCrewDetails =
+            vvnDTO.CrewDetails != null ?
+            new Crew(vvnDTO.CrewDetails.Captain, vvnDTO.CrewDetails.TotalCrewMembers, vvnDTO.CrewDetails.SafetyOfficers) :
+            null;
+
+        CargoManifest? newLoadCargoManifest = GetNewCargoManifestFromDTO(vvnDTO.LoadCargoManifest);
+
+        CargoManifest? newUnloadCargoManifest = GetNewCargoManifestFromDTO(vvnDTO.UnloadCargoManifest);
+
+        existingNotification.Update(vvnDTO.ExpectedArrival, vvnDTO.ExpectedDeparture, vvnDTO.IsCargoHazardous,
+            vvnDTO.SpecialRequirements, newCrewDetails, newLoadCargoManifest, newUnloadCargoManifest
+        );
+
+        Console.WriteLine("Updated Notification: " + existingNotification.ToString());
+
+        return (await _notificationRepository.UpdateAsync(existingNotification)).ToDTO();
+    }
+    
+    private CargoManifest? GetNewCargoManifestFromDTO(CargoManifestDto? cargoManifestDto)
+    {
+        if (cargoManifestDto == null) return null;
+
+        var newCargoManifestItems = new List<CargoTransport>();
+        foreach (var item in cargoManifestDto.Items)
+        {
+            StorageArea? itemStorageArea = _storageAreaRepository.GetStorageAreaByCodeAsync(item.Area.NameCode).Result;
+            if (itemStorageArea == null) throw new EntityNotFoundException($"Storage Area with code {item.Area.NameCode} was not found.");
+
+            Container container = new Container(
+                new ContainerNumber(item.Container.ContainerNumber),
+                item.Container.ContainerRow != null && item.Container.ContainerBay != null && item.Container.ContainerTier != null
+                    ? new ContainerPosition(item.Container.ContainerRow, item.Container.ContainerBay, item.Container.ContainerTier)
+                    : null,
+                new CargoType(CargoType.FromString(item.Container.CargoType)),
+                item.Container.Description
+            );
+
+            CargoTransport cargoTransport = new CargoTransport(
+                new ContainerPosition(item.Position.Row, item.Position.Bay, item.Position.Tier),
+                itemStorageArea,
+                container
+            );
+
+            newCargoManifestItems.Add(cargoTransport);
+        }
+        
+        return new CargoManifest(newCargoManifestItems);
+    }
+    
 }

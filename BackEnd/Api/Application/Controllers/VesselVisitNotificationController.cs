@@ -37,7 +37,7 @@ public class VesselVisitNotificationController : ControllerBase
         }
         catch (System.Exception)
         {
-            return BadRequest("An error occurred while retrieving the notification decisions" );
+            return BadRequest("An error occurred while retrieving the notification decisions");
         }
     }
 
@@ -59,7 +59,7 @@ public class VesselVisitNotificationController : ControllerBase
             return BadRequest("An error occurred while creating the notification.");
         }
     }
-    
+
     [HttpPost("decisions", Name = "CreateNotificationDecision")]
     public async Task<ActionResult<NotificationDecisionDto>> CreateDecision([FromQuery] string vesselVisitNotificationId, [FromBody] NotificationDecisionDto notificationDecisionDto)
     {
@@ -78,4 +78,24 @@ public class VesselVisitNotificationController : ControllerBase
             return BadRequest("An error occurred while creating the notification decision. " + ex.Message);
         }
     }
+
+    [HttpPut("{id}", Name = "UpdateVesselVisitNotification")]
+    public async Task<ActionResult<VesselVisitNotificationDto>> Update(string id, VesselVisitNotificationDto vesselVisitNotificationDto)
+	{
+        try
+        {
+            var updatedNotification = await _notificationService.Update(id, vesselVisitNotificationDto);
+            if (updatedNotification == null)
+            {
+                return BadRequest("Could not update the notification. It may not exist.");
+            }
+            return Ok(updatedNotification);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Error updating notification with ID {id}: {ex.Message}");
+            return BadRequest($"An error occurred while updating the notification: {ex.Message}");
+        }
+	}
+
 }

@@ -59,7 +59,7 @@ public class NotificationDecisionService
 
         notification.AddDecision(notificationDecision);
 
-        var updatedNotification = await _notificationRepository.Update(notification);
+        var updatedNotification = await _notificationRepository.UpdateAsync(notification);
         var createdDecision = updatedNotification.NotificationDecisions.Last();
         
         return createdDecision.ToDTO();
