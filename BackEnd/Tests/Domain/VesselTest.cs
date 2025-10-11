@@ -28,7 +28,13 @@ public class VesselTest
             new Designation { Value = "Ever Given" },
             new ImoNumber { Value = "IMO 9811000" },
             vesselType,
-            null,
+            new ShippingAgentOrganization(
+                Guid.NewGuid(), new Designation { Value = "Maersk" }, new List<Designation> { new Designation { Value = "A major shipping company" } },
+                new Address("123 Ocean Drive", "Copenhagen", "Denmark", "2100"), new TaxNumber { Value = "123456789" }, new HashSet<Representative>()
+                {
+                    new Representative(Guid.NewGuid(), 123456789, new Designation {Value = "rep"}, new Email{ Value = "email@email.com" }, new PhoneNumber{ Value = "4512345678" } )
+                }
+            ),
             new PhysicalCharacteristics
             {
                 Length = 200.0,

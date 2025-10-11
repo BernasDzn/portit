@@ -75,6 +75,7 @@ public class StaffControllerTests
 		var response = await _client.GetAsync("/Staff");
 
 		// Assert
+		Console.WriteLine(await response.Content.ReadAsStringAsync());
 		response.EnsureSuccessStatusCode();
 		var responseBody = await response.Content.ReadAsStringAsync();
 		Assert.NotNull(responseBody);

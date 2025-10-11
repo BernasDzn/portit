@@ -105,14 +105,29 @@ public class VesselControllerTests
                     Draft = 20
                 }
             },
-            // Owner can be null for this test
-            Owner = null
+            Owner = new ShippingAgentOrganizationDto
+            {
+                Name = "Global Shipping Co.",
+                AltNames = new List<string> { "TSA", "Test Agent" }.ToArray(),
+                TaxNumber = "123456789",
+                Address = new Address("123 Test St", "Test City", "Test Country", "12345"),
+                Representatives = new List<RepresentativeDto>()
+                {
+                    new RepresentativeDto {
+                        Name = "John Doe",
+                        EmailAddress = "email",
+                        Phone = "phone",
+                        CitizenshipId = 123456789
+                    }
+                }
+            }
         };
 
         // Act - Create
         var postResponse = await _client.PostAsJsonAsync("/Vessel", vesselDto);
 
         // Assert - Create
+        Console.WriteLine(await postResponse.Content.ReadAsStringAsync());
         postResponse.EnsureSuccessStatusCode(); // Status Code 200-299
         var createdVessel = await postResponse.Content.ReadFromJsonAsync<VesselDto>();
         Assert.NotNull(createdVessel);

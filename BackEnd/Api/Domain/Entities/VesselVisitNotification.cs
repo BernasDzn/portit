@@ -23,7 +23,6 @@ public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
     public bool IsCargoHazardous { get; private set; }
     public string? SpecialRequirements { get; private set; }
     public virtual Crew? CrewDetails { get; private set; }
-
     public virtual CargoManifest? LoadCargoManifest { get; private set; }
     public virtual CargoManifest? UnloadCargoManifest { get; private set; }
 
