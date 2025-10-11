@@ -3,6 +3,7 @@ namespace Api.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Api.Domain.Entities;
 using Api.Domain.ValueObjects;
+using System.Text.Json;
 
 public class ApiContext : DbContext
 {
@@ -25,35 +26,105 @@ public class ApiContext : DbContext
     public DbSet<Staff> Staffs { get; set; } = null!;
     public DbSet<PhysicalResource> PhysicalResources { get; set; } = null!;
     public DbSet<VesselVisitNotification> VesselVisitNotifications { get; set; } = null!;
+    public DbSet<Container> Containers { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // Discriminator so EF knows to select the correct sub class
-        modelBuilder.Entity<PhysicalResource>()
-            .HasDiscriminator<string>("resource_type")
-            .HasValue<STSCrane>("STSCrane")
-            .HasValue<YardCrane>("YardCrane")
-            .HasValue<Truck>("Truck");
+        // modelBuilder.Entity<PhysicalResource>()
+        //     .HasDiscriminator<string>("resource_type")
+        //     .HasValue<STSCrane>("STSCrane")
+        //     .HasValue<YardCrane>("YardCrane")
+        //     .HasValue<Truck>("Truck");
+
+        modelBuilder.Entity<PhysicalResource>(entity =>
+        {
+            entity.HasDiscriminator<string>("resource_type")
+                .HasValue<STSCrane>("STSCrane")
+                .HasValue<YardCrane>("YardCrane")
+                .HasValue<Truck>("Truck");
+
+            entity.Property(e => e.OperationalWindow)
+            .HasConversion(
+                v => JsonSerializer.Serialize(v, (JsonSerializerOptions?)null),
+                v => JsonSerializer.Deserialize<OperationalWindow>(v, (JsonSerializerOptions?)null)
+            )
+            .HasColumnType("json");
+        });
 
         // Operation window shift list config
         // Because EF Core does not support collections of owned types directly
-        modelBuilder.Entity<OperationalWindow>(ow =>
-        {
-            ow.OwnsMany(o => o.Shifts, sb => { });
-        });
-
         // Crew safety officers list config
         // Because EF Core does not support collections of owned types directly
-        modelBuilder.Entity<Crew>(c =>
-        {
-            c.OwnsMany(c => c.SafetyOfficers, so => { });
-        });
 
         // Notification decisions list config
         // Because EF Core does not support collections of owned types directly
-       /* modelBuilder.Entity<VesselVisitNotification>(v =>
+        /* modelBuilder.Entity<VesselVisitNotification>(v =>
+         {
+             v.OwnsMany(vn => vn.NotificationDecisions, nd => { });
+         });*/
+
+        modelBuilder.Entity<Staff>()
+            .Property(e => e.OperationalWindow)
+            .HasConversion(
+                v => JsonSerializer.Serialize(v, (JsonSerializerOptions?)null),
+                v => JsonSerializer.Deserialize<OperationalWindow>(v, (JsonSerializerOptions?)null)
+            )
+            .HasColumnType("json");
+
+        modelBuilder.Entity<StorageArea>(entity =>
         {
-            v.OwnsMany(vn => vn.NotificationDecisions, nd => { });
-        });*/
+            entity.OwnsMany(e => e.DockServices, dr =>
+            {
+                dr.WithOwner().HasForeignKey("StorageAreaId");
+
+                dr.Property<int>("Id");
+                dr.HasKey("Id");
+                dr.Property(d => d.IsServingDock);
+                dr.Property(d => d.Distance);
+            });
+        });
+
+        modelBuilder.Entity<ShippingAgentOrganization>(entity =>
+        {
+            entity.OwnsMany(e => e.AltNames, an =>
+            {
+                an.WithOwner().HasForeignKey("ShippingAgentOrganizationId");
+                an.Property<int>("Id");
+                an.HasKey("Id");
+                an.Property(a => a.Value);
+            });
+        });
+
+        modelBuilder.Entity<VesselVisitNotification>(entity =>
+        {
+            // LoadCargoManifest
+            entity.OwnsMany(e => e.LoadCargoManifest, cm =>
+            {
+                cm.WithOwner().HasForeignKey("VesselVisitNotificationId");
+
+                cm.HasKey("VesselVisitNotificationId", "ContainerId");
+                cm.OwnsOne(c => c.Position, pos =>
+                {
+                    pos.Property(p => p.Bay).HasColumnName("Position_Bay");
+                    pos.Property(p => p.Row).HasColumnName("Position_Row");
+                    pos.Property(p => p.Tier).HasColumnName("Position_Tier");
+                });
+            });
+
+            // UnloadCargoManifest
+            entity.OwnsMany(e => e.UnloadCargoManifest, cm =>
+            {
+                cm.WithOwner().HasForeignKey("VesselVisitNotificationId");
+                cm.HasKey("VesselVisitNotificationId", "ContainerId");
+
+                cm.OwnsOne(c => c.Position, pos =>
+                {
+                    pos.Property(p => p.Bay).HasColumnName("Position_Bay");
+                    pos.Property(p => p.Row).HasColumnName("Position_Row");
+                    pos.Property(p => p.Tier).HasColumnName("Position_Tier");
+                });
+            });
+        });
     }
 }

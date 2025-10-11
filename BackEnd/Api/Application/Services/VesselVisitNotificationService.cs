@@ -13,6 +13,7 @@ public class VesselVisitNotificationService
     private readonly IVesselRepository _vesselRepository;
     private readonly IRepresentativeRepository _representativeRepository;
     private readonly IStorageAreaRepository _storageAreaRepository;
+    private readonly IContainerRepository _containerRepository;
     private readonly VesselVisitNotificationIdGenerator _idGenerator;
 
     public VesselVisitNotificationService(
@@ -20,13 +21,15 @@ public class VesselVisitNotificationService
         IVesselRepository vesselRepository,
         IRepresentativeRepository representativeRepository,
         IStorageAreaRepository storageAreaRepository,
-        VesselVisitNotificationIdGenerator idGenerator
+        VesselVisitNotificationIdGenerator idGenerator,
+        IContainerRepository containerRepository
     )
     {
         _notificationRepository = notificationRepository;
         _vesselRepository = vesselRepository;
         _representativeRepository = representativeRepository;
         _storageAreaRepository = storageAreaRepository;
+        _containerRepository = containerRepository;
         _idGenerator = idGenerator;
     }
 
@@ -36,15 +39,51 @@ public class VesselVisitNotificationService
         return notifications.Select(n => n.ToDTO());
     }
 
+    private List<CargoTransport>? GetNewCargoManifestFromDTO(ICollection<CargoTransportDto>? cargoManifestDto)
+    {
+        if (cargoManifestDto == null) return null;
+
+        var newCargoManifestItems = new List<CargoTransport>();
+        foreach (var item in cargoManifestDto)
+        {
+            StorageArea? itemStorageArea = _storageAreaRepository.GetStorageAreaByCodeAsync(item.Area.NameCode).Result;
+            if (itemStorageArea == null) throw new EntityNotFoundException($"Storage Area with code {item.Area.NameCode} was not found.");
+
+            Container? container = _containerRepository.GetContainerByNumberAsync(item.Container.ContainerNumber).Result;
+            if (container == null)
+            {
+                container = new Container(
+                    Guid.NewGuid(),
+                    new ContainerNumber { Value = item.Container.ContainerNumber },
+                    item.Container.CargoType,
+                    new Designation { Value = item.Container.Description }
+                );
+
+                _containerRepository.Add(container).Wait();
+            }
+
+            CargoTransport cargoTransport = new CargoTransport(
+                item.Position,
+                itemStorageArea,
+                container
+            );
+
+            newCargoManifestItems.Add(cargoTransport);
+        }
+
+        return newCargoManifestItems;
+    }
+
     public async Task<VesselVisitNotificationDto?> Add(VesselVisitNotificationDto vesselVisitNotificationDto)
     {
         Vessel vessel = await _vesselRepository.GetVesselByIMOAsync(vesselVisitNotificationDto.Vessel.ImoNumber);
-        if (vessel == null) return null;
+        if (vessel == null) throw new EntityNotFoundException($"Vessel with IMO {vesselVisitNotificationDto.Vessel.ImoNumber} was not found.");
 
         Representative representative = await _representativeRepository.GetByCitizenIdAsync(
             vesselVisitNotificationDto.Submitter.CitizenshipId.ToString()
-            );
-        if (representative == null) return null;
+        );
+
+        if (representative == null) throw new EntityNotFoundException($"Representative with Citizenship ID {vesselVisitNotificationDto.Submitter.CitizenshipId} was not found.");
 
         Crew? crew = null;
         if (vesselVisitNotificationDto.CrewDetails != null)
@@ -56,61 +95,8 @@ public class VesselVisitNotificationService
             );
         }
 
-        CargoManifest? loadCargoManifest = null;
-        if (vesselVisitNotificationDto.LoadCargoManifest != null)
-        {
-            var loadItems = new List<CargoTransport>();
-            foreach (var item in vesselVisitNotificationDto.LoadCargoManifest.Items)
-            {
-                Container container = new Container(
-                    new ContainerNumber(item.Container.ContainerNumber),
-                    item.Container.ContainerRow != null && item.Container.ContainerBay != null && item.Container.ContainerTier != null
-                        ? new ContainerPosition(item.Container.ContainerRow, item.Container.ContainerBay, item.Container.ContainerTier)
-                        : null,
-                    new CargoType(CargoType.FromString(item.Container.CargoType)),
-                    item.Container.Description
-                );
-
-                StorageArea? area = await _storageAreaRepository.GetStorageAreaByCodeAsync(item.Area.NameCode);
-                if (area == null) throw new ArgumentException("Invalid Storage Area in Load Cargo Manifest: " + item.Area.NameCode);
-
-                CargoTransport cargoTransport = new CargoTransport(
-                    new ContainerPosition(item.Position.Row, item.Position.Bay, item.Position.Tier),
-                    area,
-                    container
-                );
-                loadItems.Add(cargoTransport);
-            }
-            loadCargoManifest = new CargoManifest(loadItems);
-        }
-
-        CargoManifest? unloadCargoManifest = null;
-        if (vesselVisitNotificationDto.UnloadCargoManifest != null)
-        {
-            var unloadItems = new List<CargoTransport>();
-            foreach (var item in vesselVisitNotificationDto.UnloadCargoManifest.Items)
-            {
-                Container container = new Container(
-                    new ContainerNumber(item.Container.ContainerNumber),
-                    item.Container.ContainerRow != null && item.Container.ContainerBay != null && item.Container.ContainerTier != null
-                        ? new ContainerPosition(item.Container.ContainerRow, item.Container.ContainerBay, item.Container.ContainerTier)
-                        : null,
-                    new CargoType(CargoType.FromString(item.Container.CargoType)),
-                    item.Container.Description
-                );
-
-                StorageArea? area = await _storageAreaRepository.GetStorageAreaByCodeAsync(item.Area.NameCode);
-                if (area == null) throw new ArgumentException("Invalid Storage Area in Unload Cargo Manifest: " + item.Area.NameCode);
-
-                CargoTransport cargoTransport = new CargoTransport(
-                    new ContainerPosition(item.Position.Row, item.Position.Bay, item.Position.Tier),
-                    area,
-                    container
-                );
-                unloadItems.Add(cargoTransport);
-            }
-            unloadCargoManifest = new CargoManifest(unloadItems);
-        }
+        List<CargoTransport>? loadCargoManifest = GetNewCargoManifestFromDTO(vesselVisitNotificationDto.LoadCargoManifest);
+        List<CargoTransport>? unloadCargoManifest = GetNewCargoManifestFromDTO(vesselVisitNotificationDto.UnloadCargoManifest);
 
         IEnumerable<VesselVisitNotification> notifications = await _notificationRepository.GetVesselVisitNotificationsAsync();
         int sequenceNumber = notifications.Count(n => n.ExpectedArrival.Year == DateTime.UtcNow.Year) + 1;
@@ -144,9 +130,8 @@ public class VesselVisitNotificationService
             new Crew(vvnDTO.CrewDetails.Captain, vvnDTO.CrewDetails.TotalCrewMembers, vvnDTO.CrewDetails.SafetyOfficers) :
             null;
 
-        CargoManifest? newLoadCargoManifest = GetNewCargoManifestFromDTO(vvnDTO.LoadCargoManifest);
-
-        CargoManifest? newUnloadCargoManifest = GetNewCargoManifestFromDTO(vvnDTO.UnloadCargoManifest);
+        List<CargoTransport>? newLoadCargoManifest = GetNewCargoManifestFromDTO(vvnDTO.LoadCargoManifest);
+        List<CargoTransport>? newUnloadCargoManifest = GetNewCargoManifestFromDTO(vvnDTO.UnloadCargoManifest);
 
         existingNotification.Update(vvnDTO.ExpectedArrival, vvnDTO.ExpectedDeparture, vvnDTO.IsCargoHazardous,
             vvnDTO.SpecialRequirements, newCrewDetails, newLoadCargoManifest, newUnloadCargoManifest
@@ -156,36 +141,4 @@ public class VesselVisitNotificationService
 
         return (await _notificationRepository.UpdateAsync(existingNotification)).ToDTO();
     }
-    
-    private CargoManifest? GetNewCargoManifestFromDTO(CargoManifestDto? cargoManifestDto)
-    {
-        if (cargoManifestDto == null) return null;
-
-        var newCargoManifestItems = new List<CargoTransport>();
-        foreach (var item in cargoManifestDto.Items)
-        {
-            StorageArea? itemStorageArea = _storageAreaRepository.GetStorageAreaByCodeAsync(item.Area.NameCode).Result;
-            if (itemStorageArea == null) throw new EntityNotFoundException($"Storage Area with code {item.Area.NameCode} was not found.");
-
-            Container container = new Container(
-                new ContainerNumber(item.Container.ContainerNumber),
-                item.Container.ContainerRow != null && item.Container.ContainerBay != null && item.Container.ContainerTier != null
-                    ? new ContainerPosition(item.Container.ContainerRow, item.Container.ContainerBay, item.Container.ContainerTier)
-                    : null,
-                new CargoType(CargoType.FromString(item.Container.CargoType)),
-                item.Container.Description
-            );
-
-            CargoTransport cargoTransport = new CargoTransport(
-                new ContainerPosition(item.Position.Row, item.Position.Bay, item.Position.Tier),
-                itemStorageArea,
-                container
-            );
-
-            newCargoManifestItems.Add(cargoTransport);
-        }
-        
-        return new CargoManifest(newCargoManifestItems);
-    }
-    
 }

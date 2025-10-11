@@ -53,7 +53,6 @@ public class StaffService
 			new Email { Value = staffDto.Email },
 			new PhoneNumber { Value = staffDto.PhoneNumber },
 			new OperationalWindow(
-                new Guid(),
                 staffDto.OperationalWindow.Shifts
             ),
 			qualifications
@@ -90,7 +89,6 @@ public class StaffService
 			staffDto.PhoneNumber,
 			staffDto.Status,
 			new OperationalWindow(
-                new Guid(),
                 staffDto.OperationalWindow.Shifts
             ),
 			qualifications

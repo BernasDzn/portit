@@ -1,19 +1,20 @@
 using Api.Application.DataTransfer;
 using Api.Infrastructure.Utilities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.Domain.ValueObjects;
 
-public class Crew : IDTOAble<CrewDto>
+[Owned]
+public class Crew
 {
-    public Guid Id { get; private set; } = Guid.NewGuid();
     public Designation Captain { get; private set; }
     public uint TotalCrewMembers { get; private set; }
     public ICollection<SafetyOfficer>? SafetyOfficers { get; private set; }
 
     protected Crew() { }
-    public Crew(string captain, uint totalCrewMembers, HashSet<SafetyOfficer>? safetyOfficers = null)
+    public Crew(Designation captain, uint totalCrewMembers, ICollection<SafetyOfficer>? safetyOfficers = null)
     {
-        Captain = new Designation { Value = captain };
+        Captain = captain ?? throw new ArgumentNullException(nameof(captain));
 
         if (totalCrewMembers < 1)
             throw new ArgumentException("Total crew members must be at least 1.");
@@ -24,11 +25,4 @@ public class Crew : IDTOAble<CrewDto>
         TotalCrewMembers = totalCrewMembers;
         SafetyOfficers = safetyOfficers;
     }
-
-    public CrewDto ToDTO() => new CrewDto
-    {
-        Captain = Captain.Value,
-        TotalCrewMembers = TotalCrewMembers,
-        SafetyOfficers = SafetyOfficers?.ToHashSet()
-    };
 }

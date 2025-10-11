@@ -90,7 +90,8 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
     {
         try
         {
-            _context.VesselVisitNotifications.Update(vesselVisitNotification);
+            //Console.WriteLine(vesselVisitNotification);
+            //_context.VesselVisitNotifications.Update(vesselVisitNotification);
             await _context.SaveChangesAsync();
             return vesselVisitNotification;
         }

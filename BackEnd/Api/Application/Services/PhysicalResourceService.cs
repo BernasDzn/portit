@@ -93,7 +93,6 @@ public class PhysicalResourceService
             TimeSpan.FromMinutes(resourceDto.SetupTimeInMinutes),
             qualifications,
             new OperationalWindow(
-                new Guid(),
                 resourceDto.OperationalWindow.Shifts
             ),
             resourceDto.LiftingCapacity,
@@ -124,7 +123,6 @@ public class PhysicalResourceService
             TimeSpan.FromMinutes(resourceDto.SetupTimeInMinutes),
             qualifications,
             new OperationalWindow(
-                new Guid(),
                 resourceDto.OperationalWindow.Shifts
             ),
             resourceDto.LiftingCapacity,
@@ -152,7 +150,6 @@ public class PhysicalResourceService
             TimeSpan.FromMinutes(resourceDto.SetupTimeInMinutes),
             qualifications,
             new OperationalWindow(
-                new Guid(),
                 resourceDto.OperationalWindow.Shifts
             ),
             resourceDto.MaxLoadCapacity,

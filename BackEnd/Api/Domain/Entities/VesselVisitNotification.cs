@@ -22,9 +22,10 @@ public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
     public DateTime ExpectedDeparture { get; private set; }
     public bool IsCargoHazardous { get; private set; }
     public string? SpecialRequirements { get; private set; }
+    [NotMapped]
     public virtual Crew? CrewDetails { get; private set; }
-    public virtual CargoManifest? LoadCargoManifest { get; private set; }
-    public virtual CargoManifest? UnloadCargoManifest { get; private set; }
+    public virtual ICollection<CargoTransport>? LoadCargoManifest { get; private set; }
+    public virtual ICollection<CargoTransport>? UnloadCargoManifest { get; private set; }
 
     public virtual Vessel Vessel { get; private set; }
     public virtual Representative Submitter { get; private set; } 
@@ -42,8 +43,8 @@ public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
         Representative submitter,
         string? specialRequirements = null,
         Crew? crewDetails = null,
-        CargoManifest? loadCargoManifest = null,
-        CargoManifest? unloadCargoManifest = null
+        ICollection<CargoTransport>? loadCargoManifest = null,
+        ICollection<CargoTransport>? unloadCargoManifest = null
     )
     {
         Id = Guid.NewGuid();
@@ -69,8 +70,8 @@ public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
         bool isCargoHazardous,
         string? specialRequirements = null,
         Crew? crewDetails = null,
-        CargoManifest? loadCargoManifest = null,
-        CargoManifest? unloadCargoManifest = null
+        ICollection<CargoTransport>? loadCargoManifest = null,
+        ICollection<CargoTransport>? unloadCargoManifest = null
     )
     {
         if (Status != NotificationStatus.InProgress)
@@ -120,6 +121,11 @@ public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
         return NotificationDecisions.OrderByDescending(d => d.DecisionDate).FirstOrDefault();
     }
 
+    public override string ToString()
+    {
+        return $"VesselVisitNotification [Guid={Id}, NotificationId={NotificationId}, ExpectedArrival={ExpectedArrival}, ExpectedDeparture={ExpectedDeparture}, IsCargoHazardous={IsCargoHazardous}, SpecialRequirements={SpecialRequirements}, CrewDetails=({CrewDetails}), LoadCargoManifest=({LoadCargoManifest}), UnloadCargoManifest=({UnloadCargoManifest}), Vessel=({Vessel}), Submitter=({Submitter}), Status={Status}, NotificationDecisions=[{string.Join(", ", NotificationDecisions)}]]";
+    }
+
     public VesselVisitNotificationDto ToDTO()
     {
         return new VesselVisitNotificationDto
@@ -129,9 +135,9 @@ public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
             ExpectedDeparture = ExpectedDeparture,
             IsCargoHazardous = IsCargoHazardous,
             SpecialRequirements = SpecialRequirements,
-            CrewDetails = CrewDetails?.ToDTO(),
-            LoadCargoManifest = LoadCargoManifest?.ToDTO(),
-            UnloadCargoManifest = UnloadCargoManifest?.ToDTO(),
+            CrewDetails = CrewDetails,
+            LoadCargoManifest = LoadCargoManifest?.Select(ct => ct.ToDTO()).ToList(),
+            UnloadCargoManifest = UnloadCargoManifest?.Select(ct => ct.ToDTO()).ToList(),
             Vessel = Vessel.ToDTO(),
             Submitter = Submitter.ToDTO()
         };

@@ -328,19 +328,29 @@ public static class Bootstrap
 
         var sa1 = context.StorageAreas.First(sa => sa.AreaType == StorageAreaType.Yard);
 
-        var UnloadCargoManifest = new CargoManifest(new List<CargoTransport>
+        ICollection<CargoTransport> UnloadCargoManifest = new List<CargoTransport>
         {
             new CargoTransport(
-                new ContainerPosition("10", "5", "10"),
+                new ContainerPosition { Row = "10", Bay = "5", Tier = "10"},
                 sa1,
                 new Container(
-                    new ContainerNumber("CMAU2468103"),
-                    new ContainerPosition("10", "5", "10"),
-                    new CargoType(CargoTypes.GENERAL_CONSUMER_PRODUCTS),
-                    "chilly yummy food"
+                    Guid.NewGuid(),
+                    new ContainerNumber { Value = "CMAU2468103" },
+                    CargoType.GENERAL_CONSUMER_PRODUCTS,
+                    new Designation { Value = "chilly yummy food" }
+                )
+            ),
+            new CargoTransport(
+                new ContainerPosition { Row = "12", Bay = "6", Tier = "8" },
+                sa1,
+                new Container(
+                    Guid.NewGuid(),
+                    new ContainerNumber { Value = "ABCD1234560" },
+                    CargoType.ELECTRONICS,
+                    new Designation { Value = "various electronic items" }
                 )
             )
-        });
+        };
 
         VesselVisitNotification vvn1 = new VesselVisitNotification(
             new VesselVisitNotificationId(
@@ -354,7 +364,7 @@ public static class Bootstrap
             vessel1,
             vessel1.Owner.Representatives.First(),
             "Requires additional security measures",
-            new Crew("Mario Silva", 5, new HashSet<SafetyOfficer>()),
+            new Crew(new Designation { Value = "Miguel Oliveira" }, 2, new HashSet<SafetyOfficer>()),
             null,
             UnloadCargoManifest
         );
@@ -378,7 +388,7 @@ public static class Bootstrap
             new SafetyOfficer{CitizenID = "CITIZEN002", Name = "Jane Smith", Nationality = "GB" }
         };
 
-        Crew crewDetails = new Crew("Ana Costa", 3, safetyOfficers);
+        Crew crewDetails = new Crew(new Designation { Value = "Ana Costa" }, 3, safetyOfficers);
 
         VesselVisitNotification vvn3 = new VesselVisitNotification(
             new VesselVisitNotificationId(
@@ -394,6 +404,8 @@ public static class Bootstrap
             "Handles hazardous materials",
             crewDetails
         );
+
+        Console.WriteLine(vvn3.Id);
 
         VesselVisitNotification vvn4 = new VesselVisitNotification(
             new VesselVisitNotificationId(

@@ -1,8 +1,10 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
+using Microsoft.EntityFrameworkCore;
 
 namespace Api.Domain.ValueObjects;
 
+[Owned]
 public class SafetyOfficer
 {
     private string _citizenID;
@@ -17,17 +19,25 @@ public class SafetyOfficer
             _citizenID = value;
         }
     }
-    private Designation _name;
+    private string _name;
     public string Name
     {
-        get => _name.Value;
-        set => _name = new Designation { Value = value };
+        get => _name;
+        set
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentException("Name cannot be empty");
+
+            _name = value;
+        }
     }
 
     private RegionInfo _nationality;
-    public string Nationality {
+    public string Nationality
+    {
         get => _nationality.TwoLetterISORegionName;
-        set {
+        set
+        {
             _nationality = new RegionInfo(value);
         }
     }

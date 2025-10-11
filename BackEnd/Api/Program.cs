@@ -16,7 +16,9 @@ builder.Services.AddControllers();
 
 // Add database contexts
 builder.Services.AddDbContext<ApiContext>(opt =>
-    opt.UseLazyLoadingProxies().UseInMemoryDatabase("database"));
+    opt.UseLazyLoadingProxies().UseMySQL(
+        "server=localhost;port=3306;database=port_management_db;user=root;password="
+    ));
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -38,6 +40,7 @@ builder.Services.AddTransient<IPhysicalResourceRepository, PhysicalResourceRepos
 builder.Services.AddTransient<PhysicalResourceService>();
 builder.Services.AddTransient<IStaffRepository, StaffRepository>();
 builder.Services.AddTransient<StaffService>();
+builder.Services.AddTransient<IContainerRepository, ContainerRepository>();
 builder.Services.AddTransient<IVesselVisitNotificationRepository, VesselVisitNotificationRepository>();
 builder.Services.AddTransient<VesselVisitNotificationService>();
 builder.Services.AddTransient<VesselVisitNotificationIdGenerator>();

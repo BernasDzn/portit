@@ -4,33 +4,43 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Domain.ValueObjects;
 
-using System;
-
 [Owned]
-public class ContainerPosition : IDTOAble<ContainerPositionDto>
+public class ContainerPosition
 {
-    public Guid Id { get; private set; }
-    public string Bay { get; private set; }
-    public string Row { get; private set; }
-    public string Tier { get; private set; }
+    private string _bay;
+    private string _row;
+    private string _tier;
 
-    public ContainerPosition(string bay, string row, string tier)
+    public string Bay
     {
-        if (string.IsNullOrWhiteSpace(bay) || string.IsNullOrWhiteSpace(row) || string.IsNullOrWhiteSpace(tier))
-            throw new ArgumentException("Bay, Row, and Tier must be non-empty strings.");
-
-        Id = Guid.NewGuid();
-        Bay = bay;
-        Row = row;
-        Tier = tier;
+        get => _bay;
+        set
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentException("Bay must be a two-digit string between '01' and '99'.");
+            _bay = value;
+        }
     }
 
-    public override string ToString() => $"Bay: {Bay}, Row: {Row}, Tier: {Tier}";
-
-    public ContainerPositionDto ToDTO() => new ContainerPositionDto
+    public string Row
     {
-        Bay = Bay,
-        Row = Row,
-        Tier = Tier
-    };
+        get => _row;
+        set
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentException("Row must be a two-character string between 'A' and 'Z'.");
+            _row = value;
+        }
+    }
+
+    public string Tier
+    {
+        get => _tier;
+        set
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentException("Tier must be a two-digit string between '01' and '99'.");
+            _tier = value;
+        }
+    }
 }
