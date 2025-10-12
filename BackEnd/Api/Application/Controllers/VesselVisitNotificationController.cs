@@ -3,7 +3,8 @@ namespace Api.Application.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Api.Application.Services;
 using Api.Application.DataTransfer;
-
+using Api.Application.DataTransfer.Filters;
+using Api.Infrastructure.Utilities;
 
 [ApiController]
 [Route("[controller]")]
@@ -81,7 +82,7 @@ public class VesselVisitNotificationController : ControllerBase
 
     [HttpPut("{id}", Name = "UpdateVesselVisitNotification")]
     public async Task<ActionResult<VesselVisitNotificationDto>> Update(string id, VesselVisitNotificationDto vesselVisitNotificationDto)
-	{
+    {
         try
         {
             var updatedNotification = await _notificationService.Update(id, vesselVisitNotificationDto);
@@ -96,6 +97,20 @@ public class VesselVisitNotificationController : ControllerBase
             _logger.LogError($"Error updating notification with ID {id}: {ex.Message}");
             return BadRequest($"An error occurred while updating the notification: {ex.Message}");
         }
-	}
+    }
 
+    [HttpGet("filter", Name = "FilterVesselVisitNotifications")]
+    public async Task<ActionResult<Page<VesselVisitNotificationStatusDto>>> Filter([FromQuery] VesselVisitNotificationFilter filter)
+    {
+        try
+        {
+            var filteredNotifications = await _notificationService.FilterNotifications(filter);
+            return Ok(filteredNotifications);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Error filtering notifications: {ex.Message}");
+            return BadRequest("An error occurred while filtering the notifications: " + ex.Message);
+        }
+    }
 }

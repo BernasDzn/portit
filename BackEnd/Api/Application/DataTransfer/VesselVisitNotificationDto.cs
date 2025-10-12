@@ -1,3 +1,4 @@
+using Api.Domain.Entities;
 using Api.Domain.ValueObjects;
 
 namespace Api.Application.DataTransfer;
@@ -14,5 +15,15 @@ public class VesselVisitNotificationDto
     public ICollection<CargoTransportDto>? UnloadCargoManifest { get; set; }
     public required VesselDto Vessel { get; set; }
     public required RepresentativeDto Submitter { get; set; }
-    
+}
+
+public class VesselVisitNotificationStatusDto
+{
+    public string NotificationId { get; set; }
+    public required NotificationStatus Status { get; set; }
+    public required DateTime ExpectedArrival { get; set; }
+    public required DateTime ExpectedDeparture { get; set; }
+    public required VesselDto Vessel { get; set; }
+    public required RepresentativeDto Submitter { get; set; }
+    public NotificationDecisionDto[] Decisions { get; set; }
 }

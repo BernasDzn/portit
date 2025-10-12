@@ -22,13 +22,13 @@ public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
     public DateTime ExpectedDeparture { get; private set; }
     public bool IsCargoHazardous { get; private set; }
     public string? SpecialRequirements { get; private set; }
-    
+
     public virtual Crew? CrewDetails { get; private set; }
     public virtual ICollection<CargoTransport>? LoadCargoManifest { get; private set; }
     public virtual ICollection<CargoTransport>? UnloadCargoManifest { get; private set; }
 
     public virtual Vessel Vessel { get; private set; }
-    public virtual Representative Submitter { get; private set; } 
+    public virtual Representative Submitter { get; private set; }
     public NotificationStatus Status { get; private set; } = NotificationStatus.InProgress;
     public virtual ICollection<NotificationDecision> NotificationDecisions { get; private set; } = new LinkedList<NotificationDecision>();
 
@@ -84,14 +84,14 @@ public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
         CrewDetails = crewDetails;
         LoadCargoManifest = loadCargoManifest;
         UnloadCargoManifest = unloadCargoManifest;
-	}
+    }
 
     public void Submit()
     {
         if (Status != NotificationStatus.InProgress)
             throw new InvalidOperationException("Only notifications in progress can be submitted.");
 
-        if(IsCargoHazardous && (CrewDetails == null || CrewDetails.SafetyOfficers == null || CrewDetails.SafetyOfficers.Count == 0))
+        if (IsCargoHazardous && (CrewDetails == null || CrewDetails.SafetyOfficers == null || CrewDetails.SafetyOfficers.Count == 0))
             throw new InvalidOperationException("Notifications with hazardous cargo must include at least one safety officer in the crew details.");
 
         Status = NotificationStatus.ApprovalPending;
@@ -120,7 +120,8 @@ public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
         else if (decision.Status == NotificationDecisionStatus.Rejected) Status = NotificationStatus.InProgress;
     }
 
-    private NotificationDecision? GetLatestDecision() {
+    public NotificationDecision? GetLatestDecision()
+    {
         return NotificationDecisions.OrderByDescending(d => d.DecisionDate).FirstOrDefault();
     }
 
@@ -143,6 +144,20 @@ public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
             UnloadCargoManifest = UnloadCargoManifest?.Select(ct => ct.ToDTO()).ToList(),
             Vessel = Vessel.ToDTO(),
             Submitter = Submitter.ToDTO()
+        };
+    }
+    
+    public VesselVisitNotificationStatusDto ToStatusDTO()
+    {
+        return new VesselVisitNotificationStatusDto
+        {
+            NotificationId = NotificationId.ToString(),
+            Status = Status,
+            ExpectedArrival = ExpectedArrival,
+            ExpectedDeparture = ExpectedDeparture,
+            Vessel = Vessel.ToDTO(),
+            Submitter = Submitter.ToDTO(),
+            Decisions = NotificationDecisions.Select(nd => nd.ToDTO()).ToArray()
         };
     }
 }

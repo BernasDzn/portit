@@ -105,8 +105,6 @@ public class StaffRepository : GenericRepository<Staff>, IStaffRepository
 	{
 		try
 		{
-			if (filter.IsEmpty()) throw new ArgumentException("Filter is empty");
-			
 			IQueryable<Staff> query = _context.Staffs.AsQueryable();
 			query = query.Where(s => s.isActive);
 

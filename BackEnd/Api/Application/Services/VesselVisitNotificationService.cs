@@ -1,6 +1,7 @@
 namespace Api.Application.Services;
 
 using Api.Application.DataTransfer;
+using Api.Application.DataTransfer.Filters;
 using Api.Application.Exceptions;
 using Api.Domain.Entities;
 using Api.Domain.IRepository;
@@ -140,5 +141,11 @@ public class VesselVisitNotificationService
         Console.WriteLine("Updated Notification: " + existingNotification.ToString());
 
         return (await _notificationRepository.UpdateAsync(existingNotification)).ToDTO();
+    }
+
+    internal async Task<Page<VesselVisitNotificationStatusDto>> FilterNotifications(VesselVisitNotificationFilter filter)
+    {
+        Page<VesselVisitNotification> page = await _notificationRepository.FilterVesselVisitNotificationsAsync(filter);
+        return page.Map(vvn => vvn.ToStatusDTO());
     }
 }

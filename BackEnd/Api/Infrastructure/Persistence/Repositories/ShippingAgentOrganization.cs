@@ -5,7 +5,7 @@ using Api.Domain.IRepository;
 using Microsoft.EntityFrameworkCore;
 using Api.Application.Exceptions;
 
-public class ShippingAgentOrgRepository : GenericRepository<Vessel>, IShippingAgentOrgRepository
+public class ShippingAgentOrgRepository : GenericRepository<ShippingAgentOrganization>, IShippingAgentOrgRepository
 {
     private new readonly ApiContext _context = null!;
 

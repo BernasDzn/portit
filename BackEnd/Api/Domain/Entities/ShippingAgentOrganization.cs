@@ -28,6 +28,9 @@ public class ShippingAgentOrganization : IDTOAble<ShippingAgentOrganizationDto>
         MainAddress = address;
         TaxId = taxId;
         Representatives = representatives;
+
+        foreach (var rep in representatives)
+            rep.AssignToOrganization(this);
     }
 
     internal bool IsRepresentedBy(Representative representative)

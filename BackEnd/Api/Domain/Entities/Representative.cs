@@ -14,6 +14,7 @@ public class Representative : IDTOAble<RepresentativeDto>
     public PhoneNumber Phone { get; private set; }
 
     public virtual ICollection<VesselVisitNotification> VesselVisitNotifications { get; private set; }
+    public virtual ShippingAgentOrganization? RepresentedOrganization { get; private set; } // navigation property
 
     // EF Core
     protected Representative() { }
@@ -25,6 +26,14 @@ public class Representative : IDTOAble<RepresentativeDto>
         Name = name;
         EmailAddress = email;
         Phone = phone;
+    }
+
+    public void AssignToOrganization(ShippingAgentOrganization organization)
+    {
+        if (RepresentedOrganization != null && RepresentedOrganization.Id != organization.Id)
+            throw new InvalidOperationException($"Representative {Name.Value} is already representing another organization.");
+
+        RepresentedOrganization = organization;
     }
 
     public RepresentativeDto ToDTO()
