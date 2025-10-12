@@ -317,6 +317,13 @@ public static class Bootstrap
 
     public static void BootstrapVVN(ApiContext context)
     {
+        // Conatiner ids validos gerados pelo engenheiro:
+        /*
+            - MSKU1234565
+            - TGHU7654320
+            - CMAU0000014
+            - MAEU9999991
+        */
 
         if (context.VesselVisitNotifications.Any())
             return;

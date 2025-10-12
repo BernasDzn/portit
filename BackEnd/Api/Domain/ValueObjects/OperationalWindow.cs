@@ -12,7 +12,6 @@ public class OperationalWindow : IDTOAble<OperationalWindowDto>
         public required DayOfWeek Day { get; set; }
         public required TimeOnly StartTime { get; set; }
         public required TimeOnly EndTime { get; set; }
-
         public override string ToString() => $"{Day}: {StartTime} - {EndTime}";
     }
 

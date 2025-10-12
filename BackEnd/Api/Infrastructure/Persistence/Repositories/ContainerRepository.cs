@@ -5,6 +5,7 @@ using Api.Domain.IRepository;
 using Microsoft.EntityFrameworkCore;
 using Api.Application.DataTransfer.Filters;
 using Api.Infrastructure.Utilities;
+using Api.Application.Exceptions;
 
 public class ContainerRepository : GenericRepository<Container>, IContainerRepository
 {
@@ -42,11 +43,29 @@ public class ContainerRepository : GenericRepository<Container>, IContainerRepos
 
     Task<Container> IContainerRepository.Add(Container container)
     {
-        throw new NotImplementedException();
+        try
+        {
+            _context.Containers.Add(container);
+            _context.SaveChanges();
+            return Task.FromResult(container);
+        }
+        catch (System.Exception)
+        {
+            throw new PersistencyFailedException("Could not add container to database");
+        }
     }
 
     public Task<Container> Update(Container container)
     {
-        throw new NotImplementedException();
+        try
+        {
+            _context.Containers.Update(container);
+            _context.SaveChanges();
+            return Task.FromResult(container);
+        }
+        catch (System.Exception)
+        {
+            throw new PersistencyFailedException("Could not update container in database");
+        }
     }
 }
