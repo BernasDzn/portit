@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 
 namespace Api.Domain.ValueObjects;
 
-public class OperationalWindow : IDTOAble<OperationalWindowDto>
+public class OperationalWindow
 {
     public class Shift
     {
@@ -42,24 +42,30 @@ public class OperationalWindow : IDTOAble<OperationalWindowDto>
     };
 
     // Make sure this has a public setter for EF Core
-    public virtual ICollection<Shift> Shifts { get; set; } = new List<Shift>();
+    private ICollection<Shift> _shifts { get; set; } = new List<Shift>();
+    public virtual ICollection<Shift> Shifts
+    {
+        get => _shifts;
+        set
+        {
+            if (value == null)
+                throw new ArgumentNullException("Shifts collection cannot be null.");
+
+            foreach (var shift in value)
+            {
+                if (shift == null)
+                    throw new ArgumentNullException("Shift cannot be null.");
+
+                if (!IsValidShift(shift))
+                    throw new ArgumentException($"Invalid shift detected: Ensure no overlapping shifts and that start time is before end time. {shift}");
+            }
+
+            _shifts = value;
+        }
+    }
 
     [JsonConstructor]
     public OperationalWindow() { }
-    
-    public OperationalWindow(HashSet<Shift> shifts)
-    {
-        foreach (var shift in shifts)
-        {
-            if (shift == null)
-                throw new ArgumentNullException("Shift cannot be null.");
-
-            if (!IsValidShift(shift))
-                throw new ArgumentException($"Invalid shift detected: Ensure no overlapping shifts and that start time is before end time. {shift}");
-        }
-
-        Shifts = shifts;
-    }
 
     private bool IsValidShift(Shift shift)
     {
@@ -69,13 +75,5 @@ public class OperationalWindow : IDTOAble<OperationalWindowDto>
                 return false;
         }
         return shift.EndTime > shift.StartTime;
-    }
-
-    public OperationalWindowDto ToDTO()
-    {
-        return new OperationalWindowDto
-        {
-            Shifts = this.Shifts.ToHashSet()
-        };
     }
 }

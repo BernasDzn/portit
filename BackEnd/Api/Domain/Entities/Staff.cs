@@ -116,7 +116,7 @@ public class Staff : IDTOAble<StaffDto>
 			Email = Email.Value,
 			PhoneNumber = PhoneNumber.Value,
 			Status = (int)Status,
-			OperationalWindow = OperationalWindow.ToDTO(),
+			OperationalWindow = OperationalWindow,
 			Qualifications = Qualifications.Select(q => q.ToDTO()).ToList()
 		};
 	}	

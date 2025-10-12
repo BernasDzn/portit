@@ -53,7 +53,7 @@ var app = builder.Build();
 app.Logger.LogInformation("Starting application");
 app.Logger.LogInformation("Environment: {EnvironmentName}", app.Environment.EnvironmentName);
 
-if (configuration.GetValue<bool>("NukeDatabaseAndBootstrap"))
+if (configuration.GetValue<bool>("NukeDatabaseAndRunBootstrap"))
 {
     using (var scope = app.Services.CreateScope())
     {

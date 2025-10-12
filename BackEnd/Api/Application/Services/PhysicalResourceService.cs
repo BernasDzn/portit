@@ -92,9 +92,7 @@ public class PhysicalResourceService
             resourceDto.Status,
             TimeSpan.FromMinutes(resourceDto.SetupTimeInMinutes),
             qualifications,
-            new OperationalWindow(
-                resourceDto.OperationalWindow.Shifts
-            ),
+            resourceDto.OperationalWindow,
             resourceDto.LiftingCapacity,
             dock,
             resourceDto.ContainersPerHour
@@ -122,9 +120,7 @@ public class PhysicalResourceService
             resourceDto.Status,
             TimeSpan.FromMinutes(resourceDto.SetupTimeInMinutes),
             qualifications,
-            new OperationalWindow(
-                resourceDto.OperationalWindow.Shifts
-            ),
+            resourceDto.OperationalWindow,
             resourceDto.LiftingCapacity,
             storageArea,
             resourceDto.ContainersPerHour
@@ -149,9 +145,7 @@ public class PhysicalResourceService
             resourceDto.Status,
             TimeSpan.FromMinutes(resourceDto.SetupTimeInMinutes),
             qualifications,
-            new OperationalWindow(
-                resourceDto.OperationalWindow.Shifts
-            ),
+            resourceDto.OperationalWindow,
             resourceDto.MaxLoadCapacity,
             resourceDto.ContainersPerTrip,
             resourceDto.AverageSpeed

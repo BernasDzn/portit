@@ -58,7 +58,7 @@ public class PhysicalResource : IDTOAble<PhysicalResourceDto>
             Status = this.Status,
             SetupTimeInMinutes = (int)this.SetupTime.TotalMinutes,
             Qualifications = this.Qualifications.Select(q => q.ToDTO()).ToList(),
-            OperationalWindow = this.OperationalWindow.ToDTO()
+            OperationalWindow = this.OperationalWindow
         };
     }
 }
@@ -98,7 +98,7 @@ public class STSCrane : PhysicalResource, IDTOAble<STSCraneDto>
             ContainersPerHour = this.ContainersPerHour,
             LiftingCapacity = this.LiftingCapacity,
             ServingDock = this.ServingDock.ToDTO(),
-            OperationalWindow = this.OperationalWindow.ToDTO()
+            OperationalWindow = this.OperationalWindow
         };
     }
 }
@@ -149,7 +149,7 @@ public class YardCrane : PhysicalResource, IDTOAble<YardCraneDto>
             ContainersPerHour = this.ContainersPerHour,
             LiftingCapacity = this.LiftingCapacity,
             YardSection = this.YardSection.ToDTO(),
-            OperationalWindow = this.OperationalWindow.ToDTO()
+            OperationalWindow = this.OperationalWindow
         };
     }
 }
@@ -190,7 +190,7 @@ public class Truck : PhysicalResource, IDTOAble<TruckDto>
             ContainersPerTrip = this.ContainersPerTrip,
             MaxLoadCapacity = this.MaxLoadCapacity,
             AverageSpeed = this.AverageSpeed,
-            OperationalWindow = this.OperationalWindow.ToDTO()
+            OperationalWindow = this.OperationalWindow
         };
     }
 }

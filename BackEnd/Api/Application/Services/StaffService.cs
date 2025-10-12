@@ -52,9 +52,7 @@ public class StaffService
 			new Designation { Value = staffDto.Name },
 			new Email { Value = staffDto.Email },
 			new PhoneNumber { Value = staffDto.PhoneNumber },
-			new OperationalWindow(
-                staffDto.OperationalWindow.Shifts
-            ),
+            staffDto.OperationalWindow,
 			qualifications
 		);
 		await _staffRepository.Add(staff);
@@ -88,9 +86,7 @@ public class StaffService
 			staffDto.Email,
 			staffDto.PhoneNumber,
 			staffDto.Status,
-			new OperationalWindow(
-                staffDto.OperationalWindow.Shifts
-            ),
+			staffDto.OperationalWindow,
 			qualifications
 		);
 
