@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Domain.ValueObjects;
 
-[Owned]
 public class SafetyOfficer
 {
     private string _citizenID;

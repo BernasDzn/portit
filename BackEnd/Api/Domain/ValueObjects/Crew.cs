@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Api.Domain.ValueObjects;
 
-[Owned]
 public class Crew
 {
     public Designation Captain { get; private set; }

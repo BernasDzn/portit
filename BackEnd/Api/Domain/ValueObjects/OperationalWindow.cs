@@ -65,7 +65,7 @@ public class OperationalWindow
     }
 
     [JsonConstructor]
-    public OperationalWindow() { }
+    protected OperationalWindow() { }
 
     private bool IsValidShift(Shift shift)
     {

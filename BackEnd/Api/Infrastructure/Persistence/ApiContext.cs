@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Api.Domain.Entities;
 using Api.Domain.ValueObjects;
 using System.Text.Json;
+using Namotion.Reflection;
 
 public class ApiContext : DbContext
 {
@@ -98,10 +99,27 @@ public class ApiContext : DbContext
 
         modelBuilder.Entity<VesselVisitNotification>(entity =>
         {
-            entity.Property(e => e.CrewDetails).HasConversion(
-                v => JsonSerializer.Serialize(v, (JsonSerializerOptions?)null),
-                v => JsonSerializer.Deserialize<Crew>(v, (JsonSerializerOptions?)null)
-            );
+            // entity.Property(e => e.CrewDetails).HasConversion(
+            //     v => JsonSerializer.Serialize(v, (JsonSerializerOptions?)null),
+            //     v => JsonSerializer.Deserialize<Crew>(v, (JsonSerializerOptions?)null)
+            // );
+            entity.OwnsOne(e => e.CrewDetails, cd =>
+            {
+                cd.Property(c => c.TotalCrewMembers).HasColumnName("TotalCrewMembers");
+                cd.OwnsOne(c => c.Captain, cap =>
+                {
+                    cap.Property(c => c.Value).HasColumnName("Captain");
+                });
+
+                // Store the safety officers only as a JSON field
+                cd.Property(c => c.SafetyOfficers)
+                  .HasColumnName("SafetyOfficers")
+                  .HasConversion(
+                      v => JsonSerializer.Serialize(v, (JsonSerializerOptions?)null),
+                      v => JsonSerializer.Deserialize<ICollection<SafetyOfficer>>(v, (JsonSerializerOptions?)null)
+                  )
+                  .HasColumnType("json");
+            });
 
             // LoadCargoManifest
             entity.OwnsMany(e => e.LoadCargoManifest, cm =>
