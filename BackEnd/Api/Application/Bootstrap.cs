@@ -412,7 +412,7 @@ public static class Bootstrap
             crewDetails
         );
 
-        Console.WriteLine(vvn3.Id);
+        Crew crewDetails2 = new Crew(new Designation { Value = "Pedro Gomes" }, 4, safetyOfficers);
 
         VesselVisitNotification vvn4 = new VesselVisitNotification(
             new VesselVisitNotificationId(
@@ -426,7 +426,7 @@ public static class Bootstrap
             vessel4,
             vessel4.Owner.Representatives.First(),
             "Handles hazardous materials",
-            crewDetails
+            crewDetails2
         );
 
         NotificationDecision decision1 = NotificationDecisionFactory.CreateAccepted("All criteria met", context.Docks.First());
@@ -440,7 +440,7 @@ public static class Bootstrap
         vvn2.AddDecision(decision2);
         vvn2.Submit();
         vvn2.AddDecision(decision3);
-
+        vvn3.Submit();
         vvn4.Submit();
 
         context.VesselVisitNotifications.AddRange(vvn1, vvn2, vvn3, vvn4);

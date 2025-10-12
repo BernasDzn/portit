@@ -91,6 +91,9 @@ public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
         if (Status != NotificationStatus.InProgress)
             throw new InvalidOperationException("Only notifications in progress can be submitted.");
 
+        if(IsCargoHazardous && (CrewDetails == null || CrewDetails.SafetyOfficers == null || CrewDetails.SafetyOfficers.Count == 0))
+            throw new InvalidOperationException("Notifications with hazardous cargo must include at least one safety officer in the crew details.");
+
         Status = NotificationStatus.ApprovalPending;
     }
 
