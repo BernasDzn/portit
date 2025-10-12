@@ -22,7 +22,7 @@ public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
     public DateTime ExpectedDeparture { get; private set; }
     public bool IsCargoHazardous { get; private set; }
     public string? SpecialRequirements { get; private set; }
-    [NotMapped]
+    
     public virtual Crew? CrewDetails { get; private set; }
     public virtual ICollection<CargoTransport>? LoadCargoManifest { get; private set; }
     public virtual ICollection<CargoTransport>? UnloadCargoManifest { get; private set; }

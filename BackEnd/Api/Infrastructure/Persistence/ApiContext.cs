@@ -98,6 +98,11 @@ public class ApiContext : DbContext
 
         modelBuilder.Entity<VesselVisitNotification>(entity =>
         {
+            entity.Property(e => e.CrewDetails).HasConversion(
+                v => JsonSerializer.Serialize(v, (JsonSerializerOptions?)null),
+                v => JsonSerializer.Deserialize<Crew>(v, (JsonSerializerOptions?)null)
+            );
+
             // LoadCargoManifest
             entity.OwnsMany(e => e.LoadCargoManifest, cm =>
             {
@@ -110,6 +115,16 @@ public class ApiContext : DbContext
                     pos.Property(p => p.Row).HasColumnName("Position_Row");
                     pos.Property(p => p.Tier).HasColumnName("Position_Tier");
                 });
+
+                cm.HasOne(c => c.Area)
+                  .WithMany()
+                  .HasForeignKey("StorageAreaId")
+                  .OnDelete(DeleteBehavior.Restrict);
+
+                cm.HasOne(c => c.Container)
+                    .WithMany()
+                    .HasForeignKey("ContainerId")
+                    .OnDelete(DeleteBehavior.Restrict);
             });
 
             // UnloadCargoManifest
@@ -124,6 +139,16 @@ public class ApiContext : DbContext
                     pos.Property(p => p.Row).HasColumnName("Position_Row");
                     pos.Property(p => p.Tier).HasColumnName("Position_Tier");
                 });
+
+                cm.HasOne(c => c.Area)
+                  .WithMany()
+                  .HasForeignKey("StorageAreaId")
+                  .OnDelete(DeleteBehavior.Restrict);
+
+                cm.HasOne(c => c.Container)
+                    .WithMany()
+                    .HasForeignKey("ContainerId")
+                    .OnDelete(DeleteBehavior.Restrict);
             });
         });
     }
