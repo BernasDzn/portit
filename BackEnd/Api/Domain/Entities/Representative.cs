@@ -19,12 +19,12 @@ public class Representative : IDTOAble<RepresentativeDto>
     // EF Core
     protected Representative() { }
 
-    public Representative(Guid id, uint citizenshipId, Designation name, Email email, PhoneNumber phone)
+    public Representative(Guid id, uint citizenshipId, Designation name, Email emailAddress, PhoneNumber phone)
     {
         Id = id;
         CitizenshipId = citizenshipId;
         Name = name;
-        EmailAddress = email;
+        EmailAddress = emailAddress;
         Phone = phone;
     }
 

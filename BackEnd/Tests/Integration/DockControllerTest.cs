@@ -8,6 +8,7 @@ using Api.Application.DataTransfer;
 using Api.Domain.Entities;
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Hosting;
+using NuGet.Protocol;
 
 namespace Api.Tests.Controllers
 {
@@ -82,6 +83,24 @@ namespace Api.Tests.Controllers
         [Fact]
         public async Task Post_Valid_Dock_Successfully_Creates_Dock()
         {
+            var vt = new
+            {
+                Name = "Panamax",
+                Description = "Max size for Panamax Canal",
+                MaxNumberOfRows = 20,
+                MaxNumberOfBays = 10,
+                MaxNumberOfTiers = 5,
+                PhysicalCharacteristics = new PhysicalCharacteristicsDto
+                {
+                    Length = 300,
+                    Depth = 35,
+                    Draft = 20
+                }
+            };
+
+            var response = await _client.PostAsJsonAsync("/VesselType", vt);
+
+            response.EnsureSuccessStatusCode();
 
             var dock = new
             {
@@ -93,26 +112,13 @@ namespace Api.Tests.Controllers
                     Depth = 40,
                     Draft = 20
                 },
-                SupportedVesselTypes = new List<VesselTypeDto>
+                SupportedVesselTypes = new List<object>
                 {
-                    new VesselTypeDto
-                    {
-                        Name = "Panamax",
-                        Description = "Max size for Panama Canal",
-                        MaxNumberOfRows = 20,
-                        MaxNumberOfBays = 10,
-                        MaxNumberOfTiers = 5,
-                        PhysicalCharacteristics = new PhysicalCharacteristicsDto
-                        {
-                            Length = 300,
-                            Depth = 35,
-                            Draft = 20
-                        }
-                    }
+                    vt
                 }
             };
 
-            var response = await _client.PostAsJsonAsync("/Dock", dock);
+            response = await _client.PostAsJsonAsync("/Dock", dock);
 
             response.EnsureSuccessStatusCode();
             Assert.Equal(System.Net.HttpStatusCode.Created, response.StatusCode);
@@ -162,9 +168,28 @@ namespace Api.Tests.Controllers
         [Fact]
         public async Task Put_Valid_Dock_Successfully_Updates_Dock()
         {
+            var vt = new
+            {
+                Name = "Post-Panamax",
+                Description = "Max size for Post-Panamax Canal",
+                MaxNumberOfRows = 20,
+                MaxNumberOfBays = 10,
+                MaxNumberOfTiers = 5,
+                PhysicalCharacteristics = new PhysicalCharacteristicsDto
+                {
+                    Length = 300,
+                    Depth = 35,
+                    Draft = 20
+                }
+            };
+
+            var response = await _client.PostAsJsonAsync("/VesselType", vt);
+
+            response.EnsureSuccessStatusCode();
+
             var updatedDock = new
             {
-                Name = "Dock A",
+                Name = "Dock Test",
                 Location = "Updated Location",
                 PhysicalCharacteristics = new PhysicalCharacteristics
                 {
@@ -172,22 +197,9 @@ namespace Api.Tests.Controllers
                     Depth = 50,
                     Draft = 25
                 },
-                SupportedVesselTypes = new List<VesselTypeDto>
+                SupportedVesselTypes = new List<object>
                 {
-                    new VesselTypeDto
-                    {
-                        Name = "Post-Panamax",
-                        Description = "Larger than Panamax",
-                        MaxNumberOfRows = 30,
-                        MaxNumberOfBays = 15,
-                        MaxNumberOfTiers = 7,
-                        PhysicalCharacteristics = new PhysicalCharacteristicsDto
-                        {
-                            Length = 400,
-                            Depth = 18,
-                            Draft = 14
-                        }
-                    }
+                    vt
                 }
             };
 
@@ -218,7 +230,7 @@ namespace Api.Tests.Controllers
             Assert.Equal(updatedDock.SupportedVesselTypes.Count, fetchedDock.SupportedVesselTypes.Count);
             for (int i = 0; i < updatedDock.SupportedVesselTypes.Count; i++)
             {
-                Assert.Equal(updatedDock.SupportedVesselTypes[i].Name, fetchedDock.SupportedVesselTypes[i].Name);
+                Assert.Equal(updatedDock.SupportedVesselTypes[i].ToJson(), fetchedDock.SupportedVesselTypes[i].ToJson());
             }
         }
 

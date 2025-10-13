@@ -8,6 +8,7 @@ using Api.Application.DataTransfer;
 using Api.Domain.Entities;
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Hosting;
+using NuGet.Protocol;
 
 namespace Tests.Integration;
 
@@ -81,21 +82,9 @@ public class VesselControllerTests
     [Fact]
     public async Task Post_Vessel_Successfully()
     {
-        // Arrange
-        // Use an existing VesselType from bootstrap data (Panamax)
-        var vesselDto = new VesselDto
+        var vt = new
         {
-            Name = "Test Vessel",
-            ImoNumber = "IMO 4569858",
-            PhysicalCharacteristics = new PhysicalCharacteristicsDto
-            {
-                Length = 250,
-                Depth = 12,
-                Draft = 10
-            },
-            Type = new VesselTypeDto
-            {
-                Name = "Panamax",
+             Name = "Panamax",
                 Description = "Max size for Panama Canal",
                 MaxNumberOfRows = 20,
                 MaxNumberOfBays = 10,
@@ -106,23 +95,50 @@ public class VesselControllerTests
                     Depth = 35,
                     Draft = 20
                 }
-            },
-            Owner = new ShippingAgentOrganizationDto
+        };
+
+        var response = await _client.PostAsJsonAsync("/VesselType", vt);
+
+        response.EnsureSuccessStatusCode();
+
+        var rep = new
+        {
+            Name = "Patricio Sharply",
+            CitizenshipId = 908029952,
+            Designation = "Patricio Sharply",
+            EmailAddress = "psharply0@yolasite.com",
+            Phone = "6947302134"
+        };
+
+        response = await _client.PostAsJsonAsync("/Representative", rep);
+        response.EnsureSuccessStatusCode();
+
+        var sao = new
+        {
+            Name = "Global Shipping Co.",
+            AltNames = new string[] { "GSC", "GlobalShip" },
+            TaxNumber = "123456789",
+            Address = new Address("123 Test St", "Test City", "Test Country", "12345"),
+            Representatives = new HashSet<object> { rep }
+        };
+
+        response = await _client.PostAsJsonAsync("/ShippingAgentOrganization", sao);
+        response.EnsureSuccessStatusCode();
+
+        // Arrange
+        // Use an existing VesselType from bootstrap data (Panamax)
+        var vesselDto = new
+        {
+            Name = "Test Vessel",
+            ImoNumber = "IMO 4569858",
+            PhysicalCharacteristics = new PhysicalCharacteristicsDto
             {
-                Name = "Global Shipping Co.",
-                AltNames = new List<string> { "TSA", "Test Agent" }.ToArray(),
-                TaxNumber = "123456789",
-                Address = new Address("123 Test St", "Test City", "Test Country", "12345"),
-                Representatives = new List<RepresentativeDto>()
-                {
-                    new RepresentativeDto {
-                        Name = "John Doe",
-                        EmailAddress = "email",
-                        Phone = "phone",
-                        CitizenshipId = 123456789
-                    }
-                }
-            }
+                Length = 250,
+                Depth = 12,
+                Draft = 10
+            },
+            Type = vt,
+            Owner = sao
         };
 
         // Act - Create

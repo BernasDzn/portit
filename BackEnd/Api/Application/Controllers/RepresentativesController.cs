@@ -3,6 +3,8 @@ namespace Api.Application.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Api.Application.DataTransfer;
 using Api.Infrastructure.Persistence;
+using Api.Domain.Entities;
+using Api.Domain.ValueObjects;
 
 [ApiController]
 [Route("[controller]")]
@@ -43,5 +45,20 @@ public class RepresentativeController : ControllerBase
             return NotFound();
         }
         return Ok(rep.ToDTO());
+    }
+
+    [HttpPost(Name = "CreateRepresentative")]
+    public ActionResult<RepresentativeDto> Create(RepresentativeDto repDto)
+    {
+        Representative rep = new Representative(
+            Guid.NewGuid(),
+            repDto.CitizenshipId,
+            new Designation { Value = repDto.Name },
+            new Email { Value = repDto.EmailAddress },
+            new PhoneNumber { Value = repDto.Phone }
+        );
+        var createdRep = _context.Representatives.Add(rep);
+        _context.SaveChanges();
+        return CreatedAtRoute("GetRepresentatives", new { id = createdRep.Entity.Id }, createdRep.Entity.ToDTO());
     }
 }
