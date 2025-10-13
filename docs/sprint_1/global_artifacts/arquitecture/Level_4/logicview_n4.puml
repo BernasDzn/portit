@@ -1,13 +1,11 @@
 @startuml logicview_n4
 skinparam Linetype polyline
 
-[UI] as ui
-
-circle "API" as api #LightBlue
+circle "EF API" as api #LightBlue
 
 api --o masterdata
 
-package "Back End" as masterdata {
+rectangle "Master Data" as masterdata {
 	
 	[row 1 empty] as empty1 #red
 	[BackEnd Controllers] as controller
@@ -18,7 +16,7 @@ package "Back End" as masterdata {
 	[BackEnd Repositories] as repository
 	[row 3 empty] as empty3 #red
 
-	[Data Transfer] as dtos
+	[DTO] as dtos
 	[BackEnd Domain] as domain
 	database "Backend\nDatabase" as database
 
@@ -26,9 +24,6 @@ package "Back End" as masterdata {
 	hide empty2
 	hide empty3
 } 
-
-
-controller -u0)- ui : "CONTROLLER\nAPI"
 
 ' row one 
 controller -d(0- dtos : "DTO\nAPI"

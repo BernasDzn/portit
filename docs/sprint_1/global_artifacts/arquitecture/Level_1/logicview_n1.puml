@@ -1,0 +1,12 @@
+@startuml logicview_n4
+skinparam Linetype polyline
+
+circle "API" as api #LightBlue
+
+api --o masterdata
+
+rectangle "PortManSys" as masterdata {
+	
+}
+
+@enduml
