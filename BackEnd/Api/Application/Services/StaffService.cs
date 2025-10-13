@@ -9,7 +9,7 @@ using Api.Domain.ValueObjects;
 using Api.Infrastructure.Exceptions;
 using Api.Infrastructure.Utilities;
 
-public class StaffService
+public class StaffService : IStaffService
 {
 
 	private readonly IStaffRepository _staffRepository;

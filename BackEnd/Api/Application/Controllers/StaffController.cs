@@ -8,7 +8,7 @@ using Api.Infrastructure.Utilities;
 
 [ApiController]
 [Route("[controller]")]
-public class StaffController : ControllerBase
+public class StaffController : ControllerBase, IStaffController
 {
 	private readonly ILogger<StaffController> _logger;
 	private readonly StaffService _staffService;
@@ -80,7 +80,7 @@ public class StaffController : ControllerBase
 	}
 
 	[HttpGet("filter")]
-	public async Task<ActionResult<IEnumerable<StaffDto>>> Filter([FromQuery] StaffFilter filter)
+	public async Task<ActionResult<Page<StaffDto>>> Filter([FromQuery] StaffFilter filter)
 	{ 
 		try
 		{

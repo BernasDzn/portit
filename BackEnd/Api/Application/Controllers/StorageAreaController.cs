@@ -7,7 +7,7 @@ using Api.Application.DataTransfer;
 
 [ApiController]
 [Route("[controller]")]
-public class StorageAreaController : ControllerBase
+public class StorageAreaController : ControllerBase, IStorageAreaController
 {
     private readonly StorageAreaService _storageAreaService;
     private readonly ILogger<StorageAreaController> _logger;

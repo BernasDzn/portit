@@ -7,7 +7,7 @@ using Api.Domain.IRepository;
 using Api.Domain.ValueObjects;
 using Api.Infrastructure.Exceptions;
 
-public class StorageAreaService
+public class StorageAreaService : IStorageAreaService
 {
     private readonly IStorageAreaRepository _storageAreaRepository;
     private readonly IDockRepository _dockRepository;
