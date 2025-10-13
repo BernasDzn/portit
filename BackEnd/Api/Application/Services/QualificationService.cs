@@ -9,7 +9,7 @@ using Api.Domain.ValueObjects;
 using Api.Infrastructure.Exceptions;
 using Api.Infrastructure.Utilities;
 
-public class QualificationService
+public class QualificationService : IQualificationService
 {
 	private readonly IQualificationRepository _qualificationRepository;
 	private readonly ILogger<QualificationService> _logger;
