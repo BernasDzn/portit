@@ -9,7 +9,7 @@ using Api.Application.DataTransfer.Filters;
 
 [ApiController]
 [Route("[controller]")]
-public class PhysicalResourceController : ControllerBase
+public class PhysicalResourceController : ControllerBase, IPhysicalResourceController
 {
     private readonly PhysicalResourceService _physicalResourceService;
     private readonly ILogger<PhysicalResourceController> _logger;

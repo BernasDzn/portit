@@ -9,7 +9,7 @@ using Api.Application.DataTransfer.Filters;
 
 [ApiController]
 [Route("[controller]")]
-public class QualificationController : ControllerBase
+public class QualificationController : ControllerBase, IQualificationController
 {
 	private readonly ILogger<QualificationController> _logger;
 	private readonly QualificationService _qualificationService;

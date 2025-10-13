@@ -9,7 +9,7 @@ using Api.Domain.ValueObjects;
 using Api.Infrastructure.Exceptions;
 using Api.Infrastructure.Utilities;
 
-public class PhysicalResourceService
+public class PhysicalResourceService : IPhysicalResourceService
 {
     private readonly IPhysicalResourceRepository _physicalResourceRepository;
     private readonly IDockRepository _dockRepository;
@@ -30,7 +30,7 @@ public class PhysicalResourceService
         _logger = logger;
     }
 
-    private HashSet<Qualification> GetQualificationsAsync(PhysicalResourceDto resourceDto)
+    private IEnumerable<Qualification> GetQualificationsAsync(PhysicalResourceDto resourceDto)
     {
         HashSet<Qualification> qualifications = new HashSet<Qualification>();
         foreach (var qualificationDto in resourceDto.Qualifications)
@@ -83,7 +83,7 @@ public class PhysicalResourceService
         if (dock == null)
             throw new EntityNotFoundException("The specified dock does not exist.");
 
-        HashSet<Qualification> qualifications = GetQualificationsAsync(resourceDto);
+        IEnumerable<Qualification> qualifications = GetQualificationsAsync(resourceDto);
 
         STSCrane crane = new STSCrane(
             Guid.NewGuid(),
@@ -91,7 +91,7 @@ public class PhysicalResourceService
             new Designation { Value = resourceDto.Description },
             resourceDto.Status,
             TimeSpan.FromMinutes(resourceDto.SetupTimeInMinutes),
-            qualifications,
+            qualifications.ToHashSet(),
             resourceDto.OperationalWindow,
             resourceDto.LiftingCapacity,
             dock,
@@ -108,7 +108,7 @@ public class PhysicalResourceService
         if (exists)
             throw new EntityAlreadyExistsException("A physical resource with this code already exists.");
 
-        HashSet<Qualification> qualifications = GetQualificationsAsync(resourceDto);
+        IEnumerable<Qualification> qualifications = GetQualificationsAsync(resourceDto);
 
         StorageArea? storageArea = await _storageAreaRepository.GetStorageAreaByCodeAsync(resourceDto.YardSection.NameCode);
         if (storageArea == null) throw new EntityNotFoundException("The specified storage area does not exist.");
@@ -119,7 +119,7 @@ public class PhysicalResourceService
             new Designation { Value = resourceDto.Description },
             resourceDto.Status,
             TimeSpan.FromMinutes(resourceDto.SetupTimeInMinutes),
-            qualifications,
+            qualifications.ToHashSet(),
             resourceDto.OperationalWindow,
             resourceDto.LiftingCapacity,
             storageArea,
@@ -136,7 +136,7 @@ public class PhysicalResourceService
         if (exists)
             throw new EntityAlreadyExistsException("A physical resource with this code already exists.");
 
-        HashSet<Qualification> qualifications = GetQualificationsAsync(resourceDto);
+        IEnumerable<Qualification> qualifications = GetQualificationsAsync(resourceDto);
 
         Truck truck = new Truck(
             Guid.NewGuid(),
@@ -144,7 +144,7 @@ public class PhysicalResourceService
             new Designation { Value = resourceDto.Description },
             resourceDto.Status,
             TimeSpan.FromMinutes(resourceDto.SetupTimeInMinutes),
-            qualifications,
+            qualifications.ToHashSet(),
             resourceDto.OperationalWindow,
             resourceDto.MaxLoadCapacity,
             resourceDto.ContainersPerTrip,
@@ -246,7 +246,7 @@ public class PhysicalResourceService
         return page.Map<object>(resource => ConvertToDto(resource));
     }
 
-    internal async Task<bool> DeactivateResource(string code)
+    public async Task<bool> DeactivateResource(string code)
     {
         PhysicalResource? resource = await _physicalResourceRepository.GetResourceByCodeAsync(code);
         if (resource == null) return false;
