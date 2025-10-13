@@ -7,6 +7,7 @@ using Api.Domain.ValueObjects;
 using Api.Application.DataTransfer;
 using Api.Domain.Entities;
 using System.Net.Http.Json;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Api.Tests.Controllers
 {
@@ -19,6 +20,7 @@ namespace Api.Tests.Controllers
         {
             _factory = factory.WithWebHostBuilder(builder =>
             {
+                builder.UseEnvironment("Testing");
                 builder.ConfigureServices(services =>
                 {
                     // Remove the real database
@@ -85,7 +87,7 @@ namespace Api.Tests.Controllers
             {
                 Name = "Dock Test",
                 Location = "Location Test",
-                PhysicalCharacteristics = new PhysicalCharacteristics
+                PhysicalCharacteristics = new PhysicalCharacteristicsDto
                 {
                     Length = 350,
                     Depth = 40,
@@ -189,7 +191,7 @@ namespace Api.Tests.Controllers
                 }
             };
 
-            var putResponse = await _client.PutAsJsonAsync($"/Dock/Dock A", updatedDock);
+            var putResponse = await _client.PutAsJsonAsync("/Dock/Dock Test", updatedDock);
             putResponse.EnsureSuccessStatusCode();
             var returnedDock = await putResponse.Content.ReadFromJsonAsync<DockDto>();
             Assert.NotNull(returnedDock);

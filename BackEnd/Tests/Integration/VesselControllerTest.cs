@@ -7,6 +7,7 @@ using Api.Domain.ValueObjects;
 using Api.Application.DataTransfer;
 using Api.Domain.Entities;
 using System.Net.Http.Json;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Tests.Integration;
 
@@ -20,6 +21,7 @@ public class VesselControllerTests
     {
         _factory = factory.WithWebHostBuilder(builder =>
         {
+            builder.UseEnvironment("Testing");
             builder.ConfigureServices(services =>
             {
                 // Remove the real database

@@ -17,10 +17,18 @@ builder.Services.AddControllers();
 IConfiguration configuration = builder.Configuration;
 
 // Add database contexts
-builder.Services.AddDbContext<ApiContext>(opt =>
-    opt.UseLazyLoadingProxies().UseMySQL(
-        $"server={configuration["DatabaseSettings:server"]};port={configuration["DatabaseSettings:port"]};database={configuration["DatabaseSettings:database"]};user={configuration["DatabaseSettings:username"]};password={configuration["DatabaseSettings:password"]}"
-    ));
+if(builder.Environment.IsEnvironment("Testing"))
+{
+    builder.Services.AddDbContext<ApiContext>(opt =>
+        opt.UseLazyLoadingProxies().UseInMemoryDatabase("TestDatabase"));
+}
+else
+{
+    builder.Services.AddDbContext<ApiContext>(opt =>
+        opt.UseLazyLoadingProxies().UseMySQL(
+            $"server={configuration["DatabaseSettings:server"]};port={configuration["DatabaseSettings:port"]};database={configuration["DatabaseSettings:database"]};user={configuration["DatabaseSettings:username"]};password={configuration["DatabaseSettings:password"]}"
+        ));
+}
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();

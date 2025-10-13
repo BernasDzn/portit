@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Api.Domain.ValueObjects;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Tests.Integration;
 
@@ -17,6 +18,7 @@ public class StaffControllerTests
 	{
 		_factory = factory.WithWebHostBuilder(builder =>
 		{
+			builder.UseEnvironment("Testing");
 			builder.ConfigureServices(services =>
 			{
 				// Remove the real database
