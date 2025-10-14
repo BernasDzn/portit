@@ -10,7 +10,7 @@ using Api.Infrastructure.Exceptions;
 using Api.Infrastructure.Utilities;
 
 
-public class DockService
+public class DockService : IDockService
 {
     private readonly IDockRepository _dockRepository;
     private readonly IVesselTypeRepository _vesselTypeRepository;
@@ -29,7 +29,7 @@ public class DockService
         return docks.Select(d => d.ToDTO()).ToList();
     }
 
-    public async Task<Page<DockDto>?> FilterDocks(DockFilter filter)
+    public async Task<Page<DockDto>> FilterDocks(DockFilter filter)
     {
         Page<Dock> page = await _dockRepository.FilterDocksAsync(filter);
         return page.Map(d => d.ToDTO());

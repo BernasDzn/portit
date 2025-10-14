@@ -8,7 +8,7 @@ using Api.Application.DataTransfer.Filters;
 
 [ApiController]
 [Route("[controller]")]
-public class DockController : ControllerBase
+public class DockController : ControllerBase, IDockController
 {
 	private readonly ILogger<DockController> _logger;
 	private readonly DockService _dockService;
@@ -61,7 +61,7 @@ public class DockController : ControllerBase
 	}
 
 	[HttpPut("{name}", Name = "UpdateDock")]
-	public async Task<IActionResult> Update(string name, DockDto dockDto)
+	public async Task<ActionResult<DockDto>> Update(string name, DockDto dockDto)
 	{
 		try
 		{

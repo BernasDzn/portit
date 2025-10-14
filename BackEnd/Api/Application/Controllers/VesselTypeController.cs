@@ -8,7 +8,7 @@ using Api.Application.DataTransfer.Filters;
 
 [ApiController]
 [Route("[controller]")]
-public class VesselTypeController : ControllerBase
+public class VesselTypeController : ControllerBase, IVesselTypeController
 {
 
 	private readonly ILogger<VesselTypeController> _logger;
@@ -62,7 +62,7 @@ public class VesselTypeController : ControllerBase
 	}
 
 	[HttpPut("{name}", Name = "UpdateVesselType")]
-	public async Task<IActionResult> Update(string name, VesselTypeDto vesselTypeDto)
+	public async Task<ActionResult<VesselTypeDto>> Update(string name, VesselTypeDto vesselTypeDto)
 	{
 		try
 		{
