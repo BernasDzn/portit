@@ -4,6 +4,7 @@ using Api.Domain.Entities;
 using Api.Domain.IRepository;
 using Api.Infrastructure.Persistence;
 using Api.Infrastructure.Persistence.Repositories;
+using Api.Infrastructure.Utilities;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,9 +12,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
+// Set encryption key for the application
+EncryptionHelper.SetEncryptionKey(builder.Configuration["EncryptionKey"]!);
+
 // Add services to the container.
 builder.Services.AddControllers();
-
 IConfiguration configuration = builder.Configuration;
 
 // Add database contexts

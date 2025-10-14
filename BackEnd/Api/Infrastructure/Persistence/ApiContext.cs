@@ -86,6 +86,20 @@ public class ApiContext : DbContext
             });
         });
 
+        // Encryption for sensitive data
+        modelBuilder.Entity<Representative>(entity =>
+        {
+            entity.Property(e => e.CitizenshipId).HasConversion<UIntEncryptionConvertor>();
+            entity.Property(e => e.EmailAddress).HasConversion<EmailEncryptionConverter>();
+            entity.Property(e => e.Phone).HasConversion<PhoneNumberEncryptionConverter>();
+        });
+
+        modelBuilder.Entity<Staff>(entity =>
+        {
+            entity.Property(e => e.Email).HasConversion<EmailEncryptionConverter>();
+            entity.Property(e => e.PhoneNumber).HasConversion<PhoneNumberEncryptionConverter>();
+        });
+
         modelBuilder.Entity<ShippingAgentOrganization>(entity =>
         {
             entity.OwnsMany(e => e.AltNames, an =>
