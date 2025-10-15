@@ -1,7 +1,7 @@
 using Api.Domain.Entities;
 using Api.Domain.ValueObjects;
 
-namespace Tests.Domain;
+namespace Tests.Unitary.Domain;
 
 public class VesselTypeTest
 {
@@ -21,7 +21,7 @@ public class VesselTypeTest
                 new HashSet<VesselType> { validVesselType }
             );
         validVessel = new Vessel(Guid.NewGuid(), new Designation { Value = "Valid Name" }, new ImoNumber { Value = "IMO 2467953" },
-                validVesselType, null, new PhysicalCharacteristics { Length = 50, Depth = 10, Draft = 10 }
+                validVesselType, null!, new PhysicalCharacteristics { Length = 50, Depth = 10, Draft = 10 }
             );
     }
 

@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 
+namespace Tests.Unitary.Controller;
+
 public class QualificationControllerTest
 {
     // Mocked qualification service to ensure isolation of controller tests
