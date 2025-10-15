@@ -9,7 +9,7 @@ using Api.Domain.ValueObjects;
 using Api.Infrastructure.Exceptions;
 using Api.Infrastructure.Utilities;
 
-public class VesselService
+public class VesselService : IVesselService
 {
     private readonly IVesselRepository _vesselRepository;
     private readonly IVesselTypeRepository _vesselTypeRepository;

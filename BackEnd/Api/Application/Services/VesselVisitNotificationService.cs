@@ -1,5 +1,6 @@
 namespace Api.Application.Services;
 
+using Api.Application.Controllers;
 using Api.Application.DataTransfer;
 using Api.Application.DataTransfer.Filters;
 using Api.Application.Exceptions;
@@ -8,7 +9,7 @@ using Api.Domain.IRepository;
 using Api.Domain.ValueObjects;
 using Api.Infrastructure.Utilities;
 
-public class VesselVisitNotificationService
+public class VesselVisitNotificationService : IVesselVisitNotificationService
 {
     private readonly IVesselVisitNotificationRepository _notificationRepository;
     private readonly IVesselRepository _vesselRepository;
