@@ -22,6 +22,7 @@ public class PhysicalResourcesTest
             capacity,
             new Dock(
                 Guid.NewGuid(),
+                new Code { Value = "DCK001" },
                 new Designation { Value = "Dock A" },
                 new Designation { Value = "Main Dock" },
                 new PhysicalCharacteristics { Length = 300, Depth = 50, Draft = 15 },
@@ -57,6 +58,7 @@ public class PhysicalResourcesTest
                 capacity,
                 new Dock(
                     Guid.NewGuid(),
+                    new Code { Value = "DCK001" },
                     new Designation { Value = "Dock A" },
                     new Designation { Value = "Main Dock" },
                     new PhysicalCharacteristics { Length = 300, Depth = 50, Draft = 15 },
