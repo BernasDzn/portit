@@ -89,7 +89,7 @@ public class VesselControllerTests
                 MaxNumberOfRows = 20,
                 MaxNumberOfBays = 10,
                 MaxNumberOfTiers = 5,
-                PhysicalCharacteristics = new PhysicalCharacteristicsDto
+                PhysicalCharacteristics = new PhysicalCharacteristics
                 {
                     Length = 300,
                     Depth = 35,
@@ -131,7 +131,7 @@ public class VesselControllerTests
         {
             Name = "Test Vessel",
             ImoNumber = "IMO 4569858",
-            PhysicalCharacteristics = new PhysicalCharacteristicsDto
+            PhysicalCharacteristics = new PhysicalCharacteristics
             {
                 Length = 250,
                 Depth = 12,

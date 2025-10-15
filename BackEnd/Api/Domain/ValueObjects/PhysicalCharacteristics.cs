@@ -7,7 +7,7 @@ using Api.Infrastructure.Utilities;
 
 
 [Owned]
-public class PhysicalCharacteristics : IDTOAble<PhysicalCharacteristicsDto>
+public class PhysicalCharacteristics
 {
 
 	private double _length;
@@ -47,15 +47,5 @@ public class PhysicalCharacteristics : IDTOAble<PhysicalCharacteristicsDto>
 	}
 
 	public override string ToString() => "Physical Characteristics: " + Length + " x " + Depth + " x " + Draft + ".";
-
-	public PhysicalCharacteristicsDto ToDTO()
-	{
-		return new PhysicalCharacteristicsDto
-        {
-            Length = _length,
-            Depth = _depth,
-            Draft = _draft
-		};
-	}
 
 }
