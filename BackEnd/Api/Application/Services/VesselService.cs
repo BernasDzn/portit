@@ -92,6 +92,15 @@ public class VesselService : IVesselService
         return updateResult.ToDTO();
     }
 
+    public async Task<VesselDto?> GetByImo(string imo)
+    {
+        Vessel? vessel = await _vesselRepository.GetVesselByIMOAsync(imo);
+        if (vessel == null)
+            throw new EntityNotFoundException("Vessel not found.");
+
+        return vessel.ToDTO();
+    }
+
     public async Task<Page<VesselDto>> FilterVessels(VesselFilter filter)
     {
         Page<Vessel> page = await _vesselRepository.FilterVesselsAsync(filter);

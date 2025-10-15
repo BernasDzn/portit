@@ -27,6 +27,24 @@ public class VesselController : ControllerBase, IVesselController
         return Ok(vesselsDto);
     }
 
+    [HttpGet("{imo}", Name = "GetVesselByImo")]
+    public async Task<ActionResult<VesselDto>> GetByImo(string imo)
+    {
+        try
+        {
+            VesselDto? vesselDto = await _vesselService.GetByImo(imo);
+            if (vesselDto == null)
+                return NotFound($"No vessel found with id: {imo}");
+
+            return Ok(vesselDto);
+        }
+        catch (System.Exception e)
+        {
+            _logger.LogError("Error retrieving vessel by IMO, {Message}", e.Message);
+            return BadRequest(e.Message);
+        }
+    }
+
     [HttpPost(Name = "PostVessel")]
     public async Task<ActionResult<VesselDto>> Create(VesselDto vesselDto)
     {
