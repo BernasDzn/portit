@@ -12,9 +12,9 @@ using Api.Application.DataTransfer.Filters;
 public class QualificationController : ControllerBase, IQualificationController
 {
 	private readonly ILogger<QualificationController> _logger;
-	private readonly QualificationService _qualificationService;
+	private readonly IQualificationService _qualificationService;
 
-	public QualificationController(QualificationService qualificationService, ILogger<QualificationController> logger)
+	public QualificationController(IQualificationService qualificationService, ILogger<QualificationController> logger)
 	{
 		_qualificationService = qualificationService;
 		_logger = logger;
