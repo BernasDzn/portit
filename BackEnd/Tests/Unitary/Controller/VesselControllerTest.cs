@@ -45,9 +45,9 @@ public class VesselControllerTest
             {
                 ImoNumber = id,
                 Name = "Sample Vessel",
-                Type = null,
-                Owner = null,
-                PhysicalCharacteristics = null
+                Type = null!,
+                Owner = null!,
+                PhysicalCharacteristics = null!
             });
 
         var result = await _controller.GetByImo(testImo);

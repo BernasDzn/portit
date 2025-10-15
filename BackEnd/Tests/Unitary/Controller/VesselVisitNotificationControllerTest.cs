@@ -65,12 +65,12 @@ public class VesselVisitNotificationControllerTest
     {
         var newNotification = new VesselVisitNotificationDto
         {
-            NotificationId = null,
+            NotificationId = null!,
             ExpectedArrival = DateTime.UtcNow,
             ExpectedDeparture = DateTime.UtcNow.AddDays(1),
             IsCargoHazardous = false,
-            Vessel = null,
-            Submitter = null
+            Vessel = null!,
+            Submitter = null!
         };
 
         _notificationServiceMock.Setup(service => service.Add(It.IsAny<VesselVisitNotificationDto>()))
@@ -87,12 +87,12 @@ public class VesselVisitNotificationControllerTest
     {
         var newNotification = new VesselVisitNotificationDto
         {
-            NotificationId = null,
+            NotificationId = null!,
             ExpectedArrival = DateTime.UtcNow,
             ExpectedDeparture = DateTime.UtcNow.AddDays(1),
             IsCargoHazardous = false,
-            Vessel = null,
-            Submitter = null
+            Vessel = null!,
+            Submitter = null!
         };
 
         _notificationServiceMock.Setup(service => service.Add(It.IsAny<VesselVisitNotificationDto>()))
@@ -108,12 +108,12 @@ public class VesselVisitNotificationControllerTest
     {
         var newNotification = new VesselVisitNotificationDto
         {
-            NotificationId = null,
+            NotificationId = null!,
             ExpectedArrival = DateTime.UtcNow,
             ExpectedDeparture = DateTime.UtcNow.AddDays(1),
             IsCargoHazardous = false,
-            Vessel = null,
-            Submitter = null
+            Vessel = null!,
+            Submitter = null!
         };
 
         _notificationServiceMock.Setup(service => service.Add(It.IsAny<VesselVisitNotificationDto>()))
@@ -188,8 +188,8 @@ public class VesselVisitNotificationControllerTest
             ExpectedArrival = DateTime.UtcNow,
             ExpectedDeparture = DateTime.UtcNow.AddDays(1),
             IsCargoHazardous = false,
-            Vessel = null,
-            Submitter = null
+            Vessel = null!,
+            Submitter = null!
         };
 
         _notificationServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<VesselVisitNotificationDto>()))
@@ -210,8 +210,8 @@ public class VesselVisitNotificationControllerTest
             ExpectedArrival = DateTime.UtcNow,
             ExpectedDeparture = DateTime.UtcNow.AddDays(1),
             IsCargoHazardous = false,
-            Vessel = null,
-            Submitter = null
+            Vessel = null!,
+            Submitter = null!
         };
 
         _notificationServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<VesselVisitNotificationDto>()))
@@ -231,8 +231,8 @@ public class VesselVisitNotificationControllerTest
             ExpectedArrival = DateTime.UtcNow,
             ExpectedDeparture = DateTime.UtcNow.AddDays(1),
             IsCargoHazardous = false,
-            Vessel = null,
-            Submitter = null
+            Vessel = null!,
+            Submitter = null!
         };
 
         _notificationServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<VesselVisitNotificationDto>()))
