@@ -8,7 +8,7 @@ using Api.Infrastructure.Utilities;
 
 [ApiController]
 [Route("[controller]")]
-public class VesselVisitNotificationController : ControllerBase
+public class VesselVisitNotificationController : ControllerBase, IVesselVisitNotificationController
 {
     private readonly ILogger<VesselVisitNotificationController> _logger;
     private readonly VesselVisitNotificationService _notificationService;

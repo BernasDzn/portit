@@ -9,7 +9,7 @@ using Api.Application.DataTransfer.Filters;
 
 [ApiController]
 [Route("[controller]")]
-public class VesselController : ControllerBase
+public class VesselController : ControllerBase, IVesselController
 {
     private readonly ILogger<VesselController> _logger;
     private readonly VesselService _vesselService;
