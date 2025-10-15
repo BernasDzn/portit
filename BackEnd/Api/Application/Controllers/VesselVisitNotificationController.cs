@@ -11,10 +11,10 @@ using Api.Infrastructure.Utilities;
 public class VesselVisitNotificationController : ControllerBase, IVesselVisitNotificationController
 {
     private readonly ILogger<VesselVisitNotificationController> _logger;
-    private readonly VesselVisitNotificationService _notificationService;
+    private readonly IVesselVisitNotificationService _notificationService;
     private readonly NotificationDecisionService _notificationDecisionService;
 
-    public VesselVisitNotificationController(VesselVisitNotificationService notificationService, NotificationDecisionService notificationDecisionService, ILogger<VesselVisitNotificationController> logger)
+    public VesselVisitNotificationController(IVesselVisitNotificationService notificationService, NotificationDecisionService notificationDecisionService, ILogger<VesselVisitNotificationController> logger)
     {
         _notificationService = notificationService;
         _notificationDecisionService = notificationDecisionService;

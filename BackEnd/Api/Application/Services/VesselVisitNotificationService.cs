@@ -144,7 +144,7 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         return (await _notificationRepository.UpdateAsync(existingNotification)).ToDTO();
     }
 
-    internal async Task<Page<VesselVisitNotificationStatusDto>> FilterNotifications(VesselVisitNotificationFilter filter)
+    public async Task<Page<VesselVisitNotificationStatusDto>> FilterNotifications(VesselVisitNotificationFilter filter)
     {
         Page<VesselVisitNotification> page = await _notificationRepository.FilterVesselVisitNotificationsAsync(filter);
         return page.Map(vvn => vvn.ToStatusDTO());

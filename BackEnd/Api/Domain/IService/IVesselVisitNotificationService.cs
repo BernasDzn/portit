@@ -8,4 +8,5 @@ public interface IVesselVisitNotificationService
     Task<IEnumerable<VesselVisitNotificationDto>> GetVesselVisitNotifications();
     Task<VesselVisitNotificationDto?> Add(VesselVisitNotificationDto vesselVisitNotificationDto);
     Task<VesselVisitNotificationDto?> Update(string vvnID, VesselVisitNotificationDto vvnDTO);
+    Task<Page<VesselVisitNotificationStatusDto>> FilterNotifications(VesselVisitNotificationFilter filter);
 }
