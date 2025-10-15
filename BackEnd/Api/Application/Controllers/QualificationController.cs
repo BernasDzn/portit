@@ -23,8 +23,16 @@ public class QualificationController : ControllerBase, IQualificationController
 	[HttpGet(Name = "GetQualifications")]
 	public async Task<ActionResult<IEnumerable<QualificationDto>>> GetAll()
 	{
-		IEnumerable<QualificationDto> qualificationsDto = await _qualificationService.GetQualifications();
-		return Ok(qualificationsDto);
+		try
+		{
+			IEnumerable<QualificationDto> qualificationsDto = await _qualificationService.GetQualifications();
+			return Ok(qualificationsDto);
+		}
+		catch (System.Exception)
+		{
+			_logger.LogError("Error retrieving qualifications");
+			return BadRequest("Error retrieving qualifications");
+		}
 	}
 
 	[HttpGet("filter")]

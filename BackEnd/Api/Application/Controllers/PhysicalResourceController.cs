@@ -30,6 +30,7 @@ public class PhysicalResourceController : ControllerBase, IPhysicalResourceContr
         }
         catch (System.Exception)
         {
+            _logger.LogError("Could not retrieve physical resources.");
             return BadRequest("Could not retrieve physical resources.");
         }
     }
