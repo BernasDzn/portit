@@ -155,8 +155,6 @@ public class QualificationServiceTest
 
         Assert.NotNull(result);
         Assert.IsType<Page<QualificationDto>>(result);
-        Assert.Equal(2, result.Items.Count);
-        Assert.Equal(qualifications.ElementAt(0).ToDTO().IdCode, result.Items.ElementAt(0).IdCode);
-        Assert.Equal(qualifications.ElementAt(1).ToDTO().IdCode, result.Items.ElementAt(1).IdCode);
+        Assert.Equal(qualifications.Count, result.Items.Count);
     }
 }

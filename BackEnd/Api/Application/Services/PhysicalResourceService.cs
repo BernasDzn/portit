@@ -249,7 +249,7 @@ public class PhysicalResourceService : IPhysicalResourceService
     public async Task<bool> DeactivateResource(string code)
     {
         PhysicalResource? resource = await _physicalResourceRepository.GetResourceByCodeAsync(code);
-        if (resource == null) return false;
+        if (resource == null) throw new EntityNotFoundException("Physical resource to deactivate not found.");
 
         resource.Deactivate();
         await _physicalResourceRepository.Update(resource);
