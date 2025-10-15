@@ -11,9 +11,9 @@ using Api.Application.DataTransfer.Filters;
 public class DockController : ControllerBase, IDockController
 {
 	private readonly ILogger<DockController> _logger;
-	private readonly DockService _dockService;
+	private readonly IDockService _dockService;
 
-	public DockController(DockService dockService, ILogger<DockController> logger)
+	public DockController(IDockService dockService, ILogger<DockController> logger)
 	{
 		_dockService = dockService;
 		_logger = logger;
@@ -24,6 +24,16 @@ public class DockController : ControllerBase, IDockController
 	{
 		IEnumerable<DockDto> docks = await _dockService.GetDocks();
 		return Ok(docks);
+	}
+
+	[HttpGet("{code}", Name = "GetDockByCode")]
+	public async Task<ActionResult<DockDto>> GetByCode(string code)
+	{
+		DockDto? dock = await _dockService.GetByCode(code);
+		if (dock == null)
+			return NotFound();
+
+		return Ok(dock);
 	}
 
 	[HttpGet("filter")]

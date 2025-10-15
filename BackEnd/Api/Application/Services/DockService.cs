@@ -29,6 +29,12 @@ public class DockService : IDockService
         return docks.Select(d => d.ToDTO()).ToList();
     }
 
+    public async Task<DockDto?> GetByCode(string code)
+    {
+        Dock? dock = await _dockRepository.GetDockByCodeAsync(code);
+        return dock?.ToDTO();
+    }
+
     public async Task<Page<DockDto>> FilterDocks(DockFilter filter)
     {
         Page<Dock> page = await _dockRepository.FilterDocksAsync(filter);
