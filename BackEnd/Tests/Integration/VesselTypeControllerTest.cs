@@ -9,9 +9,9 @@ using Api.Infrastructure.Utilities;
 using Api.Infrastructure.Persistence.Repositories;
 using Api.Infrastructure.Persistence;
 
-namespace Api.Tests.Controllers
+namespace Api.Tests.Integration.Controllers
 {
-    public class VesselTypeControllerTests
+    public class VesselTypeControllerTest
     {
 
 
