@@ -12,9 +12,9 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
 {
     private readonly ILogger<VesselVisitNotificationController> _logger;
     private readonly IVesselVisitNotificationService _notificationService;
-    private readonly NotificationDecisionService _notificationDecisionService;
+    private readonly INotificationDecisionService _notificationDecisionService;
 
-    public VesselVisitNotificationController(IVesselVisitNotificationService notificationService, NotificationDecisionService notificationDecisionService, ILogger<VesselVisitNotificationController> logger)
+    public VesselVisitNotificationController(IVesselVisitNotificationService notificationService, INotificationDecisionService notificationDecisionService, ILogger<VesselVisitNotificationController> logger)
     {
         _notificationService = notificationService;
         _notificationDecisionService = notificationDecisionService;
