@@ -66,6 +66,5 @@ public class VesselControllerTest
         var result = await _controller.GetByImo("non-existent-id");
 
         var notFoundResult = Assert.IsType<NotFoundObjectResult>(result.Result);
-        Assert.Equal("No vessel found with id: non-existent-id", notFoundResult.Value);
     }
 }

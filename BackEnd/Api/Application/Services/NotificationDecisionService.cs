@@ -4,7 +4,7 @@ using Api.Application.DataTransfer;
 using Api.Domain.Entities;
 using Api.Domain.IRepository;
 
-public class NotificationDecisionService
+public class NotificationDecisionService : INotificationDecisionService
 {
     private readonly IVesselVisitNotificationRepository _notificationRepository;
     private readonly IDockRepository _dockRepository;
