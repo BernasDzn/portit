@@ -143,9 +143,9 @@ public static class Bootstrap
 
         // Add Bootstrap data
         context.Docks.AddRange(
-            new Dock(Guid.NewGuid(), new Designation { Value = "Dock A" }, new Designation { Value = "North Harbor" }, new PhysicalCharacteristics { Length = 500, Depth = 35, Draft = 20 }, new HashSet<VesselType> { vt4, vt1 }),
-            new Dock(Guid.NewGuid(), new Designation { Value = "Dock B" }, new Designation { Value = "East Harbor" }, new PhysicalCharacteristics { Length = 700, Depth = 35, Draft = 20 }, new HashSet<VesselType> { vt5 }),
-            new Dock(Guid.NewGuid(), new Designation { Value = "Dock C" }, new Designation { Value = "South Harbor" }, new PhysicalCharacteristics { Length = 700, Depth = 40, Draft = 25 }, new HashSet<VesselType> { vt2, vt3 })
+            new Dock(Guid.NewGuid(),new Code{Value = "DCK001"}, new Designation { Value = "Dock A" }, new Designation { Value = "North Harbor" }, new PhysicalCharacteristics { Length = 500, Depth = 35, Draft = 20 }, new HashSet<VesselType> { vt4, vt1 }),
+            new Dock(Guid.NewGuid(),new Code{Value = "DCK002"}, new Designation { Value = "Dock B" }, new Designation { Value = "East Harbor" }, new PhysicalCharacteristics { Length = 700, Depth = 35, Draft = 20 }, new HashSet<VesselType> { vt5 }),
+            new Dock(Guid.NewGuid(),new Code{Value = "DCK003"}, new Designation { Value = "Dock C" }, new Designation { Value = "South Harbor" }, new PhysicalCharacteristics { Length = 700, Depth = 40, Draft = 25 }, new HashSet<VesselType> { vt2, vt3 })
         );
 
         context.SaveChanges();

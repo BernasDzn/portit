@@ -7,6 +7,7 @@ using Api.Infrastructure.Utilities;
 public class Dock : IDTOAble<DockDto>
 {
     public Guid Id { get; private set; }
+    public Code Code { get; private set; }
     public Designation Name { get; private set; }
     public Designation Location { get; private set; }
     public PhysicalCharacteristics PhysicalCharacteristics { get; private set; }
@@ -15,11 +16,12 @@ public class Dock : IDTOAble<DockDto>
 
     //EF Core
     protected Dock() { }
-    public Dock(Guid id, Designation name, Designation location, PhysicalCharacteristics physicalCharacteristics, HashSet<VesselType> supportedVesselTypes)
+    public Dock(Guid id, Code code, Designation name, Designation location, PhysicalCharacteristics physicalCharacteristics, HashSet<VesselType> supportedVesselTypes)
     {
         validatePhysicalCharacteristics(physicalCharacteristics, supportedVesselTypes);
 
         Id = id;
+        Code = code;
         Name = name ?? throw new ArgumentException("Name cannot be null.");
         Location = location ?? throw new ArgumentException("Location cannot be null.");
         PhysicalCharacteristics = physicalCharacteristics;
@@ -52,6 +54,7 @@ public class Dock : IDTOAble<DockDto>
     {
         return new DockDto
         {
+            Code = this.Code.Value,
             Name = this.Name.Value,
             Location = this.Location.Value,
             PhysicalCharacteristics = this.PhysicalCharacteristics,

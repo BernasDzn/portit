@@ -79,7 +79,7 @@ public class PhysicalResourceService : IPhysicalResourceService
         if (exists)
             throw new EntityAlreadyExistsException("A physical resource with this code already exists.");
 
-        Dock? dock = await _dockRepository.GetDockByNameAsync(resourceDto.ServingDock.Name);
+        Dock? dock = await _dockRepository.GetDockByCodeAsync(resourceDto.ServingDock.Code);
         if (dock == null)
             throw new EntityNotFoundException("The specified dock does not exist.");
 
@@ -166,7 +166,7 @@ public class PhysicalResourceService : IPhysicalResourceService
 
         List<Qualification> qualifications = GetQualificationsAsync(crane).ToList();
 
-        Dock? dock = await _dockRepository.GetDockByNameAsync(crane.ServingDock.Name);
+        Dock? dock = await _dockRepository.GetDockByCodeAsync(crane.ServingDock.Code);
         if (dock == null)
             throw new EntityNotFoundException("The specified dock does not exist.");
 

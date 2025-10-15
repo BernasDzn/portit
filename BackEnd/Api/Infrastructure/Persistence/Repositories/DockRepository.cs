@@ -27,11 +27,11 @@ public class DockRepository : GenericRepository<Dock>, IDockRepository
         }
     }
 
-    public async Task<Dock> GetDockByNameAsync(string name)
+    public async Task<Dock> GetDockByCodeAsync(string code)
     {
         try
         {
-            Dock? dock = await _context.Docks.FirstOrDefaultAsync(d => d.Name.Value.Equals(name));
+            Dock? dock = await _context.Docks.FirstOrDefaultAsync(d => d.Code.Value.Equals(code));
             return dock!;
         }
         catch

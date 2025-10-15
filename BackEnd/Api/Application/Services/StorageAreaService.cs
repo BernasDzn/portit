@@ -84,9 +84,9 @@ public class StorageAreaService : IStorageAreaService
         {
             foreach (var ds in dockRelationDtos)
             {
-                var dock = _dockRepository.GetDockByNameAsync(ds.Dock.Name).Result;
+                var dock = _dockRepository.GetDockByCodeAsync(ds.Dock.Code).Result;
                 if (dock == null)
-                    throw new EntityNotFoundException($"Dock with name {ds.Dock.Name} not found.");
+                    throw new EntityNotFoundException($"Dock with code {ds.Dock.Code} not found.");
 
                 dockRelations.Add(new StorageArea.DockRelation(dock, ds.Distance, ds.IsServingDock));
             }
