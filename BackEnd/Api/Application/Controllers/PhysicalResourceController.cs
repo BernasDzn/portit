@@ -11,10 +11,10 @@ using Api.Application.DataTransfer.Filters;
 [Route("[controller]")]
 public class PhysicalResourceController : ControllerBase, IPhysicalResourceController
 {
-    private readonly PhysicalResourceService _physicalResourceService;
+    private readonly IPhysicalResourceService _physicalResourceService;
     private readonly ILogger<PhysicalResourceController> _logger;
 
-    public PhysicalResourceController(PhysicalResourceService physicalResourceService, ILogger<PhysicalResourceController> logger)
+    public PhysicalResourceController(IPhysicalResourceService physicalResourceService, ILogger<PhysicalResourceController> logger)
     {
         _physicalResourceService = physicalResourceService;
         _logger = logger;
