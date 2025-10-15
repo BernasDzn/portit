@@ -12,9 +12,9 @@ using Api.Application.DataTransfer.Filters;
 public class VesselController : ControllerBase, IVesselController
 {
     private readonly ILogger<VesselController> _logger;
-    private readonly VesselService _vesselService;
+    private readonly IVesselService _vesselService;
 
-    public VesselController(VesselService vesselService, ILogger<VesselController> logger)
+    public VesselController(IVesselService vesselService, ILogger<VesselController> logger)
     {
         _vesselService = vesselService;
         _logger = logger;

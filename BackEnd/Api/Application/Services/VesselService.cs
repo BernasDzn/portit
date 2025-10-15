@@ -92,7 +92,7 @@ public class VesselService : IVesselService
         return updateResult.ToDTO();
     }
 
-    internal async Task<Page<VesselDto>> FilterVessels(VesselFilter filter)
+    public async Task<Page<VesselDto>> FilterVessels(VesselFilter filter)
     {
         Page<Vessel> page = await _vesselRepository.FilterVesselsAsync(filter);
         return page.Map(v => v.ToDTO());
