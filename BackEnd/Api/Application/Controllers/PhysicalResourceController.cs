@@ -23,8 +23,15 @@ public class PhysicalResourceController : ControllerBase, IPhysicalResourceContr
     [HttpGet(Name = "GetAll")]
     public async Task<ActionResult<IEnumerable<object>>> GetAll()
     {
-        var allResources = await _physicalResourceService.GetPhysicalResources();
-        return Ok(allResources);
+        try
+        {
+            var allResources = await _physicalResourceService.GetPhysicalResources();
+            return Ok(allResources);
+        }
+        catch (System.Exception)
+        {
+            return BadRequest("Could not retrieve physical resources.");
+        }
     }
 
     [HttpGet("{code}", Name = "GetByCode")]
