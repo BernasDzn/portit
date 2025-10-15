@@ -11,10 +11,10 @@ using Api.Application.DataTransfer.Filters;
 [Route("[controller]")]
 public class PhysicalResourceController : ControllerBase, IPhysicalResourceController
 {
-    private readonly PhysicalResourceService _physicalResourceService;
+    private readonly IPhysicalResourceService _physicalResourceService;
     private readonly ILogger<PhysicalResourceController> _logger;
 
-    public PhysicalResourceController(PhysicalResourceService physicalResourceService, ILogger<PhysicalResourceController> logger)
+    public PhysicalResourceController(IPhysicalResourceService physicalResourceService, ILogger<PhysicalResourceController> logger)
     {
         _physicalResourceService = physicalResourceService;
         _logger = logger;
@@ -23,8 +23,15 @@ public class PhysicalResourceController : ControllerBase, IPhysicalResourceContr
     [HttpGet(Name = "GetAll")]
     public async Task<ActionResult<IEnumerable<object>>> GetAll()
     {
-        var allResources = await _physicalResourceService.GetPhysicalResources();
-        return Ok(allResources);
+        try
+        {
+            var allResources = await _physicalResourceService.GetPhysicalResources();
+            return Ok(allResources);
+        }
+        catch (System.Exception)
+        {
+            return BadRequest("Could not retrieve physical resources.");
+        }
     }
 
     [HttpGet("{code}", Name = "GetByCode")]
