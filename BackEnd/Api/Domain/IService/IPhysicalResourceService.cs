@@ -7,7 +7,7 @@ namespace Api.Application.Services;
 public interface IPhysicalResourceService
 {
     public Task<IEnumerable<object>> GetPhysicalResources();
-    public Task<object?> GetResourceByCode(string code);
+    public Task<object> GetResourceByCode(string code);
     public Task<STSCraneDto> AddSTSCraneAsync(STSCraneDto stsCraneDto);
     public Task<YardCraneDto> AddYardCraneAsync(YardCraneDto resourceDto);
     public Task<TruckDto> AddTruckAsync(TruckDto resourceDto);

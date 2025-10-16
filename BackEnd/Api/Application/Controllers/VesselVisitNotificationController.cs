@@ -5,6 +5,8 @@ using Api.Application.Services;
 using Api.Application.DataTransfer;
 using Api.Application.DataTransfer.Filters;
 using Api.Infrastructure.Utilities;
+using Api.Infrastructure.Exceptions;
+using Api.Application.Exceptions;
 
 [ApiController]
 [Route("[controller]")]
@@ -24,8 +26,16 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
     [HttpGet(Name = "GetVesselVisitNotifications")]
     public async Task<ActionResult<IEnumerable<VesselVisitNotificationDto>>> GetAll()
     {
-        IEnumerable<VesselVisitNotificationDto> notificationsDto = await _notificationService.GetVesselVisitNotifications();
-        return Ok(notificationsDto);
+        try
+        {
+            IEnumerable<VesselVisitNotificationDto> notificationsDto = await _notificationService.GetVesselVisitNotifications();
+            return Ok(notificationsDto);
+        }
+        catch (System.Exception e)
+        {
+            _logger.LogCritical("Error retrieving vessel visit notifications, {Message}", e.Message);
+            return StatusCode(500, "An error occurred while retrieving vessel visit notifications.");
+        }
     }
 
     [HttpGet("decisions", Name = "GetNotificationDecisions")]
@@ -38,7 +48,8 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
         }
         catch (System.Exception)
         {
-            return BadRequest("An error occurred while retrieving the notification decisions");
+            _logger.LogCritical("Error retrieving notification decisions");
+            return StatusCode(500, "An error occurred while retrieving notification decisions.");
         }
     }
 
@@ -48,16 +59,28 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
         try
         {
             var createdNotification = await _notificationService.Add(vesselVisitNotificationDto);
-            if (createdNotification == null)
+            return CreatedAtAction(nameof(GetAll), new { id = createdNotification.NotificationId }, createdNotification);
+        }
+        catch (EntityAlreadyExistsException e)
+        {
+            _logger.LogError($"Entity already exists: {e.Message}");
+            return Conflict(e.Message);
+        }
+        catch (EntityNotFoundException e)
+        {
+            _logger.LogError($"Entity not found: {e.Message}");
+            return NotFound(e.Message);
+        }
+        catch (System.Exception e)
+        {
+            if (e is ArgumentException || e is ArgumentNullException || e is InvalidOperationException || e is OutdatedDecisionException)
             {
-                return BadRequest("Invalid data provided.");
+                _logger.LogError($"Invalid arguments provided for creating vessel visit notification: {e.Message}");
+                return BadRequest(e.Message);
             }
 
-            return CreatedAtAction(nameof(GetAll), null, createdNotification);
-        }
-        catch (System.Exception)
-        {
-            return BadRequest("An error occurred while creating the notification.");
+            _logger.LogCritical($"Error creating vessel visit notification: {e.Message}");
+            return StatusCode(500, "An error occurred while creating the vessel visit notification.");
         }
     }
 
@@ -67,16 +90,28 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
         try
         {
             var createdDecision = await _notificationDecisionService.Add(notificationDecisionDto, vesselVisitNotificationId);
-            if (createdDecision == null)
-            {
-                return BadRequest("Invalid data provided.");
-            }
-
-            return CreatedAtAction(nameof(GetDecisions), null, createdDecision);
+            return CreatedAtAction(nameof(GetDecisions), new { vesselVisitNotificationId = vesselVisitNotificationId }, createdDecision);
+        }
+        catch (EntityNotFoundException e)
+        {
+            _logger.LogError($"Decision creation failed, entity not found: {e.Message}");
+            return NotFound(e.Message);
+        }
+        catch (EntityAlreadyExistsException e)
+        {
+            _logger.LogError($"Entity already exists: {e.Message}");
+            return Conflict(e.Message);
         }
         catch (System.Exception ex)
         {
-            return BadRequest("An error occurred while creating the notification decision. " + ex.Message);
+            if (ex is ArgumentException || ex is ArgumentNullException || ex is InvalidOperationException || ex is OutdatedDecisionException)
+            {
+                _logger.LogError($"Invalid arguments provided for creating notification decision: {ex.Message}");
+                return BadRequest(ex.Message);
+            }
+
+            _logger.LogCritical($"Error creating notification decision: {ex.Message}");
+            return StatusCode(500, "An error occurred while creating the notification decision.");
         }
     }
 
@@ -86,16 +121,23 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
         try
         {
             var updatedNotification = await _notificationService.Update(id, vesselVisitNotificationDto);
-            if (updatedNotification == null)
-            {
-                return BadRequest("Could not update the notification. It may not exist.");
-            }
             return Ok(updatedNotification);
+        }
+        catch (EntityNotFoundException e)
+        {
+            _logger.LogError($"Error updating notification with ID {id}: {e.Message}");
+            return NotFound(e.Message);
         }
         catch (Exception ex)
         {
-            _logger.LogError($"Error updating notification with ID {id}: {ex.Message}");
-            return BadRequest($"An error occurred while updating the notification: {ex.Message}");
+            if (ex is ArgumentException || ex is ArgumentNullException || ex is InvalidOperationException)
+            {
+                _logger.LogError($"Invalid arguments provided for updating vessel visit notification: {ex.Message}");
+                return BadRequest(ex.Message);
+            }
+
+            _logger.LogCritical($"Error updating vessel visit notification with ID {id}: {ex.Message}");
+            return StatusCode(500, "An error occurred while updating the vessel visit notification.");
         }
     }
 
@@ -109,8 +151,8 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
         }
         catch (Exception ex)
         {
-            _logger.LogError($"Error filtering notifications: {ex.Message}");
-            return BadRequest("An error occurred while filtering the notifications: " + ex.Message);
+            _logger.LogCritical($"Error filtering notifications: {ex.Message}");
+            return StatusCode(500, "An error occurred while filtering vessel visit notifications.");
         }
     }
 }

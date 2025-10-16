@@ -54,9 +54,9 @@ public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
         IsCargoHazardous = isCargoHazardous;
         SpecialRequirements = specialRequirements;
         CrewDetails = crewDetails;
-        LoadCargoManifest = loadCargoManifest;
-        UnloadCargoManifest = unloadCargoManifest;
-        Vessel = vessel;
+        LoadCargoManifest = loadCargoManifest ?? new List<CargoTransport>();
+        UnloadCargoManifest = unloadCargoManifest ?? new List<CargoTransport>();
+        Vessel = vessel ?? throw new ArgumentNullException(nameof(vessel));
 
         if (!vessel.Owner.IsRepresentedBy(submitter))
             throw new InvalidRepresentativeException("The provided representative does not represent the vessel owner.");

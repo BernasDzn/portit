@@ -109,37 +109,23 @@ public class StaffRepository : GenericRepository<Staff>, IStaffRepository
 			query = query.Where(s => s.isActive);
 
 			if (!string.IsNullOrEmpty(filter.MechanograficNumber))
-			{
-				query = query.Where(s => s.MechanograficNumber.Value.Contains(filter.MechanograficNumber, StringComparison.OrdinalIgnoreCase));
-			}
+				query = query.Where(s => s.MechanograficNumber.Value.ToLower().Contains(filter.MechanograficNumber.ToLower()));
 
 			if (!string.IsNullOrEmpty(filter.Name))
-			{
-				query = query.Where(s => s.Name.Value.Contains(filter.Name, StringComparison.OrdinalIgnoreCase));
-			}
+				query = query.Where(s => s.Name.Value.ToLower().Contains(filter.Name.ToLower()));
 
 			if (!string.IsNullOrEmpty(filter.Email))
-			{
-				query = query.Where(s => s.Email.Value.Contains(filter.Email, StringComparison.OrdinalIgnoreCase));
-			}
+				query = query.Where(s => s.Email.Value.ToLower().Contains(filter.Email.ToLower()));
 
 			if (!string.IsNullOrEmpty(filter.PhoneNumber))
-			{
-				query = query.Where(s => s.PhoneNumber.Value.Contains(filter.PhoneNumber, StringComparison.OrdinalIgnoreCase));
-			}
+				query = query.Where(s => s.PhoneNumber.Value.ToLower().Contains(filter.PhoneNumber.ToLower()));
 
-			if (!string.IsNullOrEmpty(filter.Status))
-			{
-				query = query.Where(s => s.Status.ToString().Equals(filter.Status, StringComparison.OrdinalIgnoreCase));
-			}
+			if (filter.Status != null)
+				query = query.Where(s => s.Status == filter.Status);
 
 			if (filter.QualificationCodes != null && filter.QualificationCodes.Any())
-			{
 				foreach (string qualificationCode in filter.QualificationCodes)
-				{
-					query = query.Where(s => s.Qualifications.Any(q => q.NameCode.Value.Equals(qualificationCode, StringComparison.OrdinalIgnoreCase)));
-				}
-			}
+					query = query.Where(s => s.Qualifications.Any(q => q.NameCode.Value.ToLower().Equals(qualificationCode.ToLower())));
 			
 			query = query.Skip((filter.PageNumber - 1) * filter.PageSize).Take(filter.PageSize);
 			return Task.FromResult(

@@ -26,7 +26,7 @@ public class StorageAreaService : IStorageAreaService
         return qualifications.Select(q => q.ToDTO()).ToList();
     }
 
-    public async Task<StorageAreaDto?> GetStorageAreaByCode(string name)
+    public async Task<StorageAreaDto> GetStorageAreaByCode(string name)
     {
         StorageArea? qualification = await _storageAreaRepository.GetStorageAreaByCodeAsync(name);
         if (qualification == null)

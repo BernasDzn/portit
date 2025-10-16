@@ -64,12 +64,12 @@ public class PhysicalResourceService : IPhysicalResourceService
         return resourceDtos;
     }
 
-    public async Task<object?> GetResourceByCode(string code)
+    public async Task<object> GetResourceByCode(string code)
     {
         object? resource = await _physicalResourceRepository.GetResourceByCodeAsync(code);
-        if (resource == null) return null;
+        if (resource == null) throw new EntityNotFoundException("Physical resource not found");
 
-        object? resourceDto = ConvertToDto((PhysicalResource)resource);
+        object resourceDto = ConvertToDto((PhysicalResource)resource);
         return resourceDto;
     }
 

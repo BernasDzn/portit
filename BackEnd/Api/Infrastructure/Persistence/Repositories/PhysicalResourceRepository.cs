@@ -123,10 +123,10 @@ public class PhysicalResourceRepository : GenericRepository<PhysicalResource>, I
         query = query.Where(r => r.Active);
 
         if (!string.IsNullOrEmpty(filter.Code))
-            query = query.Where(r => r.Code.Value.Contains(filter.Code, StringComparison.OrdinalIgnoreCase));
+            query = query.Where(r => r.Code.Value.ToLower().Contains(filter.Code.ToLower()));
 
         if (!string.IsNullOrEmpty(filter.Description))
-            query = query.Where(r => r.Description.Value.Contains(filter.Description, StringComparison.OrdinalIgnoreCase));
+            query = query.Where(r => r.Description.Value.ToLower().Contains(filter.Description.ToLower()));
 
         if (filter.Status != null)
             query = query.Where(r => r.Status == filter.Status);

@@ -5,7 +5,8 @@ using Api.Application.Services;
 using Api.Application.DataTransfer;
 using Api.Infrastructure.Utilities;
 using Api.Application.DataTransfer.Filters;
-
+using Api.Application.Exceptions;
+using Api.Infrastructure.Exceptions;
 
 [ApiController]
 [Route("[controller]")]
@@ -28,10 +29,10 @@ public class PhysicalResourceController : ControllerBase, IPhysicalResourceContr
             var allResources = await _physicalResourceService.GetPhysicalResources();
             return Ok(allResources);
         }
-        catch (System.Exception)
+        catch (System.Exception e)
         {
-            _logger.LogError("Could not retrieve physical resources.");
-            return BadRequest("Could not retrieve physical resources.");
+            _logger.LogError("Error retrieving physical resources, {Message}", e.Message);
+            return StatusCode(500, "An error occurred while retrieving physical resources.");
         }
     }
 
@@ -41,15 +42,17 @@ public class PhysicalResourceController : ControllerBase, IPhysicalResourceContr
         try
         {
             var resource = await _physicalResourceService.GetResourceByCode(code);
-            if (resource == null)
-                return NotFound($"No physical resource found with code: {code}");
-
             return Ok(resource);
+        }
+        catch (EntityNotFoundException e)
+        {
+            _logger.LogError("Error retrieving resource by id, {Message}", e.Message);
+            return NotFound(e.Message);
         }
         catch (System.Exception e)
         {
-            _logger.LogError("Error retrieving physical resource by code, {Message}", e.Message);
-            return BadRequest(e.Message);
+            _logger.LogCritical("Error retrieving physical resource by code, {Message}", e.Message);
+            return StatusCode(500, "An error occurred while retrieving the physical resource.");
         }
     }
 
@@ -63,8 +66,8 @@ public class PhysicalResourceController : ControllerBase, IPhysicalResourceContr
         }
         catch (System.Exception e)
         {
-            _logger.LogError("Error filtering physical resources, {Message}", e.Message);
-            return NotFound();
+            _logger.LogCritical("Error filtering physical resources, {Message}", e.Message);
+            return StatusCode(500, "An error occurred while filtering physical resources.");
         }
     }
 
@@ -73,15 +76,28 @@ public class PhysicalResourceController : ControllerBase, IPhysicalResourceContr
         try
         {
             var createdResource = await creationFunc(resourceDto);
-            if (createdResource == null)
-                return BadRequest($"Could not create {resourceName}.");
-
             return CreatedAtAction(nameof(GetByCode), new { code = (createdResource as dynamic).Code }, createdResource);
+        }
+        catch (EntityNotFoundException e)
+        {
+            _logger.LogError("Error retrieving dependency by id, {Message}", e.Message);
+            return NotFound(e.Message);
+        }
+        catch (EntityAlreadyExistsException e)
+        {
+            _logger.LogError("Resource of code already exists, {Message}", e.Message);
+            return Conflict(e.Message);
         }
         catch (System.Exception e)
         {
-            _logger.LogError("Error creating {ResourceName}, {Message}", resourceName, e.Message);
-            return BadRequest(e.Message);
+            if (e is ArgumentNullException || e is ArgumentException || e is InvalidOperationException)
+            {
+                _logger.LogError("Invalid argument provided for creating {ResourceName}, {Message}", resourceName, e.Message);
+                return BadRequest(e.Message);
+            }
+
+            _logger.LogCritical("Error creating physical resource, {Message}", e.Message);
+            return StatusCode(500, "An error occurred while creating the physical resource.");
         }
     }
 
@@ -90,15 +106,43 @@ public class PhysicalResourceController : ControllerBase, IPhysicalResourceContr
         try
         {
             var updatedResource = await updateFunc(code, resourceDto);
-            if (updatedResource == null)
-                return NotFound($"No {resourceName} found with code: {code}");
-
-            return Ok(updatedResource);
+            return NoContent();
+        }
+        catch (EntityNotFoundException e)
+        {
+            _logger.LogError("Error retrieving dependency by id, {Message}", e.Message);
+            return NotFound(e.Message);
         }
         catch (System.Exception e)
         {
-            _logger.LogError("Error updating {ResourceName}, {Message}", resourceName, e.Message);
-            return BadRequest(e.Message);
+            if (e is ArgumentNullException || e is ArgumentException || e is InvalidOperationException)
+            {
+                _logger.LogError("Invalid argument provided for updating {ResourceName}, {Message}", resourceName, e.Message);
+                return BadRequest(e.Message);
+            }
+
+            _logger.LogCritical("Error updating physical resource, {Message}", e.Message);
+            return StatusCode(500, "An error occurred while updating the physical resource.");
+        }
+    }
+
+    [HttpDelete("{code}", Name = "Deactivate")]
+    public async Task<ActionResult> Deactivate(string code)
+    {
+        try
+        {
+            var success = await _physicalResourceService.DeactivateResource(code);
+            return NoContent();
+        }
+        catch (EntityNotFoundException e)
+        {
+            _logger.LogError("Error retrieving resource by id, {Message}", e.Message);
+            return NotFound(e.Message);
+        }
+        catch (System.Exception e)
+        {
+            _logger.LogCritical("Error deactivating physical resource, {Message}", e.Message);
+            return StatusCode(500, "An error occurred while deactivating the physical resource.");
         }
     }
 
@@ -125,22 +169,4 @@ public class PhysicalResourceController : ControllerBase, IPhysicalResourceContr
     [HttpPut("UpdateTruck/{code}", Name = "UpdateTruck")]
     public async Task<ActionResult<TruckDto>> UpdateTruck(string code, [FromBody] TruckDto resourceDto) =>
         await HandleUpdateAsync<TruckDto>(code, resourceDto, _physicalResourceService.UpdateTruckAsync, "truck");
-
-    [HttpDelete("{code}", Name = "Deactivate")]
-    public async Task<ActionResult> Deactivate(string code)
-    {
-        try
-        {
-            var success = await _physicalResourceService.DeactivateResource(code);
-            if (!success)
-                return NotFound($"No physical resource found with code: {code}");
-
-            return NoContent();
-        }
-        catch (System.Exception e)
-        {
-            _logger.LogError("Error deactivating physical resource, {Message}", e.Message);
-            return BadRequest(e.Message);
-        }
-    }
 }

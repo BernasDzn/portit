@@ -47,16 +47,15 @@ public class DockRepository : GenericRepository<Dock>, IDockRepository
             IQueryable<Dock> query = _context.Docks.AsQueryable();
 
             if (!string.IsNullOrEmpty(filter.DockName))
-                query = query.Where(d => d.Name.Value.Contains(filter.DockName, StringComparison.OrdinalIgnoreCase));
+                query = query.Where(d => d.Name.Value.ToLower().Contains(filter.DockName.ToLower()));
 
             if (!string.IsNullOrEmpty(filter.Location))
-                query = query.Where(d => d.Location.Value.Contains(filter.Location, StringComparison.OrdinalIgnoreCase));
+                query = query.Where(d => d.Location.Value.ToLower().Contains(filter.Location.ToLower()));
 
             if (!string.IsNullOrEmpty(filter.VesselTypeName))
-                query = query.Where(d => d.SupportedVesselTypes.Any(vt => vt.Name.Value.Contains(filter.VesselTypeName, StringComparison.OrdinalIgnoreCase)));
+                query = query.Where(d => d.SupportedVesselTypes.Any(vt => vt.Name.Value.ToLower().Contains(filter.VesselTypeName.ToLower())));
 
             query = query.Skip((filter.PageNumber - 1) * filter.PageSize).Take(filter.PageSize);
-
             return Task.FromResult(Page<Dock>.Of(query.ToList(), filter));
         }
         catch

@@ -45,12 +45,12 @@ public class RepresentativeRepository : GenericRepository<Representative>, IRepr
         }
     }
 
-    public async Task<Representative> GetByCitizenIdAsync(string citizenId)
+    public async Task<Representative> GetByCitizenIdAsync(uint citizenId)
     {
         try
         {
             Representative? representative = await _context.Representatives
-                .FirstOrDefaultAsync(q => q.CitizenshipId.ToString().Equals(citizenId));
+                .FirstOrDefaultAsync(q => q.CitizenshipId == citizenId);
             if (representative == null)
             {
                 throw new EntityNotFoundException($"Representative with citizen ID {citizenId} not found.");

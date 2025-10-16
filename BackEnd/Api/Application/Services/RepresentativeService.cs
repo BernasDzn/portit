@@ -30,7 +30,7 @@ public class RepresentativeService
         return representative.ToDTO();
     }
 
-    public async Task<RepresentativeDto> GetRepresentativeByCitizenId(string citizenId)
+    public async Task<RepresentativeDto> GetRepresentativeByCitizenId(uint citizenId)
     {
         var representative = await _representativeRepository.GetByCitizenIdAsync(citizenId);
         if (representative == null)

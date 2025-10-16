@@ -11,6 +11,7 @@ public class Qualification : IDTOAble<QualificationDto>
 	public Code NameCode { get; private set; }
 	public Designation QualificationName { get; private set; }
 	public virtual ICollection<Staff> Staffs { get; private set; }
+	public virtual ICollection<PhysicalResource> PhysicalResources { get; private set; }
 
 	//EF Core
 	protected Qualification() { }
@@ -18,8 +19,8 @@ public class Qualification : IDTOAble<QualificationDto>
 	public Qualification(Guid id, Code idCode, Designation qualificationName)
 	{
 		Id = id;
-		NameCode = idCode;
-		QualificationName = qualificationName;
+		NameCode = idCode ?? throw new ArgumentNullException(nameof(idCode));
+		QualificationName = qualificationName ?? throw new ArgumentNullException(nameof(qualificationName));
 	}
 
 	public void UpdateQualificationName(string qualificationName)

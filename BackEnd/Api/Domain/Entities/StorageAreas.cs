@@ -69,8 +69,8 @@ public class StorageArea : IDTOAble<StorageAreaDto>
     public StorageArea(Guid id, Code nameCode, Designation location, StorageAreaType areaType, uint capacity, uint currentOccupancy, HashSet<DockRelation> dockServices)
     {
         Id = id;
-        NameCode = nameCode;
-        Location = location;
+        NameCode = nameCode ?? throw new ArgumentNullException(nameof(nameCode));
+        Location = location ?? throw new ArgumentNullException(nameof(location));
         AreaType = areaType;
         Capacity = capacity;
         CurrentOccupancy = currentOccupancy;
