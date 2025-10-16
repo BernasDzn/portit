@@ -1,14 +1,13 @@
-name: Build and Release .NET Backend
+name: Build and Release .NET Backend (Linux + Windows)
 
 on:
   push:
     tags:
-      - 'v*'  # Only run on version tags like vX.Y.Z
+      - 'v*'  # Only run on version tags like v1.0.0
 
 jobs:
   release:
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         configuration: [Release]
@@ -26,7 +25,7 @@ jobs:
     - name: Setup .NET SDK
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 8.0.x
+        dotnet-version: 9.0.x
 
     # Cache NuGet packages
     - name: Cache NuGet packages
@@ -37,28 +36,51 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-nuget-
 
-    # Restore solution
-    - name: Restore dependencies
+    # Restore dependencies
+    - name: Restore solution
       run: dotnet restore ${{ env.Solution_Name }}
 
     # Build solution
     - name: Build solution
       run: dotnet build ${{ env.Solution_Name }} --configuration ${{ matrix.configuration }} --no-restore
 
-    # Run unit tests
+    # Run tests
     - name: Run tests
       run: dotnet test ${{ env.Test_Project_Path }} --configuration ${{ matrix.configuration }} --no-build --verbosity normal
 
-    # Publish project to a folder
-    - name: Publish project
-      run: dotnet publish ${{ env.Project_Path }} --configuration ${{ matrix.configuration }} --output ${{ env.Output_Folder }}
-
-    # Zip the published binaries
-    - name: Zip published binaries
+    # Publish Linux self-contained executable
+    - name: Publish Linux binaries
       run: |
-        cd ${{ env.Output_Folder }}
-        zip -r ../api-release.zip ./*
-        cd ..
+        dotnet publish ${{ env.Project_Path }} \
+          -c ${{ matrix.configuration }} \
+          -r linux-x64 \
+          --self-contained true \
+          /p:PublishSingleFile=true \
+          -o ${{ env.Output_Folder }}/linux
+
+    # Publish Windows self-contained executable
+    - name: Publish Windows binaries
+      run: |
+        dotnet publish ${{ env.Project_Path }} \
+          -c ${{ matrix.configuration }} \
+          -r win-x64 \
+          --self-contained true \
+          /p:PublishSingleFile=true \
+          -o ${{ env.Output_Folder }}/windows
+
+    # Zip Linux binaries
+    - name: Zip Linux binaries
+      run: |
+        cd ${{ env.Output_Folder }}/linux
+        zip -r ../../linux-release.zip ./*
+        cd ../../
+
+    # Zip Windows binaries
+    - name: Zip Windows binaries
+      run: |
+        cd ${{ env.Output_Folder }}/windows
+        zip -r ../../windows-release.zip ./*
+        cd ../../
 
     # Create GitHub Release
     - name: Create GitHub Release
@@ -72,13 +94,24 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    # Upload the zip file as the release asset
-    - name: Upload release asset
+    # Upload Linux zip
+    - name: Upload Linux release asset
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./api-release.zip
-        asset_name: api-release.zip
+        asset_path: ./linux-release.zip
+        asset_name: linux-release.zip
+        asset_content_type: application/zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    # Upload Windows zip
+    - name: Upload Windows release asset
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./windows-release.zip
+        asset_name: windows-release.zip
         asset_content_type: application/zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
