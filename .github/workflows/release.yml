@@ -16,6 +16,7 @@ jobs:
     env:
       Solution_Name: BackEnd/BackEnd.sln
       Project_Path: BackEnd/Api/Api.csproj
+      Test_Project_Path: BackEnd/Tests/Tests.csproj
       Output_Folder: publish
 
     steps:
@@ -46,7 +47,7 @@ jobs:
 
     # Run unit tests
     - name: Run tests
-      run: dotnet test ${{ env.Project_Path }} --configuration ${{ matrix.configuration }} --no-build --verbosity normal
+      run: dotnet test ${{ env.Test_Project_Path }} --configuration ${{ matrix.configuration }} --no-build --verbosity normal
 
     # Publish project to a folder
     - name: Publish project
