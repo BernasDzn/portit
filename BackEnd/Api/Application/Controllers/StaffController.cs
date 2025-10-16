@@ -5,15 +5,16 @@ using Api.Application.Services;
 using Api.Application.DataTransfer;
 using Api.Application.DataTransfer.Filters;
 using Api.Infrastructure.Utilities;
+using Api.Application.Exceptions;
 
 [ApiController]
 [Route("[controller]")]
 public class StaffController : ControllerBase, IStaffController
 {
 	private readonly ILogger<StaffController> _logger;
-	private readonly StaffService _staffService;
+	private readonly IStaffService _staffService;
 
-	public StaffController(StaffService staffService, ILogger<StaffController> logger)
+	public StaffController(IStaffService staffService, ILogger<StaffController> logger)
 	{
 		_staffService = staffService;
 		_logger = logger;
@@ -22,7 +23,16 @@ public class StaffController : ControllerBase, IStaffController
 	[HttpGet(Name = "GetStaffs")]
 	public async Task<ActionResult<IEnumerable<StaffDto>>> GetAll()
 	{
-		IEnumerable<StaffDto> staffsDto = await _staffService.GetStaffs();
+		IEnumerable<StaffDto> staffsDto;
+		try
+		{
+			staffsDto = await _staffService.GetStaffs();
+		}
+		catch (Exception e)
+		{
+			_logger.LogError("Error getting staffs, {Message}", e.Message);
+			return BadRequest(e.Message);
+		}
 		return Ok(staffsDto);
 	}
 
@@ -81,16 +91,21 @@ public class StaffController : ControllerBase, IStaffController
 
 	[HttpGet("filter")]
 	public async Task<ActionResult<Page<StaffDto>>> Filter([FromQuery] StaffFilter filter)
-	{ 
+	{
 		try
 		{
 			var staffsDto = await _staffService.FilterStaffs(filter);
 			return Ok(staffsDto);
 		}
-		catch (System.Exception e)
+		catch (EntityNotFoundException notFoundEx)
 		{
-			_logger.LogError("Error filtering staffs, {Message}", e.Message);
+			_logger.LogError($"Could not filter staff:{notFoundEx.Message}");
 			return NotFound();
+		}
+		catch (Exception otherEx)
+		{
+			_logger.LogError($"Something went wrong:{otherEx.Message}");
+			return BadRequest();
 		}
 	}
 
