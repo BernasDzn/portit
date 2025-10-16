@@ -10,7 +10,7 @@ using System.Net.Http.Json;
 using Microsoft.AspNetCore.Hosting;
 using NuGet.Protocol;
 
-namespace Api.Tests.Integration.Controllers
+namespace Tests.Integration.Controllers
 {
     public class DockControllerTest
     {

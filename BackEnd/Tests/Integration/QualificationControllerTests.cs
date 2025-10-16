@@ -9,7 +9,7 @@ using Api.Infrastructure.Utilities;
 using Api.Infrastructure.Persistence.Repositories;
 using Api.Infrastructure.Persistence;
 
-namespace Api.Tests.Controllers
+namespace Tests.Integration.Controllers
 {
     public class QualificationControllerTests
     {

@@ -10,8 +10,6 @@ public class Code
 	private static readonly string Pattern = @"^[a-zA-Z0-9]+$"; // Alphanumeric pattern
 	private string _value;
 
-	public Code() { }
-
 	[MaxLength(50), MinLength(1)]
 	public string Value
 	{

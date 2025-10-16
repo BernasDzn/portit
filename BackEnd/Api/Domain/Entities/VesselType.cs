@@ -10,6 +10,7 @@ public class VesselType : IDTOAble<VesselTypeDto>
 
     public Designation Name { get; private set; }
     public Designation Description { get; private set; }
+    public uint Capacity { get { return MaxNumberOfRows * MaxNumberOfBays * MaxNumberOfTiers; } }
     public uint MaxNumberOfRows { get; private set; }
     public uint MaxNumberOfBays { get; private set; }
     public uint MaxNumberOfTiers { get; private set; }

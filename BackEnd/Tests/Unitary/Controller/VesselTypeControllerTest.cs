@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc;
 using Api.Domain.ValueObjects;
 
-namespace Api.Tests.Unitary.Controllers
+namespace Tests.Unitary.Controllers
 {
     public class VesselTypeControllerTests
     {

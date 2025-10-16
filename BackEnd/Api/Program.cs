@@ -37,27 +37,27 @@ else
 builder.Services.AddOpenApi();
 
 builder.Services.AddTransient<IQualificationRepository, QualificationRepository>();
-builder.Services.AddTransient<QualificationService>();
+builder.Services.AddTransient<IQualificationService, QualificationService>();
 builder.Services.AddTransient<IDockRepository, DockRepository>();
-builder.Services.AddTransient<DockService>();
+builder.Services.AddTransient<IDockService,DockService>();
 builder.Services.AddTransient<IVesselTypeRepository, VesselTypeRepository>();
-builder.Services.AddTransient<VesselTypeService>();
+builder.Services.AddTransient<IVesselTypeService, VesselTypeService>();
 builder.Services.AddTransient<IVesselRepository, VesselRepository>();
 builder.Services.AddTransient<IShippingAgentOrgRepository, ShippingAgentOrgRepository>();
 builder.Services.AddTransient<IRepresentativeRepository, RepresentativeRepository>();
 builder.Services.AddTransient<RepresentativeService>();
 builder.Services.AddTransient<IVesselService, VesselService>();
 builder.Services.AddTransient<IStorageAreaRepository, StorageAreaRepository>();
-builder.Services.AddTransient<StorageAreaService>();
+builder.Services.AddTransient<IStorageAreaService,StorageAreaService>();
 builder.Services.AddTransient<IPhysicalResourceRepository, PhysicalResourceRepository>();
 builder.Services.AddTransient<PhysicalResourceService>();
 builder.Services.AddTransient<IStaffRepository, StaffRepository>();
-builder.Services.AddTransient<StaffService>();
+builder.Services.AddTransient<IStaffService, StaffService>();
 builder.Services.AddTransient<IContainerRepository, ContainerRepository>();
 builder.Services.AddTransient<IVesselVisitNotificationRepository, VesselVisitNotificationRepository>();
 builder.Services.AddTransient<IVesselVisitNotificationService, VesselVisitNotificationService>();
 builder.Services.AddTransient<VesselVisitNotificationIdGenerator>();
-builder.Services.AddTransient<NotificationDecisionService>();
+builder.Services.AddTransient<INotificationDecisionService, NotificationDecisionService>();
 
 var app = builder.Build();
 

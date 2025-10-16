@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 using Api.Application.DataTransfer.Filters;
 using Api.Infrastructure.Utilities;
 
-namespace Api.Tests.Unitary.Controllers
+namespace Tests.Unitary.Controllers
 {
     public class DockControllerTest
     {
