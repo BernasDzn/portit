@@ -53,8 +53,8 @@ jobs:
         configuration: [Release]
 
     env:
-      Solution_Name: Backend/BackEnd.sln
-      Test_Project_Path: Backend/Tests/Tests.csproj
+      Solution_Name: BackEnd/BackEnd.sln
+      Test_Project_Path: BackEnd/Tests/Tests.csproj
 
     steps:
     - name: Checkout
