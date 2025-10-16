@@ -67,7 +67,7 @@ public class DockTest
         Assert.Throws<ArgumentException>(() =>
             new Dock(Guid.NewGuid(), new Code { Value = code }, new Designation { Value = dockName }, new Designation { Value = dockLocation },
                 new PhysicalCharacteristics { Length = length, Depth = depth, Draft = draft },
-                vesselTypesParam
+                vesselTypesParam!
             )
         );
 

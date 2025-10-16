@@ -121,7 +121,7 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
         try
         {
             var updatedNotification = await _notificationService.Update(id, vesselVisitNotificationDto);
-            return Ok(updatedNotification);
+            return NoContent();
         }
         catch (EntityNotFoundException e)
         {

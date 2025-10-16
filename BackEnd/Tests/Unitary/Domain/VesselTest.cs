@@ -72,7 +72,7 @@ public class VesselTest
                 new Designation { Value = name },
                 new ImoNumber { Value = imoNumber },
                 vesselType,
-                null,
+                null!,
                 new PhysicalCharacteristics
                 {
                     Length = 200.0,

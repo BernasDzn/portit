@@ -1,8 +1,11 @@
 using Api.Application.Controllers;
 using Api.Application.DataTransfer;
 using Api.Application.DataTransfer.Filters;
+using Api.Application.Exceptions;
 using Api.Application.Services;
+using Api.Infrastructure.Exceptions;
 using Api.Infrastructure.Utilities;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -34,14 +37,14 @@ public class QualificationControllerTest
     }
 
     [Fact]
-    public async Task GetAll_ReturnsBadRequest_OnException()
+    public async Task GetAll_ReturnsInternalServerError_OnException()
     {
         _qualificationServiceMock.Setup(service => service.GetQualifications())
             .ThrowsAsync(new Exception("Test exception"));
 
         var result = await _controller.GetAll();
-
-        var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);
+        var objectResult = Assert.IsType<ObjectResult>(result.Result);
+        Assert.Equal(500, objectResult.StatusCode);
     }
 
     [Fact]
@@ -59,21 +62,21 @@ public class QualificationControllerTest
     }
 
     [Fact]
-    public async Task GetById_ReturnsBadRequest_OnException()
+    public async Task GetById_ReturnsInternalServerError_OnException()
     {
         _qualificationServiceMock.Setup(service => service.GetQualificationById(It.IsAny<string>()))
             .ThrowsAsync(new Exception("Test exception"));
 
         var result = await _controller.GetById("test-id");
-
-        var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);
+        var objectResult = Assert.IsType<ObjectResult>(result.Result);
+        Assert.Equal(500, objectResult.StatusCode);
     }
 
     [Fact]
     public async Task GetById_ReturnsNotFound_WhenQualificationDoesNotExist()
     {
         _qualificationServiceMock.Setup(service => service.GetQualificationById(It.IsAny<string>()))
-            .ReturnsAsync((QualificationDto?)null);
+            .ThrowsAsync(new EntityNotFoundException("Qualification not found"));
 
         var result = await _controller.GetById("non-existent-id");
         var notFoundResult = Assert.IsType<NotFoundObjectResult>(result.Result);
@@ -94,7 +97,7 @@ public class QualificationControllerTest
     }
 
     [Fact]
-    public async Task Create_ReturnsBadRequest_OnException()
+    public async Task Create_ReturnsInternalServerError_OnException()
     {
         _qualificationServiceMock.Setup(service => service.Add(It.IsAny<QualificationDto>()))
             .ThrowsAsync(new Exception("Test exception"));
@@ -102,15 +105,26 @@ public class QualificationControllerTest
         var newQualification = new QualificationDto { IdCode = "new-id", QualificationName = "New Qualification" };
 
         var result = await _controller.Create(newQualification);
+        var objectResult = Assert.IsType<ObjectResult>(result.Result);
+        Assert.Equal(500, objectResult.StatusCode);
+    }
 
-        var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);
+    [Fact]
+    public async Task Create_ReturnsConflict_WhenQualificationAlreadyExists()
+    {
+        _qualificationServiceMock.Setup(service => service.Add(It.IsAny<QualificationDto>()))
+            .ThrowsAsync(new EntityAlreadyExistsException("Qualification already exists"));
+
+        var newQualification = new QualificationDto { IdCode = "new-id", QualificationName = "New Qualification" };
+        var result = await _controller.Create(newQualification);
+        Assert.IsType<ConflictObjectResult>(result.Result);
     }
 
     [Fact]
     public async Task Create_ReturnsBadRequest_WhenCreationFails()
     {
         _qualificationServiceMock.Setup(service => service.Add(It.IsAny<QualificationDto>()))
-            .ReturnsAsync((QualificationDto?)null);
+            .ThrowsAsync(new ArgumentException("Invalid qualification data"));
 
         var newQualification = new QualificationDto { IdCode = "new-id", QualificationName = "New Qualification" };
 
@@ -119,7 +133,7 @@ public class QualificationControllerTest
     }
 
     [Fact]
-    public async Task Update_ReturnsOkResult_WithUpdatedQualification()
+    public async Task Update_ReturnsNoContent_WithUpdatedQualification()
     {
         _qualificationServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<QualificationDto>()))
             .ReturnsAsync((string id, QualificationDto dto) => dto);
@@ -127,13 +141,24 @@ public class QualificationControllerTest
         var updatedQualification = new QualificationDto { IdCode = "existing-id", QualificationName = "Updated Qualification" };
 
         var result = await _controller.Update("existing-id", updatedQualification);
-
-        var okResult = Assert.IsType<OkObjectResult>(result.Result);
-        var returnValue = Assert.IsType<QualificationDto>(okResult.Value);
+        Assert.IsType<NoContentResult>(result.Result);
     }
 
     [Fact]
-    public async Task Update_ReturnsBadRequest_OnException()
+    public async Task Update_ReturnsNotFound_WhenQualificationDoesNotExist()
+    {
+        _qualificationServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<QualificationDto>()))
+            .ThrowsAsync(new EntityNotFoundException("Qualification not found"));
+
+        var updatedQualification = new QualificationDto { IdCode = "non-existent-id", QualificationName = "Updated Qualification" };
+
+        var result = await _controller.Update("non-existent-id", updatedQualification);
+
+        var notFoundResult = Assert.IsType<NotFoundObjectResult>(result.Result);
+    }
+
+    [Fact]
+    public async Task Update_ReturnsInternalServerError_OnException()
     {
         _qualificationServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<QualificationDto>()))
             .ThrowsAsync(new Exception("Test exception"));
@@ -141,19 +166,20 @@ public class QualificationControllerTest
         var updatedQualification = new QualificationDto { IdCode = "existing-id", QualificationName = "Updated Qualification" };
 
         var result = await _controller.Update("existing-id", updatedQualification);
-
-        var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);
+        var objectResult = Assert.IsType<ObjectResult>(result.Result);
+        Assert.Equal(500, objectResult.StatusCode);
     }
 
     [Fact]
-    public async Task Update_ReturnsBadRequest_WhenUpdateFails()
+    public async Task Update_ReturnsBadRequest_OnException()
     {
         _qualificationServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<QualificationDto>()))
-            .ReturnsAsync((QualificationDto?)null);
+            .ThrowsAsync(new ArgumentException("Invalid qualification data"));
 
         var updatedQualification = new QualificationDto { IdCode = "existing-id", QualificationName = "Updated Qualification" };
 
         var result = await _controller.Update("existing-id", updatedQualification);
+
         var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);
     }
 
@@ -172,7 +198,7 @@ public class QualificationControllerTest
     }
 
     [Fact]
-    public async Task Filter_ReturnsNotFound_OnException()
+    public async Task Filter_ReturnsInternalServerError_OnException()
     {
         _qualificationServiceMock.Setup(service => service.FilterQualifications(It.IsAny<QualificationFilter>()))
             .ThrowsAsync(new Exception("Test exception"));
@@ -180,7 +206,7 @@ public class QualificationControllerTest
         var filter = new QualificationFilter { PageNumber = 1, PageSize = 10 };
 
         var result = await _controller.Filter(filter);
-
-        var notFoundResult = Assert.IsType<NotFoundResult>(result.Result);
+        var objectResult = Assert.IsType<ObjectResult>(result.Result);
+        Assert.Equal(500, objectResult.StatusCode);
     }
 }

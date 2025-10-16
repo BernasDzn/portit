@@ -1,8 +1,10 @@
 using Api.Application.Controllers;
 using Api.Application.DataTransfer;
 using Api.Application.DataTransfer.Filters;
+using Api.Application.Exceptions;
 using Api.Application.Services;
 using Api.Domain.ValueObjects;
+using Api.Infrastructure.Exceptions;
 using Api.Infrastructure.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -35,14 +37,14 @@ public class PhysicalResourceControllerTest
     }
 
     [Fact]
-    public async Task GetAll_ReturnsBadRequest_OnException()
+    public async Task GetAll_ReturnsInternalServerError_OnException()
     {
         _physicalResourceServiceMock.Setup(service => service.GetPhysicalResources())
             .ThrowsAsync(new Exception("Test exception"));
 
         var result = await _controller.GetAll();
-
-        var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);
+        var objectResult = Assert.IsType<ObjectResult>(result.Result);
+        Assert.Equal(500, objectResult.StatusCode);
     }
 
     [Fact]
@@ -67,21 +69,21 @@ public class PhysicalResourceControllerTest
     }
 
     [Fact]
-    public async Task GetByCode_ReturnsBadRequest_OnException()
+    public async Task GetByCode_ReturnsInternalServerError_OnException()
     {
         _physicalResourceServiceMock.Setup(service => service.GetResourceByCode(It.IsAny<string>()))
             .ThrowsAsync(new Exception("Test exception"));
 
         var result = await _controller.GetByCode("test-code");
-
-        var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);
+        var objectResult = Assert.IsType<ObjectResult>(result.Result);
+        Assert.Equal(500, objectResult.StatusCode);
     }
 
     [Fact]
     public async Task GetByCode_ReturnsNotFound_WhenResourceDoesNotExist()
     {
         _physicalResourceServiceMock.Setup(service => service.GetResourceByCode(It.IsAny<string>()))
-            .ReturnsAsync((PhysicalResourceDto?)null!);
+            .ThrowsAsync(new EntityNotFoundException("Resource not found"));
 
         var result = await _controller.GetByCode("non-existent-code");
         var notFoundResult = Assert.IsType<NotFoundObjectResult>(result.Result);
@@ -107,7 +109,7 @@ public class PhysicalResourceControllerTest
     }
 
     [Fact]
-    public async Task Filter_ReturnsNotFound_OnException()
+    public async Task Filter_ReturnsInternalServerError_OnException()
     {
         _physicalResourceServiceMock.Setup(service => service.FilterPhysicalResources(It.IsAny<PhysicalResourceFilter>()))
             .ThrowsAsync(new Exception("Test exception"));
@@ -115,8 +117,8 @@ public class PhysicalResourceControllerTest
         var filter = new PhysicalResourceFilter { PageNumber = 1, PageSize = 10 };
 
         var result = await _controller.Filter(filter);
-
-        var notFoundResult = Assert.IsType<NotFoundResult>(result.Result);
+        var objectResult = Assert.IsType<ObjectResult>(result.Result);
+        Assert.Equal(500, objectResult.StatusCode);
     }
 
     [Fact]
@@ -145,10 +147,33 @@ public class PhysicalResourceControllerTest
     }
 
     [Fact]
-    public async Task AddSTSCrane_ReturnsBadRequest_OnException()
+    public async Task AddSTSCrane_ReturnsNotFound_OnEntityNotFoundException()
     {
         _physicalResourceServiceMock.Setup(service => service.AddSTSCraneAsync(It.IsAny<STSCraneDto>()))
-            .ThrowsAsync(new Exception("Test exception"));
+            .ThrowsAsync(new EntityNotFoundException("Related entity not found"));
+
+        var newCrane = new STSCraneDto
+        {
+            Code = "new-crane",
+            Description = "New STS Crane",
+            Status = Api.Domain.Entities.ResourceStatus.Available,
+            SetupTimeInMinutes = 15,
+            Qualifications = new List<QualificationDto>(),
+            OperationalWindow = OperationalWindow.FullWeek(),
+            ContainersPerHour = 30,
+            LiftingCapacity = 50,
+            ServingDock = null!
+        };
+
+        var result = await _controller.AddSTSCrane(newCrane);
+        var notFoundResult = Assert.IsType<NotFoundObjectResult>(result.Result);
+    }
+
+    [Fact]
+    public async Task AddSTSCrane_ReturnsBadRequest_OnArgumentException()
+    {
+        _physicalResourceServiceMock.Setup(service => service.AddSTSCraneAsync(It.IsAny<STSCraneDto>()))
+            .ThrowsAsync(new ArgumentException("Invalid crane data"));
 
         var newCrane = new STSCraneDto
         {
@@ -168,10 +193,10 @@ public class PhysicalResourceControllerTest
     }
 
     [Fact]
-    public async Task AddSTSCrane_ReturnsBadRequest_WhenCreationFails()
+    public async Task AddSTSCrane_ReturnsConflict_OnEntityAlreadyExistsException()
     {
         _physicalResourceServiceMock.Setup(service => service.AddSTSCraneAsync(It.IsAny<STSCraneDto>()))
-            .ReturnsAsync((STSCraneDto?)null!);
+            .ThrowsAsync(new EntityAlreadyExistsException("Crane already exists"));
 
         var newCrane = new STSCraneDto
         {
@@ -187,7 +212,31 @@ public class PhysicalResourceControllerTest
         };
 
         var result = await _controller.AddSTSCrane(newCrane);
-        var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);
+        var conflictResult = Assert.IsType<ConflictObjectResult>(result.Result);
+    }
+
+    [Fact]
+    public async Task AddSTSCrane_ReturnsInternalServerError_OnException()
+    {
+        _physicalResourceServiceMock.Setup(service => service.AddSTSCraneAsync(It.IsAny<STSCraneDto>()))
+            .ThrowsAsync(new Exception("Test exception"));
+
+        var newCrane = new STSCraneDto
+        {
+            Code = "new-crane",
+            Description = "New STS Crane",
+            Status = Api.Domain.Entities.ResourceStatus.Available,
+            SetupTimeInMinutes = 15,
+            Qualifications = new List<QualificationDto>(),
+            OperationalWindow = OperationalWindow.FullWeek(),
+            ContainersPerHour = 30,
+            LiftingCapacity = 50,
+            ServingDock = null!
+        };
+
+        var result = await _controller.AddSTSCrane(newCrane);
+        var objectResult = Assert.IsType<ObjectResult>(result.Result);
+        Assert.Equal(500, objectResult.StatusCode);
     }
 
     [Fact]
@@ -216,10 +265,33 @@ public class PhysicalResourceControllerTest
     }
 
     [Fact]
-    public async Task AddYardCrane_ReturnsBadRequest_OnException()
+    public async Task AddYardCrane_ReturnsNotFound_OnEntityNotFoundException()
     {
         _physicalResourceServiceMock.Setup(service => service.AddYardCraneAsync(It.IsAny<YardCraneDto>()))
-            .ThrowsAsync(new Exception("Test exception"));
+            .ThrowsAsync(new EntityNotFoundException("Related entity not found"));
+
+        var newCrane = new YardCraneDto
+        {
+            Code = "new-yard-crane",
+            Description = "New Yard Crane",
+            Status = Api.Domain.Entities.ResourceStatus.Available,
+            SetupTimeInMinutes = 15,
+            Qualifications = new List<QualificationDto>(),
+            OperationalWindow = OperationalWindow.FullWeek(),
+            ContainersPerHour = 25,
+            LiftingCapacity = 40,
+            YardSection = null!
+        };
+
+        var result = await _controller.AddYardCrane(newCrane);
+        var notFoundResult = Assert.IsType<NotFoundObjectResult>(result.Result);
+    }
+
+    [Fact]
+    public async Task AddYardCrane_ReturnsBadRequest_OnArgumentException()
+    {
+        _physicalResourceServiceMock.Setup(service => service.AddYardCraneAsync(It.IsAny<YardCraneDto>()))
+            .ThrowsAsync(new ArgumentException("Invalid crane data"));
 
         var newCrane = new YardCraneDto
         {
@@ -239,10 +311,10 @@ public class PhysicalResourceControllerTest
     }
 
     [Fact]
-    public async Task AddYardCrane_ReturnsBadRequest_WhenCreationFails()
+    public async Task AddYardCrane_ReturnsConflict_OnEntityAlreadyExistsException()
     {
         _physicalResourceServiceMock.Setup(service => service.AddYardCraneAsync(It.IsAny<YardCraneDto>()))
-            .ReturnsAsync((YardCraneDto?)null!);
+            .ThrowsAsync(new EntityAlreadyExistsException("Crane already exists"));
 
         var newCrane = new YardCraneDto
         {
@@ -258,7 +330,31 @@ public class PhysicalResourceControllerTest
         };
 
         var result = await _controller.AddYardCrane(newCrane);
-        var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);
+        var conflictResult = Assert.IsType<ConflictObjectResult>(result.Result);
+    }
+
+    [Fact]
+    public async Task AddYardCrane_ReturnsInternalServerError_OnException()
+    {
+        _physicalResourceServiceMock.Setup(service => service.AddYardCraneAsync(It.IsAny<YardCraneDto>()))
+            .ThrowsAsync(new Exception("Test exception"));
+
+        var newCrane = new YardCraneDto
+        {
+            Code = "new-yard-crane",
+            Description = "New Yard Crane",
+            Status = Api.Domain.Entities.ResourceStatus.Available,
+            SetupTimeInMinutes = 15,
+            Qualifications = new List<QualificationDto>(),
+            OperationalWindow = OperationalWindow.FullWeek(),
+            ContainersPerHour = 25,
+            LiftingCapacity = 40,
+            YardSection = null!
+        };
+
+        var result = await _controller.AddYardCrane(newCrane);
+        var objectResult = Assert.IsType<ObjectResult>(result.Result);
+        Assert.Equal(500, objectResult.StatusCode);
     }
 
     [Fact]
@@ -287,7 +383,76 @@ public class PhysicalResourceControllerTest
     }
 
     [Fact]
-    public async Task AddTruck_ReturnsBadRequest_OnException()
+    public async Task AddTruck_ReturnsNotFound_OnEntityNotFoundException()
+    {
+        _physicalResourceServiceMock.Setup(service => service.AddTruckAsync(It.IsAny<TruckDto>()))
+            .ThrowsAsync(new EntityNotFoundException("Related entity not found"));
+
+        var newTruck = new TruckDto
+        {
+            Code = "new-truck",
+            Description = "New Truck",
+            Status = Api.Domain.Entities.ResourceStatus.Available,
+            SetupTimeInMinutes = 10,
+            Qualifications = new List<QualificationDto>(),
+            OperationalWindow = OperationalWindow.FullWeek(),
+            ContainersPerTrip = 2,
+            AverageSpeed = 60,
+            MaxLoadCapacity = 2000
+        };
+
+        var result = await _controller.AddTruck(newTruck);
+        var notFoundResult = Assert.IsType<NotFoundObjectResult>(result.Result);
+    }
+
+    [Fact]
+    public async Task AddTruck_ReturnsBadRequest_OnArgumentException()
+    {
+        _physicalResourceServiceMock.Setup(service => service.AddTruckAsync(It.IsAny<TruckDto>()))
+            .ThrowsAsync(new ArgumentException("Invalid truck data"));
+
+        var newTruck = new TruckDto
+        {
+            Code = "new-truck",
+            Description = "New Truck",
+            Status = Api.Domain.Entities.ResourceStatus.Available,
+            SetupTimeInMinutes = 10,
+            Qualifications = new List<QualificationDto>(),
+            OperationalWindow = OperationalWindow.FullWeek(),
+            ContainersPerTrip = 2,
+            AverageSpeed = 60,
+            MaxLoadCapacity = 2000
+        };
+
+        var result = await _controller.AddTruck(newTruck);
+        var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);
+    }
+
+    [Fact]
+    public async Task AddTruck_ReturnsConflict_OnEntityAlreadyExistsException()
+    {
+        _physicalResourceServiceMock.Setup(service => service.AddTruckAsync(It.IsAny<TruckDto>()))
+            .ThrowsAsync(new EntityAlreadyExistsException("Truck already exists"));
+
+        var newTruck = new TruckDto
+        {
+            Code = "new-truck",
+            Description = "New Truck",
+            Status = Api.Domain.Entities.ResourceStatus.Available,
+            SetupTimeInMinutes = 10,
+            Qualifications = new List<QualificationDto>(),
+            OperationalWindow = OperationalWindow.FullWeek(),
+            ContainersPerTrip = 2,
+            AverageSpeed = 60,
+            MaxLoadCapacity = 2000
+        };
+
+        var result = await _controller.AddTruck(newTruck);
+        var conflictResult = Assert.IsType<ConflictObjectResult>(result.Result);
+    }
+
+    [Fact]
+    public async Task AddTruck_ReturnsInternalServerError_OnException()
     {
         _physicalResourceServiceMock.Setup(service => service.AddTruckAsync(It.IsAny<TruckDto>()))
             .ThrowsAsync(new Exception("Test exception"));
@@ -306,34 +471,12 @@ public class PhysicalResourceControllerTest
         };
 
         var result = await _controller.AddTruck(newTruck);
-        var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);
+        var objectResult = Assert.IsType<ObjectResult>(result.Result);
+        Assert.Equal(500, objectResult.StatusCode);
     }
 
     [Fact]
-    public async Task AddTruck_ReturnsBadRequest_WhenCreationFails()
-    {
-        _physicalResourceServiceMock.Setup(service => service.AddTruckAsync(It.IsAny<TruckDto>()))
-            .ReturnsAsync((TruckDto?)null!);
-
-        var newTruck = new TruckDto
-        {
-            Code = "new-truck",
-            Description = "New Truck",
-            Status = Api.Domain.Entities.ResourceStatus.Available,
-            SetupTimeInMinutes = 10,
-            Qualifications = new List<QualificationDto>(),
-            OperationalWindow = OperationalWindow.FullWeek(),
-            ContainersPerTrip = 2,
-            AverageSpeed = 60,
-            MaxLoadCapacity = 2000
-        };
-
-        var result = await _controller.AddTruck(newTruck);
-        var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);
-    }
-
-    [Fact]
-    public async Task UpdateSTSCrane_ReturnsOkResult_WithUpdatedCrane()
+    public async Task UpdateSTSCrane_ReturnsNoContentResult_WithUpdatedCrane()
     {
         _physicalResourceServiceMock.Setup(service => service.UpdateSTSCraneAsync(It.IsAny<string>(), It.IsAny<STSCraneDto>()))
             .ReturnsAsync((string code, STSCraneDto dto) => dto);
@@ -352,16 +495,14 @@ public class PhysicalResourceControllerTest
         };
 
         var result = await _controller.UpdateSTSCrane("existing-crane", updatedCrane);
-
-        var okResult = Assert.IsType<OkObjectResult>(result.Result);
-        var returnValue = Assert.IsType<STSCraneDto>(okResult.Value);
+        Assert.IsType<NoContentResult>(result.Result);
     }
 
     [Fact]
-    public async Task UpdateSTSCrane_ReturnsBadRequest_OnException()
+    public async Task UpdateSTSCrane_ReturnsBadRequest_OnArgumentException()
     {
         _physicalResourceServiceMock.Setup(service => service.UpdateSTSCraneAsync(It.IsAny<string>(), It.IsAny<STSCraneDto>()))
-            .ThrowsAsync(new Exception("Test exception"));
+            .ThrowsAsync(new ArgumentException("Invalid crane data"));
 
         var updatedCrane = new STSCraneDto
         {
@@ -381,10 +522,10 @@ public class PhysicalResourceControllerTest
     }
 
     [Fact]
-    public async Task UpdateSTSCrane_ReturnsNotFound_WhenUpdateFails()
+    public async Task UpdateSTSCrane_ReturnsNotFound_OnEntityNotFoundException()
     {
         _physicalResourceServiceMock.Setup(service => service.UpdateSTSCraneAsync(It.IsAny<string>(), It.IsAny<STSCraneDto>()))
-            .ReturnsAsync((STSCraneDto?)null!);
+            .ThrowsAsync(new EntityNotFoundException("Crane not found"));
 
         var updatedCrane = new STSCraneDto
         {
@@ -404,7 +545,31 @@ public class PhysicalResourceControllerTest
     }
 
     [Fact]
-    public async Task UpdateYardCrane_ReturnsOkResult_WithUpdatedCrane()
+    public async Task UpdateSTSCrane_ReturnsInternalServerError_OnException()
+    {
+        _physicalResourceServiceMock.Setup(service => service.UpdateSTSCraneAsync(It.IsAny<string>(), It.IsAny<STSCraneDto>()))
+            .ThrowsAsync(new Exception("Test exception"));
+
+        var updatedCrane = new STSCraneDto
+        {
+            Code = "existing-crane",
+            Description = "Updated STS Crane",
+            Status = Api.Domain.Entities.ResourceStatus.Available,
+            SetupTimeInMinutes = 20,
+            Qualifications = new List<QualificationDto>(),
+            OperationalWindow = OperationalWindow.FullWeek(),
+            ContainersPerHour = 35,
+            LiftingCapacity = 55,
+            ServingDock = null!
+        };
+
+        var result = await _controller.UpdateSTSCrane("existing-crane", updatedCrane);
+        var objectResult = Assert.IsType<ObjectResult>(result.Result);
+        Assert.Equal(500, objectResult.StatusCode);
+    }
+
+    [Fact]
+    public async Task UpdateYardCrane_ReturnsNoContent_WithUpdatedCrane()
     {
         _physicalResourceServiceMock.Setup(service => service.UpdateYardCraneAsync(It.IsAny<string>(), It.IsAny<YardCraneDto>()))
             .ReturnsAsync((string code, YardCraneDto dto) => dto);
@@ -423,16 +588,14 @@ public class PhysicalResourceControllerTest
         };
 
         var result = await _controller.UpdateYardCrane("existing-yard-crane", updatedCrane);
-
-        var okResult = Assert.IsType<OkObjectResult>(result.Result);
-        var returnValue = Assert.IsType<YardCraneDto>(okResult.Value);
+        Assert.IsType<NoContentResult>(result.Result);
     }
 
     [Fact]
-    public async Task UpdateYardCrane_ReturnsBadRequest_OnException()
+    public async Task UpdateYardCrane_ReturnsBadRequest_OnArgumentException()
     {
         _physicalResourceServiceMock.Setup(service => service.UpdateYardCraneAsync(It.IsAny<string>(), It.IsAny<YardCraneDto>()))
-            .ThrowsAsync(new Exception("Test exception"));
+            .ThrowsAsync(new ArgumentException("Invalid crane data"));
 
         var updatedCrane = new YardCraneDto
         {
@@ -452,10 +615,10 @@ public class PhysicalResourceControllerTest
     }
 
     [Fact]
-    public async Task UpdateYardCrane_ReturnsNotFound_WhenUpdateFails()
+    public async Task UpdateYardCrane_ReturnsNotFound_OnEntityNotFoundException()
     {
         _physicalResourceServiceMock.Setup(service => service.UpdateYardCraneAsync(It.IsAny<string>(), It.IsAny<YardCraneDto>()))
-            .ReturnsAsync((YardCraneDto?)null!);
+            .ThrowsAsync(new EntityNotFoundException("Crane not found"));
 
         var updatedCrane = new YardCraneDto
         {
@@ -475,7 +638,31 @@ public class PhysicalResourceControllerTest
     }
 
     [Fact]
-    public async Task UpdateTruck_ReturnsOkResult_WithUpdatedTruck()
+    public async Task UpdateYardCrane_ReturnsInternalServerError_OnException()
+    {
+        _physicalResourceServiceMock.Setup(service => service.UpdateYardCraneAsync(It.IsAny<string>(), It.IsAny<YardCraneDto>()))
+            .ThrowsAsync(new Exception("Test exception"));
+
+        var updatedCrane = new YardCraneDto
+        {
+            Code = "existing-yard-crane",
+            Description = "Updated Yard Crane",
+            Status = Api.Domain.Entities.ResourceStatus.Available,
+            SetupTimeInMinutes = 20,
+            Qualifications = new List<QualificationDto>(),
+            OperationalWindow = OperationalWindow.FullWeek(),
+            ContainersPerHour = 28,
+            LiftingCapacity = 45,
+            YardSection = null!
+        };
+
+        var result = await _controller.UpdateYardCrane("existing-yard-crane", updatedCrane);
+        var objectResult = Assert.IsType<ObjectResult>(result.Result);
+        Assert.Equal(500, objectResult.StatusCode);
+    }
+
+    [Fact]
+    public async Task UpdateTruck_ReturnsNoContent_WithUpdatedTruck()
     {
         _physicalResourceServiceMock.Setup(service => service.UpdateTruckAsync(It.IsAny<string>(), It.IsAny<TruckDto>()))
             .ReturnsAsync((string code, TruckDto dto) => dto);
@@ -494,16 +681,14 @@ public class PhysicalResourceControllerTest
         };
 
         var result = await _controller.UpdateTruck("existing-truck", updatedTruck);
-
-        var okResult = Assert.IsType<OkObjectResult>(result.Result);
-        var returnValue = Assert.IsType<TruckDto>(okResult.Value);
+        Assert.IsType<NoContentResult>(result.Result);
     }
 
     [Fact]
-    public async Task UpdateTruck_ReturnsBadRequest_OnException()
+    public async Task UpdateTruck_ReturnsBadRequest_OnArgumentException()
     {
         _physicalResourceServiceMock.Setup(service => service.UpdateTruckAsync(It.IsAny<string>(), It.IsAny<TruckDto>()))
-            .ThrowsAsync(new Exception("Test exception"));
+            .ThrowsAsync(new ArgumentException("Invalid truck data"));
 
         var updatedTruck = new TruckDto
         {
@@ -523,10 +708,10 @@ public class PhysicalResourceControllerTest
     }
 
     [Fact]
-    public async Task UpdateTruck_ReturnsNotFound_WhenUpdateFails()
+    public async Task UpdateTruck_ReturnsNotFound_OnEntityNotFoundException()
     {
         _physicalResourceServiceMock.Setup(service => service.UpdateTruckAsync(It.IsAny<string>(), It.IsAny<TruckDto>()))
-            .ReturnsAsync((TruckDto?)null!);
+            .ThrowsAsync(new EntityNotFoundException("Truck not found"));
 
         var updatedTruck = new TruckDto
         {
@@ -546,7 +731,31 @@ public class PhysicalResourceControllerTest
     }
 
     [Fact]
-    public async Task DeactivateResource_ReturnsOkResult_WhenDeactivationSucceeds()
+    public async Task UpdateTruck_ReturnsInternalServerError_OnException()
+    {
+        _physicalResourceServiceMock.Setup(service => service.UpdateTruckAsync(It.IsAny<string>(), It.IsAny<TruckDto>()))
+            .ThrowsAsync(new Exception("Test exception"));
+
+        var updatedTruck = new TruckDto
+        {
+            Code = "existing-truck",
+            Description = "Updated Truck",
+            Status = Api.Domain.Entities.ResourceStatus.Available,
+            SetupTimeInMinutes = 12,
+            Qualifications = new List<QualificationDto>(),
+            OperationalWindow = OperationalWindow.FullWeek(),
+            ContainersPerTrip = 3,
+            AverageSpeed = 65,
+            MaxLoadCapacity = 2500
+        };
+
+        var result = await _controller.UpdateTruck("existing-truck", updatedTruck);
+        var objectResult = Assert.IsType<ObjectResult>(result.Result);
+        Assert.Equal(500, objectResult.StatusCode);
+    }
+
+    [Fact]
+    public async Task DeactivateResource_ReturnsNoContent_WhenDeactivationSucceeds()
     {
         _physicalResourceServiceMock.Setup(service => service.DeactivateResource(It.IsAny<string>()))
             .ReturnsAsync(true);
@@ -556,20 +765,21 @@ public class PhysicalResourceControllerTest
     }
 
     [Fact]
-    public async Task DeactivateResource_ReturnsBadRequest_OnException()
+    public async Task DeactivateResource_ReturnsInternalServerError_OnException()
     {
         _physicalResourceServiceMock.Setup(service => service.DeactivateResource(It.IsAny<string>()))
             .ThrowsAsync(new Exception("Test exception"));
 
         var result = await _controller.Deactivate("existing-code");
-        var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
+        var objectResult = Assert.IsType<ObjectResult>(result);
+        Assert.Equal(500, objectResult.StatusCode);
     }
 
     [Fact]
-    public async Task DeactivateResource_ReturnsNotFound_WhenDeactivationFails()
+    public async Task DeactivateResource_ReturnsNotFound_OnEntityNotFoundException()
     {
         _physicalResourceServiceMock.Setup(service => service.DeactivateResource(It.IsAny<string>()))
-            .ReturnsAsync(false);
+            .ThrowsAsync(new EntityNotFoundException("Resource not found"));
 
         var result = await _controller.Deactivate("non-existent-code");
         var notFoundResult = Assert.IsType<NotFoundObjectResult>(result);

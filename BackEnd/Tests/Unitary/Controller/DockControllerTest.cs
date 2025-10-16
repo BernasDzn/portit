@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc;
 using Api.Application.DataTransfer.Filters;
 using Api.Infrastructure.Utilities;
 
-namespace Tests.Unitary.Controllers
+namespace Tests.Unitary.Controller
 {
     public class DockControllerTest
     {
@@ -53,7 +53,7 @@ namespace Tests.Unitary.Controllers
                     Code = dockCode,
                     Name = "Main Dock",
                     Location = "Harbor A",
-                    PhysicalCharacteristics = null,
+                    PhysicalCharacteristics = null!,
                     SupportedVesselTypes = new List<VesselTypeDto>()
                 });
 
@@ -84,7 +84,7 @@ namespace Tests.Unitary.Controllers
                 Code = "DCK002",
                 Name = "Secondary Dock",
                 Location = "Harbor B",
-                PhysicalCharacteristics = null,
+                PhysicalCharacteristics = null!,
                 SupportedVesselTypes = new List<VesselTypeDto>()
             };
 
@@ -106,7 +106,7 @@ namespace Tests.Unitary.Controllers
                 Code = "DCK003",
                 Name = "Tertiary Dock",
                 Location = "Harbor C",
-                PhysicalCharacteristics = null,
+                PhysicalCharacteristics = null!,
                 SupportedVesselTypes = new List<VesselTypeDto>()
             };
 
@@ -127,7 +127,7 @@ namespace Tests.Unitary.Controllers
                 Code = "DCK001",
                 Name = "Updated Dock",
                 Location = "Updated Harbor",
-                PhysicalCharacteristics = null,
+                PhysicalCharacteristics = null!,
                 SupportedVesselTypes = new List<VesselTypeDto>()
             };
 
@@ -149,7 +149,7 @@ namespace Tests.Unitary.Controllers
                 Code = "DCK001",
                 Name = "Updated Dock",
                 Location = "Updated Harbor",
-                PhysicalCharacteristics = null,
+                PhysicalCharacteristics = null!,
                 SupportedVesselTypes = new List<VesselTypeDto>()
             };
 
