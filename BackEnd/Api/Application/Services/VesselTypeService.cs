@@ -26,6 +26,14 @@ public class VesselTypeService : IVesselTypeService
         return vtypes.Select(vt => vt.ToDTO()).ToList();
     }
 
+    public async Task<VesselTypeDto?> GetByName(string name)
+    {
+        VesselType? vType = await _vesselTypeRepository.GetVesselTypeByNameAsync(name);
+        if (vType == null)
+            throw new EntityNotFoundException("Vessel Type not found.");
+        return vType.ToDTO();
+    }
+
     public async Task<Page<VesselTypeDto>> FilterVesselTypes(VesselTypeFilter filter)
     {
         Page<VesselType> page = await _vesselTypeRepository.FilterVesselTypesAsync(filter);
@@ -54,7 +62,7 @@ public class VesselTypeService : IVesselTypeService
         if (vesselType == null)
             throw new Exception("Vessel Type not found.");
 
-        vesselType.UpdateName( vesselTypeDto.Name);
+        vesselType.UpdateName(vesselTypeDto.Name);
         vesselType.UpdateDescription(vesselTypeDto.Description);
         vesselType.UpdateMaxNumberOfRows(vesselTypeDto.MaxNumberOfRows);
         vesselType.UpdateMaxNumberOfBays(vesselTypeDto.MaxNumberOfBays);

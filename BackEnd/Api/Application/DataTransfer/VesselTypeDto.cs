@@ -1,3 +1,5 @@
+using Api.Domain.ValueObjects;
+
 namespace Api.Application.DataTransfer;
 
 public class VesselTypeDto
@@ -7,5 +9,5 @@ public class VesselTypeDto
     public required uint MaxNumberOfRows { get; set; }
     public required uint MaxNumberOfBays { get; set; }
     public required uint MaxNumberOfTiers { get; set; }
-    public required PhysicalCharacteristicsDto PhysicalCharacteristics { get; set; }
+    public required PhysicalCharacteristics PhysicalCharacteristics { get; set; }
 }

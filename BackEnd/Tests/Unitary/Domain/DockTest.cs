@@ -15,7 +15,7 @@ public class DockTest
         vesselTypes.Add(vt1);
         vesselTypes.Add(vt2);
 
-        validDock = new Dock(Guid.NewGuid(), new Designation { Value = "Valid Name" }, new Designation { Value = "Valid Location" },
+        validDock = new Dock(Guid.NewGuid(), new Code { Value = "DCK001" }, new Designation { Value = "Valid Name" }, new Designation { Value = "Valid Location" },
                 new PhysicalCharacteristics { Length = 500, Depth = 20, Draft = 20 },
                 vesselTypes
             );
@@ -23,53 +23,56 @@ public class DockTest
 
     //---VALID DOCK TEST---
     [Theory]
-    [InlineData("Valid Name", "Valid Location", 500, 20, 20)]
-    [InlineData("D1", "L1", 450, 24, 19)]
-    [InlineData("Dock Alpha", "Location Beta", 600.25, 30.12, 25.05)]
-    [InlineData("Dock 123", "Location 456", 700.21, 35, 30.45)]
-    public void WhenDockIsValid_ThenIsCreatedSuccessfully(string name, string location, double length, double depth, double draft)
+    [InlineData("DCK001","Valid Name", "Valid Location", 500, 20, 20)]
+    [InlineData("DOCK1","D1", "L1", 450, 24, 19)]
+    [InlineData("DK1","Dock Alpha", "Location Beta", 600.25, 30.12, 25.05)]
+    [InlineData("D001","Dock 123", "Location 456", 700.21, 35, 30.45)]
+    public void WhenDockIsValid_ThenIsCreatedSuccessfully(string code, string name, string location, double length, double depth, double draft)
     {
         new Dock(Guid.NewGuid(),
-         new Designation { Value = name },
-         new Designation { Value = location },
-         new PhysicalCharacteristics { Length = length, Depth = depth, Draft = draft },
-                 vesselTypes
-             );
+        new Code { Value = code },
+        new Designation { Value = name },
+        new Designation { Value = location },
+        new PhysicalCharacteristics { Length = length, Depth = depth, Draft = draft },
+            vesselTypes
+        );
     }
 
     //---NAME TESTS---
     [Theory]
-    [InlineData("", "Valid Location", 500, 20, 20, true)]
-    [InlineData("A Dock Name That Is Way Too Long To Be Considered Valid Because It Exceeds The Maximum Length Allowed", "Valid Location", 500, 20, 20, true)]
+    [InlineData("DCK 0_0_1", "Valid Name", "Valid Location", 500, 20, 20, true)]
+    [InlineData("", "Valid Name", "Valid Location", 500, 20, 20, true)]
+    [InlineData("DCK001", "", "Valid Location", 500, 20, 20, true)]
+    [InlineData("DCK001", "A Dock Name That Is Way Too Long To Be Considered Valid Because It Exceeds The Maximum Length Allowed", "Valid Location", 500, 20, 20, true)]
     //---LOCATION TESTS---
-    [InlineData("Valid Name", "", 500, 20, 20, true)]
-    [InlineData("Valid Name", "A Location Name That Is Way Too Long To Be Considered Valid Because It Exceeds The Maximum Length Allowed", 500, 20, 20, true)]
+    [InlineData("DCK001", "Valid Name", "", 500, 20, 20, true)]
+    [InlineData("DCK001", "Valid Name", "A Location Name That Is Way Too Long To Be Considered Valid Because It Exceeds The Maximum Length Allowed", 500, 20, 20, true)]
     //---PHYSICAL CHARACTERISTICS TESTS---
-    [InlineData("Valid Name", "Valid Location", 0, 20, 20, true)]
-    [InlineData("Valid Name", "Valid Location", -1, 20, 20, true)]
-    [InlineData("Valid Name", "Valid Location", 500, 0, 20, true)]
-    [InlineData("Valid Name", "Valid Location", 500, -1, 20, true)]
-    [InlineData("Valid Name", "Valid Location", 500, 20, 0, true)]
-    [InlineData("Valid Name", "Valid Location", 500, 20, -1, true)]
+    [InlineData("DCK001", "Valid Name", "Valid Location", 0, 20, 20, true)]
+    [InlineData("DCK001", "Valid Name", "Valid Location", -1, 20, 20, true)]
+    [InlineData("DCK001", "Valid Name", "Valid Location", 500, 0, 20, true)]
+    [InlineData("DCK001", "Valid Name", "Valid Location", 500, -1, 20, true)]
+    [InlineData("DCK001", "Valid Name", "Valid Location", 500, 20, 0, true)]
+    [InlineData("DCK001", "Valid Name", "Valid Location", 500, 20, -1, true)]
     //---PHYSICAL CHARACTERISTICS VS VESSEL TYPES TESTS---
-    [InlineData("Valid Name", "Valid Location", 100, 20, 20, true)]
-    [InlineData("Valid Name", "Valid Location", 500, 10, 20, true)]
-    [InlineData("Valid Name", "Valid Location", 500, 20, 10, true)]
+    [InlineData("DCK001", "Valid Name", "Valid Location", 100, 20, 20, true)]
+    [InlineData("DCK001", "Valid Name", "Valid Location", 500, 10, 20, true)]
+    [InlineData("DCK001", "Valid Name", "Valid Location", 500, 20, 10, true)]
     //---VESSEL TYPES TESTS---
-    [InlineData("Valid Name", "Valid Location", 500, 20, 20, false)]
-    public void WhenPassingInvalidParameters_ThenThrowsException(string dockName, string dockLocation, double length, double depth, double draft, bool useVesselTypes)
+    [InlineData("DCK001", "Valid Name", "Valid Location", 500, 20, 20, false)]
+    public void WhenPassingInvalidParameters_ThenThrowsException(string code, string dockName, string dockLocation, double length, double depth, double draft, bool useVesselTypes)
     {
         HashSet<VesselType>? vesselTypesParam = useVesselTypes ? new HashSet<VesselType> { vt1, vt2 } : null;
 
         Assert.Throws<ArgumentException>(() =>
-            new Dock(Guid.NewGuid(), new Designation { Value = dockName }, new Designation { Value = dockLocation },
+            new Dock(Guid.NewGuid(), new Code { Value = code }, new Designation { Value = dockName }, new Designation { Value = dockLocation },
                 new PhysicalCharacteristics { Length = length, Depth = depth, Draft = draft },
                 vesselTypesParam
             )
         );
 
         if (!useVesselTypes)
-            Assert.Throws<ArgumentException>(() => new Dock(Guid.NewGuid(), new Designation { Value = "Valid Name" }, new Designation { Value = "Valid Location" },
+            Assert.Throws<ArgumentException>(() => new Dock(Guid.NewGuid(), new Code { Value = code }, new Designation { Value = "Valid Name" }, new Designation { Value = "Valid Location" },
                 new PhysicalCharacteristics { Length = 500, Depth = 20, Draft = 20 },
                 new HashSet<VesselType> { }
             ));

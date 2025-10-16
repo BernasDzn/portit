@@ -16,7 +16,7 @@ public class VesselTypeTest
                 new PhysicalCharacteristics { Length = 70, Depth = 15, Draft = 15 }
             );
 
-        validDock = new Dock(Guid.NewGuid(), new Designation { Value = "Valid Name" }, new Designation { Value = "Valid Location" },
+        validDock = new Dock(Guid.NewGuid(), new Code { Value = "DCK001" }, new Designation { Value = "Valid Name" }, new Designation { Value = "Valid Location" },
                 new PhysicalCharacteristics { Length = 100, Depth = 20, Draft = 20 },
                 new HashSet<VesselType> { validVesselType }
             );
@@ -68,7 +68,7 @@ public class VesselTypeTest
             )
         );
     }
-    
+
     //---UPDATE TESTS---
     [Fact]
     public void WhenUpdatingVesselTypeWithValidParameters_ThenIsUpdatedSuccessfully()

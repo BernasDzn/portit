@@ -12,9 +12,9 @@ public class VesselTypeController : ControllerBase, IVesselTypeController
 {
 
 	private readonly ILogger<VesselTypeController> _logger;
-	private readonly VesselTypeService _vesselTypeService;
+	private readonly IVesselTypeService _vesselTypeService;
 
-	public VesselTypeController(VesselTypeService vesselTypeService, ILogger<VesselTypeController> logger)
+	public VesselTypeController(IVesselTypeService vesselTypeService, ILogger<VesselTypeController> logger)
 	{
 		_vesselTypeService = vesselTypeService;
 		_logger = logger;
@@ -25,6 +25,25 @@ public class VesselTypeController : ControllerBase, IVesselTypeController
 	{
 		IEnumerable<VesselTypeDto> vtypes = await _vesselTypeService.GetVesselTypes();
 		return Ok(vtypes);
+	}
+
+	[HttpGet("{name}")]
+	public async Task<ActionResult<VesselTypeDto>> GetByName(string name)
+	{
+		try
+		{
+			var vesselTypeDto = await _vesselTypeService.GetByName(name);
+
+			if (vesselTypeDto == null)
+				return NotFound($"No Vessel type found with name: {name}");
+
+			return Ok(vesselTypeDto);
+		}
+		catch (System.Exception e)
+		{
+			_logger.LogError("Error getting vessel type by name, {Message}", e.Message);
+			return BadRequest(e.Message);
+		}
 	}
 
 	[HttpGet("filter")]

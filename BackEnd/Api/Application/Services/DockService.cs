@@ -29,6 +29,12 @@ public class DockService : IDockService
         return docks.Select(d => d.ToDTO()).ToList();
     }
 
+    public async Task<DockDto?> GetByCode(string code)
+    {
+        Dock? dock = await _dockRepository.GetDockByCodeAsync(code);
+        return dock?.ToDTO();
+    }
+
     public async Task<Page<DockDto>> FilterDocks(DockFilter filter)
     {
         Page<Dock> page = await _dockRepository.FilterDocksAsync(filter);
@@ -37,13 +43,13 @@ public class DockService : IDockService
 
     public async Task<DockDto?> Add(DockDto dockDto)
     {
-        bool exists = await _dockRepository.GetDockByNameAsync(dockDto.Name) != null;
+        bool exists = await _dockRepository.GetDockByCodeAsync(dockDto.Name) != null;
         if (exists)
             throw new EntityAlreadyExistsException("This dock already exists.");
 
         HashSet<VesselType> vesselTypes = await GetVesselTypesFromDto(dockDto.SupportedVesselTypes);
 
-        Dock dock = new Dock(Guid.NewGuid(), new Designation { Value = dockDto.Name }, new Designation { Value = dockDto.Location },
+        Dock dock = new Dock(Guid.NewGuid(), new Code { Value = dockDto.Code }, new Designation { Value = dockDto.Name }, new Designation { Value = dockDto.Location },
          new PhysicalCharacteristics
          {
              Length = dockDto.PhysicalCharacteristics.Length,
@@ -63,12 +69,13 @@ public class DockService : IDockService
         if (name != dockDto.Name)
             throw new ArgumentException("The provided name does not match the dock to be updated.");
 
-        Dock dock = await _dockRepository.GetDockByNameAsync(dockDto.Name);
+        Dock dock = await _dockRepository.GetDockByCodeAsync(dockDto.Name);
         if (dock == null)
             throw new EntityNotFoundException("A dock with the specified name does not exist.");
 
         HashSet<VesselType> vesselTypes = await GetVesselTypesFromDto(dockDto.SupportedVesselTypes);
 
+        dock.UpdateName(dockDto.Name);
         dock.UpdateLocation(dockDto.Location);
 
         PhysicalCharacteristics newPhysicalCharacteristics = new PhysicalCharacteristics

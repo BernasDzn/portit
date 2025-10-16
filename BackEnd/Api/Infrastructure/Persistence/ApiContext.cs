@@ -48,7 +48,7 @@ public class ApiContext : DbContext
             entity.Property(e => e.OperationalWindow)
             .HasConversion(
                 v => JsonSerializer.Serialize(v, (JsonSerializerOptions?)null),
-                v => JsonSerializer.Deserialize<OperationalWindow>(v, (JsonSerializerOptions?)null)
+                v => JsonSerializer.Deserialize<OperationalWindow>(v, (JsonSerializerOptions?)null)!
             )
             .HasColumnType("json");
         });
@@ -69,7 +69,7 @@ public class ApiContext : DbContext
             .Property(e => e.OperationalWindow)
             .HasConversion(
                 v => JsonSerializer.Serialize(v, (JsonSerializerOptions?)null),
-                v => JsonSerializer.Deserialize<OperationalWindow>(v, (JsonSerializerOptions?)null)
+                v => JsonSerializer.Deserialize<OperationalWindow>(v, (JsonSerializerOptions?)null)!
             )
             .HasColumnType("json");
 

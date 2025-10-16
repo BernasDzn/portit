@@ -4,7 +4,7 @@ using Api.Application.DataTransfer;
 using Api.Domain.Entities;
 using Api.Domain.IRepository;
 
-public class NotificationDecisionService
+public class NotificationDecisionService : INotificationDecisionService
 {
     private readonly IVesselVisitNotificationRepository _notificationRepository;
     private readonly IDockRepository _dockRepository;
@@ -38,7 +38,7 @@ public class NotificationDecisionService
             if (notificationDecisionDto.AssignedDock == null)
                 throw new ArgumentException("AssignedDock must be provided for accepted decisions.", nameof(notificationDecisionDto.AssignedDock));
             
-            Dock assignedDock = await _dockRepository.GetDockByNameAsync(notificationDecisionDto.AssignedDock.Name);
+            Dock assignedDock = await _dockRepository.GetDockByCodeAsync(notificationDecisionDto.AssignedDock.Code);
             
 
             notificationDecision = NotificationDecisionFactory.CreateAccepted(

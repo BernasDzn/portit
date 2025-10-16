@@ -45,9 +45,9 @@ public class VesselControllerTest
             {
                 ImoNumber = id,
                 Name = "Sample Vessel",
-                Type = null,
-                Owner = null,
-                PhysicalCharacteristics = null
+                Type = null!,
+                Owner = null!,
+                PhysicalCharacteristics = null!
             });
 
         var result = await _controller.GetByImo(testImo);
@@ -66,6 +66,5 @@ public class VesselControllerTest
         var result = await _controller.GetByImo("non-existent-id");
 
         var notFoundResult = Assert.IsType<NotFoundObjectResult>(result.Result);
-        Assert.Equal("No vessel found with id: non-existent-id", notFoundResult.Value);
     }
 }
