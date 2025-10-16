@@ -100,4 +100,26 @@ public class StorageAreaTest
         var result = storageArea.CanServeDock(dr1.ServingDock);
         Assert.True(result);
     }
+
+    //---CANNOT SERVE DOCK TEST---
+    [Fact]
+    public void WhenStorageAreaCannotServeDock_ThenIsInvalid()
+    {
+        var storageArea = validStorageArea;
+        var newDock = new Dock(
+            Guid.NewGuid(),
+            new Code { Value = "DCK002" },
+            new Designation { Value = "Dock 2" },
+            new Designation { Value = "Location 2" },
+            new PhysicalCharacteristics
+            {
+                Length = 400,
+                Depth = 45,
+                Draft = 40
+            },
+            new HashSet<VesselType> { vt1 }
+        );
+        var result = storageArea.CanServeDock(newDock);
+        Assert.False(result);
+    }
 }
