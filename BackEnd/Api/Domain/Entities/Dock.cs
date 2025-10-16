@@ -24,8 +24,8 @@ public class Dock : IDTOAble<DockDto>
         Code = code;
         Name = name ?? throw new ArgumentException("Name cannot be null.");
         Location = location ?? throw new ArgumentException("Location cannot be null.");
-        PhysicalCharacteristics = physicalCharacteristics;
-        SupportedVesselTypes = supportedVesselTypes;
+        PhysicalCharacteristics = physicalCharacteristics ?? throw new ArgumentException("Physical characteristics cannot be null.");
+        SupportedVesselTypes = supportedVesselTypes ?? throw new ArgumentException("Invalid vessel types", nameof(supportedVesselTypes));
     }
 
     public void UpdateName(string newName)

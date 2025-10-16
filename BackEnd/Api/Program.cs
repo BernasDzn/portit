@@ -50,7 +50,7 @@ builder.Services.AddTransient<IVesselService, VesselService>();
 builder.Services.AddTransient<IStorageAreaRepository, StorageAreaRepository>();
 builder.Services.AddTransient<IStorageAreaService,StorageAreaService>();
 builder.Services.AddTransient<IPhysicalResourceRepository, PhysicalResourceRepository>();
-builder.Services.AddTransient<PhysicalResourceService>();
+builder.Services.AddTransient<IPhysicalResourceService, PhysicalResourceService>();
 builder.Services.AddTransient<IStaffRepository, StaffRepository>();
 builder.Services.AddTransient<IStaffService, StaffService>();
 builder.Services.AddTransient<IContainerRepository, ContainerRepository>();
@@ -70,7 +70,7 @@ if (configuration.GetValue<bool>("NukeDatabaseAndRunBootstrap"))
     {
         var services = scope.ServiceProvider;
         var context = services.GetRequiredService<ApiContext>();
-
+    
         Bootstrap.Init(context, nukeDatabase: true);
     }
 }

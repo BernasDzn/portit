@@ -7,6 +7,7 @@ using Api.Application.Exceptions;
 using Api.Domain.Entities;
 using Api.Domain.IRepository;
 using Api.Domain.ValueObjects;
+using Api.Infrastructure.Exceptions;
 using Api.Infrastructure.Utilities;
 
 public class VesselVisitNotificationService : IVesselVisitNotificationService
@@ -17,6 +18,7 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
     private readonly IStorageAreaRepository _storageAreaRepository;
     private readonly IContainerRepository _containerRepository;
     private readonly VesselVisitNotificationIdGenerator _idGenerator;
+    private readonly ILogger<VesselVisitNotificationService> _logger;
 
     public VesselVisitNotificationService(
         IVesselVisitNotificationRepository notificationRepository,
@@ -24,7 +26,8 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         IRepresentativeRepository representativeRepository,
         IStorageAreaRepository storageAreaRepository,
         VesselVisitNotificationIdGenerator idGenerator,
-        IContainerRepository containerRepository
+        IContainerRepository containerRepository,
+        ILogger<VesselVisitNotificationService> logger
     )
     {
         _notificationRepository = notificationRepository;
@@ -33,6 +36,7 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         _storageAreaRepository = storageAreaRepository;
         _containerRepository = containerRepository;
         _idGenerator = idGenerator;
+        _logger = logger;
     }
 
     public async Task<IEnumerable<VesselVisitNotificationDto>> GetVesselVisitNotifications()
@@ -76,13 +80,18 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         return newCargoManifestItems;
     }
 
-    public async Task<VesselVisitNotificationDto?> Add(VesselVisitNotificationDto vesselVisitNotificationDto)
+    public async Task<VesselVisitNotificationDto> Add(VesselVisitNotificationDto vesselVisitNotificationDto)
     {
+        VesselVisitNotification? existingNotification =
+            await _notificationRepository.GetVesselVisitNotificationByNotificationIdAsync(vesselVisitNotificationDto.NotificationId);
+
+        if (existingNotification != null) throw new EntityAlreadyExistsException($"Vessel Visit Notification with id {vesselVisitNotificationDto.NotificationId} already exists.");
+
         Vessel vessel = await _vesselRepository.GetVesselByIMOAsync(vesselVisitNotificationDto.Vessel.ImoNumber);
         if (vessel == null) throw new EntityNotFoundException($"Vessel with IMO {vesselVisitNotificationDto.Vessel.ImoNumber} was not found.");
 
         Representative representative = await _representativeRepository.GetByCitizenIdAsync(
-            vesselVisitNotificationDto.Submitter.CitizenshipId.ToString()
+            vesselVisitNotificationDto.Submitter.CitizenshipId
         );
 
         if (representative == null) throw new EntityNotFoundException($"Representative with Citizenship ID {vesselVisitNotificationDto.Submitter.CitizenshipId} was not found.");
@@ -117,11 +126,12 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
             unloadCargoManifest
         );
 
+        _logger.LogInformation("Vessel Visit Notification with id {VvnId} created.", notification.NotificationId);
         await _notificationRepository.AddAsync(notification);
         return notification.ToDTO();
     }
 
-    public async Task<VesselVisitNotificationDto?> Update(string vvnID, VesselVisitNotificationDto vvnDTO)
+    public async Task<VesselVisitNotificationDto> Update(string vvnID, VesselVisitNotificationDto vvnDTO)
     {
         var existingNotification =
             await _notificationRepository.GetVesselVisitNotificationByNotificationIdAsync(vvnID) ??
@@ -139,8 +149,7 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
             vvnDTO.SpecialRequirements, newCrewDetails, newLoadCargoManifest, newUnloadCargoManifest
         );
 
-        Console.WriteLine("Updated Notification: " + existingNotification.ToString());
-
+        _logger.LogInformation("Vessel Visit Notification with id {VvnId} updated.", vvnID);
         return (await _notificationRepository.UpdateAsync(existingNotification)).ToDTO();
     }
 

@@ -134,9 +134,7 @@ public class PhysicalResourceServiceTest
         _physicalResourceRepositoryMock.Setup(repo => repo.GetResourceByCodeAsync(It.IsAny<string>()))
             .ReturnsAsync((PhysicalResource?)null);
 
-        var result = await _service.GetResourceByCode("NonExistentCode");
-
-        Assert.Null(result);
+        await Assert.ThrowsAsync<EntityNotFoundException>(async () => await _service.GetResourceByCode("NonExistentCode"));
     }
 
     [Fact]

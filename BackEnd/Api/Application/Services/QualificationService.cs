@@ -25,16 +25,16 @@ public class QualificationService : IQualificationService
 		return qualifications.Select(q => q.ToDTO()).ToList();
 	}
 
-	public async Task<QualificationDto?> GetQualificationById(string id)
+	public async Task<QualificationDto> GetQualificationById(string id)
 	{
 		var qualification = await _qualificationRepository.GetQualificationByIdAsync(id);
 		if (qualification == null)
-			return null;
+			throw new EntityNotFoundException("Qualification not found.");
 
 		return qualification.ToDTO();
 	}
 
-	public async Task<QualificationDto?> Add(QualificationDto qualificationDto)
+	public async Task<QualificationDto> Add(QualificationDto qualificationDto)
 	{
 		bool exists = await _qualificationRepository.GetQualificationByIdAsync(qualificationDto.IdCode) != null;
 
@@ -54,7 +54,7 @@ public class QualificationService : IQualificationService
 		return savedQualificationDto;
 	}
 
-	public async Task<QualificationDto?> Update(string id, QualificationDto qualificationDto)
+	public async Task<QualificationDto> Update(string id, QualificationDto qualificationDto)
 	{
 		Qualification? qualification = await _qualificationRepository.GetQualificationByIdAsync(id);
 		if (qualification == null)

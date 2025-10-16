@@ -5,7 +5,9 @@ using Api.Application.Services;
 using Api.Application.DataTransfer;
 using Api.Infrastructure.Utilities;
 using Api.Application.DataTransfer.Filters;
-
+using Api.Application.Exceptions;
+using Api.Infrastructure.Exceptions;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 [ApiController]
 [Route("[controller]")]
@@ -30,8 +32,8 @@ public class QualificationController : ControllerBase, IQualificationController
 		}
 		catch (System.Exception)
 		{
-			_logger.LogError("Error retrieving qualifications");
-			return BadRequest("Error retrieving qualifications");
+			_logger.LogCritical("Error retrieving qualifications");
+			return StatusCode(500, "An error occurred while retrieving qualifications.");
 		}
 	}
 
@@ -45,8 +47,8 @@ public class QualificationController : ControllerBase, IQualificationController
 		}
 		catch (System.Exception e)
 		{
-			_logger.LogError("Error filtering qualifications, {Message}", e.Message);
-			return NotFound();
+			_logger.LogCritical("Error filtering qualifications, {Message}", e.Message);
+			return StatusCode(500, "An error occurred while filtering qualifications.");
 		}
 	}
 
@@ -56,15 +58,17 @@ public class QualificationController : ControllerBase, IQualificationController
 		try
 		{
 			var qualDto = await _qualificationService.GetQualificationById(id);
-			if (qualDto == null)
-				return NotFound($"No qualification found with id: {id}");
-
 			return Ok(qualDto);
+		}
+		catch (EntityNotFoundException e)
+		{
+			_logger.LogError("Error retrieving qualification by id, {Message}", e.Message);
+			return NotFound(e.Message);
 		}
 		catch (System.Exception e)
 		{
-			_logger.LogError("Error retrieving qualification by id, {Message}", e.Message);
-			return BadRequest(e.Message);
+			_logger.LogCritical("Error retrieving qualification by id, {Message}", e.Message);
+			return StatusCode(500, "An error occurred while retrieving the qualification.");
 		}
 	}
 
@@ -74,15 +78,23 @@ public class QualificationController : ControllerBase, IQualificationController
 		try
 		{
 			var createdQual = await _qualificationService.Add(qualDto);
-			if (createdQual == null)
-				return BadRequest("Could not create qualification");
-
 			return CreatedAtAction(nameof(GetById), new { id = createdQual.IdCode }, createdQual);
+		}
+		catch (EntityAlreadyExistsException e)
+		{
+			_logger.LogError("Entity already exists, {Message}", e.Message);
+			return Conflict(e.Message);
 		}
 		catch (System.Exception e)
 		{
-			_logger.LogError("Error creating qualification, {Message}", e.Message);
-			return BadRequest(e.Message);
+			if (e is ArgumentException || e is ArgumentNullException)
+			{
+				_logger.LogError("Invalid arguments provided for creating qualification, {Message}", e.Message);
+				return BadRequest(e.Message);
+			}
+
+			_logger.LogCritical("Error creating qualification, {Message}", e.Message);
+			return StatusCode(500, "An error occurred while creating the qualification.");
 		}
 	}
 
@@ -92,15 +104,23 @@ public class QualificationController : ControllerBase, IQualificationController
 		try
 		{	
 			var updatedQual = await _qualificationService.Update(id, qualDto);
-			if (updatedQual == null)
-				return BadRequest("Could not update qualification");
-
-			return Ok(updatedQual);
+			return NoContent();
+		}
+		catch (EntityNotFoundException e)
+		{
+			_logger.LogError("Error updating qualification, {Message}", e.Message);
+			return NotFound(e.Message);
 		}
 		catch (System.Exception e)
 		{
-			_logger.LogError("Error updating qualification, {Message}", e.Message);
-			return BadRequest(e.Message);
+			if (e is ArgumentException || e is ArgumentNullException)
+			{
+				_logger.LogError("Invalid arguments provided for updating qualification, {Message}", e.Message);
+				return BadRequest(e.Message);
+			}
+
+			_logger.LogCritical("Error updating qualification, {Message}", e.Message);
+			return StatusCode(500, "An error occurred while updating the qualification.");
 		}
 	}
 }

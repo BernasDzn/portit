@@ -29,12 +29,12 @@ public class PhysicalResource : IDTOAble<PhysicalResourceDto>
     internal PhysicalResource(Guid id, Code code, Designation description, ResourceStatus status, TimeSpan setupTime, HashSet<Qualification> qualifications, OperationalWindow operationalWindow)
     {
         Id = id;
-        Description = description;
+        Description = description ?? throw new ArgumentNullException(nameof(description));
         Status = status;
         SetupTime = setupTime;
-        Code = code;
-        Qualifications = qualifications;
-        OperationalWindow = operationalWindow;
+        Code = code ?? throw new ArgumentNullException(nameof(code));
+        Qualifications = qualifications ?? throw new ArgumentNullException(nameof(qualifications));
+        OperationalWindow = operationalWindow ?? throw new ArgumentNullException(nameof(operationalWindow));
     }
 
     public void Deactivate()

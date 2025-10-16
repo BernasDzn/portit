@@ -7,7 +7,9 @@ using Api.Application.Exceptions;
 using Api.Application.DataTransfer.Filters;
 using Api.Infrastructure.Utilities;
 
-public class QualificationRepository : GenericRepository<Qualification>, IQualificationRepository
+public class
+
+QualificationRepository : GenericRepository<Qualification>, IQualificationRepository
 {
 	private new readonly ApiContext _context = null!;
 
@@ -43,9 +45,9 @@ public class QualificationRepository : GenericRepository<Qualification>, IQualif
 		}
 	}
 
-    public async Task<Qualification?> GetQualificationByIdAsync(string id)
-    {
-        try
+	public async Task<Qualification?> GetQualificationByIdAsync(string id)
+	{
+		try
 		{
 			Qualification? qualification = await _context.Qualifications
 				.FirstOrDefaultAsync(q => q.NameCode.Value.Equals(id));
@@ -55,7 +57,7 @@ public class QualificationRepository : GenericRepository<Qualification>, IQualif
 		{
 			throw new PersistencyFailedException("Failed to select a qualification by id. " + ex.Message);
 		}
-    }
+	}
 
 	public new async Task<Qualification> Add(Qualification qualification)
 	{
@@ -89,12 +91,11 @@ public class QualificationRepository : GenericRepository<Qualification>, IQualif
 	{
 		IQueryable<Qualification> query = _context.Qualifications.AsQueryable();
 		if (!string.IsNullOrEmpty(filter.Code))
-			query = query.Where(q => q.NameCode.Value.Contains(filter.Code, StringComparison.OrdinalIgnoreCase));
+			query = query.Where(q => q.NameCode.Value.ToLower().Contains(filter.Code.ToLower()));
 
 		if (!string.IsNullOrEmpty(filter.QualificationName))
-			query = query.Where(q => q.QualificationName.Value.Contains(filter.QualificationName, StringComparison.OrdinalIgnoreCase));
+			query = query.Where(q => q.QualificationName.Value.ToLower().Contains(filter.QualificationName.ToLower()));
 
-		//Console.WriteLine($"Filter PageNumber: {filter.PageNumber}, PageSize: {filter.PageSize}");
 		query = query.Skip((filter.PageNumber - 1) * filter.PageSize).Take(filter.PageSize);
 		return Task.FromResult(
 			Page<Qualification>.Of(query.ToList(), filter)

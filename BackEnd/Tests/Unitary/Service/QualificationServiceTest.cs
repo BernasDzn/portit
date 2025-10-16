@@ -55,14 +55,12 @@ public class QualificationServiceTest
     }
 
     [Fact]
-    public async Task GetQualificationById_ReturnsNull_WhenNotExists()
+    public async Task GetQualificationById_Throws_WhenNotExists()
     {
         _qualificationRepositoryMock.Setup(repo => repo.GetQualificationByIdAsync(It.IsAny<string>()))
             .ReturnsAsync((Qualification?)null);
 
-        var result = await _service.GetQualificationById("NonExistentId");
-
-        Assert.Null(result);
+        await Assert.ThrowsAsync<EntityNotFoundException>(() => _service.GetQualificationById("Non existing qualification"));
     }
 
     [Fact]

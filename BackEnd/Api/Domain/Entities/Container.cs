@@ -14,9 +14,9 @@ public class Container : IDTOAble<ContainerDto>
     public Container(Guid id, ContainerNumber containerNumber, CargoType cargoType, Designation description)
     {
         Id = id;
-        ContainerNumber = containerNumber;
+        ContainerNumber = containerNumber ?? throw new ArgumentNullException(nameof(containerNumber), "Container Number cannot be null");
         Type = cargoType;
-        Description = description;
+        Description = description ?? throw new ArgumentNullException(nameof(description), "Description cannot be null");
     }
 
     //EF Core

@@ -77,16 +77,15 @@ public class VesselRepository : GenericRepository<Vessel>, IVesselRepository
             IQueryable<Vessel> query = _context.Vessels.AsQueryable();
 
             if (!string.IsNullOrEmpty(filter.Name))
-                query = query.Where(v => v.Name.Value.Contains(filter.Name));
+                query = query.Where(v => v.Name.Value.ToLower().Contains(filter.Name.ToLower()));
 
             if (!string.IsNullOrEmpty(filter.ImoNumber))
-                query = query.Where(v => v.ImoIdentifier != null && v.ImoIdentifier.Value.Contains(filter.ImoNumber));
+                query = query.Where(v => v.ImoIdentifier.Value.ToLower().Contains(filter.ImoNumber.ToLower()));
 
             if (!string.IsNullOrEmpty(filter.TaxNumber))
-                query = query.Where(v => v.Owner != null && v.Owner.TaxId.Value != null && v.Owner.TaxId.Value.Contains(filter.TaxNumber));
+                query = query.Where(v => v.Owner.TaxId.Value.ToLower().Contains(filter.TaxNumber.ToLower()));
 
             query = query.Skip((filter.PageNumber - 1) * filter.PageSize).Take(filter.PageSize);
-
             return Task.FromResult(Page<Vessel>.Of(query.ToList(), filter));
         }
         catch

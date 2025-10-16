@@ -19,14 +19,12 @@ public class Vessel : IDTOAble<VesselDto>
 
     public Vessel(Guid id, Designation name, ImoNumber imoNumber, VesselType type, ShippingAgentOrganization owner, PhysicalCharacteristics physicalCharacteristics)
     {
-        if (type == null) throw new ArgumentNullException(nameof(type), "Vessel Type cannot be null");
-        if (physicalCharacteristics == null) throw new ArgumentNullException(nameof(physicalCharacteristics), "Physical Characteristics cannot be null");
         Id = id;
-        Name = name;
-        ImoIdentifier = imoNumber;
-        Type = type;
-        Owner = owner;
-        PhysicalCharacteristics = physicalCharacteristics;
+        Name = name ?? throw new ArgumentException("Name cannot be null.");
+        ImoIdentifier = imoNumber ?? throw new ArgumentException("IMO Number cannot be null.");
+        Type = type ?? throw new ArgumentNullException(nameof(type), "Vessel Type cannot be null");
+        Owner = owner ?? throw new ArgumentNullException(nameof(owner), "Owner cannot be null");
+        PhysicalCharacteristics = physicalCharacteristics ?? throw new ArgumentNullException(nameof(physicalCharacteristics), "Physical Characteristics cannot be null");
         validatePhysicalCharacteristics();
     }
 

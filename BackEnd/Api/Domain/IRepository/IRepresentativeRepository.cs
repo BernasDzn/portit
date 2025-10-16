@@ -6,5 +6,5 @@ public interface IRepresentativeRepository : IGenericRepository<Representative>
 {
     Task<Representative> GetByEmailAsync(string email);
     Task<IEnumerable<Representative>> GetAllAsync();
-    Task<Representative> GetByCitizenIdAsync(string citizenId);
+    Task<Representative> GetByCitizenIdAsync(uint citizenId);
 }
