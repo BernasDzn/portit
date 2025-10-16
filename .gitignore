@@ -101,3 +101,6 @@ Thumbs.db
 *.flv
 *.mov
 *.wmv
+
+# Log files
+*log*.txt

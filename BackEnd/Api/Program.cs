@@ -6,11 +6,14 @@ using Api.Infrastructure.Persistence;
 using Api.Infrastructure.Persistence.Repositories;
 using Api.Infrastructure.Utilities;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 // Logging definitions
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
+builder.Host.UseSerilog((ctx, lc) => lc
+    .ReadFrom.Configuration(ctx.Configuration));
 
 // Set encryption key for the application
 EncryptionHelper.SetEncryptionKey(builder.Configuration["EncryptionKey"]!);
