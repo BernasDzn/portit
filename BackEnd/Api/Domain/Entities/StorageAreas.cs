@@ -99,7 +99,7 @@ public class StorageArea : IDTOAble<StorageAreaDto>
     public void UpdateCapacity(uint newCapacity)
     {
         if (newCapacity < CurrentOccupancy)
-            throw new StorageFullException($"New capacity cannot be less than current occupancy. Current Occupancy: {CurrentOccupancy}, New Capacity: {newCapacity}");
+            throw new ArgumentException($"New capacity cannot be less than current occupancy. Current Occupancy: {CurrentOccupancy}, New Capacity: {newCapacity}");
 
         Capacity = newCapacity;
     }

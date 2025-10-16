@@ -122,4 +122,67 @@ public class StorageAreaTest
         var result = storageArea.CanServeDock(newDock);
         Assert.False(result);
     }
+
+    
+    //---UPDATE STORAGE AREA TEST---
+    [Fact]
+    public void WhenUpdatingStorageAreaWithValidParameters_ThenIsUpdatedSuccessfully()
+    {
+        Dock d2 = new Dock(
+            Guid.NewGuid(),
+            new Code { Value = "DCK002" },
+            new Designation { Value = "Dock 2" },
+            new Designation { Value = "Location 2" },
+            new PhysicalCharacteristics
+            {
+                Length = 400,
+                Depth = 45,
+                Draft = 40
+            },
+            new HashSet<VesselType> { vt1 }
+        );
+
+        StorageArea.DockRelation dr2 = new StorageArea.DockRelation(d2, 150, true);
+
+        StorageArea storageAreaToUpdate = validStorageArea;
+
+        storageAreaToUpdate.UpdateNameCode("NewCode");
+        storageAreaToUpdate.UpdateLocation("New Valid Location");
+        storageAreaToUpdate.UpdateCapacity(800);
+        storageAreaToUpdate.UpdateOccupancy(400);
+        storageAreaToUpdate.UpdateAreaType(StorageAreaType.Warehouse);
+        storageAreaToUpdate.UpdateDockServices(new HashSet<StorageArea.DockRelation> { dr2 });
+
+        Assert.Equal("NewCode", storageAreaToUpdate.NameCode.Value);
+        Assert.Equal("New Valid Location", storageAreaToUpdate.Location.Value);
+        Assert.Equal((uint)800, storageAreaToUpdate.Capacity);
+        Assert.Equal((uint)400, storageAreaToUpdate.CurrentOccupancy);
+        Assert.Equal(StorageAreaType.Warehouse, storageAreaToUpdate.AreaType);
+        Assert.Contains(dr2, storageAreaToUpdate.DockServices!);
+    }
+
+
+    //---UPDATE STORAGE AREA TEST WITH INVALID PARAMETERS---
+    [Theory]
+    //---NAME CODE TESTS---
+    [InlineData("SA 0_0_1", "New Valid Location", 800, 400)]
+    [InlineData("", "New Valid Location", 800, 400)]
+    //---LOCATION TESTS---
+    [InlineData("NewCode", "", 800, 400)]
+    [InlineData("NewCode", "A Location Name That Is Way Too Long To Be Considered Valid Because It Exceeds The Maximum Length Allowed", 800, 400)]
+    //---CAPACITY TESTS---
+    [InlineData("NewCode", "New Valid Location", 400, 500)]
+    public void WhenUpdatingStorageAreaWithInvalidParameters_ThenThrowsException(string nameCode, string location, uint capacity, uint currentOccupancy)
+    {
+        StorageArea storageAreaToUpdate = validStorageArea;
+
+        // Invalid name code
+        Assert.Throws<ArgumentException>(() =>
+        {
+            storageAreaToUpdate.UpdateNameCode(nameCode);
+            storageAreaToUpdate.UpdateLocation(location);
+            storageAreaToUpdate.UpdateCapacity(capacity);
+            storageAreaToUpdate.UpdateOccupancy(currentOccupancy);
+        });
+    }
 }
