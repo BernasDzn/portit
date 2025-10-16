@@ -56,7 +56,7 @@ public class StorageArea : IDTOAble<StorageAreaDto>
         private set
         {
             if (value > Capacity)
-                throw new ArgumentException($"Current occupancy cannot exceed capacity. Capacity: {Capacity}, Attempted Occupancy: {value}");
+                throw new StorageFullException($"Current occupancy cannot exceed capacity. Capacity: {Capacity}, Attempted Occupancy: {value}");
 
             _currentOccupancy = value;
         }
@@ -99,7 +99,7 @@ public class StorageArea : IDTOAble<StorageAreaDto>
     public void UpdateCapacity(uint newCapacity)
     {
         if (newCapacity < CurrentOccupancy)
-            throw new ArgumentException($"New capacity cannot be less than current occupancy. Current Occupancy: {CurrentOccupancy}, New Capacity: {newCapacity}");
+            throw new StorageFullException($"New capacity cannot be less than current occupancy. Current Occupancy: {CurrentOccupancy}, New Capacity: {newCapacity}");
 
         Capacity = newCapacity;
     }
