@@ -104,6 +104,8 @@ public class VesselService : IVesselService
     public async Task<Page<VesselDto>> FilterVessels(VesselFilter filter)
     {
         Page<Vessel> page = await _vesselRepository.FilterVesselsAsync(filter);
+        if(page.Items.Count == 0)
+            throw new EntityNotFoundException("No vessels found with the given filter.");
         return page.Map(v => v.ToDTO());
     }
 }
