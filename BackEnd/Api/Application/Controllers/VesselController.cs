@@ -69,6 +69,8 @@ public class VesselController : ControllerBase, IVesselController
         try
         {
             var vesselDtos = await _vesselService.FilterVessels(filter);
+            if( vesselDtos.Items.Count == 0)
+                return NotFound("No vessels found with the given filter");
 
             return Ok(vesselDtos);
         }
