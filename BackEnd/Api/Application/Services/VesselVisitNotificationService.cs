@@ -42,6 +42,7 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
     public async Task<IEnumerable<VesselVisitNotificationDto>> GetVesselVisitNotifications()
     {
         IEnumerable<VesselVisitNotification> notifications = await _notificationRepository.GetVesselVisitNotificationsAsync();
+        AppLogEvents.LogRetrieve(_logger, "vessel visit notifications", notifications.Count());
         return notifications.Select(n => n.ToDTO());
     }
 
@@ -126,7 +127,8 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
             unloadCargoManifest
         );
 
-        _logger.LogInformation("Vessel Visit Notification with id {VvnId} created.", notification.NotificationId);
+        //_logger.LogInformation("Vessel Visit Notification with id {VvnId} created.", notification.NotificationId);
+        AppLogEvents.LogCreate(_logger, "vessel visit notification", notification.NotificationId);
         await _notificationRepository.AddAsync(notification);
         return notification.ToDTO();
     }
@@ -149,13 +151,15 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
             vvnDTO.SpecialRequirements, newCrewDetails, newLoadCargoManifest, newUnloadCargoManifest
         );
 
-        _logger.LogInformation("Vessel Visit Notification with id {VvnId} updated.", vvnID);
+        //_logger.LogInformation("Vessel Visit Notification with id {VvnId} updated.", vvnID);
+        AppLogEvents.LogUpdate(_logger, "vessel visit notification", vvnID);
         return (await _notificationRepository.UpdateAsync(existingNotification)).ToDTO();
     }
 
     public async Task<Page<VesselVisitNotificationStatusDto>> FilterNotifications(VesselVisitNotificationFilter filter)
     {
         Page<VesselVisitNotification> page = await _notificationRepository.FilterVesselVisitNotificationsAsync(filter);
+        AppLogEvents.LogFilter(_logger, "vessel visit notifications", page.Items.Count);
         return page.Map(vvn => vvn.ToStatusDTO());
     }
 }

@@ -115,7 +115,7 @@ public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
         NotificationDecisions.Add(decision);
 
         // Update current status to reflect decision
-        if (decision.isFinal || decision.Status == NotificationDecisionStatus.Approved) Close();
+        if (decision.isFinal) Close();
         // If rejected but not final, revert to in-progress for modifications
         else if (decision.Status == NotificationDecisionStatus.Rejected) Status = NotificationStatus.InProgress;
     }

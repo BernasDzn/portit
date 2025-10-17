@@ -8,17 +8,19 @@ public class NotificationDecisionService : INotificationDecisionService
 {
     private readonly IVesselVisitNotificationRepository _notificationRepository;
     private readonly IDockRepository _dockRepository;
+    private readonly ILogger<NotificationDecisionService> _logger;
 
-    public NotificationDecisionService(IVesselVisitNotificationRepository notificationRepository, IDockRepository dockRepository)
+    public NotificationDecisionService(IVesselVisitNotificationRepository notificationRepository, IDockRepository dockRepository, ILogger<NotificationDecisionService> logger)
     {
         _notificationRepository = notificationRepository;
         _dockRepository = dockRepository;
+        _logger = logger;
     }
 
     public async Task<IEnumerable<NotificationDecisionDto>> GetNotificationDecisions(string vesselVisitNotificationId )
     {
         var decisions = await _notificationRepository.GetNotificationDecisionsAsync(vesselVisitNotificationId );
-
+        AppLogEvents.LogRetrieve(_logger, "notification decisions", decisions.Count());
         return decisions.Select(n => n.ToDTO()).ToList();
     }
 
@@ -27,9 +29,7 @@ public class NotificationDecisionService : INotificationDecisionService
         VesselVisitNotification? notification = await _notificationRepository.GetVesselVisitNotificationByNotificationIdAsync(vesselVisitNotificationId);
 
         if (notification == null)
-        {
             throw new Exception("Vessel Visit Notification not found.");
-        }
 
         NotificationDecision notificationDecision;
 
@@ -39,7 +39,6 @@ public class NotificationDecisionService : INotificationDecisionService
                 throw new ArgumentException("AssignedDock must be provided for accepted decisions.", nameof(notificationDecisionDto.AssignedDock));
             
             Dock assignedDock = await _dockRepository.GetDockByCodeAsync(notificationDecisionDto.AssignedDock.Code);
-            
 
             notificationDecision = NotificationDecisionFactory.CreateAccepted(
                 reason: notificationDecisionDto.Reason,
@@ -56,12 +55,12 @@ public class NotificationDecisionService : INotificationDecisionService
         else
             throw new ArgumentException("Invalid status value.", nameof(notificationDecisionDto.Status));
 
-
         notification.AddDecision(notificationDecision);
 
         var updatedNotification = await _notificationRepository.UpdateAsync(notification);
         var createdDecision = updatedNotification.NotificationDecisions.Last();
-        
+
+        AppLogEvents.LogCreate(_logger, "notification decision", createdDecision.Id);
         return createdDecision.ToDTO();
     }
 }

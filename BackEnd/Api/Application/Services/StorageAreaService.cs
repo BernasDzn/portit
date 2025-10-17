@@ -23,6 +23,7 @@ public class StorageAreaService : IStorageAreaService
     public async Task<IEnumerable<StorageAreaDto>> GetStorageAreas()
     {
         var qualifications = await _storageAreaRepository.GetStorageAreasAsync();
+        AppLogEvents.LogRetrieve(_logger, "storage areas", qualifications.Count());
         return qualifications.Select(q => q.ToDTO()).ToList();
     }
 
@@ -32,6 +33,7 @@ public class StorageAreaService : IStorageAreaService
         if (qualification == null)
             throw new EntityNotFoundException("Storage area not found.");
 
+        AppLogEvents.LogRetrieve(_logger, "storage area", 1);
         return qualification.ToDTO();
     }
 
@@ -54,7 +56,7 @@ public class StorageAreaService : IStorageAreaService
         );
 
         await _storageAreaRepository.Add(storageArea);
-        _logger.LogInformation("Storage area {StorageAreaId} created.", storageArea.Id);
+        AppLogEvents.LogCreate(_logger, "Storage area", createStorageAreaDto.NameCode);
         return storageArea.ToDTO();
     }
 
@@ -73,7 +75,7 @@ public class StorageAreaService : IStorageAreaService
         storageArea.UpdateDockServices(dockRelations.Count > 0 ? dockRelations : null);
 
         await _storageAreaRepository.Update(storageArea);
-        _logger.LogInformation("Storage area {StorageAreaId} updated.", storageArea.Id);
+        AppLogEvents.LogUpdate(_logger, "Storage area", id);
         return storageArea.ToDTO();
     }
 
@@ -91,6 +93,7 @@ public class StorageAreaService : IStorageAreaService
                 dockRelations.Add(new StorageArea.DockRelation(dock, ds.Distance, ds.IsServingDock));
             }
         }
+
         return dockRelations;
     }
 }

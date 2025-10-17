@@ -23,24 +23,28 @@ public class VesselTypeService : IVesselTypeService
     public async Task<IEnumerable<VesselTypeDto>> GetVesselTypes()
     {
         IEnumerable<VesselType> vtypes = await _vesselTypeRepository.GetVesselTypesAsync();
+        AppLogEvents.LogRetrieve(_logger, "vessel types", vtypes.Count());
         return vtypes.Select(vt => vt.ToDTO()).ToList();
     }
 
-    public async Task<VesselTypeDto?> GetByName(string name)
+    public async Task<VesselTypeDto> GetByName(string name)
     {
         VesselType? vType = await _vesselTypeRepository.GetVesselTypeByNameAsync(name);
         if (vType == null)
             throw new EntityNotFoundException("Vessel Type not found.");
+
+        AppLogEvents.LogRetrieve(_logger, "vessel type", 1);
         return vType.ToDTO();
     }
 
     public async Task<Page<VesselTypeDto>> FilterVesselTypes(VesselTypeFilter filter)
     {
         Page<VesselType> page = await _vesselTypeRepository.FilterVesselTypesAsync(filter);
+        AppLogEvents.LogFilter(_logger, "vessel types", page.Items.Count);
         return page.Map(vt => vt.ToDTO());
     }
 
-    public async Task<VesselTypeDto?> Add(VesselTypeDto vesselTypeDto)
+    public async Task<VesselTypeDto> Add(VesselTypeDto vesselTypeDto)
     {
         bool exists = await _vesselTypeRepository.GetVesselTypeByNameAsync(vesselTypeDto.Name) != null;
         if (exists)
@@ -52,11 +56,11 @@ public class VesselTypeService : IVesselTypeService
 
         VesselType savedVesselType = await _vesselTypeRepository.Add(vType);
 
-        _logger.LogInformation("Vessel Type {VesselTypeId} created.", savedVesselType.Id);
+        AppLogEvents.LogCreate(_logger, "Vessel Type", vesselTypeDto.Name);
         return savedVesselType.ToDTO();
     }
 
-    public async Task<VesselTypeDto?> Update(string name, VesselTypeDto vesselTypeDto)
+    public async Task<VesselTypeDto> Update(string name, VesselTypeDto vesselTypeDto)
     {
         VesselType vesselType = await _vesselTypeRepository.GetVesselTypeByNameAsync(name);
         if (vesselType == null)
@@ -78,7 +82,7 @@ public class VesselTypeService : IVesselTypeService
         if (updated != null)
             throw new PersistencyFailedException("Failed to update Vessel Type.");
 
-        _logger.LogInformation("Vessel Type {VesselTypeId} updated.", updated!.Id);
-        return updated.ToDTO();
+        AppLogEvents.LogUpdate(_logger, "Vessel Type", vesselType.Id);
+        return updated!.ToDTO();
     }
 }

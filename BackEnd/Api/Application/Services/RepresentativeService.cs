@@ -18,6 +18,7 @@ public class RepresentativeService
     public async Task<IEnumerable<RepresentativeDto>> GetRepresentatives()
     {
         var representatives = await _representativeRepository.GetAllAsync();
+        AppLogEvents.LogRetrieve(_logger, "representatives", representatives.Count());
         return representatives.Select(r => r.ToDTO()).ToList();
     }
 
@@ -27,6 +28,7 @@ public class RepresentativeService
         if (representative == null)
             throw new EntityNotFoundException("Representative not found.");
 
+        AppLogEvents.LogRetrieve(_logger, "representative", 1);
         return representative.ToDTO();
     }
 
@@ -36,6 +38,7 @@ public class RepresentativeService
         if (representative == null)
             throw new EntityNotFoundException("Representative not found.");
 
+        AppLogEvents.LogRetrieve(_logger, "representative", 1);
         return representative.ToDTO();
     }
 }
