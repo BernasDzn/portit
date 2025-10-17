@@ -22,7 +22,7 @@ public class VesselTypeTest
             );
         validVessel = new Vessel(Guid.NewGuid(), new Designation { Value = "Valid Name" }, new ImoNumber { Value = "IMO 2467953" },
                 validVesselType,
-                new ShippingAgentOrganization(Guid.NewGuid(), new Designation { Value= "name" }, new List<Designation>(), new Address("","","",""), new TaxNumber {Value="123456789"}, new HashSet<Representative>()
+                new ShippingAgentOrganization(Guid.NewGuid(), new Designation { Value= "name" }, new List<Designation>(), new Address("","","",""), new TaxNumber {Value="PT252252252"}, new HashSet<Representative>()
                 {
                     new Representative(Guid.NewGuid(), 1234567, new Designation { Value = "Rep Name" }, new Email { Value= "email@email.email"}, new PhoneNumber { Value = "1234567890" })
                 }),
