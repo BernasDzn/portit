@@ -1,4 +1,4 @@
-namespace Tests.Domain;
+namespace Tests.Unitary.Other;
 
 using Api.Domain.Entities;
 using Api.Domain.ValueObjects;
