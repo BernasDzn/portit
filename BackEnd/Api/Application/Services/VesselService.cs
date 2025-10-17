@@ -27,6 +27,7 @@ public class VesselService : IVesselService
     public async Task<IEnumerable<VesselDto>> GetVessels()
     {
         var vessels = await _vesselRepository.GetVesselsAsync();
+        AppLogEvents.LogRetrieve(_logger, "vessels", vessels.Count());
         return vessels.Select(v => v.ToDTO()).ToList();
     }
 
@@ -61,7 +62,8 @@ public class VesselService : IVesselService
         Vessel savedVessel = await _vesselRepository.Add(vessel);
         VesselDto savedVesselDto = savedVessel.ToDTO();
 
-        _logger.LogInformation("Vessel {VesselId} created.", savedVessel.Id);
+        //_logger.LogInformation("Vessel {VesselId} created.", savedVessel.Id);
+        AppLogEvents.LogCreate(_logger, "Vessel", savedVesselDto.ImoNumber);
         return savedVesselDto;
     }
 
@@ -88,7 +90,8 @@ public class VesselService : IVesselService
         if (updateResult == null)
             throw new PersistencyFailedException("Unable to perform an update");
 
-        _logger.LogInformation("Vessel {VesselId} updated.", updateResult.Id);
+        //_logger.LogInformation("Vessel {VesselId} updated.", updateResult.Id);
+        AppLogEvents.LogUpdate(_logger, "Vessel", imo);
         return updateResult.ToDTO();
     }
 
@@ -98,14 +101,14 @@ public class VesselService : IVesselService
         if (vessel == null)
             throw new EntityNotFoundException("Vessel not found.");
 
+        AppLogEvents.LogRetrieve(_logger, "vessel", 1);
         return vessel.ToDTO();
     }
 
     public async Task<Page<VesselDto>> FilterVessels(VesselFilter filter)
     {
         Page<Vessel> page = await _vesselRepository.FilterVesselsAsync(filter);
-        if(page.Items.Count == 0)
-            throw new EntityNotFoundException("No vessels found with the given filter.");
+        AppLogEvents.LogFilter(_logger, "vessels", page.Items.Count);
         return page.Map(v => v.ToDTO());
     }
 }

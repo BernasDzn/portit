@@ -103,4 +103,4 @@ Thumbs.db
 *.wmv
 
 # Log files
-*log*.txt
+*.log

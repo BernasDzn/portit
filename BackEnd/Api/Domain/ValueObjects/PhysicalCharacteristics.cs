@@ -17,7 +17,7 @@ public class PhysicalCharacteristics
 		set
 		{
 			if (value <= 0)
-				throw new ArgumentException("Length must be positive.");
+				throw new ArgumentException("Length must be greater than zero.");
 			_length = value;
 		}
 	}
@@ -29,7 +29,7 @@ public class PhysicalCharacteristics
 		set
 		{
 			if (value <= 0)
-				throw new ArgumentException("Depth must be positive.");
+				throw new ArgumentException("Depth must be greater than zero.");
 			_depth = value;
 		}
 	}
@@ -41,7 +41,7 @@ public class PhysicalCharacteristics
 		set
 		{
 			if (value <= 0)
-				throw new ArgumentException("Draft must be positive.");
+				throw new ArgumentException("Draft must be greater than zero.");
 			_draft = value;
 		}
 	}

@@ -61,6 +61,7 @@ public class PhysicalResourceService : IPhysicalResourceService
             .Select(resource => ConvertToDto((PhysicalResource)resource))
             .ToList();
 
+        AppLogEvents.LogRetrieve(_logger, "physical resources", resourceDtos.Count);
         return resourceDtos;
     }
 
@@ -70,6 +71,7 @@ public class PhysicalResourceService : IPhysicalResourceService
         if (resource == null) throw new EntityNotFoundException("Physical resource not found");
 
         object resourceDto = ConvertToDto((PhysicalResource)resource);
+        AppLogEvents.LogRetrieve(_logger, "physical resource", 1);
         return resourceDto;
     }
 
@@ -98,7 +100,8 @@ public class PhysicalResourceService : IPhysicalResourceService
             resourceDto.ContainersPerHour
         );
 
-        _logger.LogInformation("Adding new STS Crane with code {CraneCode}", crane.Code.Value);
+        //_logger.LogInformation("Adding new STS Crane with code {CraneCode}", crane.Code.Value);
+        AppLogEvents.LogCreate(_logger, "STS Crane", crane.Id);
         return ((IDTOAble<STSCraneDto>)await _physicalResourceRepository.AddSTSCrane(crane)).ToDTO();
     }
 
@@ -126,7 +129,8 @@ public class PhysicalResourceService : IPhysicalResourceService
             resourceDto.ContainersPerHour
         );
 
-        _logger.LogInformation("Adding new Yard Crane with code {CraneCode}", crane.Code.Value);
+        //_logger.LogInformation("Adding new Yard Crane with code {CraneCode}", crane.Code.Value);
+        AppLogEvents.LogCreate(_logger, "Yard Crane", crane.Id);
         return ((IDTOAble<YardCraneDto>)await _physicalResourceRepository.AddYardCrane(crane)).ToDTO();
     }
 
@@ -151,7 +155,8 @@ public class PhysicalResourceService : IPhysicalResourceService
             resourceDto.AverageSpeed
         );
 
-        _logger.LogInformation("Adding new Truck with code {TruckCode}", truck.Code.Value);
+        //_logger.LogInformation("Adding new Truck with code {TruckCode}", truck.Code.Value);
+        AppLogEvents.LogCreate(_logger, "Truck", truck.Id);
         return ((IDTOAble<TruckDto>)await _physicalResourceRepository.AddTruck(truck)).ToDTO();
     }
 
@@ -181,7 +186,8 @@ public class PhysicalResourceService : IPhysicalResourceService
         craneObject.UpdateContainersPerHour(crane.ContainersPerHour);
         craneObject.UpdateServingDock(dock);
 
-        _logger.LogInformation("Updating STS Crane with code {CraneCode}", craneObject.Code.Value);
+        //_logger.LogInformation("Updating STS Crane with code {CraneCode}", craneObject.Code.Value);
+        AppLogEvents.LogUpdate(_logger, "STS Crane", craneObject.Id);
         return ((IDTOAble<STSCraneDto>)await _physicalResourceRepository.UpdateSTSCrane(craneObject)).ToDTO();
     }
 
@@ -210,7 +216,8 @@ public class PhysicalResourceService : IPhysicalResourceService
         craneObject.UpdateContainersPerHour(crane.ContainersPerHour);
         craneObject.UpdateYardSection(storageArea);
 
-        _logger.LogInformation("Updating Yard Crane with code {CraneCode}", craneObject.Code.Value);
+        //_logger.LogInformation("Updating Yard Crane with code {CraneCode}", craneObject.Code.Value);
+        AppLogEvents.LogUpdate(_logger, "Yard Crane", craneObject.Id);
         return ((IDTOAble<YardCraneDto>)await _physicalResourceRepository.UpdateYardCrane(craneObject)).ToDTO();
     }
 
@@ -236,13 +243,15 @@ public class PhysicalResourceService : IPhysicalResourceService
         truckObject.UpdateContainersPerTrip(truck.ContainersPerTrip);
         truckObject.UpdateAverageSpeed(truck.AverageSpeed);
 
-        _logger.LogInformation("Updating Truck with code {TruckCode}", truckObject.Code.Value);
+        //_logger.LogInformation("Updating Truck with code {TruckCode}", truckObject.Code.Value);
+        AppLogEvents.LogUpdate(_logger, "Truck", truckObject.Id);
         return ((IDTOAble<TruckDto>)await _physicalResourceRepository.UpdateTruck(truckObject)).ToDTO();
     }
 
     public async Task<Page<object>> FilterPhysicalResources(PhysicalResourceFilter filter)
     {
         Page<PhysicalResource> page = await _physicalResourceRepository.FilterPhysicalResourcesAsync(filter);
+        AppLogEvents.LogFilter(_logger, "physical resources", page.Items.Count);
         return page.Map<object>(resource => ConvertToDto(resource));
     }
 
@@ -254,7 +263,7 @@ public class PhysicalResourceService : IPhysicalResourceService
         resource.Deactivate();
         await _physicalResourceRepository.Update(resource);
 
-        _logger.LogInformation("Deactivated physical resource with code {ResourceCode}", resource.Code.Value);
+        AppLogEvents.LogDeactivate(_logger, "physical resource", resource.Id);
         return true;
     }
 }

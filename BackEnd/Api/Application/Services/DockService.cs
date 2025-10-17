@@ -8,7 +8,7 @@ using Api.Domain.IRepository;
 using Api.Domain.ValueObjects;
 using Api.Infrastructure.Exceptions;
 using Api.Infrastructure.Utilities;
-
+using Serilog.Events;
 
 public class DockService : IDockService
 {
@@ -26,18 +26,24 @@ public class DockService : IDockService
     public async Task<IEnumerable<DockDto>> GetDocks()
     {
         IEnumerable<Dock> docks = await _dockRepository.GetDocksAsync();
+        AppLogEvents.LogRetrieve(_logger, "docks", docks.Count());
         return docks.Select(d => d.ToDTO()).ToList();
     }
 
     public async Task<DockDto?> GetByCode(string code)
     {
         Dock? dock = await _dockRepository.GetDockByCodeAsync(code);
+        if (dock == null)
+            throw new EntityNotFoundException("A dock with the specified code does not exist.");
+
+        AppLogEvents.LogRetrieve(_logger, "dock", 1);
         return dock?.ToDTO();
     }
 
     public async Task<Page<DockDto>> FilterDocks(DockFilter filter)
     {
         Page<Dock> page = await _dockRepository.FilterDocksAsync(filter);
+        AppLogEvents.LogFilter(_logger, "docks", page.Items.Count);
         return page.Map(d => d.ToDTO());
     }
 
@@ -60,7 +66,8 @@ public class DockService : IDockService
         Dock savedDock = await _dockRepository.Add(dock);
         DockDto savedDockDto = savedDock.ToDTO();
 
-        _logger.LogInformation("Dock {DockId} created.", savedDock.Id);
+        //_logger.LogInformation("Dock {DockId} created.", savedDock.Id);
+        AppLogEvents.LogCreate(_logger, "Dock", savedDock.Id);
         return savedDockDto;
     }
 
@@ -93,7 +100,7 @@ public class DockService : IDockService
         if (updated == null)
             throw new PersistencyFailedException("Dock update failed.");
 
-        _logger.LogInformation("Dock {DockId} updated.", updated.Id);
+        AppLogEvents.LogUpdate(_logger, "Dock", dock.Id);
         return updated.ToDTO();
     }
 
@@ -110,6 +117,7 @@ public class DockService : IDockService
             vesselTypes.Add(vesselType);
         }
 
+        AppLogEvents.LogRetrieve(_logger, "vessel types", vesselTypes.Count);
         return vesselTypes;
     }
 }

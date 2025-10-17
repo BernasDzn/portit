@@ -26,6 +26,7 @@ public class StaffService : IStaffService
 	public async Task<IEnumerable<StaffDto>> GetStaffs()
 	{
 		var staffs = await _staffRepository.GetStaffsAsync();
+		AppLogEvents.LogRetrieve(_logger, "staffs", staffs.Count());
 		return staffs.Select(s => s.ToDTO()).ToList();
 	}
 
@@ -59,7 +60,8 @@ public class StaffService : IStaffService
 		Staff addedStaff = await _staffRepository.GetStaffByMecNumberAsync(staffDto.MechanograficNumber) ?? throw new Exception("Error retrieving the added staff.");
 		StaffDto addedStaffDto = addedStaff.ToDTO();
 
-		_logger.LogInformation("Staff {StaffId} created.", addedStaff.Id);
+		//_logger.LogInformation("Staff {StaffId} created.", addedStaff.Id);
+		AppLogEvents.LogCreate(_logger, "Staff", addedStaffDto.MechanograficNumber);
 		return addedStaffDto;
 	}
 
@@ -90,13 +92,15 @@ public class StaffService : IStaffService
 			qualifications
 		);
 
-		_logger.LogInformation("Staff {StaffId} updated.", staff.Id);
+		//_logger.LogInformation("Staff {StaffId} updated.", staff.Id);
+		AppLogEvents.LogUpdate(_logger, "Staff", staff.Id);
 		return (await _staffRepository.Update(staff)).ToDTO();
 	}
 
 	public async Task<Page<StaffDto>> FilterStaffs(StaffFilter staffFilter)
 	{
 		Page<Staff> page = await _staffRepository.FilterStaffsAsync(staffFilter);
+		AppLogEvents.LogFilter(_logger, "staffs", page.Items.Count);
 		return page.Map<StaffDto>(s => s.ToDTO());
 
 	}
@@ -110,7 +114,8 @@ public class StaffService : IStaffService
 		staff.Deactivate();
 		await _staffRepository.Update(staff);
 
-		_logger.LogInformation("Staff {StaffId} deactivated.", staff.Id);
+		//_logger.LogInformation("Staff {StaffId} deactivated.", staff.Id);
+		AppLogEvents.LogDeactivate(_logger, "Staff", staff.Id);
 		return staff.ToDTO();
 	}
 

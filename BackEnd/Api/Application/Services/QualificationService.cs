@@ -21,7 +21,8 @@ public class QualificationService : IQualificationService
 
 	public async Task<IEnumerable<QualificationDto>> GetQualifications()
 	{
-		var qualifications = await _qualificationRepository.GetQualificationsAsync();		
+		var qualifications = await _qualificationRepository.GetQualificationsAsync();	
+		AppLogEvents.LogRetrieve(_logger, "qualifications", qualifications.Count());	
 		return qualifications.Select(q => q.ToDTO()).ToList();
 	}
 
@@ -31,6 +32,7 @@ public class QualificationService : IQualificationService
 		if (qualification == null)
 			throw new EntityNotFoundException("Qualification not found.");
 
+		AppLogEvents.LogRetrieve(_logger, "qualification", 1);
 		return qualification.ToDTO();
 	}
 
@@ -50,7 +52,7 @@ public class QualificationService : IQualificationService
 		Qualification savedQualification = await _qualificationRepository.Add(qualification);
 		QualificationDto savedQualificationDto = savedQualification.ToDTO();
 
-		_logger.LogInformation("Qualification {QualificationId} created.", savedQualification.Id);
+		AppLogEvents.LogCreate(_logger, "Qualification", savedQualificationDto.IdCode);
 		return savedQualificationDto;
 	}
 
@@ -66,13 +68,14 @@ public class QualificationService : IQualificationService
 		if (updateResult == null)
 			throw new EntityNotFoundException("Qualification to update not found.");
 
-		_logger.LogInformation("Qualification {QualificationId} updated.", updateResult.Id);
+		AppLogEvents.LogUpdate(_logger, "Qualification", updateResult.Id);
 		return updateResult.ToDTO();
 	}
 
 	public async Task<Page<QualificationDto>> FilterQualifications(QualificationFilter filter)
 	{
 		Page<Qualification> page = await _qualificationRepository.FilterQualificationsAsync(filter);
+		AppLogEvents.LogFilter(_logger, "qualifications", page.Items.Count);
 		return page.Map<QualificationDto>(q => q.ToDTO());
 	}
 }
