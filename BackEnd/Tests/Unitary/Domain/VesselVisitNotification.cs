@@ -264,5 +264,114 @@ public class VesselVisitNotificationTest
             );
         });
     }
-    
+
+    [Fact]
+    public void WhenSubmittingValidVVN_ThenSubmits()
+    {
+        var vvn = new VesselVisitNotification(
+            new VesselVisitNotificationId(
+                new Designation { Value = "PORTO" },
+                1,
+                (uint)DateTime.UtcNow.Year
+            ),
+            DateTime.Parse("2024-07-01T12:00:00Z"),
+            DateTime.Parse("2024-07-01T10:00:00Z"),
+            false,
+            vessel,
+            representative,
+            null,
+            crew,
+            loadCargoManifest,
+            unloadCargoManifest
+        );
+
+        vvn.Submit();
+    }
+
+    [Theory]
+    [InlineData(true, false)]
+    [InlineData(false, true)]
+    public void WhenSubmittingInvalidVVN_ThenThrowsException(bool isCargoHazardous, bool tryDoubleSubmit)
+    {
+
+        var vvn = new VesselVisitNotification(
+            new VesselVisitNotificationId(
+                new Designation { Value = "PORTO" },
+                1,
+                (uint)DateTime.UtcNow.Year
+            ),
+            DateTime.Parse("2024-07-01T12:00:00Z"),
+            DateTime.Parse("2024-07-01T10:00:00Z"),
+            isCargoHazardous,
+            vessel,
+            representative,
+            null,
+            isCargoHazardous ? null : crew,
+            loadCargoManifest,
+            unloadCargoManifest
+        );
+
+        if (tryDoubleSubmit)
+            vvn.Submit();
+
+        Assert.Throws<InvalidOperationException>(() => vvn.Submit());
+
+    }
+
+    [Fact]
+    public void WhenUpdatingValidData_ThenUpdates()
+    {
+        var vvn = new VesselVisitNotification(
+            new VesselVisitNotificationId(
+                new Designation { Value = "PORTO" },
+                1,
+                (uint)DateTime.UtcNow.Year
+            ),
+            DateTime.Parse("2024-07-01T12:00:00Z"),
+            DateTime.Parse("2024-07-01T10:00:00Z"),
+            true,
+            vessel,
+            representative,
+            null,
+            crew,
+            loadCargoManifest,
+            unloadCargoManifest
+        );
+
+        vvn.Update(
+            DateTime.Parse("2024-07-05T12:00:00Z"),
+            DateTime.Parse("2024-07-10T10:00:00Z"),
+            false
+        );
+    }
+
+    [Fact]
+    public void WhenUpdatingApprovalPendingVVN_ThenThrowsException()
+    {
+        var vvn = new VesselVisitNotification(
+            new VesselVisitNotificationId(
+                new Designation { Value = "PORTO" },
+                1,
+                (uint)DateTime.UtcNow.Year
+            ),
+            DateTime.Parse("2024-07-01T12:00:00Z"),
+            DateTime.Parse("2024-07-01T10:00:00Z"),
+            true,
+            vessel,
+            representative,
+            null,
+            crew,
+            loadCargoManifest,
+            unloadCargoManifest
+        );
+
+        vvn.Submit();
+
+        Assert.Throws<InvalidOperationException>(() => vvn.Update(
+            DateTime.Parse("2024-07-05T12:00:00Z"),
+            DateTime.Parse("2024-07-10T10:00:00Z"),
+            false
+        ));
+    }
+
 }
