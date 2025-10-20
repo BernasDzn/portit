@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Api.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Api.Infrastructure.Utilities;
 
 
 namespace Tests.Unitary.Application;
@@ -152,5 +153,53 @@ public class VesselApplicationTest : WebApplicationFactory<Program>
         var vessels = await response.Content.ReadFromJsonAsync<IEnumerable<VesselDto>>();
         Assert.NotNull(vessels);
         Assert.NotEmpty(vessels);
+    }
+
+    [Fact]
+    public async Task GetVesselByImo_ReturnsOkResponse_WhenVesselExists()
+    {
+        // Arrange
+        var imoNumber = "IMO 3815389"; // Existing IMO number from seeded data
+        var request = new HttpRequestMessage(HttpMethod.Get, $"/Vessel/{imoNumber}");
+
+        // Act
+        var response = await _client.SendAsync(request);
+
+        // Assert
+        response.EnsureSuccessStatusCode();
+        var vessel = await response.Content.ReadFromJsonAsync<VesselDto>();
+        Assert.NotNull(vessel);
+        Assert.Equal(imoNumber, vessel.ImoNumber);
+    }
+
+    [Fact]
+    public async Task GetVesselByImo_ReturnsNotFoundResponse_WhenVesselDoesNotExist()
+    {
+        // Arrange
+        var imoNumber = "IMO 0000000"; // Non-existing IMO number
+        var request = new HttpRequestMessage(HttpMethod.Get, $"/Vessel/{imoNumber}");
+
+        // Act
+        var response = await _client.SendAsync(request);
+
+        // Assert
+        Assert.Equal(System.Net.HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task FilterVessels_ReturnsOkResponse_WithFilteredVessels()
+    {
+        // Arrange
+        var filterQuery = "?typeName=Panamax&minLength=200&maxLength=300";
+        var request = new HttpRequestMessage(HttpMethod.Get, $"/Vessel/filter{filterQuery}");
+
+        // Act
+        var response = await _client.SendAsync(request);
+
+        // Assert
+        response.EnsureSuccessStatusCode();
+        var pagedVessels = await response.Content.ReadFromJsonAsync<Page<VesselDto>>();
+        Assert.NotNull(pagedVessels);
+        Assert.NotEmpty(pagedVessels.Items);
     }
 }

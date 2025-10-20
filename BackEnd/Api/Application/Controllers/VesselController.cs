@@ -5,7 +5,7 @@ using Api.Application.Services;
 using Api.Application.DataTransfer;
 using Api.Infrastructure.Utilities;
 using Api.Application.DataTransfer.Filters;
-
+using Api.Application.Exceptions;
 
 [ApiController]
 [Route("[controller]")]
@@ -37,6 +37,11 @@ public class VesselController : ControllerBase, IVesselController
                 return NotFound($"No vessel found with id: {imo}");
 
             return Ok(vesselDto);
+        }
+        catch (EntityNotFoundException ex)
+        {
+            _logger.LogWarning("Vessel not found, {Message}", ex.Message);
+            return NotFound(ex.Message);
         }
         catch (System.Exception e)
         {
