@@ -11,12 +11,12 @@ using Api.Infrastructure.Utilities;
 
 namespace Tests.Unitary.Application;
 
-public class DockApplicationTest : WebApplicationFactory<Program>
+public class VesselTypeApplicationTest : WebApplicationFactory<Program>
 {
     private static readonly string DatabaseName = $"TestDatabase_{Guid.NewGuid()}";
     private readonly HttpClient _client;
 
-    public DockApplicationTest()
+    public VesselTypeApplicationTest()
     {
         _client = CreateClient();
     }
@@ -64,107 +64,96 @@ public class DockApplicationTest : WebApplicationFactory<Program>
     }
 
     [Fact]
-    public async Task CreateDock_ReturnsCreatedResponse_WhenDockIsValid()
+    public async Task CreateVesselType_ReturnsCreatedResponse_WhenVesselTypeIsValid()
     {
-        
         var body = @"{
-            ""code"" : ""DCK004"",
-            ""name"": ""Dock D"",
-            ""location"": ""North Harbor"",
+            ""name"": ""Large Vessel"",
+            ""description"": ""A vessel type for large ships."",
+            ""maxNumberOfRows"": 30,
+            ""maxNumberOfBays"": 15,
+            ""maxNumberOfTiers"": 10,
+            ""capacity"":0,
             ""physicalCharacteristics"": {
-                ""length"": 500,
-                ""depth"": 35,
-                ""draft"": 20
-            },
-            ""supportedVesselTypes"": [""Panamax"", ""Handymax""]
+                ""length"": 300,
+                ""depth"": 25,
+                ""draft"": 10
+            }
         }";
 
-        var request = new HttpRequestMessage(HttpMethod.Post, "/Dock")
+        var request = new HttpRequestMessage(HttpMethod.Post, "/VesselType")
         {
             Content = new StringContent(body, System.Text.Encoding.UTF8, "application/json")
         };
 
-        
         var response = await _client.SendAsync(request);
-
 
         if (response.StatusCode != System.Net.HttpStatusCode.Created)
         {
             var errorContent = await response.Content.ReadAsStringAsync();
             Console.WriteLine($"Status Code: {response.StatusCode}");
             Console.WriteLine($"Error Content: {errorContent}");
-
-
+            
             Assert.Fail($"Expected Created but got {response.StatusCode}. Error: {errorContent}");
         }
 
-        
         Assert.Equal(System.Net.HttpStatusCode.Created, response.StatusCode);
-        var createdDock = await response.Content.ReadFromJsonAsync<DockDto>();
-        Assert.NotNull(createdDock);
+        var createdVesselType = await response.Content.ReadFromJsonAsync<VesselTypeDto>();
+        Assert.NotNull(createdVesselType);
     }
 
     [Fact]
-    public async Task GetDocks_ReturnsOkResponse_WithListOfDocks()
+    public async Task GetVesselTypes_ReturnsOkResponse_WithListOfVesselTypes()
     {
-        
-        var request = new HttpRequestMessage(HttpMethod.Get, "/Dock");
+        var request = new HttpRequestMessage(HttpMethod.Get, "/VesselType");
 
-        
         var response = await _client.SendAsync(request);
 
-        
         response.EnsureSuccessStatusCode();
-        var docks = await response.Content.ReadFromJsonAsync<IEnumerable<DockDto>>();
-        Assert.NotNull(docks);
-        Assert.NotEmpty(docks);
+        var vesselTypes = await response.Content.ReadFromJsonAsync<IEnumerable<VesselTypeDto>>();
+        Assert.NotNull(vesselTypes);
+        Assert.NotEmpty(vesselTypes);
     }
 
     [Fact]
-    public async Task GetDockByCode_ReturnsOkResponse_WhenDockExists()
+    public async Task GetVesselTypeByName_ReturnsOkResponse_WhenVesselTypeExists()
     {
-        
-        var code = "DCK004";
-        var request = new HttpRequestMessage(HttpMethod.Get, $"/Dock/{code}");
+        var name = "Panamax";
+        var request = new HttpRequestMessage(HttpMethod.Get, $"/VesselType/{name}");
 
-    
         var response = await _client.SendAsync(request);
 
-        
         response.EnsureSuccessStatusCode();
-        var dock = await response.Content.ReadFromJsonAsync<DockDto>();
-        Assert.NotNull(dock);
-        Assert.Equal(code, dock.Code);
+        var vesselType = await response.Content.ReadFromJsonAsync<VesselTypeDto>();
+        Assert.NotNull(vesselType);
+        Assert.Equal(name, vesselType.Name);
     }
 
     [Fact]
-    public async Task GetDockByCode_ReturnsNotFoundResponse_WhenDockDoesNotExist()
+    public async Task GetVesselTypeByName_ReturnsNotFoundResponse_WhenVesselTypeDoesNotExist()
     {
-        
-        var code = "DCK0000"; // Non-existing Dock code
-        var request = new HttpRequestMessage(HttpMethod.Get, $"/Dock/{code}");
+       
+        var name = "Not Exist";
+        var request = new HttpRequestMessage(HttpMethod.Get, $"/VesselType/{name}");
 
         
         var response = await _client.SendAsync(request);
 
-        
         Assert.Equal(System.Net.HttpStatusCode.NotFound, response.StatusCode);
     }
 
     [Fact]
-    public async Task FilterDocks_ReturnsOkResponse_WithFilteredDocks()
+    public async Task FilterVesselTypes_ReturnsOkResponse_WithFilteredVesselTypes()
     {
         
-        var filterQuery = "?DockName=Dock%20A&Location=North%20Harbor&VesselTypeName=Handymax";
-        var request = new HttpRequestMessage(HttpMethod.Get, $"/Dock/filter{filterQuery}");
+        var filterQuery = "?Name=Panamax&Description=Max%20size%20for%20Panama%20Canal";
+        var request = new HttpRequestMessage(HttpMethod.Get, $"/VesselType/filter{filterQuery}");
 
         
         var response = await _client.SendAsync(request);
 
-        
         response.EnsureSuccessStatusCode();
-        var pagedDocks = await response.Content.ReadFromJsonAsync<Page<DockDto>>();
-        Assert.NotNull(pagedDocks);
-        Assert.NotEmpty(pagedDocks.Items);
+        var pagedVesselTypes = await response.Content.ReadFromJsonAsync<Page<VesselTypeDto>>();
+        Assert.NotNull(pagedVesselTypes);
+        Assert.NotEmpty(pagedVesselTypes.Items);
     }
 }

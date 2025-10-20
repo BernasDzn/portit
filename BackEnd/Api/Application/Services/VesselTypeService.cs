@@ -27,14 +27,14 @@ public class VesselTypeService : IVesselTypeService
         return vtypes.Select(vt => vt.ToDTO()).ToList();
     }
 
-    public async Task<VesselTypeDto> GetByName(string name)
+    public async Task<VesselTypeDto?> GetByName(string name)
     {
         VesselType? vType = await _vesselTypeRepository.GetVesselTypeByNameAsync(name);
-        if (vType == null)
-            throw new EntityNotFoundException("Vessel Type not found.");
+
 
         AppLogEvents.LogRetrieve(_logger, "vessel type", 1);
-        return vType.ToDTO();
+        
+        return vType?.ToDTO();
     }
 
     public async Task<Page<VesselTypeDto>> FilterVesselTypes(VesselTypeFilter filter)

@@ -78,7 +78,8 @@ public class VesselTypeServiceTest
         _vesselTypeRepositoryMock.Setup(repo => repo.GetVesselTypeByNameAsync(It.IsAny<string>()))
             .ReturnsAsync((VesselType?)null);
 
-        await Assert.ThrowsAsync<EntityNotFoundException>(() => _service.GetByName("Non existing vessel type"));
+        var result = await _service.GetByName("Non existing vessel type");
+        Assert.Null(result);
     }
 
     [Fact]

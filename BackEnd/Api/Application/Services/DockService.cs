@@ -74,7 +74,7 @@ public class DockService : IDockService
         if (code != dockDto.Code)
             throw new ArgumentException("The provided code does not match the dock to be updated.");
 
-        Dock dock = await _dockRepository.GetDockByCodeAsync(dockDto.Code);
+        Dock? dock = await _dockRepository.GetDockByCodeAsync(dockDto.Code);
         if (dock == null)
             throw new EntityNotFoundException("A dock with the specified code does not exist.");
 
