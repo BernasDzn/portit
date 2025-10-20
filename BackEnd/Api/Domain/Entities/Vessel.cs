@@ -36,7 +36,9 @@ public class Vessel : IDTOAble<VesselDto>
             ImoNumber = this.ImoIdentifier.Value,
             Type = this.Type.ToDTO(),
             Owner = Owner.ToDTO(),
-            PhysicalCharacteristics = PhysicalCharacteristics
+            Length = this.PhysicalCharacteristics.Length,
+            Depth = this.PhysicalCharacteristics.Depth,
+            Draft = this.PhysicalCharacteristics.Draft
         };
     }
 

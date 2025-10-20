@@ -57,7 +57,9 @@ public class Dock : IDTOAble<DockDto>
             Code = this.Code.Value,
             Name = this.Name.Value,
             Location = this.Location.Value,
-            PhysicalCharacteristics = this.PhysicalCharacteristics,
+            Length = this.PhysicalCharacteristics.Length,
+            Depth = this.PhysicalCharacteristics.Depth,
+            Draft = this.PhysicalCharacteristics.Draft,
             SupportedVesselTypes = this.SupportedVesselTypes.Select(vt => vt.ToDTO()).ToList()
         };
     }

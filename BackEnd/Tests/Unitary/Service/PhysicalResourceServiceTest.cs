@@ -201,7 +201,7 @@ public class PhysicalResourceServiceTest
             Qualifications = new List<QualificationDto>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             LiftingCapacity = 60,
-            ServingDock = new DockDto { Code = "NON_EXISTENT_DOCK", Name = "Non Existent Dock", Location = "Nowhere", PhysicalCharacteristics = null!, SupportedVesselTypes = new List<VesselTypeDto>() },
+            ServingDock = new DockDto { Code = "NON_EXISTENT_DOCK", Name = "Non Existent Dock", Location = "Nowhere", Length = 100, Depth = 50, Draft = 30, SupportedVesselTypes = new List<VesselTypeDto>() },
             ContainersPerHour = 12,
         };
 
@@ -547,7 +547,7 @@ public class PhysicalResourceServiceTest
             Qualifications = new List<QualificationDto>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             LiftingCapacity = 70,
-            ServingDock = new DockDto { Code = "DOCK1", Name = "Dock 1", Location = "Location 1", PhysicalCharacteristics = null!, SupportedVesselTypes = new List<VesselTypeDto>() },
+            ServingDock = new DockDto { Code = "DOCK1", Name = "Dock 1", Location = "Location 1",  Length = 100, Depth = 50, Draft = 30, SupportedVesselTypes = new List<VesselTypeDto>() },
             ContainersPerHour = 14,
         };
 
@@ -571,7 +571,7 @@ public class PhysicalResourceServiceTest
             Qualifications = new List<QualificationDto>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             LiftingCapacity = 70,
-            ServingDock = new DockDto { Code = "NON_EXISTENT_DOCK", Name = "Non Existent Dock", Location = "Nowhere", PhysicalCharacteristics = null!, SupportedVesselTypes = new List<VesselTypeDto>() },
+            ServingDock = new DockDto { Code = "NON_EXISTENT_DOCK", Name = "Non Existent Dock", Location = "Nowhere", Length = 100, Depth = 50, Draft = 30, SupportedVesselTypes = new List<VesselTypeDto>() },
             ContainersPerHour = 14,
         };
 
@@ -628,7 +628,7 @@ public class PhysicalResourceServiceTest
             Qualifications = new List<QualificationDto>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             LiftingCapacity = 70,
-            ServingDock = new DockDto { Code = "DOCK1", Name = "Dock 1", Location = "Location 1", PhysicalCharacteristics = null!, SupportedVesselTypes = new List<VesselTypeDto>() },
+            ServingDock = new DockDto { Code = "DOCK1", Name = "Dock 1", Location = "Location 1", Length = 100, Depth = 50, Draft = 30, SupportedVesselTypes = new List<VesselTypeDto>() },
             ContainersPerHour = 14,
         };
 

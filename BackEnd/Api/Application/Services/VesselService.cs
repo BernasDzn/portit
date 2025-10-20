@@ -53,9 +53,9 @@ public class VesselService : IVesselService
             org,
             new PhysicalCharacteristics
             {
-                Length = vesselDto.PhysicalCharacteristics.Length,
-                Depth = vesselDto.PhysicalCharacteristics.Depth,
-                Draft = vesselDto.PhysicalCharacteristics.Draft
+                Length = vesselDto.Length,
+                Depth = vesselDto.Depth,
+                Draft = vesselDto.Draft
             }
         );
 

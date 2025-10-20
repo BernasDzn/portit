@@ -53,7 +53,9 @@ namespace Tests.Unitary.Controller
                     Code = dockCode,
                     Name = "Main Dock",
                     Location = "Harbor A",
-                    PhysicalCharacteristics = null!,
+                    Length = 100,
+                    Depth = 50,
+                    Draft = 30,
                     SupportedVesselTypes = new List<VesselTypeDto>()
                 });
 
@@ -84,7 +86,9 @@ namespace Tests.Unitary.Controller
                 Code = "DCK002",
                 Name = "Secondary Dock",
                 Location = "Harbor B",
-                PhysicalCharacteristics = null!,
+                Length = 100,
+                Depth = 50,
+                Draft = 30,
                 SupportedVesselTypes = new List<VesselTypeDto>()
             };
 
@@ -106,7 +110,9 @@ namespace Tests.Unitary.Controller
                 Code = "DCK003",
                 Name = "Tertiary Dock",
                 Location = "Harbor C",
-                PhysicalCharacteristics = null!,
+                Length = 100,
+                Depth = 50,
+                Draft = 30,
                 SupportedVesselTypes = new List<VesselTypeDto>()
             };
 
@@ -127,7 +133,9 @@ namespace Tests.Unitary.Controller
                 Code = "DCK001",
                 Name = "Updated Dock",
                 Location = "Updated Harbor",
-                PhysicalCharacteristics = null!,
+                Length = 100,
+                Depth = 50,
+                Draft = 30,
                 SupportedVesselTypes = new List<VesselTypeDto>()
             };
 
@@ -149,7 +157,9 @@ namespace Tests.Unitary.Controller
                 Code = "DCK001",
                 Name = "Updated Dock",
                 Location = "Updated Harbor",
-                PhysicalCharacteristics = null!,
+                Length = 100,
+                Depth = 50,
+                Draft = 30,
                 SupportedVesselTypes = new List<VesselTypeDto>()
             };
 
@@ -179,7 +189,7 @@ namespace Tests.Unitary.Controller
             var returnValue = Assert.IsType<Page<DockDto>>(okResult.Value);
             Assert.Empty(returnValue.Items);
         }
-        
+
         [Fact]
         public async Task Filter_ReturnsNotFound_OnException()
         {

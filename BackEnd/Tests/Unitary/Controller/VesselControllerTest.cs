@@ -49,7 +49,9 @@ public class VesselControllerTest
                 Name = "Sample Vessel",
                 Type = null!,
                 Owner = null!,
-                PhysicalCharacteristics = null!
+                Length = 100,
+                Depth = 50,
+                Draft = 30,
             });
 
         var result = await _controller.GetByImo(testImo);
@@ -79,7 +81,9 @@ public class VesselControllerTest
             Name = "New Vessel",
             Type = null!,
             Owner = null!,
-            PhysicalCharacteristics = null!
+            Length = 100,
+            Depth = 50,
+            Draft = 30,
         };
 
         _vesselServiceMock.Setup(service => service.Add(It.IsAny<VesselDto>()))
@@ -101,7 +105,9 @@ public class VesselControllerTest
             Name = "New Vessel",
             Type = null!,
             Owner = null!,
-            PhysicalCharacteristics = null!
+            Length = 100,
+            Depth = 50,
+            Draft = 30,
         };
 
         _vesselServiceMock.Setup(service => service.Add(It.IsAny<VesselDto>()))
@@ -122,8 +128,12 @@ public class VesselControllerTest
             {
                 Items = new List<VesselDto>
                 {
-                    new VesselDto { ImoNumber = "IMO1234567", Name = "Vessel 1", Type = null!, Owner = null!, PhysicalCharacteristics = null! },
-                    new VesselDto { ImoNumber = "IMO2345678", Name = "Vessel 2", Type = null!, Owner = null!, PhysicalCharacteristics = null! }
+                    new VesselDto { ImoNumber = "IMO1234567", Name = "Vessel 1", Type = null!, Owner = null!, Length = 100,
+                    Depth = 50,
+                    Draft = 30, },
+                    new VesselDto { ImoNumber = "IMO2345678", Name = "Vessel 2", Type = null!, Owner = null!, Length = 100,
+                    Depth = 50,
+                    Draft = 30, }
                 },
                 PageNumber = filter.PageNumber,
                 PageSize = filter.PageSize
