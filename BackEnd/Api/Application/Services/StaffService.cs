@@ -53,14 +53,13 @@ public class StaffService : IStaffService
 			new Designation { Value = staffDto.Name },
 			new Email { Value = staffDto.Email },
 			new PhoneNumber { Value = staffDto.PhoneNumber },
-            staffDto.OperationalWindow,
+			staffDto.OperationalWindow,
 			qualifications
 		);
-		await _staffRepository.Add(staff);
-		Staff addedStaff = await _staffRepository.GetStaffByMecNumberAsync(staffDto.MechanograficNumber) ?? throw new Exception("Error retrieving the added staff.");
+
+		Staff addedStaff = await _staffRepository.Add(staff);
 		StaffDto addedStaffDto = addedStaff.ToDTO();
 
-		//_logger.LogInformation("Staff {StaffId} created.", addedStaff.Id);
 		AppLogEvents.LogCreate(_logger, "Staff", addedStaffDto.MechanograficNumber);
 		return addedStaffDto;
 	}
@@ -92,9 +91,11 @@ public class StaffService : IStaffService
 			qualifications
 		);
 
-		//_logger.LogInformation("Staff {StaffId} updated.", staff.Id);
-		AppLogEvents.LogUpdate(_logger, "Staff", staff.Id);
-		return (await _staffRepository.Update(staff)).ToDTO();
+		Staff updatedStaff = await _staffRepository.Update(staff);
+		StaffDto updatedStaffDto = updatedStaff.ToDTO(); 
+
+		AppLogEvents.LogUpdate(_logger, "Staff", updatedStaffDto.MechanograficNumber);
+		return updatedStaffDto;
 	}
 
 	public async Task<Page<StaffDto>> FilterStaffs(StaffFilter staffFilter)
@@ -102,7 +103,6 @@ public class StaffService : IStaffService
 		Page<Staff> page = await _staffRepository.FilterStaffsAsync(staffFilter);
 		AppLogEvents.LogFilter(_logger, "staffs", page.Items.Count);
 		return page.Map<StaffDto>(s => s.ToDTO());
-
 	}
 
 	public async Task<StaffDto?> Deactivate(string mecanographicNumber)

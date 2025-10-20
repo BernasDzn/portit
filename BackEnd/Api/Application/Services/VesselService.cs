@@ -82,9 +82,15 @@ public class VesselService : IVesselService
             throw new EntityNotFoundException("The referenced shipping agent organization does not exist");
 
         vessel.UpdateName(vesselDto.Name);
-        vessel.UpdateImoNumber(vesselDto.ImoNumber);
+        // dont update imo number
         vessel.UpdateVesselType(vesselType);
         vessel.UpdateOwner(org);
+        vessel.UpdatePhysicalCharacteristics(new PhysicalCharacteristics
+        {
+            Length = vesselDto.PhysicalCharacteristics.Length,
+            Depth = vesselDto.PhysicalCharacteristics.Depth,
+            Draft = vesselDto.PhysicalCharacteristics.Draft
+        });
 
         Vessel? updateResult = await _vesselRepository.Update(vessel);
         if (updateResult == null)
