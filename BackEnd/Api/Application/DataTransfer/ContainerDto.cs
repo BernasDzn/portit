@@ -14,3 +14,10 @@ public class CargoTransportDto
     public required StorageAreaDto Area { get; set; }
     public required ContainerDto Container { get; set; }
 }
+
+public class CreateCargoTransportDto
+{
+    public required ContainerPosition Position { get; set; }
+    public required string StorageAreaCode { get; set; }
+    public required ContainerDto Container { get; set; }
+}

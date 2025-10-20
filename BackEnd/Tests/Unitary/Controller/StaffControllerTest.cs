@@ -17,7 +17,7 @@ public class StaffControllerTest
 
 	private readonly Mock<IStaffService> _service_mock;
 	private readonly StaffController _controller;
-	private StaffDto _staffdto = new StaffDto();
+	private CreateStaffDto _staffdto = new CreateStaffDto();
 
 	public StaffControllerTest()
 	{
@@ -52,8 +52,9 @@ public class StaffControllerTest
 	[Fact]
 	public async Task Create_ShouldReturnOk_WithValidData()
 	{
-		_service_mock.Setup(service => service.Add(It.IsAny<StaffDto>()))
-			.ReturnsAsync((StaffDto staff) => staff);
+		var expectedDto = new StaffDto();
+		_service_mock.Setup(service => service.Add(It.IsAny<CreateStaffDto>()))
+			.ReturnsAsync(expectedDto);
 
 		var Result = await _controller.Create(_staffdto);
 
@@ -64,7 +65,7 @@ public class StaffControllerTest
 	[Fact]
 	public async Task Create_ShouldReturnBadRequest_WithInvalidData()
 	{
-		_service_mock.Setup(service => service.Add(It.IsAny<StaffDto>()))
+		_service_mock.Setup(service => service.Add(It.IsAny<CreateStaffDto>()))
 			.ThrowsAsync(new Exception("Test Exception"));
 
 		var Result = await _controller.Create(_staffdto);
@@ -109,19 +110,22 @@ public class StaffControllerTest
 	[Fact]
 	public async Task Update_ShouldReturnOk_WithValidData()
 	{
-		_service_mock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<StaffDto>()))
-			.ReturnsAsync((string id, StaffDto staff) => staff);
 
-		var Result = await _controller.Update("123", _staffdto);
+		var expectedDto = new StaffDto();
 
-		Assert.IsType<OkObjectResult>(Result.Result);
-		Assert.IsType<StaffDto>(((OkObjectResult)Result.Result).Value);
-	}
+	_service_mock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<CreateStaffDto>()))
+			.ReturnsAsync(expectedDto);
+
+	var Result = await _controller.Update("123", _staffdto);
+
+	Assert.IsType<OkObjectResult>(Result.Result);
+	Assert.IsType<StaffDto>(((OkObjectResult)Result.Result).Value);
+}
 
 	[Fact]
 	public async Task Update_ShouldReturnBadRequest_OnException()
 	{
-		_service_mock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<StaffDto>()))
+		_service_mock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<CreateStaffDto>()))
 			.ThrowsAsync(new Exception("Test Exception"));
 
 		var Result = await _controller.Update("123", _staffdto);
@@ -131,7 +135,7 @@ public class StaffControllerTest
 	[Fact]
 	public async Task Update_ShouldReturnBadRequest_WithInvalidData()
 	{
-		_service_mock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<StaffDto>()))
+		_service_mock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<CreateStaffDto>()))
 			.ReturnsAsync((StaffDto?)null);
 
 		var Result = await _controller.Update("123", _staffdto);

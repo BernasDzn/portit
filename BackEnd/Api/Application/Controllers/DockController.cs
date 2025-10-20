@@ -52,7 +52,7 @@ public class DockController : ControllerBase, IDockController
 	}
 
 	[HttpPost(Name = "CreateDock")]
-	public async Task<ActionResult<DockDto>> Create(DockDto dockDto)
+	public async Task<ActionResult<DockDto>> Create(CreateDockDto dockDto)
 	{
 		try
 		{
@@ -71,7 +71,7 @@ public class DockController : ControllerBase, IDockController
 	}
 
 	[HttpPut("{name}", Name = "UpdateDock")]
-	public async Task<ActionResult<DockDto>> Update(string name, DockDto dockDto)
+	public async Task<ActionResult<DockDto>> Update(string name, CreateDockDto dockDto)
 	{
 		try
 		{

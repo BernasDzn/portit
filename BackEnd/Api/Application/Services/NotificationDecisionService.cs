@@ -24,7 +24,7 @@ public class NotificationDecisionService : INotificationDecisionService
         return decisions.Select(n => n.ToDTO()).ToList();
     }
 
-    public async Task<NotificationDecisionDto> Add(NotificationDecisionDto notificationDecisionDto, string vesselVisitNotificationId)
+    public async Task<NotificationDecisionDto> Add(CreateNotificationDecisionDto notificationDecisionDto, string vesselVisitNotificationId)
     {
         VesselVisitNotification? notification = await _notificationRepository.GetVesselVisitNotificationByNotificationIdAsync(vesselVisitNotificationId);
 
@@ -35,10 +35,10 @@ public class NotificationDecisionService : INotificationDecisionService
 
         if (notificationDecisionDto.Status == 1)
         {
-            if (notificationDecisionDto.AssignedDock == null)
-                throw new ArgumentException("AssignedDock must be provided for accepted decisions.", nameof(notificationDecisionDto.AssignedDock));
+            if (notificationDecisionDto.AssignedDockCode == null)
+                throw new ArgumentException("AssignedDock must be provided for accepted decisions.", nameof(notificationDecisionDto.AssignedDockCode));
             
-            Dock assignedDock = await _dockRepository.GetDockByCodeAsync(notificationDecisionDto.AssignedDock.Code);
+            Dock assignedDock = await _dockRepository.GetDockByCodeAsync(notificationDecisionDto.AssignedDockCode);
 
             notificationDecision = NotificationDecisionFactory.CreateAccepted(
                 reason: notificationDecisionDto.Reason,

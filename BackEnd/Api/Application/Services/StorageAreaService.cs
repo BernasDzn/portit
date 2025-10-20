@@ -37,7 +37,7 @@ public class StorageAreaService : IStorageAreaService
         return qualification.ToDTO();
     }
 
-    public async Task<StorageAreaDto> CreateStorageArea(StorageAreaDto createStorageAreaDto)
+    public async Task<StorageAreaDto> CreateStorageArea(CreateStorageAreaDto createStorageAreaDto)
     {
         var existing = await _storageAreaRepository.GetStorageAreaByCodeAsync(createStorageAreaDto.NameCode);
         if (existing != null)
@@ -60,7 +60,7 @@ public class StorageAreaService : IStorageAreaService
         return storageArea.ToDTO();
     }
 
-    public async Task<StorageAreaDto> UpdateStorageArea(string id, StorageAreaDto updateStorageAreaDto)
+    public async Task<StorageAreaDto> UpdateStorageArea(string id, CreateStorageAreaDto updateStorageAreaDto)
     {
         var storageArea = await _storageAreaRepository.GetStorageAreaByCodeAsync(id);
         if (storageArea == null)
@@ -79,16 +79,16 @@ public class StorageAreaService : IStorageAreaService
         return storageArea.ToDTO();
     }
 
-    private HashSet<StorageArea.DockRelation> ConvertToDockRelations(IEnumerable<DockRelationDto>? dockRelationDtos)
+    private HashSet<StorageArea.DockRelation> ConvertToDockRelations(IEnumerable<CreateDockRelationDto>? dockRelationDtos)
     {
         HashSet<StorageArea.DockRelation> dockRelations = new HashSet<StorageArea.DockRelation>();
         if (dockRelationDtos != null)
         {
             foreach (var ds in dockRelationDtos)
             {
-                var dock = _dockRepository.GetDockByCodeAsync(ds.Dock.Code).Result;
+                var dock = _dockRepository.GetDockByCodeAsync(ds.DockCode).Result;
                 if (dock == null)
-                    throw new EntityNotFoundException($"Dock with code {ds.Dock.Code} not found.");
+                    throw new EntityNotFoundException($"Dock with code {ds.DockCode} not found.");
 
                 dockRelations.Add(new StorageArea.DockRelation(dock, ds.Distance, ds.IsServingDock));
             }

@@ -55,7 +55,7 @@ public class StorageAreaController : ControllerBase, IStorageAreaController
     }
 
     [HttpPost(Name = "CreateStorageArea")]
-    public async Task<ActionResult<StorageAreaDto>> Create(StorageAreaDto createStorageAreaDto)
+    public async Task<ActionResult<StorageAreaDto>> Create(CreateStorageAreaDto createStorageAreaDto)
     {
         try
         {
@@ -86,7 +86,7 @@ public class StorageAreaController : ControllerBase, IStorageAreaController
     }
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<StorageAreaDto>> Update(string id, [FromBody] StorageAreaDto updateStorageAreaDto)
+    public async Task<ActionResult<StorageAreaDto>> Update(string id, [FromBody] CreateStorageAreaDto updateStorageAreaDto)
     {
         try
         {

@@ -46,15 +46,15 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         return notifications.Select(n => n.ToDTO());
     }
 
-    private List<CargoTransport>? GetNewCargoManifestFromDTO(ICollection<CargoTransportDto>? cargoManifestDto)
+    private List<CargoTransport>? GetNewCargoManifestFromDTO(ICollection<CreateCargoTransportDto>? cargoManifestDto)
     {
         if (cargoManifestDto == null) return null;
 
         var newCargoManifestItems = new List<CargoTransport>();
         foreach (var item in cargoManifestDto)
         {
-            StorageArea? itemStorageArea = _storageAreaRepository.GetStorageAreaByCodeAsync(item.Area.NameCode).Result;
-            if (itemStorageArea == null) throw new EntityNotFoundException($"Storage Area with code {item.Area.NameCode} was not found.");
+            StorageArea? itemStorageArea = _storageAreaRepository.GetStorageAreaByCodeAsync(item.StorageAreaCode).Result;
+            if (itemStorageArea == null) throw new EntityNotFoundException($"Storage Area with code {item.StorageAreaCode} was not found.");
 
             Container? container = _containerRepository.GetContainerByNumberAsync(item.Container.ContainerNumber).Result;
             if (container == null)
@@ -81,21 +81,21 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         return newCargoManifestItems;
     }
 
-    public async Task<VesselVisitNotificationDto> Add(VesselVisitNotificationDto vesselVisitNotificationDto)
+    public async Task<VesselVisitNotificationDto> Add(CreateVesselVisitNotificationDto vesselVisitNotificationDto)
     {
         VesselVisitNotification? existingNotification =
             await _notificationRepository.GetVesselVisitNotificationByNotificationIdAsync(vesselVisitNotificationDto.NotificationId);
 
         if (existingNotification != null) throw new EntityAlreadyExistsException($"Vessel Visit Notification with id {vesselVisitNotificationDto.NotificationId} already exists.");
 
-        Vessel vessel = await _vesselRepository.GetVesselByIMOAsync(vesselVisitNotificationDto.Vessel.ImoNumber);
-        if (vessel == null) throw new EntityNotFoundException($"Vessel with IMO {vesselVisitNotificationDto.Vessel.ImoNumber} was not found.");
+        Vessel vessel = await _vesselRepository.GetVesselByIMOAsync(vesselVisitNotificationDto.VesselImoNumber);
+        if (vessel == null) throw new EntityNotFoundException($"Vessel with IMO {vesselVisitNotificationDto.VesselImoNumber} was not found.");
 
         Representative representative = await _representativeRepository.GetByCitizenIdAsync(
-            vesselVisitNotificationDto.Submitter.CitizenshipId
+            vesselVisitNotificationDto.SubmitterId
         );
 
-        if (representative == null) throw new EntityNotFoundException($"Representative with Citizenship ID {vesselVisitNotificationDto.Submitter.CitizenshipId} was not found.");
+        if (representative == null) throw new EntityNotFoundException($"Representative with Citizenship ID {vesselVisitNotificationDto.SubmitterId} was not found.");
 
         Crew? crew = null;
         if (vesselVisitNotificationDto.CrewDetails != null)
@@ -133,7 +133,7 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         return notification.ToDTO();
     }
 
-    public async Task<VesselVisitNotificationDto> Update(string vvnID, VesselVisitNotificationDto vvnDTO)
+    public async Task<VesselVisitNotificationDto> Update(string vvnID, CreateVesselVisitNotificationDto vvnDTO)
     {
         var existingNotification =
             await _notificationRepository.GetVesselVisitNotificationByNotificationIdAsync(vvnID) ??

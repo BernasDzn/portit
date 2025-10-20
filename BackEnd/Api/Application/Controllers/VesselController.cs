@@ -46,7 +46,7 @@ public class VesselController : ControllerBase, IVesselController
     }
 
     [HttpPost(Name = "PostVessel")]
-    public async Task<ActionResult<VesselDto>> Create(VesselDto vesselDto)
+    public async Task<ActionResult<VesselDto>> Create(CreateVesselDto vesselDto)
     {
         try
         {
@@ -82,7 +82,7 @@ public class VesselController : ControllerBase, IVesselController
     }
 
     [HttpPut("{imo}", Name = "UpdateVessel")]
-    public async Task<ActionResult<VesselDto>> Update(string imo, VesselDto vesselDto)
+    public async Task<ActionResult<VesselDto>> Update(string imo, CreateVesselDto vesselDto)
     {
         try
         {

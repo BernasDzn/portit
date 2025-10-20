@@ -71,11 +71,14 @@ public class PhysicalResourceController : ControllerBase, IPhysicalResourceContr
         }
     }
 
-    private async Task<ActionResult> HandleCreationAsync<T>(T resourceDto, Func<T, Task<T>> creationFunc, string resourceName) where T : class
+    private async Task<ActionResult> HandleCreationAsync<TInput, TOutput>(TInput resourceDto, Func<TInput, Task<TOutput>> creationFunc, string resourceName)
+        where TInput : class
+        where TOutput : class
     {
         try
         {
             var createdResource = await creationFunc(resourceDto);
+
             return CreatedAtAction(nameof(GetByCode), new { code = (createdResource as dynamic).Code }, createdResource);
         }
         catch (EntityNotFoundException e)
@@ -88,7 +91,7 @@ public class PhysicalResourceController : ControllerBase, IPhysicalResourceContr
             _logger.LogError("Resource of code already exists, {Message}", e.Message);
             return Conflict(e.Message);
         }
-        catch (System.Exception e)
+        catch (Exception e)
         {
             if (e is ArgumentNullException || e is ArgumentException || e is InvalidOperationException)
             {
@@ -101,7 +104,9 @@ public class PhysicalResourceController : ControllerBase, IPhysicalResourceContr
         }
     }
 
-    private async Task<ActionResult> HandleUpdateAsync<T>(string code, T resourceDto, Func<string, T, Task<T>> updateFunc, string resourceName) where T : class
+    private async Task<ActionResult> HandleUpdateAsync<TInput, TOutput>(string code, TInput resourceDto, Func<string, TInput, Task<TOutput>> updateFunc, string resourceName)
+        where TInput : class
+        where TOutput : class
     {
         try
         {
@@ -113,7 +118,7 @@ public class PhysicalResourceController : ControllerBase, IPhysicalResourceContr
             _logger.LogError("Error retrieving dependency by id, {Message}", e.Message);
             return NotFound(e.Message);
         }
-        catch (System.Exception e)
+        catch (Exception e)
         {
             if (e is ArgumentNullException || e is ArgumentException || e is InvalidOperationException)
             {
@@ -139,7 +144,7 @@ public class PhysicalResourceController : ControllerBase, IPhysicalResourceContr
             _logger.LogError("Error retrieving resource by id, {Message}", e.Message);
             return NotFound(e.Message);
         }
-        catch (System.Exception e)
+        catch (Exception e)
         {
             _logger.LogCritical("Error deactivating physical resource, {Message}", e.Message);
             return StatusCode(500, "An error occurred while deactivating the physical resource.");
@@ -147,26 +152,26 @@ public class PhysicalResourceController : ControllerBase, IPhysicalResourceContr
     }
 
     [HttpPost("AddSTSCrane", Name = "AddSTSCrane")]
-    public async Task<ActionResult<STSCraneDto>> AddSTSCrane([FromBody] STSCraneDto resourceDto) =>
-        await HandleCreationAsync<STSCraneDto>(resourceDto, _physicalResourceService.AddSTSCraneAsync, "STS crane");
+    public async Task<ActionResult<STSCraneDto>> AddSTSCrane([FromBody] CreateSTSCraneDto resourceDto) =>
+        await HandleCreationAsync(resourceDto, _physicalResourceService.AddSTSCraneAsync, "STS crane");
 
     [HttpPost("AddYardCrane", Name = "AddYardCrane")]
-    public async Task<ActionResult<YardCraneDto>> AddYardCrane([FromBody] YardCraneDto resourceDto) =>
-        await HandleCreationAsync<YardCraneDto>(resourceDto, _physicalResourceService.AddYardCraneAsync, "yard crane");
+    public async Task<ActionResult<YardCraneDto>> AddYardCrane([FromBody] CreateYardCraneDto resourceDto) =>
+        await HandleCreationAsync(resourceDto, _physicalResourceService.AddYardCraneAsync, "yard crane");
 
     [HttpPost("AddTruck", Name = "AddTruck")]
-    public async Task<ActionResult<TruckDto>> AddTruck([FromBody] TruckDto resourceDto) =>
-        await HandleCreationAsync<TruckDto>(resourceDto, _physicalResourceService.AddTruckAsync, "truck");
+    public async Task<ActionResult<TruckDto>> AddTruck([FromBody] CreateTruckDto resourceDto) =>
+        await HandleCreationAsync(resourceDto, _physicalResourceService.AddTruckAsync, "truck");
 
     [HttpPut("UpdateSTSCrane/{code}", Name = "UpdateSTSCrane")]
-    public async Task<ActionResult<STSCraneDto>> UpdateSTSCrane(string code, [FromBody] STSCraneDto resourceDto) =>
-        await HandleUpdateAsync<STSCraneDto>(code, resourceDto, _physicalResourceService.UpdateSTSCraneAsync, "STS crane");
+    public async Task<ActionResult<STSCraneDto>> UpdateSTSCrane(string code, [FromBody] CreateSTSCraneDto resourceDto) =>
+        await HandleUpdateAsync(code, resourceDto, _physicalResourceService.UpdateSTSCraneAsync, "STS crane");
 
     [HttpPut("UpdateYardCrane/{code}", Name = "UpdateYardCrane")]
-    public async Task<ActionResult<YardCraneDto>> UpdateYardCrane(string code, [FromBody] YardCraneDto resourceDto) =>
-        await HandleUpdateAsync<YardCraneDto>(code, resourceDto, _physicalResourceService.UpdateYardCraneAsync, "yard crane");
+    public async Task<ActionResult<YardCraneDto>> UpdateYardCrane(string code, [FromBody] CreateYardCraneDto resourceDto) =>
+        await HandleUpdateAsync(code, resourceDto, _physicalResourceService.UpdateYardCraneAsync, "yard crane");
 
     [HttpPut("UpdateTruck/{code}", Name = "UpdateTruck")]
-    public async Task<ActionResult<TruckDto>> UpdateTruck(string code, [FromBody] TruckDto resourceDto) =>
-        await HandleUpdateAsync<TruckDto>(code, resourceDto, _physicalResourceService.UpdateTruckAsync, "truck");
+    public async Task<ActionResult<TruckDto>> UpdateTruck(string code, [FromBody] CreateTruckDto resourceDto) =>
+        await HandleUpdateAsync(code, resourceDto, _physicalResourceService.UpdateTruckAsync, "truck");
 }

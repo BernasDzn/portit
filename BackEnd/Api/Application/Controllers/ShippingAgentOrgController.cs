@@ -27,14 +27,14 @@ public class ShippingAgentOrganizationController : ControllerBase
     }
 
     [HttpPost(Name = "CreateShippingAgentOrganization")]
-    public ActionResult<ShippingAgentOrganizationDto> Create(ShippingAgentOrganizationDto saoDto)
+    public ActionResult<ShippingAgentOrganizationDto> Create(CreateShippingAgentOrganizationDto saoDto)
     {
         List<Designation> altNames = saoDto.AltNames?
             .Select(name => new Designation { Value = name })
             .ToList() ?? new List<Designation>();
 
         HashSet<Representative> representatives = _context.Representatives
-            .Where(rep => saoDto.Representatives.Select(r => r.CitizenshipId).Contains(rep.CitizenshipId))
+            .Where(rep => saoDto.RepresentativesIds.Contains(rep.CitizenshipId))
             .ToHashSet();
 
         ShippingAgentOrganization sao = new ShippingAgentOrganization(

@@ -8,6 +8,6 @@ public interface IStorageAreaService
 {
 	Task<IEnumerable<StorageAreaDto>> GetStorageAreas();
 	Task<StorageAreaDto> GetStorageAreaByCode(string code);
-	Task<StorageAreaDto> CreateStorageArea(StorageAreaDto createStorageAreaDto);
-	Task<StorageAreaDto> UpdateStorageArea(string id, StorageAreaDto updateStorageAreaDto);
+	Task<StorageAreaDto> CreateStorageArea(CreateStorageAreaDto createStorageAreaDto);
+	Task<StorageAreaDto> UpdateStorageArea(string id, CreateStorageAreaDto updateStorageAreaDto);
 }

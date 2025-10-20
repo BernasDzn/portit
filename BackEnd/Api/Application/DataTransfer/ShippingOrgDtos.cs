@@ -11,6 +11,15 @@ public class ShippingAgentOrganizationDto
     public required virtual List<RepresentativeDto> Representatives { get; set; }
 }
 
+public class CreateShippingAgentOrganizationDto
+{
+    public required string Name { get; set; }
+    public required string[] AltNames { get; set; }
+    public required string TaxNumber { get; set; }
+    public required virtual Address Address { get; set; }
+    public required virtual List<uint> RepresentativesIds { get; set; }
+}
+
 public class RepresentativeDto
 {
     public required string Name { get; set; }

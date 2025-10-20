@@ -47,7 +47,7 @@ public class DockService : IDockService
         return page.Map(d => d.ToDTO());
     }
 
-    public async Task<DockDto?> Add(DockDto dockDto)
+    public async Task<DockDto?> Add(CreateDockDto dockDto)
     {
         bool exists = await _dockRepository.GetDockByCodeAsync(dockDto.Name) != null;
         if (exists)
@@ -58,9 +58,9 @@ public class DockService : IDockService
         Dock dock = new Dock(Guid.NewGuid(), new Code { Value = dockDto.Code }, new Designation { Value = dockDto.Name }, new Designation { Value = dockDto.Location },
          new PhysicalCharacteristics
          {
-             Length = dockDto.Length,
-             Depth = dockDto.Depth,
-             Draft = dockDto.Draft
+             Length = dockDto.PhysicalCharacteristics.Length,
+             Depth = dockDto.PhysicalCharacteristics.Depth,
+             Draft = dockDto.PhysicalCharacteristics.Draft
          }, vesselTypes);
 
         Dock savedDock = await _dockRepository.Add(dock);
@@ -71,7 +71,7 @@ public class DockService : IDockService
         return savedDockDto;
     }
 
-    public async Task<DockDto?> Update(string name, DockDto dockDto)
+    public async Task<DockDto?> Update(string name, CreateDockDto dockDto)
     {
         if (name != dockDto.Name)
             throw new ArgumentException("The provided name does not match the dock to be updated.");
@@ -87,9 +87,9 @@ public class DockService : IDockService
 
         PhysicalCharacteristics newPhysicalCharacteristics = new PhysicalCharacteristics
         {
-            Length = dockDto.Length,
-            Depth = dockDto.Depth,
-            Draft = dockDto.Draft
+            Length = dockDto.PhysicalCharacteristics.Length,
+            Depth = dockDto.PhysicalCharacteristics.Depth,
+            Draft = dockDto.PhysicalCharacteristics.Draft
         };
 
         dock.UpdatePhysicalCharacteristics(newPhysicalCharacteristics);
@@ -104,13 +104,13 @@ public class DockService : IDockService
         return updated.ToDTO();
     }
 
-    private async Task<HashSet<VesselType>> GetVesselTypesFromDto(List<VesselTypeDto> vesselTypesDtos)
+    private async Task<HashSet<VesselType>> GetVesselTypesFromDto(List<string> vesselTypesDtos)
     {
         HashSet<VesselType> vesselTypes = new HashSet<VesselType>();
 
-        foreach (VesselTypeDto vtDto in vesselTypesDtos)
+        foreach (string vtName in vesselTypesDtos)
         {
-            VesselType? vesselType = await _vesselTypeRepository.GetVesselTypeByNameAsync(vtDto.Name);
+            VesselType? vesselType = await _vesselTypeRepository.GetVesselTypeByNameAsync(vtName);
             if (vesselType == null)
                 throw new EntityNotFoundException("The referenced vessel type does not exist.");
 

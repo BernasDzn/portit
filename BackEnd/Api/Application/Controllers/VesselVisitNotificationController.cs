@@ -54,7 +54,7 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
     }
 
     [HttpPost(Name = "CreateVesselVisitNotification")]
-    public async Task<ActionResult<VesselVisitNotificationDto>> Create([FromBody] VesselVisitNotificationDto vesselVisitNotificationDto)
+    public async Task<ActionResult<VesselVisitNotificationDto>> Create([FromBody] CreateVesselVisitNotificationDto vesselVisitNotificationDto)
     {
         try
         {
@@ -85,12 +85,12 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
     }
 
     [HttpPost("decisions", Name = "CreateNotificationDecision")]
-    public async Task<ActionResult<NotificationDecisionDto>> CreateDecision([FromQuery] string vesselVisitNotificationId, [FromBody] NotificationDecisionDto notificationDecisionDto)
+    public async Task<ActionResult<NotificationDecisionDto>> CreateDecision([FromQuery] string vesselVisitNotificationId, [FromBody] CreateNotificationDecisionDto notificationDecisionDto)
     {
         try
         {
             var createdDecision = await _notificationDecisionService.Add(notificationDecisionDto, vesselVisitNotificationId);
-            return CreatedAtAction(nameof(GetDecisions), new { vesselVisitNotificationId = vesselVisitNotificationId }, createdDecision);
+            return CreatedAtAction(nameof(GetDecisions), new { vesselVisitNotificationId }, createdDecision);
         }
         catch (EntityNotFoundException e)
         {
@@ -116,7 +116,7 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
     }
 
     [HttpPut("{id}", Name = "UpdateVesselVisitNotification")]
-    public async Task<ActionResult<VesselVisitNotificationDto>> Update(string id, VesselVisitNotificationDto vesselVisitNotificationDto)
+    public async Task<ActionResult<VesselVisitNotificationDto>> Update(string id, CreateVesselVisitNotificationDto vesselVisitNotificationDto)
     {
         try
         {

@@ -7,5 +7,5 @@ namespace Api.Application.Services;
 public interface INotificationDecisionService
 {
     public Task<IEnumerable<NotificationDecisionDto>> GetNotificationDecisions(string vesselVisitNotificationId);
-    public Task<NotificationDecisionDto> Add(NotificationDecisionDto notificationDecisionDto, string vesselVisitNotificationId);
+    public Task<NotificationDecisionDto> Add(CreateNotificationDecisionDto notificationDecisionDto, string vesselVisitNotificationId);
 }

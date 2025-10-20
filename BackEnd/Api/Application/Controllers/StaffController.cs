@@ -37,7 +37,7 @@ public class StaffController : ControllerBase, IStaffController
 	}
 
 	[HttpPost(Name = "PostStaff")]
-	public async Task<ActionResult<StaffDto>> Create(StaffDto staffDto)
+	public async Task<ActionResult<StaffDto>> Create(CreateStaffDto staffDto)
 	{
 		try
 		{
@@ -72,7 +72,7 @@ public class StaffController : ControllerBase, IStaffController
 	}
 
 	[HttpPut("{mecanographicNumber}", Name = "UpdateStaff")]
-	public async Task<ActionResult<StaffDto>> Update(string mecanographicNumber, StaffDto staffDto)
+	public async Task<ActionResult<StaffDto>> Update(string mecanographicNumber, CreateStaffDto staffDto)
 	{
 		try
 		{

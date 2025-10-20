@@ -6,7 +6,7 @@ namespace Api.Application.Services;
 public interface IVesselVisitNotificationService
 {
     Task<IEnumerable<VesselVisitNotificationDto>> GetVesselVisitNotifications();
-    Task<VesselVisitNotificationDto> Add(VesselVisitNotificationDto vesselVisitNotificationDto);
-    Task<VesselVisitNotificationDto> Update(string vvnID, VesselVisitNotificationDto vvnDTO);
+    Task<VesselVisitNotificationDto> Add(CreateVesselVisitNotificationDto vesselVisitNotificationDto);
+    Task<VesselVisitNotificationDto> Update(string vvnID, CreateVesselVisitNotificationDto vvnDTO);
     Task<Page<VesselVisitNotificationStatusDto>> FilterNotifications(VesselVisitNotificationFilter filter);
 }

@@ -78,7 +78,16 @@ public class VesselVisitNotificationControllerTest
     [Fact]
     public async Task Create_ReturnsCreatedAtActionResult_WithCreatedVesselVisitNotification()
     {
-        var newNotification = new VesselVisitNotificationDto
+        var newNotification = new CreateVesselVisitNotificationDto
+        {
+            NotificationId = null!,
+            ExpectedArrival = DateTime.UtcNow,
+            ExpectedDeparture = DateTime.UtcNow.AddDays(1),
+            IsCargoHazardous = false,
+            VesselImoNumber = null!,
+            SubmitterId = 123456789
+        };
+        var expectedNotification = new VesselVisitNotificationDto
         {
             NotificationId = null!,
             ExpectedArrival = DateTime.UtcNow,
@@ -88,8 +97,8 @@ public class VesselVisitNotificationControllerTest
             Submitter = null!
         };
 
-        _notificationServiceMock.Setup(service => service.Add(It.IsAny<VesselVisitNotificationDto>()))
-            .ReturnsAsync(newNotification);
+        _notificationServiceMock.Setup(service => service.Add(It.IsAny<CreateVesselVisitNotificationDto>()))
+            .ReturnsAsync(expectedNotification);
 
         var result = await _controller.Create(newNotification);
 
@@ -100,17 +109,17 @@ public class VesselVisitNotificationControllerTest
     [Fact]
     public async Task Create_ReturnsBadRequest_OnArgumentException()
     {
-        var newNotification = new VesselVisitNotificationDto
+        var newNotification = new CreateVesselVisitNotificationDto
         {
             NotificationId = null!,
             ExpectedArrival = DateTime.UtcNow,
             ExpectedDeparture = DateTime.UtcNow.AddDays(1),
             IsCargoHazardous = false,
-            Vessel = null!,
-            Submitter = null!
+            VesselImoNumber = null!,
+            SubmitterId = 123456789
         };
 
-        _notificationServiceMock.Setup(service => service.Add(It.IsAny<VesselVisitNotificationDto>()))
+        _notificationServiceMock.Setup(service => service.Add(It.IsAny<CreateVesselVisitNotificationDto>()))
             .ThrowsAsync(new ArgumentException());
 
         var result = await _controller.Create(newNotification);
@@ -121,17 +130,17 @@ public class VesselVisitNotificationControllerTest
     [Fact]
     public async Task Create_ReturnsNotFoundResult_OnEntityNotFoundException()
     {
-        var newNotification = new VesselVisitNotificationDto
+        var newNotification = new CreateVesselVisitNotificationDto
         {
             NotificationId = null!,
             ExpectedArrival = DateTime.UtcNow,
             ExpectedDeparture = DateTime.UtcNow.AddDays(1),
             IsCargoHazardous = false,
-            Vessel = null!,
-            Submitter = null!
+            VesselImoNumber = null!,
+            SubmitterId = 123456789
         };
 
-        _notificationServiceMock.Setup(service => service.Add(It.IsAny<VesselVisitNotificationDto>()))
+        _notificationServiceMock.Setup(service => service.Add(It.IsAny<CreateVesselVisitNotificationDto>()))
             .ThrowsAsync(new EntityNotFoundException());
 
         var result = await _controller.Create(newNotification);
@@ -142,17 +151,17 @@ public class VesselVisitNotificationControllerTest
     [Fact]
     public async Task Create_ReturnsConflictResult_OnEntityAlreadyExistsException()
     {
-        var newNotification = new VesselVisitNotificationDto
+        var newNotification = new CreateVesselVisitNotificationDto
         {
             NotificationId = null!,
             ExpectedArrival = DateTime.UtcNow,
             ExpectedDeparture = DateTime.UtcNow.AddDays(1),
             IsCargoHazardous = false,
-            Vessel = null!,
-            Submitter = null!
+            VesselImoNumber = null!,
+            SubmitterId = 123456789
         };
 
-        _notificationServiceMock.Setup(service => service.Add(It.IsAny<VesselVisitNotificationDto>()))
+        _notificationServiceMock.Setup(service => service.Add(It.IsAny<CreateVesselVisitNotificationDto>()))
             .ThrowsAsync(new EntityAlreadyExistsException());
 
         var result = await _controller.Create(newNotification);
@@ -163,17 +172,17 @@ public class VesselVisitNotificationControllerTest
     [Fact]
     public async Task Create_ReturnsInternalServerError_WhenExceptionIsThrown()
     {
-        var newNotification = new VesselVisitNotificationDto
+        var newNotification = new CreateVesselVisitNotificationDto
         {
             NotificationId = null!,
             ExpectedArrival = DateTime.UtcNow,
             ExpectedDeparture = DateTime.UtcNow.AddDays(1),
             IsCargoHazardous = false,
-            Vessel = null!,
-            Submitter = null!
+            VesselImoNumber = null!,
+            SubmitterId = 123456789
         };
 
-        _notificationServiceMock.Setup(service => service.Add(It.IsAny<VesselVisitNotificationDto>()))
+        _notificationServiceMock.Setup(service => service.Add(It.IsAny<CreateVesselVisitNotificationDto>()))
             .ThrowsAsync(new System.Exception());
 
         var result = await _controller.Create(newNotification);
@@ -185,15 +194,21 @@ public class VesselVisitNotificationControllerTest
     [Fact]
     public async Task CreateDecision_ReturnsCreatedAtActionResult_WithCreatedNotificationDecision()
     {
-        var newDecision = new NotificationDecisionDto
+        var newDecision = new CreateNotificationDecisionDto
+        {
+            Status = 1,
+            DecisionDate = DateTime.UtcNow,
+            IsFinal = false
+        };
+        var expectedDecision = new NotificationDecisionDto
         {
             Status = 1,
             DecisionDate = DateTime.UtcNow,
             IsFinal = false
         };
 
-        _notificationDecisionServiceMock.Setup(service => service.Add(It.IsAny<NotificationDecisionDto>(), It.IsAny<string>()))
-            .ReturnsAsync(newDecision);
+        _notificationDecisionServiceMock.Setup(service => service.Add(It.IsAny<CreateNotificationDecisionDto>(), It.IsAny<string>()))
+            .ReturnsAsync(expectedDecision);
 
         var result = await _controller.CreateDecision("test-id", newDecision);
 
@@ -204,14 +219,14 @@ public class VesselVisitNotificationControllerTest
     [Fact]
     public async Task CreateDecision_ReturnsBadRequest_OnArgumentException()
     {
-        var newDecision = new NotificationDecisionDto
+        var newDecision = new CreateNotificationDecisionDto
         {
             Status = 1,
             DecisionDate = DateTime.UtcNow,
             IsFinal = false
         };
 
-        _notificationDecisionServiceMock.Setup(service => service.Add(It.IsAny<NotificationDecisionDto>(), It.IsAny<string>()))
+        _notificationDecisionServiceMock.Setup(service => service.Add(It.IsAny<CreateNotificationDecisionDto>(), It.IsAny<string>()))
             .ThrowsAsync(new ArgumentException());
 
         var result = await _controller.CreateDecision("test-id", newDecision);
@@ -222,14 +237,14 @@ public class VesselVisitNotificationControllerTest
     [Fact]
     public async Task CreateDecision_ReturnsNotFoundResult_OnEntityNotFoundException()
     {
-        var newDecision = new NotificationDecisionDto
+        var newDecision = new CreateNotificationDecisionDto
         {
             Status = 1,
             DecisionDate = DateTime.UtcNow,
             IsFinal = false
         };
 
-        _notificationDecisionServiceMock.Setup(service => service.Add(It.IsAny<NotificationDecisionDto>(), It.IsAny<string>()))
+        _notificationDecisionServiceMock.Setup(service => service.Add(It.IsAny<CreateNotificationDecisionDto>(), It.IsAny<string>()))
             .ThrowsAsync(new EntityNotFoundException());
 
         var result = await _controller.CreateDecision("test-id", newDecision);
@@ -240,14 +255,14 @@ public class VesselVisitNotificationControllerTest
     [Fact]
     public async Task CreateDecision_ReturnsInternalServerError_WhenExceptionIsThrown()
     {
-        var newDecision = new NotificationDecisionDto
+        var newDecision = new CreateNotificationDecisionDto
         {
             Status = 1,
             DecisionDate = DateTime.UtcNow,
             IsFinal = false
         };
 
-        _notificationDecisionServiceMock.Setup(service => service.Add(It.IsAny<NotificationDecisionDto>(), It.IsAny<string>()))
+        _notificationDecisionServiceMock.Setup(service => service.Add(It.IsAny<CreateNotificationDecisionDto>(), It.IsAny<string>()))
             .ThrowsAsync(new System.Exception());
 
         var result = await _controller.CreateDecision("test-id", newDecision);
@@ -259,9 +274,18 @@ public class VesselVisitNotificationControllerTest
     [Fact]
     public async Task Update_ReturnsNoContentResult_WithUpdatedVesselVisitNotification()
     {
-        var updatedNotification = new VesselVisitNotificationDto
+        var updatedNotification = new CreateVesselVisitNotificationDto
         {
-            NotificationId = "test-id",
+            NotificationId = null!,
+            ExpectedArrival = DateTime.UtcNow,
+            ExpectedDeparture = DateTime.UtcNow.AddDays(1),
+            IsCargoHazardous = false,
+            VesselImoNumber = null!,
+            SubmitterId = 123456789
+        };
+        var expectedNotification = new VesselVisitNotificationDto
+        {
+            NotificationId = null!,
             ExpectedArrival = DateTime.UtcNow,
             ExpectedDeparture = DateTime.UtcNow.AddDays(1),
             IsCargoHazardous = false,
@@ -269,8 +293,8 @@ public class VesselVisitNotificationControllerTest
             Submitter = null!
         };
 
-        _notificationServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<VesselVisitNotificationDto>()))
-            .ReturnsAsync(updatedNotification);
+        _notificationServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<CreateVesselVisitNotificationDto>()))
+            .ReturnsAsync(expectedNotification);
 
         var result = await _controller.Update("test-id", updatedNotification);
         var noContentResult = Assert.IsType<NoContentResult>(result.Result);
@@ -279,17 +303,17 @@ public class VesselVisitNotificationControllerTest
     [Fact]
     public async Task Update_ReturnsBadRequest_OnArgumentException()
     {
-        var updatedNotification = new VesselVisitNotificationDto
+        var updatedNotification = new CreateVesselVisitNotificationDto
         {
-            NotificationId = "test-id",
+            NotificationId = null!,
             ExpectedArrival = DateTime.UtcNow,
             ExpectedDeparture = DateTime.UtcNow.AddDays(1),
             IsCargoHazardous = false,
-            Vessel = null!,
-            Submitter = null!
+            VesselImoNumber = null!,
+            SubmitterId = 123456789
         };
 
-        _notificationServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<VesselVisitNotificationDto>()))
+        _notificationServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<CreateVesselVisitNotificationDto>()))
             .ThrowsAsync(new ArgumentException());
 
         var result = await _controller.Update("test-id", updatedNotification);
@@ -300,17 +324,17 @@ public class VesselVisitNotificationControllerTest
     [Fact]
     public async Task Update_ReturnsNotFoundResult_OnEntityNotFoundException()
     {
-        var updatedNotification = new VesselVisitNotificationDto
+        var updatedNotification = new CreateVesselVisitNotificationDto
         {
-            NotificationId = "test-id",
+            NotificationId = null!,
             ExpectedArrival = DateTime.UtcNow,
             ExpectedDeparture = DateTime.UtcNow.AddDays(1),
             IsCargoHazardous = false,
-            Vessel = null!,
-            Submitter = null!
+            VesselImoNumber = null!,
+            SubmitterId = 123456789
         };
 
-        _notificationServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<VesselVisitNotificationDto>()))
+        _notificationServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<CreateVesselVisitNotificationDto>()))
             .ThrowsAsync(new EntityNotFoundException());
 
         var result = await _controller.Update("test-id", updatedNotification);
@@ -321,17 +345,17 @@ public class VesselVisitNotificationControllerTest
     [Fact]
     public async Task Update_ReturnsInternalServerError_WhenExceptionIsThrown()
     {
-        var updatedNotification = new VesselVisitNotificationDto
+        var updatedNotification = new CreateVesselVisitNotificationDto
         {
-            NotificationId = "test-id",
+            NotificationId = null!,
             ExpectedArrival = DateTime.UtcNow,
             ExpectedDeparture = DateTime.UtcNow.AddDays(1),
             IsCargoHazardous = false,
-            Vessel = null!,
-            Submitter = null!
+            VesselImoNumber = null!,
+            SubmitterId = 123456789
         };
 
-        _notificationServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<VesselVisitNotificationDto>()))
+        _notificationServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<CreateVesselVisitNotificationDto>()))
             .ThrowsAsync(new System.Exception());
 
         var result = await _controller.Update("test-id", updatedNotification);

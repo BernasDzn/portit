@@ -6,8 +6,8 @@ namespace Api.Application.Services;
 public interface IStaffService
 {
 	Task<IEnumerable<StaffDto>> GetStaffs();
-	Task<StaffDto?> Add(StaffDto staffDto);
-	Task<StaffDto?> Update(string mecNumber, StaffDto staffDto);
+	Task<StaffDto?> Add(CreateStaffDto staffDto);
+	Task<StaffDto?> Update(string mecNumber, CreateStaffDto staffDto);
 	Task<Page<StaffDto>> FilterStaffs(StaffFilter filter);
 	Task<StaffDto?> Deactivate(string mecanographicNumber);
 }

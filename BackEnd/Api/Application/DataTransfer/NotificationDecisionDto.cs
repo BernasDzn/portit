@@ -4,10 +4,20 @@ namespace Api.Application.DataTransfer;
 
 public class NotificationDecisionDto
 {
-    public int Status { get; set; }
+    public required int Status { get; set; }
     public string? Reason { get; set; }
-    public DateTime DecisionDate { get; set; }
+    public required DateTime DecisionDate { get; set; }
     public int? OfficerID { get; set; }
     public DockDto? AssignedDock { get; set; }
+    public required bool IsFinal { get; set; }
+}
+
+public class CreateNotificationDecisionDto
+{
+    public required int Status { get; set; }
+    public string? Reason { get; set; }
+    public required DateTime DecisionDate { get; set; }
+    public int? OfficerID { get; set; }
+    public string? AssignedDockCode { get; set; }
     public required bool IsFinal { get; set; }
 }

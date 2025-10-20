@@ -53,9 +53,9 @@ public class VesselTypeService : IVesselTypeService
         VesselType vType = new VesselType(Guid.NewGuid(), new Designation { Value = vesselTypeDto.Name }, new Designation { Value = vesselTypeDto.Description },
          vesselTypeDto.MaxNumberOfRows, vesselTypeDto.MaxNumberOfBays, vesselTypeDto.MaxNumberOfTiers,
          new PhysicalCharacteristics {
-             Length = vesselTypeDto.Length,
-             Depth = vesselTypeDto.Depth,
-             Draft = vesselTypeDto.Draft
+             Length = vesselTypeDto.PhysicalCharacteristics.Length,
+             Depth = vesselTypeDto.PhysicalCharacteristics.Depth,
+             Draft = vesselTypeDto.PhysicalCharacteristics.Draft
          });
 
         VesselType savedVesselType = await _vesselTypeRepository.Add(vType);
@@ -77,9 +77,9 @@ public class VesselTypeService : IVesselTypeService
         vesselType.UpdateMaxNumberOfTiers(vesselTypeDto.MaxNumberOfTiers);
         vesselType.UpdatePhysicalCharacteristics(new PhysicalCharacteristics
         {
-            Length = vesselTypeDto.Length,
-            Depth = vesselTypeDto.Depth,
-            Draft = vesselTypeDto.Draft
+            Length = vesselTypeDto.PhysicalCharacteristics.Length,
+            Depth = vesselTypeDto.PhysicalCharacteristics.Depth,
+            Draft = vesselTypeDto.PhysicalCharacteristics.Draft
         });
 
         VesselType? updated = await _vesselTypeRepository.Update(vesselType);

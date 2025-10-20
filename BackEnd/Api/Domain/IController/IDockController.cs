@@ -7,6 +7,6 @@ public interface IDockController
     public Task<ActionResult<IEnumerable<DockDto>>> GetAll();
     public Task<ActionResult<DockDto>> GetByCode(string code);
     public Task<ActionResult<IEnumerable<DockDto>>> Filter([FromQuery] DockFilter filter);
-    public Task<ActionResult<DockDto>> Create(DockDto dockDto);
-    public Task<ActionResult<DockDto>> Update(string name, DockDto dockDto);
+    public Task<ActionResult<DockDto>> Create(CreateDockDto dockDto);
+    public Task<ActionResult<DockDto>> Update(string name, CreateDockDto dockDto);
 }

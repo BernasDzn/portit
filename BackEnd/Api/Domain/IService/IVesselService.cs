@@ -6,8 +6,8 @@ namespace Api.Application.Services;
 public interface IVesselService
 {
     Task<IEnumerable<VesselDto>> GetVessels();
-    Task<VesselDto?> Add(VesselDto vesselDto);
-    Task<VesselDto?> Update(string imoNumber, VesselDto vesselDto);
+    Task<VesselDto?> Add(CreateVesselDto vesselDto);
+    Task<VesselDto?> Update(string imoNumber, CreateVesselDto vesselDto);
     Task<VesselDto?> GetByImo(string imo);
     Task<Page<VesselDto>> FilterVessels(VesselFilter filter);
 }

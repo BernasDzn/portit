@@ -9,6 +9,6 @@ public interface IStorageAreaController
 {
 	Task<ActionResult<IEnumerable<StorageAreaDto>>> GetAll();
 	Task<ActionResult<StorageAreaDto>> Get(string id);
-	Task<ActionResult<StorageAreaDto>> Create(StorageAreaDto createStorageAreaDto);
-	Task<ActionResult<StorageAreaDto>> Update(string id, [FromBody] StorageAreaDto updateStorageAreaDto);
+	Task<ActionResult<StorageAreaDto>> Create(CreateStorageAreaDto createStorageAreaDto);
+	Task<ActionResult<StorageAreaDto>> Update(string id, [FromBody] CreateStorageAreaDto updateStorageAreaDto);
 }

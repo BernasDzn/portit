@@ -53,9 +53,7 @@ namespace Tests.Unitary.Controller
                     Code = dockCode,
                     Name = "Main Dock",
                     Location = "Harbor A",
-                    Length = 100,
-                    Depth = 50,
-                    Draft = 30,
+                    PhysicalCharacteristics = null!,
                     SupportedVesselTypes = new List<VesselTypeDto>()
                 });
 
@@ -81,19 +79,26 @@ namespace Tests.Unitary.Controller
         [Fact]
         public async Task Create_ReturnsCreatedAtActionResult_WhenDockIsCreated()
         {
-            var newDock = new DockDto
+            var newDock = new CreateDockDto
             {
                 Code = "DCK002",
                 Name = "Secondary Dock",
                 Location = "Harbor B",
-                Length = 100,
-                Depth = 50,
-                Draft = 30,
+                PhysicalCharacteristics = null!,
+                SupportedVesselTypes = new List<string>()
+            };
+
+            var expectedDock = new DockDto
+            {
+                Code = "DCK002",
+                Name = "Secondary Dock",
+                Location = "Harbor B",
+                PhysicalCharacteristics = null!,
                 SupportedVesselTypes = new List<VesselTypeDto>()
             };
 
-            _dockServiceMock.Setup(service => service.Add(It.IsAny<DockDto>()))
-                .ReturnsAsync(newDock);
+            _dockServiceMock.Setup(service => service.Add(It.IsAny<CreateDockDto>()))
+                .ReturnsAsync(expectedDock);
 
             var result = await _controller.Create(newDock);
 
@@ -105,18 +110,16 @@ namespace Tests.Unitary.Controller
         [Fact]
         public async Task Create_ReturnsBadRequest_WhenCreationFails()
         {
-            var newDock = new DockDto
+            var newDock = new CreateDockDto
             {
                 Code = "DCK003",
                 Name = "Tertiary Dock",
                 Location = "Harbor C",
-                Length = 100,
-                Depth = 50,
-                Draft = 30,
-                SupportedVesselTypes = new List<VesselTypeDto>()
+                PhysicalCharacteristics = null!,
+                SupportedVesselTypes = new List<string>()
             };
 
-            _dockServiceMock.Setup(service => service.Add(It.IsAny<DockDto>()))
+            _dockServiceMock.Setup(service => service.Add(It.IsAny<CreateDockDto>()))
                 .ReturnsAsync((DockDto?)null);
 
             var result = await _controller.Create(newDock);
@@ -128,19 +131,26 @@ namespace Tests.Unitary.Controller
         [Fact]
         public async Task Update_ReturnsOkResult_WhenDockIsUpdated()
         {
-            var updatedDock = new DockDto
+            var updatedDock = new CreateDockDto
             {
                 Code = "DCK001",
                 Name = "Updated Dock",
                 Location = "Updated Harbor",
-                Length = 100,
-                Depth = 50,
-                Draft = 30,
+                PhysicalCharacteristics = null!,
+                SupportedVesselTypes = new List<string>()
+            };
+
+            var expectedDock = new DockDto
+            {
+                Code = "DCK001",
+                Name = "Updated Dock",
+                Location = "Updated Harbor",
+                PhysicalCharacteristics = null!,
                 SupportedVesselTypes = new List<VesselTypeDto>()
             };
 
-            _dockServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<DockDto>()))
-                .ReturnsAsync(updatedDock);
+            _dockServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<CreateDockDto>()))
+                .ReturnsAsync(expectedDock);
 
             var result = await _controller.Update("Updated Dock", updatedDock);
 
@@ -152,18 +162,16 @@ namespace Tests.Unitary.Controller
         [Fact]
         public async Task Update_ReturnsBadRequest_WhenUpdateFails()
         {
-            var updatedDock = new DockDto
+            var updatedDock = new CreateDockDto
             {
                 Code = "DCK001",
                 Name = "Updated Dock",
                 Location = "Updated Harbor",
-                Length = 100,
-                Depth = 50,
-                Draft = 30,
-                SupportedVesselTypes = new List<VesselTypeDto>()
+                PhysicalCharacteristics = null!,
+                SupportedVesselTypes = new List<string>()
             };
 
-            _dockServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<DockDto>()))
+            _dockServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<CreateDockDto>()))
                 .ReturnsAsync((DockDto?)null);
 
             var result = await _controller.Update("DCK001", updatedDock);

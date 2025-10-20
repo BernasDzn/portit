@@ -45,9 +45,7 @@ public class VesselType : IDTOAble<VesselTypeDto>
             MaxNumberOfRows = this.MaxNumberOfRows,
             MaxNumberOfBays = this.MaxNumberOfBays,
             MaxNumberOfTiers = this.MaxNumberOfTiers,
-            Length = this.PhysicalCharacteristics.Length,
-            Depth = this.PhysicalCharacteristics.Depth,
-            Draft = this.PhysicalCharacteristics.Draft
+            PhysicalCharacteristics = this.PhysicalCharacteristics
         };
     }
 

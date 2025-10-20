@@ -9,6 +9,6 @@ public interface IVesselController
 {
     public Task<ActionResult<IEnumerable<VesselDto>>> GetAll();
     public Task<ActionResult<VesselDto>> GetByImo(string imo);
-    public Task<ActionResult<VesselDto>> Create(VesselDto vesselDto);
+    public Task<ActionResult<VesselDto>> Create(CreateVesselDto vesselDto);
     public Task<ActionResult<Page<VesselDto>>> Filter([FromQuery] VesselFilter filter);
 }

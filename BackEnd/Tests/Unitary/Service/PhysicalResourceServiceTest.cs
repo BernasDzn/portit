@@ -7,6 +7,7 @@ using Api.Domain.IRepository;
 using Api.Domain.ValueObjects;
 using Api.Infrastructure.Exceptions;
 using Api.Infrastructure.Utilities;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
 using Moq;
 
 namespace Tests.Unitary.Service;
@@ -158,16 +159,16 @@ public class PhysicalResourceServiceTest
                 }
             );
 
-        var newCraneDto = new STSCraneDto
+        var newCraneDto = new CreateSTSCraneDto
         {
             Code = "CRANE2",
             Description = "STS Crane 2",
             Status = ResourceStatus.Available,
             SetupTimeInMinutes = 20,
-            Qualifications = new List<QualificationDto>(),
+            QualificationsCodes = new List<string>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             LiftingCapacity = 60,
-            ServingDock = d.ToDTO(),
+            ServingDockCode = d.Code.Value,
             ContainersPerHour = 12,
         };
 
@@ -192,16 +193,16 @@ public class PhysicalResourceServiceTest
     [Fact]
     public async Task AddSTSCraneAsync_ThrowsException_WhenDockDoesNotExist()
     {
-        var newCraneDto = new STSCraneDto
+        var newCraneDto = new CreateSTSCraneDto
         {
             Code = "CRANE2",
             Description = "STS Crane 2",
             Status = ResourceStatus.Available,
             SetupTimeInMinutes = 20,
-            Qualifications = new List<QualificationDto>(),
+            QualificationsCodes = new List<string>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             LiftingCapacity = 60,
-            ServingDock = new DockDto { Code = "NON_EXISTENT_DOCK", Name = "Non Existent Dock", Location = "Nowhere", Length = 100, Depth = 50, Draft = 30, SupportedVesselTypes = new List<VesselTypeDto>() },
+            ServingDockCode = "NON_EXISTENT_DOCK",
             ContainersPerHour = 12,
         };
 
@@ -235,16 +236,16 @@ public class PhysicalResourceServiceTest
                 }
             );
 
-        var newCraneDto = new STSCraneDto
+        var newCraneDto = new CreateSTSCraneDto
         {
             Code = "CRANE2",
             Description = "STS Crane 2",
             Status = ResourceStatus.Available,
             SetupTimeInMinutes = 20,
-            Qualifications = new List<QualificationDto> { new QualificationDto { IdCode = "NON_EXISTENT_QUAL", QualificationName = "Non Existent Qualification" } },
+            QualificationsCodes = new List<string> { "NON_EXISTENT_QUAL" },
             OperationalWindow = OperationalWindow.FullWeek(),
             LiftingCapacity = 60,
-            ServingDock = d.ToDTO(),
+            ServingDockCode = d.Code.Value,
             ContainersPerHour = 12,
         };
 
@@ -264,16 +265,16 @@ public class PhysicalResourceServiceTest
     public async Task AddSTSCraneAsync_ThrowsException_WhenCodeAlreadyExists()
     {
         var existingCrane = resources.OfType<STSCrane>().First();
-        var newCraneDto = new STSCraneDto
+        var newCraneDto = new CreateSTSCraneDto
         {
             Code = existingCrane.Code.Value,
             Description = "STS Crane Duplicate",
             Status = ResourceStatus.Available,
             SetupTimeInMinutes = 20,
-            Qualifications = new List<QualificationDto>(),
+            QualificationsCodes = new List<string>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             LiftingCapacity = 60,
-            ServingDock = existingCrane.ServingDock.ToDTO(),
+            ServingDockCode = existingCrane.ServingDock.Code.Value,
             ContainersPerHour = 12,
         };
 
@@ -296,16 +297,16 @@ public class PhysicalResourceServiceTest
                 new HashSet<StorageArea.DockRelation>()
             );
 
-        var newCraneDto = new YardCraneDto
+        var newCraneDto = new CreateYardCraneDto
         {
             Code = "YCRANE2",
             Description = "Yard Crane 2",
             Status = ResourceStatus.Available,
             SetupTimeInMinutes = 15,
-            Qualifications = new List<QualificationDto>(),
+            QualificationsCodes = new List<string>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             LiftingCapacity = 40,
-            YardSection = sa.ToDTO(),
+            YardSectionCode = sa.ToDTO().NameCode,
             ContainersPerHour = 15,
         };
 
@@ -330,24 +331,16 @@ public class PhysicalResourceServiceTest
     [Fact]
     public async Task AddYardCraneAsync_ThrowsException_WhenStorageAreaDoesNotExist()
     {
-        var newCraneDto = new YardCraneDto
+        var newCraneDto = new CreateYardCraneDto
         {
             Code = "YCRANE2",
             Description = "Yard Crane 2",
             Status = ResourceStatus.Available,
             SetupTimeInMinutes = 15,
-            Qualifications = new List<QualificationDto>(),
+            QualificationsCodes = new List<string>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             LiftingCapacity = 40,
-            YardSection = new StorageAreaDto
-            {
-                NameCode = "NON_EXISTENT_STORAGE",
-                Location = "Non Existent Storage",
-                Type = StorageAreaType.Yard,
-                Capacity = 0,
-                CurrentOccupancy = 0,
-                DockServices = new HashSet<DockRelationDto>()
-            },
+            YardSectionCode = "NON_EXISTENT_STORAGE",
             ContainersPerHour = 15,
         };
 
@@ -364,16 +357,16 @@ public class PhysicalResourceServiceTest
     public async Task AddYardCraneAsync_ThrowsException_WhenCodeAlreadyExists()
     {
         var existingCrane = resources.OfType<YardCrane>().First();
-        var newCraneDto = new YardCraneDto
+        var newCraneDto = new CreateYardCraneDto
         {
             Code = existingCrane.Code.Value,
             Description = "Yard Crane Duplicate",
             Status = ResourceStatus.Available,
             SetupTimeInMinutes = 15,
-            Qualifications = new List<QualificationDto>(),
+            QualificationsCodes = new List<string>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             LiftingCapacity = 40,
-            YardSection = existingCrane.YardSection.ToDTO(),
+            YardSectionCode = existingCrane.YardSection.ToDTO().NameCode,
             ContainersPerHour = 15,
         };
 
@@ -396,16 +389,16 @@ public class PhysicalResourceServiceTest
                 new HashSet<StorageArea.DockRelation>()
             );
 
-        var newCraneDto = new YardCraneDto
+        var newCraneDto = new CreateYardCraneDto
         {
             Code = "YCRANE2",
             Description = "Yard Crane 2",
             Status = ResourceStatus.Available,
             SetupTimeInMinutes = 15,
-            Qualifications = new List<QualificationDto> { new QualificationDto { IdCode = "NON_EXISTENT_QUAL", QualificationName = "Non Existent Qualification" } },
+            QualificationsCodes = new List<string> { "NON_EXISTENT_QUAL" },
             OperationalWindow = OperationalWindow.FullWeek(),
             LiftingCapacity = 40,
-            YardSection = sa.ToDTO(),
+            YardSectionCode = sa.ToDTO().NameCode,
             ContainersPerHour = 15,
         };
 
@@ -424,13 +417,13 @@ public class PhysicalResourceServiceTest
     [Fact]
     public async Task AddTruckAsync_ReturnsAddedTruck()
     {
-        var newTruckDto = new TruckDto
+        var newTruckDto = new CreateTruckDto
         {
             Code = "TRUCK2",
             Description = "Truck 2",
             Status = ResourceStatus.Available,
             SetupTimeInMinutes = 10,
-            Qualifications = new List<QualificationDto>(),
+            QualificationsCodes = new List<string>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             ContainersPerTrip = 25,
             AverageSpeed = 60,
@@ -456,13 +449,13 @@ public class PhysicalResourceServiceTest
     public async Task AddTruckAsync_ThrowsException_WhenCodeAlreadyExists()
     {
         var existingTruck = resources.OfType<Truck>().First();
-        var newTruckDto = new TruckDto
+        var newTruckDto = new CreateTruckDto
         {
             Code = existingTruck.Code.Value,
             Description = "Truck Duplicate",
             Status = ResourceStatus.Available,
             SetupTimeInMinutes = 10,
-            Qualifications = new List<QualificationDto>(),
+            QualificationsCodes = new List<string>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             ContainersPerTrip = 25,
             AverageSpeed = 60,
@@ -478,13 +471,13 @@ public class PhysicalResourceServiceTest
     [Fact]
     public async Task AddTruckAsync_ThrowsException_WhenQualificationDoesNotExist()
     {
-        var newTruckDto = new TruckDto
+        var newTruckDto = new CreateTruckDto
         {
             Code = "TRUCK2",
             Description = "Truck 2",
             Status = ResourceStatus.Available,
             SetupTimeInMinutes = 10,
-            Qualifications = new List<QualificationDto> { new QualificationDto { IdCode = "NON_EXISTENT_QUAL", QualificationName = "Non Existent Qualification" } },
+            QualificationsCodes = new List<string> { "NON_EXISTENT_QUAL" },
             OperationalWindow = OperationalWindow.FullWeek(),
             ContainersPerTrip = 25,
             AverageSpeed = 60,
@@ -505,16 +498,16 @@ public class PhysicalResourceServiceTest
     {
         var existingCrane = resources.OfType<STSCrane>().First();
 
-        var updateCraneDto = new STSCraneDto
+        var updateCraneDto = new CreateSTSCraneDto
         {
             Code = existingCrane.Code.Value,
             Description = "Updated STS Crane",
             Status = ResourceStatus.Maintenance,
             SetupTimeInMinutes = 25,
-            Qualifications = new List<QualificationDto>(),
+            QualificationsCodes = new List<string>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             LiftingCapacity = 70,
-            ServingDock = existingCrane.ServingDock.ToDTO(),
+            ServingDockCode = existingCrane.ServingDock.Code.Value,
             ContainersPerHour = 14,
         };
 
@@ -538,16 +531,16 @@ public class PhysicalResourceServiceTest
     [Fact]
     public async Task UpdateSTSCraneAsync_ThrowsException_WhenCraneDoesNotExist()
     {
-        var updateCraneDto = new STSCraneDto
+        var updateCraneDto = new CreateSTSCraneDto
         {
             Code = "NON_EXISTENT_CRANE",
             Description = "Updated STS Crane",
             Status = ResourceStatus.Maintenance,
             SetupTimeInMinutes = 25,
-            Qualifications = new List<QualificationDto>(),
+            QualificationsCodes = new List<string>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             LiftingCapacity = 70,
-            ServingDock = new DockDto { Code = "DOCK1", Name = "Dock 1", Location = "Location 1",  Length = 100, Depth = 50, Draft = 30, SupportedVesselTypes = new List<VesselTypeDto>() },
+            ServingDockCode = "DOCK1",
             ContainersPerHour = 14,
         };
 
@@ -562,16 +555,16 @@ public class PhysicalResourceServiceTest
     {
         var existingCrane = resources.OfType<STSCrane>().First();
 
-        var updateCraneDto = new STSCraneDto
+        var updateCraneDto = new CreateSTSCraneDto
         {
             Code = existingCrane.Code.Value,
             Description = "Updated STS Crane",
             Status = ResourceStatus.Maintenance,
             SetupTimeInMinutes = 25,
-            Qualifications = new List<QualificationDto>(),
+            QualificationsCodes = new List<string>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             LiftingCapacity = 70,
-            ServingDock = new DockDto { Code = "NON_EXISTENT_DOCK", Name = "Non Existent Dock", Location = "Nowhere", Length = 100, Depth = 50, Draft = 30, SupportedVesselTypes = new List<VesselTypeDto>() },
+            ServingDockCode = "NON_EXISTENT_DOCK",
             ContainersPerHour = 14,
         };
 
@@ -589,16 +582,16 @@ public class PhysicalResourceServiceTest
     {
         var existingCrane = resources.OfType<STSCrane>().First();
 
-        var updateCraneDto = new STSCraneDto
+        var updateCraneDto = new CreateSTSCraneDto
         {
             Code = existingCrane.Code.Value,
             Description = "Updated STS Crane",
             Status = ResourceStatus.Maintenance,
             SetupTimeInMinutes = 25,
-            Qualifications = new List<QualificationDto> { new QualificationDto { IdCode = "NON_EXISTENT_QUAL", QualificationName = "Non Existent Qualification" } },
+            QualificationsCodes = new List<string> { "NON_EXISTENT_QUAL" },
             OperationalWindow = OperationalWindow.FullWeek(),
             LiftingCapacity = 70,
-            ServingDock = existingCrane.ServingDock.ToDTO(),
+            ServingDockCode = existingCrane.ServingDock.Code.Value,
             ContainersPerHour = 14,
         };
 
@@ -619,16 +612,16 @@ public class PhysicalResourceServiceTest
     {
         var existingTruck = resources.OfType<Truck>().First();
 
-        var updateCraneDto = new STSCraneDto
+        var updateCraneDto = new CreateSTSCraneDto
         {
             Code = existingTruck.Code.Value,
             Description = "Updated STS Crane",
             Status = ResourceStatus.Maintenance,
             SetupTimeInMinutes = 25,
-            Qualifications = new List<QualificationDto>(),
+            QualificationsCodes = new List<string>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             LiftingCapacity = 70,
-            ServingDock = new DockDto { Code = "DOCK1", Name = "Dock 1", Location = "Location 1", Length = 100, Depth = 50, Draft = 30, SupportedVesselTypes = new List<VesselTypeDto>() },
+            ServingDockCode = "DOCK1",
             ContainersPerHour = 14,
         };
 
@@ -643,16 +636,16 @@ public class PhysicalResourceServiceTest
     {
         var existingCrane = resources.OfType<YardCrane>().First();
 
-        var updateCraneDto = new YardCraneDto
+        var updateCraneDto = new CreateYardCraneDto
         {
             Code = existingCrane.Code.Value,
             Description = "Updated Yard Crane",
             Status = ResourceStatus.Maintenance,
             SetupTimeInMinutes = 20,
-            Qualifications = new List<QualificationDto>(),
+            QualificationsCodes = new List<string>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             LiftingCapacity = 45,
-            YardSection = existingCrane.YardSection.ToDTO(),
+            YardSectionCode = existingCrane.YardSection.NameCode.Value,
             ContainersPerHour = 18,
         };
 
@@ -676,16 +669,16 @@ public class PhysicalResourceServiceTest
     [Fact]
     public async Task UpdateYardCraneAsync_ThrowsException_WhenCraneDoesNotExist()
     {
-        var updateCraneDto = new YardCraneDto
+        var updateCraneDto = new CreateYardCraneDto
         {
             Code = "NON_EXISTENT_CRANE",
             Description = "Updated Yard Crane",
             Status = ResourceStatus.Maintenance,
             SetupTimeInMinutes = 20,
-            Qualifications = new List<QualificationDto>(),
+            QualificationsCodes = new List<string>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             LiftingCapacity = 45,
-            YardSection = new StorageAreaDto { NameCode = "STORAGE1", Location = "Storage Area 1", Type = StorageAreaType.Yard, Capacity = 100, CurrentOccupancy = 10, DockServices = new HashSet<DockRelationDto>() },
+            YardSectionCode = "STORAGE1",
             ContainersPerHour = 18,
         };
 
@@ -700,16 +693,16 @@ public class PhysicalResourceServiceTest
     {
         var existingCrane = resources.OfType<YardCrane>().First();
 
-        var updateCraneDto = new YardCraneDto
+        var updateCraneDto = new CreateYardCraneDto
         {
             Code = existingCrane.Code.Value,
             Description = "Updated Yard Crane",
             Status = ResourceStatus.Maintenance,
             SetupTimeInMinutes = 20,
-            Qualifications = new List<QualificationDto>(),
+            QualificationsCodes = new List<string>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             LiftingCapacity = 45,
-            YardSection = new StorageAreaDto { NameCode = "NON_EXISTENT_STORAGE", Location = "Nowhere", Type = StorageAreaType.Yard, Capacity = 0, CurrentOccupancy = 0, DockServices = new HashSet<DockRelationDto>() },
+            YardSectionCode = "NON_EXISTENT_STORAGE",
             ContainersPerHour = 18,
         };
 
@@ -727,16 +720,16 @@ public class PhysicalResourceServiceTest
     {
         var existingCrane = resources.OfType<YardCrane>().First();
 
-        var updateCraneDto = new YardCraneDto
+        var updateCraneDto = new CreateYardCraneDto
         {
             Code = existingCrane.Code.Value,
             Description = "Updated Yard Crane",
             Status = ResourceStatus.Maintenance,
             SetupTimeInMinutes = 20,
-            Qualifications = new List<QualificationDto> { new QualificationDto { IdCode = "NON_EXISTENT_QUAL", QualificationName = "Non Existent Qualification" } },
+            QualificationsCodes = new List<string> { "NON_EXISTENT_QUAL" },
             OperationalWindow = OperationalWindow.FullWeek(),
             LiftingCapacity = 45,
-            YardSection = existingCrane.YardSection.ToDTO(),
+            YardSectionCode = existingCrane.YardSection.NameCode.Value,
             ContainersPerHour = 18,
         };
 
@@ -757,16 +750,16 @@ public class PhysicalResourceServiceTest
     {
         var existingTruck = resources.OfType<Truck>().First();
 
-        var updateCraneDto = new YardCraneDto
+        var updateCraneDto = new CreateYardCraneDto
         {
             Code = existingTruck.Code.Value,
             Description = "Updated Yard Crane",
             Status = ResourceStatus.Maintenance,
             SetupTimeInMinutes = 20,
-            Qualifications = new List<QualificationDto>(),
+            QualificationsCodes = new List<string>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             LiftingCapacity = 45,
-            YardSection = new StorageAreaDto { NameCode = "STORAGE1", Location = "Storage Area 1", Type = StorageAreaType.Yard, Capacity = 100, CurrentOccupancy = 10, DockServices = new HashSet<DockRelationDto>() },
+            YardSectionCode = "STORAGE1",
             ContainersPerHour = 18,
         };
 
@@ -781,13 +774,13 @@ public class PhysicalResourceServiceTest
     {
         var existingTruck = resources.OfType<Truck>().First();
 
-        var updateTruckDto = new TruckDto
+        var updateTruckDto = new CreateTruckDto
         {
             Code = existingTruck.Code.Value,
             Description = "Updated Truck",
             Status = ResourceStatus.Maintenance,
             SetupTimeInMinutes = 8,
-            Qualifications = new List<QualificationDto>(),
+            QualificationsCodes = new List<string>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             ContainersPerTrip = 30,
             AverageSpeed = 65,
@@ -811,13 +804,13 @@ public class PhysicalResourceServiceTest
     [Fact]
     public async Task UpdateTruckAsync_ThrowsException_WhenTruckDoesNotExist()
     {
-        var updateTruckDto = new TruckDto
+        var updateTruckDto = new CreateTruckDto
         {
             Code = "NON_EXISTENT_TRUCK",
             Description = "Updated Truck",
             Status = ResourceStatus.Maintenance,
             SetupTimeInMinutes = 8,
-            Qualifications = new List<QualificationDto>(),
+            QualificationsCodes = new List<string>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             ContainersPerTrip = 30,
             AverageSpeed = 65,
@@ -835,13 +828,13 @@ public class PhysicalResourceServiceTest
     {
         var existingTruck = resources.OfType<Truck>().First();
 
-        var updateTruckDto = new TruckDto
+        var updateTruckDto = new CreateTruckDto
         {
             Code = existingTruck.Code.Value,
             Description = "Updated Truck",
             Status = ResourceStatus.Maintenance,
             SetupTimeInMinutes = 8,
-            Qualifications = new List<QualificationDto> { new QualificationDto { IdCode = "NON_EXISTENT_QUAL", QualificationName = "Non Existent Qualification" } },
+            QualificationsCodes = new List<string> { "NON_EXISTENT_QUAL" },
             OperationalWindow = OperationalWindow.FullWeek(),
             ContainersPerTrip = 30,
             AverageSpeed = 65,
@@ -862,13 +855,13 @@ public class PhysicalResourceServiceTest
     {
         var existingCrane = resources.OfType<STSCrane>().First();
 
-        var updateTruckDto = new TruckDto
+        var updateTruckDto = new CreateTruckDto
         {
             Code = existingCrane.Code.Value,
             Description = "Updated Truck",
             Status = ResourceStatus.Maintenance,
             SetupTimeInMinutes = 8,
-            Qualifications = new List<QualificationDto>(),
+            QualificationsCodes = new List<string>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             ContainersPerTrip = 30,
             AverageSpeed = 65,

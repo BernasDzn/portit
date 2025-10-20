@@ -30,20 +30,20 @@ public class StaffService : IStaffService
 		return staffs.Select(s => s.ToDTO()).ToList();
 	}
 
-	public async Task<StaffDto?> Add(StaffDto staffDto)
+	public async Task<StaffDto?> Add(CreateStaffDto staffDto)
 	{
 		bool exists = await _staffRepository.GetStaffByMecNumberAsync(staffDto.MechanograficNumber) != null;
 		if (exists)
 			throw new EntityAlreadyExistsException("Staff with the same mechanographic number already exists.");
 
 		ICollection<Qualification> qualifications = new List<Qualification>();
-		if (staffDto.Qualifications != null)
+		if (staffDto.QualificationsCodes != null)
 		{
-			foreach (var qualification in staffDto.Qualifications)
+			foreach (var qualificationCode in staffDto.QualificationsCodes)
 			{
-				var qual = await _qualificationRepository.GetQualificationByIdAsync(qualification.IdCode);
+				var qual = await _qualificationRepository.GetQualificationByIdAsync(qualificationCode);
 				if (qual == null)
-					throw new EntityNotFoundException($"Qualification with id {qualification.IdCode} not found.");
+					throw new EntityNotFoundException($"Qualification with id {qualificationCode} not found.");
 				qualifications.Add(qual);
 			}
 		}
@@ -65,20 +65,20 @@ public class StaffService : IStaffService
 		return addedStaffDto;
 	}
 
-	public async Task<StaffDto?> Update(string mecanographicNumber, StaffDto staffDto)
+	public async Task<StaffDto?> Update(string mecanographicNumber, CreateStaffDto staffDto)
 	{
 		Staff? staff = await _staffRepository.GetStaffByMecNumberAsync(mecanographicNumber);
 		if (staff == null)
 			throw new EntityNotFoundException("Staff not found.");
 
 		HashSet<Qualification> qualifications = new HashSet<Qualification>();
-		if (staffDto.Qualifications != null)
+		if (staffDto.QualificationsCodes != null)
 		{
-			foreach (var qualification in staffDto.Qualifications)
+			foreach (var qualificationCode in staffDto.QualificationsCodes)
 			{
-				var qual = await _qualificationRepository.GetQualificationByIdAsync(qualification.IdCode);
+				var qual = await _qualificationRepository.GetQualificationByIdAsync(qualificationCode);
 				if (qual == null)
-					throw new EntityNotFoundException($"Qualification with id {qualification.IdCode} not found.");
+					throw new EntityNotFoundException($"Qualification with id {qualificationCode} not found.");
 				qualifications.Add(qual);
 			}
 		}

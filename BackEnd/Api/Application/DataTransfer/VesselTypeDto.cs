@@ -10,7 +10,5 @@ public class VesselTypeDto
     public required uint MaxNumberOfBays { get; set; }
     public required uint MaxNumberOfTiers { get; set; }
     public uint Capacity => MaxNumberOfRows * MaxNumberOfBays * MaxNumberOfTiers;
-    public required double Length { get; set; }
-    public required double Depth { get; set; }
-    public required double Draft { get; set; }
+    public required PhysicalCharacteristics PhysicalCharacteristics { get; set; }
 }

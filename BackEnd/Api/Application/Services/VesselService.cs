@@ -31,17 +31,17 @@ public class VesselService : IVesselService
         return vessels.Select(v => v.ToDTO()).ToList();
     }
 
-    public async Task<VesselDto?> Add(VesselDto vesselDto)
+    public async Task<VesselDto?> Add(CreateVesselDto vesselDto)
     {
         bool exists = await _vesselRepository.GetVesselByIMOAsync(vesselDto.ImoNumber) != null;
         if (exists)
             throw new EntityAlreadyExistsException("This vessel already exists");
 
-        VesselType? vesselType = await _vesselTypeRepository.GetVesselTypeByNameAsync(vesselDto.Type.Name);
+        VesselType? vesselType = await _vesselTypeRepository.GetVesselTypeByNameAsync(vesselDto.Type);
         if (vesselType == null)
             throw new EntityNotFoundException("The referenced vessel type does not exist");
 
-        ShippingAgentOrganization? org = _shippingAgentOrgRepository.GetByName(vesselDto.Owner.Name);
+        ShippingAgentOrganization? org = _shippingAgentOrgRepository.GetByName(vesselDto.Owner);
         if (org == null)
             throw new EntityNotFoundException("The referenced shipping agent organization does not exist");
 
@@ -53,9 +53,9 @@ public class VesselService : IVesselService
             org,
             new PhysicalCharacteristics
             {
-                Length = vesselDto.Length,
-                Depth = vesselDto.Depth,
-                Draft = vesselDto.Draft
+                Length = vesselDto.PhysicalCharacteristics.Length,
+                Depth = vesselDto.PhysicalCharacteristics.Depth,
+                Draft = vesselDto.PhysicalCharacteristics.Draft
             }
         );
 
@@ -67,17 +67,17 @@ public class VesselService : IVesselService
         return savedVesselDto;
     }
 
-    public async Task<VesselDto?> Update(string imo, VesselDto vesselDto)
+    public async Task<VesselDto?> Update(string imo, CreateVesselDto vesselDto)
     {
         Vessel vessel = await _vesselRepository.GetVesselByIMOAsync(imo);
         if (vessel == null)
             throw new EntityNotFoundException("Vessel not found.");
 
-        VesselType? vesselType = await _vesselTypeRepository.GetVesselTypeByNameAsync(vesselDto.Type.Name);
+        VesselType? vesselType = await _vesselTypeRepository.GetVesselTypeByNameAsync(vesselDto.Type);
         if (vesselType == null)
             throw new EntityNotFoundException("The referenced vessel type does not exist");
 
-        ShippingAgentOrganization? org = _shippingAgentOrgRepository.GetByName(vesselDto.Owner.Name);
+        ShippingAgentOrganization? org = _shippingAgentOrgRepository.GetByName(vesselDto.Owner);
         if (org == null)
             throw new EntityNotFoundException("The referenced shipping agent organization does not exist");
 
