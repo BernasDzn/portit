@@ -53,9 +53,9 @@ public class VesselService : IVesselService
             org,
             new PhysicalCharacteristics
             {
-                Length = vesselDto.PhysicalCharacteristics.Length,
-                Depth = vesselDto.PhysicalCharacteristics.Depth,
-                Draft = vesselDto.PhysicalCharacteristics.Draft
+                Length = vesselDto.Length,
+                Depth = vesselDto.Depth,
+                Draft = vesselDto.Draft
             }
         );
 
@@ -87,9 +87,9 @@ public class VesselService : IVesselService
         vessel.UpdateOwner(org);
         vessel.UpdatePhysicalCharacteristics(new PhysicalCharacteristics
         {
-            Length = vesselDto.PhysicalCharacteristics.Length,
-            Depth = vesselDto.PhysicalCharacteristics.Depth,
-            Draft = vesselDto.PhysicalCharacteristics.Draft
+            Length = vesselDto.Length,
+            Depth = vesselDto.Depth,
+            Draft = vesselDto.Draft
         });
 
         Vessel? updateResult = await _vesselRepository.Update(vessel);

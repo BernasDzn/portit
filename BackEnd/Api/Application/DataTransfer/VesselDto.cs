@@ -18,5 +18,7 @@ public class CreateVesselDto
     public required string ImoNumber { get; set; }
     public required string Type { get; set; }
     public required string Owner { get; set; }
-    public required PhysicalCharacteristics PhysicalCharacteristics { get; set; }
+    public required int Length { get; set; }
+    public required int Depth { get; set; }
+    public required int Draft { get; set; }
 }
