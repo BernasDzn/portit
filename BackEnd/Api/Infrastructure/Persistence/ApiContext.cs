@@ -90,12 +90,14 @@ public class ApiContext : DbContext
         modelBuilder.Entity<Representative>(entity =>
         {
             entity.Property(e => e.CitizenshipId).HasConversion<UIntEncryptionConvertor>();
+            entity.Property(e => e.Name).HasConversion<DesignationEncryptionConverter>();
             entity.Property(e => e.EmailAddress).HasConversion<EmailEncryptionConverter>();
             entity.Property(e => e.Phone).HasConversion<PhoneNumberEncryptionConverter>();
         });
 
         modelBuilder.Entity<Staff>(entity =>
         {
+            entity.Property(e => e.Name).HasConversion<DesignationEncryptionConverter>();
             entity.Property(e => e.Email).HasConversion<EmailEncryptionConverter>();
             entity.Property(e => e.PhoneNumber).HasConversion<PhoneNumberEncryptionConverter>();
         });
