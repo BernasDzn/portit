@@ -79,7 +79,9 @@ public class VesselControllerTest
             Name = "New Vessel",
             Type = null!,
             Owner = null!,
-            PhysicalCharacteristics = null!
+            Length = 0,
+            Depth = 0,
+            Draft = 0
         };
 
         var expectedVessel = new VesselDto
@@ -110,7 +112,9 @@ public class VesselControllerTest
             Name = "New Vessel",
             Type = null!,
             Owner = null!,
-            PhysicalCharacteristics = null!
+            Length = 0,
+            Depth = 0,
+            Draft = 0
         };
 
         _vesselServiceMock.Setup(service => service.Add(It.IsAny<CreateVesselDto>()))

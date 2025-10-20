@@ -72,11 +72,9 @@ public class VesselApplicationTest : WebApplicationFactory<Program>
             ""imoNumber"": ""IMO 8476310"",
             ""type"": ""Post-Panamax"",
             ""owner"": ""Global Shipping Co."",
-            ""physicalCharacteristics"": {
-                ""length"": 360,
-                ""depth"": 16,
-                ""draft"": 13
-            }
+            ""length"": 360,
+            ""depth"": 16,
+            ""draft"": 13
         }";
 
         var request = new HttpRequestMessage(HttpMethod.Post, "/Vessel")
