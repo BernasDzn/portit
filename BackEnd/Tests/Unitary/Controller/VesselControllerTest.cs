@@ -49,7 +49,9 @@ public class VesselControllerTest
                 Name = "Sample Vessel",
                 Type = null!,
                 Owner = null!,
-                PhysicalCharacteristics = null!
+                Length = 100,
+                Depth = 50,
+                Draft = 30,
             });
 
         var result = await _controller.GetByImo(testImo);
@@ -73,38 +75,53 @@ public class VesselControllerTest
     [Fact]
     public async Task Create_ReturnsCreatedAtActionResult_WithCreatedVessel()
     {
-        var vesselDto = new VesselDto
+        var input = new VesselInputRequest
         {
             ImoNumber = "IMO1234567",
             Name = "New Vessel",
-            Type = null!,
-            Owner = null!,
-            PhysicalCharacteristics = null!
+            TypeName = "nice ship",
+            OwnerName = "big company",
+            Length = 100,
+            Depth = 50,
+            Draft = 30,
         };
 
-        _vesselServiceMock.Setup(service => service.Add(It.IsAny<VesselDto>()))
-            .ReturnsAsync(vesselDto);
+        var createdVessel = new VesselDto
+        {
+            ImoNumber = input.ImoNumber,
+            Name = input.Name,
+            Type = null!,
+            Owner = null!,
+            Length = input.Length,
+            Depth = input.Depth,
+            Draft = input.Draft,
+        };
 
-        var result = await _controller.Create(vesselDto);
+        _vesselServiceMock.Setup(service => service.Add(It.IsAny<VesselInputRequest>()))
+            .ReturnsAsync(createdVessel);
+
+        var result = await _controller.Create(input);
 
         var createdAtActionResult = Assert.IsType<CreatedAtActionResult>(result.Result);
         var returnValue = Assert.IsType<VesselDto>(createdAtActionResult.Value);
-        Assert.Equal(vesselDto.ImoNumber, returnValue.ImoNumber);
+        Assert.Equal(createdVessel.ImoNumber, returnValue.ImoNumber);
     }
 
     [Fact]
     public async Task Create_ReturnsBadRequest_OnException()
     {
-        var vesselDto = new VesselDto
+        var vesselDto = new VesselInputRequest
         {
             ImoNumber = "IMO1234567",
             Name = "New Vessel",
-            Type = null!,
-            Owner = null!,
-            PhysicalCharacteristics = null!
+            TypeName = "big ship",
+            OwnerName = "nice company",
+            Length = 100,
+            Depth = 50,
+            Draft = 30,
         };
 
-        _vesselServiceMock.Setup(service => service.Add(It.IsAny<VesselDto>()))
+        _vesselServiceMock.Setup(service => service.Add(It.IsAny<VesselInputRequest>()))
             .ThrowsAsync(new Exception("Test exception"));
 
         var result = await _controller.Create(vesselDto);
@@ -122,8 +139,12 @@ public class VesselControllerTest
             {
                 Items = new List<VesselDto>
                 {
-                    new VesselDto { ImoNumber = "IMO1234567", Name = "Vessel 1", Type = null!, Owner = null!, PhysicalCharacteristics = null! },
-                    new VesselDto { ImoNumber = "IMO2345678", Name = "Vessel 2", Type = null!, Owner = null!, PhysicalCharacteristics = null! }
+                    new VesselDto { ImoNumber = "IMO1234567", Name = "Vessel 1", Type = null!, Owner = null!, Length = 100,
+                    Depth = 50,
+                    Draft = 30, },
+                    new VesselDto { ImoNumber = "IMO2345678", Name = "Vessel 2", Type = null!, Owner = null!, Length = 100,
+                    Depth = 50,
+                    Draft = 30, }
                 },
                 PageNumber = filter.PageNumber,
                 PageSize = filter.PageSize

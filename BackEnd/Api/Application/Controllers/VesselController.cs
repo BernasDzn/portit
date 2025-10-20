@@ -5,7 +5,7 @@ using Api.Application.Services;
 using Api.Application.DataTransfer;
 using Api.Infrastructure.Utilities;
 using Api.Application.DataTransfer.Filters;
-
+using Api.Application.Exceptions;
 
 [ApiController]
 [Route("[controller]")]
@@ -38,6 +38,11 @@ public class VesselController : ControllerBase, IVesselController
 
             return Ok(vesselDto);
         }
+        catch (EntityNotFoundException ex)
+        {
+            _logger.LogWarning("Vessel not found, {Message}", ex.Message);
+            return NotFound(ex.Message);
+        }
         catch (System.Exception e)
         {
             _logger.LogError("Error retrieving vessel by IMO, {Message}", e.Message);
@@ -46,7 +51,7 @@ public class VesselController : ControllerBase, IVesselController
     }
 
     [HttpPost(Name = "PostVessel")]
-    public async Task<ActionResult<VesselDto>> Create(VesselDto vesselDto)
+    public async Task<ActionResult<VesselDto>> Create(VesselInputRequest vesselDto)
     {
         try
         {
@@ -82,7 +87,7 @@ public class VesselController : ControllerBase, IVesselController
     }
 
     [HttpPut("{imo}", Name = "UpdateVessel")]
-    public async Task<ActionResult<VesselDto>> Update(string imo, VesselDto vesselDto)
+    public async Task<ActionResult<VesselDto>> Update(string imo, VesselInputRequest vesselDto)
     {
         try
         {
