@@ -1,13 +1,6 @@
-using Xunit;
 using Api.Application.Controllers;
 using Api.Application.Services;
 using Api.Application.DataTransfer;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Api.Application.DataTransfer.Filters;
-using Api.Infrastructure.Utilities;
-using Api.Infrastructure.Persistence.Repositories;
-using Api.Infrastructure.Persistence;
 using Moq;
 using Api.Domain.IRepository;
 using Microsoft.Extensions.Logging;
@@ -15,7 +8,7 @@ using Api.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Api.Domain.ValueObjects;
 
-namespace Tests.Integration;
+namespace Tests.Integration.ControllerToService;
 
 public class VesselIntegrationTest
 {
