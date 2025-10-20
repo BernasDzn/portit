@@ -52,7 +52,9 @@ namespace Tests.Unitary.Controller
                     MaxNumberOfRows = 10,
                     MaxNumberOfBays = 20,
                     MaxNumberOfTiers = 5,
-                    PhysicalCharacteristics = null!
+                    Length = 100,
+                    Depth = 50,
+                    Draft = 30,
                 });
 
             var result = await _controller.GetByName(testName);
@@ -84,7 +86,9 @@ namespace Tests.Unitary.Controller
                 MaxNumberOfRows = 15,
                 MaxNumberOfBays = 25,
                 MaxNumberOfTiers = 6,
-                PhysicalCharacteristics = null!
+                Length = 100,
+                Depth = 50,
+                Draft = 30,
             };
 
             _vesselTypeServiceMock.Setup(service => service.Add(It.IsAny<VesselTypeDto>()))
@@ -107,7 +111,9 @@ namespace Tests.Unitary.Controller
                 MaxNumberOfRows = 15,
                 MaxNumberOfBays = 25,
                 MaxNumberOfTiers = 6,
-                PhysicalCharacteristics = null!
+                Length = 100,
+                Depth = 50,
+                Draft = 30,
             };
 
             _vesselTypeServiceMock.Setup(service => service.Add(It.IsAny<VesselTypeDto>()))
@@ -129,7 +135,9 @@ namespace Tests.Unitary.Controller
                 MaxNumberOfRows = 20,
                 MaxNumberOfBays = 30,
                 MaxNumberOfTiers = 7,
-                PhysicalCharacteristics = null!
+                Length = 100,
+                Depth = 50,
+                Draft = 30,
             };
 
             _vesselTypeServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<VesselTypeDto>()))
@@ -151,7 +159,9 @@ namespace Tests.Unitary.Controller
                 MaxNumberOfRows = 20,
                 MaxNumberOfBays = 30,
                 MaxNumberOfTiers = 7,
-                PhysicalCharacteristics = null!
+                Length = 100,
+                Depth = 50,
+                Draft = 30,
             };
 
             _vesselTypeServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<VesselTypeDto>()))

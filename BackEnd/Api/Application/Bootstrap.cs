@@ -72,7 +72,7 @@ public static class Bootstrap
                 new Designation { Value = "Global Shipping Co." },
                 new List<Designation> { new Designation { Value = "GSC" }, new Designation { Value = "Global Ship" } },
                 new Address("123 Ocean Drive", "Maritime City", "90210", "USA"),
-                new TaxNumber { Value = "PT252252252" },
+                new TaxNumber { Value = "PT123456789" },
                 new HashSet<Representative> { r, r1 }
             )
         );
@@ -83,7 +83,7 @@ public static class Bootstrap
                 new Designation { Value = "Oceanic Freight Ltd." },
                 new List<Designation> { new Designation { Value = "OFL" }, new Designation { Value = "Oceanic Freight" } },
                 new Address("456 Harbor Road", "Seaside Town", "AB12 3CD", "UK"),
-                new TaxNumber { Value = "PT252252252" },
+                new TaxNumber { Value = "GB123456789" },
                 new HashSet<Representative> { r2, r3 }
             )
         );
@@ -94,7 +94,7 @@ public static class Bootstrap
                 new Designation { Value = "TransWorld Logistics" },
                 new List<Designation> { new Designation { Value = "TWL" }, new Designation { Value = "TransWorld" } },
                 new Address("789 Dockside Ave", "Port City", "A1B 2C3", "Canada"),
-                new TaxNumber { Value = "TAX789012" },
+                new TaxNumber { Value = "PT987654321" },
                 new HashSet<Representative> { r4, r5 }
             )
         );
@@ -105,7 +105,7 @@ public static class Bootstrap
                 new Designation { Value = "Maritime Movers Inc." },
                 new List<Designation> { new Designation { Value = "MMI" }, new Designation { Value = "Maritime Movers" } },
                 new Address("321 Bay Street", "Coastal Village", "2000", "Australia"),
-                new TaxNumber { Value = "TAX210987" },
+                new TaxNumber { Value = "PT192837465" },
                 new HashSet<Representative> { r6, r7 }
             )
         );

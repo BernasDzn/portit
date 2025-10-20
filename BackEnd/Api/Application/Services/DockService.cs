@@ -58,9 +58,9 @@ public class DockService : IDockService
         Dock dock = new Dock(Guid.NewGuid(), new Code { Value = dockDto.Code }, new Designation { Value = dockDto.Name }, new Designation { Value = dockDto.Location },
          new PhysicalCharacteristics
          {
-             Length = dockDto.PhysicalCharacteristics.Length,
-             Depth = dockDto.PhysicalCharacteristics.Depth,
-             Draft = dockDto.PhysicalCharacteristics.Draft
+             Length = dockDto.Length,
+             Depth = dockDto.Depth,
+             Draft = dockDto.Draft
          }, vesselTypes);
 
         Dock savedDock = await _dockRepository.Add(dock);
@@ -87,9 +87,9 @@ public class DockService : IDockService
 
         PhysicalCharacteristics newPhysicalCharacteristics = new PhysicalCharacteristics
         {
-            Length = dockDto.PhysicalCharacteristics.Length,
-            Depth = dockDto.PhysicalCharacteristics.Depth,
-            Draft = dockDto.PhysicalCharacteristics.Draft
+            Length = dockDto.Length,
+            Depth = dockDto.Depth,
+            Draft = dockDto.Draft
         };
 
         dock.UpdatePhysicalCharacteristics(newPhysicalCharacteristics);

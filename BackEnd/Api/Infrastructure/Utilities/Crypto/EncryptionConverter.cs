@@ -24,6 +24,20 @@ public class UIntEncryptionConvertor : ValueConverter<uint, string>
     { }
 }
 
+// For designations
+public class DesignationEncryptionConverter : ValueConverter<Designation, string>
+{
+    public DesignationEncryptionConverter()
+        : this(null!) { }
+
+    public DesignationEncryptionConverter(ConverterMappingHints mappingHints = null!)
+        : base(
+            designation => EncryptionHelper.Encrypt(designation.Value),
+            encrypted => new Designation { Value = EncryptionHelper.Decrypt(encrypted) },
+            mappingHints)
+    { }
+}
+
 // For emails
 public class EmailEncryptionConverter : ValueConverter<Email, string>
 {

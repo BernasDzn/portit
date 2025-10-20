@@ -21,7 +21,7 @@ public class NotificationDecision : IDTOAble<NotificationDecisionDto>
     public virtual Dock? AssignedDock { get; private set; }
 
     protected NotificationDecision() { }
-    internal NotificationDecision(NotificationDecisionStatus status, DateTime decisionDate, int? officerID = null, Dock? assignedDock = null, string? reason = null)
+    public NotificationDecision(NotificationDecisionStatus status, DateTime decisionDate, int? officerID = null, Dock? assignedDock = null, string? reason = null)
     {
         Status = status;
         Reason = reason;
