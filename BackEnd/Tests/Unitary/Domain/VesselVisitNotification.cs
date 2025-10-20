@@ -1,4 +1,5 @@
 
+using Api.Application.DataTransfer;
 using Api.Application.Exceptions;
 using Api.Application.Services;
 using Api.Domain.Entities;
@@ -374,4 +375,166 @@ public class VesselVisitNotificationTest
         ));
     }
 
+    [Theory]
+    [InlineData(NotificationDecisionStatus.Approved, 101, null)]
+    [InlineData(NotificationDecisionStatus.Rejected, 101, "Insufficient safety measures")]
+    public void WhenAddingValidDecision_ThenAdds(NotificationDecisionStatus status, int officerID, string reason)
+    {
+        var vvn = new VesselVisitNotification(
+            new VesselVisitNotificationId(
+                new Designation { Value = "PORTO" },
+                1,
+                (uint)DateTime.UtcNow.Year
+            ),
+            DateTime.Parse("2024-07-01T12:00:00Z"),
+            DateTime.Parse("2024-07-01T10:00:00Z"),
+            true,
+            vessel,
+            representative,
+            null,
+            crew,
+            loadCargoManifest,
+            unloadCargoManifest
+        );
+
+        vvn.Submit();
+
+        vvn.AddDecision(
+            new NotificationDecision(
+                status,
+                DateTime.UtcNow,
+                officerID,
+                status == NotificationDecisionStatus.Approved ? new Dock(
+                    Guid.NewGuid(),
+                    new Code { Value = "DCK003" },
+                    new Designation { Value = "Tertiary Dock" },
+                    new Designation { Value = "Harbor Area 3" },
+                    new PhysicalCharacteristics { Length = 700, Depth = 30, Draft = 25 },
+                    new HashSet<VesselType> { vessel.Type }
+                ) : null,
+                reason
+            )
+        );
+    }
+
+    [Fact]
+    public void WhenAddingNullDecision_ThenThrowsException()
+    {
+        var vvn = new VesselVisitNotification(
+            new VesselVisitNotificationId(
+                new Designation { Value = "PORTO" },
+                1,
+                (uint)DateTime.UtcNow.Year
+            ),
+            DateTime.Parse("2024-07-01T12:00:00Z"),
+            DateTime.Parse("2024-07-01T10:00:00Z"),
+            true,
+            vessel,
+            representative,
+            null,
+            crew,
+            loadCargoManifest,
+            unloadCargoManifest
+        );
+
+        vvn.Submit();
+
+        Assert.Throws<ArgumentNullException>(() => vvn.AddDecision(null!));
+    }
+
+
+    [Fact]
+    public void WhenAddingDecisionToInProgressNotification_ThenThrowsException()
+    {
+        var vvn = new VesselVisitNotification(
+            new VesselVisitNotificationId(
+                new Designation { Value = "PORTO" },
+                1,
+                (uint)DateTime.UtcNow.Year
+            ),
+            DateTime.Parse("2024-07-01T12:00:00Z"),
+            DateTime.Parse("2024-07-01T10:00:00Z"),
+            true,
+            vessel,
+            representative,
+            null,
+            crew,
+            loadCargoManifest,
+            unloadCargoManifest
+        );
+
+        Assert.Throws<InvalidOperationException>(() => vvn.AddDecision(
+            new NotificationDecision(
+                NotificationDecisionStatus.Approved,
+                DateTime.UtcNow,
+                101,
+                new Dock(
+                    Guid.NewGuid(),
+                    new Code { Value = "DCK003" },
+                    new Designation { Value = "Tertiary Dock" },
+                    new Designation { Value = "Harbor Area 3" },
+                    new PhysicalCharacteristics { Length = 700, Depth = 30, Draft = 25 },
+                    new HashSet<VesselType> { vessel.Type }
+                ),
+                null
+            )
+        ));
+    }
+
+    [Fact]
+    public void WhenAddingDecisionWithOlderDate_ThenThrowsException()
+    {
+        var vvn = new VesselVisitNotification(
+            new VesselVisitNotificationId(
+                new Designation { Value = "PORTO" },
+                1,
+                (uint)DateTime.UtcNow.Year
+            ),
+            DateTime.Parse("2024-07-01T12:00:00Z"),
+            DateTime.Parse("2024-07-01T10:00:00Z"),
+            true,
+            vessel,
+            representative,
+            null,
+            crew,
+            loadCargoManifest,
+            unloadCargoManifest
+        );
+
+        vvn.Submit();
+
+        vvn.AddDecision(
+            new NotificationDecision(
+                NotificationDecisionStatus.Approved,
+                DateTime.UtcNow,
+                101,
+                new Dock(
+                    Guid.NewGuid(),
+                    new Code { Value = "DCK003" },
+                    new Designation { Value = "Tertiary Dock" },
+                    new Designation { Value = "Harbor Area 3" },
+                    new PhysicalCharacteristics { Length = 700, Depth = 30, Draft = 25 },
+                    new HashSet<VesselType> { vessel.Type }
+                ),
+                null
+            )
+        );
+
+        Assert.Throws<OutdatedDecisionException>(() => vvn.AddDecision(
+            new NotificationDecision(
+                NotificationDecisionStatus.Approved,
+                DateTime.UtcNow.AddHours(-1),
+                101,
+                new Dock(
+                    Guid.NewGuid(),
+                    new Code { Value = "DCK003" },
+                    new Designation { Value = "Tertiary Dock" },
+                    new Designation { Value = "Harbor Area 3" },
+                    new PhysicalCharacteristics { Length = 700, Depth = 30, Draft = 25 },
+                    new HashSet<VesselType> { vessel.Type }
+                ),
+                null
+            )
+        ));
+    }
 }
