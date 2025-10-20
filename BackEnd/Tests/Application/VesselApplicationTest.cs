@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 using Api.Infrastructure.Utilities;
 
 
-namespace Tests.Unitary.Application;
+namespace Tests.Application;
 
 public class VesselApplicationTest : WebApplicationFactory<Program>
 {
