@@ -70,11 +70,13 @@ public class VesselApplicationTest : WebApplicationFactory<Program>
         var body = @"{
             ""name"": ""Maersk Triple E MKII"",
             ""imoNumber"": ""IMO 8476310"",
-            ""typeName"": ""Post-Panamax"",
-            ""ownerName"": ""Global Shipping Co."",
-            ""length"": 370,
-            ""depth"": 16,
-            ""draft"": 13
+            ""type"": ""Post-Panamax"",
+            ""owner"": ""Global Shipping Co."",
+            ""physicalCharacteristics"": {
+                ""length"": 360,
+                ""depth"": 16,
+                ""draft"": 13
+            }
         }";
 
         var request = new HttpRequestMessage(HttpMethod.Post, "/Vessel")

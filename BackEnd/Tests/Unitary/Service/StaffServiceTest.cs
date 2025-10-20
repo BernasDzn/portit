@@ -19,7 +19,7 @@ public class StaffServiceTest
 	private readonly Mock<IStaffRepository> _staffRepositoryMock;
 	private readonly Mock<IQualificationRepository> _qualificationRepositoryMock;
 	private readonly Mock<ILogger<StaffService>> _loggerMock;
-	private readonly StaffDto _staff_dto_mock;
+	private readonly CreateStaffDto _staff_dto_mock;
 	private readonly Staff _staff_mock;
 	private Qualification _qualification_mock = null!;
 	private QualificationDto _qualification_dto_mock = null!;
@@ -47,10 +47,10 @@ public class StaffServiceTest
 		);
 	}
 
-	private StaffDto CreateValidStaffDto()
+	private CreateStaffDto CreateValidStaffDto()
 	{
 		_qualification_dto_mock = new QualificationDto { IdCode = "Q3", QualificationName = "Qualification 3" };
-		return new StaffDto
+		return new CreateStaffDto
 		{
 			MechanograficNumber = "TESTMEC0001",
 			Name = "John Test",
@@ -58,7 +58,7 @@ public class StaffServiceTest
 			PhoneNumber = "900000000",
 			Status = 0,
 			OperationalWindow = OperationalWindow.FullWeek(),
-			Qualifications = new List<QualificationDto>() { _qualification_dto_mock }
+			QualificationsCodes = new List<string>() { _qualification_dto_mock.IdCode }
 		};
 	}
 
@@ -129,7 +129,7 @@ public class StaffServiceTest
 		Staff _updated_staff_mock = _staff_mock;
 		_updated_staff_mock.UpdateName("Updated Name");
 
-		StaffDto _updated_staff_dto_mock = _staff_dto_mock;
+		CreateStaffDto _updated_staff_dto_mock = _staff_dto_mock;
 		_updated_staff_dto_mock.Name = "Updated Name";
 
 		_qualificationRepositoryMock.Setup(repo => repo.GetQualificationByIdAsync(It.IsAny<string>()))
