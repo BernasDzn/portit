@@ -70,45 +70,8 @@ public class VesselApplicationTest : WebApplicationFactory<Program>
         var body = @"{
             ""name"": ""Maersk Triple E MKII"",
             ""imoNumber"": ""IMO 8476310"",
-            ""type"": {
-                ""name"": ""Post-Panamax"",
-                ""description"": ""Larger than Panamax"",
-                ""maxNumberOfRows"": 30,
-                ""maxNumberOfBays"": 15,
-                ""maxNumberOfTiers"": 7,
-                ""length"": 400,
-                ""depth"": 18,
-                ""draft"": 14
-            },
-            ""owner"": {
-                ""name"": ""Global Shipping Co."",
-                ""altNames"": [
-                    ""GSC"",
-                    ""Global Ship""
-                ],
-                ""taxNumber"": ""PT123456789"",
-                ""address"": {
-                    ""id"": ""69aa6e59-3213-4338-9f1b-e25fb196c794"",
-                    ""street"": ""123 Ocean Drive"",
-                    ""city"": ""Maritime City"",
-                    ""zipCode"": ""90210"",
-                    ""country"": ""USA""
-                },
-                ""representatives"": [
-                    {
-                        ""name"": ""Patricio Sharply"",
-                        ""citizenshipId"": 908029952,
-                        ""emailAddress"": ""psharply0@yolasite.com"",
-                        ""phone"": ""6947302134""
-                    },
-                    {
-                        ""name"": ""Kayley Begbie"",
-                        ""citizenshipId"": 319982093,
-                        ""emailAddress"": ""kbegbie1@spotify.com"",
-                        ""phone"": ""6382283741""
-                    }
-                ]
-            },
+            ""typeName"": ""Post-Panamax"",
+            ""ownerName"": ""Global Shipping Co."",
             ""length"": 370,
             ""depth"": 16,
             ""draft"": 13
