@@ -1,13 +1,26 @@
 # Sprint 1
 
 ### Aim of this Sprint:
-<p>
-The aim of this sprint is three-fold:<br>
-(i) to set up the tools and infrastructure necessary to properly develop and manage the project, following engineering best practices;<br>
-(ii) to develop back-end module(s) exposing REST API(s) for managing port facilities, shipping agents, and logistic resources;<br>
-(iii) to study and analyze the project client from an organizational and managerial point of view.
-</p>
+
+#### The aim of this sprint is three-fold:
+> -to set up the tools and infrastructure necessary to properly develop and manage the project, following engineering best practices;
+
+> to develop back-end module(s) exposing REST API(s) for managing port facilities, shipping agents, and logistic resources;
+
+> to study and analyze the project client from an organizational and managerial point of view.
 
 ### User Stories:
-- [USXYZZ](usxyzz/readme.md)
+- [US2201 - ](us2201/readme.md)
+- [US2202 - ](us2202/readme.md)
+- [US2203 - ](us2203/readme.md)
+- [US2204 - ](us2204/readme.md)
+-
+-
+-
+-
+- [US2209 - ](us2209/readme.md)
+-
+- [US2211 - Manage staff members](us2211/readme.md)
+-
+- [US2213 - ](us2213/readme.md)
 - ...
