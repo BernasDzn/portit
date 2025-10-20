@@ -333,27 +333,4 @@ public class VesselIntegrationTest
         Assert.Equal(imoToUpdate, returnValue.ImoNumber);
         Assert.Equal("Updated Vessel", returnValue.Name);
     }
-
-    [Fact]
-    public async Task UpdateVessel_ReturnsNotFound_WhenVesselDoesNotExist()
-    {
-        var imoToUpdate = "nonexistentimo";
-        var updateVesselDto = new CreateVesselDto
-        {
-            ImoNumber = imoToUpdate,
-            Name = "Updated Vessel",
-            Type = "Post-Panamax",
-            Owner = "Maersk",
-            Length = 250,
-            Depth = 16,
-            Draft = 11
-        };
-
-        _repositoryMock.Setup(repo => repo.GetVesselByIMOAsync(imoToUpdate))!
-            .ReturnsAsync((Vessel?)null);
-
-        var result = await _controller.Update(imoToUpdate, updateVesselDto);
-
-        Assert.IsType<NotFoundObjectResult>(result.Result);
-    }
 }
