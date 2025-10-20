@@ -30,7 +30,7 @@ public class VesselTypeRepository : GenericRepository<VesselType>, IVesselTypeRe
         }
     }
 
-    public async Task<VesselType> GetVesselTypeByNameAsync(string name)
+    public async Task<VesselType?> GetVesselTypeByNameAsync(string name)
     {
         try
         {

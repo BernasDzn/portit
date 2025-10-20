@@ -33,8 +33,6 @@ public class DockService : IDockService
     public async Task<DockDto?> GetByCode(string code)
     {
         Dock? dock = await _dockRepository.GetDockByCodeAsync(code);
-        if (dock == null)
-            throw new EntityNotFoundException("A dock with the specified code does not exist.");
 
         AppLogEvents.LogRetrieve(_logger, "dock", 1);
         return dock?.ToDTO();
@@ -49,7 +47,7 @@ public class DockService : IDockService
 
     public async Task<DockDto?> Add(CreateDockDto dockDto)
     {
-        bool exists = await _dockRepository.GetDockByCodeAsync(dockDto.Name) != null;
+        bool exists = await _dockRepository.GetDockByCodeAsync(dockDto.Code) != null;
         if (exists)
             throw new EntityAlreadyExistsException("This dock already exists.");
 
@@ -71,14 +69,14 @@ public class DockService : IDockService
         return savedDockDto;
     }
 
-    public async Task<DockDto?> Update(string name, CreateDockDto dockDto)
+    public async Task<DockDto?> Update(string code, CreateDockDto dockDto)
     {
-        if (name != dockDto.Name)
-            throw new ArgumentException("The provided name does not match the dock to be updated.");
+        if (code != dockDto.Code)
+            throw new ArgumentException("The provided code does not match the dock to be updated.");
 
-        Dock dock = await _dockRepository.GetDockByCodeAsync(dockDto.Name);
+        Dock? dock = await _dockRepository.GetDockByCodeAsync(dockDto.Code);
         if (dock == null)
-            throw new EntityNotFoundException("A dock with the specified name does not exist.");
+            throw new EntityNotFoundException("A dock with the specified code does not exist.");
 
         HashSet<VesselType> vesselTypes = await GetVesselTypesFromDto(dockDto.SupportedVesselTypes);
 
