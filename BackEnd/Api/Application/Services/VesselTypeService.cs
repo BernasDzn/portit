@@ -66,7 +66,7 @@ public class VesselTypeService : IVesselTypeService
 
     public async Task<VesselTypeDto> Update(string name, VesselTypeDto vesselTypeDto)
     {
-        VesselType vesselType = await _vesselTypeRepository.GetVesselTypeByNameAsync(name);
+        VesselType? vesselType = await _vesselTypeRepository.GetVesselTypeByNameAsync(name);
         if (vesselType == null)
             throw new Exception("Vessel Type not found.");
 
@@ -83,10 +83,10 @@ public class VesselTypeService : IVesselTypeService
         });
 
         VesselType? updated = await _vesselTypeRepository.Update(vesselType);
-        if (updated != null)
+        if (updated == null)
             throw new PersistencyFailedException("Failed to update Vessel Type.");
 
         AppLogEvents.LogUpdate(_logger, "Vessel Type", vesselType.Id);
-        return updated!.ToDTO();
+        return updated.ToDTO();
     }
 }
