@@ -33,8 +33,6 @@ public class DockService : IDockService
     public async Task<DockDto?> GetByCode(string code)
     {
         Dock? dock = await _dockRepository.GetDockByCodeAsync(code);
-        if (dock == null)
-            throw new EntityNotFoundException("A dock with the specified code does not exist.");
 
         AppLogEvents.LogRetrieve(_logger, "dock", 1);
         return dock?.ToDTO();

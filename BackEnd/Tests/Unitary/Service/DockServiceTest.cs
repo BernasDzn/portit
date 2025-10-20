@@ -100,12 +100,13 @@ public class DockServiceTest
     }
 
     [Fact]
-    public async Task GetDockById_Throws_WhenNotExists()
+    public async Task GetDockById_ReturnsNotFoundResponse_WhenNotExists()
     {
         _dockRepositoryMock.Setup(repo => repo.GetDockByCodeAsync(It.IsAny<string>()))
             .ReturnsAsync((Dock?)null);
 
-        await Assert.ThrowsAsync<EntityNotFoundException>(() => _service.GetByCode("Non existing dock"));
+        var result = await _service.GetByCode("Non existing dock");
+        Assert.Null(result);
     }
 
     [Fact]
