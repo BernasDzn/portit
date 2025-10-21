@@ -11,5 +11,5 @@ public interface IQualificationController
     public Task<ActionResult<Page<QualificationDto>>> Filter([FromQuery] QualificationFilter filter);
     public Task<ActionResult<QualificationDto>> GetById(string id);
     public Task<ActionResult<QualificationDto>> Create(QualificationDto qualificationDto);
-    public Task<ActionResult<QualificationDto>> Update(string id, QualificationDto qualificationDto);
+    public Task<ActionResult> Update(string id, QualificationDto qualificationDto);
 }

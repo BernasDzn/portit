@@ -1,5 +1,6 @@
 namespace Api.Infrastructure.Persistence.Repositories;
 
+using System.Collections;
 using Api.Application.DataTransfer.Filters;
 using Api.Application.Exceptions;
 using Api.Domain.Entities;
@@ -122,11 +123,24 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
             query = query.Where(vvn => vvn.Submitter.RepresentedOrganization!.Id == relatedOrg.Id);
 
             if (filter.Status != null)
-                query = query.Where(vvn => vvn.Status == filter.Status);
+                switch (filter.Status)
+                {
+                    case NotificationStatusFilter.InProgress:
+                        query = query.Where(vvn => vvn.Status == NotificationStatus.InProgress);
+                        break;
+                    case NotificationStatusFilter.ApprovalPending:
+                        query = query.Where(vvn => vvn.Status == NotificationStatus.ApprovalPending);
+                        break;
+                    case NotificationStatusFilter.Accpeted:
+                    case NotificationStatusFilter.Rejected:
+                        // We need to filter client side since the status is derived from GetLatestDecision()
+                        query = query.Where(vvn => vvn.NotificationDecisions.Count > 0 && vvn.Status == NotificationStatus.Decided);
+                        break;
+                }
 
             if (filter.WithReason != null)
-                query = filter.WithReason.Value 
-                    ? query.Where(vvn => vvn.NotificationDecisions.Any(nd => !string.IsNullOrEmpty(nd.Reason))) 
+                query = filter.WithReason.Value
+                    ? query.Where(vvn => vvn.NotificationDecisions.Any(nd => !string.IsNullOrEmpty(nd.Reason)))
                     : query.Where(vvn => vvn.NotificationDecisions.All(nd => string.IsNullOrEmpty(nd.Reason)));
 
             if (filter.WithDockAssigned != null)
@@ -142,7 +156,15 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
 
             // Pagination
             query = query.Skip((filter.PageNumber - 1) * filter.PageSize).Take(filter.PageSize);
-            return Task.FromResult(Page<VesselVisitNotification>.Of(query.ToList(), filter));
+            List<VesselVisitNotification> result = query.ToList();
+
+            // CLient side filter of latest notification decision status
+            if (filter.Status == NotificationStatusFilter.Accpeted)
+                result = result.Where(vvn => vvn.GetLatestDecision() != null && vvn.GetLatestDecision()!.Status == NotificationDecisionStatus.Approved).ToList();
+            else if (filter.Status == NotificationStatusFilter.Rejected)
+                result = result.Where(vvn => vvn.GetLatestDecision() != null && vvn.GetLatestDecision()!.Status == NotificationDecisionStatus.Rejected).ToList();
+
+            return Task.FromResult(Page<VesselVisitNotification>.Of(result, filter));
         }
         catch (System.Exception)
         {

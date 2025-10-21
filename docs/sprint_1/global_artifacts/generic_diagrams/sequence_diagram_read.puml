@@ -12,7 +12,6 @@ participant XptoController as Controller <<controller>>
 participant XptoService as Service <<service>>
 participant XptoRepository as Repository <<repository>>
 participant XptoContext as Context <<context>>
-participant XptoDto as Dto <<dto>>
 participant XptoModel as Model <<entity>>
 database Database
 
@@ -58,6 +57,7 @@ activate UI
         API --> UI: HTTP Reponse
     deactivate API
 
+UI --> Actor: Show Xpto details
 deactivate UI
             
 @enduml

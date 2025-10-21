@@ -99,7 +99,7 @@ public class QualificationController : ControllerBase, IQualificationController
 	}
 
 	[HttpPut("{id}", Name = "UpdateQualification")]
-	public async Task<ActionResult<QualificationDto>> Update(string id, QualificationDto qualDto)
+	public async Task<ActionResult> Update(string id, QualificationDto qualDto)
 	{
 		try
 		{	

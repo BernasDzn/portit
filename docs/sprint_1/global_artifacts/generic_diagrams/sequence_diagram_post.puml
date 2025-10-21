@@ -12,7 +12,6 @@ participant XptoController as Controller <<controller>>
 participant XptoService as Service <<service>>
 participant XptoRepository as Repository <<repository>>
 participant XptoContext as Context <<context>>
-participant XptoDto as Dto <<dto>>
 participant XptoModel as Model <<entity>>
 database Database
 
@@ -30,6 +29,27 @@ activate UI
 
             Controller --> Service: Request registering
             activate Service
+
+                Service --> Repository: GetXtpo(id)
+                activate Repository
+                    Repository --> Context: GetById(id)
+                    activate Context
+                    Context --> Database: SELECT
+                    Context --> Repository: xptoInstance?
+                    deactivate Context
+                    Repository --> Service: xptoInstance?
+                deactivate Repository
+
+                group if xptoInstance exists
+                    Service --> Controller: EntityAlreadyExistsException 
+                    activate Controller
+                        Controller --> API: Conflict()
+                        activate API
+                            API --> UI: HTTP Response
+                        deactivate API
+                        UI --> Actor: Error
+                    deactivate Controller
+                end
 
                 Service --> Repository: RegisterXpto(data)
                 activate Repository
@@ -57,12 +77,12 @@ activate UI
                 Service --> Controller: xptoInstanceDto
             deactivate Service
 
-            Controller --> API: Ok(xptoResponseDto)
+            Controller --> API: CreatedAt(xptoResponseDto)
         deactivate Controller
 
         API --> UI: HTTP Reponse
     deactivate API
-
+UI --> Actor: Results
 deactivate UI
             
 @enduml

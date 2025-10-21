@@ -38,16 +38,27 @@ activate UI
 
                     activate Context
                         Context --> Database: SELECT
-                        Context --> Repository: result
+                        Context --> Repository: xptoInstance?
                     deactivate Context
 
-                    Repository --> Service: xptoInstance
+                    Repository --> Service: xptoInstance?
                 deactivate Repository
+
+                group if not xptoInstance exists
+                    Service --> Controller: EntityNotFoundException 
+                    activate Controller
+                        Controller --> API: NotFound()
+                        activate API
+                            API --> UI: HTTP Response
+                        deactivate API
+                        UI --> Actor: Error
+                    deactivate Controller
+                end
 
                 Service --> Repository: Update(data)
                 activate Repository
                 
-                    Repository --> Model: update(data)
+                    Repository --> Model: Update(data)
                     Repository --> Context: Save(XptoInstance)
 
                     activate Context
@@ -66,12 +77,13 @@ activate UI
                 Service --> Controller: xptoInstanceDto
             deactivate Service
 
-            Controller --> API: Ok(xptoResponseDto)
+            Controller --> API: NoContent()
         deactivate Controller
 
         API --> UI: HTTP Reponse
     deactivate API
 
+UI --> Actor: Success
 deactivate UI
             
 @enduml
