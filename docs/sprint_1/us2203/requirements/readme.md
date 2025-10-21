@@ -9,7 +9,7 @@
 <p>
 
 > Data needed include: unique identifier, name/number, location within the port, and physical characteristics (e.g., length, depth, max draft), the vessel types allowed to berth there
-
+> Docks must be searchable and filterable by name, vessel type, and location.
 </p>
 </details>
 
