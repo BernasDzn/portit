@@ -31,7 +31,7 @@ public class DockController : ControllerBase, IDockController
 	{
 		DockDto? dock = await _dockService.GetByCode(code);
 		if (dock == null)
-			return NotFound();
+			return NotFound($"No dock found with code: {code}");
 
 		return Ok(dock);
 	}
@@ -47,7 +47,7 @@ public class DockController : ControllerBase, IDockController
 		catch (System.Exception e)
 		{
 			_logger.LogError("Error filtering docks, {Message}", e.Message);
-			return NotFound();
+			return NotFound(e.Message);
 		}
 	}
 

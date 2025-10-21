@@ -73,7 +73,7 @@ namespace Tests.Unitary.Controller
 
             var result = await _controller.GetByCode(dockCode);
 
-            Assert.IsType<NotFoundResult>(result.Result);
+            Assert.IsType<NotFoundObjectResult>(result.Result);
         }
 
         [Fact]
@@ -211,7 +211,7 @@ namespace Tests.Unitary.Controller
 
             var result = await _controller.Filter(filter);
 
-            var notFoundResult = Assert.IsType<NotFoundResult>(result.Result);
+            var notFoundResult = Assert.IsType<NotFoundObjectResult>(result.Result);
         }
 
     }
