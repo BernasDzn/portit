@@ -126,4 +126,82 @@ public class Qualification_CtS_IntegrationTest
         var result = await _controller.Update(qualificationDto.IdCode, qualificationDto);
         var okResult = Assert.IsType<NoContentResult>(result);
     }
+
+    [Fact]
+    public async Task FilterQualifications_ReturnsInternalServerError_OnException()
+    {
+        var filter = new QualificationFilter { };
+        _repositoryMock.Setup(repo => repo.FilterQualificationsAsync(filter))
+            .ThrowsAsync(new System.Exception("Database error"));
+
+        var result = await _controller.Filter(filter);
+
+        var statusCodeResult = Assert.IsType<ObjectResult>(result.Result);
+        Assert.Equal(500, statusCodeResult.StatusCode);
+    }
+
+    [Fact]
+    public async Task GetAllQualifications_ReturnsInternalServerError_OnException()
+    {
+        _repositoryMock.Setup(repo => repo.GetQualificationsAsync())
+            .ThrowsAsync(new System.Exception("Database error"));
+
+        var result = await _controller.GetAll();
+
+        var statusCodeResult = Assert.IsType<ObjectResult>(result.Result);
+        Assert.Equal(500, statusCodeResult.StatusCode);
+    }
+
+    [Fact]
+    public async Task GetQualificationById_ReturnsInternalServerError_OnException()
+    {
+        var testId = "testid";
+        _repositoryMock.Setup(repo => repo.GetQualificationByIdAsync(testId))
+            .ThrowsAsync(new System.Exception("Database error"));
+
+        var result = await _controller.GetById(testId);
+
+        var statusCodeResult = Assert.IsType<ObjectResult>(result.Result);
+        Assert.Equal(500, statusCodeResult.StatusCode);
+    }
+
+    [Fact]
+    public async Task AddQualification_ReturnsInternalServerError_OnException()
+    {
+        var qualificationDto = new QualificationDto
+        {
+            IdCode = "newid",
+            QualificationName = "New Qualification"
+        };
+
+        _repositoryMock.Setup(repo => repo.GetQualificationByIdAsync(qualificationDto.IdCode))
+            .ReturnsAsync((Qualification?)null);
+        _repositoryMock.Setup(repo => repo.Add(It.IsAny<Qualification>()))
+            .ThrowsAsync(new System.Exception("Database error"));
+
+        var result = await _controller.Create(qualificationDto);
+
+        var statusCodeResult = Assert.IsType<ObjectResult>(result.Result);
+        Assert.Equal(500, statusCodeResult.StatusCode);
+    }
+
+    [Fact]
+    public async Task UpdateQualification_ReturnsInternalServerError_OnException()
+    {
+        var qualificationDto = new QualificationDto
+        {
+            IdCode = "existingid",
+            QualificationName = "Updated Qualification"
+        };
+
+        _repositoryMock.Setup(repo => repo.GetQualificationByIdAsync(qualificationDto.IdCode))
+            .ReturnsAsync(new Qualification(Guid.NewGuid(), new Code { Value = qualificationDto.IdCode }, new Designation { Value = "Old Qualification" }));
+        _repositoryMock.Setup(repo => repo.Update(It.IsAny<Qualification>()))
+            .ThrowsAsync(new System.Exception("Database error"));
+
+        var result = await _controller.Update(qualificationDto.IdCode, qualificationDto);
+
+        var statusCodeResult = Assert.IsType<ObjectResult>(result);
+        Assert.Equal(500, statusCodeResult.StatusCode);
+    }
 }
