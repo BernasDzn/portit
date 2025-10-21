@@ -1,0 +1,116 @@
+@startuml us2208_domain_model
+title Vessel Visit Notification Domain (DDD)
+hide circle
+
+rectangle "Vessel Visit Notification" {
+	class "**Vessel Visit Notification**" as vvn <<AggregateRoot>><<Entity>> {
+	}
+	class "Expected Time" as vvn_expected_time <<Value>> {
+		+ ETA
+		+ ETD
+	}
+	class "Special Requirements" as vvn_special_req <<Value>> {
+		+ specialRequirements
+	}
+	class "Crew" as vvn_crew <<Value>> {
+		+ captain
+		+ totalCrewMembers
+	}
+	class "Hazardous Cargo" as vvn_haz_cargo <<Value>> {
+		+ isCargoHazardous
+	}
+	class "Notification Decision" as vvn_decision <<Value>> {
+		+ status
+		+ timestamp
+		+ reason
+		+ assignedDock
+		+ officerID
+	}
+	enum "Notification Status" as vvn_notif_status {
+		APPROVED
+		REJECTED
+	}
+	enum "Notification State" as vvn_state {
+		IN_PROGRESS
+		DECISION_PENDING
+		DECIDED
+	}
+	class "Vessel Berth" as vvn_berth <<Entity>> {
+		+ dock
+		+ taskSchedule
+		+ status
+	}
+	class "Operational Task" as vvn_op_task <<Entity>> {
+		+ taskType
+		+ resourceAllocated
+		+ staffAllocated
+		+ observations
+	}
+	enum "Task Type" as vvn_task_type {
+		LOADING
+		UNLOADING
+		MOVING
+		OTHER
+	}
+	enum "Operation Status" as vvn_op_status {
+		SCHEDULED
+		FINISHED
+		FAILED
+		CANCELLED
+	}
+	class "Safety Officer" as vvn_safety_officer <<Value>> {
+		+ citizenID
+		+ name
+		+ nationality
+	}
+	class "Load Cargo Manifest" as vvn_lcm <<Value>> {}
+	class "Unload Cargo Manifest" as vvn_ucm <<Value>> {}
+	class "Cargo Load" as vvn_cargo_load <<Value>> {
+		+ origin
+		+ numberOfRow
+		+ numberOfBay
+		+ numberOfTier
+	}
+	class "Cargo Unload" as vvn_cargo_unload <<Value>> {
+		+ numberOfRow
+		+ numberOfBay
+		+ numberOfTier
+		+ destination
+	}
+	class "Cargo Item" as vvn_cargo_item <<Value>> {
+		+ ISO
+		+ description
+		+ type
+	}
+	enum "Cargo Type" as vvn_cargo_type {
+		REEFERS
+		GCP
+		ELECTRONICS
+		HAZMAT
+		OIM
+		OTHER
+	}
+}
+
+vvn --> vvn_expected_time : has
+vvn --> vvn_special_req : has
+vvn --> vvn_crew : has
+vvn --> vvn_haz_cargo : has
+vvn --> vvn_state : has
+vvn --> vvn_decision : 0..* decisions
+vvn --> vvn_berth : 0..1 responds to
+vvn --> vvn_lcm : 0..1 loadManifest
+vvn --> vvn_ucm : 0..1 unloadManifest
+vvn_crew --> vvn_safety_officer : 0..* safetyOfficers
+vvn_decision --> vvn_notif_status : has
+vvn_decision --> vvn_berth : 0..1 assignedDock
+vvn_berth --> vvn_op_status : has
+vvn_berth --> vvn_op_task : * tasks
+vvn_op_task --> vvn_task_type : has
+vvn_lcm --> vvn_cargo_load : *
+vvn_ucm --> vvn_cargo_unload : *
+vvn_cargo_load --> vvn_cargo_item : 1
+vvn_cargo_unload --> vvn_cargo_item : 1
+vvn_cargo_item --> vvn_cargo_type : has a
+
+@enduml

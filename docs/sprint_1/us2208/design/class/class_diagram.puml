@@ -1,0 +1,169 @@
+@startuml Vessel_Visit_Notification_Class_Diagram
+!theme plain
+skinparam classAttributeIconSize 0
+ 
+' Entity / Aggregate classes
+class VesselVisitNotification {
+	- NotificationId: string
+	- ExpectedArrival: DateTime
+	- ExpectedDeparture: DateTime
+	- IsCargoHazardous: bool
+	- SpecialRequirements: string?
+	- Vessel: Vessel
+	- Submitter: Representative
+	- CrewDetails: Crew?
+	- LoadCargoManifest: ICollection<CargoTransport>?
+	- UnloadCargoManifest: ICollection<CargoTransport>?
+	__
+	+ VesselVisitNotification(id, expectedArrival, expectedDeparture, isCargoHazardous, vessel, submitter, specialRequirements, crew, loadManifest, unloadManifest)
+	+ ToDTO(): VesselVisitNotificationDto
+	+ ToStatusDTO(): VesselVisitNotificationStatusDto
+	+ Update(expectedArrival, expectedDeparture, isCargoHazardous, specialRequirements, crew, loadManifest, unloadManifest): void
+}
+
+class NotificationDecision {
+	- Status: NotificationStatus
+	- Reason: string?
+	- DecisionDate: DateTime
+	- OfficerID: int?
+	- AssignedDock: Dock?
+	- IsFinal: bool
+	__
+	+ NotificationDecision(status, reason, decisionDate, officerId, assignedDock, isFinal)
+	+ ToDTO(): NotificationDecisionDto
+}
+
+class CargoTransport {
+	- Position: Position
+	- StorageArea: StorageArea
+	- Container: Container
+	__
+	+ CargoTransport(position, storageArea, container)
+}
+
+class Crew {
+	- Captain: string
+	- TotalCrewMembers: uint
+	- SafetyOfficers: ICollection<SafetyOfficer>
+	__
+	+ Crew(captain, totalCrewMembers, safetyOfficers)
+}
+
+' DTOs
+class VesselVisitNotificationDto {
+	+ NotificationId: string
+	+ ExpectedArrival: DateTime
+	+ ExpectedDeparture: DateTime
+	+ IsCargoHazardous: bool
+	+ SpecialRequirements: string?
+	+ CrewDetails: Crew?
+	+ LoadCargoManifest: ICollection<CargoTransportDto>?
+	+ UnloadCargoManifest: ICollection<CargoTransportDto>?
+	+ Vessel: VesselDto
+	+ Submitter: RepresentativeDto
+}
+
+class NotificationDecisionDto {
+	+ Status: int
+	+ Reason: string?
+	+ DecisionDate: DateTime
+	+ OfficerID: int?
+	+ AssignedDock: DockDto?
+	+ IsFinal: bool
+}
+
+' Controller
+class VesselVisitNotificationController {
+	- _notificationService: IVesselVisitNotificationService
+	- _notificationDecisionService: INotificationDecisionService
+	- _logger: ILogger<VesselVisitNotificationController>
+	__
+	+ VesselVisitNotificationController(notificationService, notificationDecisionService, logger)
+	+ GetAll(): Task<ActionResult<IEnumerable<VesselVisitNotificationDto>>>
+	+ GetDecisions(vesselVisitNotificationId): Task<ActionResult<IEnumerable<NotificationDecisionDto>>>
+	+ Create(vvnDto): Task<ActionResult<VesselVisitNotificationDto>>
+	+ CreateDecision(vesselVisitNotificationId, decisionDto): Task<ActionResult<NotificationDecisionDto>>
+	+ Update(id, vvnDto): Task<ActionResult<VesselVisitNotificationDto>>
+	+ Filter(filter): Task<ActionResult<Page<VesselVisitNotificationStatusDto>>>
+}
+
+' Services
+class VesselVisitNotificationService {
+	- _notificationRepository: IVesselVisitNotificationRepository
+	- _vesselRepository: IVesselRepository
+	- _representativeRepository: IRepresentativeRepository
+	- _storageAreaRepository: IStorageAreaRepository
+	- _containerRepository: IContainerRepository
+	- _idGenerator: VesselVisitNotificationIdGenerator
+	- _logger: ILogger<VesselVisitNotificationService>
+	__
+	+ VesselVisitNotificationService(notificationRepository, vesselRepository, representativeRepository, storageAreaRepository, idGenerator, containerRepository, logger)
+	+ GetVesselVisitNotifications(): Task<IEnumerable<VesselVisitNotificationDto>>
+	+ Add(createDto): Task<VesselVisitNotificationDto>
+	+ Update(id, createDto): Task<VesselVisitNotificationDto>
+	+ FilterNotifications(filter): Task<Page<VesselVisitNotificationStatusDto>>
+}
+
+class NotificationDecisionService {
+	- _notificationDecisionRepository: INotificationDecisionRepository
+	- _notificationRepository: IVesselVisitNotificationRepository
+	- _logger: ILogger<NotificationDecisionService>
+	__
+	+ Add(createDecisionDto, vesselVisitNotificationId): Task<NotificationDecisionDto>
+	+ GetNotificationDecisions(vesselVisitNotificationId): Task<IEnumerable<NotificationDecisionDto>>
+}
+
+' Repository interfaces
+interface IVesselVisitNotificationRepository {
+	+ GetVesselVisitNotificationsAsync(): Task<IEnumerable<VesselVisitNotification>>
+	+ GetVesselVisitNotificationByNotificationIdAsync(notificationId: string): Task<VesselVisitNotification>
+	+ AddAsync(notification: VesselVisitNotification): Task
+	+ UpdateAsync(notification: VesselVisitNotification): Task<VesselVisitNotification>
+	+ FilterVesselVisitNotificationsAsync(filter: VesselVisitNotificationFilter): Task<Page<VesselVisitNotification>>
+}
+
+interface INotificationDecisionRepository {
+	+ GetNotificationDecisionsAsync(vvnId: string): Task<IEnumerable<NotificationDecision>>
+	+ AddAsync(decision: NotificationDecision, vvnId: string): Task<NotificationDecision>
+}
+
+interface IVesselRepository {
+	+ GetVesselByIMOAsync(imo: string): Task<Vessel>
+}
+
+interface IRepresentativeRepository {
+	+ GetByCitizenIdAsync(id: uint): Task<Representative>
+}
+
+interface IStorageAreaRepository {
+	+ GetStorageAreaByCodeAsync(code: string): Task<StorageArea>
+}
+
+interface IContainerRepository {
+	+ GetContainerByNumberAsync(number: string): Task<Container>
+	+ Add(container: Container): Task
+}
+
+' Relationships
+VesselVisitNotification o-- "1" Vessel : "vessel"
+VesselVisitNotification o-- "1" Representative : "submitter"
+VesselVisitNotification o-- "0..1" Crew : "crew"
+VesselVisitNotification o-- "0..*" NotificationDecision : "decisions"
+VesselVisitNotification o-- "0..*" CargoTransport : "loadManifest / unloadManifest"
+
+VesselVisitNotificationController --> VesselVisitNotificationService : uses
+VesselVisitNotificationController --> NotificationDecisionService : uses
+VesselVisitNotificationService --> IVesselVisitNotificationRepository : uses
+VesselVisitNotificationService --> IVesselRepository : uses
+VesselVisitNotificationService --> IRepresentativeRepository : uses
+VesselVisitNotificationService --> IStorageAreaRepository : uses
+VesselVisitNotificationService --> IContainerRepository : uses
+NotificationDecisionService --> INotificationDecisionRepository : uses
+NotificationDecisionService --> IVesselVisitNotificationRepository : uses
+
+IVesselVisitNotificationRepository ..> VesselVisitNotification : "Stores"
+
+VesselVisitNotification ..> VesselVisitNotificationDto : "ToDTO"
+NotificationDecision ..> NotificationDecisionDto : "ToDTO"
+
+@enduml
