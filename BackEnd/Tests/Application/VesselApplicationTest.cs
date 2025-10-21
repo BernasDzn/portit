@@ -103,6 +103,32 @@ public class VesselApplicationTest : WebApplicationFactory<Program>
     }
 
     [Fact]
+    public async Task CreateVessel_ReturnsBadRequest_WhenVesselIsInvalid()
+    {
+        // Arrange
+        var body = @"{
+            ""name"": """",
+            ""imoNumber"": ""INVALID_IMO"",
+            ""type"": """",
+            ""owner"": """",
+            ""length"": -100,
+            ""depth"": -10,
+            ""draft"": -5
+        }";
+
+        var request = new HttpRequestMessage(HttpMethod.Post, "/Vessel")
+        {
+            Content = new StringContent(body, System.Text.Encoding.UTF8, "application/json")
+        };
+
+        // Act
+        var response = await _client.SendAsync(request);
+
+        // Assert
+        Assert.Equal(System.Net.HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
     public async Task GetVessels_ReturnsOkResponse_WithListOfVessels()
     {
         // Arrange
