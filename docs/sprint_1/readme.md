@@ -11,7 +11,7 @@
 
 ### User Stories:
 - [US2201 - ](us2201/readme.md)
-- [US2202 - ](us2202/readme.md)
+- [US2202 - Register and update vessel records](us2202/readme.md)
 - [US2203 - ](us2203/readme.md)
 - [US2204 - ](us2204/readme.md)
 -

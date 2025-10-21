@@ -1,0 +1,85 @@
+@startuml us2202_domain_model
+title Vessel Domain (DDD)
+hide circle
+
+rectangle "Vessel" {
+	class "**Vessel**" as vessel <<AggregateRoot>><<Entity>> {
+	}
+	class "Vessel\n**IMO Number**" as IMO_number <<Value>> {
+		+ IMO Number
+	}
+	class "Vessel\n**Name**" as vessel_name <<Value>> {
+		+ Name
+	}
+	class "Vessel\n**Physical Characteristics**" as vessel_physical_char <<Value>> {
+		+ Length
+		+ Depth
+		+ Draft
+	}
+}
+
+rectangle "Vessel Type"{
+	class "**Vessel Type**" as vessel_type <<AggregateRoot>><<Entity>> {
+	}
+	class "Vessel Type\n**Name**" as vessel_type_name <<Value>> {
+		+ Name
+	}
+	class "Vessel Type\n**Description**" as vessel_type_description <<Value>> {
+		+ Description
+	}
+	class "Vessel Type\n**Max Number Of Rows**" as vessel_type_max_rows <<Value>> {
+		+ maxNumberOfRows
+	}
+	class "Vessel Type\n**Max Number Of Bays**" as vessel_type_max_bays <<Value>> {
+		+ maxNumberOfBays
+	}
+	class "Vessel Type\n**Max Number Of Tiers**" as vessel_type_max_tiers <<Value>> {
+		+ maxNumberOfTiers
+	}
+	class "Vessel Type\n**Physical Characteristics**" as vessel_type_physical_char <<Value>> {
+		+ Length
+		+ Depth
+		+ Draft
+	}
+}
+
+rectangle "Shipping Agent Organization"{
+	class "**Shipping Agent**\n**Organization**" as SAO <<AggregateRoot>><<Entity>> {
+	}
+	class "Shipping Agent\nOrganization\n**Name**" as SAO_name <<Value>> {
+		+ legalName
+		+ altNames
+	}
+	class "Shipping Agent\nOrganization\n**Address**" as SAO_address <<Value>> {
+		+ address
+	}
+	class "Shipping Agent\nOrganization\n**Tax Number**" as SAO_tax_number <<Value>> {
+		+ taxNumber
+	}
+	class "**SAO Representative**" as SAO_rep <<Entity>> {
+		+ name
+		+ citizenID
+		+ nationality
+		+ email
+		+ phoneNumber
+		+ status
+	}
+}
+
+vessel --> vessel_type : "* type"
+vessel --> IMO_number : "1"
+vessel --> vessel_name : "1"
+vessel --> vessel_physical_char : "1"
+vessel "*" --> "1" SAO : "owned by"
+SAO --> SAO_name
+SAO --> SAO_address
+SAO --> SAO_tax_number
+SAO "1" --> "1..*" SAO_rep
+vessel_type --> vessel_type_name
+vessel_type --> vessel_type_description
+vessel_type --> vessel_type_max_rows
+vessel_type --> vessel_type_max_bays
+vessel_type --> vessel_type_max_tiers
+vessel_type --> vessel_type_physical_char
+
+@enduml
