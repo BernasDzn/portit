@@ -110,6 +110,23 @@ public class Qualification_CtS_IntegrationTest
     }
 
     [Fact]
+    public async Task AddQualification_ReturnsConflict_OnDuplicateId()
+    {
+        var qualificationDto = new QualificationDto
+        {
+            IdCode = "existingid",
+            QualificationName = "New Qualification"
+        };
+
+        _repositoryMock.Setup(repo => repo.GetQualificationByIdAsync(qualificationDto.IdCode))
+            .ReturnsAsync(new Qualification(Guid.NewGuid(), new Code { Value = qualificationDto.IdCode }, new Designation { Value = "Existing Qualification" }));
+
+        var result = await _controller.Create(qualificationDto);
+
+        Assert.IsType<ConflictObjectResult>(result.Result);
+    }
+
+    [Fact]
     public async Task UpdateQualification_ReturnsUpdatedQualification()
     {
         var qualificationDto = new QualificationDto
@@ -125,6 +142,35 @@ public class Qualification_CtS_IntegrationTest
 
         var result = await _controller.Update(qualificationDto.IdCode, qualificationDto);
         var okResult = Assert.IsType<NoContentResult>(result);
+    }
+
+    [Fact]
+    public async Task UpdateQualification_ReturnsNotFound_OnNonExistentId()
+    {
+        var qualificationDto = new QualificationDto
+        {
+            IdCode = "nonexistentid",
+            QualificationName = "Updated Qualification"
+        };
+
+        _repositoryMock.Setup(repo => repo.GetQualificationByIdAsync(qualificationDto.IdCode))
+            .ReturnsAsync((Qualification?)null);
+
+        var result = await _controller.Update(qualificationDto.IdCode, qualificationDto);
+
+        Assert.IsType<NotFoundObjectResult>(result);
+    }
+
+    [Fact]
+    public async Task GetQualificationById_ReturnsNotFound_OnNonExistentId()
+    {
+        var testId = "nonexistentid";
+        _repositoryMock.Setup(repo => repo.GetQualificationByIdAsync(testId))
+            .ReturnsAsync((Qualification?)null);
+
+        var result = await _controller.GetById(testId);
+
+        Assert.IsType<NotFoundObjectResult>(result.Result);
     }
 
     [Fact]
