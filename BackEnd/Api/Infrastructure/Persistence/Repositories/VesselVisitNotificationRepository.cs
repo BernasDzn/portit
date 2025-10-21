@@ -168,7 +168,6 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
         }
         catch (System.Exception)
         {
-            
             throw;
         }
     }

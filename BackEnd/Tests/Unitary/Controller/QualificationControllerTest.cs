@@ -141,7 +141,7 @@ public class QualificationControllerTest
         var updatedQualification = new QualificationDto { IdCode = "existing-id", QualificationName = "Updated Qualification" };
 
         var result = await _controller.Update("existing-id", updatedQualification);
-        Assert.IsType<NoContentResult>(result.Result);
+        Assert.IsType<NoContentResult>(result);
     }
 
     [Fact]
@@ -153,8 +153,7 @@ public class QualificationControllerTest
         var updatedQualification = new QualificationDto { IdCode = "non-existent-id", QualificationName = "Updated Qualification" };
 
         var result = await _controller.Update("non-existent-id", updatedQualification);
-
-        var notFoundResult = Assert.IsType<NotFoundObjectResult>(result.Result);
+        var notFoundResult = Assert.IsType<NotFoundObjectResult>(result);
     }
 
     [Fact]
@@ -166,7 +165,7 @@ public class QualificationControllerTest
         var updatedQualification = new QualificationDto { IdCode = "existing-id", QualificationName = "Updated Qualification" };
 
         var result = await _controller.Update("existing-id", updatedQualification);
-        var objectResult = Assert.IsType<ObjectResult>(result.Result);
+        var objectResult = Assert.IsType<ObjectResult>(result);
         Assert.Equal(500, objectResult.StatusCode);
     }
 
@@ -180,7 +179,7 @@ public class QualificationControllerTest
 
         var result = await _controller.Update("existing-id", updatedQualification);
 
-        var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);
+        var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
     }
 
     [Fact]
