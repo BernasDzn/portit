@@ -74,6 +74,28 @@ public class StaffControllerTest
 	}
 
 	[Fact]
+	public async Task Create_ShouldReturnBadRequest_WhenServiceReturnsNull()
+	{
+		_service_mock.Setup(service => service.Add(It.IsAny<CreateStaffDto>()))
+			.ReturnsAsync((StaffDto?)null);
+
+		var Result = await _controller.Create(_staffdto);
+
+		Assert.IsType<BadRequestObjectResult>(Result.Result);
+	}
+
+	[Fact]
+	public async Task Create_ShouldReturnBadRequest_OnEntityAlreadyExists()
+	{
+		_service_mock.Setup(service => service.Add(It.IsAny<CreateStaffDto>()))
+			.ThrowsAsync(new Api.Infrastructure.Exceptions.EntityAlreadyExistsException("Exists"));
+
+		var Result = await _controller.Create(_staffdto);
+
+		Assert.IsType<BadRequestObjectResult>(Result.Result);
+	}
+
+	[Fact]
 	public async Task Deactivate_ShouldReturnOk_WithValidData()
 	{
 		_service_mock.Setup(service => service.Deactivate(It.IsAny<string>()))
