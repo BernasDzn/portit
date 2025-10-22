@@ -5,11 +5,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Api.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Api.Infrastructure.Utilities;
 
 
-namespace Tests.Unitary.Application;
+namespace Tests.Application;
 
 public class VesselTypeApplicationTest : WebApplicationFactory<Program>
 {
