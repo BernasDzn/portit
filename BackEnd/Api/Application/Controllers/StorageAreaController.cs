@@ -10,10 +10,10 @@ using Api.Infrastructure.Exceptions;
 [Route("[controller]")]
 public class StorageAreaController : ControllerBase, IStorageAreaController
 {
-    private readonly StorageAreaService _storageAreaService;
+    private readonly IStorageAreaService _storageAreaService;
     private readonly ILogger<StorageAreaController> _logger;
 
-    public StorageAreaController(StorageAreaService service, ILogger<StorageAreaController> logger)
+    public StorageAreaController(IStorageAreaService service, ILogger<StorageAreaController> logger)
     {
         _storageAreaService = service;
         _logger = logger;

@@ -51,6 +51,18 @@ public class ApiContext : DbContext
                 v => JsonSerializer.Deserialize<OperationalWindow>(v, (JsonSerializerOptions?)null)!
             )
             .HasColumnType("json");
+
+            entity.HasMany(e => e.Qualifications)
+                .WithMany()
+                .UsingEntity<Dictionary<string, object>>(
+                    "PhysicalResourceQualification",
+                    prq => prq.HasOne<Qualification>().WithMany().HasForeignKey("QualificationId"),
+                    prq => prq.HasOne<PhysicalResource>().WithMany().HasForeignKey("PhysicalResourceId"),
+                    prq =>
+                    {
+                        prq.HasKey("PhysicalResourceId", "QualificationId");
+                    }
+                );
         });
 
         // Operation window shift list config
