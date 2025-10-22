@@ -123,7 +123,7 @@ public class DockApplicationTest : WebApplicationFactory<Program>
     public async Task GetDockByCode_ReturnsOkResponse_WhenDockExists()
     {
         
-        var code = "DCK004";
+        var code = "DCK001";
         var request = new HttpRequestMessage(HttpMethod.Get, $"/Dock/{code}");
 
     
