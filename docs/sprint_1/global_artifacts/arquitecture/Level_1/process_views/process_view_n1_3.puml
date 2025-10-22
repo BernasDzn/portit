@@ -1,15 +1,10 @@
 @startuml processview_n1
 Actor "User" as user
 Participant "System" as System <<System C4>>
-Participant "EFCoreApi" as EFCoreApi <<Container C4>>
 
 user -> System: Request Data Update
 
 activate System
-    System --> EFCoreApi: Update Data Request
-    activate EFCoreApi
-    System <-- EFCoreApi: Data Update Successful
-    deactivate EFCoreApi
     user <-- System: Data Update Confirmation
 deactivate System
 

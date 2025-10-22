@@ -24,7 +24,7 @@ activate UI
             Database --> BackEnd : xptoInstance?
         deactivate Database
 
-        group if xptoInstance is null
+        group if xptoInstance does not exist
         BackEnd --> UI: HTTP Response
         UI --> Actor: Error\n(xpto does not exist)
         end

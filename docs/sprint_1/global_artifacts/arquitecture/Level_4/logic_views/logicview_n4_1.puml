@@ -1,11 +1,12 @@
 @startuml logicview_n4
 skinparam Linetype polyline
 
-circle "EF API" as api #LightBlue
+circle "EFCore" as efcore #LightBlue
+circle "API" as api #LightBlue
 
 api --o masterdata
 
-rectangle "Master Data" as masterdata {
+rectangle "Master Data" as masterdata <<Container C4>> {
 	
 	[row 1 empty] as empty1 #red
 	[BackEnd Controllers] as controller
@@ -18,7 +19,7 @@ rectangle "Master Data" as masterdata {
 
 	[DTO] as dtos
 	[BackEnd Domain] as domain
-	database "Backend\nDatabase" as database
+	' database "Backend\nDatabase" as database
 
 	hide empty1
 	hide empty2
@@ -44,11 +45,6 @@ empty3 -l- repository
 empty2 -d- domain
 empty3 -u- domain
 
-repository -d(0- database : "DB\nAPI"
-
-
-
-
-
+repository -d(0- efcore : "EFCore\nAPI"
 
 @enduml
