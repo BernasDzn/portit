@@ -30,19 +30,6 @@ public class PhysicalResourceService : IPhysicalResourceService
         _logger = logger;
     }
 
-    private IEnumerable<Qualification> GetQualificationsAsync(PhysicalResourceDto resourceDto)
-    {
-        HashSet<Qualification> qualifications = new HashSet<Qualification>();
-        foreach (var IdCode in resourceDto.Qualifications.Select(q => q.IdCode))
-        {
-            Qualification? qualification = _qualificationRepository.GetQualificationByIdAsync(IdCode).Result;
-            if (qualification == null)
-                throw new EntityNotFoundException($"The qualification with ID {IdCode} does not exist.");
-
-            qualifications.Add(qualification);
-        }
-        return qualifications;
-    }
     private IEnumerable<Qualification> GetQualificationsAsync(IEnumerable<string> qualificationsCodes)
     {
         HashSet<Qualification> qualifications = new HashSet<Qualification>();

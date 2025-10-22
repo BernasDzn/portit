@@ -1,0 +1,13 @@
+@startuml logicview_n4
+skinparam Linetype polyline
+
+rectangle "localhost:??" as masterdata {
+
+    component "Browser" as browser
+    
+    component "HTTP Server" as httpserver   
+
+    browser --> httpserver : http/s
+}
+
+@enduml

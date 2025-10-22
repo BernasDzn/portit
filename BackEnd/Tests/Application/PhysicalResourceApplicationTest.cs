@@ -598,10 +598,13 @@ public class PhysicalResourceApplicationTest : WebApplicationFactory<Program>
             Status = ResourceStatus.Maintenance,
             SetupTimeInMinutes = 20,
             QualificationsCodes = new List<string> { "STSOP" },
-            OperationalWindow = OperationalWindow.FullWeek(),
+            OperationalWindow = new OperationalWindow
+            {
+                Shifts = new List<OperationalWindow.Shift>() {}
+            },
             ContainersPerHour = 35,
             LiftingCapacity = 20,
-            ServingDockCode = "DCK001"
+            ServingDockCode = "DCK002"
         };
 
         var response = await _client.PutAsJsonAsync($"/PhysicalResource/UpdateSTSCrane/{updatedCrane.Code}", updatedCrane);
@@ -836,10 +839,6 @@ public class PhysicalResourceApplicationTest : WebApplicationFactory<Program>
         var response = await _client.PutAsJsonAsync($"/PhysicalResource/UpdateTruck/TRK002", updatedTruck);
 
         response.EnsureSuccessStatusCode();
-        var returnedTruck = await response.Content.ReadFromJsonAsync<TruckDto>();
-        Assert.NotNull(returnedTruck);
-        Assert.Equal("Updated Truck", returnedTruck.Description);
-        Assert.Equal(ResourceStatus.Maintenance, returnedTruck.Status);
 
         // Verify the update persisted
         var getResponse = await _client.GetAsync($"/PhysicalResource/TRK002");

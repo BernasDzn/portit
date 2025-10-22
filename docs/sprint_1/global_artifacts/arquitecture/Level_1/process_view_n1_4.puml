@@ -1,0 +1,15 @@
+@startuml processview_n1
+Actor "User" as user
+Participant "System" as System <<System C4>>
+Participant "EFCoreApi" as EFCoreApi <<Container C4>>
+
+user -> System: Request Data Deletion
+
+activate System
+    System --> EFCoreApi: Delete Data
+    activate EFCoreApi
+    System <-- EFCoreApi: Data Deletion Confirmation
+    deactivate EFCoreApi
+    user <-- System: Data Deletion Successful
+deactivate System
+@enduml

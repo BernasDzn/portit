@@ -1,14 +1,14 @@
 @startuml logicview_n4
 skinparam Linetype polyline
 
-circle "API" as api #LightBlue
-
-api --o masterdata
+API --o masterdata
 
 rectangle "PortManSys" as masterdata {
 	
 	[Master Data] as backend
+	[EFCore] as efcore
 
+	backend -(0- efcore
 }
 
 @enduml
