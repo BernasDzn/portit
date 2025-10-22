@@ -1,26 +1,54 @@
-# Sprint 1
+# Sprint 1 - Planning and Technical Documentation
+
+> **NOTE:** This document only applies to the <u>BackEnd Module</u> user stories. 
 
 ### Aim of this Sprint:
 
 #### The aim of this sprint is three-fold:
-> -to set up the tools and infrastructure necessary to properly develop and manage the project, following engineering best practices;
+> To set up the tools and infrastructure necessary to properly develop and manage the project, following engineering best practices;
 
-> to develop back-end module(s) exposing REST API(s) for managing port facilities, shipping agents, and logistic resources;
+> To develop back-end module(s) exposing REST API(s) for managing port facilities, shipping agents, and logistic resources;
 
-> to study and analyze the project client from an organizational and managerial point of view.
+> To study and analyze the project client from an organizational and managerial point of view.
 
-### User Stories:
+### Team:
+
+| Number | Name |
+| - | - |
+| 1221402 | Rui Santiago |
+| 1231090 | Bernardo Cardoso |
+| 1231092 | Francisco Lousada |
+| 1231108 | Tiago Barros |
+
+### Distribution of Tasks:
+
+| US | 1221402 | 1231090  | 1231092 | 1231108 |
+| - | - | - | - | - |
+| US2201 |   | X  | X  |   |
+| US2202 |   | X  |   |   |
+| US2203 |   |   | X  |   |
+| US2204 | X  |  X | X  | X  |
+| US2205 |   |   |   | X  |
+| US2206 |   | X  |   |   |
+| US2207 |   |   | X  |   |
+| US2208 |   |  X |   |   |
+| US2209 | X  |   |   |   |
+| US2210 |   |   |   | X  |
+| US2211 | X  |   |   |   |
+| US2212 |   |   |   | X  |
+| US2213 | X  |   |   | X  |
+
+### Documentation *(per user story/use case)*:
 - [US2201 - ](us2201/readme.md)
 - [US2202 - Register and update vessel records](us2202/readme.md)
 - [US2203 - ](us2203/readme.md)
-- [US2204 - ](us2204/readme.md)
+- [US2204 - Register and update storage areas](us2204/readme.md)
 -
 -
 -
 - [US2208 - ](us2208/readme.md)
-- [US2209 - ](us2209/readme.md)
+- [US2209 - Change/complete a Vessel Visit Notification](us2209/readme.md)
 -
-- [US2211 - Manage staff members](us2211/readme.md)
+- [US2211 - Register and manage operating staff members](us2211/readme.md)
 -
-- [US2213 - ](us2213/readme.md)
-- ...
+- [US2213 - Register and manage qualifications](us2213/readme.md)

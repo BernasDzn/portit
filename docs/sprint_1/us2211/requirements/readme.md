@@ -1,4 +1,4 @@
-# US 2211 - Manage staff members
+# US 2211 - Register and manage operating staff members
 
 ## 1. User Story Description *(from project statement)*
 > As a Logistics Operator, I want to register and manage operating staff members (create, update, deactivate), so that the system can accurately reflect staff availability and ensure that only qualified personnel are assigned to resources during scheduling.
