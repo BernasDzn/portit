@@ -1,0 +1,77 @@
+@startuml sequence_diagram_filter
+skinparam handwritten true
+skinparam monochrome true
+skinparam packageStyle rect
+skinparam defaultFontName FG Virgil
+skinparam shadowing false
+
+actor User as Actor
+participant "U I" as UI <<presentation>>
+participant API as API <<application>>
+participant XptoController as Controller <<controller>>
+participant XptoService as Service <<service>>
+participant XptoRepository as Repository <<repository>>
+participant XptoContext as Context <<context>>
+participant XptoModel as Model <<entity>>
+participant "Page<Xpto>" as Page <<entity>>
+database Database
+
+title Read Xpto
+
+Actor --> UI: Read Xpto
+activate UI
+
+    UI --> API: HTTP GET /api/xpto/filter
+
+    activate API
+
+        API --> Controller: route
+        activate Controller
+
+            Controller --> Service: Request filter
+            activate Service
+
+                Service --> Repository: FilterXpto(filter)
+                activate Repository
+                
+                    Repository --> Context: AsQueryable()
+                    activate Context
+                        Context --> Repository: queryableInstance
+                    deactivate Context
+
+                    loop each filter parameters
+                        Repository --> Repository: queryableInstance.Where(e.parameter = filter.parameter)
+                    end
+
+                    Repository --> Context: query()
+
+                    activate Context
+                        Context --> Database: SELECT
+                        Context --> Repository: result
+                    deactivate Context
+
+                    Repository --> Service: Page<xptoInstance>
+                deactivate Repository
+
+                Service --> Page: map to Page<xptoDto>
+                activate Page
+                    Page --> Service: xptoResponseDto
+                deactivate Page
+
+                ' Service --> Model: toDto()
+                ' activate Model
+                '     Model --> Service: xptoInstanceDto
+                ' deactivate Model
+
+                Service --> Controller: Page<xptoDto>
+            deactivate Service
+
+            Controller --> API: Ok(Page<xptoDto>)
+        deactivate Controller
+
+        API --> UI: HTTP Reponse
+    deactivate API
+UI --> Actor: Show Xpto List
+deactivate UI
+            
+@enduml
