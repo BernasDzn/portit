@@ -46,7 +46,25 @@ public class PhysicalResource : IDTOAble<PhysicalResourceDto>
     public void UpdateDescription(Designation description) { Description = description; }
     public void UpdateStatus(ResourceStatus status) { Status = status; }
     public void UpdateSetupTime(TimeSpan setupTime) { SetupTime = setupTime; }
-    public void UpdateQualifications(HashSet<Qualification> qualifications) { Qualifications = qualifications; }
+    public void UpdateQualifications(HashSet<Qualification> qualifications)
+    {
+        // To avoid duplicates remove all the unneeded ones instead of clearing and adding
+        // Remove unneeded qualifications
+        var toRemove = Qualifications
+            .Where(q => !qualifications.Any(nq => nq.Id == q.Id))
+            .ToList();
+
+        foreach (var q in toRemove)
+            Qualifications.Remove(q);
+
+        // Add only new qualifications
+        var toAdd = qualifications
+            .Where(nq => !Qualifications.Any(q => q.Id == nq.Id))
+            .ToList();
+
+        foreach (var q in toAdd)
+            Qualifications.Add(q);
+    }
     public void UpdateOperationalWindow(OperationalWindow operationalWindow) { OperationalWindow = operationalWindow; }
 
     public PhysicalResourceDto ToDTO()

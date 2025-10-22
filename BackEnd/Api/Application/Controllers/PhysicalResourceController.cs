@@ -37,7 +37,7 @@ public class PhysicalResourceController : ControllerBase, IPhysicalResourceContr
     }
 
     [HttpGet("{code}", Name = "GetByCode")]
-    public async Task<ActionResult<object>> GetByCode([FromQuery] string code)
+    public async Task<ActionResult<object>> GetByCode(string code)
     {
         try
         {

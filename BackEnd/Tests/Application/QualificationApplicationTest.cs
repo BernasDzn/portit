@@ -87,6 +87,17 @@ public class QualificationApplicationTest : WebApplicationFactory<Program>
     }
 
     [Fact]
+    public async Task FilterQualifications_PageNumberExceedsTotalPages_ReturnsEmptyResult()
+    {
+        var response = await _client.GetAsync("/Qualification/filter?pageNumber=10&pageSize=2");
+
+        response.EnsureSuccessStatusCode();
+        var pagedResult = await response.Content.ReadFromJsonAsync<Page<object>>();
+        Assert.NotNull(pagedResult);
+        Assert.Empty(pagedResult.Items);
+    }
+
+    [Fact]
     public async Task FilterQualifications_ReturnsEmptyResults_WhenNoMatch()
     {
         var response = await _client.GetAsync("/Qualification/filter?qualificationName=NonExistentQualification");
@@ -214,6 +225,14 @@ public class QualificationApplicationTest : WebApplicationFactory<Program>
         Assert.NotNull(createdQualification);
         Assert.Equal(qualificationDto.IdCode, createdQualification.IdCode);
         Assert.Equal(qualificationDto.QualificationName, createdQualification.QualificationName);
+
+        // Ensure it was actually added
+        var getResponse = await _client.GetAsync($"/Qualification/{qualificationDto.IdCode}");
+        getResponse.EnsureSuccessStatusCode();
+        var fetchedQualification = await getResponse.Content.ReadFromJsonAsync<QualificationDto>();
+        Assert.NotNull(fetchedQualification);
+        Assert.Equal(qualificationDto.IdCode, fetchedQualification.IdCode);
+        Assert.Equal(qualificationDto.QualificationName, fetchedQualification.QualificationName);
     }
 
     [Fact]

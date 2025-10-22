@@ -37,6 +37,15 @@ public class Qualification : IDTOAble<QualificationDto>
 		};
 	}
 
+    public override bool Equals(object? obj)
+    {
+        return obj is Qualification q && q.NameCode.Value == NameCode.Value;
+    }
+
+    public override int GetHashCode()
+    {
+        return NameCode.Value.GetHashCode();
+    }
 	public override string ToString()
 	{
 		return $"Qualification [Id={Id}, NameCode={NameCode.Value}, QualificationName={QualificationName.Value}]";

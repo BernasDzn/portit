@@ -1,0 +1,14 @@
+@startuml logicview_n4
+skinparam Linetype polyline
+
+circle "API" as api #LightBlue
+
+api --o masterdata 
+
+
+component "PortManSys" as masterdata <<system C4>> {
+	
+	[Master Data] as backend <<container C4>>
+}
+
+@enduml
