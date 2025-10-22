@@ -8,17 +8,16 @@ assignees: ''
 ---
 
 #### **Unitary:**
-- [ ] Staff
+- [ ] Domain
 - [ ] Controller
 - [ ] Service
 
 #### **Integration:**
 - [ ] Controller to Service Integration
-- ...
+- [ ] ...
 
 #### **Application:**
-- [ ]Application testing
+- [ ] Application testing
 
 #### **System:**
 - [ ] System testing
-- ...
