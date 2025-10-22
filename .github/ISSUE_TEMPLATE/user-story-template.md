@@ -1,9 +1,9 @@
 ---
-name: Issue Template
+name: User Story Template
 about: Template for an issue / user story
 title: USXXXX - XPTO
 labels: ''
-assignees: ''
+assignees: Rui-San
 
 ---
 
