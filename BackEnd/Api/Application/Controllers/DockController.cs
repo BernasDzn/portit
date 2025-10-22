@@ -47,7 +47,7 @@ public class DockController : ControllerBase, IDockController
 		catch (System.Exception e)
 		{
 			_logger.LogError("Error filtering docks, {Message}", e.Message);
-			return NotFound(e.Message);
+			return StatusCode(500, "An error occurred while filtering docks.");
 		}
 	}
 

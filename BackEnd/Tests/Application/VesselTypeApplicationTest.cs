@@ -140,19 +140,85 @@ public class VesselTypeApplicationTest : WebApplicationFactory<Program>
         Assert.Equal(System.Net.HttpStatusCode.NotFound, response.StatusCode);
     }
 
+    
     [Fact]
-    public async Task FilterVesselTypes_ReturnsOkResponse_WithFilteredVesselTypes()
+    public async Task FilterVesselType_ReturnsPagedResult()
     {
-        
-        var filterQuery = "?Name=Panamax&Description=Max%20size%20for%20Panama%20Canal";
-        var request = new HttpRequestMessage(HttpMethod.Get, $"/VesselType/filter{filterQuery}");
-
-        
-        var response = await _client.SendAsync(request);
+        var response = await _client.GetAsync("/VesselType/filter?pageNumber=1&pageSize=2");
 
         response.EnsureSuccessStatusCode();
-        var pagedVesselTypes = await response.Content.ReadFromJsonAsync<Page<VesselTypeDto>>();
-        Assert.NotNull(pagedVesselTypes);
-        Assert.NotEmpty(pagedVesselTypes.Items);
+        var pagedResult = await response.Content.ReadFromJsonAsync<Page<VesselTypeDto>>();
+        Assert.NotNull(pagedResult);
+        Assert.NotEmpty(pagedResult.Items);
+        Assert.Equal(1, pagedResult.PageNumber);
+        Assert.Equal(2, pagedResult.PageSize);
+    }
+
+    [Fact]
+    public async Task FilterVesselType_WithNameFilter_ReturnsFilteredResult()
+    {
+        var response = await _client.GetAsync("/VesselType/filter?Name=Panamax&pageNumber=1&pageSize=5");
+
+        response.EnsureSuccessStatusCode();
+        var pagedResult = await response.Content.ReadFromJsonAsync<Page<VesselTypeDto>>();
+        Assert.NotNull(pagedResult);
+        Assert.NotEmpty(pagedResult.Items);
+    }
+
+    [Fact]
+    public async Task FilterVesselType_WithDescriptionFilter_ReturnsFilteredResult()
+    {
+        var response = await _client.GetAsync("/VesselType/filter?Description=Max%20size%20for%20Panama%20Canal&pageNumber=1&pageSize=5");
+
+        response.EnsureSuccessStatusCode();
+        var pagedResult = await response.Content.ReadFromJsonAsync<Page<VesselTypeDto>>();
+        Assert.NotNull(pagedResult);
+        Assert.NotEmpty(pagedResult.Items);
+    }
+
+
+    [Fact]
+    public async Task FilterVesselType_WithMultipleFilters_ReturnsFilteredResult()
+    {
+        var response = await _client.GetAsync("/VesselType/filter?Name=Panamax&Description=Max%20size%20for%20Panama%20Canal&pageNumber=1&pageSize=5");
+
+
+        response.EnsureSuccessStatusCode();
+        var pagedDocks = await response.Content.ReadFromJsonAsync<Page<VesselTypeDto>>();
+        Assert.NotNull(pagedDocks);
+        Assert.NotEmpty(pagedDocks.Items);
+    }
+
+    [Fact]
+    public async Task FilterVesselType_NoMatches_ReturnsEmptyResult()
+    {
+        var response = await _client.GetAsync("/VesselType/filter?Name=nonexistent&Description=nonexistent&pageNumber=1&pageSize=5");
+
+        response.EnsureSuccessStatusCode();
+        var pagedResult = await response.Content.ReadFromJsonAsync<Page<VesselTypeDto>>();
+        Assert.NotNull(pagedResult);
+        Assert.Empty(pagedResult.Items);
+    }
+
+    [Fact]
+    public async Task FilterVesselType_PageNumberExceedsTotalPages_ReturnsEmptyResult()
+    {
+        var response = await _client.GetAsync("/VesselType/filter?pageNumber=10&pageSize=2");
+
+        response.EnsureSuccessStatusCode();
+        var pagedResult = await response.Content.ReadFromJsonAsync<Page<VesselTypeDto>>();
+        Assert.NotNull(pagedResult);
+        Assert.Empty(pagedResult.Items);
+    }
+
+    [Fact]
+    public async Task FilterVesselType_ReturnsFiltered_WhenInvalidParameterPassed()
+    {
+        var response = await _client.GetAsync("/VesselType/filter?invalidParam=someValue&pageNumber=1&pageSize=5");
+
+        response.EnsureSuccessStatusCode();
+        var pagedResult = await response.Content.ReadFromJsonAsync<Page<VesselTypeDto>>();
+        Assert.NotNull(pagedResult);
+        Assert.NotEmpty(pagedResult.Items);
     }
 }

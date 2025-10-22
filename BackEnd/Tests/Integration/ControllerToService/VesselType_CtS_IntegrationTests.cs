@@ -183,7 +183,7 @@ public class VesselType_CtS_IntegrationTest
     }
 
     [Fact]
-    public async Task FilterVesselTypes_ReturnsOkResult_WithFilteredVesselTypes()
+    public async Task FilterVesselType_ReturnsOkResult_WithFilteredVesselTypes()
     {
         var filter = new VesselTypeFilter { };
         _repositoryMock.Setup(repo => repo.FilterVesselTypesAsync(filter))
@@ -202,7 +202,7 @@ public class VesselType_CtS_IntegrationTest
     }
 
     [Fact]
-    public async Task FilterVesselTypes_ReturnsInternalServerError_OnException()
+    public async Task FilterVesselType_ReturnsInternalServerError_OnException()
     {
         var filter = new VesselTypeFilter { };
         _repositoryMock.Setup(repo => repo.FilterVesselTypesAsync(filter))

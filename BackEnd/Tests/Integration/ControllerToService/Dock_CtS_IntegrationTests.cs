@@ -7,6 +7,8 @@ using Microsoft.Extensions.Logging;
 using Api.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Api.Domain.ValueObjects;
+using Api.Application.DataTransfer.Filters;
+using Api.Infrastructure.Utilities;
 
 namespace Tests.Integration.ControllerToService;
 
@@ -298,5 +300,37 @@ public class Dock_CtS_IntegrationTest
         var returnValue = Assert.IsType<DockDto>(okResult.Value);
         Assert.Equal(codeToUpdate, returnValue.Code);
         Assert.Equal("Updated Dock", returnValue.Name);
+    }
+
+    [Fact]
+    public async Task FilterDock_ReturnsOkResult_WithFilteredDocks()
+    {
+        var filter = new DockFilter { };
+        _repositoryMock.Setup(repo => repo.FilterDocksAsync(filter))
+            .ReturnsAsync(new Page<Dock>
+            {
+                Items = new List<Dock>(),
+                PageNumber = 1,
+                PageSize = 10,
+            });
+
+        var result = await _controller.Filter(filter);
+
+        var okResult = Assert.IsType<OkObjectResult>(result.Result);
+        var returnValue = Assert.IsType<Page<DockDto>>(okResult.Value);
+        Assert.Empty(returnValue.Items);
+    }
+
+    [Fact]
+    public async Task FilterDock_ReturnsInternalServerError_OnException()
+    {
+        var filter = new DockFilter { };
+        _repositoryMock.Setup(repo => repo.FilterDocksAsync(filter))
+            .ThrowsAsync(new System.Exception("Database error"));
+
+        var result = await _controller.Filter(filter);
+
+        var statusCodeResult = Assert.IsType<ObjectResult>(result.Result);
+        Assert.Equal(500, statusCodeResult.StatusCode);
     }
 }

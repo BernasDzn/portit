@@ -149,21 +149,95 @@ public class DockApplicationTest : WebApplicationFactory<Program>
         
         Assert.Equal(System.Net.HttpStatusCode.NotFound, response.StatusCode);
     }
+    
+    [Fact]
+    public async Task FilterDock_ReturnsPagedResult()
+    {
+        var response = await _client.GetAsync("/Dock/filter?pageNumber=1&pageSize=2");
+
+        response.EnsureSuccessStatusCode();
+        var pagedResult = await response.Content.ReadFromJsonAsync<Page<DockDto>>();
+        Assert.NotNull(pagedResult);
+        Assert.NotEmpty(pagedResult.Items);
+        Assert.Equal(1, pagedResult.PageNumber);
+        Assert.Equal(2, pagedResult.PageSize);
+    }
 
     [Fact]
-    public async Task FilterDocks_ReturnsOkResponse_WithFilteredDocks()
+    public async Task FilterDock_WithNameFilter_ReturnsFilteredResult()
     {
-        
-        var filterQuery = "?DockName=Dock%20A&Location=North%20Harbor&VesselTypeName=Handymax";
-        var request = new HttpRequestMessage(HttpMethod.Get, $"/Dock/filter{filterQuery}");
+        var response = await _client.GetAsync("/Dock/filter?Name=Dock%20A&pageNumber=1&pageSize=5");
 
-        
-        var response = await _client.SendAsync(request);
+        response.EnsureSuccessStatusCode();
+        var pagedResult = await response.Content.ReadFromJsonAsync<Page<DockDto>>();
+        Assert.NotNull(pagedResult);
+        Assert.NotEmpty(pagedResult.Items);
+    }
 
-        
+    [Fact]
+    public async Task FilterDock_WithLocationFilter_ReturnsFilteredResult()
+    {
+        var response = await _client.GetAsync("/Dock/filter?Location=North%20Harbor&pageNumber=1&pageSize=5");
+
+        response.EnsureSuccessStatusCode();
+        var pagedResult = await response.Content.ReadFromJsonAsync<Page<DockDto>>();
+        Assert.NotNull(pagedResult);
+        Assert.NotEmpty(pagedResult.Items);
+    }
+
+    [Fact]
+    public async Task FilterDock_WithVesselTypeFilter_ReturnsFilteredResult()
+    {
+        var response = await _client.GetAsync("/Dock/filter?VesselTypeName=Handymax&pageNumber=1&pageSize=5");
+
+        response.EnsureSuccessStatusCode();
+        var pagedResult = await response.Content.ReadFromJsonAsync<Page<DockDto>>();
+        Assert.NotNull(pagedResult);
+        Assert.NotEmpty(pagedResult.Items);
+    }
+
+    [Fact]
+    public async Task FilterDock_WithMultipleFilters_ReturnsFilteredResult()
+    {
+        var response = await _client.GetAsync("/Dock/filter?DockName=Dock%20A&Location=North%20Harbor&VesselTypeName=Handymax&pageNumber=1&pageSize=5");
+
+
         response.EnsureSuccessStatusCode();
         var pagedDocks = await response.Content.ReadFromJsonAsync<Page<DockDto>>();
         Assert.NotNull(pagedDocks);
         Assert.NotEmpty(pagedDocks.Items);
+    }
+
+    [Fact]
+    public async Task FilterDock_NoMatches_ReturnsEmptyResult()
+    {
+        var response = await _client.GetAsync("/Dock/filter?DockName=nonexistent&Location=nonexistent&VesselTypeName=nonexistent&pageNumber=1&pageSize=5");
+
+        response.EnsureSuccessStatusCode();
+        var pagedResult = await response.Content.ReadFromJsonAsync<Page<DockDto>>();
+        Assert.NotNull(pagedResult);
+        Assert.Empty(pagedResult.Items);
+    }
+
+    [Fact]
+    public async Task FilterDock_PageNumberExceedsTotalPages_ReturnsEmptyResult()
+    {
+        var response = await _client.GetAsync("/Dock/filter?pageNumber=10&pageSize=2");
+
+        response.EnsureSuccessStatusCode();
+        var pagedResult = await response.Content.ReadFromJsonAsync<Page<DockDto>>();
+        Assert.NotNull(pagedResult);
+        Assert.Empty(pagedResult.Items);
+    }
+
+    [Fact]
+    public async Task FilterDock_ReturnsFiltered_WhenInvalidParameterPassed()
+    {
+        var response = await _client.GetAsync("/Dock/filter?invalidParam=someValue&pageNumber=1&pageSize=5");
+
+        response.EnsureSuccessStatusCode();
+        var pagedResult = await response.Content.ReadFromJsonAsync<Page<DockDto>>();
+        Assert.NotNull(pagedResult);
+        Assert.NotEmpty(pagedResult.Items);
     }
 }

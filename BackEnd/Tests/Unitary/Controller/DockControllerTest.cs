@@ -211,7 +211,7 @@ namespace Tests.Unitary.Controller
 
             var result = await _controller.Filter(filter);
 
-            var notFoundResult = Assert.IsType<NotFoundObjectResult>(result.Result);
+            var notFoundResult = Assert.IsType<ObjectResult>(result.Result);
         }
 
     }
