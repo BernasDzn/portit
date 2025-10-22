@@ -58,7 +58,7 @@ public class VesselTypeController : ControllerBase, IVesselTypeController
 		catch (System.Exception e)
 		{
 			_logger.LogError("Error filtering vessel types, {Message}", e.Message);
-			return NotFound();
+			return StatusCode(500, "An error occurred while filtering vessel types.");
 		}
     }
 	[HttpPost(Name = "CreateVesselType")]

@@ -10,14 +10,14 @@ using Api.Domain.ValueObjects;
 
 namespace Tests.Integration.ControllerToService;
 
-public class DockIntegrationTest
+public class Dock_CtS_IntegrationTest
 {
     private readonly DockController _controller;
     private readonly DockService _service;
     private readonly Mock<IDockRepository> _repositoryMock;
     private readonly Mock<IVesselTypeRepository> _vesselTypeRepositoryMock;
 
-    public DockIntegrationTest()
+    public Dock_CtS_IntegrationTest()
     {
         _repositoryMock = new Mock<IDockRepository>();
         _vesselTypeRepositoryMock = new Mock<IVesselTypeRepository>();
