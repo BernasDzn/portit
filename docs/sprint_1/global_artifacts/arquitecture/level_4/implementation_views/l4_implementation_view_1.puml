@@ -7,8 +7,6 @@ package "PortTiT" {
 
     }
 
-    rt ..> controller
-
     package "Application" {
         package "Controllers" as controller {
 
@@ -57,4 +55,6 @@ ent ..> vo
 service .r.> exception
 
 repo ..> ctx
+rt ..> controller
+
 @enduml
