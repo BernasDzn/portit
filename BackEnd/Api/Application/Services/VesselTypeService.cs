@@ -27,14 +27,16 @@ public class VesselTypeService : IVesselTypeService
         return vtypes.Select(vt => vt.ToDTO()).ToList();
     }
 
-    public async Task<VesselTypeDto?> GetByName(string name)
+    public async Task<VesselTypeDto> GetByName(string name)
     {
         VesselType? vType = await _vesselTypeRepository.GetVesselTypeByNameAsync(name);
 
+        if (vType == null)
+            throw new EntityNotFoundException("Vessel Type not found.");
 
         AppLogEvents.LogRetrieve(_logger, "vessel type", 1);
         
-        return vType?.ToDTO();
+        return vType.ToDTO();
     }
 
     public async Task<Page<VesselTypeDto>> FilterVesselTypes(VesselTypeFilter filter)
@@ -47,6 +49,7 @@ public class VesselTypeService : IVesselTypeService
     public async Task<VesselTypeDto> Add(VesselTypeDto vesselTypeDto)
     {
         bool exists = await _vesselTypeRepository.GetVesselTypeByNameAsync(vesselTypeDto.Name) != null;
+
         if (exists)
             throw new EntityAlreadyExistsException("Vessel Type with the specified name already exists");
     
@@ -68,7 +71,7 @@ public class VesselTypeService : IVesselTypeService
     {
         VesselType? vesselType = await _vesselTypeRepository.GetVesselTypeByNameAsync(name);
         if (vesselType == null)
-            throw new Exception("Vessel Type not found.");
+            throw new EntityNotFoundException("Vessel Type not found.");
 
         vesselType.UpdateName(vesselTypeDto.Name);
         vesselType.UpdateDescription(vesselTypeDto.Description);
@@ -82,9 +85,7 @@ public class VesselTypeService : IVesselTypeService
             Draft = vesselTypeDto.PhysicalCharacteristics.Draft
         });
 
-        VesselType? updated = await _vesselTypeRepository.Update(vesselType);
-        if (updated == null)
-            throw new PersistencyFailedException("Failed to update Vessel Type.");
+        VesselType updated = await _vesselTypeRepository.Update(vesselType);
 
         AppLogEvents.LogUpdate(_logger, "Vessel Type", vesselType.Id);
         return updated.ToDTO();

@@ -61,7 +61,7 @@ public class VesselTypeServiceTest
     }
 
     [Fact]
-    public async Task GetVesselTypeById_ReturnsVesselType_WhenExists()
+    public async Task GetVesselTypeByName_ReturnsVesselType_WhenExists()
     {
         _vesselTypeRepositoryMock.Setup(repo => repo.GetVesselTypeByNameAsync(It.IsAny<string>()))
             .ReturnsAsync((string name) => vesselTypes.FirstOrDefault(vt => vt.Name.Value == name));
@@ -73,13 +73,12 @@ public class VesselTypeServiceTest
     }
 
     [Fact]
-    public async Task GetVesselTypeById_Throws_WhenNotExists()
+    public async Task GetVesselTypeByName_ThrowsException_WhenNotExists()
     {
         _vesselTypeRepositoryMock.Setup(repo => repo.GetVesselTypeByNameAsync(It.IsAny<string>()))
             .ReturnsAsync((VesselType?)null);
 
-        var result = await _service.GetByName("Non existing vessel type");
-        Assert.Null(result);
+        await Assert.ThrowsAsync<EntityNotFoundException>(async () => await _service.GetByName("Non existing vessel type"));
     }
 
     [Fact]
@@ -113,7 +112,7 @@ public class VesselTypeServiceTest
     }
 
     [Fact]
-    public async Task Add_ThrowsException_WhenVesselTypeAlreadyExists()
+    public async Task Add_ThrowsException_WhenNameAlreadyExists()
     {
         var existingVesselTypeDto = new VesselTypeDto
         {
@@ -158,7 +157,7 @@ public class VesselTypeServiceTest
     }
 
     [Fact]
-    public async Task Update_Throws_WhenVesselTypeNotExists()
+    public async Task Update_ThrowsException_WhenNameNotExists()
     {
         var nonExistentVesselTypeDto = new VesselTypeDto
         {
@@ -178,7 +177,7 @@ public class VesselTypeServiceTest
         _vesselTypeRepositoryMock.Setup(repo => repo.GetVesselTypeByNameAsync(nonExistentVesselTypeDto.Name))
             .ReturnsAsync((VesselType?)null);
 
-        await Assert.ThrowsAsync<Exception>(() => _service.Update(nonExistentVesselTypeDto.Name, nonExistentVesselTypeDto));
+        await Assert.ThrowsAsync<EntityNotFoundException>(() => _service.Update(nonExistentVesselTypeDto.Name, nonExistentVesselTypeDto));
     }
 
     [Fact]

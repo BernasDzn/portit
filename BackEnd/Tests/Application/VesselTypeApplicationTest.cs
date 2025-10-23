@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Api.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Api.Infrastructure.Utilities;
+using Api.Domain.ValueObjects;
 
 
 namespace Tests.Application;
@@ -91,13 +92,183 @@ public class VesselTypeApplicationTest : WebApplicationFactory<Program>
             var errorContent = await response.Content.ReadAsStringAsync();
             Console.WriteLine($"Status Code: {response.StatusCode}");
             Console.WriteLine($"Error Content: {errorContent}");
-            
+
             Assert.Fail($"Expected Created but got {response.StatusCode}. Error: {errorContent}");
         }
 
         Assert.Equal(System.Net.HttpStatusCode.Created, response.StatusCode);
         var createdVesselType = await response.Content.ReadFromJsonAsync<VesselTypeDto>();
         Assert.NotNull(createdVesselType);
+    }
+
+    [Fact]
+    public async Task AddVesselType_WithDuplicateName_ReturnsConflict()
+    {
+        var newVesselType = new VesselTypeDto
+        {
+            Name = "Panamax", // Existing name
+            Description = "Max size for Panama Canal",
+            MaxNumberOfRows = 30,
+            MaxNumberOfBays = 15,
+            MaxNumberOfTiers = 10,
+            PhysicalCharacteristics = new PhysicalCharacteristics
+            {
+                Length = 300,
+                Depth = 25,
+                Draft = 10
+            }
+        };
+
+        var response = await _client.PostAsJsonAsync("/VesselType", newVesselType);
+
+        Assert.Equal(System.Net.HttpStatusCode.Conflict, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task AddVesselType_WithInvalidData_ReturnsBadRequest()
+    {
+        var newVesselType = new VesselTypeDto
+        {
+            Name = "",
+            Description = "Invalid Data Vessel Type",
+            MaxNumberOfRows = 0,
+            MaxNumberOfBays = 0,
+            MaxNumberOfTiers = 0,
+            PhysicalCharacteristics = new PhysicalCharacteristics
+            {
+                Length = 100,
+                Depth = 10,
+                Draft = 5
+            }
+        };
+
+        var response = await _client.PostAsJsonAsync("/VesselType", newVesselType);
+
+        Assert.Equal(System.Net.HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task AddVesselType_OnNullData_ReturnsBadRequest()
+    {
+        VesselTypeDto? newVesselType = null;
+
+        var response = await _client.PostAsJsonAsync("/VesselType", newVesselType);
+
+        Assert.Equal(System.Net.HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task AddVesselType_OnWrongFormat_ReturnsBadRequest()
+    {
+        var wrongFormatData = new
+        {
+            InvalidField = "InvalidValue"
+        };
+
+        var response = await _client.PostAsJsonAsync("/VesselType", wrongFormatData);
+
+        Assert.Equal(System.Net.HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task UpdateVesselType_ReturnsOk()
+    {
+        var updatedVesselType = new VesselTypeDto
+        {
+            Name = "Handymax",
+            Description = "Updated description for Handymax vessel type.",
+            MaxNumberOfRows = 32,
+            MaxNumberOfBays = 16,
+            MaxNumberOfTiers = 11,
+            PhysicalCharacteristics = new PhysicalCharacteristics
+            {
+                Length = 310,
+                Depth = 26,
+                Draft = 11
+            }
+        };
+
+        var response = await _client.PutAsJsonAsync($"/VesselType/{updatedVesselType.Name}", updatedVesselType);
+
+        response.EnsureSuccessStatusCode();
+
+        // Verify the update persisted
+        var getResponse = await _client.GetAsync($"/VesselType/{updatedVesselType.Name}");
+        getResponse.EnsureSuccessStatusCode();
+        var retrievedVesselType = await getResponse.Content.ReadFromJsonAsync<VesselTypeDto>();
+        Assert.NotNull(retrievedVesselType);
+        Assert.Equal("Updated description for Handymax vessel type.", retrievedVesselType.Description);
+    }
+
+    [Fact]
+    public async Task UpdateVesselType_NonExistingName_ReturnsNotFound()
+    {
+        var updatedVesselType = new VesselTypeDto
+        {
+            Name = "NONEXISTENT",
+            Description = "Non-existing Vessel Type",
+            MaxNumberOfRows = 500,
+            MaxNumberOfBays = 35,
+            MaxNumberOfTiers = 20,
+            PhysicalCharacteristics = new PhysicalCharacteristics
+            {
+                Length = 500,
+                Depth = 35,
+                Draft = 20
+            }
+        };
+
+        var response = await _client.PutAsJsonAsync($"/VesselType/{updatedVesselType.Name}", updatedVesselType);
+
+        Assert.Equal(System.Net.HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+
+    [Fact]
+    public async Task UpdateVesselType_WithInvalidData_ReturnsBadRequest()
+    {
+        var updatedVesselType = new VesselTypeDto
+        {
+            Name = "",
+            Description = "",
+            MaxNumberOfRows = 0,
+            MaxNumberOfBays = 0,
+            MaxNumberOfTiers = 0,
+            PhysicalCharacteristics = new PhysicalCharacteristics
+            {
+                Length = 1,
+                Depth = 1,
+                Draft = 1
+            }
+        };
+
+        var response = await _client.PutAsJsonAsync($"/VesselType/Panamax", updatedVesselType);
+
+        Assert.Equal(System.Net.HttpStatusCode.BadRequest, response.StatusCode);
+    }
+    
+
+    [Fact]
+    public async Task UpdateVesselType_OnNullData_ReturnsBadRequest()
+    {
+        VesselTypeDto? updatedVesselType = null;
+
+        var response = await _client.PutAsJsonAsync($"/VesselType/Panamax", updatedVesselType);
+
+        Assert.Equal(System.Net.HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task UpdateVesselType_OnWrongFormat_ReturnsBadRequest()
+    {
+        var wrongFormatData = new
+        {
+            InvalidField = "InvalidValue"
+        };
+
+        var response = await _client.PutAsJsonAsync($"/VesselType/Panamax", wrongFormatData);
+
+        Assert.Equal(System.Net.HttpStatusCode.BadRequest, response.StatusCode);
     }
 
     [Fact]
@@ -140,7 +311,8 @@ public class VesselTypeApplicationTest : WebApplicationFactory<Program>
         Assert.Equal(System.Net.HttpStatusCode.NotFound, response.StatusCode);
     }
 
-    
+
+
     [Fact]
     public async Task FilterVesselType_ReturnsPagedResult()
     {

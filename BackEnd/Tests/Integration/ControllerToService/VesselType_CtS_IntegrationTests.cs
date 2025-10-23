@@ -82,6 +82,20 @@ public class VesselType_CtS_IntegrationTest
     }
 
     [Fact]
+    public async Task GetVesselTypeByName_ReturnsInternalServerError_OnException()
+    {
+        var testName = "Panamax";
+
+        _repositoryMock.Setup(repo => repo.GetVesselTypeByNameAsync(testName))
+            .ThrowsAsync(new System.Exception("Database error"));
+
+        var result = await _controller.GetByName(testName);
+
+        var statusCodeResult = Assert.IsType<ObjectResult>(result.Result);
+        Assert.Equal(500, statusCodeResult.StatusCode);
+    }
+
+    [Fact]
     public async Task CreateVesselType_ReturnsCreatedAtActionResult_WithCreatedVesselType()
     {
         var newVesselTypeDto = new VesselTypeDto
@@ -114,7 +128,45 @@ public class VesselType_CtS_IntegrationTest
 
 
     [Fact]
-    public async Task CreateVesselType_ReturnsBadRequest_OnException()
+    public async Task CreateVesselType_ReturnsConflict_OnDuplicateName()
+    {
+        var newVesselTypeDto = new VesselTypeDto
+        {
+            Name = "Panamax",
+            Description = "Description for new vessel type",
+            MaxNumberOfRows = 25,
+            MaxNumberOfBays = 12,
+            MaxNumberOfTiers = 6,
+            PhysicalCharacteristics = new PhysicalCharacteristics
+            {
+                Length = 350,
+                Depth = 20,
+                Draft = 15
+            }
+        };
+
+        _repositoryMock.Setup(repo => repo.GetVesselTypeByNameAsync(newVesselTypeDto.Name))
+            .ReturnsAsync(new VesselType(Guid.NewGuid(),
+                new Designation { Value = newVesselTypeDto.Name },
+                new Designation { Value = "Existing Vessel" },
+                30,
+                15,
+                7,
+                new PhysicalCharacteristics
+                {
+                    Length = 300,
+                    Depth = 25,
+                    Draft = 10
+                }
+            ));
+
+        var result = await _controller.Create(newVesselTypeDto);
+
+        Assert.IsType<ConflictObjectResult>(result.Result);
+    }
+
+    [Fact]
+    public async Task CreateVesselType_ReturnsInternalServerError_OnException()
     {
         var newVesselTypeDto = new VesselTypeDto
         {
@@ -131,14 +183,17 @@ public class VesselType_CtS_IntegrationTest
             }
         };
 
-        _repositoryMock.Setup(repo => repo.Add(It.IsAny<VesselType>()))
-            .ThrowsAsync(new System.Exception("Test exception"));
+        _repositoryMock.Setup(repo => repo.GetVesselTypeByNameAsync(newVesselTypeDto.Name))
+            .ThrowsAsync(new System.Exception("Database error"));
+
         var result = await _controller.Create(newVesselTypeDto);
-        Assert.IsType<BadRequestObjectResult>(result.Result);
+
+        var statusCodeResult = Assert.IsType<ObjectResult>(result.Result);
+        Assert.Equal(500, statusCodeResult.StatusCode);
     }
 
     [Fact]
-    public async Task UpdateVesselType_ReturnsUpdatedVesselType()
+    public async Task UpdateVesselType_ReturnsOkResult_WithUpdatedVesselType()
     {
         var nameToUpdate = "Panamax";
         var updateVesselTypeDto = new VesselTypeDto
@@ -181,6 +236,62 @@ public class VesselType_CtS_IntegrationTest
         Assert.Equal(nameToUpdate, returnValue.Name);
         Assert.Equal("Updated Description", returnValue.Description);
     }
+
+    [Fact]
+    public async Task UpdateVesselType_ReturnsNotFound_WhenVesselTypeDoesNotExist()
+    {
+        var existingName = "NonExistentVesselType";
+        var updateDto = new VesselTypeDto
+        {
+            Name = "Updated Vessel Name",
+            Description = "Updated Description",
+            MaxNumberOfRows = 30,
+            MaxNumberOfBays = 15,
+            MaxNumberOfTiers = 7,
+            PhysicalCharacteristics = new PhysicalCharacteristics
+            {
+                Length = 600,
+                Depth = 40,
+                Draft = 25
+            }
+        };
+
+        _repositoryMock.Setup(repo => repo.GetVesselTypeByNameAsync(existingName))
+            .ReturnsAsync((VesselType?)null);
+
+        var result = await _controller.Update(existingName, updateDto);
+
+        Assert.IsType<NotFoundObjectResult>(result.Result);
+    }
+
+    [Fact]
+    public async Task UpdateVesselType_ReturnsInternalServerError_OnException()
+    {
+        var existingName = "Panamax";
+        var updateDto = new VesselTypeDto
+        {
+            Name = existingName,
+            Description = "Updated Description",
+            MaxNumberOfRows = 30,
+            MaxNumberOfBays = 15,
+            MaxNumberOfTiers = 7,
+            PhysicalCharacteristics = new PhysicalCharacteristics
+            {
+                Length = 500,
+                Depth = 35,
+                Draft = 20
+            }
+        };
+
+        _repositoryMock.Setup(repo => repo.GetVesselTypeByNameAsync(existingName))
+            .ThrowsAsync(new Exception("Database error"));
+
+        var result = await _controller.Update(existingName, updateDto);
+
+        var statusResult = Assert.IsType<ObjectResult>(result.Result);
+        Assert.Equal(500, statusResult.StatusCode);
+    }
+
 
     [Fact]
     public async Task FilterVesselType_ReturnsOkResult_WithFilteredVesselTypes()
