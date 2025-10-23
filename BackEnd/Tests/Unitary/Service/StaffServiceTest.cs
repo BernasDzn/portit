@@ -81,7 +81,7 @@ public class StaffServiceTest
 		_staffRepositoryMock.Setup(repo => repo.Add(It.IsAny<Staff>()))
 			.ThrowsAsync(new EntityAlreadyExistsException());
 
-		await Assert.ThrowsAsync<EntityAlreadyExistsException>(() => _staffService.Add(_staff_dto_mock));
+		await Assert.ThrowsAsync<EntityAlreadyExistsException>(() => _staffService.Create(_staff_dto_mock));
 	}
 
 	[Fact]
@@ -93,7 +93,7 @@ public class StaffServiceTest
 		_staffRepositoryMock.Setup(repo => repo.Add(It.IsAny<Staff>()))
 			.ThrowsAsync(new EntityNotFoundException());
 
-		await Assert.ThrowsAsync<EntityNotFoundException>(() => _staffService.Add(_staff_dto_mock));
+		await Assert.ThrowsAsync<EntityNotFoundException>(() => _staffService.Create(_staff_dto_mock));
 	}
 
 	[Fact]
@@ -105,7 +105,7 @@ public class StaffServiceTest
 		_staffRepositoryMock.Setup(repo => repo.Add(It.IsAny<Staff>()))
 			.ThrowsAsync(new Exception("Test Exception"));
 
-		await Assert.ThrowsAsync<Exception>(() => _staffService.Add(_staff_dto_mock));
+		await Assert.ThrowsAsync<Exception>(() => _staffService.Create(_staff_dto_mock));
 	}
 
 	[Fact]
@@ -117,7 +117,7 @@ public class StaffServiceTest
 		_staffRepositoryMock.Setup(repo => repo.Add(It.IsAny<Staff>()))
 			.ReturnsAsync((Staff s) => s);
 
-		var Result = await _staffService.Add(_staff_dto_mock);
+		var Result = await _staffService.Create(_staff_dto_mock);
 
 		Assert.NotNull(Result);
 		Assert.Equal(_staff_dto_mock.MechanograficNumber, Result.MechanograficNumber);

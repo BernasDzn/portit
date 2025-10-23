@@ -4,6 +4,7 @@ using Api.Application.DataTransfer.Filters;
 using Api.Application.Exceptions;
 using Api.Application.Services;
 using Api.Domain.ValueObjects;
+using Api.Infrastructure.Exceptions;
 using Api.Infrastructure.Utilities;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -39,21 +40,22 @@ public class StaffControllerTest
 	}
 
 	[Fact]
-	public async Task GetAll_ShouldReturnBadRequest_OnException()
+	public async Task GetAll_ShouldReturnInternalServerError_OnException()
 	{
 		_service_mock.Setup(service => service.GetStaffs())
 			.ThrowsAsync(new Exception("Test Exception"));
 
 		var Result = await _controller.GetAll();
 
-		Assert.IsType<BadRequestObjectResult>(Result.Result);
+		var statusCodeResult = Assert.IsType<ObjectResult>(Result.Result);
+		Assert.Equal(500, statusCodeResult.StatusCode);
 	}
 
 	[Fact]
 	public async Task Create_ShouldReturnOk_WithValidData()
 	{
 		var expectedDto = new StaffDto();
-		_service_mock.Setup(service => service.Add(It.IsAny<CreateStaffDto>()))
+		_service_mock.Setup(service => service.Create(It.IsAny<CreateStaffDto>()))
 			.ReturnsAsync(expectedDto);
 
 		var Result = await _controller.Create(_staffdto);
@@ -63,36 +65,59 @@ public class StaffControllerTest
 	}
 
 	[Fact]
-	public async Task Create_ShouldReturnBadRequest_WithInvalidData()
+	public async Task Create_ShouldReturnBadRequest_WhenArgumentExeption()
 	{
-		_service_mock.Setup(service => service.Add(It.IsAny<CreateStaffDto>()))
+		_service_mock.Setup(service => service.Create(It.IsAny<CreateStaffDto>()))
+			.ThrowsAsync(new ArgumentException("Test Exception"));
+
+		var Result = await _controller.Create(_staffdto);
+
+		Assert.IsType<BadRequestObjectResult>(Result.Result);
+	}
+
+	[Fact]
+	public async Task Create_ShouldReturnBadRequest_WhenArgumentNullExeption()
+	{
+		_service_mock.Setup(service => service.Create(It.IsAny<CreateStaffDto>()))
+			.ThrowsAsync(new ArgumentNullException("Test Exception"));
+
+		var Result = await _controller.Create(_staffdto);
+
+		Assert.IsType<BadRequestObjectResult>(Result.Result);
+	}
+
+	[Fact]
+	public async Task Create_ShouldReturnInternalServerError_WhenException()
+	{
+		_service_mock.Setup(service => service.Create(It.IsAny<CreateStaffDto>()))
 			.ThrowsAsync(new Exception("Test Exception"));
 
 		var Result = await _controller.Create(_staffdto);
 
-		Assert.IsType<BadRequestObjectResult>(Result.Result);
+		var statusCodeResult = Assert.IsType<ObjectResult>(Result.Result);
+		Assert.Equal(500, statusCodeResult.StatusCode);
 	}
 
 	[Fact]
-	public async Task Create_ShouldReturnBadRequest_WhenServiceReturnsNull()
+	public async Task Create_ShouldReturnConflict_WhenEntityAlreadyExists()
 	{
-		_service_mock.Setup(service => service.Add(It.IsAny<CreateStaffDto>()))
-			.ReturnsAsync((StaffDto?)null);
+		_service_mock.Setup(service => service.Create(It.IsAny<CreateStaffDto>()))
+			.ThrowsAsync(new EntityAlreadyExistsException("Test Exception"));
 
 		var Result = await _controller.Create(_staffdto);
 
-		Assert.IsType<BadRequestObjectResult>(Result.Result);
+		Assert.IsType<ConflictObjectResult>(Result.Result);
 	}
 
 	[Fact]
-	public async Task Create_ShouldReturnBadRequest_OnEntityAlreadyExists()
+	public async Task Create_ShouldReturnNotFound_WhenEntityDoesNotExist()
 	{
-		_service_mock.Setup(service => service.Add(It.IsAny<CreateStaffDto>()))
-			.ThrowsAsync(new Api.Infrastructure.Exceptions.EntityAlreadyExistsException("Exists"));
+		_service_mock.Setup(service => service.Create(It.IsAny<CreateStaffDto>()))
+			.ThrowsAsync(new EntityNotFoundException("Not Found"));
 
 		var Result = await _controller.Create(_staffdto);
 
-		Assert.IsType<BadRequestObjectResult>(Result.Result);
+		Assert.IsType<NotFoundObjectResult>(Result.Result);
 	}
 
 	[Fact]
@@ -108,21 +133,22 @@ public class StaffControllerTest
 	}
 
 	[Fact]
-	public async Task Deactivate_ShouldReturnBadRequest_OnException()
+	public async Task Deactivate_ShouldReturnInternalServerError_OnException()
 	{
 		_service_mock.Setup(service => service.Deactivate(It.IsAny<string>()))
 			.ThrowsAsync(new Exception("Test Exception"));
 
 		var Result = await _controller.Deactivate("123");
 
-		Assert.IsType<BadRequestObjectResult>(Result);
+		var statusCodeResult = Assert.IsType<ObjectResult>(Result);
+		Assert.Equal(500, statusCodeResult.StatusCode);
 	}
 
 	[Fact]
-	public async Task Deactivate_ShouldReturnBadRequest_WithInvalidData()
+	public async Task Deactivate_ShouldReturnBadRequest_OnPossibleDomainError()
 	{
 		_service_mock.Setup(service => service.Deactivate(It.IsAny<string>()))
-			.ReturnsAsync((StaffDto?)null);
+			.ThrowsAsync(new ArgumentException("Test Exception"));
 
 		var Result = await _controller.Deactivate("123");
 
@@ -145,23 +171,26 @@ public class StaffControllerTest
 }
 
 	[Fact]
-	public async Task Update_ShouldReturnBadRequest_OnException()
+	public async Task Update_ShouldReturnInternalServerError_OnException()
 	{
 		_service_mock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<CreateStaffDto>()))
 			.ThrowsAsync(new Exception("Test Exception"));
 
 		var Result = await _controller.Update("123", _staffdto);
-		Assert.IsType<BadRequestObjectResult>(Result.Result);
+
+		var statusCodeResult = Assert.IsType<ObjectResult>(Result.Result);
+		Assert.Equal(500, statusCodeResult.StatusCode);
 	}
 
 	[Fact]
-	public async Task Update_ShouldReturnBadRequest_WithInvalidData()
+	public async Task Update_ShouldReturnNotFound_WhenEntityDoesNotExist()
 	{
 		_service_mock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<CreateStaffDto>()))
-			.ReturnsAsync((StaffDto?)null);
+			.ThrowsAsync(new EntityNotFoundException("Not Found"));
 
 		var Result = await _controller.Update("123", _staffdto);
-		Assert.IsType<BadRequestObjectResult>(Result.Result);
+
+		Assert.IsType<NotFoundObjectResult>(Result.Result);
 	}
 
 	[Fact]
@@ -176,23 +205,25 @@ public class StaffControllerTest
 	}
 
 	[Fact]
-	public async Task Filter_ShouldReturnNotFound_WhenNotFound()
+	public async Task Filter_ShouldReturnInternalServerError_OnException()
 	{
 		_service_mock.Setup(service => service.FilterStaffs(It.IsAny<StaffFilter>()))
-			.ThrowsAsync(new EntityNotFoundException());
+			.ThrowsAsync(new Exception("Test Exception"));
 
 		var Result = await _controller.Filter(new StaffFilter());
-		Assert.IsType<NotFoundResult>(Result.Result);
+
+		var statusCodeResult = Assert.IsType<ObjectResult>(Result.Result);
+		Assert.Equal(500, statusCodeResult.StatusCode);
 	}
 
 	[Fact]
 	public async Task Filter_ShouldReturnBadRequest_WhenOtherException()
 	{
 		_service_mock.Setup(service => service.FilterStaffs(It.IsAny<StaffFilter>()))
-			.ThrowsAsync(new Exception());
+			.ThrowsAsync(new ArgumentException("Test Exception"));
 
 		var Result = await _controller.Filter(new StaffFilter());
-		Assert.IsType<BadRequestResult>(Result.Result);
+		Assert.IsType<BadRequestObjectResult>(Result.Result);
 	}
 
 }

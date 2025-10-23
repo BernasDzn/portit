@@ -107,13 +107,13 @@ public class VesselApplicationTest : WebApplicationFactory<Program>
     {
         // Arrange
         var body = @"{
-            ""name"": """",
-            ""imoNumber"": ""INVALID_IMO"",
-            ""type"": """",
-            ""owner"": """",
-            ""length"": -100,
-            ""depth"": -10,
-            ""draft"": -5
+            ""name"": ""Maersk Triple E MKII"",
+            ""imoNumber"": ""IMO BLEBLEBLE"",
+            ""type"": ""Post-Panamax"",
+            ""owner"": ""Global Shipping Co."",
+            ""length"": 360,
+            ""depth"": 16,
+            ""draft"": 13
         }";
 
         var request = new HttpRequestMessage(HttpMethod.Post, "/Vessel")

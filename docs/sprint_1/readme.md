@@ -38,6 +38,16 @@
 | US2212 |   |   |   | X  |
 | US2213 | X  |   |   | X  |
 
+### Global artifacts
+The map of global artifacts is available through [here](global_artifacts/readme.md)
+
+As of this sprint, the generated artifacts are the following:
+1. [Glossary](global_artifacts/glossary.md)
+2. [Business model of entities](global_artifacts/domain_analysis/svg/business_model/business_model.svg)
+3. [Domain model](global_artifacts/domain_analysis/svg/domain_model/domain_model.svg)
+4. [Database modeling](global_artifacts/database_modeling/logical_model.svg)
+5. [C4+1 Model views](global_artifacts/arquitecture/readme.md)
+
 ### Documentation *(per user story/use case)*:
 - [US2201 - ](us2201/readme.md)
 - [US2202 - Register and update vessel records](us2202/readme.md)

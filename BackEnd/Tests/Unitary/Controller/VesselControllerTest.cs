@@ -60,17 +60,6 @@ public class VesselControllerTest
     }
 
     [Fact]
-    public async Task GetById_ReturnsNotFound_WhenVesselDoesNotExist()
-    {
-        _vesselServiceMock.Setup(service => service.GetByImo(It.IsAny<string>()))
-            .ReturnsAsync((VesselDto?)null);
-
-        var result = await _controller.GetByImo("non-existent-id");
-
-        var notFoundResult = Assert.IsType<NotFoundObjectResult>(result.Result);
-    }
-
-    [Fact]
     public async Task Create_ReturnsCreatedAtActionResult_WithCreatedVessel()
     {
         var newVessel = new CreateVesselDto

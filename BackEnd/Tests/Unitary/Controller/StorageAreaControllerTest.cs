@@ -184,14 +184,15 @@ public class StorageAreaControllerTest
     }
 
     [Fact]
-    public async Task Update_ShouldReturnBadRequest_OnOtherException()
+    public async Task Update_ShouldReturnInternalServerError_OnOtherException()
     {
     var existing = new StorageArea(Guid.NewGuid(), new Code { Value = "SA001" }, new Designation { Value = "Loc" }, StorageAreaType.Yard, 5, 0, new HashSet<StorageArea.DockRelation>());
     _repoMock.Setup(r => r.GetStorageAreaByCodeAsync(It.IsAny<string>())).ReturnsAsync(existing);
     _repoMock.Setup(r => r.Update(It.IsAny<StorageArea>())).ThrowsAsync(new Exception("Err"));
 
         var result = await _controller.Update("SA001", _createDto);
-        Assert.IsType<BadRequestObjectResult>(result.Result);
+        var resultType = Assert.IsType<ObjectResult>(result.Result);
+        Assert.Equal(500, resultType.StatusCode);
     }
 
 }

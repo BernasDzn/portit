@@ -1,0 +1,16 @@
+@startuml logicview_n4
+skinparam Linetype polyline
+
+rectangle "localhost:??" as localhost {
+
+    [Back end] as backend
+}
+
+rectangle "vsgate-s1.dei.isep.ipp.pt:10383" as server1 {
+
+    database Database 
+}
+
+backend -- Database : http/s
+
+@enduml

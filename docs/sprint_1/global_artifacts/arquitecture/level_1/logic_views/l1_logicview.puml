@@ -1,0 +1,8 @@
+@startuml logicview_n1
+skinparam Linetype polyline
+
+component "PorTiT" as masterdata <<system C4>> {
+	
+}
+
+@enduml

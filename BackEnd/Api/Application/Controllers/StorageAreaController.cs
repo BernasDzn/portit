@@ -81,7 +81,7 @@ public class StorageAreaController : ControllerBase, IStorageAreaController
             }
 
             _logger.LogCritical("Error creating storage area, {Message}", e.Message);
-            return BadRequest(e.Message);
+            return StatusCode(500, "An error occurred while retrieving the storage area.");
         }
     }
 
@@ -107,7 +107,7 @@ public class StorageAreaController : ControllerBase, IStorageAreaController
             }
 
             _logger.LogCritical("Error updating storage area, {Message}", e.Message);
-            return BadRequest(e.Message);
+            return StatusCode(500, "An error occurred while retrieving the storage area.");
         }
     }
 

@@ -6,6 +6,7 @@ using Api.Application.DataTransfer;
 using Api.Infrastructure.Utilities;
 using Api.Application.DataTransfer.Filters;
 using Api.Application.Exceptions;
+using Api.Infrastructure.Exceptions;
 
 [ApiController]
 [Route("[controller]")]
@@ -33,9 +34,6 @@ public class VesselController : ControllerBase, IVesselController
         try
         {
             VesselDto? vesselDto = await _vesselService.GetByImo(imo);
-            if (vesselDto == null)
-                return NotFound($"No vessel found with id: {imo}");
-
             return Ok(vesselDto);
         }
         catch (EntityNotFoundException ex)
@@ -56,10 +54,23 @@ public class VesselController : ControllerBase, IVesselController
         try
         {
             var createdVessel = await _vesselService.Add(vesselDto);
-            if (createdVessel == null)
-                return BadRequest("Could not create vessel");
 
             return CreatedAtAction(nameof(GetAll), new { name = createdVessel.Name }, createdVessel);
+        }
+        catch (EntityAlreadyExistsException ex)
+        {
+            _logger.LogWarning("Vessel already exists, {Message}", ex.Message);
+            return Conflict(ex.Message);
+        }
+        catch (EntityNotFoundException ex)
+        {
+            _logger.LogWarning("Referenced entity not found, {Message}", ex.Message);
+            return NotFound(ex.Message);
+        }
+        catch (PersistencyFailedException ex)
+        {
+            _logger.LogError("Persistency failed, {Message}", ex.Message);
+            return StatusCode(500, ex.Message);
         }
         catch (System.Exception e)
         {

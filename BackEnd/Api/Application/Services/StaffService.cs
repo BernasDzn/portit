@@ -30,7 +30,7 @@ public class StaffService : IStaffService
 		return staffs.Select(s => s.ToDTO()).ToList();
 	}
 
-	public async Task<StaffDto?> Add(CreateStaffDto staffDto)
+	public async Task<StaffDto?> Create(CreateStaffDto staffDto)
 	{
 		bool exists = await _staffRepository.GetStaffByMecNumberAsync(staffDto.MechanograficNumber) != null;
 		if (exists)
@@ -105,7 +105,7 @@ public class StaffService : IStaffService
 		return page.Map<StaffDto>(s => s.ToDTO());
 	}
 
-	public async Task<StaffDto?> Deactivate(string mecanographicNumber)
+	public async Task<StaffDto> Deactivate(string mecanographicNumber)
 	{
 		var staff = await _staffRepository.GetStaffByMecNumberAsync(mecanographicNumber);
 		if (staff == null)
@@ -114,7 +114,6 @@ public class StaffService : IStaffService
 		staff.Deactivate();
 		await _staffRepository.Update(staff);
 
-		//_logger.LogInformation("Staff {StaffId} deactivated.", staff.Id);
 		AppLogEvents.LogDeactivate(_logger, "Staff", staff.Id);
 		return staff.ToDTO();
 	}
