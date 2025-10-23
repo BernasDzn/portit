@@ -1,7 +1,7 @@
 @startuml logicview_n1
 skinparam Linetype polyline
 
-component "PortManSys" as masterdata <<system C4>> {
+component "PorTiT" as masterdata <<system C4>> {
 	
 }
 

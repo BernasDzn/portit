@@ -9,13 +9,11 @@ api --o masterdata
 rectangle "Master Data" as masterdata {
 	
 	[Backend] as backend
-	[EFCore] as efcore
 
 	database "Backend\nDatabase" as database
 
 } 
 
-backend -(0- efcore : "EFCore\nApi"
-efcore -r(0- database : "DB\nAPI"
+backend -(0- database : "Database\nApi"
 
 @enduml
