@@ -6,6 +6,7 @@ using Api.Application.DataTransfer;
 using Api.Application.DataTransfer.Filters;
 using Api.Infrastructure.Utilities;
 using Api.Application.Exceptions;
+using Api.Infrastructure.Exceptions;
 
 [ApiController]
 [Route("[controller]")]
@@ -27,13 +28,13 @@ public class StaffController : ControllerBase, IStaffController
 		try
 		{
 			staffsDto = await _staffService.GetStaffs();
+			return Ok(staffsDto);
 		}
-		catch (Exception e)
+		catch (Exception ex)
 		{
-			_logger.LogError("Error getting staffs, {Message}", e.Message);
-			return BadRequest(e.Message);
+			_logger.LogError("Unexpected error getting staffs, {Message}", ex.Message);
+			return StatusCode(500, "Internal server error");
 		}
-		return Ok(staffsDto);
 	}
 
 	[HttpPost(Name = "PostStaff")]
@@ -41,16 +42,28 @@ public class StaffController : ControllerBase, IStaffController
 	{
 		try
 		{
-			var createdStaff = await _staffService.Add(staffDto);
-			if (createdStaff == null)
-				return BadRequest("Could not create staff");
-
+			var createdStaff = await _staffService.Create(staffDto);
 			return CreatedAtAction(nameof(GetAll), new { id = createdStaff?.MechanograficNumber }, createdStaff);
+		}
+		catch (EntityNotFoundException ex)
+		{
+			_logger.LogError("Error creating staff, {Message}", ex.Message);
+			return NotFound(ex.Message);
+		}
+		catch (EntityAlreadyExistsException ex)
+		{
+			_logger.LogError("Error creating staff, {Message}", ex.Message);
+			return Conflict(ex.Message);
 		}
 		catch (Exception e)
 		{
+			if (e is ArgumentException || e is ArgumentNullException)
+			{
+				_logger.LogError("Validation error creating staff, {Message}", e.Message);
+				return BadRequest(e.Message);
+			}
 			_logger.LogError("Error creating staff, {Message}", e.Message);
-			return BadRequest(e.Message);
+			return StatusCode(500, "Internal server error");
 		}
 	}
 
@@ -59,15 +72,22 @@ public class StaffController : ControllerBase, IStaffController
 	{
 		try
 		{
-			StaffDto? deactivatedStaff = await _staffService.Deactivate(mecanographicNumber);
-			if (deactivatedStaff == null)
-				return BadRequest("Could not deactivate staff");
+			StaffDto deactivatedStaff = await _staffService.Deactivate(mecanographicNumber);
 			return Ok(deactivatedStaff); 
+		}catch (EntityNotFoundException e)
+		{
+			_logger.LogError("Error deactivating staff, {Message}", e.Message);
+			return NotFound(e.Message);
 		}
 		catch (Exception e)
 		{
+			if (e is ArgumentException || e is ArgumentNullException)
+			{
+				_logger.LogError("Validation error deactivating staff, {Message}", e.Message);
+				return BadRequest(e.Message);
+			}
 			_logger.LogError("Error deactivating staff, {Message}", e.Message);
-			return BadRequest(e.Message);
+			return StatusCode(500, "Internal server error");
 		}
 	}
 
@@ -77,15 +97,21 @@ public class StaffController : ControllerBase, IStaffController
 		try
 		{
 			var updatedStaff = await _staffService.Update(mecanographicNumber, staffDto);
-			if (updatedStaff == null)
-				return BadRequest("Could not update staff");
-
 			return Ok(updatedStaff);
+		}catch (EntityNotFoundException e)
+		{
+			_logger.LogError("Error updating staff, {Message}", e.Message);
+			return NotFound(e.Message);
 		}
 		catch (Exception e)
 		{
+			if (e is ArgumentException || e is ArgumentNullException)
+			{
+				_logger.LogError("Validation error updating staff, {Message}", e.Message);
+				return BadRequest(e.Message);
+			}
 			_logger.LogError("Error updating staff, {Message}", e.Message);
-			return BadRequest(e.Message);
+			return StatusCode(500, "Internal server error");
 		}
 	}
 
@@ -97,15 +123,15 @@ public class StaffController : ControllerBase, IStaffController
 			var staffsDto = await _staffService.FilterStaffs(filter);
 			return Ok(staffsDto);
 		}
-		catch (EntityNotFoundException notFoundEx)
+		catch (Exception ex)
 		{
-			_logger.LogError($"Could not filter staff:{notFoundEx.Message}");
-			return NotFound();
-		}
-		catch (Exception otherEx)
-		{
-			_logger.LogError($"Something went wrong:{otherEx.Message}");
-			return BadRequest();
+			if (ex is ArgumentException || ex is ArgumentNullException)
+			{
+				_logger.LogError($"Validation error:{ex.Message}");
+				return BadRequest(ex.Message);
+			}
+			_logger.LogError($"Something went wrong:{ex.Message}");
+			return StatusCode(500, "Internal server error");
 		}
 	}
 
