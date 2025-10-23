@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Api.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Api.Infrastructure.Utilities;
+using Api.Domain.ValueObjects;
 
 
 namespace Tests.Application;
@@ -37,18 +38,18 @@ public class DockApplicationTest : WebApplicationFactory<Program>
         });
 
         builder.UseEnvironment("Testing");
-        
+
         // Seed the database after configuration
         builder.ConfigureServices(services =>
         {
             var sp = services.BuildServiceProvider();
             using var scope = sp.CreateScope();
             var context = scope.ServiceProvider.GetRequiredService<ApiContext>();
-            
+
             try
             {
                 context.Database.EnsureCreated();
-                
+
                 // Only seed if database is empty (to avoid duplicate seeding)
                 if (!context.Docks.Any())
                 {
@@ -63,9 +64,9 @@ public class DockApplicationTest : WebApplicationFactory<Program>
     }
 
     [Fact]
-    public async Task CreateDock_ReturnsCreatedResponse_WhenDockIsValid()
+    public async Task AddDock_ReturnsCreatedResponse_WhenDockIsValid()
     {
-        
+
         var body = @"{
             ""code"" : ""DCK004"",
             ""name"": ""Dock D"",
@@ -83,7 +84,7 @@ public class DockApplicationTest : WebApplicationFactory<Program>
             Content = new StringContent(body, System.Text.Encoding.UTF8, "application/json")
         };
 
-        
+
         var response = await _client.SendAsync(request);
 
 
@@ -97,22 +98,232 @@ public class DockApplicationTest : WebApplicationFactory<Program>
             Assert.Fail($"Expected Created but got {response.StatusCode}. Error: {errorContent}");
         }
 
-        
+
         Assert.Equal(System.Net.HttpStatusCode.Created, response.StatusCode);
         var createdDock = await response.Content.ReadFromJsonAsync<DockDto>();
         Assert.NotNull(createdDock);
     }
 
     [Fact]
+    public async Task AddDock_WithDuplicateCode_ReturnsConflict()
+    {
+        var newDock = new CreateDockDto
+        {
+            Code = "DCK001", // Existing code
+            Name = "Duplicate Dock",
+            Location = "North Harbor",
+            PhysicalCharacteristics = new PhysicalCharacteristics
+            {
+                Length = 500,
+                Depth = 35,
+                Draft = 20
+            },
+            SupportedVesselTypes = new List<string> { "Panamax", "Handymax" }
+        };
+
+        var response = await _client.PostAsJsonAsync("/Dock", newDock);
+
+        Assert.Equal(System.Net.HttpStatusCode.Conflict, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task AddDock_WithInvalidData_ReturnsBadRequest()
+    {
+        var newDock = new CreateDockDto
+        {
+            Code = "",
+            Name = "Invalid Dock",
+            Location = "",
+            PhysicalCharacteristics = new PhysicalCharacteristics
+            {
+                Length = 500,
+                Depth = 35,
+                Draft = 20
+            },
+            SupportedVesselTypes = new List<string> { "Panamax" }
+        };
+
+        var response = await _client.PostAsJsonAsync("/Dock", newDock);
+
+        Assert.Equal(System.Net.HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task AddDock_MissingVesselTypes_ReturnsNotFound()
+    {
+        var newDock = new CreateDockDto
+        {
+            Code = "DCK005",
+            Name = "Dock E",
+            Location = "South Harbor",
+            PhysicalCharacteristics = new PhysicalCharacteristics
+            {
+                Length = 600,
+                Depth = 40,
+                Draft = 25
+            },
+            SupportedVesselTypes = new List<string> { "NonExistentType" }
+        };
+
+        var response = await _client.PostAsJsonAsync("/Dock", newDock);
+
+        Assert.Equal(System.Net.HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task AddDock_OnNullData_ReturnsBadRequest()
+    {
+        CreateDockDto? newDock = null;
+
+        var response = await _client.PostAsJsonAsync("/Dock", newDock);
+
+        Assert.Equal(System.Net.HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task AddDock_OnWrongFormat_ReturnsBadRequest()
+    {
+        var wrongFormatData = new
+        {
+            InvalidField = "InvalidValue"
+        };
+
+        var response = await _client.PostAsJsonAsync("/Dock", wrongFormatData);
+
+        Assert.Equal(System.Net.HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task UpdateDock_ReturnsOk()
+    {
+        var updatedDock = new CreateDockDto
+        {
+            Code = "DCK003",
+            Name = "Updated Dock",
+            Location = "North Harbor",
+            PhysicalCharacteristics = new PhysicalCharacteristics
+            {
+                Length = 500,
+                Depth = 35,
+                Draft = 20
+            },
+            SupportedVesselTypes = new List<string> { "Panamax", "Handymax" }
+        };
+
+        var response = await _client.PutAsJsonAsync($"/Dock/{updatedDock.Code}", updatedDock);
+
+        response.EnsureSuccessStatusCode();
+
+        // Verify the update persisted
+        var getResponse = await _client.GetAsync($"/Dock/{updatedDock.Code}");
+        getResponse.EnsureSuccessStatusCode();
+        var retrievedDock = await getResponse.Content.ReadFromJsonAsync<DockDto>();
+        Assert.NotNull(retrievedDock);
+        Assert.Equal("Updated Dock", retrievedDock.Name);
+    }
+
+    [Fact]
+    public async Task UpdateDock_NonExistingCode_ReturnsNotFound()
+    {
+        var updatedDock = new CreateDockDto
+        {
+            Code = "NONEXISTENT",
+            Name = "Non-existing Dock",
+            Location = "Unknown",
+            PhysicalCharacteristics = new PhysicalCharacteristics
+            {
+                Length = 500,
+                Depth = 35,
+                Draft = 20
+            },
+            SupportedVesselTypes = new List<string> { "Panamax" }
+        };
+
+        var response = await _client.PutAsJsonAsync($"/Dock/{updatedDock.Code}", updatedDock);
+
+        Assert.Equal(System.Net.HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+
+    [Fact]
+    public async Task UpdateDock_WithInvalidData_ReturnsBadRequest()
+    {
+        var updatedDock = new CreateDockDto
+        {
+            Code = "",
+            Name = "",
+            Location = "",
+            PhysicalCharacteristics = new PhysicalCharacteristics
+            {
+                Length = 1,
+                Depth = 1,
+                Draft = 1
+            },
+            SupportedVesselTypes = new List<string>()
+        };
+
+        var response = await _client.PutAsJsonAsync($"/Dock/DCK001", updatedDock);
+
+        Assert.Equal(System.Net.HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+
+    [Fact]
+    public async Task UpdateDock_MissingVesselTypes_ReturnsNotFound()
+    {
+        var updatedDock = new CreateDockDto
+        {
+            Code = "DCK001",
+            Name = "Updated Dock",
+            Location = "North Harbor",
+            PhysicalCharacteristics = new PhysicalCharacteristics
+            {
+                Length = 500,
+                Depth = 35,
+                Draft = 20
+            },
+            SupportedVesselTypes = new List<string> { "NonExistentType" }
+        };
+
+        var response = await _client.PutAsJsonAsync($"/Dock/{updatedDock.Code}", updatedDock);
+
+        Assert.Equal(System.Net.HttpStatusCode.NotFound, response.StatusCode);
+    }
+    
+
+    [Fact]
+    public async Task UpdateDock_OnNullData_ReturnsBadRequest()
+    {
+        CreateDockDto? updatedDock = null;
+
+        var response = await _client.PutAsJsonAsync($"/Dock/DCK001", updatedDock);
+
+        Assert.Equal(System.Net.HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task UpdateDock_OnWrongFormat_ReturnsBadRequest()
+    {
+        var wrongFormatData = new
+        {
+            InvalidField = "InvalidValue"
+        };
+
+        var response = await _client.PutAsJsonAsync($"/Dock/DCK001", wrongFormatData);
+
+        Assert.Equal(System.Net.HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
     public async Task GetDocks_ReturnsOkResponse_WithListOfDocks()
     {
-        
+
         var request = new HttpRequestMessage(HttpMethod.Get, "/Dock");
 
-        
+
         var response = await _client.SendAsync(request);
 
-        
+
         response.EnsureSuccessStatusCode();
         var docks = await response.Content.ReadFromJsonAsync<IEnumerable<DockDto>>();
         Assert.NotNull(docks);
@@ -122,14 +333,14 @@ public class DockApplicationTest : WebApplicationFactory<Program>
     [Fact]
     public async Task GetDockByCode_ReturnsOkResponse_WhenDockExists()
     {
-        
+
         var code = "DCK001";
         var request = new HttpRequestMessage(HttpMethod.Get, $"/Dock/{code}");
 
-    
+
         var response = await _client.SendAsync(request);
 
-        
+
         response.EnsureSuccessStatusCode();
         var dock = await response.Content.ReadFromJsonAsync<DockDto>();
         Assert.NotNull(dock);
@@ -139,17 +350,17 @@ public class DockApplicationTest : WebApplicationFactory<Program>
     [Fact]
     public async Task GetDockByCode_ReturnsNotFoundResponse_WhenDockDoesNotExist()
     {
-        
+
         var code = "DCK0000"; // Non-existing Dock code
         var request = new HttpRequestMessage(HttpMethod.Get, $"/Dock/{code}");
 
-        
+
         var response = await _client.SendAsync(request);
 
-        
+
         Assert.Equal(System.Net.HttpStatusCode.NotFound, response.StatusCode);
     }
-    
+
     [Fact]
     public async Task FilterDock_ReturnsPagedResult()
     {

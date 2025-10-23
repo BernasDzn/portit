@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Api.Application.Services;
 using Api.Application.DataTransfer;
 using Api.Application.DataTransfer.Filters;
-
+using Api.Application.Exceptions;
+using Api.Infrastructure.Exceptions;
 
 [ApiController]
 [Route("[controller]")]
@@ -29,11 +30,21 @@ public class DockController : ControllerBase, IDockController
 	[HttpGet("{code}", Name = "GetDockByCode")]
 	public async Task<ActionResult<DockDto>> GetByCode(string code)
 	{
-		DockDto? dock = await _dockService.GetByCode(code);
-		if (dock == null)
-			return NotFound($"No dock found with code: {code}");
-
-		return Ok(dock);
+		try
+		{
+			var dockDto = await _dockService.GetByCode(code);
+			return Ok(dockDto);
+		}
+		catch (EntityNotFoundException e)
+		{
+			_logger.LogError("Error retrieving dock by code, {Message}", e.Message);
+			return NotFound(e.Message);
+		}
+		catch (System.Exception e)
+		{
+			_logger.LogCritical("Error retrieving dock by code, {Message}", e.Message);
+			return StatusCode(500, "An error occurred while retrieving the dock.");
+		}
 	}
 
 	[HttpGet("filter")]
@@ -58,15 +69,29 @@ public class DockController : ControllerBase, IDockController
 		{
 			var createdDock = await _dockService.Add(dockDto);
 
-			if (createdDock == null)
-				return BadRequest("Unable to create dock");
-
 			return CreatedAtAction(nameof(GetAll), new { name = createdDock.Name }, createdDock);
+		}
+		catch (EntityAlreadyExistsException e)
+		{
+			_logger.LogError("Dock already exists, {Message}", e.Message);
+			return Conflict(e.Message);
+		}
+		catch (EntityNotFoundException e)
+		{
+			_logger.LogError("Related entity not found when creating dock, {Message}", e.Message);
+			return NotFound(e.Message);
 		}
 		catch (System.Exception e)
 		{
+
+			if (e is ArgumentNullException || e is ArgumentException || e is InvalidOperationException)
+			{
+				_logger.LogError("Invalid argument provided for creating dock, {Message}", e.Message);
+				return BadRequest(e.Message);
+			}
+
 			_logger.LogError("Error creating dock, {Message}", e.Message);
-			return BadRequest(e.Message);
+			return StatusCode(500, "An error occurred while creating the dock.");
 		}
 	}
 
@@ -76,15 +101,24 @@ public class DockController : ControllerBase, IDockController
 		try
 		{
 			var updatedDock = await _dockService.Update(name, dockDto);
-			if (updatedDock == null)
-				return BadRequest("Could not update dock");
 
 			return Ok(updatedDock);
 		}
+		catch (EntityNotFoundException e)
+		{
+			_logger.LogError("Entity not found when updating dock, {Message}", e.Message);
+			return NotFound(e.Message);
+		}
 		catch (System.Exception e)
 		{
+			if (e is ArgumentNullException || e is ArgumentException || e is InvalidOperationException)
+			{
+				_logger.LogError("Invalid argument provided for updating {DockName}, {Message}", name, e.Message);
+				return BadRequest(e.Message);
+			}
+
 			_logger.LogError("Error updating dock, {Message}", e.Message);
-			return BadRequest(e.Message);
+			return StatusCode(500, "An error occurred while updating the dock.");
 		}
 	}
 
