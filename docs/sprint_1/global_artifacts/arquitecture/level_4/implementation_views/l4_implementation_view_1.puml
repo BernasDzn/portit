@@ -1,0 +1,60 @@
+@startuml logicview_n4
+skinparam Linetype polyline
+
+package "PortTiT" {
+
+    package "Routes" as rt {
+
+    }
+
+    rt ..> controller
+
+    package "Application" {
+        package "Controllers" as controller {
+
+        }
+
+        package "Exceptions" as exception {
+
+        }
+
+        package "Services" as service{
+
+        }
+    }
+
+    package "Infrastructure"{
+
+        package "Persistency" {
+
+            package "Repositories" as repo {
+
+            }
+        }
+
+        package "Context" as ctx {
+
+        }
+    }
+
+    package "Domain"{
+        package "Entities" as ent {
+
+        }
+
+        package "ValueObjects" as vo {
+
+        }
+    }
+}
+
+controller ..> service
+service ..> repo
+repo ..> ent
+
+ent ..> vo
+
+service .r.> exception
+
+repo ..> ctx
+@enduml
