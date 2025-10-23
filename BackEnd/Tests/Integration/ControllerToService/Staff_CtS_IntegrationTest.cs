@@ -82,13 +82,18 @@ public class Staff_CtS_IntegrationTest
 	}
 
 	[Fact]
-	public async Task GetAll_ShouldReturnBadRequest_OnException()
+	public async Task GetAll_ShouldReturnInternalServerError_OnException()
 	{
+		// Arrange repository to throw so service will bubble up as general exception
 		_staffRepoMock.Setup(r => r.GetStaffsAsync())
 			.ThrowsAsync(new Exception("Test Exception"));
 
+		// Act
 		var result = await _controller.GetAll();
-		Assert.IsType<BadRequestObjectResult>(result.Result);
+
+		// Controller maps unexpected exceptions to 500
+		var statusCodeResult = Assert.IsType<ObjectResult>(result.Result);
+		Assert.Equal(500, statusCodeResult.StatusCode);
 	}
 
 	[Fact]
@@ -96,7 +101,10 @@ public class Staff_CtS_IntegrationTest
 	{
 		_qualRepoMock.Setup(r => r.GetQualificationByIdAsync(It.IsAny<string>()))
 			.ReturnsAsync(_qualification_mock);
-		
+
+		_staffRepoMock.Setup(r => r.GetStaffByMecNumberAsync(It.IsAny<string>()))
+			.ReturnsAsync((Staff?)null);
+
 		_staffRepoMock.Setup(r => r.Add(It.IsAny<Staff>()))
 			.ReturnsAsync(_staff_mock);
 
@@ -107,42 +115,52 @@ public class Staff_CtS_IntegrationTest
 	}
 
 	[Fact]
-	public async Task Create_WhenStaffExists_ThrowsException()
+	public async Task Create_WhenStaffExists_ReturnsBadRequest()
 	{
 		_qualRepoMock.Setup(repo => repo.GetQualificationByIdAsync(It.IsAny<string>()))
 			.ReturnsAsync(_qualification_mock);
 
+		// Existing staff found -> controller should return BadRequest
 		_staffRepoMock.Setup(repo => repo.GetStaffByMecNumberAsync(It.IsAny<string>()))
 			.ReturnsAsync(_staff_mock);
 
 		var result = await _controller.Create(_createStaffDto_mock);
-		Assert.IsType<BadRequestObjectResult>(result.Result);
+		Assert.IsType<ConflictObjectResult>(result.Result);
 	}
 
 	[Fact]
-	public async Task Create_ShouldReturnBadRequest_OnException()
+	public async Task Create_ShouldReturnInternalServerError_OnRepoException()
 	{
 		_qualRepoMock.Setup(r => r.GetQualificationByIdAsync(It.IsAny<string>()))
 			.ReturnsAsync(_qualification_mock);
 
+		_staffRepoMock.Setup(r => r.GetStaffByMecNumberAsync(It.IsAny<string>()))
+			.ReturnsAsync((Staff?)null);
+
+		// Simulate repository throwing unexpected exception
 		_staffRepoMock.Setup(r => r.Add(It.IsAny<Staff>()))
 			.ThrowsAsync(new Exception("Test Exception"));
 
 		var result = await _controller.Create(_createStaffDto_mock);
-		Assert.IsType<BadRequestObjectResult>(result.Result);
+
+		// Controller maps unexpected exceptions to 500
+		var statusCodeResult = Assert.IsType<ObjectResult>(result.Result);
+		Assert.Equal(500, statusCodeResult.StatusCode);
 	}
 
 	[Fact]
-	public async Task Create_ShouldReturnBadRequest_WhenQualificationNotFound()
+	public async Task Create_ShouldReturnNotFound_WhenQualificationNotFound()
 	{
+		// No existing staff
 		_staffRepoMock.Setup(r => r.GetStaffByMecNumberAsync(It.IsAny<string>()))
-			.ReturnsAsync(_staff_mock);
+			.ReturnsAsync((Staff?)null);
 
+		// Qualification lookup returns null -> controller should return BadRequest
 		_qualRepoMock.Setup(r => r.GetQualificationByIdAsync(It.IsAny<string>()))
-			.ReturnsAsync((Qualification)null!);
+			.ReturnsAsync((Qualification?)null);
 
 		var result = await _controller.Create(_createStaffDto_mock);
-		Assert.IsType<BadRequestObjectResult>(result.Result);
+		Assert.IsType<NotFoundObjectResult>(result.Result);
 	}
 
 	[Fact]
@@ -160,23 +178,25 @@ public class Staff_CtS_IntegrationTest
 	}
 
 	[Fact]
-	public async Task Deactivate_ShouldReturnBadRequest_OnException()
+	public async Task Deactivate_ShouldReturnInternalServerError_OnException()
 	{
 		_staffRepoMock.Setup(r => r.GetStaffByMecNumberAsync(It.IsAny<string>()))
 			.ThrowsAsync(new Exception("Test Exception"));
 
 		var result = await _controller.Deactivate(_staff_mock.MechanograficNumber.Value);
-		Assert.IsType<BadRequestObjectResult>(result);
+
+		var statusCodeResult = Assert.IsType<ObjectResult>(result);
+		Assert.Equal(500, statusCodeResult.StatusCode);
 	}
 
 	[Fact]
-	public async Task Deactivate_ShouldReturnBadRequest_WhenStaffNotFound()
+	public async Task Deactivate_ShouldReturnNotFound_WhenStaffNotFound()
 	{
 		_staffRepoMock.Setup(r => r.GetStaffByMecNumberAsync(It.IsAny<string>()))
-			.ReturnsAsync((Staff)null!);
+			.ReturnsAsync((Staff?)null);
 
 		var result = await _controller.Deactivate(_staff_mock.MechanograficNumber.Value);
-		Assert.IsType<BadRequestObjectResult>(result);
+		Assert.IsType<NotFoundObjectResult>(result);
 	}
 
 	[Fact]
@@ -197,23 +217,25 @@ public class Staff_CtS_IntegrationTest
 	}
 
 	[Fact]
-	public async Task Update_ShouldReturnBadRequest_OnException()
+	public async Task Update_ShouldReturnInternalServerError_OnException()
 	{
 		_staffRepoMock.Setup(r => r.GetStaffByMecNumberAsync(It.IsAny<string>()))
 			.ThrowsAsync(new Exception("Test Exception"));
 
 		var result = await _controller.Update(_staff_mock.MechanograficNumber.Value, _createStaffDto_mock);
-		Assert.IsType<BadRequestObjectResult>(result.Result);
+
+		var statusCodeResult = Assert.IsType<ObjectResult>(result.Result);
+		Assert.Equal(500, statusCodeResult.StatusCode);
 	}
 
 	[Fact]
-	public async Task Update_ShouldReturnBadRequest_WhenStaffNotFound()
+	public async Task Update_ShouldReturnNotFound_WhenStaffNotFound()
 	{
 		_staffRepoMock.Setup(r => r.GetStaffByMecNumberAsync(It.IsAny<string>()))
-			.ReturnsAsync((Staff)null!);
+			.ReturnsAsync((Staff?)null);
 
 		var result = await _controller.Update(_staff_mock.MechanograficNumber.Value, _createStaffDto_mock);
-		Assert.IsType<BadRequestObjectResult>(result.Result);
+		Assert.IsType<NotFoundObjectResult>(result.Result);
 	}
 
 	[Fact]
@@ -229,23 +251,28 @@ public class Staff_CtS_IntegrationTest
 	}
 
 	[Fact]
-	public async Task Filter_ShouldReturnNotFound_WhenNotFound()
+	public async Task Filter_ShouldReturnInternalServerError_WhenNotFound()
 	{
+		// Service/repository throws application-level EntityNotFoundException -> controller returns NotFound
 		_staffRepoMock.Setup(r => r.FilterStaffsAsync(It.IsAny<StaffFilter>()))
 			.ThrowsAsync(new Api.Application.Exceptions.EntityNotFoundException());
 
 		var result = await _controller.Filter(new StaffFilter());
-		Assert.IsType<NotFoundResult>(result.Result);
+
+		var statusCodeResult = Assert.IsType<ObjectResult>(result.Result);
+		Assert.Equal(500, statusCodeResult.StatusCode);
 	}
 
 	[Fact]
-	public async Task Filter_ShouldReturnBadRequest_WhenOtherException()
+	public async Task Filter_ShouldReturnInternalServerError_WhenOtherException()
 	{
 		_staffRepoMock.Setup(r => r.FilterStaffsAsync(It.IsAny<StaffFilter>()))
 			.ThrowsAsync(new Exception("Test Exception"));
 
 		var result = await _controller.Filter(new StaffFilter());
-		Assert.IsType<BadRequestResult>(result.Result);
+
+		var statusCodeResult = Assert.IsType<ObjectResult>(result.Result);
+		Assert.Equal(500, statusCodeResult.StatusCode);
 	}
 	
 }
