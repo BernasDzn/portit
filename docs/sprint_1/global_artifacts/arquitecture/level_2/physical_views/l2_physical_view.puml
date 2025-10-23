@@ -3,11 +3,10 @@ skinparam Linetype polyline
 
 rectangle "localhost:??" as masterdata {
 
-    component "Browser" as browser
-    
-    component "HTTP Server" as httpserver   
+}
 
-    browser --> httpserver : http/s
+rectangle "server1:??" as masterdata {
+
 }
 
 @enduml
