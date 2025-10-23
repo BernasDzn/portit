@@ -143,7 +143,7 @@ public class StaffApplicationTest : WebApplicationFactory<Program>
         };
 
         var response = await _client.PostAsJsonAsync("/Staff", createDto);
-        Assert.Equal(System.Net.HttpStatusCode.BadRequest, response.StatusCode);
+        Assert.Equal(System.Net.HttpStatusCode.NotFound, response.StatusCode);
     }
 
     [Fact]
@@ -161,7 +161,7 @@ public class StaffApplicationTest : WebApplicationFactory<Program>
         };
 
         var response = await _client.PostAsJsonAsync("/Staff", createDto);
-        Assert.Equal(System.Net.HttpStatusCode.BadRequest, response.StatusCode);
+        Assert.Equal(System.Net.HttpStatusCode.Conflict, response.StatusCode);
     }
 
     [Fact]
@@ -210,7 +210,7 @@ public class StaffApplicationTest : WebApplicationFactory<Program>
     public async Task Deactivate_ReturnsBadRequest_WhenNotExists()
     {
         var response = await _client.DeleteAsync("/Staff/NONEXISTENT");
-        Assert.Equal(System.Net.HttpStatusCode.BadRequest, response.StatusCode);
+        Assert.Equal(System.Net.HttpStatusCode.NotFound, response.StatusCode);
     }
 
     [Fact]
@@ -247,7 +247,7 @@ public class StaffApplicationTest : WebApplicationFactory<Program>
         };
 
         var response = await _client.PutAsJsonAsync($"/Staff/NONEX", dto);
-        Assert.Equal(System.Net.HttpStatusCode.BadRequest, response.StatusCode);
+        Assert.Equal(System.Net.HttpStatusCode.NotFound, response.StatusCode);
     }
 
     [Fact]
