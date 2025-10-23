@@ -212,6 +212,11 @@ rectangle "Staff"{
 		+ endDay
 		+ endTime
 	}
+
+	class "Staff\n**Mechanographic number**" as staff_number
+	{
+		+ mechanographicNumber
+	}
 }
 
 rectangle "Dock" {
@@ -236,6 +241,10 @@ rectangle "Dock" {
 		+ Draft
 	}
 
+	class "Dock\n**Code**" as dock_code <<Value>>
+	{
+		+ code
+	}
 }
 
 rectangle "Storage Area"{
@@ -559,5 +568,9 @@ yard_crane --> "1" storage_area
 
 truck --> "1" phys_res_cpt
 truck --> "1" phys_res_as
+
+staff --> "1" staff_number
+
+dock --> "1" dock_code
 
 @enduml
