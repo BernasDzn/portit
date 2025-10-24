@@ -1,0 +1,95 @@
+@startuml class_diagram
+skinparam classAttributeIconSize 0
+title Class Diagram
+
+package "Domain Layer" #LightGray {
+	class Qualification {
+		- Id: Guid
+		- NameCode: Code
+		- QualificationName: Designation
+		- Staffs: ICollection<Staff>
+		- PhysicalResources: ICollection<PhysicalResource>
+		__
+		+ Qualification(id: Guid, idCode: Code, qualificationName: Designation)
+		+ UpdateQualificationName(qualificationName: string): void
+		+ ToDTO(): QualificationDto
+		+ Equals(obj: object): bool
+		+ GetHashCode(): int
+		+ ToString(): string
+	}
+
+	class "Code" {
+		- _value: string
+		__
+		+ Value: string { get; set; }
+		+ ToString(): string
+	}
+
+	class "Designation" {
+		- _value: string
+		__
+		+ Value: string { get; set; }
+		+ ToString(): string
+	}
+
+	Qualification --> "Code" : has
+	Qualification --> "Designation" : has
+}
+
+package "DTOs" #LightGray {
+	class QualificationDto {
+		+ IdCode: string
+		+ QualificationName: string
+	}
+}
+
+package "Service Layer" #LightGray {
+	class QualificationService {
+		- _qualificationRepository: QualificationRepository
+		__
+		+ QualificationService(qualificationRepository)
+		+ GetAll(): Task<List<QualificationDto>>
+		+ GetById(Guid id): Task<QualificationDto>
+		+ Add(QualificationDto dto): Task<QualificationDto>
+		+ Update(Guid id, QualificationDto dto): Task<QualificationDto>
+		+ Filter(QualificationFilter filter): Task<List<QualificationDto>>
+	}
+}
+
+package "Controller Layer" #LightGray {
+	class QualificationController {
+		- _qualificationService: QualificationService
+		__
+		+ QualificationController(qualificationService)
+		+ GetAll(): Task<ActionResult<List<QualificationDto>>>
+		+ GetById(id): Task<ActionResult<QualificationDto>>
+		+ Create(qualDto): Task<ActionResult<QualificationDto>>
+		+ Update(id, qualDto): Task<ActionResult<QualificationDto>>
+		+ Filter(filter): Task<ActionResult<List<QualificationDto>>>
+	}
+}
+
+package "Repository Layer" #LightGray {
+	class QualificationRepository {
+		- _context: ApiContext
+		__
+		+ QualificationRepository(context)
+		+ GetAllAsync(): Task<List<Qualification>>
+		+ GetByIdAsync(Guid id): Task<Qualification>
+		+ GetByCodeAsync(string idCode): Task<Qualification>
+		+ FilterAsync(QualificationFilter filter): Task<List<Qualification>>
+		+ AddAsync(Qualification qualification): Task<Qualification>
+		+ UpdateAsync(Qualification qualification): Task<Qualification>
+	}
+}
+
+' Relationships
+QualificationRepository ..> Qualification : manages
+QualificationService ..> QualificationRepository : uses
+QualificationService ..>  Qualification : uses
+QualificationService ..> QualificationDto : uses
+QualificationController ..> QualificationService : uses
+
+Qualification ..> QualificationDto : converts to
+
+@enduml
