@@ -427,6 +427,19 @@ public static class Bootstrap
             crewDetails2
         );
 
+        VesselVisitNotification vvn5 = new VesselVisitNotification(
+            new VesselVisitNotificationId(
+                new Designation { Value = "PORTO" },
+                5,
+                (uint)DateTime.UtcNow.Year
+            ),
+            DateTime.UtcNow.AddDays(20),
+            DateTime.UtcNow.AddDays(25),
+            false,
+            vessel1,
+            vessel1.Owner.Representatives.First()
+        );
+
         NotificationDecision decision1 = NotificationDecisionFactory.CreateAccepted("All criteria met", context.Docks.First());
         NotificationDecision decision2 = NotificationDecisionFactory.CreateRejected("Insufficient documentation", false);
         NotificationDecision decision3 = NotificationDecisionFactory.CreateAccepted("Approved after review", context.Docks.Skip(2).First());
@@ -441,7 +454,7 @@ public static class Bootstrap
         vvn3.Submit();
         vvn4.Submit();
 
-        context.VesselVisitNotifications.AddRange(vvn1, vvn2, vvn3, vvn4);
+        context.VesselVisitNotifications.AddRange(vvn1, vvn2, vvn3, vvn4, vvn5);
         context.SaveChanges();
     }
 

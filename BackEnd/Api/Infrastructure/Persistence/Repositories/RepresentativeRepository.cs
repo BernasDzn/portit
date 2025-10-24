@@ -51,11 +51,8 @@ public class RepresentativeRepository : GenericRepository<Representative>, IRepr
         {
             Representative? representative = await _context.Representatives
                 .FirstOrDefaultAsync(q => q.CitizenshipId == citizenId);
-            if (representative == null)
-            {
-                throw new EntityNotFoundException($"Representative with citizen ID {citizenId} not found.");
-            }
-            return representative;
+          
+            return representative!;
         }
         catch
         {
