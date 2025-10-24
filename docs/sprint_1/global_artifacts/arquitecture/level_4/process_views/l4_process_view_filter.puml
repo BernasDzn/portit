@@ -55,7 +55,7 @@ activate UI
 
                 Service --> Page: map to Page<xptoDto>
                 activate Page
-                    Page --> Service: xptoResponseDto
+                    Page --> Service: Page<xptoDto>
                 deactivate Page
 
                 ' Service --> Model: toDto()

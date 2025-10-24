@@ -1,4 +1,4 @@
-# US 2203 - Register and update docks
+# US2210 - View the status of all my submitted Vessel Visit Notifications
 
 ## 1. [Requirements Engineering](./requirements/readme.md)
 Capturing what the system must do

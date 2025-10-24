@@ -44,7 +44,7 @@ empty3 -l- repository
 empty2 -d- domain
 empty3 -u- domain
 
-repository -d(0- database
+repository -d(0- database : "DATABASE\nAPI"
 
 
 @enduml

@@ -23,6 +23,11 @@ activate UI
             Database --> BackEnd: XptoInstance (where id = id)
         deactivate Database
 
+        group if xptoInstance does not exist
+        BackEnd --> UI: HTTP Response
+        UI --> Actor: Error\n(xpto does not exist)
+        end
+
         BackEnd --> Database: DELETE
         activate Database
             Database --> BackEnd: success/failure

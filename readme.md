@@ -46,18 +46,23 @@ Navigate to the `Backend/Api` directory and use `dotnet run`, alternatively use 
 This version of the software allows you to visualise and interact with the API via a [Swagger UI](https://swagger.io/tools/swagger-ui/).
 To access it, visit `http://localhost:5195/swagger/index.html?url=/openapi/v1.json` (host and port subject to change, please double check with the console logs) from any capable browser.
 
+For a comprehensive list of endpoints and their uses, refer to the [User Manual](docs/user_manual.md)
+
 ### 6. How to read Logs
-Logs of the application's are made virtually everytime the API has to run any sort of code. 
+Logs of the application are made virtually everytime the API has to run any sort of code. 
 They are achieved with [Serilog](https://github.com/serilog/serilog) and output to both the console and a file.
 To edit the configuration, open `Backend/Api/appsettings.json` and modify it as you see fit.
 
-All logs can be found on the `Backend/Api/Logs`, they are seperated by day, which means if you want to consult a certain day's logs you must check: `Backend/Api/Logs/audit-{year}{month}{day}.log`.
+All logs can be found on the `Backend/Api/Logs` folder, they are seperated by day, which means if you want to consult a certain day's logs you must check: `Backend/Api/Logs/audit-{year}{month}{day}.log`.
 
 An example log message is: 
 ```
 [2025-10-17 14:30:19 INF] ({ Name: "ExecutingEndpoint" }) Executing endpoint 'Api.Application.Controllers.QualificationController.Filter (Api)'
 ```
 They all follow the same format, [date time LEVEL] (information) Message
+
+Since the logs are private and essential for troubleshooting, things like which routes were accessed by who and even database querries are all being logged.
+If that is not of need for you, for a cleaner logging experience modify the `LogLevel` in `appsettings.json` to `Error`.
 
 ### 7. How to Install/Deploy into Another Machine (or Virtual Machine)
 

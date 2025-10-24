@@ -2,6 +2,8 @@
 Actor "User" as user
 Participant "System" as System <<System C4>>
 
+title Insert Xpto
+
 user -> System: Request Insertion
 activate System
     
