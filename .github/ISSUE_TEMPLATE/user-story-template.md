@@ -1,6 +1,6 @@
 ---
-name: Standup (Daily/Weekly)
-about: Template for a standup issue
+name: User Story Template
+about: Template for a user story
 title: USXXXX - XPTO
 labels: ''
 assignees: Rui-San
