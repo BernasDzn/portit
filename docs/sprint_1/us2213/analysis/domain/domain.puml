@@ -1,0 +1,34 @@
+@startuml us2213_domain_model
+title Domain Model (DDD)
+hide circle
+
+rectangle "System"{
+	class "**User**" as user <<AggregateRoot>><<Entity>>
+	{
+		...
+	}
+}
+
+rectangle "Qualifications" #Lavender{
+	class "**Qualification**" as quali <<AggregateRoot>><<Entity>>
+	{
+	}
+
+	class "Qualification\n**Code**" as quali_code <<Value>>
+	{
+		+ code
+	}
+
+	class "Qualification\n**Name**" as quali_name <<Value>>
+	{
+		+ name
+	}
+}
+
+user "1" ---> "*" quali : "(Logistics Operator)\nregisters/manages"
+
+
+quali --> "1" quali_code
+quali --> "1" quali_name
+
+@enduml

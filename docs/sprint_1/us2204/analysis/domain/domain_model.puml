@@ -1,5 +1,5 @@
-@startuml US2204_Domain_Model
-title US2204 - Domain Model
+@startuml domain_model
+title Domain Model (DDD)
 hide circle
 
 rectangle "System"{
@@ -9,31 +9,14 @@ rectangle "System"{
 	}
 }
 
-rectangle "Physical Resources" {
-
-	class "**Physical**\n**Resource**" as phys_res <<AggregateRoot>><<Entity>>
-	{
-		...
-	}
-
-	class "Physical\nResources\n**YardCrane**" as yard_crane <<Entity>>
-	{
-		...
-	}
-
-
-}
-
 rectangle "Dock" {
-
 	class "**Dock**" as dock <<AggregateRoot>><<Entity>>
 	{
 		...
 	}
-
 }
 
-rectangle "Storage Area"{
+rectangle "Storage Area" #Lavender{
 
 	class "**Storage**\n**Area**" as storage_area <<AggregateRoot>><<Entity>>
 	{
@@ -68,11 +51,7 @@ rectangle "Storage Area"{
 	}
 }
 
-
-user "1" ---> "*" dock : "(Port Authority Officer)\nregisters/manages"
 user "1" ---> "*" storage_area : "(Port Authority Officer)\nregisters/manages"
-user "1" ---> "*" phys_res : "(Logistics Operator)\nregisters/manages"
-
 
 storage_area --> "1" storage_area_type
 storage_area "1" --> "*" dock : "serves"
@@ -83,9 +62,5 @@ storage_area --> "1" storage_area_loc
 
 storage_area_comp_info --> "1" dock : "isServing"
 
-dock "1" --> "*" phys_res : "has"
-
-yard_crane --|> phys_res
-yard_crane --> "1" storage_area
 
 @enduml
