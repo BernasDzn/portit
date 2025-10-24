@@ -9,12 +9,12 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
+using Api.Infrastructure.Exceptions;
 
 namespace Tests.Unitary.Controller;
 
 public class VesselControllerTest
 {
-    // Mocked vessel service to ensure isolation of controller tests
     private readonly Mock<IVesselService> _vesselServiceMock;
     private readonly VesselController _controller;
 
@@ -38,19 +38,19 @@ public class VesselControllerTest
     }
 
     [Fact]
-    public async Task GetById_ReturnsOkResult_WithVessel()
+    public async Task GetByImo_ReturnsOkResult_WithVessel()
     {
         var testImo = "IMO1234567";
-
+        var vesselDto = new VesselDto
+        {
+            Name = "TestVessel",
+            ImoNumber = testImo,
+            Type = null!,
+            Owner = null!,
+            PhysicalCharacteristics = null!
+        };
         _vesselServiceMock.Setup(service => service.GetByImo(It.IsAny<string>()))
-            .ReturnsAsync((string id) => new VesselDto
-            {
-                ImoNumber = id,
-                Name = "Sample Vessel",
-                Type = null!,
-                Owner = null!,
-                PhysicalCharacteristics = null!
-            });
+            .ReturnsAsync(vesselDto);
 
         var result = await _controller.GetByImo(testImo);
 
@@ -60,36 +60,122 @@ public class VesselControllerTest
     }
 
     [Fact]
-    public async Task Create_ReturnsCreatedAtActionResult_WithCreatedVessel()
+    public async Task GetByImo_ReturnsNotFound_WhenVesselDoesNotExist()
+    {
+        var testImo = "NONEXISTENT";
+        _vesselServiceMock.Setup(service => service.GetByImo(It.IsAny<string>()))
+            .ThrowsAsync(new EntityNotFoundException("Vessel not found"));
+
+        var result = await _controller.GetByImo(testImo);
+
+        Assert.IsType<NotFoundObjectResult>(result.Result);
+    }
+
+    [Fact]
+    public async Task GetByImo_ReturnsBadRequest_OnException()
+    {
+        var testImo = "IMO1234567";
+        _vesselServiceMock.Setup(service => service.GetByImo(It.IsAny<string>()))
+            .ThrowsAsync(new Exception("Test exception"));
+
+        var result = await _controller.GetByImo(testImo);
+
+        var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);
+    }
+
+    [Fact]
+    public async Task Create_ReturnsCreatedAtActionResult_WhenVesselIsCreated()
     {
         var newVessel = new CreateVesselDto
         {
-            ImoNumber = "IMO1234567",
-            Name = "New Vessel",
-            Type = null!,
-            Owner = null!,
-            Length = 0,
-            Depth = 0,
-            Draft = 0
+            Name = "NewVessel",
+            ImoNumber = "IMO7654321",
+            Type = "TypeA",
+            Owner = "OwnerA",
+            Length = 100,
+            Depth = 20,
+            Draft = 10
         };
-
-        var expectedVessel = new VesselDto
+        var vesselDto = new VesselDto
         {
-            ImoNumber = "IMO1234567",
-            Name = "New Vessel",
+            Name = newVessel.Name,
+            ImoNumber = newVessel.ImoNumber,
             Type = null!,
             Owner = null!,
             PhysicalCharacteristics = null!
         };
-
         _vesselServiceMock.Setup(service => service.Add(It.IsAny<CreateVesselDto>()))
-            .ReturnsAsync(expectedVessel);
+            .ReturnsAsync(vesselDto);
 
         var result = await _controller.Create(newVessel);
 
         var createdAtActionResult = Assert.IsType<CreatedAtActionResult>(result.Result);
         var returnValue = Assert.IsType<VesselDto>(createdAtActionResult.Value);
-        Assert.Equal(newVessel.ImoNumber, returnValue.ImoNumber);
+        Assert.Equal(newVessel.Name, returnValue.Name);
+    }
+
+    [Fact]
+    public async Task Create_ReturnsConflict_WhenEntityAlreadyExists()
+    {
+        var newVessel = new CreateVesselDto
+        {
+            Name = "ExistingVessel",
+            ImoNumber = "IMO0000001",
+            Type = "TypeA",
+            Owner = "OwnerA",
+            Length = 100,
+            Depth = 20,
+            Draft = 10
+        };
+        _vesselServiceMock.Setup(service => service.Add(It.IsAny<CreateVesselDto>()))
+            .ThrowsAsync(new EntityAlreadyExistsException("This vessel already exists."));
+
+        var result = await _controller.Create(newVessel);
+
+        var conflictResult = Assert.IsType<ConflictObjectResult>(result.Result);
+    }
+
+    [Fact]
+    public async Task Create_ReturnsNotFound_WhenReferencedEntityDoesNotExist()
+    {
+        var newVessel = new CreateVesselDto
+        {
+            Name = "VesselWithMissingType",
+            ImoNumber = "IMO0000002",
+            Type = "MissingType",
+            Owner = "OwnerA",
+            Length = 100,
+            Depth = 20,
+            Draft = 10
+        };
+        _vesselServiceMock.Setup(service => service.Add(It.IsAny<CreateVesselDto>()))
+            .ThrowsAsync(new EntityNotFoundException("The referenced vessel type does not exist"));
+
+        var result = await _controller.Create(newVessel);
+
+        var notFoundResult = Assert.IsType<NotFoundObjectResult>(result.Result);
+    }
+
+    [Fact]
+    public async Task Create_ReturnsInternalServerError_OnPersistencyFailed()
+    {
+        var newVessel = new CreateVesselDto
+        {
+            Name = "VesselWithPersistencyError",
+            ImoNumber = "IMO0000003",
+            Type = "TypeA",
+            Owner = "OwnerA",
+            Length = 100,
+            Depth = 20,
+            Draft = 10
+        };
+        _vesselServiceMock.Setup(service => service.Add(It.IsAny<CreateVesselDto>()))
+            .ThrowsAsync(new PersistencyFailedException("Persistency failed"));
+
+        var result = await _controller.Create(newVessel);
+
+        var objectResult = Assert.IsType<ObjectResult>(result.Result);
+        Assert.Equal(500, objectResult.StatusCode);
     }
 
     [Fact]
@@ -97,15 +183,14 @@ public class VesselControllerTest
     {
         var newVessel = new CreateVesselDto
         {
-            ImoNumber = "IMO1234567",
-            Name = "New Vessel",
-            Type = null!,
-            Owner = null!,
-            Length = 0,
-            Depth = 0,
-            Draft = 0
+            Name = "BadVessel",
+            ImoNumber = "IMO0000004",
+            Type = "TypeA",
+            Owner = "OwnerA",
+            Length = 100,
+            Depth = 20,
+            Draft = 10
         };
-
         _vesselServiceMock.Setup(service => service.Add(It.IsAny<CreateVesselDto>()))
             .ThrowsAsync(new Exception("Test exception"));
 
@@ -115,40 +200,138 @@ public class VesselControllerTest
     }
 
     [Fact]
-    public async Task FilterVessels_ReturnsOkResult_WithPagedVessels()
+    public async Task Filter_ReturnsOkResult_WithPagedVessels()
     {
-        var filter = new VesselFilter { PageNumber = 1, PageSize = 10 };
-
+        var filter = new VesselFilter
+        {
+            PageNumber = 1,
+            PageSize = 10
+        };
+        var pagedResult = new Page<VesselDto>
+        {
+            Items = new List<VesselDto> { new VesselDto { Name = "Test", ImoNumber = "IMO1", Type = null!, Owner = null!, PhysicalCharacteristics = null! } },
+            PageNumber = filter.PageNumber,
+            PageSize = filter.PageSize
+        };
         _vesselServiceMock.Setup(service => service.FilterVessels(It.IsAny<VesselFilter>()))
-            .ReturnsAsync(new Page<VesselDto>
-            {
-                Items = new List<VesselDto>
-                {
-                    new VesselDto { ImoNumber = "IMO1234567", Name = "Vessel 1", Type = null!, Owner = null!, PhysicalCharacteristics = null!},
-                    new VesselDto { ImoNumber = "IMO2345678", Name = "Vessel 2", Type = null!, Owner = null!,  PhysicalCharacteristics = null!}
-                },
-                PageNumber = filter.PageNumber,
-                PageSize = filter.PageSize
-            });
+            .ReturnsAsync(pagedResult);
 
         var result = await _controller.Filter(filter);
+
         var okResult = Assert.IsType<OkObjectResult>(result.Result);
         var returnValue = Assert.IsType<Page<VesselDto>>(okResult.Value);
-        Assert.Equal(2, returnValue.Items.Count());
+        Assert.Single(returnValue.Items);
         Assert.Equal(filter.PageNumber, returnValue.PageNumber);
         Assert.Equal(filter.PageSize, returnValue.PageSize);
     }
 
     [Fact]
-    public async Task FilterVessels_ReturnsNotFound_WhenNoVesselsMatchFilter()
+    public async Task Filter_ReturnsNotFound_WhenNoVesselsFound()
     {
-        var filter = new VesselFilter { PageNumber = 1, PageSize = 10 };
-
+        var filter = new VesselFilter
+        {
+            PageNumber = 1,
+            PageSize = 10
+        };
+        var pagedResult = new Page<VesselDto>
+        {
+            Items = new List<VesselDto>(),
+            PageNumber = filter.PageNumber,
+            PageSize = filter.PageSize
+        };
         _vesselServiceMock.Setup(service => service.FilterVessels(It.IsAny<VesselFilter>()))
-            .ReturnsAsync(Page<VesselDto>.Empty());
+            .ReturnsAsync(pagedResult);
 
         var result = await _controller.Filter(filter);
 
         var notFoundResult = Assert.IsType<NotFoundObjectResult>(result.Result);
+    }
+
+    [Fact]
+    public async Task Filter_ReturnsNotFound_OnException()
+    {
+        var filter = new VesselFilter
+        {
+            PageNumber = 1,
+            PageSize = 10
+        };
+        _vesselServiceMock.Setup(service => service.FilterVessels(It.IsAny<VesselFilter>()))
+            .ThrowsAsync(new Exception("Test exception"));
+
+        var result = await _controller.Filter(filter);
+
+        Assert.IsType<NotFoundResult>(result.Result);
+    }
+
+    [Fact]
+    public async Task Update_ReturnsOk_WhenVesselIsUpdated()
+    {
+        var updatedVessel = new VesselDto
+        {
+            Name = "UpdatedVessel",
+            ImoNumber = "IMO9999999",
+            Type = null!,
+            Owner = null!,
+            PhysicalCharacteristics = null!
+        };
+        _vesselServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<CreateVesselDto>()))
+            .ReturnsAsync(updatedVessel);
+
+        var updateDto = new CreateVesselDto
+        {
+            Name = "UpdatedVessel",
+            ImoNumber = "IMO9999999",
+            Type = "TypeA",
+            Owner = "OwnerA",
+            Length = 100,
+            Depth = 20,
+            Draft = 10
+        };
+        var result = await _controller.Update("IMO9999999", updateDto);
+
+        var okResult = Assert.IsType<OkObjectResult>(result.Result);
+        var returnValue = Assert.IsType<VesselDto>(okResult.Value);
+    }
+
+    [Fact]
+    public async Task Update_ReturnsBadRequest_WhenUpdateFails()
+    {
+        _vesselServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<CreateVesselDto>()))
+            .ReturnsAsync((VesselDto?)null);
+
+        var updateDto = new CreateVesselDto
+        {
+            Name = "BadVessel",
+            ImoNumber = "IMO0000005",
+            Type = "TypeA",
+            Owner = "OwnerA",
+            Length = 100,
+            Depth = 20,
+            Draft = 10
+        };
+        var result = await _controller.Update("IMO0000005", updateDto);
+
+        var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);
+    }
+
+    [Fact]
+    public async Task Update_ReturnsBadRequest_OnException()
+    {
+        _vesselServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<CreateVesselDto>()))
+            .ThrowsAsync(new Exception("Test exception"));
+
+        var updateDto = new CreateVesselDto
+        {
+            Name = "BadVessel2",
+            ImoNumber = "IMO0000006",
+            Type = "TypeA",
+            Owner = "OwnerA",
+            Length = 100,
+            Depth = 20,
+            Draft = 10
+        };
+        var result = await _controller.Update("IMO0000006", updateDto);
+
+        var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);
     }
 }
