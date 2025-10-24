@@ -117,11 +117,6 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
             _logger.LogError($"Decision creation failed, entity not found: {e.Message}");
             return NotFound(e.Message);
         }
-        catch (EntityAlreadyExistsException e)
-        {
-            _logger.LogError($"Entity already exists: {e.Message}");
-            return Conflict(e.Message);
-        }
         catch (System.Exception ex)
         {
             if (ex is ArgumentException || ex is ArgumentNullException || ex is InvalidOperationException || ex is OutdatedDecisionException)

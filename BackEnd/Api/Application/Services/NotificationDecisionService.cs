@@ -1,6 +1,7 @@
 namespace Api.Application.Services;
 
 using Api.Application.DataTransfer;
+using Api.Application.Exceptions;
 using Api.Domain.Entities;
 using Api.Domain.IRepository;
 
@@ -29,7 +30,7 @@ public class NotificationDecisionService : INotificationDecisionService
         VesselVisitNotification? notification = await _notificationRepository.GetVesselVisitNotificationByNotificationIdAsync(vesselVisitNotificationId);
 
         if (notification == null)
-            throw new Exception("Vessel Visit Notification not found.");
+            throw new EntityNotFoundException("Vessel Visit Notification not found.");
 
         NotificationDecision notificationDecision;
 
@@ -37,8 +38,11 @@ public class NotificationDecisionService : INotificationDecisionService
         {
             if (notificationDecisionDto.AssignedDockCode == null)
                 throw new ArgumentException("AssignedDock must be provided for accepted decisions.", nameof(notificationDecisionDto.AssignedDockCode));
+
+            Dock? assignedDock = await _dockRepository.GetDockByCodeAsync(notificationDecisionDto.AssignedDockCode);
             
-            Dock assignedDock = await _dockRepository.GetDockByCodeAsync(notificationDecisionDto.AssignedDockCode);
+            if (assignedDock == null)
+                throw new EntityNotFoundException("Assigned Dock not found.");
 
             notificationDecision = NotificationDecisionFactory.CreateAccepted(
                 reason: notificationDecisionDto.Reason,

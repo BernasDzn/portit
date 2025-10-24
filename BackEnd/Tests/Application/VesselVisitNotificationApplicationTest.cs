@@ -7,6 +7,7 @@ using Api.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Api.Infrastructure.Utilities;
 using Api.Domain.ValueObjects;
+using Api.Domain.Entities;
 
 
 namespace Tests.Application;
@@ -565,5 +566,60 @@ public class VesselVisitNotificationApplicationTest : WebApplicationFactory<Prog
         var pagedResult = await response.Content.ReadFromJsonAsync<Page<VesselVisitNotificationStatusDto>>();
         Assert.NotNull(pagedResult);
         Assert.NotEmpty(pagedResult.Items);
+    }
+
+    [Fact]
+    public async Task AddNotificationDecision_ReturnsCreatedAtAction_WithValidData()
+    {
+        var decisionDto = new CreateNotificationDecisionDto
+        {
+            Status = 1,
+            Reason = "All good",
+            DecisionDate = DateTime.UtcNow,
+            AssignedDockCode = "DCK001",
+            IsFinal = true
+        };
+
+        var response = await _client.PostAsJsonAsync("/VesselVisitNotification/decisions?vesselVisitNotificationId=2025-PORTO-000003", decisionDto);
+        response.EnsureSuccessStatusCode();
+        Assert.Equal(System.Net.HttpStatusCode.Created, response.StatusCode);
+        var result = await response.Content.ReadFromJsonAsync<NotificationDecisionDto>();
+        Assert.NotNull(result);
+        Assert.Equal(1, result.Status);
+        Assert.Equal("All good", result.Reason);
+    }
+
+    [Fact]
+    public async Task AddNotificationDecision_ReturnsNotFound_WhenNotificationDoesNotExist()
+    {
+        var decisionDto = new CreateNotificationDecisionDto
+        {
+            Status = 1,
+            Reason = "All good",
+            DecisionDate = DateTime.UtcNow,
+            AssignedDockCode = "DCK001",
+            IsFinal = true
+        };
+
+        var response = await _client.PostAsJsonAsync("/VesselVisitNotification/decisions?vesselVisitNotificationId=NONEXISTENT", decisionDto);
+
+        Assert.Equal(System.Net.HttpStatusCode.NotFound, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task AddNotificationDecision_ReturnsBadRequest_WhenInvalidData()
+    {
+        var decisionDto = new CreateNotificationDecisionDto
+        {
+            Status = 5,
+            Reason = "Invalid status",
+            DecisionDate = DateTime.UtcNow,
+            AssignedDockCode = "DCK001",
+            IsFinal = true
+        };
+
+        var response = await _client.PostAsJsonAsync("/VesselVisitNotification/decisions?vesselVisitNotificationId=2025-PORTO-000003", decisionDto);
+
+        Assert.Equal(System.Net.HttpStatusCode.BadRequest, response.StatusCode);
     }
 }
