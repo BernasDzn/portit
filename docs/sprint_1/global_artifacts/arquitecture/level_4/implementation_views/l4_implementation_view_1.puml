@@ -7,14 +7,8 @@ package "PortTiT" {
 
     }
 
-    rt ..> controller
-
     package "Application" {
         package "Controllers" as controller {
-
-        }
-
-        package "Exceptions" as exception {
 
         }
 
@@ -30,10 +24,17 @@ package "PortTiT" {
             package "Repositories" as repo {
 
             }
+
+            package "Context" as ctx {
+
+            }
         }
 
-        package "Context" as ctx {
+        package "Utilities" {
 
+            package "Page<T>" as page {
+
+            }
         }
     }
 
@@ -50,11 +51,11 @@ package "PortTiT" {
 
 controller ..> service
 service ..> repo
-repo ..> ent
+service ..> ent
 
 ent ..> vo
 
-service .r.> exception
-
 repo ..> ctx
+rt ..> controller
+
 @enduml

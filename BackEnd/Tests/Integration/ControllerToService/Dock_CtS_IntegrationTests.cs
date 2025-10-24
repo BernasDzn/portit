@@ -7,17 +7,19 @@ using Microsoft.Extensions.Logging;
 using Api.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Api.Domain.ValueObjects;
+using Api.Application.DataTransfer.Filters;
+using Api.Infrastructure.Utilities;
 
 namespace Tests.Integration.ControllerToService;
 
-public class DockIntegrationTest
+public class Dock_CtS_IntegrationTest
 {
     private readonly DockController _controller;
     private readonly DockService _service;
     private readonly Mock<IDockRepository> _repositoryMock;
     private readonly Mock<IVesselTypeRepository> _vesselTypeRepositoryMock;
 
-    public DockIntegrationTest()
+    public Dock_CtS_IntegrationTest()
     {
         _repositoryMock = new Mock<IDockRepository>();
         _vesselTypeRepositoryMock = new Mock<IVesselTypeRepository>();
@@ -69,7 +71,7 @@ public class DockIntegrationTest
                         new PhysicalCharacteristics {
                             Length = 300,
                             Depth = 15,
-                            Draft = 12 
+                            Draft = 12
                         }
                     ),
                     new VesselType(
@@ -108,6 +110,20 @@ public class DockIntegrationTest
         var result = await _controller.GetByCode(testCode);
 
         Assert.IsType<NotFoundObjectResult>(result.Result);
+    }
+
+    [Fact]
+    public async Task GetDockByCode_ReturnsInternalServerError_WhenExceptionOccurs()
+    {
+        var testCode = "errorcode";
+
+        _repositoryMock.Setup(repo => repo.GetDockByCodeAsync(testCode))
+            .ThrowsAsync(new System.Exception("Database error"));
+
+        var result = await _controller.GetByCode(testCode);
+
+        var statusCodeResult = Assert.IsType<ObjectResult>(result.Result);
+        Assert.Equal(500, statusCodeResult.StatusCode);
     }
 
     [Fact]
@@ -157,46 +173,111 @@ public class DockIntegrationTest
     }
 
     [Fact]
-    public async Task CreateDock_ReturnsBadRequest_OnException()
+    public async Task CreateDock_ReturnsConflict_OnDuplicateCode()
     {
         var newDockDto = new CreateDockDto
         {
-            Code = "DCK004",
+            Code = "DCK001",
             Name = "New Dock",
             Location = "New Location",
             PhysicalCharacteristics = new PhysicalCharacteristics
             {
-                Length = 500,
-                Depth = 35,
-                Draft = 20
+                Length = 400,
+                Depth = 18,
+                Draft = 14
             },
-            SupportedVesselTypes = new List<string> { "Post-Panamax" }
+            SupportedVesselTypes = new List<string> { "Panamax" }
         };
 
-        _vesselTypeRepositoryMock.Setup(repo => repo.GetVesselTypeByNameAsync("Post-Panamax"))
-            .ReturnsAsync(new VesselType(
-                    Guid.NewGuid(),
-                    new Designation { Value = "Post-Panamax" },
-                    new Designation { Value = "Larger than Panamax" },
-                    30,
-                    15,
-                    7,
-                    new PhysicalCharacteristics
-                    {
-                        Length = 400,
-                        Depth = 18,
-                        Draft = 14
-                    }
-                ));
+        _repositoryMock.Setup(repo => repo.GetDockByCodeAsync(newDockDto.Code))
+            .ReturnsAsync(new Dock(Guid.NewGuid(),
+                new Code { Value = newDockDto.Code },
+                new Designation { Value = "Existing Dock" },
+                new Designation { Value = "Existing Location" },
+                new PhysicalCharacteristics
+                {
+                    Length = 500,
+                    Depth = 35,
+                    Draft = 20
+                },
+                new HashSet<VesselType>
+                {
+                    new VesselType(
+                        Guid.NewGuid(),
+                        new Designation { Value = "Panamax" },
+                        new Designation { Value = "Max size for Panama Canal" },
+                        20,
+                        10,
+                        5,
+                        new PhysicalCharacteristics {
+                            Length = 300,
+                            Depth = 15,
+                            Draft = 12
+                        }
+                    )
+                }
+                )
+            );
 
-        _repositoryMock.Setup(repo => repo.Add(It.IsAny<Dock>()))
-            .ThrowsAsync(new System.Exception("Test exception"));
+
         var result = await _controller.Create(newDockDto);
-        Assert.IsType<BadRequestObjectResult>(result.Result);
+
+        Assert.IsType<ConflictObjectResult>(result.Result);
     }
 
     [Fact]
-    public async Task UpdateDock_ReturnsUpdatedDock()
+    public async Task CreateDock_ReturnsNotFound_WhenVesselTypeDoesNotExist()
+    {
+        var newDockDto = new CreateDockDto
+        {
+            Code = "DCK006",
+            Name = "Another Dock",
+            Location = "Another Location",
+            PhysicalCharacteristics = new PhysicalCharacteristics
+            {
+                Length = 450,
+                Depth = 20,
+                Draft = 15
+            },
+            SupportedVesselTypes = new List<string> { "NonExistentVesselType" }
+        };
+
+        _vesselTypeRepositoryMock.Setup(repo => repo.GetVesselTypeByNameAsync("NonExistentVesselType"))
+            .ReturnsAsync((VesselType?)null);
+
+        var result = await _controller.Create(newDockDto);
+
+        var badRequestResult = Assert.IsType<NotFoundObjectResult>(result.Result);
+    }
+
+    [Fact]
+    public async Task CreateDock_ReturnsInternalServerError_OnException()
+    {
+        var newDockDto = new CreateDockDto
+        {
+            Code = "DCK007",
+            Name = "Another Dock",
+            Location = "Another Location",
+            PhysicalCharacteristics = new PhysicalCharacteristics
+            {
+                Length = 450,
+                Depth = 20,
+                Draft = 15
+            },
+            SupportedVesselTypes = new List<string> { "Panamax" }
+        };
+
+        _repositoryMock.Setup(repo => repo.GetDockByCodeAsync(newDockDto.Code))
+            .ThrowsAsync(new System.Exception("Database error"));
+
+        var result = await _controller.Create(newDockDto);
+
+        var statusCodeResult = Assert.IsType<ObjectResult>(result.Result);
+        Assert.Equal(500, statusCodeResult.StatusCode);
+    }
+
+    [Fact]
+    public async Task UpdateDock_ReturnsOkResult_WithUpdatedDock()
     {
         var codeToUpdate = "DCK005";
         var updateDockDto = new CreateDockDto
@@ -298,5 +379,91 @@ public class DockIntegrationTest
         var returnValue = Assert.IsType<DockDto>(okResult.Value);
         Assert.Equal(codeToUpdate, returnValue.Code);
         Assert.Equal("Updated Dock", returnValue.Name);
+    }
+
+    [Fact]
+    public async Task UpdateDock_ReturnsNotFound_WhenDockDoesNotExist()
+    {
+        var existingCode = "D999";
+        var updateDto = new CreateDockDto
+        {
+            Code = existingCode,
+            Name = "Updated Dock Name",
+            Location = "Updated Location",
+            PhysicalCharacteristics = new PhysicalCharacteristics
+            {
+                Length = 600,
+                Depth = 40,
+                Draft = 25
+            },
+            SupportedVesselTypes = new List<string> { "Panamax" }
+        };
+
+        _repositoryMock.Setup(repo => repo.GetDockByCodeAsync(existingCode))
+            .ReturnsAsync((Dock?)null);
+
+        var result = await _controller.Update(existingCode, updateDto);
+
+        Assert.IsType<NotFoundObjectResult>(result.Result);
+    }
+
+    [Fact]
+    public async Task UpdateDock_ReturnsInternalServerError_OnException()
+    {
+        var existingCode = "DCK001";
+        var updateDto = new CreateDockDto
+        {
+            Code = existingCode,
+            Name = "Updated Dock Name",
+            Location = "Updated Location",
+            PhysicalCharacteristics = new PhysicalCharacteristics
+            {
+                Length = 600,
+                Depth = 40,
+                Draft = 25
+            },
+            SupportedVesselTypes = new List<string> { "Panamax" }
+        };
+
+        _repositoryMock.Setup(repo => repo.GetDockByCodeAsync(existingCode))
+            .ThrowsAsync(new Exception("Database error"));
+
+        var result = await _controller.Update(existingCode, updateDto);
+
+        var statusResult = Assert.IsType<ObjectResult>(result.Result);
+        Assert.Equal(500, statusResult.StatusCode);
+    }
+
+
+    [Fact]
+    public async Task FilterDock_ReturnsOkResult_WithFilteredDocks()
+    {
+        var filter = new DockFilter { };
+        _repositoryMock.Setup(repo => repo.FilterDocksAsync(filter))
+            .ReturnsAsync(new Page<Dock>
+            {
+                Items = new List<Dock>(),
+                PageNumber = 1,
+                PageSize = 10,
+            });
+
+        var result = await _controller.Filter(filter);
+
+        var okResult = Assert.IsType<OkObjectResult>(result.Result);
+        var returnValue = Assert.IsType<Page<DockDto>>(okResult.Value);
+        Assert.Empty(returnValue.Items);
+    }
+
+    [Fact]
+    public async Task FilterDock_ReturnsInternalServerError_OnException()
+    {
+        var filter = new DockFilter { };
+        _repositoryMock.Setup(repo => repo.FilterDocksAsync(filter))
+            .ThrowsAsync(new System.Exception("Database error"));
+
+        var result = await _controller.Filter(filter);
+
+        var statusCodeResult = Assert.IsType<ObjectResult>(result.Result);
+        Assert.Equal(500, statusCodeResult.StatusCode);
     }
 }

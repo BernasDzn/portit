@@ -5,6 +5,8 @@ using Api.Application.Services;
 using Api.Application.DataTransfer;
 using Api.Infrastructure.Utilities;
 using Api.Application.DataTransfer.Filters;
+using Api.Application.Exceptions;
+using Api.Infrastructure.Exceptions;
 
 [ApiController]
 [Route("[controller]")]
@@ -34,16 +36,18 @@ public class VesselTypeController : ControllerBase, IVesselTypeController
 		{
 			var vesselTypeDto = await _vesselTypeService.GetByName(name);
 
-			if (vesselTypeDto == null)
-				return NotFound($"No Vessel type found with name: {name}");
-
 			return Ok(vesselTypeDto);
+		}
+		catch (EntityNotFoundException e)
+		{
+			_logger.LogError("Error retrieving vessel type by name, {Message}", e.Message);
+			return NotFound(e.Message);
 		}
 		catch (System.Exception e)
 		{
-			_logger.LogError("Error getting vessel type by name, {Message}", e.Message);
-			return BadRequest(e.Message);
-		}
+			_logger.LogCritical("Error retrieving vessel type by name, {Message}", e.Message);
+			return StatusCode(500, "An error occurred while retrieving the vessel type.");
+        }
 	}
 
 	[HttpGet("filter")]
@@ -58,25 +62,34 @@ public class VesselTypeController : ControllerBase, IVesselTypeController
 		catch (System.Exception e)
 		{
 			_logger.LogError("Error filtering vessel types, {Message}", e.Message);
-			return NotFound();
+			return StatusCode(500, "An error occurred while filtering vessel types.");
 		}
     }
 	[HttpPost(Name = "CreateVesselType")]
 	public async Task<ActionResult<VesselTypeDto>> Create(VesselTypeDto vesselTypeDto)
 	{
 		try
-		{	
-			VesselTypeDto? vTypeDto = await _vesselTypeService.Add(vesselTypeDto);
+		{
+			var createdVesselType = await _vesselTypeService.Add(vesselTypeDto);
 
-			if (vTypeDto == null)
-				return BadRequest("Cannot create vessel type");
-
-			return CreatedAtAction(nameof(GetAll), new { name = vTypeDto.Name }, vTypeDto);
+			return CreatedAtAction(nameof(GetAll), new { name = createdVesselType.Name }, createdVesselType);
+		}
+		catch (EntityAlreadyExistsException e)
+		{
+			_logger.LogError("Vessel Type already exists, {Message}", e.Message);
+			return Conflict(e.Message);
 		}
 		catch (System.Exception e)
 		{
+
+			if (e is ArgumentNullException || e is ArgumentException || e is InvalidOperationException)
+			{
+				_logger.LogError("Invalid argument provided for creating vessel type, {Message}", e.Message);
+				return BadRequest(e.Message);
+			}
+
 			_logger.LogError("Error creating vessel type, {Message}", e.Message);
-			return BadRequest(e.Message);
+			return StatusCode(500, "An error occurred while creating the vessel type.");
 		}
 	}
 
@@ -85,17 +98,25 @@ public class VesselTypeController : ControllerBase, IVesselTypeController
 	{
 		try
 		{
-			VesselTypeDto? vTypeDto = await _vesselTypeService.Update(name, vesselTypeDto);
+			var updatedVesselType = await _vesselTypeService.Update(name, vesselTypeDto);
 
-			if (vTypeDto == null)
-				return BadRequest("Could not update vessel type");
-
-			return Ok(vTypeDto);
+			return Ok(updatedVesselType);
+		}
+		catch (EntityNotFoundException e)
+		{
+			_logger.LogError("Entity not found when updating vessel type, {Message}", e.Message);
+			return NotFound(e.Message);
 		}
 		catch (System.Exception e)
 		{
+			if (e is ArgumentNullException || e is ArgumentException || e is InvalidOperationException)
+            {
+                _logger.LogError("Invalid argument provided for updating {VesselTypeName}, {Message}", name, e.Message);
+                return BadRequest(e.Message);
+            }
+
 			_logger.LogError("Error updating vessel type, {Message}", e.Message);
-			return BadRequest(e.Message);
+			return StatusCode(500, "An error occurred while updating the vessel type.");
 		}
 	}
 

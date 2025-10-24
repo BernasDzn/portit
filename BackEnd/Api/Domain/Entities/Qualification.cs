@@ -4,7 +4,6 @@ using Api.Domain.ValueObjects;
 using Api.Application.DataTransfer;
 using Api.Infrastructure.Utilities;
 
-
 public class Qualification : IDTOAble<QualificationDto>
 {
 	public Guid Id { get; private set; }

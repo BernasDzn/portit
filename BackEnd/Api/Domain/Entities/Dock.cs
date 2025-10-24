@@ -13,7 +13,6 @@ public class Dock : IDTOAble<DockDto>
     public PhysicalCharacteristics PhysicalCharacteristics { get; private set; }
     public virtual ICollection<VesselType> SupportedVesselTypes { get; private set; }
 
-
     //EF Core
     protected Dock() { }
     public Dock(Guid id, Code code, Designation name, Designation location, PhysicalCharacteristics physicalCharacteristics, HashSet<VesselType> supportedVesselTypes)

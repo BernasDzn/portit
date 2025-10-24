@@ -88,7 +88,7 @@ public class DockServiceTest
     }
 
     [Fact]
-    public async Task GetDockById_ReturnsDock_WhenExists()
+    public async Task GetDockByCode_ReturnsDock_WhenExists()
     {
         _dockRepositoryMock.Setup(repo => repo.GetDockByCodeAsync(It.IsAny<string>()))
             .ReturnsAsync((string id) => docks.FirstOrDefault(d => d.Code.Value == id));
@@ -100,13 +100,12 @@ public class DockServiceTest
     }
 
     [Fact]
-    public async Task GetDockById_ReturnsNotFoundResponse_WhenNotExists()
+    public async Task GetDockByCode_ThrowsException_WhenNotExists()
     {
         _dockRepositoryMock.Setup(repo => repo.GetDockByCodeAsync(It.IsAny<string>()))
             .ReturnsAsync((Dock?)null);
 
-        var result = await _service.GetByCode("Non existing dock");
-        Assert.Null(result);
+        await Assert.ThrowsAsync<EntityNotFoundException>(async () => await _service.GetByCode("NonExistentCode"));
     }
 
     [Fact]
@@ -143,7 +142,7 @@ public class DockServiceTest
     }
 
     [Fact]
-    public async Task Add_ThrowsException_WhenDockAlreadyExists()
+    public async Task Add_ThrowsException_WhenCodeAlreadyExists()
     {
         var existingDockDto = new CreateDockDto
         {
@@ -166,7 +165,33 @@ public class DockServiceTest
     }
 
     [Fact]
-    public async Task Update_ReturnsUpdatedDock_WhenExists()
+    public async Task Add_ThrowsException_WhenVesselTypeNotFound()
+    {
+        var newDockDto = new CreateDockDto
+        {
+            Code = "DOCK4",
+            Name = "Dock 4",
+            Location = "Location 4",
+            PhysicalCharacteristics = new PhysicalCharacteristics
+            {
+                Depth = 15,
+                Length = 400,
+                Draft = 20
+            },
+            SupportedVesselTypes = new List<string> { "NonExistentVesselType" }
+        };
+
+        _dockRepositoryMock.Setup(repo => repo.GetDockByCodeAsync(It.Is<string>(s => s == newDockDto.Code)))
+            .ReturnsAsync(docks.FirstOrDefault(d => d.Code.Value == newDockDto.Code));
+
+        _vesselTypeRepositoryMock.Setup(repo => repo.GetVesselTypeByNameAsync(It.IsAny<string>()))
+            .ReturnsAsync((VesselType?)null);
+
+        await Assert.ThrowsAsync<EntityNotFoundException>(() => _service.Add(newDockDto));
+    }
+
+    [Fact]
+    public async Task UpdateDock_ReturnsUpdatedDock_WhenExists()
     {
         var existingDock = docks.ElementAt(0);
         var updatedDockDto = new CreateDockDto
@@ -200,7 +225,7 @@ public class DockServiceTest
     }
 
     [Fact]
-    public async Task Update_ReturnsNull_WhenDockNotExists()
+    public async Task UpdateDock_ThrowsException_WhenCodeNotExists()
     {
         var nonExistentDockDto = new CreateDockDto
         {
@@ -223,7 +248,34 @@ public class DockServiceTest
     }
 
     [Fact]
-    public async Task FilteredDocks_ReturnsPage()
+    public async Task UpdateDock_ThrowsException_WhenVesselTypeNotFound()
+    {
+        var existingDock = docks.ElementAt(0);
+        var updatedDockDto = new CreateDockDto
+        {
+            Code = existingDock.Code.Value,
+            Name = "Updated Dock Name",
+            Location = existingDock.Location.Value,
+            PhysicalCharacteristics = new PhysicalCharacteristics
+            {
+                Depth = existingDock.PhysicalCharacteristics.Depth,
+                Length = existingDock.PhysicalCharacteristics.Length,
+                Draft = existingDock.PhysicalCharacteristics.Draft
+            },
+            SupportedVesselTypes = new List<string> { "NonExistentVesselType" }
+        };
+
+        _dockRepositoryMock.Setup(repo => repo.GetDockByCodeAsync(existingDock.Code.Value))
+            .ReturnsAsync(existingDock);
+
+        _vesselTypeRepositoryMock.Setup(repo => repo.GetVesselTypeByNameAsync(It.IsAny<string>()))
+            .ReturnsAsync((VesselType?)null);
+
+        await Assert.ThrowsAsync<EntityNotFoundException>(() => _service.Update(existingDock.Code.Value, updatedDockDto));
+    }
+
+    [Fact]
+    public async Task FilteredDock_ReturnsPage()
     {
         var filter = new DockFilter { };
 

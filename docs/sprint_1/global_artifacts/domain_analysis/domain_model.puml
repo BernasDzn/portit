@@ -168,6 +168,11 @@ rectangle "Qualifications" {
 	{
 	}
 
+	class "Qualification\n**Code**" as quali_code <<Value>>
+	{
+		+ code
+	}
+
 	class "Qualification\n**Name**" as quali_name <<Value>>
 	{
 		+ name
@@ -212,6 +217,11 @@ rectangle "Staff"{
 		+ endDay
 		+ endTime
 	}
+
+	class "Staff\n**Mechanographic number**" as staff_number
+	{
+		+ mechanographicNumber
+	}
 }
 
 rectangle "Dock" {
@@ -236,6 +246,10 @@ rectangle "Dock" {
 		+ Draft
 	}
 
+	class "Dock\n**Code**" as dock_code <<Value>>
+	{
+		+ code
+	}
 }
 
 rectangle "Storage Area"{
@@ -453,22 +467,22 @@ user "1" ---> "*" dock : "(Port Authority Officer)\nregisters/manages"
 user "1" ---> "*" storage_area : "(Port Authority Officer)\nregisters/manages"
 user "1" ---> "*" vessel_type : "(Port Authority Officer)\nregisters/manages"
 user "1" ---> "*" vessel_visit_notif : "(Port Authority Officer)\nreviews and approves or rejects"
-user "1" <--- "*" op_task : "(Port Authority Officer)\nis overseed by"
-user "1" ---> "*" SAO : "(Port Authority Officer)\nregisters"
 user "1" <--- "*" SAO_rep : "(Port Authority Officer)\nis registered/managed"
 user "1" ---> "*" vessel : "(Port Authority Officer)\nregisters/manages"
 user "1" ---> "*" notif_dec : "(Port Authority Officer)\nsubmits"
+user "1" ---> "*" SAO : "(Port Authority Officer)\nregisters"
 user "1" ---> "*" staff : "(Logistics Operator)\nregisters/manages"
 user "1" ---> "*" phys_res : "(Logistics Operator)\nregisters/manages"
 user "1" ---> "*" quali : "(Logistics Operator)\nregisters/manages"
+user "1" <--- "*" op_task : "(Port Authority Officer)\nis overseed by"
 user "1" <--- "*" op_task : "(Logistics Operator)\nis defined/scheduled by"
 
 
-phys_res "1" --> "1" phys_res_op_window : "has"
-vessel_berth "1" -> "1" op_status : "has"
 op_task "1" -> "1" phys_res : "allocates"
 op_task "1" -> "*" staff : "mobilizes"
 op_task "1" -> "1" task_types : "has"
+vessel_berth "1" -> "1" op_status : "has"
+phys_res "1" --> "1" phys_res_op_window : "has"
 
 staff "1" --> "1" staff_op_window : "has"
 staff "*" --> "*" quali : "has"
@@ -497,10 +511,8 @@ vessel_visit_notif --> "1" cargo_details
 vessel_visit_notif -> "0..*" notif_dec
 vessel_visit_notif <-- vessel_berth : "responds to"
 vessel_visit_notif --> vessel
-crew --> "*" safety_officer : "has a list of"
-vessel_visit_notif "1" --> "0..1" c_manifest_lcm : "details"
-vessel_visit_notif "1" --> "0..1" c_manifest_udm : "details"
 vessel_visit_notif --> "1" vvn_status : "has"
+crew --> "*" safety_officer : "has a list of"
 
 notif_dec "1" -> "1" notif_status : "has"
 notif_dec "1" -> "0..1" dock : "has"
@@ -513,6 +525,8 @@ SAO --> "1" SAO_tax_number
 
 SAO_rep "1" --> "*" vessel_visit_notif : "submits"
 
+vessel_visit_notif "1" --> "0..1" c_manifest_lcm : "details"
+vessel_visit_notif "1" --> "0..1" c_manifest_udm : "details"
 c_manifest_lcm "1" --> "*" c_manifest_cl
 c_manifest_udm "1" --> "*" c_manifest_cu
 c_manifest_cl "1" --> "1" c_manifest_cargo_item
@@ -541,23 +555,27 @@ vessel_type --> "1" vessel_type_max_tiers
 vessel_type --> "1" vessel_type_physical_char
 
 dock "1" --> "1" dock_loc
-dock "1" --> "*" phys_res : "has"
 dock "1" --> "1" dock_name
 dock --> "1" dock_physical_char
 
+dock "1" --> "*" phys_res : "has"
 sts_crane --|> phys_res
 yard_crane --|> phys_res
 truck --|> phys_res
-
 sts_crane --> "1" phys_res_cph
 sts_crane --> "1" phys_res_lc
-sts_crane --> "1" dock
-
 yard_crane --> "1" phys_res_cph
 yard_crane --> "1" phys_res_lc
-yard_crane --> "1" storage_area
-
 truck --> "1" phys_res_cpt
 truck --> "1" phys_res_as
+sts_crane --> "1" dock
+
+yard_crane --> "1" storage_area
+
+
+staff --> "1" staff_number
+
+quali --> "1" quali_code
+dock --> "1" dock_code
 
 @enduml

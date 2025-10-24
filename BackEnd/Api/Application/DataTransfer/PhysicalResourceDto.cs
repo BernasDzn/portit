@@ -41,14 +41,12 @@ public class YardCraneDto : PhysicalResourceDto
 {
     public required uint ContainersPerHour { get; set; }
     public required uint LiftingCapacity { get; set; }
-    public required StorageAreaDto YardSection { get; set; }
 }
 
 public class CreateYardCraneDto : CreatePhysicalResourceDto
 {
     public required uint ContainersPerHour { get; set; }
     public required uint LiftingCapacity { get; set; }
-    public required string YardSectionCode { get; set; }
 }
 
 public class TruckDto : PhysicalResourceDto

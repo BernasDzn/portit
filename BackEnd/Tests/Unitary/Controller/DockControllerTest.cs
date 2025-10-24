@@ -15,6 +15,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc;
 using Api.Application.DataTransfer.Filters;
 using Api.Infrastructure.Utilities;
+using Api.Application.Exceptions;
+using Api.Infrastructure.Exceptions;
 
 namespace Tests.Unitary.Controller
 {
@@ -69,11 +71,24 @@ namespace Tests.Unitary.Controller
         {
             var dockCode = "NONEXISTENT";
             _dockServiceMock.Setup(service => service.GetByCode(It.IsAny<string>()))
-                .ReturnsAsync((DockDto?)null);
+                .ThrowsAsync(new EntityNotFoundException("Dock not found"));
 
             var result = await _controller.GetByCode(dockCode);
 
             Assert.IsType<NotFoundObjectResult>(result.Result);
+        }
+
+        [Fact]
+        public async Task GetByCode_ReturnsInternalServerError_OnException()
+        {
+            var dockCode = "DCK001";
+            _dockServiceMock.Setup(service => service.GetByCode(It.IsAny<string>()))
+                .ThrowsAsync(new Exception("Test exception"));
+
+            var result = await _controller.GetByCode(dockCode);
+
+            var objectResult = Assert.IsType<ObjectResult>(result.Result);
+            Assert.Equal(500,  objectResult.StatusCode);
         }
 
         [Fact]
@@ -108,6 +123,26 @@ namespace Tests.Unitary.Controller
         }
 
         [Fact]
+        public async Task Create_ReturnsNotFound_WhenRelatedEntityDoesNotExist()
+        {
+            var newDock = new CreateDockDto
+            {
+                Code = "DCK002",
+                Name = "Secondary Dock",
+                Location = "Harbor B",
+                PhysicalCharacteristics = null!,
+                SupportedVesselTypes = new List<string>()
+            };
+
+            _dockServiceMock.Setup(service => service.Add(It.IsAny<CreateDockDto>()))
+                .ThrowsAsync(new EntityNotFoundException("Related entity not found"));
+
+            var result = await _controller.Create(newDock);
+
+            Assert.IsType<NotFoundObjectResult>(result.Result);
+        }
+
+        [Fact]
         public async Task Create_ReturnsBadRequest_WhenCreationFails()
         {
             var newDock = new CreateDockDto
@@ -120,12 +155,52 @@ namespace Tests.Unitary.Controller
             };
 
             _dockServiceMock.Setup(service => service.Add(It.IsAny<CreateDockDto>()))
-                .ReturnsAsync((DockDto?)null);
+                .ThrowsAsync(new ArgumentException("Could not create dock"));
 
             var result = await _controller.Create(newDock);
 
-            var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);
-            Assert.Equal("Unable to create dock", badRequestResult.Value);
+            var statusCodeResult = Assert.IsType<BadRequestObjectResult>(result.Result);
+        }
+
+        [Fact]
+        public async Task Create_ReturnsConflict_WhenEntityAlreadyExists()
+        {
+            var newDock = new CreateDockDto
+            {
+                Code = "DCK003",
+                Name = "Tertiary Dock",
+                Location = "Harbor C",
+                PhysicalCharacteristics = null!,
+                SupportedVesselTypes = new List<string>()
+            };
+
+            _dockServiceMock.Setup(service => service.Add(It.IsAny<CreateDockDto>()))
+                .ThrowsAsync(new EntityAlreadyExistsException("This dock already exists."));
+
+            var result = await _controller.Create(newDock);
+
+            var conflictResult = Assert.IsType<ConflictObjectResult>(result.Result);
+        }
+
+        [Fact]
+        public async Task Create_ReturnsInternalServerError_OnException()
+        {
+            var newDock = new CreateDockDto
+            {
+                Code = "DCK004",
+                Name = "Quaternary Dock",
+                Location = "Harbor D",
+                PhysicalCharacteristics = null!,
+                SupportedVesselTypes = new List<string>()
+            };
+
+            _dockServiceMock.Setup(service => service.Add(It.IsAny<CreateDockDto>()))
+                .ThrowsAsync(new Exception("Test exception"));
+
+            var result = await _controller.Create(newDock);
+
+            var objectResult = Assert.IsType<ObjectResult>(result.Result);
+            Assert.Equal(500,  objectResult.StatusCode);
         }
 
         [Fact]
@@ -160,7 +235,47 @@ namespace Tests.Unitary.Controller
         }
 
         [Fact]
-        public async Task Update_ReturnsBadRequest_WhenUpdateFails()
+        public async Task Update_ReturnsNotFound_WhenDockDoesNotExist()
+        {
+            var updatedDock = new CreateDockDto
+            {
+                Code = "NONEXISTENT",
+                Name = "Updated Dock",
+                Location = "Updated Harbor",
+                PhysicalCharacteristics = null!,
+                SupportedVesselTypes = new List<string>()
+            };
+
+            _dockServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<CreateDockDto>()))
+                .ThrowsAsync(new EntityNotFoundException("Dock not found"));
+
+            var result = await _controller.Update("NONEXISTENT", updatedDock);
+
+            Assert.IsType<NotFoundObjectResult>(result.Result);
+        }
+
+        [Fact]
+        public async Task Update_ReturnsBadRequest_WhenInvalidDataIsProvided()
+        {
+            var updatedDock = new CreateDockDto
+            {
+                Code = "",
+                Name = "",
+                Location = "Updated Harbor",
+                PhysicalCharacteristics = null!,
+                SupportedVesselTypes = new List<string>()
+            };
+
+            _dockServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<CreateDockDto>()))
+                .ThrowsAsync(new ArgumentException("Could not update dock"));
+
+            var result = await _controller.Update("DCK001", updatedDock);
+
+            var statusCodeResult = Assert.IsType<BadRequestObjectResult>(result.Result);
+        }
+
+        [Fact]
+        public async Task Update_ReturnsInternalServerError_OnException()
         {
             var updatedDock = new CreateDockDto
             {
@@ -172,12 +287,12 @@ namespace Tests.Unitary.Controller
             };
 
             _dockServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<CreateDockDto>()))
-                .ReturnsAsync((DockDto?)null);
+                .ThrowsAsync(new Exception("Test exception"));
 
             var result = await _controller.Update("DCK001", updatedDock);
 
-            var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);
-            Assert.Equal("Could not update dock", badRequestResult.Value);
+            var objectResult = Assert.IsType<ObjectResult>(result.Result);
+            Assert.Equal(500,  objectResult.StatusCode);
         }
 
         [Fact]
@@ -199,7 +314,7 @@ namespace Tests.Unitary.Controller
         }
 
         [Fact]
-        public async Task Filter_ReturnsNotFound_OnException()
+        public async Task Filter_ReturnsInternalServerError_OnException()
         {
             var filter = new DockFilter
             {
@@ -211,7 +326,7 @@ namespace Tests.Unitary.Controller
 
             var result = await _controller.Filter(filter);
 
-            var notFoundResult = Assert.IsType<NotFoundObjectResult>(result.Result);
+            var notFoundResult = Assert.IsType<ObjectResult>(result.Result);
         }
 
     }

@@ -2,6 +2,8 @@
 Actor "User" as user
 Participant "System" as System <<System C4>>
 
+title Delete Xpto
+
 user -> System: Request Data Deletion
 
 activate System

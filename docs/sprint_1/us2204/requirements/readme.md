@@ -52,7 +52,7 @@
 > This feature is important because it ensures storage areas are accurately registered and managed, enabling correct assignment of (un)loading operations, preventing overcapacity issues, and supporting efficient logistics planning within the port.
 
 ## 5. Definition of Ready
-> This US follows the defined [global definition of ready](../../global_artifacts/requirements/def_of_ready.md).
+> This US follows the defined [global definition of ready](../../global_artifacts/def_of_ready.md)
 
 ## 6. Definition of Done
 - When registering/updating a storage area the specified fields are mandatory (unique identifier, type, location, maximum capacity, current occupancy and complementary information).

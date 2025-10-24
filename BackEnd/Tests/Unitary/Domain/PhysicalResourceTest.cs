@@ -94,24 +94,14 @@ public class PhysicalResourcesTest
             new HashSet<Qualification> { },
             OperationalWindow.FullWeek(),
             capacity,
-            new StorageArea(
-                Guid.NewGuid(),
-                new Code { Value = "area1" },
-                new Designation { Value = "Main Storage Area" },
-                StorageAreaType.Yard,
-                200,
-                100,
-                []
-            ),
             cph
         );
     }
 
     [Theory]
-    [InlineData("", "Yard Crane 1", 20, 80, 40, StorageAreaType.Yard)]
-    [InlineData("YC002", "", 25, 120, 60, StorageAreaType.Yard)]
-    [InlineData("YC003", "Yard Crane 3", 35, 160, 80, StorageAreaType.Warehouse)]
-    public void YardCraneWhenPassingInvalidData_ThenThrowsException(string code, string designation, int time, uint capacity, uint cph, StorageAreaType type)
+    [InlineData("", "Yard Crane 1", 20, 80, 40)]
+    [InlineData("YC002", "", 25, 120, 60)]
+    public void YardCraneWhenPassingInvalidData_ThenThrowsException(string code, string designation, int time, uint capacity, uint cph)
     {
         Assert.Throws<ArgumentException>(() =>
             new YardCrane(
@@ -123,15 +113,6 @@ public class PhysicalResourcesTest
                 new HashSet<Qualification> { },
                 OperationalWindow.FullWeek(),
                 capacity,
-                new StorageArea(
-                    Guid.NewGuid(),
-                    new Code { Value = "area1" },
-                    new Designation { Value = "Main Storage Area" },
-                    type,
-                    200,
-                    100,
-                    new HashSet<StorageArea.DockRelation> { }
-                ),
                 cph
             )
         );

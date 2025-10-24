@@ -66,15 +66,10 @@ activate UI
                         Context --> Repository: status
                     deactivate Context
 
-                    Repository --> Service: xptoInstance
+                    Repository --> Service: status
                 deactivate Repository
 
-                Service --> Model: toDto()
-                activate Model
-                    Model --> Service: xptoInstanceDto
-                deactivate Model
-
-                Service --> Controller: xptoInstanceDto
+                Service --> Controller: status
             deactivate Service
 
             Controller --> API: NoContent()

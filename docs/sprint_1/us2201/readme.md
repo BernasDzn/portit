@@ -1,7 +1,10 @@
 # US2201 - Register and update vessel types
 
-### [Requirements Engineering](requirements/readme.md)
+## 1. [Requirements Engineering](./requirements/readme.md)
+Capturing what the system must do
 
-### [Analysis](analysis/readme.md)
+## 2. [Business Analysis](./analysis/readme.md)
+Understanding the domain and rules
 
-### [Design](design/readme.md)
+## 3. [Design](./design/readme.md)
+Planning how to build the solution

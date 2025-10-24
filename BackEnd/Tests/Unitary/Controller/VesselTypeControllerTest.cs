@@ -12,6 +12,8 @@ using Moq;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc;
 using Api.Domain.ValueObjects;
+using Api.Application.Exceptions;
+using Api.Infrastructure.Exceptions;
 
 namespace Tests.Unitary.Controller
 {
@@ -65,13 +67,27 @@ namespace Tests.Unitary.Controller
         [Fact]
         public async Task GetByName_ReturnsNotFound_WhenVesselDoesNotExist()
         {
+            var vesselTypeName = "NONEXISTENT";
             _vesselTypeServiceMock.Setup(service => service.GetByName(It.IsAny<string>()))
-                .ReturnsAsync((VesselTypeDto?)null);
+                .ThrowsAsync(new EntityNotFoundException("Vessel type not found"));
 
-            var result = await _controller.GetByName("non-existent-name");
+            var result = await _controller.GetByName(vesselTypeName);
 
-            var notFoundResult = Assert.IsType<NotFoundObjectResult>(result.Result);
-            Assert.Equal("No Vessel type found with name: non-existent-name", notFoundResult.Value);
+            Assert.IsType<NotFoundObjectResult>(result.Result);
+        }
+
+
+        [Fact]
+        public async Task GetByName_ReturnsInternalServerError_OnException()
+        {
+            var vesselTypeName = "VesselType1";
+            _vesselTypeServiceMock.Setup(service => service.GetByName(It.IsAny<string>()))
+                .ThrowsAsync(new Exception("Test exception"));
+
+            var result = await _controller.GetByName(vesselTypeName);
+
+            var objectResult = Assert.IsType<ObjectResult>(result.Result);
+            Assert.Equal(500, objectResult.StatusCode);
         }
 
         [Fact]
@@ -98,11 +114,11 @@ namespace Tests.Unitary.Controller
         }
 
         [Fact]
-        public async Task Create_ReturnsBadRequest_WhenVesselTypeCreationFails()
+        public async Task Create_ReturnsBadRequest_WhenCreationFails()
         {
             var newVesselType = new VesselTypeDto
             {
-                Name = "NewType",
+                Name = "",
                 Description = "A new vessel type",
                 MaxNumberOfRows = 15,
                 MaxNumberOfBays = 25,
@@ -111,12 +127,54 @@ namespace Tests.Unitary.Controller
             };
 
             _vesselTypeServiceMock.Setup(service => service.Add(It.IsAny<VesselTypeDto>()))
-                .ReturnsAsync((VesselTypeDto?)null);
+                .ThrowsAsync(new ArgumentException("Could not create vessel type"));
 
             var result = await _controller.Create(newVesselType);
 
-            var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);
-            Assert.Equal("Cannot create vessel type", badRequestResult.Value);
+            var statusCodeResult = Assert.IsType<BadRequestObjectResult>(result.Result);
+        }
+
+        [Fact]
+        public async Task Create_ReturnsConflict_WhenEntityAlreadyExists()
+        {
+            var newVesselType = new VesselTypeDto
+            {
+                Name = "Panamax",
+                Description = "An existing vessel type",
+                MaxNumberOfRows = 15,
+                MaxNumberOfBays = 25,
+                MaxNumberOfTiers = 6,
+                PhysicalCharacteristics = null!
+            };
+
+            _vesselTypeServiceMock.Setup(service => service.Add(It.IsAny<VesselTypeDto>()))
+                .ThrowsAsync(new EntityAlreadyExistsException("This vessel type already exists."));
+
+            var result = await _controller.Create(newVesselType);
+
+            var conflictResult = Assert.IsType<ConflictObjectResult>(result.Result);
+        }
+
+        [Fact]
+        public async Task Create_ReturnsInternalServerError_OnException()
+        {
+            var newVesselType = new VesselTypeDto
+            {
+                Name = "DCK004",
+                Description = "Quaternary Dock",
+                MaxNumberOfRows = 4,
+                MaxNumberOfBays = 4,
+                MaxNumberOfTiers = 4,
+                PhysicalCharacteristics = null!
+            };
+
+            _vesselTypeServiceMock.Setup(service => service.Add(It.IsAny<VesselTypeDto>()))
+                .ThrowsAsync(new Exception("Test exception"));
+
+            var result = await _controller.Create(newVesselType);
+
+            var objectResult = Assert.IsType<ObjectResult>(result.Result);
+            Assert.Equal(500, objectResult.StatusCode);
         }
 
         [Fact]
@@ -142,27 +200,68 @@ namespace Tests.Unitary.Controller
         }
 
         [Fact]
-        public async Task Update_ReturnsBadRequest_WhenVesselTypeUpdateFails()
+        public async Task Update_ReturnsBadRequest_WhenInvalidDataIsProvided()
         {
             var updatedVesselType = new VesselTypeDto
             {
-                Name = "UpdatedType",
-                Description = "An updated vessel type",
-                MaxNumberOfRows = 20,
-                MaxNumberOfBays = 30,
-                MaxNumberOfTiers = 7,
+                Name = "",
+                Description = "",
+                MaxNumberOfRows = 0,
+                MaxNumberOfBays = 0,
+                MaxNumberOfTiers = 0,
                 PhysicalCharacteristics = null!
             };
 
             _vesselTypeServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<VesselTypeDto>()))
-                .ReturnsAsync((VesselTypeDto?)null);
+                .ThrowsAsync(new ArgumentException("Could not update vessel type"));
 
-            var result = await _controller.Update("OldVesselType", updatedVesselType);
+            var result = await _controller.Update("Panamax", updatedVesselType);
 
-            var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);
-            Assert.Equal("Could not update vessel type", badRequestResult.Value);
+            var statusCodeResult = Assert.IsType<BadRequestObjectResult>(result.Result);
         }
 
+        [Fact]
+        public async Task Update_ReturnsNotFound_WhenVesselTypeDoesNotExist()
+        {
+            var updatedVesselType = new VesselTypeDto
+            {
+                Name = "Updated Vessel Type",
+                Description = "Updated Description",
+                MaxNumberOfRows = 5,
+                MaxNumberOfBays = 5,
+                MaxNumberOfTiers = 5,
+                PhysicalCharacteristics = null!
+            };
+
+            _vesselTypeServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<VesselTypeDto>()))
+                .ThrowsAsync(new EntityNotFoundException("Vessel type not found"));
+
+            var result = await _controller.Update("NONEXISTENT", updatedVesselType);
+
+            Assert.IsType<NotFoundObjectResult>(result.Result);
+        }
+
+        [Fact]
+        public async Task Update_ReturnsInternalServerError_OnException()
+        {
+            var updatedVesselType = new VesselTypeDto
+            {
+                Name = "Updated Vessel Type",
+                Description = "Updated Description",
+                MaxNumberOfRows = 5,
+                MaxNumberOfBays = 5,
+                MaxNumberOfTiers = 5,
+                PhysicalCharacteristics = null!
+            };
+
+            _vesselTypeServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<VesselTypeDto>()))
+                .ThrowsAsync(new Exception("Test exception"));
+
+            var result = await _controller.Update("DCK001", updatedVesselType);
+
+            var objectResult = Assert.IsType<ObjectResult>(result.Result);
+            Assert.Equal(500, objectResult.StatusCode);
+        }
 
         [Fact]
         public async Task Filter_ReturnsOkResult_WithPagedVesselTypes()
@@ -193,7 +292,7 @@ namespace Tests.Unitary.Controller
         }
 
         [Fact]
-        public async Task Filter_ReturnsNotFound_WhenExceptionIsThrown()
+        public async Task Filter_ReturnsInternalServerError_WhenExceptionIsThrown()
         {
             var filter = new VesselTypeFilter
             {
@@ -206,7 +305,7 @@ namespace Tests.Unitary.Controller
 
             var result = await _controller.Filter(filter);
 
-            var notFoundResult = Assert.IsType<NotFoundResult>(result.Result);
+            var notFoundResult = Assert.IsType<ObjectResult>(result.Result);
         }
 
     }

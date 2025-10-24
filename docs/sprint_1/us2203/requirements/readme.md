@@ -46,7 +46,10 @@ On a given dock may berth several vessel types (e.g. Feeder and Panamax).
 ## 3. Business Value
 > This feature is important because it ensures the port’s docking capacity is accurately managed, allowing vessels to be matched with suitable docks, improving operational efficiency, safety, and planning reliability.
 
-## 4. Definition of Done
+## 4. Definition of Ready
+> This US follows the defined [global definition of ready](../../global_artifacts/def_of_ready.md)
+
+## 5. Definition of Done
 - Each dock record include a unique identifier, a name/number, a location within the port, and physical characteristics.
 - The officer can/must specify the vessel types allowed to berth there.
 - Docks are searchable.

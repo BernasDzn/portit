@@ -30,12 +30,13 @@ public class DockService : IDockService
         return docks.Select(d => d.ToDTO()).ToList();
     }
 
-    public async Task<DockDto?> GetByCode(string code)
+    public async Task<DockDto> GetByCode(string code)
     {
         Dock? dock = await _dockRepository.GetDockByCodeAsync(code);
-
+        if (dock == null)
+            throw new EntityNotFoundException("No dock found with the provided code.");
         AppLogEvents.LogRetrieve(_logger, "dock", 1);
-        return dock?.ToDTO();
+        return dock.ToDTO();
     }
 
     public async Task<Page<DockDto>> FilterDocks(DockFilter filter)
@@ -45,7 +46,7 @@ public class DockService : IDockService
         return page.Map(d => d.ToDTO());
     }
 
-    public async Task<DockDto?> Add(CreateDockDto dockDto)
+    public async Task<DockDto> Add(CreateDockDto dockDto)
     {
         bool exists = await _dockRepository.GetDockByCodeAsync(dockDto.Code) != null;
         if (exists)
@@ -69,7 +70,7 @@ public class DockService : IDockService
         return savedDockDto;
     }
 
-    public async Task<DockDto?> Update(string code, CreateDockDto dockDto)
+    public async Task<DockDto> Update(string code, CreateDockDto dockDto)
     {
         if (code != dockDto.Code)
             throw new ArgumentException("The provided code does not match the dock to be updated.");
@@ -93,10 +94,7 @@ public class DockService : IDockService
         dock.UpdatePhysicalCharacteristics(newPhysicalCharacteristics);
         dock.UpdateVesselTypes(vesselTypes);
 
-        Dock? updated = await _dockRepository.Update(dock);
-
-        if (updated == null)
-            throw new PersistencyFailedException("Dock update failed.");
+        Dock updated = await _dockRepository.Update(dock);
 
         AppLogEvents.LogUpdate(_logger, "Dock", dock.Id);
         return updated.ToDTO();

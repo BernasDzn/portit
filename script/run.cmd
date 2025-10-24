@@ -1,1 +1,1 @@
-dotnet run --project BackEnd/Api/Api.csproj
+dotnet run --project ../BackEnd/Api/Api.csproj

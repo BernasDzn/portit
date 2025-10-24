@@ -5,8 +5,8 @@ using Api.Infrastructure.Utilities;
 public interface IDockService
 {
     public Task<IEnumerable<DockDto>> GetDocks();
-    public Task<DockDto?> GetByCode(string code);
+    public Task<DockDto> GetByCode(string code);
     public Task<Page<DockDto>> FilterDocks(DockFilter filter);
-    public Task<DockDto?> Add(CreateDockDto dockDto);
-    public Task<DockDto?> Update(string code, CreateDockDto dockDto);
+    public Task<DockDto> Add(CreateDockDto dockDto);
+    public Task<DockDto> Update(string code, CreateDockDto dockDto);
 }

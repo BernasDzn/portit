@@ -2,6 +2,8 @@
 Actor "User" as user
 Participant "System" as System <<System C4>>
 
+title Get Xpto
+
 user -> System: Request Data
 activate System
     user <-- System: Return Data

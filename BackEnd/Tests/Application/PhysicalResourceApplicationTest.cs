@@ -345,8 +345,7 @@ public class PhysicalResourceApplicationTest : WebApplicationFactory<Program>
             QualificationsCodes = new List<string> { "YACOP" },
             OperationalWindow = OperationalWindow.FullWeek(),
             ContainersPerHour = 25,
-            LiftingCapacity = 40,
-            YardSectionCode = "YARD2"
+            LiftingCapacity = 40
         };
 
         var response = await _client.PostAsJsonAsync("/PhysicalResource/AddYardCrane", newCrane);
@@ -365,27 +364,6 @@ public class PhysicalResourceApplicationTest : WebApplicationFactory<Program>
     }
 
     [Fact]
-    public async Task AddYardCrane_WithNonExistingYardSection_ReturnsNotFound()
-    {
-        var newCrane = new CreateYardCraneDto
-        {
-            Code = "PPPPP",
-            Description = "PPPPP",
-            Status = ResourceStatus.Available,
-            SetupTimeInMinutes = 10,
-            QualificationsCodes = new List<string> { "YACOP" },
-            OperationalWindow = OperationalWindow.FullWeek(),
-            ContainersPerHour = 25,
-            LiftingCapacity = 40,
-            YardSectionCode = "NONEXISTENT"
-        };
-
-        var response = await _client.PostAsJsonAsync("/PhysicalResource/AddYardCrane", newCrane);
-
-        Assert.Equal(System.Net.HttpStatusCode.NotFound, response.StatusCode);
-    }
-
-    [Fact]
     public async Task AddYardCrane_WithDuplicateCode_ReturnsConflict()
     {
         var newCrane = new CreateYardCraneDto
@@ -397,8 +375,7 @@ public class PhysicalResourceApplicationTest : WebApplicationFactory<Program>
             QualificationsCodes = new List<string> { "YACOP" },
             OperationalWindow = OperationalWindow.FullWeek(),
             ContainersPerHour = 25,
-            LiftingCapacity = 40,
-            YardSectionCode = "YARD2"
+            LiftingCapacity = 40
         };
 
         var response = await _client.PostAsJsonAsync("/PhysicalResource/AddYardCrane", newCrane);
@@ -418,8 +395,7 @@ public class PhysicalResourceApplicationTest : WebApplicationFactory<Program>
             QualificationsCodes = new List<string> { "YACOP" },
             OperationalWindow = OperationalWindow.FullWeek(),
             ContainersPerHour = 25,
-            LiftingCapacity = 40,
-            YardSectionCode = "YARD2"
+            LiftingCapacity = 40
         };
 
         var response = await _client.PostAsJsonAsync("/PhysicalResource/AddYardCrane", newCrane);
@@ -439,8 +415,7 @@ public class PhysicalResourceApplicationTest : WebApplicationFactory<Program>
             QualificationsCodes = new List<string> { "NONEXISTENT" },
             OperationalWindow = OperationalWindow.FullWeek(),
             ContainersPerHour = 25,
-            LiftingCapacity = 40,
-            YardSectionCode = "YARD2"
+            LiftingCapacity = 40
         };
 
         var response = await _client.PostAsJsonAsync("/PhysicalResource/AddYardCrane", newCrane);
@@ -718,8 +693,7 @@ public class PhysicalResourceApplicationTest : WebApplicationFactory<Program>
             QualificationsCodes = new List<string> { "YACOP" },
             OperationalWindow = OperationalWindow.FullWeek(),
             ContainersPerHour = 28,
-            LiftingCapacity = 45,
-            YardSectionCode = "YARD1"
+            LiftingCapacity = 45
         };
 
         var response = await _client.PutAsJsonAsync($"/PhysicalResource/UpdateYardCrane/{updatedYard.Code}", updatedYard);
@@ -746,8 +720,7 @@ public class PhysicalResourceApplicationTest : WebApplicationFactory<Program>
             QualificationsCodes = new List<string> { "YACOP" },
             OperationalWindow = OperationalWindow.FullWeek(),
             ContainersPerHour = 28,
-            LiftingCapacity = 45,
-            YardSectionCode = "YARD1"
+            LiftingCapacity = 45
         };
 
         var response = await _client.PutAsJsonAsync($"/PhysicalResource/UpdateYardCrane/{updatedYard.Code}", updatedYard);
@@ -767,8 +740,7 @@ public class PhysicalResourceApplicationTest : WebApplicationFactory<Program>
             QualificationsCodes = new List<string> { "YACOP" },
             OperationalWindow = OperationalWindow.FullWeek(),
             ContainersPerHour = 28,
-            LiftingCapacity = 45,
-            YardSectionCode = "YARD1"
+            LiftingCapacity = 45
         };
 
         var response = await _client.PutAsJsonAsync($"/PhysicalResource/UpdateYardCrane/YC001", updatedYard);
@@ -788,8 +760,7 @@ public class PhysicalResourceApplicationTest : WebApplicationFactory<Program>
             QualificationsCodes = new List<string> { "NONEXISTENT" },
             OperationalWindow = OperationalWindow.FullWeek(),
             ContainersPerHour = 28,
-            LiftingCapacity = 45,
-            YardSectionCode = "YARD1"
+            LiftingCapacity = 45
         };
 
         var response = await _client.PutAsJsonAsync($"/PhysicalResource/UpdateYardCrane/{updatedYard.Code}", updatedYard);

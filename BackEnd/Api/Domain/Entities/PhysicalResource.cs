@@ -125,33 +125,19 @@ public class YardCrane : PhysicalResource, IDTOAble<YardCraneDto>
 {
     public uint ContainersPerHour { get; private set; }
     public uint LiftingCapacity { get; private set; }
-    private StorageArea _yardSection;
-    public virtual StorageArea YardSection
-    {
-        get => _yardSection;
-        private set
-        {
-            if (value.AreaType != StorageAreaType.Yard)
-                throw new ArgumentException("The storage area must be of type 'Yard'.");
-
-            _yardSection = value;
-        }
-    }
 
     protected YardCrane() { } // EF Core
 
     public YardCrane(
         Guid id, Code code, Designation description, ResourceStatus status, TimeSpan setupTime, HashSet<Qualification> qualifications, OperationalWindow operationalWindow,
-        uint liftingCapacity, StorageArea yardSection, uint averageContainersPerHour
+        uint liftingCapacity, uint averageContainersPerHour
     )
         : base(id, code, description, status, setupTime, qualifications, operationalWindow)
     {
         LiftingCapacity = liftingCapacity;
-        YardSection = yardSection;
         ContainersPerHour = averageContainersPerHour;
     }
 
-    public void UpdateYardSection(StorageArea yardSection) { YardSection = yardSection; }
     public void UpdateLiftingCapacity(uint liftingCapacity) { LiftingCapacity = liftingCapacity; }
     public void UpdateContainersPerHour(uint containersPerHour) { ContainersPerHour = containersPerHour; }
     
@@ -166,7 +152,6 @@ public class YardCrane : PhysicalResource, IDTOAble<YardCraneDto>
             Qualifications = this.Qualifications.Select(q => q.ToDTO()).ToList(),
             ContainersPerHour = this.ContainersPerHour,
             LiftingCapacity = this.LiftingCapacity,
-            YardSection = this.YardSection.ToDTO(),
             OperationalWindow = this.OperationalWindow
         };
     }
