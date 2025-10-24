@@ -228,7 +228,6 @@ public static class Bootstrap
             new HashSet<Qualification> { ycOp },
             OperationalWindow.Weekdays(new TimeOnly(8, 0), new TimeOnly(18, 0)),
             20,
-            context.StorageAreas.First(sa => sa.AreaType == StorageAreaType.Yard),
             40
         );
 
@@ -241,7 +240,6 @@ public static class Bootstrap
             new HashSet<Qualification> { ycOp },
             OperationalWindow.FullWeek(),
             25,
-            context.StorageAreas.First(sa => sa.AreaType == StorageAreaType.Yard),
             35
         );
 

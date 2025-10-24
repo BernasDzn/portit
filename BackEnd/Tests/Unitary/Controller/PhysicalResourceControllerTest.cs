@@ -270,8 +270,7 @@ public class PhysicalResourceControllerTest
             QualificationsCodes = new List<string>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             ContainersPerHour = 25,
-            LiftingCapacity = 40,
-            YardSectionCode = null!
+            LiftingCapacity = 40
         };
 
         var expectedDto = new YardCraneDto
@@ -283,8 +282,7 @@ public class PhysicalResourceControllerTest
             Qualifications = new List<QualificationDto>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             ContainersPerHour = 25,
-            LiftingCapacity = 40,
-            YardSection = null!
+            LiftingCapacity = 40
         };
 
         _physicalResourceServiceMock.Setup(service => service.AddYardCraneAsync(createDto))
@@ -314,8 +312,7 @@ public class PhysicalResourceControllerTest
             QualificationsCodes = new List<string>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             ContainersPerHour = 25,
-            LiftingCapacity = 40,
-            YardSectionCode = null!
+            LiftingCapacity = 40
         };
 
         var result = await _controller.AddYardCrane(newCrane);
@@ -337,8 +334,7 @@ public class PhysicalResourceControllerTest
             QualificationsCodes = new List<string>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             ContainersPerHour = 25,
-            LiftingCapacity = 40,
-            YardSectionCode = null!
+            LiftingCapacity = 40
         };
 
         var result = await _controller.AddYardCrane(newCrane);
@@ -360,8 +356,7 @@ public class PhysicalResourceControllerTest
             QualificationsCodes = new List<string>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             ContainersPerHour = 25,
-            LiftingCapacity = 40,
-            YardSectionCode = null!
+            LiftingCapacity = 40
         };
 
         var result = await _controller.AddYardCrane(newCrane);
@@ -383,8 +378,7 @@ public class PhysicalResourceControllerTest
             QualificationsCodes = new List<string>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             ContainersPerHour = 25,
-            LiftingCapacity = 40,
-            YardSectionCode = null!
+            LiftingCapacity = 40
         };
 
         var result = await _controller.AddYardCrane(newCrane);
@@ -645,8 +639,7 @@ public class PhysicalResourceControllerTest
             QualificationsCodes = new List<string>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             ContainersPerHour = 28,
-            LiftingCapacity = 45,
-            YardSectionCode = null!
+            LiftingCapacity = 45
         };
 
         var expectedCrane = new YardCraneDto
@@ -658,8 +651,7 @@ public class PhysicalResourceControllerTest
             Qualifications = new List<QualificationDto>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             ContainersPerHour = 28,
-            LiftingCapacity = 45,
-            YardSection = null!
+            LiftingCapacity = 45
         };
 
         _physicalResourceServiceMock.Setup(service => service.UpdateYardCraneAsync(It.IsAny<string>(), It.IsAny<CreateYardCraneDto>()))
@@ -684,8 +676,7 @@ public class PhysicalResourceControllerTest
             QualificationsCodes = new List<string>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             ContainersPerHour = 28,
-            LiftingCapacity = 45,
-            YardSectionCode = null!
+            LiftingCapacity = 45
         };
 
         var result = await _controller.UpdateYardCrane("existing-yard-crane", updatedCrane);
@@ -707,8 +698,7 @@ public class PhysicalResourceControllerTest
             QualificationsCodes = new List<string>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             ContainersPerHour = 28,
-            LiftingCapacity = 45,
-            YardSectionCode = null!
+            LiftingCapacity = 45
         };
 
         var result = await _controller.UpdateYardCrane("existing-yard-crane", updatedCrane);
@@ -730,8 +720,7 @@ public class PhysicalResourceControllerTest
             QualificationsCodes = new List<string>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             ContainersPerHour = 28,
-            LiftingCapacity = 45,
-            YardSectionCode = null!
+            LiftingCapacity = 45
         };
 
         var result = await _controller.UpdateYardCrane("existing-yard-crane", updatedCrane);

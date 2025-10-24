@@ -59,15 +59,6 @@ public class PhysicalResourceServiceTest
             new HashSet<Qualification>(),
             OperationalWindow.FullWeek(),
             30,
-            new StorageArea(
-                Guid.NewGuid(),
-                new Code { Value = "STORAGE1" },
-                new Designation { Value = "Storage Area 1" },
-                StorageAreaType.Yard,
-                100,
-                10,
-                new HashSet<StorageArea.DockRelation>()
-            ),
             10
         ),
         new Truck(
@@ -287,15 +278,6 @@ public class PhysicalResourceServiceTest
     [Fact]
     public async Task AddYardCraneAsync_ReturnsAddedCrane()
     {
-        StorageArea sa = new StorageArea(
-                Guid.NewGuid(),
-                new Code { Value = "STORAGE1" },
-                new Designation { Value = "Storage Area 1" },
-                StorageAreaType.Yard,
-                100,
-                10,
-                new HashSet<StorageArea.DockRelation>()
-            );
 
         var newCraneDto = new CreateYardCraneDto
         {
@@ -306,15 +288,11 @@ public class PhysicalResourceServiceTest
             QualificationsCodes = new List<string>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             LiftingCapacity = 40,
-            YardSectionCode = sa.ToDTO().NameCode,
             ContainersPerHour = 15,
         };
 
         _physicalResourceRepositoryMock.Setup(repo => repo.GetResourceByCodeAsync(newCraneDto.Code))
             .ReturnsAsync(resources.FirstOrDefault(r => r.Code.Value == newCraneDto.Code));
-
-        _storageAreaRepositoryMock.Setup(repo => repo.GetStorageAreaByCodeAsync(It.IsAny<string>()))
-            .ReturnsAsync(sa);
 
         _qualificationRepositoryMock.Setup(repo => repo.GetQualificationByIdAsync(It.IsAny<string>()))
             .ReturnsAsync(new Qualification(Guid.NewGuid(), new Code { Value = "Q1" }, new Designation { Value = "Qualification 1" }));
@@ -326,31 +304,6 @@ public class PhysicalResourceServiceTest
 
         Assert.NotNull(result);
         Assert.Equal(newCraneDto.Code, result.Code);
-    }
-
-    [Fact]
-    public async Task AddYardCraneAsync_ThrowsException_WhenStorageAreaDoesNotExist()
-    {
-        var newCraneDto = new CreateYardCraneDto
-        {
-            Code = "YCRANE2",
-            Description = "Yard Crane 2",
-            Status = ResourceStatus.Available,
-            SetupTimeInMinutes = 15,
-            QualificationsCodes = new List<string>(),
-            OperationalWindow = OperationalWindow.FullWeek(),
-            LiftingCapacity = 40,
-            YardSectionCode = "NON_EXISTENT_STORAGE",
-            ContainersPerHour = 15,
-        };
-
-        _physicalResourceRepositoryMock.Setup(repo => repo.GetResourceByCodeAsync(newCraneDto.Code))
-            .ReturnsAsync(resources.FirstOrDefault(r => r.Code.Value == newCraneDto.Code));
-
-        _storageAreaRepositoryMock.Setup(repo => repo.GetStorageAreaByCodeAsync(It.IsAny<string>()))
-            .ReturnsAsync((StorageArea?)null);
-
-        await Assert.ThrowsAsync<EntityNotFoundException>(() => _service.AddYardCraneAsync(newCraneDto));
     }
 
     [Fact]
@@ -366,7 +319,6 @@ public class PhysicalResourceServiceTest
             QualificationsCodes = new List<string>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             LiftingCapacity = 40,
-            YardSectionCode = existingCrane.YardSection.ToDTO().NameCode,
             ContainersPerHour = 15,
         };
 
@@ -379,15 +331,6 @@ public class PhysicalResourceServiceTest
     [Fact]
     public async Task AddYardCraneAsync_ThrowsException_WhenQualificationDoesNotExist()
     {
-        StorageArea sa = new StorageArea(
-                Guid.NewGuid(),
-                new Code { Value = "STORAGE1" },
-                new Designation { Value = "Storage Area 1" },
-                StorageAreaType.Yard,
-                100,
-                10,
-                new HashSet<StorageArea.DockRelation>()
-            );
 
         var newCraneDto = new CreateYardCraneDto
         {
@@ -398,15 +341,11 @@ public class PhysicalResourceServiceTest
             QualificationsCodes = new List<string> { "NON_EXISTENT_QUAL" },
             OperationalWindow = OperationalWindow.FullWeek(),
             LiftingCapacity = 40,
-            YardSectionCode = sa.ToDTO().NameCode,
             ContainersPerHour = 15,
         };
 
         _physicalResourceRepositoryMock.Setup(repo => repo.GetResourceByCodeAsync(newCraneDto.Code))
             .ReturnsAsync(resources.FirstOrDefault(r => r.Code.Value == newCraneDto.Code));
-
-        _storageAreaRepositoryMock.Setup(repo => repo.GetStorageAreaByCodeAsync(It.IsAny<string>()))
-            .ReturnsAsync(sa);
 
         _qualificationRepositoryMock.Setup(repo => repo.GetQualificationByIdAsync(It.IsAny<string>()))
             .ReturnsAsync((Qualification?)null);
@@ -645,15 +584,11 @@ public class PhysicalResourceServiceTest
             QualificationsCodes = new List<string>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             LiftingCapacity = 45,
-            YardSectionCode = existingCrane.YardSection.NameCode.Value,
             ContainersPerHour = 18,
         };
 
         _physicalResourceRepositoryMock.Setup(repo => repo.GetResourceByCodeAsync(updateCraneDto.Code))
             .ReturnsAsync(existingCrane);
-
-        _storageAreaRepositoryMock.Setup(repo => repo.GetStorageAreaByCodeAsync(It.IsAny<string>()))
-            .ReturnsAsync(existingCrane.YardSection);
 
         _qualificationRepositoryMock.Setup(repo => repo.GetQualificationByIdAsync(It.IsAny<string>()))
             .ReturnsAsync(new Qualification(Guid.NewGuid(), new Code { Value = "Q1" }, new Designation { Value = "Qualification 1" }));
@@ -678,39 +613,11 @@ public class PhysicalResourceServiceTest
             QualificationsCodes = new List<string>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             LiftingCapacity = 45,
-            YardSectionCode = "STORAGE1",
             ContainersPerHour = 18,
         };
 
         _physicalResourceRepositoryMock.Setup(repo => repo.GetResourceByCodeAsync(updateCraneDto.Code))
             .ReturnsAsync((PhysicalResource?)null);
-
-        await Assert.ThrowsAsync<EntityNotFoundException>(() => _service.UpdateYardCraneAsync(updateCraneDto.Code, updateCraneDto));
-    }
-
-    [Fact]
-    public async Task UpdateYardCraneAsync_ThrowsException_WhenStorageAreaDoesNotExist()
-    {
-        var existingCrane = resources.OfType<YardCrane>().First();
-
-        var updateCraneDto = new CreateYardCraneDto
-        {
-            Code = existingCrane.Code.Value,
-            Description = "Updated Yard Crane",
-            Status = ResourceStatus.Maintenance,
-            SetupTimeInMinutes = 20,
-            QualificationsCodes = new List<string>(),
-            OperationalWindow = OperationalWindow.FullWeek(),
-            LiftingCapacity = 45,
-            YardSectionCode = "NON_EXISTENT_STORAGE",
-            ContainersPerHour = 18,
-        };
-
-        _physicalResourceRepositoryMock.Setup(repo => repo.GetResourceByCodeAsync(updateCraneDto.Code))
-            .ReturnsAsync(existingCrane);
-
-        _storageAreaRepositoryMock.Setup(repo => repo.GetStorageAreaByCodeAsync(It.IsAny<string>()))
-            .ReturnsAsync((StorageArea?)null);
 
         await Assert.ThrowsAsync<EntityNotFoundException>(() => _service.UpdateYardCraneAsync(updateCraneDto.Code, updateCraneDto));
     }
@@ -729,15 +636,11 @@ public class PhysicalResourceServiceTest
             QualificationsCodes = new List<string> { "NON_EXISTENT_QUAL" },
             OperationalWindow = OperationalWindow.FullWeek(),
             LiftingCapacity = 45,
-            YardSectionCode = existingCrane.YardSection.NameCode.Value,
             ContainersPerHour = 18,
         };
 
         _physicalResourceRepositoryMock.Setup(repo => repo.GetResourceByCodeAsync(updateCraneDto.Code))
             .ReturnsAsync(existingCrane);
-
-        _storageAreaRepositoryMock.Setup(repo => repo.GetStorageAreaByCodeAsync(It.IsAny<string>()))
-            .ReturnsAsync(existingCrane.YardSection);
 
         _qualificationRepositoryMock.Setup(repo => repo.GetQualificationByIdAsync(It.IsAny<string>()))
             .ReturnsAsync((Qualification?)null);
@@ -759,7 +662,6 @@ public class PhysicalResourceServiceTest
             QualificationsCodes = new List<string>(),
             OperationalWindow = OperationalWindow.FullWeek(),
             LiftingCapacity = 45,
-            YardSectionCode = "STORAGE1",
             ContainersPerHour = 18,
         };
 

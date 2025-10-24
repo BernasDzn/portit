@@ -113,9 +113,6 @@ public class PhysicalResourceService : IPhysicalResourceService
 
         IEnumerable<Qualification> qualifications = GetQualificationsAsync(resourceDto.QualificationsCodes);
 
-        StorageArea? storageArea = await _storageAreaRepository.GetStorageAreaByCodeAsync(resourceDto.YardSectionCode);
-        if (storageArea == null) throw new EntityNotFoundException("The specified storage area does not exist.");
-
         YardCrane crane = new YardCrane(
             Guid.NewGuid(),
             new Code { Value = resourceDto.Code },
@@ -125,7 +122,6 @@ public class PhysicalResourceService : IPhysicalResourceService
             qualifications.ToHashSet(),
             resourceDto.OperationalWindow,
             resourceDto.LiftingCapacity,
-            storageArea,
             resourceDto.ContainersPerHour
         );
 
@@ -202,9 +198,6 @@ public class PhysicalResourceService : IPhysicalResourceService
 
         List<Qualification> qualifications = GetQualificationsAsync(crane.QualificationsCodes).ToList();
 
-        StorageArea? storageArea = await _storageAreaRepository.GetStorageAreaByCodeAsync(crane.YardSectionCode);
-        if (storageArea == null) throw new EntityNotFoundException("The specified storage area does not exist.");
-
         YardCrane craneObject = (existingCrane as YardCrane)!;
 
         craneObject.UpdateDescription(new Designation { Value = crane.Description });
@@ -214,7 +207,6 @@ public class PhysicalResourceService : IPhysicalResourceService
 
         craneObject.UpdateLiftingCapacity(crane.LiftingCapacity);
         craneObject.UpdateContainersPerHour(crane.ContainersPerHour);
-        craneObject.UpdateYardSection(storageArea);
 
         //_logger.LogInformation("Updating Yard Crane with code {CraneCode}", craneObject.Code.Value);
         AppLogEvents.LogUpdate(_logger, "Yard Crane", craneObject.Id);
