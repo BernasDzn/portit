@@ -32,10 +32,10 @@ We have decided to include only 4 levels to our documentation. Not all levels ar
 #### Logic View
 ![N1_Logic_0](./level_1/logic_views/svg/l1_logicview/logicview_n1.svg)
 #### Process View
-![N1_Process_0](./level_1/process_views/svg/l1_process_view_get/processview_n1.svg)
-![N1_Process_1](./level_1/process_views/svg/l1_process_view_post/processview_n1.svg)
-![N1_Process_2](./level_1/process_views/svg/l1_process_view_put/processview_n1.svg)
-![N1_Process_3](./level_1/process_views/svg/l1_process_view_delete/processview_n1.svg)
+![N1_Process_0](./level_1/process_views/svg/process_view_n1_1/processview_n1.svg)
+![N1_Process_1](./level_1/process_views/svg/process_view_n1_2/processview_n1.svg)
+![N1_Process_2](./level_1/process_views/svg/process_view_n1_3/processview_n1.svg)
+![N1_Process_3](./level_1/process_views/svg/process_view_n1_4/processview_n1.svg)
 #### Scenario View
 ![N1_Scenario_0](./level_1/scenario_views/svg/l1_scenario_view/use_case_diagram.svg)
 
