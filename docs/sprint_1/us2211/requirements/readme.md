@@ -88,7 +88,7 @@ Example 2:
 > This feature is important as to ensure accurate, efficient scheduling and compliance by ensuring only qualified and available personnel are considered for operations.
 
 ## 5. Definition of Ready
-> This US follows the defined [global definition of ready](../../global_artifacts/requirements/def_of_ready.md).
+> This US follows the defined [global definition of ready](../../global_artifacts/def_of_ready.md)
 
 ## 6. Definition of Done
 - The system is able to create a staff member
