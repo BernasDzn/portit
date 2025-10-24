@@ -168,6 +168,11 @@ rectangle "Qualifications" {
 	{
 	}
 
+	class "Qualification\n**Code**" as quali_code <<Value>>
+	{
+		+ code
+	}
+
 	class "Qualification\n**Name**" as quali_name <<Value>>
 	{
 		+ name
@@ -550,27 +555,27 @@ vessel_type --> "1" vessel_type_max_tiers
 vessel_type --> "1" vessel_type_physical_char
 
 dock "1" --> "1" dock_loc
-dock "1" --> "*" phys_res : "has"
 dock "1" --> "1" dock_name
 dock --> "1" dock_physical_char
 
+dock "1" --> "*" phys_res : "has"
 sts_crane --|> phys_res
 yard_crane --|> phys_res
 truck --|> phys_res
-
 sts_crane --> "1" phys_res_cph
 sts_crane --> "1" phys_res_lc
-sts_crane --> "1" dock
-
 yard_crane --> "1" phys_res_cph
 yard_crane --> "1" phys_res_lc
-yard_crane --> "1" storage_area
-
 truck --> "1" phys_res_cpt
 truck --> "1" phys_res_as
+sts_crane --> "1" dock
+
+yard_crane --> "1" storage_area
+
 
 staff --> "1" staff_number
 
+quali --> "1" quali_code
 dock --> "1" dock_code
 
 @enduml
