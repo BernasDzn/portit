@@ -1,4 +1,4 @@
-@startuml Staff_Class_Diagram
+@startuml class_diagram
 !theme plain
 skinparam classAttributeIconSize 0
 
