@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using Api.Application.DataTransfer.Filters;
 using Api.Infrastructure.Utilities;
+using Api.Infrastructure.Persistence.Repositories;
 
 namespace Tests.Integration.ControllerToService;
 
@@ -34,7 +35,6 @@ public class VesselVisitNotification_CtS_IntegrationTests
         var loggerController = new Mock<ILogger<VesselVisitNotificationController>>();
         var loggerDecisionService = new Mock<ILogger<NotificationDecisionService>>();
 
-        // Create real services wired to mocked repositories (controller-to-service integration)
         var idGenerator = new Api.Application.Services.VesselVisitNotificationIdGenerator(_notificationRepositoryMock.Object);
         var notificationService = new VesselVisitNotificationService(
             _notificationRepositoryMock.Object,
@@ -349,8 +349,8 @@ public class VesselVisitNotification_CtS_IntegrationTests
             SubmitterId = rep.CitizenshipId
         };
 
-    var result = await _controller.Update(sample.NotificationId.ToString(), dto);
-    Assert.IsType<NoContentResult>(result.Result);
+        var result = await _controller.Update(sample.NotificationId.ToString(), dto);
+        Assert.IsType<NoContentResult>(result.Result);
     }
 
     [Fact]
@@ -418,8 +418,48 @@ public class VesselVisitNotification_CtS_IntegrationTests
         _notificationRepositoryMock.Setup(r => r.FilterVesselVisitNotificationsAsync(It.IsAny<VesselVisitNotificationFilter>()))
             .ThrowsAsync(new Exception("Test Exception"));
 
-    var result = await _controller.Filter(new VesselVisitNotificationFilter { SubmitterCitizeshipId = 0u });
+        var result = await _controller.Filter(new VesselVisitNotificationFilter { SubmitterCitizeshipId = 0u });
         var statusCodeResult = Assert.IsType<ObjectResult>(result.Result);
         Assert.Equal(500, statusCodeResult.StatusCode);
+    }
+
+    [Fact]
+    public async Task FilterVesselVisitNotifications_ReturnsOkResult_WithFilteredNotifications()
+    {
+        var filter = new VesselVisitNotificationFilter
+        {
+            SubmitterCitizeshipId = 908029952
+        };
+
+        _notificationRepositoryMock.Setup(repo => repo.FilterVesselVisitNotificationsAsync(filter))
+            .ReturnsAsync(new Page<VesselVisitNotification>
+            {
+                Items = new List<VesselVisitNotification>(),
+                PageNumber = 1,
+                PageSize = 10
+            });
+
+        var result = await _controller.Filter(filter);
+
+        var okResult = Assert.IsType<OkObjectResult>(result.Result);
+        var returnValue = Assert.IsType<Page<VesselVisitNotificationStatusDto>>(okResult.Value);
+        Assert.Empty(returnValue.Items);
+    }
+
+    [Fact]
+    public async Task FilterVesselVisitNotifications_ReturnsInternalServerError_WhenExceptionThrown()
+    {
+        var filter = new VesselVisitNotificationFilter
+        {
+            SubmitterCitizeshipId = 12345
+        };
+
+        _notificationRepositoryMock.Setup(repo => repo.FilterVesselVisitNotificationsAsync(filter))
+            .ThrowsAsync(new Exception("Database error"));
+
+        var result = await _controller.Filter(filter);
+
+        var objectResult = Assert.IsType<ObjectResult>(result.Result);
+        Assert.Equal(500, objectResult.StatusCode);
     }
 }

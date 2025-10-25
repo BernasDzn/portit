@@ -173,22 +173,88 @@ public class VesselVisitNotificationApplicationTest : WebApplicationFactory<Prog
 		}
 	}
 
-	[Fact]
-	public async Task Filter_ReturnsPagedResult()
-	{
-		// include a valid submitter id to avoid service lookup errors for id=0
-		// Note: the filter parameter is 'SubmitterCitizeshipId' in the DTO (typo preserved), pass a valid id
-		var response = await _client.GetAsync("/VesselVisitNotification/filter?pageNumber=1&pageSize=5&SubmitterCitizeshipId=908029952");
-		if (!response.IsSuccessStatusCode)
-		{
-			var text = await response.Content.ReadAsStringAsync();
-			Assert.True(response.IsSuccessStatusCode, $"Filter failed with status {response.StatusCode}. Body: {text}");
-		}
 
-		var page = await response.Content.ReadFromJsonAsync<Page<VesselVisitNotificationStatusDto>>();
-		Assert.NotNull(page);
-		Assert.NotEmpty(page.Items);
-	}
+    [Fact]
+    public async Task FilterVesselVisitNotifications_ReturnsOkAndPagedData()
+    {
+        var requestUri = "/VesselVisitNotification/filter?SubmitterCitizeshipId=908029952";
 
+        var response = await _client.GetAsync(requestUri);
+
+        response.EnsureSuccessStatusCode();
+        var pagedResult = await response.Content.ReadFromJsonAsync<Page<VesselVisitNotificationStatusDto>>();
+        Assert.NotNull(pagedResult);
+        Assert.NotNull(pagedResult.Items);
+    }
+
+    [Fact]
+    public async Task FilterVesselVisitNotifications_ReturnsOkWithEmptyData_WhenNoMatches()
+    {
+        var requestUri = "/VesselVisitNotification/filter?SubmitterCitizeshipId=908029952&Status=0";
+
+        var response = await _client.GetAsync(requestUri);
+
+        response.EnsureSuccessStatusCode();
+        var pagedResult = await response.Content.ReadFromJsonAsync<Page<VesselVisitNotificationStatusDto>>();
+        Assert.NotNull(pagedResult);
+        Assert.Empty(pagedResult.Items);
+    }
+
+    [Fact]
+    public async Task FilterVesselVisitNotifications_ReturnsOkWithData_WhenMultipleFiltersApplied()
+    {
+        var requestUri = "/VesselVisitNotification/filter?SubmitterCitizeshipId=908029952&Status=1";
+
+        var response = await _client.GetAsync(requestUri);
+
+        response.EnsureSuccessStatusCode();
+        var pagedResult = await response.Content.ReadFromJsonAsync<Page<VesselVisitNotificationStatusDto>>();
+        Assert.NotNull(pagedResult);
+        Assert.NotEmpty(pagedResult.Items);
+    }
+
+    [Fact]
+    public async Task FilterVesselVisitNotifications_ReturnsBadRequest_WhenInvalidNumber()
+    {
+        var requestUri = "/VesselVisitNotification/filter?SubmitterCitizeshipId=-1";
+
+        var response = await _client.GetAsync(requestUri);
+
+        Assert.Equal(System.Net.HttpStatusCode.BadRequest, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task FilterVesselVisitNotifications_ReturnsInternalServerError_WhenNoSubmitterGiven()
+    {
+        var requestUri = "/VesselVisitNotification/filter";
+
+        var response = await _client.GetAsync(requestUri);
+        Assert.Equal(System.Net.HttpStatusCode.InternalServerError, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task FilterVesselVisitNotifications_ReturnsPagedResults()
+    {
+        var requestUri = "/VesselVisitNotification/filter?SubmitterCitizeshipId=908029952&PageNumber=1&PageSize=0";
+
+        var response = await _client.GetAsync(requestUri);
+
+        response.EnsureSuccessStatusCode();
+        var pagedResult = await response.Content.ReadFromJsonAsync<Page<VesselVisitNotificationStatusDto>>();
+        Assert.NotNull(pagedResult);
+        Assert.Empty(pagedResult.Items);
+    }
+
+    [Fact]
+    public async Task FilterVesselVisitNotifications_ReturnsFiltered_WhenInvalidParameterPassed()
+    {
+        var requestUri = "/VesselVisitNotification/filter?SubmitterCitizeshipId=908029952&InvalidParam=xyz";
+
+        var response = await _client.GetAsync(requestUri);
+
+        response.EnsureSuccessStatusCode();
+        var pagedResult = await response.Content.ReadFromJsonAsync<Page<VesselVisitNotificationStatusDto>>();
+        Assert.NotNull(pagedResult);
+        Assert.NotEmpty(pagedResult.Items);
+    }
 }
-
