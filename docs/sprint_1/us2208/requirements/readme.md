@@ -51,7 +51,10 @@ Once assigned, the identifier must remain immutable even if other visit details 
 ## 3. Business Value
 > This feature is crucial for the efficient management of vessel visit notifications, which are essential for port operations. By enabling the registration and updating of these notifications, the system ensures that all relevant information is accurately captured and maintained. This functionality supports effective communication between port authorities and shipping agents, enhances operational planning, and ensures compliance with maritime regulations. Ultimately, it contributes to the smooth functioning of port activities and improves overall service quality.
 
-## 4. Definition of Done
+## 4. Definition of Ready
+> This US follows the defined [global definition of ready](../../global_artifacts/def_of_ready.md)
+
+## 5. Definition of Done
 - Vessel visit notifications can be created with all required attributes.
 - Vessel visit notifications can be updated with new information.
 - Validation is in place to ensure data integrity (e.g., unique notification IDs).

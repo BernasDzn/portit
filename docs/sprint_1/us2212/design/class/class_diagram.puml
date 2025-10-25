@@ -1,0 +1,339 @@
+@startuml PhysicalResource_Class_Diagram
+
+!theme plain
+skinparam classAttributeIconSize 0
+
+' Enums and Value Objects
+
+enum ResourceStatus {
+    Available = 0
+    Maintenance = 1
+    OutOfService = 2
+}
+
+class OperationalWindow {
+    - _shifts: ICollection<Shift>
+    + Shifts: ICollection<Shift>
+    __
+    + FullWeek(): OperationalWindow
+    + Weekdays(startTime, endTime): OperationalWindow
+    - IsValidShift(shift): bool
+}
+
+class Shift {
+    + Day: DayOfWeek
+    + StartTime: TimeOnly
+    + EndTime: TimeOnly
+    + ToString(): string
+}
+
+' Entity Classes
+
+class PhysicalResource {
+    - Id: Guid
+    - Code: Code
+    - Description: Designation
+    - Status: ResourceStatus
+    - SetupTime: TimeSpan
+    - OperationalWindow: OperationalWindow
+    - Qualifications: ICollection<Qualification>
+    - Active: bool
+    __
+    + PhysicalResource(id, code, description, status, setupTime, qualifications, operationalWindow)
+    + Deactivate(): void
+    + UpdateDescription(description): void
+    + UpdateStatus(status): void
+    + UpdateSetupTime(setupTime): void
+    + UpdateQualifications(qualifications): void
+    + UpdateOperationalWindow(operationalWindow): void
+    + ToDTO(): PhysicalResourceDto
+}
+
+class STSCrane {
+    - ContainersPerHour: uint
+    - LiftingCapacity: uint
+    - ServingDock: Dock
+    __
+    + STSCrane(id, code, description, status, setupTime, qualifications, operationalWindow, liftingCapacity, dock, averageContainersPerHour)
+    + UpdateServingDock(dock): void
+    + UpdateLiftingCapacity(liftingCapacity): void
+    + UpdateContainersPerHour(containersPerHour): void
+    + ToDTO(): STSCraneDto
+}
+
+class YardCrane {
+    - ContainersPerHour: uint
+    - LiftingCapacity: uint
+    __
+    + YardCrane(id, code, description, status, setupTime, qualifications, operationalWindow, liftingCapacity, averageContainersPerHour)
+    + UpdateLiftingCapacity(liftingCapacity): void
+    + UpdateContainersPerHour(containersPerHour): void
+    + ToDTO(): YardCraneDto
+}
+
+class Truck {
+    - ContainersPerTrip: uint
+    - AverageSpeed: uint
+    - MaxLoadCapacity: uint
+    __
+    + Truck(id, code, description, status, setupTime, qualifications, operationalWindow, maxLoadCapacity, containersPerTrip, averageSpeed)
+    + UpdateContainersPerTrip(containersPerTrip): void
+    + UpdateAverageSpeed(averageSpeed): void
+    + UpdateMaxLoadCapacity(maxLoadCapacity): void
+    + ToDTO(): TruckDto
+}
+
+class Qualification {
+    - Id: Guid
+    - NameCode: Code
+    - QualificationName: Designation
+    - Staffs: ICollection<Staff>
+    - PhysicalResources: ICollection<PhysicalResource>
+    __
+    + Qualification(id, idCode, qualificationName)
+    + UpdateQualificationName(qualificationName): void
+    + ToDTO(): QualificationDto
+    + Equals(obj): bool
+    + GetHashCode(): int
+    + ToString(): string
+}
+
+class Dock {
+    - Id: Guid
+    - Code: Code
+    - Name: Designation
+    - Location: Designation
+    - PhysicalCharacteristics: PhysicalCharacteristics
+    - SupportedVesselTypes: ICollection<VesselType>
+    __
+    + Dock(id, code, name, location, physicalCharacteristics, supportedVesselTypes)
+    + UpdateName(newName): void
+    + UpdateLocation(newLocation): void
+    + UpdatePhysicalCharacteristics(physicalCharacteristics): void
+    + UpdateVesselTypes(new_vesselTypes): void
+    + ToDTO(): DockDto
+    - validatePhysicalCharacteristics(physicalCharacteristics, supportedVesselTypes): void
+}
+
+' DTO Classes
+
+class PhysicalResourceDto {
+    + Code: string
+    + Description: string
+    + Status: ResourceStatus
+    + SetupTimeInMinutes: int
+    + Qualifications: List<QualificationDto>
+    + OperationalWindow: OperationalWindow
+}
+
+class CreatePhysicalResourceDto {
+    + Code: string
+    + Description: string
+    + Status: ResourceStatus
+    + SetupTimeInMinutes: int
+    + QualificationsCodes: List<string>
+    + OperationalWindow: OperationalWindow
+}
+
+class STSCraneDto {
+    + ContainersPerHour: uint
+    + LiftingCapacity: uint
+    + ServingDock: DockDto
+}
+
+class CreateSTSCraneDto {
+    + ContainersPerHour: uint
+    + LiftingCapacity: uint
+    + ServingDockCode: string
+}
+
+class YardCraneDto {
+    + ContainersPerHour: uint
+    + LiftingCapacity: uint
+}
+
+class CreateYardCraneDto {
+    + ContainersPerHour: uint
+    + LiftingCapacity: uint
+}
+
+class TruckDto {
+    + ContainersPerTrip: uint
+    + AverageSpeed: uint
+    + MaxLoadCapacity: uint
+}
+
+class CreateTruckDto {
+    + ContainersPerTrip: uint
+    + AverageSpeed: uint
+    + MaxLoadCapacity: uint
+}
+
+class QualificationDto {
+    + IdCode: string
+    + QualificationName: string
+}
+
+class DockDto {
+    + Code: string
+    + Name: string
+    + Location: string
+    + PhysicalCharacteristics: PhysicalCharacteristics
+    + SupportedVesselTypes: List<VesselTypeDto>
+}
+
+' Controllers
+
+class PhysicalResourceController {
+    - _physicalResourceService: IPhysicalResourceService
+    - _logger: ILogger<PhysicalResourceController>
+    __
+    + PhysicalResourceController(physicalResourceService, logger)
+    + GetAll(): Task<ActionResult<IEnumerable<object>>>
+    + GetByCode(code): Task<ActionResult<object>>
+    + Filter(filter): Task<ActionResult<Page<object>>>
+    + Deactivate(code): Task<ActionResult>
+    + AddSTSCrane(resourceDto): Task<ActionResult<STSCraneDto>>
+    + AddYardCrane(resourceDto): Task<ActionResult<YardCraneDto>>
+    + AddTruck(resourceDto): Task<ActionResult<TruckDto>>
+    + UpdateSTSCrane(code, resourceDto): Task<ActionResult<STSCraneDto>>
+    + UpdateYardCrane(code, resourceDto): Task<ActionResult<YardCraneDto>>
+    + UpdateTruck(code, resourceDto): Task<ActionResult<TruckDto>>
+    - HandleCreationAsync<TInput, TOutput>(resourceDto, creationFunc, resourceName): Task<ActionResult>
+    - HandleUpdateAsync<TInput, TOutput>(code, resourceDto, updateFunc, resourceName): Task<ActionResult>
+}
+
+interface IPhysicalResourceController {
+    + GetAll(): Task<ActionResult<IEnumerable<object>>>
+    + GetByCode(code): Task<ActionResult<object>>
+    + Filter(filter): Task<ActionResult<Page<object>>>
+    + AddSTSCrane(stsCraneDto): Task<ActionResult<STSCraneDto>>
+    + AddYardCrane(resourceDto): Task<ActionResult<YardCraneDto>>
+    + AddTruck(resourceDto): Task<ActionResult<TruckDto>>
+    + UpdateSTSCrane(code, crane): Task<ActionResult<STSCraneDto>>
+    + UpdateYardCrane(code, crane): Task<ActionResult<YardCraneDto>>
+    + UpdateTruck(code, truck): Task<ActionResult<TruckDto>>
+    + Deactivate(code): Task<ActionResult>
+}
+
+' Services
+
+class PhysicalResourceService {
+    - _physicalResourceRepository: IPhysicalResourceRepository
+    - _dockRepository: IDockRepository
+    - _qualificationRepository: IQualificationRepository
+    - _storageAreaRepository: IStorageAreaRepository
+    - _logger: ILogger<PhysicalResourceService>
+    __
+    + PhysicalResourceService(physicalResourceRepository, dockRepository, qualificationRepository, storageAreaRepository, logger)
+    + GetPhysicalResources(): Task<IEnumerable<object>>
+    + GetResourceByCode(code): Task<object>
+    + AddSTSCraneAsync(stsCraneDto): Task<STSCraneDto>
+    + AddYardCraneAsync(resourceDto): Task<YardCraneDto>
+    + AddTruckAsync(resourceDto): Task<TruckDto>
+    + UpdateSTSCraneAsync(code, crane): Task<STSCraneDto>
+    + UpdateYardCraneAsync(code, crane): Task<YardCraneDto>
+    + UpdateTruckAsync(code, truck): Task<TruckDto>
+    + FilterPhysicalResources(filter): Task<Page<object>>
+    + DeactivateResource(code): Task<bool>
+    - GetQualificationsAsync(qualificationsCodes): IEnumerable<Qualification>
+    - ConvertToDto(resource): object
+}
+
+interface IPhysicalResourceService {
+    + GetPhysicalResources(): Task<IEnumerable<object>>
+    + GetResourceByCode(code): Task<object>
+    + AddSTSCraneAsync(stsCraneDto): Task<STSCraneDto>
+    + AddYardCraneAsync(resourceDto): Task<YardCraneDto>
+    + AddTruckAsync(resourceDto): Task<TruckDto>
+    + UpdateSTSCraneAsync(code, crane): Task<STSCraneDto>
+    + UpdateYardCraneAsync(code, crane): Task<YardCraneDto>
+    + UpdateTruckAsync(code, truck): Task<TruckDto>
+    + FilterPhysicalResources(filter): Task<Page<object>>
+    + DeactivateResource(code): Task<bool>
+}
+
+' Repository Interfaces
+
+interface IPhysicalResourceRepository {
+    + GetPhysicalResourcesAsync(): Task<IEnumerable<PhysicalResource>>
+    + GetResourceByCodeAsync(code): Task<PhysicalResource?>
+    + FilterPhysicalResourcesAsync(filter): Task<Page<PhysicalResource>>
+    + AddSTSCrane(crane): Task<STSCrane>
+    + AddYardCrane(crane): Task<YardCrane>
+    + AddTruck(truck): Task<Truck>
+    + Update(resource): Task<PhysicalResource>
+    + UpdateSTSCrane(crane): Task<STSCrane>
+    + UpdateYardCrane(crane): Task<YardCrane>
+    + UpdateTruck(truck): Task<Truck>
+}
+
+class PhysicalResourceRepository {
+    - _context: ApiContext
+    __
+    + PhysicalResourceRepository(context)
+    + AddSTSCrane(crane): Task<STSCrane>
+    + AddTruck(truck): Task<Truck>
+    + AddYardCrane(crane): Task<YardCrane>
+    + GetPhysicalResourcesAsync(): Task<IEnumerable<PhysicalResource>>
+    + GetResourceByCodeAsync(code): Task<PhysicalResource?>
+    + Update(resource): Task<PhysicalResource>
+    + UpdateSTSCrane(crane): Task<STSCrane>
+    + UpdateTruck(truck): Task<Truck>
+    + UpdateYardCrane(crane): Task<YardCrane>
+    + FilterPhysicalResourcesAsync(filter): Task<Page<PhysicalResource>>
+}
+
+' Inheritance Relationships
+
+PhysicalResource <|-- STSCrane
+PhysicalResource <|-- YardCrane
+PhysicalResource <|-- Truck
+
+PhysicalResourceDto <|-- STSCraneDto
+PhysicalResourceDto <|-- YardCraneDto
+PhysicalResourceDto <|-- TruckDto
+
+CreatePhysicalResourceDto <|-- CreateSTSCraneDto
+CreatePhysicalResourceDto <|-- CreateYardCraneDto
+CreatePhysicalResourceDto <|-- CreateTruckDto
+
+' Composition and Association Relationships
+
+PhysicalResource o-- "1" OperationalWindow
+PhysicalResource o-- "1" ResourceStatus
+PhysicalResource o-- "0..*" Qualification
+
+STSCrane --> "1" Dock : ServingDock
+
+OperationalWindow o-- "1..*" Shift
+
+Qualification o-- "0..*" PhysicalResource
+Qualification o-- "0..*" Staff
+
+Dock o-- "1" PhysicalCharacteristics
+Dock o-- "0..*" VesselType
+
+' DTO Mapping Relationships
+
+PhysicalResource ..> PhysicalResourceDto : "ToDTO"
+STSCrane ..> STSCraneDto : "ToDTO"
+YardCrane ..> YardCraneDto : "ToDTO"
+Truck ..> TruckDto : "ToDTO"
+Qualification ..> QualificationDto : "ToDTO"
+Dock ..> DockDto : "ToDTO"
+
+' Service and Controller Relationships
+
+PhysicalResourceController --> IPhysicalResourceService : uses
+IPhysicalResourceController <|.. PhysicalResourceController
+
+PhysicalResourceService --> IPhysicalResourceRepository : uses
+PhysicalResourceService --> IDockRepository : uses
+PhysicalResourceService --> IQualificationRepository : uses
+PhysicalResourceService --> IStorageAreaRepository : uses
+IPhysicalResourceService <|.. PhysicalResourceService
+
+IPhysicalResourceRepository <|.. PhysicalResourceRepository
+
+@enduml

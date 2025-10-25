@@ -66,8 +66,8 @@
 - All acceptance criteria are met
 
 ## 7. Dependencies
-- (Qualifications Management) - for staff qualification requirements
-- (Area/Dock Management) - for resource area assignments
+- (Qualifications Management)
+- (Dock Management)
 
 ## 8. Notes
 - Resource types: STS Cranes, Yard Gantry Cranes, Trucks

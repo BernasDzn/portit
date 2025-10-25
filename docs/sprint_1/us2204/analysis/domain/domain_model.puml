@@ -1,0 +1,66 @@
+@startuml domain_model
+title Domain Model (DDD)
+hide circle
+
+rectangle "System"{
+	class "**User**" as user <<AggregateRoot>><<Entity>>
+	{
+		...
+	}
+}
+
+rectangle "Dock" {
+	class "**Dock**" as dock <<AggregateRoot>><<Entity>>
+	{
+		...
+	}
+}
+
+rectangle "Storage Area" #Lavender{
+
+	class "**Storage**\n**Area**" as storage_area <<AggregateRoot>><<Entity>>
+	{
+	}
+
+	class "Storage Area\n**Location**" as storage_area_loc <<Value>>
+	{
+		+ location
+	}
+
+	class "Storage Area\n**Name**" as storage_area_name <<Value>>
+	{
+		+ nameOrNumber
+	}
+
+	class "Storage Area\n**Capacity**" as storage_area_capacity <<Value>>
+	{
+		+ maxCapacity
+		+ currentCapacity
+	}
+
+	class "Storage Area\n**Serving Information**" as storage_area_comp_info <<Value>>
+	{
+		+ dock
+		+ isServing
+		+ distance
+	}
+
+	class "Storage Area\n**Type**" as storage_area_type <<Value>>
+	{
+		+ typeName
+	}
+}
+
+user "1" ---> "*" storage_area : "(Port Authority Officer)\nregisters/manages"
+
+storage_area --> "1" storage_area_type
+storage_area "1" --> "*" dock : "serves"
+storage_area --> "1" storage_area_capacity
+storage_area --> "1" storage_area_comp_info
+storage_area --> "1" storage_area_name
+storage_area --> "1" storage_area_loc
+
+storage_area_comp_info --> "1" dock : "isServing"
+
+
+@enduml

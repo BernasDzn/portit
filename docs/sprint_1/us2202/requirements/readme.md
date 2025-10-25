@@ -42,7 +42,10 @@
 ## 3. Business Value
 > This feature is of utmost importance as it enables the accurate registration and management of vessel records, which are essential for the efficient operation of port activities. By ensuring that valid vessels can be referenced in visit notifications, the system enhances operational efficiency, safety, and compliance with maritime regulations. This functionality directly supports the core operations of the port authority, facilitating better planning and resource allocation.
 
-## 4. Definition of Done
+## 4. Definition of Ready
+> This US follows the defined [global definition of ready](../../global_artifacts/def_of_ready.md)
+
+## 5. Definition of Done
 - Vessel records can be created with all required attributes.
 - Vessel records can be updated with new information.
 - Validation is in place to ensure data integrity (e.g., unique IMO numbers).

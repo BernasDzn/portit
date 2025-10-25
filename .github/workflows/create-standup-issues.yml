@@ -1,0 +1,36 @@
+name: Create Standup Issues
+
+on:
+  push:
+    paths:
+      - "docs/standups/**/*.md"
+
+jobs:
+  create-issues:
+    runs-on: ubuntu-latest
+
+    permissions:
+      issues: write
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Prepare environment
+        run: |
+          mkdir -p .github/scripts
+          cd .github/scripts
+          npm init -y
+          npm install @octokit/rest @actions/core @actions/github
+          cd ../..
+
+      - name: Run standup issue creator
+        run: node .github/scripts/create-standup-issue.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -443,6 +443,7 @@ public static class Bootstrap
         NotificationDecision decision1 = NotificationDecisionFactory.CreateAccepted("All criteria met", context.Docks.First());
         NotificationDecision decision2 = NotificationDecisionFactory.CreateRejected("Insufficient documentation", false);
         NotificationDecision decision3 = NotificationDecisionFactory.CreateAccepted("Approved after review", context.Docks.Skip(2).First());
+        NotificationDecision decision4 = NotificationDecisionFactory.CreateRejected("Safety concerns", true);
 
         vvn1.Submit();
         vvn1.AddDecision(decision1);

@@ -58,7 +58,10 @@ Moreover, it states that "The type of vessel determines the maximum number of ro
 ## 3. Business Value
 > This feature is important because it ensures vessels are classified consistently, allowing accurate planning, compliance with operational constraints, and efficient reference when managing vessel records.
 
-## 4. Definition of Done
+## 4. Definition of Ready
+> This US follows the defined [global definition of ready](../../global_artifacts/def_of_ready.md)
+
+## 5. Definition of Done
 - Vessel types attributes are defined.
 - Vessel types are available for reference everytime a vessel record is being created.
 - Vessel types are searchable.

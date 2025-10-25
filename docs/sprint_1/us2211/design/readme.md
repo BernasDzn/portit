@@ -1,19 +1,22 @@
-# US2211 - Register and manage operating staff members (create, update, deactivate) 
+# US2211 - Register and manage operating staff members
 
-### System Sequence Diagrams per feature:
+### Process View(s):
 
-#### - Create:
-![class_diagram](../../global_artifacts/generic_diagrams/svg/sequence_diagram_post/sequence_diagram_post.svg) 
+>**Note:** Since these features (CRUD operations) are common to (almost) all user stories, some/all diagrams displayed will be the general level 4 process view diagrams. 
+
+#### - Create a staff:
+![diagram](../../global_artifacts/arquitecture/level_4/process_views/svg/l4_process_view_post/sequence_diagram_post.svg) 
 
 #### - Update:
-![class_diagram](../../global_artifacts/generic_diagrams/svg/sequence_diagram_put/sequence_diagram_put.svg) 
+![diagram](../../global_artifacts/arquitecture/level_4/process_views/svg/l4_process_view_put/sequence_diagram_put.svg)
 
 #### - Deactivate:
-![class_diagram](../../global_artifacts/generic_diagrams/svg/sequence_diagram_put/sequence_diagram_put.svg) 
+![diagram](../../global_artifacts/arquitecture/level_4/process_views/svg/l4_process_view_put/sequence_diagram_put.svg)
 
 #### - Filter:
+![diagram](../../global_artifacts/arquitecture/level_4/process_views/svg/l4_process_view_filter/sequence_diagram_filter.svg)
 
 
-### Class Diagram:
+### Class Diagram(s):
 
-![class_diagram](class/svg/class_diagram/us2211_domain_model.svg) 
+![class_diagram](class/svg/class_diagram/class_diagram.svg) 

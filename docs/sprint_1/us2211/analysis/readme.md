@@ -1,4 +1,4 @@
-# US2211 - Register and manage operating staff members (create, update, deactivate) 
+# US2211 - Register and manage operating staff members
 
 ### Relevant Domain Model Excerpt:
 

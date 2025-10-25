@@ -1,0 +1,218 @@
+@startuml domain model
+rectangle "Berthing information" {
+
+	class "**Vessel Visit**\n**Notification**" as vessel_visit_notif <<AggregateRoot>><<Entity>>
+	{
+	}
+
+	class "Vessel Visit\nNotification\n**Expected Time**" as exp_time <<Value>>
+	{
+		+ ETA
+		+ ETD
+	}
+
+	class "Vessel Visit\nNotification\n**Special Requirements**" as spec_rep <<Value>>
+	{
+		+ specialRequirements [?]
+	}
+
+	class "Vessel Visit\nNotification\n**Crew**" as crew <<Value>>
+	{
+		+ captain
+		+ totalCrewMembers
+	}
+
+	class "Vessel Visit\nNotification\n**Hazardous Cargo**" as cargo_details <<Value>>
+	{
+		+ isCargoHazardous
+	}
+
+	class "Vessel Visit\nNotification\n**Vessel Berth**" as vessel_berth <<Entity>>
+	{
+		+ dock
+		+ taskSchedule
+		+ status
+	}
+
+	class "Vessel Visit\nNotification\n**Notification Decision**" as notif_dec <<Value>>
+	{
+		+ status
+		+ timestamp
+		+ reason [?]
+		+ assignedDock [?]
+		+ officerID
+	}
+
+	note top of notif_dec: Nós podemos ter uma dock que apenas é preenchida quando a notificação é aceite, \nda mesma maneira que temos uma razão apenas quando é rejeitada. \nIsso porque é temporária, quando confirmado teremos outra class "Vessel Visit"
+
+	enum "Vessel Visit\nNotification\n**Notification status**" as notif_status <<Enum>>
+	{
+		APPROVED
+		REJECTED
+	}
+
+	enum "Vessel Visit\nNotification\n**Status**" as vvn_status <<Enum>>
+	{
+		IN_PROGRESS
+		DECISION_PENDING
+		DECIDED
+	}
+
+	class "Vessel Visit\nNotification\n**Load Cargo Manifest**" as c_manifest_lcm <<Value>>
+	{
+	}
+
+	class "Vessel Visit\nNotification\n**Unload Cargo Manifest**" as c_manifest_udm <<Value>>
+	{
+
+
+	}
+
+	class "Vessel Visit\nNotification\n**Cargo Load**" as c_manifest_cl <<Value>>
+	{
+		+ origin
+		+ numberOfRow
+		+ numberOfBay
+		+ numberOfTier
+	}
+
+	class "Vessel Visit\nNotification\n**Cargo Unload**" as c_manifest_cu <<Value>>
+	{
+		+ numberOfRow
+		+ numberOfBay
+		+ numberOfTier
+		+ destination
+	}
+
+	class "Vessel Visit\nNotification\n**Cargo Item**" as c_manifest_cargo_item <<Value>>
+	{
+		+ ISO
+		+ description
+		+ type
+	}
+
+
+	enum "Vessel Visit\nNotification\n**Cargo Type**" as cargo_type <<Enum>>
+	{
+		REEFERS
+		GCP
+		ELECTRONICS
+		HAZMAT
+		OIM
+		OTHER
+	}
+
+
+	class "Vessel Visit\nNotification\n**Operational Task**" as op_task <<Entity>>
+	{
+		+ taskType
+		+ resourceAllocated
+		+ staffAllocated
+		+ observations [?]
+	}
+
+	enum "Vessel Visit\nNotification\n**Task Types**" as task_types <<Enum>>
+	{
+		LOADING
+		UNLOADING
+		MOVING
+		OTHER
+	}
+
+	enum "Vessel Visit\nNotification\n**Operation Status**" as op_status <<Enum>>
+	{
+		SCHEDULED
+		FINISHED
+		FAILED
+		CANCELLED
+	}
+
+
+	class "Vessel Visit\nNotification\n**Safety Officer**" as safety_officer <<Value>>
+	{
+		+ citizenID
+		+ name
+		+ nationality
+	}
+
+}
+
+rectangle "System"{
+	class "**User**" as user <<AggregateRoot>><<Entity>>
+	{
+	}
+}
+
+rectangle "Dock" {
+	class "**Dock**" as dock <<AggregateRoot>><<Entity>>
+	{
+	}
+}
+
+rectangle "Vessel" {
+	class "**Vessel**" as vessel <<AggregateRoot>><<Entity>>
+	{
+	}
+}
+
+rectangle "Physical Resources" {
+
+	class "**Physical**\n**Resource**" as phys_res <<AggregateRoot>><<Entity>>
+	{
+	}
+}
+
+
+rectangle "Staff"{
+
+	class "**Staff**" as staff <<AggregateRoot>><<Entity>>
+	{
+	}
+}
+
+rectangle "Shipping Agent Organization"{
+
+	class "**SAO Representative**" as SAO_rep <<Entity>>
+	{
+		
+	}
+}
+
+
+user "1" ---> "*" vessel_visit_notif : "(Port Authority Officer)\nreviews and approves or rejects"
+
+vessel_visit_notif --> "1" exp_time
+vessel_visit_notif --> "1" spec_rep
+vessel_visit_notif --> "1" crew
+vessel_visit_notif --> "1" cargo_details
+vessel_visit_notif -> "0..*" notif_dec
+vessel_visit_notif <-- vessel_berth : "responds to"
+vessel_visit_notif --> vessel
+vessel_visit_notif "1" --> "0..1" c_manifest_lcm : "details"
+vessel_visit_notif "1" --> "0..1" c_manifest_udm : "details"
+vessel_visit_notif --> "1" vvn_status : "has"
+crew --> "*" safety_officer : "has a list of"
+
+notif_dec "1" -> "1" notif_status : "has"
+notif_dec "1" -> "0..1" dock : "has"
+
+SAO_rep "1" --> "*" vessel_visit_notif : "submits"
+vessel_berth "1" -> "1" op_status : "has"
+user "1" <--- "*" op_task : "(Port Authority Officer)\nis overseed by"
+user "1" <--- "*" op_task : "(Logistics Operator)\nis defined/scheduled by"
+
+
+op_task "1" -> "1" phys_res : "allocates"
+op_task "1" -> "*" staff : "mobilizes"
+op_task "1" -> "1" task_types : "has"
+vessel_berth "1" -> "1" op_status : "has"
+
+vessel_visit_notif "1" --> "0..1" c_manifest_lcm : "details"
+vessel_visit_notif "1" --> "0..1" c_manifest_udm : "details"
+c_manifest_lcm "1" --> "*" c_manifest_cl
+c_manifest_udm "1" --> "*" c_manifest_cu
+c_manifest_cl "1" --> "1" c_manifest_cargo_item
+c_manifest_cu "1" --> "1" c_manifest_cargo_item
+c_manifest_cargo_item "1" -r-> "1" cargo_type : "has a"
+
+@enduml

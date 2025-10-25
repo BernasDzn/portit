@@ -1,4 +1,4 @@
-@startuml logicview_n4
+@startuml logicview_n2
 skinparam Linetype polyline
 
 circle "API" as api #LightBlue

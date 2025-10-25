@@ -28,7 +28,8 @@ public class RepresentativeController : ControllerBase
     [HttpGet("email/{email}")]
     public ActionResult<RepresentativeDto> GetByEmail(string email)
     {
-        var rep = _context.Representatives.FirstOrDefault(r => r.EmailAddress.Value == email);
+        var rep = _context.Representatives.AsEnumerable()
+            .FirstOrDefault(r => r.EmailAddress.Value == email);
         if (rep == null)
         {
             return NotFound();
@@ -39,7 +40,12 @@ public class RepresentativeController : ControllerBase
     [HttpGet("citizen/{citizenId}")]
     public ActionResult<RepresentativeDto> GetByCitizenId(string citizenId)
     {
-        var rep = _context.Representatives.FirstOrDefault(r => r.CitizenshipId.ToString() == citizenId);
+        if (!uint.TryParse(citizenId, out var citizenIdUInt))
+        {
+            return BadRequest("Invalid citizen id format");
+        }
+
+        var rep = _context.Representatives.FirstOrDefault(r => r.CitizenshipId == citizenIdUInt);
         if (rep == null)
         {
             return NotFound();
