@@ -1,0 +1,11 @@
+@startuml logicview_n4
+skinparam Linetype polyline
+
+package "PortTiT" {
+
+	package "Master Data" {
+		
+	}
+}
+
+@enduml
