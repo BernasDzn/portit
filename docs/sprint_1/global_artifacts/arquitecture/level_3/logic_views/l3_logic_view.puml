@@ -2,9 +2,7 @@
 skinparam Linetype polyline
 
 
-circle "API" as api #LightBlue
-
-api --o masterdata
+circle " " as api
 
 rectangle "Master Data" as masterdata {
 	
@@ -12,7 +10,9 @@ rectangle "Master Data" as masterdata {
 
 	database "Backend\nDatabase" as database
 
-} 
+}
+
+api -- backend
 
 backend -(0- database : "Database\nApi"
 

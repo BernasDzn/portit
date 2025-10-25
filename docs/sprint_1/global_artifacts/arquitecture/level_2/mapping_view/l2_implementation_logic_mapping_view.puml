@@ -3,23 +3,26 @@ skinparam Linetype polyline
 
 title Level 2 - Implementation Logic Mapping View
 
-package "PortTiT" {
+rectangle "Implementation View" {
+	package "PortTiT" {
 
-	package BackEnd {
-		
+		package BackEnd {
+			
+		}
 	}
 }
 
-circle "API" as api #LightBlue
+rectangle "logic View"{
+	circle " " as api
 
-api --o masterdata_implementation 
+	component "PorTiT" as masterdata_logic <<system C4>> {
+		
+		[Master Data] as backend <<container C4>>
+	}
 
-
-component "PorTiT" as masterdata_implementation <<system C4>> {
-	
-	[Master Data] as backend <<container C4>>
+	api -- masterdata_logic
 }
 
-masterdata_implementation .l.> BackEnd : manifests
+masterdata_logic ...> BackEnd : "<<manifests>>"
 
 @enduml
