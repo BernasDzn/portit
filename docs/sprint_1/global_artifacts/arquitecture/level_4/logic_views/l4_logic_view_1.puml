@@ -1,9 +1,7 @@
 @startuml logicview_n4
 skinparam Linetype polyline
 
-circle "API" as api #LightBlue
-
-api --o masterdata
+circle " " as api
 
 rectangle "Master Data" as masterdata <<Container C4>> {
 	
@@ -24,6 +22,8 @@ rectangle "Master Data" as masterdata <<Container C4>> {
 	hide empty2
 	hide empty3
 } 
+
+api -- controller
 
 ' row one 
 controller -d(0- dtos : "DTO\nAPI"

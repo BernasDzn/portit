@@ -3,33 +3,35 @@ skinparam Linetype polyline
 
 title Level 3 - Logic Physical Mapping View
 
-circle "API" as api #LightBlue
+rectangle "Logic View"{
+	circle " " as api
 
-api --o masterdata
+	rectangle "Master Data" as masterdata {
+		
+		[Backend] as backend
 
-rectangle "Master Data" as masterdata {
-	
-	[Backend] as backend
+		database "Backend\nDatabase" as database
 
-	database "Backend\nDatabase" as database
+	} 
 
-} 
-
-backend -(0- database : "Database\nApi"
-
-rectangle "localhost:??" as localhost {
-
-    [Back end] as backend2
+	api -- backend
+	backend -(0- database : "Database\nApi"
 }
 
-rectangle "vsgate-s1.dei.isep.ipp.pt:10383" as server1 {
+rectangle "Physical View"{
+	rectangle "localhost:??" as localhost {
+		[Back end] as backend2
+	}
 
-    database Database 
+	rectangle "vsgate-s1.dei.isep.ipp.pt:10383" as server1 {
+
+		database Database 
+	}
+
+	backend2 -- Database : http/s
 }
 
-backend2 -- Database : http/s
-
-backend .r.> backend2 : "manifests"
-database .r.> Database : "manifests"
+backend ...> backend2 : "<<manifests>>"
+database ...> Database : "<<manifests>>"
 
 @enduml

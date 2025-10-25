@@ -1,14 +1,13 @@
 @startuml logicview_n2
 skinparam Linetype polyline
 
-circle "API" as api #LightBlue
-
-api --o masterdata 
-
+circle " " as api
 
 component "PorTiT" as masterdata <<system C4>> {
 	
 	[Master Data] as backend <<container C4>>
 }
+
+api -- masterdata
 
 @enduml
