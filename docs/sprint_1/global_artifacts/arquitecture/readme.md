@@ -70,3 +70,6 @@ We have decided to include only 4 levels to our documentation. Not all levels ar
 ![N4_Impl_0](./level_4/implementation_views/svg/l4_implementation_view_1/logicview_n4.svg)
 
 ## Mapping between views
+![N2_Implementation_Logic](./level_2/mapping_view/svg/l2_implementation_logic_mapping_view/mapping_view_n2.svg)
+![N3_Logical_Physical](./level_3/mapping_view/svg/l3_logic_physical_view/mapping_view_n3.svg)
+![N4_Implementation_Logic](./level_4/mapping_view/svg/l4_implementation_logic_mapping_view/mapping_view_n4.svg)
