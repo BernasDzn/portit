@@ -21,8 +21,8 @@ public class VesselVisitNotification_CtS_IntegrationTest
     private readonly Mock<IRepresentativeRepository> _representativeRepositoryMock = new Mock<IRepresentativeRepository>();
     private readonly Mock<IStorageAreaRepository> _storageAreaRepositoryMock = new Mock<IStorageAreaRepository>();
     private readonly Mock<IContainerRepository> _containerRepositoryMock = new Mock<IContainerRepository>();
+    private readonly Mock<IDockRepository> _dockRepositoryMock = new Mock<IDockRepository>();
     private readonly VesselVisitNotificationIdGenerator _idGenerator;
-    private readonly Mock<INotificationDecisionService> _notificationDecisionServiceMock = new Mock<INotificationDecisionService>();
 
 
     private static Representative representative = new Representative(
@@ -73,7 +73,6 @@ public class VesselVisitNotification_CtS_IntegrationTest
     {
         _repositoryMock = new Mock<IVesselVisitNotificationRepository>();
 
-        // id generator requires repository
         _idGenerator = new VesselVisitNotificationIdGenerator(_repositoryMock.Object);
 
         _service = new VesselVisitNotificationService(
@@ -85,9 +84,15 @@ public class VesselVisitNotification_CtS_IntegrationTest
             _containerRepositoryMock.Object,
             new Mock<ILogger<VesselVisitNotificationService>>().Object);
 
+
+        var notificationDecisionService = new NotificationDecisionService(
+            _repositoryMock.Object,
+            _dockRepositoryMock.Object,
+            new Mock<ILogger<NotificationDecisionService>>().Object);
+
         _controller = new VesselVisitNotificationController(
             _service,
-            _notificationDecisionServiceMock.Object,
+            notificationDecisionService,
             new Mock<ILogger<VesselVisitNotificationController>>().Object);
 
     }
@@ -478,4 +483,172 @@ public class VesselVisitNotification_CtS_IntegrationTest
         var statusCodeResult = Assert.IsType<ObjectResult>(result.Result);
         Assert.Equal(500, statusCodeResult.StatusCode);
     }
+
+
+    [Fact]
+    public async Task GetDecisions_ReturnsOkWithList()
+    {
+        var vvn = new VesselVisitNotification(
+            new VesselVisitNotificationId(new Designation { Value = "PORTO" }, 10, 2025),
+            DateTime.UtcNow.AddDays(1),
+            DateTime.UtcNow.AddDays(5),
+            false,
+            vessel,
+            representative
+        );
+
+        vvn.Submit();
+        var decision = NotificationDecisionFactory.CreateRejected("No reason", true, DateTime.UtcNow);
+
+        _repositoryMock.Setup(r => r.GetNotificationDecisionsAsync(It.IsAny<string>()))
+            .ReturnsAsync(new List<NotificationDecision> { decision });
+
+        var result = await _controller.GetDecisions(vvn.NotificationId.ToString());
+        var response = Assert.IsType<OkObjectResult>(result.Result);
+        Assert.IsAssignableFrom<IEnumerable<NotificationDecisionDto>>(response.Value);
+    }
+
+
+    [Fact]
+    public async Task GetDecisions_ReturnsInternalServerError_OnException()
+    {
+        _repositoryMock.Setup(r => r.GetNotificationDecisionsAsync(It.IsAny<string>()))
+            .ThrowsAsync(new Exception("Test Exception"));
+
+        var result = await _controller.GetDecisions("NON_EXISTENT_ID");
+        var statusCodeResult = Assert.IsType<ObjectResult>(result.Result);
+        Assert.Equal(500, statusCodeResult.StatusCode);
+    }
+
+    [Fact]
+    public async Task CreateDecision_ReturnsCreatedAtAction_WhenAccepted()
+    {
+        var vvn = new VesselVisitNotification(
+            new VesselVisitNotificationId(new Designation { Value = "PORTO" }, 10, 2025),
+            DateTime.UtcNow.AddDays(1),
+            DateTime.UtcNow.AddDays(5),
+            false,
+            vessel,
+            representative
+        );
+
+        vvn.Submit();
+
+        var vt = new VesselType(
+            Guid.NewGuid(),
+            new Designation { Value = "Large Vessel Type" },
+            new Designation { Value = "Vessel Type Description" },
+            15,
+            10,
+            5,
+            new PhysicalCharacteristics
+            {
+                Length = 200,
+                Depth = 25,
+                Draft = 10
+            }
+            );
+
+        var dock = new Dock(
+            Guid.NewGuid(),
+            new Code { Value = "DCK001" },
+            new Designation { Value = "Dock 1" },
+            new Designation { Value = "Location 1" },
+            new PhysicalCharacteristics
+            {
+                Length = 250,
+                Depth = 40,
+                Draft = 15
+            },
+            new HashSet<VesselType> { vt }
+        );
+
+        _dockRepositoryMock.Setup(r => r.GetDockByCodeAsync(It.IsAny<string>()))
+            .ReturnsAsync(dock);
+
+        _repositoryMock.Setup(r => r.UpdateAsync(It.IsAny<VesselVisitNotification>()))
+            .ReturnsAsync((VesselVisitNotification v) => v);
+
+        _repositoryMock.Setup(r => r.GetVesselVisitNotificationByNotificationIdAsync(It.IsAny<string>()))
+        .ReturnsAsync(vvn);
+
+        var vvnDto = new CreateNotificationDecisionDto
+        {
+            Status = 1,
+            AssignedDockCode = "DCK001",
+            DecisionDate = DateTime.UtcNow,
+            IsFinal = true
+        };
+
+        var result = await _controller.CreateDecision(vvn.NotificationId.ToString(), vvnDto);
+        var response = Assert.IsType<CreatedAtActionResult>(result.Result);
+        Assert.IsType<NotificationDecisionDto>(response.Value);
+    }
+
+    [Fact]
+    public async Task CreateDecision_ReturnsNotFound_WhenNotificationNotFound()
+    {
+
+        var vvnDto = new CreateNotificationDecisionDto
+        {
+            Status = 2,
+            DecisionDate = DateTime.UtcNow,
+            IsFinal = false
+        };
+
+        _repositoryMock.Setup(r => r.GetVesselVisitNotificationByNotificationIdAsync(It.IsAny<string>()))
+                   .ReturnsAsync((VesselVisitNotification)null!);
+
+        var result = await _controller.CreateDecision("NON_EXISTENT_ID", vvnDto);
+        Assert.IsType<NotFoundObjectResult>(result.Result);
+    }
+
+    [Fact]
+    public async Task CreateDecision_ReturnsBadRequest_WhenMissingAssignedDock()
+    {
+
+        var vvn = new VesselVisitNotification(
+            new VesselVisitNotificationId(new Designation { Value = "PORTO" }, 10, 2025),
+            DateTime.UtcNow.AddDays(1),
+            DateTime.UtcNow.AddDays(5),
+            false,
+            vessel,
+            representative
+        );
+
+        vvn.Submit();
+
+        _repositoryMock.Setup(r => r.GetVesselVisitNotificationByNotificationIdAsync(It.IsAny<string>()))
+            .ReturnsAsync(vvn);
+
+        var vvnDto = new CreateNotificationDecisionDto
+        {
+            Status = 1,
+            AssignedDockCode = null,
+            DecisionDate = DateTime.UtcNow,
+            IsFinal = true
+        };
+
+        var result = await _controller.CreateDecision(vvn.NotificationId.ToString(), vvnDto);
+        Assert.IsType<BadRequestObjectResult>(result.Result);
+    }
+
+    [Fact]
+    public async Task CreateDecision_ReturnsInternalServerError_OnException()
+    {
+        var vvnDto = new CreateNotificationDecisionDto
+        {
+            Status = 2,
+            DecisionDate = DateTime.UtcNow,
+            IsFinal = false
+        };
+
+        _repositoryMock.Setup(r => r.GetVesselVisitNotificationByNotificationIdAsync(It.IsAny<string>()))
+            .ThrowsAsync(new Exception("Test Exception"));
+
+        var result = await _controller.CreateDecision("NON_EXISTENT_ID", vvnDto);
+        var statusCodeResult = Assert.IsType<ObjectResult>(result.Result);
+        Assert.Equal(500, statusCodeResult.StatusCode);
+    }
+
 }
