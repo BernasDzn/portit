@@ -66,6 +66,11 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
             IEnumerable<NotificationDecisionDto> notificationsDto = await _notificationDecisionService.GetNotificationDecisions(vesselVisitNotificationId);
             return Ok(notificationsDto);
         }
+        catch (EntityNotFoundException e)
+        {
+            _logger.LogError($"Error retrieving notification decisions: {e.Message}");
+            return NotFound(e.Message);
+        }
         catch (System.Exception)
         {
             _logger.LogCritical("Error retrieving notification decisions");

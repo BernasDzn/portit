@@ -28,13 +28,13 @@ public class VesselRepository : GenericRepository<Vessel>, IVesselRepository
         }
     }
 
-    public async Task<Vessel> GetVesselByIMOAsync(string imo)
+    public async Task<Vessel?> GetVesselByIMOAsync(string imo)
     {
         try
         {
             Vessel? vessel = await _context.Vessels
                 .FirstOrDefaultAsync(q => q.ImoIdentifier != null && q.ImoIdentifier.Value == imo);
-            return vessel!;
+            return vessel;
         }
         catch
         {

@@ -69,7 +69,7 @@ public class VesselService : IVesselService
 
     public async Task<VesselDto?> Update(string imo, CreateVesselDto vesselDto)
     {
-        Vessel vessel = await _vesselRepository.GetVesselByIMOAsync(imo);
+        Vessel? vessel = await _vesselRepository.GetVesselByIMOAsync(imo);
         if (vessel == null)
             throw new EntityNotFoundException("Vessel not found.");
 

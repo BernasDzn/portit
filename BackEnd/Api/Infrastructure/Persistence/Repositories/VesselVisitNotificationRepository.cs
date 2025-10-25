@@ -30,12 +30,12 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
         }
     }
 
-    public async Task<VesselVisitNotification> GetVesselVisitNotificationByNotificationIdAsync(string notificationId)
+    public async Task<VesselVisitNotification?> GetVesselVisitNotificationByNotificationIdAsync(string notificationId)
     {
         try
         {
             VesselVisitNotification? notification = await _context.VesselVisitNotifications.FirstOrDefaultAsync(n => n.NotificationId.Value == notificationId);
-            return notification!;
+            return notification;
         }
         catch
         {
@@ -43,12 +43,12 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
         }
     }
 
-    public async Task<VesselVisitNotification> GetVesselVisitNotificationByVesselIMOAsync(string imoNumber)
+    public async Task<VesselVisitNotification?> GetVesselVisitNotificationByVesselIMOAsync(string imoNumber)
     {
         try
         {
             VesselVisitNotification? notification = await _context.VesselVisitNotifications.FirstOrDefaultAsync(n => n.Vessel.ImoIdentifier.Value == imoNumber);
-            return notification!;
+            return notification;
         }
         catch
         {

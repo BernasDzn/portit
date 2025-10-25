@@ -64,6 +64,16 @@ public class VesselVisitNotificationControllerTest
     }
 
     [Fact]
+    public async Task GetDecisions_ReturnsNotFound_WhenNotificationNotFound()
+    {
+        _notificationDecisionServiceMock.Setup(r => r.GetNotificationDecisions(It.IsAny<string>()))
+            .ThrowsAsync(new EntityNotFoundException());
+
+        var result = await _controller.GetDecisions("NON_EXISTENT_ID");
+        Assert.IsType<NotFoundObjectResult>(result.Result);
+    }
+
+    [Fact]
     public async Task GetDecisions_ReturnsInternalServerError_WhenExceptionIsThrown()
     {
         _notificationDecisionServiceMock.Setup(service => service.GetNotificationDecisions(It.IsAny<string>()))

@@ -20,7 +20,12 @@ public class NotificationDecisionService : INotificationDecisionService
 
     public async Task<IEnumerable<NotificationDecisionDto>> GetNotificationDecisions(string vesselVisitNotificationId )
     {
-        var decisions = await _notificationRepository.GetNotificationDecisionsAsync(vesselVisitNotificationId );
+        bool exists = await _notificationRepository.GetVesselVisitNotificationByNotificationIdAsync(vesselVisitNotificationId) != null;
+        if (!exists)
+            throw new EntityNotFoundException($"Vessel Visit Notification with id {vesselVisitNotificationId} was not found.");
+            
+        var decisions = await _notificationRepository.GetNotificationDecisionsAsync(vesselVisitNotificationId);
+        
         AppLogEvents.LogRetrieve(_logger, "notification decisions", decisions.Count());
         return decisions.Select(n => n.ToDTO()).ToList();
     }
