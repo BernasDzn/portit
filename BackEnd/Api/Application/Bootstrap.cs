@@ -455,9 +455,6 @@ public static class Bootstrap
         vvn3.Submit();
         vvn4.Submit();
 
-        vvn5.Submit();
-        vvn5.AddDecision(decision4);
-
         context.VesselVisitNotifications.AddRange(vvn1, vvn2, vvn3, vvn4, vvn5);
         context.SaveChanges();
     }

@@ -38,6 +38,26 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
         }
     }
 
+    [HttpGet("{id}", Name = "GetVesselVisitNotificationById")]
+    public async Task<ActionResult<VesselVisitNotificationDto>> GetById(string id)
+    {
+        try
+        {
+            var notification = await _notificationService.GetById(id);
+            return Ok(notification);
+        }
+        catch (EntityNotFoundException e)
+        {
+            _logger.LogError($"Error retrieving notification with ID {id}: {e.Message}");
+            return NotFound(e.Message);
+        }
+        catch (Exception e)
+        {
+            _logger.LogCritical($"Error retrieving vessel visit notification with ID {id}: {e.Message}");
+            return StatusCode(500, "An error occurred while retrieving the vessel visit notification.");
+        }
+    }
+
     [HttpGet("decisions", Name = "GetNotificationDecisions")]
     public async Task<ActionResult<IEnumerable<NotificationDecisionDto>>> GetDecisions([FromQuery] string vesselVisitNotificationId)
     {
@@ -45,6 +65,11 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
         {
             IEnumerable<NotificationDecisionDto> notificationsDto = await _notificationDecisionService.GetNotificationDecisions(vesselVisitNotificationId);
             return Ok(notificationsDto);
+        }
+        catch (EntityNotFoundException e)
+        {
+            _logger.LogError($"Error retrieving notification decisions: {e.Message}");
+            return NotFound(e.Message);
         }
         catch (System.Exception)
         {
@@ -97,11 +122,6 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
             _logger.LogError($"Decision creation failed, entity not found: {e.Message}");
             return NotFound(e.Message);
         }
-        catch (EntityAlreadyExistsException e)
-        {
-            _logger.LogError($"Entity already exists: {e.Message}");
-            return Conflict(e.Message);
-        }
         catch (System.Exception ex)
         {
             if (ex is ArgumentException || ex is ArgumentNullException || ex is InvalidOperationException || ex is OutdatedDecisionException)
@@ -115,11 +135,16 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
         }
     }
 
-    [HttpPut("{id}", Name = "UpdateVesselVisitNotification")]
+    [HttpPut("{id?}", Name = "UpdateVesselVisitNotification")]
     public async Task<ActionResult<VesselVisitNotificationDto>> Update(string id, CreateVesselVisitNotificationDto vesselVisitNotificationDto)
     {
         try
         {
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                _logger.LogError("Update called without an id");
+                return BadRequest("Notification id is required.");
+            }
             var updatedNotification = await _notificationService.Update(id, vesselVisitNotificationDto);
             return NoContent();
         }
@@ -140,6 +165,7 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
             return StatusCode(500, "An error occurred while updating the vessel visit notification.");
         }
     }
+
 
     [HttpGet("filter", Name = "FilterVesselVisitNotifications")]
     public async Task<ActionResult<Page<VesselVisitNotificationStatusDto>>> Filter([FromQuery] VesselVisitNotificationFilter filter)

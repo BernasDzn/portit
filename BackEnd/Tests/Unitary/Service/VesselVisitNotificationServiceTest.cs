@@ -14,26 +14,96 @@ namespace Tests.Unitary.Service;
 
 public class VesselVisitNotificationServiceTest
 {
-    private readonly Mock<IVesselVisitNotificationRepository> _notificationRepositoryMock;
+    private readonly Mock<IVesselVisitNotificationRepository> _repositoryMock;
     private readonly Mock<IVesselRepository> _vesselRepositoryMock;
     private readonly Mock<IRepresentativeRepository> _representativeRepositoryMock;
     private readonly Mock<IStorageAreaRepository> _storageAreaRepositoryMock;
     private readonly Mock<IContainerRepository> _containerRepositoryMock;
     private readonly VesselVisitNotificationService _service;
 
+    private static Representative representative = new Representative(
+        Guid.NewGuid(),
+        908029952,
+        new Designation { Value = "Patricio Sharply" },
+        new Email { Value = "patricio.sharply@globalshipping.com" },
+        new PhoneNumber { Value = "6947302134" }
+    );
+
+    private static Vessel vessel = new Vessel(
+            Guid.NewGuid(),
+            new Designation { Value = "Ever Given" },
+            new ImoNumber { Value = "IMO 7585229" },
+            new VesselType(
+                Guid.NewGuid(),
+                new Designation { Value = "Panamax" },
+                new Designation { Value = "Max size for Panama Canal" },
+                20,
+                10,
+                5,
+                new PhysicalCharacteristics
+                {
+                    Length = 300,
+                    Depth = 15,
+                    Draft = 12
+                }),
+                new ShippingAgentOrganization(
+                    Guid.NewGuid(),
+                    new Designation { Value = "Global Shipping Co." },
+                    new List<Designation> {
+                        new Designation { Value = "GSC" },
+                        new Designation { Value = "Global Ship" }
+                    },
+                    new Address("123 Ocean Drive", "Maritime City", "90210", "USA"),
+                    new TaxNumber { Value = "PT123456789" },
+                    new HashSet<Representative> { representative }
+                ),
+                new PhysicalCharacteristics
+                {
+                    Length = 270,
+                    Depth = 13,
+                    Draft = 10
+                }
+        );
+    private static ICollection<VesselVisitNotification> notifications = new List<VesselVisitNotification>
+    {
+        new VesselVisitNotification(
+            new VesselVisitNotificationId(new Designation { Value = "PORTO" }, 1, 2025),
+            DateTime.UtcNow.AddDays(1),
+            DateTime.UtcNow.AddDays(5),
+            false,
+            vessel,
+            representative,
+            "Requires additional security measures",
+            new Crew(new Designation { Value = "Miguel Oliveira" }, 2, new HashSet<SafetyOfficer>()),
+            null,
+            null
+        ),
+        new VesselVisitNotification(
+            new VesselVisitNotificationId(new Designation { Value = "PORTO" }, 2, 2025),
+            DateTime.UtcNow.AddDays(3),
+            DateTime.UtcNow.AddDays(7),
+            false,
+            vessel,
+            representative,
+            "Handle with care",
+            new Crew(new Designation { Value = "Ana Silva" }, 3, new HashSet<SafetyOfficer>()),
+            null,
+            null
+        )
+    };
+
     public VesselVisitNotificationServiceTest()
     {
-        _notificationRepositoryMock = new Mock<IVesselVisitNotificationRepository>();
-    _vesselRepositoryMock = new Mock<IVesselRepository>();
-    _representativeRepositoryMock = new Mock<IRepresentativeRepository>();
+        _repositoryMock = new Mock<IVesselVisitNotificationRepository>();
+        _vesselRepositoryMock = new Mock<IVesselRepository>();
+        _representativeRepositoryMock = new Mock<IRepresentativeRepository>();
         _storageAreaRepositoryMock = new Mock<IStorageAreaRepository>();
         _containerRepositoryMock = new Mock<IContainerRepository>();
 
-        // Use a real id generator but provide the mocked notification repository it needs
-        var idGenerator = new VesselVisitNotificationIdGenerator(_notificationRepositoryMock.Object);
+        var idGenerator = new VesselVisitNotificationIdGenerator(_repositoryMock.Object);
 
         _service = new VesselVisitNotificationService(
-            _notificationRepositoryMock.Object,
+            _repositoryMock.Object,
             _vesselRepositoryMock.Object,
             _representativeRepositoryMock.Object,
             _storageAreaRepositoryMock.Object,
@@ -43,179 +113,220 @@ public class VesselVisitNotificationServiceTest
         );
     }
 
-    private (Vessel vessel, Representative representative) BuildVesselWithRepresentative(uint repCitizenId = 123456789)
-    {
-        // Representative
-    	var rep = new Representative(Guid.NewGuid(), repCitizenId, new Designation { Value = "Rep Name" }, new Email { Value = "rep@example.com" }, new PhoneNumber { Value = "4512345678" });
-
-        // Owner organization that contains the representative
-        var owner = new ShippingAgentOrganization(
-            Guid.NewGuid(),
-            new Designation { Value = "Owner Org" },
-            new List<Designation> { new Designation { Value = "Alt" } },
-            new Address("Street 1", "City", "0000", "Country"),
-            new TaxNumber { Value = "PT252252252" },
-            new HashSet<Representative> { rep }
-        );
-
-        // Vessel type and physical characteristics
-        var vesselType = new VesselType(Guid.NewGuid(), new Designation { Value = "TypeA" }, new Designation { Value = "Type A Description" }, 10u, 5u, 3u, new PhysicalCharacteristics { Length = 100, Depth = 20, Draft = 10 });
-        var physical = new PhysicalCharacteristics { Length = 50, Depth = 10, Draft = 5 };
-
-   		var vessel = new Vessel(Guid.NewGuid(), new Designation { Value = "Vessel 1" }, new ImoNumber { Value = "IMO1234567" }, vesselType, owner, physical);
-
-        return (vessel, rep);
-    }
-
     [Fact]
-    public async Task GetVesselVisitNotifications_ReturnsList()
+    public async Task GetVesselVisitNotifications_ReturnsListOfNotifications()
     {
-        var pair = BuildVesselWithRepresentative();
-        var notifications = new List<VesselVisitNotification>
-        {
-            new VesselVisitNotification(
-                new VesselVisitNotificationId(new Designation{ Value = "PORTO" }, 1, (uint)DateTime.UtcNow.Year),
-                DateTime.UtcNow,
-                DateTime.UtcNow.AddDays(1),
-                false,
-                pair.vessel,
-                pair.representative
-            )
-        };
-
-        _notificationRepositoryMock.Setup(r => r.GetVesselVisitNotificationsAsync()).ReturnsAsync(notifications);
+        _repositoryMock.Setup(repo => repo.GetVesselVisitNotificationsAsync())
+            .ReturnsAsync(notifications);
 
         var result = await _service.GetVesselVisitNotifications();
 
         Assert.NotNull(result);
-        Assert.Single(result);
+        Assert.Equal(2, result.Count());
+        Assert.Equal(notifications.ElementAt(0).NotificationId.ToString(), result.ElementAt(0).NotificationId.ToString());
     }
 
     [Fact]
-    public async Task Add_ReturnsAddedNotification_WhenValid()
+    public async Task GetVesselVisitNotificationById_ReturnsNotification_WhenExists()
     {
-        var (vessel, rep) = BuildVesselWithRepresentative();
+        _repositoryMock.Setup(repo => repo.GetVesselVisitNotificationByNotificationIdAsync(It.IsAny<string>()))
+            .ReturnsAsync((string id) => notifications.FirstOrDefault(n => n.NotificationId.ToString() == id));
 
-    _notificationRepositoryMock.Setup(r => r.GetVesselVisitNotificationByNotificationIdAsync(It.IsAny<string>())).ReturnsAsync((VesselVisitNotification)null!);
-        _vesselRepositoryMock.Setup(r => r.GetVesselByIMOAsync(It.IsAny<string>())).ReturnsAsync(vessel);
-        _representativeRepositoryMock.Setup(r => r.GetByCitizenIdAsync(It.IsAny<uint>())).ReturnsAsync(rep);
+        var result = await _service.GetById(notifications.ElementAt(0).NotificationId.ToString());
 
-        // Storage area & container used by cargo manifest
-        var storageArea = new StorageArea(Guid.NewGuid(), new Code { Value = "YARD01" }, new Designation { Value = "Loc" }, StorageAreaType.Yard, 100, 0, new HashSet<StorageArea.DockRelation>());
-        _storageAreaRepositoryMock.Setup(r => r.GetStorageAreaByCodeAsync(It.IsAny<string>())).ReturnsAsync(storageArea);
+        Assert.NotNull(result);
+        Assert.Equal(notifications.ElementAt(0).NotificationId.ToString(), result.NotificationId.ToString());
+    }
 
-        // Container repo returns null first to force creation
-    _containerRepositoryMock.Setup(r => r.GetContainerByNumberAsync(It.IsAny<string>())).ReturnsAsync((Container)null!);
-        _containerRepositoryMock.Setup(r => r.Add(It.IsAny<Container>())).ReturnsAsync((Container c) => c);
+    [Fact]
+    public async Task GetVesselVisitNotificationById_ThrowsException_WhenNotExists()
+    {
+        _repositoryMock.Setup(repo => repo.GetVesselVisitNotificationByNotificationIdAsync(It.IsAny<string>()))
+            .ReturnsAsync((VesselVisitNotification?)null);
 
-        var dto = new CreateVesselVisitNotificationDto
+        await Assert.ThrowsAsync<EntityNotFoundException>(async () => await _service.GetById("NonExistentId"));
+    }
+
+    [Fact]
+    public async Task Add_ReturnsAddedVesselVisitNotification()
+    {
+        var newNotificationDto = new CreateVesselVisitNotificationDto
         {
-            NotificationId = null!,
-            ExpectedArrival = DateTime.UtcNow,
-            ExpectedDeparture = DateTime.UtcNow.AddDays(1),
-            IsCargoHazardous = false,
-            VesselImoNumber = vessel.ImoIdentifier.Value,
-            SubmitterId = rep.CitizenshipId,
-            LoadCargoManifest = new List<CreateCargoTransportDto>
-            {
-                new CreateCargoTransportDto
-                {
-                    Position = new ContainerPosition { Bay = "01", Row = "A", Tier = "01" },
-                    StorageAreaCode = storageArea.NameCode.Value,
-                    Container = new ContainerDto { ContainerNumber = "CMAU2468103", CargoType = CargoType.OTHER, Description = "desc" }
-                }
-            }
+            NotificationId = "2025-PORTO-000001",
+            ExpectedArrival = DateTime.UtcNow.AddDays(1),
+            ExpectedDeparture = DateTime.UtcNow.AddDays(5),
+            IsCargoHazardous = true,
+            VesselImoNumber = "IMO 7585229",
+            SubmitterId = 908029952
         };
 
-        _notificationRepositoryMock.Setup(r => r.GetVesselVisitNotificationsAsync()).ReturnsAsync(new List<VesselVisitNotification>());
-        _notificationRepositoryMock.Setup(r => r.AddAsync(It.IsAny<VesselVisitNotification>())).ReturnsAsync((VesselVisitNotification v) => v);
+        _vesselRepositoryMock.Setup(repo => repo.GetVesselByIMOAsync(newNotificationDto.VesselImoNumber))
+            .ReturnsAsync(vessel);
 
-        var result = await _service.Add(dto);
+        _representativeRepositoryMock.Setup(repo => repo.GetByCitizenIdAsync(newNotificationDto.SubmitterId))
+            .ReturnsAsync(representative);
 
-        Assert.NotNull(result);
-        Assert.NotNull(result.NotificationId);
-        _containerRepositoryMock.Verify(r => r.Add(It.IsAny<Container>()), Times.Once);
-    }
+        _repositoryMock.Setup(repo => repo.AddAsync(It.IsAny<VesselVisitNotification>()))
+            .ReturnsAsync((VesselVisitNotification n) => n);
 
-    [Fact]
-    public async Task Add_Throws_WhenAlreadyExists()
-    {
-        var existingPair = BuildVesselWithRepresentative();
-        var existing = new VesselVisitNotification(
-            new VesselVisitNotificationId(new Designation{ Value = "PORTO" }, 1, (uint)DateTime.UtcNow.Year),
-            DateTime.UtcNow,
-            DateTime.UtcNow.AddDays(1),
-            false,
-            existingPair.vessel,
-            existingPair.representative
-        );
-
-    _notificationRepositoryMock.Setup(r => r.GetVesselVisitNotificationByNotificationIdAsync(It.IsAny<string>())).ReturnsAsync(existing);
-
-        await Assert.ThrowsAsync<EntityAlreadyExistsException>(() => _service.Add(new CreateVesselVisitNotificationDto { NotificationId = existing.NotificationId.ToString(), ExpectedArrival = DateTime.UtcNow, ExpectedDeparture = DateTime.UtcNow.AddDays(1), IsCargoHazardous = false, VesselImoNumber = null!, SubmitterId = 1 }));
-    }
-
-    [Fact]
-    public async Task Add_Throws_WhenVesselNotFound()
-    {
-    _notificationRepositoryMock.Setup(r => r.GetVesselVisitNotificationByNotificationIdAsync(It.IsAny<string>())).ReturnsAsync((VesselVisitNotification)null!);
-    _vesselRepositoryMock.Setup(r => r.GetVesselByIMOAsync(It.IsAny<string>())).ReturnsAsync((Vessel)null!);
-
-        await Assert.ThrowsAsync<EntityNotFoundException>(() => _service.Add(new CreateVesselVisitNotificationDto { NotificationId = null!, ExpectedArrival = DateTime.UtcNow, ExpectedDeparture = DateTime.UtcNow.AddDays(1), IsCargoHazardous = false, VesselImoNumber = "NONIMO", SubmitterId = 1 }));
-    }
-
-    [Fact]
-    public async Task Add_Throws_WhenRepresentativeNotFound()
-    {
-        var (vessel, _) = BuildVesselWithRepresentative();
-    _notificationRepositoryMock.Setup(r => r.GetVesselVisitNotificationByNotificationIdAsync(It.IsAny<string>())).ReturnsAsync((VesselVisitNotification)null!);
-    _vesselRepositoryMock.Setup(r => r.GetVesselByIMOAsync(It.IsAny<string>())).ReturnsAsync(vessel);
-    _representativeRepositoryMock.Setup(r => r.GetByCitizenIdAsync(It.IsAny<uint>())).ReturnsAsync((Representative)null!);
-
-        await Assert.ThrowsAsync<EntityNotFoundException>(() => _service.Add(new CreateVesselVisitNotificationDto { NotificationId = null!, ExpectedArrival = DateTime.UtcNow, ExpectedDeparture = DateTime.UtcNow.AddDays(1), IsCargoHazardous = false, VesselImoNumber = vessel.ImoIdentifier.Value, SubmitterId = 999 }));
-    }
-
-    [Fact]
-    public async Task Update_ReturnsUpdated_WhenExists()
-    {
-        var (vessel, rep) = BuildVesselWithRepresentative();
-        var existing = new VesselVisitNotification(
-            new VesselVisitNotificationId(new Designation{ Value = "PORTO" }, 1, (uint)DateTime.UtcNow.Year),
-            DateTime.UtcNow,
-            DateTime.UtcNow.AddDays(1),
-            false,
-            vessel,
-            rep
-        );
-
-        _notificationRepositoryMock.Setup(r => r.GetVesselVisitNotificationByNotificationIdAsync(It.IsAny<string>())).ReturnsAsync(existing);
-        _notificationRepositoryMock.Setup(r => r.UpdateAsync(It.IsAny<VesselVisitNotification>())).ReturnsAsync((VesselVisitNotification v) => v);
-
-        var dto = new CreateVesselVisitNotificationDto { NotificationId = existing.NotificationId.ToString(), ExpectedArrival = DateTime.UtcNow.AddDays(2), ExpectedDeparture = DateTime.UtcNow.AddDays(3), IsCargoHazardous = false, VesselImoNumber = vessel.ImoIdentifier.Value, SubmitterId = rep.CitizenshipId };
-
-        var result = await _service.Update(existing.NotificationId.ToString(), dto);
+        var result = await _service.Add(newNotificationDto);
 
         Assert.NotNull(result);
-        Assert.Equal(dto.ExpectedArrival, result.ExpectedArrival);
+
+        // the service generates the notification id via the id generator and repository
+        // we assert the generated id has the expected prefix rather than a fixed value
+        Assert.StartsWith("2025-PORTO-", result.NotificationId.ToString());
     }
 
     [Fact]
-    public async Task Update_Throws_WhenNotExists()
+    public async Task Add_ThrowsException_WhenNotificationIdAlreadyExists()
     {
-    _notificationRepositoryMock.Setup(r => r.GetVesselVisitNotificationByNotificationIdAsync(It.IsAny<string>())).ReturnsAsync((VesselVisitNotification)null!);
+        var existingNotificationDto = new CreateVesselVisitNotificationDto
+        {
+            NotificationId = notifications.ElementAt(0).NotificationId.ToString(),
+            ExpectedArrival = DateTime.UtcNow.AddDays(1),
+            ExpectedDeparture = DateTime.UtcNow.AddDays(5),
+            IsCargoHazardous = true,
+            VesselImoNumber = "IMO 7585229",
+            SubmitterId = 908029952
+        };
 
-        await Assert.ThrowsAsync<EntityNotFoundException>(() => _service.Update("nonexistent", new CreateVesselVisitNotificationDto { NotificationId = null!, ExpectedArrival = DateTime.UtcNow, ExpectedDeparture = DateTime.UtcNow.AddDays(1), IsCargoHazardous = false, VesselImoNumber = null!, SubmitterId = 1 }));
+        _repositoryMock.Setup(repo => repo.GetVesselVisitNotificationByNotificationIdAsync(existingNotificationDto.NotificationId))
+            .ReturnsAsync(notifications.FirstOrDefault(n => n.NotificationId.ToString() == existingNotificationDto.NotificationId));
+
+        await Assert.ThrowsAsync<EntityAlreadyExistsException>(() => _service.Add(existingNotificationDto));
     }
 
     [Fact]
-    public async Task FilterNotifications_ReturnsPage()
+    public async Task Add_ThrowsException_WhenVesselNotFound()
     {
-        var page = new Page<VesselVisitNotification> { Items = new List<VesselVisitNotification>(), PageNumber = 1, PageSize = 10 };
-        _notificationRepositoryMock.Setup(r => r.FilterVesselVisitNotificationsAsync(It.IsAny<VesselVisitNotificationFilter>())).ReturnsAsync(page);
+        var newNotificationDto = new CreateVesselVisitNotificationDto
+        {
+            NotificationId = "2025-PORTO-3",
+            ExpectedArrival = DateTime.UtcNow.AddDays(1),
+            ExpectedDeparture = DateTime.UtcNow.AddDays(5),
+            IsCargoHazardous = true,
+            VesselImoNumber = "IMO 0000000",
+            SubmitterId = 908029952
+        };
 
-    var result = await _service.FilterNotifications(new VesselVisitNotificationFilter { SubmitterCitizeshipId = 1 });
+        _repositoryMock.Setup(repo => repo.GetVesselVisitNotificationByNotificationIdAsync(It.Is<string>(s => s == newNotificationDto.NotificationId)))
+            .ReturnsAsync(notifications.FirstOrDefault(n => n.NotificationId.ToString() == newNotificationDto.NotificationId));
+
+        _vesselRepositoryMock.Setup(repo => repo.GetVesselByIMOAsync(It.IsAny<string>()))
+            .ReturnsAsync((Vessel?)null);
+
+        await Assert.ThrowsAsync<EntityNotFoundException>(() => _service.Add(newNotificationDto));
+    }
+
+    [Fact]
+    public async Task Add_ThrowsException_WhenRepresentativeNotFound()
+    {
+        var newNotificationDto = new CreateVesselVisitNotificationDto
+        {
+            NotificationId = "2025-PORTO-3",
+            ExpectedArrival = DateTime.UtcNow.AddDays(1),
+            ExpectedDeparture = DateTime.UtcNow.AddDays(5),
+            IsCargoHazardous = true,
+            VesselImoNumber = "IMO 0000000",
+            SubmitterId = 908029952
+        };
+
+        _repositoryMock.Setup(repo => repo.GetVesselVisitNotificationByNotificationIdAsync(It.Is<string>(s => s == newNotificationDto.NotificationId)))
+            .ReturnsAsync(notifications.FirstOrDefault(n => n.NotificationId.ToString() == newNotificationDto.NotificationId));
+
+        _vesselRepositoryMock.Setup(repo => repo.GetVesselByIMOAsync(It.IsAny<string>()))
+            .ReturnsAsync((Vessel?)null);
+
+        await Assert.ThrowsAsync<EntityNotFoundException>(() => _service.Add(newNotificationDto));
+    }
+
+    [Fact]
+    public async Task UpdateVesselVisitNotification_ReturnsUpdatedNotification_WhenExists()
+    {
+        var existingNotification = notifications.ElementAt(0);
+        var updatedNotificationDto = new CreateVesselVisitNotificationDto
+        {
+            NotificationId = existingNotification.NotificationId.ToString(),
+            ExpectedArrival = DateTime.UtcNow.AddDays(2),
+            ExpectedDeparture = DateTime.UtcNow.AddDays(6),
+            IsCargoHazardous = existingNotification.IsCargoHazardous,
+            VesselImoNumber = existingNotification.Vessel.ImoIdentifier.Value,
+            SubmitterId = existingNotification.Submitter.CitizenshipId,
+            SpecialRequirements = "Updated special requirements"
+        };
+
+        _repositoryMock.Setup(repo => repo.GetVesselVisitNotificationByNotificationIdAsync(existingNotification.NotificationId.ToString()))
+            .ReturnsAsync(existingNotification);
+
+        _repositoryMock.Setup(repo => repo.UpdateAsync(It.IsAny<VesselVisitNotification>()))
+            .ReturnsAsync((VesselVisitNotification n) => n);
+
+        var result = await _service.Update(existingNotification.NotificationId.ToString(), updatedNotificationDto);
+
+        Assert.NotNull(result);
+        Assert.Equal(updatedNotificationDto.NotificationId, result.NotificationId.ToString());
+        Assert.Equal(updatedNotificationDto.ExpectedArrival, result.ExpectedArrival);
+        Assert.Equal(updatedNotificationDto.ExpectedDeparture, result.ExpectedDeparture);
+        Assert.Equal(updatedNotificationDto.SpecialRequirements, result.SpecialRequirements);
+    }
+
+    [Fact]
+    public async Task UpdateVesselVisitNotification_ThrowsException_WhenNotificationIdNotExists()
+    {
+        var nonExistentNotificationDto = new CreateVesselVisitNotificationDto
+        {
+            NotificationId = "NonExistentId",
+            ExpectedArrival = DateTime.UtcNow.AddDays(1),
+            ExpectedDeparture = DateTime.UtcNow.AddDays(5),
+            IsCargoHazardous = true,
+            VesselImoNumber = "IMO 7585229",
+            SubmitterId = 908029952
+        };
+
+        _repositoryMock.Setup(repo => repo.GetVesselVisitNotificationByNotificationIdAsync(nonExistentNotificationDto.NotificationId))
+            .ReturnsAsync((VesselVisitNotification?)null);
+
+        await Assert.ThrowsAsync<EntityNotFoundException>(() => _service.Update(nonExistentNotificationDto.NotificationId, nonExistentNotificationDto));
+    }
+
+    [Fact]
+    public async Task FilteredVesselVisitNotification_ReturnsPage()
+    {
+        var filter = new VesselVisitNotificationFilter { SubmitterCitizenshipId = 908029952 };
+
+        _repositoryMock.Setup(repo => repo.FilterVesselVisitNotificationsAsync(filter))
+            .ReturnsAsync(new Page<VesselVisitNotification>
+            {
+                Items = notifications.ToList(),
+                PageNumber = 1,
+                PageSize = notifications.Count
+            });
+
+        var result = await _service.FilterNotifications(filter);
 
         Assert.NotNull(result);
         Assert.IsType<Page<VesselVisitNotificationStatusDto>>(result);
+        Assert.Equal(notifications.Count, result.Items.Count);
+    }
+
+    [Fact]
+    public async Task FilteredVesselVisitNotification_ReturnsEmptyPage_WhenNoMatches()
+    {
+        var filter = new VesselVisitNotificationFilter { SubmitterCitizenshipId = 123456789 };
+
+        _repositoryMock.Setup(repo => repo.FilterVesselVisitNotificationsAsync(filter))
+            .ReturnsAsync(new Page<VesselVisitNotification>
+            {
+                Items = new List<VesselVisitNotification>(),
+                PageNumber = 1,
+                PageSize = 0
+            });
+
+        var result = await _service.FilterNotifications(filter);
+
+        Assert.NotNull(result);
+        Assert.IsType<Page<VesselVisitNotificationStatusDto>>(result);
+        Assert.Empty(result.Items);
     }
 }

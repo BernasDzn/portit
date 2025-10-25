@@ -30,12 +30,12 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
         }
     }
 
-    public async Task<VesselVisitNotification> GetVesselVisitNotificationByNotificationIdAsync(string notificationId)
+    public async Task<VesselVisitNotification?> GetVesselVisitNotificationByNotificationIdAsync(string notificationId)
     {
         try
         {
             VesselVisitNotification? notification = await _context.VesselVisitNotifications.FirstOrDefaultAsync(n => n.NotificationId.Value == notificationId);
-            return notification!;
+            return notification;
         }
         catch
         {
@@ -43,12 +43,12 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
         }
     }
 
-    public async Task<VesselVisitNotification> GetVesselVisitNotificationByVesselIMOAsync(string imoNumber)
+    public async Task<VesselVisitNotification?> GetVesselVisitNotificationByVesselIMOAsync(string imoNumber)
     {
         try
         {
             VesselVisitNotification? notification = await _context.VesselVisitNotifications.FirstOrDefaultAsync(n => n.Vessel.ImoIdentifier.Value == imoNumber);
-            return notification!;
+            return notification;
         }
         catch
         {
@@ -108,16 +108,16 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
     {
         try
         {
-            Representative? submitter = _context.Representatives.FirstOrDefault(rep => rep.CitizenshipId == filter.SubmitterCitizeshipId);
+            Representative? submitter = _context.Representatives.FirstOrDefault(rep => rep.CitizenshipId == filter.SubmitterCitizenshipId);
             if (submitter == null)
-                throw new EntityNotFoundException($"No Representative found with Citizenship ID {filter.SubmitterCitizeshipId}");
+                throw new EntityNotFoundException($"No Representative found with Citizenship ID {filter.SubmitterCitizenshipId}");
             
             if (submitter.RepresentedOrganization == null)
-                throw new EntityNotFoundException($"The representative with Citizenship ID {filter.SubmitterCitizeshipId} does not represent any organization.");
+                throw new EntityNotFoundException($"The representative with Citizenship ID {filter.SubmitterCitizenshipId} does not represent any organization.");
 
             IQueryable<VesselVisitNotification> query = _context.VesselVisitNotifications.AsQueryable();
-            ShippingAgentOrganization relatedOrg = _context.ShippingAgentOrganizations.FirstOrDefault(org => org.Representatives.Any(rep => rep.CitizenshipId == filter.SubmitterCitizeshipId)) 
-                ?? throw new EntityNotFoundException($"No Shipping Agent Organization found for Submitter Citizenship ID {filter.SubmitterCitizeshipId}");
+            ShippingAgentOrganization relatedOrg = _context.ShippingAgentOrganizations.FirstOrDefault(org => org.Representatives.Any(rep => rep.CitizenshipId == filter.SubmitterCitizenshipId)) 
+                ?? throw new EntityNotFoundException($"No Shipping Agent Organization found for Submitter Citizenship ID {filter.SubmitterCitizenshipId}");
 
             // Apply same company rule
             query = query.Where(vvn => vvn.Submitter.RepresentedOrganization!.Id == relatedOrg.Id);
@@ -131,7 +131,7 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
                     case NotificationStatusFilter.ApprovalPending:
                         query = query.Where(vvn => vvn.Status == NotificationStatus.ApprovalPending);
                         break;
-                    case NotificationStatusFilter.Accpeted:
+                    case NotificationStatusFilter.Accepted:
                     case NotificationStatusFilter.Rejected:
                         // We need to filter client side since the status is derived from GetLatestDecision()
                         query = query.Where(vvn => vvn.NotificationDecisions.Count > 0 && vvn.Status == NotificationStatus.Decided);
@@ -158,8 +158,8 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
             query = query.Skip((filter.PageNumber - 1) * filter.PageSize).Take(filter.PageSize);
             List<VesselVisitNotification> result = query.ToList();
 
-            // CLient side filter of latest notification decision status
-            if (filter.Status == NotificationStatusFilter.Accpeted)
+            // CClient side filter of latest notification decision status
+            if (filter.Status == NotificationStatusFilter.Accepted)
                 result = result.Where(vvn => vvn.GetLatestDecision() != null && vvn.GetLatestDecision()!.Status == NotificationDecisionStatus.Approved).ToList();
             else if (filter.Status == NotificationStatusFilter.Rejected)
                 result = result.Where(vvn => vvn.GetLatestDecision() != null && vvn.GetLatestDecision()!.Status == NotificationDecisionStatus.Rejected).ToList();

@@ -46,6 +46,14 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         return notifications.Select(n => n.ToDTO());
     }
 
+    
+    public async Task<VesselVisitNotificationDto> GetById(string vvnID)
+    {
+        var notification = await _notificationRepository.GetVesselVisitNotificationByNotificationIdAsync(vvnID);
+        if (notification == null) throw new EntityNotFoundException($"Vessel Visit Notification with id {vvnID} was not found.");
+        return notification.ToDTO();
+    }
+
     private List<CargoTransport>? GetNewCargoManifestFromDTO(ICollection<CreateCargoTransportDto>? cargoManifestDto)
     {
         if (cargoManifestDto == null) return null;

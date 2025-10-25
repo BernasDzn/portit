@@ -8,12 +8,12 @@ public enum NotificationStatusFilter
 {
 	InProgress = 0,
 	ApprovalPending = 1,
-	Accpeted = 2,
+	Accepted = 2,
 	Rejected = 3
 }
 public class VesselVisitNotificationFilter : Pageable
 {
-	public required uint SubmitterCitizeshipId { get; set; }
+	public required uint SubmitterCitizenshipId { get; set; }
 	public NotificationStatusFilter? Status { get; set; }
 	public bool? WithReason { get; set; }
 	public bool? WithDockAssigned { get; set; }
