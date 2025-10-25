@@ -3,6 +3,7 @@
  * ---------------------
  * Reads markdown files in /docs/standups/
  * and creates or updates GitHub issues accordingly.
+ * Adds the "daily" label automatically.
  */
 
 import fs from "fs";
@@ -14,7 +15,18 @@ import * as github from "@actions/github";
 const octokit = new Octokit({ auth: process.env.GITHUB_TOKEN });
 const { owner, repo } = github.context.repo;
 
-// Parse the markdown content into a structured object
+// 🏷️ Ensure "daily" label exists
+async function ensureLabelExists(labelName, color = "0e8a16") {
+  try {
+    await octokit.issues.getLabel({ owner, repo, name: labelName });
+    core.info(`Label "${labelName}" already exists.`);
+  } catch {
+    core.info(`Creating missing label "${labelName}"...`);
+    await octokit.issues.createLabel({ owner, repo, name: labelName, color });
+  }
+}
+
+// 🧩 Parse the markdown content into structured data
 function parseStandup(mdContent) {
   const titleMatch = mdContent.match(/^## Standup - ([\d/]+)/m);
   const title = titleMatch ? `Standup - ${titleMatch[1]}` : "Standup Report";
@@ -22,7 +34,7 @@ function parseStandup(mdContent) {
   const statusMatch = mdContent.match(/\*\*Status:\*\*\s*(.+)/);
   const status = statusMatch ? statusMatch[1].trim() : "No status provided";
 
-  // Capture all @usernames (allow letters, numbers, underscores, and hyphens)
+  // Capture @usernames (letters, numbers, underscores, hyphens)
   const members = [...mdContent.matchAll(/(@[A-Za-z0-9_-]+)\s*<br>/g)].map(m => m[1]);
 
   const data = {
@@ -45,7 +57,7 @@ function parseStandup(mdContent) {
     data.obstacles.push(obstacles ? obstacles[1].trim() : "-");
   }
 
-  // Construct the table body
+  // Build Markdown table
   const header = `| Question | ${members.join(" | ")} |\n| - | ${members.map(() => "-").join(" | ")} |`;
   const rows = [
     `| **What did I do yesterday?** | ${data.yesterday.join(" | ")} |`,
@@ -65,7 +77,10 @@ ${rows.join("\n")}
   return { title, body };
 }
 
+// 🚀 Main
 async function main() {
+  await ensureLabelExists("daily");
+
   const dir = path.join(process.cwd(), "docs/standups");
   const files = fs.readdirSync(dir).filter(f => f.endsWith(".md"));
 
@@ -74,10 +89,10 @@ async function main() {
     const content = fs.readFileSync(filePath, "utf8");
     const { title, body } = parseStandup(content);
 
-    core.info(`Processing daily file: ${file}`);
-    core.info(`Looking for existing issue titled "${title}"...`);
+    core.info(`📄 Processing daily file: ${file}`);
+    core.info(`🔎 Looking for existing issue titled "${title}"...`);
 
-    // Check if an issue with the same title exists
+    // Check if an issue with the same title already exists
     const existingIssues = await octokit.paginate(octokit.issues.listForRepo, {
       owner,
       repo,
@@ -94,6 +109,7 @@ async function main() {
         repo,
         issue_number: existing.number,
         body,
+        labels: ["daily"],
       });
     } else {
       core.info(`🆕 No existing issue found. Creating new one.`);
@@ -102,6 +118,7 @@ async function main() {
         repo,
         title,
         body,
+        labels: ["daily"],
       });
     }
   }
