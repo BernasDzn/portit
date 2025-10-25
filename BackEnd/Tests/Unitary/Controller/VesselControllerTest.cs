@@ -297,7 +297,7 @@ public class VesselControllerTest
     public async Task Update_ReturnsBadRequest_WhenUpdateFails()
     {
         _vesselServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<CreateVesselDto>()))
-            .ReturnsAsync((VesselDto?)null);
+            .ThrowsAsync(new PersistencyFailedException("Unable to perform an update"));
 
         var updateDto = new CreateVesselDto
         {

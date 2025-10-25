@@ -200,7 +200,7 @@ public class VesselVisitNotificationTest
     [InlineData("2024-08-15T14:30:00Z", "2024-08-15T16:30:00Z", true, "Requires special handling")]
     [InlineData("2024-09-20T08:00:00Z", "2024-09-20T10:00:00Z", false, "Fragile cargo")]
     [InlineData("2024-10-05T09:15:00Z", "2024-10-05T11:45:00Z", true, null)]
-    public void WhenPassingCorrectData_ThenVesselVisitNotificationIsCreated(string arrivalStr, string departureStr, bool isCargoHazardous, string specialRequirements)
+    public void WhenPassingCorrectData_ThenVesselVisitNotificationIsCreated(string arrivalStr, string departureStr, bool isCargoHazardous, string? specialRequirements)
     {
         DateTime arrival = DateTime.Parse(arrivalStr);
         DateTime departure = DateTime.Parse(departureStr);
@@ -225,22 +225,22 @@ public class VesselVisitNotificationTest
 
     [Theory]
     //INVALID ID
-    [InlineData("", 1, "2024-07-01T12:00:00Z", "2024-07-01T10:00:00Z", false, null, true, true, typeof(ArgumentException))]
-    [InlineData("P ort o", 1, "2024-07-01T12:00:00Z", "2024-07-01T10:00:00Z", false, null, true, true, typeof(ArgumentException))]
-    [InlineData("P", 1, "2024-07-01T12:00:00Z", "2024-07-01T10:00:00Z", false, null, true, true, typeof(ArgumentException))]
-    [InlineData("PORTOOOOOOOOO", 1, "2024-07-01T12:00:00Z", "2024-07-01T10:00:00Z", false, null, true, true, typeof(ArgumentException))]
+    [InlineData("", 1, "2024-07-01T12:00:00Z", "2024-07-01T10:00:00Z", false, true, true, typeof(ArgumentException), null)]
+    [InlineData("P ort o", 1, "2024-07-01T12:00:00Z", "2024-07-01T10:00:00Z", false, true, true, typeof(ArgumentException), null)]
+    [InlineData("P", 1, "2024-07-01T12:00:00Z", "2024-07-01T10:00:00Z", false, true, true, typeof(ArgumentException), null)]
+    [InlineData("PORTOOOOOOOOO", 1, "2024-07-01T12:00:00Z", "2024-07-01T10:00:00Z", false, true, true, typeof(ArgumentException), null)]
     //INVALID DATES
-    [InlineData("PORTO", 1, "", "2024-07-01T10:00:00Z", false, null, true, true, typeof(FormatException))]
-    [InlineData("PORTO", 1, "2024-08-15T14:30:00Z", "", true, "Requires special handling", true, true, typeof(FormatException))]
+    [InlineData("PORTO", 1, "", "2024-07-01T10:00:00Z", false, true, true, typeof(FormatException), null)]
+    [InlineData("PORTO", 1, "2024-08-15T14:30:00Z", "", true, true, true, typeof(FormatException), "Requires special handling")]
     //INVALID REPRESENTATIVE
-    [InlineData("PORTO", 1, "2024-09-20T08:00:00Z", "2024-09-20T10:00:00Z", true, "Fragile cargo", false, true, typeof(InvalidRepresentativeException))]
+    [InlineData("PORTO", 1, "2024-09-20T08:00:00Z", "2024-09-20T10:00:00Z", true, false, true, typeof(InvalidRepresentativeException), "Fragile cargo")]
     //INVALID VESSEL
-    [InlineData("PORTO", 1, "2024-09-20T08:00:00Z", "2024-09-20T10:00:00Z", true, "Fragile cargo", false, false, typeof(ArgumentNullException))]
+    [InlineData("PORTO", 1, "2024-09-20T08:00:00Z", "2024-09-20T10:00:00Z", true, false, false, typeof(ArgumentNullException), "Fragile cargo")]
 
     public void WhenPassingInvalidData_ThenThrowsException(
         string id_portCode, uint id_number,
-        string arrivalStr, string departureStr, bool isCargoHazardous,
-        string specialRequirements, bool isRepresentativeValid, bool useVessel, Type exceptionType)
+        string arrivalStr, string departureStr, bool isCargoHazardous, bool isRepresentativeValid,
+        bool useVessel, Type exceptionType, string? specialRequirements)
     {
         Assert.Throws(exceptionType, () =>
         {
@@ -256,7 +256,7 @@ public class VesselVisitNotificationTest
                 arrival,
                 departure,
                 isCargoHazardous,
-                useVessel ? vessel : null,
+                useVessel ? vessel : null!,
                 isRepresentativeValid ? representative : invalidRepresentative,
                 specialRequirements,
                 crew,
@@ -378,7 +378,7 @@ public class VesselVisitNotificationTest
     [Theory]
     [InlineData(NotificationDecisionStatus.Approved, 101, null)]
     [InlineData(NotificationDecisionStatus.Rejected, 101, "Insufficient safety measures")]
-    public void WhenAddingValidDecision_ThenAdds(NotificationDecisionStatus status, int officerID, string reason)
+    public void WhenAddingValidDecision_ThenAdds(NotificationDecisionStatus status, int officerID, string? reason)
     {
         var vvn = new VesselVisitNotification(
             new VesselVisitNotificationId(

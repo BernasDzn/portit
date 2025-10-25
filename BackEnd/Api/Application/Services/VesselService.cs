@@ -31,7 +31,7 @@ public class VesselService : IVesselService
         return vessels.Select(v => v.ToDTO()).ToList();
     }
 
-    public async Task<VesselDto?> Add(CreateVesselDto vesselDto)
+    public async Task<VesselDto> Add(CreateVesselDto vesselDto)
     {
         bool exists = await _vesselRepository.GetVesselByIMOAsync(vesselDto.ImoNumber) != null;
         if (exists)
@@ -67,7 +67,7 @@ public class VesselService : IVesselService
         return savedVesselDto;
     }
 
-    public async Task<VesselDto?> Update(string imo, CreateVesselDto vesselDto)
+    public async Task<VesselDto> Update(string imo, CreateVesselDto vesselDto)
     {
         Vessel? vessel = await _vesselRepository.GetVesselByIMOAsync(imo);
         if (vessel == null)
@@ -101,7 +101,7 @@ public class VesselService : IVesselService
         return updateResult.ToDTO();
     }
 
-    public async Task<VesselDto?> GetByImo(string imo)
+    public async Task<VesselDto> GetByImo(string imo)
     {
         Vessel? vessel = await _vesselRepository.GetVesselByIMOAsync(imo);
         if (vessel == null)

@@ -103,8 +103,6 @@ public class VesselController : ControllerBase, IVesselController
         try
         {
             var updatedVessel = await _vesselService.Update(imo, vesselDto);
-            if (updatedVessel == null)
-                return BadRequest("Could not update vessel");
 
             return Ok(updatedVessel);
         }
