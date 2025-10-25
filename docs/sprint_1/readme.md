@@ -57,7 +57,7 @@ As of this sprint, the generated artifacts are the following:
 - [US2205 - Register new shipping agent organizations]() **Not planned**
 - [US2206 - Register and manage representatives of a shipping agent organization]() **Not planned**
 -
-- [US2208 - ](us2208/readme.md)
+- [US2208 - Register and update vessel visit notifications](us2208/readme.md)
 - [US2209 - Change/complete a Vessel Visit Notification](us2209/readme.md)
 - [US2210 - View the status of all my submitted Vessel Visit Notifications](us2210/readme.md)
 - [US2211 - Register and manage operating staff members](us2211/readme.md)
