@@ -15,8 +15,8 @@ do
   # Create svg/ folder inside that directory if it doesn't exist
   mkdir -p "svg"
   fileName=$(basename "$aFile" .puml)
-  echo "Running command: java -jar libs/plantuml-1.2025.9.jar $extra $exportFormat -o 'svg/$fileName' '$aFile'"
-	java -jar libs/plantuml-1.2025.9.jar $extra $exportFormat -o "svg/$fileName" "$aFile"
+  echo "Running command: java -jar libs/plantuml-1.2025.2.jar $extra $exportFormat -o 'svg/$fileName' '$aFile'"
+	java -jar libs/plantuml-1.2025.2.jar $extra $exportFormat -o "svg/$fileName" "$aFile"
 done
 
 echo "Finished"
