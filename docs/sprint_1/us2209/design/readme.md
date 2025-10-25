@@ -9,4 +9,4 @@
 
 ### Class Diagram(s):
 
-![class_diagram](class/svg/class_diagram/class_diagram.svg) 
+![class_diagram](class/svg/class_diagram/Vessel_Visit_Notification_Class_Diagram.svg) 
