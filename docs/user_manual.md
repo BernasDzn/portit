@@ -844,7 +844,7 @@ id: WH34
 ```
 
 ### <img src="svg/get.svg" height="20" style="position: relative; top: 4px;"> /VesselVisitNotification/filter
-Should return a list of Physical Resources that match the filter criteria.
+Should return a list of Vessel Visit Notifications that match the filter criteria.
 
 Query Parameters:
 - SubmitterCitizenshipId (int, required): The id of the person requesting to see their notifications
