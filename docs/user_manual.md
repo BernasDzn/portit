@@ -779,3 +779,23 @@ Query Parameters:
 ### <img src="svg/delete.svg" height="20" style="position: relative; top: 4px;"> /PhysicalResource/{code}
 
 Deactivate the Physical Resources of the given code.
+
+## Vessel Visit Notification
+
+### <img src="svg/post.svg" height="20" style="position: relative; top: 4px;"> /VesselVisitNotification
+```json
+{
+  "notificationId": "2025-PORTO-000006",
+  "expectedArrival": "2025-10-27T15:54:33.638Z",
+  "expectedDeparture": "2025-10-30T15:54:33.638Z",
+  "isCargoHazardous": false,
+  "specialRequirements": null,
+  "crewDetails": null,
+  "loadCargoManifest": [],
+  "unloadCargoManifest": [],
+  "vesselImoNumber": "IMO 9703318",
+  "submitterId": 733060890
+}
+```
+
+Creates a new Vessel Visit Notification for the vessel with IMO Number IMO 9703318 (Ever Given). The expected arrival is on October 27, 2025, and the expected departure is on October 30, 2025. The notification indicates that there is no hazardous cargo and no special requirements. The load and unload cargo manifests are empty, and the submitter has the ID 733060890.
