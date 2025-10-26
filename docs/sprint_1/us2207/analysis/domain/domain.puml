@@ -1,0 +1,37 @@
+@startuml us2208_domain_model
+title Vessel Visit Notification Domain (DDD)
+hide circle
+
+rectangle "Vessel Visit Notification" {
+	class "**Vessel Visit Notification**" as vvn <<AggregateRoot>><<Entity>> {
+	...
+	}
+	class "Notification Decision" as vvn_decision <<Value>> {
+		+ status
+		+ timestamp
+		+ reason
+		+ assignedDock
+		+ officerID
+	}
+	enum "Notification Status" as vvn_notif_status {
+		APPROVED
+		REJECTED
+	}
+	enum "Notification State" as vvn_state {
+		IN_PROGRESS
+		APPROVAL_PENDING
+		DECIDED
+	}
+	class "Vessel Berth" as vvn_berth <<Entity>> {
+		+ dock
+		+ taskSchedule
+		+ status
+	}
+}
+
+vvn --> vvn_state : has
+vvn --> vvn_decision : 0..* decisions
+vvn_decision --> vvn_notif_status : has
+vvn_decision --> vvn_berth : 0..1 assignedDock
+
+@enduml

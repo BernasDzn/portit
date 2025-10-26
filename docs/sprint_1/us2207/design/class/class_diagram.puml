@@ -1,0 +1,102 @@
+@startuml Notification_Decision_Class_Diagram
+!theme plain
+skinparam classAttributeIconSize 0
+ 
+' Entity / Aggregate classes
+class VesselVisitNotification {
+	- NotificationId: string
+	- ExpectedArrival: DateTime
+	- ExpectedDeparture: DateTime
+	- IsCargoHazardous: bool
+	- SpecialRequirements: string?
+	- Vessel: Vessel
+	- Submitter: Representative
+	- CrewDetails: Crew?
+	- LoadCargoManifest: ICollection<CargoTransport>?
+	- UnloadCargoManifest: ICollection<CargoTransport>?
+	__
+	+ VesselVisitNotification(id, expectedArrival, expectedDeparture, isCargoHazardous, vessel, submitter, specialRequirements, crew, loadManifest, unloadManifest)
+	+ ToDTO(): VesselVisitNotificationDto
+	+ ToStatusDTO(): VesselVisitNotificationStatusDto
+	+ Update(expectedArrival, expectedDeparture, isCargoHazardous, specialRequirements, crew, loadManifest, unloadManifest): void
+}
+
+class NotificationDecision {
+	- Status: NotificationStatus
+	- Reason: string?
+	- DecisionDate: DateTime
+	- OfficerID: int?
+	- AssignedDock: Dock?
+	- IsFinal: bool
+	__
+	+ NotificationDecision(status, reason, decisionDate, officerId, assignedDock, isFinal)
+	+ ToDTO(): NotificationDecisionDto
+}
+
+' DTO 
+class NotificationDecisionDto {
+	+ Status: int
+	+ Reason: string?
+	+ DecisionDate: DateTime
+	+ OfficerID: int?
+	+ AssignedDock: DockDto?
+	+ IsFinal: bool
+}
+
+' Controller
+class VesselVisitNotificationController {
+	- _notificationService: IVesselVisitNotificationService
+	- _notificationDecisionService: INotificationDecisionService
+	- _logger: ILogger<VesselVisitNotificationController>
+	__
+	+ VesselVisitNotificationController(notificationService, notificationDecisionService, logger)
+	+ GetAll(): Task<ActionResult<IEnumerable<VesselVisitNotificationDto>>>
+	+ GetDecisions(vesselVisitNotificationId): Task<ActionResult<IEnumerable<NotificationDecisionDto>>>
+	+ Create(vvnDto): Task<ActionResult<VesselVisitNotificationDto>>
+	+ CreateDecision(vesselVisitNotificationId, decisionDto): Task<ActionResult<NotificationDecisionDto>>
+	+ Update(id, vvnDto): Task<ActionResult<VesselVisitNotificationDto>>
+	+ Filter(filter): Task<ActionResult<Page<VesselVisitNotificationStatusDto>>>
+}
+
+
+class NotificationDecisionService {
+	- _notificationRepository: IVesselVisitNotificationRepository
+	- _dockRepository: IDockRepository
+	- _logger: ILogger<NotificationDecisionService>
+	__
+	+ Add(createDecisionDto, vesselVisitNotificationId): Task<NotificationDecisionDto>
+	+ GetNotificationDecisions(vesselVisitNotificationId): Task<IEnumerable<NotificationDecisionDto>>
+}
+
+class NotificationDecisionFactory {
+	+ CreateAccepted(reason, assignedDock, decisionDate): NotificationDecision
+	+ CreateRejected(reason, isPermanent, decisionDate): NotificationDecision
+}
+
+' Repository interfaces
+interface IVesselVisitNotificationRepository {
+	+ GetVesselVisitNotificationsAsync(): Task<IEnumerable<VesselVisitNotification>>
+	+ GetVesselVisitNotificationByNotificationIdAsync(notificationId: string): Task<VesselVisitNotification>
+	+ GetNotificationDecisionsAsync(vvnId: string): Task<IEnumerable<NotificationDecision>>
+	+ AddAsync(notification: VesselVisitNotification): Task
+	+ UpdateAsync(notification: VesselVisitNotification): Task<VesselVisitNotification>
+	+ FilterVesselVisitNotificationsAsync(filter: VesselVisitNotificationFilter): Task<Page<VesselVisitNotification>>
+}
+
+interface IDockRepository {
+	+ GetDockByCodeAsync(code : string): Task<Dock?>
+}
+
+' Relationships
+VesselVisitNotification o-- "0..*" NotificationDecision : "decisions"
+
+VesselVisitNotificationController --> NotificationDecisionService : uses
+NotificationDecisionService --> IVesselVisitNotificationRepository : uses
+NotificationDecisionService --> IDockRepository : uses
+NotificationDecisionService --> NotificationDecisionFactory : uses
+
+IVesselVisitNotificationRepository ..> VesselVisitNotification : "Updates"
+
+NotificationDecision ..> NotificationDecisionDto : "ToDTO"
+
+@enduml

@@ -45,22 +45,14 @@ public class NotificationDecisionService : INotificationDecisionService
                 throw new ArgumentException("AssignedDock must be provided for accepted decisions.", nameof(notificationDecisionDto.AssignedDockCode));
 
             Dock? assignedDock = await _dockRepository.GetDockByCodeAsync(notificationDecisionDto.AssignedDockCode);
-            
             if (assignedDock == null)
                 throw new EntityNotFoundException("Assigned Dock not found.");
 
-            notificationDecision = NotificationDecisionFactory.CreateAccepted(
-                reason: notificationDecisionDto.Reason,
-                assignedDock: assignedDock,
-                decisionDate: notificationDecisionDto.DecisionDate);
+            notificationDecision = NotificationDecisionFactory.CreateAccepted(notificationDecisionDto.Reason, assignedDock, notificationDecisionDto.DecisionDate);
         }
         else if (notificationDecisionDto.Status == 2)
-        {
-            notificationDecision = NotificationDecisionFactory.CreateRejected(
-                reason: notificationDecisionDto.Reason ?? "No reason provided",
-                isPermanent: notificationDecisionDto.IsFinal,
-                decisionDate: notificationDecisionDto.DecisionDate);
-        }
+            notificationDecision = NotificationDecisionFactory.CreateRejected(notificationDecisionDto.Reason ?? "No reason provided",
+             notificationDecisionDto.IsFinal, notificationDecisionDto.DecisionDate);
         else
             throw new ArgumentException("Invalid status value.", nameof(notificationDecisionDto.Status));
 
