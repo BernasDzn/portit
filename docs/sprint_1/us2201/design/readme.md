@@ -3,13 +3,13 @@
 ### System Sequence Diagrams per feature:
 
 #### - Create:
-![class_diagram](../../global_artifacts/generic_diagrams/svg/sequence_diagram_post/sequence_diagram_post.svg) 
+![class_diagram](../../global_artifacts/arquitecture/level_4/process_views/svg/l4_process_view_post/sequence_diagram_post.svg) 
 
 #### - Update:
-![class_diagram](../../global_artifacts/generic_diagrams/svg/sequence_diagram_put/sequence_diagram_put.svg) 
+![class_diagram](../../global_artifacts/arquitecture/level_4/process_views/svg/l4_process_view_put/sequence_diagram_put.svg) 
 
 #### - Filter:
-
+![class_diagram](../../global_artifacts/arquitecture/level_4/process_views/svg/l4_process_view_filter/sequence_diagram_filter.svg) 
 
 ### Class Diagram:
 
