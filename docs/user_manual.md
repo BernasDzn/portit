@@ -251,7 +251,7 @@ Since **DCK001** is the only dock that meets the requirements, it is the only on
 
 ### <img src="svg/get.svg" height="20" style="position: relative; top: 4px;"> /Vessel
 
-Should return a list of all vessels in the database.
+> Should return a list of all vessels in the database.
 
 ### <img src="svg/post.svg" height="20" style="position: relative; top: 4px;"> /Vessel
 ```json
@@ -268,7 +268,7 @@ Should return a list of all vessels in the database.
 
 ### <img src="svg/get.svg" height="20" style="position: relative; top: 4px;"> /Vessel/{imo}
 
-Should return the vessel with IMO Number (eg. IMO 3815389):
+> Should return the vessel with IMO Number (eg. IMO 3815389):
 ```json
 {
   "name": "Maersk Triple E",
@@ -323,11 +323,11 @@ Should return the vessel with IMO Number (eg. IMO 3815389):
 }
 ```
 
-This includes all information about the vessel, including its type and owner details.
+> This includes all information about the vessel, including its type and owner details.
 
 ### <img src="svg/put.svg" height="20" style="position: relative; top: 4px;"> /Vessel/{imo}
 
-IMO Number field should be the IMO of the desired vessel (eg. IMO 3815389).
+> IMO Number field should be the IMO of the desired vessel (eg. IMO 3815389).
 
 ```json
 {
@@ -343,16 +343,14 @@ IMO Number field should be the IMO of the desired vessel (eg. IMO 3815389).
 
 ### <img src="svg/get.svg" height="20" style="position: relative; top: 4px;"> /Vessel/filter
 
-Should return a list of vessels that match the filter criteria.
-
-Query Parameters:
-- name (string, optional): Filter by vessel name.
-- type (string, optional): Filter by vessel type.
-- owner (string, optional): Filter by vessel owner.
-- pageNumber (int, optional): Page number for pagination (default is 1).
-- pageSize (int, optional): Number of items per page (default is 10).
-
-When filtering, after running the previous requests, the "Vessel" name filter should be a good example, returning both the "New Vessel" and "Update Vessel Name" entries.
+>Should return a list of vessels that match the filter criteria.\
+>Query Parameters:
+>- name (string, optional): Filter by vessel name.
+>- type (string, optional): Filter by vessel type.
+>- owner (string, optional): Filter by vessel owner.
+>- pageNumber (int, optional): Page number for pagination (default is 1).
+>- pageSize (int, optional): Number of items per page (default is 10).\
+>When filtering, after running the previous requests, the "Vessel" name filter should be a good example, returning both the "New Vessel" and "Update Vessel Name" entries.
 
 ## Vessel Type
 
@@ -780,9 +778,56 @@ Query Parameters:
 
 Deactivate the Physical Resources of the given code.
 
+## Storage area
+
+### <img src="svg/get.svg" height="20" style="position: relative; top: 4px;"> /StorageArea
+
+> Gets all storage areas in the system.
+
+### <img src="svg/post.svg" height="20" style="position: relative; top: 4px;"> /StorageArea
+
+> Warehouse 34 on Section 34, Warehouse type with 1500 capacity:
+
+```json
+{
+  "nameCode": "WH34",
+  "location": "Section 34",
+  "type": 1,
+  "capacity": 1500,
+  "currentOccupancy": 0,
+  "dockServices": []
+}
+```
+
+### <img src="svg/get.svg" height="20" style="position: relative; top: 4px;"> /StorageArea/{id}
+
+> Gets storage area by id
+
+```
+id: WH34
+```
+
+### <img src="svg/put.svg" height="20" style="position: relative; top: 4px;"> /StorageArea/{id}
+
+> Update warehouse 34 with 500 ocupancy:
+
+```json
+{
+  "nameCode": "WH34",
+  "location": "Section 34",
+  "type": 1,
+  "capacity": 1500,
+  "currentOccupancy": 500,
+  "dockServices": []
+}
+```
+
 ## Vessel Visit Notification
 
 ### <img src="svg/post.svg" height="20" style="position: relative; top: 4px;"> /VesselVisitNotification
+
+> Creates a new Vessel Visit Notification for the vessel with IMO Number IMO 9703318 (Ever Given). The expected arrival is on October 27, 2025, and the expected departure is on October 30, 2025. The notification indicates that there is no hazardous cargo and no special requirements. The load and unload cargo manifests are empty, and the submitter has the ID 733060890.
+
 ```json
 {
   "notificationId": "2025-PORTO-000006",
@@ -797,5 +842,3 @@ Deactivate the Physical Resources of the given code.
   "submitterId": 733060890
 }
 ```
-
-Creates a new Vessel Visit Notification for the vessel with IMO Number IMO 9703318 (Ever Given). The expected arrival is on October 27, 2025, and the expected departure is on October 30, 2025. The notification indicates that there is no hazardous cargo and no special requirements. The load and unload cargo manifests are empty, and the submitter has the ID 733060890.
