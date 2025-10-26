@@ -779,3 +779,47 @@ Query Parameters:
 ### <img src="svg/delete.svg" height="20" style="position: relative; top: 4px;"> /PhysicalResource/{code}
 
 Deactivate the Physical Resources of the given code.
+
+## Storage area
+
+### <img src="svg/get.svg" height="20" style="position: relative; top: 4px;"> /StorageArea
+
+> Gets all storage areas in the system.
+
+### <img src="svg/post.svg" height="20" style="position: relative; top: 4px;"> /StorageArea
+
+> Warehouse 34 on Section 34, Warehouse type with 1500 capacity:
+
+```json
+{
+  "nameCode": "WH34",
+  "location": "Section 34",
+  "type": 1,
+  "capacity": 1500,
+  "currentOccupancy": 0,
+  "dockServices": []
+}
+```
+
+### <img src="svg/get.svg" height="20" style="position: relative; top: 4px;"> /StorageArea/{id}
+
+> Gets storage area by id
+
+```
+id: WH34
+```
+
+### <img src="svg/put.svg" height="20" style="position: relative; top: 4px;"> /StorageArea/{id}
+
+> Update warehouse 34 with 500 ocupancy:
+
+```json
+{
+  "nameCode": "WH34",
+  "location": "Section 34",
+  "type": 1,
+  "capacity": 1500,
+  "currentOccupancy": 500,
+  "dockServices": []
+}
+```
