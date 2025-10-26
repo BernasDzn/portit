@@ -13,4 +13,4 @@
 
 ### Class Diagram:
 
-![class_diagram](class\svg\class_diagram\Vessel_Class_Diagram.svg) 
+![class_diagram](class/svg/class_diagram/Vessel_Class_Diagram.svg) 
