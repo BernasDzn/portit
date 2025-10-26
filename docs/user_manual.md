@@ -163,7 +163,7 @@ The physical characteristics need to be bigger than the vessel type selected.
 
 ### <img src="svg/get.svg" height="20" style="position: relative; top: 4px;"> /Dock/{code}
 
-Should return the dock with code (eg. DCK004):
+Should return the dock with code (eg. DCK004, created previously):
 ```json
 {
   "code": "DCK004",
@@ -209,7 +209,7 @@ This includes all information about the dock, including its type details.
 
 ### <img src="svg/put.svg" height="20" style="position: relative; top: 4px;"> /Dock/{code}
 
-> Dock with code DCK004<br>
+> Dock with code DCK004 (Created previously)<br>
 Name is actually **Dock Test**<br>
 Location was wrong and the new one is: **East Harbor**
 The physical characteristics are bigger than expected: **Length: 500, Depth: 50, Draft: 35**<br>
@@ -353,6 +353,107 @@ Query Parameters:
 - pageSize (int, optional): Number of items per page (default is 10).
 
 When filtering, after running the previous requests, the "Vessel" name filter should be a good example, returning both the "New Vessel" and "Update Vessel Name" entries.
+
+## Vessel Type
+
+### <img src="svg/get.svg" height="20" style="position: relative; top: 4px;"> /VesselType
+
+> Gets all vessel types in the system.
+
+> When we execute, we should see 5 vessel types that we bootstraped:
+<br>**Panamax**, **Post-Panamax**, **Ultra Large Container Vessel (ULCV)**, **Handymax** and **Capesize**
+
+### <img src="svg/post.svg" height="20" style="position: relative; top: 4px;"> /VesselType
+
+> Vessel Type with name Large Vessel<br>
+Description is "A really large vessel type",
+has max number of:
+<br>Rows: 20
+<br>Bays: 15
+<br>Tiers: 10
+<br>The physical characteristics:
+<br>Length: 200
+<br>Depth: 30
+<br>Draft: 15
+<br>**The capacity does not need to be specified since it is calculated with rows,bays and tiers**
+
+```json
+{
+  "name": "Large Vessel",
+  "description": "A really large vessel type",
+  "maxNumberOfRows": 20,
+  "maxNumberOfBays": 15,
+  "maxNumberOfTiers": 10,
+  "physicalCharacteristics": {
+    "length": 200,
+    "depth": 30,
+    "draft": 15
+  }
+}
+```
+
+### <img src="svg/get.svg" height="20" style="position: relative; top: 4px;"> /VesselType/{name}
+
+Should return the vessel type with name (eg. Panamax):
+```json
+{
+  "name": "Panamax",
+  "description": "Max size for Panama Canal",
+  "maxNumberOfRows": 20,
+  "maxNumberOfBays": 10,
+  "maxNumberOfTiers": 5,
+  "capacity": 1000,
+  "physicalCharacteristics": {
+    "length": 300,
+    "depth": 15,
+    "draft": 12
+  }
+}
+```
+
+This includes all information about the vessel type, including the capacity that is calculated automatically with other information.
+
+### <img src="svg/put.svg" height="20" style="position: relative; top: 4px;"> /VesselType/{name}
+
+> Vessel Type with name Large Vessel (Created previously)<br>
+Description is actually **Bigger than usual vessel type**<br>
+Has max number of:
+<br>Rows: **50**
+<br>Bays: **45**
+<br>Tiers: **40**
+<br>The physical characteristics:
+<br>Length: **800**
+<br>Depth: **150**
+<br>Draft: **75**
+
+```json
+{
+  "name": "Large Vessel",
+  "description": "Bigger than usual vessel type",
+  "maxNumberOfRows": 50,
+  "maxNumberOfBays": 45,
+  "maxNumberOfTiers": 40,
+  "physicalCharacteristics": {
+    "length": 800,
+    "depth": 150,
+    "draft": 75
+  }
+}
+```
+
+### <img src="svg/get.svg" height="20" style="position: relative; top: 4px;"> /VesselType/filter
+
+> Filters vessel types by any field.
+
+Query Parameters:
+- name (string, optional): Filter by vessel type name.
+- description (string, optional): Filter by vessel type description.
+- pageNumber (int, optional): Page number for pagination (default is 1).
+- pageSize (int, optional): Number of items per page (default is 10).
+
+> Let's try filtering all vessel types with **"Panamax"** in their names and **"Panama Canal"** in their description.
+
+Since **Panamax** is the only vessel type that meets the requirements, it is the only one that's returned.
 
 ## Qualifications
 ### <img src="svg/get.svg" height="20" style="position: relative; top: 4px;"> /Qualification
