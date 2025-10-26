@@ -26,7 +26,7 @@ public class VesselTypeRepository : GenericRepository<VesselType>, IVesselTypeRe
         }
         catch
         {
-            throw;
+            throw new PersistencyFailedException("Failed to retrieve vessel types from the database.");
         }
     }
 
@@ -40,7 +40,7 @@ public class VesselTypeRepository : GenericRepository<VesselType>, IVesselTypeRe
         }
         catch
         {
-            throw;
+            throw new PersistencyFailedException("Failed to select a vessel type by name from the database.");
         }
     }
     
@@ -61,7 +61,7 @@ public class VesselTypeRepository : GenericRepository<VesselType>, IVesselTypeRe
         }
         catch
         {
-            throw;
+            throw new PersistencyFailedException("Failed to filter vessel types from the database.");
         }
     }
 
@@ -75,7 +75,7 @@ public class VesselTypeRepository : GenericRepository<VesselType>, IVesselTypeRe
         }
         catch
         {
-            throw new PersistencyFailedException("Failed to select a vessel type by name");
+            throw new PersistencyFailedException("Failed to add vessel type to the database.");
         }
     }
 
@@ -89,7 +89,7 @@ public class VesselTypeRepository : GenericRepository<VesselType>, IVesselTypeRe
         }
         catch
         {
-            throw;
+            throw new PersistencyFailedException("Failed to update vessel type in the database.");
         }
     }
 }
