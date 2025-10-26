@@ -95,12 +95,12 @@ public class DockController : ControllerBase, IDockController
 		}
 	}
 
-	[HttpPut("{name}", Name = "UpdateDock")]
-	public async Task<ActionResult<DockDto>> Update(string name, CreateDockDto dockDto)
+	[HttpPut("{code}", Name = "UpdateDock")]
+	public async Task<ActionResult<DockDto>> Update(string code, CreateDockDto dockDto)
 	{
 		try
 		{
-			var updatedDock = await _dockService.Update(name, dockDto);
+			var updatedDock = await _dockService.Update(code, dockDto);
 
 			return Ok(updatedDock);
 		}
@@ -113,7 +113,7 @@ public class DockController : ControllerBase, IDockController
 		{
 			if (e is ArgumentNullException || e is ArgumentException || e is InvalidOperationException)
 			{
-				_logger.LogError("Invalid argument provided for updating {DockName}, {Message}", name, e.Message);
+				_logger.LogError("Invalid argument provided for updating {DockCode}, {Message}", code, e.Message);
 				return BadRequest(e.Message);
 			}
 

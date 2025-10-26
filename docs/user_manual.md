@@ -128,6 +128,125 @@ QualificationCodes: TRKDR
 TESTMEC01
 ```
 
+## Dock
+
+### <img src="svg/get.svg" height="20" style="position: relative; top: 4px;"> /Dock
+
+> Gets all docks in the system.
+
+> When we execute, we should see 3 docks that we bootstraped:
+<br>**DCK001 (Dock A)**, **DCK002 (Dock B)** and **DCK003 (Dock C)**
+
+### <img src="svg/post.svg" height="20" style="position: relative; top: 4px;"> /Dock
+
+> Dock with code DCK004<br>
+Name is Dock D,
+has supported vessel type "Panamax"
+and location "North Harbor". <br> 
+The physical characteristics need to be bigger than the vessel type selected.
+
+```json
+{
+  "code": "DCK004",
+  "name": "Dock D",
+  "location": "North Harbor",
+  "physicalCharacteristics": {
+    "length": 300,
+    "depth": 30,
+    "draft": 20
+  },
+  "supportedVesselTypes": [
+    "Panamax"
+  ]
+}
+```
+
+### <img src="svg/get.svg" height="20" style="position: relative; top: 4px;"> /Dock/{code}
+
+Should return the dock with code (eg. DCK004):
+```json
+{
+  "code": "DCK004",
+  "name": "Dock Test",
+  "location": "East Harbor",
+  "physicalCharacteristics": {
+    "length": 500,
+    "depth": 30,
+    "draft": 20
+  },
+  "supportedVesselTypes": [
+    {
+      "name": "Post-Panamax",
+      "description": "Larger than Panamax",
+      "maxNumberOfRows": 30,
+      "maxNumberOfBays": 15,
+      "maxNumberOfTiers": 7,
+      "capacity": 3150,
+      "physicalCharacteristics": {
+        "length": 400,
+        "depth": 18,
+        "draft": 14
+      }
+    },
+    {
+      "name": "Panamax",
+      "description": "Max size for Panama Canal",
+      "maxNumberOfRows": 20,
+      "maxNumberOfBays": 10,
+      "maxNumberOfTiers": 5,
+      "capacity": 1000,
+      "physicalCharacteristics": {
+        "length": 300,
+        "depth": 15,
+        "draft": 12
+      }
+    }
+  ]
+}
+```
+
+This includes all information about the dock, including its type details.
+
+### <img src="svg/put.svg" height="20" style="position: relative; top: 4px;"> /Dock/{code}
+
+> Dock with code DCK004<br>
+Name is actually **Dock Test**<br>
+Location was wrong and the new one is: **East Harbor**
+The physical characteristics are bigger than expected: **Length: 500, Depth: 50, Draft: 35**<br>
+Has "Panamax" **and Post-Panamax** supported vessel types<br>
+
+```json
+{
+  "code": "DCK004",
+  "name": "Dock Test",
+  "location": "East Harbor",
+  "physicalCharacteristics": {
+    "length": 500,
+    "depth": 30,
+    "draft": 20
+  },
+  "supportedVesselTypes": [
+    "Panamax",
+    "Post-Panamax"
+  ]
+}
+```
+
+### <img src="svg/get.svg" height="20" style="position: relative; top: 4px;"> /Dock/filter
+
+> Filters docks by any field.
+
+Query Parameters:
+- name (string, optional): Filter by dock name.
+- location (string, optional): Filter by dock location.
+- type (string, optional): Filter by supported vessel type.
+- pageNumber (int, optional): Page number for pagination (default is 1).
+- pageSize (int, optional): Number of items per page (default is 10).
+
+> Let's try filtering all docks with **"Dock"** in their names, **"North"** in their location and the **Panamax** vessel type.
+
+Since **DCK001** is the only dock that meets the requirements, it is the only one that's returned.
+
 ## Vessel
 
 ### <img src="svg/get.svg" height="20" style="position: relative; top: 4px;"> /Vessel
