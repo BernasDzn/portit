@@ -843,6 +843,86 @@ id: WH34
 }
 ```
 
+### <img src="svg/get.svg" height="20" style="position: relative; top: 4px;"> /VesselVisitNotification/decisions
+Should return the Decisions for the notification with the given id (eg. 2025-PORTO-000001):
+
+```json
+[
+  {
+    "status": 1,
+    "reason": "All criteria met",
+    "decisionDate": "2025-10-26T15:46:38.622586",
+    "officerID": null,
+    "assignedDock": {
+      "code": "DCK001",
+      "name": "Dock A",
+      "location": "North Harbor",
+      "physicalCharacteristics": {
+        "length": 500,
+        "depth": 35,
+        "draft": 20
+      },
+      "supportedVesselTypes": [
+        {
+          "name": "Handymax",
+          "description": "Medium-sized bulk carriers",
+          "maxNumberOfRows": 15,
+          "maxNumberOfBays": 8,
+          "maxNumberOfTiers": 4,
+          "capacity": 480,
+          "physicalCharacteristics": {
+            "length": 250,
+            "depth": 12,
+            "draft": 10
+          }
+        },
+        {
+          "name": "Panamax",
+          "description": "Max size for Panama Canal",
+          "maxNumberOfRows": 20,
+          "maxNumberOfBays": 10,
+          "maxNumberOfTiers": 5,
+          "capacity": 1000,
+          "physicalCharacteristics": {
+            "length": 300,
+            "depth": 15,
+            "draft": 12
+          }
+        }
+      ]
+    },
+    "isFinal": false
+  }
+]
+```
+
+### <img src="svg/post.svg" height="20" style="position: relative; top: 4px;"> /VesselVisitNotification/decisions
+
+#### Create Accept Decision
+> Creates a new Notification Decision for the Vessel Visit Notification with id 2025-PORTO-000004. The status is accepted, the reason is "Everything checked and ready to receive the vessel", the decision date is October 26, 2025, and the assigned dock is DCK001. Since it is a decision of acceptance, it is always a permanent decision.
+
+```json
+{
+  "status": 1,
+  "reason": "Everything checked and ready to receive the vessel",
+  "decisionDate": "2025-10-26T16:25:31.528Z",
+  "assignedDockCode": "DCK001",
+  "isFinal": true
+}
+```
+
+#### Create Reject Decision
+> Creates a new Notification Decision for the Vessel Visit Notification with id 2025-PORTO-000003. The status is rejected, the reason is "Insufficient data provided", and the decision date is October 26, 2025. Since it is a rejection decision we can choose between being a final decision or not, for example, it can be a final reject decision for when there are no docks available for that vessel, or a not final decision for when the provided data is insufficient.
+
+```json
+{
+  "status": 2,
+  "reason": "Insufficient data provided",
+  "decisionDate": "2025-10-26T16:39:15.123Z",
+  "isFinal": false
+}
+```
+
 ### <img src="svg/get.svg" height="20" style="position: relative; top: 4px;"> /VesselVisitNotification/filter
 Should return a list of Vessel Visit Notifications that match the filter criteria.
 
