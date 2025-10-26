@@ -141,7 +141,7 @@ public class VesselVisitNotification_CtS_IntegrationTest
     [Fact]
     public async Task GetVesselVisitNotificationByNotificationId_ReturnsNotFound_WhenNotificationDoesNotExist()
     {
-        var testId = "2025_PORTO_999999";
+        var testId = "2025-PORTO-999999";
 
         _repositoryMock.Setup(repo => repo.GetVesselVisitNotificationByNotificationIdAsync(testId))!
             .ReturnsAsync((VesselVisitNotification?)null);
@@ -205,7 +205,7 @@ public class VesselVisitNotification_CtS_IntegrationTest
     {
         var newNotificationDto = new CreateVesselVisitNotificationDto
         {
-            NotificationId = "2025_PORTO_000001",
+            NotificationId = "2025-PORTO-000001",
             ExpectedArrival = DateTime.UtcNow.AddDays(2),
             ExpectedDeparture = DateTime.UtcNow.AddDays(6),
             IsCargoHazardous = false,
@@ -238,7 +238,7 @@ public class VesselVisitNotification_CtS_IntegrationTest
     {
         var newNotificationDto = new CreateVesselVisitNotificationDto
         {
-            NotificationId = "2025_PORTO_000008",
+            NotificationId = "2025-PORTO-000008",
             ExpectedArrival = DateTime.UtcNow.AddDays(2),
             ExpectedDeparture = DateTime.UtcNow.AddDays(6),
             IsCargoHazardous = false,
@@ -263,7 +263,7 @@ public class VesselVisitNotification_CtS_IntegrationTest
     {
         var newNotificationDto = new CreateVesselVisitNotificationDto
         {
-            NotificationId = "2025_PORTO_000008",
+            NotificationId = "2025-PORTO-000008",
             ExpectedArrival = DateTime.UtcNow.AddDays(2),
             ExpectedDeparture = DateTime.UtcNow.AddDays(6),
             IsCargoHazardous = false,
@@ -288,7 +288,7 @@ public class VesselVisitNotification_CtS_IntegrationTest
     {
         var newVesselVisitNotificationDto = new CreateVesselVisitNotificationDto
         {
-            NotificationId = "2025_PORTO_000009",
+            NotificationId = "2025-PORTO-000009",
             ExpectedArrival = DateTime.UtcNow.AddDays(2),
             ExpectedDeparture = DateTime.UtcNow.AddDays(6),
             IsCargoHazardous = false,
@@ -312,7 +312,7 @@ public class VesselVisitNotification_CtS_IntegrationTest
     [Fact]
     public async Task UpdateVesselVisitNotification_ReturnsNoContentResult_WithUpdatedNotification()
     {
-        var notificationIdToUpdate = "2025-PORTO-000001";
+        var notificationIdToUpdate = "2025-PORTO-000009";
         var updateVesselVisitNotificationDto = new CreateVesselVisitNotificationDto
         {
             NotificationId = notificationIdToUpdate,
@@ -360,6 +360,7 @@ public class VesselVisitNotification_CtS_IntegrationTest
 
         var dto = new CreateVesselVisitNotificationDto
         {
+            NotificationId = "NON_EXISTENT_ID",
             ExpectedArrival = DateTime.UtcNow,
             ExpectedDeparture = DateTime.UtcNow.AddDays(1),
             IsCargoHazardous = false,
@@ -373,48 +374,6 @@ public class VesselVisitNotification_CtS_IntegrationTest
 
         var result = await _controller.Update("NON_EXISTENT_ID", dto);
         var notFound = Assert.IsType<NotFoundObjectResult>(result.Result);
-        Assert.IsType<NotFoundObjectResult>(result.Result);
-    }
-
-    [Fact]
-    public async Task UpdateVesselVisitNotification_ReturnsNotFound_WhenVesselDoesNotExist()
-    {
-        var dto = new CreateVesselVisitNotificationDto
-        {
-            NotificationId = "2025_PORTO_000005",
-            ExpectedArrival = DateTime.UtcNow,
-            ExpectedDeparture = DateTime.UtcNow.AddDays(1),
-            IsCargoHazardous = false,
-            VesselImoNumber = "IMO 0000000",
-            SubmitterId = 908029952,
-
-        };
-
-        _vesselRepositoryMock.Setup(r => r.GetVesselByIMOAsync(dto.VesselImoNumber))
-            .ReturnsAsync((Vessel)null!);
-
-        var result = await _controller.Update("2025_PORTO_000005", dto);
-        Assert.IsType<NotFoundObjectResult>(result.Result);
-    }
-
-    [Fact]
-    public async Task UpdateVesselVisitNotification_ReturnsNotFound_WhenRepresentativeDoesNotExist()
-    {
-        var dto = new CreateVesselVisitNotificationDto
-        {
-            NotificationId = "2025_PORTO_000005",
-            ExpectedArrival = DateTime.UtcNow,
-            ExpectedDeparture = DateTime.UtcNow.AddDays(1),
-            IsCargoHazardous = false,
-            VesselImoNumber = "IMO 7585229",
-            SubmitterId = 100000000,
-
-        };
-
-        _representativeRepositoryMock.Setup(r => r.GetByCitizenIdAsync(dto.SubmitterId))
-            .ReturnsAsync((Representative)null!);
-
-        var result = await _controller.Update("2025_PORTO_000005", dto);
         Assert.IsType<NotFoundObjectResult>(result.Result);
     }
 

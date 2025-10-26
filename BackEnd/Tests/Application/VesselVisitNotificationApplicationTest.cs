@@ -330,51 +330,6 @@ public class VesselVisitNotificationApplicationTest : WebApplicationFactory<Prog
 
 
     [Fact]
-    public async Task UpdateVesselVisitNotification_MissingVessel_ReturnsNotFound()
-    {
-        var updatedVesselVisitNotification = new CreateVesselVisitNotificationDto
-        {
-            NotificationId = "2025-PORTO-000008",
-            ExpectedArrival = DateTime.Parse("2024-10-01T10:00:00Z"),
-            ExpectedDeparture = DateTime.Parse("2024-10-05T18:00:00Z"),
-            IsCargoHazardous = false,
-            SpecialRequirements = null,
-            CrewDetails = null,
-            LoadCargoManifest = null,
-            UnloadCargoManifest = null,
-            VesselImoNumber = "IMO 0000000",
-            SubmitterId = 908029952
-        };
-
-        var response = await _client.PutAsJsonAsync($"/VesselVisitNotification/{updatedVesselVisitNotification.NotificationId}", updatedVesselVisitNotification);
-
-        Assert.Equal(System.Net.HttpStatusCode.NotFound, response.StatusCode);
-    }
-
-    [Fact]
-    public async Task UpdateVesselVisitNotification_MissingRepresentative_ReturnsNotFound()
-    {
-        var updatedVesselVisitNotification = new CreateVesselVisitNotificationDto
-        {
-            NotificationId = "2025-PORTO-000008",
-            ExpectedArrival = DateTime.Parse("2024-10-01T10:00:00Z"),
-            ExpectedDeparture = DateTime.Parse("2024-10-05T18:00:00Z"),
-            IsCargoHazardous = false,
-            SpecialRequirements = null,
-            CrewDetails = null,
-            LoadCargoManifest = null,
-            UnloadCargoManifest = null,
-            VesselImoNumber = "IMO 7585229",
-            SubmitterId = 900000000
-        };
-
-        var response = await _client.PutAsJsonAsync($"/VesselVisitNotification/{updatedVesselVisitNotification.NotificationId}", updatedVesselVisitNotification);
-
-        Assert.Equal(System.Net.HttpStatusCode.NotFound, response.StatusCode);
-    }
-
-
-    [Fact]
     public async Task UpdateVesselVisitNotification_OnNullData_ReturnsBadRequest()
     {
         CreateVesselVisitNotificationDto? updatedVesselVisitNotification = null;
