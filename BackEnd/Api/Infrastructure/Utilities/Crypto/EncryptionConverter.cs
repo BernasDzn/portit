@@ -50,6 +50,11 @@ public class EmailEncryptionConverter : ValueConverter<Email, string>
             encrypted => new Email { Value = EncryptionHelper.Decrypt(encrypted) },
             mappingHints)
     { }
+
+    public static string Decrypt(string encryptedEmail)
+    {
+        return EncryptionHelper.Decrypt(encryptedEmail);
+    }
 }
 
 // For phone numbers

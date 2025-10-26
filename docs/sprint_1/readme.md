@@ -48,15 +48,16 @@ As of this sprint, the generated artifacts are the following:
 3. [Domain model](global_artifacts/domain_analysis/svg/domain_model/domain_model.svg)
 4. [Database modeling](global_artifacts/database_modeling/logical_model.svg)
 5. [C4+1 Model views](global_artifacts/arquitecture/readme.md)
+6. [Developer Manual](../user_manual.md)
 
 ### Documentation *(per user story/use case)*:
-- [US2201 - ](us2201/readme.md)
+- [US2201 - Register and update vessel types](us2201/readme.md)
 - [US2202 - Register and update vessel records](us2202/readme.md)
-- [US2203 - ](us2203/readme.md)
+- [US2203 - Register and update docks](us2203/readme.md)
 - [US2204 - Register and update storage areas](us2204/readme.md)
 - [US2205 - Register new shipping agent organizations]() **Not planned**
 - [US2206 - Register and manage representatives of a shipping agent organization]() **Not planned**
--
+- [US2207 - Review pending Vessel Visit Notifications and approve or reject them](us2207/readme.md)
 - [US2208 - Register and update vessel visit notifications](us2208/readme.md)
 - [US2209 - Change/complete a Vessel Visit Notification](us2209/readme.md)
 - [US2210 - View the status of all my submitted Vessel Visit Notifications](us2210/readme.md)
