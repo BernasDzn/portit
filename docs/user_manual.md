@@ -842,3 +842,17 @@ id: WH34
   "submitterId": 733060890
 }
 ```
+
+### <img src="svg/get.svg" height="20" style="position: relative; top: 4px;"> /VesselVisitNotification/filter
+Should return a list of Vessel Visit Notifications that match the filter criteria.
+
+Query Parameters:
+- SubmitterCitizenshipId (int, required): The id of the person requesting to see their notifications
+- status (int, optional): Filter by status. (0 = In progress; 1 = Approval pending; 2 = Accepted; 3 = Rejected)
+- with reason (bool, optional): Must include a reason?
+- with dock assigned (bool, optional): Must have a dock assigned?
+- vessel (string, optional): Imo of the vessel the notification must refer to.
+- ETAFrom (date, optional): Filter by arrival date after date
+- ETATo (date, optional): Filter by arrival date before date
+- pageNumber (int, optional): Page number for pagination (default is 1).
+- pageSize (int, optional): Number of items per page (default is 10).
