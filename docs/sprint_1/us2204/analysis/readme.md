@@ -2,4 +2,4 @@
 
 ### Relevant Domain Model Excerpt:
 
-![domain_model_image](domain/svg/domain/domain_model.svg)
+![domain_model_image](./domain/svg/domain_model/domain_model.svg)
