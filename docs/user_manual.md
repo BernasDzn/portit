@@ -843,6 +843,40 @@ id: WH34
 }
 ```
 
+### <img src="svg/put.svg" height="20" style="position: relative; top: 4px;"> /VesselVisitNotification
+
+> Let's make the Cargo Hazardous and add a load manifest
+
+```json
+{
+  "notificationId": "2025-PORTO-000006",
+  "expectedArrival": "2025-10-27T15:54:33.638Z",
+  "expectedDeparture": "2025-10-30T15:54:33.638Z",
+  "isCargoHazardous": true,
+  "specialRequirements": null,
+  "crewDetails": null,
+  "loadCargoManifest": [
+    {
+      "position": {
+        "bay": "6",
+        "row": "12",
+        "tier": "8"
+      },
+      "storageAreaCode": "YARD1",
+      "container": {
+        "containerNumber": "ABCD1234560",
+        "cargoType": 2,
+        "description": "various electronic items"
+      }
+    }
+  ],
+  "unloadCargoManifest": [],
+  "vesselImoNumber": "IMO 9703318",
+  "submitterId": 733060890
+}
+```
+
+
 ### <img src="svg/get.svg" height="20" style="position: relative; top: 4px;"> /VesselVisitNotification/decisions
 Should return the Decisions for the notification with the given id (eg. 2025-PORTO-000001):
 
