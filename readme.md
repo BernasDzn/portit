@@ -46,7 +46,7 @@ Navigate to the `Backend/Api` directory and use `dotnet run`, alternatively use 
 This version of the software allows you to visualise and interact with the API via a [Swagger UI](https://swagger.io/tools/swagger-ui/).
 To access it, visit `http://localhost:5195/swagger/index.html?url=/openapi/v1.json` (host and port subject to change, please double check with the console logs) from any capable browser.
 
-For a comprehensive list of endpoints and their uses, refer to the [User Manual](docs/user_manual.md)
+For a comprehensive list of endpoints and their uses, refer to the [Developer Manual](docs/user_manual.md)
 
 ### 6. How to read Logs
 Logs of the application are made virtually everytime the API has to run any sort of code. 
