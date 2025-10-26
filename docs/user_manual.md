@@ -1,6 +1,131 @@
 
 # User Manual
 
+## Staff
+
+### <img src="svg/get.svg" height="20" style="position: relative; top: 4px;"> /Staff
+
+> Gets all staff members in the system.
+
+> When we execute, we should see 3 staff that we bootstraped:
+<br>**João Pedro**, **Carlos Santos** and **Maria Silva**
+
+### <img src="svg/post.svg" height="20" style="position: relative; top: 4px;"> /Staff
+
+> Staff called Rodrigo Pinto<br>
+works from 8 to 17 on work days<br>
+has "Yard Crane Operator" qualification
+
+```json
+{
+  "mechanograficNumber": "TESTMEC01",
+  "name": "Rodrigo Pinto",
+  "email": "r.pinto@gmail.com",
+  "phoneNumber": "912021021",
+  "status": 0,
+  "operationalWindow": {
+    "shifts": [
+		{
+			"day": 1,
+			"startTime": "08:00:00",
+			"endTime": "17:00:00"
+		},
+		{
+			"day": 2,
+			"startTime": "08:00:00",
+			"endTime": "17:00:00"
+		},
+		{
+			"day": 3,
+			"startTime": "08:00:00",
+			"endTime": "17:00:00"
+		},
+		{
+			"day": 4,
+			"startTime": "08:00:00",
+			"endTime": "17:00:00"
+		},
+		{
+			"day": 5,
+			"startTime": "08:00:00",
+			"endTime": "17:00:00"
+		}
+	]
+  },
+  "qualificationsCodes": [
+    "YACOP"
+  ]
+}
+```
+
+### <img src="svg/put.svg" height="20" style="position: relative; top: 4px;"> /Staff/{mecanographicNumber}
+
+> Staff with mechanografic number TESTMEC01<br>
+Full name is actually **Rodrigo Faria Pinto**<br>
+Email had a typo, actual email is: **r.fpinto@gmail.com**
+Changed work period to: **Mondays to Tuesdays, 8 to 18**<br>
+Has "Yard Crane Operator" **and Truck Driver** qualification<br>
+
+```json
+{
+  "mechanograficNumber": "TESTMEC01",
+  "name": "Rodrigo Faria Pinto",
+  "email": "r.fpinto@gmail.com",
+  "phoneNumber": "912021021",
+  "status": 0,
+  "operationalWindow": {
+    "shifts": [
+		{
+			"day": 1,
+			"startTime": "08:00:00",
+			"endTime": "18:00:00"
+		},
+		{
+			"day": 2,
+			"startTime": "08:00:00",
+			"endTime": "18:00:00"
+		},
+		{
+			"day": 3,
+			"startTime": "08:00:00",
+			"endTime": "18:00:00"
+		},
+		{
+			"day": 4,
+			"startTime": "08:00:00",
+			"endTime": "18:00:00"
+		}
+	]
+  },
+  "qualificationsCodes": [
+    "YACOP",
+	"TRKDR"
+  ]
+}
+```
+
+### <img src="svg/get.svg" height="20" style="position: relative; top: 4px;"> /Staff/filter
+
+> Filters staffs by any field.
+
+> Let's try filtering all Staffs with **"Faria"** in their names and the **Truck Driver** qualification.
+<br>Since **Rodrigo Faria Pinto** is the only staff that meets there requirements, only he should be returned.
+
+```
+Name: Faria
+
+QualificationCodes: TRKDR
+```
+
+### <img src="svg/delete.svg" height="20" style="position: relative; top: 4px;"> /Staff/{mecanographicNumber}
+
+> Acts as a soft delete, in domain terms, it **deactivates** the staff member.
+<br>The company now wants to deactivate the staff **Rodrigo Faria Pinto**:
+
+```json
+TESTMEC01
+```
+
 ## Vessel
 
 ### <img src="svg/get.svg" height="20" style="position: relative; top: 4px;"> /Vessel
