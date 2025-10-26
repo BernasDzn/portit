@@ -5,6 +5,7 @@ using Api.Domain.IRepository;
 using Microsoft.EntityFrameworkCore;
 using Api.Application.DataTransfer.Filters;
 using Api.Infrastructure.Utilities;
+using Api.Application.Exceptions;
 
 public class DockRepository : GenericRepository<Dock>, IDockRepository
 {
@@ -23,7 +24,7 @@ public class DockRepository : GenericRepository<Dock>, IDockRepository
         }
         catch
         {
-            throw;
+            throw new PersistencyFailedException("Failed to retrieve docks from the database.");
         }
     }
 
@@ -36,7 +37,7 @@ public class DockRepository : GenericRepository<Dock>, IDockRepository
         }
         catch
         {
-            throw;
+            throw new PersistencyFailedException("Failed to retrieve dock by code from the database.");
         }
     }
 
@@ -60,7 +61,7 @@ public class DockRepository : GenericRepository<Dock>, IDockRepository
         }
         catch
         {
-            throw;
+            throw new PersistencyFailedException("Failed to filter docks from the database.");
         }
     }
 
@@ -74,7 +75,7 @@ public class DockRepository : GenericRepository<Dock>, IDockRepository
         }
         catch
         {
-            throw;
+            throw new PersistencyFailedException("Failed to add dock to the database.");
         }
     }
 
@@ -88,7 +89,7 @@ public class DockRepository : GenericRepository<Dock>, IDockRepository
         }
         catch
         {
-            throw;
+            throw new PersistencyFailedException("Failed to update dock in the database.");
         }
     }
 

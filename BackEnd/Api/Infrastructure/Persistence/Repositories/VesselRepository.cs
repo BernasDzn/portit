@@ -5,6 +5,7 @@ using Api.Domain.IRepository;
 using Microsoft.EntityFrameworkCore;
 using Api.Application.DataTransfer.Filters;
 using Api.Infrastructure.Utilities;
+using Api.Application.Exceptions;
 
 public class VesselRepository : GenericRepository<Vessel>, IVesselRepository
 {
@@ -24,7 +25,7 @@ public class VesselRepository : GenericRepository<Vessel>, IVesselRepository
         }
         catch
         {
-            throw;
+            throw new PersistencyFailedException("Failed to retrieve vessels from the database.");
         }
     }
 
@@ -38,7 +39,7 @@ public class VesselRepository : GenericRepository<Vessel>, IVesselRepository
         }
         catch
         {
-            throw;
+            throw new PersistencyFailedException("Failed to retrieve vessel by IMO from the database.");
         }
     }
 
@@ -52,7 +53,7 @@ public class VesselRepository : GenericRepository<Vessel>, IVesselRepository
         }
         catch
         {
-            throw;
+            throw new PersistencyFailedException("Failed to add vessel to the database.");
         }
     }
 
@@ -66,7 +67,7 @@ public class VesselRepository : GenericRepository<Vessel>, IVesselRepository
         }
         catch
         {
-            throw;
+            throw new PersistencyFailedException("Failed to update vessel in the database.");
         }
     }
 
@@ -90,7 +91,7 @@ public class VesselRepository : GenericRepository<Vessel>, IVesselRepository
         }
         catch
         {
-            throw;
+            throw new PersistencyFailedException("Failed to filter vessels from the database.");
         }
     }
 }

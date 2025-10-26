@@ -26,7 +26,7 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
         }
         catch
         {
-            throw;
+            throw new PersistencyFailedException("Failed to retrieve vessel visit notifications from the database.");
         }
     }
 
@@ -39,7 +39,7 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
         }
         catch
         {
-            throw;
+            throw new PersistencyFailedException("Failed to retrieve vessel visit notification by ID from the database.");
         }
     }
 
@@ -52,7 +52,7 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
         }
         catch
         {
-            throw;
+            throw new PersistencyFailedException("Failed to retrieve vessel visit notification by vessel IMO from the database.");
         }
     }
 
@@ -70,7 +70,7 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
         }
         catch
         {
-            throw;
+            throw new PersistencyFailedException("Failed to retrieve notification decisions from the database.");
         }
     }
 
@@ -85,7 +85,7 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
         }
         catch
         {
-            throw;
+            throw new PersistencyFailedException("Failed to add vessel visit notification to the database.");
         }
     }
 
@@ -98,9 +98,9 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
             await _context.SaveChangesAsync();
             return vesselVisitNotification;
         }
-        catch (Exception ex)
+        catch
         {
-            throw new PersistencyFailedException($"Failed to update vessel visit notification {vesselVisitNotification.NotificationId}: {ex.Message}");
+            throw new PersistencyFailedException($"Failed to update vessel visit notification in the database.");
         }
     }
 
@@ -166,9 +166,9 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
 
             return Task.FromResult(Page<VesselVisitNotification>.Of(result, filter));
         }
-        catch (System.Exception)
+        catch
         {
-            throw;
+            throw new PersistencyFailedException("Failed to filter vessel visit notifications from the database.");
         }
     }
 }
