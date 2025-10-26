@@ -138,8 +138,4 @@ public class StaffRepository : GenericRepository<Staff>, IStaffRepository
 			throw new PersistencyFailedException("Failed to filter staffs: " + ex.Message);
 		}
 	}
-	
-
-
-	
 }
