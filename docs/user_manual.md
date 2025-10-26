@@ -1,5 +1,7 @@
+# Developer Manual
+The developer manual attempts to guide you through the backend's endpoints by enumerating them, showing of their functionality, and suggesting inputs.
 
-# User Manual
+The suggested inputs are for testing purposes only. They assume the `Bootstrap` script was ran once and no additional data was added.
 
 ## Staff
 
@@ -232,3 +234,328 @@ Query Parameters:
 - pageSize (int, optional): Number of items per page (default is 10).
 
 When filtering, after running the previous requests, the "Vessel" name filter should be a good example, returning both the "New Vessel" and "Update Vessel Name" entries.
+
+## Qualifications
+### <img src="svg/get.svg" height="20" style="position: relative; top: 4px;"> /Qualification
+
+Should return a list of all qualifications in the database.
+
+### <img src="svg/post.svg" height="20" style="position: relative; top: 4px;"> /Qualification
+```json
+{
+  "idCode": "EXQL",
+  "qualificationName": "example qualification"
+}
+```
+
+### <img src="svg/put.svg" height="20" style="position: relative; top: 4px;"> /Qualification/{id}
+```json
+{
+  "idCode": "EXQL",
+  "qualificationName": "new name"
+}
+```
+
+### <img src="svg/get.svg" height="20" style="position: relative; top: 4px;"> /Qualification/{id}
+Should return the qualification with the given Id (eg. STSOP):
+```json
+{
+  "idCode": "STSOP",
+  "qualificationName": "STS Crane Operator"
+}
+```
+
+### <img src="svg/get.svg" height="20" style="position: relative; top: 4px;"> /Qualification/filter
+Should return a list of qualifications that match the filter criteria.
+
+Query Parameters:
+- code (string, optional): Filter by qualification code.
+- name (string, optional): Filter by qualification name.
+- pageNumber (int, optional): Page number for pagination (default is 1).
+- pageSize (int, optional): Number of items per page (default is 10).
+
+## Physical Resources
+### <img src="svg/get.svg" height="20" style="position: relative; top: 4px;"> /PhysicalResource
+
+Should return a list of all Physical Resources in the database.
+
+### <img src="svg/post.svg" height="20" style="position: relative; top: 4px;"> /PhysicalResource/AddSTSCrane
+```json
+{
+  "containersPerHour": 10,
+  "liftingCapacity": 10,
+  "servingDockCode": "DCK001",
+  "code": "EXPLCrane",
+  "description": "An example crane",
+  "status": 0,
+  "setupTimeInMinutes": 20,
+  "qualificationsCodes": [
+    "STSOP"
+  ],
+  "operationalWindow": {
+    "shifts": [
+        {
+          "day": 1,
+          "startTime": "06:00:00",
+          "endTime": "22:00:00"
+        },
+        {
+          "day": 2,
+          "startTime": "06:00:00",
+          "endTime": "22:00:00"
+        },
+        {
+          "day": 3,
+          "startTime": "06:00:00",
+          "endTime": "22:00:00"
+        }
+    ]
+  }
+}
+```
+
+### <img src="svg/put.svg" height="20" style="position: relative; top: 4px;"> /PhysicalResource/UpdateSTSCrane/{code}
+```json
+
+{
+  "containersPerHour": 40,
+  "liftingCapacity": 80,
+  "servingDockCode": "DCK002",
+  "code": "EXPLCrane",
+  "description": "An new example crane",
+  "status": 0,
+  "setupTimeInMinutes": 20,
+  "qualificationsCodes": [
+    "STSOP",
+    "YACOP"
+  ],
+  "operationalWindow": {
+    "shifts": [
+        {
+          "day": 1,
+          "startTime": "06:00:00",
+          "endTime": "22:00:00"
+        },
+        {
+          "day": 2,
+          "startTime": "06:00:00",
+          "endTime": "22:00:00"
+        },
+        {
+          "day": 3,
+          "startTime": "06:00:00",
+          "endTime": "22:00:00"
+        },
+        {
+          "day": 4,
+          "startTime": "23:00:00",
+          "endTime": "23:59:00"
+        }
+    ]
+  }
+}
+```
+
+### <img src="svg/post.svg" height="20" style="position: relative; top: 4px;"> /PhysicalResource/AddYardCrane
+```json
+{
+  "containersPerHour": 10,
+  "liftingCapacity": 10,
+  "code": "EXPLYardCrane",
+  "description": "An example yard crane",
+  "status": 1,
+  "setupTimeInMinutes": 30,
+  "qualificationsCodes": [
+    "YACOP"
+  ],
+  "operationalWindow": {
+    "shifts": [
+    ]
+  }
+}
+```
+
+### <img src="svg/put.svg" height="20" style="position: relative; top: 4px;"> /PhysicalResource/UpdateYardCrane/{code}
+```json
+{
+  "containersPerHour": 10,
+  "liftingCapacity": 10,
+  "code": "EXPLYardCrane",
+  "description": "An new yard crane",
+  "status": 1,
+  "setupTimeInMinutes": 30,
+  "qualificationsCodes": [
+    "TRKDR"
+  ],
+  "operationalWindow": {
+    "shifts": [
+        {
+          "day": 3,
+          "startTime": "06:00:00",
+          "endTime": "22:00:00"
+        },
+        {
+          "day": 4,
+          "startTime": "23:00:00",
+          "endTime": "23:59:00"
+        }
+    ]
+  }
+}
+```
+
+### <img src="svg/post.svg" height="20" style="position: relative; top: 4px;"> /PhysicalResource/AddTruck
+```json
+{
+  "containersPerTrip": 20,
+  "averageSpeed": 80,
+  "maxLoadCapacity": 1,
+  "code": "EXPLTruck",
+  "description": "An example truck",
+  "status": 0,
+  "setupTimeInMinutes": 0,
+  "qualificationsCodes": [
+    "TRKDR"
+  ],
+  "operationalWindow": {
+    "shifts": [
+      {
+        "day": 0,
+        "startTime": "0:0",
+        "endTime": "23:59"
+      }
+    ]
+  }
+}
+```
+
+### <img src="svg/put.svg" height="20" style="position: relative; top: 4px;"> /PhysicalResource/UpdateTruck/{code}
+```json
+{
+  "containersPerTrip": 3,
+  "averageSpeed": 85,
+  "maxLoadCapacity": 2,
+  "code": "EXPLTruck",
+  "description": "An new truck",
+  "status": 1,
+  "setupTimeInMinutes": 0,
+  "qualificationsCodes": [
+    "TRKDR"
+  ],
+  "operationalWindow": {
+    "shifts": [
+    ]
+  }
+}
+```
+
+### <img src="svg/get.svg" height="20" style="position: relative; top: 4px;"> /PhysicalResource/{id}
+Should return the Physical Resource with the given code (eg. STS001):
+```json
+{
+  "containersPerHour": 30,
+  "liftingCapacity": 40,
+  "servingDock": {
+    "code": "DCK001",
+    "name": "Dock A",
+    "location": "North Harbor",
+    "physicalCharacteristics": {
+      "length": 500,
+      "depth": 35,
+      "draft": 20
+    },
+    "supportedVesselTypes": [
+      {
+        "name": "Panamax",
+        "description": "Max size for Panama Canal",
+        "maxNumberOfRows": 20,
+        "maxNumberOfBays": 10,
+        "maxNumberOfTiers": 5,
+        "capacity": 1000,
+        "physicalCharacteristics": {
+          "length": 300,
+          "depth": 15,
+          "draft": 12
+        }
+      },
+      {
+        "name": "Handymax",
+        "description": "Medium-sized bulk carriers",
+        "maxNumberOfRows": 15,
+        "maxNumberOfBays": 8,
+        "maxNumberOfTiers": 4,
+        "capacity": 480,
+        "physicalCharacteristics": {
+          "length": 250,
+          "depth": 12,
+          "draft": 10
+        }
+      }
+    ]
+  },
+  "code": "STS001",
+  "description": "STS Crane 1",
+  "status": 0,
+  "setupTimeInMinutes": 30,
+  "qualifications": [
+    {
+      "idCode": "STSOP",
+      "qualificationName": "STS Crane Operator"
+    }
+  ],
+  "operationalWindow": {
+    "shifts": [
+      {
+        "day": 1,
+        "startTime": "00:00:00",
+        "endTime": "23:59:59.9999999"
+      },
+      {
+        "day": 2,
+        "startTime": "00:00:00",
+        "endTime": "23:59:59.9999999"
+      },
+      {
+        "day": 3,
+        "startTime": "00:00:00",
+        "endTime": "23:59:59.9999999"
+      },
+      {
+        "day": 4,
+        "startTime": "00:00:00",
+        "endTime": "23:59:59.9999999"
+      },
+      {
+        "day": 5,
+        "startTime": "00:00:00",
+        "endTime": "23:59:59.9999999"
+      },
+      {
+        "day": 6,
+        "startTime": "00:00:00",
+        "endTime": "23:59:59.9999999"
+      },
+      {
+        "day": 0,
+        "startTime": "00:00:00",
+        "endTime": "23:59:59.9999999"
+      }
+    ]
+  }
+}
+```
+
+### <img src="svg/get.svg" height="20" style="position: relative; top: 4px;"> /PhysicalResource/filter
+Should return a list of Physical Resources that match the filter criteria.
+
+Query Parameters:
+- code (string, optional): Filter by resource code.
+- description (string, optional): Filter by resource description.
+- status (int, optional): Filter by resource status. (0 = Available; 1 = Maintenance; 2 = Out of service)
+- type (int, optional): Filter by resource type. (0 = STSCrane; 1 = YardCrane; 2 = Truck)
+- pageNumber (int, optional): Page number for pagination (default is 1).
+- pageSize (int, optional): Number of items per page (default is 10).
+
+### <img src="svg/delete.svg" height="20" style="position: relative; top: 4px;"> /PhysicalResource/{code}
+
+Deactivate the Physical Resources of the given code.
