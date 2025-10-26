@@ -1,24 +1,14 @@
-<style>
-    .http-method { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px; color: #fff; font-weight: 700; font-family: monospace; margin-right: 0.5rem; }
-    .http-get { background: #2d9cdb; }
-    .http-post { background: #27ae60; }
-    .http-put { background: #f39c12; }
-    .http-delete { background: #e74c3c; }
-    .http-patch { background: #8e44ad; }
-    .http-method.small { padding: 0.08rem 0.4rem; font-size: 0.8em; }
 
-    .endpoint-path { font-weight: 600; color: #ffffffff; }
-</style>
 # User Manual
 
 ## Vessel
 
-### <span class="http-method http-get">GET</span> <span class="endpoint-path">/Vessel</span>
+### <img src="svg/get.svg" height="20" style="position: relative; top: 4px;"> /Vessel
 
 Should return a list of all vessels in the database.
 
-### <span class="http-method http-post">POST</span> <span class="endpoint-path">/Vessel</span>
-```
+### <img src="svg/post.svg" height="20" style="position: relative; top: 4px;"> /Vessel
+```json
 {
   "name": "New Vessel",
   "imoNumber": "IMO 4569858",
@@ -30,10 +20,10 @@ Should return a list of all vessels in the database.
 }
 ```
 
-### <span class="http-method http-get">GET</span> <span class="endpoint-path">/Vessel/{imo}</span>
+### <img src="svg/get.svg" height="20" style="position: relative; top: 4px;"> /Vessel/{imo}
 
 Should return the vessel with IMO Number (eg. IMO 3815389):
-```
+```json
 {
   "name": "Maersk Triple E",
   "imoNumber": "IMO 3815389",
@@ -89,11 +79,11 @@ Should return the vessel with IMO Number (eg. IMO 3815389):
 
 This includes all information about the vessel, including its type and owner details.
 
-### <span class="http-method http-put">PUT</span> <span class="endpoint-path">/Vessel/{imo}</span>
+### <img src="svg/put.svg" height="20" style="position: relative; top: 4px;"> /Vessel/{imo}
 
 IMO Number field should be the IMO of the desired vessel (eg. IMO 3815389).
 
-```
+```json
 {
   "name": "Update Vessel Name",
   "imoNumber": "IMO 3815389",
@@ -105,7 +95,7 @@ IMO Number field should be the IMO of the desired vessel (eg. IMO 3815389).
 }
 ```
 
-### <span class="http-method http-get">GET</span> <span class="endpoint-path">/Vessel/filter</span>
+### <img src="svg/get.svg" height="20" style="position: relative; top: 4px;"> /Vessel/filter
 
 Should return a list of vessels that match the filter criteria.
 
