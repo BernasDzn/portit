@@ -1,4 +1,4 @@
-@startuml us2208_domain_model
+@startuml us2207_domain_model
 title Vessel Visit Notification Domain (DDD)
 hide circle
 

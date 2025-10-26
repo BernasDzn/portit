@@ -13,4 +13,4 @@
 
 ### Class Diagram:
 
-![class_diagram](class\svg\class_diagram\Dock_Class_Diagram.svg) 
+![class_diagram](class/svg/class_diagram/Dock_Class_Diagram.svg) 
