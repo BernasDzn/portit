@@ -876,7 +876,6 @@ id: WH34
 }
 ```
 
-
 ### <img src="svg/get.svg" height="20" style="position: relative; top: 4px;"> /VesselVisitNotification/decisions
 Should return the Decisions for the notification with the given id (eg. 2025-PORTO-000001):
 
