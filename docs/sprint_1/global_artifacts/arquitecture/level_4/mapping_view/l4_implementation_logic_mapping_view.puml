@@ -32,13 +32,6 @@ rectangle "Implementation View" {
 
                 }
             }
-
-            package "Utilities" {
-
-                package "Page<T>" as page {
-
-                }
-            }
         }
 
         package "Domain"{

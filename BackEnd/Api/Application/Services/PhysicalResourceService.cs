@@ -177,6 +177,7 @@ public class PhysicalResourceService : IPhysicalResourceService
         craneObject.UpdateStatus(crane.Status);
         craneObject.UpdateSetupTime(TimeSpan.FromMinutes(crane.SetupTimeInMinutes));
         craneObject.UpdateQualifications(qualifications.ToHashSet());
+        craneObject.UpdateOperationalWindow(crane.OperationalWindow);
 
         craneObject.UpdateLiftingCapacity(crane.LiftingCapacity);
         craneObject.UpdateContainersPerHour(crane.ContainersPerHour);
@@ -204,6 +205,7 @@ public class PhysicalResourceService : IPhysicalResourceService
         craneObject.UpdateStatus(crane.Status);
         craneObject.UpdateSetupTime(TimeSpan.FromMinutes(crane.SetupTimeInMinutes));
         craneObject.UpdateQualifications(qualifications.ToHashSet());
+        craneObject.UpdateOperationalWindow(crane.OperationalWindow);
 
         craneObject.UpdateLiftingCapacity(crane.LiftingCapacity);
         craneObject.UpdateContainersPerHour(crane.ContainersPerHour);
@@ -230,6 +232,7 @@ public class PhysicalResourceService : IPhysicalResourceService
         truckObject.UpdateStatus(truck.Status);
         truckObject.UpdateSetupTime(TimeSpan.FromMinutes(truck.SetupTimeInMinutes));
         truckObject.UpdateQualifications(qualifications.ToHashSet());
+        truckObject.UpdateOperationalWindow(truck.OperationalWindow);
 
         truckObject.UpdateMaxLoadCapacity(truck.MaxLoadCapacity);
         truckObject.UpdateContainersPerTrip(truck.ContainersPerTrip);
