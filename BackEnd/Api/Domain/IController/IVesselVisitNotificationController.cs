@@ -11,6 +11,10 @@ public interface IVesselVisitNotificationController
     public Task<ActionResult<IEnumerable<NotificationDecisionDto>>> GetDecisions([FromQuery] string vesselVisitNotificationId);
     public Task<ActionResult<VesselVisitNotificationDto>> Create([FromBody] CreateVesselVisitNotificationDto vesselVisitNotificationDto);
     public Task<ActionResult<NotificationDecisionDto>> CreateDecision([FromQuery] string vesselVisitNotificationId, [FromBody] CreateNotificationDecisionDto notificationDecisionDto);
-    public Task<ActionResult<VesselVisitNotificationDto>> Update(string id, CreateVesselVisitNotificationDto vesselVisitNotificationDto);
+    public Task<ActionResult> Update(string id, CreateVesselVisitNotificationDto vesselVisitNotificationDto);
     public Task<ActionResult<Page<VesselVisitNotificationStatusDto>>> Filter([FromQuery] VesselVisitNotificationFilter filter);
+
+    // Draft operations
+    public Task<ActionResult> Submit(string id);
+    public Task<ActionResult> DeleteDraft(string id);
 }

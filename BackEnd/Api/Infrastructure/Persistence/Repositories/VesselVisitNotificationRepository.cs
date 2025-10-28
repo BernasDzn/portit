@@ -171,4 +171,17 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
             throw new PersistencyFailedException("Failed to filter vessel visit notifications from the database.");
         }
     }
+
+    public Task DeleteAsync(VesselVisitNotification notification)
+    {
+        try
+        {
+            _context.VesselVisitNotifications.Remove(notification);
+            return _context.SaveChangesAsync();
+        }
+        catch (System.Exception)
+        {
+            throw new PersistencyFailedException("Failed to delete vessel visit notification from the database.");
+        }
+    }
 }

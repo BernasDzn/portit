@@ -46,7 +46,7 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         return notifications.Select(n => n.ToDTO());
     }
 
-    
+
     public async Task<VesselVisitNotificationDto> GetById(string vvnID)
     {
         var notification = await _notificationRepository.GetVesselVisitNotificationByNotificationIdAsync(vvnID);
@@ -169,5 +169,31 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         Page<VesselVisitNotification> page = await _notificationRepository.FilterVesselVisitNotificationsAsync(filter);
         AppLogEvents.LogFilter(_logger, "vessel visit notifications", page.Items.Count);
         return page.Map(vvn => vvn.ToStatusDTO());
+    }
+
+    public async Task SubmitNotification(string vvnID)
+    {
+        var existingNotification =
+            await _notificationRepository.GetVesselVisitNotificationByNotificationIdAsync(vvnID) ??
+            throw new EntityNotFoundException($"Vessel Visit Notification with id {vvnID} was not found.");
+
+        // TODO: verificar com auth
+
+        existingNotification.Submit();
+        await _notificationRepository.UpdateAsync(existingNotification);
+    }
+
+    public async Task DeleteNotificationDraft(string vvnID)
+    {
+        var existingNotification =
+            await _notificationRepository.GetVesselVisitNotificationByNotificationIdAsync(vvnID) ??
+            throw new EntityNotFoundException($"Vessel Visit Notification with id {vvnID} was not found.");
+
+        if (existingNotification.Status != NotificationStatus.InProgress)
+            throw new InvalidOperationException("Cannot delete this notification, it was already submitted");
+
+        // TODO: verificar com auth
+        
+        await _notificationRepository.DeleteAsync(existingNotification);
     }
 }

@@ -136,13 +136,13 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
     }
 
     [HttpPut("{id?}", Name = "UpdateVesselVisitNotification")]
-    public async Task<ActionResult<VesselVisitNotificationDto>> Update(string id, CreateVesselVisitNotificationDto vesselVisitNotificationDto)
+    public async Task<ActionResult> Update(string id, CreateVesselVisitNotificationDto vesselVisitNotificationDto)
     {
         try
         {
             if (string.IsNullOrWhiteSpace(id))
             {
-                _logger.LogError("Update called without an id");
+                _logger.LogError("Update notification called without an id");
                 return BadRequest("Notification id is required.");
             }
             var updatedNotification = await _notificationService.Update(id, vesselVisitNotificationDto);
@@ -167,6 +167,41 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
     }
 
 
+    [HttpPut("submit/{id}", Name = "SubmitVesselVisitNotification")]
+    public async Task<ActionResult> Submit(string id)
+    {
+        try
+        {
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                {
+                    _logger.LogError("Submit cpdate called without an id");
+                    return BadRequest("Notification id is required.");
+                }
+            }
+
+            await _notificationService.SubmitNotification(id);
+            return NoContent();
+        }
+        catch (EntityNotFoundException e)
+        {
+            _logger.LogError($"Error submitting notification with ID {id}: {e.Message}");
+            return NotFound(e.Message);
+        }
+        catch (Exception ex)
+        {
+            if (ex is ArgumentException || ex is ArgumentNullException || ex is InvalidOperationException || ex is InvalidOperationException)
+            {
+                _logger.LogError($"Invalid arguments provided for submitting vessel visit notification: {ex.Message}");
+                return BadRequest(ex.Message);
+            }
+
+            _logger.LogCritical($"Error updating vessel visit notification with ID {id}: {ex.Message}");
+            return StatusCode(500, "An error occurred while updating the vessel visit notification.");
+        }
+    }
+
+
     [HttpGet("filter", Name = "FilterVesselVisitNotifications")]
     public async Task<ActionResult<Page<VesselVisitNotificationStatusDto>>> Filter([FromQuery] VesselVisitNotificationFilter filter)
     {
@@ -179,6 +214,32 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
         {
             _logger.LogCritical($"Error filtering notifications: {ex.Message}");
             return StatusCode(500, "An error occurred while filtering vessel visit notifications.");
+        }
+    }
+
+    [HttpDelete(Name = "DeleteDraft")]
+    public async Task<ActionResult> DeleteDraft(string id)
+    {
+        try
+        {
+            await _notificationService.DeleteNotificationDraft(id);
+            return NoContent();
+        }
+        catch (EntityNotFoundException e)
+        {
+            _logger.LogError($"Error deleting draft notification with ID {id}: {e.Message}");
+            return NotFound(e.Message);
+        }
+        catch (System.Exception e)
+        {
+            if (e is ArgumentException || e is ArgumentNullException || e is InvalidOperationException)
+            {
+                _logger.LogError($"Invalid arguments provided for deleting vessel visit notification draft: {e.Message}");
+                return BadRequest(e.Message);
+            }
+
+            _logger.LogCritical($"Error deleting draft notification with ID {id}");
+            return StatusCode(500, "An error occurred while deleting the vessel visit notification draft.");
         }
     }
 }
