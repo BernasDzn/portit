@@ -7,6 +7,10 @@ using Api.Infrastructure.Persistence.Repositories;
 using Api.Infrastructure.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Google;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 // Logging definitions
@@ -15,8 +19,41 @@ builder.Logging.AddConsole();
 builder.Host.UseSerilog((ctx, lc) => lc
     .ReadFrom.Configuration(ctx.Configuration));
 
+// Enable HTTPS
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenLocalhost(5195);
+    options.ListenLocalhost(builder.Configuration.GetValue<int>("https_port"), listenOptions =>
+    {
+        listenOptions.UseHttps();
+    });
+});
+
+// Add authentication
+// Using JSON Web Tokens that get sent from the client to keep
+// a stateeless authentication system.
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.Authority = "https://accounts.google.com"; // Google OAuth 2.0
+        options.Audience = "28670621917-0p4e3s7it08to15g7c591b4vjtvo9eaq.apps.googleusercontent.com";
+
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = "https://accounts.google.com",
+            ValidateAudience = true,
+            ValidAudience = "28670621917-0p4e3s7it08to15g7c591b4vjtvo9eaq.apps.googleusercontent.com",
+            ValidateLifetime = true
+        };
+        
+        options.IncludeErrorDetails = true; 
+    });
+
 // Set encryption key for the application
 EncryptionHelper.SetEncryptionKey(builder.Configuration["EncryptionKey"]!);
+
+builder.Services.AddAuthorization();
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -89,7 +126,10 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();
