@@ -307,7 +307,7 @@ public class VesselVisitNotificationControllerTest
             .ReturnsAsync(expectedNotification);
 
         var result = await _controller.Update("test-id", updatedNotification);
-        var noContentResult = Assert.IsType<NoContentResult>(result.Result);
+        var noContentResult = Assert.IsType<NoContentResult>(result);
     }
 
     [Fact]
@@ -328,7 +328,7 @@ public class VesselVisitNotificationControllerTest
 
         var result = await _controller.Update("test-id", updatedNotification);
 
-        var badRequestResult = Assert.IsType<BadRequestObjectResult>(result.Result);
+        var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
     }
 
     [Fact]
@@ -349,7 +349,7 @@ public class VesselVisitNotificationControllerTest
 
         var result = await _controller.Update("test-id", updatedNotification);
 
-        var notFoundResult = Assert.IsType<NotFoundObjectResult>(result.Result);
+        var notFoundResult = Assert.IsType<NotFoundObjectResult>(result);
     }
 
     [Fact]
@@ -370,7 +370,7 @@ public class VesselVisitNotificationControllerTest
 
         var result = await _controller.Update("test-id", updatedNotification);
 
-        var statusCodeResult = Assert.IsType<ObjectResult>(result.Result);
+        var statusCodeResult = Assert.IsType<ObjectResult>(result);
         Assert.Equal(500, statusCodeResult.StatusCode);
     }
 

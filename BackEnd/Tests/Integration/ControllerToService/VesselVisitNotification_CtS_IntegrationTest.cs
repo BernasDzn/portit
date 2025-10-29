@@ -351,7 +351,7 @@ public class VesselVisitNotification_CtS_IntegrationTest
 
         var result = await _controller.Update(notificationIdToUpdate, updateVesselVisitNotificationDto);
 
-        Assert.IsType<NoContentResult>(result.Result);
+        Assert.IsType<NoContentResult>(result);
     }
 
     [Fact]
@@ -373,8 +373,7 @@ public class VesselVisitNotification_CtS_IntegrationTest
             .ReturnsAsync((VesselVisitNotification)null!);
 
         var result = await _controller.Update("NON_EXISTENT_ID", dto);
-        var notFound = Assert.IsType<NotFoundObjectResult>(result.Result);
-        Assert.IsType<NotFoundObjectResult>(result.Result);
+        Assert.IsType<NotFoundObjectResult>(result);
     }
 
     [Fact]
@@ -397,7 +396,7 @@ public class VesselVisitNotification_CtS_IntegrationTest
 
         var result = await _controller.Update(existingNotificationId, updateDto);
 
-        var statusResult = Assert.IsType<ObjectResult>(result.Result);
+        var statusResult = Assert.IsType<ObjectResult>(result);
         Assert.Equal(500, statusResult.StatusCode);
     }
 
