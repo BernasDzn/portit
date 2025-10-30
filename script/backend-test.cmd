@@ -1,0 +1,1 @@
+dotnet test ../BackEnd/Tests/Tests.csproj
