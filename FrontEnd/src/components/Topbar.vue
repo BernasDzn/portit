@@ -1,9 +1,29 @@
 <script setup lang="ts">
+import Searchbar from './Searchbar.vue';
+import UserProfile from './UserProfile.vue';
 
 </script>
 
 <template>
-  <div>
+  <div class="topbar">
+
+    <div class="topbar-left">
+      
+      <div class="topbar-logo"> 
+        <img class="logo" src="/PORTIT Logo.svg" alt="logo"> 
+      </div>
+      
+      <!-- Global search bar -->
+      <Searchbar />
+
+    </div>
+
+    <div class="topbar-right">
     
+      <!-- Profile -->
+      <UserProfile />
+
+    </div>
+
   </div>
 </template>

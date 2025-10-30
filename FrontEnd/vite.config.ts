@@ -7,7 +7,15 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
-    vue(),
+    vue({
+      template: {
+        compilerOptions: {
+          // treat all tags with a dash as custom elements
+          isCustomElement: (tag) => tag.includes('-'),
+          whitespace: 'condense',
+        }
+      }
+    }),
     vueDevTools(),
   ],
   resolve: {
