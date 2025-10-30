@@ -22,12 +22,11 @@
 .topbar-logo {
     width: var(--sidebar-width);
     display: flex;
-    justify-items: center;
+    justify-content: center;
 }
 
 .topbar-logo img {
     width: var(--icon-size);
-    margin: 13px auto;
 }
 
 .topbar-right {

@@ -10,7 +10,7 @@ import UserProfile from './UserProfile.vue';
     <div class="topbar-left">
       
       <div class="topbar-logo"> 
-        <img class="logo" src="/PORTIT Logo.svg" alt="logo"> 
+        <RouterLink to="/"><img class="logo" src="/PORTIT Logo.svg" alt="logo"></RouterLink> 
       </div>
       
       <!-- Global search bar -->

@@ -18,7 +18,7 @@ const toggleMoreInfo = () => {
 <div>
     <div @click="toggleMoreInfo" class="user-info">
         <sl-avatar 
-            shape="rounded" 
+            
             image="monouser.png"
             label="User avatar"
             loading="lazy"
