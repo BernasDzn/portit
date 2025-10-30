@@ -5,7 +5,7 @@
 <template>
   <div>
     <sl-input class="main-searchbar" placeholder="Search..." size="large" clearable>
-      <sl-icon class="small" name="search" slot="prefix"></sl-icon>
+      <span slot="prefix" class="material-icons material-icons--prefix">search</span>
     </sl-input>
   </div>
 </template>
@@ -24,7 +24,11 @@
 }
 
 .main-searchbar::part(input) {
-  color: white;
+  color: var(--text-primary);
+}
+
+.main-searchbar::part(prefix) {
+  color: var(--text-primary);
 }
 
 </style>
