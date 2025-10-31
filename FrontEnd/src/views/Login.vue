@@ -8,7 +8,6 @@ import "./../assets/login.css";
 <template>
     <div class="login-layout">
         <div class="login-left">
-      <!-- Canvas anchored to left panel and placed behind the logo -->
       <PolkaGrid class="polka-bg" />
       <img src="/PORTIT Dark Logo.svg" alt="Portit logo" class="logo" />
         </div>

@@ -19,7 +19,7 @@ const props = withDefaults(defineProps<{
 }>(), {
   rows: 39,
   cols: 50,
-  gap: 15,
+  gap: 25,
   baseSize: 1,
   waveSpeed: 0.02,
   waveAmplitude: 0.5,
@@ -111,7 +111,7 @@ function drawFrame(t: number) {
   const verticalShift = Math.sin(phase) * (props.gap * 0.25)
   const drawY = p.y - verticalShift
 
-    ctx.fillStyle = "rgba(180,180,180,0.95)"
+    ctx.fillStyle = `rgba(200, 200, 255, ${0.3 + 0.7 * (scale - 1) / (2 + props.waveAmplitude)})`
 
     ctx.beginPath()
     ctx.arc(p.x, drawY, size, 0, Math.PI * 2)

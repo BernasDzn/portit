@@ -11,6 +11,18 @@ const moreInfo = ref(false);
 
 const toggleMoreInfo = () => {
     moreInfo.value = !moreInfo.value;
+    animateChevron();
+};
+
+const animateChevron = () => {
+    const icon = document.querySelector('.icon') as HTMLElement;
+    if (moreInfo.value) {
+        icon.style.transform = 'rotate(-180deg)';
+        icon.style.transition = 'transform 0.2s ease';
+    } else {
+        icon.style.transform = 'rotate(0deg)';
+        icon.style.transition = 'transform 0.2s ease';
+    }
 };
 
 onMounted(async () => {
@@ -50,7 +62,7 @@ onMounted(async () => {
     </div>
 
     <div class="info-popup">
-        <sl-popup placement="bottom-start" :active="moreInfo" >
+        <sl-popup placement="bottom-start" shift shift-padding="10" :active="moreInfo" >
             <span slot="anchor"></span>
             <div class="box">
                 <p class="title"><sl-badge variant="primary" pill>{{user.role}}</sl-badge> {{user.name}} </p>
