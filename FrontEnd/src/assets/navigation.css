@@ -96,7 +96,12 @@
     margin: auto 0 auto 5px;
 }
 
-.sidebar-menu-link:hover {
+.link-active {
     background-color: #e9ecef;
     color: var(--text-black);
+}
+
+.sidebar-menu-link:not(.link-active):hover {
+    /* Slightly lighen background */
+    background-color: var(--primary-lighter);
 }

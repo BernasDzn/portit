@@ -19,7 +19,7 @@ import UserProfile from './UserProfile.vue';
     </div>
 
     <div class="topbar-right">
-    
+
       <!-- Profile -->
       <UserProfile />
 

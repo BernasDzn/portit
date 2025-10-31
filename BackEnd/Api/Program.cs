@@ -9,8 +9,13 @@ using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Google;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using ZstdSharp.Unsafe;
+using NSwag;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using System.Text;
+using NSwag.Generation.Processors.Security;
 
 var builder = WebApplication.CreateBuilder(args);
 // Logging definitions
@@ -29,14 +34,59 @@ builder.WebHost.ConfigureKestrel(options =>
     });
 });
 
-// Add authentication
-// Using JSON Web Tokens that get sent from the client to keep
-// a stateeless authentication system.
+// Allow all requests from Vue dev server
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("VueDevPolicy", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
+});
+
+// Authentication
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+// JwtBearer for API authorization
+.AddJwtBearer(options =>
+{
+    // Define validation parameters for Bearer token headers
+    // When an HTTP request with a Bearer token is received, these parameters are used to validate the token
+    // If it passes the HttpContext.User will be populated with the token claims
+    // If it fails a 401 Unauthorized response is returned automatically
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true, // Require that token iss claim matches configured issuer (us)
+        ValidIssuer = builder.Configuration.GetValue<string>("Jwt:Issuer")!, 
+        ValidateAudience = true, // Require that token aud claim matches configured audience (our front-end)
+        ValidAudience = builder.Configuration.GetValue<string>("Jwt:Audience")!,
+        ValidateLifetime = true, // Ensure token hasn't expired
+        ValidateIssuerSigningKey = true, // Ensure token signature is valid so it cant be forged
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)),
+        ClockSkew = TimeSpan.FromMinutes(2) // Allows for a small time difference between server and client
+    };
+})
+.AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
+{
+    options.ClientId = builder.Configuration["Authentication:Google:ClientId"]!;
+    options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]!;
+});
+
+// Authorization step, after identification of the user, we want to know what they can access
+// This policy just requires that the user is authenticated
+// It will be used for the "me" endpoint
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("ApiUser", policy => policy.RequireAuthenticatedUser());
+});
 
 // Set encryption key for the application
 EncryptionHelper.SetEncryptionKey(builder.Configuration["EncryptionKey"]!);
-
-builder.Services.AddAuthorization();
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -101,6 +151,7 @@ if (configuration.GetValue<bool>("NukeDatabaseAndRunBootstrap"))
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseOpenApi();
     app.MapOpenApi();
     app.UseSwaggerUi(options =>
     {
@@ -109,6 +160,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("VueDevPolicy");
 
 app.UseAuthentication();
 app.UseAuthorization();
