@@ -4,9 +4,10 @@ import Qualifications from '@/views/Qualifications.vue'
 import VesselDashboard from '@/views/VesselDashboard.vue'
 import VesselSearch from '@/views/SearchVessels.vue'
 import Dashboard from '@/views/Dashboard.vue'
-import Docks from '@/views/Docks.vue'
 import Staff from '@/views/Staff.vue'
 import Login from '@/views/Login.vue'
+import DockSearch from '@/views/SearchDocks.vue'
+import DockDashboard from '@/views/DockDashboard.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,9 +33,14 @@ const router = createRouter({
           component: VesselSearch
         },
         {
-          path: '/docks',
-          name: 'docks',
-          component: Docks
+          path: '/docks/dashboard',
+          name: 'docksDashboard',
+          component: DockDashboard
+        },
+        {
+          path: '/docks/search',
+          name: 'docksSearch',
+          component: DockSearch
         },
         {
           path: '/qualifications',
