@@ -32,7 +32,6 @@ const router = createRouter({
       ]
     },
     {
-<<<<<<< HEAD
       path: '/vessels',
       name: 'vessels',
       component: Vessels,
@@ -46,11 +45,11 @@ const router = createRouter({
       path: '/staff',
       name: 'staff',
       component: Staff
-=======
+    },
+    {
       path: '/login',
       name: 'login',
       component: Login,
->>>>>>> 2165c8188576bfdae0b009525d50db4d0f138296
     }
   ],
 })
