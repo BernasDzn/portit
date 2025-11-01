@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { RouterLink } from 'vue-router';
+import { computed, onMounted, ref } from 'vue';
+import { RouterLink, useRoute } from 'vue-router';
 
+const route = useRoute();
 
 const sidebarItems = ref([
   // add a materialIcon property with the Material Icons name we want to render
@@ -9,7 +10,14 @@ const sidebarItems = ref([
   { name: 'Qualifications', route: '/qualifications', icon:"mortarboard", materialIcon: 'school' },
   { name: 'Vessels', route: '/vessels', icon: "ship", materialIcon: 'directions_boat' },
   { name: 'Staff', route: '/staff', icon: "people", materialIcon: 'people' },
+  { name: 'Dashboard', route: '/', materialIcon: 'home', selected: true },
+  { name: 'Qualifications', route: '/qualifications', materialIcon: 'school' },
+  { name: 'Vessels', route: '/vessels', materialIcon: 'directions_boat' },
 ]);
+
+const isCurrentTab = (itemRoute: string) => {
+  return route.path === itemRoute;
+};
 
 </script>
 
@@ -17,7 +25,10 @@ const sidebarItems = ref([
   <nav class="sidebar">
     <ul class="sidebar-menu">
       <li v-for="item in sidebarItems" class="sidebar-menu-item">
-        <RouterLink :to="item.route" class="sidebar-menu-link">
+        <RouterLink 
+          :to="item.route" 
+          :class="(isCurrentTab(item.route) ? 'link-active' : '') + ' sidebar-menu-link'"
+        >
           <span class="material-icons icon" aria-hidden="true">{{ item.materialIcon }}</span>
           <p>{{item.name}}</p>
         </RouterLink>
@@ -31,14 +42,9 @@ const sidebarItems = ref([
 .icon {
   margin: auto 10px auto 0;
   font-size: 24px;
-  color: inherit; /* inherit color from the link so hover can change it */
+  color: inherit;
   display: inline-flex;
   align-items: center;
-}
-
-.sidebar-menu-link:hover .icon {
-  /* make hover color explicit in case of specificity issues */
-  color: var(--text-black);
 }
 
 </style>
