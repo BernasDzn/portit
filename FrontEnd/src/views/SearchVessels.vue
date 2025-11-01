@@ -19,7 +19,7 @@ const fetchVessels = async (filtering?: Filter<Vessel>): Promise<Page<Vessel>> =
   <div>
 
     <sl-breadcrumb>
-      <sl-breadcrumb-item href="../vessels/dashboard">Vessel Dashboard</sl-breadcrumb-item>
+      <sl-breadcrumb-item><RouterLink to="../vessels/dashboard">Vessel Dashboard</RouterLink></sl-breadcrumb-item>
       <sl-breadcrumb-item>Search Vessels</sl-breadcrumb-item>
     </sl-breadcrumb>
 
