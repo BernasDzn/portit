@@ -45,11 +45,4 @@ const toggleMoreInfo = () => {
     margin: auto 0 auto 10px;
 }
 
-.info-popup .box {
-    background: white;
-    border-radius: var(--sl-border-radius-medium);
-    box-shadow: var(--sl-shadow-large);
-    padding: 10px;
-}
-
 </style>

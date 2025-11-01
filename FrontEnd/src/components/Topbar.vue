@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Searchbar from './Searchbar.vue';
 import UserProfile from './UserProfile.vue';
+import Notifications from './Notifications.vue';
 
 </script>
 
@@ -19,7 +20,10 @@ import UserProfile from './UserProfile.vue';
     </div>
 
     <div class="topbar-right">
-    
+      
+      <!--Notifications-->
+      <Notifications />
+
       <!-- Profile -->
       <UserProfile />
 
