@@ -8,6 +8,7 @@ const sidebarItems = ref([
   { name: 'Dashboard', route: '/', icon: "house", materialIcon: 'home' },
   { name: 'Qualifications', route: '/qualifications', icon:"mortarboard", materialIcon: 'school' },
   { name: 'Vessels', route: '/vessels', icon: "ship", materialIcon: 'directions_boat' },
+  { name: 'Staff', route: '/staff', icon: "people", materialIcon: 'people' },
 ]);
 
 </script>

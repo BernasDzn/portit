@@ -1,3 +1,0 @@
-# Dependecy Injection
-
-Here we'll put the services, axios, etc...
