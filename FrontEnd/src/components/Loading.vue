@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount, ref, watch, withDefaults, defineProps } from 'vue';
+import { onMounted, onBeforeUnmount, ref, watch} from 'vue';
 import lottie from 'lottie-web';
 
 const props = withDefaults(defineProps<{ color?: string }>(), { color: '#485EA9' });

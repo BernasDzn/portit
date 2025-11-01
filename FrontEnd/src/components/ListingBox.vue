@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
+import { onMounted, ref, watch, onBeforeUnmount } from 'vue';
 import Loading from './Loading.vue';
 import ErrorHandler from './ErrorHandler.vue';
 import type { Filter, Page } from '@/model/Page';
@@ -54,16 +54,55 @@ const loadElements = async (filter?: any) => {
     }
 };
 
-watch([searchTerm, pageNumber], async ([newTerm, newPageNumber]) => {
+let debounceTimer: ReturnType<typeof setTimeout> | null = null;
+const DEBOUNCE_MS = 500;
+
+watch(searchTerm, (newTerm) => {
+    const normalized = (newTerm || '').toString();
+    if (normalized.trim().length === 0) {
+        if (debounceTimer) {
+            clearTimeout(debounceTimer);
+            debounceTimer = null;
+        }
+        pageNumber.value = 1;
+        void loadElements({ filter: {}, pageNumber: pageNumber.value });
+        return;
+    }
+
+    if (debounceTimer) clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(async () => {
+        pageNumber.value = 1;
+        const filter: Filter<any> = {
+            filter: {
+                [props.searchFilter]: newTerm
+            },
+            pageNumber: pageNumber.value
+        };
+        await loadElements(filter);
+    }, DEBOUNCE_MS);
+});
+
+watch(pageNumber, async (newPageNumber) => {
+    if (debounceTimer) {
+        clearTimeout(debounceTimer);
+        debounceTimer = null;
+    }
 
     const filter: Filter<any> = {
-        filter : {
-            [props.searchFilter]: newTerm
+        filter: {
+            [props.searchFilter]: searchTerm.value
         },
-        pageNumber: newPageNumber,
+        pageNumber: newPageNumber
     };
 
     await loadElements(filter);
+});
+
+onBeforeUnmount(() => {
+    if (debounceTimer) {
+        clearTimeout(debounceTimer);
+        debounceTimer = null;
+    }
 });
 
 </script>
