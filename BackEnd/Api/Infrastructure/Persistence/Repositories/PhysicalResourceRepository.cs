@@ -121,6 +121,8 @@ public class PhysicalResourceRepository : GenericRepository<PhysicalResource>, I
     {
         IQueryable<PhysicalResource> query = _context.PhysicalResources.AsQueryable();
         query = query.Where(r => r.Active);
+        
+        int pageCount = (int) Math.Ceiling((double)query.Count() / filter.PageSize);
 
         if (!string.IsNullOrEmpty(filter.Code))
             query = query.Where(r => r.Code.Value.ToLower().Contains(filter.Code.ToLower()));
@@ -149,7 +151,7 @@ public class PhysicalResourceRepository : GenericRepository<PhysicalResource>, I
 
         query = query.Skip((filter.PageNumber - 1) * filter.PageSize).Take(filter.PageSize);
 		return Task.FromResult(
-			Page<PhysicalResource>.Of(query.ToList(), filter)
+			Page<PhysicalResource>.Of(query.ToList(), filter, pageCount)
 		);
     }
 }

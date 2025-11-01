@@ -49,6 +49,7 @@ public class VesselTypeRepository : GenericRepository<VesselType>, IVesselTypeRe
         try
         {
             IQueryable<VesselType> query = _context.VesselTypes.AsQueryable();
+            int pageCount = (int) Math.Ceiling((double)query.Count() / filter.PageSize);
 
             if (!string.IsNullOrEmpty(filter.Name))
                 query = query.Where(vt => vt.Name.Value.ToLower().Contains(filter.Name.ToLower()));
@@ -57,7 +58,7 @@ public class VesselTypeRepository : GenericRepository<VesselType>, IVesselTypeRe
                 query = query.Where(vt => vt.Description.Value.ToLower().Contains(filter.Description.ToLower()));
 
             query = query.Skip((filter.PageNumber - 1) * filter.PageSize).Take(filter.PageSize);
-            return Task.FromResult(Page<VesselType>.Of(query.ToList(), filter));
+            return Task.FromResult(Page<VesselType>.Of(query.ToList(), filter, pageCount));
         }
         catch
         {

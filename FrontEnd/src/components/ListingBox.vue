@@ -3,6 +3,7 @@ import { onMounted, ref, watch } from 'vue';
 import Loading from './Loading.vue';
 import ErrorHandler from './ErrorHandler.vue';
 import type { Page } from '@/model/Page';
+import Pagination from './Pagination.vue';
 
 // The function to fetch data is passed as a prop
 const props = defineProps<{
@@ -15,7 +16,7 @@ const loading = ref(false);
 const error = ref<Error | null>(null);
 const searchTerm = ref('');
 
-const elements = ref<any[]>([]);
+const elements = ref<Page<any>>({ items: [], pageNumber: 0, pageSize: 0 });
 
 onMounted(async () => {
     await loadElements();
@@ -28,7 +29,7 @@ const loadElements = async (filter?: any) => {
 
     try {
 
-        elements.value = (await props.fetchFunction(filter)).items;
+        elements.value = (await props.fetchFunction(filter));
 
     } catch (e: any) {
         console.error('Failed to load elements', e);
@@ -40,7 +41,6 @@ const loadElements = async (filter?: any) => {
 
 watch(searchTerm, async (newTerm) => {
     const filter = props.searchFilter ? { [props.searchFilter]: newTerm } : undefined;
-    //console.log('Search term changed:', newTerm, 'Applying filter:', filter);
     await loadElements(filter);
 });
 
@@ -56,10 +56,12 @@ watch(searchTerm, async (newTerm) => {
             <!-- Pass the loaded elements to the parent via a slot prop --> 
             <Loading v-if="loading"/>
             <ul v-else :class="props.listingStyle || 'listing-doubles'">
-                <slot :elements="elements">
+                <slot :elements="elements.items">
                     No elements found.
                 </slot>
             </ul>
+
+            <Pagination :total-pages="10" :current-page="elements.pageNumber" />
         </sl-card>
     </div>
 </template>

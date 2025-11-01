@@ -107,9 +107,11 @@ public class StaffRepository : GenericRepository<Staff>, IStaffRepository
 		{
 			IQueryable<Staff> query = _context.Staffs.AsQueryable();
 			query = query.Where(s => s.isActive);
+            
+            int pageCount = (int) Math.Ceiling((double)query.Count() / filter.PageSize);
 
 			if (!string.IsNullOrEmpty(filter.MechanograficNumber))
-				query = query.Where(s => s.MechanograficNumber.Value.ToLower().Contains(filter.MechanograficNumber.ToLower()));
+                query = query.Where(s => s.MechanograficNumber.Value.ToLower().Contains(filter.MechanograficNumber.ToLower()));
 
 			if (!string.IsNullOrEmpty(filter.Name))
 				query = query.Where(s => s.Name.Value.ToLower().Contains(filter.Name.ToLower()));
@@ -129,7 +131,7 @@ public class StaffRepository : GenericRepository<Staff>, IStaffRepository
 			
 			query = query.Skip((filter.PageNumber - 1) * filter.PageSize).Take(filter.PageSize);
 			return Task.FromResult(
-				Page<Staff>.Of(query.ToList(), filter)
+				Page<Staff>.Of(query.ToList(), filter, pageCount)
 			);
 			
 		}
