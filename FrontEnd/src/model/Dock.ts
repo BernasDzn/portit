@@ -14,6 +14,4 @@ export interface DockFilter{
     name?: string;
     location?: string;
     vesselTypeName?: string;
-    pageNumber?: number;
-    pageSize?: number;
 }

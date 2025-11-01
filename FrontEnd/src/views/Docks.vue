@@ -16,7 +16,8 @@
 		loading.value = true
 		error.value = null
 		try {
-			Docks.value = await dockService.getDocks()
+			const res = await dockService.getDocks() as any
+			Docks.value = res.content ?? res.items ?? res.data ?? []
 		} catch (e: any) {
 			console.error('[Dock] failed loading Dock members', e)
 			error.value = e?.message ?? String(e)
