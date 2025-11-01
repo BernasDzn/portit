@@ -71,16 +71,33 @@ body {
 }
 
 .listing-item:hover {
-    transform: scale(0.98);
+    transform: scale(1.02);
     box-shadow: 0 6px 18px rgba(72, 94, 169, 0.12);
     cursor: pointer;
-}
-
-.listing-item:hover::part(body) {
-    background-color: var(--sl-color-gray-100);
 }
 
 .item-description {
     color: var(--sl-color-gray-500);
     font-size: var(--font-size-sm);
+}
+
+.dashboard-overview {
+    width: 100%;
+}
+
+.dashboard-items {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, 1fr);
+  width: 100%;
+}
+
+.dashboard-item{
+    transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
+}
+
+.dashboard-item:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 18px rgba(72, 94, 169, 0.12);
+    cursor: pointer;
 }

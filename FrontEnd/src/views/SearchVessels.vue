@@ -19,13 +19,13 @@ const fetchVessels = async (filtering?: Filter<Vessel>): Promise<Page<Vessel>> =
   <div>
 
     <sl-breadcrumb>
-      <sl-breadcrumb-item>Vessels</sl-breadcrumb-item>
-      <sl-breadcrumb-item>Listings</sl-breadcrumb-item>
+      <sl-breadcrumb-item href="../vessels/dashboard">Vessel Dashboard</sl-breadcrumb-item>
+      <sl-breadcrumb-item>Search Vessels</sl-breadcrumb-item>
     </sl-breadcrumb>
 
     <header>
-      <h1 class="title">Vessels</h1>
-      <p class="subtitle">Manage registered vessels</p>
+      <h1 class="title">Search Vessels</h1>
+      <p class="subtitle">Search registered vessels</p>
 
       <ListingBox :fetch-function="fetchVessels" search-filter="name" v-slot="{elements}">
       <li v-for="vessel in elements" :key="vessel.imo">
