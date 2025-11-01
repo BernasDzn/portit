@@ -20,13 +20,18 @@ export class VesselService implements IVesselService {
 
         if (filtering) {
             query.push(filtering.filter.name ? `Name=${filtering.filter.name}&` : '');
-            query.push(filtering.filter.imo ? `ImoNumber=${filtering.filter.imo}&` : '');
+            query.push(filtering.filter.imoNumber ? `ImoNumber=${filtering.filter.imoNumber}&` : '');
             query.push(filtering.pageNumber !== undefined ? `PageNumber=${filtering.pageNumber}&` : '');
             query.push(filtering.pageSize !== undefined ? `PageSize=${filtering.pageSize}` : '');
         }
 
 		const res = await this.http.get<Page<Vessel>>(`/Vessel/filter${query.length ? `?${query.join('')}` : ''}`);
 
+		return res.data;
+	}
+
+	async createVessel(vessel: Vessel): Promise<Vessel> {
+		const res =  await this.http.post<Vessel>('/Vessel', vessel);
 		return res.data;
 	}
     
