@@ -29,11 +29,7 @@ const fetchVessels = async (filtering?: Filter<Vessel>): Promise<Page<Vessel>> =
 
       <ListingBox :fetch-function="fetchVessels" search-filter="name" v-slot="{elements}">
       <li v-for="vessel in elements" :key="vessel.imo">
-        <VesselPrinter class="listing-item" :vessel="vessel">
-          <p class="item-description">{{ vessel.imoNumber }}</p>
-          <p class="item-description">{{ vessel.type.name }}</p>
-          <p class ="item-description">{{ vessel.owner.name }}</p>
-        </VesselPrinter>
+        <VesselPrinter class="listing-box" :vessel="vessel"/>
       </li>
     </ListingBox>
     </header>

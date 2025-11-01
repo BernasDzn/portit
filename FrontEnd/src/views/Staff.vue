@@ -30,7 +30,7 @@ const fetchStaffs = async (filtering?: Filter<Staff>): Promise<Page<Staff>> => {
 			<p class="subtitle">List of all staff members</p>
 			<ListingBox :fetch-function="fetchStaffs" search-filter="name" v-slot="{elements}">
 				<li v-for="staff in elements" :key="staff.mechanographicNumber">
-					<StaffPrinter class="listing-item" :staff="staff" />
+					<StaffPrinter class="listing-box" :staff="staff" />
 				</li>
 			</ListingBox>
 		</header>

@@ -57,6 +57,28 @@ body {
 .listing-item {
     width: 100%;
 }
+.listing-item {
+    width: 100%;
+    display: block;
+    overflow: visible;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.listing-item::part(body) {
+    background-color: transparent;
+    padding: 1rem;
+    transition: background-color 0.12s ease;
+}
+
+.listing-item:hover {
+    transform: scale(0.98);
+    box-shadow: 0 6px 18px rgba(72, 94, 169, 0.12);
+    cursor: pointer;
+}
+
+.listing-item:hover::part(body) {
+    background-color: var(--sl-color-gray-100);
+}
 
 .item-description {
     color: var(--sl-color-gray-500);

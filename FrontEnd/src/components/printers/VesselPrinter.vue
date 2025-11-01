@@ -11,7 +11,7 @@ const props = defineProps<{vessel: Vessel}>();
         <div class="opposed">
             <div>
                 <p>{{ vessel.name }}</p>
-                <p class="item-description">{{ vessel.imo }}</p>
+                <p class="item-description">{{ vessel.imoNumber }}<br/>{{ vessel.type.name }}<br/>{{ vessel.owner.name }}</p>
             </div>
             <span class="material-icons icon" aria-hidden="true">directions_boat</span>
         </div>

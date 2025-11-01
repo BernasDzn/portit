@@ -30,7 +30,7 @@ const fetchQualifications = async (filtering?: Filter<Qualification>): Promise<P
         <ListingBox :fetch-function="fetchQualifications" search-filter="qualificationName" v-slot="{elements}">
             <li v-for="qualification in elements" :key="qualification.idCode">
                 <!-- {{ qualification.idCode }} - {{ qualification.qualificationName }} -->
-                <QualificationPrinter class="listing-item" :qualification="qualification" />
+                <QualificationPrinter class="listing-box" :qualification="qualification" />
             </li>
         </ListingBox>
     </header>
