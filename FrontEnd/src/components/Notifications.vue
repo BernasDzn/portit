@@ -38,7 +38,7 @@ const toggleMoreInfo = () => {
 <template>
     <div>
         <div @click="toggleMoreInfo" class="notifications-info">
-            <sl-icon class="icon" name="bell"></sl-icon>
+            <sl-icon name="bell"></sl-icon>
         </div>
 
         <div class="info-popup">
