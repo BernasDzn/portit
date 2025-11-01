@@ -39,7 +39,7 @@ onMounted(async () => {
         <ErrorHandler v-else-if="error" :error-object="error" />
         <sl-card v-else class="listing-box">
             <sl-input class="listing-search" placeholder="Search..." size="large" clearable>
-                <span class="material-icons material-icons--prefix">search</span>
+                <span slot="prefix" class="material-icons material-icons--prefix">search</span>
               </sl-input>
             <!-- Pass the loaded elements to the parent via a slot prop -->
             <ul :class="props.listingStyle || 'listing-doubles'">

@@ -9,10 +9,12 @@ const props = defineProps<{qualification: Qualification}>();
 <template>
     <sl-card class="listing-item">
         <div class="opposed">
-            <p>{{ qualification.qualificationName }}</p>
+            <div>
+                <p>{{ qualification.qualificationName }}</p>
+                <p class="item-description">{{ qualification.idCode }}</p>
+            </div>
             <span class="material-icons icon" aria-hidden="true">workspace_premium</span>
         </div>
-        <p class="item-description">{{ qualification.idCode }}</p>
         <!-- For view details in the future maybe?  -->
         <slot></slot>
     </sl-card>
