@@ -11,7 +11,7 @@ export interface Dock {
 }
 
 export interface DockFilter{
-    name?: string;
-    location?: string;
-    vesselTypeName?: string;
+    dockName: string;
+    location: string;
+    vesselTypeName: string;
 }

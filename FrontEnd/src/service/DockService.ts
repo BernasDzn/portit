@@ -19,9 +19,9 @@ export class DockService implements IDockService {
         let query: string[] = [];
 
         if (filtering) {
-            query.push(filtering.filter.name ? `Name=${filtering.filter.name}&` : '');
+            query.push(filtering.filter.dockName ? `DockName=${filtering.filter.dockName}&` : '');
             query.push(filtering.filter.location ? `Location=${filtering.filter.location}&` : '');
-            query.push(filtering.filter.vesselTypeName ? `Type=${filtering.filter.vesselTypeName}&` : '');
+            query.push(filtering.filter.vesselTypeName ? `VesselTypeName=${filtering.filter.vesselTypeName}&` : '');
             query.push(filtering.pageNumber !== undefined ? `PageNumber=${filtering.pageNumber}&` : '');
             query.push(filtering.pageSize !== undefined ? `PageSize=${filtering.pageSize}` : '');
         }
