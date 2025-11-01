@@ -16,8 +16,7 @@
 		loading.value = true
 		error.value = null
 		try {
-			const list = await staffService.getStaffs()
-			staffs.value = StaffMapper.normalizeStaffPayload(list)
+			staffs.value = await staffService.getStaffs()
 		} catch (e: any) {
 			console.error('[Staff] failed loading staff members', e)
 			error.value = e?.message ?? String(e)
@@ -51,8 +50,8 @@
 				http requests working took so long this started to PMO
 			-->
 			<ul v-else>
-			<li v-for="s in staffs" :key="s.mecanograficNumber">
-				{{ s.mecanograficNumber || 'well this is unexpected... this staff doesnt have a mecanograficNumber... how...	' }} - 
+			<li v-for="s in staffs" :key="s.mechanograficNumber">
+				{{ s.mechanograficNumber || 'well this is unexpected... this staff doesnt have a mechanograficNumber... how...' }} -
 				{{ s.name || 'well this is unexpected... this staff doesnt have a name.' }}
 			</li>
 			</ul>

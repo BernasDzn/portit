@@ -1,5 +1,5 @@
 export interface Staff {
-	mecanograficNumber: string;
+	mechanograficNumber: string;
 	name: string;
 	email?: string;
 	phoneNumber?: string;
