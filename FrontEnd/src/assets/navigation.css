@@ -59,6 +59,7 @@
     background-color: #ffffff;
   
     width: calc(100% - var(--sidebar-width) - 50px);
+    z-index: -1;
   }
 
 .user-info {
@@ -118,4 +119,25 @@
 .sidebar-menu-link:not(.link-active):hover {
     /* Slightly lighen background */
     background-color: var(--primary-lighter);
+}
+
+.icon {
+    margin: auto 0 auto 10px;
+}
+
+.info-popup .box {
+    background: white;
+    border-radius: var(--sl-border-radius-medium);
+    box-shadow: var(--sl-shadow-large);
+    padding: 10px;
+}
+
+.logout-box {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.logout-button {
+    width: 100%;
 }

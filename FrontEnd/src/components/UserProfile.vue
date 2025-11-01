@@ -77,28 +77,3 @@ onMounted(async () => {
     </div>
 </div>
 </template>
-
-<style scoped>
-
-.icon {
-    margin: auto 0 auto 10px;
-}
-
-.info-popup .box {
-    background: white;
-    border-radius: var(--sl-border-radius-medium);
-    box-shadow: var(--sl-shadow-large);
-    padding: 10px;
-}
-
-.logout-box {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-}
-
-.logout-button {
-    width: 100%;
-}
-
-</style>

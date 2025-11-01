@@ -62,3 +62,14 @@ body {
     color: var(--sl-color-gray-500);
     font-size: var(--font-size-sm);
 }
+
+.loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
