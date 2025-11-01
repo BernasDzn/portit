@@ -14,4 +14,6 @@
   --foreground: oklch(0.145 0 0);
   --sidebar-width: 250px;
   --icon-size: 110px;
+
+  --accent-1: #485EA9;
 }

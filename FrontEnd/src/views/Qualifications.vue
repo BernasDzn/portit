@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import ListingBox from '@/components/ListingBox.vue';
 import QualificationPrinter from '@/components/printers/QualificationPrinter.vue';
+import type { Page } from '@/model/Page';
 import type { Qualification } from '@/model/Qualifications';
 import AxiosHttpService from '@/service/AxiosHttpService';
 import { QualificationService } from '@/service/QualificationService';
@@ -9,8 +10,8 @@ import { onMounted, ref } from 'vue';
 const http = new AxiosHttpService()
 const qualificationService = new QualificationService(http as any)
 
-const fetchQualifications = async (): Promise<Qualification[]> => {
-    return await qualificationService.getQualifications()
+const fetchQualifications = async (filtering?: Qualification): Promise<Page<Qualification>> => {
+    return await qualificationService.getQualifications(filtering);
 }
 
 </script>
@@ -27,7 +28,7 @@ const fetchQualifications = async (): Promise<Qualification[]> => {
         <h1 class="title">Qualifications</h1>
         <p class="subtitle">Manage required certifications and qualifications</p>
 
-        <ListingBox :fetch-function="fetchQualifications" v-slot="{elements}">
+        <ListingBox :fetch-function="fetchQualifications" search-filter="qualificationName" v-slot="{elements}">
             <li v-for="qualification in elements" :key="qualification.idCode">
                 <!-- {{ qualification.idCode }} - {{ qualification.qualificationName }} -->
                 <QualificationPrinter class="listing-item" :qualification="qualification" />

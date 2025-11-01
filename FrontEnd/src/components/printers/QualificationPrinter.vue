@@ -24,7 +24,7 @@ const props = defineProps<{qualification: Qualification}>();
 
 .icon {
     font-size: 35px;
-    color: var(--sl-color-indigo-700);
+    color: var(--accent-1);
 }
 
 </style>
