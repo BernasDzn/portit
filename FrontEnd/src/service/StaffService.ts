@@ -9,7 +9,8 @@ import type { IHttpService } from './IService/IHttpService';
 export class StaffService implements IStaffService {
     
 	constructor(
-		@inject(TYPES.api) private http: IHttpService
+		@inject(TYPES.api) 
+		private http: IHttpService
 	){}
 
 	async getStaffs(): Promise<Staff[]> {

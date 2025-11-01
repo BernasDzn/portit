@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "types": ["@shoelace-style/shoelace/dist/types/vue"]
+    "types": ["@shoelace-style/shoelace/dist/types/vue"],
+    "experimentalDecorators": true,
   },
   "files": [],
   "references": [

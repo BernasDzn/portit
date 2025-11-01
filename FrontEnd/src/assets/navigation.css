@@ -47,6 +47,20 @@
     overflow: hidden;
 }
 
+.main-content {
+
+    position: fixed;
+    top: 80px;
+    left: var(--sidebar-width);
+  
+    flex: 1;
+    padding: 20px 25px;
+    overflow-y: auto;
+    background-color: #ffffff;
+  
+    width: 100%;
+  }
+
 .user-info {
     text-align: center;
     margin: auto 30px auto 0;

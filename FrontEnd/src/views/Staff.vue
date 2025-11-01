@@ -1,39 +1,42 @@
 <script setup lang="ts">
-	import { ref, onMounted } from 'vue'
-	import type { Staff } from '@/model/Staff'
-	import { StaffService } from '@/service/StaffService'
-	import AxiosHttpService from '@/service/AxiosHttpService'
-	import Loading from '@/components/Loading.vue'
-	import DataTable from '@/components/DataTable.vue'
+import DataTable from '@/components/DataTable.vue'
+import { ref, onMounted } from 'vue'
+import Loading from '@/components/Loading.vue'
+import type { Staff } from '@/model/Staff'
+import { StaffService } from '@/service/StaffService'
+import AxiosHttpService from '@/service/AxiosHttpService'
+import ErrorHandler from '@/components/ErrorHandler.vue'
 
-	const http = new AxiosHttpService()
-	const staffService = new StaffService(http as any)
+const http = new AxiosHttpService()
+const staffService = new StaffService(http as any)
 
-	const staffs = ref<Staff[]>([])
-	const loading = ref(false)
-	const error = ref<string | null>(null)
+const staffs = ref<Staff[]>([])
+const loading = ref(false)
+const error = ref<Error | null>(null)
 
-	async function loadStaffs() {
-		loading.value = true
-		error.value = null
-		try {
-			staffs.value = await staffService.getStaffs()
-		} catch (e: any) {
-			console.error('[Staff] failed loading staff members', e)
-			error.value = e?.message ?? String(e)
-		} finally {
-			loading.value = false
-		}
+async function loadStaffs() {
+
+	loading.value = true
+	error.value = null
+	try {
+		staffs.value = await staffService.getStaffs()
+	} catch (e: any) {
+		console.error('[Staff] failed loading staff members', e)
+		error.value = e;
+	} finally {
+		loading.value = false
 	}
+}
 
-	onMounted(() => { void loadStaffs() })
+onMounted(() => { loadStaffs() });
+
 </script>
 
 <template>
 	<div>
 		<sl-breadcrumb>
-		<sl-breadcrumb-item>Staff</sl-breadcrumb-item>
-		<sl-breadcrumb-item>Listings</sl-breadcrumb-item>
+			<sl-breadcrumb-item>Staff</sl-breadcrumb-item>
+			<sl-breadcrumb-item>Listings</sl-breadcrumb-item>
 		</sl-breadcrumb>
 
 		<header>
@@ -45,7 +48,7 @@
 		<div v-if="loading">
 			<Loading message="Loading staff list…" />
 		</div>
-		<div v-else-if="error" class="error">Error: {{ error }}</div>
+		<div v-else-if="error"><ErrorHandler :error-object="error" /></div>
 		<div v-else>
 			<DataTable
 				:columns="['mechanograficNumber', 'name', 'email', 'phoneNumber']"

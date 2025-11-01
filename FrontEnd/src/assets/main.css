@@ -15,18 +15,6 @@ body {
   overflow: hidden;
 }
 
-.main-content {
-
-  position: fixed;
-  top: 80px;
-  left: var(--sidebar-width);
-
-  flex: 1;
-  padding: 20px 25px;
-  overflow-y: auto;
-  background-color: #ffffff;
-}
-
 .title {
 
   font-weight: normal;
@@ -35,5 +23,42 @@ body {
 }
 
 .subtitle {
-  color: var(--sl-color-neutral-500);
+  color: var(--sl-color-gray-500);
+}
+
+.listing-box {
+    width: 100%;
+}
+
+.listing-box ul {
+
+    list-style-type: none;
+    padding: 0;
+    
+    display: grid;
+    gap: 20px;
+}
+
+.opposed {
+    display: flex;
+    justify-content: space-between;
+}
+
+.listing-doubles {
+    /* Only two columns */
+    grid-template-columns: 1fr 1fr;
+}
+
+.listing-triples {
+    /* Only three columns */
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.listing-item {
+    width: 100%;
+}
+
+.item-description {
+    color: var(--sl-color-gray-500);
+    font-size: var(--font-size-sm);
 }

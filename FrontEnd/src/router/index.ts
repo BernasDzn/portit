@@ -33,14 +33,14 @@ const router = createRouter({
           path: '/staff',
           name: 'staff',
           component: Staff
-        },
-        {
-          path: '/login',
-          name: 'login',
-          component: Login,
         }
       ]
     },
+    {
+        path: '/login',
+        name: 'login',
+        component: Login,
+    }
   ],
 })
 
