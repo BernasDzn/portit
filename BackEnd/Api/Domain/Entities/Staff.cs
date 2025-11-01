@@ -9,7 +9,7 @@ public class Staff : IDTOAble<StaffDto>
 {
 	public Guid Id { get; private set; }
 
-	public StaffMechanograficNumber MechanograficNumber { get; private set; }
+	public StaffMechanographicNumber MechanographicNumber { get; private set; }
 
 	public Designation Name { get; private set; }
 
@@ -28,7 +28,7 @@ public class Staff : IDTOAble<StaffDto>
 	protected Staff() { }
 
 	public Staff(
-		StaffMechanograficNumber mechanograficNumber,
+		StaffMechanographicNumber mechanographicNumber,
 		Designation name,
 		Email email,
 		PhoneNumber phoneNumber,
@@ -36,7 +36,7 @@ public class Staff : IDTOAble<StaffDto>
 		ICollection<Qualification> qualifications)
 	{
 		Id = Guid.NewGuid();
-		MechanograficNumber = mechanograficNumber;
+		MechanographicNumber = mechanographicNumber;
 		Name = name;
 		Email = email;
 		PhoneNumber = phoneNumber;
@@ -111,7 +111,7 @@ public class Staff : IDTOAble<StaffDto>
 	{
 		return new StaffDto
 		{
-			MechanograficNumber = MechanograficNumber.Value,
+			MechanographicNumber = MechanographicNumber.Value,
 			Name = Name.Value,
 			Email = Email.Value,
 			PhoneNumber = PhoneNumber.Value,
@@ -121,7 +121,7 @@ public class Staff : IDTOAble<StaffDto>
 		};
 	}	
 	public override string ToString() =>
-		$"Staff [MechanograficNumber={MechanograficNumber.Value}, Name={Name.Value}, Email={Email.Value}, PhoneNumber={PhoneNumber.Value}, Status={Status}, OperationalWindow=({OperationalWindow}), Qualifications=[{string.Join(", ", Qualifications)}]]";
+		$"Staff [MechanographicNumber={MechanographicNumber.Value}, Name={Name.Value}, Email={Email.Value}, PhoneNumber={PhoneNumber.Value}, Status={Status}, OperationalWindow=({OperationalWindow}), Qualifications=[{string.Join(", ", Qualifications)}]]";
 }
 
 public enum StaffStatus

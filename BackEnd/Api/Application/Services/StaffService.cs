@@ -32,7 +32,7 @@ public class StaffService : IStaffService
 
 	public async Task<StaffDto?> Create(CreateStaffDto staffDto)
 	{
-		bool exists = await _staffRepository.GetStaffByMecNumberAsync(staffDto.MechanograficNumber) != null;
+		bool exists = await _staffRepository.GetStaffByMecNumberAsync(staffDto.MechanographicNumber) != null;
 		if (exists)
 			throw new EntityAlreadyExistsException("Staff with the same mechanographic number already exists.");
 
@@ -49,7 +49,7 @@ public class StaffService : IStaffService
 		}
 
 		Staff staff = new Staff(
-			new StaffMechanograficNumber { Value = staffDto.MechanograficNumber },
+			new StaffMechanographicNumber { Value = staffDto.MechanographicNumber },
 			new Designation { Value = staffDto.Name },
 			new Email { Value = staffDto.Email },
 			new PhoneNumber { Value = staffDto.PhoneNumber },
@@ -60,7 +60,7 @@ public class StaffService : IStaffService
 		Staff addedStaff = await _staffRepository.Add(staff);
 		StaffDto addedStaffDto = addedStaff.ToDTO();
 
-		AppLogEvents.LogCreate(_logger, "Staff", addedStaffDto.MechanograficNumber);
+		AppLogEvents.LogCreate(_logger, "Staff", addedStaffDto.MechanographicNumber);
 		return addedStaffDto;
 	}
 
@@ -94,7 +94,7 @@ public class StaffService : IStaffService
 		Staff updatedStaff = await _staffRepository.Update(staff);
 		StaffDto updatedStaffDto = updatedStaff.ToDTO(); 
 
-		AppLogEvents.LogUpdate(_logger, "Staff", updatedStaffDto.MechanograficNumber);
+		AppLogEvents.LogUpdate(_logger, "Staff", updatedStaffDto.MechanographicNumber);
 		return updatedStaffDto;
 	}
 

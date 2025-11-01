@@ -51,7 +51,7 @@ onMounted(() => { loadStaffs() });
 		<div v-else-if="error"><ErrorHandler :error-object="error" /></div>
 		<div v-else>
 			<DataTable
-				:columns="['mechanograficNumber', 'name', 'email', 'phoneNumber']"
+				:columns="['mechanographicNumber', 'name', 'email', 'phoneNumber']"
 				:rows="staffs"
 			/>
 		</div>

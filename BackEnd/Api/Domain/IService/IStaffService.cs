@@ -7,7 +7,7 @@ public interface IStaffService
 {
 	Task<IEnumerable<StaffDto>> GetStaffs();
 	Task<StaffDto?> Create(CreateStaffDto staffDto);
-	Task<StaffDto?> Update(string mecNumber, CreateStaffDto staffDto);
+	Task<StaffDto?> Update(string mechanographicNumber, CreateStaffDto staffDto);
 	Task<Page<StaffDto>> FilterStaffs(StaffFilter filter);
-	Task<StaffDto> Deactivate(string mecanographicNumber);
+	Task<StaffDto> Deactivate(string mechanographicNumber);
 }
