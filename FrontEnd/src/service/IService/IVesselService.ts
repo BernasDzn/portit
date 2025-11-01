@@ -3,7 +3,7 @@ import type { Vessel } from "@/model/Vessels";
 
 export interface IVesselService {
     getVessels(filtering: Filter<Vessel>): Promise<Page<Vessel>>;
-    // create 
+    createVessel(vessel: Vessel): Promise<Vessel>;
     // deactivate
     // update
     // filter

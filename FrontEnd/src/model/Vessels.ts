@@ -1,6 +1,6 @@
 export interface Vessel {
-    imo: string;
     name: string;
+    imoNumber: string;
     type: string;
     owner: string;
     length: number;

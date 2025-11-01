@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import Qualifications from '@/views/Qualifications.vue'
 import VesselDashboard from '@/views/VesselDashboard.vue'
 import VesselSearch from '@/views/SearchVessels.vue'
+import VesselCreate from '@/views/CreateVessel.vue'
 import Dashboard from '@/views/Dashboard.vue'
 import Staff from '@/views/Staff.vue'
 import Login from '@/views/Login.vue'
@@ -29,6 +30,11 @@ const router = createRouter({
           path: '/vessels/search',
           name: 'vessels',
           component: VesselSearch
+        },
+        {
+          path: '/vessels/create',
+          name: 'createVessel',
+          component: VesselCreate
         },
         {
           path: '/qualifications',
