@@ -27,7 +27,7 @@ const fetchVessels = async (filtering?: Filter<Vessel>): Promise<Page<Vessel>> =
       <h1 class="title">Vessels</h1>
       <p class="subtitle">Manage registered vessels</p>
 
-      <ListingBox :fetch-function="fetchVessels" search-filter="Name" v-slot="{elements}">
+      <ListingBox :fetch-function="fetchVessels" search-filter="name" v-slot="{elements}">
       <li v-for="vessel in elements" :key="vessel.imo">
         <VesselPrinter class="listing-item" :vessel="vessel">
           <p class="item-description">{{ vessel.imoNumber }}</p>
