@@ -4,6 +4,7 @@ import Loading from './Loading.vue';
 import ErrorHandler from './ErrorHandler.vue';
 import type { Filter, Page } from '@/model/Page';
 import Pagination from './Pagination.vue';
+import NoResults from './NoResults.vue';
 
 // The function to fetch data is passed as a prop
 const props = defineProps<{
@@ -117,23 +118,19 @@ onBeforeUnmount(() => {
             <!-- Pass the loaded elements to the parent via a slot prop --> 
             <Loading v-if="loading"/>
             <div v-else>
-                <ul :class="props.listingStyle || 'listing-doubles'">
-                    <slot :elements="elements.items">
-                        No elements found.
-                    </slot>
-                </ul>
-                <Pagination :total-pages="elements.pageCount" :current-page="elements.pageNumber" @page-changed="(n: number) => pageNumber = n"  />
+                <template v-if="elements.items && elements.items.length">
+                    <ul :class="props.listingStyle || 'listing-doubles'">
+                        <slot :elements="elements.items" />
+                    </ul>
+                    <Pagination :total-pages="elements.pageCount" :current-page="elements.pageNumber" @page-changed="(n: number) => pageNumber = n"  />
+                </template>
+                <template v-else>
+                    <div class="no-results-container">
+                        <NoResults />
+                    </div>
+                </template>
             </div>
 
         </sl-card>
     </div>
 </template>
-
-<style scoped>
-
-.listing-search {
-    margin-bottom: 1rem;
-    color: gray;
-}
-
-</style>
