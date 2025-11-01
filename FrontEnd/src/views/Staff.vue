@@ -4,7 +4,6 @@
 	import type { Staff } from '@/model/Staff'
 	import { StaffService } from '@/service/StaffService'
 	import AxiosHttpService from '@/service/AxiosHttpService'
-	import { StaffMapper } from '@/model/mappers/StaffMapper'
 
 	const http = new AxiosHttpService()
 	const staffService = new StaffService(http as any)
