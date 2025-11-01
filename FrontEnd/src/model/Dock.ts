@@ -9,3 +9,11 @@ export interface Dock {
     };
     supportedVesselTypes: {name: string;}[];
 }
+
+export interface DockFilter{
+    name?: string;
+    location?: string;
+    vesselTypeName?: string;
+    pageNumber?: number;
+    pageSize?: number;
+}

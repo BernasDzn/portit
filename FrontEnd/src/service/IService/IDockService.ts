@@ -1,7 +1,8 @@
-import { type Dock } from "../../model/Dock";
+import { type Dock, type DockFilter } from "../../model/Dock";
 
 export interface IDockService {
     getDocks(): Promise<Dock[]>;
-    
-    // missing create, update, filter methods
+    createDock(dock: Dock): Promise<Dock>;
+    updateDock(code: string, dock: Dock): Promise<Dock>;
+    filterDocks(filter: DockFilter): Promise<Dock[]>;
 }
