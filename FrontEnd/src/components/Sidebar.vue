@@ -10,9 +10,6 @@ const sidebarItems = ref([
   { name: 'Qualifications', route: '/qualifications', icon:"mortarboard", materialIcon: 'school' },
   { name: 'Vessels', route: '/vessels', icon: "ship", materialIcon: 'directions_boat' },
   { name: 'Staff', route: '/staff', icon: "people", materialIcon: 'people' },
-  { name: 'Dashboard', route: '/', materialIcon: 'home', selected: true },
-  { name: 'Qualifications', route: '/qualifications', materialIcon: 'school' },
-  { name: 'Vessels', route: '/vessels', materialIcon: 'directions_boat' },
 ]);
 
 const isCurrentTab = (itemRoute: string) => {

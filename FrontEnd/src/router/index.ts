@@ -29,28 +29,18 @@ const router = createRouter({
           name: 'qualifications',
           component: Qualifications
         },
+        {
+          path: '/staff',
+          name: 'staff',
+          component: Staff
+        },
+        {
+          path: '/login',
+          name: 'login',
+          component: Login,
+        }
       ]
     },
-    {
-      path: '/vessels',
-      name: 'vessels',
-      component: Vessels,
-    },
-    {
-      path: '/qualifications',
-      name: 'qualifications',
-      component: Qualifications
-    },
-    {
-      path: '/staff',
-      name: 'staff',
-      component: Staff
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: Login,
-    }
   ],
 })
 

@@ -6,9 +6,6 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vite.dev/config/
 export default defineConfig({
-  server: {
-    allowedHosts: true,
-  },
   plugins: [
     vue({
       template: {
@@ -27,6 +24,7 @@ export default defineConfig({
     },
   },
   server: {
+    allowedHosts: true,
     // Proxy API calls to backend dev server to avoid browser TLS issues with self-signed certs
     
     proxy: {
