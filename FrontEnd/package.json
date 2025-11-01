@@ -20,6 +20,7 @@
     "@shoelace-style/shoelace": "^2.20.1",
     "axios": "^1.13.1",
     "inversify": "^7.10.4",
+    "lottie-web": "^5.13.0",
     "vue": "^3.5.22",
     "vue-router": "^4.6.3"
   },

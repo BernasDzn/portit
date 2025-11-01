@@ -1,5 +1,6 @@
 <script setup lang="ts">
 	import { ref, onMounted } from 'vue'
+	import Loading from '@/components/Loading.vue'
 	import type { Staff } from '@/model/Staff'
 	import { StaffService } from '@/service/StaffService'
 	import AxiosHttpService from '@/service/AxiosHttpService'
@@ -41,7 +42,9 @@
 		</header>
 
 		<section style="margin-top:1rem">
-		<div v-if="loading">Loading staff list…</div>
+		<div v-if="loading">
+			<Loading/>
+		</div>
 		<div v-else-if="error" class="error">Error: {{ error }}</div>
 		<div v-else>
 			<div v-if="staffs.length === 0"> No staff members found. </div>
