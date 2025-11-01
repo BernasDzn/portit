@@ -52,7 +52,6 @@ onMounted(async () => {
 <div>
     <div @click="toggleMoreInfo" class="user-info">
         <sl-avatar 
-            shape="rounded" 
             :image="user.avatar"
             label="User avatar"
             loading="lazy"

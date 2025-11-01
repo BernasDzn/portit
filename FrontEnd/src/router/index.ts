@@ -7,6 +7,8 @@ import VesselCreate from '@/views/VesselCreate.vue'
 import Dashboard from '@/views/Dashboard.vue'
 import Staff from '@/views/Staff.vue'
 import Login from '@/views/Login.vue'
+import DockSearch from '@/views/SearchDocks.vue'
+import DockDashboard from '@/views/DockDashboard.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -40,6 +42,16 @@ const router = createRouter({
           path: '/vessels/view/:imo',
           name: 'viewVessel',
           component: () => import('@/views/VesselView.vue')
+        },
+        {
+          path: '/docks/dashboard',
+          name: 'docksDashboard',
+          component: DockDashboard
+        },
+        {
+          path: '/docks/search',
+          name: 'docksSearch',
+          component: DockSearch
         },
         {
           path: '/qualifications',
