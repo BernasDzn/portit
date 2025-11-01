@@ -8,8 +8,8 @@ const sidebarItems = ref([
   // add a materialIcon property with the Material Icons name we want to render
   { name: 'Dashboard', route: '/', icon: "house", materialIcon: 'home' },
   { name: 'Qualifications', route: '/qualifications', icon:"mortarboard", materialIcon: 'school' },
-  { name: 'Vessels', route: '/vessels', icon: "ship", materialIcon: 'directions_boat' },
   { name: 'Docks', route: '/docks', icon: "anchor", materialIcon: 'anchor' },
+  { name: 'Vessels', route: '/vessels/dashboard', icon: "anchor", materialIcon: 'anchor' },
   { name: 'Staff', route: '/staff', icon: "people", materialIcon: 'people' },
 ]);
 

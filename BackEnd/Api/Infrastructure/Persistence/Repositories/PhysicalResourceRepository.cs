@@ -147,9 +147,10 @@ public class PhysicalResourceRepository : GenericRepository<PhysicalResource>, I
             }
         }
 
+        int pageCount = (int) Math.Ceiling((double)query.Count() / filter.PageSize);
         query = query.Skip((filter.PageNumber - 1) * filter.PageSize).Take(filter.PageSize);
 		return Task.FromResult(
-			Page<PhysicalResource>.Of(query.ToList(), filter)
+			Page<PhysicalResource>.Of(query.ToList(), filter, pageCount)
 		);
     }
 }

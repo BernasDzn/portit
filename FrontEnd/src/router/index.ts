@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import Qualifications from '@/views/Qualifications.vue'
-import Vessels from '@/views/Vessels.vue'
+import VesselDashboard from '@/views/VesselDashboard.vue'
+import VesselSearch from '@/views/SearchVessels.vue'
 import Dashboard from '@/views/Dashboard.vue'
 import Docks from '@/views/Docks.vue'
 import Staff from '@/views/Staff.vue'
@@ -21,9 +22,14 @@ const router = createRouter({
           component: Dashboard,
         },
         {
-          path: '/vessels',
+          path: '/vessels/dashboard',
+          name: 'vesselDashboard',
+          component: VesselDashboard,
+        },
+        {
+          path: '/vessels/search',
           name: 'vessels',
-          component: Vessels,
+          component: VesselSearch
         },
         {
           path: '/docks',
@@ -39,14 +45,14 @@ const router = createRouter({
           path: '/staff',
           name: 'staff',
           component: Staff
-        },
-        {
-          path: '/login',
-          name: 'login',
-          component: Login,
         }
       ]
     },
+    {
+        path: '/login',
+        name: 'login',
+        component: Login,
+    }
   ],
 })
 

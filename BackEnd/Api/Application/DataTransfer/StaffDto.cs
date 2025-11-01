@@ -4,7 +4,7 @@ namespace Api.Application.DataTransfer;
 
 public class StaffDto
 {
-	public string MechanograficNumber { get; set; }
+	public string MechanographicNumber { get; set; }
 	public string Name { get; set; }
 	public string Email { get; set; }
 	public string PhoneNumber { get; set; }
@@ -16,7 +16,7 @@ public class StaffDto
 
 public class CreateStaffDto
 {
-	public string MechanograficNumber { get; set; }
+	public string MechanographicNumber { get; set; }
 	public string Name { get; set; }
 	public string Email { get; set; }
 	public string PhoneNumber { get; set; }

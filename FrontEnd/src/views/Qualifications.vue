@@ -1,18 +1,38 @@
 <script setup lang="ts">
+import QualificationPrinter from '@/components/printers/QualificationPrinter.vue';
+import ListingBox from '@/components/ListingBox.vue';
+import type { Filter, Page } from '@/model/Page';
+import type { Qualification } from '@/model/Qualifications';
+import AxiosHttpService from '@/service/AxiosHttpService';
+import { QualificationService } from '@/service/QualificationService';
+
+const http = new AxiosHttpService()
+const qualificationService = new QualificationService(http as any)
+
+const fetchQualifications = async (filtering?: Filter<Qualification>): Promise<Page<Qualification>> => {
+    return await qualificationService.getQualifications(filtering);
+}
 
 </script>
 
 <template>
-  <div>
+<div>
 
     <sl-breadcrumb>
-      <sl-breadcrumb-item>Qualifications</sl-breadcrumb-item>
-      <sl-breadcrumb-item>Listings</sl-breadcrumb-item>
+        <sl-breadcrumb-item>Qualifications</sl-breadcrumb-item>
+        <sl-breadcrumb-item>Listings</sl-breadcrumb-item>
     </sl-breadcrumb>
 
     <header>
-      <h1 class="title">Qualifications</h1>
-      <p class="subtitle">Manage required certifications and qualifications</p>
+        <h1 class="title">Qualifications</h1>
+        <p class="subtitle">Manage required certifications and qualifications</p>
+
+        <ListingBox :fetch-function="fetchQualifications" search-filter="qualificationName" v-slot="{elements}">
+            <li v-for="qualification in elements" :key="qualification.idCode">
+                <!-- {{ qualification.idCode }} - {{ qualification.qualificationName }} -->
+                <QualificationPrinter class="listing-box" :qualification="qualification" />
+            </li>
+        </ListingBox>
     </header>
-  </div>
+</div>
 </template>

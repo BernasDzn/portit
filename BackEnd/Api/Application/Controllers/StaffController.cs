@@ -43,7 +43,7 @@ public class StaffController : ControllerBase, IStaffController
 		try
 		{
 			var createdStaff = await _staffService.Create(staffDto);
-			return CreatedAtAction(nameof(GetAll), new { id = createdStaff?.MechanograficNumber }, createdStaff);
+			return CreatedAtAction(nameof(GetAll), new { id = createdStaff?.MechanographicNumber }, createdStaff);
 		}
 		catch (EntityNotFoundException ex)
 		{

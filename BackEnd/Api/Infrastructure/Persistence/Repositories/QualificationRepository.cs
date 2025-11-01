@@ -90,15 +90,17 @@ QualificationRepository : GenericRepository<Qualification>, IQualificationReposi
 	public Task<Page<Qualification>> FilterQualificationsAsync(QualificationFilter filter)
 	{
 		IQueryable<Qualification> query = _context.Qualifications.AsQueryable();
+
 		if (!string.IsNullOrEmpty(filter.Code))
-			query = query.Where(q => q.NameCode.Value.ToLower().Contains(filter.Code.ToLower()));
+            query = query.Where(q => q.NameCode.Value.ToLower().Contains(filter.Code.ToLower()));
 
 		if (!string.IsNullOrEmpty(filter.QualificationName))
 			query = query.Where(q => q.QualificationName.Value.ToLower().Contains(filter.QualificationName.ToLower()));
 
-		query = query.Skip((filter.PageNumber - 1) * filter.PageSize).Take(filter.PageSize);
+        int pageCount = (int) Math.Ceiling((double)query.Count() / filter.PageSize);
+        query = query.Skip((filter.PageNumber - 1) * filter.PageSize).Take(filter.PageSize);
 		return Task.FromResult(
-			Page<Qualification>.Of(query.ToList(), filter)
+			Page<Qualification>.Of(query.ToList(), filter, pageCount)
 		);
 	}
 }

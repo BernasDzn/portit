@@ -36,12 +36,12 @@ public class StaffRepository : GenericRepository<Staff>, IStaffRepository
 		try
 		{
 			Staff? staff = await _context.Staffs
-				.FirstOrDefaultAsync(s => s.MechanograficNumber.Value.Equals(mecNumber) && s.isActive);
+				.FirstOrDefaultAsync(s => s.MechanographicNumber.Value.Equals(mecNumber) && s.isActive);
 			return staff;
 		}
 		catch (Exception ex)
 		{
-			throw new EntityNotFoundException("Staff with mechanografic number " + mecNumber + " not found: " + ex.Message);
+			throw new EntityNotFoundException("Staff with mechanographic number " + mecNumber + " not found: " + ex.Message);
 		}
 	}
 
@@ -107,9 +107,11 @@ public class StaffRepository : GenericRepository<Staff>, IStaffRepository
 		{
 			IQueryable<Staff> query = _context.Staffs.AsQueryable();
 			query = query.Where(s => s.isActive);
+            
+            int pageCount = (int) Math.Ceiling((double)query.Count() / filter.PageSize);
 
-			if (!string.IsNullOrEmpty(filter.MechanograficNumber))
-				query = query.Where(s => s.MechanograficNumber.Value.ToLower().Contains(filter.MechanograficNumber.ToLower()));
+			if (!string.IsNullOrEmpty(filter.MechanographicNumber))
+                query = query.Where(s => s.MechanographicNumber.Value.ToLower().Contains(filter.MechanographicNumber.ToLower()));
 
 			if (!string.IsNullOrEmpty(filter.Name))
 				query = query.Where(s => s.Name.Value.ToLower().Contains(filter.Name.ToLower()));
@@ -129,7 +131,7 @@ public class StaffRepository : GenericRepository<Staff>, IStaffRepository
 			
 			query = query.Skip((filter.PageNumber - 1) * filter.PageSize).Take(filter.PageSize);
 			return Task.FromResult(
-				Page<Staff>.Of(query.ToList(), filter)
+				Page<Staff>.Of(query.ToList(), filter, pageCount)
 			);
 			
 		}

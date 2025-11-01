@@ -76,21 +76,3 @@ onMounted(async () => {
     </div>
 </div>
 </template>
-
-<style scoped>
-
-.icon {
-    margin: auto 0 auto 10px;
-}
-
-.logout-box {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-}
-
-.logout-button {
-    width: 100%;
-}
-
-</style>

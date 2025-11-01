@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Api.Domain.ValueObjects;
 
 [Owned]
-public class StaffMechanograficNumber
+public class StaffMechanographicNumber
 {
 
 	Regex alphanumericRegex = new Regex("^[a-zA-Z0-9]*$");
