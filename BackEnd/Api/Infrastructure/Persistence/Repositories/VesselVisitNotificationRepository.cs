@@ -121,7 +121,6 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
 
             // Apply same company rule
             query = query.Where(vvn => vvn.Submitter.RepresentedOrganization!.Id == relatedOrg.Id);
-            int pageCount = (int) Math.Ceiling((double)query.Count() / filter.PageSize);
 
             if (filter.Status != null)
                 switch (filter.Status)
@@ -156,6 +155,7 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
                 query = query.Where(vvn => vvn.ExpectedArrival <= filter.ExpectedArrivalTo);
 
             // Pagination
+            int pageCount = (int) Math.Ceiling((double)query.Count() / filter.PageSize);
             query = query.Skip((filter.PageNumber - 1) * filter.PageSize).Take(filter.PageSize);
             List<VesselVisitNotification> result = query.ToList();
 

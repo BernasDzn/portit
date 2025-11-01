@@ -76,7 +76,6 @@ public class VesselRepository : GenericRepository<Vessel>, IVesselRepository
         try
         {
             IQueryable<Vessel> query = _context.Vessels.AsQueryable();
-            int pageCount = (int) Math.Ceiling((double)query.Count() / filter.PageSize);
 
             if (!string.IsNullOrEmpty(filter.Name))
                 query = query.Where(v => v.Name.Value.ToLower().Contains(filter.Name.ToLower()));
@@ -87,6 +86,7 @@ public class VesselRepository : GenericRepository<Vessel>, IVesselRepository
             if (!string.IsNullOrEmpty(filter.TaxNumber))
                 query = query.Where(v => v.Owner.TaxId.Value.ToLower().Contains(filter.TaxNumber.ToLower()));
 
+            int pageCount = (int) Math.Ceiling((double)query.Count() / filter.PageSize);
             query = query.Skip((filter.PageNumber - 1) * filter.PageSize).Take(filter.PageSize);
             return Task.FromResult(Page<Vessel>.Of(query.ToList(), filter, pageCount));
         }

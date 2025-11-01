@@ -1,16 +1,15 @@
 <script setup lang="ts">
-import ListingBox from '@/components/ListingBox.vue';
 import QualificationPrinter from '@/components/printers/QualificationPrinter.vue';
-import type { Page } from '@/model/Page';
+import ListingBox from '@/components/ListingBox.vue';
+import type { Filter, Page } from '@/model/Page';
 import type { Qualification } from '@/model/Qualifications';
 import AxiosHttpService from '@/service/AxiosHttpService';
 import { QualificationService } from '@/service/QualificationService';
-import { onMounted, ref } from 'vue';
 
 const http = new AxiosHttpService()
 const qualificationService = new QualificationService(http as any)
 
-const fetchQualifications = async (filtering?: Qualification): Promise<Page<Qualification>> => {
+const fetchQualifications = async (filtering?: Filter<Qualification>): Promise<Page<Qualification>> => {
     return await qualificationService.getQualifications(filtering);
 }
 

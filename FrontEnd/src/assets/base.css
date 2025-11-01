@@ -1,19 +1,22 @@
 :root {
-  
-  /* Login */
-  --login-base: #EDEFF6;
-  --login-primary-gradient: linear-gradient(35deg, #00062D 0%, #393357 100%);
 
-  /* Main page */
+    /* Login */
+    --login-base: #EDEFF6;
+    --login-primary-gradient: linear-gradient(35deg, #00062D 0%, #393357 100%);
 
-  --font-size-base: 16px;
-  --text-black: #131523;
-  --text-primary: #ffffff;
-  --primary: #1F2435;
-  --primary-lighter: #2A2E42;
-  --foreground: oklch(0.145 0 0);
-  --sidebar-width: 250px;
-  --icon-size: 110px;
+    /* Main page */
 
-  --accent-1: #485EA9;
+    --font-size-base: 16px;
+    --text-black: #131523;
+    --text-primary: #ffffff;
+    --primary: #1F2435;
+    --primary-lighter: #2A2E42;
+    --foreground: oklch(0.145 0 0);
+    --sidebar-width: 250px;
+    --icon-size: 110px;
+
+    --accent-1: #485EA9;
+
+    /* Shoelace customizing */
+    --sl-color-primary-600: var(--accent-1) !important;
 }
