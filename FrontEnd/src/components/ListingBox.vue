@@ -126,7 +126,7 @@ onBeforeUnmount(() => {
                 </template>
                 <template v-else>
                     <div class="no-results-container">
-                        <NoResults />
+                        <NoResults noResultsMessage="No results found."/>
                     </div>
                 </template>
             </div>

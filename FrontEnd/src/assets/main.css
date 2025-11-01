@@ -27,6 +27,8 @@ body {
 }
 
 .listing-box {
+    text-decoration: none;
+    color: inherit;
     width: 100%;
 }
 
@@ -54,9 +56,6 @@ body {
     grid-template-columns: 1fr 1fr 1fr;
 }
 
-.listing-item {
-    width: 100%;
-}
 .listing-item {
     width: 100%;
     display: block;

@@ -3,7 +3,8 @@ import { ref, onMounted, computed } from 'vue';
 import FormField from '@/components/FormField.vue';
 import { AxiosHttpService } from '@/service/AxiosHttpService';
 import { VesselService } from '@/service/VesselService';
-import type { Vessel } from '@/model/Vessels';
+import type { Vessel } from '@/model/Vessel';
+import router from '@/router';
 
 const vesselName = ref('');
 const vesselIMO = ref('');
@@ -82,13 +83,13 @@ function onCancel() {
         (cancelDialog.value as any)?.show?.();
     } else {
         // no unsaved changes - navigate back
-        window.location.href = '../vessels/dashboard';
+        router.push('/vessels/dashboard');
     }
 }
 
 function confirmCancel() {
     (cancelDialog.value as any)?.hide?.();
-    window.location.href = '../vessels/dashboard';
+    router.push('/vessels/dashboard');
 }
 
 onMounted(async () => {
@@ -117,7 +118,7 @@ onMounted(async () => {
 <template>
     <div>
         <sl-breadcrumb>
-            <sl-breadcrumb-item href="../vessels/dashboard">Vessel Dashboard</sl-breadcrumb-item>
+            <sl-breadcrumb-item><RouterLink to="/vessels/dashboard" class="link">Vessel Dashboard</RouterLink></sl-breadcrumb-item>
             <sl-breadcrumb-item>Create Vessel</sl-breadcrumb-item>
         </sl-breadcrumb>
         <h1 class="title">Create Vessel</h1>
@@ -222,4 +223,10 @@ onMounted(async () => {
     display: flex;
     justify-content: flex-end;
 }
+
+.link {
+  text-decoration: none;
+  color: inherit;
+}
+
 </style>

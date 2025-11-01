@@ -3,7 +3,7 @@ import { TYPES } from '@/inversify/types';
 
 import type { IHttpService } from './IService/IHttpService';
 import type { IVesselService } from './IService/IVesselService';
-import type { Vessel } from '@/model/Vessels';
+import type { Vessel } from '@/model/Vessel';
 import type { Filter, Page } from '@/model/Page';
 
 @injectable()
@@ -33,6 +33,11 @@ export class VesselService implements IVesselService {
 	async createVessel(vessel: Vessel): Promise<Vessel> {
 		const res =  await this.http.post<Vessel>('/Vessel', vessel);
 		return res.data;
+	}
+
+	async getVesselByIMO(imo: string): Promise<Vessel> {
+	const res = await this.http.get<Vessel>(`/Vessel/${imo}`);
+	return res.data;
 	}
     
 }

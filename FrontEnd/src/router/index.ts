@@ -2,8 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import Qualifications from '@/views/Qualifications.vue'
 import VesselDashboard from '@/views/VesselDashboard.vue'
-import VesselSearch from '@/views/SearchVessels.vue'
-import VesselCreate from '@/views/CreateVessel.vue'
+import VesselSearch from '@/views/VesselSearch.vue'
+import VesselCreate from '@/views/VesselCreate.vue'
 import Dashboard from '@/views/Dashboard.vue'
 import Staff from '@/views/Staff.vue'
 import Login from '@/views/Login.vue'
@@ -35,6 +35,11 @@ const router = createRouter({
           path: '/vessels/create',
           name: 'createVessel',
           component: VesselCreate
+        },
+        {
+          path: '/vessels/view/:imo',
+          name: 'viewVessel',
+          component: () => import('@/views/VesselView.vue')
         },
         {
           path: '/qualifications',

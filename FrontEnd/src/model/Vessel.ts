@@ -1,7 +1,7 @@
 export interface Vessel {
     name: string;
     imoNumber: string;
-    type: string;
+    type: string
     owner: string;
     length: number;
     depth: number;
