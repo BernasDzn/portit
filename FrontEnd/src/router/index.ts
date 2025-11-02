@@ -44,6 +44,11 @@ const router = createRouter({
           component: () => import('@/views/VesselView.vue')
         },
         {
+          path: '/vessels/edit/:imo',
+          name: 'editVessel',
+          component: () => import('@/views/VesselEdit.vue')
+        },
+        {
           path: '/docks/dashboard',
           name: 'docksDashboard',
           component: DockDashboard

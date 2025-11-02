@@ -36,8 +36,13 @@ export class VesselService implements IVesselService {
 	}
 
 	async getVesselByIMO(imo: string): Promise<Vessel> {
-	const res = await this.http.get<Vessel>(`/Vessel/${imo}`);
-	return res.data;
+		const res = await this.http.get<Vessel>(`/Vessel/${imo}`);
+		return res.data;
+	}
+
+	async updateVessel(imo: string, vessel: Vessel): Promise<Vessel> {
+		const res = await this.http.put<Vessel>(`/Vessel/${imo}`, vessel);
+		return res.data;
 	}
     
 }

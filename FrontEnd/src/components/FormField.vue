@@ -2,7 +2,7 @@
     <div class="form-field">
         <sl-label :for="inputId">{{ name }}</sl-label>
         <slot>
-            <sl-input :id="inputId" v-model="inputValue" :placeholder="placeholderText"></sl-input>
+            <sl-input :id="inputId" v-model="inputValue" :placeholder="placeholderText" :disabled="!enabled" />
         </slot>
     </div>
 </template>
@@ -22,6 +22,10 @@ const props = defineProps({
     modelValue: {
         type: [String, Number],
         default: ''
+    },
+    enabled : {
+        type: Boolean,
+        default: true
     }
 });
 
