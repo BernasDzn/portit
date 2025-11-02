@@ -19,6 +19,9 @@ const searchTerm = ref('');
 
 const pageNumber = ref(1);
 const elements = ref<Page<any>>({ items: [], pageNumber: 0, pageSize: 0, pageCount: 0 });
+    
+const showFiltermenu = ref(false);
+const filters = ref<{ [key: string]: any }>({});
 
 onMounted(async () => {
     await loadElements(
@@ -112,9 +115,19 @@ onBeforeUnmount(() => {
     <div>
         <ErrorHandler v-if="error" :error-object="error" />
         <sl-card v-else class="listing-box">
-            <sl-input class="listing-search" placeholder="Search..." size="large" clearable v-model="searchTerm">
-                <span slot="prefix" class="material-icons material-icons--prefix">search</span>
-              </sl-input>
+            <div class="listing-filters">
+                <sl-input class="listing-search" placeholder="Search..." size="large" clearable v-model="searchTerm">
+                    <span slot="prefix" class="material-icons material-icons--prefix">search</span>
+                </sl-input>
+                <sl-button class="filter-button" variant="default" size="large" @click="() => showFiltermenu = !showFiltermenu">
+                    <sl-icon slot="prefix" name="filter"></sl-icon>
+                    Filter
+                </sl-button>
+            </div>
+            <div v-if="showFiltermenu">
+                <!-- Future filter menu implementation -->
+                <p>Filter menu coming soon...</p>
+            </div>
             <!-- Pass the loaded elements to the parent via a slot prop --> 
             <Loading v-if="loading"/>
             <div v-else>
@@ -134,3 +147,21 @@ onBeforeUnmount(() => {
         </sl-card>
     </div>
 </template>
+
+<style scoped>
+.listing-filters {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+  
+.listing-search {
+    flex: 1;
+}
+
+.filter-button::part(base) {
+    margin-bottom: 1rem;
+    flex-shrink: 0;
+}
+  
+</style>

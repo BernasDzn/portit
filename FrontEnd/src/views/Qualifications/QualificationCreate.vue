@@ -6,6 +6,10 @@ import AxiosHttpService from '@/service/AxiosHttpService';
 import { QualificationService } from '@/service/QualificationService';
 import { ref } from 'vue';
 
+const props = defineProps<{
+    updateId: string | null;
+}>()
+
 const http = new AxiosHttpService();
 const qualificationService = new QualificationService(http as any);
 
@@ -14,8 +18,11 @@ const qualification = ref<Qualification>({
     qualificationName: ''
 });
 
-const submitQualification = (obj: any) => 
+const submitQualification = (obj: Qualification) => 
     qualificationService.addQualification(obj);
+
+const updateQualification = async (id: string, obj: Qualification) => 
+    qualificationService.updateQualification(id, obj);
 
 </script>
 

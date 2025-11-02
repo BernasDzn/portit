@@ -5,7 +5,5 @@ export interface IQualificationService {
     getQualifications(filtering: Filter<Qualification>): Promise<Page<Qualification>>;
     getQualificationById(id: string): Promise<Qualification>;
     addQualification(value: Qualification): Promise<Qualification>;
-    // deactivate
-    // update
-    // filter
+    updateQualification(id: string, value: Qualification): Promise<Qualification>;
 }
