@@ -19,7 +19,7 @@ const fetchDocks = async (filtering?: Filter<DockFilter>): Promise<Page<Dock>> =
 <div>
 
     <sl-breadcrumb>
-        <sl-breadcrumb-item><RouterLink to="../docks/dashboard">Docks Dashboard</RouterLink></sl-breadcrumb-item>
+        <sl-breadcrumb-item><RouterLink to="../docks/dashboard" class="breadcrumb-link">Docks Dashboard</RouterLink></sl-breadcrumb-item>
         <sl-breadcrumb-item>Search Docks</sl-breadcrumb-item>
     </sl-breadcrumb>
 

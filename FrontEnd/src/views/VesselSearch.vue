@@ -28,7 +28,7 @@ function goToVessel(imo: string) {
   <div>
 
     <sl-breadcrumb>
-      <sl-breadcrumb-item><RouterLink to="/vessels/dashboard" class="link">Vessel Dashboard</RouterLink></sl-breadcrumb-item>
+      <sl-breadcrumb-item><RouterLink to="/vessels/dashboard" class="breadcrumb-link">Vessel Dashboard</RouterLink></sl-breadcrumb-item>
       <sl-breadcrumb-item>Search Vessels</sl-breadcrumb-item>
     </sl-breadcrumb>
 

@@ -32,7 +32,7 @@ onMounted(async () => {
 <template>
   <div>
     <sl-breadcrumb>
-      <sl-breadcrumb-item><RouterLink to="/vessels/dashboard" class="link">Vessel Dashboard</RouterLink></sl-breadcrumb-item>
+      <sl-breadcrumb-item><RouterLink to="/vessels/dashboard" class="breadcrumb-link">Vessel Dashboard</RouterLink></sl-breadcrumb-item>
       <sl-breadcrumb-item>View Vessel</sl-breadcrumb-item>
     </sl-breadcrumb>
     <h1>View Vessel</h1>

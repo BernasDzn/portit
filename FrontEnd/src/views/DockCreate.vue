@@ -116,7 +116,7 @@ onMounted(async () => {
 <template>
     <div>
         <sl-breadcrumb>
-            <sl-breadcrumb-item href="../docks/dashboard">Dock Dashboard</sl-breadcrumb-item>
+            <sl-breadcrumb-item><RouterLink to="../docks/dashboard" class="breadcrumb-link">Dock Dashboard</RouterLink></sl-breadcrumb-item>
             <sl-breadcrumb-item>Create Dock</sl-breadcrumb-item>
         </sl-breadcrumb>
         <h1 class="title">Create Dock</h1>

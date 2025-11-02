@@ -250,3 +250,8 @@
     margin-bottom: 1rem;
     color: gray;
 }
+
+.breadcrumb-link {
+  text-decoration: none;
+  color: inherit;
+}

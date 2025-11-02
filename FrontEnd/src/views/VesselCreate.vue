@@ -118,7 +118,7 @@ onMounted(async () => {
 <template>
     <div>
         <sl-breadcrumb>
-            <sl-breadcrumb-item><RouterLink to="/vessels/dashboard" class="link">Vessel Dashboard</RouterLink></sl-breadcrumb-item>
+            <sl-breadcrumb-item><RouterLink to="/vessels/dashboard" class="breadcrumb-link">Vessel Dashboard</RouterLink></sl-breadcrumb-item>
             <sl-breadcrumb-item>Create Vessel</sl-breadcrumb-item>
         </sl-breadcrumb>
         <h1 class="title">Create Vessel</h1>
@@ -222,11 +222,6 @@ onMounted(async () => {
     margin-bottom: 1rem;
     display: flex;
     justify-content: flex-end;
-}
-
-.link {
-  text-decoration: none;
-  color: inherit;
 }
 
 </style>
