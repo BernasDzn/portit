@@ -6,6 +6,7 @@ import { DockService } from '@/service/DockService';
 import type { Dock } from '@/model/Dock';
 
 import EntityView from '@/components/crud/EntityView.vue';
+import VesselTypePrinter from '@/components/printers/VesselTypePrinter.vue';
 
 
 const route = useRoute();
@@ -101,14 +102,13 @@ const fetchDock = async (): Promise<Dock | undefined> => {
                         </sl-card>
                     </div>
                     <sl-card class="info-card" style="flex: 100%;">
-                        <p>Supported Vessel Types</p>
-                        <div class="info-grid">
-                            <div class="info-block" v-for="vtype in entity.element.supportedVesselTypes"
-                                :key="vtype.name">
-                                <p>{{ vtype.name }}</p>
-                            </div>
+                    <p>Supported Vessel Types</p>
+                    <div class="info-grid">
+                        <div v-for="vtype in entity.element.supportedVesselTypes" :key="vtype.name">
+                            <VesselTypePrinter class="listing-box" :vtype="vtype" :link="`/vessel-types/view/${vtype.name}`" />
                         </div>
-                    </sl-card>
+                    </div>
+                </sl-card>
                 </div>
             </div>
         </EntityView>
