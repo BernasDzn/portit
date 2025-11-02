@@ -96,12 +96,6 @@ const fetchStaff = async (): Promise<Staff | undefined> => {
 
 <style scoped> 
 
-.info-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-}
-
 .info-block {
     flex: 1 1 45%;
     min-width: 200px;

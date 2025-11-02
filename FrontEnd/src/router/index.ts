@@ -18,6 +18,7 @@ import QualificationView from '@/views/Qualifications/QualificationView.vue'
 import StaffDashboard from '@/views/Staff/StaffDashboard.vue'
 import StaffSearch from '@/views/Staff/StaffSearch.vue'
 import StaffView from '@/views/Staff/StaffView.vue'
+import DockView from '@/views/Docks/DockView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -66,6 +67,11 @@ const router = createRouter({
           path: '/docks/search',
           name: 'docksSearch',
           component: DockSearch
+        },
+        {
+          path: '/docks/view/:code',
+          name: 'viewDock',
+          component: DockView
         },
         {
           path: '/docks/create',

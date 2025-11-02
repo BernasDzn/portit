@@ -31,6 +31,11 @@ export class DockService implements IDockService {
         return res.data;
     }
 
+    async getDockByCode(code: string): Promise<Dock | undefined> {
+        const res = await this.http.get<Dock>(`/Dock/${code}`);
+        return res.data;
+    }
+
     async createDock(dock: Dock): Promise<Dock> {
         const res = await this.http.post<Dock>('/Dock', dock);
         return res.data;

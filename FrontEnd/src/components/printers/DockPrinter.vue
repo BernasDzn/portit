@@ -1,36 +1,57 @@
 <script setup lang="ts">
 import type { Dock } from '@/model/Dock';
 import { computed } from 'vue';
-const props = defineProps<{dock: Dock}>();
+import { RouterLink } from 'vue-router';
+const props = defineProps<{
+    dock: Dock,
+    link?: string
+}>();
 
 const typesDisplay = computed(() => {
-    const t = (props as any).dock?.supportedVesselTypes;
-    return Array.isArray(t) ? t.map((type: any) => type.name).join(', ') : '';
+    return props.dock.supportedVesselTypes.map((type: any) => type.name) ?? [];
 });
 </script>
 
 <template>
-    <sl-card class="listing-item">
-        <div class="opposed">
-            <div>
-                <p>{{ dock.name }}</p>
-                <p class="item-description">
-                    {{ dock.code }}<br/>
-                    {{ dock.location }}<br/>
-                    Supports: {{ typesDisplay }}
-                </p>
+    <component :is="props.link ? RouterLink : 'div'" :to="props.link">
+        <sl-card class="listing-item">
+            <div class="opposed">
+                <div>
+                    <p>{{ dock.name }}</p>
+                    <p class="item-description">
+                        {{ dock.code }}<br />
+                        {{ dock.location }}<br />
+                    </p>
+                </div>
+                <span class="material-icons icon" aria-hidden="true">anchor</span>
             </div>
-            <span class="material-icons icon" aria-hidden="true">houseboat</span>
-        </div>
-        <slot></slot>
-    </sl-card>
+            <sl-divider></sl-divider>
+            <p>Supported Vessel Types:</p>
+            <ul class="vessel-types-list">
+                <li v-for="vtype in typesDisplay">
+                    <sl-badge v-if="vtype !== undefined" class="list-badge" variant="neutral">{{ vtype }}</sl-badge>
+                </li>
+            </ul>
+            <slot></slot>
+        </sl-card>
+    </component>
 </template>
 
 <style scoped>
-
 .icon {
     font-size: 35px;
     color: var(--accent-1);
 }
+.vessel-types-list {
+    padding: 0;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
 
+.list-badge::part(base) {
+    border-radius: var(--sl-border-radius-medium);
+    background-color: var(--sl-color-neutral-200);
+    color: var(--sl-color-neutral-800);
+}
 </style>

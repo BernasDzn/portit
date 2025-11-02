@@ -29,7 +29,7 @@ const fetchDocks = async (filtering?: Filter<DockFilter>): Promise<Page<Dock>> =
 
         <ListingBox :fetch-function="fetchDocks" search-filter="dockName" v-slot="{elements}">
             <li v-for="dock in elements" :key="dock.code">
-                <DockPrinter class="listing-box" :dock="dock" />
+                <DockPrinter class="listing-box" :dock="dock" :link="`/docks/view/${dock.code}`"/>
             </li>
         </ListingBox>
     </header>
