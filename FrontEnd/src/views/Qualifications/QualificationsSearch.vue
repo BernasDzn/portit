@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import QualificationPrinter from '@/components/printers/QualificationPrinter.vue';
-import ListingBox from '@/components/ListingBox.vue';
+import ListingBox from '@/components/crud/ListingBox.vue';
 import type { Filter, Page } from '@/model/Page';
 import type { Qualification } from '@/model/Qualifications';
 import AxiosHttpService from '@/service/AxiosHttpService';

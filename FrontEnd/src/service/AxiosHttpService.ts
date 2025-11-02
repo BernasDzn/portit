@@ -24,17 +24,45 @@ export class AxiosHttpService implements IHttpService {
   }
 
   async post<T>(url: string, data: unknown, headers?: Headers): Promise<Response<T>> {
-    const res = await this.axiosInstance.post<T>(url, data as any, { headers } as any);
+    const res = await this.axiosInstance.post<T>(
+      url,
+      data,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          ...headers,
+        },
+      } as any
+    );
     return this.toResponse(res);
   }
+  
 
   async put<T>(url: string, data: unknown, headers?: Headers): Promise<Response<T>> {
-    const res = await this.axiosInstance.put<T>(url, data as any, { headers } as any);
+    const res = await this.axiosInstance.put<T>(
+        url,
+        data,
+        {
+            headers: {
+            'Content-Type': 'application/json',
+            ...headers,
+            },
+        } as any
+    );
     return this.toResponse(res);
   }
 
   async patch<T>(url: string, data: unknown, headers?: Headers): Promise<Response<T>> {
-    const res = await this.axiosInstance.patch<T>(url, data as any, { headers } as any);
+    const res = await this.axiosInstance.patch<T>(
+        url,
+        data,
+        {
+            headers: {
+            'Content-Type': 'application/json',
+            ...headers,
+            },
+        } as any
+    );
     return this.toResponse(res);
   }
 

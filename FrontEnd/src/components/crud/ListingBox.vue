@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { onMounted, ref, watch, onBeforeUnmount } from 'vue';
-import Loading from './Loading.vue';
-import ErrorHandler from './ErrorHandler.vue';
+import Loading from '../Loading.vue';
+import ErrorHandler from '../ErrorHandler.vue';
 import type { Filter, Page } from '@/model/Page';
-import Pagination from './Pagination.vue';
-import NoResults from './NoResults.vue';
+import Pagination from '../Pagination.vue';
+import NoResults from '../NoResults.vue';
 
 // The function to fetch data is passed as a prop
 const props = defineProps<{

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
 import { useRoute } from 'vue-router';
-import FormField from '@/components/FormField.vue';
+import FormField from '@/components/crud/FormField.vue';
 import Loading from '@/components/Loading.vue';
 import { AxiosHttpService } from '@/service/AxiosHttpService';
 import { VesselService } from '@/service/VesselService';

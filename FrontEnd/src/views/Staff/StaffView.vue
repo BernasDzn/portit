@@ -5,7 +5,7 @@ import { StaffService } from '@/service/StaffService';
 
 import type { Staff } from '@/model/Staff';
 
-import EntityView from '@/components/EntityView.vue';
+import EntityView from '@/components/crud/EntityView.vue';
 import ActivityTag from '@/components/ActivityTag.vue';
 
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import VesselPrinter from '@/components/printers/VesselPrinter.vue';
-import ListingBox from '@/components/ListingBox.vue';
+import ListingBox from '@/components/crud/ListingBox.vue';
 import { useRouter } from 'vue-router';
 import type { Filter, Page } from '@/model/Page';
 import type { VesselType } from '@/model/VesselType';

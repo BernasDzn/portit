@@ -6,7 +6,7 @@ import { VesselService } from '@/service/VesselService';
 import type { Vessel } from '@/model/Vessel';
 import Loading from '@/components/Loading.vue';
 import NoResults from '@/components/NoResults.vue';
-import EntityView from '@/components/EntityView.vue';
+import EntityView from '@/components/crud/EntityView.vue';
 
 
 const route = useRoute();
