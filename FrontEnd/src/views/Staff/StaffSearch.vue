@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import AxiosHttpService from '@/service/AxiosHttpService'
 
-import ListingBox from '@/components/ListingBox.vue';
+import ListingBox from '@/components/crud/ListingBox.vue';
 import StaffPrinter from '@/components/printers/StaffPrinter.vue'
 
 import { StaffService } from '@/service/StaffService'
