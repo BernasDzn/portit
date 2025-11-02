@@ -43,21 +43,33 @@ watch(() => props.items, (val) => {
 });
 
 watch(() => props.modelValue, (val) => {
-    if (props.multiple) 
-        internalValue.value = Array.isArray(val) ? val.map(encodeRaw) : [];
-    else 
-        internalValue.value = (val !== undefined && val !== null) ? encodeRaw(val) : null;
+    if (props.multiple) {
+        const newEnc = Array.isArray(val) ? val.map(encodeRaw) : [];
+        if (JSON.stringify(newEnc) !== JSON.stringify(internalValue.value)) {
+            internalValue.value = newEnc;
+        }
+    } else {
+        const newEnc = (val !== undefined && val !== null) ? encodeRaw(val) : null;
+        if (newEnc !== internalValue.value) {
+            internalValue.value = newEnc;
+        }
+    }
 });
 
 watch(internalValue, (val) => {
     if (props.multiple) {
-        const arr = Array.isArray(val) ? val : [];
-        emit('update:modelValue', arr.map((k) => decodeKey(String(k))));
-    } else
-        emit('update:modelValue', val ? decodeKey(String(val)) : null);
-
+        const arr = Array.isArray(val) ? val.map((k) => decodeKey(String(k))) : [];
+        const current = Array.isArray(props.modelValue) ? props.modelValue : [];
+        if (JSON.stringify(arr) !== JSON.stringify(current)) {
+            emit('update:modelValue', arr);
+        }
+    } else {
+        const decoded = val ? decodeKey(String(val)) : null;
+        if (decoded !== props.modelValue) {
+            emit('update:modelValue', decoded);
+        }
+    }
 });
-
 async function loadItems() {
     if (typeof props.fetchFunction === 'function') {
         try {
