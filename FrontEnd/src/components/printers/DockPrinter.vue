@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import type { Dock } from '@/model/Dock';
+import { computed } from 'vue';
 const props = defineProps<{dock: Dock}>();
+
+const typesDisplay = computed(() => {
+    const t = (props as any).dock?.supportedVesselTypes;
+    return Array.isArray(t) ? t.map((type: any) => type.name).join(', ') : '';
+});
 </script>
 
 <template>
@@ -11,7 +17,7 @@ const props = defineProps<{dock: Dock}>();
                 <p class="item-description">
                     {{ dock.code }}<br/>
                     {{ dock.location }}<br/>
-                    Supports: {{ dock.supportedVesselTypes.map(type => type.name).join(', ') }}
+                    Supports: {{ typesDisplay }}
                 </p>
             </div>
             <span class="material-icons icon" aria-hidden="true">anchor</span>

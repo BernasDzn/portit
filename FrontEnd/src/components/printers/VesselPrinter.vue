@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Vessel } from '@/model/Vessels';
+import type { Vessel } from '@/model/Vessel';
 import { RouterLink } from 'vue-router';
 import { computed } from 'vue';
 

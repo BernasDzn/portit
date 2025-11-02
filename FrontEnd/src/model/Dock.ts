@@ -7,7 +7,7 @@ export interface Dock {
         depth: number;
         draft: number;
     };
-    supportedVesselTypes: {name: string;}[];
+    supportedVesselTypes: string[];
 }
 
 export interface DockFilter{
