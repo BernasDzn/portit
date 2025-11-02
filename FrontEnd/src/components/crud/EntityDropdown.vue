@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref, computed, watch, onMounted } from 'vue';
 
 const props = defineProps({
@@ -14,22 +14,106 @@ const props = defineProps({
     // Keys for value/label when items are objects
     valueKey: { type: String, default: 'id' },
     labelKey: { type: String, default: 'name' },
-    required: { type: Boolean, default: false }
+    required: { type: Boolean, default: false },
+    selectedElement: { type: [String, Number, Object], default: null }
 });
 
 const emit = defineEmits(['update:modelValue']);
 
 const internalValue = ref(props.modelValue);
-const options = ref(Array.isArray(props.items) ? props.items.slice() : []);
+const options = ref<any[]>(Array.isArray(props.items) ? props.items.slice() : []);
 const loading = ref(false);
+
+const displayLabel = computed(() => {
+    if (internalValue.value === null || internalValue.value === undefined || internalValue.value === '') {
+        return props.placeholderText;
+    }
+
+    if (options.value && options.value.length) {
+        const match = (options.value as Record<string, any>[]).find((opt) => {
+            if (opt && typeof opt === 'object') {
+                return opt[props.valueKey] === internalValue.value;
+            }
+            return opt === internalValue.value;
+        });
+
+        if (match !== undefined) {
+            return (match && typeof match === 'object') ? match[props.labelKey] : match;
+        }
+    }
+
+    return internalValue.value;
+});
+
+function applySelectedElement() {
+    const sel = props.selectedElement;
+    if (sel === null || sel === undefined) return;
+    if (internalValue.value !== null && internalValue.value !== undefined && internalValue.value !== '') return;
+    if (!options.value || !options.value.length) return;
+
+    const setFromMatch = (match: unknown) => {
+        if (match === undefined) return;
+        internalValue.value = (match && typeof match === 'object') ? (match as Record<string, any>)[props.valueKey] : match;
+    };
+
+    if (typeof sel === 'object') {
+        const match = options.value.find(opt => {
+            if (opt && typeof opt === 'object') {
+                return ((sel as Record<string, any>)[props.valueKey] !== undefined && (opt as Record<string, any>)[props.valueKey] === (sel as Record<string, any>)[props.valueKey]) || opt === sel;
+            }
+            return opt === sel;
+        });
+        setFromMatch(match);
+    } else {
+        const match = options.value.find(opt => {
+            if (opt && typeof opt === 'object') {
+                return (opt as Record<string, any>)[props.valueKey] === sel;
+            }
+            return opt === sel;
+        });
+        setFromMatch(match);
+    }
+}
 
 watch(() => props.items, (val) => {
     options.value = Array.isArray(val) ? val.slice() : [];
+    applySelectedElement();
 });
 
-watch(() => props.modelValue, (val) => (internalValue.value = val));
+watch(() => props.modelValue, (val) => {
+    if (val === null || val === undefined || val === '') {
+        internalValue.value = val;
+        return;
+    }
 
-watch(internalValue, (val) => emit('update:modelValue', val));
+    if (val && typeof val === 'object') {
+        const key = val[props.valueKey];
+        if (key !== undefined) {
+            internalValue.value = key;
+            return;
+        }
+    }
+
+    internalValue.value = val;
+});
+
+
+watch(internalValue, (val) => {
+    if (options.value && options.value.length) {
+        const match = options.value.find(opt => {
+            if (opt && typeof opt === 'object') {
+                return (opt as Record<string, any>)[props.valueKey] === val;
+            }
+            return opt === val;
+        });
+        if (match !== undefined) {
+            emit('update:modelValue', (typeof match === 'object') ? match : val);
+            return;
+        }
+    }
+
+    emit('update:modelValue', val);
+});
 
 async function loadItems() {
     if (typeof props.fetchFunction === 'function') {
@@ -38,7 +122,6 @@ async function loadItems() {
             const result = props.fetchFunction();
             const resolved = result instanceof Promise ? await result : result;
 
-            // Accept multiple shapes: plain array, axios-style { data: [...] }, or paged { items: [...] }
             if (Array.isArray(resolved)) {
                 options.value = resolved;
             } else if (resolved && Array.isArray(resolved.data)) {
@@ -46,17 +129,15 @@ async function loadItems() {
             } else if (resolved && Array.isArray(resolved.items)) {
                 options.value = resolved.items;
             } else {
-                // Unknown shape — try to be helpful by logging
-                // eslint-disable-next-line no-console
                 console.warn('EntityDropdown: fetchFunction returned unexpected shape', resolved);
                 options.value = [];
             }
         } catch (err) {
-            // eslint-disable-next-line no-console
             console.error('EntityDropdown: error loading items', err);
             options.value = [];
         } finally {
             loading.value = false;
+            applySelectedElement();
         }
     }
 }
@@ -65,9 +146,17 @@ onMounted(() => {
     if (props.fetchOnMount && typeof props.fetchFunction === 'function') {
         loadItems();
     }
+    applySelectedElement();
 });
 
+watch(() => props.selectedElement, () => applySelectedElement());
+
 const inputId = computed(() => `entity-dropdown-${props.name.replace(/\s+/g, '-').toLowerCase()}`);
+
+function selectOption(opt: any) {
+    internalValue.value = (opt && typeof opt === 'object') ? opt[props.valueKey] : opt;
+}
+
 </script>
 
 <template>
@@ -75,22 +164,32 @@ const inputId = computed(() => `entity-dropdown-${props.name.replace(/\s+/g, '-'
         <label class="label" :for="inputId">{{ name }}</label>
 
         <div>
-            <select
+            <input
+                v-if="required"
                 :id="inputId"
-                class="entity-dropdown"
-                v-model="internalValue"
-                :disabled="!enabled || loading"
-                :required="required"
-            >
-                <option value="" disabled>{{ placeholderText }}</option>
-                <option
-                    v-for="(opt, idx) in options"
-                    :key="idx + '-' + (opt && opt[valueKey] !== undefined ? opt[valueKey] : opt)"
-                    :value="(opt && typeof opt === 'object') ? opt[valueKey] : opt"
-                >
-                    {{ (opt && typeof opt === 'object') ? opt[labelKey] : opt }}
-                </option>
-            </select>
+                type="text"
+                :value="internalValue"
+                required
+                style="position: absolute; width: 0; height: 0; padding: 0; border: 0; opacity: 0; pointer-events: none;"
+                aria-hidden="true"
+            />
+
+            <sl-dropdown :disabled="!enabled || loading" hoist>
+                <sl-button slot="trigger" caret variant="default" type="button">
+                    {{ displayLabel }}
+                </sl-button>
+
+                <sl-menu>
+                    <sl-menu-item
+                        v-for="(opt, idx) in options"
+                        :key="idx + '-' + (opt && (opt as Record<string, any>)[valueKey] !== undefined ? (opt as Record<string, any>)[valueKey] : opt)"
+                        @click="() => selectOption(opt)"
+                    >
+                        {{ (opt && typeof opt === 'object') ? (opt as Record<string, any>)[labelKey] : opt }}
+                    </sl-menu-item>
+                </sl-menu>
+            </sl-dropdown>
+
             <span v-if="loading" class="loading">Loading...</span>
         </div>
     </div>

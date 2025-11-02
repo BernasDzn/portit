@@ -3,7 +3,7 @@ import type { VesselType } from "./VesselType";
 export interface Vessel {
     name: string;
     imoNumber: string;
-    type: VesselType;
+    type: string;
     owner: string;
     length: number;
     depth: number;

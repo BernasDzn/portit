@@ -32,9 +32,10 @@ const submitVessel = (obj: any) =>
             <sl-breadcrumb-item><RouterLink to="/vessels/dashboard" class="breadcrumb-link">Vessel Dashboard</RouterLink></sl-breadcrumb-item>
             <sl-breadcrumb-item>Create Vessel</sl-breadcrumb-item>
         </sl-breadcrumb>
+
         <h1 class="title">Create Vessel</h1>
         <p class="subtitle">Register a new vessel into the system</p>
-        <EntityForm :editing-object="vessel" :submit-function="submitVessel">
+        <EntityForm :object="vessel" :submit-function="submitVessel">
             <div class="name-imo">
                 <FormField :required="true" class="field" name="Vessel Name*" v-model="vessel.name" placeholderText="Vessel name"/>
                 <FormField :required="true" class="field" name="IMO Number*" v-model="vessel.imoNumber" placeholderText="IMO number" pattern="IMO [0-9]{7}"/>
@@ -42,7 +43,7 @@ const submitVessel = (obj: any) =>
                 class="field-dropdown"
                 name="Vessel Type*"
                 v-model="vessel.type"
-                :fetch-function="() => vesselTypeService.getVesselTypes()"
+                :fetch-function="() => vesselTypeService.getVesselTypes().then(page => (page.items || []).map(t => t.name))"
                 :fetch-on-mount="true"
                 placeholderText="Select vessel type"
                 :required="true"
@@ -51,9 +52,12 @@ const submitVessel = (obj: any) =>
                 />
             </div>
             <div class="measurements">
-                <FormField :required="true" class="field" name="Length (m)*" v-model.number="vessel.length" placeholderText="Length in meters" pattern="^\d+(\.\d{1,2})?$"/>
-                <FormField :required="true" class="field" name="Depth (m)*" v-model.number="vessel.depth" placeholderText="Depth in meters" pattern="^\d+(\.\d{1,2})?$"/>
-                <FormField :required="true" class="field" name="Draft (m)*" v-model.number="vessel.draft" placeholderText="Draft in meters" pattern="^\d+(\.\d{1,2})?$"/>
+                <FormField :required="true" class="field" name="Length (m)*" v-model.number="vessel.length"
+                placeholderText="Length in meters" pattern="^\d+(\.\d{1,2})?$"/>
+                <FormField :required="true" class="field" name="Depth (m)*" v-model.number="vessel.depth"
+                placeholderText="Depth in meters" pattern="^\d+(\.\d{1,2})?$"/>
+                <FormField :required="true" class="field" name="Draft (m)*" v-model.number="vessel.draft"
+                placeholderText="Draft in meters" pattern="^\d+(\.\d{1,2})?$"/>
             </div>
         </EntityForm>
     </div>

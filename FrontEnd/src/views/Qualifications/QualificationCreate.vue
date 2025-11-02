@@ -29,7 +29,7 @@ const submitQualification = (obj: any) =>
         <h1 class="title">Create Qualification</h1>
         <p class="subtitle">Register a new qualification into the system</p>
 
-        <EntityForm :editing-object="qualification" :submit-function="submitQualification">
+        <EntityForm :object="qualification" :submit-function="submitQualification">
             <FormField :required="true" class="field" name="Qualification Code*" v-model="qualification.idCode" placeholderText="Qualification code" pattern="^[a-zA-Z0-9]+$" />
             <FormField :required="true" class="field" name="Qualification Name*" v-model="qualification.qualificationName" placeholderText="Qualification name"/>
         </EntityForm>
