@@ -10,6 +10,7 @@ import VesselEdit from '@/views/Vessels/VesselEdit.vue'
 import DockDashboard from '@/views/Docks/DockDashboard.vue'
 import DockSearch from '@/views/Docks/DockSearch.vue'
 import DockCreate from '@/views/Docks/DockCreate.vue'
+import DockView from '@/views/Docks/DockView.vue'
 import VesselTypeDashboard from '@/views/VesselTypes/VesselTypeDashboard.vue'
 import VesselTypeSearch from '@/views/VesselTypes/VesselTypeSearch.vue'
 import QualificationDashboard from '@/views/Qualifications/QualificationDashboard.vue'
@@ -18,7 +19,8 @@ import QualificationView from '@/views/Qualifications/QualificationView.vue'
 import StaffDashboard from '@/views/Staff/StaffDashboard.vue'
 import StaffSearch from '@/views/Staff/StaffSearch.vue'
 import StaffView from '@/views/Staff/StaffView.vue'
-import DockView from '@/views/Docks/DockView.vue'
+import Staff from '@/views/Staff.vue'
+import QualificationCreate from '@/views/Qualifications/QualificationCreate.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -117,6 +119,16 @@ const router = createRouter({
           path: '/staff/view/:mechanographicNumber',
           name: 'viewStaff',
           component: StaffView
+        },
+        {
+            path: '/qualifications/create',
+            name: 'qualificationCreate',
+            component: QualificationCreate
+        },
+        {
+          path: '/staff',
+          name: 'staff',
+          component: Staff
         }
       ]
     },

@@ -14,6 +14,12 @@ export class QualificationService implements IQualificationService {
 		private http: IHttpService
 	){}
 
+    async addQualification(value: Qualification): Promise<Qualification> {
+        
+        const res = await this.http.post<Qualification>('/Qualification', value);
+        return res.data;
+    }
+
 	async getQualifications(filtering?: Filter<Qualification>): Promise<Page<Qualification>> {
 
         let query: string[] = [];

@@ -179,6 +179,13 @@
     margin: auto 0 auto 5px;
 }
 
+.sidebar-separator {
+    border: none;
+    height: 2px;
+    background-color: var(--primary-lighter);
+    margin: 10px 0;
+}
+
 .link-active {
     background-color: #e9ecef;
     color: var(--text-black);

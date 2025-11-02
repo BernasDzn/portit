@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Topbar from '@/components/Topbar.vue';
 import Sidebar from '@/components/Sidebar.vue';
+import NotificationQueue from '@/components/NotificationQueue.vue';
 </script>
 
 <template>
@@ -13,6 +14,7 @@ import Sidebar from '@/components/Sidebar.vue';
         <RouterView />
       </main>
     </div>
+    <NotificationQueue />
   </div>
 </template>
 

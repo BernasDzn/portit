@@ -2,10 +2,9 @@
 import { useRoute } from 'vue-router';
 import { AxiosHttpService } from '@/service/AxiosHttpService';
 import type { Vessel } from '@/model/Vessel';
-import EntityView from '@/components/EntityView.vue';
+import EntityView from '@/components/crud/EntityView.vue';
 import { QualificationService } from '@/service/QualificationService';
 import type { Qualification } from '@/model/Qualifications';
-
 
 const route = useRoute();
 

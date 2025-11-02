@@ -5,8 +5,7 @@ import { DockService } from '@/service/DockService';
 
 import type { Dock } from '@/model/Dock';
 
-import EntityView from '@/components/EntityView.vue';
-import ActivityTag from '@/components/ActivityTag.vue';
+import EntityView from '@/components/crud/EntityView.vue';
 
 
 const route = useRoute();
