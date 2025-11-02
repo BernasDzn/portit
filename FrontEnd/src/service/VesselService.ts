@@ -44,5 +44,10 @@ export class VesselService implements IVesselService {
 		const res = await this.http.put<Vessel>(`/Vessel/${imo}`, vessel);
 		return res.data;
 	}
+
+	async getNumberOfVessels(): Promise<number> {
+		const res = await this.getVessels();
+		return res.items.length;
+	}
     
 }
