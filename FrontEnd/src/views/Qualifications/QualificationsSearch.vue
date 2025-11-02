@@ -13,6 +13,13 @@ const fetchQualifications = async (filtering?: Filter<Qualification>): Promise<P
     return await qualificationService.getQualifications(filtering);
 }
 
+const filterDefinition = {
+    idCode: {
+        type: 'text',
+        label: 'Qualification Code',
+    }
+};
+
 </script>
 
 <template>
@@ -27,7 +34,7 @@ const fetchQualifications = async (filtering?: Filter<Qualification>): Promise<P
         <h1 class="title">Qualifications</h1>
         <p class="subtitle">Manage required certifications and qualifications</p>
 
-        <ListingBox :fetch-function="fetchQualifications" search-filter="qualificationName" v-slot="{elements}">
+        <ListingBox :fetch-function="fetchQualifications" search-filter="qualificationName" v-slot="{elements}" :filter-definition="filterDefinition">
             <li v-for="qualification in elements" :key="qualification.idCode">
                 <!-- {{ qualification.idCode }} - {{ qualification.qualificationName }} -->
                 <QualificationPrinter class="listing-box" :qualification="qualification" :link="`/qualifications/view/${qualification.idCode}`" />
