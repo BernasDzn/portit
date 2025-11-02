@@ -19,7 +19,7 @@ const fetchQualifications = async (filtering?: Filter<Qualification>): Promise<P
 <div>
 
     <sl-breadcrumb>
-        <sl-breadcrumb-item><RouterLink to="/qualifications/dashboard" class="breadcrumb-link">Vessel Dashboard</RouterLink></sl-breadcrumb-item>
+        <sl-breadcrumb-item><RouterLink to="/qualifications/dashboard" class="breadcrumb-link">Qualification Dashboard</RouterLink></sl-breadcrumb-item>
         <sl-breadcrumb-item>Search Qualifications</sl-breadcrumb-item>
     </sl-breadcrumb>
 
@@ -30,7 +30,7 @@ const fetchQualifications = async (filtering?: Filter<Qualification>): Promise<P
         <ListingBox :fetch-function="fetchQualifications" search-filter="qualificationName" v-slot="{elements}">
             <li v-for="qualification in elements" :key="qualification.idCode">
                 <!-- {{ qualification.idCode }} - {{ qualification.qualificationName }} -->
-                <QualificationPrinter class="listing-box" :qualification="qualification" />
+                <QualificationPrinter class="listing-box" :qualification="qualification" :link="`/qualifications/view/${qualification.idCode}`" />
             </li>
         </ListingBox>
     </header>

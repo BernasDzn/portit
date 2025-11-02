@@ -15,6 +15,7 @@ import VesselTypeDashboard from '@/views/VesselTypes/VesselTypeDashboard.vue'
 import VesselTypeSearch from '@/views/VesselTypes/VesselTypeSearch.vue'
 import QualificationDashboard from '@/views/Qualifications/QualificationDashboard.vue'
 import QualificationsSearch from '@/views/Qualifications/QualificationsSearch.vue'
+import QualificationView from '@/views/Qualifications/QualificationView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -88,6 +89,11 @@ const router = createRouter({
             path: '/qualifications/search',
             name: 'qualificationsSearch',
             component: QualificationsSearch
+        },
+        {
+            path: '/qualifications/view/:id',
+            name: 'qualificationView',
+            component: QualificationView
         },
         {
           path: '/staff',

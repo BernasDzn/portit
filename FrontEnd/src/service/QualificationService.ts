@@ -30,4 +30,8 @@ export class QualificationService implements IQualificationService {
 		return res.data;
 	}
     
+    async getQualificationById(id: string): Promise<Qualification> {
+        const res = await this.http.get<Qualification>(`/Qualification/${id}`);
+        return res.data;
+    }
 }
