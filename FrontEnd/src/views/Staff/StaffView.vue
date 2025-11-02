@@ -7,6 +7,7 @@ import type { Staff } from '@/model/Staff';
 
 import EntityView from '@/components/crud/EntityView.vue';
 import ActivityTag from '@/components/ActivityTag.vue';
+import QualificationPrinter from '@/components/printers/QualificationPrinter.vue';
 
 
 const route = useRoute();
@@ -83,8 +84,8 @@ const fetchStaff = async (): Promise<Staff | undefined> => {
                 <sl-card class="info-card" style="flex: 100%;">
                     <p>Qualifications</p>
                     <div class="info-grid">
-                        <div class="info-block" v-for="qualification in entity.element.qualifications" :key="qualification.qualificationName">
-                            <p>{{ qualification.qualificationName }}</p>
+                        <div v-for="qualification in entity.element.qualifications" :key="qualification.idCode">
+                            <QualificationPrinter class="listing-box" :qualification="qualification" :link="`/qualifications/view/${qualification.idCode}`" />
                         </div>
                     </div>
                 </sl-card>
@@ -95,6 +96,11 @@ const fetchStaff = async (): Promise<Staff | undefined> => {
 </template>
 
 <style scoped> 
+
+.icon{
+    margin: 0;
+    margin-right: 1rem;
+}
 
 .info-grid {
     display: flex;
