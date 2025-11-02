@@ -14,7 +14,7 @@ const props = defineProps<{vtype: VesselType}>();
                     {{ vtype.description }}<br/>
                 </p>
             </div>
-            <span class="material-icons icon" aria-hidden="true">directions_boat</span>
+            <span class="material-icons icon" aria-hidden="true">sailing</span>
         </div>
         <slot></slot>
     </sl-card>

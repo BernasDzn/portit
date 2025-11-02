@@ -131,6 +131,33 @@ body {
     margin-right: 20px;
 }
 
+.view-statistics-overview {
+    text-align: center;
+    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    background-color: #f5f6fa;
+}
+
+.view-statistics-overview p {
+    margin: 0;
+    padding: 0.5rem;
+    color: #485ea9;
+}
+
+.view-statistics {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    width: fit-content;
+    gap: 1rem;
+}
+
+.view-statistic-data {
+    font-size: 2rem;
+}
+
 .info-row {
     display: flex;
     gap: 10px;
@@ -155,6 +182,12 @@ body {
 
 .info-block {
     margin-top: 20px;
+}
+
+.info-card {
+    border-radius: 0.5rem;
+    height: fit-content;
+    flex: fit-content;
 }
 
 .columns-2 {

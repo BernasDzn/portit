@@ -25,7 +25,7 @@ const fetchDock = async (): Promise<Dock | undefined> => {
     <div>
         <sl-breadcrumb>
             <sl-breadcrumb-item>
-                <RouterLink to="/docks/dashboard" class="breadcrumb-link">Docks Dashboard</RouterLink>
+                <RouterLink to="/docks/dashboard" class="breadcrumb-link">Dock Dashboard</RouterLink>
             </sl-breadcrumb-item>
             <sl-breadcrumb-item>
                 <RouterLink to="/docks/search" class="breadcrumb-link">Search Docks</RouterLink>
@@ -72,18 +72,18 @@ const fetchDock = async (): Promise<Dock | undefined> => {
                         </sl-card>
                         <sl-card class="info-card">
                             <p>Statistics</p>
-                            <div class="statistics">
-                                <div class="statistics-overview">
+                            <div class="view-statistics">
+                                <div class="view-statistics-overview">
                                     <div>
-                                        <p><span class="statistic-data">{{ entity.element.physicalCharacteristics.length }}</span>m</p>
+                                        <p><span class="view-statistic-data">{{ entity.element.physicalCharacteristics.length }}</span>m</p>
                                         <p>Length</p>
                                     </div>
                                     <div>
-                                        <p><span class="statistic-data">{{ entity.element.physicalCharacteristics.depth }}</span>m</p>
+                                        <p><span class="view-statistic-data">{{ entity.element.physicalCharacteristics.depth }}</span>m</p>
                                         <p>Depth</p>
                                     </div>
                                     <div>
-                                        <p><span class="statistic-data">{{ entity.element.physicalCharacteristics.draft }}</span>m</p>
+                                        <p><span class="view-statistic-data">{{ entity.element.physicalCharacteristics.draft }}</span>m</p>
                                         <p>Draft</p>
                                     </div>
                                 </div>
@@ -91,9 +91,9 @@ const fetchDock = async (): Promise<Dock | undefined> => {
                                 <span class="material-icons icon" aria-hidden="true"
                                     style="color: #485ea9;margin: 0%;">arrow_right</span>
 
-                                <div class="statistics-overview">
+                                <div class="view-statistics-overview">
                                     <div>
-                                        <p class="statistic-data">{{ entity.element.supportedVesselTypes.length }}</p>
+                                        <p class="view-statistic-data">{{ entity.element.supportedVesselTypes.length }}</p>
                                         <p>Supported Vessel Types</p>
                                     </div>
                                 </div>
@@ -123,25 +123,9 @@ const fetchDock = async (): Promise<Dock | undefined> => {
     min-width: 200px;
 }
 
-.statistics-overview {
+.view-statistics-overview{
     display: flex;
     flex-direction: row;
-    text-align: center;
-    margin-bottom: 1rem;
-    border-radius: 0.5rem;
-    padding: 1rem;
-    background-color: #f5f6fa;
-}
-
-
-.statistics-overview p {
-    margin: 0;
-    padding: 0.5rem;
-    color: #485ea9;
-}
-
-.statistic-data {
-    font-size: 2rem;
 }
 
 .viewing-content {
@@ -156,19 +140,6 @@ const fetchDock = async (): Promise<Dock | undefined> => {
     margin-bottom: 1rem;
     width: 100%;
     height: fit-content;
-}
-
-.statistics {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: row;
-    gap: 1rem;
-}
-
-.info-card {
-    border-radius: 0.5rem;
-    flex: 1 1 auto;
 }
 
 </style>

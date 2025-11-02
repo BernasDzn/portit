@@ -71,8 +71,8 @@ const fetchStaff = async (): Promise<Staff | undefined> => {
                 </sl-card>
                 <sl-card class="info-card">
                     <p>Statistics</p>
-                    <div class="qualifications-overview">
-                        <p>{{ entity.element.qualifications.length }}</p>
+                    <div class="view-statistics-overview">
+                        <p class="view-statistic-data">{{ entity.element.qualifications.length }}</p>
                         <p>Qualifications</p>
                     </div>
                     <p class="info-row">
@@ -101,33 +101,9 @@ const fetchStaff = async (): Promise<Staff | undefined> => {
     min-width: 200px;
 }
 
-.qualifications-overview {
-    text-align: center;
-    margin-bottom: 1rem;
-    border-radius: 0.5rem;
-    padding: 1rem;
-    background-color: #f5f6fa;
-}
-
-.qualifications-overview p {
-    margin: 0;
-    padding: 0.5rem;
-    color: #485ea9;
-}
-
-.qualifications-overview p:nth-child(1) {
-    font-size: 2rem;
-}
-
 .viewing-content{
     display: flex;
     flex-wrap: wrap;
-}
-
-.info-card{
-    border-radius: 0.5rem;
-    height: fit-content;
-    flex: fit-content;
 }
 
 </style>
