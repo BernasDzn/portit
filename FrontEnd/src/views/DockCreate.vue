@@ -4,6 +4,7 @@ import FormField from '@/components/FormField.vue';
 import { AxiosHttpService } from '@/service/AxiosHttpService';
 import { DockService } from '@/service/DockService';
 import type { Dock } from '@/model/Dock';
+import router from '@/router';
 
 const code = ref('');
 const name = ref('');
@@ -20,7 +21,7 @@ const success = ref('');
 const cancelDialog = ref<HTMLElement | null>(null);
 
 const hasUnsaved = computed(() => {
-    return !!(code.value || name.value || location.value || depth.value || draft.value || length.value || (selectedTypes.value && selectedTypes.value.length > 0));
+    return !!(code.value || name.value || location.value || depth.value || draft.value || length.value || (selectedTypes.value && selectedTypes.value.length > 0 && selectedTypes.value[0] !== 'Vessel Types'));
 });
 
 const http = new AxiosHttpService('https://localhost:5001');
@@ -81,13 +82,13 @@ function onCancel() {
     if (hasUnsaved.value) {
         (cancelDialog.value as any)?.show?.();
     } else {
-        window.location.href = '../docks/dashboard';
+        router.back();
     }
 }
 
 function confirmCancel() {
     (cancelDialog.value as any)?.hide?.();
-    window.location.href = '../docks/dashboard';
+    router.back();
 }
 
 onMounted(async () => {
