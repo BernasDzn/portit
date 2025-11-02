@@ -4,14 +4,14 @@ import DashboardItem from '@/components/DashboardItem.vue';
 
 <template>
     <div>
-        <h1 class="title">Vessel Dashboard</h1>
-        <p class="subtitle">Overview of vessel statistics and activities</p>
+        <h1 class="title">Dock Dashboard</h1>
+        <p class="subtitle">Overview of dock statistics and activities</p>
         <sl-card class="dashboard-overview">
             <div class="dashboard-items">
                 <DashboardItem
                     title="View Docks"
                     description="Manage and view all registered docks"
-                    icon="anchor"
+                    icon="search"
                     to="/docks/search"
                 />
                 <DashboardItem

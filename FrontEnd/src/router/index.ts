@@ -11,6 +11,8 @@ import Login from '@/views/Login.vue'
 import DockDashboard from '@/views/DockDashboard.vue'
 import DockCreate from '@/views/DockCreate.vue'
 import DockSearch from '@/views/DockSearch.vue'
+import VesselTypeDashboard from '@/views/VesselTypeDashboard.vue'
+import VesselTypeSearch from '@/views/VesselTypeSearch.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -59,6 +61,16 @@ const router = createRouter({
           path: '/docks/create',
           name: 'createDock',
           component: DockCreate
+        },
+        {
+          path: '/vessel-types/dashboard',
+          name: 'vesselTypesDashboard',
+          component: VesselTypeDashboard
+        },
+        {
+          path: '/vessel-types/search',
+          name: 'vesselTypesSearch',
+          component: VesselTypeSearch
         },
         {
           path: '/qualifications',

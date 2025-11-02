@@ -20,7 +20,7 @@ const typesDisplay = computed(() => {
                     Supports: {{ typesDisplay }}
                 </p>
             </div>
-            <span class="material-icons icon" aria-hidden="true">anchor</span>
+            <span class="material-icons icon" aria-hidden="true">houseboat</span>
         </div>
         <slot></slot>
     </sl-card>

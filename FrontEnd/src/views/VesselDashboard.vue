@@ -11,7 +11,7 @@ import DashboardItem from '@/components/DashboardItem.vue';
                 <DashboardItem
                     title="View Vessels"
                     description="Manage and view all registered vessels"
-                    icon="directions_boat"
+                    icon="search"
                     to="/vessels/search"
                 />
                 <DashboardItem
