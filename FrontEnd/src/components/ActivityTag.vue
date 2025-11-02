@@ -7,11 +7,11 @@ const status = [
 ];
 
 const props = defineProps<{
-    status: number
+    status: number | undefined
 }>();
 
 </script>
 
 <template>
-    <sl-tag :variant="status[props.status]?.variant">{{status[props.status]?.label}}</sl-tag>
+    <sl-tag v-if="props.status !== undefined" :variant="status[props.status]?.variant">{{status[props.status]?.label}}</sl-tag>
 </template>
