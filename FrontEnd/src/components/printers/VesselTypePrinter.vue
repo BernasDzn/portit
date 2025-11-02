@@ -12,7 +12,6 @@ const props = defineProps<{vtype: VesselType}>();
                 <p>{{ vtype.name }}</p>
                 <p class="item-description">
                     {{ vtype.description }}<br/>
-                    Capacity: {{ vtype.capacity }} (R: {{ vtype.maxNumberOfRows }}, B: {{ vtype.maxNumberOfBays }}, T: {{ vtype.maxNumberOfTiers }})
                 </p>
             </div>
             <span class="material-icons icon" aria-hidden="true">directions_boat</span>

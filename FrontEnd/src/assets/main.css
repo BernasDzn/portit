@@ -94,8 +94,65 @@ body {
 .dashboard-item{
     transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
 }
+
 .dashboard-item:hover {
     transform: scale(1.02);
     box-shadow: 0 6px 18px rgba(72, 94, 169, 0.12);
     cursor: pointer;
+}
+
+.viewing-box {
+    display: block;
+    margin-top: 20px;
+}
+
+.view-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.viewing-content {
+    display: flex;
+    flex-direction:row;
+    gap: 20px;
+
+    width: 100%;
+}
+
+.view-header .icon {
+    padding: 15px;
+    background-color: var(--sl-color-primary-600);
+    color: white;
+    border-radius: 8px;
+    font-size: 43px;
+
+    margin-right: 20px;
+}
+
+.info-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 5px;
+
+    justify-content: space-between;
+}
+
+.info-row, .info-block .label {
+    font-size: var(--sl-font-size-small);
+}
+
+.info-row .label, .info-block .label {
+    color: var(--sl-color-primary-600);
+}
+
+.info-block {
+    margin-top: 20px;
+}
+
+.columns-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
 }

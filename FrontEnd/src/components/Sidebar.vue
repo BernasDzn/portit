@@ -7,7 +7,7 @@ const route = useRoute();
 const sidebarItems = ref([
   // add a materialIcon property with the Material Icons name we want to render
   { name: 'Dashboard', route: '/', icon: "house", materialIcon: 'home' },
-  { name: 'Qualifications', route: '/qualifications', icon:"mortarboard", materialIcon: 'school' },
+  { name: 'Qualifications', route: '/qualifications/dashboard', icon:"mortarboard", materialIcon: 'school' },
   { name: 'Docks', route: '/docks/dashboard', icon: "houseboat", materialIcon: 'houseboat' },
   { name: 'Vessels', route: '/vessels/dashboard', icon: "anchor", materialIcon: 'anchor' },
   { name: 'Vessel Types', route: '/vessel-types/dashboard', icon: "directions_boat", materialIcon: 'directions_boat' },

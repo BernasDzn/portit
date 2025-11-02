@@ -29,7 +29,7 @@ const fetchVesselTypes = async (filtering?: Filter<VesselType>): Promise<Page<Ve
         <h1 class="title">Vessel Types</h1>
         <p class="subtitle">Search all vessel types</p>
 
-        <ListingBox :fetch-function="fetchVesselTypes" search-filter="name" v-slot="{elements}">
+        <ListingBox listing-style="listing-triples" :fetch-function="fetchVesselTypes" search-filter="name" v-slot="{elements}">
             <li v-for="vt in elements" :key="vt.id">
                 <VesselTypePrinter class="listing-box" :vtype="vt" />
             </li>

@@ -14,14 +14,6 @@ const fetchVessels = async (filtering?: Filter<Vessel>): Promise<Page<Vessel>> =
   return await vesselService.getVessels(filtering);
 }
 
-const router = useRouter();
-
-function goToVessel(imo: string) {
-  if (!imo) return;
-  // use named route to avoid hard-coded path issues and ensure correct params
-  router.push({ name: 'viewVessel', params: { imo } });
-}
-
 </script>
 
 <template>

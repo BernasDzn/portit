@@ -19,8 +19,8 @@ const fetchQualifications = async (filtering?: Filter<Qualification>): Promise<P
 <div>
 
     <sl-breadcrumb>
-        <sl-breadcrumb-item>Qualifications</sl-breadcrumb-item>
-        <sl-breadcrumb-item>Listings</sl-breadcrumb-item>
+        <sl-breadcrumb-item><RouterLink to="/qualifications/dashboard" class="breadcrumb-link">Vessel Dashboard</RouterLink></sl-breadcrumb-item>
+        <sl-breadcrumb-item>Search Qualifications</sl-breadcrumb-item>
     </sl-breadcrumb>
 
     <header>

@@ -5,16 +5,6 @@ import { computed } from 'vue';
 
 const props = defineProps<{ vessel: Vessel; link?: string }>();
 
-const imoDisplay = computed(() => ((props as any).vessel?.imoNumber ?? (props as any).vessel?.imo ?? ''));
-const typeDisplay = computed(() => {
-    const t = (props as any).vessel?.type;
-    return t && typeof t === 'object' ? t.name : (t ?? '');
-});
-const ownerDisplay = computed(() => {
-    const o = (props as any).vessel?.owner;
-    return o && typeof o === 'object' ? o.name : (o ?? '');
-});
-
 </script>
 
 <template>
@@ -22,11 +12,15 @@ const ownerDisplay = computed(() => {
         <sl-card class="listing-item">
             <div class="opposed">
                 <div>
-                    <p>{{ props.vessel.name }}</p>
+                    <p class="vessel-idemtification">
+                        {{ props.vessel.name }} 
+                        <sl-tag size="small" variant="neutral">
+                            {{ props.vessel.type.name }}
+                        </sl-tag>
+                    </p> 
                     <p class="item-description">
-                        {{ imoDisplay }}<br/>
-                        {{ typeDisplay }}<br/>
-                        {{ ownerDisplay }}
+                        {{ props.vessel.imoNumber }}<br/>
+                        Owned by {{ props.vessel.owner.name }}
                     </p>
                 </div>
                 <span class="material-icons icon" aria-hidden="true">directions_boat</span>
@@ -40,6 +34,12 @@ const ownerDisplay = computed(() => {
 .icon {
     font-size: 35px;
     color: var(--accent-1);
+}
+
+.vessel-idemtification {
+    display: flex;
+    align-items: center;
+    gap: 15px;
 }
 
 </style>

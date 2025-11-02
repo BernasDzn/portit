@@ -1,18 +1,20 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import Qualifications from '@/views/Qualifications.vue'
-import VesselDashboard from '@/views/VesselDashboard.vue'
-import VesselSearch from '@/views/VesselSearch.vue'
-import VesselCreate from '@/views/VesselCreate.vue'
-import VesselView from '@/views/VesselView.vue'
 import Dashboard from '@/views/Dashboard.vue'
 import Staff from '@/views/Staff.vue'
 import Login from '@/views/Login.vue'
-import DockDashboard from '@/views/DockDashboard.vue'
-import DockCreate from '@/views/DockCreate.vue'
-import DockSearch from '@/views/DockSearch.vue'
-import VesselTypeDashboard from '@/views/VesselTypeDashboard.vue'
-import VesselTypeSearch from '@/views/VesselTypeSearch.vue'
+import VesselDashboard from '@/views/Vessels/VesselDashboard.vue'
+import VesselSearch from '@/views/Vessels/VesselSearch.vue'
+import VesselCreate from '@/views/Vessels/VesselCreate.vue'
+import VesselView from '@/views/Vessels/VesselView.vue'
+import VesselEdit from '@/views/Vessels/VesselEdit.vue'
+import DockDashboard from '@/views/Docks/DockDashboard.vue'
+import DockSearch from '@/views/Docks/DockSearch.vue'
+import DockCreate from '@/views/Docks/DockCreate.vue'
+import VesselTypeDashboard from '@/views/VesselTypes/VesselTypeDashboard.vue'
+import VesselTypeSearch from '@/views/VesselTypes/VesselTypeSearch.vue'
+import QualificationDashboard from '@/views/Qualifications/QualificationDashboard.vue'
+import QualificationsSearch from '@/views/Qualifications/QualificationsSearch.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -50,7 +52,7 @@ const router = createRouter({
         {
           path: '/vessels/edit/:imo',
           name: 'editVessel',
-          component: () => import('@/views/VesselEdit.vue')
+          component: VesselEdit
         },
         {
           path: '/docks/dashboard',
@@ -78,9 +80,14 @@ const router = createRouter({
           component: VesselTypeSearch
         },
         {
-          path: '/qualifications',
+          path: '/qualifications/dashboard',
           name: 'qualifications',
-          component: Qualifications
+          component: QualificationDashboard
+        },
+        {
+            path: '/qualifications/search',
+            name: 'qualificationsSearch',
+            component: QualificationsSearch
         },
         {
           path: '/staff',
