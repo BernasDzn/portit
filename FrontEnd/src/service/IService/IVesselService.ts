@@ -5,7 +5,6 @@ export interface IVesselService {
     getVessels(filtering: Filter<Vessel>): Promise<Page<Vessel>>;
     createVessel(vessel: Vessel): Promise<Vessel>;
     getVesselByIMO(imo: string): Promise<Vessel>;
-    // deactivate
-    // update
+    updateVessel(imo: string, vessel: Vessel): Promise<Vessel>;
     // filter
 }

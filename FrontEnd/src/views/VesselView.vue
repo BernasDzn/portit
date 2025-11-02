@@ -32,8 +32,9 @@ onMounted(async () => {
 <template>
   <div>
     <sl-breadcrumb>
-      <sl-breadcrumb-item><RouterLink to="/vessels/dashboard" class="breadcrumb-link">Vessel Dashboard</RouterLink></sl-breadcrumb-item>
-      <sl-breadcrumb-item>View Vessel</sl-breadcrumb-item>
+        <sl-breadcrumb-item><RouterLink to="/vessels/dashboard" class="breadcrumb-link">Vessel Dashboard</RouterLink></sl-breadcrumb-item>
+        <sl-breadcrumb-item><RouterLink to="/vessels/search" class="breadcrumb-link">Search Vessels</RouterLink></sl-breadcrumb-item>
+        <sl-breadcrumb-item>{{ vessel?.imoNumber }}</sl-breadcrumb-item>
     </sl-breadcrumb>
     <h1>View Vessel</h1>
 
@@ -48,8 +49,8 @@ onMounted(async () => {
                 <div class="physical-characteristics-card">
                     <h4>Physical Characteristics</h4>
                     Length: {{ vessel.physicalCharacteristics.length }}m<br/>
-                    Draft: {{ vessel.physicalCharacteristics.draft }}m<br/>
                     Depth: {{ vessel.physicalCharacteristics.depth }}m<br/>
+                    Draft: {{ vessel.physicalCharacteristics.draft }}m<br/>
                 </div>
             </p>
             <div class="buttons">
