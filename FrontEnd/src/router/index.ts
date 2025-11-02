@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import Dashboard from '@/views/Dashboard.vue'
-import Staff from '@/views/Staff.vue'
 import Login from '@/views/Login.vue'
 import VesselDashboard from '@/views/Vessels/VesselDashboard.vue'
 import VesselSearch from '@/views/Vessels/VesselSearch.vue'
@@ -16,6 +15,9 @@ import VesselTypeSearch from '@/views/VesselTypes/VesselTypeSearch.vue'
 import QualificationDashboard from '@/views/Qualifications/QualificationDashboard.vue'
 import QualificationsSearch from '@/views/Qualifications/QualificationsSearch.vue'
 import QualificationView from '@/views/Qualifications/QualificationView.vue'
+import StaffDashboard from '@/views/Staff/StaffDashboard.vue'
+import StaffSearch from '@/views/Staff/StaffSearch.vue'
+import StaffView from '@/views/Staff/StaffView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -96,9 +98,19 @@ const router = createRouter({
             component: QualificationView
         },
         {
-          path: '/staff',
-          name: 'staff',
-          component: Staff
+          path: '/staff/dashboard',
+          name: 'staffDashboard',
+          component: StaffDashboard
+        },
+        {
+          path: '/staff/search',
+          name: 'staffSearch',
+          component: StaffSearch
+        },
+        {
+          path: '/staff/view/:mechanographicNumber',
+          name: 'viewStaff',
+          component: StaffView
         }
       ]
     },

@@ -29,5 +29,25 @@ export class StaffService implements IStaffService {
 		
 		return res.data;
 	}
+
+	async getStaffByMechanographicNumber(mechanographicNumber: string): Promise<Staff | undefined> {
+		const res = await this.http.get<Page<Staff>>(`/Staff/filter?MechanographicNumber=${mechanographicNumber}`);
+		let staff = res.data.items[0];
+		return staff;
+	}
+
+	async createStaff(staff: Staff): Promise<Staff> {
+		const res =  await this.http.post<Staff>('/Staff', staff);
+		return res.data;
+	}
+
+	async deactivateStaff(mechanographicNumber: string): Promise<void> {
+		await this.http.delete<void>(`/Staff/${mechanographicNumber}`);
+	}
+
+	async updateStaff(mechanographicNumber: string, staff: Staff): Promise<Staff> {
+		const res = await this.http.put<Staff>(`/Staff/${mechanographicNumber}`, staff);
+		return res.data;
+	}
     
 }
