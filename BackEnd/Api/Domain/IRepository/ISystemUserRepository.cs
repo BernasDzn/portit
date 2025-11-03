@@ -8,4 +8,5 @@ public interface ISystemUserRepository : IGenericRepository<SystemUser>
     Task<SystemUser?> GetBySubAsync(string sub);
     Task<IEnumerable<SystemUser>> GetAllAsync();
     Task<SystemUser> Update(SystemUser systemUser);
+    Task DeleteBySubAsync(string sub);
 }

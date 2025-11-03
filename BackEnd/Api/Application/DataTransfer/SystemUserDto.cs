@@ -4,5 +4,6 @@ public class SystemUserDto
 {
     public string Sub { get; set; }
     public bool IsActive { get; set; }
-    public string[] Roles { get; set; }
+    public int Role { get; set; }
+    public string Email { get; set; }
 }
