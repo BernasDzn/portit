@@ -194,6 +194,12 @@ const router = createRouter({
         meta: { hideFromSearch: true },
         component: Login,
     },
+  {
+    path: '/activate',
+    name: 'activate',
+    meta: { hideFromSearch: true },
+    component: () => import('@/views/Activate.vue')
+  },
     {
         path: '/unauthorized',
         name: 'unauthorized',

@@ -16,6 +16,7 @@ using NSwag;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using NSwag.Generation.Processors.Security;
+using Api.Infrastructure.Utilities.Email;
 
 var builder = WebApplication.CreateBuilder(args);
 // Logging definitions
@@ -133,6 +134,7 @@ builder.Services.AddTransient<VesselVisitNotificationIdGenerator>();
 builder.Services.AddTransient<INotificationDecisionService, NotificationDecisionService>();
 builder.Services.AddTransient<ISystemUserRepository, SystemUserRepository>();
 builder.Services.AddTransient<ISystemUserService, SystemUserService>();
+builder.Services.AddTransient<IEmailService, SmtpEmailService>();
 
 var app = builder.Build();
 

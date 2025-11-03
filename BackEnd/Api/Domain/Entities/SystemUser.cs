@@ -11,16 +11,20 @@ public class SystemUser : IdentityUser<Guid>, IDTOAble<SystemUserDto>
     public required string Sub { get; set; }
     public required bool Active { get; set; }
     public virtual SystemUserRole Role { get; set; }
+    // Activation token and expiry used when a user is authorized for the first time
+    public string? ActivationToken { get; set; }
+    public DateTime? ActivationTokenExpiresAt { get; set; }
 
     protected SystemUser()
     {
         Id = Guid.NewGuid();
     }
 
-    public SystemUser(string sub, bool active)
+    public SystemUser(string sub, bool active, string email)
     {
         Sub = sub;
         Active = active;
+        Email = email;
     }
 
     public override string ToString()
@@ -34,7 +38,8 @@ public class SystemUser : IdentityUser<Guid>, IDTOAble<SystemUserDto>
         {
             Sub = Sub,
             IsActive = Active,
-            Role = (int)Role
+            Role = (int)Role,
+            Email = Email
         };
     }
 }
