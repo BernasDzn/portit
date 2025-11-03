@@ -9,7 +9,7 @@ import { VesselTypeService } from '@/service/VesselTypeService';
 import { ref, onMounted } from 'vue';
 import { useRoute, RouterLink } from 'vue-router';
 
-const http = new AxiosHttpService('https://localhost:5001');
+const http = new AxiosHttpService();
 const vesselService = new VesselService(http);
 const vesselTypeService = new VesselTypeService(http);
 

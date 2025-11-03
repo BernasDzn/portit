@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { useAlerts } from '@/composables/alerts';
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import Loading from '../Loading.vue';
 
 const notification = useAlerts();
 
@@ -10,14 +11,19 @@ const props = defineProps({
         type: Object,
         required: true
     },
-    editing: {
-        type: Boolean,
+    editingId: {
+        type: String,
         required: false,
-        default: false
+        default: null
     },
     submitFunction: {
         type: Function,
         required: true
+    },
+    fetchingFunction: {
+        type: Function,
+        required: false,
+        default: null
     },
     successMessage: {
         type: String,
@@ -28,6 +34,7 @@ const props = defineProps({
 
 const router = useRouter();
 const cancelDialog = ref<HTMLElement | null>(null);
+const loading = ref(false);
 
 const form = ref<HTMLFormElement | null>(null);
 
@@ -84,23 +91,42 @@ function confirmCancel() {
     router.back();
 }
 
+onMounted(
+    async () => {
+        if (props.editingId != null && props.fetchingFunction != null) {
+            try {
+                loading.value = true;
+
+                const data = await props.fetchingFunction(props.editingId);
+                Object.assign(props.object, data);
+
+                loading.value = false;
+
+            } catch (err) {
+                notification.enqueueNotification(
+                    'Failed to load data for editing.',
+                    notification.notificationTypes.DANGER,
+                );
+            }
+        }
+    }
+);
+
 </script>
 
 <template>
     <form ref="form" @submit.prevent="submit">
         <div class="form-content">
-            <slot class="form-content"></slot>
+            <Loading v-if="loading" />
+            <slot v-else class="form-content"></slot>
         </div>
 
         <div class="form-operations">
             <sl-button class="form-button" variant="danger" outline @click="onCancel">
                 Cancel
             </sl-button>
-            <sl-button class="form-button" variant="primary" type="submit" v-if="!editing">
-                Create
-            </sl-button>
-            <sl-button class="form-button" variant="primary" type="submit" v-else>
-                Save Changes
+            <sl-button class="form-button" variant="primary" type="submit" :loading="loading">
+                {{ props.editingId != null ? 'Save changes' : 'Create'}}
             </sl-button>
         </div>
 

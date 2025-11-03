@@ -24,6 +24,7 @@ import StaffView from '@/views/Staff/StaffView.vue'
 import QualificationCreate from '@/views/Qualifications/QualificationCreate.vue'
 import Unauthorized from '@/views/Unauthorized.vue'
 import StaffCreate from '@/views/Staff/StaffCreate.vue'
+import QualificationEdit from '@/views/Qualifications/QualificationEdit.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -180,6 +181,10 @@ const router = createRouter({
             meta: {
                 icon: "add"
             }
+        },
+        {
+            path: '/qualifications/edit/:id',
+            component: QualificationEdit
         }
       ]
     },
