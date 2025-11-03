@@ -1,6 +1,8 @@
 <script setup lang="ts">
 
 import Loading from '@/components/Loading.vue';
+import Port3DHero from '@/components/Port3DHero.vue';
+import router from '@/router';
 
 const loading = false;
 </script>
@@ -9,8 +11,8 @@ const loading = false;
   <div>
     <h1 class="title">Portit dashboard</h1>
     <p class="subtitle">Overview of PortIT system</p>
-    <sl-card style="width: 100%;">
-      <div class="main-dashboard-statistics">
+      <sl-card style="width: 100%;">
+        <div class="main-dashboard-statistics">
         <div class="stats-overview" v-if="!loading">
           <div class="opposed">
             <p>42</p>
@@ -47,9 +49,10 @@ const loading = false;
           <p>Staff Members</p>
         </div>
         <Loading v-if="loading"/>
-      </div>
-    </sl-card>
+        </div>
+      </sl-card>
   </div>
+  <Port3DHero :route="'visualization'" />
 </template>
 
 <style scoped>
