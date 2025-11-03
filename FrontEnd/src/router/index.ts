@@ -16,6 +16,7 @@ import VesselTypeDashboard from '@/views/VesselTypes/VesselTypeDashboard.vue'
 import VesselTypeSearch from '@/views/VesselTypes/VesselTypeSearch.vue'
 import VesselTypeView from '@/views/VesselTypes/VesselTypeView.vue'
 import VesselTypeCreate from '@/views/VesselTypes/VesselTypeCreate.vue'
+import VesselTypeEdit from '@/views/VesselTypes/VesselTypeEdit.vue'
 import QualificationDashboard from '@/views/Qualifications/QualificationDashboard.vue'
 import QualificationsSearch from '@/views/Qualifications/QualificationsSearch.vue'
 import QualificationView from '@/views/Qualifications/QualificationView.vue'
@@ -108,6 +109,11 @@ const router = createRouter({
           path: '/vessel-types/create',
           name: 'createVesselType',
           component: VesselTypeCreate
+        },
+        {
+          path: '/vessel-types/edit/:name',
+          name: 'editVesselType',
+          component: VesselTypeEdit
         },
         {
           path: '/qualifications/dashboard',

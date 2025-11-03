@@ -6,6 +6,6 @@ export interface VesselType {
     maxNumberOfRows: number;
     maxNumberOfBays: number;
     maxNumberOfTiers: number;
-    capacity: number;
+    //capacity: number;
     physicalCharacteristics: PhysicalCharacteristics;
 }

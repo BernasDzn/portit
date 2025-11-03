@@ -34,12 +34,12 @@ onMounted(async () => {
         const data = await dockService.getDockByCode(dockCode);
         if (!data) return;
         
-        dock.value.code = data.code ?? '';
-        dock.value.name = data.name ?? '';
-        dock.value.location = data.location ?? '';
-        dock.value.physicalCharacteristics.length = data.physicalCharacteristics?.length ?? null!;
-        dock.value.physicalCharacteristics.depth = data.physicalCharacteristics?.depth ?? null!;
-        dock.value.physicalCharacteristics.draft = data.physicalCharacteristics?.draft ?? null!;
+        dock.value.code = data.code;
+        dock.value.name = data.name;
+        dock.value.location = data.location;
+        dock.value.physicalCharacteristics.length = data.physicalCharacteristics?.length;
+        dock.value.physicalCharacteristics.depth = data.physicalCharacteristics?.depth;
+        dock.value.physicalCharacteristics.draft = data.physicalCharacteristics?.draft;
         dock.value.supportedVesselTypes = (data.supportedVesselTypes ?? []).map((vt: any) =>vt.name);
     } catch (err) {
         console.error('Failed to load dock', err);

@@ -1,23 +1,30 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
-import { AxiosHttpService } from '@/service/AxiosHttpService';
-import { VesselTypeService } from '@/service/VesselTypeService';
-import type { VesselType } from '@/model/VesselType';
+import EntityDropdown from '@/components/crud/EntityDropdown.vue';
 import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
+import type { VesselType } from '@/model/VesselType';
+import AxiosHttpService from '@/service/AxiosHttpService';
+import { VesselTypeService } from '@/service/VesselTypeService';
+import { ref, onMounted, computed } from 'vue';
+import { useRoute, RouterLink } from 'vue-router';
 
+const http = new AxiosHttpService();
+const vesselTypeService = new VesselTypeService(http);
 
-const vesselType = ref<VesselType>({
+const route = useRoute();
+const vesselTypeName = route.params.name as string;
+
+let vesselType = ref<VesselType>({
     name: '',
     description: '',
-    maxNumberOfRows: null!,
-    maxNumberOfBays: null!,
-    maxNumberOfTiers: null!,
     physicalCharacteristics: {
         length: null!,
         depth: null!,
         draft: null!
-    }
+    },
+    maxNumberOfRows: null!,
+    maxNumberOfBays: null!,
+    maxNumberOfTiers: null!
 });
 
 const capacity = computed(() => {
@@ -27,25 +34,50 @@ const capacity = computed(() => {
     return rows * bays * tiers;
 });
 
-const http = new AxiosHttpService();
-const vesselTypeService = new VesselTypeService(http);
+onMounted(async () => {
+
+    try {
+        const data = await vesselTypeService.getVesselTypeByName(vesselTypeName);
+        if (!data) return;
+
+        vesselType.value.name = data.name;
+        vesselType.value.description = data.description;
+        vesselType.value.physicalCharacteristics.length = data.physicalCharacteristics?.length;
+        vesselType.value.physicalCharacteristics.depth = data.physicalCharacteristics?.depth;
+        vesselType.value.physicalCharacteristics.draft = data.physicalCharacteristics?.draft;
+        vesselType.value.maxNumberOfRows = data.maxNumberOfRows;
+        vesselType.value.maxNumberOfBays = data.maxNumberOfBays;
+        vesselType.value.maxNumberOfTiers = data.maxNumberOfTiers;
+    } catch (err) {
+        console.error('Failed to load vessel type', err);
+    }
+});
 
 const submitVesselType = (obj: any) =>
-    vesselTypeService.createVesselType(obj);
+    vesselTypeService.updateVesselType(vesselTypeName, obj);
 
 </script>
 
 <template>
-    <div>
+    <div class="dock-edit">
         <sl-breadcrumb>
             <sl-breadcrumb-item>
-                <RouterLink to="/vessel-types/dashboard" class="breadcrumb-link">Vessel Type Dashboard</RouterLink>
+                <RouterLink to="/docks/dashboard" class="link">Dock Dashboard</RouterLink>
             </sl-breadcrumb-item>
-            <sl-breadcrumb-item>Create Vessel Type</sl-breadcrumb-item>
+            <sl-breadcrumb-item>
+                <RouterLink to="/docks/search" class="link">Search Docks</RouterLink>
+            </sl-breadcrumb-item>
+            <sl-breadcrumb-item>
+                <RouterLink :to="vesselType.name ? `/vessel-types/view/${vesselType.name}` : '/vessel-types/search'" class="link">
+                    {{ vesselType.name || 'Vessel Type Name' }}
+                </RouterLink>
+            </sl-breadcrumb-item>
+            <sl-breadcrumb-item>Edit Vessel Type</sl-breadcrumb-item>
         </sl-breadcrumb>
-        <h1 class="title">Create Vessel Type</h1>
-        <p class="subtitle">Register a new vessel type into the system</p>
-        <EntityForm :object="vesselType" :submit-function="submitVesselType">
+
+        <h1 class="title">Edit Vessel Type</h1>
+        <p class="subtitle">Edit an existing vessel type in the system</p>
+        <EntityForm :object="vesselType" editing :submit-function="submitVesselType">
             <div class="form">
                 <div class="general-info">
                     <p class="section-title">General Information</p>
@@ -75,7 +107,6 @@ const submitVesselType = (obj: any) =>
         </EntityForm>
     </div>
 </template>
-
 
 <style scoped>
 
