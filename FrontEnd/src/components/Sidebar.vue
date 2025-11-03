@@ -14,6 +14,7 @@ const sidebarItems = ref([
   {},
   { name: 'Qualifications', route: '/qualifications/dashboard', icon:"mortarboard", materialIcon: 'school' },
   { name: 'Staff', route: '/staff/dashboard', icon: "people", materialIcon: 'people' },
+  { name: 'Physical Resources', route: '/resources/dashboard', icon: "inventory", materialIcon: 'build' },
 ]);
 
 const isCurrentTab = (itemRoute: string) => {

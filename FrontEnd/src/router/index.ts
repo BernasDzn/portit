@@ -25,6 +25,8 @@ import QualificationCreate from '@/views/Qualifications/QualificationCreate.vue'
 import Unauthorized from '@/views/Unauthorized.vue'
 import StaffCreate from '@/views/Staff/StaffCreate.vue'
 import QualificationEdit from '@/views/Qualifications/QualificationEdit.vue'
+import PhysicalResourceDashboard from '@/views/PhysicalResources/PhysicalResourceDashboard.vue'
+import PhysicalResourcesSearch from '@/views/PhysicalResources/PhysicalResourcesSearch.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -185,6 +187,22 @@ const router = createRouter({
         {
             path: '/qualifications/edit/:id',
             component: QualificationEdit
+        },
+        {
+            path: '/resources/dashboard',
+            name: 'Physical Resources Dashboard',
+            component: PhysicalResourceDashboard,
+            meta: {
+                icon: "build"
+            }
+        },
+        {
+            path: '/resources/search',
+            name: 'Search for physical resources',
+            component: PhysicalResourcesSearch,
+            meta: {
+                icon: "search"
+            }
         }
       ]
     },
