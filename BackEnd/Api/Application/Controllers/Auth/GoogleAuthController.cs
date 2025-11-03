@@ -1,11 +1,7 @@
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Mvc;
 
 using Microsoft.AspNetCore.Authorization;
 using Google.Apis.Auth;
-using System.IdentityModel.Tokens.Jwt;
 using Api.Application.Services;
 
 namespace GoogleAuth.Controllers;
@@ -16,8 +12,9 @@ public class LoginController : ControllerBase
 {
     private readonly IJwtTokenService _jwtTokenService;
     private readonly IConfiguration _config;
+    private readonly ISystemUserService _systemUserService;
 
-    public LoginController(IConfiguration config)
+    public LoginController(ISystemUserService systemUserService, IConfiguration config)
     {
         _jwtTokenService = new JwtTokenService(
             config["Jwt:Key"]!,
@@ -26,6 +23,7 @@ public class LoginController : ControllerBase
             config.GetValue<int>("Jwt:ExpiresMinutes")
         );
         _config = config;
+        _systemUserService = systemUserService;
     }
 
     [HttpPost("google")]
@@ -47,6 +45,12 @@ public class LoginController : ControllerBase
             // payload contains info such as Email, Sub (Google user id), Name, Picture, etc.
             var googleUserId = payload.Subject;
             var email = payload.Email ?? "unknown";
+
+            var result = await _systemUserService.GetBySub(googleUserId);
+            if (result == null || !result.IsActive)
+            {
+                throw new UnauthorizedAccessException("User not found or inactive.");
+            }
 
             // Create our own JWT token for the user
             // We need to create this because the google token was issue by google and we cant accept any token not issued by us
