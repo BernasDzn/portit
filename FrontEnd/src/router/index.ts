@@ -40,32 +40,30 @@ const router = createRouter({
         },
         {
           path: '/vessels/dashboard',
-          name: 'vesselDashboard',
+          name: 'Vessel Dashboard',
           component: VesselDashboard,
         },
         {
           path: '/vessels/search',
-          name: 'vessels',
+          name: 'Vessel Search',
           component: VesselSearch
         },
         {
           path: '/vessels/create',
-          name: 'createVessel',
+          name: 'Create Vessel',
           component: VesselCreate
         },
         {
           path: '/vessels/view/:imo',
-          name: 'viewVessel',
           component: VesselView
         },
         {
           path: '/vessels/edit/:imo',
-          name: 'editVessel',
           component: VesselEdit
         },
         {
           path: '/docks/dashboard',
-          name: 'docksDashboard',
+          name: 'Dock Dashboard',
           component: DockDashboard
         },
         {

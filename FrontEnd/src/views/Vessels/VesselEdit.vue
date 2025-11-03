@@ -67,7 +67,7 @@ const submitVessel = (obj: any) =>
         </sl-breadcrumb>
 
         <h1 class="title">Edit Vessel</h1>
-        <p class="subtitle">Register a new vessel into the system</p>
+        <p class="subtitle">Edit an existing vessel from the system</p>
         <EntityForm :editing="true" :object="vessel" :submit-function="submitVessel">
             <div class="name-imo">
                 <FormField :required="true" class="field" name="Vessel Name*" v-model="vessel.name" placeholderText="Vessel name"/>

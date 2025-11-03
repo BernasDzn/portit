@@ -49,6 +49,7 @@ export class AuthService implements IAuthService {
     async whoAmI(): Promise<User> {
         
         let res = await this.http.get('/Login/me');
+        console.log(res.data);
         return {
             id: res.data.sub,
             name: res.data.name,
