@@ -28,6 +28,7 @@ public class ApiContext : DbContext
     public DbSet<PhysicalResource> PhysicalResources { get; set; } = null!;
     public DbSet<VesselVisitNotification> VesselVisitNotifications { get; set; } = null!;
     public DbSet<Container> Containers { get; set; } = null!;
+    public DbSet<SystemUser> SystemUsers { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
