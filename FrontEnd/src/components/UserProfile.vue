@@ -1,11 +1,22 @@
 <script setup lang="ts">
+import { useAlerts } from '@/composables/alerts';
+import type { User } from '@/model/User';
+import { AuthService } from '@/service/AuthService';
+import AxiosHttpService from '@/service/AxiosHttpService';
 import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
-const user = ref({
+const http = new AxiosHttpService();
+const authService = new AuthService(http);
+
+const notifications = useAlerts();
+const router = useRouter();
+
+const user = ref<User>({
+    id: '1',
     name: 'Monokuma',
     email: 'monoemail@hopes.peak',
-    avatar: '/monouser.png',
-    role: 'Admin'
+    avatar: '/monouser.png'
 });
 const moreInfo = ref(false);
 
@@ -26,23 +37,17 @@ const animateChevron = () => {
 };
 
 onMounted(async () => {
-    // fetch user info
-    
-    const token = localStorage.getItem('authToken');
-    const res = await fetch('https://localhost:5001/Login/me', {
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    });
 
-    if (res.ok) {
-        const data = await res.json();
-        user.value.name = data.name;
-        user.value.email = data.email;
-        user.value.avatar = data.picture;
-        console.log(user.value.avatar);
-    } else {
-        console.error('Failed to fetch user info', res.status);
+    try {
+        user.value = await authService.whoAmI();
+    } catch (error: any) {
+
+        if (error.status === 401)
+            notifications.enqueueNotification('Session could not be found', notifications.notificationTypes.WARNING);
+        else
+            notifications.enqueueNotification(`Unexpected error fetching user data: ${error.message}`, notifications.notificationTypes.DANGER);
+
+        router.push('/unauthorized');
     }
 });
 
@@ -64,7 +69,7 @@ onMounted(async () => {
         <sl-popup placement="bottom-start" shift shift-padding="10" :active="moreInfo" >
             <span slot="anchor"></span>
             <div class="box">
-                <p class="title"><sl-badge variant="primary" pill>{{user.role}}</sl-badge> {{user.name}} </p>
+                <p class="title"><sl-badge variant="primary" pill>Admin</sl-badge> {{user.name}} </p>
                 <p class="subtitle">{{ user.email }}</p>
                 <div class="logout-box">
                     <RouterLink to="/login">

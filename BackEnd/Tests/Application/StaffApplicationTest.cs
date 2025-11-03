@@ -61,7 +61,7 @@ public class StaffApplicationTest : WebApplicationFactory<Program>
             // seed a staff using the in-memory list (avoid querying DB before SaveChanges)
             var qual = qualifications.First();
             var staff = new Staff(
-                new StaffMechanograficNumber { Value = "MEC001" },
+                new StaffMechanographicNumber { Value = "MEC001" },
                 new Designation { Value = "Alice" },
                 new Email { Value = "alice@example.com" },
                 new PhoneNumber { Value = "900000001" },
@@ -94,7 +94,7 @@ public class StaffApplicationTest : WebApplicationFactory<Program>
         var page = await response.Content.ReadFromJsonAsync<Page<StaffDto>>();
         Assert.NotNull(page);
         Assert.Single(page.Items);
-        Assert.Equal("MEC001", page.Items.First().MechanograficNumber);
+        Assert.Equal("MEC001", page.Items.First().MechanographicNumber);
     }
 
     [Fact]
@@ -112,7 +112,7 @@ public class StaffApplicationTest : WebApplicationFactory<Program>
     {
         var createDto = new CreateStaffDto
         {
-            MechanograficNumber = "MEC002",
+            MechanographicNumber = "MEC002",
             Name = "Bob",
             Email = "bob@example.com",
             PhoneNumber = "900000002",
@@ -125,7 +125,7 @@ public class StaffApplicationTest : WebApplicationFactory<Program>
         Assert.Equal(System.Net.HttpStatusCode.Created, response.StatusCode);
         var created = await response.Content.ReadFromJsonAsync<StaffDto>();
         Assert.NotNull(created);
-        Assert.Equal(createDto.MechanograficNumber, created.MechanograficNumber);
+        Assert.Equal(createDto.MechanographicNumber, created.MechanographicNumber);
     }
 
     [Fact]
@@ -133,7 +133,7 @@ public class StaffApplicationTest : WebApplicationFactory<Program>
     {
         var createDto = new CreateStaffDto
         {
-            MechanograficNumber = "MEC003",
+            MechanographicNumber = "MEC003",
             Name = "Charlie",
             Email = "charlie@example.com",
             PhoneNumber = "900000003",
@@ -151,7 +151,7 @@ public class StaffApplicationTest : WebApplicationFactory<Program>
     {
         var createDto = new CreateStaffDto
         {
-            MechanograficNumber = "MEC001",
+            MechanographicNumber = "MEC001",
             Name = "Dup",
             Email = "dup@example.com",
             PhoneNumber = "900000009",
@@ -169,7 +169,7 @@ public class StaffApplicationTest : WebApplicationFactory<Program>
     {
         var createDto = new CreateStaffDto
         {
-            MechanograficNumber = "",
+            MechanographicNumber = "",
             Name = "",
             Email = "not-an-email",
             PhoneNumber = "",
@@ -218,7 +218,7 @@ public class StaffApplicationTest : WebApplicationFactory<Program>
     {
         var dto = new CreateStaffDto
         {
-            MechanograficNumber = "MEC001",
+            MechanographicNumber = "MEC001",
             Name = "Alice Updated",
             Email = "alice2@example.com",
             PhoneNumber = "900000010",
@@ -237,7 +237,7 @@ public class StaffApplicationTest : WebApplicationFactory<Program>
     {
         var dto = new CreateStaffDto
         {
-            MechanograficNumber = "NONEX",
+            MechanographicNumber = "NONEX",
             Name = "No",
             Email = "no@example.com",
             PhoneNumber = "900000099",

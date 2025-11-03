@@ -2,6 +2,7 @@
 import LoginBox from "@/components/LoginBox.vue";
 import PolkaGrid from '@/components/PolkaCanvas.vue'
 import "./../assets/login.css";
+import NotificationQueue from "@/components/NotificationQueue.vue";
 
 </script>
 

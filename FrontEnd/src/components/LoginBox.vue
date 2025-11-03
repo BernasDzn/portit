@@ -1,30 +1,31 @@
 <script setup lang="ts">
+import { useSession } from '@/composables/session';
+import type { User } from '@/model/User';
+import { AuthService } from '@/service/AuthService';
+import AxiosHttpService from '@/service/AxiosHttpService';
+import type { AppJWTResponse } from '@/service/IService/IAuthService';
 import { onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 
-const handleCredentialResponse = async (response: any) => {
-    const idToken = response.credential;
+const http = new AxiosHttpService();
+const authService = new AuthService(http);
 
-    let res = await fetch('https://localhost:5001/Login/google', {
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        method: 'POST',
-        body: JSON.stringify({ token: idToken })
-    });
+const session = useSession();
+const router = useRouter();
 
-    if (res.ok) {
-        let token = await res.text();
-        token = JSON.parse(token).token;
-        
-        // NAO FAZER ISTO !!
-        // ATENÇAO CODIGO MAL FEITO
-        localStorage.setItem('authToken', token);
-        window.location.href = '/';
+const loginFinished = (res: AppJWTResponse) => {
+    const sessionUser: User = {
+        id: res.user.id,
+        name: res.user.name,
+        email: res.user.email,
+        avatar: res.user.picture
+    };
 
-    } else {
-        console.error('uh oh', res.status)
-    }
-};
+    session.setSession(sessionUser, res.token, res.expiresIn);
+
+    // Goto dashbaotd
+    router.push('/');
+}
 
 onMounted(() => {
     /* Load Google script dynamically if not already loaded */
@@ -35,23 +36,10 @@ onMounted(() => {
         script.async = true
         script.defer = true
         script.id = 'google-client-script'
-        script.onload = () => initGoogleSignIn()
+        script.onload = () => authService.initGoogleSignIn(loginFinished)
         document.head.appendChild(script)
     } else {
-        initGoogleSignIn()
-    }
-
-    function initGoogleSignIn() {
-        console.log('Initializing Google Sign-In');
-        window.google.accounts.id.initialize({
-            client_id: '28670621917-0p4e3s7it08to15g7c591b4vjtvo9eaq.apps.googleusercontent.com',
-            callback: handleCredentialResponse
-        })
-
-        window.google.accounts.id.renderButton(
-            document.getElementById('google-signin-btn'),
-            { theme: 'outline', size: 'large' }
-        )
+        authService.initGoogleSignIn(loginFinished)
     }
 });
 

@@ -23,7 +23,6 @@ import NotificationQueue from '@/components/NotificationQueue.vue';
 .layout-content {
   display: flex;
   flex: 1;
-  overflow: hidden;
 }
 
 .layout-content :deep(.sidebar) {
