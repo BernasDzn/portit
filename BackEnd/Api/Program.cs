@@ -131,6 +131,8 @@ builder.Services.AddTransient<IVesselVisitNotificationRepository, VesselVisitNot
 builder.Services.AddTransient<IVesselVisitNotificationService, VesselVisitNotificationService>();
 builder.Services.AddTransient<VesselVisitNotificationIdGenerator>();
 builder.Services.AddTransient<INotificationDecisionService, NotificationDecisionService>();
+builder.Services.AddTransient<ISystemUserRepository, SystemUserRepository>();
+builder.Services.AddTransient<ISystemUserService, SystemUserService>();
 
 var app = builder.Build();
 
