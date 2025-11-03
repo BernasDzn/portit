@@ -1,9 +1,17 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-const listOfRoutes = router.getRoutes().map(route => route.name);
+
+const displayedRoutes = computed(() => {
+  return router.getRoutes()
+    .filter(route => route.name != undefined && !route.meta.hideFromSearch)
+    .filter(route => {
+      if (value.value === '') return true;
+      return route.name!.toString().toLowerCase().includes(value.value.toLowerCase());
+    });
+});
 
 const value = ref('');
 const showMenu = ref(false);
@@ -34,8 +42,13 @@ function handleClear() {
 
     <transition name="fade">
       <sl-menu v-if="showMenu" class="search-menu">
-        <sl-menu-item v-for="item in listOfRoutes">
-            {{ item }}
+        <sl-menu-item v-for="item in displayedRoutes">
+            <RouterLink :to="item.path" @click="handleClear">
+                <div class="search-icon">
+                    <span class="material-icons icon" style="color: var(--accent-1);">{{ item.meta.icon }}</span>
+                    {{ item.name }}
+                </div>
+            </RouterLink>
         </sl-menu-item>
         <sl-divider></sl-divider>
       </sl-menu>
@@ -82,4 +95,17 @@ function handleClear() {
 .fade-leave-to {
   opacity: 0;
 }
+
+.search-icon {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-menu a {
+    text-decoration: none; 
+    color: inherit;        
+    display: block;        
+}
+
 </style>
