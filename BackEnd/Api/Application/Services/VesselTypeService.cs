@@ -73,6 +73,10 @@ public class VesselTypeService : IVesselTypeService
         if (vesselType == null)
             throw new EntityNotFoundException("Vessel Type not found.");
 
+        bool exists = await _vesselTypeRepository.GetVesselTypeByNameAsync(vesselTypeDto.Name) != null;
+        if (exists && vesselTypeDto.Name != name)
+            throw new EntityAlreadyExistsException("Vessel Type with the specified name already exists");
+
         vesselType.UpdateName(vesselTypeDto.Name);
         vesselType.UpdateDescription(vesselTypeDto.Description);
         vesselType.UpdateMaxNumberOfRows(vesselTypeDto.MaxNumberOfRows);

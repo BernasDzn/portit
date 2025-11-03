@@ -59,17 +59,17 @@ const submitVesselType = (obj: any) =>
 </script>
 
 <template>
-    <div class="dock-edit">
+    <div class="vessel-type-edit">
         <sl-breadcrumb>
             <sl-breadcrumb-item>
-                <RouterLink to="/docks/dashboard" class="link">Dock Dashboard</RouterLink>
+                <RouterLink to="/vessel-types/dashboard" class="link">Vessel Type Dashboard</RouterLink>
             </sl-breadcrumb-item>
             <sl-breadcrumb-item>
-                <RouterLink to="/docks/search" class="link">Search Docks</RouterLink>
+                <RouterLink to="/vessel-types/search" class="link">Search Vessel Types</RouterLink>
             </sl-breadcrumb-item>
             <sl-breadcrumb-item>
                 <RouterLink :to="vesselType.name ? `/vessel-types/view/${vesselType.name}` : '/vessel-types/search'" class="link">
-                    {{ vesselType.name || 'Vessel Type Name' }}
+                    {{ vesselTypeName || 'Vessel Type Name' }}
                 </RouterLink>
             </sl-breadcrumb-item>
             <sl-breadcrumb-item>Edit Vessel Type</sl-breadcrumb-item>

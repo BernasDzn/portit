@@ -107,13 +107,18 @@ public class VesselTypeController : ControllerBase, IVesselTypeController
 			_logger.LogError("Entity not found when updating vessel type, {Message}", e.Message);
 			return NotFound(e.Message);
 		}
+		catch (EntityAlreadyExistsException e)
+		{
+			_logger.LogError("Vessel Type already exists when updating, {Message}", e.Message);
+			return Conflict(e.Message);
+		}
 		catch (System.Exception e)
 		{
 			if (e is ArgumentNullException || e is ArgumentException || e is InvalidOperationException)
-            {
-                _logger.LogError("Invalid argument provided for updating {VesselTypeName}, {Message}", name, e.Message);
-                return BadRequest(e.Message);
-            }
+			{
+				_logger.LogError("Invalid argument provided for updating {VesselTypeName}, {Message}", name, e.Message);
+				return BadRequest(e.Message);
+			}
 
 			_logger.LogError("Error updating vessel type, {Message}", e.Message);
 			return StatusCode(500, "An error occurred while updating the vessel type.");
