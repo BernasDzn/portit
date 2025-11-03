@@ -12,7 +12,7 @@ const props = defineProps<{ vessel: Vessel; link?: string }>();
         <sl-card class="listing-item">
             <div class="opposed">
                 <div>
-                    <p class="vessel-idemtification">
+                    <p class="vessel-identification">
                         {{ props.vessel.name }} 
                         <sl-tag size="small" variant="neutral">
                             {{ props.vessel.type.name }}
@@ -36,7 +36,7 @@ const props = defineProps<{ vessel: Vessel; link?: string }>();
     color: var(--accent-1);
 }
 
-.vessel-idemtification {
+.vessel-identification {
     display: flex;
     align-items: center;
     gap: 15px;
