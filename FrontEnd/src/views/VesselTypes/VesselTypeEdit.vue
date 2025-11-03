@@ -2,6 +2,7 @@
 import EntityDropdown from '@/components/crud/EntityDropdown.vue';
 import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
+import { useAlerts } from '@/composables/alerts';
 import type { VesselType } from '@/model/VesselType';
 import AxiosHttpService from '@/service/AxiosHttpService';
 import { VesselTypeService } from '@/service/VesselTypeService';
@@ -12,7 +13,8 @@ const http = new AxiosHttpService();
 const vesselTypeService = new VesselTypeService(http);
 
 const route = useRoute();
-const vesselTypeName = route.params.name as string;
+const vesselTypeName = String(route.params.name || '');
+const notifications = useAlerts();
 
 let vesselType = ref<VesselType>({
     name: '',
@@ -53,8 +55,18 @@ onMounted(async () => {
     }
 });
 
-const submitVesselType = (obj: any) =>
+
+const updateVesselType = async (obj: VesselType) => {
+    if (!vesselTypeName) {
+        notifications.enqueueNotification(
+            'Cannot update vessel types at this time.',
+            notifications.notificationTypes.DANGER
+        );
+        return;
+    }
+
     vesselTypeService.updateVesselType(vesselTypeName, obj);
+};
 
 </script>
 
@@ -77,7 +89,7 @@ const submitVesselType = (obj: any) =>
 
         <h1 class="title">Edit Vessel Type</h1>
         <p class="subtitle">Edit an existing vessel type in the system</p>
-        <EntityForm :object="vesselType" editing :submit-function="submitVesselType">
+        <EntityForm :object="vesselType" :editing-id="vesselTypeName" :submit-function="updateVesselType">
             <div class="form">
                 <div class="general-info">
                     <p class="section-title">General Information</p>

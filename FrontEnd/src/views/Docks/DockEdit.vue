@@ -2,6 +2,7 @@
 import EntityDropdown from '@/components/crud/EntityDropdown.vue';
 import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
+import { useAlerts } from '@/composables/alerts';
 import type { Dock } from '@/model/Dock';
 import AxiosHttpService from '@/service/AxiosHttpService';
 import { DockService } from '@/service/DockService';
@@ -13,8 +14,10 @@ const http = new AxiosHttpService();
 const dockService = new DockService(http);
 const vesselTypeService = new VesselTypeService(http);
 
+const notifications = useAlerts();
+
 const route = useRoute();
-const dockCode = route.params.code as string;
+const dockCode = String(route.params.code || '');
 
 let dock = ref<Dock>({
     code: '',
@@ -46,9 +49,17 @@ onMounted(async () => {
     }
 });
 
-const submitDock = (obj: any) =>
-    dockService.updateDock(dock.value.code, obj);
+const updateDock = async (obj: Dock) => {
+    if (!dockCode) {
+        notifications.enqueueNotification(
+            'Cannot update docks at this time.',
+            notifications.notificationTypes.DANGER
+        );
+        return;
+    }
 
+    dockService.updateDock(dockCode, obj);
+};
 </script>
 
 <template>
@@ -70,7 +81,7 @@ const submitDock = (obj: any) =>
 
         <h1 class="title">Edit Dock</h1>
         <p class="subtitle">Edit an existing dock in the system</p>
-        <EntityForm :object="dock" editing :submit-function="submitDock">
+        <EntityForm :object="dock" editing-id="dockCode" :submit-function="updateDock">
             <div class="form">
                 <div class="general-info">
                     <p class="section-title">General Information</p>
