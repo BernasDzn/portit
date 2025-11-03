@@ -30,6 +30,11 @@ export class VesselTypeService implements IVesselTypeService {
         return res.data;
     }
 
+    async getVesselTypeByName(name: string): Promise<VesselType | undefined> {
+        const res = await this.http.get<VesselType>(`/VesselType/${name}`);
+        return res.data;
+    }
+
     async createVesselType(vesselType: VesselType): Promise<VesselType> {
         const res = await this.http.post<VesselType>('/VesselType', vesselType);
         return res.data;

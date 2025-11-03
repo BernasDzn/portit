@@ -21,6 +21,7 @@ import StaffSearch from '@/views/Staff/StaffSearch.vue'
 import StaffView from '@/views/Staff/StaffView.vue'
 import Staff from '@/views/Staff.vue'
 import QualificationCreate from '@/views/Qualifications/QualificationCreate.vue'
+import VesselTypeView from '@/views/VesselTypes/VesselTypeView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -89,6 +90,11 @@ const router = createRouter({
           path: '/vessel-types/search',
           name: 'vesselTypesSearch',
           component: VesselTypeSearch
+        },
+        {
+          path: '/vessel-types/view/:name',
+          name: 'viewVesselType',
+          component: VesselTypeView
         },
         {
           path: '/qualifications/dashboard',
