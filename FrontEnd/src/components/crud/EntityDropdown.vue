@@ -44,10 +44,10 @@ watch(() => props.items, (val) => {
 
 watch(() => props.modelValue, (val) => {
     if (props.multiple) {
-        const newEnc = Array.isArray(val) ? val.map(encodeRaw) : [];
-        if (JSON.stringify(newEnc) !== JSON.stringify(internalValue.value)) {
-            internalValue.value = newEnc;
-        }
+
+        const newEnc = val.map(encodeRaw);
+        internalValue.value = newEnc;
+
     } else {
         const newEnc = (val !== undefined && val !== null) ? encodeRaw(val) : null;
         if (newEnc !== internalValue.value) {
@@ -58,9 +58,8 @@ watch(() => props.modelValue, (val) => {
 
 watch(internalValue, (val) => {
     if (props.multiple) {
-        const arr = Array.isArray(val) ? val.map((k) => decodeKey(String(k))) : [];
-        const current = Array.isArray(props.modelValue) ? props.modelValue : [];
-        if (JSON.stringify(arr) !== JSON.stringify(current)) {
+        const arr = val.map((k) => decodeKey(String(k)));
+        if (JSON.stringify(props.modelValue) !== JSON.stringify(arr)) {
             emit('update:modelValue', arr);
         }
     } else {
@@ -113,9 +112,10 @@ function onChange(e) {
     const el = e.target || e.currentTarget;
 
     if (props.multiple) {
+        
         const raw = (el && el.selectedValues) || (e.detail && e.detail.value) || (el && el.value) || [];
-        const arr = Array.isArray(raw) ? raw : [raw];
-        internalValue.value = arr.map((k) => String(k));
+        internalValue.value = raw;
+
     } else {
         const val = (el && el.value) || (e.detail && e.detail.value) || null;
         internalValue.value = val ? String(val) : null;

@@ -21,8 +21,8 @@ import QualificationView from '@/views/Qualifications/QualificationView.vue'
 import StaffDashboard from '@/views/Staff/StaffDashboard.vue'
 import StaffSearch from '@/views/Staff/StaffSearch.vue'
 import StaffView from '@/views/Staff/StaffView.vue'
-import Staff from '@/views/Staff.vue'
 import QualificationCreate from '@/views/Qualifications/QualificationCreate.vue'
+import Unauthorized from '@/views/Unauthorized.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -136,11 +136,6 @@ const router = createRouter({
             path: '/qualifications/create',
             name: 'qualificationCreate',
             component: QualificationCreate
-        },
-        {
-          path: '/staff',
-          name: 'staff',
-          component: Staff
         }
       ]
     },
@@ -148,6 +143,11 @@ const router = createRouter({
         path: '/login',
         name: 'login',
         component: Login,
+    },
+    {
+        path: '/unauthorized',
+        name: 'unauthorized',
+        component: Unauthorized
     }
   ],
 })
