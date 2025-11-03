@@ -1,3 +1,5 @@
+import type { User } from "@/model/User";
+
 export interface AppJWTResponse {
     user: {
       id: string;
@@ -13,5 +15,5 @@ export interface IAuthService {
     initGoogleSignIn(callback: Function): void;
     getAppJWTToken(token: string): Promise<AppJWTResponse>;
 
-    whoAmI(): Promise<AppJWTResponse>;
+    whoAmI(): Promise<User>;
 }

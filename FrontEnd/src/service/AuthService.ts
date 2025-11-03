@@ -2,6 +2,7 @@ import { inject, injectable } from 'inversify';
 import { TYPES } from '@/inversify/types';
 import type { AppJWTResponse, IAuthService } from './IService/IAuthService';
 import type { IHttpService } from './IService/IHttpService';
+import type { User } from '@/model/User';
 
 @injectable()
 export class AuthService implements IAuthService {
@@ -45,11 +46,15 @@ export class AuthService implements IAuthService {
         )
     }
 
-    async whoAmI(): Promise<AppJWTResponse> {
+    async whoAmI(): Promise<User> {
         
         let res = await this.http.get('/Login/me');
-        console.log('whoAmI response:', res);
-        return res.data as Promise<AppJWTResponse>;
+        return {
+            id: res.data.sub,
+            name: res.data.name,
+            email: res.data.email,
+            avatar: res.data.picture
+        }
     }
 
     // async handleCredentialResponse(response: any) {

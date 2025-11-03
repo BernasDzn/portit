@@ -1,11 +1,16 @@
 <script setup lang="ts">
+import { useAlerts } from '@/composables/alerts';
 import type { User } from '@/model/User';
 import { AuthService } from '@/service/AuthService';
 import AxiosHttpService from '@/service/AxiosHttpService';
 import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 const http = new AxiosHttpService();
 const authService = new AuthService(http);
+
+const notifications = useAlerts();
+const router = useRouter();
 
 const user = ref<User>({
     id: '1',
@@ -32,26 +37,18 @@ const animateChevron = () => {
 };
 
 onMounted(async () => {
-    
-    // fetch user info
-    // const token = localStorage.getItem('authToken');
-    // const res = await fetch('https://localhost:5001/Login/me', {
-    //     headers: {
-    //         'Authorization': `Bearer ${token}`
-    //     }
-    // });
 
-    // if (res.ok) {
-    //     const data = await res.json();
-    //     user.value.name = data.name;
-    //     user.value.email = data.email;
-    //     user.value.avatar = data.picture;
-    //     console.log(user.value.avatar);
-    // } else {
-    //     console.error('Failed to fetch user info', res.status);
-    // }
+    try {
+        user.value = await authService.whoAmI();
+    } catch (error: any) {
 
-    const me = authService.whoAmI();
+        if (error.status === 401)
+            notifications.enqueueNotification('Session could not be found', notifications.notificationTypes.WARNING);
+        else
+            notifications.enqueueNotification(`Unexpected error fetching user data: ${error.message}`, notifications.notificationTypes.DANGER);
+
+        router.push('/unauthorized');
+    }
 });
 
 </script>
