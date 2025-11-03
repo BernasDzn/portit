@@ -17,7 +17,7 @@ class Session {
         return Session._instance;
     }
 
-    static isAuthenticated(): boolean {
+    isAuthenticated(): boolean {
         const session = Session.getInstance();
         return session.authenticatedUser !== null && session.authToken !== null;
     }

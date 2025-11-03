@@ -34,22 +34,24 @@ const animateChevron = () => {
 onMounted(async () => {
     
     // fetch user info
-    const token = localStorage.getItem('authToken');
-    const res = await fetch('https://localhost:5001/Login/me', {
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    });
+    // const token = localStorage.getItem('authToken');
+    // const res = await fetch('https://localhost:5001/Login/me', {
+    //     headers: {
+    //         'Authorization': `Bearer ${token}`
+    //     }
+    // });
 
-    if (res.ok) {
-        const data = await res.json();
-        user.value.name = data.name;
-        user.value.email = data.email;
-        user.value.avatar = data.picture;
-        console.log(user.value.avatar);
-    } else {
-        console.error('Failed to fetch user info', res.status);
-    }
+    // if (res.ok) {
+    //     const data = await res.json();
+    //     user.value.name = data.name;
+    //     user.value.email = data.email;
+    //     user.value.avatar = data.picture;
+    //     console.log(user.value.avatar);
+    // } else {
+    //     console.error('Failed to fetch user info', res.status);
+    // }
+
+    const me = authService.whoAmI();
 });
 
 </script>

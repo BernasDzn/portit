@@ -2,6 +2,9 @@ import axios from 'axios';
 import type { AxiosInstance } from 'axios';
 import type { IHttpService, Response, Headers, IGetOptions } from './IService/IHttpService';
 import { api } from './api';
+import { useSession } from '@/composables/session';
+
+const session = useSession();
 
 export class AxiosHttpService implements IHttpService {
   private axiosInstance: AxiosInstance;
@@ -19,7 +22,15 @@ export class AxiosHttpService implements IHttpService {
   }
 
   async get<T>(url: string, options?: IGetOptions): Promise<Response<T>> {
-    const res = await this.axiosInstance.get<T>(url, { params: options?.params, headers: options?.headers } as any);
+    const res = await this.axiosInstance.get<T>(
+        url, 
+        { 
+            params: options?.params, 
+            headers: {
+                ...options?.headers,
+                'Authorization': session.isAuthenticated() ? `Bearer ${session.authToken}` : undefined,
+            }
+        } as any);
     return this.toResponse(res);
   }
 
@@ -29,8 +40,9 @@ export class AxiosHttpService implements IHttpService {
       data,
       {
         headers: {
-          'Content-Type': 'application/json',
-          ...headers,
+            'Content-Type': 'application/json',
+            'Authorization': session.isAuthenticated() ? `Bearer ${session.authToken}` : undefined,
+            ...headers,
         },
       } as any
     );
@@ -44,8 +56,9 @@ export class AxiosHttpService implements IHttpService {
         data,
         {
             headers: {
-            'Content-Type': 'application/json',
-            ...headers,
+                'Content-Type': 'application/json',
+                'Authorization': session.isAuthenticated() ? `Bearer ${session.authToken}` : undefined,
+                ...headers,
             },
         } as any
     );
@@ -58,8 +71,9 @@ export class AxiosHttpService implements IHttpService {
         data,
         {
             headers: {
-            'Content-Type': 'application/json',
-            ...headers,
+                'Content-Type': 'application/json',
+                'Authorization': session.isAuthenticated() ? `Bearer ${session.authToken}` : undefined,
+                ...headers,
             },
         } as any
     );
