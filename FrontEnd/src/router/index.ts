@@ -24,113 +24,149 @@ import StaffView from '@/views/Staff/StaffView.vue'
 import QualificationCreate from '@/views/Qualifications/QualificationCreate.vue'
 import Unauthorized from '@/views/Unauthorized.vue'
 import StaffCreate from '@/views/Staff/StaffCreate.vue'
+import QualificationEdit from '@/views/Qualifications/QualificationEdit.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'home',
       component: HomeView,
       children: [
         {
           path: '/',
-          name: 'dashboard',
+          name: 'Main Dashboard',
           component: Dashboard,
+          meta: {
+            icon: "directions_boat"
+          }
         },
         {
-          path: '/vessels/dashboard',
-          name: 'vesselDashboard',
-          component: VesselDashboard,
+            path: '/vessels/dashboard',
+            name: 'Vessel Dashboard',
+            component: VesselDashboard,
+            meta: {
+                    icon: "directions_boat"
+            }
         },
         {
-          path: '/vessels/search',
-          name: 'vessels',
-          component: VesselSearch
+            path: '/vessels/search',
+            name: 'Search for vessels',
+            component: VesselSearch,
+            meta: {
+                icon: "search"
+            }
         },
         {
-          path: '/vessels/create',
-          name: 'createVessel',
-          component: VesselCreate
+            path: '/vessels/create',
+            name: 'Create a Vessel',
+            component: VesselCreate,
+            meta: {
+                icon: "add"
+            }
         },
         {
           path: '/vessels/view/:imo',
-          name: 'viewVessel',
           component: VesselView
         },
         {
           path: '/vessels/edit/:imo',
-          name: 'editVessel',
           component: VesselEdit
         },
         {
-          path: '/docks/dashboard',
-          name: 'docksDashboard',
-          component: DockDashboard
+            path: '/docks/dashboard',
+            name: 'Dock Dashboard',
+            component: DockDashboard,
+            meta: {
+                icon: "anchor"
+            }
         },
         {
-          path: '/docks/search',
-          name: 'docksSearch',
-          component: DockSearch
+            path: '/docks/search',
+            name: 'Search for Docks',
+            component: DockSearch,
+            meta: {
+                icon: "search"
+            }
         },
         {
           path: '/docks/view/:code',
-          name: 'viewDock',
           component: DockView
         },
         {
-          path: '/docks/create',
-          name: 'createDock',
-          component: DockCreate
+            path: '/docks/create',
+            name: 'Create a Dock',
+            component: DockCreate,
+            meta: {
+                icon: "add"
+            }
         },
         {
-          path: '/vessel-types/dashboard',
-          name: 'vesselTypesDashboard',
-          component: VesselTypeDashboard
+            path: '/vessel-types/dashboard',
+            name: 'Vessel Types Dashboard',
+            component: VesselTypeDashboard,
+            meta: {
+                icon: "sailing"
+            }
         },
         {
           path: '/vessel-types/search',
-          name: 'vesselTypesSearch',
-          component: VesselTypeSearch
+          name: 'Search for vessel types',
+          component: VesselTypeSearch,
+            meta: {
+                icon: "search"
+            }
         },
         {
           path: '/vessel-types/view/:name',
-          name: 'viewVesselType',
           component: VesselTypeView
         },
         {
           path: '/vessel-types/create',
-          name: 'createVesselType',
-          component: VesselTypeCreate
+          name: 'Create a Vessel Type',
+          component: VesselTypeCreate,
+            meta: {
+                icon: "add"
+            }
         },
         {
           path: '/qualifications/dashboard',
-          name: 'qualifications',
-          component: QualificationDashboard
+          name: 'Qualifications Dashboard',
+          component: QualificationDashboard,
+            meta: {
+                icon: "school"
+            }
         },
         {
             path: '/qualifications/search',
-            name: 'qualificationsSearch',
-            component: QualificationsSearch
+            name: 'Search for qualifications',
+            component: QualificationsSearch,
+            meta: {
+                icon: "search"
+            }
         },
         {
             path: '/qualifications/view/:id',
-            name: 'qualificationView',
             component: QualificationView
         },
         {
           path: '/staff/dashboard',
-          name: 'staffDashboard',
-          component: StaffDashboard
+          name: 'Staff Dashboard',
+          component: StaffDashboard,
+            meta: {
+                icon: "people"
+            }
         },
         {
           path: '/staff/search',
-          name: 'staffSearch',
-          component: StaffSearch
+          name: 'Search for staff',
+          component: StaffSearch,
+            meta: {
+                icon: "search"
+            }
         },
         {
           path: '/staff/view/:mechanographicNumber',
-          name: 'viewStaff',
           component: StaffView
         },
         {
@@ -140,19 +176,28 @@ const router = createRouter({
         },
         {
             path: '/qualifications/create',
-            name: 'qualificationCreate',
-            component: QualificationCreate
+            name: 'Create a Qualification',
+            component: QualificationCreate,
+            meta: {
+                icon: "add"
+            }
+        },
+        {
+            path: '/qualifications/edit/:id',
+            component: QualificationEdit
         }
       ]
     },
     {
         path: '/login',
         name: 'login',
+        meta: { hideFromSearch: true },
         component: Login,
     },
     {
         path: '/unauthorized',
         name: 'unauthorized',
+        meta: { hideFromSearch: true },
         component: Unauthorized
     }
   ],

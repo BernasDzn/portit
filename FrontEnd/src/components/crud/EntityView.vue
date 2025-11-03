@@ -3,6 +3,7 @@ import { onMounted, ref, watch, onBeforeUnmount } from 'vue';
 import Loading from '../Loading.vue';
 import ErrorHandler from '../ErrorHandler.vue';
 import NoResults from '../NoResults.vue';
+import { onBeforeRouteUpdate, useRoute } from 'vue-router';
 
 // The function to fetch data is passed as a prop
 const props = defineProps<{
@@ -14,7 +15,7 @@ const error = ref<Error | null>(null);
 
 const element = ref<any>(null);
 
-onMounted(async () => {
+const loadElement = async () => {
     loading.value = true;
     error.value = null;
 
@@ -28,7 +29,15 @@ onMounted(async () => {
     } finally {
         loading.value = false;
     }
+};
+
+onMounted(() => {
+    loadElement();
 });
+
+// Reload element when route changes (from update page)
+const route = useRoute();
+watch(() => route.fullPath, () => loadElement())
 
 </script>
 
