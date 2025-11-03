@@ -186,6 +186,11 @@
     margin: 10px 0;
 }
 
+.link {
+  text-decoration: none;
+  color: inherit;
+}
+
 .link-active {
     background-color: #e9ecef;
     color: var(--text-black);

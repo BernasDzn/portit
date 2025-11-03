@@ -11,6 +11,7 @@ import DockDashboard from '@/views/Docks/DockDashboard.vue'
 import DockSearch from '@/views/Docks/DockSearch.vue'
 import DockCreate from '@/views/Docks/DockCreate.vue'
 import DockView from '@/views/Docks/DockView.vue'
+import DockEdit from '@/views/Docks/DockEdit.vue'
 import VesselTypeDashboard from '@/views/VesselTypes/VesselTypeDashboard.vue'
 import VesselTypeSearch from '@/views/VesselTypes/VesselTypeSearch.vue'
 import VesselTypeView from '@/views/VesselTypes/VesselTypeView.vue'
@@ -82,6 +83,11 @@ const router = createRouter({
           path: '/docks/create',
           name: 'createDock',
           component: DockCreate
+        },
+        {
+          path: '/docks/edit/:code',
+          name: 'editDock',
+          component: DockEdit
         },
         {
           path: '/vessel-types/dashboard',

@@ -6,7 +6,7 @@ import { VesselService } from '@/service/VesselService';
 import Loading from '@/components/Loading.vue';
 import { ref, onMounted } from 'vue';
 
-const http = new AxiosHttpService('https://localhost:5001');
+const http = new AxiosHttpService();
 const vesselService = new VesselService(http);
 
 const numberOfVessels = ref(0);

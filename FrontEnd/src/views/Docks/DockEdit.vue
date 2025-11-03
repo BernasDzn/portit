@@ -1,15 +1,22 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { AxiosHttpService } from '@/service/AxiosHttpService';
-import { DockService } from '@/service/DockService';
-import type { Dock } from '@/model/Dock';
-import { VesselTypeService } from '@/service/VesselTypeService';
-import EntityForm from '@/components/crud/EntityForm.vue';
 import EntityDropdown from '@/components/crud/EntityDropdown.vue';
+import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
+import type { Dock } from '@/model/Dock';
+import AxiosHttpService from '@/service/AxiosHttpService';
+import { DockService } from '@/service/DockService';
+import { VesselTypeService } from '@/service/VesselTypeService';
+import { ref, onMounted } from 'vue';
+import { useRoute, RouterLink } from 'vue-router';
 
+const http = new AxiosHttpService();
+const dockService = new DockService(http);
+const vesselTypeService = new VesselTypeService(http);
 
-const dock = ref<Dock>({
+const route = useRoute();
+const dockCode = route.params.code as string;
+
+let dock = ref<Dock>({
     code: '',
     name: '',
     location: '',
@@ -21,30 +28,53 @@ const dock = ref<Dock>({
     supportedVesselTypes: []
 });
 
-const http = new AxiosHttpService();
-const dockService = new DockService(http);
-const vesselTypeService = new VesselTypeService(http);
+onMounted(async () => {
 
-const submitDock = (obj: any) => 
-    dockService.createDock(obj);
+    try {
+        const data = await dockService.getDockByCode(dockCode);
+        if (!data) return;
+        
+        dock.value.code = data.code ?? '';
+        dock.value.name = data.name ?? '';
+        dock.value.location = data.location ?? '';
+        dock.value.physicalCharacteristics.length = data.physicalCharacteristics?.length ?? null!;
+        dock.value.physicalCharacteristics.depth = data.physicalCharacteristics?.depth ?? null!;
+        dock.value.physicalCharacteristics.draft = data.physicalCharacteristics?.draft ?? null!;
+        dock.value.supportedVesselTypes = (data.supportedVesselTypes ?? []).map((vt: any) =>vt.name);
+    } catch (err) {
+        console.error('Failed to load dock', err);
+    }
+});
+
+const submitDock = (obj: any) =>
+    dockService.updateDock(dock.value.code, obj);
 
 </script>
 
 <template>
-    <div>
+    <div class="dock-edit">
         <sl-breadcrumb>
             <sl-breadcrumb-item>
-                <RouterLink to="/docks/dashboard" class="breadcrumb-link">Dock Dashboard</RouterLink>
+                <RouterLink to="/docks/dashboard" class="link">Dock Dashboard</RouterLink>
             </sl-breadcrumb-item>
-            <sl-breadcrumb-item>Create Dock</sl-breadcrumb-item>
+            <sl-breadcrumb-item>
+                <RouterLink to="/docks/search" class="link">Search Docks</RouterLink>
+            </sl-breadcrumb-item>
+            <sl-breadcrumb-item>
+                <RouterLink :to="dock.code ? `/docks/view/${dock.code}` : '/docks/search'" class="link">
+                    {{ dock.code || 'Dock Code' }}
+                </RouterLink>
+            </sl-breadcrumb-item>
+            <sl-breadcrumb-item>Edit Dock</sl-breadcrumb-item>
         </sl-breadcrumb>
-        <h1 class="title">Create Dock</h1>
-        <p class="subtitle">Register a new dock into the system</p>
-        <EntityForm :object="dock" :submit-function="submitDock">
+
+        <h1 class="title">Edit Dock</h1>
+        <p class="subtitle">Edit an existing dock in the system</p>
+        <EntityForm :object="dock" editing :submit-function="submitDock">
             <div class="form">
                 <div class="general-info">
                     <p class="section-title">General Information</p>
-                    <FormField class="field" name="Code*" v-model="dock.code" placeholderText="Dock code" pattern="^[a-zA-Z0-9]+$" required/>
+                    <FormField class="field" name="Code" v-model="dock.code" :enabled="false"/>
                     <FormField class="field" name="Name*" v-model="dock.name" placeholderText="Dock name" required/>
                     <FormField class="field" name="Location*" v-model="dock.location" placeholderText="Dock location" required/>
                 </div>
@@ -63,7 +93,7 @@ const submitDock = (obj: any) =>
                 <EntityDropdown
                     class="field-dropdown"
                     name="Vessel Types*"
-                    v-model="dock.supportedVesselTypes"
+                    v-model=dock.supportedVesselTypes
                     :fetch-function="() => vesselTypeService.getVesselTypes()"
                     :fetch-on-mount="true"
                     placeholderText="Select vessel types"
@@ -77,7 +107,6 @@ const submitDock = (obj: any) =>
         </EntityForm>
     </div>
 </template>
-
 
 <style scoped>
 

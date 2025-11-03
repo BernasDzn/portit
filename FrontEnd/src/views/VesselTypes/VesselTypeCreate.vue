@@ -28,7 +28,7 @@ const capacity = computed(() => {
     return rows * bays * tiers;
 });
 
-const http = new AxiosHttpService('https://localhost:5001');
+const http = new AxiosHttpService();
 const vesselTypeService = new VesselTypeService(http);
 
 const submitVesselType = (obj: any) =>

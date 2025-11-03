@@ -35,11 +35,11 @@ const options = ref(Array.isArray(props.items) ? props.items.slice() : []);
 const loading = ref(false);
 
 const internalValue = ref(props.multiple
-    ? (Array.isArray(props.modelValue) ? props.modelValue.map(encodeRaw) : [])
+    ? (Array.isArray(props.modelValue) && props.modelValue.length ? props.modelValue.map(encodeRaw) : [])
     : (props.modelValue !== undefined && props.modelValue !== null ? encodeRaw(props.modelValue) : null));
 
 watch(() => props.items, (val) => {
-    options.value = Array.isArray(val) ? val.slice() : [];
+    options.value = val;
 });
 
 watch(() => props.modelValue, (val) => {
