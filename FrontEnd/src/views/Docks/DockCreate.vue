@@ -40,7 +40,7 @@ const submitDock = (obj: any) =>
         </sl-breadcrumb>
         <h1 class="title">Create Dock</h1>
         <p class="subtitle">Register a new dock into the system</p>
-        <EntityForm :editing-object="dock" :submit-function="submitDock">
+        <EntityForm :object="dock" :submit-function="submitDock">
             <div class="form">
                 <div class="general-info">
                     <p class="section-title">General Information</p>

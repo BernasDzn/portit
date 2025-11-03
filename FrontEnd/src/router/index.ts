@@ -13,6 +13,8 @@ import DockCreate from '@/views/Docks/DockCreate.vue'
 import DockView from '@/views/Docks/DockView.vue'
 import VesselTypeDashboard from '@/views/VesselTypes/VesselTypeDashboard.vue'
 import VesselTypeSearch from '@/views/VesselTypes/VesselTypeSearch.vue'
+import VesselTypeView from '@/views/VesselTypes/VesselTypeView.vue'
+import VesselTypeCreate from '@/views/VesselTypes/VesselTypeCreate.vue'
 import QualificationDashboard from '@/views/Qualifications/QualificationDashboard.vue'
 import QualificationsSearch from '@/views/Qualifications/QualificationsSearch.vue'
 import QualificationView from '@/views/Qualifications/QualificationView.vue'
@@ -21,7 +23,6 @@ import StaffSearch from '@/views/Staff/StaffSearch.vue'
 import StaffView from '@/views/Staff/StaffView.vue'
 import Staff from '@/views/Staff.vue'
 import QualificationCreate from '@/views/Qualifications/QualificationCreate.vue'
-import VesselTypeView from '@/views/VesselTypes/VesselTypeView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -95,6 +96,11 @@ const router = createRouter({
           path: '/vessel-types/view/:name',
           name: 'viewVesselType',
           component: VesselTypeView
+        },
+        {
+          path: '/vessel-types/create',
+          name: 'createVesselType',
+          component: VesselTypeCreate
         },
         {
           path: '/qualifications/dashboard',
