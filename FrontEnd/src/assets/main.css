@@ -45,6 +45,13 @@ body {
     justify-content: space-between;
 }
 
+.listing-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(28rem, 1fr));
+    width: 100%;
+}
+
 .listing-doubles {
     /* Only two columns */
     grid-template-columns: 1fr 1fr;
