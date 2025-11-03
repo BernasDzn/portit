@@ -19,14 +19,15 @@ export class PhysicalResourceService implements IPhysicalResourceService {
         let query: string[] = [];
 
         if (filtering) {
-            query.push(filtering.filter.code ? `Code=${filtering.filter.code}&` : '');
-            query.push(filtering.filter.description ? `Description=${filtering.filter.description}&` : '');
-            query.push(filtering.filter.status !== undefined ? `Status=${filtering.filter.status}&` : '');
-            query.push(filtering.filter.type !== undefined ? `Type=${filtering.filter.type}&` : '');
+            query.push(filtering.filter.Code ? `Code=${filtering.filter.Code}&` : '');
+            query.push(filtering.filter.Description ? `Description=${filtering.filter.Description}&` : '');
+            query.push(filtering.filter.Status !== undefined ? `Status=${filtering.filter.Status}&` : '');
+            query.push(filtering.filter.Type !== undefined ? `Type=${filtering.filter.Type}&` : '');
             query.push(filtering.pageNumber !== undefined ? `PageNumber=${filtering.pageNumber}&` : '');
             query.push(filtering.pageSize !== undefined ? `PageSize=${filtering.pageSize}` : '');
         }
 
+        console.log(`/PhysicalResource/filter${query.length ? `?${query.join('')}` : ''}`);
         const res = await this.http.get<Page<PhysicalResource>>(`/PhysicalResource/filter${query.length ? `?${query.join('')}` : ''}`);
         return res.data;
     }

@@ -42,8 +42,8 @@ export interface Truck extends PhysicalResource {
 }
 
 export interface PhysicalResourceFilter {
-    code?: string;
-    description?: string;
-    status?: 0 | 1 | 2;
-    type?: 0 | 1 | 2;
+    Code?: string;
+    Description?: string;
+    Status?: 0 | 1 | 2;
+    Type?: 0 | 1 | 2;
 }

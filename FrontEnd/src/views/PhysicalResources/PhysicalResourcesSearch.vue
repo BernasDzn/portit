@@ -13,12 +13,30 @@ const fetchResources = async (filtering?: Filter<PhysicalResourceFilter>): Promi
     return await resourceService.getPhysicalResources(filtering);
 }
 
-// const filterDefinition = {
-//     idCode: {
-//         type: 'text',
-//         label: 'Qualification Code',
-//     }
-// };
+const filterDefinition = {
+    Code: {
+        type: 'text',
+        label: 'Resource Code',
+    },
+    Status: {
+        type: 'select',
+        label: 'Status',
+        options: [
+            { value: '0', text: 'Available' },
+            { value: '1', text: 'Maintenance' },
+            { value: '2', text: 'Out of service' },
+        ],
+    },
+    Type: {
+        type: 'select',
+        label: 'Resource Type',
+        options: [
+            { value: '0', text: 'STS Crane' },
+            { value: '1', text: 'Yard Gantry Crane' },
+            { value: '2', text: 'Truck' },
+        ],
+    }
+};
 
 </script>
 
@@ -34,7 +52,7 @@ const fetchResources = async (filtering?: Filter<PhysicalResourceFilter>): Promi
         <h1 class="title">Physical Resources</h1>
         <p class="subtitle">Manage existing Physical Resources at the port</p>
 
-        <ListingBox :fetch-function="fetchResources" search-filter="description" v-slot="{elements}">
+        <ListingBox :fetch-function="fetchResources" search-filter="Description" v-slot="{elements}" :filter-definition="filterDefinition">
             <li v-for="resource in elements" :key="resource.code">
                 <!-- {{ resource.code }} - {{ resource.description }} -->
                 <!-- <QualificationPrinter class="listing-box" :qualification="qualification" :link="`/qualifications/view/${qualification.idCode}`" /> -->

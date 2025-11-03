@@ -25,20 +25,21 @@ const showFiltermenu = ref(false);
 const filters = ref<{ [key: string]: any }>({});
 
 onMounted(async () => {
-    await loadElements(
-        {
-            filter: {},
-            pageNumber: pageNumber.value
-        }
-    );
+  // Initialize filters before loading data
+  if (props.filterDefinition) {
+    for (const key in props.filterDefinition)
+      filters.value[key] = '';
+  }
 
-    // Initialize filters
-    if (props.filterDefinition)
-        for (const key in props.filterDefinition)
-            filters.value[key] = '';
+  await loadElements({
+    filter: {},
+    pageNumber: pageNumber.value
+  });
 });
 
 const loadElements = async (filter?: any) => {
+
+    //console.log('Loading elements with filter:', filter);
     
     loading.value = true;
     error.value = null;
@@ -161,7 +162,7 @@ onBeforeUnmount(() => {
                 <div v-if="showFiltermenu" class="filter-box" ref="filterMenuRef">
                   <div class="filters-container">
                     <p class="filter-title">Filters</p>
-                    <template v-for="(def, key) in props.filterDefinition" :key="key">
+                    <template class="filter-container" v-for="(def, key) in props.filterDefinition" :key="key">
                       <div class="filter-field">
                         <label class="filter-label">{{ def.label }}</label>
                         <sl-input
@@ -172,6 +173,23 @@ onBeforeUnmount(() => {
                           v-model="filters[key]"
                           :placeholder="def.label"
                         />
+                        <sl-select
+                            class="filter-input"
+                            v-else-if="def.type === 'select'"
+                            size="medium"
+                            clearable
+                            :placeholder="'Select ' + def.label"
+                            :value="filters[key]"
+                            @sl-change="(e: any) => filters[key] = e.target.value"
+                        >
+                            <sl-option
+                                v-for="option in def.options"
+                                :key="option.value"
+                                :value="option.value"
+                            >
+                                {{ option.text }}
+                            </sl-option>
+                        </sl-select>
                       </div>
                     </template>
               
@@ -223,12 +241,21 @@ onBeforeUnmount(() => {
     flex-shrink: 0;
 }
 
+.filter-field {
+    width: fit-content;
+    margin-bottom: 1rem !important;
+}
+
 .filter-title {
     margin-top: 0;
 }
 
 .clear-button {
     margin-top: 1rem;
+}
+
+.filter-input::part(base) {
+    margin: 0.5rem 0 0 0;
 }
 
 </style>

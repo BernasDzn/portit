@@ -27,6 +27,7 @@ import StaffCreate from '@/views/Staff/StaffCreate.vue'
 import QualificationEdit from '@/views/Qualifications/QualificationEdit.vue'
 import PhysicalResourceDashboard from '@/views/PhysicalResources/PhysicalResourceDashboard.vue'
 import PhysicalResourcesSearch from '@/views/PhysicalResources/PhysicalResourcesSearch.vue'
+import PhysicalResourceViewer from '@/views/PhysicalResources/PhysicalResourceViewer.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -203,6 +204,10 @@ const router = createRouter({
             meta: {
                 icon: "search"
             }
+        },
+        {
+            path: '/resources/view/:code',
+            component: PhysicalResourceViewer
         }
       ]
     },
