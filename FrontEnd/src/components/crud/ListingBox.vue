@@ -11,6 +11,7 @@ const props = defineProps<{
     fetchFunction: (filtering?: Filter<any>) => Promise<Page<any>>,
     searchFilter: string,
     listingStyle?: string,
+    filterDefinition?: { [key: string]: any }
 }>();
 
 const loading = ref(false);
@@ -19,6 +20,9 @@ const searchTerm = ref('');
 
 const pageNumber = ref(1);
 const elements = ref<Page<any>>({ items: [], pageNumber: 0, pageSize: 0, pageCount: 0 });
+    
+const showFiltermenu = ref(false);
+const filters = ref<{ [key: string]: any }>({});
 
 onMounted(async () => {
     await loadElements(
@@ -27,6 +31,11 @@ onMounted(async () => {
             pageNumber: pageNumber.value
         }
     );
+
+    // Initialize filters
+    if (props.filterDefinition)
+        for (const key in props.filterDefinition)
+            filters.value[key] = '';
 });
 
 const loadElements = async (filter?: any) => {
@@ -66,7 +75,10 @@ watch(searchTerm, (newTerm) => {
             debounceTimer = null;
         }
         pageNumber.value = 1;
-        void loadElements({ filter: {}, pageNumber: pageNumber.value });
+        void loadElements({ filter: {
+            ...filters.value,
+            [props.searchFilter]: ''
+        }, pageNumber: pageNumber.value });
         return;
     }
 
@@ -75,6 +87,7 @@ watch(searchTerm, (newTerm) => {
         pageNumber.value = 1;
         const filter: Filter<any> = {
             filter: {
+                ...filters.value,
                 [props.searchFilter]: newTerm
             },
             pageNumber: pageNumber.value
@@ -91,6 +104,7 @@ watch(pageNumber, async (newPageNumber) => {
 
     const filter: Filter<any> = {
         filter: {
+            ...filters.value,
             [props.searchFilter]: searchTerm.value
         },
         pageNumber: newPageNumber
@@ -98,6 +112,28 @@ watch(pageNumber, async (newPageNumber) => {
 
     await loadElements(filter);
 });
+
+watch(filters, async (newFilters) => {
+    
+    if (debounceTimer) {
+        clearTimeout(debounceTimer);
+        debounceTimer = null;
+    }
+
+    debounceTimer = setTimeout(async () => {
+        pageNumber.value = 1;
+        const filter: Filter<any> = {
+            filter: {
+                ...newFilters,
+                [props.searchFilter]: searchTerm.value
+            },
+            pageNumber: pageNumber.value
+        };
+
+        await loadElements(filter);
+        
+    }, DEBOUNCE_MS);
+}, { deep: true });
 
 onBeforeUnmount(() => {
     if (debounceTimer) {
@@ -112,18 +148,54 @@ onBeforeUnmount(() => {
     <div>
         <ErrorHandler v-if="error" :error-object="error" />
         <sl-card v-else class="listing-box">
-            <sl-input class="listing-search" placeholder="Search..." size="large" clearable v-model="searchTerm">
-                <span slot="prefix" class="material-icons material-icons--prefix">search</span>
-              </sl-input>
+            <div class="listing-filters">
+                <sl-input class="listing-search" placeholder="Search..." size="large" clearable v-model="searchTerm">
+                    <span slot="prefix" class="material-icons material-icons--prefix">search</span>
+                </sl-input>
+                <sl-button v-if="filterDefinition" class="filter-button" variant="default" size="large" @click="() => showFiltermenu = !showFiltermenu">
+                    <sl-icon slot="prefix" name="filter"></sl-icon>
+                    Filter
+                </sl-button>
+            </div>
+            <transition name="slide-fade">
+                <div v-if="showFiltermenu" class="filter-box" ref="filterMenuRef">
+                  <div class="filters-container">
+                    <p class="filter-title">Filters</p>
+                    <template v-for="(def, key) in props.filterDefinition" :key="key">
+                      <div class="filter-field">
+                        <label class="filter-label">{{ def.label }}</label>
+                        <sl-input
+                          class="filter-input"
+                          v-if="def.type === 'text'"
+                          size="medium"
+                          clearable
+                          v-model="filters[key]"
+                          :placeholder="def.label"
+                        />
+                      </div>
+                    </template>
+              
+                    <sl-button
+                      class="clear-button"
+                      variant="neutral"
+                      outline
+                      size="small"
+                      @click="() => Object.keys(filters).forEach(k => filters[k] = '')"
+                    >
+                      Clear Filters
+                    </sl-button>
+                  </div>
+                </div>
+            </transition>              
             <!-- Pass the loaded elements to the parent via a slot prop --> 
             <Loading v-if="loading"/>
             <div v-else>
-                <template v-if="elements.items && elements.items.length">
+                <main v-if="elements.items && elements.items.length">
                     <ul :class="props.listingStyle || 'listing-doubles'">
                         <slot :elements="elements.items" />
                     </ul>
                     <Pagination :total-pages="elements.pageCount" :current-page="elements.pageNumber" @page-changed="(n: number) => pageNumber = n"  />
-                </template>
+                </main>
                 <template v-else>
                     <div class="no-results-container">
                         <NoResults noResultsMessage="No results found."/>
@@ -134,3 +206,29 @@ onBeforeUnmount(() => {
         </sl-card>
     </div>
 </template>
+
+<style scoped>
+.listing-filters {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+  
+.listing-search {
+    flex: 1;
+}
+
+.filter-button::part(base) {
+    margin-bottom: 1rem;
+    flex-shrink: 0;
+}
+
+.filter-title {
+    margin-top: 0;
+}
+
+.clear-button {
+    margin-top: 1rem;
+}
+
+</style>

@@ -6,9 +6,14 @@ import { useRouter } from 'vue-router';
 const notification = useAlerts();
 
 const props = defineProps({
-    editingObject: {
+    object: {
         type: Object,
         required: true
+    },
+    editing: {
+        type: Boolean,
+        required: false,
+        default: false
     },
     submitFunction: {
         type: Function,
@@ -27,7 +32,7 @@ const cancelDialog = ref<HTMLElement | null>(null);
 const form = ref<HTMLFormElement | null>(null);
 
 const hasUnsaved = computed(() => {
-    return Object.values(props.editingObject).some(value => {
+    return Object.values(props.object).some(value => {
         return value !== null && value !== undefined && value !== '';
     });
 });
@@ -38,7 +43,7 @@ const submit = async () => {
         return;
     }
     
-    props.submitFunction(props.editingObject)
+    props.submitFunction(props.object)
     .catch((error: any) => {
         notification.enqueueNotification(
             error.response?.data || 'Could not pinpoint the error. Please try again later.',
@@ -84,8 +89,11 @@ function confirmCancel() {
             <sl-button class="form-button" variant="danger" outline @click="onCancel">
                 Cancel
             </sl-button>
-            <sl-button class="form-button" variant="primary" type="submit">
+            <sl-button class="form-button" variant="primary" type="submit" v-if="!editing">
                 Create
+            </sl-button>
+            <sl-button class="form-button" variant="primary" type="submit" v-else>
+                Save Changes
             </sl-button>
         </div>
 
