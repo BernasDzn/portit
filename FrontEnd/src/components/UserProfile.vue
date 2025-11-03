@@ -1,11 +1,17 @@
 <script setup lang="ts">
+import type { User } from '@/model/User';
+import { AuthService } from '@/service/AuthService';
+import AxiosHttpService from '@/service/AxiosHttpService';
 import { onMounted, ref } from 'vue';
 
-const user = ref({
+const http = new AxiosHttpService();
+const authService = new AuthService(http);
+
+const user = ref<User>({
+    id: '1',
     name: 'Monokuma',
     email: 'monoemail@hopes.peak',
-    avatar: '/monouser.png',
-    role: 'Admin'
+    avatar: '/monouser.png'
 });
 const moreInfo = ref(false);
 
@@ -26,8 +32,8 @@ const animateChevron = () => {
 };
 
 onMounted(async () => {
-    // fetch user info
     
+    // fetch user info
     const token = localStorage.getItem('authToken');
     const res = await fetch('https://localhost:5001/Login/me', {
         headers: {
@@ -64,7 +70,7 @@ onMounted(async () => {
         <sl-popup placement="bottom-start" shift shift-padding="10" :active="moreInfo" >
             <span slot="anchor"></span>
             <div class="box">
-                <p class="title"><sl-badge variant="primary" pill>{{user.role}}</sl-badge> {{user.name}} </p>
+                <p class="title"><sl-badge variant="primary" pill>Admin</sl-badge> {{user.name}} </p>
                 <p class="subtitle">{{ user.email }}</p>
                 <div class="logout-box">
                     <RouterLink to="/login">
