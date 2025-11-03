@@ -56,4 +56,28 @@ public class SystemUserService : ISystemUserService
         var updatedUser = await _systemUserRepository.Update(systemUser);
         return updatedUser.ToDTO();
     }
+
+    public async Task<SystemUserDto> SetUserRole(string sub, int role)
+    {
+        var systemUser = await _systemUserRepository.GetBySubAsync(sub);
+        if (systemUser == null)
+        {
+            throw new EntityNotFoundException($"System user with sub '{sub}' not found.");
+        }
+
+        systemUser.Role = (SystemUserRole)role;
+        var updatedUser = await _systemUserRepository.Update(systemUser);
+        return updatedUser.ToDTO();
+    }
+
+    public async Task DeleteSystemUser(string sub)
+    {
+        var systemUser = await _systemUserRepository.GetBySubAsync(sub);
+        if (systemUser == null)
+        {
+            throw new EntityNotFoundException($"System user with sub '{sub}' not found.");
+        }
+
+        await _systemUserRepository.DeleteBySubAsync(sub);
+    }
 }

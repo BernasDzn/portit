@@ -10,4 +10,6 @@ public interface ISystemUserService
     public Task<IEnumerable<SystemUserDto>> GetAll();
     public Task<SystemUserDto> CreateSystemUser(SystemUserDto systemUserDto);
     public Task<SystemUserDto> UpdateSystemUser(string sub, SystemUserDto systemUserDto);
+    public Task<SystemUserDto> SetUserRole(string sub, int role);
+    public Task DeleteSystemUser(string sub);
 }

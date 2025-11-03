@@ -3,12 +3,14 @@ namespace Api.Domain.Entities;
 using Api.Infrastructure.Utilities;
 using Microsoft.AspNetCore.Identity;
 using Api.Application.DataTransfer;
+using System;
 
 public class SystemUser : IdentityUser<Guid>, IDTOAble<SystemUserDto>
 {
     // Use properties with PascalCase so EF Core maps them by convention
     public required string Sub { get; set; }
     public required bool Active { get; set; }
+    public virtual SystemUserRole Role { get; set; }
 
     protected SystemUser()
     {
@@ -31,7 +33,8 @@ public class SystemUser : IdentityUser<Guid>, IDTOAble<SystemUserDto>
         return new SystemUserDto
         {
             Sub = Sub,
-            IsActive = Active
+            IsActive = Active,
+            Role = (int)Role
         };
     }
 }

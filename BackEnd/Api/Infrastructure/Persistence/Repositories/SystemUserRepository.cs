@@ -70,4 +70,21 @@ public class SystemUserRepository : GenericRepository<SystemUser>, ISystemUserRe
             throw new PersistencyFailedException("Failed to update a system user. " + ex.Message);
         }
     }
+
+    public async Task DeleteBySubAsync(string sub)
+    {
+        try
+        {
+            var systemUser = await GetBySubAsync(sub);
+            if (systemUser != null)
+            {
+                _context.SystemUsers.Remove(systemUser);
+                await _context.SaveChangesAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new PersistencyFailedException("Failed to delete a system user by sub. " + ex.Message);
+        }
+    }
 }
