@@ -13,6 +13,7 @@ const sidebarItems = ref([
   { name: 'Docks', route: '/docks/dashboard', icon: "anchor", materialIcon: 'anchor' },
   {},
   { name: 'Qualifications', route: '/qualifications/dashboard', icon:"mortarboard", materialIcon: 'school' },
+  { name: 'Physical Resources', route: '/resources/dashboard', icon: "inventory", materialIcon: 'build' },
   { name: 'Staff', route: '/staff/dashboard', icon: "people", materialIcon: 'people' },
 ]);
 
