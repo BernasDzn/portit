@@ -38,7 +38,7 @@ public class StaffServiceTest
 	{
 		_qualification_mock = new Qualification(Guid.NewGuid(), new Code { Value = "Q1" }, new Designation { Value = "Qualification 1" });
 		return new Staff(
-			new StaffMechanograficNumber { Value = "TESTMEC0001" },
+			new StaffMechanographicNumber { Value = "ST250001" },
 			new Designation { Value = "John Test" },
 			new Email { Value = "john.test@example.com" },
 			new PhoneNumber { Value = "900000000" },
@@ -52,7 +52,7 @@ public class StaffServiceTest
 		_qualification_dto_mock = new QualificationDto { IdCode = "Q3", QualificationName = "Qualification 3" };
 		return new CreateStaffDto
 		{
-			MechanograficNumber = "TESTMEC0001",
+			MechanographicNumber = "STF250001",
 			Name = "John Test",
 			Email = "john.test@example.com",
 			PhoneNumber = "900000000",
@@ -116,11 +116,14 @@ public class StaffServiceTest
 
 		_staffRepositoryMock.Setup(repo => repo.Add(It.IsAny<Staff>()))
 			.ReturnsAsync((Staff s) => s);
+		
+		_staffRepositoryMock.Setup(repo => repo.FilterStaffsAsync(It.IsAny<StaffFilter>()))
+			.ReturnsAsync(new Page<Staff> { Items = new List<Staff> { _staff_mock } });
 
 		var Result = await _staffService.Create(_staff_dto_mock);
 
 		Assert.NotNull(Result);
-		Assert.Equal(_staff_dto_mock.MechanograficNumber, Result.MechanograficNumber);
+		Assert.Equal("STF250002", Result.MechanographicNumber);
 	}
 
 	[Fact]
@@ -141,7 +144,7 @@ public class StaffServiceTest
 		_staffRepositoryMock.Setup(repo => repo.Update(It.IsAny<Staff>()))
 			.ReturnsAsync(_updated_staff_mock);
 
-		var Result = await _staffService.Update(_staff_dto_mock.MechanograficNumber, _updated_staff_dto_mock);
+		var Result = await _staffService.Update(_staff_dto_mock.MechanographicNumber, _updated_staff_dto_mock);
 
 		Assert.NotNull(Result);
 		Assert.Equal(_updated_staff_dto_mock.Name, Result.Name);
@@ -153,7 +156,7 @@ public class StaffServiceTest
 		_staffRepositoryMock.Setup(repo => repo.GetStaffByMecNumberAsync(It.IsAny<string>()))
 			.ReturnsAsync((Staff?)null);
 
-		await Assert.ThrowsAsync<EntityNotFoundException>(() => _staffService.Update(_staff_dto_mock.MechanograficNumber, _staff_dto_mock));
+		await Assert.ThrowsAsync<EntityNotFoundException>(() => _staffService.Update(_staff_dto_mock.MechanographicNumber, _staff_dto_mock));
 	}
 
 	[Fact]
@@ -165,7 +168,7 @@ public class StaffServiceTest
 		_qualificationRepositoryMock.Setup(repo => repo.GetQualificationByIdAsync(It.IsAny<string>()))
 			.ReturnsAsync((Qualification?)null);
 
-		await Assert.ThrowsAsync<EntityNotFoundException>(() => _staffService.Update(_staff_dto_mock.MechanograficNumber, _staff_dto_mock));
+		await Assert.ThrowsAsync<EntityNotFoundException>(() => _staffService.Update(_staff_dto_mock.MechanographicNumber, _staff_dto_mock));
 	}
 
 	[Fact]
@@ -213,9 +216,9 @@ public class StaffServiceTest
 		_staffRepositoryMock.Setup(repo => repo.Update(It.IsAny<Staff>()))
 			.ReturnsAsync((Staff s) => s);
 
-		var Result = await _staffService.Deactivate(_staff_dto_mock.MechanograficNumber);
+		var Result = await _staffService.Deactivate(_staff_dto_mock.MechanographicNumber);
 		Assert.NotNull(Result);
-		Assert.Equal(_staff_dto_mock.MechanograficNumber, Result.MechanograficNumber);
+		Assert.Equal(_staff_dto_mock.MechanographicNumber, Result.MechanographicNumber);
 	}
 
 	[Fact]
@@ -224,7 +227,7 @@ public class StaffServiceTest
 		_staffRepositoryMock.Setup(repo => repo.GetStaffByMecNumberAsync(It.IsAny<string>()))
 			.ReturnsAsync((Staff?)null);
 
-		await Assert.ThrowsAsync<EntityNotFoundException>(() => _staffService.Deactivate(_staff_dto_mock.MechanograficNumber));
+		await Assert.ThrowsAsync<EntityNotFoundException>(() => _staffService.Deactivate(_staff_dto_mock.MechanographicNumber));
 	}
 
 

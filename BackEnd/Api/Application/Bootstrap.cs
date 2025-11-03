@@ -283,7 +283,7 @@ public static class Bootstrap
         var qual2 = context.Qualifications.Skip(1).First();
 
         Staff staff1 = new Staff(
-            new StaffMechanographicNumber { Value = "OCEANPMEC001" },
+            new StaffMechanographicNumber { Value = "STF250001" },
             new Designation { Value = "João Pedro" },
             new Email { Value = "joao.pedro@oceanicport.com" },
             new PhoneNumber { Value = "911222333" },
@@ -292,7 +292,7 @@ public static class Bootstrap
         );
 
         Staff staff2 = new Staff(
-            new StaffMechanographicNumber { Value = "OCEANPMEC002" },
+            new StaffMechanographicNumber { Value = "STF250002" },
             new Designation { Value = "Maria Silva" },
             new Email { Value = "maria.silva@oceanicport.com" },
             new PhoneNumber { Value = "911222444" },
@@ -301,7 +301,7 @@ public static class Bootstrap
         );
 
         Staff staff3 = new Staff(
-            new StaffMechanographicNumber { Value = "OCEANPMEC003" },
+            new StaffMechanographicNumber { Value = "STF250003" },
             new Designation { Value = "Carlos Santos" },
             new Email { Value = "carlos.santos@oceanicport.com" },
             new PhoneNumber { Value = "911222555" },
