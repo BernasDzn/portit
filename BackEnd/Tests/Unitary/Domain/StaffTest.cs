@@ -13,7 +13,7 @@ public class StaffTest
 	public void WhenPassingNonAlphanumericMecanographicNumber_ThenThrowsException(string mecanographicNumber)
 	{
 		Assert.Throws<ArgumentException>(() =>
-			new StaffMechanograficNumber { Value = mecanographicNumber }
+			new StaffMechanographicNumber { Value = mecanographicNumber }
 		);
 	}
 
@@ -22,7 +22,7 @@ public class StaffTest
 	public void WhenPassingInvalidMecanographicNumber_ThenThrowsException(string mecanographicNumber)
 	{
 		Assert.Throws<ArgumentException>(() =>
-			new StaffMechanograficNumber { Value = mecanographicNumber }
+			new StaffMechanographicNumber { Value = mecanographicNumber }
 		);
 	}
 
@@ -37,7 +37,7 @@ public class StaffTest
 		string phoneNumber)
 	{
 		Staff staff = new Staff(
-			new StaffMechanograficNumber { Value = mecanographicNumber },
+			new StaffMechanographicNumber { Value = mecanographicNumber },
 			new Designation { Value = name },
 			new Email { Value = email },
 			new PhoneNumber { Value = phoneNumber },
@@ -50,7 +50,7 @@ public class StaffTest
 	public void UpdateStatus_WithValidStatus_UpdatesSuccessfully()
 	{
 		var staff = new Staff(
-			new StaffMechanograficNumber { Value = "MEC001" },
+			new StaffMechanographicNumber { Value = "MEC001" },
 			new Designation { Value = "Name" },
 			new Email { Value = "a@b.com" },
 			new PhoneNumber { Value = "900000000" },
@@ -66,7 +66,7 @@ public class StaffTest
 	public void UpdateStatus_WithInvalidStatus_ThrowsArgumentException()
 	{
 		var staff = new Staff(
-			new StaffMechanograficNumber { Value = "MEC002" },
+			new StaffMechanographicNumber { Value = "MEC002" },
 			new Designation { Value = "Name" },
 			new Email { Value = "a@b.com" },
 			new PhoneNumber { Value = "900000000" },
@@ -81,7 +81,7 @@ public class StaffTest
 	public void Deactivate_SetsStatusUnavailableAndIsActiveFalse()
 	{
 		var staff = new Staff(
-			new StaffMechanograficNumber { Value = "MEC003" },
+			new StaffMechanographicNumber { Value = "MEC003" },
 			new Designation { Value = "Name" },
 			new Email { Value = "a@b.com" },
 			new PhoneNumber { Value = "900000000" },
@@ -98,7 +98,7 @@ public class StaffTest
 	public void Update_ChangesPropertiesCorrectly()
 	{
 		var staff = new Staff(
-			new StaffMechanograficNumber { Value = "MEC004" },
+			new StaffMechanographicNumber { Value = "MEC004" },
 			new Designation { Value = "OldName" },
 			new Email { Value = "old@a.com" },
 			new PhoneNumber { Value = "900000001" },
@@ -121,7 +121,7 @@ public class StaffTest
 	public void ToDTO_ReturnsCorrectDto()
 	{
 		var staff = new Staff(
-			new StaffMechanograficNumber { Value = "MEC005" },
+			new StaffMechanographicNumber { Value = "MEC005" },
 			new Designation { Value = "Name" },
 			new Email { Value = "a@b.com" },
 			new PhoneNumber { Value = "900000000" },
@@ -130,7 +130,7 @@ public class StaffTest
 		);
 
 		var dto = staff.ToDTO();
-		Assert.Equal(staff.MechanograficNumber.Value, dto.MechanograficNumber);
+		Assert.Equal(staff.MechanographicNumber.Value, dto.MechanographicNumber);
 		Assert.Equal(staff.Name.Value, dto.Name);
 	}
 
@@ -138,7 +138,7 @@ public class StaffTest
 	public void ToString_IncludesMechanograficNumber()
 	{
 		var staff = new Staff(
-			new StaffMechanograficNumber { Value = "MEC006" },
+			new StaffMechanographicNumber { Value = "MEC006" },
 			new Designation { Value = "Name" },
 			new Email { Value = "a@b.com" },
 			new PhoneNumber { Value = "900000000" },

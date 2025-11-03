@@ -3,8 +3,8 @@ namespace Api.Infrastructure.Utilities;
 // Utility class to represent pagination parameters
 public class Pageable
 {
-    public required int PageNumber { get; set; } = 1;
-    public required int PageSize { get; set; } = 10;
+    public int PageNumber { get; set; } = 1;
+    public int PageSize { get; set; } = 10;
 }
 
 // Page class to hold paginated results

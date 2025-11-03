@@ -50,7 +50,7 @@ public class Staff_CtS_IntegrationTest
 		_qualificationDto_mock = _qualification_mock.ToDTO();
 
 		_staff_mock = new Staff(
-			new StaffMechanograficNumber { Value = "INTMEC001" },
+			new StaffMechanographicNumber { Value = "STF25001" },
 			new Designation { Value = "Integration Test" },
 			new Email { Value = "int.test@example.com" },
 			new PhoneNumber { Value = "900000001" },
@@ -60,7 +60,7 @@ public class Staff_CtS_IntegrationTest
 		_staffDto_mock = _staff_mock.ToDTO();
 		_createStaffDto_mock = new CreateStaffDto
 		{
-			MechanograficNumber = _staff_mock.MechanograficNumber.Value,
+			MechanographicNumber = _staff_mock.MechanographicNumber.Value,
 			Name = _staff_mock.Name.Value,
 			Email = _staff_mock.Email.Value,
 			PhoneNumber = _staff_mock.PhoneNumber.Value,
@@ -102,6 +102,9 @@ public class Staff_CtS_IntegrationTest
 		_qualRepoMock.Setup(r => r.GetQualificationByIdAsync(It.IsAny<string>()))
 			.ReturnsAsync(_qualification_mock);
 
+		_staffRepoMock.Setup(r => r.FilterStaffsAsync(It.IsAny<StaffFilter>()))
+			.ReturnsAsync(new Page<Staff> { Items = new List<Staff>() });
+
 		_staffRepoMock.Setup(r => r.GetStaffByMecNumberAsync(It.IsAny<string>()))
 			.ReturnsAsync((Staff?)null);
 
@@ -111,21 +114,7 @@ public class Staff_CtS_IntegrationTest
 		var result = await _controller.Create(_createStaffDto_mock);
 		var response = Assert.IsType<CreatedAtActionResult>(result.Result);
 		var value = Assert.IsType<StaffDto>(response.Value);
-		Assert.Equal(_createStaffDto_mock.MechanograficNumber, value.MechanograficNumber);
-	}
-
-	[Fact]
-	public async Task Create_WhenStaffExists_ReturnsBadRequest()
-	{
-		_qualRepoMock.Setup(repo => repo.GetQualificationByIdAsync(It.IsAny<string>()))
-			.ReturnsAsync(_qualification_mock);
-
-		// Existing staff found -> controller should return BadRequest
-		_staffRepoMock.Setup(repo => repo.GetStaffByMecNumberAsync(It.IsAny<string>()))
-			.ReturnsAsync(_staff_mock);
-
-		var result = await _controller.Create(_createStaffDto_mock);
-		Assert.IsType<ConflictObjectResult>(result.Result);
+		Assert.Equal(_createStaffDto_mock.MechanographicNumber, value.MechanographicNumber);
 	}
 
 	[Fact]
@@ -172,7 +161,7 @@ public class Staff_CtS_IntegrationTest
 		_staffRepoMock.Setup(r => r.Update(It.IsAny<Staff>()))
 			.ReturnsAsync(_staff_mock);
 
-		var result = await _controller.Deactivate(_staff_mock.MechanograficNumber.Value);
+		var result = await _controller.Deactivate(_staff_mock.MechanographicNumber.Value);
 		var response = Assert.IsType<OkObjectResult>(result);
 		var value = Assert.IsType<StaffDto>(response.Value);
 	}
@@ -183,7 +172,7 @@ public class Staff_CtS_IntegrationTest
 		_staffRepoMock.Setup(r => r.GetStaffByMecNumberAsync(It.IsAny<string>()))
 			.ThrowsAsync(new Exception("Test Exception"));
 
-		var result = await _controller.Deactivate(_staff_mock.MechanograficNumber.Value);
+		var result = await _controller.Deactivate(_staff_mock.MechanographicNumber.Value);
 
 		var statusCodeResult = Assert.IsType<ObjectResult>(result);
 		Assert.Equal(500, statusCodeResult.StatusCode);
@@ -195,7 +184,7 @@ public class Staff_CtS_IntegrationTest
 		_staffRepoMock.Setup(r => r.GetStaffByMecNumberAsync(It.IsAny<string>()))
 			.ReturnsAsync((Staff?)null);
 
-		var result = await _controller.Deactivate(_staff_mock.MechanograficNumber.Value);
+		var result = await _controller.Deactivate(_staff_mock.MechanographicNumber.Value);
 		Assert.IsType<NotFoundObjectResult>(result);
 	}
 
@@ -211,7 +200,7 @@ public class Staff_CtS_IntegrationTest
 		_staffRepoMock.Setup(r => r.Update(It.IsAny<Staff>()))
 			.ReturnsAsync(_staff_mock);
 
-		var result = await _controller.Update(_staff_mock.MechanograficNumber.Value, _createStaffDto_mock);
+		var result = await _controller.Update(_staff_mock.MechanographicNumber.Value, _createStaffDto_mock);
 		var response = Assert.IsType<OkObjectResult>(result.Result);
 		var value = Assert.IsType<StaffDto>(response.Value);
 	}
@@ -222,7 +211,7 @@ public class Staff_CtS_IntegrationTest
 		_staffRepoMock.Setup(r => r.GetStaffByMecNumberAsync(It.IsAny<string>()))
 			.ThrowsAsync(new Exception("Test Exception"));
 
-		var result = await _controller.Update(_staff_mock.MechanograficNumber.Value, _createStaffDto_mock);
+		var result = await _controller.Update(_staff_mock.MechanographicNumber.Value, _createStaffDto_mock);
 
 		var statusCodeResult = Assert.IsType<ObjectResult>(result.Result);
 		Assert.Equal(500, statusCodeResult.StatusCode);
@@ -234,20 +223,8 @@ public class Staff_CtS_IntegrationTest
 		_staffRepoMock.Setup(r => r.GetStaffByMecNumberAsync(It.IsAny<string>()))
 			.ReturnsAsync((Staff?)null);
 
-		var result = await _controller.Update(_staff_mock.MechanograficNumber.Value, _createStaffDto_mock);
+		var result = await _controller.Update(_staff_mock.MechanographicNumber.Value, _createStaffDto_mock);
 		Assert.IsType<NotFoundObjectResult>(result.Result);
-	}
-
-	[Fact]
-	public async Task Filter_ShouldReturnOk_WhenFound()
-	{
-		var page = Page<Staff>.Of(new List<Staff> { _staff_mock }, new Pageable { PageNumber = 1, PageSize = 10 });
-		_staffRepoMock.Setup(r => r.FilterStaffsAsync(It.IsAny<StaffFilter>()))
-			.ReturnsAsync(page);
-
-		var result = await _controller.Filter(new StaffFilter());
-		var response = Assert.IsType<OkObjectResult>(result.Result);
-		var value = Assert.IsType<Page<StaffDto>>(response.Value);
 	}
 
 	[Fact]

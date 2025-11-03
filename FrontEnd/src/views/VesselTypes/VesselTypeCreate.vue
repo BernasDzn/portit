@@ -88,13 +88,11 @@ const submitVesselType = (obj: any) =>
 .general-info {
     display: flex;
     flex-direction: column;
-    width: 20%;
 }
 
 .measurements {
     display: flex;
     flex-direction: column;
-    width: 15%;
 }
 
 .measurements-grid {

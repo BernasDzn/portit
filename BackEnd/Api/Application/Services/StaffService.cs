@@ -7,6 +7,7 @@ using Api.Domain.Entities;
 using Api.Domain.IRepository;
 using Api.Domain.ValueObjects;
 using Api.Infrastructure.Exceptions;
+using Api.Infrastructure.Persistence.Repositories;
 using Api.Infrastructure.Utilities;
 
 public class StaffService : IStaffService
@@ -32,10 +33,6 @@ public class StaffService : IStaffService
 
 	public async Task<StaffDto?> Create(CreateStaffDto staffDto)
 	{
-		bool exists = await _staffRepository.GetStaffByMecNumberAsync(staffDto.MechanographicNumber) != null;
-		if (exists)
-			throw new EntityAlreadyExistsException("Staff with the same mechanographic number already exists.");
-
 		ICollection<Qualification> qualifications = new List<Qualification>();
 		if (staffDto.QualificationsCodes != null)
 		{
@@ -48,8 +45,10 @@ public class StaffService : IStaffService
 			}
 		}
 
+		string mecNumber = await new StaffMechanographicNumberGenerator(_staffRepository).GenerateMechanographicNumber();
+
 		Staff staff = new Staff(
-			new StaffMechanographicNumber { Value = staffDto.MechanographicNumber },
+			new StaffMechanographicNumber { Value = mecNumber },
 			new Designation { Value = staffDto.Name },
 			new Email { Value = staffDto.Email },
 			new PhoneNumber { Value = staffDto.PhoneNumber },
