@@ -32,8 +32,15 @@ const cancelDialog = ref<HTMLElement | null>(null);
 const form = ref<HTMLFormElement | null>(null);
 
 const hasUnsaved = computed(() => {
+    console.log(props.object);
     return Object.values(props.object).some(value => {
-        return value !== null && value !== undefined && value !== '';
+        if (typeof value === 'object' && value !== null) 
+            return Object.values(value).some(v => {return (v !== null && v !== undefined && v !== '');});
+        else if (Array.isArray(value))
+            return value.length > 0;
+        else 
+            return (value !== null && value !== undefined && value !== '');
+        
     });
 });
 
