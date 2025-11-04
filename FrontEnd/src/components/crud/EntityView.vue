@@ -46,7 +46,7 @@ watch(() => route.fullPath, () => loadElement())
         <ErrorHandler v-if="error" :error-object="error" />
         <div v-else class="viewing-box">
             <Loading v-if="loading"/>
-            <NoResults v-else-if="element==null" noResultsMessage="No vessel of IMO" />
+            <NoResults v-else-if="element==null" noResultsMessage="No results." />
             <div v-else>
                 <slot :element="element" />
             </div>

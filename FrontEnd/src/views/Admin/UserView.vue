@@ -1,0 +1,158 @@
+<script setup lang="ts">
+import { reactive, ref, onMounted } from 'vue';
+import { useRoute, useRouter, RouterLink } from 'vue-router';
+import FormField from '@/components/crud/FormField.vue';
+import EntityDropdown from '@/components/crud/EntityDropdown.vue';
+import Loading from '@/components/Loading.vue';
+import AxiosHttpService from '@/service/AxiosHttpService';
+import { AdminService } from '@/service/AdminService';
+import { useAlerts } from '@/composables/alerts';
+import type { SystemUser } from '@/model/SystemUser';
+
+const http = new AxiosHttpService();
+const adminService = new AdminService(http as any);
+const notifications = useAlerts();
+
+const route = useRoute();
+const router = useRouter();
+const emailParam = route.fullPath.split('/').pop() || '';
+
+const loading = ref(true);
+const deleteDialog = ref<HTMLElement | null>(null);
+
+// Local mutable user object so FormField/EntityDropdown can bind with v-model
+const user = reactive<SystemUser>({ sub: '', emailAddress: '', isActive: false, role: 0 });
+
+// Role items for EntityDropdown (match backend enum ordering)
+const roleItems = [
+  { id: 0, name: 'Administrator' },
+  { id: 1, name: 'Port Authority Officer' },
+  { id: 2, name: 'SAO Representative' },
+  { id: 3, name: 'Logistics Operator' }
+];
+
+onMounted(async () => {
+  if (!emailParam) {
+    loading.value = false;
+    return;
+  }
+
+    try {
+    loading.value = true;
+    const data = await adminService.getByEmail(emailParam);
+    // copy into reactive object
+    Object.assign(user, data as any);
+    // ensure emailAddress is populated whether backend returns `emailAddress` or `email`
+    user.emailAddress = (data as any).emailAddress ?? (data as any).email ?? user.emailAddress;
+  } catch (err: any) {
+    notifications.enqueueNotification(err?.response?.data || 'Failed to load user', notifications.notificationTypes.DANGER);
+  } finally {
+    loading.value = false;
+  }
+});
+
+const activate = async () => {
+  try {
+    await adminService.activateUserAccount(user.emailAddress);
+    user.isActive = true;
+    notifications.enqueueNotification('User activated', notifications.notificationTypes.SUCCESS);
+  } catch (err: any) {
+    notifications.enqueueNotification(err?.response?.data || 'Failed to activate user', notifications.notificationTypes.DANGER);
+  }
+};
+
+const deactivate = async () => {
+  try {
+    await adminService.deactivateUserAccount(user.emailAddress);
+    user.isActive = false;
+    notifications.enqueueNotification('User deactivated', notifications.notificationTypes.SUCCESS);
+  } catch (err: any) {
+    notifications.enqueueNotification(err?.response?.data || 'Failed to deactivate user', notifications.notificationTypes.DANGER);
+  }
+};
+
+const confirmDelete = () => {
+  (deleteDialog.value as any)?.show?.();
+};
+
+const doDelete = async () => {
+  try {
+    await adminService.deleteUser(user.emailAddress);
+    notifications.enqueueNotification('User deleted', notifications.notificationTypes.SUCCESS);
+    router.back();
+  } catch (err: any) {
+    notifications.enqueueNotification(err?.response?.data || 'Failed to delete user', notifications.notificationTypes.DANGER);
+  } finally {
+    (deleteDialog.value as any)?.hide?.();
+  }
+};
+
+</script>
+
+<template>
+  <div>
+    <sl-breadcrumb>
+      <sl-breadcrumb-item><RouterLink to="/admin" class="breadcrumb-link">Admin</RouterLink></sl-breadcrumb-item>
+      <sl-breadcrumb-item><RouterLink to="/admin/users" class="breadcrumb-link">Users</RouterLink></sl-breadcrumb-item>
+      <sl-breadcrumb-item><RouterLink to="/admin/users/search" class="breadcrumb-link">Search Users</RouterLink></sl-breadcrumb-item>
+      <sl-breadcrumb-item>View {{user.emailAddress}}</sl-breadcrumb-item>
+    </sl-breadcrumb>
+
+    <h1 class="title">User details</h1>
+
+    <sl-card style="margin-top: 1rem;">
+      <div class="view-grid">
+        <div class="fields">
+          <Loading v-if="loading" />
+
+          <div v-else>
+            <FormField name="Email" v-model="user.emailAddress" :enabled="false" />
+
+            <EntityDropdown
+              name="Role"
+              :items="roleItems"
+              v-model="user.role"
+              valueKey="id"
+              labelKey="name"
+              :enabled="false"
+            />
+
+            <p>Active: <strong>{{ user.isActive ? 'Yes' : 'No' }}</strong></p>
+          </div>
+        </div>
+
+        <div class="actions">
+          <sl-button v-if="!user.isActive" variant="primary" @click="activate">Activate</sl-button>
+          <sl-button v-else variant="warning" @click="deactivate">Deactivate</sl-button>
+          <sl-button variant="danger" outline @click="confirmDelete">Delete</sl-button>
+        </div>
+      </div>
+    </sl-card>
+
+    <sl-dialog ref="deleteDialog" label="Confirm delete">
+      <div>Are you sure you want to delete this user?</div>
+      <sl-button slot="footer" variant="text" @click="(deleteDialog as any).hide()">Cancel</sl-button>
+      <sl-button slot="footer" variant="danger" @click="doDelete">Delete</sl-button>
+    </sl-dialog>
+  </div>
+</template>
+
+<style scoped>
+.view-grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: stretch;
+}
+.fields {
+  flex: 1 1 60%;
+}
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 180px;
+  justify-content: flex-end;
+}
+
+</style>
