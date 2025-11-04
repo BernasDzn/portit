@@ -1,4 +1,6 @@
 # LEI-SEM5-PI-2025-26-3DJ-01
+After cloning, run `git submodule update --init --recursive` to include all submodules:
+1. [Three.js](https://github.com/mrdoob/three.js)
 
 ### 1. Description of the Project
 
@@ -68,3 +70,6 @@ If that is not of need for you, for a cleaner logging experience modify the `Log
 
 > TODO
 
+### 8. 3rd party assets used
+- [Skiing penguins skybox pack (opengameart.org)](https://opengameart.org/content/skiingpenguins-skybox-pack)
+- [Boat V2 3D Model](https://free3d.com/3d-model/boat-v2--225787.html)

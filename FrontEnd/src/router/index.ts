@@ -41,6 +41,7 @@ import UserDashboard from '@/views/Admin/UserDashboard.vue'
 import UserSearch from '@/views/Admin/UserSearch.vue'
 import UserCreate from '@/views/Admin/UserCreate.vue'
 import UserView from '@/views/Admin/UserView.vue'
+import Visualizer from '@/views/Visualizer.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -321,12 +322,20 @@ const router = createRouter({
       meta: { hideFromSearch: true },
       component: Login,
     },
-  {
-    path: '/activate',
-    name: 'activate',
-    meta: { hideFromSearch: true },
-    component: () => import('@/views/Activate.vue')
-  },
+    {
+        path: '/visualization',
+        name: 'Port 3D',
+        component: Visualizer,
+        meta: {
+            icon: "view_in_ar"
+        }
+    },
+    {
+        path: '/activate',
+        name: 'activate',
+        meta: { hideFromSearch: true },
+        component: () => import('@/views/Activate.vue')
+    },
     {
       path: '/unauthorized',
       name: 'unauthorized',
