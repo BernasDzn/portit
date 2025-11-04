@@ -13,10 +13,14 @@ const fetchQualifications = async (filtering?: Filter<Qualification>): Promise<P
     return await qualificationService.getQualifications(filtering);
 }
 
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
+
 const filterDefinition = {
     idCode: {
         type: 'text',
-        label: 'Qualification Code',
+        label: t('qualification.fields.idCode.title'),
     }
 };
 
@@ -26,13 +30,13 @@ const filterDefinition = {
 <div>
 
     <sl-breadcrumb>
-        <sl-breadcrumb-item><RouterLink to="/qualifications/dashboard" class="breadcrumb-link">Qualification Dashboard</RouterLink></sl-breadcrumb-item>
-        <sl-breadcrumb-item>Search Qualifications</sl-breadcrumb-item>
+        <sl-breadcrumb-item><RouterLink to="/qualifications/dashboard" class="breadcrumb-link">{{ t('qualification.tabs.dashboard') }}</RouterLink></sl-breadcrumb-item>
+        <sl-breadcrumb-item>{{ t('qualification.tabs.search') }}</sl-breadcrumb-item>
     </sl-breadcrumb>
 
     <header>
-        <h1 class="title">Qualifications</h1>
-        <p class="subtitle">Manage required certifications and qualifications</p>
+        <h1 class="title">{{ t('qualification.title') }}</h1>
+        <p class="subtitle">{{ t('qualification.subtitle.search') }}</p>
 
         <ListingBox :fetch-function="fetchQualifications" search-filter="qualificationName" v-slot="{elements}" :filter-definition="filterDefinition">
             <li v-for="qualification in elements" :key="qualification.idCode">

@@ -2,6 +2,10 @@
 import type { VesselType } from '@/model/VesselType';
 import { computed } from 'vue';
 import { RouterLink } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+
+const {t} = useI18n();
+
 const props = defineProps<{
     vtype: VesselType,
     link?: string
@@ -17,7 +21,7 @@ const props = defineProps<{
                     <p>{{ vtype.name }}</p>
                     <p class="item-description">
                         {{ vtype.description }}<br />
-                        Capacity: {{ vtype.capacity }}<br />
+                        {{ t('vesselType.fields.capacity.title') }}: {{ vtype.capacity }}<br />
                     </p>
                 </div>
                 <span class="material-icons icon" aria-hidden="true">sailing</span>

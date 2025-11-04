@@ -8,6 +8,9 @@ import type { Dock } from '@/model/Dock';
 import EntityView from '@/components/crud/EntityView.vue';
 import VesselTypePrinter from '@/components/printers/VesselTypePrinter.vue';
 
+import {useI18n} from "vue-i18n";
+
+const {t} = useI18n();
 
 const route = useRoute();
 
@@ -25,10 +28,10 @@ const fetchDock = async (): Promise<Dock | undefined> => {
     <div>
         <sl-breadcrumb>
             <sl-breadcrumb-item>
-                <RouterLink to="/docks/dashboard" class="breadcrumb-link">Dock Dashboard</RouterLink>
+                <RouterLink to="/docks/dashboard" class="breadcrumb-link">{{ t('dock.tabs.dashboard') }}</RouterLink>
             </sl-breadcrumb-item>
             <sl-breadcrumb-item>
-                <RouterLink to="/docks/search" class="breadcrumb-link">Search Docks</RouterLink>
+                <RouterLink to="/docks/search" class="breadcrumb-link">{{ t('dock.tabs.search') }}</RouterLink>
             </sl-breadcrumb-item>
             <sl-breadcrumb-item>{{ dockCode }}</sl-breadcrumb-item>
         </sl-breadcrumb>
@@ -46,7 +49,7 @@ const fetchDock = async (): Promise<Dock | undefined> => {
                     <RouterLink :to="`/docks/edit/${encodeURIComponent(entity.element.code)}`">
                         <sl-button variant="default" size="large">
                             <sl-icon slot="prefix" name="pencil"></sl-icon>
-                            Edit Dock
+                            {{ t('dock.tabs.edit') }}
                         </sl-button>
                     </RouterLink>
 
@@ -54,37 +57,37 @@ const fetchDock = async (): Promise<Dock | undefined> => {
                 <div class="viewing-content">
                     <div class="top-section">
                         <sl-card class="info-card" style="flex: 65%;">
-                            <p>Dock information</p>
+                            <p>{{ t('dock.infoTitle') }}</p>
                             <div class="info-grid">
                                 <div class="info-block">
-                                    <span class="label">Code</span>
+                                    <span class="label">{{ t('dock.fields.code.title') }}</span>
                                     <p>{{ entity.element.code }}</p>
                                 </div>
                                 <div class="info-block">
-                                    <span class="label">Name</span>
+                                    <span class="label">{{ t('dock.fields.name.title') }}</span>
                                     <p>{{ entity.element.name }}</p>
                                 </div>
                                 <div class="info-block">
-                                    <span class="label">Location</span>
+                                    <span class="label">{{ t('dock.fields.location.title') }}</span>
                                     <p>{{ entity.element.location }}</p>
                                 </div>
                             </div>
                         </sl-card>
                         <sl-card class="info-card">
-                            <p>Statistics</p>
+                            <p>{{ t('common.statistics') }}</p>
                             <div class="view-statistics">
                                 <div class="view-statistics-overview">
                                     <div>
                                         <p><span class="view-statistic-data">{{ entity.element.physicalCharacteristics.length }}</span>m</p>
-                                        <p>Length</p>
+                                        <p>{{ t('physicalCharacteristics.length.title') }}</p>
                                     </div>
                                     <div>
                                         <p><span class="view-statistic-data">{{ entity.element.physicalCharacteristics.depth }}</span>m</p>
-                                        <p>Depth</p>
+                                        <p>{{ t('physicalCharacteristics.depth.title') }}</p>
                                     </div>
                                     <div>
                                         <p><span class="view-statistic-data">{{ entity.element.physicalCharacteristics.draft }}</span>m</p>
-                                        <p>Draft</p>
+                                        <p>{{ t('physicalCharacteristics.draft.title') }}</p>
                                     </div>
                                 </div>
 
@@ -94,7 +97,7 @@ const fetchDock = async (): Promise<Dock | undefined> => {
                                 <div class="view-statistics-overview">
                                     <div>
                                         <p class="view-statistic-data">{{ entity.element.supportedVesselTypes.length }}</p>
-                                        <p>Supported Vessel Types</p>
+                                        <p>{{ t('dock.fields.supportedVesselTypes.title') }}</p>
                                     </div>
                                 </div>
 
@@ -102,7 +105,7 @@ const fetchDock = async (): Promise<Dock | undefined> => {
                         </sl-card>
                     </div>
                     <sl-card class="info-card" style="flex: 100%;">
-                    <p>Supported Vessel Types</p>
+                    <p>{{ t('dock.fields.supportedVesselTypes.title') }}</p>
                     <div class="info-grid">
                         <div v-for="vtype in entity.element.supportedVesselTypes" :key="vtype.name">
                             <VesselTypePrinter class="listing-box" :vtype="vtype" :link="`/vessel-types/view/${vtype.name}`" />

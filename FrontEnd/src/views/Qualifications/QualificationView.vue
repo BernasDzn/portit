@@ -5,6 +5,7 @@ import type { Vessel } from '@/model/Vessel';
 import EntityView from '@/components/crud/EntityView.vue';
 import { QualificationService } from '@/service/QualificationService';
 import type { Qualification } from '@/model/Qualifications';
+import { useI18n } from 'vue-i18n';
 
 const route = useRoute();
 
@@ -16,13 +17,15 @@ const fetchQualification = async (): Promise<Qualification | null> => {
     return await qualificationService.getQualificationById(qualId);
 };
 
+const { t } = useI18n();
+
 </script>
 
 <template>
   <div>
     <sl-breadcrumb>
-        <sl-breadcrumb-item><RouterLink to="/qualifications/dashboard" class="breadcrumb-link">Qualifications Dashboard</RouterLink></sl-breadcrumb-item>
-        <sl-breadcrumb-item><RouterLink to="/qualifications/search" class="breadcrumb-link">Search Qualifications</RouterLink></sl-breadcrumb-item>
+        <sl-breadcrumb-item><RouterLink to="/qualifications/dashboard" class="breadcrumb-link">{{ t('qualification.tabs.dashboard') }}</RouterLink></sl-breadcrumb-item>
+        <sl-breadcrumb-item><RouterLink to="/qualifications/search" class="breadcrumb-link">{{ t('qualification.tabs.search') }}</RouterLink></sl-breadcrumb-item>
         <sl-breadcrumb-item>{{ qualId }}</sl-breadcrumb-item>
     </sl-breadcrumb>
 
@@ -39,24 +42,24 @@ const fetchQualification = async (): Promise<Qualification | null> => {
                 <RouterLink :to="`/qualifications/edit/${encodeURIComponent(entity.element.idCode)}`">
                     <sl-button variant="default" size="large">
                         <sl-icon slot="prefix" name="pencil"></sl-icon>
-                        Edit Qualification
+                        {{ t('qualification.tabs.edit') }}
                     </sl-button>
                 </RouterLink>
     
             </div>
             <div class="viewing-content">
                 <sl-card class="qual-main-info">
-                    <p>Qualification information</p>
+                    <p>{{ t('qualification.infoTitle') }}</p>
                     <div class="columns-2">
                         <div>
                             <div class="info-block">
-                                <span class="label">Qualification code</span>
+                                <span class="label">{{ t('qualification.fields.idCode.title') }}</span>
                                 <p>{{ entity.element.idCode }}</p>
                             </div>
                         </div>
                         <div>
                             <div class="info-block">
-                                <span class="label">Qualification name</span>
+                                <span class="label">{{ t('qualification.fields.qualificationName.title') }}</span>
                                 <p>{{ entity.element.qualificationName }}</p>
                             </div>
                         </div>

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -16,6 +17,8 @@ const displayedRoutes = computed(() => {
 const value = ref('');
 const showMenu = ref(false);
 
+const {t} = useI18n();
+
 watch(value, (newValue) => {
   // Show the menu only when the input has text
   showMenu.value = newValue.length > 0;
@@ -31,7 +34,7 @@ function handleClear() {
   <div class="search-container">
     <sl-input
       class="main-searchbar"
-      placeholder="Search..."
+      :placeholder="t('buttons.search').concat('...')"
       size="large"
       clearable
       v-model="value"

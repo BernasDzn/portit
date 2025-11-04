@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { RouterLink } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const props = defineProps<{resource: any; link?: string}>();
 
@@ -21,14 +24,14 @@ const props = defineProps<{resource: any; link?: string}>();
                 <sl-tag 
                     :variant="['success', 'warning', 'danger'][resource.status]"
                 >
-                    {{ ["Available", "Maintenance", "Out of service"][resource.status] }}
+                    {{ [t('physicalResource.fields.status.options.available'), t('physicalResource.fields.status.options.maintenance'), t('physicalResource.fields.status.options.outOfService')][resource.status] }}
                 </sl-tag>
             </div>
             <p class="item-description">
                 {{ resource.code }} <br>
             </p>
             <sl-divider></sl-divider>
-            <p>Required qualifications:</p>
+            <p>{{ t('physicalResource.requiredQualifications') }}</p>
             <ul class="qualification-list">
                 <li v-for="q in props.resource.qualifications">
                     <sl-badge v-if="q !== undefined" class="list-badge" variant="neutral">{{ q.qualificationName }}</sl-badge>

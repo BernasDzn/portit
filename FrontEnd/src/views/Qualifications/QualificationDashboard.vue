@@ -1,22 +1,25 @@
 <script setup lang="ts">
 import DashboardItem from '@/components/DashboardItem.vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 </script>
 
 <template>
     <div>
-        <h1 class="title">Qualification Dashboard</h1>
-        <p class="subtitle">Control panel for all qualification things</p>
+        <h1 class="title">{{ t('qualification.tabs.dashboard') }}</h1>
+        <p class="subtitle">{{ t('qualification.subtitle.dashboard') }}</p>
         <sl-card class="dashboard-overview">
             <div class="dashboard-items">
                 <DashboardItem
-                    title="View Qualifications"
-                    description="Manage and view all registered qualifications"
+                    :title="t('qualification.tabs.view_dashboard')"
+                    :description="t('qualification.subtitle.search')"
                     icon="search"
                     to="/qualifications/search"
                 />
                 <DashboardItem
-                    title="Create Qualification"
-                    description="Register a new qualification into the system"
+                    :title="t('qualification.tabs.create')"
+                    :description="t('qualification.subtitle.create')"
                     icon="add"
                     to="/qualifications/create"
                 />

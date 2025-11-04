@@ -2,6 +2,9 @@
 import type { Vessel } from '@/model/Vessel';
 import { RouterLink } from 'vue-router';
 import { computed } from 'vue';
+import {useI18n} from 'vue-i18n';
+
+const { t } = useI18n();
 
 const props = defineProps<{ vessel: Vessel; link?: string }>();
 
@@ -20,7 +23,7 @@ const props = defineProps<{ vessel: Vessel; link?: string }>();
                     </p> 
                     <p class="item-description">
                         {{ props.vessel.imoNumber }}<br/>
-                        Owned by {{ props.vessel.owner.name }}
+                        {{ t('vessel.ownedBy') }} {{ props.vessel.owner.name }}
                     </p>
                 </div>
                 <span class="material-icons icon" aria-hidden="true">directions_boat</span>

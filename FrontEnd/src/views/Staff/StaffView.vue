@@ -8,7 +8,11 @@ import type { Staff } from '@/model/Staff';
 import EntityView from '@/components/crud/EntityView.vue';
 import ActivityTag from '@/components/ActivityTag.vue';
 import QualificationPrinter from '@/components/printers/QualificationPrinter.vue';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
+
+import WorkShiftPrinter from '@/components/printers/WorkShiftPrinter.vue';
 
 const route = useRoute();
 
@@ -25,8 +29,8 @@ const fetchStaff = async (): Promise<Staff | undefined> => {
 <template>
   <div>
     <sl-breadcrumb>
-        <sl-breadcrumb-item><RouterLink to="/staff/dashboard" class="breadcrumb-link">Staff Dashboard</RouterLink></sl-breadcrumb-item>
-        <sl-breadcrumb-item><RouterLink to="/staff/search" class="breadcrumb-link">Search Staff</RouterLink></sl-breadcrumb-item>
+        <sl-breadcrumb-item><RouterLink to="/staff/dashboard" class="breadcrumb-link">{{ t('staff.tabs.dashboard') }}</RouterLink></sl-breadcrumb-item>
+        <sl-breadcrumb-item><RouterLink to="/staff/search" class="breadcrumb-link">{{ t('staff.tabs.search') }}</RouterLink></sl-breadcrumb-item>
         <sl-breadcrumb-item>{{ mechanographicNumber }}</sl-breadcrumb-item>
     </sl-breadcrumb>
 
@@ -43,51 +47,57 @@ const fetchStaff = async (): Promise<Staff | undefined> => {
                 <RouterLink :to="`/staff/edit/${encodeURIComponent(entity.element.mechanographicNumber)}`">
                     <sl-button variant="default" size="large">
                         <sl-icon slot="prefix" name="pencil"></sl-icon>
-                        Edit Staff
+                        {{ t('staff.tabs.edit') }}
                     </sl-button>
                 </RouterLink>
     
             </div>
             <div class="viewing-content">
                 <sl-card class="info-card" style="flex: 65%;">
-                    <p>Staff information</p>
+                    <p>{{ t('staff.infoTitle') }}</p>
                     <div class="info-grid">
                         <div class="info-block">
-                            <span class="label">Name</span>
+                            <span class="label">{{ t('staff.fields.name.title') }}</span>
                             <p>{{ entity.element.name }}</p>
                         </div>
                         <div class="info-block">
-                            <span class="label">Mechanographic Number</span>
+                            <span class="label">{{ t('staff.fields.mechanographicNumber.title') }}</span>
                             <p>{{ entity.element.mechanographicNumber }}</p>
                         </div>
                         <div class="info-block">
-                            <span class="label">Email address</span>
+                            <span class="label">{{ t('staff.fields.email.title') }}</span>
                             <p>{{ entity.element.email }}</p>
                         </div>
                         <div class="info-block">
-                            <span class="label">Phone number</span>
+                            <span class="label">{{ t('staff.fields.phoneNumber.title') }}</span>
                             <p>{{ entity.element.phoneNumber }}</p>
                         </div>
                     </div>
                 </sl-card>
                 <sl-card class="info-card">
-                    <p>Statistics</p>
+                    <p>{{ t('common.statistics') }}</p>
                     <div class="view-statistics-overview">
                         <p class="view-statistic-data">{{ entity.element.qualifications.length }}</p>
-                        <p>Qualifications</p>
+                        <p>{{ t('staff.fields.qualifications.title') }}</p>
                     </div>
                     <p class="info-row">
-                        <span class="label">Status:</span> 
+                        <span class="label">{{ t('staff.fields.status.title') }}:</span>
                         <span><ActivityTag :status="entity.element.status" /></span>
                     </p>
                 </sl-card>
                 <sl-card class="info-card" style="flex: 100%;">
-                    <p>Qualifications</p>
+                    <p>{{ t('staff.fields.qualifications.title') }}</p>
                     <div class="info-grid">
                         <div v-for="qualification in entity.element.qualifications" :key="qualification.idCode">
                             <QualificationPrinter class="listing-box" :qualification="qualification" :link="`/qualifications/view/${qualification.idCode}`" />
                         </div>
                     </div>
+                </sl-card>
+                <sl-card class="info-card" style="flex: 100%;">
+                    <p>Operational Window:</p>
+                    <WorkShiftPrinter
+                        :op_window="entity.element.operationalWindow"
+                    />
                 </sl-card>
             </div>
         </div>

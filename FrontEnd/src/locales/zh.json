@@ -1,0 +1,321 @@
+{
+    "lang": {
+        "en": "英文",
+        "pt": "葡萄牙语",
+        "ca": "加泰罗尼亚语",
+        "zh": "中文"
+    },
+    "common": {
+        "loading": "加载中...",
+        "noData": "暂无数据",
+        "statistics": "统计"
+    },
+    "buttons": {
+        "save": "保存",
+        "cancel": "取消",
+        "delete": "删除",
+        "edit": "编辑",
+        "create": "创建",
+        "search": "搜索",
+        "select": "选择",
+        "filter": {
+            "title": "筛选",
+            "add": "添加筛选",
+            "clear": "清除筛选"
+        },
+        "pagination": {
+            "previous": "上一页",
+            "next": "下一页"
+        },
+        "login": "登录",
+        "goBackToLogin": "返回登录",
+        "logout": "注销"
+    },
+    "unsavedChanges": {
+        "title": "放弃更改？",
+        "message": "您有未保存的更改。确定要离开此页面并放弃更改吗？",
+        "confirm": "放弃",
+        "cancel": "继续编辑"
+    },
+    "dashboard": {
+        "sidebarTitle": "仪表板",
+        "title": "PortIT 仪表板",
+        "subtitle": "PortIT 系统概览",
+        "3DModel": {
+            "title": "港口 3D 可视化",
+            "description": "查看整个港口设施的交互式 3D 表示。实时监控码头占用、船舶位置、存储区和资源的概况。",
+            "open": "打开 3D 模型"
+        }
+    },
+    "physicalCharacteristics": {
+        "title": "物理特性 (m)",
+        "length": {
+            "title": "长度",
+            "placeholder": "米为单位的长度"
+        },
+        "depth": {
+            "title": "深度",
+            "placeholder": "米为单位的深度"
+        },
+        "draft": {
+            "title": "吃水",
+            "placeholder": "米为单位的吃水"
+        }
+    },
+    "dock": {
+        "fields": {
+            "code": {
+                "title": "代码",
+                "placeholder": "码头代码"
+            },
+            "name": {
+                "title": "名称",
+                "placeholder": "码头名称"
+            },
+            "location": {
+                "title": "位置",
+                "placeholder": "码头位置"
+            },
+            "supportedVesselTypes": {
+                "title": "支持的船舶类型",
+                "vesselTypes": {
+                    "title": "船舶类型",
+                    "placeholder": "选择船舶类型"
+                },
+                "vesselType": "船舶类型"
+            }
+        },
+        "tabs": {
+            "dashboard": "码头仪表板",
+            "view_dashboard": "查看码头",
+            "search": "搜索码头",
+            "create": "创建码头",
+            "view": "查看码头",
+            "edit": "编辑码头"
+        },
+        "infoTitle": "码头信息",
+        "title": "码头",
+        "subtitle": {
+            "dashboard": "码头统计和活动概览",
+            "search": "管理并查看所有注册的码头",
+            "create": "在系统中注册新的码头",
+            "edit": "编辑系统中已有的码头"
+        },
+        "registeredDocks": "已注册的码头"
+    },
+    "vesselType": {
+        "fields": {
+            "name": {
+                "title": "名称",
+                "placeholder": "船型名称"
+            },
+            "description": {
+                "title": "描述",
+                "placeholder": "船型描述"
+            },
+            "capacity": {
+                "title": "容量",
+                "placeholder": "集装箱容量 (TEU)"
+            },
+            "containerCapacity": {
+                "title": "集装箱容量 (TEU)",
+                "maxNumberOfRows": {
+                    "title": "最大行数",
+                    "placeholder": "TEU 的最大行数"
+                },
+                "maxNumberOfBays": {
+                    "title": "最大舱位数",
+                    "placeholder": "TEU 的最大舱位数"
+                },
+                "maxNumberOfTiers": {
+                    "title": "最大层数",
+                    "placeholder": "TEU 的最大层数"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "船型仪表板",
+            "view_dashboard": "查看船型",
+            "search": "搜索船型",
+            "create": "创建船型",
+            "view": "查看船型",
+            "edit": "编辑船型"
+        },
+        "infoTitle": "船型信息",
+        "title": "船型",
+        "subtitle": {
+            "dashboard": "船型统计和活动概览",
+            "search": "管理并查看所有已注册的船型",
+            "create": "在系统中注册新的船型",
+            "edit": "编辑系统中已有的船型"
+        },
+        "registeredVesselTypes": "已注册的船型"
+    },
+    "vessel": {
+        "fields": {
+            "name": {
+                "title": "名称",
+                "placeholder": "船舶名称"
+            },
+            "imoNumber": {
+                "title": "IMO 号码",
+                "placeholder": "船舶 IMO 号码"
+            },
+            "owner": {
+                "title": "所属机构",
+                "placeholder": "所属机构"
+            },
+            "vesselType": {
+                "title": "船型",
+                "placeholder": "选择船型"
+            }
+        },
+        "infoTitle": "船舶信息",
+        "physicalCharacteristicsTitle": "物理特性",
+        "tabs": {
+            "dashboard": "船舶仪表板",
+            "view_dashboard": "查看船舶",
+            "search": "搜索船舶",
+            "create": "创建船舶",
+            "view": "查看船舶",
+            "edit": "编辑船舶"
+        },
+        "title": "船舶",
+        "subtitle": {
+            "dashboard": "船舶统计和活动概览",
+            "search": "管理并查看所有已注册的船舶",
+            "create": "在系统中注册新的船舶",
+            "edit": "编辑系统中已有的船舶"
+        },
+        "ownedBy": "拥有者",
+        "registeredVessels": "已注册的船舶"
+    },
+    "staff": {
+        "fields": {
+            "mechanographicNumber": {
+                "title": "工号",
+                "placeholder": "工号"
+            },
+            "name": {
+                "title": "姓名",
+                "placeholder": "员工姓名"
+            },
+            "email": {
+                "title": "电子邮件",
+                "placeholder": "电子邮件地址"
+            },
+            "phoneNumber": {
+                "title": "电话号码",
+                "placeholder": "电话号码"
+            },
+            "qualifications": {
+                "title": "资质",
+                "placeholder": "选择资质"
+            },
+            "status": {
+                "title": "状态",
+                "options": {
+                    "available": "可用",
+                    "unavailable": "不可用",
+                    "temporarilyReassigned": "临时调岗"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "员工仪表板",
+            "view_dashboard": "查看员工",
+            "search": "搜索员工",
+            "create": "创建员工",
+            "view": "查看员工",
+            "edit": "编辑员工"
+        },
+        "infoTitle": "员工信息",
+        "title": "员工",
+        "subtitle": {
+            "search": "管理并查看所有已注册员工",
+            "dashboard": "员工统计和活动概览",
+            "create": "在系统中注册新员工",
+            "view": "查看员工详情",
+            "edit": "编辑系统中已有的员工"
+        }
+    },
+    "qualification": {
+        "tabs": {
+            "dashboard": "资质仪表板",
+            "view_dashboard": "查看资质",
+            "search": "搜索资质",
+            "create": "创建资质",
+            "view": "查看资质",
+            "edit": "编辑资质"
+        },
+        "infoTitle": "资质信息",
+        "title": "资质",
+        "subtitle": {
+            "search": "管理并查看所有已注册资质",
+            "dashboard": "资质统计和活动概览",
+            "create": "在系统中注册新的资质",
+            "edit": "编辑系统中已有的资质",
+            "view": "查看资质详情"
+        },
+        "fields": {
+            "idCode": {
+                "title": "资质代码",
+                "placeholder": "资质代码"
+            },
+            "qualificationName": {
+                "title": "资质名称",
+                "placeholder": "资质名称"
+            }
+        }
+    },
+    "physicalResource": {
+        "tabs": {
+            "dashboard": "物理资源仪表板",
+            "view_dashboard": "查看物理资源",
+            "search": "搜索物理资源",
+            "create": "创建物理资源",
+            "view": "查看物理资源",
+            "edit": "编辑物理资源"
+        },
+        "requiredQualifications": "所需资质",
+        "infoTitle": "物理资源信息",
+        "title": "物理资源",
+        "subtitle": {
+            "search": "管理并查看所有已注册的物理资源",
+            "dashboard": "物理资源控制面板",
+            "view_dashboard": "查看物理资源",
+            "create": "在系统中注册新的物理资源",
+            "view": "查看物理资源详情",
+            "edit": "编辑系统中已有的物理资源"
+        },
+        "fields": {
+            "code": {
+                "title": "代码",
+                "placeholder": "资源代码"
+            },
+            "description": {
+                "title": "描述",
+                "placeholder": "资源描述"
+            },
+            "status": {
+                "title": "状态",
+                "options": {
+                    "available": "可用",
+                    "maintenance": "维护中",
+                    "outOfService": "已停用"
+                }
+            },
+            "type": {
+                "title": "资源类型",
+                "options": {
+                    "stsCrane": "岸桥 (STS)",
+                    "yardGantry": "场桥",
+                    "truck": "卡车"
+                }
+            }
+        },
+        "actions": {
+            "deactivate": "停用物理资源"
+        }
+    }
+}

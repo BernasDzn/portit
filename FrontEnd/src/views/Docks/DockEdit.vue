@@ -9,6 +9,9 @@ import { DockService } from '@/service/DockService';
 import { VesselTypeService } from '@/service/VesselTypeService';
 import { ref, onMounted } from 'vue';
 import { useRoute, RouterLink } from 'vue-router';
+import {useI18n} from 'vue-i18n';
+
+const {t} = useI18n();
 
 const http = new AxiosHttpService();
 const dockService = new DockService(http);
@@ -66,48 +69,48 @@ const updateDock = async (obj: Dock) => {
     <div class="dock-edit">
         <sl-breadcrumb>
             <sl-breadcrumb-item>
-                <RouterLink to="/docks/dashboard" class="link">Dock Dashboard</RouterLink>
+                <RouterLink to="/docks/dashboard" class="link">{{ t('dock.tabs.dashboard') }}</RouterLink>
             </sl-breadcrumb-item>
             <sl-breadcrumb-item>
-                <RouterLink to="/docks/search" class="link">Search Docks</RouterLink>
+                <RouterLink to="/docks/search" class="link">{{ t('dock.tabs.search') }}</RouterLink>
             </sl-breadcrumb-item>
             <sl-breadcrumb-item>
                 <RouterLink :to="dock.code ? `/docks/view/${dock.code}` : '/docks/search'" class="link">
-                    {{ dock.code || 'Dock Code' }}
+                    {{ dock.code || t('dock.fields.code.placeholder') }}
                 </RouterLink>
             </sl-breadcrumb-item>
-            <sl-breadcrumb-item>Edit Dock</sl-breadcrumb-item>
+            <sl-breadcrumb-item>{{ t('dock.tabs.edit') }}</sl-breadcrumb-item>
         </sl-breadcrumb>
 
-        <h1 class="title">Edit Dock</h1>
-        <p class="subtitle">Edit an existing dock in the system</p>
+        <h1 class="title">{{ t('dock.tabs.edit') }}</h1>
+        <p class="subtitle">{{ t('dock.subtitle.edit') }}</p>
         <EntityForm :object="dock" editing-id="dockCode" :submit-function="updateDock">
             <div class="form">
                 <div class="general-info">
-                    <p class="section-title">General Information</p>
-                    <FormField class="field" name="Code" v-model="dock.code" :enabled="false"/>
-                    <FormField class="field" name="Name*" v-model="dock.name" placeholderText="Dock name" required/>
-                    <FormField class="field" name="Location*" v-model="dock.location" placeholderText="Dock location" required/>
+                    <p class="section-title">{{ t('dock.infoTitle') }}</p>
+                    <FormField class="field" :name="t('dock.fields.code.title')" v-model="dock.code" :enabled="false"/>
+                    <FormField class="field" :name="t('dock.fields.name.title') + '*'" v-model="dock.name" :placeholderText="t('dock.fields.name.placeholder')" required/>
+                    <FormField class="field" :name="t('dock.fields.location.title') + '*'" v-model="dock.location" :placeholderText="t('dock.fields.location.placeholder')" required/>
                 </div>
                 <span class="section-divider"></span>
                 
                 <div class="measurements">
-                    <p class="section-title">Physical Characteristics</p>
-                    <FormField class="field" name="Length (m)*" v-model.number="dock.physicalCharacteristics.length" placeholderText="Length in meters" pattern="^\d+(\.\d{1,2})?$" required/>
-                    <FormField class="field" name="Depth (m)*" v-model.number="dock.physicalCharacteristics.depth" placeholderText="Depth in meters" pattern="^\d+(\.\d{1,2})?$" required/>
-                    <FormField class="field" name="Draft (m)*" v-model.number="dock.physicalCharacteristics.draft" placeholderText="Draft in meters" pattern="^\d+(\.\d{1,2})?$" required/>
+                    <p class="section-title">{{ t('physicalCharacteristics.title') }}</p>
+                    <FormField class="field" :name="t('physicalCharacteristics.length.title') + '*'" v-model.number="dock.physicalCharacteristics.length" :placeholderText="t('physicalCharacteristics.length.placeholder')" pattern="^\d+(\.\d{1,2})?$" required/>
+                    <FormField class="field" :name="t('physicalCharacteristics.depth.title') + '*'" v-model.number="dock.physicalCharacteristics.depth" :placeholderText="t('physicalCharacteristics.depth.placeholder')" pattern="^\d+(\.\d{1,2})?$" required/>
+                    <FormField class="field" :name="t('physicalCharacteristics.draft.title') + '*'" v-model.number="dock.physicalCharacteristics.draft" :placeholderText="t('physicalCharacteristics.draft.placeholder')" pattern="^\d+(\.\d{1,2})?$" required/>
                 </div>
 
                 <span class="section-divider"></span>
                 <div>
-                <p class="section-title">Supported Vessel Types</p>
+                <p class="section-title">{{ t('dock.fields.supportedVesselTypes.title') }}</p>
                 <EntityDropdown
                     class="field-dropdown"
-                    name="Vessel Types*"
+                    :name="t('dock.fields.supportedVesselTypes.vesselTypes.title') + '*'"
                     v-model=dock.supportedVesselTypes
                     :fetch-function="() => vesselTypeService.getVesselTypes()"
                     :fetch-on-mount="true"
-                    placeholderText="Select vessel types"
+                    :placeholderText="t('dock.fields.supportedVesselTypes.placeholder')"
                     valueKey="name"
                     labelKey="name"
                     required

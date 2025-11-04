@@ -2,6 +2,10 @@
 import type { Dock } from '@/model/Dock';
 import { computed } from 'vue';
 import { RouterLink } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
+
 const props = defineProps<{
     dock: Dock,
     link?: string
@@ -26,7 +30,7 @@ const typesDisplay = computed(() => {
                 <span class="material-icons icon" aria-hidden="true">anchor</span>
             </div>
             <sl-divider></sl-divider>
-            <p>Supported Vessel Types:</p>
+            <p>{{ t('dock.fields.supportedVesselTypes.title') }}:</p>
             <ul class="vessel-types-list">
                 <li v-for="vtype in typesDisplay">
                     <sl-badge v-if="vtype !== undefined" class="list-badge" variant="neutral">{{ vtype }}</sl-badge>

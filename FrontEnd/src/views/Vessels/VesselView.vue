@@ -7,7 +7,9 @@ import type { Vessel } from '@/model/Vessel';
 import Loading from '@/components/Loading.vue';
 import NoResults from '@/components/NoResults.vue';
 import EntityView from '@/components/crud/EntityView.vue';
+import {useI18n} from 'vue-i18n';
 
+const { t } = useI18n();
 
 const route = useRoute();
 
@@ -24,8 +26,8 @@ const fetchVessel = async (): Promise<Vessel | null> => {
 <template>
   <div>
     <sl-breadcrumb>
-        <sl-breadcrumb-item><RouterLink to="/vessels/dashboard" class="breadcrumb-link">Vessel Dashboard</RouterLink></sl-breadcrumb-item>
-        <sl-breadcrumb-item><RouterLink to="/vessels/search" class="breadcrumb-link">Search Vessels</RouterLink></sl-breadcrumb-item>
+        <sl-breadcrumb-item><RouterLink to="/vessels/dashboard" class="breadcrumb-link">{{ t('vessel.tabs.dashboard') }}</RouterLink></sl-breadcrumb-item>
+        <sl-breadcrumb-item><RouterLink to="/vessels/search" class="breadcrumb-link">{{ t('vessel.tabs.search') }}</RouterLink></sl-breadcrumb-item>
         <sl-breadcrumb-item>{{ imoNumber }}</sl-breadcrumb-item>
     </sl-breadcrumb>
 
@@ -42,44 +44,44 @@ const fetchVessel = async (): Promise<Vessel | null> => {
                 <RouterLink :to="`/vessels/edit/${encodeURIComponent(entity.element.imoNumber)}`">
                     <sl-button variant="default" size="large">
                         <sl-icon slot="prefix" name="pencil"></sl-icon>
-                        Edit Vessel
+                        {{ t('vessel.tabs.edit') }}
                     </sl-button>
                 </RouterLink>
     
             </div>
             <div class="viewing-content">
                 <sl-card class="vessel-main-info">
-                    <p>Vessel information</p>
+                    <p>{{ t('vessel.infoTitle') }}</p>
                     <div class="columns-2">
                         <div>
                             <div class="info-block">
-                                <span class="label">Vessel name</span>
+                                <span class="label">{{ t('vessel.fields.name.title') }}</span>
                                 <p>{{ entity.element.name }}</p>
                             </div>
 
                             <div class="info-block">
-                                <span class="label">Type</span>
+                                <span class="label">{{ t('vessel.fields.vesselType.title') }}</span>
                                 <p>{{ entity.element.type.name }}</p>
                             </div>
 
                             <div class="info-block">
-                                <span class="label">Owning organization</span>
+                                <span class="label">{{ t('vessel.fields.owner.title') }}</span>
                                 <p>{{ entity.element.owner.name }}</p>
                             </div>
                         </div>
                         <div>
                             <div class="info-block">
-                                <span class="label">Vessel IMO</span>
+                                <span class="label">{{ t('vessel.fields.imoNumber.title') }}</span>
                                 <p>{{ entity.element.imoNumber }}</p>
                             </div>
                         </div>
                     </div>
                 </sl-card>
                 <sl-card class="vessel-alt-info">
-                    <p>Physical Characteristics</p>
-                    <p class="info-row"><span class="label">Length:</span> <span>{{ entity.element.physicalCharacteristics.length }}m</span></p>
-                    <p class="info-row"><span class="label">Depth:</span> <span>{{ entity.element.physicalCharacteristics.depth }}m</span></p>
-                    <p class="info-row"><span class="label">Draft:</span> <span>{{ entity.element.physicalCharacteristics.draft }}m</span></p>
+                    <p>{{ t('physicalCharacteristics.title') }}</p>
+                    <p class="info-row"><span class="label">{{ t('physicalCharacteristics.length.title') }}:</span> <span>{{ entity.element.physicalCharacteristics.length }}m</span></p>
+                    <p class="info-row"><span class="label">{{ t('physicalCharacteristics.depth.title') }}:</span> <span>{{ entity.element.physicalCharacteristics.depth }}m</span></p>
+                    <p class="info-row"><span class="label">{{ t('physicalCharacteristics.draft.title') }}:</span> <span>{{ entity.element.physicalCharacteristics.draft }}m</span></p>
                 </sl-card>
             </div>
         </div>

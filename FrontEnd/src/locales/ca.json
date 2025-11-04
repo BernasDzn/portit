@@ -1,0 +1,321 @@
+{
+    "lang": {
+        "en": "Anglès",
+        "pt": "Portuguès",
+        "ca": "Català",
+        "zh": "Xinès"
+    },
+    "common": {
+        "loading": "Carregant...",
+        "noData": "No hi ha dades disponibles",
+        "statistics": "Estadístiques"
+    },
+    "buttons": {
+        "save": "Desar",
+        "cancel": "Cancel·lar",
+        "delete": "Eliminar",
+        "edit": "Editar",
+        "create": "Crear",
+        "search": "Cercar",
+        "select": "Seleccionar",
+        "filter": {
+            "title": "Filtres",
+            "add": "Afegir filtre",
+            "clear": "Netejar filtres"
+        },
+        "pagination": {
+            "previous": "Anterior",
+            "next": "Següent"
+        },
+        "login": "Iniciar sessió",
+        "goBackToLogin": "Tornar a iniciar sessió",
+        "logout": "Tancar sessió"
+    },
+    "unsavedChanges": {
+        "title": "Descartar canvis?",
+        "message": "Tens canvis sense desar. Estàs segur que vols sortir d'aquesta pàgina i descartar els canvis?",
+        "confirm": "Descartar",
+        "cancel": "Continuar editant"
+    },
+    "dashboard": {
+        "sidebarTitle": "Panell",
+        "title": "Panell PortIT",
+        "subtitle": "Visió general del sistema PortIT",
+        "3DModel": {
+            "title": "Visualització 3D del Port",
+            "description": "Mostra una representació 3D interactiva de tota la infraestructura del port. Supervisa l'ocupació de les doces, les posicions dels vaixells, les àrees d'emmagatzematge i els recursos en temps real.",
+            "open": "Obrir model 3D"
+        }
+    },
+    "physicalCharacteristics": {
+        "title": "Característiques físiques (m)",
+        "length": {
+            "title": "Llargada",
+            "placeholder": "Llargada en metres"
+        },
+        "depth": {
+            "title": "Fondària",
+            "placeholder": "Fondària en metres"
+        },
+        "draft": {
+            "title": "Calat",
+            "placeholder": "Calat en metres"
+        }
+    },
+    "dock": {
+        "fields": {
+            "code": {
+                "title": "Codi",
+                "placeholder": "Codi de la doca"
+            },
+            "name": {
+                "title": "Nom",
+                "placeholder": "Nom de la doca"
+            },
+            "location": {
+                "title": "Ubicació",
+                "placeholder": "Ubicació de la doca"
+            },
+            "supportedVesselTypes": {
+                "title": "Tipus de vaixell suportats",
+                "vesselTypes": {
+                    "title": "Tipus de vaixell",
+                    "placeholder": "Selecciona tipus de vaixell"
+                },
+                "vesselType": "Tipus de vaixell"
+            }
+        },
+        "tabs": {
+            "dashboard": "Panell de doces",
+            "view_dashboard": "Veure doces",
+            "search": "Cercar doces",
+            "create": "Crear doca",
+            "view": "Veure doca",
+            "edit": "Editar doca"
+        },
+        "infoTitle": "Informació de la doca",
+        "title": "Doces",
+        "subtitle": {
+            "dashboard": "Visió general de les estadístiques i activitats de les doces",
+            "search": "Gestiona i visualitza totes les doces registrades",
+            "create": "Registra una nova doca al sistema",
+            "edit": "Edita una doca existent al sistema"
+        },
+        "registeredDocks": "Doces registrades"
+    },
+    "vesselType": {
+        "fields": {
+            "name": {
+                "title": "Nom",
+                "placeholder": "Nom del tipus de vaixell"
+            },
+            "description": {
+                "title": "Descripció",
+                "placeholder": "Descripció del tipus de vaixell"
+            },
+            "capacity": {
+                "title": "Capacitat",
+                "placeholder": "Capacitat de contenidors en TEU"
+            },
+            "containerCapacity": {
+                "title": "Capacitat de contenidors (TEU)",
+                "maxNumberOfRows": {
+                    "title": "Número màxim de files",
+                    "placeholder": "Máx. files en TEU"
+                },
+                "maxNumberOfBays": {
+                    "title": "Número màxim de bays",
+                    "placeholder": "Máx. bays en TEU"
+                },
+                "maxNumberOfTiers": {
+                    "title": "Número màxim de capes",
+                    "placeholder": "Máx. capes en TEU"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Panell de tipus de vaixell",
+            "view_dashboard": "Veure tipus de vaixell",
+            "search": "Cercar tipus de vaixell",
+            "create": "Crear tipus de vaixell",
+            "view": "Veure tipus de vaixell",
+            "edit": "Editar tipus de vaixell"
+        },
+        "infoTitle": "Informació del tipus de vaixell",
+        "title": "Tipus de vaixell",
+        "subtitle": {
+            "dashboard": "Visió general de les estadístiques i activitats dels tipus de vaixell",
+            "search": "Gestiona i visualitza tots els tipus de vaixell registrats",
+            "create": "Registra un nou tipus de vaixell al sistema",
+            "edit": "Edita un tipus de vaixell existent al sistema"
+        },
+        "registeredVesselTypes": "Tipus de vaixell registrats"
+    },
+    "vessel": {
+        "fields": {
+            "name": {
+                "title": "Nom",
+                "placeholder": "Nom del vaixell"
+            },
+            "imoNumber": {
+                "title": "Número IMO",
+                "placeholder": "Número IMO del vaixell"
+            },
+            "owner": {
+                "title": "Organització propietària",
+                "placeholder": "Organització propietària"
+            },
+            "vesselType": {
+                "title": "Tipus de vaixell",
+                "placeholder": "Selecciona tipus de vaixell"
+            }
+        },
+        "infoTitle": "Informació del vaixell",
+        "physicalCharacteristicsTitle": "Característiques físiques",
+        "tabs": {
+            "dashboard": "Panell de vaixells",
+            "view_dashboard": "Veure vaixells",
+            "search": "Cercar vaixells",
+            "create": "Crear vaixell",
+            "view": "Veure vaixell",
+            "edit": "Editar vaixell"
+        },
+        "title": "Vaixells",
+        "subtitle": {
+            "dashboard": "Visió general de les estadístiques i activitats dels vaixells",
+            "search": "Gestiona i visualitza tots els vaixells registrats",
+            "create": "Registra un nou vaixell al sistema",
+            "edit": "Edita un vaixell existent al sistema"
+        },
+        "ownedBy": "Propietat de",
+        "registeredVessels": "Vaixells registrats"
+    },
+    "staff": {
+        "fields": {
+            "mechanographicNumber": {
+                "title": "Número mecanogràfic",
+                "placeholder": "Número mecanogràfic"
+            },
+            "name": {
+                "title": "Nom",
+                "placeholder": "Nom del personal"
+            },
+            "email": {
+                "title": "Correu electrònic",
+                "placeholder": "Adreça de correu"
+            },
+            "phoneNumber": {
+                "title": "Telèfon",
+                "placeholder": "Número de telèfon"
+            },
+            "qualifications": {
+                "title": "Qualificacions",
+                "placeholder": "Selecciona qualificacions"
+            },
+            "status": {
+                "title": "Estat",
+                "options":{
+                    "available": "Disponible",
+                    "unavailable": "No disponible",
+                    "temporarilyReassigned": "Reassignat temporalment"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Panell de personal",
+            "view_dashboard": "Veure personal",
+            "search": "Cercar personal",
+            "create": "Crear personal",
+            "view": "Veure personal",
+            "edit": "Editar personal"
+        },
+        "infoTitle": "Informació del membre del personal",
+        "title": "Personal",
+        "subtitle": {
+            "search": "Gestiona i visualitza tot el personal registrat",
+            "dashboard": "Visió general de les estadístiques i activitats del personal",
+            "create": "Registra un nou membre del personal al sistema",
+            "view": "Veure detalls del personal",
+            "edit": "Edita un membre del personal existent al sistema"
+        }
+    },
+    "qualification": {
+        "tabs": {
+            "dashboard": "Panell de qualificacions",
+            "view_dashboard": "Veure qualificacions",
+            "search": "Cercar qualificacions",
+            "create": "Crear qualificació",
+            "view": "Veure qualificació",
+            "edit": "Editar qualificació"
+        },
+        "infoTitle": "Informació de la qualificació",
+        "title": "Qualificacions",
+        "subtitle": {
+            "search": "Gestiona i visualitza totes les qualificacions registrades",
+            "dashboard": "Visió general de les estadístiques i activitats de les qualificacions",
+            "create": "Registra una nova qualificació al sistema",
+            "edit": "Edita una qualificació existent al sistema",
+            "view": "Veure detalls de la qualificació"
+        },
+        "fields": {
+            "idCode": {
+                "title": "Codi de qualificació",
+                "placeholder": "Codi de la qualificació"
+            },
+            "qualificationName": {
+                "title": "Nom de la qualificació",
+                "placeholder": "Nom de la qualificació"
+            }
+        }
+    },
+    "physicalResource": {
+        "tabs": {
+            "dashboard": "Panell de recursos físics",
+            "view_dashboard": "Veure recursos físics",
+            "search": "Cercar recursos físics",
+            "create": "Crear recurs físic",
+            "view": "Veure recurs físic",
+            "edit": "Editar recurs físic"
+        },
+        "requiredQualifications": "Qualificacions requerides",
+        "infoTitle": "Informació del recurs físic",
+        "title": "Recursos físics",
+        "subtitle": {
+            "search": "Gestiona i visualitza tots els recursos físics registrats",
+            "dashboard": "Panell de control per a recursos físics",
+            "view_dashboard": "Veure recursos físics",
+            "create": "Registra un nou recurs físic al sistema",
+            "view": "Veure detalls del recurs físic",
+            "edit": "Edita un recurs físic existent al sistema"
+        },
+        "fields": {
+            "code": {
+                "title": "Codi",
+                "placeholder": "Codi del recurs"
+            },
+            "description": {
+                "title": "Descripció",
+                "placeholder": "Descripció del recurs"
+            },
+            "status": {
+                "title": "Estat",
+                "options": {
+                    "available": "Disponible",
+                    "maintenance": "Manteniment",
+                    "outOfService": "Fora de servei"
+                }
+            },
+            "type": {
+                "title": "Tipus de recurs",
+                "options": {
+                    "stsCrane": "Grua STS",
+                    "yardGantry": "Pòrtic de pati",
+                    "truck": "Camió"
+                }
+            }
+        },
+        "actions": {
+            "deactivate": "Desactivar recurs físic"
+        }
+    }
+}

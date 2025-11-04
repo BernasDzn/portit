@@ -1,22 +1,25 @@
 <script setup lang="ts">
 import DashboardItem from '@/components/DashboardItem.vue';
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n();
 </script>
 
 <template>
     <div>
-        <h1 class="title">Dock Dashboard</h1>
-        <p class="subtitle">Overview of dock statistics and activities</p>
+        <h1 class="title">{{ t('dock.tabs.dashboard') }}</h1>
+        <p class="subtitle">{{ t('dock.subtitle.dashboard') }}</p>
         <sl-card class="dashboard-overview">
             <div class="dashboard-items">
                 <DashboardItem
-                    title="View Docks"
-                    description="Manage and view all registered docks"
+                    :title="t('dock.tabs.view_dashboard')"
+                    :description="t('dock.subtitle.search')"
                     icon="search"
                     to="/docks/search"
                 />
                 <DashboardItem
-                    title="Create Dock"
-                    description="Register a new dock into the system"
+                    :title="t('dock.tabs.create')"
+                    :description="t('dock.subtitle.create')"
                     icon="add"
                     to="/docks/create"
                 />

@@ -5,6 +5,9 @@ import ErrorHandler from '../ErrorHandler.vue';
 import type { Filter, Page } from '@/model/Page';
 import Pagination from '../Pagination.vue';
 import NoResults from '../NoResults.vue';
+import { useI18n } from 'vue-i18n';
+
+const {t} = useI18n();
 
 // The function to fetch data is passed as a prop
 const props = defineProps<{
@@ -150,18 +153,18 @@ onBeforeUnmount(() => {
         <ErrorHandler v-if="error" :error-object="error" />
         <sl-card v-else class="listing-box">
             <div class="listing-filters">
-                <sl-input class="listing-search" placeholder="Search..." size="large" clearable v-model="searchTerm">
+                <sl-input class="listing-search" :placeholder="t('buttons.search').concat('...')" size="large" clearable v-model="searchTerm">
                     <span slot="prefix" class="material-icons material-icons--prefix">search</span>
                 </sl-input>
                 <sl-button v-if="filterDefinition" class="filter-button" variant="default" size="large" @click="() => showFiltermenu = !showFiltermenu">
                     <sl-icon slot="prefix" name="filter"></sl-icon>
-                    Filter
+                    {{ t('buttons.filter.add') }}
                 </sl-button>
             </div>
             <transition name="slide-fade">
                 <div v-if="showFiltermenu" class="filter-box" ref="filterMenuRef">
                   <div class="filters-container">
-                    <p class="filter-title">Filters</p>
+                    <p class="filter-title">{{ t('buttons.filter.title') }}</p>
                     <template class="filter-container" v-for="(def, key) in props.filterDefinition" :key="key">
                         <div class="filter-field">
                             <label class="filter-label">{{ def.label }}</label>
@@ -178,7 +181,7 @@ onBeforeUnmount(() => {
                                 v-else-if="def.type === 'select'"
                                 size="medium"
                                 clearable
-                                :placeholder="'Select ' + def.label"
+                                :placeholder="t('buttons.select').concat(' ').concat(def.label)"
                                 :value="filters[key]"
                                 @sl-change="(e: any) => filters[key] = e.target.value"
                             >
@@ -200,7 +203,7 @@ onBeforeUnmount(() => {
                       size="small"
                       @click="() => Object.keys(filters).forEach(k => filters[k] = '')"
                     >
-                      Clear Filters
+                      {{ t('buttons.filter.clear') }}
                     </sl-button>
                   </div>
                 </div>

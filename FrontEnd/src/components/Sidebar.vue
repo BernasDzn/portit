@@ -1,22 +1,24 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
 import { RouterLink, useRoute } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 
 const route = useRoute();
+const { t } = useI18n();
 
 const sidebarItems = ref([
   // add a materialIcon property with the Material Icons name we want to render
-  { name: 'Dashboard', route: '/', icon: "house", materialIcon: 'home' },
+  { name: 'dashboard.sidebarTitle', route: '/', icon: "house", materialIcon: 'home' },
   {},
-  { name: 'Vessels', route: '/vessels/dashboard', icon: "directions_boat", materialIcon: 'directions_boat' },
-  { name: 'Vessel Types', route: '/vessel-types/dashboard', icon: "sailing", materialIcon: 'sailing' },
-  { name: 'Docks', route: '/docks/dashboard', icon: "anchor", materialIcon: 'anchor' },
+  { name: 'vessel.title', route: '/vessels/dashboard', icon: "directions_boat", materialIcon: 'directions_boat' },
+  { name: 'vesselType.title', route: '/vessel-types/dashboard', icon: "sailing", materialIcon: 'sailing' },
+  { name: 'dock.title', route: '/docks/dashboard', icon: "anchor", materialIcon: 'anchor' },
   {},
-  { name: 'Qualifications', route: '/qualifications/dashboard', icon:"mortarboard", materialIcon: 'school' },
-  { name: 'Physical Resources', route: '/resources/dashboard', icon: "inventory", materialIcon: 'build' },
-  { name: 'Staff', route: '/staff/dashboard', icon: "people", materialIcon: 'people' },
+  { name: 'qualification.title', route: '/qualifications/dashboard', icon:"mortarboard", materialIcon: 'school' },
+  { name: 'physicalResource.title', route: '/resources/dashboard', icon: "inventory", materialIcon: 'build' },
+  { name: 'staff.title', route: '/staff/dashboard', icon: "people", materialIcon: 'people' },
   {},
-  { name: 'Admin', route: '/admin/dashboard', icon: "admin_panel_settings", materialIcon: 'admin_panel_settings' },
+  { name: "Admin", route: '/admin/dashboard', icon: "admin_panel_settings", materialIcon: 'admin_panel_settings' }
 ]);
 
 const isCurrentTab = (itemRoute: string) => {
@@ -34,7 +36,7 @@ const isCurrentTab = (itemRoute: string) => {
           :class="(isCurrentTab(item.route) ? 'link-active' : '') + ' sidebar-menu-link'"
         >
           <span class="material-icons icon" aria-hidden="true">{{ item.materialIcon }}</span>
-          <p>{{item.name}}</p>
+          <p>{{ t(item.name) }}</p>
         </RouterLink>
         <hr v-else class="sidebar-separator"/>
       </li>

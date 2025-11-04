@@ -1,22 +1,25 @@
 <script setup lang="ts">
 import DashboardItem from '@/components/DashboardItem.vue';
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n();
 </script>
 
 <template>
     <div>
-        <h1 class="title">Vessel Type Dashboard</h1>
-        <p class="subtitle">Overview of vessel type statistics and activities</p>
+        <h1 class="title">{{ t('vesselType.tabs.dashboard') }}</h1>
+        <p class="subtitle">{{ t('vesselType.subtitle.dashboard') }}</p>
         <sl-card class="dashboard-overview">
             <div class="dashboard-items">
                 <DashboardItem
-                    title="View Vessel Types"
-                    description="Manage and view all registered vessel types"
+                    :title="t('vesselType.tabs.view_dashboard')"
+                    :description="t('vesselType.subtitle.search')"
                     icon="search"
                     to="/vessel-types/search"
                 />
                 <DashboardItem
-                    title="Create Vessel Type"
-                    description="Register a new vessel type into the system"
+                    :title="t('vesselType.tabs.create')"
+                    :description="t('vesselType.subtitle.create')"
                     icon="add"
                     to="/vessel-types/create"
                 />

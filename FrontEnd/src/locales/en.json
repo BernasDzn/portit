@@ -1,0 +1,321 @@
+{
+    "lang": {
+        "en": "English",
+        "pt": "Portuguese",
+        "ca": "Catalan",
+        "zh": "Chinese"
+    },
+    "common": {
+        "loading": "Loading...",
+        "noData": "No data available",
+        "statistics": "Statistics"
+    },
+    "buttons": {
+        "save": "Save",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "edit": "Edit",
+        "create": "Create",
+        "search": "Search",
+        "select": "Select",
+        "filter": {
+            "title": "Filters",
+            "add": "Filter",
+            "clear": "Clear Filters"
+        },
+        "pagination": {
+            "previous": "Previous",
+            "next": "Next"
+        },
+        "login": "Login",
+        "goBackToLogin": "Go back to Login",
+        "logout": "Logout"
+    },
+    "unsavedChanges": {
+        "title": "Discard changes?",
+        "message": "You have unsaved changes. Are you sure you want to leave this page and discard your changes?",
+        "confirm": "Discard",
+        "cancel": "Keep Editing"
+    },
+    "dashboard": {
+        "sidebarTitle": "Dashboard",
+        "title": "PortIT Dashboard",
+        "subtitle": "Overview of PortIT system",
+        "3DModel": {
+            "title": "3D Port Visualization",
+            "description": "View an interactive 3D representation of the entire port facility. Monitor dock occupancy, vessel positions, storage areas, and resources in real-time from a bird's-eye view.",
+            "open": "Open 3D Model"
+        }
+    },
+    "physicalCharacteristics": {
+        "title": "Physical Characteristics (m)",
+        "length": {
+            "title": "Length",
+            "placeholder": "Length in meters"
+        },
+        "depth": {
+            "title": "Depth",
+            "placeholder": "Depth in meters"
+        },
+        "draft": {
+            "title": "Draft",
+            "placeholder": "Draft in meters"
+        }
+    },
+    "dock": {
+        "fields": {
+            "code": {
+                "title": "Code",
+                "placeholder": "Dock code"
+            },
+            "name": {
+                "title": "Name",
+                "placeholder": "Dock name"
+            },
+            "location": {
+                "title": "Location",
+                "placeholder": "Dock location"
+            },
+            "supportedVesselTypes": {
+                "title": "Supported Vessel Types",
+                "vesselTypes": {
+                    "title": "Vessel Types",
+                    "placeholder": "Select vessel types"
+                },
+                "vesselType": "Vessel Type"
+            }
+        },
+        "tabs": {
+            "dashboard": "Dock Dashboard",
+            "view_dashboard": "View Docks",
+            "search": "Search Docks",
+            "create": "Create Dock",
+            "view": "View Dock",
+            "edit": "Edit Dock"
+        },
+        "infoTitle": "Dock Information",
+        "title": "Docks",
+        "subtitle": {
+            "dashboard": "Overview of dock statistics and activities",
+            "search": "Manage and view all registered docks",
+            "create": "Register a new dock into the system",
+            "edit": "Edit an existing dock in the system"
+        },
+        "registeredDocks": "Registered Docks"
+    },
+    "vesselType": {
+        "fields": {
+            "name": {
+                "title": "Name",
+                "placeholder": "Vessel type name"
+            },
+            "description": {
+                "title": "Description",
+                "placeholder": "Vessel type description"
+            },
+            "capacity": {
+                "title": "Capacity",
+                "placeholder": "Container capacity in TEU"
+            },
+            "containerCapacity": {
+                "title": "Container Capacity (TEU)",
+                "maxNumberOfRows": {
+                    "title": "Max Number of Rows",
+                    "placeholder": "Max Rows in TEU's"
+                },
+                "maxNumberOfBays": {
+                    "title": "Max Number of Bays",
+                    "placeholder": "Max Bays in TEU's"
+                },
+                "maxNumberOfTiers": {
+                    "title": "Max Number of Tiers",
+                    "placeholder": "Max Tiers in TEU's"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Vessel Type Dashboard",
+            "view_dashboard": "View Vessel Types",
+            "search": "Search Vessel Types",
+            "create": "Create Vessel Type",
+            "view": "View Vessel Type",
+            "edit": "Edit Vessel Type"
+        },
+        "infoTitle": "Vessel Type Information",
+        "title": "Vessel Types",
+        "subtitle": {
+            "dashboard": "Overview of vessel type statistics and activities",
+            "search": "Manage and view all registered vessel types",
+            "create": "Register a new vessel type into the system",
+            "edit": "Edit an existing vessel type in the system"
+        },
+        "registeredVesselTypes": "Registered Vessel Types"
+    },
+    "vessel": {
+        "fields": {
+            "name": {
+                "title": "Name",
+                "placeholder": "Vessel name"
+            },
+            "imoNumber": {
+                "title": "IMO Number",
+                "placeholder": "Vessel IMO number"
+            },
+            "owner": {
+                "title": "Owning organization",
+                "placeholder": "Owning organization"
+            },
+            "vesselType": {
+                "title": "Vessel Type",
+                "placeholder": "Select vessel type"
+            }
+        },
+        "infoTitle": "Vessel information",
+        "physicalCharacteristicsTitle": "Physical Characteristics",
+        "tabs": {
+            "dashboard": "Vessel Dashboard",
+            "view_dashboard": "View Vessels",
+            "search": "Search Vessels",
+            "create": "Create Vessel",
+            "view": "View Vessel",
+            "edit": "Edit Vessel"
+        },
+        "title": "Vessels",
+        "subtitle": {
+            "dashboard": "Overview of vessel statistics and activities",
+            "search": "Manage and view all registered vessels",
+            "create": "Register a new vessel into the system",
+            "edit": "Edit an existing vessel in the system"
+        },
+        "ownedBy": "Owned by",
+        "registeredVessels": "Registered Vessels"
+    },
+    "staff": {
+        "fields": {
+            "mechanographicNumber": {
+                "title": "Mechanographic Number",
+                "placeholder": "Mechanographic Number"
+            },
+            "name": {
+                "title": "Name",
+                "placeholder": "Staff name"
+            },
+            "email": {
+                "title": "Email",
+                "placeholder": "Email address"
+            },
+            "phoneNumber": {
+                "title": "Phone Number",
+                "placeholder": "Phone number"
+            },
+            "qualifications": {
+                "title": "Qualifications",
+                "placeholder": "Select qualifications"
+            },
+            "status": {
+                "title": "Status",
+                "options":{
+                    "available": "Available",
+                    "unavailable": "Unavailable",
+                    "temporarilyReassigned": "Temporarily reassigned"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Staff Dashboard",
+            "view_dashboard": "View Staff Members",
+            "search": "Search Staff",
+            "create": "Create Staff Member",
+            "view": "View Staff Member",
+            "edit": "Edit Staff Member"
+        },
+        "infoTitle": "Staff Member Information",
+        "title": "Staffs",
+        "subtitle": {
+            "search": "Manage and view all registered staff members",
+            "dashboard": "Overview of staff members statistics and activities",
+            "create": "Register a new staff member into the system",
+            "view": "View staff details",
+            "edit": "Edit an existing staff member in the system"
+        }
+    },
+    "qualification": {
+        "tabs": {
+            "dashboard": "Qualification Dashboard",
+            "view_dashboard": "View Qualifications",
+            "search": "Search Qualifications",
+            "create": "Create Qualification",
+            "view": "View Qualification",
+            "edit": "Edit Qualification"
+        },
+        "infoTitle": "Qualification Information",
+        "title": "Qualifications",
+        "subtitle": {
+            "search": "Manage and view all registered qualifications",
+            "dashboard": "Overview of qualification statistics and activities",
+            "create": "Register a new qualification into the system",
+            "edit": "Edit an existing qualification in the system",
+            "view": "View qualification details"
+        },
+        "fields": {
+            "idCode": {
+                "title": "Qualification Code",
+                "placeholder": "Qualification code"
+            },
+            "qualificationName": {
+                "title": "Qualification Name",
+                "placeholder": "Qualification name"
+            }
+        }
+    },
+    "physicalResource": {
+        "tabs": {
+            "dashboard": "Physical Resource Dashboard",
+            "view_dashboard": "View Physical Resources",
+            "search": "Search Physical Resources",
+            "create": "Create Physical Resource",
+            "view": "View Physical Resource",
+            "edit": "Edit Physical Resource"
+        },
+        "requiredQualifications": "Required Qualifications",
+        "infoTitle": "Physical Resource Information",
+        "title": "Physical Resources",
+        "subtitle": {
+            "search": "Manage and view all registered physical resources",
+            "dashboard": "Control panel for all physical resource things",
+            "view_dashboard": "View Physical Resources",
+            "create": "Register a new Physical Resource into the system",
+            "view": "View physical resource details",
+            "edit": "Edit an existing Physical Resource in the system"
+        },
+        "fields": {
+            "code": {
+                "title": "Code",
+                "placeholder": "Resource code"
+            },
+            "description": {
+                "title": "Description",
+                "placeholder": "Resource description"
+            },
+            "status": {
+                "title": "Status",
+                "options": {
+                    "available": "Available",
+                    "maintenance": "Maintenance",
+                    "outOfService": "Out of service"
+                }
+            },
+            "type": {
+                "title": "Resource Type",
+                "options": {
+                    "stsCrane": "STS Crane",
+                    "yardGantry": "Yard Gantry Crane",
+                    "truck": "Truck"
+                }
+            }
+        },
+        "actions": {
+            "deactivate": "Deactivate Physical Resource"
+        }
+    }
+}
