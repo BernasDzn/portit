@@ -2,6 +2,7 @@
 import LoginBox from "@/components/LoginBox.vue";
 import PolkaGrid from '@/components/PolkaCanvas.vue'
 import "./../assets/login.css";
+import "./../assets/navigation.css";
 import NotificationQueue from "@/components/NotificationQueue.vue";
 
 </script>
@@ -16,6 +17,7 @@ import NotificationQueue from "@/components/NotificationQueue.vue";
             <LoginBox />
             <span class="login-footer">PorTiT© LAPR5 25/26 Group 3DJ-1</span>
         </div>
+        <NotificationQueue />
     </div>
 </template>
 

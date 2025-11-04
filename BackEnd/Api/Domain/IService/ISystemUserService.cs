@@ -12,4 +12,6 @@ public interface ISystemUserService
     public Task<SystemUserDto> UpdateSystemUser(string sub, SystemUserDto systemUserDto);
     public Task<SystemUserDto> SetUserRole(string sub, int role);
     public Task DeleteSystemUser(string sub);
+    public Task ActivateUser(string sub);
+    public Task DeactivateUser(string sub);
 }

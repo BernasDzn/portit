@@ -65,15 +65,16 @@ public class SystemUserService : ISystemUserService
             _logger.LogWarning($"System user with sub '{sub}' not found.");
             throw new EntityNotFoundException($"System user with sub '{sub}' not found.");
         }
-
+            
         systemUser.Active = systemUserDto.IsActive;
+
         var updatedUser = await _systemUserRepository.Update(systemUser);
         return updatedUser.ToDTO();
     }
 
     public async Task<SystemUserDto> SetUserRole(string sub, int role)
     {
-        var systemUser = await _systemUserRepository.GetBySubAsync(sub);
+        SystemUser? systemUser = await _systemUserRepository.GetBySubAsync(sub);
         if (systemUser == null)
         {
             _logger.LogWarning($"System user with sub '{sub}' not found.");
@@ -125,5 +126,36 @@ public class SystemUserService : ISystemUserService
         }
 
         await _systemUserRepository.DeleteBySubAsync(sub);
+    }
+
+    public async Task ActivateUser(string sub)
+    {
+        var systemUser = await _systemUserRepository.GetBySubAsync(sub);
+        if (systemUser == null)
+        {
+            _logger.LogWarning($"System user with sub '{sub}' not found.");
+            throw new EntityNotFoundException($"System user with sub '{sub}' not found.");
+        }
+
+        if (systemUser.ActivationToken == null)
+            throw new InvalidOperationException($"System user with sub '{sub}' does not have a pending activation.");
+
+        systemUser.Active = true;
+        systemUser.ActivationToken = null;
+        await _systemUserRepository.Update(systemUser);
+    }
+
+    public async Task DeactivateUser(string sub)
+    {
+        var systemUser = await _systemUserRepository.GetBySubAsync(sub);
+        if (systemUser == null)
+        {
+            _logger.LogWarning($"System user with sub '{sub}' not found.");
+            throw new EntityNotFoundException($"System user with sub '{sub}' not found.");
+        }
+
+        systemUser.Active = false;
+        systemUser.ActivationToken = null;
+        await _systemUserRepository.Update(systemUser);
     }
 }

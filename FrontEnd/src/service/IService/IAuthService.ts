@@ -12,7 +12,7 @@ export interface AppJWTResponse {
 }
 
 export interface IAuthService {
-    initGoogleSignIn(callback: Function): void;
+    initGoogleSignIn(callback: Function, errorCallback: Function): void;
     getAppJWTToken(token: string): Promise<AppJWTResponse>;
 
     whoAmI(): Promise<User>;
