@@ -25,7 +25,7 @@ const resourceType = ref<number | null>(null);
 
 onMounted(async () => {
     const res = await fetchResource();
-    console.log('Resource for icon:', res.servingDock);
+    // console.log('Resource for icon:', res.servingDock);
     resourceType.value = res.servingDock != undefined ? 0 : 
         res.averageSpeed != undefined ? 2 : 1;
 

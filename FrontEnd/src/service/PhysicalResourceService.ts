@@ -27,7 +27,6 @@ export class PhysicalResourceService implements IPhysicalResourceService {
             query.push(filtering.pageSize !== undefined ? `PageSize=${filtering.pageSize}` : '');
         }
 
-        console.log(`/PhysicalResource/filter${query.length ? `?${query.join('')}` : ''}`);
         const res = await this.http.get<Page<PhysicalResource>>(`/PhysicalResource/filter${query.length ? `?${query.join('')}` : ''}`);
         return res.data;
     }
@@ -45,7 +44,7 @@ export class PhysicalResourceService implements IPhysicalResourceService {
     }
 
     async addSTSCrane(value: STSCrane): Promise<STSCrane> {
-        console.log('Adding STS Crane:', JSON.stringify(value));
+        // console.log('Adding STS Crane:', JSON.stringify(value));
         const res = await this.http.post<PhysicalResource>(`/PhysicalResource/AddSTSCrane`, value);
         return res.data as STSCrane;
     }
