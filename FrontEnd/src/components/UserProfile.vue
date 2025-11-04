@@ -5,6 +5,7 @@ import { AuthService } from '@/service/AuthService';
 import AxiosHttpService from '@/service/AxiosHttpService';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import Logout from './Logout.vue';
 
 const http = new AxiosHttpService();
 const authService = new AuthService(http);
@@ -91,19 +92,10 @@ onMounted(async () => {
 
                 <p class="subtitle">{{ user.email }}</p>
                 <div class="logout-box">
-                    <RouterLink to="/login">
-                        <sl-button class="logout-button" variant="danger" outline>Logout</sl-button>
-                    </RouterLink>
+                    <Logout />
                 </div>
             </div>
         </sl-popup>
     </div>
 </div>
 </template>
-
-<style scoped>
-
-.role {
-}
-
-</style>

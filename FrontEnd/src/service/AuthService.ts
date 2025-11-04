@@ -107,6 +107,9 @@ export class AuthService implements IAuthService {
         }
     }
 
+    async logout(): Promise<void> {
+        await this.http.post('/Login/logout', {});
+    }
    
     // async handleCredentialResponse(response: any) {
     //     const idToken = response.credential;

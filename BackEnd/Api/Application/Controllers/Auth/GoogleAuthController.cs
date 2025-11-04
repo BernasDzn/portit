@@ -100,6 +100,20 @@ public class LoginController : ControllerBase
         }
     }
 
+    [HttpPost("logout")]
+    public IActionResult Logout()
+    {
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.Strict,
+            Expires = DateTimeOffset.UtcNow.AddDays(-1)
+        };
+        Response.Cookies.Delete("AuthToken", cookieOptions);
+        return NoContent();
+    }
+
     [Authorize(Policy = "ApiUser")]
     [HttpGet("me")]
     public IActionResult Me()
