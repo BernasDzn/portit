@@ -46,10 +46,19 @@ public class LoginController : ControllerBase
             var googleUserId = payload.Subject;
             var email = payload.Email ?? "unknown";
 
-            var result = await _systemUserService.GetBySub(googleUserId);
-            if (result == null || !(bool)result.IsActive!)
+            try
             {
-                throw new UnauthorizedAccessException("User not found or inactive.");
+                var result = await _systemUserService.GetBySub(googleUserId);
+                if (result == null || !(bool)result.IsActive!)
+                {
+                    // treat as unauthorized (user missing or not active)
+                    return Unauthorized("User not found or inactive.");
+                }
+            }
+            catch (Api.Application.Exceptions.EntityNotFoundException)
+            {
+                // If the user is not present in the system, return Unauthorized instead of bubbling as 500
+                return Unauthorized("User not found or inactive.");
             }
 
             // Create our own JWT token for the user

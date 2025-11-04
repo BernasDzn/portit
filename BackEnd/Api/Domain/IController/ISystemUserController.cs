@@ -10,4 +10,5 @@ public interface ISystemUserController
     public Task<ActionResult> DeactivateUser(string emailAddress);
     public Task<ActionResult> ActivateUser(string emailAddress);
     public Task<ActionResult> DeleteUser(string emailAddress);
+    public Task<ActionResult> ActivateUserWithToken(string emailAddress, string token, Api.Application.DataTransfer.ActivationIdTokenRequest idTokenRequest);
 }

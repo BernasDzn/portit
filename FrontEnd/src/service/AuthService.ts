@@ -23,11 +23,15 @@ export class AuthService implements IAuthService {
         return res.data as AppJWTResponse;
     }
 
-    async activateUser(email: string, token: string): Promise<void> {
-        // The API expects a PUT to /SystemUser/activate-with-token/
+    async activateUser(email: string, token: string, sub: string): Promise<void> {
+        // The API expects a POST to /SystemUser/activate-with-token with the Google id_token
+        // in the request body. The `sub` parameter here is actually the raw Google id_token
+        // returned by the Google client (response.credential). Send it as { idToken }.
+        const body = { idToken: sub };
         await this.http.post(
-            `/SystemUser/activate-with-token?emailAddress=${encodeURIComponent(email)}&token=${encodeURIComponent(token)}`
-            , {});
+            `/SystemUser/activate-with-token?emailAddress=${encodeURIComponent(email)}&token=${encodeURIComponent(token)}`,
+            body
+        );
     }
 
     initGoogleSignIn(callback: Function, errorCallback: Function) {
@@ -58,6 +62,36 @@ export class AuthService implements IAuthService {
             document.getElementById('google-signin-btn'),
             { theme: 'outline', size: 'large' }
         )
+    }
+
+    initGoogleLoginAccountActivation(callback: Function, errorCallback: Function) {
+        console.log('Initializing Google Sign-In for Account Activation');
+        window.google.accounts.id.initialize({
+            client_id: this.googleClientId,
+            // For activation we pass the raw Google response (contains credential/id_token)
+            callback: (response: any) => {
+                try {
+                    callback(response);
+                }
+                catch (error) {
+                    errorCallback(error);
+                }
+            }
+        })
+        // Render the button into the activation page so users can click to sign-in
+        // This mirrors initGoogleSignIn which renders a visible button.
+        try {
+            const btnContainer = document.getElementById('google-signin-btn');
+            if (btnContainer && window.google?.accounts?.id?.renderButton) {
+                window.google.accounts.id.renderButton(
+                    btnContainer,
+                    { theme: 'outline', size: 'large' }
+                );
+            }
+        } catch (e) {
+            // Do not throw — rendering may fail in some contexts; initialization still works
+            console.warn('Failed to render Google Sign-In button for activation page.', e);
+        }
     }
 
     async whoAmI(): Promise<User> {

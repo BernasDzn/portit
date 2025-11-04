@@ -2,6 +2,7 @@ namespace Api.Application.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
 using Api.Application.Services;
+using Google.Apis.Auth;
 using Api.Application.DataTransfer;
 using Api.Application.Exceptions;
 using Api.Infrastructure.Exceptions;
@@ -14,11 +15,13 @@ public class SystemUserController : ControllerBase, ISystemUserController
 {
     private readonly ILogger<SystemUserController> _logger;
     private readonly ISystemUserService _systemUserService;
+    private readonly IConfiguration _configuration;
 
-    public SystemUserController(ISystemUserService systemUserService, ILogger<SystemUserController> logger)
+    public SystemUserController(ISystemUserService systemUserService, ILogger<SystemUserController> logger, IConfiguration configuration)
     {
         _systemUserService = systemUserService;
         _logger = logger;
+        _configuration = configuration;
     }
 
     [HttpGet(Name = "GetSystemUsers")]
@@ -135,17 +138,43 @@ public class SystemUserController : ControllerBase, ISystemUserController
     }
 
     [HttpPost("activate-with-token", Name = "ActivateUserWithToken")]
-    public async Task<ActionResult> ActivateUserWithToken(string emailAddress, string token)
+    public async Task<ActionResult> ActivateUserWithToken(string emailAddress, string token, [FromBody] Api.Application.DataTransfer.ActivationIdTokenRequest idTokenRequest)
     {
         try
         {
-            await _systemUserService.ActivateUserWithToken(emailAddress, token);
+            if (idTokenRequest == null || string.IsNullOrEmpty(idTokenRequest.IdToken))
+                return BadRequest("Missing id_token in request body.");
+
+            // Validate the Google ID token server-side to prevent trusting client-side values
+            var audience = _configuration.GetValue<string>("Authentication:Google:ClientId");
+            var settings = new GoogleJsonWebSignature.ValidationSettings();
+            if (!string.IsNullOrEmpty(audience))
+            {
+                settings.Audience = new[] { audience };
+            }
+            var payload = await GoogleJsonWebSignature.ValidateAsync(idTokenRequest.IdToken, settings);
+
+            var sub = payload.Subject;
+
+            // Optional: verify payload.Email matches the emailAddress query parameter
+            if (!string.Equals(payload.Email ?? string.Empty, emailAddress, StringComparison.OrdinalIgnoreCase))
+            {
+                _logger.LogWarning("Email in ID token '{TokenEmail}' does not match activation email '{Email}'", payload.Email, emailAddress);
+                return BadRequest("Email in ID token does not match activation email.");
+            }
+
+            await _systemUserService.ActivateUserWithToken(emailAddress, token, sub);
             return NoContent();
         }
         catch (EntityNotFoundException)
         {
             _logger.LogWarning("System user with email '{email}' not found for activation with token", emailAddress);
             return NotFound($"System user with email '{emailAddress}' not found.");
+        }
+        catch (InvalidJwtException ij)
+        {
+            _logger.LogWarning("Invalid Google ID token during activation for '{Email}': {Msg}", emailAddress, ij.Message);
+            return BadRequest("Invalid Google ID token.");
         }
         catch (InvalidOperationException)
         {

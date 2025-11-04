@@ -105,7 +105,7 @@ public class SystemUserService : ISystemUserService
 
             // build activation link based on configuration
             var baseUrl = _configuration.GetValue<string>("ApplicationSettings:BaseUrl") ?? "http://localhost:5173";
-            var activationPath = _configuration.GetValue<string>("ApplicationSettings:ActivationPath") ?? "/activate";
+            var activationPath = _configuration.GetValue<string>("ApplicationSettings:ActivationPath") ?? "/activate-with-token";
             var activationLink = $"{baseUrl.TrimEnd('/')}{activationPath}?token={systemUser.ActivationToken}&emailAddress={systemUser.Email}";
 
             // attempt to send the activation email (fire-and-forget not here, but we try)
@@ -126,7 +126,7 @@ public class SystemUserService : ISystemUserService
         var updatedUser = await _systemUserRepository.Update(systemUser);
         return updatedUser.ToDTO();
     }
-    public async Task<SystemUserDto> ActivateUserWithToken(string emailAddress, string token)
+    public async Task<SystemUserDto> ActivateUserWithToken(string emailAddress, string token, string sub)
     {
         var systemUser = await _systemUserRepository.GetByEmailAddressAsync(emailAddress);
         if (systemUser == null)
@@ -144,6 +144,7 @@ public class SystemUserService : ISystemUserService
         systemUser.Active = true;
         systemUser.ActivationToken = null;
         systemUser.ActivationTokenExpiresAt = null;
+        systemUser.Sub = sub;
 
         var updatedUser = await _systemUserRepository.Update(systemUser);
         return updatedUser.ToDTO();
