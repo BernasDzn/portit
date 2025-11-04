@@ -8,7 +8,7 @@ import type { Staff } from '@/model/Staff';
 import EntityView from '@/components/crud/EntityView.vue';
 import ActivityTag from '@/components/ActivityTag.vue';
 import QualificationPrinter from '@/components/printers/QualificationPrinter.vue';
-
+import WorkShiftPrinter from '@/components/printers/WorkShiftPrinter.vue';
 
 const route = useRoute();
 
@@ -88,6 +88,12 @@ const fetchStaff = async (): Promise<Staff | undefined> => {
                             <QualificationPrinter class="listing-box" :qualification="qualification" :link="`/qualifications/view/${qualification.idCode}`" />
                         </div>
                     </div>
+                </sl-card>
+                <sl-card class="info-card" style="flex: 100%;">
+                    <p>Operational Window:</p>
+                    <WorkShiftPrinter
+                        :op_window="entity.element.operationalWindow"
+                    />
                 </sl-card>
             </div>
         </div>

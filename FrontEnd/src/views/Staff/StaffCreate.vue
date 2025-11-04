@@ -2,13 +2,13 @@
 import EntityDropdown from '@/components/crud/EntityDropdown.vue';
 import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
+import OperationalWindowPicker from '@/components/OperationalWindowPicker.vue';
 import type { StaffCreate } from '@/model/Staff';
-import type { OperationalWindow } from '@/model/OperationalWindow';
 import AxiosHttpService from '@/service/AxiosHttpService';
 import { QualificationService } from '@/service/QualificationService';
 import { StaffService } from '@/service/StaffService';
 import { ref } from 'vue';
-import { FullWeek } from '@/model/OperationalWindow';
+import { FullWeek, type Shift } from '@/model/OperationalWindow';
 
 const http = new AxiosHttpService();
 const staffService = new StaffService(http);
@@ -20,7 +20,7 @@ const staff = ref<StaffCreate>({
     email: '',
     phoneNumber: '',
     status: 0,
-    operationalWindow: FullWeek(),
+    operationalWindow: { shifts: [] },
     qualificationsCodes: [],
 });
 
@@ -55,6 +55,11 @@ const submitStaff = (obj: any) =>
                     valueKey="name"
                     labelKey="name"
                 />
+                <div style="flex:100%; width: 100%;">
+                   <OperationalWindowPicker
+                        v-model="staff.operationalWindow"
+                   />
+                </div>  
             </div>
         </EntityForm>
     </div>
@@ -64,6 +69,7 @@ const submitStaff = (obj: any) =>
 .name-imo {
     display: flex;
     gap: .5rem;
+    flex-wrap: wrap;
 }
 
 .measurements {
