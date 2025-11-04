@@ -11,4 +11,5 @@ public interface ISystemUserRepository : IGenericRepository<SystemUser>
     Task<SystemUser> Update(SystemUser systemUser);
     Task DeleteByEmailAddressAsync(string emailAddress);
     Task DeleteBySubAsync(string sub);
+    Task<SystemUser?> GetByActivationTokenAsync(string activationToken)
 }

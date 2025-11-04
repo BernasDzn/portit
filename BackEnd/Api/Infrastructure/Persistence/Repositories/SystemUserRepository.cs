@@ -106,6 +106,20 @@ public class SystemUserRepository : GenericRepository<SystemUser>, ISystemUserRe
         }
     }
 
+    public async Task<SystemUser?> GetByActivationTokenAsync(string activationToken)
+    {
+        try
+        {
+            SystemUser? systemUser = await _context.SystemUsers
+                .FirstOrDefaultAsync(su => su.ActivationToken == activationToken);
+            return systemUser;
+        }
+        catch (Exception ex)
+        {
+            throw new PersistencyFailedException("Failed to select a system user by authentication token. " + ex.Message);
+        }
+    }
+
     public async Task<SystemUser?> GetByEmailAddressAsync(string emailAddress)
     {
         try

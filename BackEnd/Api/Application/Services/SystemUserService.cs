@@ -128,7 +128,7 @@ public class SystemUserService : ISystemUserService
     }
     public async Task<SystemUserDto> ActivateUserWithToken(string emailAddress, string token, string sub)
     {
-        var systemUser = await _systemUserRepository.GetByEmailAddressAsync(emailAddress);
+        var systemUser = await _systemUserRepository.GetByActivationTokenAsync(token);
         if (systemUser == null)
         {
             _logger.LogWarning($"System user with email '{emailAddress}' not found.");
@@ -139,6 +139,12 @@ public class SystemUserService : ISystemUserService
         {
             _logger.LogWarning($"Invalid or expired activation token for user '{emailAddress}'.");
             throw new InvalidOperationException($"Invalid or expired activation token for user '{emailAddress}'.");
+        }
+
+        if(systemUser.Email != emailAddress)
+        {
+            _logger.LogWarning($"Activation token does not match email address '{emailAddress}'.");
+            throw new InvalidOperationException($"Activation token does not match email address '{emailAddress}'.");
         }
 
         systemUser.Active = true;
