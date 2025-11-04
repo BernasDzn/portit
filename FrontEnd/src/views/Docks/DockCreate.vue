@@ -45,7 +45,7 @@ const submitDock = (obj: any) =>
         <EntityForm :object="dock" :submit-function="submitDock">
             <div class="form">
                 <div class="general-info">
-                    <p class="section-title">{{ t('dock.infoTitle') }}</p>
+                    <p class="section-title">{{ t('dock.generalFields') }}</p>
                     <FormField class="field" :name="t('dock.fields.code.title') + '*'" v-model="dock.code" :placeholderText="t('dock.fields.code.placeholder')" pattern="^[a-zA-Z0-9]+$" required/>
                     <FormField class="field" :name="t('dock.fields.name.title') + '*'" v-model="dock.name" :placeholderText="t('dock.fields.name.placeholder')" required/>
                     <FormField class="field" :name="t('dock.fields.location.title') + '*'" v-model="dock.location" :placeholderText="t('dock.fields.location.placeholder')" required/>

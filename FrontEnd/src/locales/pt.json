@@ -87,6 +87,7 @@
             "view": "Visualizar Doca",
             "edit": "Editar Doca"
         },
+        "generalFields" : "Campos Gerais",
         "infoTitle": "Informação da Doca",
         "title": "Docas",
         "subtitle": {
@@ -135,6 +136,7 @@
             "view": "Visualizar Tipo de Navio",
             "edit": "Editar Tipo de Navio"
         },
+        "generalFields" : "Campos Gerais",
         "infoTitle": "Informação do Tipo de Navio",
         "title": "Tipos de Navio",
         "subtitle": {
@@ -271,7 +273,6 @@
             "view": "Visualizar Recurso Físico",
             "edit": "Editar Recurso Físico"
         },
-        "requiredQualifications": "Qualificações Requeridas",
         "infoTitle": "Informação do Recurso Físico",
         "title": "Recursos Físicos",
         "subtitle": {
@@ -282,6 +283,8 @@
             "view": "Visualizar detalhes do recurso físico",
             "edit": "Editar um recurso físico existente no sistema"
         },
+        "generalFields": "Campos Gerais",
+        "specificFields": "Campos Específicos",
         "fields": {
             "code": {
                 "title": "Código",
@@ -293,11 +296,44 @@
             },
             "status": {
                 "title": "Estado",
+                "placeholder": "Selecionar estado do recurso",
                 "options": {
                     "available": "Disponível",
                     "maintenance": "Manutenção",
                     "outOfService": "Fora de serviço"
                 }
+            },
+            "qualifications": {
+                "title": "Qualificações Necessárias",
+                "placeholder": "As qualificações necessárias para operar este recurso"
+            },
+            "setupTime": {
+                "title": "Tempo de Configuração (minutos)",
+                "placeholder": "Tempo de configuração"
+            },
+            "liftingCapacity": {
+                "title": "Capacidade de Elevação (kgs)",
+                "placeholder": "Capacidade de elevação"
+            },
+            "servingDocks": {
+                "title": "Docas de Serviço",
+                "placeholder": "Selecionar docas de serviço"
+            },
+            "containersPerHour": {
+                "title": "Contentores por hora",
+                "placeholder": "Contentores por hora"
+            },
+            "maxLoadCapacity": {
+                "title": "Capacidade Máxima de Carga (kg)",
+                "placeholder": "Capacidade máxima de carga"
+            },
+            "averageSpeed": {
+                "title": "Velocidade Média (km/h)",
+                "placeholder": "Velocidade média"
+            },
+            "containersPerTrip": {
+                "title": "Contentores por Viagem",
+                "placeholder": "Contentores por viagem"
             },
             "type": {
                 "title": "Tipo de Recurso",
