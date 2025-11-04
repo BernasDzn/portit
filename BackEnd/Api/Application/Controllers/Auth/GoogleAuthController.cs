@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Google.Apis.Auth;
 using Api.Application.Services;
+using Api.Domain.Entities;
+using Api.Application.DataTransfer;
 
 namespace GoogleAuth.Controllers;
 
@@ -46,10 +48,11 @@ public class LoginController : ControllerBase
             var googleUserId = payload.Subject;
             var email = payload.Email ?? "unknown";
 
+            SystemUserDto? user = null;
             try
             {
-                var result = await _systemUserService.GetBySub(googleUserId);
-                if (result == null || !(bool)result.IsActive!)
+                user = await _systemUserService.GetBySub(googleUserId);
+                if (user == null || user.IsActive != null && !user.IsActive.Value)
                 {
                     // treat as unauthorized (user missing or not active)
                     return Unauthorized("User not found or inactive.");
@@ -71,13 +74,14 @@ public class LoginController : ControllerBase
                 { "email_address", email },
                 { "name", payload.Name ?? "" },
                 { "picture", payload.Picture ?? "" },
+                { "user_role", user.Role.ToString() ?? "" }
             });
 
             return Ok(new
             {
                 Token = token, // This is the token that will have tobe used as a bearer in the future
                 expiresIn = _config.GetValue<int>("Jwt:ExpiresMinutes"),
-                user = new { id = googleUserId, email = email, name = payload.Name, picture = payload.Picture }
+                user = new { id = googleUserId, email = email, name = payload.Name, picture = payload.Picture, role = user.Role }
             });
         }
         catch (InvalidJwtException ex)
@@ -94,7 +98,11 @@ public class LoginController : ControllerBase
         var email = User.FindFirst("email_address")?.Value;
         var name = User.FindFirst("name")?.Value;
         var picture = User.FindFirst("picture")?.Value;
+        var role = User.FindFirst("user_role")?.Value;
 
-        return Ok(new { sub, email, name, picture });
+        Console.WriteLine($"Me called for user {sub} - {email}");
+        Console.WriteLine($"Name: {name}, Picture: {picture}, Role: {role}");
+
+        return Ok(new { sub, email, name, picture, role });
     }
 }

@@ -30,6 +30,7 @@ import QualificationEdit from '@/views/Qualifications/QualificationEdit.vue'
 import PhysicalResourceDashboard from '@/views/PhysicalResources/PhysicalResourceDashboard.vue'
 import PhysicalResourcesSearch from '@/views/PhysicalResources/PhysicalResourcesSearch.vue'
 import PhysicalResourceViewer from '@/views/PhysicalResources/PhysicalResourceViewer.vue'
+import PhysicalResourceCreate from '@/views/PhysicalResources/PhysicalResourceCreate.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -220,6 +221,14 @@ const router = createRouter({
         {
             path: '/resources/view/:code',
             component: PhysicalResourceViewer
+        },
+        {
+            path: '/resources/create',
+            name: 'Create a Physical Resource',
+            component: PhysicalResourceCreate,
+            meta: {
+                icon: "add"
+            }
         }
       ]
     },

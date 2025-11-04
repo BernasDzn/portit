@@ -16,9 +16,17 @@ const user = ref<User>({
     id: '1',
     name: 'Monokuma',
     email: 'monoemail@hopes.peak',
-    avatar: '/monouser.png'
+    avatar: '/monouser.png',
+    role: -1
 });
+
 const moreInfo = ref(false);
+const roles = [
+    { value: 0, label: 'Admin', color: 'primary'},
+    { value: 1, label: 'Port Authority Officer', color: 'success'},
+    { value: 2, label: 'SAO Representative', color: 'warning'},
+    { value: 3, label: 'Logistics operator', color: 'danger'}
+]
 
 const toggleMoreInfo = () => {
     moreInfo.value = !moreInfo.value;
@@ -69,7 +77,18 @@ onMounted(async () => {
         <sl-popup placement="bottom-start" shift shift-padding="10" :active="moreInfo" >
             <span slot="anchor"></span>
             <div class="box">
-                <p class="title"><sl-badge variant="primary" pill>Admin</sl-badge> {{user.name}} </p>
+                <!-- <p class="title"><sl-badge variant="primary" pill>Admin</sl-badge> {{user.name}} </p> -->
+                <div class="opposed">
+                    <p class="title">{{ user.name }}</p>
+                    <sl-badge 
+                        class="role"
+                        :variant="roles.find(r => r.value === user.role)?.color || 'default'" 
+                        pill
+                    >
+                        {{ roles.find(r => r.value === user.role)?.label || 'Unknown Role' }}
+                    </sl-badge> 
+                </div>
+
                 <p class="subtitle">{{ user.email }}</p>
                 <div class="logout-box">
                     <RouterLink to="/login">
@@ -81,3 +100,10 @@ onMounted(async () => {
     </div>
 </div>
 </template>
+
+<style scoped>
+
+.role {
+}
+
+</style>
