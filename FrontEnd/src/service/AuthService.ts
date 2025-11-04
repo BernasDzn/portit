@@ -23,15 +23,22 @@ export class AuthService implements IAuthService {
         return res.data as AppJWTResponse;
     }
 
-    initGoogleSignIn(callback: Function) {
+    initGoogleSignIn(callback: Function, errorCallback: Function) {
         
         // Handle the google response
         const handleCredentialResponse = async (response: any) => {
-            const idToken = response.credential;
-            const res: AppJWTResponse = await this.getAppJWTToken(idToken);
-            
-            // Pass the response to the callback
-            callback(res);
+
+            try {
+
+                const idToken = response.credential;
+                const res: AppJWTResponse = await this.getAppJWTToken(idToken);
+                
+                // Pass the response to the callback
+                callback(res);
+                
+            } catch (error) {
+                errorCallback(error);
+            }
         };
         
         console.log('Initializing Google Sign-In');

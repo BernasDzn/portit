@@ -93,9 +93,7 @@ public class SystemUserController : ControllerBase, ISystemUserController
     {
         try
         {
-            var systemUserDto = await _systemUserService.GetBySub(sub);
-            systemUserDto.IsActive = false;
-            await _systemUserService.UpdateSystemUser(sub, systemUserDto);
+            await _systemUserService.DeactivateUser(sub);
             return NoContent();
         }
         catch (EntityNotFoundException)
@@ -115,9 +113,7 @@ public class SystemUserController : ControllerBase, ISystemUserController
     {
         try
         {
-            var systemUserDto = await _systemUserService.GetBySub(sub);
-            systemUserDto.IsActive = true;
-            await _systemUserService.UpdateSystemUser(sub, systemUserDto);
+            await _systemUserService.ActivateUser(sub);
             return NoContent();
         }
         catch (EntityNotFoundException)
@@ -127,6 +123,12 @@ public class SystemUserController : ControllerBase, ISystemUserController
         }
         catch (System.Exception e)
         {
+            if (e is InvalidOperationException)
+            {
+                _logger.LogWarning("User does not have a pending activation: '{Sub}'", sub);
+                return BadRequest($"System user with sub '{sub}' does not have a pending activation.");
+            }
+
             _logger.LogCritical("Error activating system user with sub '{Sub}', {Message}", sub, e.Message);
             return StatusCode(500, "An error occurred while activating the user.");
         }

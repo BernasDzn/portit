@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useAlerts } from '@/composables/alerts';
 import { useSession } from '@/composables/session';
 import type { User } from '@/model/User';
 import { AuthService } from '@/service/AuthService';
@@ -12,6 +13,8 @@ const authService = new AuthService(http);
 
 const session = useSession();
 const router = useRouter();
+
+const notifications = useAlerts();
 
 const loginFinished = (res: AppJWTResponse) => {
     const sessionUser: User = {
@@ -27,6 +30,11 @@ const loginFinished = (res: AppJWTResponse) => {
     router.push('/');
 }
 
+const errorCallback = (err: any) => {
+    console.error('Google Sign-In error:', err);
+    notifications.enqueueNotification('Error during Google Sign-In. Please try again.', notifications.notificationTypes.DANGER);
+}
+
 onMounted(() => {
     /* Load Google script dynamically if not already loaded */
     const existingScript = document.getElementById('google-client-script')
@@ -36,10 +44,10 @@ onMounted(() => {
         script.async = true
         script.defer = true
         script.id = 'google-client-script'
-        script.onload = () => authService.initGoogleSignIn(loginFinished)
+        script.onload = () => authService.initGoogleSignIn(loginFinished, errorCallback)
         document.head.appendChild(script)
     } else {
-        authService.initGoogleSignIn(loginFinished)
+        authService.initGoogleSignIn(loginFinished, errorCallback)
     }
 });
 
