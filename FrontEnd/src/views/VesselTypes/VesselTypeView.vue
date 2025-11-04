@@ -6,8 +6,9 @@ import { VesselTypeService } from '@/service/VesselTypeService';
 import type { VesselType } from '@/model/VesselType';
 
 import EntityView from '@/components/crud/EntityView.vue';
+import {useI18n} from "vue-i18n";
 
-
+const {t} = useI18n();
 const route = useRoute();
 
 const http = new AxiosHttpService();
@@ -24,10 +25,10 @@ const fetchVesselType = async (): Promise<VesselType | undefined> => {
     <div>
         <sl-breadcrumb>
             <sl-breadcrumb-item>
-                <RouterLink to="/vessel-types/dashboard" class="breadcrumb-link">Vessel Type Dashboard</RouterLink>
+                <RouterLink to="/vessel-types/dashboard" class="breadcrumb-link">{{ t('vesselType.tabs.dashboard') }}</RouterLink>
             </sl-breadcrumb-item>
             <sl-breadcrumb-item>
-                <RouterLink to="/vessel-types/search" class="breadcrumb-link">Search Vessel Types</RouterLink>
+                <RouterLink to="/vessel-types/search" class="breadcrumb-link">{{ t('vesselType.tabs.search') }}</RouterLink>
             </sl-breadcrumb-item>
             <sl-breadcrumb-item>{{ vesselTypeName }}</sl-breadcrumb-item>
         </sl-breadcrumb>
@@ -45,7 +46,7 @@ const fetchVesselType = async (): Promise<VesselType | undefined> => {
                     <RouterLink :to="`/vessel-types/edit/${encodeURIComponent(entity.element.name)}`">
                         <sl-button variant="default" size="large">
                             <sl-icon slot="prefix" name="pencil"></sl-icon>
-                            Edit Vessel Type
+                            {{ t('vesselType.tabs.edit') }}
                         </sl-button>
                     </RouterLink>
 
@@ -53,44 +54,44 @@ const fetchVesselType = async (): Promise<VesselType | undefined> => {
                 <div class="viewing-content">
                     <div class="top-section">
                         <sl-card class="info-card">
-                            <p>Vessel Type information</p>
+                            <p>{{ t('vesselType.infoTitle') }}</p>
                             <div class="info-grid">
                                 <div class="info-block">
-                                    <span class="label">Name</span>
+                                    <span class="label">{{ t('vesselType.fields.name.title') }}</span>
                                     <p>{{ entity.element.name }}</p>
                                 </div>
                                 <div class="info-block">
-                                    <span class="label">Description</span>
+                                    <span class="label">{{ t('vesselType.fields.description.title') }}</span>
                                     <p>{{ entity.element.description }}</p>
                                 </div>
                             </div>
                         </sl-card>
                         <sl-card class="info-card">
-                            <p>Physical Characteristics</p>
-                            <p class="info-row"><span class="label">Length:</span> <span>{{
+                            <p>{{ t('physicalCharacteristics.title').replace('(m)','') }}</p>
+                            <p class="info-row"><span class="label">{{ t('physicalCharacteristics.length.title') }}:</span> <span>{{
                                 entity.element.physicalCharacteristics.length }}m</span></p>
-                            <p class="info-row"><span class="label">Depth:</span> <span>{{
+                            <p class="info-row"><span class="label">{{ t('physicalCharacteristics.depth.title') }}:</span> <span>{{
                                 entity.element.physicalCharacteristics.depth }}m</span></p>
-                            <p class="info-row"><span class="label">Draft:</span> <span>{{
+                            <p class="info-row"><span class="label">{{ t('physicalCharacteristics.draft.title') }}:</span> <span>{{
                                 entity.element.physicalCharacteristics.draft }}m</span></p>
                         </sl-card>
                         <sl-card class="info-card">
-                            <p>Statistics</p>
+                            <p>{{ t('common.statistics') }}</p>
                             <div class="view-statistics">
                                 <div class="view-statistics-overview">
-                                    <p>Capacity Dimensions (in TEU's)</p>
+                                    <p>{{ t('vesselType.fields.containerCapacity.title') }}</p>
                                     <div class="capacity-dimensions">
                                         <div>
                                             <p class="view-statistic-data">{{ entity.element.maxNumberOfRows }}</p>
-                                            <p>Rows</p>
+                                            <p>{{ t('vesselType.fields.containerCapacity.maxNumberOfRows.title') }}</p>
                                         </div>
                                         <div>
                                             <p class="view-statistic-data">{{ entity.element.maxNumberOfBays }}</p>
-                                            <p>Bays</p>
+                                            <p>{{ t('vesselType.fields.containerCapacity.maxNumberOfBays.title') }}</p>
                                         </div>
                                         <div>
                                             <p class="view-statistic-data">{{ entity.element.maxNumberOfTiers }}</p>
-                                            <p>Tiers</p>
+                                            <p>{{ t('vesselType.fields.containerCapacity.maxNumberOfTiers.title') }}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -101,7 +102,7 @@ const fetchVesselType = async (): Promise<VesselType | undefined> => {
                                 <div class="view-statistics-overview">
                                     <div>
                                         <p class="view-statistic-data">{{ entity.element.capacity }}</p>
-                                        <p>Capacity</p>
+                                        <p>{{ t('vesselType.fields.capacity.title') }}</p>
                                     </div>
                                 </div>
 

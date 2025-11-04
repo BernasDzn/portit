@@ -8,6 +8,7 @@ import { ref } from 'vue';
 import type { Qualification } from '@/model/Qualifications';
 import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
+import { useI18n } from 'vue-i18n';
 
 const route = useRoute();
 const qualificationId = String(route.params.id || '');
@@ -37,18 +38,20 @@ const updateQualification = async (obj: Qualification) => {
 const getById = async (id: string) => 
     qualificationService.getQualificationById(id);
 
+const { t } = useI18n();
+
 </script>
 
 <template>
     <div>
         <sl-breadcrumb>
-            <sl-breadcrumb-item><RouterLink to="/qualifications/dashboard" class="breadcrumb-link">Qualifications Dashboard</RouterLink></sl-breadcrumb-item>
-            <sl-breadcrumb-item><RouterLink to="/qualifications/search" class="breadcrumb-link">Search Qualifications</RouterLink></sl-breadcrumb-item>
-            <sl-breadcrumb-item>Edit Qualification</sl-breadcrumb-item>
+            <sl-breadcrumb-item><RouterLink to="/qualifications/dashboard" class="breadcrumb-link">{{ t('qualification.tabs.dashboard') }}</RouterLink></sl-breadcrumb-item>
+            <sl-breadcrumb-item><RouterLink to="/qualifications/search" class="breadcrumb-link">{{ t('qualification.tabs.search') }}</RouterLink></sl-breadcrumb-item>
+            <sl-breadcrumb-item>{{ t('qualification.tabs.edit') }}</sl-breadcrumb-item>
         </sl-breadcrumb>
         
-        <h1 class="title">Edit Qualification</h1>
-        <p class="subtitle">Update a qualification from the system</p>
+        <h1 class="title">{{ t('qualification.tabs.edit') }}</h1>
+        <p class="subtitle">{{ t('qualification.subtitle.edit') }}</p>
 
         <EntityForm
             :editing-id="qualificationId"
@@ -56,8 +59,8 @@ const getById = async (id: string) =>
             :submit-function="updateQualification"
             :fetching-function="getById"
         >
-            <FormField :enabled="false" :required="true" class="field" name="Qualification Code*" v-model="qualification.idCode" placeholderText="Qualification code" />
-            <FormField :required="true" class="field" name="Qualification Name*" v-model="qualification.qualificationName" placeholderText="Qualification name"/>
+            <FormField :enabled="false" :required="true" class="field" :name="t('qualification.fields.idCode.title') + '*'" v-model="qualification.idCode" :placeholderText="t('qualification.fields.idCode.placeholder')" />
+            <FormField :required="true" class="field" :name="t('qualification.fields.qualificationName.title') + '*'" v-model="qualification.qualificationName" :placeholderText="t('qualification.fields.qualificationName.placeholder')"/>
         </EntityForm>
 
     </div>

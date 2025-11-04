@@ -5,9 +5,11 @@ import AxiosHttpService from '@/service/AxiosHttpService';
 import { VesselService } from '@/service/VesselService';
 import Loading from '@/components/Loading.vue';
 import { ref, onMounted } from 'vue';
+import { useI18n } from 'vue-i18n'
 
 const http = new AxiosHttpService();
 const vesselService = new VesselService(http);
+const { t } = useI18n()
 
 const numberOfVessels = ref(0);
 const loading = ref(true)
@@ -24,19 +26,19 @@ onMounted(async () => {
 
 <template>
     <div>
-        <h1 class="title">Vessel Dashboard</h1>
-        <p class="subtitle">Overview of vessel statistics and activities</p>
+        <h1 class="title">{{ t('vessel.tabs.dashboard') }}</h1>
+        <p class="subtitle">{{ t('vessel.subtitle.dashboard') }}</p>
         <sl-card class="dashboard-overview">
             <div class="dashboard-items">
                 <DashboardItem
-                    title="View Vessels"
-                    description="Manage and view all registered vessels"
+                    :title="t('vessel.tabs.view_dashboard')"
+                    :description="t('vessel.subtitle.search')"
                     icon="search"
                     to="/vessels/search"
                 />
                 <DashboardItem
-                    title="Create Vessel"
-                    description="Register a new vessel into the system"
+                    :title="t('vessel.tabs.create')"
+                    :description="t('vessel.subtitle.create')"
                     icon="add"
                     to="/vessels/create"
                 />
@@ -45,7 +47,7 @@ onMounted(async () => {
         <sl-card class="dashboard-statistics">
             <div class="stats-overview" v-if="!loading">
                 <p>{{numberOfVessels}}</p>
-                <p>Registered Vessels</p>
+                <p>{{ t('vessel.registeredVessels') }}</p>
             </div>
             <Loading v-if="loading"/>
         </sl-card>

@@ -8,6 +8,7 @@ import AxiosHttpService from '@/service/AxiosHttpService';
 import { QualificationService } from '@/service/QualificationService';
 import { StaffService } from '@/service/StaffService';
 import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { FullWeek } from '@/model/OperationalWindow';
 
 const http = new AxiosHttpService();
@@ -24,6 +25,8 @@ const staff = ref<StaffCreate>({
     qualificationsCodes: [],
 });
 
+const { t } = useI18n();
+
 const submitStaff = (obj: any) => 
     staffService.createStaff(obj);
 
@@ -32,24 +35,24 @@ const submitStaff = (obj: any) =>
 <template>
     <div>
         <sl-breadcrumb>
-            <sl-breadcrumb-item><RouterLink to="/staff/dashboard" class="breadcrumb-link">Staff Dashboard</RouterLink></sl-breadcrumb-item>
-            <sl-breadcrumb-item>Create Staff</sl-breadcrumb-item>
+            <sl-breadcrumb-item><RouterLink to="/staff/dashboard" class="breadcrumb-link">{{ t('staff.tabs.dashboard') }}</RouterLink></sl-breadcrumb-item>
+            <sl-breadcrumb-item>{{ t('staff.tabs.create') }}</sl-breadcrumb-item>
         </sl-breadcrumb>
 
-        <h1 class="title">Create Staff</h1>
-        <p class="subtitle">Register a new staff member into the system</p>
+        <h1 class="title">{{ t('staff.tabs.create') }}</h1>
+        <p class="subtitle">{{ t('staff.subtitle.create') }}</p>
         <EntityForm :object="staff" :submit-function="submitStaff">
             <div class="name-imo">
-                <FormField :required="true" class="field" name="Staff Name*" v-model="staff.name" placeholderText="Staff name"/>
-                <FormField :required="true" class="field" name="Email*" v-model="staff.email" placeholderText="Email"/>
-                <FormField :required="true" class="field" name="Phone Number*" v-model="staff.phoneNumber" placeholderText="Phone number"/>
+                <FormField :required="true" class="field" :name="t('staff.fields.name.title') + '*'" v-model="staff.name" :placeholderText="t('staff.fields.name.placeholder')"/>
+                <FormField :required="true" class="field" :name="t('staff.fields.email.title') + '*'" v-model="staff.email" :placeholderText="t('staff.fields.email.placeholder')"/>
+                <FormField :required="true" class="field" :name="t('staff.fields.phoneNumber.title') + '*'" v-model="staff.phoneNumber" :placeholderText="t('staff.fields.phoneNumber.placeholder')"/>
                 <EntityDropdown
                     class="field-dropdown"
-                    name="Qualifications*"
+                    :name="t('staff.fields.qualifications.title') + '*'"
                     v-model="staff.qualificationsCodes"
                     :fetch-function="() => qualificationService.getQualifications().then(page => (page.items || []).map(t => t.idCode))"
                     :fetch-on-mount="true"
-                    placeholderText="Select qualifications"
+                    :placeholderText="t('staff.fields.qualifications.placeholder')"
                     :required="true"
                     :multiple="true"
                     valueKey="name"

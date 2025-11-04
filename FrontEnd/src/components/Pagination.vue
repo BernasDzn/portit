@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n';
+
+
+const {t} = useI18n();
 
 const props = defineProps<{
     totalPages: number
@@ -22,7 +26,7 @@ const setPage = (page: number) => {
         <sl-button :disabled="props.currentPage==1" @click="() => {
             setPage(props.currentPage - 1);
         }">
-            Prev
+            {{ t('buttons.pagination.previous') }}
         </sl-button>
 
         <template v-for="page in props.totalPages" :key="page">
@@ -39,7 +43,7 @@ const setPage = (page: number) => {
         <sl-button :disabled="props.currentPage==props.totalPages" @click="() => {
             setPage(props.currentPage + 1);
         }">
-            Next
+            {{ t('buttons.pagination.next') }}
         </sl-button>
     </div>
 </template>

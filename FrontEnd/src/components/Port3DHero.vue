@@ -1,9 +1,14 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
+import {useI18n} from 'vue-i18n';
+
+const { t } = useI18n();
 
 const props = defineProps<{
   route: string;
 }>();
+
+
 
 </script>
 
@@ -14,11 +19,10 @@ const props = defineProps<{
       <div class="hero-left">
         <h3 class="hero-title">
           <span class="material-icons">widgets</span>
-          3D Port Visualization
+          {{ t('dashboard.3DModel.title') }}
         </h3>
         <p class="hero-description">
-          View an interactive 3D representation of the entire port facility. Monitor dock occupancy, vessel
-          positions, storage areas, and resources in real-time from a bird's-eye view.
+          {{ t('dashboard.3DModel.description') }}
         </p>
         <div class="hero-actions">
           <!-- Use RouterLink's v-slot to get a navigate() callback and call it from the Shoelace button click
@@ -26,7 +30,7 @@ const props = defineProps<{
           <RouterLink :to="props.route">
             <sl-button variant="default" size="large" class="hero-cta"  >
               <span slot="prefix" class="material-symbols-outlined">open_in_new</span>
-              Open 3D View
+              {{ t('dashboard.3DModel.open') }}
             </sl-button>
           </RouterLink>
         </div>

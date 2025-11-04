@@ -19,9 +19,11 @@
     "@fontsource/material-icons": "^5.2.7",
     "@shoelace-style/shoelace": "^2.20.1",
     "axios": "^1.13.1",
+    "canvas-confetti": "^1.9.4",
     "inversify": "^7.10.4",
     "lottie-web": "^5.13.0",
     "vue": "^3.5.22",
+    "vue-i18n": "^12.0.0-alpha.3",
     "vue-router": "^4.6.3"
   },
   "devDependencies": {

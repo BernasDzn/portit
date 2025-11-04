@@ -2,7 +2,9 @@
 import { RouterLink } from 'vue-router';
 import type { Staff } from '@/model/Staff';
 import ActivityTag from '@/components/ActivityTag.vue'
+import {useI18n} from 'vue-i18n';
 
+const { t } = useI18n();
 
 const props = defineProps<{
     staff: Staff;
@@ -26,7 +28,7 @@ const props = defineProps<{
                 <span class="item-description">{{ staff.email }}</span>
             </div>
             <sl-divider></sl-divider>
-            <p>Qualifications:</p>
+            <p>{{ t('staff.fields.qualifications.title') }}:</p>
             <ul class="qualification-list">
                 <li v-for="qualification in staff.qualifications">
                     <sl-badge v-if="qualification !== undefined" class="list-badge" variant="neutral">{{ qualification.qualificationName }}</sl-badge>

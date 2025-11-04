@@ -5,6 +5,7 @@ import type { Filter, Page } from '@/model/Page';
 import type { PhysicalResource, PhysicalResourceFilter } from '@/model/PhysicalResource';
 import AxiosHttpService from '@/service/AxiosHttpService';
 import { PhysicalResourceService } from '@/service/PhysicalResourceService';
+import { useI18n } from 'vue-i18n';
 
 const http = new AxiosHttpService()
 const resourceService = new PhysicalResourceService(http as any)
@@ -12,28 +13,29 @@ const resourceService = new PhysicalResourceService(http as any)
 const fetchResources = async (filtering?: Filter<PhysicalResourceFilter>): Promise<Page<PhysicalResource>> => {
     return await resourceService.getPhysicalResources(filtering);
 }
+const { t } = useI18n();
 
 const filterDefinition = {
     Code: {
         type: 'text',
-        label: 'Resource Code',
+        label: t('physicalResource.fields.code.title'),
     },
     Status: {
         type: 'select',
-        label: 'Status',
+        label: t('physicalResource.fields.status.title'),
         options: [
-            { value: '0', text: 'Available' },
-            { value: '1', text: 'Maintenance' },
-            { value: '2', text: 'Out of service' },
+            { value: '0', text: t('physicalResource.fields.status.options.available') },
+            { value: '1', text: t('physicalResource.fields.status.options.maintenance') },
+            { value: '2', text: t('physicalResource.fields.status.options.outOfService') },
         ],
     },
     Type: {
         type: 'select',
-        label: 'Resource Type',
+        label: t('physicalResource.fields.type.title'),
         options: [
-            { value: '0', text: 'STS Crane' },
-            { value: '1', text: 'Yard Gantry Crane' },
-            { value: '2', text: 'Truck' },
+            { value: '0', text: t('physicalResource.fields.type.options.stsCrane') },
+            { value: '1', text: t('physicalResource.fields.type.options.yardGantry') },
+            { value: '2', text: t('physicalResource.fields.type.options.truck') },
         ],
     }
 };
@@ -44,13 +46,13 @@ const filterDefinition = {
 <div>
 
     <sl-breadcrumb>
-        <sl-breadcrumb-item><RouterLink to="/resources/dashboard" class="breadcrumb-link">Physical Resources Dashboard</RouterLink></sl-breadcrumb-item>
-        <sl-breadcrumb-item>Search Physical Resources</sl-breadcrumb-item>
+        <sl-breadcrumb-item><RouterLink to="/resources/dashboard" class="breadcrumb-link">{{ t('physicalResource.tabs.dashboard') }}</RouterLink></sl-breadcrumb-item>
+        <sl-breadcrumb-item>{{ t('physicalResource.tabs.search') }}</sl-breadcrumb-item>
     </sl-breadcrumb>
 
     <header>
-        <h1 class="title">Physical Resources</h1>
-        <p class="subtitle">Manage existing Physical Resources at the port</p>
+        <h1 class="title">{{ t('physicalResource.title') }}</h1>
+        <p class="subtitle">{{ t('physicalResource.subtitle.search') }}</p>
 
         <ListingBox :fetch-function="fetchResources" search-filter="Description" v-slot="{elements}" :filter-definition="filterDefinition">
             <li v-for="resource in elements" :key="resource.code">

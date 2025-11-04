@@ -7,6 +7,9 @@ import AxiosHttpService from '@/service/AxiosHttpService';
 import { DockService } from '@/service/DockService';
 import { VesselTypeService } from '@/service/VesselTypeService';
 import { onMounted, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const http = new AxiosHttpService()
 const dockService = new DockService(http)
@@ -25,11 +28,11 @@ onMounted(async () => {
     filterDefinition.value = {
         location: {
             type: 'text',
-            label: 'Location',
+            label: t('dock.fields.location.title') as string,
         },
         vesselTypeName: {
             type: 'select',
-            label: 'Vessel Type',
+            label: t('dock.fields.supportedVesselTypes.vesselType') as string,
             options: optionTypes,
         }
     };
@@ -41,13 +44,13 @@ onMounted(async () => {
 <div>
 
     <sl-breadcrumb>
-        <sl-breadcrumb-item><RouterLink to="../docks/dashboard" class="breadcrumb-link">Dock Dashboard</RouterLink></sl-breadcrumb-item>
-        <sl-breadcrumb-item>Search Docks</sl-breadcrumb-item>
+        <sl-breadcrumb-item><RouterLink to="../docks/dashboard" class="breadcrumb-link">{{ t('dock.tabs.dashboard') }}</RouterLink></sl-breadcrumb-item>
+        <sl-breadcrumb-item>{{ t('dock.tabs.search') }}</sl-breadcrumb-item>
     </sl-breadcrumb>
 
     <header>
-        <h1 class="title">Docks</h1>
-        <p class="subtitle">Search all docks</p>
+        <h1 class="title">{{ t('dock.title') }}</h1>
+        <p class="subtitle">{{ t('dock.subtitle.search') }}</p>
 
         <ListingBox :fetch-function="fetchDocks" search-filter="dockName" v-slot="{elements}" :filter-definition="filterDefinition">
             <li v-for="dock in elements" :key="dock.code">

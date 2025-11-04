@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import VesselPrinter from '@/components/printers/VesselPrinter.vue';
 import ListingBox from '@/components/crud/ListingBox.vue';
-import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n'
 import type { Filter, Page } from '@/model/Page';
 import type { VesselType } from '@/model/VesselType';
 import AxiosHttpService from '@/service/AxiosHttpService';
 import { VesselTypeService } from '@/service/VesselTypeService';
 import VesselTypePrinter from '@/components/printers/VesselTypePrinter.vue';
+
+const {t} = useI18n();
+
 
 const http = new AxiosHttpService()
 const vesselTypeService = new VesselTypeService(http as any)
@@ -18,7 +20,7 @@ const fetchVesselTypes = async (filtering?: Filter<VesselType>): Promise<Page<Ve
 const filterDefinition = {
     description: {
         type: 'text',
-        label: 'Description',
+        label: t('vesselType.fields.description.title') as string,
     }
 };
 
@@ -28,13 +30,19 @@ const filterDefinition = {
 <div>
 
     <sl-breadcrumb>
-        <sl-breadcrumb-item><RouterLink to="../vessel-types/dashboard" class="breadcrumb-link">Vessel Type Dashboard</RouterLink></sl-breadcrumb-item>
-        <sl-breadcrumb-item>Search Vessel Types</sl-breadcrumb-item>
+        <sl-breadcrumb-item>
+            <RouterLink to="../vessel-types/dashboard" class="breadcrumb-link">{{ t('vesselType.tabs.dashboard') }}</RouterLink>
+        </sl-breadcrumb-item>
+        <sl-breadcrumb-item>{{ t('vesselType.tabs.search') }}</sl-breadcrumb-item>
     </sl-breadcrumb>
 
     <header>
-        <h1 class="title">Vessel Types</h1>
-        <p class="subtitle">Search all vessel types</p>
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+                <h1 class="title">{{ t('vesselType.title') }}</h1>
+                <p class="subtitle">{{ t('vesselType.subtitle.search') }}</p>
+            </div>
+        </div>
 
         <ListingBox listing-style="listing-triples" :fetch-function="fetchVesselTypes" search-filter="name" v-slot="{elements}" :filter-definition="filterDefinition">
             <li v-for="vt in elements" :key="vt.id">

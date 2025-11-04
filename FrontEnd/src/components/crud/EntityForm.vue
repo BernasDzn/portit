@@ -3,7 +3,9 @@ import { useAlerts } from '@/composables/alerts';
 import { computed, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import Loading from '../Loading.vue';
+import { useI18n } from 'vue-i18n';
 
+const {t} = useI18n();
 const notification = useAlerts();
 
 const props = defineProps({
@@ -124,17 +126,17 @@ onMounted(
 
         <div class="form-operations">
             <sl-button class="form-button" variant="danger" outline @click="onCancel">
-                Cancel
+                {{ t('buttons.cancel') }}
             </sl-button>
             <sl-button class="form-button" variant="primary" type="submit" :loading="loading">
-                {{ props.editingId != null ? 'Save changes' : 'Create'}}
+                {{ props.editingId != null ? t('buttons.save') : t('buttons.create') }}
             </sl-button>
         </div>
 
-        <sl-dialog ref="cancelDialog" label="Discard changes?" >
-            <div>You have unsaved changes. Do you really want to discard them and leave?</div>
-            <sl-button slot="footer" variant="text" @click="(cancelDialog as any).hide()">Keep editing</sl-button>
-            <sl-button slot="footer" variant="danger" @click="confirmCancel">Discard</sl-button>
+        <sl-dialog ref="cancelDialog" :label="t('unsavedChanges.title')">
+            <div>{{ t('unsavedChanges.message') }}</div>
+            <sl-button slot="footer" variant="text" @click="(cancelDialog as any).hide()">{{ t('unsavedChanges.cancel') }}</sl-button>
+            <sl-button slot="footer" variant="danger" @click="confirmCancel">{{ t('unsavedChanges.confirm') }}</sl-button>
         </sl-dialog>
     </form>
 </template>

@@ -1,0 +1,321 @@
+{
+    "lang": {
+        "en": "Inglês",
+        "pt": "Português",
+        "ca": "Catalão",
+        "zh": "Chinês"
+    },
+    "common": {
+        "loading": "Carregando...",
+        "noData": "Sem dados disponíveis",
+        "statistics": "Estatísticas"
+    },
+    "buttons": {
+        "save": "Salvar",
+        "cancel": "Cancelar",
+        "delete": "Excluir",
+        "edit": "Editar",
+        "create": "Criar",
+        "search": "Pesquisar",
+        "select": "Selecionar",
+        "filter": {
+            "title": "Filtros",
+            "add": "Filtrar",
+            "clear": "Limpar Filtros"
+        },
+        "pagination": {
+            "previous": "Anterior",
+            "next": "Próximo"
+        },
+        "login": "Entrar",
+        "goBackToLogin": "Voltar ao Login",
+        "logout": "Sair"
+    },
+    "unsavedChanges": {
+        "title": "Descartar alterações?",
+        "message": "Você tem alterações não salvas. Tem certeza de que deseja sair desta página e descartar suas alterações?",
+        "confirm": "Descartar",
+        "cancel": "Continuar a editar"
+    },
+    "dashboard": {
+        "sidebarTitle": "Painel",
+        "title": "Painel PortIT",
+        "subtitle": "Visão geral do sistema PortIT",
+        "3DModel": {
+            "title": "Visualização 3D do Porto",
+            "description": "Veja uma representação 3D interativa de toda a infraestrutura do porto. Monitore ocupação de docas, posições de navios, áreas de armazenamento e recursos em tempo real.",
+            "open": "Abrir Modelo 3D"
+        }
+    },
+    "physicalCharacteristics": {
+        "title": "Características Físicas (m)",
+        "length": {
+            "title": "Comprimento",
+            "placeholder": "Comprimento em metros"
+        },
+        "depth": {
+            "title": "Profundidade",
+            "placeholder": "Profundidade em metros"
+        },
+        "draft": {
+            "title": "Calado",
+            "placeholder": "Calado em metros"
+        }
+    },
+    "dock": {
+        "fields": {
+            "code": {
+                "title": "Código",
+                "placeholder": "Código da doca"
+            },
+            "name": {
+                "title": "Nome",
+                "placeholder": "Nome da doca"
+            },
+            "location": {
+                "title": "Localização",
+                "placeholder": "Localização da doca"
+            },
+            "supportedVesselTypes": {
+                "title": "Tipos de Navio Suportados",
+                "vesselTypes": {
+                    "title": "Tipos de Navio",
+                    "placeholder": "Selecione tipos de navio"
+                },
+                "vesselType": "Tipo de Navio"
+            }
+        },
+        "tabs": {
+            "dashboard": "Painel de Docas",
+            "view_dashboard": "Visualizar Docas",
+            "search": "Pesquisar Docas",
+            "create": "Criar Doca",
+            "view": "Visualizar Doca",
+            "edit": "Editar Doca"
+        },
+        "infoTitle": "Informação da Doca",
+        "title": "Docas",
+        "subtitle": {
+            "dashboard": "Visão geral das estatísticas e atividades das docas",
+            "search": "Gerir e visualizar todas as docas registadas",
+            "create": "Registar uma nova doca no sistema",
+            "edit": "Editar uma doca existente no sistema"
+        },
+        "registeredDocks": "Docas Registradas"
+    },
+    "vesselType": {
+        "fields": {
+            "name": {
+                "title": "Nome",
+                "placeholder": "Nome do tipo de navio"
+            },
+            "description": {
+                "title": "Descrição",
+                "placeholder": "Descrição do tipo de navio"
+            },
+            "capacity": {
+                "title": "Capacidade",
+                "placeholder": "Capacidade de contentores em TEU"
+            },
+            "containerCapacity": {
+                "title": "Capacidade de Contentores (TEU)",
+                "maxNumberOfRows": {
+                    "title": "Máximo de Linhas",
+                    "placeholder": "Máx. Linhas em TEU"
+                },
+                "maxNumberOfBays": {
+                    "title": "Máximo de Bays",
+                    "placeholder": "Máx. Bays em TEU"
+                },
+                "maxNumberOfTiers": {
+                    "title": "Máximo de Camadas",
+                    "placeholder": "Máx. Camadas em TEU"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Painel de Tipos de Navio",
+            "view_dashboard": "Visualizar Tipos de Navio",
+            "search": "Pesquisar Tipos de Navio",
+            "create": "Criar Tipo de Navio",
+            "view": "Visualizar Tipo de Navio",
+            "edit": "Editar Tipo de Navio"
+        },
+        "infoTitle": "Informação do Tipo de Navio",
+        "title": "Tipos de Navio",
+        "subtitle": {
+            "dashboard": "Visão geral das estatísticas e atividades dos tipos de navio",
+            "search": "Gerir e visualizar todos os tipos de navio registados",
+            "create": "Registar um novo tipo de navio no sistema",
+            "edit": "Editar um tipo de navio existente no sistema"
+        },
+        "registeredVesselTypes": "Tipos de Navio Registrados"
+    },
+    "vessel": {
+        "fields": {
+            "name": {
+                "title": "Nome",
+                "placeholder": "Nome do navio"
+            },
+            "imoNumber": {
+                "title": "Número IMO",
+                "placeholder": "Número IMO do navio"
+            },
+            "owner": {
+                "title": "Organização proprietária",
+                "placeholder": "Organização proprietária"
+            },
+            "vesselType": {
+                "title": "Tipo de Navio",
+                "placeholder": "Selecionar tipo de navio"
+            }
+        },
+        "infoTitle": "Informação do Navio",
+        "physicalCharacteristicsTitle": "Características Físicas",
+        "tabs": {
+            "dashboard": "Painel de Navios",
+            "view_dashboard": "Visualizar Navios",
+            "search": "Pesquisar Navios",
+            "create": "Criar Navio",
+            "view": "Visualizar Navio",
+            "edit": "Editar Navio"
+        },
+        "title": "Navios",
+        "subtitle": {
+            "dashboard": "Visão geral das estatísticas e atividades dos navios",
+            "search": "Gerir e visualizar todos os navios registados",
+            "create": "Registar um novo navio no sistema",
+            "edit": "Editar um navio existente no sistema"
+        },
+        "ownedBy": "Propriedade de",
+        "registeredVessels": "Navios Registrados"
+    },
+    "staff": {
+        "fields": {
+            "mechanographicNumber": {
+                "title": "Número Mecanográfico",
+                "placeholder": "Número Mecanográfico"
+            },
+            "name": {
+                "title": "Nome",
+                "placeholder": "Nome do funcionário"
+            },
+            "email": {
+                "title": "Email",
+                "placeholder": "Endereço de email"
+            },
+            "phoneNumber": {
+                "title": "Número de Telefone",
+                "placeholder": "Número de telefone"
+            },
+            "qualifications": {
+                "title": "Qualificações",
+                "placeholder": "Selecionar qualificações"
+            },
+            "status": {
+                "title": "Estado",
+                "options":{
+                    "available": "Disponível",
+                    "unavailable": "Indisponível",
+                    "temporarilyReassigned": "Reatribuído temporariamente"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Painel de Funcionários",
+            "view_dashboard": "Visualizar Funcionários",
+            "search": "Pesquisar Funcionários",
+            "create": "Criar Funcionário",
+            "view": "Visualizar Funcionário",
+            "edit": "Editar Funcionário"
+        },
+        "infoTitle": "Informação do Funcionário",
+        "title": "Funcionários",
+        "subtitle": {
+            "search": "Gerir e visualizar todos os funcionários registados",
+            "dashboard": "Visão geral das estatísticas e atividades dos funcionários",
+            "create": "Registar um novo funcionário no sistema",
+            "view": "Visualizar detalhes do funcionário",
+            "edit": "Editar um funcionário existente no sistema"
+        }
+    },
+    "qualification": {
+        "tabs": {
+            "dashboard": "Painel de Qualificações",
+            "view_dashboard": "Visualizar Qualificações",
+            "search": "Pesquisar Qualificações",
+            "create": "Criar Qualificação",
+            "view": "Visualizar Qualificação",
+            "edit": "Editar Qualificação"
+        },
+        "infoTitle": "Informação da Qualificação",
+        "title": "Qualificações",
+        "subtitle": {
+            "search": "Gerir e visualizar todas as qualificações registadas",
+            "dashboard": "Visão geral das estatísticas e atividades das qualificações",
+            "create": "Registar uma nova qualificação no sistema",
+            "edit": "Editar uma qualificação existente no sistema",
+            "view": "Visualizar detalhes da qualificação"
+        },
+        "fields": {
+            "idCode": {
+                "title": "Código da Qualificação",
+                "placeholder": "Código da qualificação"
+            },
+            "qualificationName": {
+                "title": "Nome da Qualificação",
+                "placeholder": "Nome da qualificação"
+            }
+        }
+    },
+    "physicalResource": {
+        "tabs": {
+            "dashboard": "Painel de Recursos Físicos",
+            "view_dashboard": "Visualizar Recursos Físicos",
+            "search": "Pesquisar Recursos Físicos",
+            "create": "Criar Recurso Físico",
+            "view": "Visualizar Recurso Físico",
+            "edit": "Editar Recurso Físico"
+        },
+        "requiredQualifications": "Qualificações Requeridas",
+        "infoTitle": "Informação do Recurso Físico",
+        "title": "Recursos Físicos",
+        "subtitle": {
+            "search": "Gerir e visualizar todos os recursos físicos registados",
+            "dashboard": "Painel de controlo para recursos físicos",
+            "view_dashboard": "Visualizar Recursos Físicos",
+            "create": "Registar um novo Recurso Físico no sistema",
+            "view": "Visualizar detalhes do recurso físico",
+            "edit": "Editar um recurso físico existente no sistema"
+        },
+        "fields": {
+            "code": {
+                "title": "Código",
+                "placeholder": "Código do recurso"
+            },
+            "description": {
+                "title": "Descrição",
+                "placeholder": "Descrição do recurso"
+            },
+            "status": {
+                "title": "Estado",
+                "options": {
+                    "available": "Disponível",
+                    "maintenance": "Manutenção",
+                    "outOfService": "Fora de serviço"
+                }
+            },
+            "type": {
+                "title": "Tipo de Recurso",
+                "options": {
+                    "stsCrane": "Grua STS",
+                    "yardGantry": "Pórtico de pátio",
+                    "truck": "Camião"
+                }
+            }
+        },
+        "actions": {
+            "deactivate": "Desativar Recurso Físico"
+        }
+    }
+}

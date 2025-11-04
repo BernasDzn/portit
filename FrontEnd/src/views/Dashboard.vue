@@ -3,14 +3,17 @@
 import Loading from '@/components/Loading.vue';
 import Port3DHero from '@/components/Port3DHero.vue';
 import router from '@/router';
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n();
 
 const loading = false;
 </script>
 
 <template>
   <div>
-    <h1 class="title">Portit dashboard</h1>
-    <p class="subtitle">Overview of PortIT system</p>
+    <h1 class="title">{{ t('dashboard.title') }}</h1>
+    <p class="subtitle">{{ t('dashboard.subtitle') }}</p>
       <sl-card style="width: 100%;">
         <div class="main-dashboard-statistics">
         <div class="stats-overview" v-if="!loading">
@@ -18,35 +21,35 @@ const loading = false;
             <p>42</p>
             <span class="material-icons icon" style="color: var(--accent-1);">directions_boat</span>
           </div>
-          <p>Vessels</p>
+          <p>{{ t('vessel.title') }}</p>
         </div>
         <div class="stats-overview" v-if="!loading">
           <div class="opposed">
             <p>8</p>
             <span class="material-icons icon" style="color: var(--accent-1);">sailing</span>
           </div>
-          <p>Vessel Types</p>
+          <p>{{ t('vesselType.title') }}</p>
         </div>
         <div class="stats-overview" v-if="!loading">
           <div class="opposed">
             <p>15</p>
             <span class="material-icons icon" style="color: var(--accent-1);">anchor</span>
           </div>
-          <p>Docks</p>
+          <p>{{ t('dock.title') }}</p>
         </div>
         <div class="stats-overview" v-if="!loading">
           <div class="opposed">
             <p>25</p>
             <span class="material-icons icon" style="color: var(--accent-1);">school</span>
           </div>
-          <p>Qualifications</p>
+          <p>{{ t('qualification.title') }}</p>
         </div>
         <div class="stats-overview" v-if="!loading">
           <div class="opposed">
             <p>30</p>
             <span class="material-icons icon" style="color: var(--accent-1);">people</span>
           </div>
-          <p>Staff Members</p>
+          <p>{{ t('staff.title') }}</p>
         </div>
         <Loading v-if="loading"/>
         </div>

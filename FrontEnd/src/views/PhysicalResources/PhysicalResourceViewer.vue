@@ -7,6 +7,7 @@ import { QualificationService } from '@/service/QualificationService';
 import type { Qualification } from '@/model/Qualifications';
 import { PhysicalResourceService } from '@/service/PhysicalResourceService';
 import { computed, onMounted, ref } from 'vue';
+import { useI18n } from 'vue-i18n';
 
 const route = useRoute();
 
@@ -27,13 +28,15 @@ onMounted(async () => {
         res.averageSpeed != undefined ? 'local_shipping' : 'precision_manufacturing'
 });
 
+const { t } = useI18n();
+
 </script>
 
 <template>
   <div>
     <sl-breadcrumb>
-        <sl-breadcrumb-item><RouterLink to="/resources/dashboard" class="breadcrumb-link">Physical Resource Dashboard</RouterLink></sl-breadcrumb-item>
-        <sl-breadcrumb-item><RouterLink to="/resources/search" class="breadcrumb-link">Search Physical Resources</RouterLink></sl-breadcrumb-item>
+        <sl-breadcrumb-item><RouterLink to="/resources/dashboard" class="breadcrumb-link">{{ t('physicalResource.tabs.dashboard') }}</RouterLink></sl-breadcrumb-item>
+        <sl-breadcrumb-item><RouterLink to="/resources/search" class="breadcrumb-link">{{ t('physicalResource.tabs.search') }}</RouterLink></sl-breadcrumb-item>
         <sl-breadcrumb-item>{{ resourceId }}</sl-breadcrumb-item>
     </sl-breadcrumb>
 
@@ -51,14 +54,14 @@ onMounted(async () => {
                     <RouterLink :to="`/resources/edit/${encodeURIComponent(entity.element.code)}`">
                         <sl-button variant="default" size="large">
                             <sl-icon slot="prefix" name="pencil"></sl-icon>
-                            Edit Physical Resource
+                            {{ t('physicalResource.tabs.edit') }}
                         </sl-button>
                     </RouterLink>
 
                     <RouterLink :to="`/resources/deactivate/${encodeURIComponent(entity.element.code)}`">
                         <sl-button variant="danger" size="large">
                             <sl-icon slot="prefix" name="trash"></sl-icon>
-                            Deactivate Physical Resource
+                            {{ t('physicalResource.actions.deactivate') }}
                         </sl-button>
                     </RouterLink>
                 </div>
@@ -66,17 +69,17 @@ onMounted(async () => {
             </div>
             <div class="viewing-content">
                 <sl-card class="qual-main-info">
-                    <p>Physical Resource information</p>
+                    <p>{{ t('physicalResource.infoTitle') }}</p>
                     <div class="columns-2">
                         <div>
                             <div class="info-block">
-                                <span class="label">Physical Resource code</span>
+                                <span class="label">{{ t('physicalResource.fields.code.title') }}</span>
                                 <p>{{ entity.element.code }}</p>
                             </div>
                         </div>
                         <div>
                             <div class="info-block">
-                                <span class="label">Physical Resource name</span>
+                                <span class="label">{{ t('physicalResource.fields.description.title') }}</span>
                                 <p>{{ entity.element.description }}</p>
                             </div>
                         </div>

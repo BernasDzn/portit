@@ -7,7 +7,10 @@ import type { VesselType } from '@/model/VesselType';
 import AxiosHttpService from '@/service/AxiosHttpService';
 import { VesselTypeService } from '@/service/VesselTypeService';
 import { ref, onMounted, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useRoute, RouterLink } from 'vue-router';
+
+const { t } = useI18n();
 
 const http = new AxiosHttpService();
 const vesselTypeService = new VesselTypeService(http);
@@ -74,46 +77,46 @@ const updateVesselType = async (obj: VesselType) => {
     <div class="vessel-type-edit">
         <sl-breadcrumb>
             <sl-breadcrumb-item>
-                <RouterLink to="/vessel-types/dashboard" class="link">Vessel Type Dashboard</RouterLink>
+                <RouterLink to="/vessel-types/dashboard" class="link">{{ t('vesselType.tabs.dashboard') }}</RouterLink>
             </sl-breadcrumb-item>
             <sl-breadcrumb-item>
-                <RouterLink to="/vessel-types/search" class="link">Search Vessel Types</RouterLink>
+                <RouterLink to="/vessel-types/search" class="link">{{ t('vesselType.tabs.search') }}</RouterLink>
             </sl-breadcrumb-item>
             <sl-breadcrumb-item>
                 <RouterLink :to="vesselType.name ? `/vessel-types/view/${vesselType.name}` : '/vessel-types/search'" class="link">
                     {{ vesselTypeName || 'Vessel Type Name' }}
                 </RouterLink>
             </sl-breadcrumb-item>
-            <sl-breadcrumb-item>Edit Vessel Type</sl-breadcrumb-item>
+            <sl-breadcrumb-item>{{ t('vesselType.tabs.edit') }}</sl-breadcrumb-item>
         </sl-breadcrumb>
 
-        <h1 class="title">Edit Vessel Type</h1>
-        <p class="subtitle">Edit an existing vessel type in the system</p>
+        <h1 class="title">{{ t('vesselType.tabs.edit') }}</h1>
+        <p class="subtitle">{{ t('vesselType.subtitle.edit') }}</p>
         <EntityForm :object="vesselType" :editing-id="vesselTypeName" :submit-function="updateVesselType">
             <div class="form">
                 <div class="general-info">
-                    <p class="section-title">General Information</p>
-                    <FormField class="field" name="Name*" v-model="vesselType.name" placeholderText="Vessel type name" required/>
-                    <FormField class="field" name="Description*" v-model="vesselType.description" placeholderText="Vessel type description" required/>
+                    <p class="section-title">{{ t('vesselType.infoTitle') }}</p>
+                    <FormField class="field" :name="t('vesselType.fields.name.title') + '*'" v-model="vesselType.name" :placeholderText="t('vesselType.fields.name.placeholder')" required/>
+                    <FormField class="field" :name="t('vesselType.fields.description.title') + '*'" v-model="vesselType.description" :placeholderText="t('vesselType.fields.description.placeholder')" required/>
                 </div>
 
                 <span class="section-divider"></span>
                 
                 <div class="measurements">
-                    <p class="section-title">Physical Characteristics (m)</p>
-                        <FormField class="field" name="Length*" v-model.number="vesselType.physicalCharacteristics.length" placeholderText="Length in meters" pattern="^\d+(\.\d{1,2})?$" required/>
-                        <FormField class="field" name="Depth*" v-model.number="vesselType.physicalCharacteristics.depth" placeholderText="Depth in meters" pattern="^\d+(\.\d{1,2})?$" required/>
-                        <FormField class="field" name="Draft*" v-model.number="vesselType.physicalCharacteristics.draft" placeholderText="Draft in meters" pattern="^\d+(\.\d{1,2})?$" required/>
+                    <p class="section-title">{{ t('physicalCharacteristics.title') }}</p>
+                        <FormField class="field" :name="t('physicalCharacteristics.length.title') + '*'" v-model.number="vesselType.physicalCharacteristics.length" :placeholderText="t('physicalCharacteristics.length.placeholder')" pattern="^\d+(\.\d{1,2})?$" required/>
+                        <FormField class="field" :name="t('physicalCharacteristics.depth.title') + '*'" v-model.number="vesselType.physicalCharacteristics.depth" :placeholderText="t('physicalCharacteristics.depth.placeholder')" pattern="^\d+(\.\d{1,2})?$" required/>
+                        <FormField class="field" :name="t('physicalCharacteristics.draft.title') + '*'" v-model.number="vesselType.physicalCharacteristics.draft" :placeholderText="t('physicalCharacteristics.draft.placeholder')" pattern="^\d+(\.\d{1,2})?$" required/>
                 </div>
 
                 <span class="section-divider"></span>
 
                 <div class="measurements">
-                    <p class="section-title">Container Capacity (TEU)</p>
-                    <FormField class="field" name="Max Number of Rows*" v-model.number="vesselType.maxNumberOfRows" placeholderText="Max Rows in TEU's" pattern="^\d+$" required/>
-                    <FormField class="field" name="Max Number of Bays*" v-model.number="vesselType.maxNumberOfBays" placeholderText="Max Bays in TEU's" pattern="^\d+$" required/>
-                    <FormField class="field" name="Max Number of Tiers*" v-model.number="vesselType.maxNumberOfTiers" placeholderText="Max Tiers in TEU's" pattern="^\d+$" required/>
-                    <p class="section-title">Capacity: {{ capacity }} TEU</p>
+                    <p class="section-title">{{ t('vesselType.fields.containerCapacity.title') }}</p>
+                    <FormField class="field" :name="t('vesselType.fields.containerCapacity.maxNumberOfRows.title') + '*'" v-model.number="vesselType.maxNumberOfRows" :placeholderText="t('vesselType.fields.containerCapacity.maxNumberOfRows.placeholder')" pattern="^\d+$" required/>
+                    <FormField class="field" :name="t('vesselType.fields.containerCapacity.maxNumberOfBays.title') + '*'" v-model.number="vesselType.maxNumberOfBays" :placeholderText="t('vesselType.fields.containerCapacity.maxNumberOfBays.placeholder')" pattern="^\d+$" required/>
+                    <FormField class="field" :name="t('vesselType.fields.containerCapacity.maxNumberOfTiers.title') + '*'" v-model.number="vesselType.maxNumberOfTiers" :placeholderText="t('vesselType.fields.containerCapacity.maxNumberOfTiers.placeholder')" pattern="^\d+$" required/>
+                    <p class="section-title">{{ t('vesselType.fields.capacity.title') }}: {{ capacity }} TEU</p>
                 </div>
             </div>
         </EntityForm>
