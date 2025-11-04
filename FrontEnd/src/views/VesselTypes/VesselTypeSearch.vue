@@ -15,6 +15,13 @@ const fetchVesselTypes = async (filtering?: Filter<VesselType>): Promise<Page<Ve
   return await vesselTypeService.getVesselTypes(filtering);
 }
 
+const filterDefinition = {
+    description: {
+        type: 'text',
+        label: 'Description',
+    }
+};
+
 </script>
 
 <template>
@@ -29,7 +36,7 @@ const fetchVesselTypes = async (filtering?: Filter<VesselType>): Promise<Page<Ve
         <h1 class="title">Vessel Types</h1>
         <p class="subtitle">Search all vessel types</p>
 
-        <ListingBox listing-style="listing-triples" :fetch-function="fetchVesselTypes" search-filter="name" v-slot="{elements}">
+        <ListingBox listing-style="listing-triples" :fetch-function="fetchVesselTypes" search-filter="name" v-slot="{elements}" :filter-definition="filterDefinition">
             <li v-for="vt in elements" :key="vt.id">
                 <VesselTypePrinter class="listing-box" :vtype="vt" :link="`/vessel-types/view/${vt.name}`" />
             </li>

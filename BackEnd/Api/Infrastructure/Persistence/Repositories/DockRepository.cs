@@ -54,7 +54,7 @@ public class DockRepository : GenericRepository<Dock>, IDockRepository
                 query = query.Where(d => d.Location.Value.ToLower().Contains(filter.Location.ToLower()));
 
             if (!string.IsNullOrEmpty(filter.VesselTypeName))
-                query = query.Where(d => d.SupportedVesselTypes.Any(vt => vt.Name.Value.ToLower().Contains(filter.VesselTypeName.ToLower())));
+                query = query.Where(d => d.SupportedVesselTypes.Any(vt => vt.Name.Value.ToLower().Equals(filter.VesselTypeName.ToLower())));
 
             int pageCount = (int) Math.Ceiling((double)query.Count() / filter.PageSize);
             query = query.Skip((filter.PageNumber - 1) * filter.PageSize).Take(filter.PageSize);
