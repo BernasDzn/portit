@@ -31,7 +31,7 @@ const props = defineProps<{resource: any; link?: string}>();
                 {{ resource.code }} <br>
             </p>
             <sl-divider></sl-divider>
-            <p>{{ t('physicalResource.requiredQualifications') }}</p>
+            <p>{{ t('physicalResource.fields.qualifications.title') }}</p>
             <ul class="qualification-list">
                 <li v-for="q in props.resource.qualifications">
                     <sl-badge v-if="q !== undefined" class="list-badge" variant="neutral">{{ q.qualificationName }}</sl-badge>

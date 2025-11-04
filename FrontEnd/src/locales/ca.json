@@ -1,10 +1,4 @@
 {
-    "lang": {
-        "en": "Anglès",
-        "pt": "Portuguès",
-        "ca": "Català",
-        "zh": "Xinès"
-    },
     "common": {
         "loading": "Carregant...",
         "noData": "No hi ha dades disponibles",
@@ -93,6 +87,7 @@
             "view": "Veure doca",
             "edit": "Editar doca"
         },
+        "generalFields" : "Camps generals",
         "infoTitle": "Informació de la doca",
         "title": "Doces",
         "subtitle": {
@@ -141,6 +136,7 @@
             "view": "Veure tipus de vaixell",
             "edit": "Editar tipus de vaixell"
         },
+        "generalFields" : "Camps generals",
         "infoTitle": "Informació del tipus de vaixell",
         "title": "Tipus de vaixell",
         "subtitle": {
@@ -277,7 +273,6 @@
             "view": "Veure recurs físic",
             "edit": "Editar recurs físic"
         },
-        "requiredQualifications": "Qualificacions requerides",
         "infoTitle": "Informació del recurs físic",
         "title": "Recursos físics",
         "subtitle": {
@@ -288,6 +283,8 @@
             "view": "Veure detalls del recurs físic",
             "edit": "Edita un recurs físic existent al sistema"
         },
+        "generalFields": "Camps generals",
+        "specificFields": "Camps específics",
         "fields": {
             "code": {
                 "title": "Codi",
@@ -299,11 +296,44 @@
             },
             "status": {
                 "title": "Estat",
+                "placeholder": "Selecciona l'estat del recurs",
                 "options": {
                     "available": "Disponible",
                     "maintenance": "Manteniment",
                     "outOfService": "Fora de servei"
                 }
+            },
+            "qualifications": {
+                "title": "Qualificacions necessàries",
+                "placeholder": "Les qualificacions necessàries per operar aquest recurs"
+            },
+            "servingDocks": {
+                "title": "Doces de servei",
+                "placeholder": "Selecciona doces de servei"
+            },
+            "setupTime": {
+                "title": "Temps de configuració (minuts)",
+                "placeholder": "Temps de configuració"
+            },
+            "liftingCapacity": {
+                "title": "Capacitat d'elevació (kgs)",
+                "placeholder": "Capacitat d'elevació"
+            },
+            "containersPerHour": {
+                "title": "Contenidors per hora",
+                "placeholder": "Contenidors per hora"
+            },
+            "maxLoadCapacity": {
+                "title": "Capacitat màxima de càrrega (kgs)",
+                "placeholder": "Capacitat màxima de càrrega"
+            },
+            "averageSpeed": {
+                "title": "Velocitat mitjana (km/h)",
+                "placeholder": "Velocitat mitjana"
+            },
+            "containersPerTrip": {
+                "title": "Contenidors per viatge",
+                "placeholder": "Contenidors per viatge"
             },
             "type": {
                 "title": "Tipus de recurs",

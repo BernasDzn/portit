@@ -77,6 +77,16 @@ public class LoginController : ControllerBase
                 { "user_role", user.Role.ToString() ?? "" }
             });
 
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTime.UtcNow.AddMinutes(_config.GetValue<int>("Jwt:ExpiresMinutes"))
+            };
+
+            Response.Cookies.Append("AuthToken", token, cookieOptions);
+
             return Ok(new
             {
                 Token = token, // This is the token that will have tobe used as a bearer in the future

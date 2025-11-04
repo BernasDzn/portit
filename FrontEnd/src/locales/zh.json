@@ -1,10 +1,4 @@
 {
-    "lang": {
-        "en": "英文",
-        "pt": "葡萄牙语",
-        "ca": "加泰罗尼亚语",
-        "zh": "中文"
-    },
     "common": {
         "loading": "加载中...",
         "noData": "暂无数据",
@@ -93,6 +87,7 @@
             "view": "查看码头",
             "edit": "编辑码头"
         },
+        "generalFields" : "通用字段",
         "infoTitle": "码头信息",
         "title": "码头",
         "subtitle": {
@@ -141,6 +136,7 @@
             "view": "查看船型",
             "edit": "编辑船型"
         },
+        "generalFields" : "通用字段",
         "infoTitle": "船型信息",
         "title": "船型",
         "subtitle": {
@@ -277,7 +273,6 @@
             "view": "查看物理资源",
             "edit": "编辑物理资源"
         },
-        "requiredQualifications": "所需资质",
         "infoTitle": "物理资源信息",
         "title": "物理资源",
         "subtitle": {
@@ -288,6 +283,8 @@
             "view": "查看物理资源详情",
             "edit": "编辑系统中已有的物理资源"
         },
+        "generalFields": "通用字段",
+        "specificFields": "特定字段",
         "fields": {
             "code": {
                 "title": "代码",
@@ -299,11 +296,44 @@
             },
             "status": {
                 "title": "状态",
+                "placeholder": "选择资源状态",
                 "options": {
                     "available": "可用",
                     "maintenance": "维护中",
                     "outOfService": "已停用"
                 }
+            },
+            "qualifications": {
+                "title": "所需资质",
+                "placeholder": "操作此资源所需的资质"
+            },
+            "setupTime": {
+                "title": "设置时间（分钟）",
+                "placeholder": "设置时间"
+            },
+            "servingDocks": {
+                "title": "服务码头",
+                "placeholder": "选择服务码头"
+            },
+            "liftingCapacity": {
+                "title": "提升能力（公斤）",
+                "placeholder": "提升能力"
+            },
+            "containersPerHour": {
+                "title": "每小时集装箱数",
+                "placeholder": "每小时集装箱数"
+            },
+            "maxLoadCapacity": {
+                "title": "最大载重能力（公斤）",
+                "placeholder": "最大载重能力"
+            },
+            "averageSpeed": {
+                "title": "平均速度（公里/小时）",
+                "placeholder": "平均速度"
+            },
+            "containersPerTrip": {
+                "title": "每次行程集装箱数",
+                "placeholder": "每次行程集装箱数"
             },
             "type": {
                 "title": "资源类型",

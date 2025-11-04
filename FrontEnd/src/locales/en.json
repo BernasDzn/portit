@@ -1,10 +1,4 @@
 {
-    "lang": {
-        "en": "English",
-        "pt": "Portuguese",
-        "ca": "Catalan",
-        "zh": "Chinese"
-    },
     "common": {
         "loading": "Loading...",
         "noData": "No data available",
@@ -93,6 +87,7 @@
             "view": "View Dock",
             "edit": "Edit Dock"
         },
+        "generalFields" : "General fields",
         "infoTitle": "Dock Information",
         "title": "Docks",
         "subtitle": {
@@ -133,6 +128,7 @@
                 }
             }
         },
+        "generalFields" : "General fields",
         "tabs": {
             "dashboard": "Vessel Type Dashboard",
             "view_dashboard": "View Vessel Types",
@@ -277,7 +273,6 @@
             "view": "View Physical Resource",
             "edit": "Edit Physical Resource"
         },
-        "requiredQualifications": "Required Qualifications",
         "infoTitle": "Physical Resource Information",
         "title": "Physical Resources",
         "subtitle": {
@@ -288,6 +283,8 @@
             "view": "View physical resource details",
             "edit": "Edit an existing Physical Resource in the system"
         },
+        "generalFields" : "General fields",
+        "specificFields" : "Specific fields",
         "fields": {
             "code": {
                 "title": "Code",
@@ -299,11 +296,44 @@
             },
             "status": {
                 "title": "Status",
+                "placeholder": "Select resource status",
                 "options": {
                     "available": "Available",
                     "maintenance": "Maintenance",
                     "outOfService": "Out of service"
                 }
+            },
+            "qualifications": {
+                "title": "Required qualifications",
+                "placeholder": "The qualifications required to operate this resource"
+            },
+            "setupTime": {
+                "title": "Setup time (minutes)",
+                "placeholder": "Setup time"
+            },
+            "servingDocks": {
+                "title": "Serving Docks",
+                "placeholder": "Select serving docks"
+            },
+            "liftingCapacity": {
+                "title": "Lifting Capacity (kgs)",
+                "placeholder": "Lifting capacity"
+            },
+            "containersPerHour": {
+                "title": "Containers per hour",
+                "placeholder": "Containers per hour"
+            },
+            "maxLoadCapacity": {
+                "title": "Maximum load capacity (kg)",
+                "placeholder": "Max load capacity"
+            },
+            "averageSpeed": {
+                "title": "Average speed (km/h)",
+                "placeholder": "Average speed"
+            },            
+            "containersPerTrip": {
+                "title": "Containers per trip",
+                "placeholder": "Containers per trip"
             },
             "type": {
                 "title": "Resource Type",

@@ -47,11 +47,11 @@ const submitVesselType = (obj: any) =>
             <sl-breadcrumb-item>{{ t('vesselType.tabs.create') }}</sl-breadcrumb-item>
         </sl-breadcrumb>
         <h1 class="title">{{ t('vesselType.tabs.create') }}</h1>
-        <p class="subtitle">{{ t('vesselType.subtitles.create') }}</p>
+        <p class="subtitle">{{ t('vesselType.subtitle.create') }}</p>
         <EntityForm :object="vesselType" :submit-function="submitVesselType">
             <div class="form">
                 <div class="general-info">
-                    <p class="section-title">{{ t('vesselType.infoTitle') }}</p>
+                    <p class="section-title">{{ t('vesselType.generalFields') }}</p>
                     <FormField class="field" :name="t('vesselType.fields.name.title') + '*'" v-model="vesselType.name" :placeholderText="t('vesselType.fields.name.placeholder')" required/>
                     <FormField class="field" :name="t('vesselType.fields.description.title') + '*'" v-model="vesselType.description" :placeholderText="t('vesselType.fields.description.placeholder')" required/>
                 </div>

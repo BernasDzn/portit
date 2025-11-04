@@ -5,6 +5,7 @@ const BACKEND = import.meta.env.VITE_BACKEND_URL || '/api'
 
 export const api = axios.create({
   baseURL: BACKEND,
+  withCredentials: true
 })
 
 export interface ApiResponse<T> {

@@ -8,6 +8,9 @@ import { DockService } from '@/service/DockService';
 import { PhysicalResourceService } from '@/service/PhysicalResourceService';
 import { QualificationService } from '@/service/QualificationService';
 import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const http = new AxiosHttpService();
 const resourceService = new PhysicalResourceService(http);
@@ -31,7 +34,7 @@ const genericResourse = ref<any>({
     }
 });
 
-const statuses = ["Available","In maintenance","Out of service"];
+const statuses = [t('physicalResource.fields.status.options.available'),t('physicalResource.fields.status.options.maintenance'),t('physicalResource.fields.status.options.outOfService')];
 
 const submitSTSResource = (obj: any) => {
     const STSObject: STSCrane = {
@@ -85,18 +88,18 @@ const submitTruckResource = (obj: any) => {
 <template>
     <div>
         <sl-breadcrumb>
-            <sl-breadcrumb-item><RouterLink to="/resources/dashboard" class="breadcrumb-link">Physical Resources Dashboard</RouterLink></sl-breadcrumb-item>
-            <sl-breadcrumb-item>Create Physical Resource</sl-breadcrumb-item>
+            <sl-breadcrumb-item><RouterLink to="/resources/dashboard" class="breadcrumb-link">{{ t('physicalResource.tabs.dashboard') }}</RouterLink></sl-breadcrumb-item>
+            <sl-breadcrumb-item>{{ t('physicalResource.tabs.create') }}</sl-breadcrumb-item>
         </sl-breadcrumb>
         
-        <h1 class="title">Create Create Physical Resource</h1>
-        <p class="subtitle">Register a new physical resource into the system</p>
+        <h1 class="title">{{ t('physicalResource.tabs.create') }}</h1>
+        <p class="subtitle">{{ t('physicalResource.subtitle.create') }}</p>
 
         <sl-tab-group>
-            <sl-tab slot="nav" panel="general">S-T-S Crane</sl-tab>
-            <sl-tab slot="nav" panel="custom">Yard Gantry Crane</sl-tab>
-            <sl-tab slot="nav" panel="advanced">Trucks and terminal tractors</sl-tab>
-            
+            <sl-tab slot="nav" panel="general">{{ t('physicalResource.fields.type.options.stsCrane') }}</sl-tab>
+            <sl-tab slot="nav" panel="custom">{{ t('physicalResource.fields.type.options.yardGantry') }}</sl-tab>
+            <sl-tab slot="nav" panel="advanced">{{ t('physicalResource.fields.type.options.truck') }}</sl-tab>
+
             <sl-tab-panel name="general">
                 
                 <EntityForm
@@ -104,7 +107,7 @@ const submitTruckResource = (obj: any) => {
                 :submit-function="submitSTSResource"
                 class="group"
                 >
-                    <p class="section-title">General fields</p>
+                    <p class="section-title">{{ t('physicalResource.generalFields') }}</p>
 
                     <div class="group">
                         <div class="form">
@@ -113,9 +116,9 @@ const submitTruckResource = (obj: any) => {
                             <FormField 
                                 :required="true" 
                                 class="field" 
-                                name="Resource code*" 
+                                :name="`${t('physicalResource.fields.code.title')}*`" 
                                 v-model="genericResourse.code" 
-                                placeholderText="Resource code" 
+                                :placeholderText="t('physicalResource.fields.code.placeholder')" 
                                 pattern="^[a-zA-Z0-9]+$" 
                             />
                 
@@ -124,19 +127,19 @@ const submitTruckResource = (obj: any) => {
                             <FormField 
                                 :required="true" 
                                 class="field" 
-                                name="Resource description*" 
+                                :name="`${t('physicalResource.fields.description.title')}*`" 
                                 v-model="genericResourse.description" 
-                                placeholderText="Resource description"
+                                :placeholderText="t('physicalResource.fields.description.placeholder')" 
                             />
             
                             <span class="section-divider"></span>
             
                             <EntityDropdown
                                 class="field-dropdown"
-                                name="Resource Status*"
+                                :name="`${t('physicalResource.fields.status.title')}*`"
                                 v-model="genericResourse.status"
                                 :items="statuses"
-                                placeholderText="Select resource status"
+                                :placeholderText="t('physicalResource.fields.status.placeholder')"
                                 required
                             />
                         </div>
@@ -144,11 +147,11 @@ const submitTruckResource = (obj: any) => {
                         <div class="form">    
                             <EntityDropdown
                                 class="field-dropdown"
-                                name="Required qualifications*"
+                                :name="`${t('physicalResource.fields.qualifications.title')}*`"
                                 v-model="genericResourse.qualifications"
                                 :fetch-function="() => qualificationService.getQualifications()"
                                 :fetch-on-mount="true"
-                                placeholderText="The qualifications required to operate this resource"
+                                :placeholderText="t('physicalResource.fields.qualifications.placeholder')"
                                 valueKey="idCode"
                                 labelKey="idCode"
                                 multiple
@@ -160,24 +163,24 @@ const submitTruckResource = (obj: any) => {
                             <FormField 
                                 :required="true" 
                                 class="field" 
-                                name="Setup time (minutes)*"
+                                :name="`${t('physicalResource.fields.setupTime.title')}*`"
                                 v-model="genericResourse.setupTime"
-                                placeholderText="Setup time"
+                                :placeholderText="t('physicalResource.fields.setupTime.placeholder')"
                                 pattern="^[0-9]+$"
                             />
                         </div>
         
                     </div>
                 
-                    <p class="section-title">Specific fields</p>
+                    <p class="section-title">{{ t('physicalResource.specificFields') }}</p>
 
                     <EntityDropdown
                         class="field-dropdown"
-                        name="Serving Dock*"
+                        :name="`${t('physicalResource.fields.servingDocks.title')}*`"
                         v-model="genericResourse.servingDock"
                         :fetch-function="() => dockService.getDocks()"
                         :fetch-on-mount="true"
-                        placeholderText="Select serving dock"
+                        :placeholderText="t('physicalResource.fields.servingDocks.placeholder')"
                         valueKey="code"
                         labelKey="name"
                         required
@@ -186,18 +189,18 @@ const submitTruckResource = (obj: any) => {
                     <FormField 
                         :required="true" 
                         class="field" 
-                        name="Lifting capacity (kgs)*" 
+                        :name="`${t('physicalResource.fields.liftingCapacity.title')}*`" 
                         v-model="genericResourse.liftingCapacity" 
-                        placeholderText="Lifting capacity"
+                        :placeholderText="t('physicalResource.fields.liftingCapacity.placeholder')"
                         pattern="^[0-9]+$"
                     />
 
                     <FormField 
                         :required="true" 
                         class="field" 
-                        name="Containers per hour*" 
+                        :name="`${t('physicalResource.fields.containersPerHour.title')}*`" 
                         v-model="genericResourse.containersPerHour" 
-                        placeholderText="Containers per hour"
+                        :placeholderText="t('physicalResource.fields.containersPerHour.placeholder')"
                         pattern="^[0-9]+$"
                     />
                     
@@ -210,7 +213,7 @@ const submitTruckResource = (obj: any) => {
                     class="group"
                 >
 
-                <p class="section-title">General fields</p>
+                <p class="section-title">{{ t('physicalResource.generalFields') }}</p>
 
                 <div class="group">
                     <div class="form">
@@ -219,9 +222,9 @@ const submitTruckResource = (obj: any) => {
                         <FormField 
                             :required="true" 
                             class="field" 
-                            name="Resource code*" 
+                            :name="`${t('physicalResource.fields.code.title')}*`" 
                             v-model="genericResourse.code" 
-                            placeholderText="Resource code" 
+                            :placeholderText="t('physicalResource.fields.code.placeholder')" 
                             pattern="^[a-zA-Z0-9]+$" 
                         />
             
@@ -230,19 +233,19 @@ const submitTruckResource = (obj: any) => {
                         <FormField 
                             :required="true" 
                             class="field" 
-                            name="Resource description*" 
+                            :name="`${t('physicalResource.fields.description.title')}*`" 
                             v-model="genericResourse.description" 
-                            placeholderText="Resource description"
+                            :placeholderText="t('physicalResource.fields.description.placeholder')"
                         />
         
                         <span class="section-divider"></span>
         
                         <EntityDropdown
                             class="field-dropdown"
-                            name="Resource Status*"
+                            :name="`${t('physicalResource.fields.status.title')}*`"
                             v-model="genericResourse.status"
                             :items="statuses"
-                            placeholderText="Select resource status"
+                            :placeholderText="t('physicalResource.fields.status.placeholder')"
                             required
                         />
                     </div>
@@ -250,11 +253,11 @@ const submitTruckResource = (obj: any) => {
                     <div class="form">    
                         <EntityDropdown
                             class="field-dropdown"
-                            name="Required qualifications*"
+                            :name="`${t('physicalResource.fields.qualifications.title')}*`"
                             v-model="genericResourse.qualifications"
                             :fetch-function="() => qualificationService.getQualifications()"
                             :fetch-on-mount="true"
-                            placeholderText="The qualifications required to operate this resource"
+                            :placeholderText="t('physicalResource.fields.qualifications.placeholder')"
                             valueKey="idCode"
                             labelKey="idCode"
                             multiple
@@ -266,9 +269,9 @@ const submitTruckResource = (obj: any) => {
                         <FormField 
                             :required="true" 
                             class="field" 
-                            name="Setup time (minutes)*"
+                            :name="`${t('physicalResource.fields.setupTime.title')}*`"
                             v-model="genericResourse.setupTime"
-                            placeholderText="Setup time"
+                            :placeholderText="t('physicalResource.fields.setupTime.placeholder')"
                             pattern="^[0-9]+$"
                         />
                     </div>
@@ -280,18 +283,18 @@ const submitTruckResource = (obj: any) => {
                     <FormField 
                         :required="true" 
                         class="field" 
-                        name="Lifting capacity (kg)*" 
+                        :name="`${t('physicalResource.fields.liftingCapacity.title')}*`" 
                         v-model="genericResourse.liftingCapacity" 
-                        placeholderText="Lifting capacity"
+                        :placeholderText="t('physicalResource.fields.liftingCapacity.placeholder')"
                         pattern="^[0-9]+$"
                     />
 
                     <FormField 
                         :required="true" 
                         class="field" 
-                        name="Containers per hour*" 
+                        :name="`${t('physicalResource.fields.containersPerHour.title')}*`" 
                         v-model="genericResourse.containersPerHour" 
-                        placeholderText="Containers per hour"
+                        :placeholderText="t('physicalResource.fields.containersPerHour.placeholder')"
                         pattern="^[0-9]+$"
                     />
                     
@@ -304,7 +307,7 @@ const submitTruckResource = (obj: any) => {
                     :submit-function="submitTruckResource"
                     class="group"
                 >
-                <p class="section-title">General fields</p>
+                <p class="section-title">{{ t('physicalResource.generalFields') }}</p>
 
                 <div class="group">
                     <div class="form">
@@ -313,9 +316,9 @@ const submitTruckResource = (obj: any) => {
                         <FormField 
                             :required="true" 
                             class="field" 
-                            name="Resource code*" 
+                            :name="`${t('physicalResource.fields.code.title')}*`" 
                             v-model="genericResourse.code" 
-                            placeholderText="Resource code" 
+                            :placeholderText="t('physicalResource.fields.code.placeholder')" 
                             pattern="^[a-zA-Z0-9]+$" 
                         />
             
@@ -324,19 +327,19 @@ const submitTruckResource = (obj: any) => {
                         <FormField 
                             :required="true" 
                             class="field" 
-                            name="Resource description*" 
+                            :name="`${t('physicalResource.fields.description.title')}*`" 
                             v-model="genericResourse.description" 
-                            placeholderText="Resource description"
+                            :placeholderText="t('physicalResource.fields.description.placeholder')"
                         />
         
                         <span class="section-divider"></span>
         
                         <EntityDropdown
                             class="field-dropdown"
-                            name="Resource Status*"
+                            :name="`${t('physicalResource.fields.status.title')}*`"
                             v-model="genericResourse.status"
                             :items="statuses"
-                            placeholderText="Select resource status"
+                            :placeholderText="t('physicalResource.fields.status.placeholder')"
                             required
                         />
                     </div>
@@ -344,11 +347,11 @@ const submitTruckResource = (obj: any) => {
                     <div class="form">    
                         <EntityDropdown
                             class="field-dropdown"
-                            name="Required qualifications*"
+                            :name="`${t('physicalResource.fields.qualifications.title')}*`"
                             v-model="genericResourse.qualifications"
                             :fetch-function="() => qualificationService.getQualifications()"
                             :fetch-on-mount="true"
-                            placeholderText="The qualifications required to operate this resource"
+                            :placeholderText="t('physicalResource.fields.qualifications.placeholder')"
                             valueKey="idCode"
                             labelKey="idCode"
                             multiple
@@ -360,41 +363,41 @@ const submitTruckResource = (obj: any) => {
                         <FormField 
                             :required="true" 
                             class="field" 
-                            name="Setup time (minutes)*"
+                            :name="`${t('physicalResource.fields.setupTime.title')}*`"
                             v-model="genericResourse.setupTime"
-                            placeholderText="Setup time"
+                            :placeholderText="t('physicalResource.fields.setupTime.placeholder')"
                             pattern="^[0-9]+$"
                         />
                     </div>
     
                 </div>
             
-                <p class="section-title">Specific fields</p>
+                <p class="section-title">{{ t('physicalResource.specificFields') }}</p>
 
                     <FormField 
                         :required="true" 
                         class="field" 
-                        name="Maximum load capacity (kg)*" 
+                        :name="`${t('physicalResource.fields.maxLoadCapacity.title')}*`" 
                         v-model="genericResourse.maxLoadCapacity" 
-                        placeholderText="Max load capacity"
+                        :placeholderText="t('physicalResource.fields.maxLoadCapacity.placeholder')"
                         pattern="^[0-9]+$"
                     />
 
                     <FormField 
                         :required="true" 
                         class="field" 
-                        name="Average speed (km/h)*" 
+                        :name="`${t('physicalResource.fields.averageSpeed.title')}*`" 
                         v-model="genericResourse.averageSpeed" 
-                        placeholderText="Average speed"
+                        :placeholderText="t('physicalResource.fields.averageSpeed.placeholder')"
                         pattern="^[0-9]+$"
                     />
 
                     <FormField 
                         :required="true" 
                         class="field" 
-                        name="Containers per trip*" 
+                        :name="`${t('physicalResource.fields.containersPerTrip.title')}*`" 
                         v-model="genericResourse.containersPerTrip" 
-                        placeholderText="Containers per trip"
+                        :placeholderText="t('physicalResource.fields.containersPerTrip.placeholder')"
                         pattern="^[0-9]+$"
                     />
                     
