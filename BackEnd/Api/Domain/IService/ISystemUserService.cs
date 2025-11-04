@@ -16,4 +16,5 @@ public interface ISystemUserService
     public Task DeactivateUser(string emailAddress);
     public Task<SystemUserDto> GetByEmailAddress(string emailAddress);
     public Task<SystemUserDto> ActivateUserWithToken(string emailAddress, string token, string sub);
+    public Task<Page<SystemUserDto>> FilterUsers(SystemUserFilter filter);
 }

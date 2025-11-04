@@ -11,6 +11,8 @@ using Api.Domain.Entities;
 using Api.Domain.IRepository;
 using Api.Application.Exceptions;
 using Api.Infrastructure.Exceptions;
+using Api.Application.DataTransfer.Filters;
+using Api.Infrastructure.Utilities;
 
 public class SystemUserService : ISystemUserService
 {
@@ -197,5 +199,11 @@ public class SystemUserService : ISystemUserService
         systemUser.Active = false;
         systemUser.ActivationToken = null;
         await _systemUserRepository.Update(systemUser);
+    }
+
+    public async Task<Page<SystemUserDto>> FilterUsers(SystemUserFilter filter)
+    {
+        Page<SystemUser> page = await _systemUserRepository.FilterUsersAsync(filter);
+        return page.Map(su => su.ToDTO());
     }
 }
