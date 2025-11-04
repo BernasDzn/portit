@@ -58,7 +58,7 @@ const submit = async () => {
         form.value.reportValidity();
         return;
     }
-    
+
     props.submitFunction(props.object)
     .catch((error: any) => {
         notification.enqueueNotification(

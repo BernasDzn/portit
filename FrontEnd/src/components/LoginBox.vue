@@ -21,7 +21,8 @@ const loginFinished = (res: AppJWTResponse) => {
         id: res.user.id,
         name: res.user.name,
         email: res.user.email,
-        avatar: res.user.picture
+        avatar: res.user.picture,
+        role: res.user.role
     };
 
     session.setSession(sessionUser, res.token, res.expiresIn);

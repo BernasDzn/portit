@@ -2,10 +2,11 @@ import type { User } from "@/model/User";
 
 export interface AppJWTResponse {
     user: {
-      id: string;
-      name: string;
-      email: string;
-      picture: string;
+        id: string;
+        name: string;
+        email: string;
+        picture: string;
+        role: number;
     };
     token: string,
     expiresIn: number;

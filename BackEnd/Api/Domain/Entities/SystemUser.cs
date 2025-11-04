@@ -9,7 +9,7 @@ public class SystemUser : IdentityUser<Guid>, IDTOAble<SystemUserDto>
 {
     // Use properties with PascalCase so EF Core maps them by convention
     public string? Sub { get; set; }
-    public required bool Active { get; set; }
+    public bool Active { get; set; } = false;
     public virtual SystemUserRole Role { get; set; }
     public string? ActivationToken { get; set; }
     public DateTime? ActivationTokenExpiresAt { get; set; }
@@ -17,6 +17,7 @@ public class SystemUser : IdentityUser<Guid>, IDTOAble<SystemUserDto>
     protected SystemUser()
     {
         Id = Guid.NewGuid();
+        Active = false;
     }
 
     public SystemUser(string? sub, bool active, string email)
@@ -37,7 +38,7 @@ public class SystemUser : IdentityUser<Guid>, IDTOAble<SystemUserDto>
         {
             Sub = Sub ?? string.Empty,
             IsActive = Active,
-            Role = (int)Role,
+            Role = (int) Role,
             Email = Email!
         };
     }

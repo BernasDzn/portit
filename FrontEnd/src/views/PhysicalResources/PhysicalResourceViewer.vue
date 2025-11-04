@@ -8,6 +8,8 @@ import type { Qualification } from '@/model/Qualifications';
 import { PhysicalResourceService } from '@/service/PhysicalResourceService';
 import { computed, onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import QualificationPrinter from '@/components/printers/QualificationPrinter.vue';
+import DockPrinter from '@/components/printers/DockPrinter.vue';
 
 const route = useRoute();
 
@@ -19,13 +21,16 @@ const fetchResource = async (): Promise<any | null> => {
     return await physicalResourceService.getPhysicalResourceById(resourceId);
 };
 
-const icon = ref('build');
+const icon = ref<string | undefined>('build');
+const resourceType = ref<number | null>(null);
 
 onMounted(async () => {
     const res = await fetchResource();
-    console.log('Resource for icon:', res.servingDock);
-    icon.value = res.servingDock != undefined ? 'build' : 
-        res.averageSpeed != undefined ? 'local_shipping' : 'precision_manufacturing'
+    // console.log('Resource for icon:', res.servingDock);
+    resourceType.value = res.servingDock != undefined ? 0 : 
+        res.averageSpeed != undefined ? 2 : 1;
+
+    icon.value = (['build', 'precision_manufacturing', 'local_shipping'])[resourceType.value];
 });
 
 const { t } = useI18n();
@@ -76,12 +81,75 @@ const { t } = useI18n();
                                 <span class="label">{{ t('physicalResource.fields.code.title') }}</span>
                                 <p>{{ entity.element.code }}</p>
                             </div>
+                            <div v-if="resourceType == 0 || resourceType == 1" class="info-block">
+                                <span class="label">Physical Resource Lifting Capacity</span>
+                                <p>{{ entity.element.liftingCapacity }}</p>
+                            </div>
+                            <div v-if="resourceType == 2" class="info-block">
+                                <span class="label">Physical Resource Average Speed</span>
+                                <p>{{ entity.element.averageSpeed }} km/h</p>
+                            </div>
+                            <div v-if="resourceType == 2" class="info-block">
+                                <span class="label">Physical Resource Containers per Trip</span>
+                                <p>{{ entity.element.containersPerTrip }}</p>
+                            </div>
                         </div>
                         <div>
                             <div class="info-block">
                                 <span class="label">{{ t('physicalResource.fields.description.title') }}</span>
                                 <p>{{ entity.element.description }}</p>
                             </div>
+                            <div v-if="resourceType == 0 || resourceType == 1" class="info-block">
+                                <span class="label">Physical Resource Containers per Hour</span>
+                                <p>{{ entity.element.containersPerHour }}</p>
+                            </div>
+                            <div v-if="resourceType == 2" class="info-block">
+                                <span class="label">Physical Resource Maximum Load Capacity</span>
+                                <p>{{ entity.element.maxLoadCapacity }} kg</p>
+                            </div>
+                        </div>
+                    </div>
+                </sl-card>
+                <sl-card class="info-card">
+                    <p>Statistics</p>
+                    <div class="view-statistics-overview">
+                        <div>
+                            <p class="view-statistic-data">{{ entity.element.setupTimeInMinutes }}m</p>
+                            <p>Setup time</p>
+                        </div>
+                        <div>
+                            <p class="view-statistic-data">{{ entity.element.qualifications.length }}</p>
+                            <p>Qualifications</p>
+                        </div>
+                    </div>
+                    <p class="info-row">
+                        <span class="label">Status:</span> 
+                        <span>
+                            <sl-tag 
+                                :variant="['success', 'warning', 'danger'][entity.element.status]"
+                                >
+                                {{ ["Available", "Maintenance", "Out of service"][entity.element.status] }}
+                            </sl-tag>
+                        </span>
+                    </p>
+                </sl-card>
+
+                <div></div>
+
+                <sl-card class="info-card" style="flex: 100%;">
+                    <p>Qualifications</p>
+                    <div class="info-grid">
+                        <div v-for="qualification in entity.element.qualifications" :key="qualification.idCode">
+                            <QualificationPrinter class="listing-box" :qualification="qualification" :link="`/qualifications/view/${qualification.idCode}`" />
+                        </div>
+                    </div>
+                </sl-card>
+                
+                <sl-card v-if="resourceType == 0" class="info-card dock-info">
+                    <p>Serving dock</p>
+                    <div class="info-grid">
+                        <div v-for="qualification in entity.element.qualifications" :key="qualification.idCode">
+                            <DockPrinter class="listing-box" :dock="entity.element.servingDock" :link="`/docks/view/${entity.element.servingDock.code}`" />
                         </div>
                     </div>
                 </sl-card>
@@ -93,12 +161,28 @@ const { t } = useI18n();
 
 <style scoped> 
 .qual-main-info {
-    width: 100%;
+    width: 60%;
 }
 
 .button-group {
     display: flex;
     gap: 10px;
+}
+
+.dock-info div {
+    width: 100%;
+}
+
+.viewing-content{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.view-statistics-overview {
+
+    display: flex;
+    gap: 40px;
+    justify-content: space-around;
 }
 
 </style>

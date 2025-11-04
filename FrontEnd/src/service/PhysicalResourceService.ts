@@ -4,7 +4,7 @@ import { TYPES } from '@/inversify/types';
 import type { IHttpService } from './IService/IHttpService';
 import type { Filter, Page } from '@/model/Page';
 import type { IPhysicalResourceService } from './IService/IPhysicalResourceService';
-import type { PhysicalResourceFilter, PhysicalResource } from '@/model/PhysicalResource';
+import type { PhysicalResourceFilter, PhysicalResource, STSCrane, YardCrane, Truck } from '@/model/PhysicalResource';
 
 @injectable()
 export class PhysicalResourceService implements IPhysicalResourceService {
@@ -27,7 +27,6 @@ export class PhysicalResourceService implements IPhysicalResourceService {
             query.push(filtering.pageSize !== undefined ? `PageSize=${filtering.pageSize}` : '');
         }
 
-        console.log(`/PhysicalResource/filter${query.length ? `?${query.join('')}` : ''}`);
         const res = await this.http.get<Page<PhysicalResource>>(`/PhysicalResource/filter${query.length ? `?${query.join('')}` : ''}`);
         return res.data;
     }
@@ -37,19 +36,41 @@ export class PhysicalResourceService implements IPhysicalResourceService {
         const res = await this.http.get<PhysicalResource>(`/PhysicalResource/${id}`);
         return res.data;
     }
-    async addPhysicalResource(value: PhysicalResource): Promise<PhysicalResource> {
-        
-        const res = await this.http.post<PhysicalResource>('/PhysicalResource', value);
-        return res.data;
-    }
-    async updatePhysicalResource(id: string, value: PhysicalResource): Promise<PhysicalResource> {
-        
-        const res = await this.http.put<PhysicalResource>(`/PhysicalResource/${id}`, value);
-        return res.data;
-    }
+
     async deactivatePhysicalResource(id: string): Promise<void> {
         
         const res = await this.http.delete<void>(`/PhysicalResource/${id}`);
         return res.data;
+    }
+
+    async addSTSCrane(value: STSCrane): Promise<STSCrane> {
+        // console.log('Adding STS Crane:', JSON.stringify(value));
+        const res = await this.http.post<PhysicalResource>(`/PhysicalResource/AddSTSCrane`, value);
+        return res.data as STSCrane;
+    }
+
+    async updateSTSCrane(code: string, value: STSCrane): Promise<STSCrane> {
+        const res = await this.http.put<PhysicalResource>(`/PhysicalResource/UpdateSTSCrane/${code}`, value);
+        return res.data as STSCrane;
+    }
+
+    async addYardCrane(value: YardCrane): Promise<YardCrane> {
+        const res = await this.http.post<PhysicalResource>(`/PhysicalResource/AddYardCrane`, value);
+        return res.data as YardCrane;
+    }
+
+    async updateYardCrane(code: string, value: YardCrane): Promise<YardCrane> {
+        const res = await this.http.put<PhysicalResource>(`/PhysicalResource/UpdateYardCrane/${code}`, value);
+        return res.data as YardCrane;
+    }
+
+    async addTruck(value: Truck): Promise<Truck> {
+        const res = await this.http.post<PhysicalResource>(`/PhysicalResource/AddTruck`, value);
+        return res.data as Truck;
+    }
+
+    async updateTruck(code: string, value: Truck): Promise<Truck> {
+        const res = await this.http.put<PhysicalResource>(`/PhysicalResource/UpdateTruck/${code}`, value);
+        return res.data as Truck;
     }
 }

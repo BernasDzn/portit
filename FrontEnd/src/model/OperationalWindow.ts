@@ -1,5 +1,5 @@
 export interface OperationalWindow {
-	shifts? : Shift[];
+	shifts : Shift[];
 }
 
 export interface Shift{
