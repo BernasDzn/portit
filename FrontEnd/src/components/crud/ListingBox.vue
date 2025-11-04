@@ -163,34 +163,34 @@ onBeforeUnmount(() => {
                   <div class="filters-container">
                     <p class="filter-title">Filters</p>
                     <template class="filter-container" v-for="(def, key) in props.filterDefinition" :key="key">
-                      <div class="filter-field">
-                        <label class="filter-label">{{ def.label }}</label>
-                        <sl-input
-                          class="filter-input"
-                          v-if="def.type === 'text'"
-                          size="medium"
-                          clearable
-                          v-model="filters[key]"
-                          :placeholder="def.label"
-                        />
-                        <sl-select
+                        <div class="filter-field">
+                            <label class="filter-label">{{ def.label }}</label>
+                            <sl-input
                             class="filter-input"
-                            v-else-if="def.type === 'select'"
+                            v-if="def.type === 'text'"
                             size="medium"
                             clearable
-                            :placeholder="'Select ' + def.label"
-                            :value="filters[key]"
-                            @sl-change="(e: any) => filters[key] = e.target.value"
-                        >
-                            <sl-option
-                                v-for="option in def.options"
-                                :key="option.value"
-                                :value="option.value"
+                            v-model="filters[key]"
+                            :placeholder="def.label"
+                            />
+                            <sl-select
+                                class="filter-input"
+                                v-else-if="def.type === 'select'"
+                                size="medium"
+                                clearable
+                                :placeholder="'Select ' + def.label"
+                                :value="filters[key]"
+                                @sl-change="(e: any) => filters[key] = e.target.value"
                             >
-                                {{ option.text }}
-                            </sl-option>
-                        </sl-select>
-                      </div>
+                                <sl-option
+                                    v-for="option in def.options"
+                                    :key="option.value"
+                                    :value="option.value"
+                                >
+                                    {{ option.text }}
+                                </sl-option>
+                            </sl-select>
+                        </div>
                     </template>
               
                     <sl-button
@@ -226,6 +226,7 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
+
 .listing-filters {
     display: flex;
     align-items: center;
