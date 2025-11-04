@@ -8,6 +8,8 @@ using Api.Application.Exceptions;
 using Api.Infrastructure.Exceptions;
 using System.Linq;
 using System.Collections.Generic;
+using Api.Application.DataTransfer.Filters;
+using Api.Infrastructure.Utilities;
 
 [ApiController]
 [Route("[controller]")]
@@ -31,22 +33,22 @@ public class SystemUserController : ControllerBase, ISystemUserController
         return Ok(systemUsersDto);
     }
 
-    [HttpGet("{sub}", Name = "GetSystemUserBySub")]
-    public async Task<ActionResult<SystemUserDto>> GetBySub(string sub)
+    [HttpGet("{emailAddress}", Name = "GetSystemUserByEmailAddress")]
+    public async Task<ActionResult<SystemUserDto>> GetByEmailAddress(string emailAddress)
     {
         try
         {
-            var systemUserDto = await _systemUserService.GetBySub(sub);
+            var systemUserDto = await _systemUserService.GetByEmailAddress(emailAddress);
             return Ok(systemUserDto);
         }
         catch (EntityNotFoundException)
         {
-            _logger.LogWarning("System user with sub '{Sub}' not found", sub);
-            return NotFound($"System user with sub '{sub}' not found.");
+            _logger.LogWarning("System user with email '{emailAddress}' not found", emailAddress);
+            return NotFound($"System user with email '{emailAddress}' not found.");
         }
         catch (System.Exception e)
         {
-            _logger.LogCritical("Error retrieving system user with sub '{Sub}', {Message}", sub, e.Message);
+            _logger.LogCritical("Error retrieving system user with email '{emailAddress}', {Message}", emailAddress, e.Message);
             return StatusCode(500, "An error occurred while retrieving the system user.");
         }
     }
@@ -205,6 +207,21 @@ public class SystemUserController : ControllerBase, ISystemUserController
         {
             _logger.LogCritical("Error deleting system user with email '{email}', {Message}", emailAddress, e.Message);
             return StatusCode(500, "An error occurred while deleting the user.");
+        }
+    }
+
+    [HttpGet("filter")]
+    public async Task<ActionResult<Page<SystemUserDto>>> FilterUsers([FromQuery]SystemUserFilter filter)
+    {
+        try
+        {
+            var filteredUsers = await _systemUserService.FilterUsers(filter);
+            return Ok(filteredUsers);
+        }
+        catch (System.Exception e)
+        {
+            _logger.LogCritical("Error filtering system users, {Message}", e.Message);
+            return StatusCode(500, "An error occurred while filtering the users.");
         }
     }
 }

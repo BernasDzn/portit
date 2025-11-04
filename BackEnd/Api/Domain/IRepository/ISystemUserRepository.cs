@@ -1,6 +1,8 @@
 namespace Api.Domain.IRepository;
 
+using Api.Application.DataTransfer.Filters;
 using Api.Domain.Entities;
+using Api.Infrastructure.Utilities;
 
 public interface ISystemUserRepository : IGenericRepository<SystemUser>
 {
@@ -12,4 +14,5 @@ public interface ISystemUserRepository : IGenericRepository<SystemUser>
     Task DeleteByEmailAddressAsync(string emailAddress);
     Task DeleteBySubAsync(string sub);
     Task<SystemUser?> GetByActivationTokenAsync(string activationToken);
+    Task<Page<SystemUser>> FilterUsersAsync(SystemUserFilter filter);
 }

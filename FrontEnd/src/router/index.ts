@@ -31,6 +31,9 @@ import PhysicalResourceDashboard from '@/views/PhysicalResources/PhysicalResourc
 import PhysicalResourcesSearch from '@/views/PhysicalResources/PhysicalResourcesSearch.vue'
 import PhysicalResourceViewer from '@/views/PhysicalResources/PhysicalResourceViewer.vue'
 import PhysicalResourceCreate from '@/views/PhysicalResources/PhysicalResourceCreate.vue'
+import AdminDashboard from '@/views/Admin/AdminDashboard.vue'
+import UserDashboard from '@/views/Admin/UserDashboard.vue'
+import UserSearch from '@/views/Admin/UserSearch.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -229,6 +232,30 @@ const router = createRouter({
             meta: {
                 icon: "add"
             }
+        },
+        {
+          path: '/admin/dashboard',
+          name: 'Admin Dashboard',
+          component: AdminDashboard,
+          meta: {
+            icon: "admin_panel_settings"
+          }
+        },
+        {
+          path: '/admin/users',
+          name: 'User Management',
+          component: UserDashboard,
+          meta: {
+            icon: "manage_accounts"
+          }
+        },
+        {
+          path: '/admin/users/search',
+          name: 'Search for users',
+          component: UserSearch,
+          meta: {
+            icon: "search"
+          }
         }
       ]
     },
