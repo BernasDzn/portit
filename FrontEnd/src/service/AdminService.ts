@@ -36,6 +36,12 @@ export class AdminService implements IAdminService {
         return res.data;
     }
 
+    async inviteUser(emailAddress: string, role: number): Promise<SystemUser> {
+        const res = await this.createUser(emailAddress, role);
+        await this.changeUserRole(emailAddress, role);
+        return res;
+    }
+
     async getAllUsers(): Promise<Array<SystemUser>> {
         const res = await this.http.get<Array<SystemUser>>('/SystemUser');
         return res.data;

@@ -34,6 +34,7 @@ import PhysicalResourceCreate from '@/views/PhysicalResources/PhysicalResourceCr
 import AdminDashboard from '@/views/Admin/AdminDashboard.vue'
 import UserDashboard from '@/views/Admin/UserDashboard.vue'
 import UserSearch from '@/views/Admin/UserSearch.vue'
+import UserCreate from '@/views/Admin/UserCreate.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -255,6 +256,14 @@ const router = createRouter({
           component: UserSearch,
           meta: {
             icon: "search"
+          }
+        },
+        {
+          path: '/admin/users/create',
+          name: 'Create User',
+          component: UserCreate,
+          meta: {
+            icon: "person_add"
           }
         }
       ]
