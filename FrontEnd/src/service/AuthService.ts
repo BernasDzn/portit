@@ -35,7 +35,7 @@ export class AuthService implements IAuthService {
     }
 
     initGoogleSignIn(callback: Function, errorCallback: Function) {
-        
+
         // Handle the google response
         const handleCredentialResponse = async (response: any) => {
 
@@ -43,15 +43,15 @@ export class AuthService implements IAuthService {
 
                 const idToken = response.credential;
                 const res: AppJWTResponse = await this.getAppJWTToken(idToken);
-                
+
                 // Pass the response to the callback
                 callback(res);
-                
+
             } catch (error) {
                 errorCallback(error);
             }
         };
-        
+
         console.log('Initializing Google Sign-In');
         window.google.accounts.id.initialize({
             client_id: this.googleClientId,
@@ -95,7 +95,7 @@ export class AuthService implements IAuthService {
     }
 
     async whoAmI(): Promise<User> {
-        
+
         let res: any = await this.http.get('/Login/me');
         // console.log(res.data);
         return {
@@ -107,20 +107,21 @@ export class AuthService implements IAuthService {
         }
     }
 
+   
     // async handleCredentialResponse(response: any) {
     //     const idToken = response.credential;
-    
+
     //     let res = await this.getAppJWTToken(idToken);
-    
+
     //     // if (res.ok) {
     //     //     let token = await res.text();
     //     //     token = JSON.parse(token).token;
-            
+
     //     //     // NAO FAZER ISTO !!
     //     //     // ATENÇAO CODIGO MAL FEITO
     //     //     localStorage.setItem('authToken', token);
     //     //     window.location.href = '/';
-    
+
     //     // } else {
     //     //     console.error('uh oh', res.status)
     //     // }

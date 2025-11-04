@@ -63,13 +63,30 @@ builder.Services.AddAuthentication(options =>
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true, // Require that token iss claim matches configured issuer (us)
-        ValidIssuer = builder.Configuration.GetValue<string>("Jwt:Issuer")!, 
+        ValidIssuer = builder.Configuration.GetValue<string>("Jwt:Issuer")!,
         ValidateAudience = true, // Require that token aud claim matches configured audience (our front-end)
         ValidAudience = builder.Configuration.GetValue<string>("Jwt:Audience")!,
         ValidateLifetime = true, // Ensure token hasn't expired
         ValidateIssuerSigningKey = true, // Ensure token signature is valid so it cant be forged
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)),
         ClockSkew = TimeSpan.FromMinutes(2) // Allows for a small time difference between server and client
+    };
+    
+    options.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
+        {
+            // if there is no authorization header try to read token from cookie
+            if (string.IsNullOrEmpty(context.Token))
+            {
+                if (context.Request.Cookies.TryGetValue("AuthToken", out var cookieToken) &&
+                    !string.IsNullOrEmpty(cookieToken))
+                {
+                    context.Token = cookieToken;
+                }
+            }
+            return Task.CompletedTask;
+        }
     };
 })
 .AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
