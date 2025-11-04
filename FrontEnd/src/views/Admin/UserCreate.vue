@@ -36,7 +36,7 @@ const submitFunction = async (obj: SystemUser) => {
 <template>
   <div>
     <sl-breadcrumb>
-      <sl-breadcrumb-item><RouterLink to="/admin" class="breadcrumb-link">Admin</RouterLink></sl-breadcrumb-item>
+      <sl-breadcrumb-item><RouterLink to="/admin/dashboard" class="breadcrumb-link">Admin</RouterLink></sl-breadcrumb-item>
       <sl-breadcrumb-item><RouterLink to="/admin/users" class="breadcrumb-link">Users</RouterLink></sl-breadcrumb-item>
       <sl-breadcrumb-item>Create User</sl-breadcrumb-item>
     </sl-breadcrumb>
