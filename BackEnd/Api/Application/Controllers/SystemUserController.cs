@@ -128,12 +128,6 @@ public class SystemUserController : ControllerBase, ISystemUserController
         }
         catch (System.Exception e)
         {
-            if (e is InvalidOperationException)
-            {
-                _logger.LogWarning("User does not have a pending activation: '{email}'", emailAddress);
-                return BadRequest($"System user with email '{emailAddress}' does not have a pending activation.");
-            }
-
             _logger.LogCritical("Error activating system user with email '{email}', {Message}", emailAddress, e.Message);
             return StatusCode(500, "An error occurred while activating the user.");
         }

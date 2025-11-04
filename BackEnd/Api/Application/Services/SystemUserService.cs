@@ -179,9 +179,6 @@ public class SystemUserService : ISystemUserService
             throw new EntityNotFoundException($"System user with email '{emailAddress}' not found.");
         }
 
-        if (systemUser.ActivationToken == null)
-            throw new InvalidOperationException($"System user with email '{emailAddress}' does not have a pending activation.");
-
         systemUser.Active = true;
         systemUser.ActivationToken = null;
         await _systemUserRepository.Update(systemUser);

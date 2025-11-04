@@ -35,6 +35,7 @@ import AdminDashboard from '@/views/Admin/AdminDashboard.vue'
 import UserDashboard from '@/views/Admin/UserDashboard.vue'
 import UserSearch from '@/views/Admin/UserSearch.vue'
 import UserCreate from '@/views/Admin/UserCreate.vue'
+import UserView from '@/views/Admin/UserView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -264,6 +265,14 @@ const router = createRouter({
           component: UserCreate,
           meta: {
             icon: "person_add"
+          }
+        },
+        {
+          path: '/admin/users/view/:emailAddress',
+          name: 'User View',
+          component: UserView,
+          meta: { 
+            icon: "visibility"
           }
         }
       ]
