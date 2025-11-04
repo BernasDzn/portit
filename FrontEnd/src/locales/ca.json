@@ -1,10 +1,4 @@
 {
-    "lang": {
-        "en": "Anglès",
-        "pt": "Portuguès",
-        "ca": "Català",
-        "zh": "Xinès"
-    },
     "common": {
         "loading": "Carregant...",
         "noData": "No hi ha dades disponibles",

@@ -1,10 +1,4 @@
 {
-    "lang": {
-        "en": "English",
-        "pt": "Portuguese",
-        "ca": "Catalan",
-        "zh": "Chinese"
-    },
     "common": {
         "loading": "Loading...",
         "noData": "No data available",

@@ -5,10 +5,10 @@ import { useI18n } from 'vue-i18n'
 const { locale, t } = useI18n()
 
 const options = [
-    { code: 'en', label: t('lang.en') || 'English' },
-    { code: 'pt', label: t('lang.pt') || 'Português' },
-    { code: 'ca', label: t('lang.ca') || 'Catalão' },
-    { code: 'zh', label: t('lang.zh') || 'Chinês' }
+    { code: 'en', label: 'English' },
+    { code: 'pt', label: 'Português' },
+    { code: 'ca', label: 'Català' },
+    { code: 'zh', label: '中文' }
 ]
 
 const current = computed(() => options.find(o => o.code === locale.value) ?? options[0])
