@@ -29,12 +29,11 @@ const session = useSession();
 const loginFinished = async (googleResponse: any) => {
   const params = new URLSearchParams(window.location.search)
   const token = params.get('token')
-  const email = params.get('emailAddress')
 
-  if (!email || !token) {
+  if (!token) {
     loading.value = false
     error.value = true
-    errorMessage.value = 'Missing arguments.'
+    errorMessage.value = 'Missing token.'
     return
   }
 
@@ -42,6 +41,33 @@ const loginFinished = async (googleResponse: any) => {
     // googleResponse contains the Google credential (id_token) in .credential
     const idToken = googleResponse?.credential;
     if (!idToken) throw new Error('Missing Google ID token');
+
+    // Helper: parse a JWT (id_token) payload to extract claims such as email.
+    // We avoid adding a heavy dependency; this is a small, defensive decoder.
+    function parseJwt(token: string) {
+      try {
+        const parts = token.split('.')
+        if (parts.length < 2) return null
+  const payload = parts[1] ?? ''
+        // base64url -> base64
+        const base64 = payload.replace(/-/g, '+').replace(/_/g, '/')
+        // atob on base64 string -> decode percent-encoded UTF-8
+        const json = decodeURIComponent(
+          atob(base64)
+            .split('')
+            .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+            .join('')
+        )
+        return JSON.parse(json)
+      } catch (err) {
+        console.error('Failed to parse JWT', err)
+        return null
+      }
+    }
+
+    const payload = parseJwt(idToken)
+    const email = payload?.email as string | undefined
+    if (!email) throw new Error('Unable to determine email from Google ID token')
 
     // Call backend to validate id_token and activate the account (bind sub)
     await authService.activateUser(email, token, idToken);

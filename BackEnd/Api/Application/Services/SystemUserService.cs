@@ -106,7 +106,7 @@ public class SystemUserService : ISystemUserService
             // build activation link based on configuration
             var baseUrl = _configuration.GetValue<string>("ApplicationSettings:BaseUrl") ?? "http://localhost:5173";
             var activationPath = _configuration.GetValue<string>("ApplicationSettings:ActivationPath") ?? "/activate-with-token";
-            var activationLink = $"{baseUrl.TrimEnd('/')}{activationPath}?token={systemUser.ActivationToken}&emailAddress={systemUser.Email}";
+            var activationLink = $"{baseUrl.TrimEnd('/')}{activationPath}?token={systemUser.ActivationToken}";
 
             // attempt to send the activation email (fire-and-forget not here, but we try)
             try
