@@ -23,6 +23,13 @@ export class AuthService implements IAuthService {
         return res.data as AppJWTResponse;
     }
 
+    async activateUser(email: string, token: string): Promise<void> {
+        // The API expects a PUT to /SystemUser/activate-with-token/
+        await this.http.post(
+            `/SystemUser/activate-with-token?emailAddress=${encodeURIComponent(email)}&token=${encodeURIComponent(token)}`
+            , {});
+    }
+
     initGoogleSignIn(callback: Function, errorCallback: Function) {
         
         // Handle the google response

@@ -9,30 +9,32 @@
 </template>
 
 <script setup lang="ts">
+import { AuthService } from '@/service/AuthService'
+import AxiosHttpService from '@/service/AxiosHttpService'
 import { ref, onMounted } from 'vue'
-import { api } from '@/service/api'
+
 
 const loading = ref(true)
 const success = ref(false)
 const error = ref(false)
 const errorMessage = ref('')
+const httpService = new AxiosHttpService();
+const authService = new AuthService(httpService);
 
 onMounted(async () => {
   const params = new URLSearchParams(window.location.search)
   const token = params.get('token')
-  const sub = params.get('sub')
+  const email = params.get('emailAddress')
 
-  if (!sub) {
+  if (!email || !token) {
     loading.value = false
     error.value = true
-    errorMessage.value = 'Missing user identifier.'
+    errorMessage.value = 'Missing arguments.'
     return
   }
 
   try {
-    // The API expects a PUT to /SystemUser/{sub}/activate
-    // The token is not used by the current API, but we include it in the request body for future-proofing
-    await api.put(`/SystemUser/${encodeURIComponent(sub)}/activate`, { token })
+    await authService.activateUser(email, token);
     success.value = true
   } catch (e: any) {
     error.value = true

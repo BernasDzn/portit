@@ -54,102 +54,127 @@ public class SystemUserController : ControllerBase, ISystemUserController
         try
         {
             var createdUserDto = await _systemUserService.CreateSystemUser(systemUserDto);
-            return CreatedAtAction(nameof(GetBySub), new { sub = createdUserDto.Sub }, createdUserDto);
+            return CreatedAtAction(nameof(GetBySub), new { email = createdUserDto.Email }, createdUserDto);
         }
         catch (EntityAlreadyExistsException)
         {
-            _logger.LogWarning("System user with sub '{Sub}' already exists", systemUserDto.Sub);
-            return Conflict($"System user with sub '{systemUserDto.Sub}' already exists.");
+            _logger.LogWarning("System user with email '{email}' already exists.", systemUserDto.Email);
+            return Conflict($"System user with email '{systemUserDto.Email}' already exists.");
         }
         catch (System.Exception e)
         {
-            _logger.LogCritical("Error creating system user with sub '{Sub}', {Message}", systemUserDto.Sub, e.Message);
+            _logger.LogCritical("Error creating system user with email '{email}', {Message}", systemUserDto.Email, e.Message);
             return StatusCode(500, "An error occurred while creating the system user.");
         }
     }
 
-    [HttpPut("{sub}/role", Name = "SetUserRole")]
-    public async Task<ActionResult<SystemUserDto>> SetUserRole(string sub, int role)
+    [HttpPut("{emailAddress}/role", Name = "SetUserRole")]
+    public async Task<ActionResult<SystemUserDto>> SetUserRole(string emailAddress, int role)
     {
         try
         {
-            var updatedUserDto = await _systemUserService.SetUserRole(sub, role);
+            var updatedUserDto = await _systemUserService.SetUserRole(emailAddress, role);
             return Ok(updatedUserDto);
         }
         catch (EntityNotFoundException)
         {
-            _logger.LogWarning("System user with sub '{Sub}' not found for role update", sub);
-            return NotFound($"System user with sub '{sub}' not found.");
+            _logger.LogWarning("System user with email '{Email}' not found for role update", emailAddress);
+            return NotFound($"System user with email '{emailAddress}' not found.");
         }
         catch (System.Exception e)
         {
-            _logger.LogCritical("Error setting role for system user with sub '{Sub}', {Message}", sub, e.Message);
+            _logger.LogCritical("Error setting role for system user with email '{Email}', {Message}", emailAddress, e.Message);
             return StatusCode(500, "An error occurred while setting the user role.");
         }
     }
 
-    [HttpPut("{sub}/deactivate", Name = "DeactivateUser")]
-    public async Task<ActionResult> DeactivateUser(string sub)
+    [HttpPut("{emailAddress}/deactivate", Name = "DeactivateUser")]
+    public async Task<ActionResult> DeactivateUser(string emailAddress)
     {
         try
         {
-            await _systemUserService.DeactivateUser(sub);
+            await _systemUserService.DeactivateUser(emailAddress);
             return NoContent();
         }
         catch (EntityNotFoundException)
         {
-            _logger.LogWarning("System user with sub '{Sub}' not found for deactivation", sub);
-            return NotFound($"System user with sub '{sub}' not found.");
+            _logger.LogWarning("System user with email '{email}' not found for deactivation", emailAddress);
+            return NotFound($"System user with email '{emailAddress}' not found.");
         }
         catch (System.Exception e)
         {
-            _logger.LogCritical("Error deactivating system user with sub '{Sub}', {Message}", sub, e.Message);
+            _logger.LogCritical("Error deactivating system user with email '{email}', {Message}", emailAddress, e.Message);
             return StatusCode(500, "An error occurred while deactivating the user.");
         }
     }
 
-    [HttpPut("{sub}/activate", Name = "ActivateUser")]
-    public async Task<ActionResult> ActivateUser(string sub)
+    [HttpPut("{emailAddress}/activate", Name = "ActivateUser")]
+    public async Task<ActionResult> ActivateUser(string emailAddress)
     {
         try
         {
-            await _systemUserService.ActivateUser(sub);
+            await _systemUserService.ActivateUser(emailAddress);
             return NoContent();
         }
         catch (EntityNotFoundException)
         {
-            _logger.LogWarning("System user with sub '{Sub}' not found for activation", sub);
-            return NotFound($"System user with sub '{sub}' not found.");
+            _logger.LogWarning("System user with email '{email}' not found for activation", emailAddress);
+            return NotFound($"System user with email '{emailAddress}' not found.");
         }
         catch (System.Exception e)
         {
             if (e is InvalidOperationException)
             {
-                _logger.LogWarning("User does not have a pending activation: '{Sub}'", sub);
-                return BadRequest($"System user with sub '{sub}' does not have a pending activation.");
+                _logger.LogWarning("User does not have a pending activation: '{email}'", emailAddress);
+                return BadRequest($"System user with email '{emailAddress}' does not have a pending activation.");
             }
 
-            _logger.LogCritical("Error activating system user with sub '{Sub}', {Message}", sub, e.Message);
+            _logger.LogCritical("Error activating system user with email '{email}', {Message}", emailAddress, e.Message);
             return StatusCode(500, "An error occurred while activating the user.");
         }
     }
 
-    [HttpDelete("{sub}", Name = "DeleteUser")]
-    public async Task<ActionResult> DeleteUser(string sub)
+    [HttpPost("activate-with-token", Name = "ActivateUserWithToken")]
+    public async Task<ActionResult> ActivateUserWithToken(string emailAddress, string token)
     {
         try
         {
-            await _systemUserService.DeleteSystemUser(sub);
+            await _systemUserService.ActivateUserWithToken(emailAddress, token);
             return NoContent();
         }
         catch (EntityNotFoundException)
         {
-            _logger.LogWarning("System user with sub '{Sub}' not found for deletion", sub);
-            return NotFound($"System user with sub '{sub}' not found.");
+            _logger.LogWarning("System user with email '{email}' not found for activation with token", emailAddress);
+            return NotFound($"System user with email '{emailAddress}' not found.");
+        }
+        catch (InvalidOperationException)
+        {
+            _logger.LogWarning("Invalid or expired activation token for user '{email}'", emailAddress);
+            return BadRequest($"Invalid or expired activation token for user '{emailAddress}'.");
         }
         catch (System.Exception e)
         {
-            _logger.LogCritical("Error deleting system user with sub '{Sub}', {Message}", sub, e.Message);
+            _logger.LogCritical("Error activating system user with email '{email}' using token, {Message}", emailAddress, e.Message);
+            return StatusCode(500, "An error occurred while activating the user with token.");
+        }
+    }
+
+    [HttpDelete("{emailAddress}", Name = "DeleteUser")]
+    public async Task<ActionResult> DeleteUser(string emailAddress)
+    {
+        try
+        {
+            await _systemUserService.DeleteSystemUser(emailAddress);
+            return NoContent();
+        }
+        catch (EntityNotFoundException)
+        {
+            _logger.LogWarning("System user with email '{email}' not found for deletion", emailAddress);
+            return NotFound($"System user with email '{emailAddress}' not found.");
+        }
+        catch (System.Exception e)
+        {
+            _logger.LogCritical("Error deleting system user with email '{email}', {Message}", emailAddress, e.Message);
             return StatusCode(500, "An error occurred while deleting the user.");
         }
     }

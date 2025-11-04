@@ -14,6 +14,6 @@ export interface AppJWTResponse {
 export interface IAuthService {
     initGoogleSignIn(callback: Function, errorCallback: Function): void;
     getAppJWTToken(token: string): Promise<AppJWTResponse>;
-
+    activateUser(email: string, token: string): Promise<void>;
     whoAmI(): Promise<User>;
 }

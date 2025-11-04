@@ -47,7 +47,7 @@ public class LoginController : ControllerBase
             var email = payload.Email ?? "unknown";
 
             var result = await _systemUserService.GetBySub(googleUserId);
-            if (result == null || !result.IsActive)
+            if (result == null || !(bool)result.IsActive!)
             {
                 throw new UnauthorizedAccessException("User not found or inactive.");
             }

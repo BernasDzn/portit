@@ -10,8 +10,10 @@ public interface ISystemUserService
     public Task<IEnumerable<SystemUserDto>> GetAll();
     public Task<SystemUserDto> CreateSystemUser(SystemUserDto systemUserDto);
     public Task<SystemUserDto> UpdateSystemUser(string sub, SystemUserDto systemUserDto);
-    public Task<SystemUserDto> SetUserRole(string sub, int role);
-    public Task DeleteSystemUser(string sub);
-    public Task ActivateUser(string sub);
-    public Task DeactivateUser(string sub);
+    public Task<SystemUserDto> SetUserRole(string emailAddress, int role);
+    public Task DeleteSystemUser(string emailAddress);
+    public Task ActivateUser(string emailAddress);
+    public Task DeactivateUser(string emailAddress);
+    public Task<SystemUserDto> GetByEmailAddress(string emailAddress);
+    public Task<SystemUserDto> ActivateUserWithToken(string emailAddress, string token);
 }

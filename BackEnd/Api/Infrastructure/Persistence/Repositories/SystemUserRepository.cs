@@ -87,4 +87,36 @@ public class SystemUserRepository : GenericRepository<SystemUser>, ISystemUserRe
             throw new PersistencyFailedException("Failed to delete a system user by sub. " + ex.Message);
         }
     }
+
+    public async Task DeleteByEmailAddressAsync(string emailAddress)
+    {
+        try
+        {
+            var systemUser = await _context.SystemUsers
+                .FirstOrDefaultAsync(su => su.Email == emailAddress);
+            if (systemUser != null)
+            {
+                _context.SystemUsers.Remove(systemUser);
+                await _context.SaveChangesAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new PersistencyFailedException("Failed to delete a system user by email address. " + ex.Message);
+        }
+    }
+
+    public async Task<SystemUser?> GetByEmailAddressAsync(string emailAddress)
+    {
+        try
+        {
+            SystemUser? systemUser = await _context.SystemUsers
+                .FirstOrDefaultAsync(su => su.Email == emailAddress);
+            return systemUser;
+        }
+        catch (Exception ex)
+        {
+            throw new PersistencyFailedException("Failed to select a system user by email address. " + ex.Message);
+        }
+    }
 }
