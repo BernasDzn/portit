@@ -18,13 +18,16 @@ const fetchResource = async (): Promise<any | null> => {
     return await physicalResourceService.getPhysicalResourceById(resourceId);
 };
 
-const icon = ref('build');
+const icon = ref<string | undefined>('build');
+const resourceType = ref<number | null>(null);
 
 onMounted(async () => {
     const res = await fetchResource();
     console.log('Resource for icon:', res.servingDock);
-    icon.value = res.servingDock != undefined ? 'build' : 
-        res.averageSpeed != undefined ? 'local_shipping' : 'precision_manufacturing'
+    resourceType.value = res.servingDock != undefined ? 0 : 
+        res.averageSpeed != undefined ? 2 : 1;
+
+    icon.value = (['build', 'precision_manufacturing', 'local_shipping'])[resourceType.value];
 });
 
 </script>

@@ -24,7 +24,7 @@ export interface PhysicalResource {
 export interface STSCrane extends PhysicalResource {
     type: 'STS Crane';
     liftingCapacity: number;
-    servinDock: Dock;
+    servingDock: Dock;
     containersPerHour: number;
 }
 
