@@ -17,6 +17,8 @@ public static class Bootstrap
         // Ensure the database is created
         context.Database.EnsureCreated();
 
+        BootstrapUsers(context);
+
         // Bootstrap Qualifications
         BootstrapQualifications(context);
         // Bootstrap Shipping Agent Organizations and Representatives
@@ -31,6 +33,45 @@ public static class Bootstrap
         BootstrapStaff(context);
         // Bootstrap Vessel Visit Notifications
         BootstrapVVN(context);
+    }
+
+    private static void BootstrapUsers(ApiContext context)
+    {
+        // Check if there are any users already in the database
+        if (context.SystemUsers.Any())
+            return;
+
+        SystemUser bern = new SystemUser(
+            "109730045337224782667",
+            true,
+            "bernardogranjacardoso@gmail.com"
+        );
+
+        SystemUser francis = new SystemUser(
+            "111839515929489386087",
+            true,
+            "franciscolousada19@gmail.com"
+        );
+
+        SystemUser kray = new SystemUser(
+            "114350264242626181256",
+            true,
+            "ruisantiago.jp@gmail.com"
+        );
+
+        SystemUser taiko = new SystemUser(
+            "111642040238696442904",
+            true,
+            "tiagobarrossao@gmail.com"
+        );
+
+        bern.Role = SystemUserRole.Administrator;
+        francis.Role = SystemUserRole.Administrator;
+        kray.Role = SystemUserRole.Administrator;
+        taiko.Role = SystemUserRole.Administrator;
+
+        context.SystemUsers.AddRange(bern, francis, kray, taiko);
+        context.SaveChanges();
     }
 
     private static void BootstrapQualifications(ApiContext context)

@@ -15,16 +15,16 @@ export interface PhysicalResource {
     type: string;
     code: string;
     description: string;
-    status: 0 | 1 | 2;
-    setupTime: number;
+    status: number;
+    setupTimeInMinutes: number;
     operationalWindow: OperationalWindow;
-    qualifications: Qualification[];
+    qualificationsCodes: Qualification[];
 }
 
 export interface STSCrane extends PhysicalResource {
     type: 'STS Crane';
     liftingCapacity: number;
-    servingDock: Dock;
+    servingDockCode: Dock;
     containersPerHour: number;
 }
 
@@ -36,9 +36,9 @@ export interface YardCrane extends PhysicalResource {
 
 export interface Truck extends PhysicalResource {
     type: 'Truck';
-    maxLoad: number;
+    maxLoadCapacity: number;
     averageSpeed: number;
-    conatinersPerTrip: number;
+    containersPerTrip: number;
 }
 
 export interface PhysicalResourceFilter {
