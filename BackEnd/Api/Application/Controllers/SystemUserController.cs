@@ -57,7 +57,7 @@ public class SystemUserController : ControllerBase, ISystemUserController
         try
         {
             var createdUserDto = await _systemUserService.CreateSystemUser(systemUserDto);
-            return CreatedAtAction(nameof(GetBySub), new { email = createdUserDto.Email }, createdUserDto);
+            return CreatedAtAction(nameof(Create), new { email = createdUserDto.Email }, createdUserDto);
         }
         catch (EntityAlreadyExistsException)
         {
