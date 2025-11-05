@@ -77,3 +77,5 @@ Every asset that is not in the list bellow is of our own
 - [Boat V2 3D Model](https://free3d.com/3d-model/boat-v2--225787.html)
 - [Buoy 3D model by TepidGames](https://sketchfab.com/3d-models/free-low-poly-buoy-8e7797a922304f7aab23ffe534a47839)
 - [Lighthouse 3D Model by apocalypse_67](https://free3d.com/3d-model/lighthouse-44581.html)
+- [Threex.daynight](https://github.com/jeromeetienne/threex.daynight)
+- [Wooden texture background by dotstudio](https://www.freepik.com/free-vector/wooden-texture-background_851099.htm#fromView=keyword&page=1&position=3&uuid=c4d347d5-55a6-479e-8835-00f7babebaa7&query=Wooden+road+texture)

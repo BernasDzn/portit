@@ -39,6 +39,20 @@ const chunkTypes = Object.freeze({
     WAREHOUSE: 3,
 });
 
+export function chunkIndexToPosition(x, y, centered=false) {
+    let position = new THREE.Vector3();
+    position.x = chunkSize.x * x + worldOrigin.x;
+    position.y = layoutY;
+    position.z = -chunkSize.z * y + worldOrigin.z;
+
+    if (centered) {
+        position.x += chunkSize.x / 2;
+        position.z -= chunkSize.z / 2;
+    }
+
+    return position;
+}
+
 class PortChunk {
 
     base;
@@ -52,10 +66,7 @@ class PortChunk {
             return;
         }
         
-        this.position = new THREE.Vector3();
-        this.position.x = chunkSize.x * x + worldOrigin.x;
-        this.position.y = layoutY;
-        this.position.z = -chunkSize.z * y + worldOrigin.z;
+        this.position = chunkIndexToPosition(x, y);
     }
 }
 
@@ -112,6 +123,43 @@ class BuoyChunk extends PortChunk {
     }
 }
 
+class DockChunk extends PortChunk {
+    
+    dockLabel;
+
+    constructor(x,y, label) {
+        super(x,y);
+        this.base = null;
+
+        this.dockLabel = makeBillboard("Dock", 32, 0xffffff);
+    }
+
+    async init(scene) {
+        this.base = new THREE.BoxGeometry(chunkSize.x / 2, chunkSize.y, chunkSize.z);
+        const texture = new THREE.TextureLoader().load('/visualizer/textures/wood.png');
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.wrapT = THREE.RepeatWrapping;
+
+        let baseMesh = new THREE.MeshStandardMaterial({ map: texture });
+
+        this.base = new THREE.Mesh(this.base, baseMesh);
+        this.base.position.copy(this.position);
+
+        this.base.castShadow = true;
+        this.base.receiveShadow = true;
+        scene.add(this.base);
+
+        // Position dock label above the dock
+        this.dockLabel.position.set(
+            this.position.x,
+            this.position.y + 30,
+            this.position.z
+        );
+
+        scene.add(this.dockLabel);
+    }
+}
+
 export default class PortLayout {
 
     terrain;
@@ -125,9 +173,11 @@ export default class PortLayout {
         
         let portChunk = new LandChunk(4, 4);
         let buoyChunk = new BuoyChunk(4, 3);
+        let dockChunk = new DockChunk(4, 5);
 
         this.chunkData.push(portChunk);
         this.chunkData.push(buoyChunk);
+        this.chunkData.push(dockChunk);
      
         this.loadChunks(scene);
         this.loadTerrain(scene);
@@ -135,7 +185,7 @@ export default class PortLayout {
 
     async loadChunks(scene) {
         for (let chunk of this.chunkData) {
-            await chunk.init(scene);
+            chunk.init(scene);
         }
     }
 
