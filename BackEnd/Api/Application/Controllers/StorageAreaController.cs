@@ -5,6 +5,7 @@ using Api.Application.Services;
 using Api.Application.DataTransfer;
 using Api.Application.Exceptions;
 using Api.Infrastructure.Exceptions;
+using Api.Application.DataTransfer.Filters;
 
 [ApiController]
 [Route("[controller]")]
@@ -111,4 +112,18 @@ public class StorageAreaController : ControllerBase, IStorageAreaController
         }
     }
 
+    [HttpGet("filter")]
+    public async Task<ActionResult<IEnumerable<StorageAreaDto>>> Filter([FromQuery] StorageAreaFilter filter)
+    {
+        try
+        {
+            var storageAreaDtos = await _storageAreaService.FilterStorageAreas(filter);
+            return Ok(storageAreaDtos);
+        }
+        catch (System.Exception)
+        {
+            _logger.LogCritical("Error retrieving filtered storage areas");
+            return StatusCode(500, "An error occurred while retrieving storage areas.");
+        }
+    }
 }

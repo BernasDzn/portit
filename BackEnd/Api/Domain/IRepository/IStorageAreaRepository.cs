@@ -1,6 +1,8 @@
 namespace Api.Domain.IRepository;
 
+using Api.Application.DataTransfer.Filters;
 using Api.Domain.Entities;
+using Api.Infrastructure.Utilities;
 
 public interface IStorageAreaRepository : IGenericRepository<StorageArea>
 {
@@ -9,4 +11,6 @@ public interface IStorageAreaRepository : IGenericRepository<StorageArea>
 
     new Task<StorageArea> Add(StorageArea vessel);
     Task<StorageArea> Update(StorageArea vessel);
+
+    Task<Page<StorageArea>> FilterStorageAreasAsync(StorageAreaFilter filter);
 }

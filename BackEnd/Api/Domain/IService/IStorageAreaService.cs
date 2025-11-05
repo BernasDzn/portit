@@ -10,4 +10,5 @@ public interface IStorageAreaService
 	Task<StorageAreaDto> GetStorageAreaByCode(string code);
 	Task<StorageAreaDto> CreateStorageArea(CreateStorageAreaDto createStorageAreaDto);
 	Task<StorageAreaDto> UpdateStorageArea(string id, CreateStorageAreaDto updateStorageAreaDto);
+	Task<Page<StorageAreaDto>> FilterStorageAreas(StorageAreaFilter filter);
 }

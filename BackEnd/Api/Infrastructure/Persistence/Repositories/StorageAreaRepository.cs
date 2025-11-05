@@ -4,6 +4,8 @@ using Api.Domain.Entities;
 using Api.Domain.IRepository;
 using Microsoft.EntityFrameworkCore;
 using Api.Application.Exceptions;
+using Api.Infrastructure.Utilities;
+using Api.Application.DataTransfer.Filters;
 
 public class StorageAreaRepository : GenericRepository<StorageArea>, IStorageAreaRepository
 {
@@ -68,4 +70,26 @@ public class StorageAreaRepository : GenericRepository<StorageArea>, IStorageAre
             throw;
         }
     }
+
+    public Task<Page<StorageArea>> FilterStorageAreasAsync(StorageAreaFilter filter)
+	{
+		try
+		{
+			IQueryable<StorageArea> query = _context.StorageAreas.AsQueryable();
+            
+            int pageCount = (int) Math.Ceiling((double)query.Count() / filter.PageSize);
+
+			if (!string.IsNullOrEmpty(filter.NameCode))
+                query = query.Where(s => s.NameCode.Value.ToLower().Contains(filter.NameCode.ToLower()));
+
+			return Task.FromResult(
+				Page<StorageArea>.Of(query.ToList(), filter, pageCount)
+			);
+			
+		}
+		catch (Exception ex)
+		{
+			throw new PersistencyFailedException("Failed to filter storage areas: " + ex.Message);
+		}
+	}
 }

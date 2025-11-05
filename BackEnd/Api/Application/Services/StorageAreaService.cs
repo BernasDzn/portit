@@ -1,11 +1,13 @@
 namespace Api.Application.Services;
 
 using Api.Application.DataTransfer;
+using Api.Application.DataTransfer.Filters;
 using Api.Application.Exceptions;
 using Api.Domain.Entities;
 using Api.Domain.IRepository;
 using Api.Domain.ValueObjects;
 using Api.Infrastructure.Exceptions;
+using Api.Infrastructure.Utilities;
 
 public class StorageAreaService : IStorageAreaService
 {
@@ -96,4 +98,11 @@ public class StorageAreaService : IStorageAreaService
 
         return dockRelations;
     }
+
+    public async Task<Page<StorageAreaDto>> FilterStorageAreas(StorageAreaFilter filter)
+	{
+		Page<StorageArea> page = await _storageAreaRepository.FilterStorageAreasAsync(filter);
+		AppLogEvents.LogFilter(_logger, "storage areas", page.Items.Count);
+		return page.Map<StorageAreaDto>(s => s.ToDTO());
+	}
 }
