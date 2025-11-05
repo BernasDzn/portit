@@ -27,6 +27,11 @@ const statuses = [
 	"Yard", "Warehouse"
 ];
 
+// Helper used in the template to get only dock services with a non-null distance.
+function filterDockServices(list: Array<any> | undefined) {
+    return (list ?? []).filter((ds: any) => ds.distance != null)
+}
+
 </script>
 
 <template>
@@ -81,9 +86,12 @@ const statuses = [
                 </sl-card>
                 <sl-card class="info-card">
                     <p>{{ t('common.statistics') }}</p>
-                    <div class="view-statistics-overview">
+                    <div v-if="entity.element.type == 0" class="view-statistics-overview">
                         <p class="view-statistic-data">{{ entity.element.dockServices.length }}</p>
                         <p>{{ t('storageArea.printer.docks_serviced') }}</p>
+                    </div>
+                    <div v-else class="view-statistics-overview">
+                        <p>{{ t('storageArea.printer.all_docks_serviced') }}</p>
                     </div>
                 </sl-card>
                 <sl-card class="info-card" style="flex: 100%;">
@@ -93,21 +101,25 @@ const statuses = [
                     />
                 </sl-card>
                 <sl-card class="info-card" style="flex: 100%;">
-                    <p>{{ t('storageArea.printer.docks_serviced').slice(0, 1).toUpperCase() + t('storageArea.printer.docks_serviced').slice(1) }}:</p>
+                    <p>{{ t('storageArea.printer.serviced_docks_distance') }}:</p>
                     <div class="info-grid">
-                        <div
-                            style="flex: 3;" 
-                            v-if="entity.element.dockServices.length > 0" 
-                            v-for="dock_relation of entity.element.dockServices" :key="dock_relation.dock.code"
-                        >
-                            <DockPrinter
-                                class="listing-box"
-                                :dock="dock_relation.dock"
-                                :link="`/docks/view/${dock_relation.dock.code}`"
-                                :show-details="false"
-                            />
-                        </div>
-                        <p v-else style="color: var(--sl-color-neutral-400)">{{ t('storageArea.printer.no_docks_serviced') }}</p>
+                        <template v-if="filterDockServices(entity.element.dockServices).length > 0">
+                            <div
+                                style="flex: 3;"
+                                v-for="dock_relation in filterDockServices(entity.element.dockServices)"
+                                :key="dock_relation.dock.code"
+                            >
+                                <DockPrinter
+                                    class="listing-box"
+                                    :dock="dock_relation.dock"
+                                    :link="`/docks/view/${dock_relation.dock.code}`"
+                                    :show-details="false"
+                                    :distance_string="`${entity.element.nameCode}  —  ${dock_relation.distance}m -->  ${dock_relation.dock.code}`"
+                                />
+                            </div>
+                        </template>
+                        <p v-else-if="entity.element.type == 0" style="color: var(--sl-color-neutral-400)">{{ t('storageArea.printer.no_docks_serviced') }}</p>
+                        <p v-else-if="entity.element.type == 1 || entity.element.dockServices.length > 0" style="color: var(--sl-color-neutral-400)">{{ t('storageArea.printer.no_registered_distances') }}</p>
                     </div>
                 </sl-card>
             </div>

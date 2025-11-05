@@ -3,6 +3,7 @@ import type { Dock } from '@/model/Dock';
 import { computed } from 'vue';
 import { RouterLink } from 'vue-router';
 import { useI18n } from 'vue-i18n';
+import type { StorageArea } from '@/model/StorageArea';
 
 const { t } = useI18n();
 
@@ -10,6 +11,7 @@ const props = withDefaults(defineProps<{
     dock: Dock;
     link?: string;
     showDetails?: boolean;
+    distance_string?: string;
 }>(), {
     showDetails: true
 });
@@ -22,6 +24,11 @@ const typesDisplay = computed(() => {
 <template>
     <component :is="props.link ? RouterLink : 'div'" :to="props.link">
         <sl-card class="listing-item">
+            <div class="email-group">
+                <span class="material-icons sec_icon" aria-hidden="true">route</span>
+                <span class="item-description">{{ props.distance_string }}</span>
+            </div>
+            <sl-divider></sl-divider>
             <div class="opposed">
                 <div>
                     <p>{{ dock.name }}</p>

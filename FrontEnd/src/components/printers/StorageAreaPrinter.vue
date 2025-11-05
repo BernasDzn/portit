@@ -34,7 +34,12 @@ const statuses = [
 					<div class="item-description">
 						<div class="email-group">
 							<span class="material-icons icon" aria-hidden="true">anchor</span>
-							<span class="item-description">{{ storageArea.dockServices.length }} {{t('storageArea.printer.docks_serviced')}}</span>
+							<span v-if="storageArea.type == 0" class="item-description">
+                                {{ storageArea.dockServices.length }} {{t('storageArea.printer.docks_serviced')}}
+                            </span>
+                            <span v-else class="item-description">
+                                {{ t('storageArea.printer.all_docks_serviced') }}
+                            </span>
 						</div>
 					</div>
                 </div>
