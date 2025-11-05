@@ -1,0 +1,430 @@
+{
+    "common": {
+        "loading": "Ładowanie...",
+        "noData": "Brak dostępnych danych",
+        "statistics": "Statystyki"
+    },
+    "buttons": {
+        "save": "Zapisz",
+        "cancel": "Anuluj",
+        "delete": "Usuń",
+        "edit": "Edytuj",
+        "create": "Utwórz",
+        "search": "Szukaj",
+        "select": "Wybierz",
+        "activate": "Aktywuj",
+        "deactivate": "Dezaktywuj",
+        "filter": {
+            "title": "Filtry",
+            "add": "Filtruj",
+            "clear": "Wyczyść filtry"
+        },
+        "pagination": {
+            "previous": "Poprzedni",
+            "next": "Następny"
+        },
+        "login": "Zaloguj się",
+        "goBackToLogin": "Powrót do logowania",
+        "logout": "Wyloguj"
+    },
+    "unsavedChanges": {
+        "title": "Odrzucić zmiany?",
+        "message": "Masz niezapisane zmiany. Czy na pewno chcesz opuścić tę stronę i odrzucić swoje zmiany?",
+        "confirm": "Odrzuć",
+        "cancel": "Kontynuuj edycję"
+    },
+    "dashboard": {
+        "sidebarTitle": "Panel",
+        "title": "PortIT Panel",
+        "subtitle": "Przegląd systemu PortIT",
+        "3DModel": {
+            "title": "Wizualizacja portu 3D",
+            "description": "Zobacz interaktywną reprezentację 3D całego obiektu portowego. Monitoruj zajętość nabrzeży, pozycje statków, obszary magazynowe i zasoby w czasie rzeczywistym.",
+            "open": "Otwórz model 3D"
+        }
+    },
+    "admin": {
+        "sidebarTitle": "Admin",
+        "title": "Panel administracyjny",
+        "subtitle": "Przegląd i zarządzanie administracyjne",
+        "userManagement": {
+            "title": "Zarządzanie użytkownikami",
+            "subtitle": "Zarządzaj użytkownikami systemu, rolami i uprawnieniami."
+        },
+        "auditLogs": {
+            "title": "Logi audytu",
+            "subtitle": "Przeglądaj i monitoruj logi aktywności systemu."
+        }
+    },
+    "user": {
+        "fields": {
+            "email": {
+                "title": "Email",
+                "placeholder": "email@mail.com"
+            },
+            "role": {
+                "title": "Rola",
+                "placeholder": "Wybierz rolę użytkownika",
+                "options": {
+                    "admin": "Administrator",
+                    "saoRep": "Przedstawiciel SAO",
+                    "pao": "Urzędnik portu",
+                    "logisticsOperator": "Operator logistyczny"
+                }
+            },
+            "isActive": {
+                "title": "Aktywny",
+                "options": {
+                    "active": "Tak",
+                    "inactive": "Nie"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Panel użytkownika",
+            "create": "Utwórz użytkownika",
+            "view": "Zobacz użytkowników",
+            "search": "Szukaj użytkowników"
+        },
+        "infoTitle": "Szczegóły użytkownika",
+        "title": "Użytkownicy",
+        "subtitle": {
+            "dashboard": "Przegląd i zarządzanie użytkownikami",
+            "create": "Zarejestruj nowego użytkownika w systemie",
+            "view": "Zobacz i zarządzaj istniejącymi użytkownikami"
+        }
+    },
+    "physicalCharacteristics": {
+        "title": "Właściwości fizyczne (m)",
+        "length": {
+            "title": "Długość",
+            "placeholder": "Długość w metrach"
+        },
+        "depth": {
+            "title": "Głębokość",
+            "placeholder": "Głębokość w metrach"
+        },
+        "draft": {
+            "title": "Zanurzenie",
+            "placeholder": "Zanurzenie w metrach"
+        }
+    },
+    "dock": {
+        "fields": {
+            "code": {
+                "title": "Kod",
+                "placeholder": "Kod nabrzeża"
+            },
+            "name": {
+                "title": "Nazwa",
+                "placeholder": "Nazwa nabrzeża"
+            },
+            "location": {
+                "title": "Lokalizacja",
+                "placeholder": "Lokalizacja nabrzeża"
+            },
+            "supportedVesselTypes": {
+                "title": "Obsługiwane typy statków",
+                "vesselTypes": {
+                    "title": "Typy statków",
+                    "placeholder": "Wybierz typy statków"
+                },
+                "vesselType": "Typ statku"
+            }
+        },
+        "tabs": {
+            "dashboard": "Panel nabrzeża",
+            "view_dashboard": "Zobacz nabrzeża",
+            "search": "Szukaj nabrzeży",
+            "create": "Utwórz nabrzeże",
+            "view": "Zobacz nabrzeże",
+            "edit": "Edytuj nabrzeże"
+        },
+        "generalFields": "Pola ogólne",
+        "infoTitle": "Informacje o nabrzeżu",
+        "title": "Nabrzeża",
+        "subtitle": {
+            "dashboard": "Przegląd statystyk i działań nabrzeża",
+            "search": "Zarządzaj i przeglądaj wszystkie zarejestrowane nabrzeża",
+            "create": "Zarejestruj nowe nabrzeże w systemie",
+            "edit": "Edytuj istniejące nabrzeże w systemie"
+        },
+        "registeredDocks": "Zarejestrowane nabrzeża"
+    },
+    "vesselType": {
+        "fields": {
+            "name": {
+                "title": "Nazwa",
+                "placeholder": "Nazwa typu statku"
+            },
+            "description": {
+                "title": "Opis",
+                "placeholder": "Opis typu statku"
+            },
+            "capacity": {
+                "title": "Pojemność",
+                "placeholder": "Pojemność kontenerowa w TEU"
+            },
+            "containerCapacity": {
+                "title": "Pojemność kontenerów (TEU)",
+                "maxNumberOfRows": {
+                    "title": "Maks. liczba rzędów",
+                    "placeholder": "Maks. rzędy w TEU"
+                },
+                "maxNumberOfBays": {
+                    "title": "Maks. liczba zatok",
+                    "placeholder": "Maks. zatoki w TEU"
+                },
+                "maxNumberOfTiers": {
+                    "title": "Maks. liczba poziomów",
+                    "placeholder": "Maks. poziomy w TEU"
+                }
+            }
+        },
+        "generalFields": "Pola ogólne",
+        "tabs": {
+            "dashboard": "Panel typów statków",
+            "view_dashboard": "Zobacz typy statków",
+            "search": "Szukaj typów statków",
+            "create": "Utwórz typ statku",
+            "view": "Zobacz typ statku",
+            "edit": "Edytuj typ statku"
+        },
+        "infoTitle": "Informacje o typie statku",
+        "title": "Typy statków",
+        "subtitle": {
+            "dashboard": "Przegląd statystyk i działań według typu statku",
+            "search": "Zarządzaj i przeglądaj wszystkie zarejestrowane typy statków",
+            "create": "Zarejestruj nowy typ statku w systemie",
+            "edit": "Edytuj istniejący typ statku w systemie"
+        },
+        "registeredVesselTypes": "Zarejestrowane typy statków"
+    },
+    "vessel": {
+        "fields": {
+            "name": {
+                "title": "Nazwa",
+                "placeholder": "Nazwa statku"
+            },
+            "imoNumber": {
+                "title": "Numer IMO",
+                "placeholder": "Numer IMO statku"
+            },
+            "owner": {
+                "title": "Właściciel",
+                "placeholder": "Organizacja właściciela"
+            },
+            "vesselType": {
+                "title": "Typ statku",
+                "placeholder": "Wybierz typ statku"
+            }
+        },
+        "infoTitle": "Informacje o statku",
+        "physicalCharacteristicsTitle": "Właściwości fizyczne",
+        "tabs": {
+            "dashboard": "Panel statków",
+            "view_dashboard": "Zobacz statki",
+            "search": "Szukaj statków",
+            "create": "Utwórz statek",
+            "view": "Zobacz statek",
+            "edit": "Edytuj statek"
+        },
+        "title": "Statki",
+        "subtitle": {
+            "dashboard": "Przegląd statystyk i działań statków",
+            "search": "Zarządzaj i przeglądaj wszystkie zarejestrowane statki",
+            "create": "Zarejestruj nowy statek w systemie",
+            "edit": "Edytuj istniejący statek w systemie"
+        },
+        "ownedBy": "Własność",
+        "registeredVessels": "Zarejestrowane statki"
+    },
+    "staff": {
+        "fields": {
+            "mechanographicNumber": {
+                "title": "Numer mechanograficzny",
+                "placeholder": "Numer mechanograficzny"
+            },
+            "name": {
+                "title": "Nazwa",
+                "placeholder": "Nazwa pracownika"
+            },
+            "email": {
+                "title": "Email",
+                "placeholder": "Adres email"
+            },
+            "phoneNumber": {
+                "title": "Numer telefonu",
+                "placeholder": "Numer telefonu"
+            },
+            "qualifications": {
+                "title": "Kwalifikacje",
+                "placeholder": "Wybierz kwalifikacje"
+            },
+            "status": {
+                "title": "Status",
+                "options": {
+                    "available": "Dostępny",
+                    "unavailable": "Niedostępny",
+                    "temporarilyReassigned": "Tymczasowo przeniesiony"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Panel personelu",
+            "view_dashboard": "Zobacz personel",
+            "search": "Szukaj personelu",
+            "create": "Utwórz członka personelu",
+            "view": "Zobacz członka personelu",
+            "edit": "Edytuj członka personelu"
+        },
+        "infoTitle": "Informacje o członku personelu",
+        "title": "Personel",
+        "subtitle": {
+            "search": "Zarządzaj i przeglądaj wszystkich zarejestrowanych pracowników",
+            "dashboard": "Przegląd statystyk i działań personelu",
+            "create": "Zarejestruj nowego członka personelu w systemie",
+            "view": "Zobacz szczegóły personelu",
+            "edit": "Edytuj istniejącego członka personelu w systemie"
+        }
+    },
+    "qualification": {
+        "tabs": {
+            "dashboard": "Panel kwalifikacji",
+            "view_dashboard": "Zobacz kwalifikacje",
+            "search": "Szukaj kwalifikacji",
+            "create": "Utwórz kwalifikację",
+            "view": "Zobacz kwalifikację",
+            "edit": "Edytuj kwalifikację"
+        },
+        "infoTitle": "Informacje o kwalifikacji",
+        "title": "Kwalifikacje",
+        "subtitle": {
+            "search": "Zarządzaj i przeglądaj wszystkie zarejestrowane kwalifikacje",
+            "dashboard": "Przegląd statystyk i działań kwalifikacji",
+            "create": "Zarejestruj nową kwalifikację w systemie",
+            "edit": "Edytuj istniejącą kwalifikację w systemie",
+            "view": "Zobacz szczegóły kwalifikacji"
+        },
+        "fields": {
+            "idCode": {
+                "title": "Kod kwalifikacji",
+                "placeholder": "Kod kwalifikacji"
+            },
+            "qualificationName": {
+                "title": "Nazwa kwalifikacji",
+                "placeholder": "Nazwa kwalifikacji"
+            }
+        }
+    },
+    "physicalResource": {
+        "tabs": {
+            "dashboard": "Panel zasobów fizycznych",
+            "view_dashboard": "Zobacz zasoby fizyczne",
+            "search": "Szukaj zasobów fizycznych",
+            "create": "Utwórz zasób fizyczny",
+            "view": "Zobacz zasób fizyczny",
+            "edit": "Edytuj zasób fizyczny"
+        },
+        "infoTitle": "Informacje o zasobie fizycznym",
+        "title": "Zasoby fizyczne",
+        "subtitle": {
+            "search": "Zarządzaj i przeglądaj wszystkie zarejestrowane zasoby fizyczne",
+            "dashboard": "Panel kontrolny dla zasobów fizycznych",
+            "view_dashboard": "Zobacz zasoby fizyczne",
+            "create": "Zarejestruj nowy zasób fizyczny w systemie",
+            "view": "Zobacz szczegóły zasobu fizycznego",
+            "edit": "Edytuj istniejący zasób fizyczny w systemie"
+        },
+        "generalFields": "Pola ogólne",
+        "specificFields": "Pola szczegółowe",
+        "fields": {
+            "code": {
+                "title": "Kod",
+                "placeholder": "Kod zasobu"
+            },
+            "description": {
+                "title": "Opis",
+                "placeholder": "Opis zasobu"
+            },
+            "status": {
+                "title": "Status",
+                "placeholder": "Wybierz status zasobu",
+                "options": {
+                    "available": "Dostępny",
+                    "maintenance": "Konserwacja",
+                    "outOfService": "Wyłączony"
+                }
+            },
+            "qualifications": {
+                "title": "Wymagane kwalifikacje",
+                "placeholder": "Kwalifikacje wymagane do obsługi tego zasobu"
+            },
+            "setupTime": {
+                "title": "Czas konfiguracji (minuty)",
+                "placeholder": "Czas konfiguracji"
+            },
+            "servingDocks": {
+                "title": "Obsługiwane nabrzeża",
+                "placeholder": "Wybierz obsługiwane nabrzeża"
+            },
+            "liftingCapacity": {
+                "title": "Udźwig (kgs)",
+                "placeholder": "Udźwig"
+            },
+            "containersPerHour": {
+                "title": "Kontenery na godzinę",
+                "placeholder": "Kontenery na godzinę"
+            },
+            "maxLoadCapacity": {
+                "title": "Maksymalna ładowność (kg)",
+                "placeholder": "Maksymalna ładowność"
+            },
+            "averageSpeed": {
+                "title": "Średnia prędkość (km/h)",
+                "placeholder": "Średnia prędkość"
+            },
+            "containersPerTrip": {
+                "title": "Kontenery na podróż",
+                "placeholder": "Kontenery na podróż"
+            },
+            "type": {
+                "title": "Typ zasobu",
+                "options": {
+                    "stsCrane": "Dźwig STS",
+                    "yardGantry": "Suwnica placowa",
+                    "truck": "Ciężarówka"
+                }
+            }
+        },
+        "actions": {
+            "deactivate": "Dezaktywuj zasób fizyczny"
+        }
+    },
+    "storageArea": {
+        "tabs": {
+            "dashboard": "Panel obszarów składowania",
+            "view_dashboard": "Zobacz obszary składowania",
+            "search": "Szukaj obszarów składowania",
+            "create": "Utwórz obszar składowania",
+            "view": "Zobacz obszar składowania",
+            "edit": "Edytuj obszar składowania"
+        },
+        "infoTitle": "Informacje o obszarze składowania",
+        "title": "Obszary składowania",
+        "subtitle": {
+            "search": "Zarządzaj i przeglądaj wszystkie zarejestrowane obszary składowania",
+            "dashboard": "Panel kontrolny dla wszystkich obszarów składowania",
+            "view_dashboard": "Zobacz obszary składowania",
+            "create": "Zarejestruj nowy obszar składowania w systemie",
+            "view": "Zobacz szczegóły obszaru składowania",
+            "edit": "Edytuj istniejący obszar składowania w systemie"
+        },
+        "printer": {
+            "docks_serviced": "obsługiwane nabrzeża",
+            "capacity_usage": "Wykorzystanie pojemności",
+            "units": "jednostki",
+            "available": "dostępne"
+        }
+    }
+}

@@ -1,0 +1,430 @@
+{
+    "common": {
+        "loading": "Įkeliama...",
+        "noData": "Duomenų nėra",
+        "statistics": "Statistika"
+    },
+    "buttons": {
+        "save": "Išsaugoti",
+        "cancel": "Atšaukti",
+        "delete": "Ištrinti",
+        "edit": "Redaguoti",
+        "create": "Sukurti",
+        "search": "Ieškoti",
+        "select": "Pasirinkti",
+        "activate": "Aktyvuoti",
+        "deactivate": "Deaktyvuoti",
+        "filter": {
+            "title": "Filtrai",
+            "add": "Filtruoti",
+            "clear": "Išvalyti filtrus"
+        },
+        "pagination": {
+            "previous": "Ankstesnis",
+            "next": "Kitas"
+        },
+        "login": "Prisijungti",
+        "goBackToLogin": "Grįžti prie prisijungimo",
+        "logout": "Atsijungti"
+    },
+    "unsavedChanges": {
+        "title": "Atmesti pakeitimus?",
+        "message": "Turite neišsaugotų pakeitimų. Ar tikrai norite palikti šį puslapį ir atmesti pakeitimus?",
+        "confirm": "Atmesti",
+        "cancel": "Tęsti redagavimą"
+    },
+    "dashboard": {
+        "sidebarTitle": "Valdymo skydas",
+        "title": "PortIT Valdymo skydas",
+        "subtitle": "PortIT sistemos apžvalga",
+        "3DModel": {
+            "title": "3D uosto vizualizacija",
+            "description": "Peržiūrėkite interaktyvų 3D uosto modelį. Stebėkite prieplaukų užimtumą, laivų pozicijas, sandėlio zonas ir išteklius realiu laiku.",
+            "open": "Atidaryti 3D modelį"
+        }
+    },
+    "admin": {
+        "sidebarTitle": "Administravimas",
+        "title": "Administratoriaus skydas",
+        "subtitle": "Administracinė apžvalga ir valdymas",
+        "userManagement": {
+            "title": "Vartotojų valdymas",
+            "subtitle": "Valdykite sistemos vartotojus, roles ir leidimus."
+        },
+        "auditLogs": {
+            "title": "Auditavimo žurnalas",
+            "subtitle": "Sistemos veiksmų žurnalų peržiūra ir stebėjimas."
+        }
+    },
+    "user": {
+        "fields": {
+            "email": {
+                "title": "Elektroninis paštas",
+                "placeholder": "email@mail.com"
+            },
+            "role": {
+                "title": "Rolė",
+                "placeholder": "Pasirinkite vartotojo rolę",
+                "options": {
+                    "admin": "Administratorius",
+                    "saoRep": "SAO atstovas",
+                    "pao": "Uosto administracijos pareigūnas",
+                    "logisticsOperator": "Logistikos operatorius"
+                }
+            },
+            "isActive": {
+                "title": "Aktyvus",
+                "options": {
+                    "active": "Taip",
+                    "inactive": "Ne"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Vartotojo skyrius",
+            "create": "Sukurti vartotoją",
+            "view": "Peržiūrėti vartotojus",
+            "search": "Ieškoti vartotojų"
+        },
+        "infoTitle": "Vartotojo informacija",
+        "title": "Vartotojai",
+        "subtitle": {
+            "dashboard": "Vartotojų peržiūra ir valdymas",
+            "create": "Užregistruoti naują vartotoją sistemoje",
+            "view": "Peržiūrėti ir valdyti esamus vartotojus"
+        }
+    },
+    "physicalCharacteristics": {
+        "title": "Fizinės charakteristikos (m)",
+        "length": {
+            "title": "Ilgis",
+            "placeholder": "Ilgis metrais"
+        },
+        "depth": {
+            "title": "Gylis",
+            "placeholder": "Gylis metrais"
+        },
+        "draft": {
+            "title": "Korpuso grimzlė",
+            "placeholder": "Grimzlė metrais"
+        }
+    },
+    "dock": {
+        "fields": {
+            "code": {
+                "title": "Kodas",
+                "placeholder": "Prieplaukos kodas"
+            },
+            "name": {
+                "title": "Pavadinimas",
+                "placeholder": "Prieplaukos pavadinimas"
+            },
+            "location": {
+                "title": "Vieta",
+                "placeholder": "Prieplaukos vieta"
+            },
+            "supportedVesselTypes": {
+                "title": "Palaikomi laivų tipai",
+                "vesselTypes": {
+                    "title": "Laivų tipai",
+                    "placeholder": "Pasirinkite laivų tipus"
+                },
+                "vesselType": "Laivo tipas"
+            }
+        },
+        "tabs": {
+            "dashboard": "Prieplaukos skydas",
+            "view_dashboard": "Peržiūrėti prieplaukas",
+            "search": "Ieškoti prieplaukų",
+            "create": "Sukurti prieplauką",
+            "view": "Peržiūrėti prieplauką",
+            "edit": "Redaguoti prieplauką"
+        },
+        "generalFields": "Bendri laukai",
+        "infoTitle": "Prieplaukos informacija",
+        "title": "Prieplaukos",
+        "subtitle": {
+            "dashboard": "Prieplaukos statistikos ir veiklos apžvalga",
+            "search": "Tvarkykite ir peržiūrėkite visas įregistruotas prieplaukas",
+            "create": "Užregistruokite naują prieplauką sistemoje",
+            "edit": "Redaguokite esamą prieplauką sistemoje"
+        },
+        "registeredDocks": "Užregistruotos prieplaukos"
+    },
+    "vesselType": {
+        "fields": {
+            "name": {
+                "title": "Pavadinimas",
+                "placeholder": "Laivo tipo pavadinimas"
+            },
+            "description": {
+                "title": "Aprašymas",
+                "placeholder": "Laivo tipo aprašymas"
+            },
+            "capacity": {
+                "title": "Talpa",
+                "placeholder": "Konteinerių talpa TEU"
+            },
+            "containerCapacity": {
+                "title": "Konteinerių talpa (TEU)",
+                "maxNumberOfRows": {
+                    "title": "Maks. eilių skaičius",
+                    "placeholder": "Maks. eilių TEU"
+                },
+                "maxNumberOfBays": {
+                    "title": "Maks. skyrių skaičius",
+                    "placeholder": "Maks. skyrių TEU"
+                },
+                "maxNumberOfTiers": {
+                    "title": "Maks. aukštų skaičius",
+                    "placeholder": "Maks. aukštų TEU"
+                }
+            }
+        },
+        "generalFields": "Bendri laukai",
+        "tabs": {
+            "dashboard": "Laivų tipų skydas",
+            "view_dashboard": "Peržiūrėti laivų tipus",
+            "search": "Ieškoti laivų tipų",
+            "create": "Sukurti laivo tipą",
+            "view": "Peržiūrėti laivo tipą",
+            "edit": "Redaguoti laivo tipą"
+        },
+        "infoTitle": "Laivo tipo informacija",
+        "title": "Laivų tipai",
+        "subtitle": {
+            "dashboard": "Laivų tipų statistikos apžvalga",
+            "search": "Tvarkykite ir peržiūrėkite visus įregistruotus laivų tipus",
+            "create": "Užregistruokite naują laivo tipą sistemoje",
+            "edit": "Redaguokite esamą laivo tipą sistemoje"
+        },
+        "registeredVesselTypes": "Užregistruoti laivų tipai"
+    },
+    "vessel": {
+        "fields": {
+            "name": {
+                "title": "Pavadinimas",
+                "placeholder": "Laivo pavadinimas"
+            },
+            "imoNumber": {
+                "title": "IMO numeris",
+                "placeholder": "Laivo IMO numeris"
+            },
+            "owner": {
+                "title": "Savininkas",
+                "placeholder": "Savininko organizacija"
+            },
+            "vesselType": {
+                "title": "Laivo tipas",
+                "placeholder": "Pasirinkite laivo tipą"
+            }
+        },
+        "infoTitle": "Laivo informacija",
+        "physicalCharacteristicsTitle": "Fizinės charakteristikos",
+        "tabs": {
+            "dashboard": "Laivų skydas",
+            "view_dashboard": "Peržiūrėti laivus",
+            "search": "Ieškoti laivų",
+            "create": "Sukurti laivą",
+            "view": "Peržiūrėti laivą",
+            "edit": "Redaguoti laivą"
+        },
+        "title": "Laivai",
+        "subtitle": {
+            "dashboard": "Laivų statistikos ir veiklos apžvalga",
+            "search": "Tvarkykite ir peržiūrėkite visus įregistruotus laivus",
+            "create": "Užregistruokite naują laivą sistemoje",
+            "edit": "Redaguokite esamą laivą sistemoje"
+        },
+        "ownedBy": "Savininkas",
+        "registeredVessels": "Užregistruoti laivai"
+    },
+    "staff": {
+        "fields": {
+            "mechanographicNumber": {
+                "title": "Mechanografinis numeris",
+                "placeholder": "Mechanografinis numeris"
+            },
+            "name": {
+                "title": "Vardas",
+                "placeholder": "Darbuotojo vardas"
+            },
+            "email": {
+                "title": "El. paštas",
+                "placeholder": "El. pašto adresas"
+            },
+            "phoneNumber": {
+                "title": "Telefonas",
+                "placeholder": "Telefono numeris"
+            },
+            "qualifications": {
+                "title": "Kvalifikacijos",
+                "placeholder": "Pasirinkite kvalifikacijas"
+            },
+            "status": {
+                "title": "Statusas",
+                "options": {
+                    "available": "Pasiekiamas",
+                    "unavailable": "Nepasiekiamas",
+                    "temporarilyReassigned": "Laikinai perkelta"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Personalo skydas",
+            "view_dashboard": "Peržiūrėti personalą",
+            "search": "Ieškoti personalo",
+            "create": "Sukurti darbuotoją",
+            "view": "Peržiūrėti darbuotoją",
+            "edit": "Redaguoti darbuotoją"
+        },
+        "infoTitle": "Darbuotojo informacija",
+        "title": "Personalas",
+        "subtitle": {
+            "search": "Tvarkykite ir peržiūrėkite visą registruotą personalą",
+            "dashboard": "Personalo statistikos peržiūra",
+            "create": "Užregistruokite naują darbuotoją sistemoje",
+            "view": "Peržiūrėti darbuotojo detales",
+            "edit": "Redaguokite esamą darbuotoją sistemoje"
+        }
+    },
+    "qualification": {
+        "tabs": {
+            "dashboard": "Kvalifikacijų skydas",
+            "view_dashboard": "Peržiūrėti kvalifikacijas",
+            "search": "Ieškoti kvalifikacijų",
+            "create": "Sukurti kvalifikaciją",
+            "view": "Peržiūrėti kvalifikaciją",
+            "edit": "Redaguoti kvalifikaciją"
+        },
+        "infoTitle": "Kvalifikacijos informacija",
+        "title": "Kvalifikacijos",
+        "subtitle": {
+            "search": "Tvarkykite ir peržiūrėkite visus registruotus kvalifikacijas",
+            "dashboard": "Kvalifikacijų statistikos apžvalga",
+            "create": "Užregistruokite naują kvalifikaciją sistemoje",
+            "edit": "Redaguokite esamą kvalifikaciją sistemoje",
+            "view": "Peržiūrėti kvalifikacijos detales"
+        },
+        "fields": {
+            "idCode": {
+                "title": "Kvalifikacijos kodas",
+                "placeholder": "Kvalifikacijos kodas"
+            },
+            "qualificationName": {
+                "title": "Kvalifikacijos pavadinimas",
+                "placeholder": "Kvalifikacijos pavadinimas"
+            }
+        }
+    },
+    "physicalResource": {
+        "tabs": {
+            "dashboard": "Fizinių išteklių skydas",
+            "view_dashboard": "Peržiūrėti fizinius išteklius",
+            "search": "Ieškoti fizinių išteklių",
+            "create": "Sukurti fizinį išteklį",
+            "view": "Peržiūrėti fizinį išteklį",
+            "edit": "Redaguoti fizinį išteklį"
+        },
+        "infoTitle": "Fizinio ištekliaus informacija",
+        "title": "Fiziniai ištekliai",
+        "subtitle": {
+            "search": "Tvarkykite ir peržiūrėkite visus registruotus fizinius išteklius",
+            "dashboard": "Fizinių išteklių valdymo skydas",
+            "view_dashboard": "Peržiūrėti fizinius išteklius",
+            "create": "Užregistruokite naują fizinį išteklį sistemoje",
+            "view": "Peržiūrėti fizinio ištekliaus detales",
+            "edit": "Redaguokite esamą fizinį išteklį sistemoje"
+        },
+        "generalFields": "Bendri laukai",
+        "specificFields": "Specifiniai laukai",
+        "fields": {
+            "code": {
+                "title": "Kodas",
+                "placeholder": "Išteklių kodas"
+            },
+            "description": {
+                "title": "Aprašymas",
+                "placeholder": "Išteklių aprašymas"
+            },
+            "status": {
+                "title": "Statusas",
+                "placeholder": "Pasirinkite išteklių statusą",
+                "options": {
+                    "available": "Pasiekiamas",
+                    "maintenance": "Priežiūra",
+                    "outOfService": "Neveikia"
+                }
+            },
+            "qualifications": {
+                "title": "Reikalingos kvalifikacijos",
+                "placeholder": "Kvalifikacijos reikalingos darbui su šiuo ištekliumi"
+            },
+            "setupTime": {
+                "title": "Diegimo laikas (min)",
+                "placeholder": "Diegimo laikas"
+            },
+            "servingDocks": {
+                "title": "Aptarnaujamos prieplaukos",
+                "placeholder": "Pasirinkite aptarnaujamas prieplaukas"
+            },
+            "liftingCapacity": {
+                "title": "Kėlimo galia (kg)",
+                "placeholder": "Kėlimo galia"
+            },
+            "containersPerHour": {
+                "title": "Konteineriai per valandą",
+                "placeholder": "Konteineriai per valandą"
+            },
+            "maxLoadCapacity": {
+                "title": "Maks. apkrova (kg)",
+                "placeholder": "Maks. apkrova"
+            },
+            "averageSpeed": {
+                "title": "Vidutinis greitis (km/h)",
+                "placeholder": "Vidutinis greitis"
+            },
+            "containersPerTrip": {
+                "title": "Konteineriai per kelionę",
+                "placeholder": "Konteineriai per kelionę"
+            },
+            "type": {
+                "title": "Išteklių tipas",
+                "options": {
+                    "stsCrane": "STS kranas",
+                    "yardGantry": "Kiemo kranas",
+                    "truck": "Sunkvežimis"
+                }
+            }
+        },
+        "actions": {
+            "deactivate": "Išjungti fizinį išteklių"
+        }
+    },
+    "storageArea": {
+        "tabs": {
+            "dashboard": "Sandėliavimo zonų skydas",
+            "view_dashboard": "Peržiūrėti sandėliavimo zonas",
+            "search": "Ieškoti sandėliavimo zonų",
+            "create": "Sukurti sandėliavimo zoną",
+            "view": "Peržiūrėti sandėliavimo zoną",
+            "edit": "Redaguoti sandėliavimo zoną"
+        },
+        "infoTitle": "Sandėliavimo zonos informacija",
+        "title": "Sandėliavimo zonos",
+        "subtitle": {
+            "search": "Tvarkykite ir peržiūrėkite visas įregistruotas sandėliavimo zonas",
+            "dashboard": "Sandėliavimo zonų valdymo skydas",
+            "view_dashboard": "Peržiūrėti sandėliavimo zonas",
+            "create": "Užregistruokite naują sandėliavimo zoną sistemoje",
+            "view": "Peržiūrėti sandėliavimo zonos detales",
+            "edit": "Redaguokite esamą sandėliavimo zoną sistemoje"
+        },
+        "printer": {
+            "docks_serviced": "aptarnaujamos prieplaukos",
+            "capacity_usage": "Naudojamas pajėgumas",
+            "units": "vienetai",
+            "available": "galima"
+        }
+    }
+}

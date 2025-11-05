@@ -1,0 +1,430 @@
+{
+    "common": {
+        "loading": "Načítava sa...",
+        "noData": "Nie sú k dispozícii žiadne údaje",
+        "statistics": "Štatistiky"
+    },
+    "buttons": {
+        "save": "Uložiť",
+        "cancel": "Zrušiť",
+        "delete": "Odstrániť",
+        "edit": "Upraviť",
+        "create": "Vytvoriť",
+        "search": "Hľadať",
+        "select": "Vybrať",
+        "activate": "Aktivovať",
+        "deactivate": "Deaktivovať",
+        "filter": {
+            "title": "Filtre",
+            "add": "Filtrovať",
+            "clear": "Vymazať filtre"
+        },
+        "pagination": {
+            "previous": "Predchádzajúci",
+            "next": "Ďalší"
+        },
+        "login": "Prihlásiť sa",
+        "goBackToLogin": "Späť na prihlásenie",
+        "logout": "Odhlásiť"
+    },
+    "unsavedChanges": {
+        "title": "Zrušiť zmeny?",
+        "message": "Máte neuložené zmeny. Ste si istí, že chcete opustiť túto stránku a zrušiť svoje zmeny?",
+        "confirm": "Zrušiť",
+        "cancel": "Pokračovať v úpravách"
+    },
+    "dashboard": {
+        "sidebarTitle": "Panel",
+        "title": "PortIT Panel",
+        "subtitle": "Prehľad systému PortIT",
+        "3DModel": {
+            "title": "3D vizualizácia prístavu",
+            "description": "Zobraziť interaktívnu 3D reprezentáciu celého prístavného zariadenia. Monitorovať obsadenosť móla, polohy plavidiel, skladovacie oblasti a zdroje v reálnom čase.",
+            "open": "Otvoriť 3D model"
+        }
+    },
+    "admin": {
+        "sidebarTitle": "Admin",
+        "title": "Admin panel",
+        "subtitle": "Administratívny prehľad a správa",
+        "userManagement": {
+            "title": "Správa používateľov",
+            "subtitle": "Spravovať používateľov systému, role a oprávnenia."
+        },
+        "auditLogs": {
+            "title": "Audit logy",
+            "subtitle": "Zobraziť a monitorovať logy aktivít systému."
+        }
+    },
+    "user": {
+        "fields": {
+            "email": {
+                "title": "Email",
+                "placeholder": "email@mail.com"
+            },
+            "role": {
+                "title": "Rola",
+                "placeholder": "Vyberte rolu používateľa",
+                "options": {
+                    "admin": "Administrátor",
+                    "saoRep": "Zástupca SAO",
+                    "pao": "Úradník prístavnej autority",
+                    "logisticsOperator": "Logistický operátor"
+                }
+            },
+            "isActive": {
+                "title": "Aktívny",
+                "options": {
+                    "active": "Áno",
+                    "inactive": "Nie"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Používateľský panel",
+            "create": "Vytvoriť používateľa",
+            "view": "Zobraziť používateľov",
+            "search": "Vyhľadať používateľov"
+        },
+        "infoTitle": "Detaily používateľa",
+        "title": "Používatelia",
+        "subtitle": {
+            "dashboard": "Prehľad a správa používateľov",
+            "create": "Registrovať nového používateľa do systému",
+            "view": "Zobraziť a spravovať existujúcich používateľov"
+        }
+    },
+    "physicalCharacteristics": {
+        "title": "Fyzikálne charakteristiky (m)",
+        "length": {
+            "title": "Dĺžka",
+            "placeholder": "Dĺžka v metroch"
+        },
+        "depth": {
+            "title": "Hĺbka",
+            "placeholder": "Hĺbka v metroch"
+        },
+        "draft": {
+            "title": "Ponor",
+            "placeholder": "Ponor v metroch"
+        }
+    },
+    "dock": {
+        "fields": {
+            "code": {
+                "title": "Kód",
+                "placeholder": "Kód móla"
+            },
+            "name": {
+                "title": "Názov",
+                "placeholder": "Názov móla"
+            },
+            "location": {
+                "title": "Poloha",
+                "placeholder": "Poloha móla"
+            },
+            "supportedVesselTypes": {
+                "title": "Podporované typy plavidiel",
+                "vesselTypes": {
+                    "title": "Typy plavidiel",
+                    "placeholder": "Vyberte typy plavidiel"
+                },
+                "vesselType": "Typ plavidla"
+            }
+        },
+        "tabs": {
+            "dashboard": "Panel móla",
+            "view_dashboard": "Zobraziť móla",
+            "search": "Vyhľadať móla",
+            "create": "Vytvoriť mólo",
+            "view": "Zobraziť mólo",
+            "edit": "Upraviť mólo"
+        },
+        "generalFields": "Všeobecné polia",
+        "infoTitle": "Informácie o móle",
+        "title": "Móla",
+        "subtitle": {
+            "dashboard": "Prehľad štatistík a aktivít móla",
+            "search": "Spravovať a zobraziť všetky registrované móla",
+            "create": "Registrovať nové mólo do systému",
+            "edit": "Upraviť existujúce mólo v systéme"
+        },
+        "registeredDocks": "Registrované móla"
+    },
+    "vesselType": {
+        "fields": {
+            "name": {
+                "title": "Názov",
+                "placeholder": "Názov typu plavidla"
+            },
+            "description": {
+                "title": "Popis",
+                "placeholder": "Popis typu plavidla"
+            },
+            "capacity": {
+                "title": "Kapacita",
+                "placeholder": "Kapacita kontajnerov v TEU"
+            },
+            "containerCapacity": {
+                "title": "Kapacita kontajnerov (TEU)",
+                "maxNumberOfRows": {
+                    "title": "Max počet riadkov",
+                    "placeholder": "Max riadky v TEU"
+                },
+                "maxNumberOfBays": {
+                    "title": "Max počet priehradiek",
+                    "placeholder": "Max priehradky v TEU"
+                },
+                "maxNumberOfTiers": {
+                    "title": "Max počet úrovní",
+                    "placeholder": "Max úrovne v TEU"
+                }
+            }
+        },
+        "generalFields": "Všeobecné polia",
+        "tabs": {
+            "dashboard": "Panel typov plavidiel",
+            "view_dashboard": "Zobraziť typy plavidiel",
+            "search": "Vyhľadať typy plavidiel",
+            "create": "Vytvoriť typ plavidla",
+            "view": "Zobraziť typ plavidla",
+            "edit": "Upraviť typ plavidla"
+        },
+        "infoTitle": "Informácie o type plavidla",
+        "title": "Typy plavidiel",
+        "subtitle": {
+            "dashboard": "Prehľad štatistík a aktivít podľa typu plavidla",
+            "search": "Spravovať a zobraziť všetky registrované typy plavidiel",
+            "create": "Registrovať nový typ plavidla do systému",
+            "edit": "Upraviť existujúci typ plavidla v systéme"
+        },
+        "registeredVesselTypes": "Registrované typy plavidiel"
+    },
+    "vessel": {
+        "fields": {
+            "name": {
+                "title": "Názov",
+                "placeholder": "Názov plavidla"
+            },
+            "imoNumber": {
+                "title": "IMO číslo",
+                "placeholder": "IMO číslo plavidla"
+            },
+            "owner": {
+                "title": "Vlastník",
+                "placeholder": "Organizácia majiteľa"
+            },
+            "vesselType": {
+                "title": "Typ plavidla",
+                "placeholder": "Vyberte typ plavidla"
+            }
+        },
+        "infoTitle": "Informácie o plavidle",
+        "physicalCharacteristicsTitle": "Fyzikálne charakteristiky",
+        "tabs": {
+            "dashboard": "Panel plavidla",
+            "view_dashboard": "Zobraziť plavidlá",
+            "search": "Vyhľadať plavidlá",
+            "create": "Vytvoriť plavidlo",
+            "view": "Zobraziť plavidlo",
+            "edit": "Upraviť plavidlo"
+        },
+        "title": "Plavidlá",
+        "subtitle": {
+            "dashboard": "Prehľad štatistík a aktivít plavidiel",
+            "search": "Spravovať a zobraziť všetky registrované plavidlá",
+            "create": "Registrovať nové plavidlo do systému",
+            "edit": "Upraviť existujúce plavidlo v systéme"
+        },
+        "ownedBy": "Vlastní",
+        "registeredVessels": "Registrované plavidlá"
+    },
+    "staff": {
+        "fields": {
+            "mechanographicNumber": {
+                "title": "Mechanografické číslo",
+                "placeholder": "Mechanografické číslo"
+            },
+            "name": {
+                "title": "Meno",
+                "placeholder": "Meno zamestnanca"
+            },
+            "email": {
+                "title": "Email",
+                "placeholder": "Emailová adresa"
+            },
+            "phoneNumber": {
+                "title": "Telefónne číslo",
+                "placeholder": "Telefónne číslo"
+            },
+            "qualifications": {
+                "title": "Kvalifikácie",
+                "placeholder": "Vyberte kvalifikácie"
+            },
+            "status": {
+                "title": "Stav",
+                "options": {
+                    "available": "K dispozícii",
+                    "unavailable": "Nedostupný",
+                    "temporarilyReassigned": "Dočasne prevelený"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Panel personálu",
+            "view_dashboard": "Zobraziť personál",
+            "search": "Vyhľadať personál",
+            "create": "Vytvoriť člena personálu",
+            "view": "Zobraziť člena personálu",
+            "edit": "Upraviť člena personálu"
+        },
+        "infoTitle": "Informácie o členovi personálu",
+        "title": "Personál",
+        "subtitle": {
+            "search": "Spravovať a zobraziť všetok registrovaný personál",
+            "dashboard": "Prehľad štatistík a aktivít personálu",
+            "create": "Registrovať nového člena personálu v systéme",
+            "view": "Zobraziť detaily personálu",
+            "edit": "Upraviť existujúceho člena personálu v systéme"
+        }
+    },
+    "qualification": {
+        "tabs": {
+            "dashboard": "Panel kvalifikácií",
+            "view_dashboard": "Zobraziť kvalifikácie",
+            "search": "Vyhľadať kvalifikácie",
+            "create": "Vytvoriť kvalifikáciu",
+            "view": "Zobraziť kvalifikáciu",
+            "edit": "Upraviť kvalifikáciu"
+        },
+        "infoTitle": "Informácie o kvalifikácii",
+        "title": "Kvalifikácie",
+        "subtitle": {
+            "search": "Spravovať a zobraziť všetky registrované kvalifikácie",
+            "dashboard": "Prehľad štatistík a aktivít kvalifikácií",
+            "create": "Registrovať novú kvalifikáciu v systéme",
+            "edit": "Upraviť existujúcu kvalifikáciu v systéme",
+            "view": "Zobraziť detaily kvalifikácie"
+        },
+        "fields": {
+            "idCode": {
+                "title": "Kód kvalifikácie",
+                "placeholder": "Kód kvalifikácie"
+            },
+            "qualificationName": {
+                "title": "Názov kvalifikácie",
+                "placeholder": "Názov kvalifikácie"
+            }
+        }
+    },
+    "physicalResource": {
+        "tabs": {
+            "dashboard": "Panel fyzických zdrojov",
+            "view_dashboard": "Zobraziť fyzické zdroje",
+            "search": "Vyhľadať fyzické zdroje",
+            "create": "Vytvoriť fyzický zdroj",
+            "view": "Zobraziť fyzický zdroj",
+            "edit": "Upraviť fyzický zdroj"
+        },
+        "infoTitle": "Informácie o fyzickom zdroji",
+        "title": "Fyzické zdroje",
+        "subtitle": {
+            "search": "Spravovať a zobraziť všetky registrované fyzické zdroje",
+            "dashboard": "Ovládací panel pre fyzické zdroje",
+            "view_dashboard": "Zobraziť fyzické zdroje",
+            "create": "Registrovať nový fyzický zdroj v systéme",
+            "view": "Zobraziť detaily fyzického zdroja",
+            "edit": "Upraviť existujúci fyzický zdroj v systéme"
+        },
+        "generalFields": "Všeobecné polia",
+        "specificFields": "Špecifické polia",
+        "fields": {
+            "code": {
+                "title": "Kód",
+                "placeholder": "Kód zdroja"
+            },
+            "description": {
+                "title": "Popis",
+                "placeholder": "Popis zdroja"
+            },
+            "status": {
+                "title": "Stav",
+                "placeholder": "Vyberte stav zdroja",
+                "options": {
+                    "available": "K dispozícii",
+                    "maintenance": "Údržba",
+                    "outOfService": "Mimo prevádzky"
+                }
+            },
+            "qualifications": {
+                "title": "Vyžadované kvalifikácie",
+                "placeholder": "Kvalifikácie požadované na obsluhu tohto zdroja"
+            },
+            "setupTime": {
+                "title": "Čas nastavenia (minúty)",
+                "placeholder": "Čas nastavenia"
+            },
+            "servingDocks": {
+                "title": "Obsluhované móla",
+                "placeholder": "Vyberte obsluhované móla"
+            },
+            "liftingCapacity": {
+                "title": "Zdvíhacia kapacita (kgs)",
+                "placeholder": "Zdvíhacia kapacita"
+            },
+            "containersPerHour": {
+                "title": "Kontajnery za hodinu",
+                "placeholder": "Kontajnery za hodinu"
+            },
+            "maxLoadCapacity": {
+                "title": "Maximálna nosnosť (kg)",
+                "placeholder": "Maximálna nosnosť"
+            },
+            "averageSpeed": {
+                "title": "Priemerná rýchlosť (km/h)",
+                "placeholder": "Priemerná rýchlosť"
+            },
+            "containersPerTrip": {
+                "title": "Kontajnery na cestu",
+                "placeholder": "Kontajnery na cestu"
+            },
+            "type": {
+                "title": "Typ zdroja",
+                "options": {
+                    "stsCrane": "STS žeriav",
+                    "yardGantry": "Yard portálový žeriav",
+                    "truck": "Nákladné auto"
+                }
+            }
+        },
+        "actions": {
+            "deactivate": "Deaktivovať fyzický zdroj"
+        }
+    },
+    "storageArea": {
+        "tabs": {
+            "dashboard": "Panel skladovacích oblastí",
+            "view_dashboard": "Zobraziť skladovacie oblasti",
+            "search": "Vyhľadať skladovacie oblasti",
+            "create": "Vytvoriť skladovaciu oblasť",
+            "view": "Zobraziť skladovaciu oblasť",
+            "edit": "Upraviť skladovaciu oblasť"
+        },
+        "infoTitle": "Informácie o skladovacej oblasti",
+        "title": "Skladovacie oblasti",
+        "subtitle": {
+            "search": "Spravovať a zobraziť všetky registrované skladovacie oblasti",
+            "dashboard": "Ovládací panel pre všetky skladovacie oblasti",
+            "view_dashboard": "Zobraziť skladovacie oblasti",
+            "create": "Registrovať novú skladovaciu oblasť v systéme",
+            "view": "Zobraziť detaily skladovacej oblasti",
+            "edit": "Upraviť existujúcu skladovaciu oblasť v systéme"
+        },
+        "printer": {
+            "docks_serviced": "obsluhované móla",
+            "capacity_usage": "Využitie kapacity",
+            "units": "jednotky",
+            "available": "k dispozícii"
+        }
+    }
+}

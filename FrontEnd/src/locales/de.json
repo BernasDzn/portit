@@ -1,0 +1,430 @@
+{
+    "common": {
+        "loading": "Lädt...",
+        "noData": "Keine Daten verfügbar",
+        "statistics": "Statistiken"
+    },
+    "buttons": {
+        "save": "Speichern",
+        "cancel": "Abbrechen",
+        "delete": "Löschen",
+        "edit": "Bearbeiten",
+        "create": "Erstellen",
+        "search": "Suchen",
+        "select": "Auswählen",
+        "activate": "Aktivieren",
+        "deactivate": "Deaktivieren",
+        "filter": {
+            "title": "Filter",
+            "add": "Filtern",
+            "clear": "Filter löschen"
+        },
+        "pagination": {
+            "previous": "Vorherige",
+            "next": "Nächste"
+        },
+        "login": "Anmelden",
+        "goBackToLogin": "Zurück zur Anmeldung",
+        "logout": "Abmelden"
+    },
+    "unsavedChanges": {
+        "title": "Änderungen verwerfen?",
+        "message": "Sie haben ungespeicherte Änderungen. Möchten Sie die Seite wirklich verlassen und Ihre Änderungen verwerfen?",
+        "confirm": "Verwerfen",
+        "cancel": "Weiter bearbeiten"
+    },
+    "dashboard": {
+        "sidebarTitle": "Dashboard",
+        "title": "PortIT Dashboard",
+        "subtitle": "Übersicht über das PortIT-System",
+        "3DModel": {
+            "title": "3D Hafen-Visualisierung",
+            "description": "Sehen Sie eine interaktive 3D-Darstellung der gesamten Hafenanlage. Überwachen Sie Liegeplatzbelegungen, Schiffspositionen, Lagerbereiche und Ressourcen in Echtzeit.",
+            "open": "3D Modell öffnen"
+        }
+    },
+    "admin": {
+        "sidebarTitle": "Admin",
+        "title": "Admin Dashboard",
+        "subtitle": "Administrativer Überblick und Verwaltung",
+        "userManagement": {
+            "title": "Benutzerverwaltung",
+            "subtitle": "Verwalten Sie Systembenutzer, Rollen und Berechtigungen."
+        },
+        "auditLogs": {
+            "title": "Prüfprotokolle",
+            "subtitle": "Systemaktivitätsprotokolle anzeigen und überwachen."
+        }
+    },
+    "user": {
+        "fields": {
+            "email": {
+                "title": "E-Mail",
+                "placeholder": "email@mail.com"
+            },
+            "role": {
+                "title": "Rolle",
+                "placeholder": "Benutzerrolle auswählen",
+                "options": {
+                    "admin": "Administrator",
+                    "saoRep": "SAO-Vertreter",
+                    "pao": "Hafenbehördenbeauftragter",
+                    "logisticsOperator": "Logistikbetreiber"
+                }
+            },
+            "isActive": {
+                "title": "Aktiv",
+                "options": {
+                    "active": "Ja",
+                    "inactive": "Nein"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Benutzer Dashboard",
+            "create": "Benutzer erstellen",
+            "view": "Benutzer anzeigen",
+            "search": "Benutzer suchen"
+        },
+        "infoTitle": "Benutzerdetails",
+        "title": "Benutzer",
+        "subtitle": {
+            "dashboard": "Benutzerübersicht und Verwaltung",
+            "create": "Einen neuen Benutzer im System registrieren",
+            "view": "Bestehende Benutzer anzeigen und verwalten"
+        }
+    },
+    "physicalCharacteristics": {
+        "title": "Physikalische Eigenschaften (m)",
+        "length": {
+            "title": "Länge",
+            "placeholder": "Länge in Metern"
+        },
+        "depth": {
+            "title": "Tiefe",
+            "placeholder": "Tiefe in Metern"
+        },
+        "draft": {
+            "title": "Tiefgang",
+            "placeholder": "Tiefgang in Metern"
+        }
+    },
+    "dock": {
+        "fields": {
+            "code": {
+                "title": "Code",
+                "placeholder": "Dockcode"
+            },
+            "name": {
+                "title": "Name",
+                "placeholder": "Dockname"
+            },
+            "location": {
+                "title": "Standort",
+                "placeholder": "Dock-Standort"
+            },
+            "supportedVesselTypes": {
+                "title": "Unterstützte Schiffstypen",
+                "vesselTypes": {
+                    "title": "Schiffstypen",
+                    "placeholder": "Schiffstypen auswählen"
+                },
+                "vesselType": "Schiffstyp"
+            }
+        },
+        "tabs": {
+            "dashboard": "Dock Dashboard",
+            "view_dashboard": "Docks anzeigen",
+            "search": "Docks suchen",
+            "create": "Dock erstellen",
+            "view": "Dock anzeigen",
+            "edit": "Dock bearbeiten"
+        },
+        "generalFields": "Allgemeine Felder",
+        "infoTitle": "Dock-Informationen",
+        "title": "Docks",
+        "subtitle": {
+            "dashboard": "Überblick über Dock-Statistiken und Aktivitäten",
+            "search": "Verwalten und Anzeigen aller registrierten Docks",
+            "create": "Ein neues Dock im System registrieren",
+            "edit": "Ein vorhandenes Dock im System bearbeiten"
+        },
+        "registeredDocks": "Registrierte Docks"
+    },
+    "vesselType": {
+        "fields": {
+            "name": {
+                "title": "Name",
+                "placeholder": "Name des Schiffstyps"
+            },
+            "description": {
+                "title": "Beschreibung",
+                "placeholder": "Beschreibung des Schiffstyps"
+            },
+            "capacity": {
+                "title": "Kapazität",
+                "placeholder": "Containerkapazität in TEU"
+            },
+            "containerCapacity": {
+                "title": "Containerkapazität (TEU)",
+                "maxNumberOfRows": {
+                    "title": "Maximale Anzahl Reihen",
+                    "placeholder": "Max Reihen in TEU"
+                },
+                "maxNumberOfBays": {
+                    "title": "Maximale Anzahl Laderäume",
+                    "placeholder": "Max Laderäume in TEU"
+                },
+                "maxNumberOfTiers": {
+                    "title": "Maximale Anzahl Ebenen",
+                    "placeholder": "Max Ebenen in TEU"
+                }
+            }
+        },
+        "generalFields": "Allgemeine Felder",
+        "tabs": {
+            "dashboard": "Schiffstyp Dashboard",
+            "view_dashboard": "Schiffstypen anzeigen",
+            "search": "Schiffstypen suchen",
+            "create": "Schiffstyp erstellen",
+            "view": "Schiffstyp anzeigen",
+            "edit": "Schiffstyp bearbeiten"
+        },
+        "infoTitle": "Informationen zum Schiffstyp",
+        "title": "Schiffstypen",
+        "subtitle": {
+            "dashboard": "Überblick über Schiffstyp-Statistiken und Aktivitäten",
+            "search": "Verwalten und Anzeigen aller registrierten Schiffstypen",
+            "create": "Einen neuen Schiffstyp im System registrieren",
+            "edit": "Einen vorhandenen Schiffstyp im System bearbeiten"
+        },
+        "registeredVesselTypes": "Registrierte Schiffstypen"
+    },
+    "vessel": {
+        "fields": {
+            "name": {
+                "title": "Name",
+                "placeholder": "Schiffsname"
+            },
+            "imoNumber": {
+                "title": "IMO-Nummer",
+                "placeholder": "IMO-Nummer des Schiffes"
+            },
+            "owner": {
+                "title": "Eigentümer",
+                "placeholder": "Eigentümerorganisation"
+            },
+            "vesselType": {
+                "title": "Schiffstyp",
+                "placeholder": "Schiffstyp auswählen"
+            }
+        },
+        "infoTitle": "Schiffsinformationen",
+        "physicalCharacteristicsTitle": "Physikalische Eigenschaften",
+        "tabs": {
+            "dashboard": "Schiff Dashboard",
+            "view_dashboard": "Schiffe anzeigen",
+            "search": "Schiffe suchen",
+            "create": "Schiff erstellen",
+            "view": "Schiff anzeigen",
+            "edit": "Schiff bearbeiten"
+        },
+        "title": "Schiffe",
+        "subtitle": {
+            "dashboard": "Überblick über Schiffstatistiken und Aktivitäten",
+            "search": "Verwalten und Anzeigen aller registrierten Schiffe",
+            "create": "Ein neues Schiff im System registrieren",
+            "edit": "Ein vorhandenes Schiff im System bearbeiten"
+        },
+        "ownedBy": "Im Besitz von",
+        "registeredVessels": "Registrierte Schiffe"
+    },
+    "staff": {
+        "fields": {
+            "mechanographicNumber": {
+                "title": "Mechanografische Nummer",
+                "placeholder": "Mechanografische Nummer"
+            },
+            "name": {
+                "title": "Name",
+                "placeholder": "Mitarbeitername"
+            },
+            "email": {
+                "title": "E-Mail",
+                "placeholder": "E-Mail-Adresse"
+            },
+            "phoneNumber": {
+                "title": "Telefonnummer",
+                "placeholder": "Telefonnummer"
+            },
+            "qualifications": {
+                "title": "Qualifikationen",
+                "placeholder": "Qualifikationen auswählen"
+            },
+            "status": {
+                "title": "Status",
+                "options": {
+                    "available": "Verfügbar",
+                    "unavailable": "Nicht verfügbar",
+                    "temporarilyReassigned": "Vorübergehend umversetzt"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Mitarbeiter Dashboard",
+            "view_dashboard": "Mitarbeiter anzeigen",
+            "search": "Mitarbeiter suchen",
+            "create": "Mitarbeiter erstellen",
+            "view": "Mitarbeiter anzeigen",
+            "edit": "Mitarbeiter bearbeiten"
+        },
+        "infoTitle": "Mitarbeiterinformationen",
+        "title": "Mitarbeiter",
+        "subtitle": {
+            "search": "Verwalten und Anzeigen aller registrierten Mitarbeiter",
+            "dashboard": "Überblick über Mitarbeiterstatistiken und Aktivitäten",
+            "create": "Einen neuen Mitarbeiter im System registrieren",
+            "view": "Mitarbeiterdetails anzeigen",
+            "edit": "Einen vorhandenen Mitarbeiter im System bearbeiten"
+        }
+    },
+    "qualification": {
+        "tabs": {
+            "dashboard": "Qualifikation Dashboard",
+            "view_dashboard": "Qualifikationen anzeigen",
+            "search": "Qualifikationen suchen",
+            "create": "Qualifikation erstellen",
+            "view": "Qualifikation anzeigen",
+            "edit": "Qualifikation bearbeiten"
+        },
+        "infoTitle": "Qualifikationsinformationen",
+        "title": "Qualifikationen",
+        "subtitle": {
+            "search": "Verwalten und Anzeigen aller registrierten Qualifikationen",
+            "dashboard": "Überblick über Qualifikationsstatistiken und Aktivitäten",
+            "create": "Eine neue Qualifikation im System registrieren",
+            "edit": "Eine vorhandene Qualifikation im System bearbeiten",
+            "view": "Qualifikationsdetails anzeigen"
+        },
+        "fields": {
+            "idCode": {
+                "title": "Qualifikationscode",
+                "placeholder": "Qualifikationscode"
+            },
+            "qualificationName": {
+                "title": "Qualifikationsname",
+                "placeholder": "Qualifikationsname"
+            }
+        }
+    },
+    "physicalResource": {
+        "tabs": {
+            "dashboard": "Physische Ressource Dashboard",
+            "view_dashboard": "Physische Ressourcen anzeigen",
+            "search": "Physische Ressourcen suchen",
+            "create": "Physische Ressource erstellen",
+            "view": "Physische Ressource anzeigen",
+            "edit": "Physische Ressource bearbeiten"
+        },
+        "infoTitle": "Informationen zur physischen Ressource",
+        "title": "Physische Ressourcen",
+        "subtitle": {
+            "search": "Verwalten und Anzeigen aller registrierten physischen Ressourcen",
+            "dashboard": "Bedienfeld für alle physischen Ressourcen",
+            "view_dashboard": "Physische Ressourcen anzeigen",
+            "create": "Eine neue physische Ressource im System registrieren",
+            "view": "Details zur physischen Ressource anzeigen",
+            "edit": "Eine vorhandene physische Ressource im System bearbeiten"
+        },
+        "generalFields": "Allgemeine Felder",
+        "specificFields": "Spezifische Felder",
+        "fields": {
+            "code": {
+                "title": "Code",
+                "placeholder": "Ressourcencode"
+            },
+            "description": {
+                "title": "Beschreibung",
+                "placeholder": "Ressourcenbeschreibung"
+            },
+            "status": {
+                "title": "Status",
+                "placeholder": "Ressourcenstatus auswählen",
+                "options": {
+                    "available": "Verfügbar",
+                    "maintenance": "Wartung",
+                    "outOfService": "Außer Betrieb"
+                }
+            },
+            "qualifications": {
+                "title": "Erforderliche Qualifikationen",
+                "placeholder": "Die Qualifikationen, die zum Bedienen dieser Ressource erforderlich sind"
+            },
+            "setupTime": {
+                "title": "Einrichtungszeit (Minuten)",
+                "placeholder": "Einrichtungszeit"
+            },
+            "servingDocks": {
+                "title": "Bedienende Docks",
+                "placeholder": "Bedienende Docks auswählen"
+            },
+            "liftingCapacity": {
+                "title": "Hubkapazität (kg)",
+                "placeholder": "Hubkapazität"
+            },
+            "containersPerHour": {
+                "title": "Container pro Stunde",
+                "placeholder": "Container pro Stunde"
+            },
+            "maxLoadCapacity": {
+                "title": "Maximale Tragfähigkeit (kg)",
+                "placeholder": "Maximale Tragfähigkeit"
+            },
+            "averageSpeed": {
+                "title": "Durchschnittsgeschwindigkeit (km/h)",
+                "placeholder": "Durchschnittsgeschwindigkeit"
+            },
+            "containersPerTrip": {
+                "title": "Container pro Fahrt",
+                "placeholder": "Container pro Fahrt"
+            },
+            "type": {
+                "title": "Ressourcentyp",
+                "options": {
+                    "stsCrane": "STS-Kran",
+                    "yardGantry": "Hof-Portalkran",
+                    "truck": "LKW"
+                }
+            }
+        },
+        "actions": {
+            "deactivate": "Physische Ressource deaktivieren"
+        }
+    },
+    "storageArea": {
+        "tabs": {
+            "dashboard": "Lagerbereich Dashboard",
+            "view_dashboard": "Lagerbereiche anzeigen",
+            "search": "Lagerbereiche suchen",
+            "create": "Lagerbereich erstellen",
+            "view": "Lagerbereich anzeigen",
+            "edit": "Lagerbereich bearbeiten"
+        },
+        "infoTitle": "Informationen zum Lagerbereich",
+        "title": "Lagerbereiche",
+        "subtitle": {
+            "search": "Verwalten und Anzeigen aller registrierten Lagerbereiche",
+            "dashboard": "Bedienfeld für alle Lagerbereichsfunktionen",
+            "view_dashboard": "Lagerbereiche anzeigen",
+            "create": "Einen neuen Lagerbereich im System registrieren",
+            "view": "Details zum Lagerbereich anzeigen",
+            "edit": "Einen vorhandenen Lagerbereich im System bearbeiten"
+        },
+        "printer": {
+            "docks_serviced": "bediente Docks",
+            "capacity_usage": "Kapazitätsauslastung",
+            "units": "Einheiten",
+            "available": "verfügbar"
+        }
+    }
+}

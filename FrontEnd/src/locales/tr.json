@@ -1,0 +1,430 @@
+{
+    "common": {
+        "loading": "Yükleniyor...",
+        "noData": "Veri yok",
+        "statistics": "İstatistikler"
+    },
+    "buttons": {
+        "save": "Kaydet",
+        "cancel": "İptal",
+        "delete": "Sil",
+        "edit": "Düzenle",
+        "create": "Oluştur",
+        "search": "Ara",
+        "select": "Seç",
+        "activate": "Etkinleştir",
+        "deactivate": "Devre dışı bırak",
+        "filter": {
+            "title": "Filtreler",
+            "add": "Filtrele",
+            "clear": "Filtreleri Temizle"
+        },
+        "pagination": {
+            "previous": "Önceki",
+            "next": "Sonraki"
+        },
+        "login": "Giriş",
+        "goBackToLogin": "Girişe Geri Dön",
+        "logout": "Çıkış"
+    },
+    "unsavedChanges": {
+        "title": "Değişiklikleri at?",
+        "message": "Kaydedilmemiş değişiklikleriniz var. Bu sayfadan ayrılıp değişiklikleri atmak istediğinize emin misiniz?",
+        "confirm": "At",
+        "cancel": "Düzenlemeye Devam Et"
+    },
+    "dashboard": {
+        "sidebarTitle": "Gösterge Paneli",
+        "title": "PortIT Gösterge Paneli",
+        "subtitle": "PortIT sisteminin genel görünümü",
+        "3DModel": {
+            "title": "3D Liman Görselleştirme",
+            "description": "Tüm liman tesisinin etkileşimli 3D temsilini görüntüleyin. İskele doluluklarını, gemi konumlarını, depolama alanlarını ve kaynakları gerçek zamanlı olarak takip edin.",
+            "open": "3D Modeli Aç"
+        }
+    },
+    "admin": {
+        "sidebarTitle": "Yönetici",
+        "title": "Yönetici Paneli",
+        "subtitle": "Yönetimsel genel bakış ve yönetim",
+        "userManagement": {
+            "title": "Kullanıcı Yönetimi",
+            "subtitle": "Sistem kullanıcılarını, rolleri ve izinleri yönetin."
+        },
+        "auditLogs": {
+            "title": "Denetim Kayıtları",
+            "subtitle": "Sistem etkinlik günlüklerini görüntüleyin ve izleyin."
+        }
+    },
+    "user": {
+        "fields": {
+            "email": {
+                "title": "E-posta",
+                "placeholder": "email@mail.com"
+            },
+            "role": {
+                "title": "Rol",
+                "placeholder": "Kullanıcı rolü seçin",
+                "options": {
+                    "admin": "Yönetici",
+                    "saoRep": "SAO Temsilcisi",
+                    "pao": "Liman Yetkilisi",
+                    "logisticsOperator": "Lojistik Operatörü"
+                }
+            },
+            "isActive": {
+                "title": "Aktif",
+                "options": {
+                    "active": "Evet",
+                    "inactive": "Hayır"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Kullanıcı Paneli",
+            "create": "Kullanıcı Oluştur",
+            "view": "Kullanıcıları Görüntüle",
+            "search": "Kullanıcı Ara"
+        },
+        "infoTitle": "Kullanıcı detayları",
+        "title": "Kullanıcılar",
+        "subtitle": {
+            "dashboard": "Kullanıcı genel görünümü ve yönetimi",
+            "create": "Sisteme yeni bir kullanıcı kaydedin",
+            "view": "Mevcut kullanıcıları görüntüle ve yönet"
+        }
+    },
+    "physicalCharacteristics": {
+        "title": "Fiziksel Özellikler (m)",
+        "length": {
+            "title": "Uzunluk",
+            "placeholder": "Metre cinsinden uzunluk"
+        },
+        "depth": {
+            "title": "Derinlik",
+            "placeholder": "Metre cinsinden derinlik"
+        },
+        "draft": {
+            "title": "Draft",
+            "placeholder": "Metre cinsinden draft"
+        }
+    },
+    "dock": {
+        "fields": {
+            "code": {
+                "title": "Kod",
+                "placeholder": "İskele kodu"
+            },
+            "name": {
+                "title": "Ad",
+                "placeholder": "İskele adı"
+            },
+            "location": {
+                "title": "Konum",
+                "placeholder": "İskele konumu"
+            },
+            "supportedVesselTypes": {
+                "title": "Desteklenen Gemi Tipleri",
+                "vesselTypes": {
+                    "title": "Gemi Tipleri",
+                    "placeholder": "Gemi tiplerini seçin"
+                },
+                "vesselType": "Gemi Tipi"
+            }
+        },
+        "tabs": {
+            "dashboard": "İskele Paneli",
+            "view_dashboard": "İskeleleri Görüntüle",
+            "search": "İskele Ara",
+            "create": "İskele Oluştur",
+            "view": "İskeleyi Görüntüle",
+            "edit": "İskeleyi Düzenle"
+        },
+        "generalFields": "Genel alanlar",
+        "infoTitle": "İskele Bilgisi",
+        "title": "İskeleler",
+        "subtitle": {
+            "dashboard": "İskele istatistikleri ve faaliyetleri genel bakışı",
+            "search": "Tüm kayıtlı iskeleleri yönetin ve görüntüleyin",
+            "create": "Sisteme yeni bir iskele kaydedin",
+            "edit": "Sistemdeki mevcut iskelenin düzenlenmesi"
+        },
+        "registeredDocks": "Kayıtlı İskeleler"
+    },
+    "vesselType": {
+        "fields": {
+            "name": {
+                "title": "Ad",
+                "placeholder": "Gemi tipi adı"
+            },
+            "description": {
+                "title": "Açıklama",
+                "placeholder": "Gemi tipi açıklaması"
+            },
+            "capacity": {
+                "title": "Kapasite",
+                "placeholder": "TEU cinsinden konteyner kapasitesi"
+            },
+            "containerCapacity": {
+                "title": "Konteyner Kapasitesi (TEU)",
+                "maxNumberOfRows": {
+                    "title": "Maks. Satır Sayısı",
+                    "placeholder": "TEU'da Maks. Satırlar"
+                },
+                "maxNumberOfBays": {
+                    "title": "Maks. Bölme Sayısı",
+                    "placeholder": "TEU'da Maks. Bölmeler"
+                },
+                "maxNumberOfTiers": {
+                    "title": "Maks. Katman Sayısı",
+                    "placeholder": "TEU'da Maks. Katmanlar"
+                }
+            }
+        },
+        "generalFields": "Genel alanlar",
+        "tabs": {
+            "dashboard": "Gemi Tipleri Paneli",
+            "view_dashboard": "Gemi Tiplerini Görüntüle",
+            "search": "Gemi Tipi Ara",
+            "create": "Gemi Tipi Oluştur",
+            "view": "Gemi Tipini Görüntüle",
+            "edit": "Gemi Tipini Düzenle"
+        },
+        "infoTitle": "Gemi Tipi Bilgisi",
+        "title": "Gemi Tipleri",
+        "subtitle": {
+            "dashboard": "Gemi tipi istatistikleri ve faaliyetleri genel bakışı",
+            "search": "Tüm kayıtlı gemi tiplerini yönetin ve görüntüleyin",
+            "create": "Sisteme yeni bir gemi tipi kaydedin",
+            "edit": "Sistemde mevcut bir gemi tipini düzenleyin"
+        },
+        "registeredVesselTypes": "Kayıtlı Gemi Tipleri"
+    },
+    "vessel": {
+        "fields": {
+            "name": {
+                "title": "Ad",
+                "placeholder": "Gemi adı"
+            },
+            "imoNumber": {
+                "title": "IMO Numarası",
+                "placeholder": "Gemi IMO numarası"
+            },
+            "owner": {
+                "title": "Sahibi",
+                "placeholder": "Sahip kuruluş"
+            },
+            "vesselType": {
+                "title": "Gemi Tipi",
+                "placeholder": "Gemi tipini seçin"
+            }
+        },
+        "infoTitle": "Gemi bilgileri",
+        "physicalCharacteristicsTitle": "Fiziksel Özellikler",
+        "tabs": {
+            "dashboard": "Gemi Paneli",
+            "view_dashboard": "Gemileri Görüntüle",
+            "search": "Gemi Ara",
+            "create": "Gemi Oluştur",
+            "view": "Gemiyi Görüntüle",
+            "edit": "Gemiyi Düzenle"
+        },
+        "title": "Gemiler",
+        "subtitle": {
+            "dashboard": "Gemi istatistikleri ve faaliyetleri genel bakışı",
+            "search": "Kayıtlı tüm gemileri yönetin ve görüntüleyin",
+            "create": "Sisteme yeni bir gemi kaydedin",
+            "edit": "Mevcut bir gemiyi düzenleyin"
+        },
+        "ownedBy": "Sahip olan",
+        "registeredVessels": "Kayıtlı Gemiler"
+    },
+    "staff": {
+        "fields": {
+            "mechanographicNumber": {
+                "title": "Mekanografik Numara",
+                "placeholder": "Mekanografik Numara"
+            },
+            "name": {
+                "title": "İsim",
+                "placeholder": "Çalışan adı"
+            },
+            "email": {
+                "title": "E-posta",
+                "placeholder": "E-posta adresi"
+            },
+            "phoneNumber": {
+                "title": "Telefon",
+                "placeholder": "Telefon numarası"
+            },
+            "qualifications": {
+                "title": "Yeterlilikler",
+                "placeholder": "Yeterlilikleri seçin"
+            },
+            "status": {
+                "title": "Durum",
+                "options": {
+                    "available": "Mevcut",
+                    "unavailable": "Mevcut değil",
+                    "temporarilyReassigned": "Geçici olarak yeniden atandı"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Personel Paneli",
+            "view_dashboard": "Personeli Görüntüle",
+            "search": "Personel Ara",
+            "create": "Personel Oluştur",
+            "view": "Personeli Görüntüle",
+            "edit": "Personeli Düzenle"
+        },
+        "infoTitle": "Personel Bilgisi",
+        "title": "Personel",
+        "subtitle": {
+            "search": "Kayıtlı tüm personeli yönetin ve görüntüleyin",
+            "dashboard": "Personel istatistikleri genel bakışı",
+            "create": "Yeni bir personel kaydedin",
+            "view": "Personel detaylarını görüntüle",
+            "edit": "Mevcut personeli düzenle"
+        }
+    },
+    "qualification": {
+        "tabs": {
+            "dashboard": "Yeterlilik Paneli",
+            "view_dashboard": "Yeterlilikleri Görüntüle",
+            "search": "Yeterliliği Ara",
+            "create": "Yeterlilik Oluştur",
+            "view": "Yeterliliği Görüntüle",
+            "edit": "Yeterliliği Düzenle"
+        },
+        "infoTitle": "Yeterlilik Bilgisi",
+        "title": "Yeterlilikler",
+        "subtitle": {
+            "search": "Kayıtlı tüm yeterlilikleri yönetin ve görüntüleyin",
+            "dashboard": "Yeterlilik istatistiklerinin genel görünümü",
+            "create": "Sisteme yeni bir yeterlilik kaydedin",
+            "edit": "Mevcut bir yeterliliği düzenleyin",
+            "view": "Yeterlilik detaylarını görüntüle"
+        },
+        "fields": {
+            "idCode": {
+                "title": "Yeterlilik Kodu",
+                "placeholder": "Yeterlilik kodu"
+            },
+            "qualificationName": {
+                "title": "Yeterlilik Adı",
+                "placeholder": "Yeterlilik adı"
+            }
+        }
+    },
+    "physicalResource": {
+        "tabs": {
+            "dashboard": "Fiziksel Kaynak Paneli",
+            "view_dashboard": "Fiziksel Kaynakları Görüntüle",
+            "search": "Fiziksel Kaynak Ara",
+            "create": "Fiziksel Kaynak Oluştur",
+            "view": "Fiziksel Kaynağı Görüntüle",
+            "edit": "Fiziksel Kaynağı Düzenle"
+        },
+        "infoTitle": "Fiziksel Kaynak Bilgisi",
+        "title": "Fiziksel Kaynaklar",
+        "subtitle": {
+            "search": "Kayıtlı tüm fiziksel kaynakları yönetin ve görüntüleyin",
+            "dashboard": "Tüm fiziksel kaynaklar için kontrol paneli",
+            "view_dashboard": "Fiziksel Kaynakları Görüntüle",
+            "create": "Sisteme yeni bir fiziksel kaynak kaydedin",
+            "view": "Fiziksel kaynak detaylarını görüntüle",
+            "edit": "Mevcut fiziksel kaynağı düzenle"
+        },
+        "generalFields": "Genel alanlar",
+        "specificFields": "Özel alanlar",
+        "fields": {
+            "code": {
+                "title": "Kod",
+                "placeholder": "Kaynak kodu"
+            },
+            "description": {
+                "title": "Açıklama",
+                "placeholder": "Kaynak açıklaması"
+            },
+            "status": {
+                "title": "Durum",
+                "placeholder": "Kaynak durumunu seçin",
+                "options": {
+                    "available": "Mevcut",
+                    "maintenance": "Bakım",
+                    "outOfService": "Hizmet dışı"
+                }
+            },
+            "qualifications": {
+                "title": "Gerekli yeterlilikler",
+                "placeholder": "Bu kaynağı işletmek için gereken yeterlilikler"
+            },
+            "setupTime": {
+                "title": "Kurulum süresi (dakika)",
+                "placeholder": "Kurulum süresi"
+            },
+            "servingDocks": {
+                "title": "Hizmet verilen iskeleler",
+                "placeholder": "Servis verilen iskeleleri seçin"
+            },
+            "liftingCapacity": {
+                "title": "Kaldırma Kapasitesi (kg)",
+                "placeholder": "Kaldırma kapasitesi"
+            },
+            "containersPerHour": {
+                "title": "Saatte konteyner",
+                "placeholder": "Saatte konteyner"
+            },
+            "maxLoadCapacity": {
+                "title": "Maks. yük kapasitesi (kg)",
+                "placeholder": "Maks. yük kapasitesi"
+            },
+            "averageSpeed": {
+                "title": "Ortalama hız (km/s)",
+                "placeholder": "Ortalama hız"
+            },
+            "containersPerTrip": {
+                "title": "Sefer başına konteyner",
+                "placeholder": "Sefer başına konteyner"
+            },
+            "type": {
+                "title": "Kaynak tipi",
+                "options": {
+                    "stsCrane": "STS Vinç",
+                    "yardGantry": "Saha Gantri Vinçi",
+                    "truck": "Kamyon"
+                }
+            }
+        },
+        "actions": {
+            "deactivate": "Fiziksel Kaynağı Devre Dışı Bırak"
+        }
+    },
+    "storageArea": {
+        "tabs": {
+            "dashboard": "Depolama Alanı Paneli",
+            "view_dashboard": "Depolama Alanlarını Görüntüle",
+            "search": "Depolama Alanı Ara",
+            "create": "Depolama Alanı Oluştur",
+            "view": "Depolama Alanını Görüntüle",
+            "edit": "Depolama Alanını Düzenle"
+        },
+        "infoTitle": "Depolama Alanı Bilgisi",
+        "title": "Depolama Alanları",
+        "subtitle": {
+            "search": "Kayıtlı tüm depolama alanlarını yönetin ve görüntüleyin",
+            "dashboard": "Depolama alanları için kontrol paneli",
+            "view_dashboard": "Depolama Alanlarını Görüntüle",
+            "create": "Sisteme yeni bir depolama alanı kaydedin",
+            "view": "Depolama alanı detaylarını görüntüle",
+            "edit": "Mevcut depolama alanını düzenle"
+        },
+        "printer": {
+            "docks_serviced": "hizmet verilen iskeleler",
+            "capacity_usage": "Kapasite Kullanımı",
+            "units": "birimler",
+            "available": "mevcut"
+        }
+    }
+}

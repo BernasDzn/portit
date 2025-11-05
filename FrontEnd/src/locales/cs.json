@@ -1,0 +1,430 @@
+{
+    "common": {
+        "loading": "Načítání...",
+        "noData": "Žádná dostupná data",
+        "statistics": "Statistiky"
+    },
+    "buttons": {
+        "save": "Uložit",
+        "cancel": "Zrušit",
+        "delete": "Smazat",
+        "edit": "Upravit",
+        "create": "Vytvořit",
+        "search": "Hledat",
+        "select": "Vybrat",
+        "activate": "Aktivovat",
+        "deactivate": "Deaktivovat",
+        "filter": {
+            "title": "Filtry",
+            "add": "Filtrovat",
+            "clear": "Vymazat filtry"
+        },
+        "pagination": {
+            "previous": "Předchozí",
+            "next": "Další"
+        },
+        "login": "Přihlásit se",
+        "goBackToLogin": "Zpět na přihlášení",
+        "logout": "Odhlásit se"
+    },
+    "unsavedChanges": {
+        "title": "Zrušit změny?",
+        "message": "Máte neuložené změny. Opravdu chcete opustit tuto stránku a zahodit změny?",
+        "confirm": "Zahodit",
+        "cancel": "Pokračovat v úpravách"
+    },
+    "dashboard": {
+        "sidebarTitle": "Nástěnka",
+        "title": "PortIT Nástěnka",
+        "subtitle": "Přehled systému PortIT",
+        "3DModel": {
+            "title": "3D vizualizace přístavu",
+            "description": "Zobrazte interaktivní 3D reprezentaci celého přístavního komplexu. Sledujte obsazenost doků, pozice lodí, skladovací prostory a zdroje v reálném čase.",
+            "open": "Otevřít 3D model"
+        }
+    },
+    "admin": {
+        "sidebarTitle": "Admin",
+        "title": "Admin rozhraní",
+        "subtitle": "Správní přehled a řízení",
+        "userManagement": {
+            "title": "Správa uživatelů",
+            "subtitle": "Spravujte uživatele systému, role a oprávnění."
+        },
+        "auditLogs": {
+            "title": "Auditní záznamy",
+            "subtitle": "Zobrazit a sledovat systémové logy aktivit."
+        }
+    },
+    "user": {
+        "fields": {
+            "email": {
+                "title": "Email",
+                "placeholder": "email@mail.com"
+            },
+            "role": {
+                "title": "Role",
+                "placeholder": "Vyberte roli uživatele",
+                "options": {
+                    "admin": "Správce",
+                    "saoRep": "Zástupce SAO",
+                    "pao": "Úředník přístavní správy",
+                    "logisticsOperator": "Provozovatel logistiky"
+                }
+            },
+            "isActive": {
+                "title": "Aktivní",
+                "options": {
+                    "active": "Ano",
+                    "inactive": "Ne"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Uživatelská nástěnka",
+            "create": "Vytvořit uživatele",
+            "view": "Zobrazit uživatele",
+            "search": "Hledat uživatele"
+        },
+        "infoTitle": "Detaily uživatele",
+        "title": "Uživatelé",
+        "subtitle": {
+            "dashboard": "Přehled a správa uživatelů",
+            "create": "Zaregistrujte nového uživatele do systému",
+            "view": "Zobrazit a spravovat existující uživatele"
+        }
+    },
+    "physicalCharacteristics": {
+        "title": "Fyzické charakteristiky (m)",
+        "length": {
+            "title": "Délka",
+            "placeholder": "Délka v metrech"
+        },
+        "depth": {
+            "title": "Hloubka",
+            "placeholder": "Hloubka v metrech"
+        },
+        "draft": {
+            "title": "Ponor",
+            "placeholder": "Ponor v metrech"
+        }
+    },
+    "dock": {
+        "fields": {
+            "code": {
+                "title": "Kód",
+                "placeholder": "Kód doku"
+            },
+            "name": {
+                "title": "Název",
+                "placeholder": "Název doku"
+            },
+            "location": {
+                "title": "Umístění",
+                "placeholder": "Umístění doku"
+            },
+            "supportedVesselTypes": {
+                "title": "Podporované typy lodí",
+                "vesselTypes": {
+                    "title": "Typy lodí",
+                    "placeholder": "Vyberte typy lodí"
+                },
+                "vesselType": "Typ lodi"
+            }
+        },
+        "tabs": {
+            "dashboard": "Nástěnka doků",
+            "view_dashboard": "Zobrazit doky",
+            "search": "Hledat doky",
+            "create": "Vytvořit dok",
+            "view": "Zobrazit dok",
+            "edit": "Upravit dok"
+        },
+        "generalFields": "Obecná pole",
+        "infoTitle": "Informace o doku",
+        "title": "Doky",
+        "subtitle": {
+            "dashboard": "Přehled statistik a aktivit doků",
+            "search": "Spravujte a zobrazte všechny registrované doky",
+            "create": "Zaregistrujte nový dok do systému",
+            "edit": "Upravit existující dok v systému"
+        },
+        "registeredDocks": "Registrované doky"
+    },
+    "vesselType": {
+        "fields": {
+            "name": {
+                "title": "Název",
+                "placeholder": "Název typu lodi"
+            },
+            "description": {
+                "title": "Popis",
+                "placeholder": "Popis typu lodi"
+            },
+            "capacity": {
+                "title": "Kapacita",
+                "placeholder": "Kapacita kontejnerů v TEU"
+            },
+            "containerCapacity": {
+                "title": "Kapacita kontejnerů (TEU)",
+                "maxNumberOfRows": {
+                    "title": "Maximální počet řad",
+                    "placeholder": "Max řad v TEU"
+                },
+                "maxNumberOfBays": {
+                    "title": "Maximální počet prostor",
+                    "placeholder": "Max prostor v TEU"
+                },
+                "maxNumberOfTiers": {
+                    "title": "Maximální počet úrovní",
+                    "placeholder": "Max úrovní v TEU"
+                }
+            }
+        },
+        "generalFields": "Obecná pole",
+        "tabs": {
+            "dashboard": "Nástěnka typů lodí",
+            "view_dashboard": "Zobrazit typy lodí",
+            "search": "Hledat typy lodí",
+            "create": "Vytvořit typ lodi",
+            "view": "Zobrazit typ lodi",
+            "edit": "Upravit typ lodi"
+        },
+        "infoTitle": "Informace o typu lodi",
+        "title": "Typy lodí",
+        "subtitle": {
+            "dashboard": "Přehled statistik a aktivit typů lodí",
+            "search": "Spravujte a zobrazte všechny registrované typy lodí",
+            "create": "Zaregistrujte nový typ lodi do systému",
+            "edit": "Upravit existující typ lodi v systému"
+        },
+        "registeredVesselTypes": "Registrované typy lodí"
+    },
+    "vessel": {
+        "fields": {
+            "name": {
+                "title": "Název",
+                "placeholder": "Název lodi"
+            },
+            "imoNumber": {
+                "title": "IMO číslo",
+                "placeholder": "IMO číslo lodi"
+            },
+            "owner": {
+                "title": "Vlastník",
+                "placeholder": "Organizace vlastník"
+            },
+            "vesselType": {
+                "title": "Typ lodi",
+                "placeholder": "Vyberte typ lodi"
+            }
+        },
+        "infoTitle": "Informace o lodi",
+        "physicalCharacteristicsTitle": "Fyzické charakteristiky",
+        "tabs": {
+            "dashboard": "Nástěnka lodí",
+            "view_dashboard": "Zobrazit lodě",
+            "search": "Hledat lodě",
+            "create": "Vytvořit loď",
+            "view": "Zobrazit loď",
+            "edit": "Upravit loď"
+        },
+        "title": "Lodě",
+        "subtitle": {
+            "dashboard": "Přehled statistik a aktivit lodí",
+            "search": "Spravujte a zobrazte všechny registrované lodě",
+            "create": "Zaregistrujte novou loď v systému",
+            "edit": "Upravit existující loď v systému"
+        },
+        "ownedBy": "Vlastník",
+        "registeredVessels": "Registrované lodě"
+    },
+    "staff": {
+        "fields": {
+            "mechanographicNumber": {
+                "title": "Mechanografické číslo",
+                "placeholder": "Mechanografické číslo"
+            },
+            "name": {
+                "title": "Jméno",
+                "placeholder": "Jméno zaměstnance"
+            },
+            "email": {
+                "title": "Email",
+                "placeholder": "Emailová adresa"
+            },
+            "phoneNumber": {
+                "title": "Telefonní číslo",
+                "placeholder": "Telefonní číslo"
+            },
+            "qualifications": {
+                "title": "Kvalifikace",
+                "placeholder": "Vyberte kvalifikace"
+            },
+            "status": {
+                "title": "Stav",
+                "options": {
+                    "available": "Dostupný",
+                    "unavailable": "Nedostupný",
+                    "temporarilyReassigned": "Dočasně přeložen"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Nástěnka zaměstnanců",
+            "view_dashboard": "Zobrazit zaměstnance",
+            "search": "Hledat zaměstnance",
+            "create": "Vytvořit zaměstnance",
+            "view": "Zobrazit zaměstnance",
+            "edit": "Upravit zaměstnance"
+        },
+        "infoTitle": "Informace o zaměstnanci",
+        "title": "Zaměstnanci",
+        "subtitle": {
+            "search": "Spravujte a zobrazte všechny registrované zaměstnance",
+            "dashboard": "Přehled statistik a aktivit zaměstnanců",
+            "create": "Zaregistrujte nového zaměstnance v systému",
+            "view": "Zobrazit detaily zaměstnance",
+            "edit": "Upravit existujícího zaměstnance v systému"
+        }
+    },
+    "qualification": {
+        "tabs": {
+            "dashboard": "Nástěnka kvalifikací",
+            "view_dashboard": "Zobrazit kvalifikace",
+            "search": "Hledat kvalifikace",
+            "create": "Vytvořit kvalifikaci",
+            "view": "Zobrazit kvalifikaci",
+            "edit": "Upravit kvalifikaci"
+        },
+        "infoTitle": "Informace o kvalifikaci",
+        "title": "Kvalifikace",
+        "subtitle": {
+            "search": "Spravujte a zobrazte všechny registrované kvalifikace",
+            "dashboard": "Přehled statistik a aktivit kvalifikací",
+            "create": "Zaregistrujte novou kvalifikaci v systému",
+            "edit": "Upravit existující kvalifikaci v systému",
+            "view": "Zobrazit detaily kvalifikace"
+        },
+        "fields": {
+            "idCode": {
+                "title": "Kód kvalifikace",
+                "placeholder": "Kód kvalifikace"
+            },
+            "qualificationName": {
+                "title": "Název kvalifikace",
+                "placeholder": "Název kvalifikace"
+            }
+        }
+    },
+    "physicalResource": {
+        "tabs": {
+            "dashboard": "Nástěnka fyzických zdrojů",
+            "view_dashboard": "Zobrazit fyzické zdroje",
+            "search": "Hledat fyzické zdroje",
+            "create": "Vytvořit fyzický zdroj",
+            "view": "Zobrazit fyzický zdroj",
+            "edit": "Upravit fyzický zdroj"
+        },
+        "infoTitle": "Informace o fyzickém zdroji",
+        "title": "Fyzické zdroje",
+        "subtitle": {
+            "search": "Spravujte a zobrazte všechny registrované fyzické zdroje",
+            "dashboard": "Ovládací panel pro všechny fyzické zdroje",
+            "view_dashboard": "Zobrazit fyzické zdroje",
+            "create": "Zaregistrujte nový fyzický zdroj v systému",
+            "view": "Zobrazit detaily fyzického zdroje",
+            "edit": "Upravit existující fyzický zdroj v systému"
+        },
+        "generalFields": "Obecná pole",
+        "specificFields": "Specifická pole",
+        "fields": {
+            "code": {
+                "title": "Kód",
+                "placeholder": "Kód zdroje"
+            },
+            "description": {
+                "title": "Popis",
+                "placeholder": "Popis zdroje"
+            },
+            "status": {
+                "title": "Stav",
+                "placeholder": "Vyberte stav zdroje",
+                "options": {
+                    "available": "Dostupný",
+                    "maintenance": "Údržba",
+                    "outOfService": "Mimo provoz"
+                }
+            },
+            "qualifications": {
+                "title": "Požadované kvalifikace",
+                "placeholder": "Kvalifikace potřebné k obsluze tohoto zdroje"
+            },
+            "setupTime": {
+                "title": "Čas nastavení (minuty)",
+                "placeholder": "Čas nastavení"
+            },
+            "servingDocks": {
+                "title": "Obsluhující doky",
+                "placeholder": "Vyberte obsluhující doky"
+            },
+            "liftingCapacity": {
+                "title": "Nosnost (kg)",
+                "placeholder": "Nosnost"
+            },
+            "containersPerHour": {
+                "title": "Kontejnery za hodinu",
+                "placeholder": "Kontejnery za hodinu"
+            },
+            "maxLoadCapacity": {
+                "title": "Maximální nosnost (kg)",
+                "placeholder": "Maximální nosnost"
+            },
+            "averageSpeed": {
+                "title": "Průměrná rychlost (km/h)",
+                "placeholder": "Průměrná rychlost"
+            },
+            "containersPerTrip": {
+                "title": "Kontejnery na jízdu",
+                "placeholder": "Kontejnery na jízdu"
+            },
+            "type": {
+                "title": "Typ zdroje",
+                "options": {
+                    "stsCrane": "Příbřežní jeřáb (STS)",
+                    "yardGantry": "Příhradový jeřáb",
+                    "truck": "Nákladní auto"
+                }
+            }
+        },
+        "actions": {
+            "deactivate": "Deaktivovat fyzický zdroj"
+        }
+    },
+    "storageArea": {
+        "tabs": {
+            "dashboard": "Nástěnka skladovacích oblastí",
+            "view_dashboard": "Zobrazit skladovací oblasti",
+            "search": "Hledat skladovací oblasti",
+            "create": "Vytvořit skladovací oblast",
+            "view": "Zobrazit skladovací oblast",
+            "edit": "Upravit skladovací oblast"
+        },
+        "infoTitle": "Informace o skladovací oblasti",
+        "title": "Skladovací oblasti",
+        "subtitle": {
+            "search": "Spravujte a zobrazte všechny registrované skladovací oblasti",
+            "dashboard": "Ovládací panel pro všechny funkce skladovací oblasti",
+            "view_dashboard": "Zobrazit skladovací oblasti",
+            "create": "Zaregistrujte novou skladovací oblast v systému",
+            "view": "Zobrazit detaily skladovací oblasti",
+            "edit": "Upravit existující skladovací oblast v systému"
+        },
+        "printer": {
+            "docks_serviced": "obsluhované doky",
+            "capacity_usage": "Využití kapacity",
+            "units": "jednotky",
+            "available": "dostupné"
+        }
+    }
+}

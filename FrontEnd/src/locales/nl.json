@@ -1,0 +1,430 @@
+{
+    "common": {
+        "loading": "Laden...",
+        "noData": "Geen gegevens beschikbaar",
+        "statistics": "Statistieken"
+    },
+    "buttons": {
+        "save": "Opslaan",
+        "cancel": "Annuleren",
+        "delete": "Verwijderen",
+        "edit": "Bewerken",
+        "create": "Aanmaken",
+        "search": "Zoeken",
+        "select": "Selecteren",
+        "activate": "Activeren",
+        "deactivate": "Deactiveren",
+        "filter": {
+            "title": "Filters",
+            "add": "Filteren",
+            "clear": "Filters wissen"
+        },
+        "pagination": {
+            "previous": "Vorige",
+            "next": "Volgende"
+        },
+        "login": "Inloggen",
+        "goBackToLogin": "Terug naar inloggen",
+        "logout": "Uitloggen"
+    },
+    "unsavedChanges": {
+        "title": "Wijzigingen weggooien?",
+        "message": "Je hebt niet-opgeslagen wijzigingen. Weet je zeker dat je deze pagina wilt verlaten en de wijzigingen wilt weggooien?",
+        "confirm": "Weggooien",
+        "cancel": "Blijf bewerken"
+    },
+    "dashboard": {
+        "sidebarTitle": "Dashboard",
+        "title": "PortIT Dashboard",
+        "subtitle": "Overzicht van het PortIT-systeem",
+        "3DModel": {
+            "title": "3D Havenvisualisatie",
+            "description": "Bekijk een interactieve 3D-weergave van de gehele havenfaciliteit. Houd kadebezetting, scheepsposities, opslaggebieden en middelen in realtime in de gaten.",
+            "open": "3D-model openen"
+        }
+    },
+    "admin": {
+        "sidebarTitle": "Beheer",
+        "title": "Admin Dashboard",
+        "subtitle": "Administratief overzicht en beheer",
+        "userManagement": {
+            "title": "Gebruikersbeheer",
+            "subtitle": "Beheer systeemgebruikers, rollen en machtigingen."
+        },
+        "auditLogs": {
+            "title": "Auditlogs",
+            "subtitle": "Bekijk en monitor systeemactiviteitlogs."
+        }
+    },
+    "user": {
+        "fields": {
+            "email": {
+                "title": "E-mail",
+                "placeholder": "email@mail.com"
+            },
+            "role": {
+                "title": "Rol",
+                "placeholder": "Selecteer gebruikersrol",
+                "options": {
+                    "admin": "Beheerder",
+                    "saoRep": "SAO Vertegenwoordiger",
+                    "pao": "Havenautoriteit functionaris",
+                    "logisticsOperator": "Logistiek operator"
+                }
+            },
+            "isActive": {
+                "title": "Actief",
+                "options": {
+                    "active": "Ja",
+                    "inactive": "Nee"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Gebruikersdashboard",
+            "create": "Gebruiker aanmaken",
+            "view": "Gebruikers bekijken",
+            "search": "Gebruikers zoeken"
+        },
+        "infoTitle": "Gebruikersgegevens",
+        "title": "Gebruikers",
+        "subtitle": {
+            "dashboard": "Gebruikersoverzicht en -beheer",
+            "create": "Registreer een nieuwe gebruiker in het systeem",
+            "view": "Bestaande gebruikers bekijken en beheren"
+        }
+    },
+    "physicalCharacteristics": {
+        "title": "Fysieke kenmerken (m)",
+        "length": {
+            "title": "Lengte",
+            "placeholder": "Lengte in meters"
+        },
+        "depth": {
+            "title": "Diepte",
+            "placeholder": "Diepte in meters"
+        },
+        "draft": {
+            "title": "Diepgang",
+            "placeholder": "Diepgang in meters"
+        }
+    },
+    "dock": {
+        "fields": {
+            "code": {
+                "title": "Code",
+                "placeholder": "Kadecode"
+            },
+            "name": {
+                "title": "Naam",
+                "placeholder": "Naam van de kade"
+            },
+            "location": {
+                "title": "Locatie",
+                "placeholder": "Kadelocatie"
+            },
+            "supportedVesselTypes": {
+                "title": "Ondersteunde schipstypen",
+                "vesselTypes": {
+                    "title": "Scheepstypen",
+                    "placeholder": "Selecteer scheepstypen"
+                },
+                "vesselType": "Scheepstype"
+            }
+        },
+        "tabs": {
+            "dashboard": "Kadedashboard",
+            "view_dashboard": "Kades bekijken",
+            "search": "Zoek kades",
+            "create": "Kade aanmaken",
+            "view": "Kade bekijken",
+            "edit": "Kade bewerken"
+        },
+        "generalFields": "Algemene velden",
+        "infoTitle": "Kade-informatie",
+        "title": "Kades",
+        "subtitle": {
+            "dashboard": "Overzicht van kade-statistieken en activiteiten",
+            "search": "Beheer en bekijk alle geregistreerde kades",
+            "create": "Registreer een nieuwe kade in het systeem",
+            "edit": "Bewerk een bestaande kade in het systeem"
+        },
+        "registeredDocks": "Geregistreerde kades"
+    },
+    "vesselType": {
+        "fields": {
+            "name": {
+                "title": "Naam",
+                "placeholder": "Naam van het scheepstype"
+            },
+            "description": {
+                "title": "Beschrijving",
+                "placeholder": "Beschrijving van het scheepstype"
+            },
+            "capacity": {
+                "title": "Capaciteit",
+                "placeholder": "Containercapaciteit in TEU"
+            },
+            "containerCapacity": {
+                "title": "Containercapaciteit (TEU)",
+                "maxNumberOfRows": {
+                    "title": "Max aantal rijen",
+                    "placeholder": "Max rijen in TEU"
+                },
+                "maxNumberOfBays": {
+                    "title": "Max aantal bakken",
+                    "placeholder": "Max bakken in TEU"
+                },
+                "maxNumberOfTiers": {
+                    "title": "Max aantal lagen",
+                    "placeholder": "Max lagen in TEU"
+                }
+            }
+        },
+        "generalFields": "Algemene velden",
+        "tabs": {
+            "dashboard": "Scheepstype-dashboard",
+            "view_dashboard": "Bekijk scheepstypen",
+            "search": "Zoek scheepstypen",
+            "create": "Maak scheepstype",
+            "view": "Bekijk scheepstype",
+            "edit": "Bewerk scheepstype"
+        },
+        "infoTitle": "Informatie over scheepstype",
+        "title": "Scheepstypen",
+        "subtitle": {
+            "dashboard": "Overzicht van statistieken en activiteiten per scheepstype",
+            "search": "Beheer en bekijk alle geregistreerde scheepstypen",
+            "create": "Registreer een nieuw scheepstype in het systeem",
+            "edit": "Bewerk een bestaand scheepstype in het systeem"
+        },
+        "registeredVesselTypes": "Geregistreerde scheepstypen"
+    },
+    "vessel": {
+        "fields": {
+            "name": {
+                "title": "Naam",
+                "placeholder": "Scheepsnaam"
+            },
+            "imoNumber": {
+                "title": "IMO-nummer",
+                "placeholder": "IMO-nummer van het schip"
+            },
+            "owner": {
+                "title": "Eigenaar",
+                "placeholder": "Eigenarenorganisatie"
+            },
+            "vesselType": {
+                "title": "Scheepstype",
+                "placeholder": "Selecteer scheepstype"
+            }
+        },
+        "infoTitle": "Scheepsinformatie",
+        "physicalCharacteristicsTitle": "Fysieke kenmerken",
+        "tabs": {
+            "dashboard": "Scheepsdashboard",
+            "view_dashboard": "Bekijk schepen",
+            "search": "Zoek schepen",
+            "create": "Maak schip",
+            "view": "Bekijk schip",
+            "edit": "Bewerk schip"
+        },
+        "title": "Schepen",
+        "subtitle": {
+            "dashboard": "Overzicht van scheepsstatistieken en -activiteiten",
+            "search": "Beheer en bekijk alle geregistreerde schepen",
+            "create": "Registreer een nieuw schip in het systeem",
+            "edit": "Bewerk een bestaand schip in het systeem"
+        },
+        "ownedBy": "Eigendom van",
+        "registeredVessels": "Geregistreerde schepen"
+    },
+    "staff": {
+        "fields": {
+            "mechanographicNumber": {
+                "title": "Mechanografisch nummer",
+                "placeholder": "Mechanografisch nummer"
+            },
+            "name": {
+                "title": "Naam",
+                "placeholder": "Naam personeelslid"
+            },
+            "email": {
+                "title": "E-mail",
+                "placeholder": "E-mailadres"
+            },
+            "phoneNumber": {
+                "title": "Telefoonnummer",
+                "placeholder": "Telefoonnummer"
+            },
+            "qualifications": {
+                "title": "Kwalificaties",
+                "placeholder": "Selecteer kwalificaties"
+            },
+            "status": {
+                "title": "Status",
+                "options": {
+                    "available": "Beschikbaar",
+                    "unavailable": "Niet beschikbaar",
+                    "temporarilyReassigned": "Tijdelijk toegewezen"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Personeelsdashboard",
+            "view_dashboard": "Bekijk personeelsleden",
+            "search": "Zoek personeel",
+            "create": "Maak personeelslid",
+            "view": "Bekijk personeelslid",
+            "edit": "Bewerk personeelslid"
+        },
+        "infoTitle": "Informatie personeelslid",
+        "title": "Personeel",
+        "subtitle": {
+            "search": "Beheer en bekijk al het geregistreerde personeel",
+            "dashboard": "Overzicht van personeelsstatistieken en -activiteiten",
+            "create": "Registreer een nieuw personeelslid in het systeem",
+            "view": "Bekijk personeelsdetails",
+            "edit": "Bewerk een bestaand personeelslid in het systeem"
+        }
+    },
+    "qualification": {
+        "tabs": {
+            "dashboard": "Kwalificatiedashboard",
+            "view_dashboard": "Bekijk kwalificaties",
+            "search": "Zoek kwalificaties",
+            "create": "Maak kwalificatie",
+            "view": "Bekijk kwalificatie",
+            "edit": "Bewerk kwalificatie"
+        },
+        "infoTitle": "Informatie kwalificatie",
+        "title": "Kwalificaties",
+        "subtitle": {
+            "search": "Beheer en bekijk alle geregistreerde kwalificaties",
+            "dashboard": "Overzicht van kwalificatiestatistieken en -activiteiten",
+            "create": "Registreer een nieuwe kwalificatie in het systeem",
+            "edit": "Bewerk een bestaande kwalificatie in het systeem",
+            "view": "Bekijk kwalificatiedetails"
+        },
+        "fields": {
+            "idCode": {
+                "title": "Kwalificatiecode",
+                "placeholder": "Kwalificatiecode"
+            },
+            "qualificationName": {
+                "title": "Naam kwalificatie",
+                "placeholder": "Naam kwalificatie"
+            }
+        }
+    },
+    "physicalResource": {
+        "tabs": {
+            "dashboard": "Fysieke resources-dashboard",
+            "view_dashboard": "Bekijk fysieke resources",
+            "search": "Zoek fysieke resources",
+            "create": "Maak fysieke resource",
+            "view": "Bekijk fysieke resource",
+            "edit": "Bewerk fysieke resource"
+        },
+        "infoTitle": "Informatie fysieke resource",
+        "title": "Fysieke resources",
+        "subtitle": {
+            "search": "Beheer en bekijk alle geregistreerde fysieke resources",
+            "dashboard": "Bedieningspaneel voor fysieke resources",
+            "view_dashboard": "Bekijk fysieke resources",
+            "create": "Registreer een nieuwe fysieke resource in het systeem",
+            "view": "Bekijk fysieke resourcedetails",
+            "edit": "Bewerk een bestaande fysieke resource in het systeem"
+        },
+        "generalFields": "Algemene velden",
+        "specificFields": "Specifieke velden",
+        "fields": {
+            "code": {
+                "title": "Code",
+                "placeholder": "Resourcecode"
+            },
+            "description": {
+                "title": "Beschrijving",
+                "placeholder": "Resourcebeschrijving"
+            },
+            "status": {
+                "title": "Status",
+                "placeholder": "Selecteer resourcestatus",
+                "options": {
+                    "available": "Beschikbaar",
+                    "maintenance": "Onderhoud",
+                    "outOfService": "Buiten gebruik"
+                }
+            },
+            "qualifications": {
+                "title": "Vereiste kwalificaties",
+                "placeholder": "Kwalificaties vereist om deze resource te bedienen"
+            },
+            "setupTime": {
+                "title": "Insteltijd (minuten)",
+                "placeholder": "Insteltijd"
+            },
+            "servingDocks": {
+                "title": "Bediende kades",
+                "placeholder": "Selecteer bediende kades"
+            },
+            "liftingCapacity": {
+                "title": "Heftcapaciteit (kgs)",
+                "placeholder": "Heftcapaciteit"
+            },
+            "containersPerHour": {
+                "title": "Containers per uur",
+                "placeholder": "Containers per uur"
+            },
+            "maxLoadCapacity": {
+                "title": "Maximale laadcapaciteit (kg)",
+                "placeholder": "Maximale laadcapaciteit"
+            },
+            "averageSpeed": {
+                "title": "Gemiddelde snelheid (km/h)",
+                "placeholder": "Gemiddelde snelheid"
+            },
+            "containersPerTrip": {
+                "title": "Containers per rit",
+                "placeholder": "Containers per rit"
+            },
+            "type": {
+                "title": "Resource type",
+                "options": {
+                    "stsCrane": "STS Kraan",
+                    "yardGantry": "Yard portaalkraan",
+                    "truck": "Vrachtwagen"
+                }
+            }
+        },
+        "actions": {
+            "deactivate": "Deactiveer fysieke resource"
+        }
+    },
+    "storageArea": {
+        "tabs": {
+            "dashboard": "Dashboard opslaggebieden",
+            "view_dashboard": "Bekijk opslaggebieden",
+            "search": "Zoek opslaggebieden",
+            "create": "Maak opslaggebied",
+            "view": "Bekijk opslaggebied",
+            "edit": "Bewerk opslaggebied"
+        },
+        "infoTitle": "Informatie opslaggebied",
+        "title": "Opslaggebieden",
+        "subtitle": {
+            "search": "Beheer en bekijk alle geregistreerde opslaggebieden",
+            "dashboard": "Bedieningspaneel voor alle opslaggebieden",
+            "view_dashboard": "Bekijk opslaggebieden",
+            "create": "Registreer een nieuw opslaggebied in het systeem",
+            "view": "Bekijk opslaggebied-details",
+            "edit": "Bewerk een bestaand opslaggebied in het systeem"
+        },
+        "printer": {
+            "docks_serviced": "bediende kades",
+            "capacity_usage": "Capaciteitsgebruik",
+            "units": "eenheden",
+            "available": "beschikbaar"
+        }
+    }
+}

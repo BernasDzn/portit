@@ -1,0 +1,430 @@
+{
+    "common": {
+        "loading": "Duke ngarkuar...",
+        "noData": "Nuk ka të dhëna",
+        "statistics": "Statistikat"
+    },
+    "buttons": {
+        "save": "Ruaj",
+        "cancel": "Anulo",
+        "delete": "Fshi",
+        "edit": "Redakto",
+        "create": "Krijo",
+        "search": "Kërko",
+        "select": "Zgjidh",
+        "activate": "Aktivo",
+        "deactivate": "Çaktivizo",
+        "filter": {
+            "title": "Filtro",
+            "add": "Shto filter",
+            "clear": "Pastro filterat"
+        },
+        "pagination": {
+            "previous": "Mëparshëm",
+            "next": "Tjetër"
+        },
+        "login": "Hyrje",
+        "goBackToLogin": "Kthehu te hyrja",
+        "logout": "Dil"
+    },
+    "unsavedChanges": {
+        "title": "Hedh jashtë ndryshimet?",
+        "message": "Keni ndryshime të pacaktuara. Jeni i sigurt që dëshironi të lini këtë faqe dhe të hidhni ndryshimet?",
+        "confirm": "Hedh",
+        "cancel": "Vazhdo redaktimin"
+    },
+    "dashboard": {
+        "sidebarTitle": "Paneli",
+        "title": "Paneli PortIT",
+        "subtitle": "Përmbledhje e sistemit PortIT",
+        "3DModel": {
+            "title": "Vizualizimi 3D i portit",
+            "description": "Shikoni një përfaqësim 3D interaktiv të të gjithë objektit të portit. Monitoroni zënien e molave, pozicionet e anijeve, zonat e magazinimit dhe burimet në kohë reale.",
+            "open": "Hap modelin 3D"
+        }
+    },
+    "admin": {
+        "sidebarTitle": "Admin",
+        "title": "Paneli i administratorit",
+        "subtitle": "Përmbledhje administrative dhe menaxhim",
+        "userManagement": {
+            "title": "Menaxhimi i përdoruesve",
+            "subtitle": "Menaxhoni përdoruesit e sistemit, rolet dhe lejet."
+        },
+        "auditLogs": {
+            "title": "Logjet e auditimit",
+            "subtitle": "Shikoni dhe monitoroni logjet e aktivitetit të sistemit."
+        }
+    },
+    "user": {
+        "fields": {
+            "email": {
+                "title": "Email",
+                "placeholder": "email@mail.com"
+            },
+            "role": {
+                "title": "Roli",
+                "placeholder": "Zgjidh rolin e përdoruesit",
+                "options": {
+                    "admin": "Administrator",
+                    "saoRep": "Përfaqësues SAO",
+                    "pao": "Zyrtar i Autoritetit Portual",
+                    "logisticsOperator": "Operator Logjistik"
+                }
+            },
+            "isActive": {
+                "title": "Aktiv",
+                "options": {
+                    "active": "Po",
+                    "inactive": "Jo"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Paneli i përdoruesit",
+            "create": "Krijo përdorues",
+            "view": "Shiko përdoruesit",
+            "search": "Kërko përdorues"
+        },
+        "infoTitle": "Detajet e përdoruesit",
+        "title": "Përdoruesit",
+        "subtitle": {
+            "dashboard": "Përmbledhje dhe menaxhim i përdoruesve",
+            "create": "Regjistro një përdorues të ri në sistem",
+            "view": "Shiko dhe menaxho përdoruesit ekzistues"
+        }
+    },
+    "physicalCharacteristics": {
+        "title": "Karakteristikat fizike (m)",
+        "length": {
+            "title": "Gjatësia",
+            "placeholder": "Gjatësia në metra"
+        },
+        "depth": {
+            "title": "Thellësia",
+            "placeholder": "Thellësia në metra"
+        },
+        "draft": {
+            "title": "Kopa",
+            "placeholder": "Kopa në metra"
+        }
+    },
+    "dock": {
+        "fields": {
+            "code": {
+                "title": "Kodi",
+                "placeholder": "Kodi i molit"
+            },
+            "name": {
+                "title": "Emri",
+                "placeholder": "Emri i molit"
+            },
+            "location": {
+                "title": "Lokacioni",
+                "placeholder": "Lokacioni i molit"
+            },
+            "supportedVesselTypes": {
+                "title": "Llojet e mbështetura të anijeve",
+                "vesselTypes": {
+                    "title": "Llojet e anijeve",
+                    "placeholder": "Zgjidh llojet e anijeve"
+                },
+                "vesselType": "Lloji i anijes"
+            }
+        },
+        "tabs": {
+            "dashboard": "Paneli i molit",
+            "view_dashboard": "Shiko molat",
+            "search": "Kërko mola",
+            "create": "Krijo mol",
+            "view": "Shiko molin",
+            "edit": "Redakto molin"
+        },
+        "generalFields": "Fushat e përgjithshme",
+        "infoTitle": "Informacion mbi molin",
+        "title": "Molat",
+        "subtitle": {
+            "dashboard": "Përmbledhje e statistikave dhe aktiviteteve të molit",
+            "search": "Menaxho dhe shiko të gjitha molat e regjistruara",
+            "create": "Regjistro një mol të ri në sistem",
+            "edit": "Ndrysho molin ekzistues në sistem"
+        },
+        "registeredDocks": "Molë të regjistruara"
+    },
+    "vesselType": {
+        "fields": {
+            "name": {
+                "title": "Emri",
+                "placeholder": "Emri i tipit të anijes"
+            },
+            "description": {
+                "title": "Përshkrimi",
+                "placeholder": "Përshkrimi i tipit të anijes"
+            },
+            "capacity": {
+                "title": "Kapaciteti",
+                "placeholder": "Kapaciteti i kontejnerëve në TEU"
+            },
+            "containerCapacity": {
+                "title": "Kapaciteti i kontejnerëve (TEU)",
+                "maxNumberOfRows": {
+                    "title": "Numri maksimal i rrjeshtave",
+                    "placeholder": "Maks. rrjeshtat në TEU"
+                },
+                "maxNumberOfBays": {
+                    "title": "Numri maksimal i fushave",
+                    "placeholder": "Maks. fushat në TEU"
+                },
+                "maxNumberOfTiers": {
+                    "title": "Numri maksimal i niveleve",
+                    "placeholder": "Maks. nivelet në TEU"
+                }
+            }
+        },
+        "generalFields": "Fushat e përgjithshme",
+        "tabs": {
+            "dashboard": "Paneli i llojeve të anijeve",
+            "view_dashboard": "Shiko llojet e anijeve",
+            "search": "Kërko llojet e anijeve",
+            "create": "Krijo lloj anije",
+            "view": "Shiko lloj anije",
+            "edit": "Redakto lloj anije"
+        },
+        "infoTitle": "Informacion mbi llojin e anijes",
+        "title": "Llojet e anijeve",
+        "subtitle": {
+            "dashboard": "Përmbledhje e statistikave të llojit të anijes",
+            "search": "Menaxho dhe shiko të gjitha llojet e regjistruara të anijeve",
+            "create": "Regjistro një lloj të ri anije në sistem",
+            "edit": "Ndrysho një lloj anije ekzistues në sistem"
+        },
+        "registeredVesselTypes": "Llojet e regjistruara të anijeve"
+    },
+    "vessel": {
+        "fields": {
+            "name": {
+                "title": "Emri",
+                "placeholder": "Emri i anijes"
+            },
+            "imoNumber": {
+                "title": "Numri IMO",
+                "placeholder": "Numri IMO i anijes"
+            },
+            "owner": {
+                "title": "Pronari",
+                "placeholder": "Organizata pronare"
+            },
+            "vesselType": {
+                "title": "Lloji i anijes",
+                "placeholder": "Zgjidh llojin e anijes"
+            }
+        },
+        "infoTitle": "Informacion mbi anijen",
+        "physicalCharacteristicsTitle": "Karakteristikat fizike",
+        "tabs": {
+            "dashboard": "Paneli i anijeve",
+            "view_dashboard": "Shiko anijet",
+            "search": "Kërko anijet",
+            "create": "Krijo anije",
+            "view": "Shiko anije",
+            "edit": "Redakto anije"
+        },
+        "title": "Anijet",
+        "subtitle": {
+            "dashboard": "Përmbledhje e statistikave dhe aktiviteteve të anijeve",
+            "search": "Menaxho dhe shiko të gjitha anijet e regjistruara",
+            "create": "Regjistro një anije të re në sistem",
+            "edit": "Redakto një anije ekzistuese në sistem"
+        },
+        "ownedBy": "Pronësi e",
+        "registeredVessels": "Anije të regjistruara"
+    },
+    "staff": {
+        "fields": {
+            "mechanographicNumber": {
+                "title": "Numri mekanografik",
+                "placeholder": "Numri mekanografik"
+            },
+            "name": {
+                "title": "Emri",
+                "placeholder": "Emri i punonjësit"
+            },
+            "email": {
+                "title": "Email",
+                "placeholder": "Adresa e email"
+            },
+            "phoneNumber": {
+                "title": "Telefoni",
+                "placeholder": "Numri i telefonit"
+            },
+            "qualifications": {
+                "title": "Kualifikimet",
+                "placeholder": "Zgjidh kualifikimet"
+            },
+            "status": {
+                "title": "Statusi",
+                "options": {
+                    "available": "Në dispozicion",
+                    "unavailable": "Nuk është në dispozicion",
+                    "temporarilyReassigned": "Përkohësisht riorganizuar"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Paneli i stafit",
+            "view_dashboard": "Shiko stafin",
+            "search": "Kërko stafin",
+            "create": "Krijo anëtar stafi",
+            "view": "Shiko anëtar stafi",
+            "edit": "Redakto anëtar stafi"
+        },
+        "infoTitle": "Informacion për anëtarin e stafit",
+        "title": "Stafi",
+        "subtitle": {
+            "search": "Menaxhoni dhe shikoni të gjithë stafin e regjistruar",
+            "dashboard": "Përmbledhje e statistikave të stafit",
+            "create": "Regjistro një anëtar të ri të stafit në sistem",
+            "view": "Shiko detajet e stafit",
+            "edit": "Redakto anëtarin ekzistues të stafit në sistem"
+        }
+    },
+    "qualification": {
+        "tabs": {
+            "dashboard": "Paneli i kualifikimeve",
+            "view_dashboard": "Shiko kualifikimet",
+            "search": "Kërko kualifikimet",
+            "create": "Krijo kualifikim",
+            "view": "Shiko kualifikim",
+            "edit": "Redakto kualifikim"
+        },
+        "infoTitle": "Informacion mbi kualifikimin",
+        "title": "Kualifikimet",
+        "subtitle": {
+            "search": "Menaxhoni dhe shikoni të gjitha kualifikimet e regjistruara",
+            "dashboard": "Përmbledhje e statistikave të kualifikimeve",
+            "create": "Regjistro një kualifikim të ri në sistem",
+            "edit": "Redakto një kualifikim ekzistues në sistem",
+            "view": "Shiko detajet e kualifikimit"
+        },
+        "fields": {
+            "idCode": {
+                "title": "Kodi i kualifikimit",
+                "placeholder": "Kodi i kualifikimit"
+            },
+            "qualificationName": {
+                "title": "Emri i kualifikimit",
+                "placeholder": "Emri i kualifikimit"
+            }
+        }
+    },
+    "physicalResource": {
+        "tabs": {
+            "dashboard": "Paneli i burimeve fizike",
+            "view_dashboard": "Shiko burimet fizike",
+            "search": "Kërko burimet fizike",
+            "create": "Krijo burim fizik",
+            "view": "Shiko burim fizik",
+            "edit": "Redakto burim fizik"
+        },
+        "infoTitle": "Informacion mbi burimin fizik",
+        "title": "Burimet fizike",
+        "subtitle": {
+            "search": "Menaxhoni dhe shikoni të gjitha burimet fizike të regjistruara",
+            "dashboard": "Paneli i kontrollit për burimet fizike",
+            "view_dashboard": "Shiko burimet fizike",
+            "create": "Regjistro një burim fizik të ri në sistem",
+            "view": "Shiko detajet e burimit fizik",
+            "edit": "Redakto burimin fizik ekzistues në sistem"
+        },
+        "generalFields": "Fushat e përgjithshme",
+        "specificFields": "Fusha specifike",
+        "fields": {
+            "code": {
+                "title": "Kodi",
+                "placeholder": "Kodi i burimit"
+            },
+            "description": {
+                "title": "Përshkrimi",
+                "placeholder": "Përshkrimi i burimit"
+            },
+            "status": {
+                "title": "Statusi",
+                "placeholder": "Zgjidh statusin e burimit",
+                "options": {
+                    "available": "Në dispozicion",
+                    "maintenance": "Mirëmbajtje",
+                    "outOfService": "Jashtë shërbimit"
+                }
+            },
+            "qualifications": {
+                "title": "Kualifikimet e kërkuara",
+                "placeholder": "Kualifikimet e nevojshme për të operuar këtë burim"
+            },
+            "setupTime": {
+                "title": "Koha e vendosjes (min)",
+                "placeholder": "Koha e vendosjes"
+            },
+            "servingDocks": {
+                "title": "Mollët e shërbyera",
+                "placeholder": "Zgjidh mollët e shërbyera"
+            },
+            "liftingCapacity": {
+                "title": "Kapaciteti i ngritjes (kg)",
+                "placeholder": "Kapaciteti i ngritjes"
+            },
+            "containersPerHour": {
+                "title": "Konteinerë në orë",
+                "placeholder": "Konteinerë në orë"
+            },
+            "maxLoadCapacity": {
+                "title": "Ngarkesa maksimale (kg)",
+                "placeholder": "Ngarkesa maksimale"
+            },
+            "averageSpeed": {
+                "title": "Shpejtësia mesatare (km/h)",
+                "placeholder": "Shpejtësia mesatare"
+            },
+            "containersPerTrip": {
+                "title": "Konteinerë për udhëtim",
+                "placeholder": "Konteinerë për udhëtim"
+            },
+            "type": {
+                "title": "Lloji i burimit",
+                "options": {
+                    "stsCrane": "Kran STS",
+                    "yardGantry": "Kran i oborrit",
+                    "truck": "Kamion"
+                }
+            }
+        },
+        "actions": {
+            "deactivate": "Çaktivizo burimin fizik"
+        }
+    },
+    "storageArea": {
+        "tabs": {
+            "dashboard": "Paneli i zonave të magazinimit",
+            "view_dashboard": "Shiko zonat e magazinimit",
+            "search": "Kërko zonat e magazinimit",
+            "create": "Krijo zonë magazinimi",
+            "view": "Shiko zonën e magazinimit",
+            "edit": "Redakto zonën e magazinimit"
+        },
+        "infoTitle": "Informacion mbi zonën e magazinimit",
+        "title": "Zonat e magazinimit",
+        "subtitle": {
+            "search": "Menaxhoni dhe shikoni të gjitha zonat e magazinimit të regjistruara",
+            "dashboard": "Paneli i menaxhimit për zonat e magazinimit",
+            "view_dashboard": "Shiko zonat e magazinimit",
+            "create": "Regjistro një zonë të re magazinimi në sistem",
+            "view": "Shiko detajet e zonës së magazinimit",
+            "edit": "Redakto zonën e magazinimit ekzistuese në sistem"
+        },
+        "printer": {
+            "docks_serviced": "mollët e shërbyera",
+            "capacity_usage": "Përdorimi i kapacitetit",
+            "units": "njësi",
+            "available": "në dispozicion"
+        }
+    }
+}

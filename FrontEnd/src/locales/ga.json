@@ -1,0 +1,414 @@
+{
+    "common": {
+        "loading": "Ag luchtú...",
+        "noData": "Níl sonraí ar fáil",
+        "statistics": "Staitisticí"
+    },
+    "buttons": {
+        "save": "Sábháil",
+        "cancel": "Cealaigh",
+        "delete": "Scrios",
+        "edit": "Cuir in eagar",
+        "create": "Cruthaigh",
+        "search": "Cuardaigh",
+        "select": "Roghnaigh",
+        "activate": "Gníomhachtaigh",
+        "deactivate": "Díghníomhachtaigh",
+        "filter": {
+            "title": "Scagairí",
+            "add": "Scag",
+            "clear": "Glan scagairí"
+        },
+        "pagination": {
+            "previous": "Roimhe",
+            "next": "Ar Aghaidh"
+        },
+        "login": "Logáil isteach",
+        "goBackToLogin": "Fill ar ais chuig logáil isteach",
+        "logout": "Logáil amach"
+    },
+    "unsavedChanges": {
+        "title": "Déan neamhaird ar na hathruithe?",
+        "message": "Tá athruithe neamhshábháilte agat. An bhfuil tú cinnte go dteastaíonn uait an leathanach a fhágáil agus na hathruithe a dhéanamh neamhbhailí?",
+        "confirm": "Déan neamhaird",
+        "cancel": "Lean ar aghaidh ag eagarthóireacht"
+    },
+    "dashboard": {
+        "sidebarTitle": "Painéal",
+        "title": "Painéal PortIT",
+        "subtitle": "Forbhreathnú ar an gcóras PortIT",
+        "3DModel": {
+            "title": "Léiriú 3D ar an gcalafort",
+            "description": "Amharc ar léiriú idirghníomhach 3D den chonair calafort go léir. Féach ar luchtú na dugaí, suíomhanna long, réigiúin stórála agus acmhainní i bhfíor-am.",
+            "open": "Oscail an múnla 3D"
+        }
+    },
+    "admin": {
+        "sidebarTitle": "Riarachán",
+        "title": "Painéal Riaracháin",
+        "subtitle": "Riarachán agus bainistíocht",
+        "userManagement": {
+            "title": "Bainistíocht úsáideoirí",
+            "subtitle": "Bainistigh úsáideoirí an chórais, róil agus ceadanna."
+        },
+        "auditLogs": {
+            "title": "Logaí iniúchta",
+            "subtitle": "Amharc agus monatóireacht ar logaí gníomhaíochta an chórais."
+        }
+    },
+    "user": {
+        "fields": {
+            "email": {
+                "title": "R-phost",
+                "placeholder": "email@mail.com"
+            },
+            "role": {
+                "title": "Ról",
+                "placeholder": "Roghnaigh ról an úsáideora",
+                "options": {
+                    "admin": "Riarthóir",
+                    "saoRep": "Ionadaí SAO",
+                    "pao": "Oifigeach PAO",
+                    "logisticsOperator": "Oibreoir loighistíochta"
+                }
+            },
+            "isActive": {
+                "title": "Gníomhach",
+                "options": {
+                    "active": "Sea",
+                    "inactive": "Níl"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Painéal úsáideora",
+            "create": "Cruthaigh úsáideoir",
+            "view": "Féach ar úsáideoirí",
+            "search": "Cuardaigh úsáideoirí"
+        },
+        "infoTitle": "Sonraí an úsáideora",
+        "title": "Úsáideoirí",
+        "subtitle": {
+            "dashboard": "Forbhreathnú agus bainistíocht úsáideoirí",
+            "create": "Cláraigh úsáideoir nua sa chóras",
+            "view": "Féach agus bainistigh úsáideoirí atá ann"
+        }
+    },
+    "physicalCharacteristics": {
+        "title": "Tréithe fisiciúla (m)",
+        "length": {
+            "title": "Fad",
+            "placeholder": "Fad i méadar"
+        },
+        "depth": {
+            "title": "Doimhneacht",
+            "placeholder": "Doimhneacht i méadar"
+        },
+        "draft": {
+            "title": "Dréacht",
+            "placeholder": "Dréacht i méadar"
+        }
+    },
+    "dock": {
+        "fields": {
+            "code": {
+                "title": "Cód",
+                "placeholder": "Cód an dua"
+            },
+            "name": {
+                "title": "Ainm",
+                "placeholder": "Ainm an dua"
+            },
+            "location": {
+                "title": "Suíomh",
+                "placeholder": "Suíomh an dua"
+            },
+            "supportedVesselTypes": {
+                "title": "Cineálacha longa a thacaítear leo",
+                "vesselTypes": {
+                    "title": "Cineálacha longa",
+                    "placeholder": "Roghnaigh cineálacha longa"
+                },
+                "vesselType": "Cineál loinge"
+            }
+        },
+        "tabs": {
+            "dashboard": "Painéal dua",
+            "view_dashboard": "Féach ar dua",
+            "search": "Cuardaigh dua",
+            "create": "Cruthaigh dua",
+            "view": "Féach ar dua",
+            "edit": "Cuir in eagar dua"
+        },
+        "generalFields": "Réimsí ginearálta",
+        "infoTitle": "Eolas faoi an dua",
+        "title": "Dua",
+        "subtitle": {
+            "dashboard": "Forbhreathnú ar staitisticí agus gníomhaíocht dua",
+            "search": "Bainistigh agus féach ar na dua atá cláraithe",
+            "create": "Cláraigh dua nua sa chóras",
+            "edit": "Cuir in eagar dua atá ann"
+        },
+        "registeredDocks": "Dua cláraithe"
+    },
+    "vesselType": {
+        "fields": {
+            "name": {
+                "title": "Ainm",
+                "placeholder": "Ainm cineál long"
+            },
+            "description": {
+                "title": "Cur síos",
+                "placeholder": "Cur síos ar chineál long"
+            },
+            "capacity": {
+                "title": "Cumas",
+                "placeholder": "Cumas coimeádán i TEU"
+            },
+            "containerCapacity": {
+                "title": "Cumas coimeádán (TEU)",
+                "maxNumberOfRows": {
+                    "title": "Uimhir uachtair uasta",
+                    "placeholder": "Uimhir uachtair uasta i TEU"
+                },
+                "maxNumberOfBays": {
+                    "title": "Uimhir bairr uasta",
+                    "placeholder": "Uimhir bairr uasta i TEU"
+                },
+                "maxNumberOfTiers": {
+                    "title": "Uimhir sraithe uasta",
+                    "placeholder": "Uimhir sraithe uasta i TEU"
+                }
+            }
+        },
+        "generalFields": "Réimsí ginearálta",
+        "tabs": {
+            "dashboard": "Painéal cineálacha longa",
+            "view_dashboard": "Féach ar cineálacha longa",
+            "search": "Cuardaigh cineálacha longa",
+            "create": "Cruthaigh cineál long",
+            "view": "Féach ar chineál long",
+            "edit": "Cuir in eagar cineál long"
+        },
+        "infoTitle": "Eolas faoi cineál long",
+        "title": "Cineálacha longa",
+        "subtitle": {
+            "dashboard": "Forbhreathnú ar staitisticí cineálacha longa",
+            "search": "Bainistigh agus féach ar na cineálacha longa atá cláraithe",
+            "create": "Cláraigh cineál long nua sa chóras",
+            "edit": "Cuir in eagar cineál long atá ann"
+        },
+        "registeredVesselTypes": "Cineálacha longa cláraithe"
+    },
+    "vessel": {
+        "fields": {
+            "name": {
+                "title": "Ainm",
+                "placeholder": "Ainm an longa"
+            },
+            "imoNumber": {
+                "title": "Uimhir IMO",
+                "placeholder": "Uimhir IMO an longa"
+            },
+            "owner": {
+                "title": "Úinéir",
+                "placeholder": "Eagraíocht úinéara"
+            },
+            "vesselType": {
+                "title": "Cineál long",
+                "placeholder": "Roghnaigh cineál long"
+            }
+        },
+        "infoTitle": "Eolas an longa",
+        "physicalCharacteristicsTitle": "Tréithe fisiciúla",
+        "tabs": {
+            "dashboard": "Painéal long",
+            "view_dashboard": "Féach ar longa",
+            "search": "Cuardaigh longa",
+            "create": "Cruthaigh long",
+            "view": "Féach ar long",
+            "edit": "Cuir in eagar long"
+        },
+        "title": "Longa",
+        "subtitle": {
+            "dashboard": "Forbhreathnú ar staitisticí agus gníomhaíocht longa",
+            "search": "Bainistigh agus féach ar na longa atá cláraithe",
+            "create": "Cláraigh longa nua sa chóras",
+            "edit": "Cuir in eagar longa atá ann"
+        },
+        "ownedBy": "Seilbh ag",
+        "registeredVessels": "Longa cláraithe"
+    },
+    "staff": {
+        "fields": {
+            "mechanographicNumber": {
+                "title": "Uimhir mheicnifeagrafach",
+                "placeholder": "Uimhir mheicnifeagrafach"
+            },
+            "name": {
+                "title": "Ainm",
+                "placeholder": "Ainm an fostaí"
+            },
+            "email": {
+                "title": "R-phost",
+                "placeholder": "Seoladh ríomhphoist"
+            },
+            "phoneNumber": {
+                "title": "Fón",
+                "placeholder": "Uimhir theileafóin"
+            },
+            "qualifications": {
+                "title": "Cáilíochtaí",
+                "placeholder": "Roghnaigh cáilíochtaí"
+            },
+            "status": {
+                "title": "Stádas",
+                "options": {
+                    "available": "Ar fáil",
+                    "unavailable": "Ní ar fáil",
+                    "temporarilyReassigned": "Athshainithe go sealadach"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Painéal foirne",
+            "view_dashboard": "Féach ar fostaithe",
+            "search": "Cuardaigh fostaithe",
+            "create": "Cruthaigh fostaí",
+            "view": "Féach ar fostaí",
+            "edit": "Cuir in eagar fostaí"
+        },
+        "infoTitle": "Sonraí fostaí",
+        "title": "Fostaithe",
+        "subtitle": {
+            "search": "Bainistigh agus féach ar na fostaithe cláraithe",
+            "dashboard": "Forbhreathnú ar staitisticí agus gníomhaíocht fostaithe",
+            "create": "Cláraigh fostaí nua sa chóras",
+            "view": "Féach ar shonraí an fostaí",
+            "edit": "Cuir in eagar fostaí atá ann"
+        }
+    },
+    "qualification": {
+        "tabs": {
+            "dashboard": "Painéal cáilíochtaí",
+            "view_dashboard": "Féach ar cáilíochtaí",
+            "search": "Cuardaigh cáilíochtaí",
+            "create": "Cruthaigh cáilíocht",
+            "view": "Féach ar cháilíocht",
+            "edit": "Cuir in eagar cáilíocht"
+        },
+        "infoTitle": "Sonraí cáilíochta",
+        "title": "Cáilíochtaí",
+        "subtitle": {
+            "search": "Bainistigh agus féach ar na cáilíochtaí cláraithe",
+            "dashboard": "Forbhreathnú ar staitisticí cáilíochtaí",
+            "create": "Cláraigh cáilíocht nua sa chóras",
+            "edit": "Cuir in eagar cáilíocht atá ann",
+            "view": "Féach ar shonraí cáilíochta"
+        },
+        "fields": {
+            "idCode": {
+                "title": "Cód cáilíochta",
+                "placeholder": "Cód cáilíochta"
+            },
+            "qualificationName": {
+                "title": "Ainm an cháilíochta",
+                "placeholder": "Ainm an cháilíochta"
+            }
+        }
+    },
+    "physicalResource": {
+        "tabs": {
+            "dashboard": "Painéal acmhainní fisiciúla",
+            "view_dashboard": "Féach ar acmhainní fisiciúla",
+            "search": "Cuardaigh acmhainní fisiciúla",
+            "create": "Cruthaigh acmhainn fiseolaíoch",
+            "view": "Féach ar acmhainn fiseolaíoch",
+            "edit": "Cuir in eagar acmhainn fiseolaíoch"
+        },
+        "infoTitle": "Sonraí an acmhainn fiseolaíoch",
+        "title": "Acmhainní fisiciúla",
+        "subtitle": {
+            "search": "Bainistigh agus féach ar na hacmhainní fisiciúla cláraithe",
+            "dashboard": "Painéal bainistíochta do gach acmhainn fiseolaíoch",
+            "view_dashboard": "Féach ar acmhainní fisiciúla",
+            "create": "Cláraigh acmhainn fiseolaíoch nua sa chóras",
+            "view": "Féach ar shonraí an acmhainn fiseolaíoch",
+            "edit": "Cuir in eagar acmhainn fiseolaíoch atá ann"
+        },
+        "generalFields": "Réimsí ginearálta",
+        "specificFields": "Réimsí shonracha",
+        "fields": {
+            "code": {
+                "title": "Cód",
+                "placeholder": "Cód acmhainne"
+            },
+            "description": {
+                "title": "Cur síos",
+                "placeholder": "Cur síos an acmhainn"
+            },
+            "status": {
+                "title": "Stádas",
+                "placeholder": "Roghnaigh stádas an acmhainn",
+                "options": {
+                    "available": "Ar fáil",
+                    "maintenance": "Cothabháil",
+                    "outOfService": "As seirbhís"
+                }
+            },
+            "qualifications": {
+                "title": "Cáilíochtaí riachtanacha",
+                "placeholder": "Cáilíochtaí a theastaíonn don acmhainn seo"
+            },
+            "setupTime": {
+                "title": "Am socraithe (nóim)",
+                "placeholder": "Am socraithe"
+            },
+            "servingDocks": {
+                "title": "Dugaí seirbhíse",
+                "placeholder": "Roghnaigh dugaí seirbhíse"
+            },
+            "liftingCapacity": {
+                "title": "Inchumas ardaithe (kg)",
+                "placeholder": "Inchumas ardaithe"
+            },
+            "containersPerHour": {
+                "title": "Coimeádáin in aghaidh na huaire",
+                "placeholder": "Coimeádáin in aghaidh na huaire"
+            },
+            "maxLoadCapacity": {
+                "title": "Uasmhéid luchtaithe (kg)",
+                "placeholder": "Uasmhéid luchtaithe"
+            }
+        },
+        "actions": {
+            "deactivate": "Díghníomhachtaigh acmhainn fiseolaíoch"
+        }
+    },
+    "storageArea": {
+        "tabs": {
+            "dashboard": "Painéal réimsí stórála",
+            "view_dashboard": "Féach ar réimsí stórála",
+            "search": "Cuardaigh réimsí stórála",
+            "create": "Cruthaigh réimse stórála",
+            "view": "Féach ar réimse stórála",
+            "edit": "Cuir in eagar réimse stórála"
+        },
+        "infoTitle": "Sonraí réimse stórála",
+        "title": "Réimsí stórála",
+        "subtitle": {
+            "search": "Bainistigh agus féach ar réimsí stórála cláraithe",
+            "dashboard": "Painéal bainistíochta do réimsí stórála",
+            "view_dashboard": "Féach ar réimsí stórála",
+            "create": "Cláraigh réimse stórála nua sa chóras",
+            "view": "Féach ar shonraí réimse stórála",
+            "edit": "Cuir in eagar réimse stórála atá ann"
+        },
+        "printer": {
+            "docks_serviced": "dugaí seirbhíse",
+            "capacity_usage": "úsáid cumais",
+            "units": "aonaid",
+            "available": "ar fáil"
+        }
+    }
+}
