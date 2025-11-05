@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import Environment from "/visualizer/environment.ts";
-import PortLayout from "./simulation_data.ts";
+import PortLayout from "./chunk_layout.ts";
 import Controls from "./controls.ts";
 
 const clearColor = 0x000000;

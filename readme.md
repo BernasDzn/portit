@@ -71,5 +71,8 @@ If that is not of need for you, for a cleaner logging experience modify the `Log
 > TODO
 
 ### 8. 3rd party assets used
+Every asset that is not in the list bellow is of our own
+
 - [Skiing penguins skybox pack (opengameart.org)](https://opengameart.org/content/skiingpenguins-skybox-pack)
 - [Boat V2 3D Model](https://free3d.com/3d-model/boat-v2--225787.html)
+- [Buoy 3D model by TepidGames](https://sketchfab.com/3d-models/free-low-poly-buoy-8e7797a922304f7aab23ffe534a47839)

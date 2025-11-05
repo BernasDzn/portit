@@ -5,30 +5,51 @@ import {MTLLoader} from 'three/examples/jsm/loaders/MTLLoader.js';
 function loadModel(path) {
 
     return new Promise((resolve, reject) => {
-        const loader = new OBJLoader();
+        const objLoader = new OBJLoader();
         const mtlLoader = new MTLLoader();
-        loader.load(
-            path,
-            (object) => {
-                
-                mtlLoader.load(
-                    path.replace('.obj', '.mtl'),
-                    (materials) => {
-                        materials.preload();
-                        object.traverse((child) => {
-                            if (child.isMesh) {
-                                child.material = materials.materials[child.name] || child.material;
-                            }
-                        });
+
+        const mtlPath = path.replace('.obj', '.mtl');
+
+        mtlLoader.load(
+            mtlPath,
+            (materials) => {
+                materials.preload();
+                // Apply materials to OBJLoader
+                objLoader.setMaterials(materials);
+
+                objLoader.load(
+                    path,
+                    (object) => {
                         resolve(object);
                     },
                     undefined,
-                    (error) => {
-                        console.warn('MTL file not found or failed to load, proceeding without materials.', error);
-                        resolve(object); // Resolve with the object even if MTL fails
-                    }
+                    (error) => reject(error)
                 );
+            },
+            undefined,
+            (error) => {
+                console.warn('MTL not found, loading OBJ without materials:', error);
 
+                // fallback, if not found load OBJ without materials
+                objLoader.load(
+                    path,
+                    (object) => resolve(object),
+                    undefined,
+                    (error) => reject(error)
+                );
+            }
+        );
+    });
+}
+
+function loadModelRaw(path) {
+
+    return new Promise((resolve, reject) => {
+        const loader = new OBJLoader();
+        loader.load(
+            path,
+            (object) => {
+                resolve(object);
             },
             undefined,
             (error) => {
@@ -38,4 +59,4 @@ function loadModel(path) {
     });
 }
 
-export { loadModel };
+export { loadModel, loadModelRaw };
