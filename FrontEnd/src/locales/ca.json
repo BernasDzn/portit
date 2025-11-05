@@ -371,7 +371,8 @@
             "docks_serviced": "molls atesos",
             "capacity_usage": "Ús de la Capacitat",
             "units": "unitats",
-            "available": "disponibles"
+            "available": "disponibles",
+            "no_docks_serviced": "Cap moll atès"
         },
         "fields": {
             "nameCode": {

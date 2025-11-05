@@ -371,7 +371,8 @@
             "docks_serviced": "已服务码头",
             "capacity_usage": "容量使用情况",
             "units": "单位",
-            "available": "可用"
+            "available": "可用",
+            "no_docks_serviced": "无已服务码头"
         },
         "fields": {
             "nameCode": {
