@@ -387,6 +387,10 @@
                 "title": "Type",
                 "placeholder": "Select Storage Area type"
             },
+            "capacity": {
+                "title": "Capacity",
+                "placeholder": "Maximum capacity"
+            },
             "occupancy": {
                 "title": "Occupancy",
                 "placeholder": "Current occupancy"
