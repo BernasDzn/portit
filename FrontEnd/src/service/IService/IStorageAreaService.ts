@@ -3,8 +3,8 @@ import type { StorageArea } from "@/model/StorageArea";
 
 export interface IStorageAreaService {
 	getStorageAreas(): Promise<Page<StorageArea>>;
-	getStorageAreaById(id: number): Promise<StorageArea | undefined>;
+	getStorageAreaById(id: string): Promise<StorageArea | undefined>;
 	createStorageArea(storageArea: StorageArea): Promise<StorageArea>;
-	updateStorageArea(id: number, storageArea: StorageArea): Promise<StorageArea>;
-	deleteStorageArea(id: number): Promise<void>;
+	updateStorageArea(id: string, storageArea: StorageArea): Promise<StorageArea>;
+	deleteStorageArea(id: string): Promise<void>;
 }
