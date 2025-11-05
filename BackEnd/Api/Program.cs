@@ -182,7 +182,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseCors("VueDevPolicy");
 
 app.UseAuthentication();
