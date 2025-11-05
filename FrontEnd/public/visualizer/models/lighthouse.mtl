@@ -1,0 +1,42 @@
+# Blender 3.6.3 MTL File: 'None'
+# www.blender.org
+
+newmtl Bottom.002
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:/Bottom_baseColor.jpg
+
+newmtl Glass.002
+Ns 63.999992
+Ka 1.000000 1.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+illum 2
+map_Kd C:/Glass_baseColor_scale0.png
+map_d C:/Glass_baseColor_scale0.png
+
+newmtl Lighthouse.002
+Ns 27.404097
+Ka 0.572189 0.572189 0.572189
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd C:/Lighthouse_baseColor.jpg
+
+newmtl Rock.002
+Ns 93.108643
+Ka 0.547912 0.547912 0.547912
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd C:/Rock_baseColor.jpg

@@ -115,6 +115,8 @@ class BuoyChunk extends PortChunk {
 export default class PortLayout {
 
     terrain;
+    lighthouse;
+    lighthouseLight;
 
     vesselList = []; // The vessels in the port
     chunkData = []; // The chunks that make up the port layout
@@ -156,6 +158,20 @@ export default class PortLayout {
         });
 
         scene.add(this.terrain);
+
+        // Lighthouse
+        this.lighthouse = await loadModelRaw("/visualizer/models/lighthouse.obj");
+        this.lighthouse.scale.set(0.4, 0.4, 0.4);
+        this.lighthouse.position.set(-250, layoutY + 10, 250);   
+
+        scene.add(this.lighthouse);
+
+        // Lighthouse light
+        this.lighthouseLight = new THREE.PointLight(0xffffff, 2, 200); 
+        this.lighthouseLight.position.set(-250, layoutY, 250);
+        this.lighthouseLight.castShadow = true;
+
+        scene.add(this.lighthouseLight);
     }
 
     async addVessel(name, position, scene) {

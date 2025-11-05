@@ -2,6 +2,7 @@ import * as THREE from "three";
 import Environment from "/visualizer/environment.ts";
 import PortLayout from "./chunk_layout.ts";
 import Controls from "./controls.ts";
+import setupGUI from "./hud.ts";
 
 const clearColor = 0x000000;
 
@@ -53,11 +54,14 @@ export default class Port3D {
 
         // Add environment
         this.environment = new Environment();
-        this.environment.init(this.scene);
+        this.environment.init(this.scene, this.camera);
 
         // Add port base
         this.portLayout = new PortLayout(this.scene);
         this.portLayout.addVessel("Vessel 1", new THREE.Vector3(0, -12, -40), this.scene);
+
+        // Setup GUI
+        setupGUI(this);
 
         this.animate();
     }

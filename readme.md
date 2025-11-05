@@ -76,3 +76,4 @@ Every asset that is not in the list bellow is of our own
 - [Skiing penguins skybox pack (opengameart.org)](https://opengameart.org/content/skiingpenguins-skybox-pack)
 - [Boat V2 3D Model](https://free3d.com/3d-model/boat-v2--225787.html)
 - [Buoy 3D model by TepidGames](https://sketchfab.com/3d-models/free-low-poly-buoy-8e7797a922304f7aab23ffe534a47839)
+- [Lighthouse 3D Model by apocalypse_67](https://free3d.com/3d-model/lighthouse-44581.html)
