@@ -2,24 +2,27 @@
 import type { SystemUser } from '@/model/SystemUser';
 import { RouterLink } from 'vue-router';
 import { computed } from 'vue';
+import {useI18n} from 'vue-i18n';
+
+const { t } = useI18n();
 
 const props = defineProps<{ systemUser: SystemUser | any; link?: string }>();
 
 const email = computed(() => props.systemUser?.emailAddress ?? props.systemUser?.email ?? '');
 
 const ROLE_LABELS: Record<string, string> = {
-    ADMIN: 'Administrator',
-    PORT_AUTHORITY_OFFICER: 'Port Authority Officer',
-    SAO_REPRESENTATIVE: 'SAO Representative',
-    LOGISTICS_OPERATOR: 'Logistics Operator'
+    ADMIN: 'user.fields.role.options.admin',
+    PORT_AUTHORITY_OFFICER: 'user.fields.role.options.pao',
+    SAO_REPRESENTATIVE: 'user.fields.role.options.saoRep',
+    LOGISTICS_OPERATOR: 'user.fields.role.options.logisticsOperator'
 };
 
 // Numeric role mapping to match backend enum ordering (Administrator = 0, ...)
 const NUM_ROLE_LABELS: Record<number, string> = {
-    0: 'Administrator',
-    1: 'Port Authority Officer',
-    2: 'SAO Representative',
-    3: 'Logistics Operator'
+    0: 'user.fields.role.options.admin',
+    1: 'user.fields.role.options.pao',
+    2: 'user.fields.role.options.saoRep',
+    3: 'user.fields.role.options.logisticsOperator'
 };
 
 const roleLabel = computed(() => {
@@ -27,10 +30,10 @@ const roleLabel = computed(() => {
     if (r === undefined || r === null || r === '') return '';
     // If backend sends numeric enum values, map them first
     if (typeof r === 'number') {
-        return NUM_ROLE_LABELS[r] ?? String(r);
+        return t(NUM_ROLE_LABELS[r] as string) ?? String(r);
     }
     // Direct match (key)
-    if (ROLE_LABELS[r]) return ROLE_LABELS[r];
+    if (ROLE_LABELS[r]) return t(ROLE_LABELS[r] as string);
     // Direct match by value (maybe already a friendly string)
     for (const v of Object.values(ROLE_LABELS)) {
         if (String(v).toLowerCase() === String(r).toLowerCase()) return v;
@@ -57,7 +60,7 @@ const roleLabel = computed(() => {
                         </sl-tag>
                     </p>
                     <p class="item-description">
-                        Active: {{ props.systemUser.isActive ? 'Yes' : 'No' }}
+                        {{ t('user.fields.isActive.title') }}: {{ props.systemUser.isActive ? t('user.fields.isActive.options.active') : t('user.fields.isActive.options.inactive') }}
                     </p>
                 </div>
                 <span class="material-icons icon" aria-hidden="true">person</span>

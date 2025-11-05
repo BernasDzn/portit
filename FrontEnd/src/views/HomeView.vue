@@ -2,6 +2,7 @@
 import Topbar from '@/components/Topbar.vue';
 import Sidebar from '@/components/Sidebar.vue';
 import NotificationQueue from '@/components/NotificationQueue.vue';
+
 </script>
 
 <template>

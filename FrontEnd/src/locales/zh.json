@@ -11,7 +11,9 @@
         "edit": "编辑",
         "create": "创建",
         "search": "搜索",
-        "select": "选择",
+    "select": "选择",
+    "activate": "激活",
+    "deactivate": "停用",
         "filter": {
             "title": "筛选",
             "add": "添加筛选",
@@ -39,6 +41,57 @@
             "title": "港口 3D 可视化",
             "description": "查看整个港口设施的交互式 3D 表示。实时监控码头占用、船舶位置、存储区和资源的概况。",
             "open": "打开 3D 模型"
+        }
+    },
+    "admin": {
+        "sidebarTitle": "管理",
+        "title": "管理面板",
+        "subtitle": "管理概览和管理",
+        "userManagement": {
+            "title": "用户管理",
+            "subtitle": "管理系统用户、角色和权限。"
+        },
+        "auditLogs": {
+            "title": "审计日志",
+            "subtitle": "查看并监控系统活动日志。"
+        }
+    },
+    "user": {
+        "fields": {
+            "email": {
+                "title": "电子邮件",
+                "placeholder": "email@mail.com"
+            },
+            "role": {
+                "title": "角色",
+                "placeholder": "选择用户角色",
+                "options": {
+                    "admin": "管理员",
+                    "saoRep": "SAO 代表",
+                    "pao": "港务局官员",
+                    "logisticsOperator": "物流操作员"
+                }
+            },
+            "isActive": {
+                "title": "激活",
+                "options": {
+                    "active": "是",
+                    "inactive": "否"
+                }
+            }
+        },
+        "tabs":{
+            "dashboard": "用户面板",
+            "create": "创建用户",
+            "view": "查看用户",
+            "search": "搜索用户"
+        },
+        "infoTitle": "用户详情",
+        "title": "用户",
+        "subtitle": {
+            "dashboard": "用户概览和管理",
+            "create": "在系统中注册新用户",
+            "view": "查看并管理现有用户"
         }
     },
     "physicalCharacteristics": {

@@ -11,7 +11,9 @@
         "edit": "Editar",
         "create": "Crear",
         "search": "Cercar",
-        "select": "Seleccionar",
+    "select": "Seleccionar",
+    "activate": "Activar",
+    "deactivate": "Desactivar",
         "filter": {
             "title": "Filtres",
             "add": "Afegir filtre",
@@ -39,6 +41,57 @@
             "title": "Visualització 3D del Port",
             "description": "Mostra una representació 3D interactiva de tota la infraestructura del port. Supervisa l'ocupació de les doces, les posicions dels vaixells, les àrees d'emmagatzematge i els recursos en temps real.",
             "open": "Obrir model 3D"
+        }
+    },
+    "admin": {
+        "sidebarTitle": "Admin",
+        "title": "Panell d'Administració",
+        "subtitle": "Visió administrativa i gestió",
+        "userManagement": {
+            "title": "Gestió d'usuaris",
+            "subtitle": "Gestiona els usuaris, rols i permisos"
+        },
+        "auditLogs": {
+            "title": "Registres d'auditoria",
+            "subtitle": "Veure i controlar l'activitat del sistema"
+        }
+    },
+    "user": {
+        "fields": {
+            "email": {
+                "title": "Email",
+                "placeholder": "email@mail.com"
+            },
+            "role": {
+                "title": "Rol",
+                "placeholder": "Selecciona el rol de l'usuari",
+                "options": {
+                    "admin": "Administrador",
+                    "saoRep": "Representant SAO",
+                    "pao": "Responsable Autoritat Portuària",
+                    "logisticsOperator": "Operador Logístic"
+                }
+            },
+            "isActive": {
+                "title": "Actiu",
+                "options": {
+                    "active": "Sí",
+                    "inactive": "No"
+                }
+            }
+        },
+        "tabs":{
+            "dashboard": "Panell d'usuaris",
+            "create": "Crear usuari",
+            "view": "Veure usuaris",
+            "search": "Cercar usuaris"
+        },
+        "infoTitle": "Detalls de l'usuari",
+        "title": "Usuaris",
+        "subtitle": {
+            "dashboard": "Visió general i gestió d'usuaris",
+            "create": "Registra un nou usuari al sistema",
+            "view": "Veure i gestionar usuaris existents"
         }
     },
     "physicalCharacteristics": {

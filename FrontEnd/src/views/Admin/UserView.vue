@@ -8,6 +8,9 @@ import AxiosHttpService from '@/service/AxiosHttpService';
 import { AdminService } from '@/service/AdminService';
 import { useAlerts } from '@/composables/alerts';
 import type { SystemUser } from '@/model/SystemUser';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const http = new AxiosHttpService();
 const adminService = new AdminService(http as any);
@@ -25,10 +28,10 @@ const user = reactive<SystemUser>({ sub: '', emailAddress: '', isActive: false, 
 
 // Role items for EntityDropdown (match backend enum ordering)
 const roleItems = [
-  { id: 0, name: 'Administrator' },
-  { id: 1, name: 'Port Authority Officer' },
-  { id: 2, name: 'SAO Representative' },
-  { id: 3, name: 'Logistics Operator' }
+  { id: 0, name: 'user.fields.role.options.admin' },
+  { id: 1, name: 'user.fields.role.options.pao' },
+  { id: 2, name: 'user.fields.role.options.saoRep' },
+  { id: 3, name: 'user.fields.role.options.logisticsOperator' }
 ];
 
 onMounted(async () => {
@@ -92,13 +95,13 @@ const doDelete = async () => {
 <template>
   <div>
     <sl-breadcrumb>
-      <sl-breadcrumb-item><RouterLink to="/admin" class="breadcrumb-link">Admin</RouterLink></sl-breadcrumb-item>
-      <sl-breadcrumb-item><RouterLink to="/admin/users" class="breadcrumb-link">Users</RouterLink></sl-breadcrumb-item>
-      <sl-breadcrumb-item><RouterLink to="/admin/users/search" class="breadcrumb-link">Search Users</RouterLink></sl-breadcrumb-item>
-      <sl-breadcrumb-item>View {{user.emailAddress}}</sl-breadcrumb-item>
+      <sl-breadcrumb-item><RouterLink to="/admin" class="breadcrumb-link">{{ t('admin.sidebarTitle') }}</RouterLink></sl-breadcrumb-item>
+      <sl-breadcrumb-item><RouterLink to="/admin/users" class="breadcrumb-link">{{ t('user.title') }}</RouterLink></sl-breadcrumb-item>
+      <sl-breadcrumb-item><RouterLink to="/admin/users/search" class="breadcrumb-link">{{ t('user.tabs.search') }}</RouterLink></sl-breadcrumb-item>
+      <sl-breadcrumb-item>{{user.emailAddress}}</sl-breadcrumb-item>
     </sl-breadcrumb>
 
-    <h1 class="title">User details</h1>
+    <h1 class="title">{{ t('user.infoTitle') }}</h1>
 
     <sl-card style="margin-top: 1rem;">
       <div class="view-grid">
@@ -106,25 +109,25 @@ const doDelete = async () => {
           <Loading v-if="loading" />
 
           <div v-else>
-            <FormField name="Email" v-model="user.emailAddress" :enabled="false" />
+            <FormField :name="t('user.fields.email.title')" v-model="user.emailAddress" :enabled="false" />
 
             <EntityDropdown
-              name="Role"
-              :items="roleItems"
+              :name="t('user.fields.role.title')"
+              :items="roleItems.map(r => ({ id: r.id, name: t(r.name) }))"
               v-model="user.role"
               valueKey="id"
               labelKey="name"
               :enabled="false"
             />
 
-            <p>Active: <strong>{{ user.isActive ? 'Yes' : 'No' }}</strong></p>
+            <p>{{ t('user.fields.isActive.title') }}: <strong>{{ user.isActive ? t('user.fields.isActive.options.active') : t('user.fields.isActive.options.inactive') }}</strong></p>
           </div>
         </div>
 
         <div class="actions">
-          <sl-button v-if="!user.isActive" variant="primary" @click="activate">Activate</sl-button>
-          <sl-button v-else variant="warning" @click="deactivate">Deactivate</sl-button>
-          <sl-button variant="danger" outline @click="confirmDelete">Delete</sl-button>
+          <sl-button v-if="!user.isActive" variant="primary" @click="activate">{{ t('buttons.activate') }}</sl-button>
+          <sl-button v-else variant="warning" @click="deactivate">{{ t('buttons.deactivate') }}</sl-button>
+          <sl-button variant="danger" outline @click="confirmDelete">{{ t('buttons.delete') }}</sl-button>
         </div>
       </div>
     </sl-card>

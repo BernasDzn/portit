@@ -7,16 +7,19 @@ import EntityDropdown from '@/components/crud/EntityDropdown.vue';
 import AxiosHttpService from '@/service/AxiosHttpService';
 import { AdminService } from '@/service/AdminService';
 import type { SystemUser } from '@/model/SystemUser';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const http = new AxiosHttpService();
 const adminService = new AdminService(http as any);
 
 // Role items must match backend enum ordering: Administrator=0, PortAuthorityOfficer=1, SAORepresentative=2, LogisticsOperator=3
 const roleItems = [
-  { id: 0, name: 'Administrator' },
-  { id: 1, name: 'Port Authority Officer' },
-  { id: 2, name: 'SAO Representative' },
-  { id: 3, name: 'Logistics Operator' }
+  { id: 0, name: 'user.fields.role.options.admin' },
+  { id: 1, name: 'user.fields.role.options.pao' },
+  { id: 2, name: 'user.fields.role.options.saoRep' },
+  { id: 3, name: 'user.fields.role.options.logisticsOperator' }
 ];
 
 const model = reactive<SystemUser>({
@@ -36,21 +39,21 @@ const submitFunction = async (obj: SystemUser) => {
 <template>
   <div>
     <sl-breadcrumb>
-      <sl-breadcrumb-item><RouterLink to="/admin/dashboard" class="breadcrumb-link">Admin</RouterLink></sl-breadcrumb-item>
-      <sl-breadcrumb-item><RouterLink to="/admin/users" class="breadcrumb-link">Users</RouterLink></sl-breadcrumb-item>
-      <sl-breadcrumb-item>Create User</sl-breadcrumb-item>
+      <sl-breadcrumb-item><RouterLink to="/admin/dashboard" class="breadcrumb-link">{{ t('admin.sidebarTitle') }}</RouterLink></sl-breadcrumb-item>
+      <sl-breadcrumb-item><RouterLink to="/admin/users" class="breadcrumb-link">{{ t('user.title') }}</RouterLink></sl-breadcrumb-item>
+      <sl-breadcrumb-item>{{ t('user.tabs.create') }}</sl-breadcrumb-item>
     </sl-breadcrumb>
 
     <header>
-      <h1 class="title">Create User</h1>
-      <p class="subtitle">Register a new system user</p>
+      <h1 class="title">{{ t('user.tabs.create') }}</h1>
+      <p class="subtitle">{{ t('user.subtitle.create') }}</p>
 
       <EntityForm :object="model" :submitFunction="submitFunction" successMessage="User created successfully">
-        <FormField name="Email" v-model="model.emailAddress" placeholderText="example@mail.com" required />
+        <FormField :name="t('user.fields.email.title')" v-model="model.emailAddress" :placeholderText="t('user.fields.email.placeholder')" required />
 
         <EntityDropdown
-          name="Role"
-          :items="roleItems"
+          :name="t('user.fields.role.title')"
+          :items="roleItems.map(r => ({ id: r.id, name: t(r.name) }))"
           v-model="model.role"
           valueKey="id"
           labelKey="name"
