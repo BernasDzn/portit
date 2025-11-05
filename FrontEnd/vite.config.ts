@@ -1,10 +1,22 @@
 import { fileURLToPath, URL } from 'node:url'
+import fs from 'node:fs'
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vite.dev/config/
+const isLocal = process.env.npm_lifecycle_event === 'local'
+
+// Load centralized config.json so we don't duplicate the remote host/port
+const cfgPath = new URL('./config.json', import.meta.url)
+const cfg = JSON.parse(fs.readFileSync(cfgPath, { encoding: 'utf-8' }))
+const remoteApi = cfg.remoteApi
+const localPort = cfg.localApiPort
+
+// Allow explicit override via VITE_API_URL (set in npm script for local runs)
+const proxyTarget = process.env.VITE_API_URL ?? (isLocal ? `http://localhost:${localPort}` : remoteApi)
+
 export default defineConfig({
   plugins: [
     vue({
@@ -28,9 +40,8 @@ export default defineConfig({
     // Proxy API calls to backend dev server to avoid browser TLS issues with self-signed certs
     
     proxy: {
-      // proxy any requests under /api to the backend and strip the /api prefix
       '^/api': {
-        target: 'https://vs-gate.dei.isep.ipp.pt:10228',
+        target: proxyTarget,
         changeOrigin: true,
         secure: false,
         rewrite: (path) => path.replace(/^\/api/, ''),

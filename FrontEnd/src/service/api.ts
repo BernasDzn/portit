@@ -1,7 +1,7 @@
 import axios from 'axios'
+import { getApiBase } from '@/config.ts'
 
-// Q.A: Why is it "/api" ?? "/api" works because of Vite proxy settings in #vite.config.ts, I know, weird huh?
-const BACKEND = "https://vs-gate.dei.isep.ipp.pt:10228"; 
+const BACKEND = getApiBase()
 
 export const api = axios.create({
   baseURL: BACKEND,

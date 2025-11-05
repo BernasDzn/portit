@@ -1,0 +1,4 @@
+{
+  "remoteApi": "https://vs-gate.dei.isep.ipp.pt:10228",
+  "localApiPort": 5195
+}
