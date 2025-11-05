@@ -31,6 +31,11 @@ import PhysicalResourceDashboard from '@/views/PhysicalResources/PhysicalResourc
 import PhysicalResourcesSearch from '@/views/PhysicalResources/PhysicalResourcesSearch.vue'
 import PhysicalResourceViewer from '@/views/PhysicalResources/PhysicalResourceViewer.vue'
 import PhysicalResourceCreate from '@/views/PhysicalResources/PhysicalResourceCreate.vue'
+import StorageAreaDashboard from '@/views/StorageAreas/StorageAreaDashboard.vue'
+import StorageAreaSearch from '@/views/StorageAreas/StorageAreaSearch.vue'
+import StorageAreaView from '@/views/StorageAreas/StorageAreaView.vue'
+import StorageAreaCreate from '@/views/StorageAreas/StorageAreaCreate.vue'
+import StorageAreaEdit from '@/views/StorageAreas/StorageAreaEdit.vue'
 import AdminDashboard from '@/views/Admin/AdminDashboard.vue'
 import UserDashboard from '@/views/Admin/UserDashboard.vue'
 import UserSearch from '@/views/Admin/UserSearch.vue'
@@ -234,6 +239,39 @@ const router = createRouter({
             meta: {
                 icon: "add"
             }
+        },
+        {
+          path: '/storage-areas/dashboard',
+          name: 'Storage Areas Dashboard',
+          component: StorageAreaDashboard,
+          meta: {
+            icon: "warehouse"
+          }
+        },
+        {
+          path: '/storage-areas/search',
+          name: 'Search for storage areas',
+          component: StorageAreaSearch,
+          meta: {
+            icon: "search"
+          }
+        },
+        {
+          path: '/storage-areas/view/:nameCode',
+          component: StorageAreaView
+        },
+        {
+          path: '/storage-areas/create',
+          name: 'Create a Storage Area',
+          component: StorageAreaCreate,
+          meta: {
+            icon: "add"
+          }
+        },
+        {
+          path: '/storage-areas/edit/:name',
+          name: 'editStorageArea',
+          component: StorageAreaEdit
         },
         {
           path: '/admin/dashboard',
