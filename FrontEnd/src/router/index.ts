@@ -44,6 +44,7 @@ import UserView from '@/views/Admin/UserView.vue'
 import Visualizer from '@/views/Visualizer.vue'
 import VVNDashboard from '@/views/VesselVisitNotification/VesselVisitNotificationDashboard.vue'
 import VVNSearch from '@/views/VesselVisitNotification/VesselVisitNotificationSearch.vue'
+import VVNView from '@/views/VesselVisitNotification/VesselVisitNotificationView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -285,6 +286,11 @@ const router = createRouter({
           path: '/vessel-visit-notifications/search',
           name: 'VVN Search',
           component: VVNSearch
+        },
+        {
+          path : '/vessel-visit-notifications/view/:notificationId',
+          name: 'VVN View',
+          component: VVNView
         },
         {
           path: '/admin/dashboard',

@@ -7,19 +7,19 @@ const { t } = useI18n();
 
 <template>
     <div>
-        <h1 class="title">{{ t('vesselVisitNotification.tabs.dashboard') }}</h1>
-        <p class="subtitle">{{ t('vesselVisitNotification.subtitle.dashboard') }}</p>
+        <h1 class="title">{{ t('notification.tabs.dashboard') }}</h1>
+        <p class="subtitle">{{ t('notification.subtitle.dashboard') }}</p>
         <sl-card class="dashboard-overview">
             <div class="dashboard-items">
                 <DashboardItem
-                    :title="t('vesselVisitNotification.tabs.search')"
-                    :description="t('vesselVisitNotification.subtitle.search')"
+                    :title="t('notification.tabs.search')"
+                    :description="t('notification.subtitle.search')"
                     icon="search"
                     to="/vessel-visit-notifications/search"
                 />
                 <DashboardItem
-                    :title="t('vesselVisitNotification.tabs.create')"
-                    :description="t('vesselVisitNotification.subtitle.create')"
+                    :title="t('notification.tabs.create')"
+                    :description="t('notification.subtitle.create')"
                     icon="add"
                     to="/vessel-visit-notifications/create"
                 />

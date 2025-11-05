@@ -15,16 +15,19 @@ const props = defineProps<{ notification: VesselVisitNotification; link?: string
             <div class="opposed">
                 <div>
                     <p class="notification-title">
-                        {{ t('notification.id') }}: {{ props.notification.notificationId }}
-                        <sl-tag size="small" variant="primary">
-                            {{ props.notification.isCargoHazardous ? t('notification.hazardous') : t('notification.nonHazardous') }}
+                        {{ props.notification.notificationId }}
+                        <sl-tag size="small" variant="danger" v-if="props.notification.isCargoHazardous">
+                            {{ t('notification.hazardous') }}
+                        </sl-tag>
+                        <sl-tag size="small" variant="success" v-else>
+                            {{ t('notification.nonHazardous') }}
                         </sl-tag>
                     </p>
                     <p class="item-description">
-                        {{ t('notification.arrival') }}: {{ props.notification.expectedArrival }}<br/>
-                        {{ t('notification.departure') }}: {{ props.notification.expectedDeparture }}<br/>
+                        {{ t('notification.arrival') }}: {{ props.notification.expectedArrival.split('T')[0] }}<br/>
+                        {{ t('notification.departure') }}: {{ props.notification.expectedDeparture.split('T')[0] }}<br/>
                         {{ t('notification.specialRequirements') }}: {{ props.notification.specialRequirements || t('notification.none') }}<br/>
-                        {{ t('notification.crew') }}: {{ props.notification.crewDetails ? props.notification.crewDetails.totalCrewMembers : t('notification.unknown') }} {{ t('notification.captain') }}: {{ props.notification.crewDetails && props.notification.crewDetails.captain ? props.notification.crewDetails.captain.value : t('notification.unknown') }}
+                        {{ t('notification.crew') }}: {{ props.notification.crewDetails ? props.notification.crewDetails.totalCrewMembers : t('notification.unknown') }}<br/>{{ t('notification.captain') }}: {{ props.notification.crewDetails && props.notification.crewDetails.captain ? props.notification.crewDetails.captain.value : t('notification.unknown') }}
                     </p>
                 </div>
                 <span class="material-icons icon" aria-hidden="true">notifications</span>

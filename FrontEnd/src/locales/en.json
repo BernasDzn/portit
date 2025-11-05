@@ -2,7 +2,9 @@
     "common": {
         "loading": "Loading...",
         "noData": "No data available",
-        "statistics": "Statistics"
+        "statistics": "Statistics",
+        "yes": "Yes",
+        "no": "No"
     },
     "buttons": {
         "save": "Save",
@@ -453,9 +455,6 @@
             }
         }
     },
-    "vvn": {
-        "title": "Vessel Visit Notifications"
-    },
     "notification": {
         "id": "Notification ID",
         "hazardous": "Hazardous",
@@ -466,18 +465,40 @@
         "none": "None",
         "crew": "Crew",
         "captain": "Captain",
-        "unknown": "Unknown"
-    },
-    "vesselVisitNotification": {
+        "unknown": "Unknown",
         "tabs": {
             "dashboard": "Notifications Dashboard",
             "search": "Search Notifications",
+            "edit": "Edit Notification",
             "create": "Create Notification"
         },
+        "title": "Vessel Visit Notifications",
         "subtitle": {
-            "search": "Search vessel visit notifications",
-            "dashboard": "Vessel visit notifications dashboard",
-            "create": "Create a new vessel visit notification"
+            "dashboard": "Overview of vessel visit notifications",
+            "search": "Manage and view all vessel visit notifications",
+            "create": "Create a new vessel visit notification",
+            "edit": "Edit an existing vessel visit notification"
+        },
+        "errors": {
+            "noNotificationId": "No notification id provided"
+        },
+        "infoTitle": "Notification Information",
+        "cargoTitle": "Cargo Information",
+        "vesselTitle": "Vessel Information",
+        "fields": {
+            "expectedArrival": "Expected Arrival",
+            "expectedDeparture": "Expected Departure",
+            "isCargoHazardous": "Cargo Hazardous",
+            "specialRequirements": "Special Requirements",
+            "captain": "Captain",
+            "totalCrewMembers": "Total Crew Members",
+            "safetyOfficers": "Safety Officers",
+            "loadCargoManifest": "Load Cargo Manifest",
+            "unloadCargoManifest": "Unload Cargo Manifest",
+            "position": "Position",
+            "area": "Area",
+            "container": "Container",
+            "crewMembers": "Crew Members"
         }
     }
 }

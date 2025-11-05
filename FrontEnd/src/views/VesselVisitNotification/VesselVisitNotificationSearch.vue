@@ -31,15 +31,15 @@ const fetchVesselVisitNotifications = async (filtering?: Filter<VesselVisitNotif
         <sl-breadcrumb>
             <sl-breadcrumb-item>
                 <RouterLink to="/vessel-visit-notifications/dashboard" class="breadcrumb-link">
-                    {{ t('vesselVisitNotification.tabs.dashboard') }}
+                    {{ t('notification.tabs.dashboard') }}
                 </RouterLink>
             </sl-breadcrumb-item>
-            <sl-breadcrumb-item>{{ t('vesselVisitNotification.tabs.search') }}</sl-breadcrumb-item>
+            <sl-breadcrumb-item>{{ t('notification.tabs.search') }}</sl-breadcrumb-item>
         </sl-breadcrumb>
 
         <header>
-            <h1 class="title">{{ t('vesselVisitNotification.tabs.search') }}</h1>
-            <p class="subtitle">{{ t('vesselVisitNotification.subtitle.search') }}</p>
+            <h1 class="title">{{ t('notification.tabs.search') }}</h1>
+            <p class="subtitle">{{ t('notification.subtitle.search') }}</p>
 
             <ListingBox
                 listingStyle="listing-grid"
@@ -47,11 +47,11 @@ const fetchVesselVisitNotifications = async (filtering?: Filter<VesselVisitNotif
                 search-filter="notificationNumber"
                 v-slot="{ elements }"
             >
-                <li v-for="notification in elements" :key="notification.id">
+                <li v-for="notification in elements" :key="notification.notificationId" class="link">
                     <VesselVisitNotificationPrinter
                         class="listing-box"
                         :notification="notification"
-                        :link="`/vessel-visit-notifications/view/${notification.id}`"
+                        :link="`/vessel-visit-notifications/view/${notification.notificationId}`"
                     />
                 </li>
             </ListingBox>
