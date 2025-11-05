@@ -42,6 +42,8 @@ import UserSearch from '@/views/Admin/UserSearch.vue'
 import UserCreate from '@/views/Admin/UserCreate.vue'
 import UserView from '@/views/Admin/UserView.vue'
 import Visualizer from '@/views/Visualizer.vue'
+import VVNDashboard from '@/views/VesselVisitNotification/VesselVisitNotificationDashboard.vue'
+import VVNSearch from '@/views/VesselVisitNotification/VesselVisitNotificationSearch.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -273,6 +275,16 @@ const router = createRouter({
           path: '/storage-areas/edit/:name',
           name: 'editStorageArea',
           component: StorageAreaEdit
+        },
+        {
+          path: '/vessel-visit-notifications/dashboard',
+          name: 'VVN Dashboard',
+          component: VVNDashboard
+        },
+        {
+          path: '/vessel-visit-notifications/search',
+          name: 'VVN Search',
+          component: VVNSearch
         },
         {
           path: '/admin/dashboard',

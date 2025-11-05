@@ -13,6 +13,7 @@ const sidebarItems = ref([
   { name: 'vessel.title', route: '/vessels/dashboard', icon: "directions_boat", materialIcon: 'directions_boat' },
   { name: 'vesselType.title', route: '/vessel-types/dashboard', icon: "sailing", materialIcon: 'sailing' },
   { name: 'dock.title', route: '/docks/dashboard', icon: "anchor", materialIcon: 'anchor' },
+  { name: 'vvn.title', route: '/vessel-visit-notifications/dashboard', icon: "ballot", materialIcon: 'ballot' },
   {},
   { name: 'qualification.title', route: '/qualifications/dashboard', icon:"mortarboard", materialIcon: 'school' },
   { name: 'physicalResource.title', route: '/resources/dashboard', icon: "inventory", materialIcon: 'build' },

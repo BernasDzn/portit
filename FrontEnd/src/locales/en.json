@@ -452,5 +452,32 @@
                 "placeholder": "Current occupancy"
             }
         }
+    },
+    "vvn": {
+        "title": "Vessel Visit Notifications"
+    },
+    "notification": {
+        "id": "Notification ID",
+        "hazardous": "Hazardous",
+        "nonHazardous": "Non-hazardous",
+        "arrival": "Arrival",
+        "departure": "Departure",
+        "specialRequirements": "Special Requirements",
+        "none": "None",
+        "crew": "Crew",
+        "captain": "Captain",
+        "unknown": "Unknown"
+    },
+    "vesselVisitNotification": {
+        "tabs": {
+            "dashboard": "Notifications Dashboard",
+            "search": "Search Notifications",
+            "create": "Create Notification"
+        },
+        "subtitle": {
+            "search": "Search vessel visit notifications",
+            "dashboard": "Vessel visit notifications dashboard",
+            "create": "Create a new vessel visit notification"
+        }
     }
 }

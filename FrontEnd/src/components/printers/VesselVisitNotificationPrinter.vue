@@ -1,0 +1,52 @@
+<script setup lang="ts">
+import type { VesselVisitNotification } from '@/model/VesselVisitNotification';
+import VesselPrinter from './VesselPrinter.vue';
+import { RouterLink } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
+
+const props = defineProps<{ notification: VesselVisitNotification; link?: string }>();
+</script>
+
+<template>
+    <component :is="props.link ? RouterLink : 'div'" :to="props.link">
+        <sl-card class="listing-item">
+            <div class="opposed">
+                <div>
+                    <p class="notification-title">
+                        {{ t('notification.id') }}: {{ props.notification.notificationId }}
+                        <sl-tag size="small" variant="primary">
+                            {{ props.notification.isCargoHazardous ? t('notification.hazardous') : t('notification.nonHazardous') }}
+                        </sl-tag>
+                    </p>
+                    <p class="item-description">
+                        {{ t('notification.arrival') }}: {{ props.notification.expectedArrival }}<br/>
+                        {{ t('notification.departure') }}: {{ props.notification.expectedDeparture }}<br/>
+                        {{ t('notification.specialRequirements') }}: {{ props.notification.specialRequirements || t('notification.none') }}<br/>
+                        {{ t('notification.crew') }}: {{ props.notification.crewDetails ? props.notification.crewDetails.totalCrewMembers : t('notification.unknown') }} {{ t('notification.captain') }}: {{ props.notification.crewDetails && props.notification.crewDetails.captain ? props.notification.crewDetails.captain.value : t('notification.unknown') }}
+                    </p>
+                </div>
+                <span class="material-icons icon" aria-hidden="true">notifications</span>
+            </div>
+            <slot></slot>
+        </sl-card>
+    </component>
+</template>
+
+<style scoped>
+.icon {
+    font-size: 35px;
+    color: var(--accent-1);
+}
+
+.notification-title {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.vessel-section {
+    margin-top: 10px;
+}
+</style>
