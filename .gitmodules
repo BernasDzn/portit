@@ -1,3 +1,4 @@
 [submodule "FrontEnd/public/libs/three.js"]
 	path = FrontEnd/public/libs/three.js
 	url = https://github.com/mrdoob/three.js.git
+	shallow = true
