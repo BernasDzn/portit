@@ -1,84 +1,90 @@
 <script setup lang="ts">
+import { ref } from 'vue';
+import { useI18n } from 'vue-i18n';
+import AxiosHttpService from '@/service/AxiosHttpService';
+import { StorageAreaService } from '@/service/StorageAreaService';
+import type { StorageArea } from '@/model/StorageArea';
+
 import EntityDropdown from '@/components/crud/EntityDropdown.vue';
 import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
-import type { Vessel } from '@/model/Vessel';
-import AxiosHttpService from '@/service/AxiosHttpService';
-import { VesselService } from '@/service/VesselService';
-import { VesselTypeService } from '@/service/VesselTypeService';
-import { ref } from 'vue';
-import { useI18n } from 'vue-i18n';
+import { DockService } from '@/service/DockService';
 
 const http = new AxiosHttpService();
-const vesselService = new VesselService(http);
-const vesselTypeService = new VesselTypeService(http);
+const storageAreaService = new StorageAreaService(http);
+const dockService = new DockService(http);
 
-const vessel = ref<Vessel>({
-    name: '',
-    imoNumber: '',
-    type: '',
-    owner: 'Global Shipping Co.', // SUBSTITUIR PELO OWNER REPRESENTADO PELO USER DEPOIS
-    length: null!,
-    depth: null!,
-    draft: null!
+const storageArea = ref<StorageArea>({
+    nameCode: '',
+    location: '',
+    type: 0,
+    capacity: 0,
+    currentOccupancy: 0,
+    dockServices: [],
 });
 
 const { t } = useI18n();
 
-const submitVessel = (obj: any) => 
-    vesselService.createVessel(obj);
+const submitStorageArea = (obj: any) => 
+    storageAreaService.createStorageArea(obj);
+
 </script>
 
 <template>
     <div>
         <sl-breadcrumb>
-            <sl-breadcrumb-item><RouterLink to="/vessels/dashboard" class="breadcrumb-link">{{ t('vessel.tabs.dashboard') }}</RouterLink></sl-breadcrumb-item>
-            <sl-breadcrumb-item>{{ t('vessel.tabs.create') }}</sl-breadcrumb-item>
+            <sl-breadcrumb-item><RouterLink to="/storage-area/dashboard" class="breadcrumb-link">{{ t('storageArea.tabs.dashboard') }}</RouterLink></sl-breadcrumb-item>
+            <sl-breadcrumb-item>{{ t('storageArea.tabs.create') }}</sl-breadcrumb-item>
         </sl-breadcrumb>
 
-        <h1 class="title">{{ t('vessel.tabs.create') }}</h1>
-        <p class="subtitle">{{ t('vessel.subtitle.create') }}</p>
-        <EntityForm :object="vessel" :submit-function="submitVessel">
-            <div class="name-imo">
-                <FormField :required="true" class="field" :name="t('vessel.fields.name.title') + '*'" v-model="vessel.name" :placeholderText="t('vessel.fields.name.placeholder')"/>
-                <FormField :required="true" class="field" :name="t('vessel.fields.imoNumber.title') + '*'" v-model="vessel.imoNumber" :placeholderText="t('vessel.fields.imoNumber.placeholder')" pattern="IMO [0-9]{7}"/>
-                <EntityDropdown
-                class="field-dropdown"
-                :name="t('vessel.fields.vesselType.title') + '*'"
-                v-model="vessel.type"
-                :fetch-function="() => vesselTypeService.getVesselTypes().then(page => (page.items || []).map(t => t.name))"
-                :fetch-on-mount="true"
-                :placeholderText="t('vessel.fields.vesselType.placeholder')"
-                :required="true"
-                valueKey="name"
-                labelKey="name"
-                />
-            </div>
-            <div class="measurements">
-                <FormField :required="true" class="field" :name="t('physicalCharacteristics.length.title') + ' (m)*'" v-model.number="vessel.length"
-                :placeholderText="t('physicalCharacteristics.length.placeholder')" pattern="^\d+(\.\d{1,2})?$"/>
-                <FormField :required="true" class="field" :name="t('physicalCharacteristics.depth.title') + ' (m)*'" v-model.number="vessel.depth"
-                :placeholderText="t('physicalCharacteristics.depth.placeholder')" pattern="^\d+(\.\d{1,2})?$"/>
-                <FormField :required="true" class="field" :name="t('physicalCharacteristics.draft.title') + ' (m)*'" v-model.number="vessel.draft"
-                :placeholderText="t('physicalCharacteristics.draft.placeholder')" pattern="^\d+(\.\d{1,2})?$"/>
+        <h1 class="title">{{ t('storageArea.tabs.create') }}</h1>
+        <p class="subtitle">{{ t('storageArea.subtitle.create') }}</p>
+        <EntityForm :object="storageArea" :submit-function="submitStorageArea">
+            <div class="form">
+                <div class="general-info">
+                    <p class="section-title">{{ t('dock.generalFields') }}</p>
+                    <FormField class="field" :name="t('storageArea.fields.nameCode.title')" v-model="storageArea.nameCode" :placeholderText="t('storageArea.fields.nameCode.placeholder')" required/>
+                    <FormField class="field" :name="t('storageArea.fields.location.title')" v-model="storageArea.location" :placeholderText="t('storageArea.fields.location.placeholder')" required/>
+                </div>
+
+                <span class="section-divider"></span>
+                
+                <div class="measurements">
+                    <p class="section-title">{{ t('storageArea.fields.capacity.title') }}</p>
+                        <FormField class="field" :name="t('storageArea.fields.capacity.title')" v-model.number="storageArea.capacity" :placeholderText="t('storageArea.capacity.placeholder')" pattern="^[1-9]\d*$" required/>
+                        <FormField class="field" :name="t('storageArea.fields.occupancy.placeholder')" v-model.number="storageArea.currentOccupancy" :placeholderText="t('storage-areas.currentOccupancy.placeholder')" pattern="^[1-9]\d*$" required/>
+                </div>
+
+                <span class="section-divider"></span>
+
+                <div class="measurements">
+                    <p class="section-title">{{ t('dock.title') }}</p>
+                </div>
             </div>
         </EntityForm>
     </div>
 </template>
 
 <style scoped>
-.name-imo {
+
+.form{
     display: flex;
-    gap: .5rem;
+    flex-direction: row;
+}
+
+.general-info {
+    display: flex;
+    flex-direction: column;
 }
 
 .measurements {
     display: flex;
-    gap: .5rem;
+    flex-direction: column;
 }
 
-.create-vessel-form {
-    width: 100%;
+.measurements-grid {
+    display: flex;
+    flex-direction: row;
 }
 
 .field {
@@ -97,27 +103,16 @@ const submitVessel = (obj: any) =>
     max-width: 30rem;
 }
 
-.buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
+.section-divider {
+    width: 1px;
+    margin: 0 1rem;
+    background-color: var(--sl-color-neutral-200);
 }
 
-.form-button {
-    min-width: 100px;
-}
-
-.form-messages {
-    margin: 0.5rem 0 1rem 0;
-    bottom: 1rem;
-}
-
-.form-tip {
-    font-size: 0.9rem;
-    color: #666666;
+.section-title {
+    font-size: 0.8rem;
     margin-bottom: 1rem;
-    display: flex;
-    justify-content: flex-end;
+    color: var(--sl-color-neutral-400);
 }
 
 </style>

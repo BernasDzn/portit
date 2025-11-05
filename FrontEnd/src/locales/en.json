@@ -425,7 +425,10 @@
             "capacity_usage": "Capacity Usage",
             "units": "units",
             "available": "available",
-            "no_docks_serviced": "No docks serviced"
+            "serviced_docks_distance" : "Serviced Docks Distances",
+            "all_docks_serviced": "All docks serviced",
+            "no_docks_serviced": "No docks serviced",
+            "no_registered_distances": "No registered distances"
         },
         "fields":{
             "nameCode": {
