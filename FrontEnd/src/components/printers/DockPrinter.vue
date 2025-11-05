@@ -6,10 +6,13 @@ import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 
-const props = defineProps<{
-    dock: Dock,
-    link?: string
-}>();
+const props = withDefaults(defineProps<{
+    dock: Dock;
+    link?: string;
+    showDetails?: boolean;
+}>(), {
+    showDetails: true
+});
 
 const typesDisplay = computed(() => {
     return props.dock.supportedVesselTypes.map((type: any) => type.name) ?? [];
@@ -29,14 +32,16 @@ const typesDisplay = computed(() => {
                 </div>
                 <span class="material-icons icon" aria-hidden="true">anchor</span>
             </div>
-            <sl-divider></sl-divider>
-            <p>{{ t('dock.fields.supportedVesselTypes.title') }}:</p>
-            <ul class="vessel-types-list">
-                <li v-for="vtype in typesDisplay">
-                    <sl-badge v-if="vtype !== undefined" class="list-badge" variant="neutral">{{ vtype }}</sl-badge>
-                </li>
-            </ul>
-            <slot></slot>
+            <div class="details" v-if="props.showDetails">
+                <sl-divider></sl-divider>
+                <p>{{ t('dock.fields.supportedVesselTypes.title') }}:</p>
+                <ul class="vessel-types-list">
+                    <li v-for="vtype in typesDisplay">
+                        <sl-badge v-if="vtype !== undefined" class="list-badge" variant="neutral">{{ vtype }}</sl-badge>
+                    </li>
+                </ul>
+                <slot></slot>
+            </div>
         </sl-card>
     </component>
 </template>

@@ -371,7 +371,26 @@
             "docks_serviced": "molls atesos",
             "capacity_usage": "Ús de la Capacitat",
             "units": "unitats",
-            "available": "disponibles"
+            "available": "disponibles",
+            "no_docks_serviced": "Cap moll atès"
+        },
+        "fields": {
+            "nameCode": {
+                "title": "Codi de Nom",
+                "placeholder": "Codi de nom de l'Àrea d'Emmagatzematge"
+            },
+            "location": {
+                "title": "Ubicació",
+                "placeholder": "Ubicació de l'Àrea d'Emmagatzematge"
+            },
+            "type": {
+                "title": "Tipus",
+                "placeholder": "Selecciona el tipus d'Àrea d'Emmagatzematge"
+            },
+            "occupancy": {
+                "title": "Ocupació",
+                "placeholder": "Ocupació actual"
+            }
         }
     }
 
