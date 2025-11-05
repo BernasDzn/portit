@@ -1,12 +1,20 @@
-import { ref } from "vue";
+import { ref, nextTick } from "vue";
+
+let _idCounter = 1
 
 class Notification {
+    id: number;
     message: string;
     type: string;
+    open: boolean;
+    duration?: number;
 
-    constructor(message: string, type: string) {
+    constructor(message: string, type: string, duration?: number) {
+        this.id = Date.now() + (_idCounter++)
         this.message = message;
         this.type = type;
+        this.open = false // start closed, we'll open after mount to trigger animation
+        this.duration = duration
     }
 }
 
@@ -30,13 +38,21 @@ const typeToTitleMap: Record<string, string> = {
 
 const notificationList = ref<Array<Notification>>([]);
 
-function enqueueNotification(message: string, type: string) {
-    const notif = new Notification(message, type);
-    notificationList.value.push(notif);
+function enqueueNotification(message: string, type: string, duration?: number) {
+    const notif = new Notification(message, type, duration)
+    notificationList.value.push(notif)
+    // open after DOM updates so Shoelace animates the entrance
+    nextTick(() => { notif.open = true })
+    return notif.id
 }
 
 function dequeueNotification() {
     notificationList.value.shift();
+}
+
+function removeNotificationById(id: number) {
+    const idx = notificationList.value.findIndex(n => n.id === id)
+    if (idx !== -1) notificationList.value.splice(idx, 1)
 }
 
 function getNotificationTitle(notif: Notification): string {
@@ -54,6 +70,7 @@ export function useAlerts() {
         getNotificationTitle,
         enqueueNotification,
         dequeueNotification,
+        removeNotificationById,
         clearNotifications,
     };
 }
