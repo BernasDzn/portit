@@ -30,7 +30,7 @@ export default defineConfig({
     proxy: {
       // proxy any requests under /api to the backend and strip the /api prefix
       '^/api': {
-        target: 'https://localhost:5001',
+        target: 'https://localhost:7223',
         changeOrigin: true,
         secure: false,
         rewrite: (path) => path.replace(/^\/api/, ''),

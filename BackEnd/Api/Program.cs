@@ -26,21 +26,23 @@ builder.Host.UseSerilog((ctx, lc) => lc
     .ReadFrom.Configuration(ctx.Configuration));
 
 // Enable HTTPS
+/*
 builder.WebHost.ConfigureKestrel(options =>
 {
-    options.ListenLocalhost(5195);
+    options.ListenLocalhost(builder.Configuration.GetValue<int>("http_port"));
     options.ListenLocalhost(builder.Configuration.GetValue<int>("https_port"), listenOptions =>
     {
         listenOptions.UseHttps();
     });
 });
+*/
 
 // Allow all requests from Vue dev server
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("VueDevPolicy", policy =>
     {
-        policy.WithOrigins("http://localhost:5173")
+        policy.WithOrigins(builder.Configuration.GetValue<string>("frontend_url")!)
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials();
@@ -63,9 +65,9 @@ builder.Services.AddAuthentication(options =>
     options.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true, // Require that token iss claim matches configured issuer (us)
-        ValidIssuer = builder.Configuration.GetValue<string>("Jwt:Issuer")!,
+        ValidIssuer = builder.Configuration.GetValue<string>("backend_url")!,
         ValidateAudience = true, // Require that token aud claim matches configured audience (our front-end)
-        ValidAudience = builder.Configuration.GetValue<string>("Jwt:Audience")!,
+        ValidAudience = builder.Configuration.GetValue<string>("frontend_url")!,
         ValidateLifetime = true, // Ensure token hasn't expired
         ValidateIssuerSigningKey = true, // Ensure token signature is valid so it cant be forged
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)),

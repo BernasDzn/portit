@@ -20,8 +20,8 @@ public class LoginController : ControllerBase
     {
         _jwtTokenService = new JwtTokenService(
             config["Jwt:Key"]!,
-            config["Jwt:Issuer"]!,
-            config["Jwt:Audience"]!,
+            config["backend_url"]!,
+            config["frontend_url"]!,
             config.GetValue<int>("Jwt:ExpiresMinutes")
         );
         _config = config;
