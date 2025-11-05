@@ -1,0 +1,430 @@
+{
+    "common": {
+        "loading": "Se încarcă...",
+        "noData": "Nu există date disponibile",
+        "statistics": "Statistici"
+    },
+    "buttons": {
+        "save": "Salvează",
+        "cancel": "Anulează",
+        "delete": "Șterge",
+        "edit": "Editează",
+        "create": "Creează",
+        "search": "Caută",
+        "select": "Selectează",
+        "activate": "Activează",
+        "deactivate": "Dezactivează",
+        "filter": {
+            "title": "Filtre",
+            "add": "Filtrează",
+            "clear": "Curăță filtrele"
+        },
+        "pagination": {
+            "previous": "Anterior",
+            "next": "Următorul"
+        },
+        "login": "Autentificare",
+        "goBackToLogin": "Întoarce-te la autentificare",
+        "logout": "Deconectare"
+    },
+    "unsavedChanges": {
+        "title": "Renunți la modificări?",
+        "message": "Ai modificări nesalvate. Ești sigur că vrei să părăsești această pagină și să renunți la modificări?",
+        "confirm": "Renunță",
+        "cancel": "Continuă editarea"
+    },
+    "dashboard": {
+        "sidebarTitle": "Tablou de bord",
+        "title": "PortIT Tablou de bord",
+        "subtitle": "Prezentare generală a sistemului PortIT",
+        "3DModel": {
+            "title": "Vizualizare 3D port",
+            "description": "Vizualizați o reprezentare 3D interactivă a întregii facilități portuare. Monitorizați ocuparea docurilor, pozițiile navelor, zonele de depozitare și resursele în timp real.",
+            "open": "Deschide model 3D"
+        }
+    },
+    "admin": {
+        "sidebarTitle": "Admin",
+        "title": "Tablou administrativ",
+        "subtitle": "Prezentare administrativă și management",
+        "userManagement": {
+            "title": "Gestionare utilizatori",
+            "subtitle": "Gestionați utilizatorii sistemului, rolurile și permisiunile."
+        },
+        "auditLogs": {
+            "title": "Jurnale de audit",
+            "subtitle": "Vizualizați și monitorizați jurnalele de activitate ale sistemului."
+        }
+    },
+    "user": {
+        "fields": {
+            "email": {
+                "title": "Email",
+                "placeholder": "email@mail.com"
+            },
+            "role": {
+                "title": "Rol",
+                "placeholder": "Selectează rolul utilizatorului",
+                "options": {
+                    "admin": "Administrator",
+                    "saoRep": "Reprezentant SAO",
+                    "pao": "Ofițer Autoritate Portuară",
+                    "logisticsOperator": "Operator logistic"
+                }
+            },
+            "isActive": {
+                "title": "Activ",
+                "options": {
+                    "active": "Da",
+                    "inactive": "Nu"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Tablou utilizator",
+            "create": "Creează utilizator",
+            "view": "Vizualizează utilizatori",
+            "search": "Caută utilizatori"
+        },
+        "infoTitle": "Detalii utilizator",
+        "title": "Utilizatori",
+        "subtitle": {
+            "dashboard": "Prezentare generală și management utilizatori",
+            "create": "Înregistrează un utilizator nou în sistem",
+            "view": "Vizualizează și gestionează utilizatorii existenți"
+        }
+    },
+    "physicalCharacteristics": {
+        "title": "Caracteristici fizice (m)",
+        "length": {
+            "title": "Lungime",
+            "placeholder": "Lungime în metri"
+        },
+        "depth": {
+            "title": "Adâncime",
+            "placeholder": "Adâncime în metri"
+        },
+        "draft": {
+            "title": "Pescaj",
+            "placeholder": "Pescaj în metri"
+        }
+    },
+    "dock": {
+        "fields": {
+            "code": {
+                "title": "Cod",
+                "placeholder": "Cod doc"
+            },
+            "name": {
+                "title": "Nume",
+                "placeholder": "Numele docului"
+            },
+            "location": {
+                "title": "Locație",
+                "placeholder": "Locația docului"
+            },
+            "supportedVesselTypes": {
+                "title": "Tipuri de nave suportate",
+                "vesselTypes": {
+                    "title": "Tipuri de nave",
+                    "placeholder": "Selectează tipuri de nave"
+                },
+                "vesselType": "Tip navă"
+            }
+        },
+        "tabs": {
+            "dashboard": "Tablou docuri",
+            "view_dashboard": "Vizualizează docuri",
+            "search": "Caută docuri",
+            "create": "Creează doc",
+            "view": "Vizualizează doc",
+            "edit": "Editează doc"
+        },
+        "generalFields": "Câmpuri generale",
+        "infoTitle": "Informații doc",
+        "title": "Docuri",
+        "subtitle": {
+            "dashboard": "Prezentare statistică a docurilor și activităților",
+            "search": "Gestionează și vizualizează toate docurile înregistrate",
+            "create": "Înregistrează un doc nou în sistem",
+            "edit": "Editează un doc existent în sistem"
+        },
+        "registeredDocks": "Docuri înregistrate"
+    },
+    "vesselType": {
+        "fields": {
+            "name": {
+                "title": "Nume",
+                "placeholder": "Numele tipului de navă"
+            },
+            "description": {
+                "title": "Descriere",
+                "placeholder": "Descrierea tipului de navă"
+            },
+            "capacity": {
+                "title": "Capacitate",
+                "placeholder": "Capacitatea de containere în TEU"
+            },
+            "containerCapacity": {
+                "title": "Capacitate containere (TEU)",
+                "maxNumberOfRows": {
+                    "title": "Nr. maxim de rânduri",
+                    "placeholder": "Max rânduri în TEU"
+                },
+                "maxNumberOfBays": {
+                    "title": "Nr. maxim de benzi",
+                    "placeholder": "Max benzi în TEU"
+                },
+                "maxNumberOfTiers": {
+                    "title": "Nr. maxim de niveluri",
+                    "placeholder": "Max niveluri în TEU"
+                }
+            }
+        },
+        "generalFields": "Câmpuri generale",
+        "tabs": {
+            "dashboard": "Tablou tipuri nave",
+            "view_dashboard": "Vizualizează tipuri nave",
+            "search": "Caută tipuri nave",
+            "create": "Creează tip navă",
+            "view": "Vizualizează tip navă",
+            "edit": "Editează tip navă"
+        },
+        "infoTitle": "Informații tip navă",
+        "title": "Tipuri nave",
+        "subtitle": {
+            "dashboard": "Prezentare generală a statisticilor și activităților pe tipuri de nave",
+            "search": "Gestionează și vizualizează toate tipurile de nave înregistrate",
+            "create": "Înregistrează un tip de navă nou în sistem",
+            "edit": "Editează un tip de navă existent în sistem"
+        },
+        "registeredVesselTypes": "Tipuri nave înregistrate"
+    },
+    "vessel": {
+        "fields": {
+            "name": {
+                "title": "Nume",
+                "placeholder": "Numele navei"
+            },
+            "imoNumber": {
+                "title": "Număr IMO",
+                "placeholder": "Numărul IMO al navei"
+            },
+            "owner": {
+                "title": "Proprietar",
+                "placeholder": "Organizația proprietară"
+            },
+            "vesselType": {
+                "title": "Tip navă",
+                "placeholder": "Selectează tip navă"
+            }
+        },
+        "infoTitle": "Informații navă",
+        "physicalCharacteristicsTitle": "Caracteristici fizice",
+        "tabs": {
+            "dashboard": "Tablou nave",
+            "view_dashboard": "Vizualizează nave",
+            "search": "Caută nave",
+            "create": "Creează navă",
+            "view": "Vizualizează navă",
+            "edit": "Editează navă"
+        },
+        "title": "Nave",
+        "subtitle": {
+            "dashboard": "Prezentare generală a statisticilor și activităților navelor",
+            "search": "Gestionează și vizualizează toate navele înregistrate",
+            "create": "Înregistrează o navă nouă în sistem",
+            "edit": "Editează o navă existentă în sistem"
+        },
+        "ownedBy": "Deținut de",
+        "registeredVessels": "Nave înregistrate"
+    },
+    "staff": {
+        "fields": {
+            "mechanographicNumber": {
+                "title": "Număr mecanografic",
+                "placeholder": "Număr mecanografic"
+            },
+            "name": {
+                "title": "Nume",
+                "placeholder": "Numele personalului"
+            },
+            "email": {
+                "title": "Email",
+                "placeholder": "Adresa de email"
+            },
+            "phoneNumber": {
+                "title": "Număr de telefon",
+                "placeholder": "Număr de telefon"
+            },
+            "qualifications": {
+                "title": "Calificări",
+                "placeholder": "Selectează calificări"
+            },
+            "status": {
+                "title": "Stare",
+                "options": {
+                    "available": "Disponibil",
+                    "unavailable": "Indisponibil",
+                    "temporarilyReassigned": "Realocat temporar"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Tablou personal",
+            "view_dashboard": "Vizualizează personalul",
+            "search": "Caută personal",
+            "create": "Creează membru personal",
+            "view": "Vizualizează membru personal",
+            "edit": "Editează membru personal"
+        },
+        "infoTitle": "Informații membru personal",
+        "title": "Personal",
+        "subtitle": {
+            "search": "Gestionează și vizualizează tot personalul înregistrat",
+            "dashboard": "Prezentare generală a statisticilor și activităților personalului",
+            "create": "Înregistrează un nou membru al personalului în sistem",
+            "view": "Vizualizează detalii personale",
+            "edit": "Editează un membru al personalului existent în sistem"
+        }
+    },
+    "qualification": {
+        "tabs": {
+            "dashboard": "Tablou calificări",
+            "view_dashboard": "Vizualizează calificări",
+            "search": "Caută calificări",
+            "create": "Creează calificare",
+            "view": "Vizualizează calificare",
+            "edit": "Editează calificare"
+        },
+        "infoTitle": "Informații calificare",
+        "title": "Calificări",
+        "subtitle": {
+            "search": "Gestionează și vizualizează toate calificările înregistrate",
+            "dashboard": "Prezentare generală a statisticilor și activităților calificărilor",
+            "create": "Înregistrează o calificare nouă în sistem",
+            "edit": "Editează o calificare existentă în sistem",
+            "view": "Vizualizează detaliile calificării"
+        },
+        "fields": {
+            "idCode": {
+                "title": "Codul calificării",
+                "placeholder": "Cod calificare"
+            },
+            "qualificationName": {
+                "title": "Nume calificare",
+                "placeholder": "Nume calificare"
+            }
+        }
+    },
+    "physicalResource": {
+        "tabs": {
+            "dashboard": "Tablou resurse fizice",
+            "view_dashboard": "Vizualizează resurse fizice",
+            "search": "Caută resurse fizice",
+            "create": "Creează resursă fizică",
+            "view": "Vizualizează resursă fizică",
+            "edit": "Editează resursă fizică"
+        },
+        "infoTitle": "Informații resursă fizică",
+        "title": "Resurse fizice",
+        "subtitle": {
+            "search": "Gestionează și vizualizează toate resursele fizice înregistrate",
+            "dashboard": "Panou de control pentru resurse fizice",
+            "view_dashboard": "Vizualizează resurse fizice",
+            "create": "Înregistrează o nouă resursă fizică în sistem",
+            "view": "Vizualizează detaliile resursei fizice",
+            "edit": "Editează o resursă fizică existentă în sistem"
+        },
+        "generalFields": "Câmpuri generale",
+        "specificFields": "Câmpuri specifice",
+        "fields": {
+            "code": {
+                "title": "Cod",
+                "placeholder": "Cod resursă"
+            },
+            "description": {
+                "title": "Descriere",
+                "placeholder": "Descriere resursă"
+            },
+            "status": {
+                "title": "Stare",
+                "placeholder": "Selectați starea resursei",
+                "options": {
+                    "available": "Disponibil",
+                    "maintenance": "În mentenanță",
+                    "outOfService": "În afara serviciului"
+                }
+            },
+            "qualifications": {
+                "title": "Calificări necesare",
+                "placeholder": "Calificările necesare pentru operarea acestei resurse"
+            },
+            "setupTime": {
+                "title": "Timp de configurare (minute)",
+                "placeholder": "Timp de configurare"
+            },
+            "servingDocks": {
+                "title": "Docuri deservite",
+                "placeholder": "Selectați docurile deservite"
+            },
+            "liftingCapacity": {
+                "title": "Capacitate de ridicare (kgs)",
+                "placeholder": "Capacitate de ridicare"
+            },
+            "containersPerHour": {
+                "title": "Containere pe oră",
+                "placeholder": "Containere pe oră"
+            },
+            "maxLoadCapacity": {
+                "title": "Capacitatea maximă de încărcare (kg)",
+                "placeholder": "Capacitatea maximă de încărcare"
+            },
+            "averageSpeed": {
+                "title": "Viteza medie (km/h)",
+                "placeholder": "Viteza medie"
+            },
+            "containersPerTrip": {
+                "title": "Containere pe călătorie",
+                "placeholder": "Containere pe călătorie"
+            },
+            "type": {
+                "title": "Tip resursă",
+                "options": {
+                    "stsCrane": "Macara STS",
+                    "yardGantry": "Macara portică pentru curte",
+                    "truck": "Camion"
+                }
+            }
+        },
+        "actions": {
+            "deactivate": "Dezactivează resursa fizică"
+        }
+    },
+    "storageArea": {
+        "tabs": {
+            "dashboard": "Tablou zone depozitare",
+            "view_dashboard": "Vizualizează zone depozitare",
+            "search": "Caută zone depozitare",
+            "create": "Creează zonă depozitare",
+            "view": "Vizualizează zonă depozitare",
+            "edit": "Editează zonă depozitare"
+        },
+        "infoTitle": "Informații zonă depozitare",
+        "title": "Zone depozitare",
+        "subtitle": {
+            "search": "Gestionează și vizualizează toate zonele de depozitare înregistrate",
+            "dashboard": "Panou de control pentru toate zonele de depozitare",
+            "view_dashboard": "Vizualizează zone depozitare",
+            "create": "Înregistrează o nouă zonă de depozitare în sistem",
+            "view": "Vizualizează detaliile zonei de depozitare",
+            "edit": "Editează o zonă de depozitare existentă în sistem"
+        },
+        "printer": {
+            "docks_serviced": "docuri deservite",
+            "capacity_usage": "Utilizare capacitate",
+            "units": "unități",
+            "available": "disponibil"
+        }
+    }
+}

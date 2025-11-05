@@ -12,6 +12,8 @@
         "create": "Create",
         "search": "Search",
         "select": "Select",
+        "activate": "Activate",
+        "deactivate": "Deactivate",
         "filter": {
             "title": "Filters",
             "add": "Filter",
@@ -39,6 +41,57 @@
             "title": "3D Port Visualization",
             "description": "View an interactive 3D representation of the entire port facility. Monitor dock occupancy, vessel positions, storage areas, and resources in real-time from a bird's-eye view.",
             "open": "Open 3D Model"
+        }
+    },
+    "admin": {
+        "sidebarTitle": "Admin",
+        "title": "Admin Dashboard",
+        "subtitle": "Administrative overview and management",
+        "userManagement": {
+            "title": "User Management",
+            "subtitle": "Manage system users, roles, and permissions."
+        },
+        "auditLogs": {
+            "title": "Audit Logs",
+            "subtitle": "View and monitor system activity logs."
+        }
+    },
+    "user": {
+        "fields": {
+            "email": {
+                "title": "Email",
+                "placeholder": "email@mail.com"
+            },
+            "role": {
+                "title": "Role",
+                "placeholder": "Select user role",
+                "options": {
+                    "admin": "Administrator",
+                    "saoRep": "SAO Representative",
+                    "pao": "Port Authority Officer",
+                    "logisticsOperator": "Logistics Operator"
+                }
+            },
+            "isActive": {
+                "title": "Active",
+                "options": {
+                    "active": "Yes",
+                    "inactive": "No"
+                }
+            }
+        },
+        "tabs":{
+            "dashboard": "User Dashboard",
+            "create": "Create User",
+            "view": "View Users",
+            "search": "Search Users"
+        },
+        "infoTitle": "User details",
+        "title": "Users",
+        "subtitle": {
+            "dashboard": "User overview and management",
+            "create": "Register a new user into the system",
+            "view": "View and manage existing users"
         }
     },
     "physicalCharacteristics": {
@@ -87,7 +140,7 @@
             "view": "View Dock",
             "edit": "Edit Dock"
         },
-        "generalFields" : "General fields",
+        "generalFields": "General fields",
         "infoTitle": "Dock Information",
         "title": "Docks",
         "subtitle": {
@@ -128,7 +181,7 @@
                 }
             }
         },
-        "generalFields" : "General fields",
+        "generalFields": "General fields",
         "tabs": {
             "dashboard": "Vessel Type Dashboard",
             "view_dashboard": "View Vessel Types",
@@ -210,7 +263,7 @@
             },
             "status": {
                 "title": "Status",
-                "options":{
+                "options": {
                     "available": "Available",
                     "unavailable": "Unavailable",
                     "temporarilyReassigned": "Temporarily reassigned"
@@ -283,8 +336,8 @@
             "view": "View physical resource details",
             "edit": "Edit an existing Physical Resource in the system"
         },
-        "generalFields" : "General fields",
-        "specificFields" : "Specific fields",
+        "generalFields": "General fields",
+        "specificFields": "Specific fields",
         "fields": {
             "code": {
                 "title": "Code",
@@ -330,7 +383,7 @@
             "averageSpeed": {
                 "title": "Average speed (km/h)",
                 "placeholder": "Average speed"
-            },            
+            },
             "containersPerTrip": {
                 "title": "Containers per trip",
                 "placeholder": "Containers per trip"

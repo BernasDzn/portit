@@ -1,0 +1,430 @@
+{
+    "common": {
+        "loading": "Laadimine...",
+        "noData": "Andmeid pole",
+        "statistics": "Statistika"
+    },
+    "buttons": {
+        "save": "Salvesta",
+        "cancel": "Tühista",
+        "delete": "Kustuta",
+        "edit": "Redigeeri",
+        "create": "Loo",
+        "search": "Otsi",
+        "select": "Vali",
+        "activate": "Aktiveeri",
+        "deactivate": "Deaktiveeri",
+        "filter": {
+            "title": "Filtrid",
+            "add": "Lisa filter",
+            "clear": "Tühjenda filtrid"
+        },
+        "pagination": {
+            "previous": "Eelmine",
+            "next": "Järgmine"
+        },
+        "login": "Logi sisse",
+        "goBackToLogin": "Tagasi sisselogimise juurde",
+        "logout": "Logi välja"
+    },
+    "unsavedChanges": {
+        "title": "Loobuda muudatustest?",
+        "message": "Teil on salvestamata muudatusi. Kas olete kindel, et soovite sellelt lehelt lahkuda ja muudatused tagasi lükata?",
+        "confirm": "Loobu",
+        "cancel": "Jätka redigeerimist"
+    },
+    "dashboard": {
+        "sidebarTitle": "Töölaual",
+        "title": "PortIT töölaual",
+        "subtitle": "PortIT süsteemi ülevaade",
+        "3DModel": {
+            "title": "Sadama 3D visualiseerimine",
+            "description": "Vaadake interaktiivset 3D sadama esitust. Jälgige kai hõivatusi, laevade positsioone, ladu ja ressursse reaalajas.",
+            "open": "Ava 3D mudel"
+        }
+    },
+    "admin": {
+        "sidebarTitle": "Admin",
+        "title": "Admin paneel",
+        "subtitle": "Administreerimise ülevaade ja haldus",
+        "userManagement": {
+            "title": "Kasutajate haldus",
+            "subtitle": "Haldage süsteemi kasutajaid, rolle ja õigusi."
+        },
+        "auditLogs": {
+            "title": "Audit logid",
+            "subtitle": "Süsteemi tegevuste logide ülevaade ja järelevalve."
+        }
+    },
+    "user": {
+        "fields": {
+            "email": {
+                "title": "E-post",
+                "placeholder": "email@mail.com"
+            },
+            "role": {
+                "title": "Roll",
+                "placeholder": "Valige kasutaja roll",
+                "options": {
+                    "admin": "Administraator",
+                    "saoRep": "SAO esindaja",
+                    "pao": "Sadamaametniku töötaja",
+                    "logisticsOperator": "Logistika operaator"
+                }
+            },
+            "isActive": {
+                "title": "Aktiivne",
+                "options": {
+                    "active": "Jah",
+                    "inactive": "Ei"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Kasutaja paneel",
+            "create": "Loo kasutaja",
+            "view": "Vaata kasutajaid",
+            "search": "Otsi kasutajaid"
+        },
+        "infoTitle": "Kasutaja info",
+        "title": "Kasutajad",
+        "subtitle": {
+            "dashboard": "Kasutajate ülevaade ja haldus",
+            "create": "Registreeri uus kasutaja süsteemi",
+            "view": "Halda ja vaata olemasolevaid kasutajaid"
+        }
+    },
+    "physicalCharacteristics": {
+        "title": "Füüsilised omadused (m)",
+        "length": {
+            "title": "Pikkus",
+            "placeholder": "Pikkus meetrites"
+        },
+        "depth": {
+            "title": "Sügavus",
+            "placeholder": "Sügavus meetrites"
+        },
+        "draft": {
+            "title": "Süvis",
+            "placeholder": "Süvis meetrites"
+        }
+    },
+    "dock": {
+        "fields": {
+            "code": {
+                "title": "Kood",
+                "placeholder": "Kai kood"
+            },
+            "name": {
+                "title": "Nimetus",
+                "placeholder": "Kai nimi"
+            },
+            "location": {
+                "title": "Asukoht",
+                "placeholder": "Kai asukoht"
+            },
+            "supportedVesselTypes": {
+                "title": "Toetatud laevatüübid",
+                "vesselTypes": {
+                    "title": "Laevatüübid",
+                    "placeholder": "Valige laevatüübid"
+                },
+                "vesselType": "Laeva tüüp"
+            }
+        },
+        "tabs": {
+            "dashboard": "Kai paneel",
+            "view_dashboard": "Vaata kaid",
+            "search": "Otsi kaid",
+            "create": "Loo kai",
+            "view": "Vaata kaita",
+            "edit": "Muuda kaita"
+        },
+        "generalFields": "Üldised väljad",
+        "infoTitle": "Kai info",
+        "title": "Kaied",
+        "subtitle": {
+            "dashboard": "Kaide statistika ja tegevuste ülevaade",
+            "search": "Halda ja vaata kõiki registreeritud kaid",
+            "create": "Registreeri uus kai süsteemi",
+            "edit": "Muuda olemasolevat kaita süsteemis"
+        },
+        "registeredDocks": "Registreeritud kaid"
+    },
+    "vesselType": {
+        "fields": {
+            "name": {
+                "title": "Nimetus",
+                "placeholder": "Laevatüübi nimi"
+            },
+            "description": {
+                "title": "Kirjeldus",
+                "placeholder": "Laevatüübi kirjeldus"
+            },
+            "capacity": {
+                "title": "Mahutavus",
+                "placeholder": "Konteinereid TEU"
+            },
+            "containerCapacity": {
+                "title": "Konteinereid (TEU)",
+                "maxNumberOfRows": {
+                    "title": "Maks. ridade arv",
+                    "placeholder": "Maks. ridu TEU"
+                },
+                "maxNumberOfBays": {
+                    "title": "Maks. aukude arv",
+                    "placeholder": "Maks. auke TEU"
+                },
+                "maxNumberOfTiers": {
+                    "title": "Maks. kihtide arv",
+                    "placeholder": "Maks. kihte TEU"
+                }
+            }
+        },
+        "generalFields": "Üldised väljad",
+        "tabs": {
+            "dashboard": "Laevatüüpide paneel",
+            "view_dashboard": "Vaata laevatüüpe",
+            "search": "Otsi laevatüüpe",
+            "create": "Loo laevatüüp",
+            "view": "Vaata laevatüüpi",
+            "edit": "Muuda laevatüüpi"
+        },
+        "infoTitle": "Laevatüübi info",
+        "title": "Laevatüübid",
+        "subtitle": {
+            "dashboard": "Laevatüüpide statistika ülevaade",
+            "search": "Halda ja vaata kõiki registreeritud laevatüüpe",
+            "create": "Registreeri uus laevatüüp süsteemi",
+            "edit": "Muuda olemasolevat laevatüüpi süsteemis"
+        },
+        "registeredVesselTypes": "Registreeritud laevatüübid"
+    },
+    "vessel": {
+        "fields": {
+            "name": {
+                "title": "Nimetus",
+                "placeholder": "Laeva nimi"
+            },
+            "imoNumber": {
+                "title": "IMO number",
+                "placeholder": "Laeva IMO number"
+            },
+            "owner": {
+                "title": "Omanik",
+                "placeholder": "Omaniku organisatsioon"
+            },
+            "vesselType": {
+                "title": "Laeva tüüp",
+                "placeholder": "Vali laeva tüüp"
+            }
+        },
+        "infoTitle": "Laeva info",
+        "physicalCharacteristicsTitle": "Füüsilised omadused",
+        "tabs": {
+            "dashboard": "Laevade paneel",
+            "view_dashboard": "Vaata laevu",
+            "search": "Otsi laevu",
+            "create": "Loo laev",
+            "view": "Vaata laeva",
+            "edit": "Muuda laeva"
+        },
+        "title": "Laevad",
+        "subtitle": {
+            "dashboard": "Laevade statistika ja tegevuste ülevaade",
+            "search": "Halda ja vaata kõiki registreeritud laevu",
+            "create": "Registreeri uus laev süsteemi",
+            "edit": "Muuda olemasolevat laeva süsteemis"
+        },
+        "ownedBy": "Omanik",
+        "registeredVessels": "Registreeritud laevad"
+    },
+    "staff": {
+        "fields": {
+            "mechanographicNumber": {
+                "title": "Mehanograafiline number",
+                "placeholder": "Mehanograafiline number"
+            },
+            "name": {
+                "title": "Nimi",
+                "placeholder": "Töötaja nimi"
+            },
+            "email": {
+                "title": "E-post",
+                "placeholder": "E-posti aadress"
+            },
+            "phoneNumber": {
+                "title": "Telefon",
+                "placeholder": "Telefon"
+            },
+            "qualifications": {
+                "title": "Kvalifikatsioonid",
+                "placeholder": "Vali kvalifikatsioonid"
+            },
+            "status": {
+                "title": "Staatus",
+                "options": {
+                    "available": "Saadaval",
+                    "unavailable": "Pole saadaval",
+                    "temporarilyReassigned": "Ajutiselt ümber paigutatud"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Töötajate paneel",
+            "view_dashboard": "Vaata töötajaid",
+            "search": "Otsi töötajaid",
+            "create": "Loo töötaja",
+            "view": "Vaata töötajat",
+            "edit": "Muuda töötajat"
+        },
+        "infoTitle": "Töötaja info",
+        "title": "Töötajad",
+        "subtitle": {
+            "search": "Haldage ja vaadake kõiki registreeritud töötajaid",
+            "dashboard": "Töötajate statistika ülevaade",
+            "create": "Registreeri uus töötaja süsteemi",
+            "view": "Vaata töötaja andmeid",
+            "edit": "Muuda olemasolevat töötajat süsteemis"
+        }
+    },
+    "qualification": {
+        "tabs": {
+            "dashboard": "Kvalifikatsioonide paneel",
+            "view_dashboard": "Vaata kvalifikatsioone",
+            "search": "Otsi kvalifikatsioone",
+            "create": "Loo kvalifikatsioon",
+            "view": "Vaata kvalifikatsiooni",
+            "edit": "Muuda kvalifikatsiooni"
+        },
+        "infoTitle": "Kvalifikatsiooni info",
+        "title": "Kvalifikatsioonid",
+        "subtitle": {
+            "search": "Haldage ja vaadake kõiki registreeritud kvalifikatsioone",
+            "dashboard": "Kvalifikatsioonide statistika ülevaade",
+            "create": "Registreeri uus kvalifikatsioon süsteemi",
+            "edit": "Muuda olemasolevat kvalifikatsiooni süsteemis",
+            "view": "Vaata kvalifikatsiooni detaile"
+        },
+        "fields": {
+            "idCode": {
+                "title": "Kvalifikatsiooni kood",
+                "placeholder": "Kvalifikatsiooni kood"
+            },
+            "qualificationName": {
+                "title": "Kvalifikatsiooni nimi",
+                "placeholder": "Kvalifikatsiooni nimi"
+            }
+        }
+    },
+    "physicalResource": {
+        "tabs": {
+            "dashboard": "Füüsiliste ressursside paneel",
+            "view_dashboard": "Vaata füüsilisi ressursse",
+            "search": "Otsi füüsilisi ressursse",
+            "create": "Loo füüsiline ressurss",
+            "view": "Vaata füüsilist ressurssi",
+            "edit": "Muuda füüsilist ressurssi"
+        },
+        "infoTitle": "Füüsilise ressursi info",
+        "title": "Füüsilised ressursid",
+        "subtitle": {
+            "search": "Haldage ja vaadake kõiki registreeritud füüsilisi ressursse",
+            "dashboard": "Füüsiliste ressursside haldus",
+            "view_dashboard": "Vaata füüsilisi ressursse",
+            "create": "Registreeri uus füüsiline ressurss süsteemi",
+            "view": "Vaata füüsilise ressursi detaile",
+            "edit": "Muuda olemasolevat füüsilist ressurssi süsteemis"
+        },
+        "generalFields": "Üldised väljad",
+        "specificFields": "Spetsiifilised väljad",
+        "fields": {
+            "code": {
+                "title": "Kood",
+                "placeholder": "Ressursi kood"
+            },
+            "description": {
+                "title": "Kirjeldus",
+                "placeholder": "Ressursi kirjeldus"
+            },
+            "status": {
+                "title": "Staatus",
+                "placeholder": "Valige ressursi staatus",
+                "options": {
+                    "available": "Saadaval",
+                    "maintenance": "Hooldus",
+                    "outOfService": "Seis"
+                }
+            },
+            "qualifications": {
+                "title": "Nõutavad kvalifikatsioonid",
+                "placeholder": "Kvalifikatsioonid, mis on vajalikud selle ressursi kasutamiseks"
+            },
+            "setupTime": {
+                "title": "Seadistusaeg (min)",
+                "placeholder": "Seadistusaeg"
+            },
+            "servingDocks": {
+                "title": "Teenindatavad kaid",
+                "placeholder": "Valige teenindatavad kaid"
+            },
+            "liftingCapacity": {
+                "title": "Tõstekapasiteet (kg)",
+                "placeholder": "Tõstekapasiteet"
+            },
+            "containersPerHour": {
+                "title": "Konteinerid tunnis",
+                "placeholder": "Konteinerid tunnis"
+            },
+            "maxLoadCapacity": {
+                "title": "Maks. koormus (kg)",
+                "placeholder": "Maks. koormus"
+            },
+            "averageSpeed": {
+                "title": "Keskmine kiirus (km/h)",
+                "placeholder": "Keskmine kiirus"
+            },
+            "containersPerTrip": {
+                "title": "Konteinerid sõidu kohta",
+                "placeholder": "Konteinerid sõidu kohta"
+            },
+            "type": {
+                "title": "Ressursi tüüp",
+                "options": {
+                    "stsCrane": "STS kraana",
+                    "yardGantry": "Sõidukite kraana",
+                    "truck": "Veok"
+                }
+            }
+        },
+        "actions": {
+            "deactivate": "Deaktiveeri füüsiline ressurss"
+        }
+    },
+    "storageArea": {
+        "tabs": {
+            "dashboard": "Ladustamisalade paneel",
+            "view_dashboard": "Vaata ladustamisalasid",
+            "search": "Otsi ladustamisalasid",
+            "create": "Loo ladustamisala",
+            "view": "Vaata ladustamisala",
+            "edit": "Muuda ladustamisala"
+        },
+        "infoTitle": "Ladustamisala info",
+        "title": "Ladustamisalad",
+        "subtitle": {
+            "search": "Haldage ja vaadake kõiki registreeritud ladustamisalasid",
+            "dashboard": "Ladustamisalade haldus",
+            "view_dashboard": "Vaata ladustamisalasid",
+            "create": "Registreeri uus ladustamisala süsteemi",
+            "view": "Vaata ladustamisala detaile",
+            "edit": "Muuda olemasolevat ladustamisala süsteemis"
+        },
+        "printer": {
+            "docks_serviced": "teenindatavad kaid",
+            "capacity_usage": "Kasutus%",
+            "units": "ühikud",
+            "available": "saadaval"
+        }
+    }
+}

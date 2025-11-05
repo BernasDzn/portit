@@ -1,0 +1,430 @@
+{
+    "common": {
+        "loading": "Caricamento...",
+        "noData": "Nessun dato disponibile",
+        "statistics": "Statistiche"
+    },
+    "buttons": {
+        "save": "Salva",
+        "cancel": "Annulla",
+        "delete": "Elimina",
+        "edit": "Modifica",
+        "create": "Crea",
+        "search": "Cerca",
+        "select": "Seleziona",
+        "activate": "Attiva",
+        "deactivate": "Disattiva",
+        "filter": {
+            "title": "Filtri",
+            "add": "Filtra",
+            "clear": "Cancella filtri"
+        },
+        "pagination": {
+            "previous": "Precedente",
+            "next": "Successivo"
+        },
+        "login": "Accedi",
+        "goBackToLogin": "Torna al login",
+        "logout": "Esci"
+    },
+    "unsavedChanges": {
+        "title": "Scartare le modifiche?",
+        "message": "Hai modifiche non salvate. Sei sicuro di voler lasciare questa pagina e scartare le modifiche?",
+        "confirm": "Scarta",
+        "cancel": "Continua a modificare"
+    },
+    "dashboard": {
+        "sidebarTitle": "Dashboard",
+        "title": "PortIT Dashboard",
+        "subtitle": "Panoramica del sistema PortIT",
+        "3DModel": {
+            "title": "Visualizzazione 3D del porto",
+            "description": "Visualizza una rappresentazione 3D interattiva dell'intera struttura portuale. Monitora l'occupazione dei moli, le posizioni delle navi, le aree di stoccaggio e le risorse in tempo reale.",
+            "open": "Apri modello 3D"
+        }
+    },
+    "admin": {
+        "sidebarTitle": "Admin",
+        "title": "Pannello amministratore",
+        "subtitle": "Panoramica e gestione amministrativa",
+        "userManagement": {
+            "title": "Gestione utenti",
+            "subtitle": "Gestisci utenti del sistema, ruoli e permessi."
+        },
+        "auditLogs": {
+            "title": "Log di audit",
+            "subtitle": "Visualizza e monitora i log delle attività del sistema."
+        }
+    },
+    "user": {
+        "fields": {
+            "email": {
+                "title": "Email",
+                "placeholder": "email@mail.com"
+            },
+            "role": {
+                "title": "Ruolo",
+                "placeholder": "Seleziona ruolo utente",
+                "options": {
+                    "admin": "Amministratore",
+                    "saoRep": "Rappresentante SAO",
+                    "pao": "Funzionario Autorità Portuale",
+                    "logisticsOperator": "Operatore logistico"
+                }
+            },
+            "isActive": {
+                "title": "Attivo",
+                "options": {
+                    "active": "Sì",
+                    "inactive": "No"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Dashboard utente",
+            "create": "Crea utente",
+            "view": "Visualizza utenti",
+            "search": "Cerca utenti"
+        },
+        "infoTitle": "Dettagli utente",
+        "title": "Utenti",
+        "subtitle": {
+            "dashboard": "Panoramica e gestione utenti",
+            "create": "Registra un nuovo utente nel sistema",
+            "view": "Visualizza e gestisci utenti esistenti"
+        }
+    },
+    "physicalCharacteristics": {
+        "title": "Caratteristiche fisiche (m)",
+        "length": {
+            "title": "Lunghezza",
+            "placeholder": "Lunghezza in metri"
+        },
+        "depth": {
+            "title": "Profondità",
+            "placeholder": "Profondità in metri"
+        },
+        "draft": {
+            "title": "Pescaggio",
+            "placeholder": "Pescaggio in metri"
+        }
+    },
+    "dock": {
+        "fields": {
+            "code": {
+                "title": "Codice",
+                "placeholder": "Codice molo"
+            },
+            "name": {
+                "title": "Nome",
+                "placeholder": "Nome molo"
+            },
+            "location": {
+                "title": "Posizione",
+                "placeholder": "Posizione molo"
+            },
+            "supportedVesselTypes": {
+                "title": "Tipi di nave supportati",
+                "vesselTypes": {
+                    "title": "Tipi di nave",
+                    "placeholder": "Seleziona tipi di nave"
+                },
+                "vesselType": "Tipo di nave"
+            }
+        },
+        "tabs": {
+            "dashboard": "Dashboard moli",
+            "view_dashboard": "Visualizza moli",
+            "search": "Cerca moli",
+            "create": "Crea molo",
+            "view": "Visualizza molo",
+            "edit": "Modifica molo"
+        },
+        "generalFields": "Campi generali",
+        "infoTitle": "Informazioni molo",
+        "title": "Moli",
+        "subtitle": {
+            "dashboard": "Panoramica delle statistiche e attività del molo",
+            "search": "Gestisci e visualizza tutti i moli registrati",
+            "create": "Registra un nuovo molo nel sistema",
+            "edit": "Modifica un molo esistente nel sistema"
+        },
+        "registeredDocks": "Moli registrati"
+    },
+    "vesselType": {
+        "fields": {
+            "name": {
+                "title": "Nome",
+                "placeholder": "Nome del tipo di nave"
+            },
+            "description": {
+                "title": "Descrizione",
+                "placeholder": "Descrizione del tipo di nave"
+            },
+            "capacity": {
+                "title": "Capacità",
+                "placeholder": "Capacità di container in TEU"
+            },
+            "containerCapacity": {
+                "title": "Capacità container (TEU)",
+                "maxNumberOfRows": {
+                    "title": "Num. massimo di file",
+                    "placeholder": "Max file in TEU"
+                },
+                "maxNumberOfBays": {
+                    "title": "Num. massimo di baie",
+                    "placeholder": "Max baie in TEU"
+                },
+                "maxNumberOfTiers": {
+                    "title": "Num. massimo di livelli",
+                    "placeholder": "Max livelli in TEU"
+                }
+            }
+        },
+        "generalFields": "Campi generali",
+        "tabs": {
+            "dashboard": "Dashboard tipi di nave",
+            "view_dashboard": "Visualizza tipi di nave",
+            "search": "Cerca tipi di nave",
+            "create": "Crea tipo di nave",
+            "view": "Visualizza tipo di nave",
+            "edit": "Modifica tipo di nave"
+        },
+        "infoTitle": "Informazioni tipo di nave",
+        "title": "Tipi di nave",
+        "subtitle": {
+            "dashboard": "Panoramica delle statistiche e attività per tipo di nave",
+            "search": "Gestisci e visualizza tutti i tipi di nave registrati",
+            "create": "Registra un nuovo tipo di nave nel sistema",
+            "edit": "Modifica un tipo di nave esistente nel sistema"
+        },
+        "registeredVesselTypes": "Tipi di nave registrati"
+    },
+    "vessel": {
+        "fields": {
+            "name": {
+                "title": "Nome",
+                "placeholder": "Nome della nave"
+            },
+            "imoNumber": {
+                "title": "Numero IMO",
+                "placeholder": "Numero IMO della nave"
+            },
+            "owner": {
+                "title": "Proprietario",
+                "placeholder": "Organizzazione proprietaria"
+            },
+            "vesselType": {
+                "title": "Tipo di nave",
+                "placeholder": "Seleziona tipo di nave"
+            }
+        },
+        "infoTitle": "Informazioni nave",
+        "physicalCharacteristicsTitle": "Caratteristiche fisiche",
+        "tabs": {
+            "dashboard": "Dashboard navi",
+            "view_dashboard": "Visualizza navi",
+            "search": "Cerca navi",
+            "create": "Crea nave",
+            "view": "Visualizza nave",
+            "edit": "Modifica nave"
+        },
+        "title": "Navi",
+        "subtitle": {
+            "dashboard": "Panoramica delle statistiche e attività delle navi",
+            "search": "Gestisci e visualizza tutte le navi registrate",
+            "create": "Registra una nuova nave nel sistema",
+            "edit": "Modifica una nave esistente nel sistema"
+        },
+        "ownedBy": "Proprietà di",
+        "registeredVessels": "Navi registrate"
+    },
+    "staff": {
+        "fields": {
+            "mechanographicNumber": {
+                "title": "Numero mecanografico",
+                "placeholder": "Numero mecanografico"
+            },
+            "name": {
+                "title": "Nome",
+                "placeholder": "Nome del personale"
+            },
+            "email": {
+                "title": "Email",
+                "placeholder": "Indirizzo email"
+            },
+            "phoneNumber": {
+                "title": "Telefono",
+                "placeholder": "Numero di telefono"
+            },
+            "qualifications": {
+                "title": "Qualifiche",
+                "placeholder": "Seleziona qualifiche"
+            },
+            "status": {
+                "title": "Stato",
+                "options": {
+                    "available": "Disponibile",
+                    "unavailable": "Non disponibile",
+                    "temporarilyReassigned": "Riassegnato temporaneamente"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Dashboard personale",
+            "view_dashboard": "Visualizza personale",
+            "search": "Cerca personale",
+            "create": "Crea membro personale",
+            "view": "Visualizza membro personale",
+            "edit": "Modifica membro personale"
+        },
+        "infoTitle": "Informazioni membro personale",
+        "title": "Personale",
+        "subtitle": {
+            "search": "Gestisci e visualizza tutto il personale registrato",
+            "dashboard": "Panoramica delle statistiche e attività del personale",
+            "create": "Registra un nuovo membro del personale nel sistema",
+            "view": "Visualizza dettagli del personale",
+            "edit": "Modifica un membro del personale esistente nel sistema"
+        }
+    },
+    "qualification": {
+        "tabs": {
+            "dashboard": "Dashboard qualifiche",
+            "view_dashboard": "Visualizza qualifiche",
+            "search": "Cerca qualifiche",
+            "create": "Crea qualifica",
+            "view": "Visualizza qualifica",
+            "edit": "Modifica qualifica"
+        },
+        "infoTitle": "Informazioni qualificazione",
+        "title": "Qualifiche",
+        "subtitle": {
+            "search": "Gestisci e visualizza tutte le qualifiche registrate",
+            "dashboard": "Panoramica delle statistiche e attività delle qualifiche",
+            "create": "Registra una nuova qualifica nel sistema",
+            "edit": "Modifica una qualifica esistente nel sistema",
+            "view": "Visualizza dettagli della qualifica"
+        },
+        "fields": {
+            "idCode": {
+                "title": "Codice qualifica",
+                "placeholder": "Codice qualifica"
+            },
+            "qualificationName": {
+                "title": "Nome qualifica",
+                "placeholder": "Nome qualifica"
+            }
+        }
+    },
+    "physicalResource": {
+        "tabs": {
+            "dashboard": "Dashboard risorse fisiche",
+            "view_dashboard": "Visualizza risorse fisiche",
+            "search": "Cerca risorse fisiche",
+            "create": "Crea risorsa fisica",
+            "view": "Visualizza risorsa fisica",
+            "edit": "Modifica risorsa fisica"
+        },
+        "infoTitle": "Informazioni risorsa fisica",
+        "title": "Risorse fisiche",
+        "subtitle": {
+            "search": "Gestisci e visualizza tutte le risorse fisiche registrate",
+            "dashboard": "Pannello di controllo per le risorse fisiche",
+            "view_dashboard": "Visualizza risorse fisiche",
+            "create": "Registra una nuova risorsa fisica nel sistema",
+            "view": "Visualizza i dettagli della risorsa fisica",
+            "edit": "Modifica una risorsa fisica esistente nel sistema"
+        },
+        "generalFields": "Campi generali",
+        "specificFields": "Campi specifici",
+        "fields": {
+            "code": {
+                "title": "Codice",
+                "placeholder": "Codice risorsa"
+            },
+            "description": {
+                "title": "Descrizione",
+                "placeholder": "Descrizione risorsa"
+            },
+            "status": {
+                "title": "Stato",
+                "placeholder": "Seleziona stato risorsa",
+                "options": {
+                    "available": "Disponibile",
+                    "maintenance": "Manutenzione",
+                    "outOfService": "Fuori servizio"
+                }
+            },
+            "qualifications": {
+                "title": "Qualifiche richieste",
+                "placeholder": "Qualifiche richieste per operare questa risorsa"
+            },
+            "setupTime": {
+                "title": "Tempo di configurazione (minuti)",
+                "placeholder": "Tempo di configurazione"
+            },
+            "servingDocks": {
+                "title": "Moli serviti",
+                "placeholder": "Seleziona moli serviti"
+            },
+            "liftingCapacity": {
+                "title": "Capacità di sollevamento (kgs)",
+                "placeholder": "Capacità di sollevamento"
+            },
+            "containersPerHour": {
+                "title": "Container all'ora",
+                "placeholder": "Container all'ora"
+            },
+            "maxLoadCapacity": {
+                "title": "Capacità massima di carico (kg)",
+                "placeholder": "Capacità massima di carico"
+            },
+            "averageSpeed": {
+                "title": "Velocità media (km/h)",
+                "placeholder": "Velocità media"
+            },
+            "containersPerTrip": {
+                "title": "Container per viaggio",
+                "placeholder": "Container per viaggio"
+            },
+            "type": {
+                "title": "Tipo di risorsa",
+                "options": {
+                    "stsCrane": "Gru STS",
+                    "yardGantry": "Carroponte di deposito",
+                    "truck": "Camion"
+                }
+            }
+        },
+        "actions": {
+            "deactivate": "Disattiva risorsa fisica"
+        }
+    },
+    "storageArea": {
+        "tabs": {
+            "dashboard": "Dashboard aree di stoccaggio",
+            "view_dashboard": "Visualizza aree di stoccaggio",
+            "search": "Cerca aree di stoccaggio",
+            "create": "Crea area di stoccaggio",
+            "view": "Visualizza area di stoccaggio",
+            "edit": "Modifica area di stoccaggio"
+        },
+        "infoTitle": "Informazioni area di stoccaggio",
+        "title": "Aree di stoccaggio",
+        "subtitle": {
+            "search": "Gestisci e visualizza tutte le aree di stoccaggio registrate",
+            "dashboard": "Pannello di controllo per tutte le aree di stoccaggio",
+            "view_dashboard": "Visualizza aree di stoccaggio",
+            "create": "Registra una nuova area di stoccaggio nel sistema",
+            "view": "Visualizza dettagli dell'area di stoccaggio",
+            "edit": "Modifica un'area di stoccaggio esistente nel sistema"
+        },
+        "printer": {
+            "docks_serviced": "moli serviti",
+            "capacity_usage": "Uso della capacità",
+            "units": "unità",
+            "available": "disponibile"
+        }
+    }
+}

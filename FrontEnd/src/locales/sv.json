@@ -1,0 +1,430 @@
+{
+    "common": {
+        "loading": "Laddar...",
+        "noData": "Inga data tillgängliga",
+        "statistics": "Statistik"
+    },
+    "buttons": {
+        "save": "Spara",
+        "cancel": "Avbryt",
+        "delete": "Ta bort",
+        "edit": "Redigera",
+        "create": "Skapa",
+        "search": "Sök",
+        "select": "Välj",
+        "activate": "Aktivera",
+        "deactivate": "Avaktivera",
+        "filter": {
+            "title": "Filter",
+            "add": "Filtrera",
+            "clear": "Rensa filter"
+        },
+        "pagination": {
+            "previous": "Föregående",
+            "next": "Nästa"
+        },
+        "login": "Logga in",
+        "goBackToLogin": "Återgå till inloggning",
+        "logout": "Logga ut"
+    },
+    "unsavedChanges": {
+        "title": "Kassera ändringar?",
+        "message": "Du har osparade ändringar. Är du säker på att du vill lämna denna sida och kassera dina ändringar?",
+        "confirm": "Kassera",
+        "cancel": "Fortsätt redigera"
+    },
+    "dashboard": {
+        "sidebarTitle": "Instrumentpanel",
+        "title": "PortIT Instrumentpanel",
+        "subtitle": "Översikt över PortIT-systemet",
+        "3DModel": {
+            "title": "3D Hamnvisualisering",
+            "description": "Visa en interaktiv 3D-representation av hela hamnanläggningen. Övervaka kajupptagning, fartygspositioner, lagringsområden och resurser i realtid.",
+            "open": "Öppna 3D-modell"
+        }
+    },
+    "admin": {
+        "sidebarTitle": "Admin",
+        "title": "Admin-instrumentpanel",
+        "subtitle": "Administrativ översikt och hantering",
+        "userManagement": {
+            "title": "Användarhantering",
+            "subtitle": "Hantera systemanvändare, roller och behörigheter."
+        },
+        "auditLogs": {
+            "title": "Revisionsloggar",
+            "subtitle": "Visa och övervaka systemaktivitetsloggar."
+        }
+    },
+    "user": {
+        "fields": {
+            "email": {
+                "title": "E-post",
+                "placeholder": "email@mail.com"
+            },
+            "role": {
+                "title": "Roll",
+                "placeholder": "Välj användarroll",
+                "options": {
+                    "admin": "Administratör",
+                    "saoRep": "SAO-representant",
+                    "pao": "Hamnautoritetstjänsteman",
+                    "logisticsOperator": "Logistikoperatör"
+                }
+            },
+            "isActive": {
+                "title": "Aktiv",
+                "options": {
+                    "active": "Ja",
+                    "inactive": "Nej"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Användarinstrumentpanel",
+            "create": "Skapa användare",
+            "view": "Visa användare",
+            "search": "Sök användare"
+        },
+        "infoTitle": "Användardetaljer",
+        "title": "Användare",
+        "subtitle": {
+            "dashboard": "Översikt och hantering av användare",
+            "create": "Registrera en ny användare i systemet",
+            "view": "Visa och hantera befintliga användare"
+        }
+    },
+    "physicalCharacteristics": {
+        "title": "Fysiska egenskaper (m)",
+        "length": {
+            "title": "Längd",
+            "placeholder": "Längd i meter"
+        },
+        "depth": {
+            "title": "Djup",
+            "placeholder": "Djup i meter"
+        },
+        "draft": {
+            "title": "Djupgående",
+            "placeholder": "Djupgående i meter"
+        }
+    },
+    "dock": {
+        "fields": {
+            "code": {
+                "title": "Kod",
+                "placeholder": "Kajkod"
+            },
+            "name": {
+                "title": "Namn",
+                "placeholder": "Kajnamn"
+            },
+            "location": {
+                "title": "Plats",
+                "placeholder": "Kajplats"
+            },
+            "supportedVesselTypes": {
+                "title": "Stödda fartygstyper",
+                "vesselTypes": {
+                    "title": "Fartygstyper",
+                    "placeholder": "Välj fartygstyper"
+                },
+                "vesselType": "Fartygstyp"
+            }
+        },
+        "tabs": {
+            "dashboard": "Kajinstrumentpanel",
+            "view_dashboard": "Visa kajer",
+            "search": "Sök kajer",
+            "create": "Skapa kaj",
+            "view": "Visa kaj",
+            "edit": "Redigera kaj"
+        },
+        "generalFields": "Allmänna fält",
+        "infoTitle": "Kajinformation",
+        "title": "Kajer",
+        "subtitle": {
+            "dashboard": "Översikt över kajstatistik och aktiviteter",
+            "search": "Hantera och visa alla registrerade kajer",
+            "create": "Registrera en ny kaj i systemet",
+            "edit": "Redigera en befintlig kaj i systemet"
+        },
+        "registeredDocks": "Registrerade kajer"
+    },
+    "vesselType": {
+        "fields": {
+            "name": {
+                "title": "Namn",
+                "placeholder": "Fartygstypens namn"
+            },
+            "description": {
+                "title": "Beskrivning",
+                "placeholder": "Beskrivning av fartygstypen"
+            },
+            "capacity": {
+                "title": "Kapacitet",
+                "placeholder": "Containermängd i TEU"
+            },
+            "containerCapacity": {
+                "title": "Containerkapacitet (TEU)",
+                "maxNumberOfRows": {
+                    "title": "Max antal rader",
+                    "placeholder": "Max rader i TEU"
+                },
+                "maxNumberOfBays": {
+                    "title": "Max antal bingor",
+                    "placeholder": "Max bingor i TEU"
+                },
+                "maxNumberOfTiers": {
+                    "title": "Max antal nivåer",
+                    "placeholder": "Max nivåer i TEU"
+                }
+            }
+        },
+        "generalFields": "Allmänna fält",
+        "tabs": {
+            "dashboard": "Fartygstyp-instrumentpanel",
+            "view_dashboard": "Visa fartygstyper",
+            "search": "Sök fartygstyper",
+            "create": "Skapa fartygstyp",
+            "view": "Visa fartygstyp",
+            "edit": "Redigera fartygstyp"
+        },
+        "infoTitle": "Information om fartygstyp",
+        "title": "Fartygstyper",
+        "subtitle": {
+            "dashboard": "Översikt över statistik och aktiviteter per fartygstyp",
+            "search": "Hantera och visa alla registrerade fartygstyper",
+            "create": "Registrera en ny fartygstyp i systemet",
+            "edit": "Redigera en befintlig fartygstyp i systemet"
+        },
+        "registeredVesselTypes": "Registrerade fartygstyper"
+    },
+    "vessel": {
+        "fields": {
+            "name": {
+                "title": "Namn",
+                "placeholder": "Fartygsnamn"
+            },
+            "imoNumber": {
+                "title": "IMO-nummer",
+                "placeholder": "Fartyg IMO-nummer"
+            },
+            "owner": {
+                "title": "Ägare",
+                "placeholder": "Ägarorganisation"
+            },
+            "vesselType": {
+                "title": "Fartygstyp",
+                "placeholder": "Välj fartygstyp"
+            }
+        },
+        "infoTitle": "Fartygsinformation",
+        "physicalCharacteristicsTitle": "Fysiska egenskaper",
+        "tabs": {
+            "dashboard": "Fartygsinstrumentpanel",
+            "view_dashboard": "Visa fartyg",
+            "search": "Sök fartyg",
+            "create": "Skapa fartyg",
+            "view": "Visa fartyg",
+            "edit": "Redigera fartyg"
+        },
+        "title": "Fartyg",
+        "subtitle": {
+            "dashboard": "Översikt över fartygsstatistik och aktiviteter",
+            "search": "Hantera och visa alla registrerade fartyg",
+            "create": "Registrera ett nytt fartyg i systemet",
+            "edit": "Redigera ett befintligt fartyg i systemet"
+        },
+        "ownedBy": "Ägs av",
+        "registeredVessels": "Registrerade fartyg"
+    },
+    "staff": {
+        "fields": {
+            "mechanographicNumber": {
+                "title": "Mekanografiskt nummer",
+                "placeholder": "Mekanografiskt nummer"
+            },
+            "name": {
+                "title": "Namn",
+                "placeholder": "Personalnamn"
+            },
+            "email": {
+                "title": "E-post",
+                "placeholder": "E-postadress"
+            },
+            "phoneNumber": {
+                "title": "Telefonnummer",
+                "placeholder": "Telefonnummer"
+            },
+            "qualifications": {
+                "title": "Kvalifikationer",
+                "placeholder": "Välj kvalifikationer"
+            },
+            "status": {
+                "title": "Status",
+                "options": {
+                    "available": "Tillgänglig",
+                    "unavailable": "Otillgänglig",
+                    "temporarilyReassigned": "Tillfälligt omplacerad"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Personalinstrumentpanel",
+            "view_dashboard": "Visa personal",
+            "search": "Sök personal",
+            "create": "Skapa personal",
+            "view": "Visa personal",
+            "edit": "Redigera personal"
+        },
+        "infoTitle": "Personalinformation",
+        "title": "Personal",
+        "subtitle": {
+            "search": "Hantera och visa all registrerad personal",
+            "dashboard": "Översikt över personalstatistik och aktiviteter",
+            "create": "Registrera en ny personalmedlem i systemet",
+            "view": "Visa personaluppgifter",
+            "edit": "Redigera en befintlig personalmedlem i systemet"
+        }
+    },
+    "qualification": {
+        "tabs": {
+            "dashboard": "Kvalifikationsinstrumentpanel",
+            "view_dashboard": "Visa kvalifikationer",
+            "search": "Sök kvalifikationer",
+            "create": "Skapa kvalifikation",
+            "view": "Visa kvalifikation",
+            "edit": "Redigera kvalifikation"
+        },
+        "infoTitle": "Kvalifikationsinformation",
+        "title": "Kvalifikationer",
+        "subtitle": {
+            "search": "Hantera och visa alla registrerade kvalifikationer",
+            "dashboard": "Översikt över kvalifikationsstatistik och aktiviteter",
+            "create": "Registrera en ny kvalifikation i systemet",
+            "edit": "Redigera en befintlig kvalifikation i systemet",
+            "view": "Visa kvalifikationsdetaljer"
+        },
+        "fields": {
+            "idCode": {
+                "title": "Kvalifikationskod",
+                "placeholder": "Kvalifikationskod"
+            },
+            "qualificationName": {
+                "title": "Kvalifikationsnamn",
+                "placeholder": "Kvalifikationsnamn"
+            }
+        }
+    },
+    "physicalResource": {
+        "tabs": {
+            "dashboard": "Fysiska resurser instrumentpanel",
+            "view_dashboard": "Visa fysiska resurser",
+            "search": "Sök fysiska resurser",
+            "create": "Skapa fysisk resurs",
+            "view": "Visa fysisk resurs",
+            "edit": "Redigera fysisk resurs"
+        },
+        "infoTitle": "Information om fysisk resurs",
+        "title": "Fysiska resurser",
+        "subtitle": {
+            "search": "Hantera och visa alla registrerade fysiska resurser",
+            "dashboard": "Kontrollpanel för fysiska resurser",
+            "view_dashboard": "Visa fysiska resurser",
+            "create": "Registrera en ny fysisk resurs i systemet",
+            "view": "Visa information om fysisk resurs",
+            "edit": "Redigera en befintlig fysisk resurs i systemet"
+        },
+        "generalFields": "Allmänna fält",
+        "specificFields": "Specifika fält",
+        "fields": {
+            "code": {
+                "title": "Kod",
+                "placeholder": "Resurskod"
+            },
+            "description": {
+                "title": "Beskrivning",
+                "placeholder": "Resursbeskrivning"
+            },
+            "status": {
+                "title": "Status",
+                "placeholder": "Välj resursstatus",
+                "options": {
+                    "available": "Tillgänglig",
+                    "maintenance": "Underhåll",
+                    "outOfService": "Ur bruk"
+                }
+            },
+            "qualifications": {
+                "title": "Krävda kvalifikationer",
+                "placeholder": "Kvalifikationer som krävs för att använda denna resurs"
+            },
+            "setupTime": {
+                "title": "Uppställningstid (minuter)",
+                "placeholder": "Uppställningstid"
+            },
+            "servingDocks": {
+                "title": "Tjänster kajer",
+                "placeholder": "Välj tjänade kajer"
+            },
+            "liftingCapacity": {
+                "title": "Lyftkapacitet (kgs)",
+                "placeholder": "Lyftkapacitet"
+            },
+            "containersPerHour": {
+                "title": "Containrar per timme",
+                "placeholder": "Containrar per timme"
+            },
+            "maxLoadCapacity": {
+                "title": "Maximal lastkapacitet (kg)",
+                "placeholder": "Maximal lastkapacitet"
+            },
+            "averageSpeed": {
+                "title": "Genomsnittsfart (km/h)",
+                "placeholder": "Genomsnittsfart"
+            },
+            "containersPerTrip": {
+                "title": "Containrar per resa",
+                "placeholder": "Containrar per resa"
+            },
+            "type": {
+                "title": "Resurstyp",
+                "options": {
+                    "stsCrane": "STS-kran",
+                    "yardGantry": "Gårdsportalkran",
+                    "truck": "Lastbil"
+                }
+            }
+        },
+        "actions": {
+            "deactivate": "Avaktivera fysisk resurs"
+        }
+    },
+    "storageArea": {
+        "tabs": {
+            "dashboard": "Lagringsområden instrumentpanel",
+            "view_dashboard": "Visa lagringsområden",
+            "search": "Sök lagringsområden",
+            "create": "Skapa lagringsområde",
+            "view": "Visa lagringsområde",
+            "edit": "Redigera lagringsområde"
+        },
+        "infoTitle": "Information om lagringsområde",
+        "title": "Lagringsområden",
+        "subtitle": {
+            "search": "Hantera och visa alla registrerade lagringsområden",
+            "dashboard": "Kontrollpanel för alla lagringsområden",
+            "view_dashboard": "Visa lagringsområden",
+            "create": "Registrera ett nytt lagringsområde i systemet",
+            "view": "Visa detaljer om lagringsområdet",
+            "edit": "Redigera ett befintligt lagringsområde i systemet"
+        },
+        "printer": {
+            "docks_serviced": "tjänade kajer",
+            "capacity_usage": "Kapacitetsanvändning",
+            "units": "enheter",
+            "available": "tillgänglig"
+        }
+    }
+}

@@ -1,0 +1,430 @@
+{
+    "common": {
+        "loading": "Indlæser...",
+        "noData": "Ingen data tilgængelige",
+        "statistics": "Statistik"
+    },
+    "buttons": {
+        "save": "Gem",
+        "cancel": "Annuller",
+        "delete": "Slet",
+        "edit": "Rediger",
+        "create": "Opret",
+        "search": "Søg",
+        "select": "Vælg",
+        "activate": "Aktivér",
+        "deactivate": "Deaktivér",
+        "filter": {
+            "title": "Filtre",
+            "add": "Filtrer",
+            "clear": "Ryd filtre"
+        },
+        "pagination": {
+            "previous": "Forrige",
+            "next": "Næste"
+        },
+        "login": "Log ind",
+        "goBackToLogin": "Gå tilbage til login",
+        "logout": "Log ud"
+    },
+    "unsavedChanges": {
+        "title": "Forkaste ændringer?",
+        "message": "Du har ikke gemte ændringer. Er du sikker på, at du vil forlade denne side og forkaste dine ændringer?",
+        "confirm": "Forkast",
+        "cancel": "Fortsæt redigering"
+    },
+    "dashboard": {
+        "sidebarTitle": "Dashboard",
+        "title": "PortIT Dashboard",
+        "subtitle": "Oversigt over PortIT-systemet",
+        "3DModel": {
+            "title": "3D Havn Visualisering",
+            "description": "Se en interaktiv 3D-repræsentation af hele havneanlægget. Overvåg dokbelægning, fartøjspositioner, oplagsområder og ressourcer i realtid.",
+            "open": "Åbn 3D-model"
+        }
+    },
+    "admin": {
+        "sidebarTitle": "Admin",
+        "title": "Admin Dashboard",
+        "subtitle": "Administrativ oversigt og styring",
+        "userManagement": {
+            "title": "Brugeradministration",
+            "subtitle": "Administrer systembrugere, roller og tilladelser."
+        },
+        "auditLogs": {
+            "title": "Revisionslog",
+            "subtitle": "Vis og overvåg systemaktivitetslogge."
+        }
+    },
+    "user": {
+        "fields": {
+            "email": {
+                "title": "Email",
+                "placeholder": "email@mail.com"
+            },
+            "role": {
+                "title": "Rolle",
+                "placeholder": "Vælg brugerrolle",
+                "options": {
+                    "admin": "Administrator",
+                    "saoRep": "SAO-repræsentant",
+                    "pao": "Havnemyndighedsofficer",
+                    "logisticsOperator": "Logistikoperatør"
+                }
+            },
+            "isActive": {
+                "title": "Aktiv",
+                "options": {
+                    "active": "Ja",
+                    "inactive": "Nej"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Bruger-dashboard",
+            "create": "Opret bruger",
+            "view": "Vis brugere",
+            "search": "Søg brugere"
+        },
+        "infoTitle": "Brugeroplysninger",
+        "title": "Brugere",
+        "subtitle": {
+            "dashboard": "Brugeroversigt og administration",
+            "create": "Registrer en ny bruger i systemet",
+            "view": "Vis og administrer eksisterende brugere"
+        }
+    },
+    "physicalCharacteristics": {
+        "title": "Fysiske egenskaber (m)",
+        "length": {
+            "title": "Længde",
+            "placeholder": "Længde i meter"
+        },
+        "depth": {
+            "title": "Dybde",
+            "placeholder": "Dybde i meter"
+        },
+        "draft": {
+            "title": "Dybgang",
+            "placeholder": "Dybgang i meter"
+        }
+    },
+    "dock": {
+        "fields": {
+            "code": {
+                "title": "Kode",
+                "placeholder": "Dokkode"
+            },
+            "name": {
+                "title": "Navn",
+                "placeholder": "Doknavn"
+            },
+            "location": {
+                "title": "Placering",
+                "placeholder": "Dok placering"
+            },
+            "supportedVesselTypes": {
+                "title": "Understøttede fartøjstyper",
+                "vesselTypes": {
+                    "title": "Fartøjstyper",
+                    "placeholder": "Vælg fartøjstyper"
+                },
+                "vesselType": "Fartøjstype"
+            }
+        },
+        "tabs": {
+            "dashboard": "Dok-dashboard",
+            "view_dashboard": "Vis dokke",
+            "search": "Søg dokke",
+            "create": "Opret dok",
+            "view": "Vis dok",
+            "edit": "Rediger dok"
+        },
+        "generalFields": "Generelle felter",
+        "infoTitle": "Dokoplysninger",
+        "title": "Dokke",
+        "subtitle": {
+            "dashboard": "Oversigt over dokstatistik og aktiviteter",
+            "search": "Administrer og vis alle registrerede dokke",
+            "create": "Registrer en ny dok i systemet",
+            "edit": "Rediger en eksisterende dok i systemet"
+        },
+        "registeredDocks": "Registrerede dokke"
+    },
+    "vesselType": {
+        "fields": {
+            "name": {
+                "title": "Navn",
+                "placeholder": "Fartøjstypens navn"
+            },
+            "description": {
+                "title": "Beskrivelse",
+                "placeholder": "Beskrivelse af fartøjstypen"
+            },
+            "capacity": {
+                "title": "Kapacitet",
+                "placeholder": "Containerkapacitet i TEU"
+            },
+            "containerCapacity": {
+                "title": "Containerkapacitet (TEU)",
+                "maxNumberOfRows": {
+                    "title": "Maks antal rækker",
+                    "placeholder": "Maks rækker i TEU"
+                },
+                "maxNumberOfBays": {
+                    "title": "Maks antal bugser",
+                    "placeholder": "Maks bugser i TEU"
+                },
+                "maxNumberOfTiers": {
+                    "title": "Maks antal lag",
+                    "placeholder": "Maks lag i TEU"
+                }
+            }
+        },
+        "generalFields": "Generelle felter",
+        "tabs": {
+            "dashboard": "Fartøjstyper dashboard",
+            "view_dashboard": "Vis fartøjstyper",
+            "search": "Søg fartøjstyper",
+            "create": "Opret fartøjstype",
+            "view": "Vis fartøjstype",
+            "edit": "Rediger fartøjstype"
+        },
+        "infoTitle": "Fartøjstypes oplysninger",
+        "title": "Fartøjstyper",
+        "subtitle": {
+            "dashboard": "Oversigt over statistik og aktiviteter for fartøjstyper",
+            "search": "Administrer og vis alle registrerede fartøjstyper",
+            "create": "Registrer en ny fartøjstype i systemet",
+            "edit": "Rediger en eksisterende fartøjstype i systemet"
+        },
+        "registeredVesselTypes": "Registrerede fartøjstyper"
+    },
+    "vessel": {
+        "fields": {
+            "name": {
+                "title": "Navn",
+                "placeholder": "Fartøjsnavn"
+            },
+            "imoNumber": {
+                "title": "IMO nummer",
+                "placeholder": "Fartøjets IMO nummer"
+            },
+            "owner": {
+                "title": "Ejerorganisation",
+                "placeholder": "Ejerorganisation"
+            },
+            "vesselType": {
+                "title": "Fartøjstype",
+                "placeholder": "Vælg fartøjstype"
+            }
+        },
+        "infoTitle": "Fartøjsinformation",
+        "physicalCharacteristicsTitle": "Fysiske egenskaber",
+        "tabs": {
+            "dashboard": "Fartøj dashboard",
+            "view_dashboard": "Vis fartøjer",
+            "search": "Søg fartøjer",
+            "create": "Opret fartøj",
+            "view": "Vis fartøj",
+            "edit": "Rediger fartøj"
+        },
+        "title": "Fartøjer",
+        "subtitle": {
+            "dashboard": "Oversigt over fartøjsstatistik og aktiviteter",
+            "search": "Administrer og vis alle registrerede fartøjer",
+            "create": "Registrer et nyt fartøj i systemet",
+            "edit": "Rediger et eksisterende fartøj i systemet"
+        },
+        "ownedBy": "Ejet af",
+        "registeredVessels": "Registrerede fartøjer"
+    },
+    "staff": {
+        "fields": {
+            "mechanographicNumber": {
+                "title": "Mekanografisk nummer",
+                "placeholder": "Mekanografisk nummer"
+            },
+            "name": {
+                "title": "Navn",
+                "placeholder": "Medarbejdernavn"
+            },
+            "email": {
+                "title": "Email",
+                "placeholder": "Email adresse"
+            },
+            "phoneNumber": {
+                "title": "Telefonnummer",
+                "placeholder": "Telefonnummer"
+            },
+            "qualifications": {
+                "title": "Kvalifikationer",
+                "placeholder": "Vælg kvalifikationer"
+            },
+            "status": {
+                "title": "Status",
+                "options": {
+                    "available": "Tilgængelig",
+                    "unavailable": "Ikke tilgængelig",
+                    "temporarilyReassigned": "Midlertidigt omplaceret"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Medarbejder dashboard",
+            "view_dashboard": "Vis medarbejdere",
+            "search": "Søg medarbejdere",
+            "create": "Opret medarbejder",
+            "view": "Vis medarbejder",
+            "edit": "Rediger medarbejder"
+        },
+        "infoTitle": "Medarbejderinformation",
+        "title": "Medarbejdere",
+        "subtitle": {
+            "search": "Administrer og vis alle registrerede medarbejdere",
+            "dashboard": "Oversigt over medarbejderstatistik og aktiviteter",
+            "create": "Registrer en ny medarbejder i systemet",
+            "view": "Vis medarbejderdetaljer",
+            "edit": "Rediger en eksisterende medarbejder i systemet"
+        }
+    },
+    "qualification": {
+        "tabs": {
+            "dashboard": "Kvalifikations dashboard",
+            "view_dashboard": "Vis kvalifikationer",
+            "search": "Søg kvalifikationer",
+            "create": "Opret kvalifikation",
+            "view": "Vis kvalifikation",
+            "edit": "Rediger kvalifikation"
+        },
+        "infoTitle": "Kvalifikationsinformation",
+        "title": "Kvalifikationer",
+        "subtitle": {
+            "search": "Administrer og vis alle registrerede kvalifikationer",
+            "dashboard": "Oversigt over kvalifikationsstatistik og aktiviteter",
+            "create": "Registrer en ny kvalifikation i systemet",
+            "edit": "Rediger en eksisterende kvalifikation i systemet",
+            "view": "Vis kvalifikationsdetaljer"
+        },
+        "fields": {
+            "idCode": {
+                "title": "Kvalifikationskode",
+                "placeholder": "Kvalifikationskode"
+            },
+            "qualificationName": {
+                "title": "Kvalifikationsnavn",
+                "placeholder": "Kvalifikationsnavn"
+            }
+        }
+    },
+    "physicalResource": {
+        "tabs": {
+            "dashboard": "Fysisk ressource dashboard",
+            "view_dashboard": "Vis fysiske ressourcer",
+            "search": "Søg fysiske ressourcer",
+            "create": "Opret fysisk ressource",
+            "view": "Vis fysisk ressource",
+            "edit": "Rediger fysisk ressource"
+        },
+        "infoTitle": "Information om fysisk ressource",
+        "title": "Fysiske ressourcer",
+        "subtitle": {
+            "search": "Administrer og vis alle registrerede fysiske ressourcer",
+            "dashboard": "Kontrolpanel for alle fysiske ressourcer",
+            "view_dashboard": "Vis fysiske ressourcer",
+            "create": "Registrer en ny fysisk ressource i systemet",
+            "view": "Vis detaljer om fysisk ressource",
+            "edit": "Rediger en eksisterende fysisk ressource i systemet"
+        },
+        "generalFields": "Generelle felter",
+        "specificFields": "Specifikke felter",
+        "fields": {
+            "code": {
+                "title": "Kode",
+                "placeholder": "Ressourcekode"
+            },
+            "description": {
+                "title": "Beskrivelse",
+                "placeholder": "Ressourcebeskrivelse"
+            },
+            "status": {
+                "title": "Status",
+                "placeholder": "Vælg ressource status",
+                "options": {
+                    "available": "Tilgængelig",
+                    "maintenance": "Vedligeholdelse",
+                    "outOfService": "Uden for drift"
+                }
+            },
+            "qualifications": {
+                "title": "Påkrævede kvalifikationer",
+                "placeholder": "De kvalifikationer, der kræves for at betjene denne ressource"
+            },
+            "setupTime": {
+                "title": "Opsætningstid (minutter)",
+                "placeholder": "Opsætningstid"
+            },
+            "servingDocks": {
+                "title": "Betjente dokke",
+                "placeholder": "Vælg betjente dokke"
+            },
+            "liftingCapacity": {
+                "title": "Løftekapacitet (kg)",
+                "placeholder": "Løftekapacitet"
+            },
+            "containersPerHour": {
+                "title": "Containere per time",
+                "placeholder": "Containere per time"
+            },
+            "maxLoadCapacity": {
+                "title": "Maksimal lasteevne (kg)",
+                "placeholder": "Maksimal lasteevne"
+            },
+            "averageSpeed": {
+                "title": "Gennemsnitlig hastighed (km/t)",
+                "placeholder": "Gennemsnitlig hastighed"
+            },
+            "containersPerTrip": {
+                "title": "Containere per tur",
+                "placeholder": "Containere per tur"
+            },
+            "type": {
+                "title": "Ressourcetype",
+                "options": {
+                    "stsCrane": "STS kran",
+                    "yardGantry": "Opslagsgård portalkran",
+                    "truck": "Lastbil"
+                }
+            }
+        },
+        "actions": {
+            "deactivate": "Deaktivér fysisk ressource"
+        }
+    },
+    "storageArea": {
+        "tabs": {
+            "dashboard": "Lagerområde dashboard",
+            "view_dashboard": "Vis lagerområder",
+            "search": "Søg lagerområder",
+            "create": "Opret lagerområde",
+            "view": "Vis lagerområde",
+            "edit": "Rediger lagerområde"
+        },
+        "infoTitle": "Information om lagerområde",
+        "title": "Lagerområder",
+        "subtitle": {
+            "search": "Administrer og vis alle registrerede lagerområder",
+            "dashboard": "Kontrolpanel for alle lagerområdefunktioner",
+            "view_dashboard": "Vis lagerområder",
+            "create": "Registrer et nyt lagerområde i systemet",
+            "view": "Vis lagerområdets detaljer",
+            "edit": "Rediger et eksisterende lagerområde i systemet"
+        },
+        "printer": {
+            "docks_serviced": "betjente dokke",
+            "capacity_usage": "Kapacitetsudnyttelse",
+            "units": "enheder",
+            "available": "tilgængelige"
+        }
+    }
+}

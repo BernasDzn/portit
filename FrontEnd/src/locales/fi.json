@@ -1,0 +1,430 @@
+{
+    "common": {
+        "loading": "Ladataan...",
+        "noData": "Ei saatavilla olevia tietoja",
+        "statistics": "Tilastot"
+    },
+    "buttons": {
+        "save": "Tallenna",
+        "cancel": "Peruuta",
+        "delete": "Poista",
+        "edit": "Muokkaa",
+        "create": "Luo",
+        "search": "Etsi",
+        "select": "Valitse",
+        "activate": "Aktivoi",
+        "deactivate": "Poista käytöstä",
+        "filter": {
+            "title": "Suodattimet",
+            "add": "Suodata",
+            "clear": "Tyhjennä suodattimet"
+        },
+        "pagination": {
+            "previous": "Edellinen",
+            "next": "Seuraava"
+        },
+        "login": "Kirjaudu sisään",
+        "goBackToLogin": "Palaa kirjautumiseen",
+        "logout": "Kirjaudu ulos"
+    },
+    "unsavedChanges": {
+        "title": "Hylätäänkö muutokset?",
+        "message": "Sinulla on tallentamattomia muutoksia. Haluatko varmasti poistua tältä sivulta ja hylätä muutoksesi?",
+        "confirm": "Hylkää",
+        "cancel": "Jatka muokkaamista"
+    },
+    "dashboard": {
+        "sidebarTitle": "Kojelauta",
+        "title": "PortIT Kojelauta",
+        "subtitle": "Yleiskatsaus PortIT-järjestelmään",
+        "3DModel": {
+            "title": "3D-porttinäkymä",
+            "description": "Näytä interaktiivinen 3D-esitys koko satamalaitoksesta. Seuraa laiturien käyttöastetta, alusten sijainteja, varastointialueita ja resursseja reaaliajassa.",
+            "open": "Avaa 3D-malli"
+        }
+    },
+    "admin": {
+        "sidebarTitle": "Ylläpito",
+        "title": "Ylläpito-paneeli",
+        "subtitle": "Hallinnollinen yleiskatsaus ja hallinta",
+        "userManagement": {
+            "title": "Käyttäjähallinta",
+            "subtitle": "Hallitse järjestelmän käyttäjiä, rooleja ja oikeuksia."
+        },
+        "auditLogs": {
+            "title": "Tarkastuslokit",
+            "subtitle": "Näytä ja seuraa järjestelmän toimintalokeja."
+        }
+    },
+    "user": {
+        "fields": {
+            "email": {
+                "title": "Sähköposti",
+                "placeholder": "email@mail.com"
+            },
+            "role": {
+                "title": "Rooli",
+                "placeholder": "Valitse käyttäjärooli",
+                "options": {
+                    "admin": "Ylläpitäjä",
+                    "saoRep": "SAO-edustaja",
+                    "pao": "Satamaviranomainen",
+                    "logisticsOperator": "Logistiikkaoperaattori"
+                }
+            },
+            "isActive": {
+                "title": "Aktiivinen",
+                "options": {
+                    "active": "Kyllä",
+                    "inactive": "Ei"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Käyttäjän kojelauta",
+            "create": "Luo käyttäjä",
+            "view": "Näytä käyttäjät",
+            "search": "Hae käyttäjiä"
+        },
+        "infoTitle": "Käyttäjän tiedot",
+        "title": "Käyttäjät",
+        "subtitle": {
+            "dashboard": "Käyttäjien yleiskatsaus ja hallinta",
+            "create": "Rekisteröi uusi käyttäjä järjestelmään",
+            "view": "Näytä ja hallitse olemassa olevia käyttäjiä"
+        }
+    },
+    "physicalCharacteristics": {
+        "title": "Fyysiset ominaisuudet (m)",
+        "length": {
+            "title": "Pituus",
+            "placeholder": "Pituus metreinä"
+        },
+        "depth": {
+            "title": "Syvyys",
+            "placeholder": "Syvyys metreinä"
+        },
+        "draft": {
+            "title": "Syväys",
+            "placeholder": "Syväys metreinä"
+        }
+    },
+    "dock": {
+        "fields": {
+            "code": {
+                "title": "Koodi",
+                "placeholder": "Laiturikoodi"
+            },
+            "name": {
+                "title": "Nimi",
+                "placeholder": "Laiturin nimi"
+            },
+            "location": {
+                "title": "Sijainti",
+                "placeholder": "Laiturin sijainti"
+            },
+            "supportedVesselTypes": {
+                "title": "Tuetut laivatyypit",
+                "vesselTypes": {
+                    "title": "Laivatyypit",
+                    "placeholder": "Valitse laivatyypit"
+                },
+                "vesselType": "Laivatype"
+            }
+        },
+        "tabs": {
+            "dashboard": "Laiturikojelauta",
+            "view_dashboard": "Näytä laiturit",
+            "search": "Etsi laitureita",
+            "create": "Luo laituri",
+            "view": "Näytä laituri",
+            "edit": "Muokkaa laituria"
+        },
+        "generalFields": "Yleiset kentät",
+        "infoTitle": "Laiturin tiedot",
+        "title": "Laiturit",
+        "subtitle": {
+            "dashboard": "Yleiskatsaus laiturien tilastoihin ja toimintaan",
+            "search": "Hallitse ja näytä kaikki rekisteröidyt laiturit",
+            "create": "Rekisteröi uusi laituri järjestelmään",
+            "edit": "Muokkaa olemassa olevaa laituria järjestelmässä"
+        },
+        "registeredDocks": "Rekisteröidyt laiturit"
+    },
+    "vesselType": {
+        "fields": {
+            "name": {
+                "title": "Nimi",
+                "placeholder": "Laivatyypin nimi"
+            },
+            "description": {
+                "title": "Kuvaus",
+                "placeholder": "Laivatyypin kuvaus"
+            },
+            "capacity": {
+                "title": "Kapsiteetti",
+                "placeholder": "Konttikapasiteetti TEU:ssa"
+            },
+            "containerCapacity": {
+                "title": "Konttikapasiteetti (TEU)",
+                "maxNumberOfRows": {
+                    "title": "Maks. rivien määrä",
+                    "placeholder": "Maks. rivit TEU:ssa"
+                },
+                "maxNumberOfBays": {
+                    "title": "Maks. laitteiden määrä",
+                    "placeholder": "Maks. laitteet TEU:ssa"
+                },
+                "maxNumberOfTiers": {
+                    "title": "Maks. tasojen määrä",
+                    "placeholder": "Maks. tasot TEU:ssa"
+                }
+            }
+        },
+        "generalFields": "Yleiset kentät",
+        "tabs": {
+            "dashboard": "Laivatyypin kojelauta",
+            "view_dashboard": "Näytä laivatyypit",
+            "search": "Etsi laivatyyppejä",
+            "create": "Luo laivatype",
+            "view": "Näytä laivatype",
+            "edit": "Muokkaa laivatype"
+        },
+        "infoTitle": "Laivatyypin tiedot",
+        "title": "Laivatyypit",
+        "subtitle": {
+            "dashboard": "Yleiskatsaus laivatyypin tilastoihin ja toimintaan",
+            "search": "Hallitse ja näytä kaikki rekisteröidyt laivatyypit",
+            "create": "Rekisteröi uusi laivatype järjestelmään",
+            "edit": "Muokkaa olemassa olevaa laivatypea järjestelmässä"
+        },
+        "registeredVesselTypes": "Rekisteröidyt laivatyypit"
+    },
+    "vessel": {
+        "fields": {
+            "name": {
+                "title": "Nimi",
+                "placeholder": "Aluksen nimi"
+            },
+            "imoNumber": {
+                "title": "IMO-numero",
+                "placeholder": "Aluksen IMO-numero"
+            },
+            "owner": {
+                "title": "Omistaja",
+                "placeholder": "Omistava organisaatio"
+            },
+            "vesselType": {
+                "title": "Laivatype",
+                "placeholder": "Valitse laivatype"
+            }
+        },
+        "infoTitle": "Aluksen tiedot",
+        "physicalCharacteristicsTitle": "Fyysiset ominaisuudet",
+        "tabs": {
+            "dashboard": "Aluskojelauda",
+            "view_dashboard": "Näytä alukset",
+            "search": "Etsi aluksia",
+            "create": "Luo alus",
+            "view": "Näytä alus",
+            "edit": "Muokkaa alus"
+        },
+        "title": "Alukset",
+        "subtitle": {
+            "dashboard": "Yleiskatsaus alusten tilastoihin ja toimintaan",
+            "search": "Hallitse ja näytä kaikki rekisteröidyt alukset",
+            "create": "Rekisteröi uusi alus järjestelmään",
+            "edit": "Muokkaa olemassa olevaa alusta järjestelmässä"
+        },
+        "ownedBy": "Omistaja",
+        "registeredVessels": "Rekisteröidyt alukset"
+    },
+    "staff": {
+        "fields": {
+            "mechanographicNumber": {
+                "title": "Mekanografinen numero",
+                "placeholder": "Mekanografinen numero"
+            },
+            "name": {
+                "title": "Nimi",
+                "placeholder": "Henkilöstön nimi"
+            },
+            "email": {
+                "title": "Sähköposti",
+                "placeholder": "Sähköpostiosoite"
+            },
+            "phoneNumber": {
+                "title": "Puhelinnumero",
+                "placeholder": "Puhelinnumero"
+            },
+            "qualifications": {
+                "title": "Pätevyydet",
+                "placeholder": "Valitse pätevyydet"
+            },
+            "status": {
+                "title": "Tila",
+                "options": {
+                    "available": "Saatavilla",
+                    "unavailable": "Ei saatavilla",
+                    "temporarilyReassigned": "Tilapäisesti siirretty"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Henkilöstökojelauda",
+            "view_dashboard": "Näytä henkilöstö",
+            "search": "Etsi henkilöstöä",
+            "create": "Luo henkilöstön jäsen",
+            "view": "Näytä henkilöstön jäsen",
+            "edit": "Muokkaa henkilöstön jäsen"
+        },
+        "infoTitle": "Henkilöstön jäsenen tiedot",
+        "title": "Henkilöstö",
+        "subtitle": {
+            "search": "Hallitse ja näytä kaikki rekisteröity henkilöstö",
+            "dashboard": "Yleiskatsaus henkilöstön tilastoihin ja toimintaan",
+            "create": "Rekisteröi uusi henkilöstön jäsen järjestelmään",
+            "view": "Näytä henkilöstötiedot",
+            "edit": "Muokkaa olemassa olevaa henkilöstön jäsentä järjestelmässä"
+        }
+    },
+    "qualification": {
+        "tabs": {
+            "dashboard": "Pätevyydet-kojelauta",
+            "view_dashboard": "Näytä pätevyydet",
+            "search": "Etsi pätevyyksiä",
+            "create": "Luo pätevyys",
+            "view": "Näytä pätevyys",
+            "edit": "Muokkaa pätevyyttä"
+        },
+        "infoTitle": "Pätevyystiedot",
+        "title": "Pätevyydet",
+        "subtitle": {
+            "search": "Hallitse ja näytä kaikki rekisteröidyt pätevyydet",
+            "dashboard": "Yleiskatsaus pätevyyksien tilastoihin ja toimintaan",
+            "create": "Rekisteröi uusi pätevyys järjestelmään",
+            "edit": "Muokkaa olemassa olevaa pätevyyttä järjestelmässä",
+            "view": "Näytä pätevyystiedot"
+        },
+        "fields": {
+            "idCode": {
+                "title": "Pätevyyskoodi",
+                "placeholder": "Pätevyyskoodi"
+            },
+            "qualificationName": {
+                "title": "Pätevyyden nimi",
+                "placeholder": "Pätevyyden nimi"
+            }
+        }
+    },
+    "physicalResource": {
+        "tabs": {
+            "dashboard": "Fyysiset resurssit -kojelauta",
+            "view_dashboard": "Näytä fyysiset resurssit",
+            "search": "Etsi fyysisiä resursseja",
+            "create": "Luo fyysinen resurssi",
+            "view": "Näytä fyysinen resurssi",
+            "edit": "Muokkaa fyysistä resurssia"
+        },
+        "infoTitle": "Fyysisen resurssin tiedot",
+        "title": "Fyysiset resurssit",
+        "subtitle": {
+            "search": "Hallitse ja näytä kaikki rekisteröidyt fyysiset resurssit",
+            "dashboard": "Ohjauspaneeli fyysisille resursseille",
+            "view_dashboard": "Näytä fyysiset resurssit",
+            "create": "Rekisteröi uusi fyysinen resurssi järjestelmään",
+            "view": "Näytä fyysisen resurssin tiedot",
+            "edit": "Muokkaa olemassa olevaa fyysistä resurssia järjestelmässä"
+        },
+        "generalFields": "Yleiset kentät",
+        "specificFields": "Erityiset kentät",
+        "fields": {
+            "code": {
+                "title": "Koodi",
+                "placeholder": "Resurssin koodi"
+            },
+            "description": {
+                "title": "Kuvaus",
+                "placeholder": "Resurssin kuvaus"
+            },
+            "status": {
+                "title": "Tila",
+                "placeholder": "Valitse resurssin tila",
+                "options": {
+                    "available": "Saatavilla",
+                    "maintenance": "Huolto",
+                    "outOfService": "Pois käytöstä"
+                }
+            },
+            "qualifications": {
+                "title": "Vaatimukset",
+                "placeholder": "Pätevyydet, joita vaaditaan tämän resurssin käyttöön"
+            },
+            "setupTime": {
+                "title": "Asetusaika (minuuttia)",
+                "placeholder": "Asetusaika"
+            },
+            "servingDocks": {
+                "title": "Palvellut laituri",
+                "placeholder": "Valitse palveltavat laiturit"
+            },
+            "liftingCapacity": {
+                "title": "Nostokapasiteetti (kgs)",
+                "placeholder": "Nostokapasiteetti"
+            },
+            "containersPerHour": {
+                "title": "Kontteja tunnissa",
+                "placeholder": "Kontteja tunnissa"
+            },
+            "maxLoadCapacity": {
+                "title": "Suurin kuormauskapasiteetti (kg)",
+                "placeholder": "Suurin kuormauskapasiteetti"
+            },
+            "averageSpeed": {
+                "title": "Keskinopeus (km/h)",
+                "placeholder": "Keskinopeus"
+            },
+            "containersPerTrip": {
+                "title": "Kontteja per matka",
+                "placeholder": "Kontteja per matka"
+            },
+            "type": {
+                "title": "Resurssin tyyppi",
+                "options": {
+                    "stsCrane": "STS-nosturi",
+                    "yardGantry": "Varaston nosturi",
+                    "truck": "Kuorma-auto"
+                }
+            }
+        },
+        "actions": {
+            "deactivate": "Poista fyysinen resurssi käytöstä"
+        }
+    },
+    "storageArea": {
+        "tabs": {
+            "dashboard": "Varastointi-alueiden kojelauta",
+            "view_dashboard": "Näytä varastointi-alueet",
+            "search": "Etsi varastointi-alueita",
+            "create": "Luo varastointi-alue",
+            "view": "Näytä varastointi-alue",
+            "edit": "Muokkaa varastointi-aluetta"
+        },
+        "infoTitle": "Varastointi-alueen tiedot",
+        "title": "Varastointi-alueet",
+        "subtitle": {
+            "search": "Hallitse ja näytä kaikki rekisteröidyt varastointi-alueet",
+            "dashboard": "Ohjauspaneeli kaikille varastointi-alueille",
+            "view_dashboard": "Näytä varastointi-alueet",
+            "create": "Rekisteröi uusi varastointi-alue järjestelmään",
+            "view": "Näytä varastointi-alueen tiedot",
+            "edit": "Muokkaa olemassa olevaa varastointi-aluetta järjestelmässä"
+        },
+        "printer": {
+            "docks_serviced": "palvellut laiturit",
+            "capacity_usage": "Kapasiteetin käyttö",
+            "units": "yksiköt",
+            "available": "saatavilla"
+        }
+    }
+}

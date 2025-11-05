@@ -1,0 +1,430 @@
+{
+    "common": {
+        "loading": "Laster...",
+        "noData": "Ingen data tilgjengelig",
+        "statistics": "Statistikk"
+    },
+    "buttons": {
+        "save": "Lagre",
+        "cancel": "Avbryt",
+        "delete": "Slett",
+        "edit": "Rediger",
+        "create": "Opprett",
+        "search": "Søk",
+        "select": "Velg",
+        "activate": "Aktiver",
+        "deactivate": "Deaktiver",
+        "filter": {
+            "title": "Filtre",
+            "add": "Filtrer",
+            "clear": "Fjern filtre"
+        },
+        "pagination": {
+            "previous": "Forrige",
+            "next": "Neste"
+        },
+        "login": "Logg inn",
+        "goBackToLogin": "Gå tilbake til innlogging",
+        "logout": "Logg ut"
+    },
+    "unsavedChanges": {
+        "title": "Forkast endringer?",
+        "message": "Du har ikke-lagte endringer. Er du sikker på at du vil forlate denne siden og forkaste endringene?",
+        "confirm": "Forkast",
+        "cancel": "Fortsett redigering"
+    },
+    "dashboard": {
+        "sidebarTitle": "Dashboard",
+        "title": "PortIT Dashboard",
+        "subtitle": "Oversikt over PortIT-systemet",
+        "3DModel": {
+            "title": "3D Port-visualisering",
+            "description": "Se en interaktiv 3D-representasjon av hele havneanlegget. Overvåk kaiokkupasjon, fartøyposisjoner, lagringsområder og ressurser i sanntid.",
+            "open": "Åpne 3D-modell"
+        }
+    },
+    "admin": {
+        "sidebarTitle": "Admin",
+        "title": "Admin Dashboard",
+        "subtitle": "Administrativ oversikt og styring",
+        "userManagement": {
+            "title": "Brukeradministrasjon",
+            "subtitle": "Administrer systembrukere, roller og tillatelser."
+        },
+        "auditLogs": {
+            "title": "Revisjonslogger",
+            "subtitle": "Vis og overvåk systemaktivitetslogger."
+        }
+    },
+    "user": {
+        "fields": {
+            "email": {
+                "title": "E-post",
+                "placeholder": "email@mail.com"
+            },
+            "role": {
+                "title": "Rolle",
+                "placeholder": "Velg brukerrolle",
+                "options": {
+                    "admin": "Administrator",
+                    "saoRep": "SAO-representant",
+                    "pao": "Havneansatt",
+                    "logisticsOperator": "Logistikkoperatør"
+                }
+            },
+            "isActive": {
+                "title": "Aktiv",
+                "options": {
+                    "active": "Ja",
+                    "inactive": "Nei"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Brukerdashboard",
+            "create": "Opprett bruker",
+            "view": "Vis brukere",
+            "search": "Søk brukere"
+        },
+        "infoTitle": "Brukerdetaljer",
+        "title": "Brukere",
+        "subtitle": {
+            "dashboard": "Oversikt og administrasjon av brukere",
+            "create": "Registrer en ny bruker i systemet",
+            "view": "Vis og administrer eksisterende brukere"
+        }
+    },
+    "physicalCharacteristics": {
+        "title": "Fysiske karakteristika (m)",
+        "length": {
+            "title": "Lengde",
+            "placeholder": "Lengde i meter"
+        },
+        "depth": {
+            "title": "Dybde",
+            "placeholder": "Dybde i meter"
+        },
+        "draft": {
+            "title": "Dypgang",
+            "placeholder": "Dypgang i meter"
+        }
+    },
+    "dock": {
+        "fields": {
+            "code": {
+                "title": "Kode",
+                "placeholder": "Kaikode"
+            },
+            "name": {
+                "title": "Navn",
+                "placeholder": "Kainavn"
+            },
+            "location": {
+                "title": "Lokasjon",
+                "placeholder": "Kaiplassering"
+            },
+            "supportedVesselTypes": {
+                "title": "Støttede fartøytyper",
+                "vesselTypes": {
+                    "title": "Fartøytyper",
+                    "placeholder": "Velg fartøytyper"
+                },
+                "vesselType": "Fartøytype"
+            }
+        },
+        "tabs": {
+            "dashboard": "Kaidashboard",
+            "view_dashboard": "Vis kaier",
+            "search": "Søk kaier",
+            "create": "Opprett kai",
+            "view": "Vis kai",
+            "edit": "Rediger kai"
+        },
+        "generalFields": "Generelle felt",
+        "infoTitle": "Kaainformasjon",
+        "title": "Kaier",
+        "subtitle": {
+            "dashboard": "Oversikt over kai-statistikk og aktiviteter",
+            "search": "Administrer og vis alle registrerte kaier",
+            "create": "Registrer ny kai i systemet",
+            "edit": "Rediger eksisterende kai i systemet"
+        },
+        "registeredDocks": "Registrerte kaier"
+    },
+    "vesselType": {
+        "fields": {
+            "name": {
+                "title": "Navn",
+                "placeholder": "Fartøytypens navn"
+            },
+            "description": {
+                "title": "Beskrivelse",
+                "placeholder": "Beskrivelse av fartøytypen"
+            },
+            "capacity": {
+                "title": "Kapasitet",
+                "placeholder": "Containerkapasitet i TEU"
+            },
+            "containerCapacity": {
+                "title": "Containerkapasitet (TEU)",
+                "maxNumberOfRows": {
+                    "title": "Maks antall rader",
+                    "placeholder": "Maks rader i TEU"
+                },
+                "maxNumberOfBays": {
+                    "title": "Maks antall seksjoner",
+                    "placeholder": "Maks seksjoner i TEU"
+                },
+                "maxNumberOfTiers": {
+                    "title": "Maks antall nivåer",
+                    "placeholder": "Maks nivåer i TEU"
+                }
+            }
+        },
+        "generalFields": "Generelle felt",
+        "tabs": {
+            "dashboard": "Fartøytypers dashboard",
+            "view_dashboard": "Vis fartøytyper",
+            "search": "Søk fartøytyper",
+            "create": "Opprett fartøytype",
+            "view": "Vis fartøytype",
+            "edit": "Rediger fartøytype"
+        },
+        "infoTitle": "Informasjon om fartøytype",
+        "title": "Fartøytyper",
+        "subtitle": {
+            "dashboard": "Oversikt over statistikk og aktiviteter per fartøytype",
+            "search": "Administrer og vis alle registrerte fartøytyper",
+            "create": "Registrer ny fartøytype i systemet",
+            "edit": "Rediger eksisterende fartøytype i systemet"
+        },
+        "registeredVesselTypes": "Registrerte fartøytyper"
+    },
+    "vessel": {
+        "fields": {
+            "name": {
+                "title": "Navn",
+                "placeholder": "Fartøynavn"
+            },
+            "imoNumber": {
+                "title": "IMO-nummer",
+                "placeholder": "Fartøyets IMO-nummer"
+            },
+            "owner": {
+                "title": "Eier",
+                "placeholder": "Eierorganisasjon"
+            },
+            "vesselType": {
+                "title": "Fartøytype",
+                "placeholder": "Velg fartøytype"
+            }
+        },
+        "infoTitle": "Fartøysinformasjon",
+        "physicalCharacteristicsTitle": "Fysiske karakteristika",
+        "tabs": {
+            "dashboard": "Fartøydashboard",
+            "view_dashboard": "Vis fartøy",
+            "search": "Søk fartøy",
+            "create": "Opprett fartøy",
+            "view": "Vis fartøy",
+            "edit": "Rediger fartøy"
+        },
+        "title": "Fartøy",
+        "subtitle": {
+            "dashboard": "Oversikt over fartøystatistikk og aktiviteter",
+            "search": "Administrer og vis alle registrerte fartøy",
+            "create": "Registrer nytt fartøy i systemet",
+            "edit": "Rediger eksisterende fartøy i systemet"
+        },
+        "ownedBy": "Eid av",
+        "registeredVessels": "Registrerte fartøy"
+    },
+    "staff": {
+        "fields": {
+            "mechanographicNumber": {
+                "title": "Mekanografisk nummer",
+                "placeholder": "Mekanografisk nummer"
+            },
+            "name": {
+                "title": "Navn",
+                "placeholder": "Ansattnavn"
+            },
+            "email": {
+                "title": "E-post",
+                "placeholder": "E-postadresse"
+            },
+            "phoneNumber": {
+                "title": "Telefonnummer",
+                "placeholder": "Telefonnummer"
+            },
+            "qualifications": {
+                "title": "Kvalifikasjoner",
+                "placeholder": "Velg kvalifikasjoner"
+            },
+            "status": {
+                "title": "Status",
+                "options": {
+                    "available": "Tilgjengelig",
+                    "unavailable": "Utilgjengelig",
+                    "temporarilyReassigned": "Midlertidig omplassert"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Ansattdashboard",
+            "view_dashboard": "Vis ansatte",
+            "search": "Søk ansatte",
+            "create": "Opprett ansatt",
+            "view": "Vis ansatt",
+            "edit": "Rediger ansatt"
+        },
+        "infoTitle": "Ansattinformasjon",
+        "title": "Ansatte",
+        "subtitle": {
+            "search": "Administrer og vis all registrert arbeidskraft",
+            "dashboard": "Oversikt over ansattstatistikk og aktiviteter",
+            "create": "Registrer ny ansatt i systemet",
+            "view": "Vis ansattdetaljer",
+            "edit": "Rediger eksisterende ansatt i systemet"
+        }
+    },
+    "qualification": {
+        "tabs": {
+            "dashboard": "Kvalifikasjonsdashboard",
+            "view_dashboard": "Vis kvalifikasjoner",
+            "search": "Søk kvalifikasjoner",
+            "create": "Opprett kvalifikasjon",
+            "view": "Vis kvalifikasjon",
+            "edit": "Rediger kvalifikasjon"
+        },
+        "infoTitle": "Kvalifikasjonsinformasjon",
+        "title": "Kvalifikasjoner",
+        "subtitle": {
+            "search": "Administrer og vis alle registrerte kvalifikasjoner",
+            "dashboard": "Oversikt over kvalifikasjonsstatistikk og aktiviteter",
+            "create": "Registrer ny kvalifikasjon i systemet",
+            "edit": "Rediger eksisterende kvalifikasjon i systemet",
+            "view": "Vis kvalifikasjonsdetaljer"
+        },
+        "fields": {
+            "idCode": {
+                "title": "Kvalifikasjonskode",
+                "placeholder": "Kvalifikasjonskode"
+            },
+            "qualificationName": {
+                "title": "Kvalifikasjonsnavn",
+                "placeholder": "Kvalifikasjonsnavn"
+            }
+        }
+    },
+    "physicalResource": {
+        "tabs": {
+            "dashboard": "Fysisk ressurs dashboard",
+            "view_dashboard": "Vis fysiske ressurser",
+            "search": "Søk fysiske ressurser",
+            "create": "Opprett fysisk ressurs",
+            "view": "Vis fysisk ressurs",
+            "edit": "Rediger fysisk ressurs"
+        },
+        "infoTitle": "Informasjon om fysisk ressurs",
+        "title": "Fysiske ressurser",
+        "subtitle": {
+            "search": "Administrer og vis alle registrerte fysiske ressurser",
+            "dashboard": "Kontrollpanel for alle fysiske ressurser",
+            "view_dashboard": "Vis fysiske ressurser",
+            "create": "Registrer ny fysisk ressurs i systemet",
+            "view": "Vis fysisk ressursdetaljer",
+            "edit": "Rediger eksisterende fysisk ressurs i systemet"
+        },
+        "generalFields": "Generelle felt",
+        "specificFields": "Spesifikke felt",
+        "fields": {
+            "code": {
+                "title": "Kode",
+                "placeholder": "Ressurskode"
+            },
+            "description": {
+                "title": "Beskrivelse",
+                "placeholder": "Ressursbeskrivelse"
+            },
+            "status": {
+                "title": "Status",
+                "placeholder": "Velg ressursstatus",
+                "options": {
+                    "available": "Tilgjengelig",
+                    "maintenance": "Vedlikehold",
+                    "outOfService": "Ute av drift"
+                }
+            },
+            "qualifications": {
+                "title": "Påkrevde kvalifikasjoner",
+                "placeholder": "Kvalifikasjoner som kreves for å operere denne ressursen"
+            },
+            "setupTime": {
+                "title": "Oppsettstid (minutter)",
+                "placeholder": "Oppsettstid"
+            },
+            "servingDocks": {
+                "title": "Betjente kaier",
+                "placeholder": "Velg betjente kaier"
+            },
+            "liftingCapacity": {
+                "title": "Løftekapasitet (kg)",
+                "placeholder": "Løftekapasitet"
+            },
+            "containersPerHour": {
+                "title": "Containere per time",
+                "placeholder": "Containere per time"
+            },
+            "maxLoadCapacity": {
+                "title": "Maks belastningskapasitet (kg)",
+                "placeholder": "Maks belastningskapasitet"
+            },
+            "averageSpeed": {
+                "title": "Gjennomsnittshastighet (km/t)",
+                "placeholder": "Gjennomsnittshastighet"
+            },
+            "containersPerTrip": {
+                "title": "Containere per tur",
+                "placeholder": "Containere per tur"
+            },
+            "type": {
+                "title": "Resurstype",
+                "options": {
+                    "stsCrane": "STS Kran",
+                    "yardGantry": "Gantry kran",
+                    "truck": "Lastebil"
+                }
+            }
+        },
+        "actions": {
+            "deactivate": "Deaktiver fysisk ressurs"
+        }
+    },
+    "storageArea": {
+        "tabs": {
+            "dashboard": "Lagerområde dashboard",
+            "view_dashboard": "Vis lagerområder",
+            "search": "Søk lagerområder",
+            "create": "Opprett lagerområde",
+            "view": "Vis lagerområde",
+            "edit": "Rediger lagerområde"
+        },
+        "infoTitle": "Lagerområdeinformasjon",
+        "title": "Lagerområder",
+        "subtitle": {
+            "search": "Administrer og vis alle registrerte lagerområder",
+            "dashboard": "Kontrollpanel for lagerområder",
+            "view_dashboard": "Vis lagerområder",
+            "create": "Registrer nytt lagerområde i systemet",
+            "view": "Vis lagerområdedetaljer",
+            "edit": "Rediger eksisterende lagerområde i systemet"
+        },
+        "printer": {
+            "docks_serviced": "betjente kaier",
+            "capacity_usage": "Kapasitetsbruk",
+            "units": "enheter",
+            "available": "tilgjengelig"
+        }
+    }
+}

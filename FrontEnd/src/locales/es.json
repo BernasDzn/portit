@@ -1,0 +1,430 @@
+{
+    "common": {
+        "loading": "Cargando...",
+        "noData": "No hay datos disponibles",
+        "statistics": "Estadísticas"
+    },
+    "buttons": {
+        "save": "Guardar",
+        "cancel": "Cancelar",
+        "delete": "Eliminar",
+        "edit": "Editar",
+        "create": "Crear",
+        "search": "Buscar",
+        "select": "Seleccionar",
+        "activate": "Activar",
+        "deactivate": "Desactivar",
+        "filter": {
+            "title": "Filtros",
+            "add": "Filtrar",
+            "clear": "Borrar filtros"
+        },
+        "pagination": {
+            "previous": "Anterior",
+            "next": "Siguiente"
+        },
+        "login": "Iniciar sesión",
+        "goBackToLogin": "Volver a iniciar sesión",
+        "logout": "Cerrar sesión"
+    },
+    "unsavedChanges": {
+        "title": "¿Descartar cambios?",
+        "message": "Tienes cambios sin guardar. ¿Seguro que quieres salir y descartar los cambios?",
+        "confirm": "Descartar",
+        "cancel": "Seguir editando"
+    },
+    "dashboard": {
+        "sidebarTitle": "Tablero",
+        "title": "PortIT Tablero",
+        "subtitle": "Resumen del sistema PortIT",
+        "3DModel": {
+            "title": "Visualización 3D del puerto",
+            "description": "Ver una representación 3D interactiva de toda la instalación del puerto. Monitoriza la ocupación de muelles, la posición de los buques, las zonas de almacenamiento y recursos en tiempo real.",
+            "open": "Abrir modelo 3D"
+        }
+    },
+    "admin": {
+        "sidebarTitle": "Admin",
+        "title": "Panel de administración",
+        "subtitle": "Resumen y gestión administrativa",
+        "userManagement": {
+            "title": "Gestión de usuarios",
+            "subtitle": "Gestionar usuarios del sistema, roles y permisos."
+        },
+        "auditLogs": {
+            "title": "Registros de auditoría",
+            "subtitle": "Ver y monitorizar los registros de actividad del sistema."
+        }
+    },
+    "user": {
+        "fields": {
+            "email": {
+                "title": "Email",
+                "placeholder": "email@mail.com"
+            },
+            "role": {
+                "title": "Rol",
+                "placeholder": "Seleccionar rol de usuario",
+                "options": {
+                    "admin": "Administrador",
+                    "saoRep": "Representante SAO",
+                    "pao": "Oficial de Autoridad Portuaria",
+                    "logisticsOperator": "Operador logístico"
+                }
+            },
+            "isActive": {
+                "title": "Activo",
+                "options": {
+                    "active": "Sí",
+                    "inactive": "No"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Panel de usuario",
+            "create": "Crear usuario",
+            "view": "Ver usuarios",
+            "search": "Buscar usuarios"
+        },
+        "infoTitle": "Detalles del usuario",
+        "title": "Usuarios",
+        "subtitle": {
+            "dashboard": "Resumen y gestión de usuarios",
+            "create": "Registrar un nuevo usuario en el sistema",
+            "view": "Ver y gestionar usuarios existentes"
+        }
+    },
+    "physicalCharacteristics": {
+        "title": "Características físicas (m)",
+        "length": {
+            "title": "Eslora",
+            "placeholder": "Longitud en metros"
+        },
+        "depth": {
+            "title": "Calado",
+            "placeholder": "Profundidad en metros"
+        },
+        "draft": {
+            "title": "Boca",
+            "placeholder": "Calado en metros"
+        }
+    },
+    "dock": {
+        "fields": {
+            "code": {
+                "title": "Código",
+                "placeholder": "Código de muelle"
+            },
+            "name": {
+                "title": "Nombre",
+                "placeholder": "Nombre del muelle"
+            },
+            "location": {
+                "title": "Ubicación",
+                "placeholder": "Ubicación del muelle"
+            },
+            "supportedVesselTypes": {
+                "title": "Tipos de buques soportados",
+                "vesselTypes": {
+                    "title": "Tipos de buques",
+                    "placeholder": "Seleccionar tipos de buque"
+                },
+                "vesselType": "Tipo de buque"
+            }
+        },
+        "tabs": {
+            "dashboard": "Panel de muelles",
+            "view_dashboard": "Ver muelles",
+            "search": "Buscar muelles",
+            "create": "Crear muelle",
+            "view": "Ver muelle",
+            "edit": "Editar muelle"
+        },
+        "generalFields": "Campos generales",
+        "infoTitle": "Información del muelle",
+        "title": "Muelles",
+        "subtitle": {
+            "dashboard": "Resumen de estadísticas y actividades del muelle",
+            "search": "Gestionar y ver todos los muelles registrados",
+            "create": "Registrar un nuevo muelle en el sistema",
+            "edit": "Editar un muelle existente en el sistema"
+        },
+        "registeredDocks": "Muelles registrados"
+    },
+    "vesselType": {
+        "fields": {
+            "name": {
+                "title": "Nombre",
+                "placeholder": "Nombre del tipo de buque"
+            },
+            "description": {
+                "title": "Descripción",
+                "placeholder": "Descripción del tipo de buque"
+            },
+            "capacity": {
+                "title": "Capacidad",
+                "placeholder": "Capacidad de contenedores en TEU"
+            },
+            "containerCapacity": {
+                "title": "Capacidad de contenedores (TEU)",
+                "maxNumberOfRows": {
+                    "title": "Máx. número de filas",
+                    "placeholder": "Máx. filas en TEU"
+                },
+                "maxNumberOfBays": {
+                    "title": "Máx. número de bahías",
+                    "placeholder": "Máx. bahías en TEU"
+                },
+                "maxNumberOfTiers": {
+                    "title": "Máx. número de niveles",
+                    "placeholder": "Máx. niveles en TEU"
+                }
+            }
+        },
+        "generalFields": "Campos generales",
+        "tabs": {
+            "dashboard": "Panel tipos de buque",
+            "view_dashboard": "Ver tipos de buque",
+            "search": "Buscar tipos de buque",
+            "create": "Crear tipo de buque",
+            "view": "Ver tipo de buque",
+            "edit": "Editar tipo de buque"
+        },
+        "infoTitle": "Información del tipo de buque",
+        "title": "Tipos de buque",
+        "subtitle": {
+            "dashboard": "Resumen de estadísticas y actividades por tipo de buque",
+            "search": "Gestionar y ver todos los tipos de buque registrados",
+            "create": "Registrar un nuevo tipo de buque en el sistema",
+            "edit": "Editar un tipo de buque existente en el sistema"
+        },
+        "registeredVesselTypes": "Tipos de buque registrados"
+    },
+    "vessel": {
+        "fields": {
+            "name": {
+                "title": "Nombre",
+                "placeholder": "Nombre del buque"
+            },
+            "imoNumber": {
+                "title": "Número IMO",
+                "placeholder": "Número IMO del buque"
+            },
+            "owner": {
+                "title": "Propietario",
+                "placeholder": "Organización propietaria"
+            },
+            "vesselType": {
+                "title": "Tipo de buque",
+                "placeholder": "Seleccionar tipo de buque"
+            }
+        },
+        "infoTitle": "Información del buque",
+        "physicalCharacteristicsTitle": "Características físicas",
+        "tabs": {
+            "dashboard": "Panel buques",
+            "view_dashboard": "Ver buques",
+            "search": "Buscar buques",
+            "create": "Crear buque",
+            "view": "Ver buque",
+            "edit": "Editar buque"
+        },
+        "title": "Buques",
+        "subtitle": {
+            "dashboard": "Resumen de estadísticas y actividades de buques",
+            "search": "Gestionar y ver todos los buques registrados",
+            "create": "Registrar un nuevo buque en el sistema",
+            "edit": "Editar un buque existente en el sistema"
+        },
+        "ownedBy": "Propiedad de",
+        "registeredVessels": "Buques registrados"
+    },
+    "staff": {
+        "fields": {
+            "mechanographicNumber": {
+                "title": "Número mecanográfico",
+                "placeholder": "Número mecanográfico"
+            },
+            "name": {
+                "title": "Nombre",
+                "placeholder": "Nombre del personal"
+            },
+            "email": {
+                "title": "Email",
+                "placeholder": "Dirección de email"
+            },
+            "phoneNumber": {
+                "title": "Teléfono",
+                "placeholder": "Número de teléfono"
+            },
+            "qualifications": {
+                "title": "Cualificaciones",
+                "placeholder": "Seleccionar cualificaciones"
+            },
+            "status": {
+                "title": "Estado",
+                "options": {
+                    "available": "Disponible",
+                    "unavailable": "No disponible",
+                    "temporarilyReassigned": "Reasignado temporalmente"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Panel de personal",
+            "view_dashboard": "Ver personal",
+            "search": "Buscar personal",
+            "create": "Crear personal",
+            "view": "Ver personal",
+            "edit": "Editar personal"
+        },
+        "infoTitle": "Información del miembro del personal",
+        "title": "Personal",
+        "subtitle": {
+            "search": "Gestionar y ver todo el personal registrado",
+            "dashboard": "Resumen de estadísticas y actividades del personal",
+            "create": "Registrar un nuevo miembro del personal en el sistema",
+            "view": "Ver detalles del personal",
+            "edit": "Editar un miembro del personal existente en el sistema"
+        }
+    },
+    "qualification": {
+        "tabs": {
+            "dashboard": "Panel de cualificaciones",
+            "view_dashboard": "Ver cualificaciones",
+            "search": "Buscar cualificaciones",
+            "create": "Crear cualificación",
+            "view": "Ver cualificación",
+            "edit": "Editar cualificación"
+        },
+        "infoTitle": "Información de cualificación",
+        "title": "Cualificaciones",
+        "subtitle": {
+            "search": "Gestionar y ver todas las cualificaciones registradas",
+            "dashboard": "Resumen de estadísticas y actividades de cualificaciones",
+            "create": "Registrar una nueva cualificación en el sistema",
+            "edit": "Editar una cualificación existente en el sistema",
+            "view": "Ver detalles de la cualificación"
+        },
+        "fields": {
+            "idCode": {
+                "title": "Código de cualificación",
+                "placeholder": "Código de cualificación"
+            },
+            "qualificationName": {
+                "title": "Nombre de la cualificación",
+                "placeholder": "Nombre de la cualificación"
+            }
+        }
+    },
+    "physicalResource": {
+        "tabs": {
+            "dashboard": "Panel recursos físicos",
+            "view_dashboard": "Ver recursos físicos",
+            "search": "Buscar recursos físicos",
+            "create": "Crear recurso físico",
+            "view": "Ver recurso físico",
+            "edit": "Editar recurso físico"
+        },
+        "infoTitle": "Información del recurso físico",
+        "title": "Recursos físicos",
+        "subtitle": {
+            "search": "Gestionar y ver todos los recursos físicos registrados",
+            "dashboard": "Panel de control para recursos físicos",
+            "view_dashboard": "Ver recursos físicos",
+            "create": "Registrar un nuevo recurso físico en el sistema",
+            "view": "Ver detalles del recurso físico",
+            "edit": "Editar un recurso físico existente en el sistema"
+        },
+        "generalFields": "Campos generales",
+        "specificFields": "Campos específicos",
+        "fields": {
+            "code": {
+                "title": "Código",
+                "placeholder": "Código del recurso"
+            },
+            "description": {
+                "title": "Descripción",
+                "placeholder": "Descripción del recurso"
+            },
+            "status": {
+                "title": "Estado",
+                "placeholder": "Seleccionar estado del recurso",
+                "options": {
+                    "available": "Disponible",
+                    "maintenance": "Mantenimiento",
+                    "outOfService": "Fuera de servicio"
+                }
+            },
+            "qualifications": {
+                "title": "Cualificaciones requeridas",
+                "placeholder": "Cualificaciones necesarias para operar este recurso"
+            },
+            "setupTime": {
+                "title": "Tiempo de configuración (minutos)",
+                "placeholder": "Tiempo de configuración"
+            },
+            "servingDocks": {
+                "title": "Muelles atendidos",
+                "placeholder": "Seleccionar muelles atendidos"
+            },
+            "liftingCapacity": {
+                "title": "Capacidad de elevación (kgs)",
+                "placeholder": "Capacidad de elevación"
+            },
+            "containersPerHour": {
+                "title": "Contenedores por hora",
+                "placeholder": "Contenedores por hora"
+            },
+            "maxLoadCapacity": {
+                "title": "Capacidad máxima de carga (kg)",
+                "placeholder": "Capacidad máxima de carga"
+            },
+            "averageSpeed": {
+                "title": "Velocidad media (km/h)",
+                "placeholder": "Velocidad media"
+            },
+            "containersPerTrip": {
+                "title": "Contenedores por viaje",
+                "placeholder": "Contenedores por viaje"
+            },
+            "type": {
+                "title": "Tipo de recurso",
+                "options": {
+                    "stsCrane": "Grúa STS",
+                    "yardGantry": "Puente Grúa de patio",
+                    "truck": "Camión"
+                }
+            }
+        },
+        "actions": {
+            "deactivate": "Desactivar recurso físico"
+        }
+    },
+    "storageArea": {
+        "tabs": {
+            "dashboard": "Panel de áreas de almacenamiento",
+            "view_dashboard": "Ver áreas de almacenamiento",
+            "search": "Buscar áreas de almacenamiento",
+            "create": "Crear área de almacenamiento",
+            "view": "Ver área de almacenamiento",
+            "edit": "Editar área de almacenamiento"
+        },
+        "infoTitle": "Información del área de almacenamiento",
+        "title": "Áreas de almacenamiento",
+        "subtitle": {
+            "search": "Gestionar y ver todas las áreas de almacenamiento registradas",
+            "dashboard": "Panel de control para todas las áreas de almacenamiento",
+            "view_dashboard": "Ver áreas de almacenamiento",
+            "create": "Registrar una nueva área de almacenamiento en el sistema",
+            "view": "Ver detalles del área de almacenamiento",
+            "edit": "Editar un área de almacenamiento existente en el sistema"
+        },
+        "printer": {
+            "docks_serviced": "muelles atendidos",
+            "capacity_usage": "Uso de capacidad",
+            "units": "unidades",
+            "available": "disponible"
+        }
+    }
+}

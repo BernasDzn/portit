@@ -1,0 +1,430 @@
+{
+    "common": {
+        "loading": "Tqegħid...",
+        "noData": "L-ebda data disponibbli",
+        "statistics": "Statistiċi"
+    },
+    "buttons": {
+        "save": "Ħlief",
+        "cancel": "Ikkanċella",
+        "delete": "Ħassar",
+        "edit": "Editja",
+        "create": "Oħloq",
+        "search": "Fittex",
+        "select": "Agħżel",
+        "activate": "Attiva",
+        "deactivate": "Diżattiva",
+        "filter": {
+            "title": "Filtri",
+            "add": "Filtra",
+            "clear": "Aħsel il-filtri"
+        },
+        "pagination": {
+            "previous": "Preċedenti",
+            "next": "Li jmiss"
+        },
+        "login": "Illoggja",
+        "goBackToLogin": "Mur lura għall-login",
+        "logout": "Il-loggjar"
+    },
+    "unsavedChanges": {
+        "title": "Tirrifjuta bidliet?",
+        "message": "Għandek bidliet mhux salvati. Int żgur li trid titlaq minn din il-paġna u tirrifjuta l-bidliet?",
+        "confirm": "Tirrifjuta",
+        "cancel": "Kompli Editja"
+    },
+    "dashboard": {
+        "sidebarTitle": "Pannell",
+        "title": "PortIT Pannell",
+        "subtitle": "Panoramika tas-sistema PortIT",
+        "3DModel": {
+            "title": "Viżwalizzazzjoni 3D tal-Port",
+            "description": "Ara rappreżentazzjoni 3D interattiva tal-fażi kollha tal-port. Iġġedded l-okkupazzjoni tal-mollijiet, pożizzjonijiet tal-vapuri, żoni ta' ħażna u riżorsi f' ħin reali.",
+            "open": "Iftaħ mudell 3D"
+        }
+    },
+    "admin": {
+        "sidebarTitle": "Amministrazzjoni",
+        "title": "Pannell ta' Amministrazzjoni",
+        "subtitle": "Reviżjoni amministrattiva u ġestjoni",
+        "userManagement": {
+            "title": "Ġestjoni tal-Utenti",
+            "subtitle": "Ġestixxi utenti, rwoli u permessi tas-sistema."
+        },
+        "auditLogs": {
+            "title": "Logijiet tal-Awditjar",
+            "subtitle": "Ara u monitaġġ tal-attivitajiet tas-sistema."
+        }
+    },
+    "user": {
+        "fields": {
+            "email": {
+                "title": "Email",
+                "placeholder": "email@mail.com"
+            },
+            "role": {
+                "title": "Rwoli",
+                "placeholder": "Agħżel rwol tal-utent",
+                "options": {
+                    "admin": "Amministratur",
+                    "saoRep": "Rappreżentant SAO",
+                    "pao": "Uffiċjal tal-Awtorità tal-Port",
+                    "logisticsOperator": "Operatur tal-Lojistika"
+                }
+            },
+            "isActive": {
+                "title": "Aktiv",
+                "options": {
+                    "active": "Iva",
+                    "inactive": "Le"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Pannell tal-Utent",
+            "create": "Oħloq Utent",
+            "view": "Ara Utenti",
+            "search": "Fittex Utenti"
+        },
+        "infoTitle": "Dettalji tal-Utent",
+        "title": "Utenti",
+        "subtitle": {
+            "dashboard": "Panoramika u ġestjoni tal-utenti",
+            "create": "Irreġistra utent ġdid fis-sistema",
+            "view": "Ara u ġestixxi utenti eżistenti"
+        }
+    },
+    "physicalCharacteristics": {
+        "title": "Karatteristiċi Fiżiċi (m)",
+        "length": {
+            "title": "Tul",
+            "placeholder": "Tul f'metri"
+        },
+        "depth": {
+            "title": "Fond",
+            "placeholder": "Fond f'metri"
+        },
+        "draft": {
+            "title": "Kawża",
+            "placeholder": "Kawża f'metri"
+        }
+    },
+    "dock": {
+        "fields": {
+            "code": {
+                "title": "Kodiċi",
+                "placeholder": "Kodiċi tal-moll"
+            },
+            "name": {
+                "title": "Isem",
+                "placeholder": "Isem tal-moll"
+            },
+            "location": {
+                "title": "Post",
+                "placeholder": "Post tal-moll"
+            },
+            "supportedVesselTypes": {
+                "title": "Tipi ta' Vapur Appoġġjati",
+                "vesselTypes": {
+                    "title": "Tipi ta' Vapur",
+                    "placeholder": "Agħżel tipi ta' vapur"
+                },
+                "vesselType": "Tip ta' Vapur"
+            }
+        },
+        "tabs": {
+            "dashboard": "Pannell tal-Moll",
+            "view_dashboard": "Ara Mollijiet",
+            "search": "Fittex Mollijiet",
+            "create": "Oħloq Moll",
+            "view": "Ara Moll",
+            "edit": "Editja Moll"
+        },
+        "generalFields": "Kampijiet Ġenerali",
+        "infoTitle": "Informazzjoni dwar il-Moll",
+        "title": "Mollijiet",
+        "subtitle": {
+            "dashboard": "Panoramika ta' statistika u attività tal-mollijiet",
+            "search": "Ġestixxi u ara l-mollijiet kollha rreġistrati",
+            "create": "Irreġistra moll ġdid fis-sistema",
+            "edit": "Editja moll eżistenti fis-sistema"
+        },
+        "registeredDocks": "Mollijiet rreġistrati"
+    },
+    "vesselType": {
+        "fields": {
+            "name": {
+                "title": "Isem",
+                "placeholder": "Isem tat-tip ta' vapur"
+            },
+            "description": {
+                "title": "Deskrizzjoni",
+                "placeholder": "Deskrizzjoni tat-tip"
+            },
+            "capacity": {
+                "title": "Kapaċità",
+                "placeholder": "Kapaċità ta' kontenituri f'TEU"
+            },
+            "containerCapacity": {
+                "title": "Kapaċità ta' Kontenituri (TEU)",
+                "maxNumberOfRows": {
+                    "title": "Max Numri ta' Wieqfa",
+                    "placeholder": "Max Wieqfa f'TEU"
+                },
+                "maxNumberOfBays": {
+                    "title": "Max Numri ta' Bajjiet",
+                    "placeholder": "Max Bajjiet f'TEU"
+                },
+                "maxNumberOfTiers": {
+                    "title": "Max Numri ta' Livelli",
+                    "placeholder": "Max Livelli f'TEU"
+                }
+            }
+        },
+        "generalFields": "Kampijiet Ġenerali",
+        "tabs": {
+            "dashboard": "Pannell tat-Tipi ta' Vapur",
+            "view_dashboard": "Ara Tipi ta' Vapur",
+            "search": "Fittex Tipi ta' Vapur",
+            "create": "Oħloq Tip Vapur",
+            "view": "Ara Tip Vapur",
+            "edit": "Editja Tip Vapur"
+        },
+        "infoTitle": "Informazzjoni dwar it-Tip ta' Vapur",
+        "title": "Tipi ta' Vapur",
+        "subtitle": {
+            "dashboard": "Panoramika ta' statistika tat-tipi ta' vapur",
+            "search": "Ġestixxi u ara l-tipi kollha reġistrati",
+            "create": "Irreġistra tip ġdid fis-sistema",
+            "edit": "Editja tip eżistenti fis-sistema"
+        },
+        "registeredVesselTypes": "Tipi ta' Vapur rreġistrati"
+    },
+    "vessel": {
+        "fields": {
+            "name": {
+                "title": "Isem",
+                "placeholder": "Isem tal-vapur"
+            },
+            "imoNumber": {
+                "title": "Numru IMO",
+                "placeholder": "Numru IMO tal-vapur"
+            },
+            "owner": {
+                "title": "Sid",
+                "placeholder": "Organizzazzjoni sid"
+            },
+            "vesselType": {
+                "title": "Tip ta' Vapur",
+                "placeholder": "Agħżel tip"
+            }
+        },
+        "infoTitle": "Informazzjoni dwar il-Vapur",
+        "physicalCharacteristicsTitle": "Karatteristiċi Fiżiċi",
+        "tabs": {
+            "dashboard": "Pannell tal-Vapuri",
+            "view_dashboard": "Ara Vapuri",
+            "search": "Fittex Vapuri",
+            "create": "Oħloq Vapur",
+            "view": "Ara Vapur",
+            "edit": "Editja Vapur"
+        },
+        "title": "Vapuri",
+        "subtitle": {
+            "dashboard": "Panoramika ta' statistika u attività tal-vapuri",
+            "search": "Ġestixxi u ara l-vapuri rreġistrati",
+            "create": "Irreġistra vapur ġdid",
+            "edit": "Editja vapur eżistenti"
+        },
+        "ownedBy": "Fil-proprjetà ta'",
+        "registeredVessels": "Vapuri rreġistrati"
+    },
+    "staff": {
+        "fields": {
+            "mechanographicNumber": {
+                "title": "Numru Mehanografiku",
+                "placeholder": "Numru Mehanografiku"
+            },
+            "name": {
+                "title": "Isem",
+                "placeholder": "Isem tal-impjegat"
+            },
+            "email": {
+                "title": "Email",
+                "placeholder": "Indirizz email"
+            },
+            "phoneNumber": {
+                "title": "Numru tat-Telefon",
+                "placeholder": "Numru tat-Telefon"
+            },
+            "qualifications": {
+                "title": "Kwalifikazzjonijiet",
+                "placeholder": "Agħżel kwalifikazzjonijiet"
+            },
+            "status": {
+                "title": "Status",
+                "options": {
+                    "available": "Disponibbli",
+                    "unavailable": "Mhux disponibbli",
+                    "temporarilyReassigned": "Provvisoriski riassegnat"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Pannell tal-Persunal",
+            "view_dashboard": "Ara Persunal",
+            "search": "Fittex Persunal",
+            "create": "Oħloq Membru tal-Persunal",
+            "view": "Ara Membru tal-Persunal",
+            "edit": "Editja Membru tal-Persunal"
+        },
+        "infoTitle": "Informazzjoni dwar Membru tal-Persunal",
+        "title": "Persunal",
+        "subtitle": {
+            "search": "Ġestixxi u ara l-persunal rreġistrat",
+            "dashboard": "Panoramika ta' statistika tal-persunal",
+            "create": "Irreġistra membru ġdid tal-persunal",
+            "view": "Ara dettalji tal-persunal",
+            "edit": "Editja membru eżistenti tal-persunal"
+        }
+    },
+    "qualification": {
+        "tabs": {
+            "dashboard": "Pannell tal-Kwalifikazzjonijiet",
+            "view_dashboard": "Ara Kwalifikazzjonijiet",
+            "search": "Fittex Kwalifikazzjonijiet",
+            "create": "Oħloq Kwalifikazzjoni",
+            "view": "Ara Kwalifikazzjoni",
+            "edit": "Editja Kwalifikazzjoni"
+        },
+        "infoTitle": "Informazzjoni dwar il-Kwalifikazzjoni",
+        "title": "Kwalifikazzjonijiet",
+        "subtitle": {
+            "search": "Ġestixxi u ara l-kwalifikazzjonijiet reġistrati",
+            "dashboard": "Panoramika ta' statistika tal-kwalifikazzjonijiet",
+            "create": "Irreġistra kwalifikazzjoni ġdida",
+            "edit": "Editja kwalifikazzjoni eżistenti",
+            "view": "Ara dettalji tal-kwalifikazzjoni"
+        },
+        "fields": {
+            "idCode": {
+                "title": "Kodiċi tal-Kwalifikazzjoni",
+                "placeholder": "Kodiċi tal-Kwalifikazzjoni"
+            },
+            "qualificationName": {
+                "title": "Isem tal-Kwalifikazzjoni",
+                "placeholder": "Isem tal-Kwalifikazzjoni"
+            }
+        }
+    },
+    "physicalResource": {
+        "tabs": {
+            "dashboard": "Pannell tar-Riżorsi Fiżiċi",
+            "view_dashboard": "Ara Riżorsi Fiżiċi",
+            "search": "Fittex Riżorsi Fiżiċi",
+            "create": "Oħloq Riżors Fiżiku",
+            "view": "Ara Riżors Fiżiku",
+            "edit": "Editja Riżors Fiżiku"
+        },
+        "infoTitle": "Informazzjoni dwar ir-Riżors Fiżiku",
+        "title": "Riżorsi Fiżiċi",
+        "subtitle": {
+            "search": "Ġestixxi u ara r-riżorsi fiżiċi kollha rreġistrati",
+            "dashboard": "Pannell ta' kontroll għall-riżorsi fiżiċi",
+            "view_dashboard": "Ara Riżorsi Fiżiċi",
+            "create": "Irreġistra riżors fiżiku ġdid",
+            "view": "Ara dettalji tar-riżors fiżiku",
+            "edit": "Editja riżors fiżiku eżistenti"
+        },
+        "generalFields": "Kampijiet Ġenerali",
+        "specificFields": "Kampijiet Speċifiċi",
+        "fields": {
+            "code": {
+                "title": "Kodiċi",
+                "placeholder": "Kodiċi tar-riżors"
+            },
+            "description": {
+                "title": "Deskrizzjoni",
+                "placeholder": "Deskrizzjoni tar-riżors"
+            },
+            "status": {
+                "title": "Status",
+                "placeholder": "Agħżel status tar-riżors",
+                "options": {
+                    "available": "Disponibbli",
+                    "maintenance": "Manutenzjoni",
+                    "outOfService": "Barra mis-servizz"
+                }
+            },
+            "qualifications": {
+                "title": "Kwalifikazzjonijiet meħtieġa",
+                "placeholder": "Kwalifikazzjonijiet meħtieġa għall-operazzjoni"
+            },
+            "setupTime": {
+                "title": "Ħin ta' setup (minuti)",
+                "placeholder": "Ħin ta' setup"
+            },
+            "servingDocks": {
+                "title": "Mollijiet servuti",
+                "placeholder": "Agħżel mollijiet servuti"
+            },
+            "liftingCapacity": {
+                "title": "Kapaċità ta' tebgħa (kg)",
+                "placeholder": "Kapaċità ta' tebgħa"
+            },
+            "containersPerHour": {
+                "title": "Kontejners kull siegħa",
+                "placeholder": "Kontejners kull siegħa"
+            },
+            "maxLoadCapacity": {
+                "title": "Kapaċità massima (kg)",
+                "placeholder": "Kapaċità massima"
+            },
+            "averageSpeed": {
+                "title": "Kejla medja (km/h)",
+                "placeholder": "Kejla medja"
+            },
+            "containersPerTrip": {
+                "title": "Kontejners kull vjaġġ",
+                "placeholder": "Kontejners kull vjaġġ"
+            },
+            "type": {
+                "title": "Tip tar-riżors",
+                "options": {
+                    "stsCrane": "Kran STS",
+                    "yardGantry": "Kran tal-bogħod",
+                    "truck": "Truck"
+                }
+            }
+        },
+        "actions": {
+            "deactivate": "Diżattiva riżors fiżiku"
+        }
+    },
+    "storageArea": {
+        "tabs": {
+            "dashboard": "Pannell tal-Awżilju tal-Istorja",
+            "view_dashboard": "Ara Żoni ta' Ħażna",
+            "search": "Fittex Żoni ta' Ħażna",
+            "create": "Oħloq Żona ta' Ħażna",
+            "view": "Ara Żona ta' Ħażna",
+            "edit": "Editja Żona ta' Ħażna"
+        },
+        "infoTitle": "Informazzjoni dwar iż-Żona ta' Ħażna",
+        "title": "Żoni ta' Ħażna",
+        "subtitle": {
+            "search": "Ġestixxi u ara ż-żoni ta' ħażna kollha rreġistrati",
+            "dashboard": "Pannell għall-immaniġġjar ta' żoni ta' ħażna",
+            "view_dashboard": "Ara Żoni ta' Ħażna",
+            "create": "Irreġistra żona ġdida ta' ħażna",
+            "view": "Ara dettalji",
+            "edit": "Editja żona ta' ħażna"
+        },
+        "printer": {
+            "docks_serviced": "mollijiet servuti",
+            "capacity_usage": "Użu tal-kapaċità",
+            "units": "unitajiet",
+            "available": "disponibbli"
+        }
+    }
+}

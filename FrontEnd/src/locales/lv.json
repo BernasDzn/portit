@@ -1,0 +1,430 @@
+{
+    "common": {
+        "loading": "Ielādē...",
+        "noData": "Nav datu",
+        "statistics": "Statistika"
+    },
+    "buttons": {
+        "save": "Saglabāt",
+        "cancel": "Atcelt",
+        "delete": "Dzēst",
+        "edit": "Rediģēt",
+        "create": "Izveidot",
+        "search": "Meklēt",
+        "select": "Izvēlēties",
+        "activate": "Aktivizēt",
+        "deactivate": "Deaktivizēt",
+        "filter": {
+            "title": "Filtri",
+            "add": "Pievienot filtru",
+            "clear": "Notīrīt filtrus"
+        },
+        "pagination": {
+            "previous": "Iepriekšējais",
+            "next": "Nākamais"
+        },
+        "login": "Pieteikties",
+        "goBackToLogin": "Atgriezties pie pieteikšanās",
+        "logout": "Iziet"
+    },
+    "unsavedChanges": {
+        "title": "Atcelt izmaiņas?",
+        "message": "Jums ir nesaglabātas izmaiņas. Vai tiešām vēlaties pamest šo lapu un atmest izmaiņas?",
+        "confirm": "Atcelt",
+        "cancel": "Turpināt rediģēšanu"
+    },
+    "dashboard": {
+        "sidebarTitle": "Panelis",
+        "title": "PortIT paneļa pārskats",
+        "subtitle": "PortIT sistēmas pārskats",
+        "3DModel": {
+            "title": "3D ostas vizualizācija",
+            "description": "Skatiet interaktīvu 3D ostas modeli. Sekojiet piestātņu noslodzei, kuģu pozīcijām, noliktavu zonām un resursiem reāllaikā.",
+            "open": "Atvērt 3D modeli"
+        }
+    },
+    "admin": {
+        "sidebarTitle": "Administrācija",
+        "title": "Administrācijas panelis",
+        "subtitle": "Administratīvs pārskats un pārvaldība",
+        "userManagement": {
+            "title": "Lietotāju pārvaldība",
+            "subtitle": "Pārvaldiet sistēmas lietotājus, lomas un atļaujas."
+        },
+        "auditLogs": {
+            "title": "Revīzijas žurnāli",
+            "subtitle": "Sistēmas darbību žurnālu pārskatīšana un uzraudzība."
+        }
+    },
+    "user": {
+        "fields": {
+            "email": {
+                "title": "E-pasts",
+                "placeholder": "email@mail.com"
+            },
+            "role": {
+                "title": "Loma",
+                "placeholder": "Izvēlieties lietotāja lomu",
+                "options": {
+                    "admin": "Administrators",
+                    "saoRep": "SAO pārstāvis",
+                    "pao": "Ostu pārvaldes darbinieks",
+                    "logisticsOperator": "Loģistikas operators"
+                }
+            },
+            "isActive": {
+                "title": "Aktīvs",
+                "options": {
+                    "active": "Jā",
+                    "inactive": "Nē"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Lietotāja panelis",
+            "create": "Izveidot lietotāju",
+            "view": "Skatīt lietotājus",
+            "search": "Meklēt lietotājus"
+        },
+        "infoTitle": "Lietotāja informācija",
+        "title": "Lietotāji",
+        "subtitle": {
+            "dashboard": "Lietotāju pārskats un pārvaldība",
+            "create": "Reģistrēt jaunu lietotāju sistēmā",
+            "view": "Pārvaldīt un skatīt esošos lietotājus"
+        }
+    },
+    "physicalCharacteristics": {
+        "title": "Fiziskās īpašības (m)",
+        "length": {
+            "title": "Garums",
+            "placeholder": "Garums metros"
+        },
+        "depth": {
+            "title": "Dziļums",
+            "placeholder": "Dziļums metros"
+        },
+        "draft": {
+            "title": "Iegrimšana",
+            "placeholder": "Iegrimšana metros"
+        }
+    },
+    "dock": {
+        "fields": {
+            "code": {
+                "title": "Kods",
+                "placeholder": "Piestātņu kods"
+            },
+            "name": {
+                "title": "Nosaukums",
+                "placeholder": "Piestātnes nosaukums"
+            },
+            "location": {
+                "title": "Atrašanās vieta",
+                "placeholder": "Piestātnes atrašanās vieta"
+            },
+            "supportedVesselTypes": {
+                "title": "Atbalstītie kuģu tipi",
+                "vesselTypes": {
+                    "title": "Kuģu tipi",
+                    "placeholder": "Izvēlieties kuģu tipus"
+                },
+                "vesselType": "Kuģa tips"
+            }
+        },
+        "tabs": {
+            "dashboard": "Piestātņu panelis",
+            "view_dashboard": "Skatīt piestātnes",
+            "search": "Meklēt piestātnes",
+            "create": "Izveidot piestātni",
+            "view": "Skatīt piestātni",
+            "edit": "Rediģēt piestātni"
+        },
+        "generalFields": "Vispārīgie lauki",
+        "infoTitle": "Piestātnes informācija",
+        "title": "Piestātnes",
+        "subtitle": {
+            "dashboard": "Piestātņu statistikas un darbību pārskats",
+            "search": "Pārvaldīt un skatīt visas reģistrētās piestātnes",
+            "create": "Reģistrēt jaunu piestātni sistēmā",
+            "edit": "Rediģēt esošu piestātni sistēmā"
+        },
+        "registeredDocks": "Reģistrētās piestātnes"
+    },
+    "vesselType": {
+        "fields": {
+            "name": {
+                "title": "Nosaukums",
+                "placeholder": "Kuģa tipa nosaukums"
+            },
+            "description": {
+                "title": "Apraksts",
+                "placeholder": "Kuģa tipa apraksts"
+            },
+            "capacity": {
+                "title": "Jauda",
+                "placeholder": "Konteineru ietilpība TEU"
+            },
+            "containerCapacity": {
+                "title": "Konteineru ietilpība (TEU)",
+                "maxNumberOfRows": {
+                    "title": "Maks. rindu skaits",
+                    "placeholder": "Maks. rindu TEU"
+                },
+                "maxNumberOfBays": {
+                    "title": "Maks. lauku skaits",
+                    "placeholder": "Maks. lauku TEU"
+                },
+                "maxNumberOfTiers": {
+                    "title": "Maks. līmeņu skaits",
+                    "placeholder": "Maks. līmeņu TEU"
+                }
+            }
+        },
+        "generalFields": "Vispārīgie lauki",
+        "tabs": {
+            "dashboard": "Kuģu tipu panelis",
+            "view_dashboard": "Skatīt kuģu tipus",
+            "search": "Meklēt kuģu tipus",
+            "create": "Izveidot kuģa tipu",
+            "view": "Skatīt kuģa tipu",
+            "edit": "Rediģēt kuģa tipu"
+        },
+        "infoTitle": "Kuģa tipa informācija",
+        "title": "Kuģu tipi",
+        "subtitle": {
+            "dashboard": "Kuģu tipu statistikas pārskats",
+            "search": "Pārvaldīt un skatīt visus reģistrētos kuģu tipus",
+            "create": "Reģistrēt jaunu kuģa tipu sistēmā",
+            "edit": "Rediģēt esošu kuģa tipu sistēmā"
+        },
+        "registeredVesselTypes": "Reģistrētie kuģu tipi"
+    },
+    "vessel": {
+        "fields": {
+            "name": {
+                "title": "Nosaukums",
+                "placeholder": "Kuģa nosaukums"
+            },
+            "imoNumber": {
+                "title": "IMO numurs",
+                "placeholder": "Kuģa IMO numurs"
+            },
+            "owner": {
+                "title": "Īpašnieks",
+                "placeholder": "Īpašnieka organizācija"
+            },
+            "vesselType": {
+                "title": "Kuģa tips",
+                "placeholder": "Izvēlieties kuģa tipu"
+            }
+        },
+        "infoTitle": "Kuģa informācija",
+        "physicalCharacteristicsTitle": "Fiziskās īpašības",
+        "tabs": {
+            "dashboard": "Kuģu panelis",
+            "view_dashboard": "Skatīt kuģus",
+            "search": "Meklēt kuģus",
+            "create": "Izveidot kuģi",
+            "view": "Skatīt kuģi",
+            "edit": "Rediģēt kuģi"
+        },
+        "title": "Kuģi",
+        "subtitle": {
+            "dashboard": "Kuģu statistikas un darbību pārskats",
+            "search": "Pārvaldīt un skatīt visus reģistrētos kuģus",
+            "create": "Reģistrēt jaunu kuģi sistēmā",
+            "edit": "Rediģēt esošu kuģi sistēmā"
+        },
+        "ownedBy": "Īpašnieks",
+        "registeredVessels": "Reģistrētie kuģi"
+    },
+    "staff": {
+        "fields": {
+            "mechanographicNumber": {
+                "title": "Mehanogrāfiskais numurs",
+                "placeholder": "Mehanogrāfiskais numurs"
+            },
+            "name": {
+                "title": "Vārds",
+                "placeholder": "Darbinieka vārds"
+            },
+            "email": {
+                "title": "E-pasts",
+                "placeholder": "E-pasta adrese"
+            },
+            "phoneNumber": {
+                "title": "Telefons",
+                "placeholder": "Telefona numurs"
+            },
+            "qualifications": {
+                "title": "Kvalifikācijas",
+                "placeholder": "Izvēlieties kvalifikācijas"
+            },
+            "status": {
+                "title": "Statuss",
+                "options": {
+                    "available": "Pieejams",
+                    "unavailable": "Nav pieejams",
+                    "temporarilyReassigned": "Pagaidām pārvietots"
+                }
+            }
+        },
+        "tabs": {
+            "dashboard": "Personāla panelis",
+            "view_dashboard": "Skatīt personālu",
+            "search": "Meklēt personālu",
+            "create": "Izveidot darbinieku",
+            "view": "Skatīt darbinieku",
+            "edit": "Rediģēt darbinieku"
+        },
+        "infoTitle": "Darbinieka informācija",
+        "title": "Personāls",
+        "subtitle": {
+            "search": "Pārvaldiet un skatiet visu reģistrēto personālu",
+            "dashboard": "Personāla statistikas pārskats",
+            "create": "Reģistrēt jaunu darbinieku sistēmā",
+            "view": "Skatīt darbinieka detaļas",
+            "edit": "Rediģēt esošu darbinieku sistēmā"
+        }
+    },
+    "qualification": {
+        "tabs": {
+            "dashboard": "Kvalifikāciju panelis",
+            "view_dashboard": "Skatīt kvalifikācijas",
+            "search": "Meklēt kvalifikācijas",
+            "create": "Izveidot kvalifikāciju",
+            "view": "Skatīt kvalifikāciju",
+            "edit": "Rediģēt kvalifikāciju"
+        },
+        "infoTitle": "Kvalifikācijas informācija",
+        "title": "Kvalifikācijas",
+        "subtitle": {
+            "search": "Pārvaldiet un skatiet visas reģistrētās kvalifikācijas",
+            "dashboard": "Kvalifikāciju statistikas pārskats",
+            "create": "Reģistrēt jaunu kvalifikāciju sistēmā",
+            "edit": "Rediģēt esošu kvalifikāciju sistēmā",
+            "view": "Skatīt kvalifikācijas detaļas"
+        },
+        "fields": {
+            "idCode": {
+                "title": "Kvalifikācijas kods",
+                "placeholder": "Kvalifikācijas kods"
+            },
+            "qualificationName": {
+                "title": "Kvalifikācijas nosaukums",
+                "placeholder": "Kvalifikācijas nosaukums"
+            }
+        }
+    },
+    "physicalResource": {
+        "tabs": {
+            "dashboard": "Fizisko resursu panelis",
+            "view_dashboard": "Skatīt fiziskos resursus",
+            "search": "Meklēt fiziskos resursus",
+            "create": "Izveidot fizisko resursu",
+            "view": "Skatīt fizisko resursu",
+            "edit": "Rediģēt fizisko resursu"
+        },
+        "infoTitle": "Fiziskā resursa informācija",
+        "title": "Fiziskie resursi",
+        "subtitle": {
+            "search": "Pārvaldiet un skatiet visus reģistrētos fiziskos resursus",
+            "dashboard": "Fizisko resursu pārvaldības panelis",
+            "view_dashboard": "Skatīt fiziskos resursus",
+            "create": "Reģistrēt jaunu fizisko resursu sistēmā",
+            "view": "Skatīt fiziskā resursa detaļas",
+            "edit": "Rediģēt esošu fizisko resursu sistēmā"
+        },
+        "generalFields": "Vispārīgie lauki",
+        "specificFields": "Specifiski lauki",
+        "fields": {
+            "code": {
+                "title": "Kods",
+                "placeholder": "Resursa kods"
+            },
+            "description": {
+                "title": "Apraksts",
+                "placeholder": "Resursa apraksts"
+            },
+            "status": {
+                "title": "Statuss",
+                "placeholder": "Izvēlieties resursa statusu",
+                "options": {
+                    "available": "Pieejams",
+                    "maintenance": "Apkope",
+                    "outOfService": "Netiek lietots"
+                }
+            },
+            "qualifications": {
+                "title": "Nepieciešamās kvalifikācijas",
+                "placeholder": "Kvalifikācijas nepieciešamas darbam ar šo resursu"
+            },
+            "setupTime": {
+                "title": "Uzstādīšanas laiks (min)",
+                "placeholder": "Uzstādīšanas laiks"
+            },
+            "servingDocks": {
+                "title": "Aptarnājamās piestātnes",
+                "placeholder": "Izvēlieties aptarnājamās piestātnes"
+            },
+            "liftingCapacity": {
+                "title": "Pacelšanas jauda (kg)",
+                "placeholder": "Pacelšanas jauda"
+            },
+            "containersPerHour": {
+                "title": "Konteineri stundā",
+                "placeholder": "Konteineri stundā"
+            },
+            "maxLoadCapacity": {
+                "title": "Maks. slodze (kg)",
+                "placeholder": "Maks. slodze"
+            },
+            "averageSpeed": {
+                "title": "Vidējais ātrums (km/h)",
+                "placeholder": "Vidējais ātrums"
+            },
+            "containersPerTrip": {
+                "title": "Konteineri uz reisu",
+                "placeholder": "Konteineri uz reisu"
+            },
+            "type": {
+                "title": "Resursa tips",
+                "options": {
+                    "stsCrane": "STS celtņi",
+                    "yardGantry": "Pagalma celtņi",
+                    "truck": "Kravas automašīna"
+                }
+            }
+        },
+        "actions": {
+            "deactivate": "Deaktivizēt fizisko resursu"
+        }
+    },
+    "storageArea": {
+        "tabs": {
+            "dashboard": "Noliktavu zonu panelis",
+            "view_dashboard": "Skatīt noliktavu zonas",
+            "search": "Meklēt noliktavu zonas",
+            "create": "Izveidot noliktavu zonu",
+            "view": "Skatīt noliktavu zonu",
+            "edit": "Rediģēt noliktavu zonu"
+        },
+        "infoTitle": "Noliktavu zonas informācija",
+        "title": "Noliktavu zonas",
+        "subtitle": {
+            "search": "Pārvaldiet un skatiet visas reģistrētās noliktavu zonas",
+            "dashboard": "Noliktavu zonu pārvaldības panelis",
+            "view_dashboard": "Skatīt noliktavu zonas",
+            "create": "Reģistrēt jaunu noliktavu zonu sistēmā",
+            "view": "Skatīt noliktavu zonas detaļas",
+            "edit": "Rediģēt esošu noliktavu zonu sistēmā"
+        },
+        "printer": {
+            "docks_serviced": "aptarnājamās piestātnes",
+            "capacity_usage": "Ietilpības izmantošana",
+            "units": "vienības",
+            "available": "pieejams"
+        }
+    }
+}
