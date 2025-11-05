@@ -26,7 +26,7 @@ export class StorageAreaService implements IStorageAreaService {
 		return res.data;
 	}
 
-	async getStorageAreaById(id: number): Promise<StorageArea | undefined> {
+	async getStorageAreaById(id: string): Promise<StorageArea | undefined> {
 		const res = await this.http.get<StorageArea>(`/StorageArea/${id}`);
 		return res.data;
 	}
@@ -36,12 +36,12 @@ export class StorageAreaService implements IStorageAreaService {
 		return res.data;
 	}
 
-	async updateStorageArea(id: number, storageArea: StorageArea): Promise<StorageArea> {
+	async updateStorageArea(id: string, storageArea: StorageArea): Promise<StorageArea> {
 		const res = await this.http.put<StorageArea>(`/StorageArea/${id}`, storageArea);
 		return res.data;
 	}
 
-	async deleteStorageArea(id: number): Promise<void> {
+	async deleteStorageArea(id: string): Promise<void> {
 		await this.http.delete<void>(`/StorageArea/${id}`);
 	}
 
