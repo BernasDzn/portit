@@ -347,5 +347,32 @@
         "actions": {
             "deactivate": "Desactivar recurs físic"
         }
+    },
+        "storageArea": {
+        "tabs": {
+            "dashboard": "Panell de control per a Àrea d'Emmagatzematge",
+            "view_dashboard": "Veure Àrees d'Emmagatzematge",
+            "search": "Cercar Àrees d'Emmagatzematge",
+            "create": "Crear Àrea d'Emmagatzematge",
+            "view": "Veure Àrea d'Emmagatzematge",
+            "edit": "Editar Àrea d'Emmagatzematge"
+        },
+        "infoTitle": "Informació de l'Àrea d'Emmagatzematge",
+        "title": "Àrees d'Emmagatzematge",
+        "subtitle": {
+            "search": "Gestiona i visualitza totes les àrees d'emmagatzematge registrades",
+            "dashboard": "Panell de control per a totes les funcions de l'àrea d'emmagatzematge",
+            "view_dashboard": "Veure Àrees d'Emmagatzematge",
+            "create": "Registrar una nova Àrea d'Emmagatzematge al sistema",
+            "view": "Veure detalls de l'àrea d'emmagatzematge",
+            "edit": "Editar una Àrea d'Emmagatzematge existent al sistema"
+        },
+        "printer": {
+            "docks_serviced": "molls atesos",
+            "capacity_usage": "Ús de la Capacitat",
+            "units": "unitats",
+            "available": "disponibles"
+        }
     }
+
 }

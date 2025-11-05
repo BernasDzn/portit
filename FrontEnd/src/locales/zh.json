@@ -347,5 +347,32 @@
         "actions": {
             "deactivate": "停用物理资源"
         }
+    },
+        "storageArea": {
+        "tabs": {
+            "dashboard": "仓储区域仪表板",
+            "view_dashboard": "查看仓储区域",
+            "search": "搜索仓储区域",
+            "create": "创建仓储区域",
+            "view": "查看仓储区域",
+            "edit": "编辑仓储区域"
+        },
+        "infoTitle": "仓储区域信息",
+        "title": "仓储区域",
+        "subtitle": {
+            "search": "管理并查看所有已注册的仓储区域",
+            "dashboard": "仓储区域的控制面板",
+            "view_dashboard": "查看仓储区域",
+            "create": "在系统中注册新的仓储区域",
+            "view": "查看仓储区域详情",
+            "edit": "编辑系统中现有的仓储区域"
+        },
+        "printer": {
+            "docks_serviced": "已服务码头",
+            "capacity_usage": "容量使用情况",
+            "units": "单位",
+            "available": "可用"
+        }
     }
+
 }

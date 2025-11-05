@@ -347,5 +347,31 @@
         "actions": {
             "deactivate": "Deactivate Physical Resource"
         }
+    },
+    "storageArea": {
+        "tabs": {
+            "dashboard": "Storage Area Dashboard",
+            "view_dashboard": "View Storage Areas",
+            "search": "Search Storage Areas",
+            "create": "Create Storage Area",
+            "view": "View Storage Area",
+            "edit": "Edit Storage Area"
+        },
+        "infoTitle": "Storage Area Information",
+        "title": "Storage Areas",
+        "subtitle": {
+            "search": "Manage and view all registered storage areas",
+            "dashboard": "Control panel for all storage area things",
+            "view_dashboard": "View Storage Areas",
+            "create": "Register a new Storage Area into the system",
+            "view": "View storage area details",
+            "edit": "Edit an existing Storage Area in the system"
+        },
+        "printer": {
+            "docks_serviced": "docks serviced",
+            "capacity_usage": "Capacity Usage",
+            "units": "units",
+            "available": "available"
+        }
     }
 }

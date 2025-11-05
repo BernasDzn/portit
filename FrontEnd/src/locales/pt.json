@@ -347,5 +347,32 @@
         "actions": {
             "deactivate": "Desativar Recurso Físico"
         }
+    },
+        "storageArea": {
+        "tabs": {
+            "dashboard": "Painel da Área de Armazenamento",
+            "view_dashboard": "Ver Áreas de Armazenamento",
+            "search": "Procurar Áreas de Armazenamento",
+            "create": "Criar Área de Armazenamento",
+            "view": "Ver Área de Armazenamento",
+            "edit": "Editar Área de Armazenamento"
+        },
+        "infoTitle": "Informações da Área de Armazenamento",
+        "title": "Áreas de Armazenamento",
+        "subtitle": {
+            "search": "Gerir e visualizar todas as áreas de armazenamento registadas",
+            "dashboard": "Painel de controlo para todas as funcionalidades da área de armazenamento",
+            "view_dashboard": "Ver Áreas de Armazenamento",
+            "create": "Registar uma nova Área de Armazenamento no sistema",
+            "view": "Ver detalhes da área de armazenamento",
+            "edit": "Editar uma Área de Armazenamento existente no sistema"
+        },
+        "printer": {
+            "docks_serviced": "docas atendidas",
+            "capacity_usage": "Utilização da Capacidade",
+            "units": "unidades",
+            "available": "disponíveis"
+        }
     }
+
 }
