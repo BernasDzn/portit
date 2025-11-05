@@ -2,6 +2,7 @@
 import EntityDropdown from '@/components/crud/EntityDropdown.vue';
 import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
+import OperationalWindowPicker from '@/components/OperationalWindowPicker.vue';
 import type { PhysicalResource, STSCrane, Truck, YardCrane } from '@/model/PhysicalResource';
 import AxiosHttpService from '@/service/AxiosHttpService';
 import { DockService } from '@/service/DockService';
@@ -103,9 +104,9 @@ const submitTruckResource = (obj: any) => {
             <sl-tab-panel name="general">
                 
                 <EntityForm
-                :object="genericResourse" 
-                :submit-function="submitSTSResource"
-                class="group"
+                    :object="genericResourse" 
+                    :submit-function="submitSTSResource"
+                    class="group"
                 >
                     <p class="section-title">{{ t('physicalResource.generalFields') }}</p>
 
@@ -171,6 +172,12 @@ const submitTruckResource = (obj: any) => {
                         </div>
         
                     </div>
+
+                    <div style="flex:100%; width: 100%;">
+                        <OperationalWindowPicker
+                             v-model="genericResourse.operationalWindow"
+                        />
+                     </div>
                 
                     <p class="section-title">{{ t('physicalResource.specificFields') }}</p>
 

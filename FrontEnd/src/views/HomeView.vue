@@ -33,6 +33,6 @@ import NotificationQueue from '@/components/NotificationQueue.vue';
     color: #fff;
     height: 100%;
     overflow-y: auto;
-  }
+}
 
 </style>

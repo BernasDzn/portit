@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Cube - DEI</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        #title {
+            position: absolute;
+            top: 20px;
+            width: 100vw;
+            z-index: 1;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            font-size: 2.5vmin;
+            color: white;
+        }
+
+        #help {
+            position: absolute;
+            bottom: 2vh;
+            right: 1vw;
+            z-index: 1;
+            font-family: Arial, sans-serif;
+            font-size: 1.3vmin;
+            color: white;
+        }
+
+        table {
+            table-layout: fixed;
+            margin: auto;
+            border: 1px solid gray;
+        }
+
+        table.help {
+            width: 24vmin;
+            background-color: #A0A0A050;
+        }
+
+        th,
+        td {
+            overflow: hidden;
+            border: 1px solid gray;
+        }
+
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="title">
+        Port3D simulation
+    </div>
+    <div id="help">
+        <table class="help">
+            <tr>
+                <th colspan="2" style="font-size: 1.5vmin">
+                    Mouse
+                </th>
+            </tr>
+            <tr>
+                <td>Primary button</td>
+                <td>Orbit</td>
+            </tr>
+            <tr>
+                <td>Wheel</td>
+                <td>Dolly</td>
+            </tr>
+        </table>
+    </div>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "/libs/three.js/build/three.module.js",
+                "three/addons/": "/libs/three.js/examples/jsm/",
+                "three/examples/jsm/objects/Water.js": "/libs/three.js/examples/jsm/objects/Water.js",
+                "three/examples/jsm/loaders/OBJLoader.js": "/libs/three.js/examples/jsm/loaders/OBJLoader.js",
+                "three/examples/jsm/loaders/MTLLoader.js": "/libs/three.js/examples/jsm/loaders/MTLLoader.js",
+                "three/examples/jsm/libs/lil-gui.module.min.js": "/libs/three.js/examples/jsm/libs/lil-gui.module.min.js"
+            }
+        }
+    </script>
+    <script type="module">
+        import Port3D from "/visualizer/port3d_init.ts";
+
+        let scene, camera, renderer, controls;
+        let cube;
+
+        function windowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        let port3D;
+
+        function initialize() {
+
+            port3D = new Port3D();
+
+            // // Create a scene
+            // scene = new THREE.Scene();
+            // scene.background = new THREE.Color(0x000000);
+
+            // // Create a perspective camera
+            // camera = new THREE.PerspectiveCamera(60.0, window.innerWidth / window.innerHeight, 0.1, 10.0);
+
+            // // Create a renderer
+            // renderer = new THREE.WebGLRenderer({ antialias: true });
+            // renderer.setPixelRatio(window.devicePixelRatio);
+            // renderer.setSize(window.innerWidth, window.innerHeight);
+            // document.body.appendChild(renderer.domElement);
+
+            // // Create the orbit controls
+            // controls = new OrbitControls(camera, renderer.domElement);
+            // controls.autoRotate = false;
+            // controls.enableDamping = true;
+            // controls.enablePan = false;
+            // controls.minDistance = 1.0;
+            // controls.maxDistance = 9.0;
+
+            // // Create a box geometry
+            // const geometry = new THREE.BoxGeometry();
+
+            // // Create a texture  
+            // const texture = new THREE.TextureLoader().load("/favicon.ico");
+            // texture.colorSpace = THREE.SRGBColorSpace;
+
+            // // Create a white-colored material with the specified texture
+            // const material = new THREE.MeshBasicMaterial({ color: 0xffffff, map: texture });
+
+            // // Create a mesh with the specified geometry and material
+            // cube = new THREE.Mesh(geometry, material);
+
+            // // Add it to the scene
+            // scene.add(cube);
+
+            // // Set the camera position;
+            // camera.position.z = 2.0;
+
+            // // Register the event handler to be called on window resize
+            // window.addEventListener("resize", windowResize);
+
+            // animate();
+        }
+
+        initialize();
+    </script>
+</body>
+
+</html>

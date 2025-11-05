@@ -10,6 +10,7 @@ import { computed, onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import QualificationPrinter from '@/components/printers/QualificationPrinter.vue';
 import DockPrinter from '@/components/printers/DockPrinter.vue';
+import WorkShiftPrinter from '@/components/printers/WorkShiftPrinter.vue';
 
 const route = useRoute();
 
@@ -148,12 +149,19 @@ const { t } = useI18n();
                 <sl-card v-if="resourceType == 0" class="info-card dock-info">
                     <p>Serving dock</p>
                     <div class="info-grid">
-                        <div v-for="qualification in entity.element.qualifications" :key="qualification.idCode">
-                            <DockPrinter class="listing-box" :dock="entity.element.servingDock" :link="`/docks/view/${entity.element.servingDock.code}`" />
-                        </div>
+                        <DockPrinter class="listing-box" :dock="entity.element.servingDock" :link="`/docks/view/${entity.element.servingDock.code}`" />
                     </div>
                 </sl-card>
             </div>
+
+            <br>
+
+            <sl-card class="info-card" style="flex: 100%;">
+                <p>Operational Window:</p>
+                <WorkShiftPrinter
+                    :op_window="entity.element.operationalWindow"
+                />
+            </sl-card>
         </div>
     </EntityView>
   </div>
