@@ -4,9 +4,10 @@ import { Water } from 'three/examples/jsm/objects/Water.js'; // Water tutorial
 const waterLevel = -5;
 const waterColor = 0x00008B;
 
-const fogColor = 0xcce0ff;
+const fogColor = 0xcccccc;
 
 const waterNormalsPath = '/visualizer/textures/maps/waternormals.jpg';
+const worldBorder = 1000;
 
 async function createWaterFromPlaneGeometry(object, scene) {
     return new Promise((resolve) => {
@@ -48,7 +49,6 @@ export default class Environment {
     skybox;
 
     water;
-
     
     constructor() {
         this.ambientLight = null;
@@ -69,7 +69,7 @@ export default class Environment {
         scene.add(this.directionalLight);
 
         // Fog
-        // scene.fog = new THREE.Fog(fogColor, 10,180);
+        //scene.fog = new THREE.Fog(fogColor, 200, 1200);
 
         // Skybox
         let materialArray = [
@@ -82,15 +82,17 @@ export default class Environment {
         ];
 
         // Set the side of each material to BackSide, so we see the inside of the box
-        for (let i = 0; i < materialArray.length; i++)
+        for (let i = 0; i < materialArray.length; i++){
             materialArray[i].side = THREE.BackSide;
+            materialArray[i].fog = false;
+        }
 
-        let letSkyboxGeometry = new THREE.BoxGeometry(200, 200, 200);
-        this.skybox = new THREE.Mesh(letSkyboxGeometry, materialArray);
+        let letSkyboxGeometry = new THREE.BoxGeometry(worldBorder, worldBorder, worldBorder);
+        this.skybox = new THREE.Mesh(letSkyboxGeometry, materialArray); 
         scene.add(this.skybox);
 
         // Water plane
-        let waterGeometry = new THREE.PlaneGeometry(200, 200);
+        let waterGeometry = new THREE.PlaneGeometry(worldBorder, worldBorder);
 
         let waterPlane = new THREE.Mesh(waterGeometry);
         waterPlane.rotation.x = -Math.PI / 2;
@@ -108,7 +110,7 @@ export default class Environment {
 
         // https://github.com/ClassOutside/ThreeJS_Water_Object/tree/main
         if (this.water) {
-            this.water.material.uniforms['time'].value += 1.0 / 360.0;
+            this.water.material.uniforms['time'].value += 1.0 / 180.0;
         }
     }
 }

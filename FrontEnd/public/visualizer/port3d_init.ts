@@ -1,14 +1,9 @@
 import * as THREE from "three";
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import Environment from "/visualizer/environment.ts";
 import PortLayout from "./simulation_data.ts";
+import Controls from "./controls.ts";
 
 const clearColor = 0x000000;
-
-const minZoomDistance = 1; // Minimum distance for zooming
-const maxZoomDistance = 100; // Maximum distance for zooming
-
-const zoomIncrement = 10;
 
 export default class Port3D {
 
@@ -26,14 +21,18 @@ export default class Port3D {
         this.scene.background = new THREE.Color(clearColor);
 
         // Create a perspective camera
+        // this.camera = new THREE.PerspectiveCamera(
+        //     60.0,
+        //     window.innerWidth / window.innerHeight,
+        //     0.1,
+        //     1000.0
+        // );
         this.camera = new THREE.PerspectiveCamera(
-            60.0,
+            15,
             window.innerWidth / window.innerHeight,
-            0.1,
-            1000.0
+            1,
+            3000
         );
-        this.camera.position.set(-65, 25, 71);
-        this.camera.rotation.set(-0.33, 0.71, -0.22);
 
         // Create the renderer
         this.renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -47,13 +46,7 @@ export default class Port3D {
         document.body.appendChild(this.renderer.domElement);
 
         // Create the orbit controls
-        this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-        this.controls.autoRotate = false;
-        this.controls.enableDamping = true;
-        this.controls.enablePan = false;
-        this.controls.minDistance = minZoomDistance;
-        this.controls.maxDistance = maxZoomDistance;
-        this.controls.zoomSpeed = zoomIncrement;
+        this.controls = new Controls(this.camera, this.renderer.domElement);
 
         // Listen for resize
         window.addEventListener("resize", () => this.onWindowResize());

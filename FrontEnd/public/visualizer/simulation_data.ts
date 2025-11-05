@@ -1,31 +1,42 @@
 import * as THREE from "three";
 import {loadModel} from "./helpers/model_helper.ts";
+import {makeBillboard} from "./helpers/billboard_helper.ts";
 
 const layoutY = -20;
-const layoutSize = {
-    x: 10,
-    y: 80,
-    z: 5
+const chunkSize = {
+    x: 100,
+    y: 40,
+    z: 50
+}
+
+class PortChunk {
+
+    base;
+
+    constructor(position) {
+
+        this.base = new THREE.BoxGeometry(chunkSize.x, chunkSize.y, chunkSize.z);
+        let baseMesh = new THREE.MeshStandardMaterial({ color: 0x808080 });
+
+        this.base = new THREE.Mesh(this.base, baseMesh);
+        this.base.position.copy(position);
+
+        this.base.castShadow = true;
+        this.base.receiveShadow = true;
+    }
 }
 
 export default class PortLayout {
 
-    base;
-    vesselList = [];
+    vesselList = []; // The vessels in the port
+    chunkData = []; // The chunks that make up the port layout
 
     constructor(scene) {
         
-        this.base = new THREE.BoxGeometry(10, 0.5, 10);
-        let baseMesh = new THREE.MeshStandardMaterial({ color: 0x808080 });
+        let portChunk = new PortChunk(new THREE.Vector3(0, layoutY, 0));
+        this.chunkData.push(portChunk);
 
-        this.base = new THREE.Mesh(this.base, baseMesh);
-        this.base.position.set(0, layoutY, 0);
-        this.base.scale.set(layoutSize.x, layoutSize.y, layoutSize.z);
-
-        this.base.castShadow = true;
-        this.base.receiveShadow = true;
-
-        scene.add(this.base);
+        scene.add(portChunk.base);
     }
 
     async addVessel(name, position, scene) {
@@ -52,6 +63,8 @@ class Vessel {
     bouyanceAmplitude = 0.8;
     bouyanceSpeed = 0.002;
 
+    label;
+
     constructor(name, model, position) {
         this.name = name;
         this.model = model;
@@ -76,6 +89,16 @@ class Vessel {
         this.model.castShadow = true;
 
         scene.add(this.model);
+
+        // Make label billboard
+        this.label = makeBillboard(this.name, 16, 0xffffff);
+
+        const labelOffset = new THREE.Vector3(0, 10, 0);
+        const vesselRoot = new THREE.Object3D();
+        vesselRoot.position.copy(this.position).add(labelOffset);
+        vesselRoot.add(this.label);
+
+        scene.add(vesselRoot);
     }
 
     update() {
