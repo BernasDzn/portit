@@ -372,6 +372,24 @@
             "capacity_usage": "容量使用情况",
             "units": "单位",
             "available": "可用"
+        },
+        "fields": {
+            "nameCode": {
+                "title": "名称代码",
+                "placeholder": "仓储区域名称代码"
+            },
+            "location": {
+                "title": "位置",
+                "placeholder": "仓储区域位置"
+            },
+            "type": {
+                "title": "类型",
+                "placeholder": "选择仓储区域类型"
+            },
+            "occupancy": {
+                "title": "占用率",
+                "placeholder": "当前占用情况"
+            }
         }
     }
 

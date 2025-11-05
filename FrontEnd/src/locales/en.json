@@ -372,6 +372,24 @@
             "capacity_usage": "Capacity Usage",
             "units": "units",
             "available": "available"
+        },
+        "fields":{
+            "nameCode": {
+                "title": "Name Code",
+                "placeholder": "Storage Area name code"
+            },
+            "location": {
+                "title": "Location",
+                "placeholder": "Storage Area location"
+            },
+            "type": {
+                "title": "Type",
+                "placeholder": "Select Storage Area type"
+            },
+            "occupancy": {
+                "title": "Occupancy",
+                "placeholder": "Current occupancy"
+            }
         }
     }
 }

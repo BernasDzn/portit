@@ -372,6 +372,24 @@
             "capacity_usage": "Utilização da Capacidade",
             "units": "unidades",
             "available": "disponíveis"
+        },
+        "fields": {
+            "nameCode": {
+                "title": "Código de Nome",
+                "placeholder": "Código de nome da Área de Armazenamento"
+            },
+            "location": {
+                "title": "Localização",
+                "placeholder": "Localização da Área de Armazenamento"
+            },
+            "type": {
+                "title": "Tipo",
+                "placeholder": "Selecionar tipo de Área de Armazenamento"
+            },
+            "occupancy": {
+                "title": "Ocupação",
+                "placeholder": "Ocupação atual"
+            }
         }
     }
 
