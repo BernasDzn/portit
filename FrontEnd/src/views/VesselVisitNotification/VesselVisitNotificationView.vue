@@ -91,28 +91,28 @@ const closeUnloadManifest = () => {
                             <div class="timeline">
                                 <div class="timeline-point">
                                     <span class="timeline-icon material-icons" aria-hidden="true">check_circle</span>
-                                    <p>Pending</p>
+                                    <p>{{t("notification.timeline.pending")}}</p>
                                 </div>
                                 <div class="timeline-point">
                                     <span class="timeline-icon material-icons" aria-hidden="true">check_circle</span>
-                                    <p>Submited</p>
+                                    <p>{{t("notification.timeline.submitted")}}</p>
                                 </div>
                                 <div class="timeline-point">
                                     <span class="timeline-icon material-icons" aria-hidden="true">check_circle</span>
-                                    <p>Awaiting decision</p>
+                                    <p>{{t("notification.timeline.inProgress")}}</p>
                                 </div>
                                 <div class="timeline-point">
                                     <span class="timeline-icon material-icons" aria-hidden="true">check_circle</span>
-                                    <p>Finished</p>
+                                    <p>{{t("notification.timeline.completed")}}</p>
                                 </div>
                             </div>
                         </sl-card>
 
                         <sl-card class="notification-manifest">
-                            <p>Manifest information</p>
+                            <p>{{ t("notification.manifestInfo") }}</p>
                             <div>
-                                <sl-button @click="openLoadCargoManifest" :disabled="entity.element.loadCargoManifest.length == 0" size="medium" pill>Open load manifest</sl-button>
-                                <sl-button @click="openUnloadCargoManifest" :disabled="entity.element.unloadCargoManifest.length == 0" size="medium" pill>Open unload manifest</sl-button>
+                                <sl-button @click="openLoadCargoManifest" :disabled="entity.element.loadCargoManifest.length == 0" size="medium" pill>{{t("notification.fields.openLoadManifest")}}</sl-button>
+                                <sl-button @click="openUnloadCargoManifest" :disabled="entity.element.unloadCargoManifest.length == 0" size="medium" pill>{{t("notification.fields.openUnloadManifest")}}</sl-button>
                             </div>
                         </sl-card>
                     </div>
@@ -176,7 +176,7 @@ const closeUnloadManifest = () => {
     
             <!-- Cargo manifest drawer -->
             <sl-drawer id="loadManifestDrawer" label="Drawer" class="drawer-overview">
-                <h2>Load cargo manifest</h2>
+                <h2>{{t("notification.fields.loadCargoManifest")}}</h2>
                 <sl-card class="manifest-item" v-for="item in entity.element.loadCargoManifest" :key="item.containerId">
                     <p>{{ item.container.description }} ({{item.container.container}})</p>
                     <p>To: {{ item.area.nameCode }}</p>
@@ -186,7 +186,7 @@ const closeUnloadManifest = () => {
             </sl-drawer>
     
             <sl-drawer id="unloadManifestDrawer" label="Drawer" class="drawer-overview"  style="--size: 35vw;">
-                <h2>Unload cargo manifest</h2>
+                <h2>{{t("notification.fields.unloadCargoManifest")}}</h2>
                 <sl-card class="manifest-item" v-for="item in entity.element.unloadCargoManifest" :key="item.containerId">
                     <div class="opposed">
                         <div>
@@ -196,9 +196,9 @@ const closeUnloadManifest = () => {
                         <sl-tag variant="neutral">{{cargoTypes[item.container.cargoType]}}</sl-tag>
                     </div>
                     <div class="manifest-direction">
-                        <p>From: {{ item.area.nameCode }}</p>
+                        <p>{{ t("notification.from") }}: {{ item.area.nameCode }}</p>
                         <span class="material-icons" aria-hidden="true">arrow_right_alt</span>
-                        <p>To: ({{item.position.bay}}, {{item.position.row}}, {{item.position.tier}})</p>
+                        <p>{{ t("notification.to") }}: ({{item.position.bay}}, {{item.position.row}}, {{item.position.tier}})</p>
                     </div>
                 </sl-card>
     

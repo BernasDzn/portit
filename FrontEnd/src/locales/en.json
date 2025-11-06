@@ -480,6 +480,8 @@
         "crew": "Crew",
         "captain": "Captain",
         "unknown": "Unknown",
+        "from": "From",
+        "to": "To",
         "tabs": {
             "dashboard": "Notifications Dashboard",
             "search": "Search Notifications",
@@ -499,7 +501,10 @@
         "infoTitle": "Notification Information",
         "cargoTitle": "Cargo Information",
         "vesselTitle": "Vessel Information",
+        "manifestInfo": "Manifest Information",
         "fields": {
+            "openLoadManifest": "Open Load Manifest",
+            "openUnloadManifest": "Open Unload Manifest",
             "expectedArrival": "Expected Arrival",
             "expectedDeparture": "Expected Departure",
             "isCargoHazardous": "Cargo Hazardous",
@@ -513,6 +518,14 @@
             "area": "Area",
             "container": "Container",
             "crewMembers": "Crew Members"
+        },
+        "timeline": {
+            "pending": "Pending",
+            "inProgress": "In Progress",
+            "completed": "Completed",
+            "submitted": "Submitted",
+            "accepted": "Accepted",
+            "rejected": "Rejected"
         }
     },
     "operationalWindow": {
