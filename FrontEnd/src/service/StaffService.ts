@@ -21,6 +21,9 @@ export class StaffService implements IStaffService {
 		if (filtering) {
 			query.push(filtering.filter.mechanographicNumber ? `MechanographicNumber=${filtering.filter.mechanographicNumber}&` : '');
 			query.push(filtering.filter.name ? `Name=${filtering.filter.name}&` : '');
+            query.push(filtering.filter.email ? `Email=${filtering.filter.email}&` : '');
+            query.push(filtering.filter.status ? `Status=${filtering.filter.status}&` : '');
+            query.push(filtering.filter.phoneNumber ? `PhoneNumber=${filtering.filter.phoneNumber}&` : '');
 			query.push(filtering.pageNumber !== undefined ? `PageNumber=${filtering.pageNumber}&` : '');
 			query.push(filtering.pageSize !== undefined ? `PageSize=${filtering.pageSize}` : '');
 		}

@@ -1,4 +1,5 @@
 import type { User } from "@/model/User";
+import AxiosHttpService from "@/service/AxiosHttpService";
 
 class Session {
 

@@ -4,7 +4,16 @@
         "noData": "No data available",
         "statistics": "Statistics",
         "yes": "Yes",
-        "no": "No"
+        "no": "No",
+        "days": {
+            "sunday": "Sunday",
+            "monday": "Monday",
+            "tuesday": "Tuesday",
+            "wednesday": "Wednesday",
+            "thursday": "Thursday",
+            "friday": "Friday",
+            "saturday": "Saturday"
+        }
     },
     "buttons": {
         "save": "Save",
@@ -219,6 +228,9 @@
             "vesselType": {
                 "title": "Vessel Type",
                 "placeholder": "Select vessel type"
+            },
+            "taxNumber": {
+                "title": "Tax Number"
             }
         },
         "infoTitle": "Vessel information",
@@ -270,7 +282,8 @@
                     "unavailable": "Unavailable",
                     "temporarilyReassigned": "Temporarily reassigned"
                 }
-            }
+            },
+            "operationalWindow": "Operational Window"
         },
         "tabs": {
             "dashboard": "Staff Dashboard",
@@ -427,10 +440,11 @@
             "capacity_usage": "Capacity Usage",
             "units": "units",
             "available": "available",
-            "serviced_docks_distance" : "Serviced Docks Distances",
-            "all_docks_serviced": "All docks serviced",
+            "no_registered_distances": "No registered distances",
             "no_docks_serviced": "No docks serviced",
-            "no_registered_distances": "No registered distances"
+            "all_docks_serviced": "All docks serviced",
+            "serviced_docks_distance": "Serviced docks distance",
+            "no_registered_docks": "No registered docks"
         },
         "fields":{
             "nameCode": {
@@ -499,6 +513,19 @@
             "area": "Area",
             "container": "Container",
             "crewMembers": "Crew Members"
+        }
+    },
+    "operationalWindow": {
+        "printer": {
+            "addShift": "Add Shift",
+            "shifts": "Shifts:",
+            "noShifts": "No shifts defined",
+            "startTime": "Start Time",
+            "endTime": "End Time",
+            "weekDays": "Week Days"
+        },
+        "errors": {
+            "shiftOverlap": "Invalid shift. Overlapping or end time before start time."
         }
     }
 }

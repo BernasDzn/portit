@@ -1,38 +1,41 @@
 <script setup lang="ts">
-	import { onMounted, ref } from 'vue'
-	import type { OperationalWindow, Shift } from '@/model/OperationalWindow';
-	
-	const props = defineProps<{
-		op_window?: OperationalWindow;
-		shift_record?: Record<number, Shift[]>;
-		is_removable?: boolean,
-	}>();
+import { onMounted, ref } from 'vue'
+import type { OperationalWindow, Shift } from '@/model/OperationalWindow';
+import { useI18n } from 'vue-i18n';
 
-	const emits = defineEmits(['removeShift'])
+const props = defineProps<{
+    op_window?: OperationalWindow;
+    shift_record?: Record<number, Shift[]>;
+    is_removable?: boolean,
+}>();
 
-	let shiftsPerDay = ref<Record<number, Shift[]>>({});
-	
-	const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const {t} = useI18n();
 
-	onMounted(
-		() => {
-			if(props.shift_record != null) 
-				shiftsPerDay.value = props.shift_record as Record<number, Shift[]>;
+const emits = defineEmits(['removeShift'])
 
-			if(props.op_window != null){
-				for(let shift of props.op_window.shifts){
-					if(!shiftsPerDay.value[shift.day]) {
-						shiftsPerDay.value[shift.day] = [];
-					}
-					shiftsPerDay.value[shift.day]?.push(shift);
-				}
-			}
-		}
-	)
+let shiftsPerDay = ref<Record<number, Shift[]>>({});
 
-	function FormatTime(qwertyuiop:string){
-		return qwertyuiop.split(":")[0] + ":" + qwertyuiop.split(":")[1];
-	}
+const weekDays = [t("common.days.sunday"), t("common.days.monday"), t("common.days.tuesday"), t("common.days.wednesday"), t("common.days.thursday"), t("common.days.friday"), t("common.days.saturday")];
+
+onMounted(
+    () => {
+        if(props.shift_record != null) 
+            shiftsPerDay.value = props.shift_record as Record<number, Shift[]>;
+
+        if(props.op_window != null){
+            for(let shift of props.op_window.shifts){
+                if(!shiftsPerDay.value[shift.day]) {
+                    shiftsPerDay.value[shift.day] = [];
+                }
+                shiftsPerDay.value[shift.day]?.push(shift);
+            }
+        }
+    }
+)
+
+function FormatTime(qwertyuiop:string){
+    return qwertyuiop.split(":")[0] + ":" + qwertyuiop.split(":")[1];
+}
 
 </script>
 

@@ -19,6 +19,31 @@ const fetchStaffs = async (filtering?: Filter<Staff>): Promise<Page<Staff>> => {
 
 const { t } = useI18n();
 
+
+const filterDefinition = {
+    mechanographicNumber: {
+        type: 'text',
+        label: t('staff.fields.mechanographicNumber.title'),
+    },
+    email: {
+        type: 'text',
+        label: t('staff.fields.email.title'),
+    },
+    status: {
+        type: 'select',
+        label: t('staff.fields.status.title'),
+        options: [
+            { value: '0', text: t('staff.fields.status.options.available') },
+            { value: '1', text: t('staff.fields.status.options.unavailable') },
+            { value: '2', text: t('staff.fields.status.options.temporarilyReassigned') },
+        ],
+    },
+    phoneNumber: {
+        type: 'text',
+        label: t('staff.fields.phoneNumber.title'),
+    },
+};
+
 </script>
 
 <template>
@@ -33,7 +58,7 @@ const { t } = useI18n();
       <h1 class="title">{{ t('staff.tabs.search') }}</h1>
       <p class="subtitle">{{ t('staff.subtitle.search') }}</p>
 
-      <ListingBox :fetch-function="fetchStaffs" search-filter="name" v-slot="{elements}">
+      <ListingBox :fetch-function="fetchStaffs" search-filter="name" v-slot="{elements}" :filter-definition="filterDefinition">
         <li v-for="staff in elements" :key="staff.mechanographicNumber">
           <StaffPrinter class="listing-box" :staff="staff" :link="`/staff/view/${staff.mechanographicNumber}`" />
         </li>

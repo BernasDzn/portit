@@ -95,7 +95,6 @@ function filterDockServices(list: Array<any> | undefined) {
                     </div>
                 </sl-card>
                 <sl-card class="info-card" style="flex: 100%;">
-                    <p>Capacity:</p>
                     <StorageCapacityPrinter
                         :storage-area="entity.element"
                     />
