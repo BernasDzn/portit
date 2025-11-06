@@ -124,12 +124,11 @@ const router = createRouter({
         },
         {
           path: '/docks/edit/:code',
-          name: 'editDock',
           component: DockEdit
         },
         {
           path: '/vessel-types/dashboard',
-          name: 'vesselTypesDashboard',
+          name: 'Vessel Types Dashboard',
           component: VesselTypeDashboard,
           meta: {
             icon: "sailing"
@@ -157,7 +156,6 @@ const router = createRouter({
         },
         {
           path: '/vessel-types/edit/:name',
-          name: 'editVesselType',
           component: VesselTypeEdit
         },
         {
@@ -202,7 +200,6 @@ const router = createRouter({
         },
         {
           path: '/staff/create',
-          name: 'createStaff',
           component: StaffCreate
         },
         {
@@ -279,22 +276,26 @@ const router = createRouter({
         },
         {
           path: '/storage-areas/edit/:name',
-          name: 'editStorageArea',
           component: StorageAreaEdit
         },
         {
           path: '/vessel-visit-notifications/dashboard',
           name: 'VVN Dashboard',
-          component: VVNDashboard
+          component: VVNDashboard,
+          meta: {
+            icon: "notifications"
+          }
         },
         {
           path: '/vessel-visit-notifications/search',
           name: 'VVN Search',
-          component: VVNSearch
+          component: VVNSearch,
+          meta: {
+            icon: "search"
+          }
         },
         {
           path : '/vessel-visit-notifications/view/:notificationId',
-          name: 'VVN View',
           component: VVNView
         },
         {
