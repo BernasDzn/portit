@@ -11,9 +11,40 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import i18n from './composables/i18n'
+import AxiosHttpService from './service/AxiosHttpService';
+import { AuthService } from './service/AuthService';
+import { useSession } from './composables/session';
 
-const app = createApp(App)
+// Handle authentication on app load
+const checkForAuthorization = async () => {
 
-app.use(router)
-app.use(i18n)
-app.mount('#app')
+    try {
+    
+        const http = new AxiosHttpService();
+        const response = await new AuthService(http).whoAmI();
+
+        const session = useSession();
+        session.authenticatedUser = response;
+        
+    } catch (error) {
+
+        // we have to call this again grrr
+        startApp();
+
+        router.push('/unauthorized');
+    } finally {
+        startApp();
+    }
+    
+};
+
+const startApp = () => {
+    
+    const app = createApp(App);
+    
+    app.use(router)
+    app.use(i18n)    
+    app.mount('#app');
+}
+
+checkForAuthorization();

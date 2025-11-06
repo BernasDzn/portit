@@ -20,6 +20,8 @@ export class AxiosHttpService implements IHttpService {
     }
 
     this.axiosInstance.interceptors.request.use(
+
+        
       (config) => {
         // Add auth token to headers if available
         if (session.authToken) {

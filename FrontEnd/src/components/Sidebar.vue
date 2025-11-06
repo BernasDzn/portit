@@ -1,11 +1,16 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
-import { RouterLink, useRoute } from 'vue-router';
+import { RouterLink, useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { useSession } from '@/composables/session';
+import AxiosHttpService from '@/service/AxiosHttpService';
+import { AuthService } from '@/service/AuthService';
+import { useAlerts } from '@/composables/alerts';
 
 const route = useRoute();
 const { t } = useI18n();
+
+const role = ref(useSession().authenticatedUser!.role);
 
 const sidebarItems = ref([
   // add a materialIcon property with the Material Icons name we want to render
@@ -24,21 +29,18 @@ const sidebarItems = ref([
   { name: "admin.sidebarTitle", route: '/admin/dashboard', icon: "admin_panel_settings", materialIcon: 'admin_panel_settings', roles: [0] }
 ]);
 
-onMounted(() => {
-    const session = useSession();
-    console.log(session.authenticatedUser?.role);
-})
-
 const isCurrentTab = (itemRoute: string) => {
   return route.path === itemRoute;
 };
 
 const itemsToShow = computed(() => {
-  const session = useSession();
-  return sidebarItems.value.filter(item => {
-    if (!item.route) return true; // keep separators
-    return item.roles?.includes(session.authenticatedUser?.role || -1);
-  });
+    return sidebarItems.value.filter(item => {
+        // Show sepereators only if admin
+        if (!item.roles && role.value == 0) return true;
+        // Check current role against item roles
+        const shouldShow = item.roles?.includes(role.value);
+        return shouldShow;
+    });
 });
 
 </script>
