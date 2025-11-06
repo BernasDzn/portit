@@ -1,20 +1,23 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AxiosHttpService from '@/service/AxiosHttpService';
 import { StorageAreaService } from '@/service/StorageAreaService';
-import type { StorageArea } from '@/model/StorageArea';
+import type { StorageAreaCreate } from '@/model/StorageArea';
 
 import EntityDropdown from '@/components/crud/EntityDropdown.vue';
 import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
 import { DockService } from '@/service/DockService';
+import type { Dock } from '@/model/Dock';
 
 const http = new AxiosHttpService();
 const storageAreaService = new StorageAreaService(http);
 const dockService = new DockService(http);
 
-const storageArea = ref<StorageArea>({
+const { t } = useI18n();
+
+const storageArea = ref<StorageAreaCreate>({
     nameCode: '',
     location: '',
     type: 0,
@@ -23,7 +26,30 @@ const storageArea = ref<StorageArea>({
     dockServices: [],
 });
 
-const { t } = useI18n();
+const allDocks = ref<Array<Dock>>([]);
+
+function updateDockRelations(dockCodes: string[]) {
+    const selected = new Set(dockCodes || [])
+
+    storageArea.value.dockServices = storageArea.value.dockServices.filter(rel => selected.has(rel.dockCode))
+
+    // Add new relations for any selected codes not already present
+    dockCodes.forEach(dockCode => {
+        const existingRelation = storageArea.value.dockServices.find(relation => relation.dockCode === dockCode);
+        if (!existingRelation) {
+            const dock = allDocks.value.find(d => d.code === dockCode);
+            if (dock) {
+                storageArea.value.dockServices.push({ dockCode: dock.code, isServingDock: true });
+            }
+        }
+    });
+}
+
+onMounted(() => {
+    dockService.getDocks().then(page => {
+        allDocks.value = page.items || [];
+    });
+});
 
 const submitStorageArea = (obj: any) => 
     storageAreaService.createStorageArea(obj);
@@ -40,10 +66,10 @@ const submitStorageArea = (obj: any) =>
         <h1 class="title">{{ t('storageArea.tabs.create') }}</h1>
         <p class="subtitle">{{ t('storageArea.subtitle.create') }}</p>
         <EntityForm :object="storageArea" :submit-function="submitStorageArea">
-            <div class="form">
+            <div class="form" style="display: flex; flex-wrap: wrap;">
                 <div class="general-info">
                     <p class="section-title">{{ t('dock.generalFields') }}</p>
-                    <FormField class="field" :name="t('storageArea.fields.nameCode.title')" v-model="storageArea.nameCode" :placeholderText="t('storageArea.fields.nameCode.placeholder')" required/>
+                    <FormField class="field" :name="t('storageArea.fields.nameCode.title')" v-model="storageArea.nameCode" :placeholderText="t('storageArea.fields.nameCode.placeholder')" required pattern="^[a-zA-Z0-9]*$"/>
                     <FormField class="field" :name="t('storageArea.fields.location.title')" v-model="storageArea.location" :placeholderText="t('storageArea.fields.location.placeholder')" required/>
                 </div>
 
@@ -51,14 +77,34 @@ const submitStorageArea = (obj: any) =>
                 
                 <div class="measurements">
                     <p class="section-title">{{ t('storageArea.fields.capacity.title') }}</p>
-                        <FormField class="field" :name="t('storageArea.fields.capacity.title')" v-model.number="storageArea.capacity" :placeholderText="t('storageArea.capacity.placeholder')" pattern="^[1-9]\d*$" required/>
-                        <FormField class="field" :name="t('storageArea.fields.occupancy.placeholder')" v-model.number="storageArea.currentOccupancy" :placeholderText="t('storage-areas.currentOccupancy.placeholder')" pattern="^[1-9]\d*$" required/>
+                        <FormField class="field" :name="t('storageArea.fields.capacity.title')" v-model.number="storageArea.capacity" :placeholderText="t('storageArea.capacity.placeholder')" pattern="^[0-9]\d*$" required/>
+                        <FormField class="field" :name="t('storageArea.fields.occupancy.placeholder')" v-model.number="storageArea.currentOccupancy" :placeholderText="t('storage-areas.currentOccupancy.placeholder')" pattern="^[0-9]\d*$" required/>
                 </div>
 
                 <span class="section-divider"></span>
 
-                <div class="measurements">
+                <div class="measurements" style="flex: 100%;">
                     <p class="section-title">{{ t('dock.title') }}</p>
+                    <EntityDropdown
+                        class="field-dropdown"
+                        :name="t('physicalResource.fields.servingDocks.title')"
+                        :fetch-function="() => dockService.getDocks().then(page => (page.items || []).map(t => t.code))"
+                        :fetch-on-mount="true"
+                        :placeholderText="t('physicalResource.fields.servingDocks.placeholder')"
+                        :required="true"
+                        :multiple="true"
+                        valueKey="code"
+                        labelKey="name"
+                        @sl-change="console.log($event.target.value), updateDockRelations($event.target.value)"
+                    />
+                    <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+                        <sl-card class="card-header" style="width: fit-content;" v-for="dock in storageArea.dockServices" :key="dock.dockCode" >
+                            <div slot="header">
+                                {{ dock.dockCode }}
+                            </div>
+                            <FormField class="field" :name="`null`" v-model="dock.distance" :placeholderText="t('storageArea.create.distance_meters')" pattern="^[0-9]+(\.[0-9]{1,2})?$" required/>
+                        </sl-card>
+                    </div>
                 </div>
             </div>
         </EntityForm>

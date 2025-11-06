@@ -1,7 +1,7 @@
 import {inject, injectable} from 'inversify';
 import { TYPES } from '@/inversify/types';
 
-import type { StorageArea } from '@/model/StorageArea';
+import type { StorageArea, StorageAreaCreate } from '@/model/StorageArea';
 import type { IStorageAreaService } from './IService/IStorageAreaService';
 import type { IHttpService } from './IService/IHttpService';
 import type { Filter, Page } from '@/model/Page';
@@ -31,8 +31,8 @@ export class StorageAreaService implements IStorageAreaService {
 		return res.data;
 	}
 
-	async createStorageArea(storageArea: StorageArea): Promise<StorageArea> {
-		const res =  await this.http.post<StorageArea>('/StorageArea', storageArea);
+	async createStorageArea(storageArea: StorageAreaCreate): Promise<StorageAreaCreate> {
+		const res =  await this.http.post<StorageAreaCreate>('/StorageArea', storageArea);
 		return res.data;
 	}
 

@@ -23,7 +23,7 @@ watch(() => props.modelValue, (val) => (inputValue.value = val));
 
 <template>
     <div class="form-field">
-        <sl-label class="label" :for="inputId">{{ name }}</sl-label>
+        <sl-label class="label" :for="inputId" v-if="name != 'null'">{{ name }}</sl-label>
         <slot>
             <sl-input 
                 :id="props.inputId" 
