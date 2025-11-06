@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import { onMounted, reactive, ref } from 'vue';
+	import { onMounted, reactive, ref, watch } from 'vue';
 	import type { OperationalWindow, Shift } from '@/model/OperationalWindow';
 	import WorkShiftPrinter from './printers/WorkShiftPrinter.vue';
 	import { useAlerts } from '@/composables/alerts';
@@ -74,14 +74,21 @@
 		selectedDays.value = Array.from(selectedDaysInput.selectedOptions).map(option => Number(option.value));
 	}
 
-	onMounted(() => {
-		for(let shift of props.modelValue.shifts){
-			if (!shiftsPerDay[shift.day]) {
-				shiftsPerDay[shift.day] = [];
-			}
-			shiftsPerDay[shift.day]?.push(shift);
+	function populateShiftsPerDay(shifts?: Shift[]) {
+		// clear existing
+		Object.keys(shiftsPerDay).forEach(k => delete shiftsPerDay[Number(k)])
+
+		if (!shifts || shifts.length === 0) return
+
+		for (const shift of shifts) {
+			const arr = shiftsPerDay[shift.day] ?? (shiftsPerDay[shift.day] = [])
+			arr.push(shift)
 		}
-	})
+	}
+
+	watch(() => props.modelValue?.shifts, (newShifts) => {
+		populateShiftsPerDay(newShifts as Shift[] | undefined)
+	}, { immediate: true, deep: true })
 
 </script>
 

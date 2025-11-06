@@ -7,12 +7,17 @@ import type { StaffCreate } from '@/model/Staff';
 import AxiosHttpService from '@/service/AxiosHttpService';
 import { QualificationService } from '@/service/QualificationService';
 import { StaffService } from '@/service/StaffService';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { useRoute, RouterLink } from 'vue-router';
 
 const http = new AxiosHttpService();
 const staffService = new StaffService(http);
 const qualificationService = new QualificationService(http);
+
+const route = useRoute();
+const staffMecNumber = String(route.params.id || '');
+
 
 const staff = ref<StaffCreate>({
     mechanographicNumber: '',
@@ -24,10 +29,25 @@ const staff = ref<StaffCreate>({
     qualificationsCodes: [],
 });
 
+onMounted(async () => {
+    if (!staffMecNumber) return;
+    try {
+        const data = await staffService.getStaffByMechanographicNumber(staffMecNumber);
+        staff.value.name = data.name;
+        staff.value.email = data.email;
+        staff.value.phoneNumber = data.phoneNumber;
+        staff.value.status = data.status;
+        staff.value.operationalWindow = data.operationalWindow;
+        staff.value.qualificationsCodes = data.qualifications?.map(q => q.idCode) || [];
+    } catch (err) {
+        console.error('Failed to load staff', err);
+    }
+});
+
 const { t } = useI18n();
 
-const submitStaff = (obj: any) => 
-    staffService.createStaff(obj);
+const editStaff = (obj: any) => 
+    staffService.updateStaff(staffMecNumber, obj);
 
 </script>
 
@@ -35,12 +55,19 @@ const submitStaff = (obj: any) =>
     <div>
         <sl-breadcrumb>
             <sl-breadcrumb-item><RouterLink to="/staff/dashboard" class="breadcrumb-link">{{ t('staff.tabs.dashboard') }}</RouterLink></sl-breadcrumb-item>
-            <sl-breadcrumb-item>{{ t('staff.tabs.create') }}</sl-breadcrumb-item>
+            <sl-breadcrumb-item><RouterLink to="/staff/search" class="breadcrumb-link">{{ t('staff.tabs.search') }}</RouterLink></sl-breadcrumb-item>
+            <sl-breadcrumb-item>
+                <RouterLink 
+                    :to="staffMecNumber ? `/staff/view/${staffMecNumber}` : '/staff/search'" 
+                    class="breadcrumb-link"
+                >{{ staffMecNumber }}</RouterLink>
+            </sl-breadcrumb-item>
+            <sl-breadcrumb-item>{{ t('staff.tabs.edit') }}</sl-breadcrumb-item>
         </sl-breadcrumb>
 
-        <h1 class="title">{{ t('staff.tabs.create') }}</h1>
-        <p class="subtitle">{{ t('staff.subtitle.create') }}</p>
-        <EntityForm :object="staff" :submit-function="submitStaff">
+        <h1 class="title">{{ t('staff.tabs.edit') }}</h1>
+        <p class="subtitle">{{ t('staff.subtitle.edit') }}</p>
+        <EntityForm editingId="true" :object="staff" :submit-function="editStaff">
             <div class="name-imo">
                 <FormField :required="true" class="field" :name="t('staff.fields.name.title') + '*'" v-model="staff.name" :placeholderText="t('staff.fields.name.placeholder')"/>
                 <FormField :required="true" class="field" :name="t('staff.fields.email.title') + '*'" v-model="staff.email" :placeholderText="t('staff.fields.email.placeholder')"/>

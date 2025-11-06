@@ -4,10 +4,10 @@ import type { OperationalWindow } from "./OperationalWindow";
 export interface Staff {
 	mechanographicNumber: string;
 	name: string;
-	email?: string;
-	phoneNumber?: string;
-	status?: number;
-	active?: boolean;
+	email: string;
+	phoneNumber: string;
+	status: number;
+	active: boolean;
 	operationalWindow : OperationalWindow;
     qualifications?: Qualification[];
 }
@@ -19,5 +19,5 @@ export interface StaffCreate {
 	phoneNumber: string;
 	status: number;
 	operationalWindow: OperationalWindow;
-	qualificationsCodes: string[];
+	qualificationsCodes?: string[];
 }

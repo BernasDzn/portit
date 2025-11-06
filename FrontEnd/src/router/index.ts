@@ -42,6 +42,7 @@ import UserSearch from '@/views/Admin/UserSearch.vue'
 import UserCreate from '@/views/Admin/UserCreate.vue'
 import UserView from '@/views/Admin/UserView.vue'
 import Visualizer from '@/views/Visualizer.vue'
+import StaffEdit from '@/views/Staff/StaffEdit.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -200,6 +201,10 @@ const router = createRouter({
           path: '/staff/create',
           name: 'createStaff',
           component: StaffCreate
+        },
+        {
+          path: '/staff/edit/:id',
+          component: StaffEdit
         },
         {
           path: '/qualifications/create',
