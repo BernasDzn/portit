@@ -45,9 +45,14 @@
         "cancel": "Keep Editing"
     },
     "dashboard": {
+        "welcome": "Welcome back, [name]!",
         "sidebarTitle": "Dashboard",
         "title": "PortIT Dashboard",
         "subtitle": "Overview of PortIT system",
+        "SAOR": {
+            "subtitle": "Overview of the shipping agent's operations",
+            "pendingNotifications": "Pending Notifications"
+        },
         "3DModel": {
             "title": "3D Port Visualization",
             "description": "View an interactive 3D representation of the entire port facility. Monitor dock occupancy, vessel positions, storage areas, and resources in real-time from a bird's-eye view.",
@@ -486,7 +491,9 @@
             "dashboard": "Notifications Dashboard",
             "search": "Search Notifications",
             "edit": "Edit Notification",
-            "create": "Create Notification"
+            "create": "Create Notification",
+            "makeDraft": "Create Draft Notification",
+            "myNotifications": "My Notifications"
         },
         "title": "Vessel Visit Notifications",
         "subtitle": {

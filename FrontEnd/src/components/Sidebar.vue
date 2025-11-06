@@ -11,7 +11,7 @@ const role = ref(useSession().authenticatedUser!.role);
 
 const sidebarItems = ref([
   // add a materialIcon property with the Material Icons name we want to render
-  { name: 'dashboard.sidebarTitle', route: '/', icon: "house", materialIcon: 'home', roles: [0] },
+  { name: 'dashboard.sidebarTitle', route: '/', icon: "house", materialIcon: 'home', roles: [0, 1, 2, 3] },
   {},
   { name: 'vessel.title', route: '/vessels/dashboard', icon: "directions_boat", materialIcon: 'directions_boat', roles: [0, 1] },
   { name: 'vesselType.title', route: '/vessel-types/dashboard', icon: "sailing", materialIcon: 'sailing', roles: [0, 1] },
