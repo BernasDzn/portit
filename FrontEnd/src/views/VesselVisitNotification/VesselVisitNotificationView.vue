@@ -16,9 +16,43 @@ const notificationId = route.params.notificationId && route.params.notificationI
     ? decodeURIComponent(route.params.notificationId as string)
     : '';
 
+const cargoTypes = [
+    "Refrigerated goods",
+    "General consumer products",
+    "Electronics",
+    "Hazmat",
+    "Oversized industrial equipment",
+    "Other"
+]
+
 const fetchNotification = async (): Promise<VesselVisitNotification | null> => {
-    return await notificationService.getVesselVisitNotificationById(notificationId);
+    const n = await notificationService.getVesselVisitNotificationById(notificationId);
+    console.log(n);
+    return n;
 };
+
+const openLoadCargoManifest = () => {
+    
+    const drawer = document.querySelector('#loadManifestDrawer') as any;
+    drawer.show();
+}
+
+const openUnloadCargoManifest = () => {
+    
+    const drawer = document.querySelector('#unloadManifestDrawer') as any;
+    drawer.show();
+}
+
+const closeLoadManifest = () => {
+    const drawer = document.querySelector('#loadManifestDrawer') as any;
+    drawer.hide();
+}
+
+const closeUnloadManifest = () => {
+    const drawer = document.querySelector('#unloadManifestDrawer') as any;
+    drawer.hide();
+}
+
 </script>
 
 <template>
@@ -50,133 +84,225 @@ const fetchNotification = async (): Promise<VesselVisitNotification | null> => {
                     </RouterLink>
                 </div>
                 <div class="viewing-content">
-                    <sl-card class="notification-main-info">
-                        <p>{{ t('notification.infoTitle') }}</p>
-                        <div class="columns-2">
-                            <div>
-                                <div class="info-block">
-                                    <span class="label">{{ t('notification.fields.expectedArrival') }}</span>
-                                    <p>{{ entity.element.expectedArrival.split("T")[0].split(".")[0] }}
-                                        {{ entity.element.expectedArrival.split("T")[1].split(".")[0] }}
-                                    </p>
+
+                    <div class="notification-row">
+                        <sl-card class="notification-progress">
+
+                            <div class="timeline">
+                                <div class="timeline-point">
+                                    <span class="timeline-icon material-icons" aria-hidden="true">check_circle</span>
+                                    <p>Pending</p>
                                 </div>
-                                <div class="info-block">
-                                    <span class="label">{{ t('notification.fields.expectedDeparture') }}</span>
-                                    <p>{{ entity.element.expectedDeparture.split("T")[0].split(".")[0] }}
-                                        {{ entity.element.expectedDeparture.split("T")[1].split(".")[0] }}
-                                    </p>
+                                <div class="timeline-point">
+                                    <span class="timeline-icon material-icons" aria-hidden="true">check_circle</span>
+                                    <p>Submited</p>
                                 </div>
-                                <div class="info-block">
-                                    <span class="label">{{ t('notification.fields.isCargoHazardous') }}</span>
-                                    <p>{{ entity.element.isCargoHazardous ? t('common.yes') : t('common.no') }}</p>
+                                <div class="timeline-point">
+                                    <span class="timeline-icon material-icons" aria-hidden="true">check_circle</span>
+                                    <p>Awaiting decision</p>
                                 </div>
-                                <div class="info-block" v-if="entity.element.specialRequirements">
-                                    <span class="label">{{ t('notification.fields.specialRequirements') }}</span>
-                                    <p>{{ entity.element.specialRequirements }}</p>
+                                <div class="timeline-point">
+                                    <span class="timeline-icon material-icons" aria-hidden="true">check_circle</span>
+                                    <p>Finished</p>
                                 </div>
                             </div>
+                        </sl-card>
+
+                        <sl-card class="notification-manifest">
+                            <p>Manifest information</p>
                             <div>
-                                <div class="info-block" v-if="entity.element.crewDetails">
-                                    <span class="label">{{ t('notification.fields.captain') }}</span>
-                                    <p>{{ entity.element.crewDetails.captain.value }}</p>
-                                </div>
-                                <div class="info-block" v-if="entity.element.crewDetails">
-                                    <span class="label">{{ t('notification.fields.totalCrewMembers') }}</span>
-                                    <p>{{ entity.element.crewDetails.totalCrewMembers }}</p>
-                                </div>
-                                <div class="info-block" v-if="entity.element.crewDetails">
-                                    <span class="label">{{ t('notification.fields.crewMembers') }}</span>
-                                    <div>
-                                        <ul>
-                                            <li v-for="member in entity.element.crewDetails.safetyOfficers" :key="member.citizenID">
-                                                {{ member.name }} ({{ member.nationality }}) {{ member.citizenID }}
-                                            </li>
-                                        </ul>
+                                <sl-button @click="openLoadCargoManifest" :disabled="entity.element.loadCargoManifest.length == 0" size="medium" pill>Open load manifest</sl-button>
+                                <sl-button @click="openUnloadCargoManifest" :disabled="entity.element.unloadCargoManifest.length == 0" size="medium" pill>Open unload manifest</sl-button>
+                            </div>
+                        </sl-card>
+                    </div>
+                    <div class="notification-main-column">
+                        <sl-card class="notification-main-info">
+                            <p>{{ t('notification.infoTitle') }}</p>
+                            <div class="columns-2">
+                                <div>
+                                    <div class="info-block">
+                                        <span class="label">{{ t('notification.fields.expectedArrival') }}</span>
+                                        <p>{{ entity.element.expectedArrival.split("T")[0].split(".")[0] }}
+                                            {{ entity.element.expectedArrival.split("T")[1].split(".")[0] }}
+                                        </p>
                                     </div>
-                                    <div v-if="entity.element.crewDetails.safetyOfficers.length === 0">
-                                        {{ t('notification.none') }}
+                                    <div class="info-block">
+                                        <span class="label">{{ t('notification.fields.expectedDeparture') }}</span>
+                                        <p>{{ entity.element.expectedDeparture.split("T")[0].split(".")[0] }}
+                                            {{ entity.element.expectedDeparture.split("T")[1].split(".")[0] }}
+                                        </p>
+                                    </div>
+                                    <div class="info-block">
+                                        <span class="label">{{ t('notification.fields.isCargoHazardous') }}</span>
+                                        <p>{{ entity.element.isCargoHazardous ? t('common.yes') : t('common.no') }}</p>
+                                    </div>
+                                    <div class="info-block" v-if="entity.element.specialRequirements">
+                                        <span class="label">{{ t('notification.fields.specialRequirements') }}</span>
+                                        <p>{{ entity.element.specialRequirements }}</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="info-block" v-if="entity.element.crewDetails">
+                                        <span class="label">{{ t('notification.fields.captain') }}</span>
+                                        <p>{{ entity.element.crewDetails.captain.value }}</p>
+                                    </div>
+                                    <div class="info-block" v-if="entity.element.crewDetails">
+                                        <span class="label">{{ t('notification.fields.totalCrewMembers') }}</span>
+                                        <p>{{ entity.element.crewDetails.totalCrewMembers }}</p>
+                                    </div>
+                                    <div class="info-block" v-if="entity.element.crewDetails">
+                                        <span class="label">{{ t('notification.fields.crewMembers') }}</span>
+                                        <div>
+                                            <ul>
+                                                <li v-for="member in entity.element.crewDetails.safetyOfficers" :key="member.citizenID">
+                                                    {{ member.name }} ({{ member.nationality }}) {{ member.citizenID }}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div v-if="entity.element.crewDetails.safetyOfficers.length === 0">
+                                            {{ t('notification.none') }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </sl-card>
-                    <sl-card class="notification-cargo-info">
-                        <p>{{ t('notification.cargoTitle') }}</p>
-                        <div>
-                            <h4>{{ t('notification.fields.loadCargoManifest') }}</h4>
-                            <ul>
-                                <li v-for="(item, idx) in entity.element.loadCargoManifest" :key="idx">
-                                    <span class="label">{{ t('notification.fields.position') }}:</span>
-                                    {{ item.position.bay }}/{{ item.position.row }}/{{ item.position.tier }},
-                                    <span class="label">{{ t('notification.fields.area') }}:</span>
-                                    {{ item.area.nameCode }} ({{ item.area.location }}),
-                                    <span class="label">{{ t('notification.fields.container') }}:</span>
-                                    {{ item.container.containerNumber }} - {{ item.container.description }}
-                                </li>
-                                <div v-if="entity.element.loadCargoManifest.length === 0">
-                                    {{ t('notification.none') }}
-                                </div>
-                            </ul>
-                            <h4>{{ t('notification.fields.unloadCargoManifest') }}</h4>
-                            <ul>
-                                <li v-for="(item, idx) in entity.element.unloadCargoManifest" :key="idx">
-                                    <span class="label">{{ t('notification.fields.position') }}:</span>
-                                    {{ item.position.bay }}/{{ item.position.row }}/{{ item.position.tier }},
-                                    <span class="label">{{ t('notification.fields.area') }}:</span>
-                                    {{ item.area.nameCode }} ({{ item.area.location }}),
-                                    <span class="label">{{ t('notification.fields.container') }}:</span>
-                                    {{ item.container.containerNumber }} - {{ item.container.description }}
-                                </li>
-                                <div v-if="entity.element.unloadCargoManifest.length === 0">
-                                    {{ t('notification.none') }}
-                                </div>
-                            </ul>
-                        </div>
-                    </sl-card>
-                    <sl-card class="notification-vessel-info">
-                        <p>{{ t('notification.vesselTitle') }}</p>
-                        <div class="columns-2">
-                            <div>
-                                <div class="info-block">
-                                    <span class="label">{{ t('vessel.fields.name.title') }}</span>
-                                    <p>{{ entity.element.vessel.name }}</p>
-                                </div>
-                                <div class="info-block">
-                                    <span class="label">{{ t('vessel.fields.vesselType.title') }}</span>
-                                    <p>{{ entity.element.vessel.type.name }}</p>
-                                </div>
-                                <div class="info-block">
-                                    <span class="label">{{ t('vessel.fields.owner.title') }}</span>
-                                    <p>{{ entity.element.vessel.owner.name }}</p>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="info-block">
-                                    <span class="label">{{ t('vessel.fields.imoNumber.title') }}</span>
-                                    <p>{{ entity.element.vessel.imoNumber }}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </sl-card>
+                        </sl-card>
+                    </div>
                 </div>
             </template>
             <template v-else>
                 <NoResults :message="t('notification.errors.noNotificationId')" />
             </template>
+    
+            <!-- Cargo manifest drawer -->
+            <sl-drawer id="loadManifestDrawer" label="Drawer" class="drawer-overview">
+                <h2>Load cargo manifest</h2>
+                <sl-card class="manifest-item" v-for="item in entity.element.loadCargoManifest" :key="item.containerId">
+                    <p>{{ item.container.description }} ({{item.container.container}})</p>
+                    <p>To: {{ item.area.nameCode }}</p>
+                </sl-card>
+    
+                <sl-button @click="closeLoadManifest" slot="footer" variant="primary">Close</sl-button>
+            </sl-drawer>
+    
+            <sl-drawer id="unloadManifestDrawer" label="Drawer" class="drawer-overview"  style="--size: 35vw;">
+                <h2>Unload cargo manifest</h2>
+                <sl-card class="manifest-item" v-for="item in entity.element.unloadCargoManifest" :key="item.containerId">
+                    <div class="opposed">
+                        <div>
+                            <p class="title">{{ item.container.description }}</p> 
+                            <p class="subtitle">{{item.container.containerNumber}}</p>
+                        </div>
+                        <sl-tag variant="neutral">{{cargoTypes[item.container.cargoType]}}</sl-tag>
+                    </div>
+                    <div class="manifest-direction">
+                        <p>From: {{ item.area.nameCode }}</p>
+                        <span class="material-icons" aria-hidden="true">arrow_right_alt</span>
+                        <p>To: ({{item.position.bay}}, {{item.position.row}}, {{item.position.tier}})</p>
+                    </div>
+                </sl-card>
+    
+                <sl-button @click="closeUnloadManifest" slot="footer" variant="primary">Close</sl-button>
+            </sl-drawer>
         </EntityView>
     </div>
 </template>
 
 <style scoped>
+.viewing-content {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+}
+  
+.notification-row {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 30%;
+}
+
+.notification-progress {
+    height: fit-content;
+}
+
+.notification-main-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 70%;
+}
+
 .notification-main-info {
-    width: 60%;
-}
-.notification-cargo-info {
     width: 100%;
-    margin-top: 1rem;
 }
-.notification-vessel-info {
-    width: 40%;
-    margin-top: 1rem;
+
+.manifest-direction {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
+
+.notification-manifest > div {
+    display: flex;
+    gap: 1rem;
+    align-items: start;
+}
+
+.manifest-item {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.timeline {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    padding: 1rem;
+}
+.timeline-icon {
+    font-size: 32px;
+    color: var(--sl-color-success-600);
+
+    z-index: 1;
+    background-color: white;
+}
+
+.timeline-point p {
+    color: var(--sl-color-neutral-500);
+}
+
+/* The vertical line */
+.timeline::before {
+    content: "";
+    position: absolute;
+    left: 4.8rem;
+    top: 14rem;
+    width: 2px;
+    height: calc(100% - 28rem);
+    background-color: var(--sl-color-neutral-300);
+    z-index: 0;
+}
+
+.timeline-point {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 1.5rem;
+  }
+  
+.timeline-point:last-child {
+    margin-bottom: 0;
+}
+  
+.timeline-icon {
+    font-size: 32px;
+    color: var(--sl-color-success-600);
+    background-color: var(--sl-color-neutral-0);
+    border-radius: 50%;
+    z-index: 1;
+}
+
 </style>

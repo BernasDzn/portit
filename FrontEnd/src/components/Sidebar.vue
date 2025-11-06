@@ -3,9 +3,6 @@ import { computed, onMounted, ref } from 'vue';
 import { RouterLink, useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import { useSession } from '@/composables/session';
-import AxiosHttpService from '@/service/AxiosHttpService';
-import { AuthService } from '@/service/AuthService';
-import { useAlerts } from '@/composables/alerts';
 
 const route = useRoute();
 const { t } = useI18n();
