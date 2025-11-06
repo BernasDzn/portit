@@ -285,7 +285,7 @@ const submitTruckResource = (obj: any) => {
     
                 </div>
             
-                <p class="section-title">Specific fields</p>
+                <p class="section-title"> {{ t('physicalResource.specificFields') }}</p>
 
                     <FormField 
                         :required="true" 
