@@ -43,6 +43,12 @@ class Session {
         const currentTime = new Date().getTime();
         return currentTime >= this.expirationTime;
     }
+
+    clearSession() {
+        this.authenticatedUser = null;
+        this.authToken = null;
+        this.expirationTime = null;
+    }
 }
 
 export const useSession = () => {
