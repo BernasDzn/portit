@@ -47,6 +47,7 @@ import VVNDashboard from '@/views/VesselVisitNotification/VesselVisitNotificatio
 import VVNSearch from '@/views/VesselVisitNotification/VesselVisitNotificationSearch.vue'
 import VVNView from '@/views/VesselVisitNotification/VesselVisitNotificationView.vue'
 import PhysicalResourceEdit from '@/views/PhysicalResources/PhysicalResourceEdit.vue'
+import AuditLogs from '@/views/Admin/AuditLogs.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -343,6 +344,14 @@ const router = createRouter({
             path: '/resources/edit/:code',
             name: 'editPhysicalResource',
             component: PhysicalResourceEdit
+        },
+        {
+            path: '/admin/audit-logs',
+            name: 'Audit Logs',
+            component: AuditLogs,
+            meta: {
+              icon: "history"
+            }
         }
       ]
     },

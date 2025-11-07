@@ -164,6 +164,10 @@ const closeUnloadManifest = () => {
                                             {{ t('notification.none') }}
                                         </div>
                                     </div>
+                                    <div class="info-block">
+                                        <span class="label"> Submitter </span>
+                                        <p>{{ entity.element.submitter.name }} ({{ entity.element.submitter.citizenshipId }})</p>
+                                    </div>
                                 </div>
                             </div>
                         </sl-card>

@@ -154,6 +154,7 @@ builder.Services.AddTransient<INotificationDecisionService, NotificationDecision
 builder.Services.AddTransient<ISystemUserRepository, SystemUserRepository>();
 builder.Services.AddTransient<ISystemUserService, SystemUserService>();
 builder.Services.AddTransient<IEmailService, SmtpEmailService>();
+builder.Services.AddTransient<IAdminService, AdminService>();
 
 var app = builder.Build();
 

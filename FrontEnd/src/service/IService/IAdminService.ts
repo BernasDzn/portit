@@ -1,3 +1,4 @@
+import type { Logs } from "@/model/Logs";
 import type { Filter, Page } from "@/model/Page";
 import type { SystemUser } from "@/model/SystemUser";
 
@@ -10,4 +11,5 @@ export interface IAdminService {
     getByEmail(emailAddress: string): Promise<SystemUser>;
     deleteUser(emailAddress: string): Promise<void>;
     filterSystemUsers(filter: Filter<SystemUser>): Promise<Page<SystemUser>>;
+    getLogs(): Promise<Logs[]>;
 }
