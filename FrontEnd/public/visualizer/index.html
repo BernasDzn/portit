@@ -36,7 +36,7 @@
             border: 1px solid gray;
         }
 
-        table.help {
+        table {
             width: 24vmin;
             background-color: #A0A0A050;
         }
@@ -50,6 +50,48 @@
         canvas {
             display: block;
         }
+
+        .clock {
+            width: 26vmin;
+            position: absolute;
+            top: 10px;
+            left: 270px;
+            z-index: 1;
+            font-family: Arial, sans-serif;
+            font-size: 1.5vmin;
+            color: white;
+        }
+
+        #object-details {
+            position: absolute;
+            top: 70px;
+            left: 270px;
+
+            font-size: 1.5vmin;
+            color: white;
+            z-index: 1;
+            background-color: #A0A0A050;
+
+            border: 1px solid gray;
+            display:none;
+        }
+
+        .contents-container {
+            max-width: 40vmin;
+            max-height: 30vh;
+            overflow: auto;
+            padding: 10px;
+        }
+
+        #container-title {
+            margin: 0;
+            font-size: 2vmin;
+        }
+
+        #container-description {
+            font-size: 1.5vmin;
+        }
+
     </style>
 </head>
 
@@ -57,6 +99,27 @@
     <div id="title">
         Port3D simulation
     </div>
+
+    <div id="object-details">
+        <div class="contents-container">
+            <h3 id="container-title">Title</h3>
+            <p id="container-description">Description</p>
+            <button id="kill">DIE BRUH DIE!!!</button>
+        </div>
+    </div>
+
+    <table class="clock">
+        <tr>
+            <th colspan="2" style="font-size: 1.5vmin">
+                Date
+            </th>
+        </tr>
+        <tr>
+            <td id="date">2024-01-01</td>
+            <td id="time">0.0 s</td>
+        </tr>
+    </table>
+
     <div id="help">
         <table class="help">
             <tr>
@@ -83,6 +146,7 @@
                 "three/examples/jsm/loaders/OBJLoader.js": "/libs/three.js/examples/jsm/loaders/OBJLoader.js",
                 "three/examples/jsm/loaders/MTLLoader.js": "/libs/three.js/examples/jsm/loaders/MTLLoader.js",
                 "three/examples/jsm/libs/lil-gui.module.min.js": "/libs/three.js/examples/jsm/libs/lil-gui.module.min.js"
+                
             }
         }
     </script>

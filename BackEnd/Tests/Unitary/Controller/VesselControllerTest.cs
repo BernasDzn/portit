@@ -252,6 +252,7 @@ public class VesselControllerTest
             Owner = null!,
             PhysicalCharacteristics = null!
         };
+
         _vesselServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<CreateVesselDto>()))
             .ReturnsAsync(updatedVessel);
 

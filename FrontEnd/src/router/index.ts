@@ -352,6 +352,14 @@ const router = createRouter({
             meta: {
               icon: "history"
             }
+        },
+        {
+            path: '/visualization',
+            name: 'Port 3D',
+            component: Visualizer,
+            meta: {
+                icon: "view_in_ar"
+            }
         }
       ]
     },
@@ -360,14 +368,6 @@ const router = createRouter({
       name: 'login',
       meta: { hideFromSearch: true },
       component: Login,
-    },
-    {
-        path: '/visualization',
-        name: 'Port 3D',
-        component: Visualizer,
-        meta: {
-            icon: "view_in_ar"
-        }
     },
     {
         path: '/activate',
