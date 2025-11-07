@@ -334,7 +334,6 @@ const router = createRouter({
         },
         {
           path: '/admin/users/view/:emailAddress',
-          name: 'User View',
           component: UserView,
           meta: { 
             icon: "visibility"
@@ -342,7 +341,6 @@ const router = createRouter({
         },
         {
             path: '/resources/edit/:code',
-            name: 'editPhysicalResource',
             component: PhysicalResourceEdit
         },
         {
