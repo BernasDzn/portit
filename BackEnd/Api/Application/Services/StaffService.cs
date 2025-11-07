@@ -33,6 +33,10 @@ public class StaffService : IStaffService
 
 	public async Task<StaffDto?> Create(CreateStaffDto staffDto)
 	{
+        var staffWithMec = await _staffRepository.GetStaffByMecNumberAsync(staffDto.MechanographicNumber);
+        if (staffWithMec != null)
+            throw new EntityAlreadyExistsException("Staff with the same mechanographic number already exists.");
+
 		ICollection<Qualification> qualifications = new List<Qualification>();
 		if (staffDto.QualificationsCodes != null)
 		{

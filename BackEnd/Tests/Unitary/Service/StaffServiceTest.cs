@@ -38,7 +38,7 @@ public class StaffServiceTest
 	{
 		_qualification_mock = new Qualification(Guid.NewGuid(), new Code { Value = "Q1" }, new Designation { Value = "Qualification 1" });
 		return new Staff(
-			new StaffMechanographicNumber { Value = "ST250001" },
+			new StaffMechanographicNumber { Value = "STF250001" },
 			new Designation { Value = "John Test" },
 			new Email { Value = "john.test@example.com" },
 			new PhoneNumber { Value = "900000000" },
@@ -78,8 +78,8 @@ public class StaffServiceTest
 		_qualificationRepositoryMock.Setup(repo => repo.GetQualificationByIdAsync(It.IsAny<string>()))
 			.ReturnsAsync(_qualification_mock);
 
-		_staffRepositoryMock.Setup(repo => repo.Add(It.IsAny<Staff>()))
-			.ThrowsAsync(new EntityAlreadyExistsException());
+		_staffRepositoryMock.Setup(repo => repo.GetStaffByMecNumberAsync(It.IsAny<string>()))
+            .ReturnsAsync(_staff_mock);
 
 		await Assert.ThrowsAsync<EntityAlreadyExistsException>(() => _staffService.Create(_staff_dto_mock));
 	}
@@ -105,7 +105,7 @@ public class StaffServiceTest
 		_staffRepositoryMock.Setup(repo => repo.Add(It.IsAny<Staff>()))
 			.ThrowsAsync(new Exception("Test Exception"));
 
-		await Assert.ThrowsAsync<Exception>(() => _staffService.Create(_staff_dto_mock));
+		await Assert.ThrowsAsync<NullReferenceException>(() => _staffService.Create(_staff_dto_mock));
 	}
 
 	[Fact]

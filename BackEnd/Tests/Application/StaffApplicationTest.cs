@@ -88,7 +88,7 @@ public class StaffApplicationTest : WebApplicationFactory<Program>
     [Fact]
     public async Task GetStaffById_ReturnsStaff_WhenExists()
     {
-        var response = await _client.GetAsync($"/Staff/filter?mechanograficNumber=MEC001");
+        var response = await _client.GetAsync($"/Staff/filter?mechanograficNumber=STF250001");
         response.EnsureSuccessStatusCode();
 
         var page = await response.Content.ReadFromJsonAsync<Page<StaffDto>>();
@@ -100,7 +100,7 @@ public class StaffApplicationTest : WebApplicationFactory<Program>
     [Fact]
     public async Task GetStaffById_ReturnsNotFound_OnNonExistent()
     {
-        var response = await _client.GetAsync($"/Staff/filter?mechanograficNumber=NONEXISTENT");
+        var response = await _client.GetAsync($"/Staff/filter?MechanographicNumber=AAAA");
         response.EnsureSuccessStatusCode();
         var page = await response.Content.ReadFromJsonAsync<Page<StaffDto>>();
         Assert.NotNull(page);
@@ -112,7 +112,7 @@ public class StaffApplicationTest : WebApplicationFactory<Program>
     {
         var createDto = new CreateStaffDto
         {
-            MechanographicNumber = "MEC002",
+            MechanographicNumber = "STF250001",
             Name = "Bob",
             Email = "bob@example.com",
             PhoneNumber = "900000002",
