@@ -43,6 +43,8 @@ export default class Vessel {
         this.model.children[1].meta = {
             title: 'Vessel',
             description: `${this.name} is a vessel`,
+            killable: true,
+            killFunction: () => { this.kill(); }
         };
 
         scene.add(this.model);
@@ -133,5 +135,18 @@ export default class Vessel {
         this.goOnAnAdventure();
         // update label position
         this.label.position.set(this.model.position.x, this.model.position.y + 10, this.model.position.z);
+    }
+
+    kill(){
+        // Remove from scene
+        if (this.model.parent) {
+            this.model.parent.remove(this.model);
+        }
+        if (this.label.parent) {
+            this.label.parent.remove(this.label);
+        }
+        if (this.path && this.path.parent) {
+            this.path.parent.remove(this.path);
+        }
     }
 } 

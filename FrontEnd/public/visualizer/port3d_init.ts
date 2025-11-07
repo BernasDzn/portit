@@ -30,9 +30,9 @@ export default class Port3D {
     composer; // Post-processing composer
     portsProcessing = {
         bloom: {
-            strength: 1.5,
-            radius: 0.4,
-            threshold: 0.85
+            strength: 0.8,
+            radius: 0.55,
+            threshold: 0.72
         }
     }
 

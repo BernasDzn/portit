@@ -24,7 +24,7 @@ const validChunkPositions = [
 const layoutY = -20;
 const chunkSize = {
     x: worldBorder / validChunkPositions.length,
-    y: 40,
+    y: 20,
     z: worldBorder / validChunkPositions[0].length
 }
 
@@ -69,6 +69,7 @@ class PortChunk {
         }
         
         this.position = chunkIndexToPosition(x, y);
+        this.position.y += chunkSize.y / 2;
     }
 }
 
@@ -253,6 +254,14 @@ export default class PortLayout {
         this.vesselList.push(vessel);
     }
 
+    removeVessel(vessel) {
+        const index = this.vesselList.indexOf(vessel);
+        if (index > -1) {
+            this.vesselList[index].kill();
+            this.vesselList.splice(index, 1);
+        }
+    }
+
     update() {
         this.vesselList.forEach((vessel) => {
             vessel.update();
@@ -277,8 +286,6 @@ export default class PortLayout {
             ...this.vesselList.map(vessel => vessel.model.children[1])
         ];
 
-        console.log("Picking from", objectlist);
-    
         const picked = this.picker.pickFromList(normalizedPosition, scene, camera, objectlist);
         let pickedObject = picked ? picked.object : null;
     
@@ -298,11 +305,11 @@ export default class PortLayout {
         if (pickedObject) {
             this.selectedObject = pickedObject;
             console.log("Picked object:", this.selectedObject);
-
             try {
                 
                 const userData = this.selectedObject.meta;
-                setInfoText(userData.title || "Unknown Object", userData.description || "No description available.");
+                setInfoText(userData);
+
             } catch (error) {
 
                 console.warn("No meta information available for selected object.");
