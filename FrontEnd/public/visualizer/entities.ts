@@ -40,6 +40,11 @@ export default class Vessel {
         this.model.receiveShadow = true;
         this.model.castShadow = true;
 
+        this.model.children[1].meta = {
+            title: 'Vessel',
+            description: `${this.name} is a vessel`,
+        };
+
         scene.add(this.model);
 
         // Make label billboard

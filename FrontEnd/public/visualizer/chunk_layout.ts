@@ -2,6 +2,8 @@ import * as THREE from "three";
 import {loadModel, loadModelRaw} from "./helpers/model_helper.ts";
 import {makeBillboard} from "./helpers/billboard_helper.ts";
 import Vessel from "./entities.ts";
+import PickHelper from "./helpers/pick_helper.ts";
+import { hideInfoText, setInfoText } from "./helpers/info_helper.ts";
 
 const worldBorder = 1000;
 
@@ -84,6 +86,11 @@ class LandChunk extends PortChunk {
         this.base = new THREE.Mesh(this.base, baseMesh);
         this.base.position.copy(this.position);
 
+        this.base.meta = {
+            title: "Land Chunk",
+            description: "This is a land chunk.\n Located at (" + this.position.x.toFixed(2) + ", " + this.position.z.toFixed(2) + ").",
+        };
+
         this.base.castShadow = true;
         this.base.receiveShadow = true;
         scene.add(this.base);
@@ -145,6 +152,11 @@ class DockChunk extends PortChunk {
         this.base = new THREE.Mesh(this.base, baseMesh);
         this.base.position.copy(this.position);
 
+        this.base.meta = {
+            title: "Dock Chunk",
+            description: "This is a dock chunk where vessels can berth.\n Located at (" + this.position.x.toFixed(2) + ", " + this.position.z.toFixed(2) + ").",
+        };
+
         this.base.castShadow = true;
         this.base.receiveShadow = true;
         scene.add(this.base);
@@ -166,11 +178,19 @@ export default class PortLayout {
     lighthouse;
     lighthouseLight;
 
+    picker;
+
     vesselList = []; // The vessels in the port
     chunkData = []; // The chunks that make up the port layout
 
-    constructor(scene) {
+    constructor(scene, camera) {
         
+        this.picker = new PickHelper();
+
+        window.addEventListener('click', (event) => {
+            this.pick(scene, camera);
+        });
+
         let portChunk = new LandChunk(4, 4);
         let buoyChunk = new BuoyChunk(4, 3);
         let dockChunk = new DockChunk(4, 5);
@@ -244,4 +264,63 @@ export default class PortLayout {
             }
         });
     }
+
+    selectedObject;
+    pick(scene, camera) {
+        const normalizedPosition = {
+            x: (event.clientX / window.innerWidth) * 2 - 1,
+            y: -(event.clientY / window.innerHeight) * 2 + 1
+        };
+    
+        const objectlist = [
+            ...this.chunkData.map(chunk => chunk.base),
+            ...this.vesselList.map(vessel => vessel.model.children[1])
+        ];
+
+        console.log("Picking from", objectlist);
+    
+        const picked = this.picker.pickFromList(normalizedPosition, scene, camera, objectlist);
+        let pickedObject = picked ? picked.object : null;
+    
+        const highlightMesh = (obj, color) => {
+            if (obj && obj.material) {
+
+                if (Array.isArray(obj.material)) {
+                    obj.material.forEach((mat) => {
+                        mat.emissive = new THREE.Color(color);
+                    });
+                } else
+                    obj.material.emissive = new THREE.Color(color);
+            }
+        }
+
+        // highlight picked
+        if (pickedObject) {
+            this.selectedObject = pickedObject;
+            console.log("Picked object:", this.selectedObject);
+
+            try {
+                
+                const userData = this.selectedObject.meta;
+                setInfoText(userData.title || "Unknown Object", userData.description || "No description available.");
+            } catch (error) {
+
+                console.warn("No meta information available for selected object.");
+            }
+            highlightMesh(this.selectedObject, 0x444477);
+        } else 
+        {
+            this.selectedObject = null;
+            // Clear info text
+            hideInfoText();
+        }
+
+        // unhighlight previous
+        objectlist.forEach((obj) => {
+            if (obj !== this.selectedObject) {
+                highlightMesh(obj, 0x000000);
+            }
+        });
+    }
+    
 }

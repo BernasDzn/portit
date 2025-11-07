@@ -60,12 +60,50 @@
             font-size: 1.5vmin;
             color: white;
         }
+
+        #object-details {
+            position: absolute;
+            top: 70px;
+            left: 270px;
+
+            font-size: 1.5vmin;
+            color: white;
+            z-index: 1;
+            background-color: #A0A0A050;
+
+            border: 1px solid gray;
+            display:none;
+        }
+
+        .contents-container {
+            max-width: 40vmin;
+            max-height: 30vh;
+            overflow: auto;
+            padding: 10px;
+        }
+
+        #container-title {
+            margin: 0;
+            font-size: 2vmin;
+        }
+
+        #container-description {
+            font-size: 1.5vmin;
+        }
+
     </style>
 </head>
 
 <body>
     <div id="title">
         Port3D simulation
+    </div>
+
+    <div id="object-details">
+        <div class="contents-container">
+            <h3 id="container-title">Title</h3>
+            <p id="container-description">Description</p>
+        </div>
     </div>
 
     <table class="clock">
