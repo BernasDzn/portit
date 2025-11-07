@@ -1,12 +1,22 @@
 <template>
-  <div class="activate-page">
-    <h2>Account activation</h2>
-    <div id="google-signin-btn"></div>
-    <div v-if="loading">Activating your account, please wait...</div>
-    <div v-else-if="success">Your account has been activated. You can <a href="/login">log in</a> now.</div>
-    <div v-else-if="error">Activation failed: {{ errorMessage }}</div>
-    <div v-else>Invalid activation link.</div>
+  <div class="activation-page">
+    <sl-card class="activation-card">
+      <div class="content">
+        <sl-icon name="check-circle" style="font-size: 3rem; color: var(--sl-color-success-600);" />
+        <h2>Account activation</h2>
+        
+        <div id="google-signin-btn"></div>
+        <sl-divider />
+        <div v-if="loading">Activating your account, please wait...</div>
+        <div v-else-if="success">Your account has been activated. You can <a href="/login">log in</a> now.</div>
+        <div v-else-if="error">Activation failed: {{ errorMessage }}</div>
+        <div v-else>Invalid activation link.</div>
+      </div>
+    </sl-card>
+
+    <NotificationQueue />
   </div>
+
 </template>
 
 <script setup lang="ts">
@@ -122,11 +132,39 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.activate-page {
-  max-width: 600px;
-  margin: 40px auto;
-  padding: 24px;
-  border-radius: 6px;
-  background: var(--card-bg, #fff);
+.activation-page {
+    position: absolute;
+    
+    top: calc(50% - 200px);
+    left: calc(50% - 200px);
 }
+
+.activation-card {
+  text-align: center;
+  padding: 2rem;
+  max-width: 400px;
+}
+
+.content h1 {
+  font-size: 1.75rem;
+  margin: 1rem 0 0.5rem;
+  color: var(--sl-color-neutral-900);
+}
+
+.content p {
+  color: var(--sl-color-neutral-600);
+  margin-bottom: 1.5rem;
+}
+
+sl-button::part(base) {
+  width: 100%;
+  justify-content: center;
+}
+
+#google-signin-btn {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
 </style>

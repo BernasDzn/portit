@@ -40,8 +40,7 @@ const options = [
     { code: 'mk', label: 'Македонски' },
     { code: 'sr', label: 'Српски' },
     { code: 'bs', label: 'Bosanski' },
-
-]
+].sort((a, b) => a.label.localeCompare(b.label));
 
 const current = computed(() => options.find(o => o.code === locale.value) ?? options[0])
 
