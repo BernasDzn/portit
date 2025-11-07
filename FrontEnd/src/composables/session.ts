@@ -24,7 +24,7 @@ class Session {
 
     setSession(user: User, token: string, expiryTime: number) {
 
-        console.log('Setting session for user:', user);
+        console.trace('Setting session for user:', user);
 
         this.authenticatedUser = user;
         this.authToken = token;

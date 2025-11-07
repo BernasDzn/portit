@@ -1,6 +1,7 @@
 import type { IAdminService } from "./IService/IAdminService";
 import type { IHttpService } from "./IService/IHttpService";
 import { TYPES } from "@/inversify/types";
+import type { Logs } from "@/model/Logs";
 import type { Filter, Page } from "@/model/Page";
 import type { SystemUser } from "@/model/SystemUser";
 import {inject, injectable} from 'inversify';
@@ -12,6 +13,10 @@ export class AdminService implements IAdminService {
 		@inject(TYPES.api) 
 		private http: IHttpService
 	){}
+
+    getLogs(): Promise<Logs[]> {
+        return this.http.get<Logs[]>('/auditLogs').then(res => res.data);
+    }
 
     async changeUserRole(emailAddress: string, newRole: number): Promise<SystemUser> {
         const res = await this.http.put<SystemUser>(`/SystemUser/${encodeURIComponent(emailAddress)}/role?role=${encodeURIComponent(newRole)}`, { });

@@ -46,6 +46,8 @@ import StaffEdit from '@/views/Staff/StaffEdit.vue'
 import VVNDashboard from '@/views/VesselVisitNotification/VesselVisitNotificationDashboard.vue'
 import VVNSearch from '@/views/VesselVisitNotification/VesselVisitNotificationSearch.vue'
 import VVNView from '@/views/VesselVisitNotification/VesselVisitNotificationView.vue'
+import PhysicalResourceEdit from '@/views/PhysicalResources/PhysicalResourceEdit.vue'
+import AuditLogs from '@/views/Admin/AuditLogs.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -337,6 +339,19 @@ const router = createRouter({
           meta: { 
             icon: "visibility"
           }
+        },
+        {
+            path: '/resources/edit/:code',
+            name: 'editPhysicalResource',
+            component: PhysicalResourceEdit
+        },
+        {
+            path: '/admin/audit-logs',
+            name: 'Audit Logs',
+            component: AuditLogs,
+            meta: {
+              icon: "history"
+            }
         }
       ]
     },

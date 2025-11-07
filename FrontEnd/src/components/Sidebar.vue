@@ -1,38 +1,51 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue';
-import { RouterLink, useRoute } from 'vue-router';
+import { RouterLink, useRoute, useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
+import { useSession } from '@/composables/session';
 
 const route = useRoute();
 const { t } = useI18n();
 
+const role = ref(useSession().authenticatedUser!.role);
+
 const sidebarItems = ref([
   // add a materialIcon property with the Material Icons name we want to render
-  { name: 'dashboard.sidebarTitle', route: '/', icon: "house", materialIcon: 'home' },
+  { name: 'dashboard.sidebarTitle', route: '/', icon: "house", materialIcon: 'home', roles: [0, 1, 2, 3] },
   {},
-  { name: 'vessel.title', route: '/vessels/dashboard', icon: "directions_boat", materialIcon: 'directions_boat' },
-  { name: 'vesselType.title', route: '/vessel-types/dashboard', icon: "sailing", materialIcon: 'sailing' },
-  { name: 'dock.title', route: '/docks/dashboard', icon: "anchor", materialIcon: 'anchor' },
-  { name: 'notification.title', route: '/vessel-visit-notifications/dashboard', icon: "ballot", materialIcon: 'ballot' },
+  { name: 'vessel.title', route: '/vessels/dashboard', icon: "directions_boat", materialIcon: 'directions_boat', roles: [0, 1] },
+  { name: 'vesselType.title', route: '/vessel-types/dashboard', icon: "sailing", materialIcon: 'sailing', roles: [0, 1] },
+  { name: 'dock.title', route: '/docks/dashboard', icon: "anchor", materialIcon: 'anchor', roles: [0, 1] },
+  { name: 'notification.title', route: '/vessel-visit-notifications/dashboard', icon: "ballot", materialIcon: 'ballot', roles: [0, 2, 1] },
   {},
-  { name: 'qualification.title', route: '/qualifications/dashboard', icon:"mortarboard", materialIcon: 'school' },
-  { name: 'physicalResource.title', route: '/resources/dashboard', icon: "inventory", materialIcon: 'build' },
-  { name: 'staff.title', route: '/staff/dashboard', icon: "people", materialIcon: 'people' },
-  { name: 'storageArea.title', route: '/storage-areas/dashboard', icon: "warehouse", materialIcon: 'warehouse' },
+  { name: 'qualification.title', route: '/qualifications/dashboard', icon:"mortarboard", materialIcon: 'school', roles: [0, 3] },
+  { name: 'physicalResource.title', route: '/resources/dashboard', icon: "inventory", materialIcon: 'build', roles: [0, 3] },
+  { name: 'staff.title', route: '/staff/dashboard', icon: "people", materialIcon: 'people', roles: [0, 3] },
+  { name: 'storageArea.title', route: '/storage-areas/dashboard', icon: "warehouse", materialIcon: 'warehouse', roles: [0, 1] },
   {},
-  { name: "admin.sidebarTitle", route: '/admin/dashboard', icon: "admin_panel_settings", materialIcon: 'admin_panel_settings' }
+  { name: "admin.sidebarTitle", route: '/admin/dashboard', icon: "admin_panel_settings", materialIcon: 'admin_panel_settings', roles: [0] }
 ]);
 
 const isCurrentTab = (itemRoute: string) => {
   return route.path === itemRoute;
 };
 
+const itemsToShow = computed(() => {
+    return sidebarItems.value.filter(item => {
+        // Show sepereators only if admin
+        if (!item.roles && role.value == 0) return true;
+        // Check current role against item roles
+        const shouldShow = item.roles?.includes(role.value);
+        return shouldShow;
+    });
+});
+
 </script>
 
 <template>
   <nav class="sidebar">
     <ul class="sidebar-menu">
-      <li v-for="item in sidebarItems" class="sidebar-menu-item">
+      <li v-for="item in itemsToShow" class="sidebar-menu-item">
         <RouterLink v-if="item.route" 
           :to="item.route" 
           :class="(isCurrentTab(item.route) ? 'link-active' : '') + ' sidebar-menu-link'"

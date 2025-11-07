@@ -24,11 +24,13 @@ const typesDisplay = computed(() => {
 <template>
     <component :is="props.link ? RouterLink : 'div'" :to="props.link">
         <sl-card class="listing-item">
-            <div class="email-group">
-                <span class="material-icons sec_icon" aria-hidden="true">route</span>
-                <span class="item-description">{{ props.distance_string }}</span>
+            <div v-if="distance_string">
+                <div class="icon-group">
+                    <span class="material-icons sec_icon" aria-hidden="true">route</span>
+                    <span class="item-description">{{ props.distance_string }}</span>
+                </div>
+                <sl-divider></sl-divider>
             </div>
-            <sl-divider></sl-divider>
             <div class="opposed">
                 <div>
                     <p>{{ dock.name }}</p>
@@ -70,4 +72,12 @@ const typesDisplay = computed(() => {
     background-color: var(--sl-color-neutral-200);
     color: var(--sl-color-neutral-800);
 }
+
+.icon-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 8px;
+}
+
 </style>

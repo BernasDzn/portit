@@ -148,7 +148,7 @@ public class VesselIntegrationTest
     }
 
     [Fact]
-    public async Task Filter_ReturnsNotFound_WhenNoVesselsFound()
+    public async Task Filter_ReturnsEmpty_WhenNoVesselsFound()
     {
         var filter = new VesselFilter
         {
@@ -165,7 +165,9 @@ public class VesselIntegrationTest
             .ReturnsAsync(pagedResult);
 
         var result = await _controller.Filter(filter);
-        var notFoundResult = Assert.IsType<NotFoundObjectResult>(result.Result);
+        var okResult = Assert.IsType<OkObjectResult>(result.Result);
+        var returnValue = Assert.IsType<Page<VesselDto>>(okResult.Value);
+        Assert.Empty(returnValue.Items);
     }
 
     [Fact]

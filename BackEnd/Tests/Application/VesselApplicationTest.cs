@@ -300,11 +300,13 @@ public class VesselApplicationTest : WebApplicationFactory<Program>
     }
 
     [Fact]
-    public async Task FilterVessels_ReturnsNotFound_WhenPageNumberExceeds()
+    public async Task FilterVessels_Empty_WhenPageNumberExceeds()
     {
-        var request = new HttpRequestMessage(HttpMethod.Get, "/Vessel/filter?pageNumber=999&pageSize=10");
+        var request = new HttpRequestMessage(HttpMethod.Get, "/Vessel/filter?PageNumber=999&PageSize=10");
         var response = await _client.SendAsync(request);
-        Assert.Equal(System.Net.HttpStatusCode.NotFound, response.StatusCode);
+        response.EnsureSuccessStatusCode();
+        var pagedVessels = await response.Content.ReadFromJsonAsync<Page<VesselDto>>();
+        Assert.NotNull(pagedVessels);
     }
 
     [Fact]

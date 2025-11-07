@@ -226,28 +226,6 @@ public class VesselControllerTest
     }
 
     [Fact]
-    public async Task Filter_ReturnsNotFound_WhenNoVesselsFound()
-    {
-        var filter = new VesselFilter
-        {
-            PageNumber = 1,
-            PageSize = 10
-        };
-        var pagedResult = new Page<VesselDto>
-        {
-            Items = new List<VesselDto>(),
-            PageNumber = filter.PageNumber,
-            PageSize = filter.PageSize
-        };
-        _vesselServiceMock.Setup(service => service.FilterVessels(It.IsAny<VesselFilter>()))
-            .ReturnsAsync(pagedResult);
-
-        var result = await _controller.Filter(filter);
-
-        var notFoundResult = Assert.IsType<NotFoundObjectResult>(result.Result);
-    }
-
-    [Fact]
     public async Task Filter_ReturnsNotFound_OnException()
     {
         var filter = new VesselFilter

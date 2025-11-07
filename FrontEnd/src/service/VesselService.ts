@@ -3,7 +3,7 @@ import { TYPES } from '@/inversify/types';
 
 import type { IHttpService } from './IService/IHttpService';
 import type { IVesselService } from './IService/IVesselService';
-import type { Vessel } from '@/model/Vessel';
+import type { Vessel, VesselFilter } from '@/model/Vessel';
 import type { Filter, Page } from '@/model/Page';
 
 @injectable()
@@ -14,13 +14,14 @@ export class VesselService implements IVesselService {
 		private http: IHttpService
 	){}
 
-	async getVessels(filtering?: Filter<Vessel>): Promise<Page<Vessel>> {
+	async getVessels(filtering?: Filter<VesselFilter>): Promise<Page<Vessel>> {
 
         let query: string[] = [];
 
         if (filtering) {
             query.push(filtering.filter.name ? `Name=${filtering.filter.name}&` : '');
             query.push(filtering.filter.imoNumber ? `ImoNumber=${filtering.filter.imoNumber}&` : '');
+            query.push(filtering.filter.taxNumber ? `TaxNumber=${filtering.filter.taxNumber}&` : '');
             query.push(filtering.pageNumber !== undefined ? `PageNumber=${filtering.pageNumber}&` : '');
             query.push(filtering.pageSize !== undefined ? `PageSize=${filtering.pageSize}` : '');
         }

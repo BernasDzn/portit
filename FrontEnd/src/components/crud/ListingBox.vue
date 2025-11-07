@@ -12,7 +12,7 @@ const {t} = useI18n();
 // The function to fetch data is passed as a prop
 const props = defineProps<{
     fetchFunction: (filtering?: Filter<any>) => Promise<Page<any>>,
-    searchFilter: string,
+    searchFilter?: string,
     listingStyle?: string,
     filterDefinition?: { [key: string]: any }
 }>();
@@ -81,7 +81,7 @@ watch(searchTerm, (newTerm) => {
         pageNumber.value = 1;
         void loadElements({ filter: {
             ...filters.value,
-            [props.searchFilter]: ''
+            [props.searchFilter || ""]: ''
         }, pageNumber: pageNumber.value });
         return;
     }
@@ -92,7 +92,7 @@ watch(searchTerm, (newTerm) => {
         const filter: Filter<any> = {
             filter: {
                 ...filters.value,
-                [props.searchFilter]: newTerm
+                [props.searchFilter || ""]: newTerm
             },
             pageNumber: pageNumber.value
         };
@@ -109,7 +109,7 @@ watch(pageNumber, async (newPageNumber) => {
     const filter: Filter<any> = {
         filter: {
             ...filters.value,
-            [props.searchFilter]: searchTerm.value
+            [props.searchFilter || ""]: searchTerm.value
         },
         pageNumber: newPageNumber
     };
@@ -129,7 +129,7 @@ watch(filters, async (newFilters) => {
         const filter: Filter<any> = {
             filter: {
                 ...newFilters,
-                [props.searchFilter]: searchTerm.value
+                [props.searchFilter || ""]: searchTerm.value
             },
             pageNumber: pageNumber.value
         };
@@ -153,7 +153,7 @@ onBeforeUnmount(() => {
         <ErrorHandler v-if="error" :error-object="error" />
         <sl-card v-else class="listing-box">
             <div class="listing-filters">
-                <sl-input class="listing-search" :placeholder="t('buttons.search').concat('...')" size="large" clearable v-model="searchTerm">
+                <sl-input v-if="searchFilter" class="listing-search" :placeholder="t('buttons.search').concat('...')" size="large" clearable v-model="searchTerm">
                     <span slot="prefix" class="material-icons material-icons--prefix">search</span>
                 </sl-input>
                 <sl-button v-if="filterDefinition" class="filter-button" variant="default" size="large" @click="() => showFiltermenu = !showFiltermenu">

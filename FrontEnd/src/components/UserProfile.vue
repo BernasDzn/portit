@@ -6,20 +6,11 @@ import AxiosHttpService from '@/service/AxiosHttpService';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import Logout from './Logout.vue';
+import { useSession } from '@/composables/session';
 
-const http = new AxiosHttpService();
-const authService = new AuthService(http);
+const session = useSession();
 
-const notifications = useAlerts();
-const router = useRouter();
-
-const user = ref<User>({
-    id: '1',
-    name: 'Monokuma',
-    email: 'monoemail@hopes.peak',
-    avatar: '/monouser.png',
-    role: -1
-});
+const user = ref<User>(session.authenticatedUser!);
 
 const moreInfo = ref(false);
 const roles = [
@@ -44,21 +35,6 @@ const animateChevron = () => {
         icon.style.transition = 'transform 0.2s ease';
     }
 };
-
-onMounted(async () => {
-
-    try {
-        user.value = await authService.whoAmI();
-    } catch (error: any) {
-
-        if (error.status === 401)
-            notifications.enqueueNotification('Session could not be found', notifications.notificationTypes.WARNING);
-        else
-            notifications.enqueueNotification(`Unexpected error fetching user data: ${error.message}`, notifications.notificationTypes.DANGER);
-
-        router.push('/unauthorized');
-    }
-});
 
 </script>
 

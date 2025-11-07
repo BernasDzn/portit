@@ -13,8 +13,26 @@ export class AxiosHttpService implements IHttpService {
     if (!instanceOrBase) {
       this.axiosInstance = api as AxiosInstance;
     } else {
-      this.axiosInstance = axios.create({ baseURL: instanceOrBase as string });
+      this.axiosInstance = axios.create(
+        { 
+            baseURL: instanceOrBase as string ,
+        });
     }
+
+    this.axiosInstance.interceptors.request.use(
+
+        
+      (config) => {
+        // Add auth token to headers if available
+        if (session.authToken) {
+          config.headers.Authorization = `Bearer ${session.authToken}`;
+        }
+        return config;
+      },
+      (error) => {
+        return Promise.reject(error);
+      }
+    );
   }
 
   private toResponse<T>(res: import('axios').AxiosResponse<T>): Response<T> {
@@ -26,10 +44,7 @@ export class AxiosHttpService implements IHttpService {
         url, 
         { 
             params: options?.params, 
-            headers: {
-                ...options?.headers,
-                'Authorization': session.isAuthenticated() ? `Bearer ${session.authToken}` : undefined,
-            }
+            headers: options?.headers
         } as any);
     return this.toResponse(res);
   }
@@ -41,7 +56,6 @@ export class AxiosHttpService implements IHttpService {
       {
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': session.isAuthenticated() ? `Bearer ${session.authToken}` : undefined,
             ...headers,
         },
       } as any
@@ -57,7 +71,6 @@ export class AxiosHttpService implements IHttpService {
         {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': session.isAuthenticated() ? `Bearer ${session.authToken}` : undefined,
                 ...headers,
             },
         } as any
@@ -72,7 +85,6 @@ export class AxiosHttpService implements IHttpService {
         {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': session.isAuthenticated() ? `Bearer ${session.authToken}` : undefined,
                 ...headers,
             },
         } as any

@@ -4,7 +4,16 @@
         "noData": "No data available",
         "statistics": "Statistics",
         "yes": "Yes",
-        "no": "No"
+        "no": "No",
+        "days": {
+            "sunday": "Sunday",
+            "monday": "Monday",
+            "tuesday": "Tuesday",
+            "wednesday": "Wednesday",
+            "thursday": "Thursday",
+            "friday": "Friday",
+            "saturday": "Saturday"
+        }
     },
     "buttons": {
         "save": "Save",
@@ -36,9 +45,14 @@
         "cancel": "Keep Editing"
     },
     "dashboard": {
+        "welcome": "Welcome back, [name]!",
         "sidebarTitle": "Dashboard",
         "title": "PortIT Dashboard",
         "subtitle": "Overview of PortIT system",
+        "SAOR": {
+            "subtitle": "Overview of the shipping agent's operations",
+            "pendingNotifications": "Pending Notifications"
+        },
         "3DModel": {
             "title": "3D Port Visualization",
             "description": "View an interactive 3D representation of the entire port facility. Monitor dock occupancy, vessel positions, storage areas, and resources in real-time from a bird's-eye view.",
@@ -219,6 +233,9 @@
             "vesselType": {
                 "title": "Vessel Type",
                 "placeholder": "Select vessel type"
+            },
+            "taxNumber": {
+                "title": "Tax Number"
             }
         },
         "infoTitle": "Vessel information",
@@ -270,7 +287,8 @@
                     "unavailable": "Unavailable",
                     "temporarilyReassigned": "Temporarily reassigned"
                 }
-            }
+            },
+            "operationalWindow": "Operational Window"
         },
         "tabs": {
             "dashboard": "Staff Dashboard",
@@ -427,10 +445,11 @@
             "capacity_usage": "Capacity Usage",
             "units": "units",
             "available": "available",
-            "serviced_docks_distance" : "Serviced Docks Distances",
-            "all_docks_serviced": "All docks serviced",
+            "no_registered_distances": "No registered distances",
             "no_docks_serviced": "No docks serviced",
-            "no_registered_distances": "No registered distances"
+            "all_docks_serviced": "All docks serviced",
+            "serviced_docks_distance": "Serviced docks distance",
+            "no_registered_docks": "No registered docks"
         },
         "fields":{
             "nameCode": {
@@ -466,11 +485,15 @@
         "crew": "Crew",
         "captain": "Captain",
         "unknown": "Unknown",
+        "from": "From",
+        "to": "To",
         "tabs": {
             "dashboard": "Notifications Dashboard",
             "search": "Search Notifications",
             "edit": "Edit Notification",
-            "create": "Create Notification"
+            "create": "Create Notification",
+            "makeDraft": "Create Draft Notification",
+            "myNotifications": "My Notifications"
         },
         "title": "Vessel Visit Notifications",
         "subtitle": {
@@ -485,7 +508,10 @@
         "infoTitle": "Notification Information",
         "cargoTitle": "Cargo Information",
         "vesselTitle": "Vessel Information",
+        "manifestInfo": "Manifest Information",
         "fields": {
+            "openLoadManifest": "Open Load Manifest",
+            "openUnloadManifest": "Open Unload Manifest",
             "expectedArrival": "Expected Arrival",
             "expectedDeparture": "Expected Departure",
             "isCargoHazardous": "Cargo Hazardous",
@@ -499,6 +525,27 @@
             "area": "Area",
             "container": "Container",
             "crewMembers": "Crew Members"
+        },
+        "timeline": {
+            "pending": "Pending",
+            "inProgress": "In Progress",
+            "completed": "Completed",
+            "submitted": "Submitted",
+            "accepted": "Accepted",
+            "rejected": "Rejected"
+        }
+    },
+    "operationalWindow": {
+        "printer": {
+            "addShift": "Add Shift",
+            "shifts": "Shifts:",
+            "noShifts": "No shifts defined",
+            "startTime": "Start Time",
+            "endTime": "End Time",
+            "weekDays": "Week Days"
+        },
+        "errors": {
+            "shiftOverlap": "Invalid shift. Overlapping or end time before start time."
         }
     }
 }

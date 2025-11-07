@@ -9,3 +9,9 @@ export interface Vessel {
     depth: number;
     draft: number;
 }
+
+export interface VesselFilter {
+    name?: string;
+    imoNumber?: string;
+    taxNumber?: string;
+}

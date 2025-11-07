@@ -32,7 +32,7 @@ onMounted(async () => {
                     :title="t('admin.auditLogs.title')"
                     :description="t('admin.auditLogs.subtitle')"
                     icon="history"
-                    to="/admin/logs"
+                    to="/admin/audit-logs"
                 />
             </div>
         </sl-card>
