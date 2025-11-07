@@ -5,40 +5,53 @@ import NotificationQueue from '@/components/NotificationQueue.vue';
 import { onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
 import { useSession } from '@/composables/session';
+import { useAlerts } from '@/composables/alerts';
 
 const session = useSession();
 const router = useRouter();
+const notifications = useAlerts();
 
-let expiryTimer: number | null = null;
+let expirationTimer: number | null = null;
+let warningTimer: number;
 
-function scheduleExpiryCheck() {
-  if (expiryTimer) {
-    clearTimeout(expiryTimer);
-    expiryTimer = null;
+function scheduleExpirationCheck() {
+  if (expirationTimer) {
+    clearTimeout(expirationTimer);
+    expirationTimer = null;
   }
 
   if (session.expirationTime) {
-    const msUntilExpiry = session.expirationTime - Date.now();
-    if (msUntilExpiry <= 0) {
-      handleExpiry();
+    const msUntilExpiration = session.expirationTime - Date.now();
+    if (msUntilExpiration <= 0) {
+      handleExpiration();
       return;
     }
 
-    expiryTimer = window.setTimeout(() => {
-      handleExpiry();
-    }, msUntilExpiry + 1000);
+    expirationTimer = window.setTimeout(() => {
+      handleExpiration();
+    }, msUntilExpiration + 1000);
+
+    const warningMs = msUntilExpiration - 60000;
+    if (warningMs > 0) {
+      warningTimer = window.setTimeout(() => {
+        notifications.enqueueNotification('Your session will expire in 1 minute.', notifications.notificationTypes.WARNING, 60000);
+      }, warningMs);
+    } else if (warningMs <= 0) {
+      notifications.enqueueNotification('Your session will expire soon.', notifications.notificationTypes.WARNING, 60000);
+    }
   }
 }
 
-function handleExpiry() {
+function handleExpiration() {
   session.clearSession();
   router.push('/unauthorized');
 }
 
-onMounted(() => scheduleExpiryCheck());
+onMounted(() => scheduleExpirationCheck());
 
 onBeforeUnmount(() => {
-  if (expiryTimer) clearTimeout(expiryTimer);
+  if (expirationTimer) clearTimeout(expirationTimer);
+  if (warningTimer) clearTimeout(warningTimer);
 });
 </script>
 
