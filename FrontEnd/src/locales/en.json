@@ -44,6 +44,10 @@
         "confirm": "Discard",
         "cancel": "Keep Editing"
     },
+    "expirationWarning": {
+        "messageOneMinute": "Your session will expire in 1 minute.",
+        "messageLessThanOneMinute": "Your session is about to expire."
+    },
     "dashboard": {
         "welcome": "Welcome back, [name]!",
         "sidebarTitle": "Dashboard",
