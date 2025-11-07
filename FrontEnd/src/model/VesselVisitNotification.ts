@@ -1,5 +1,6 @@
 export interface VesselVisitNotification {
     notificationId: string;
+    status: VesselVisitNotificationStatus;
     expectedArrival: string;
     expectedDeparture: string;
     isCargoHazardous: boolean;
@@ -9,6 +10,15 @@ export interface VesselVisitNotification {
     unloadCargoManifest: string[];
     vessel: Vessel;
     submitter: Person;
+}
+
+export interface VesselVisitNotificationFilter {
+    Status: VesselVisitNotificationStatus
+    WithReason: boolean
+    WithDockAssigned: boolean
+    Vessel: string
+    ExpectedArrivalFrom: Date
+    ExpectedArrivalTo: Date
 }
 
 export interface CrewDetails {
