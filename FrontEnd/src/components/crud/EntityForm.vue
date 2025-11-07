@@ -62,7 +62,7 @@ const submit = async () => {
     props.submitFunction(props.object)
     .catch((error: any) => {
         notification.enqueueNotification(
-            error.response?.data || 'Could not pinpoint the error. Please try again later.',
+            error.response?.data || error.message || 'Could not pinpoint the error. Please try again later.',
             notification.notificationTypes.DANGER,
         );
 

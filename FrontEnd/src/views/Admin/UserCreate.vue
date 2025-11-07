@@ -6,10 +6,13 @@ import FormField from '@/components/crud/FormField.vue';
 import EntityDropdown from '@/components/crud/EntityDropdown.vue';
 import AxiosHttpService from '@/service/AxiosHttpService';
 import { AdminService } from '@/service/AdminService';
+import { RepresentativeService } from '@/service/RepresentativeService';
 import type { SystemUser } from '@/model/SystemUser';
 import { useI18n } from 'vue-i18n';
+import { useAlerts } from '@/composables/alerts';
 
 const { t } = useI18n();
+const alerts = useAlerts();
 
 const http = new AxiosHttpService();
 const adminService = new AdminService(http as any);
@@ -31,6 +34,17 @@ const model = reactive<SystemUser>({
 
 const submitFunction = async (obj: SystemUser) => {
   const roleNum = typeof obj.role === 'number' ? obj.role : Number(obj.role);
+
+  if (roleNum == 2) {
+    const representativeService = new RepresentativeService(http as any);
+
+    try {
+      await representativeService.getByEmail(obj.emailAddress);
+    } catch {
+      throw new Error('Representative not found for the provided email address.');
+    }
+  }
+
   return await adminService.inviteUser(obj.emailAddress, roleNum);
 }
 
