@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using NSwag.Generation.Processors.Security;
 using Api.Infrastructure.Utilities.Email;
+using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
 // Logging definitions
@@ -37,12 +38,15 @@ builder.WebHost.ConfigureKestrel(options =>
 });
 */
 
-// Allow all requests from Vue dev server
+// Allow requests from one or more frontend origins (Vue dev server, hosted frontends, ...)
+// Read an array from configuration (frontend_urls). Fall back to single frontend_url for backward compatibility.
+var frontendUrls = builder.Configuration.GetSection("frontend_urls").Get<string[]>() ?? new[] { builder.Configuration.GetValue<string>("frontend_url")! };
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("VueDevPolicy", policy =>
     {
-        policy.WithOrigins(builder.Configuration.GetValue<string>("frontend_url")!)
+        policy.WithOrigins(frontendUrls)
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials();
@@ -67,7 +71,8 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuer = true, // Require that token iss claim matches configured issuer (us)
         ValidIssuer = builder.Configuration.GetValue<string>("backend_url")!,
         ValidateAudience = true, // Require that token aud claim matches configured audience (our front-end)
-        ValidAudience = builder.Configuration.GetValue<string>("frontend_url")!,
+    // Accept any of the configured frontend URLs as valid audiences for tokens
+    ValidAudiences = frontendUrls,
         ValidateLifetime = true, // Ensure token hasn't expired
         ValidateIssuerSigningKey = true, // Ensure token signature is valid so it cant be forged
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)),
@@ -203,7 +208,10 @@ if (app.Environment.IsDevelopment())
     {
         options.DocumentPath = "/openapi/v1.json";
     });
+    app.UseDeveloperExceptionPage();
 }
+
+app.UseSerilogRequestLogging();
 
 //app.UseHttpsRedirection();
 app.UseCors("VueDevPolicy");
@@ -211,7 +219,11 @@ app.UseCors("VueDevPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Prometheus metrics endpoint for Grafana
+app.UseHttpMetrics();  // Collects HTTP request metrics (duration, count, etc.)
+
 app.MapControllers();
+app.MapMetrics();      // Exposes /metrics endpoint at http://localhost:2226/metrics
 
 app.Run();
 

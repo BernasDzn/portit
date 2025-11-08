@@ -6,10 +6,12 @@ import { onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
 import { useSession } from '@/composables/session';
 import { useAlerts } from '@/composables/alerts';
+import { useI18n } from 'vue-i18n';
 
 const session = useSession();
 const router = useRouter();
 const notifications = useAlerts();
+const { t } = useI18n();
 
 let expirationTimer: number | null = null;
 let warningTimer: number;
@@ -34,10 +36,10 @@ function scheduleExpirationCheck() {
     const warningMs = msUntilExpiration - 60000;
     if (warningMs > 0) {
       warningTimer = window.setTimeout(() => {
-        notifications.enqueueNotification('Your session will expire in 1 minute.', notifications.notificationTypes.WARNING, 60000);
+        notifications.enqueueNotification(t('expirationWarning.messageOneMinute'), notifications.notificationTypes.WARNING, 60000);
       }, warningMs);
     } else if (warningMs <= 0) {
-      notifications.enqueueNotification('Your session will expire soon.', notifications.notificationTypes.WARNING, 60000);
+      notifications.enqueueNotification(t('expirationWarning.messageLessThanOneMinute'), notifications.notificationTypes.WARNING, 60000);
     }
   }
 }

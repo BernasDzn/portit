@@ -57,7 +57,7 @@ public class AdminService : IAdminService
                     if (
                         (
                             log.RequestId != string.Empty &&
-                            Int32.Parse(log.RequestId) > 1000 &&
+                            Int32.Parse(log.RequestId) >= 1000 &&
                             Int32.Parse(log.RequestId) < 2000
                         ) ||
                         log.Level == "ERROR" ||

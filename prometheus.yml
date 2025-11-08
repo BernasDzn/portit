@@ -1,0 +1,17 @@
+# Prometheus configuration for monitoring ASP.NET Core API
+global:
+  scrape_interval: 15s     # How often to scrape targets
+  evaluation_interval: 15s # How often to evaluate rules
+
+# Scrape configurations
+scrape_configs:
+  # Monitor the ASP.NET Core API
+  - job_name: 'aspnet-api'
+    static_configs:
+      - targets: ['localhost:2226']  # Internal port on vs228
+        labels:
+          environment: production
+          host: vs228
+          public_url: 'https://vs-gate.dei.isep.ipp.pt:10228'
+    metrics_path: '/metrics'
+    scrape_interval: 10s

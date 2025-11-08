@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import ListingBox from '@/components/crud/ListingBox.vue';
-import { useRouter } from 'vue-router';
+import DataTable from '@/components/crud/DataTable.vue';
+import { onMounted, ref, computed } from 'vue';
 import type { Filter, Page } from '@/model/Page';
 import type { Vessel } from '@/model/Vessel';
 import AxiosHttpService from '@/service/AxiosHttpService';
@@ -16,15 +16,42 @@ const { t } = useI18n();
 const http = new AxiosHttpService()
 const adminService = new AdminService(http)
 
-const fetchLogs = async (filter?: Filter<any>): Promise<Page<Logs>> => {
-    const logList: Logs[] = await adminService.getLogs();
-    return {
-        items: logList,
-        pageNumber: 1,
-        pageSize: logList.length,
-        pageCount: 1
-    };
-}
+const logs = ref<Logs[]>([] as Logs[]);
+
+const columns = [
+  'timestamp',
+  'level',
+  'message',
+  'requestId',
+  'requestType'
+];
+
+const fetchLogs = async () => {
+  const logList: Logs[] = await adminService.getLogs();
+  logs.value = logList;
+};
+
+onMounted(() => {
+  void fetchLogs();
+});
+
+// Map numeric level codes to human-friendly labels
+const levelMap: Record<string, string> = {
+  '1000': 'Create',
+  '1001': 'Update',
+  '1002': 'Delete',
+  '1003': 'Deactivate',
+  '1004': 'Retrieve',
+  '1005': 'Filter'
+};
+
+const mappedLogs = computed(() =>
+  logs.value.map(l => ({
+    ...l,
+    // Map based on the numeric requestId (the log's Id field), not the textual Level (INF/ERR)
+    requestType: levelMap[String(l.requestId)] ?? String(l.requestId)
+  }))
+);
 </script>
 
 <template>
@@ -39,11 +66,7 @@ const fetchLogs = async (filter?: Filter<any>): Promise<Page<Logs>> => {
       <h1 class="title">Audit logs</h1>
       <p class="subtitle">Peep what's been happening in the app</p>
 
-      <ListingBox listingStyle="listing-grid" :fetch-function="fetchLogs" v-slot="{elements}">
-        <li v-for="log in elements" :key="log.requestId">
-          <LogPrinter :log="log" />
-        </li>
-      </ListingBox>
+  <DataTable :columns="columns" :rows="mappedLogs" keyField="requestId" emptyText="No logs" />
     </header>
   </div>
 </template>

@@ -106,7 +106,7 @@ public class SystemUserService : ISystemUserService
             systemUser.ActivationTokenExpiresAt = DateTime.UtcNow.AddDays(7);
 
             // build activation link based on configuration
-            var baseUrl = _configuration.GetValue<string>("ApplicationSettings:BaseUrl") ?? "http://localhost:5173";
+            var baseUrl = _configuration.GetValue<string>("ApplicationSettings:BaseUrl") ?? "https://vs-gate.dei.isep.ipp.pt:40228";
             var activationPath = _configuration.GetValue<string>("ApplicationSettings:ActivationPath") ?? "/activate-with-token";
             var activationLink = $"{baseUrl.TrimEnd('/')}{activationPath}?token={systemUser.ActivationToken}";
 
