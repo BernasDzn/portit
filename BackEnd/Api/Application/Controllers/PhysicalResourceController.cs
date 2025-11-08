@@ -1,6 +1,7 @@
 namespace Api.Application.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Api.Application.Services;
 using Api.Application.DataTransfer;
 using Api.Infrastructure.Utilities;
@@ -10,6 +11,7 @@ using Api.Infrastructure.Exceptions;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize(Policy = "PhysicalResource.Manage")]
 public class PhysicalResourceController : ControllerBase, IPhysicalResourceController
 {
     private readonly IPhysicalResourceService _physicalResourceService;

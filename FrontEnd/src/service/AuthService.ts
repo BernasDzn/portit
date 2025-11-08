@@ -8,6 +8,12 @@ import type { User } from '@/model/User';
 export class AuthService implements IAuthService {
 
     googleClientId: string;
+    roles : Map<string, number> = new Map<string, number>([
+        ['Administrator', 0],
+        ['PortAuthorityOfficer', 1],
+        ['SAORepresentative', 2],
+        ['LogisticsOperator', 3]
+    ]);
 
     constructor(
         @inject(TYPES.api)
@@ -95,15 +101,30 @@ export class AuthService implements IAuthService {
     }
 
     async whoAmI(): Promise<User> {
-
-        let res: any = await this.http.get('/Login/me');
-        // console.log(res.data);
+        let roleNumeric: number = -1;
+        try {
+            let res: any = await this.http.get('/Login/me');
+            if (res && res.data) {
+                roleNumeric = this.roles.get(res.data.role) ?? -1;
+                console.log('Role determined from role name:', roleNumeric);
+                return {
+                    id: res.data.sub,
+                    name: res.data.name,
+                    email: res.data.email,
+                    avatar: res.data.picture,
+                    role: roleNumeric
+                }
+            }
+        } catch (err) {
+            console.debug('whoAmI failed or returned no data; treating as unauthenticated', err);
+        }
+        // Default to unauthenticated user "Guest"
         return {
-            id: res.data.sub,
-            name: res.data.name,
-            email: res.data.email,
-            avatar: res.data.picture,
-            role: parseInt(res.data.role)
+            id: '',
+            name: '',
+            email: '',
+            avatar: '',
+            role: -1
         }
     }
 

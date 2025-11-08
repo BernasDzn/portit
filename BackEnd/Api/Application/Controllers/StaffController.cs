@@ -1,6 +1,7 @@
 namespace Api.Application.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Api.Application.Services;
 using Api.Application.DataTransfer;
 using Api.Application.DataTransfer.Filters;
@@ -10,6 +11,7 @@ using Api.Infrastructure.Exceptions;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize(Policy = "Staff.Manage")]
 public class StaffController : ControllerBase, IStaffController
 {
 	private readonly ILogger<StaffController> _logger;

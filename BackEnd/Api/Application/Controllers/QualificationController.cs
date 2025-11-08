@@ -1,16 +1,17 @@
 namespace Api.Application.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Api.Application.Services;
 using Api.Application.DataTransfer;
 using Api.Infrastructure.Utilities;
 using Api.Application.DataTransfer.Filters;
 using Api.Application.Exceptions;
 using Api.Infrastructure.Exceptions;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize(Policy = "Qualification.Manage")]
 public class QualificationController : ControllerBase, IQualificationController
 {
 	private readonly ILogger<QualificationController> _logger;

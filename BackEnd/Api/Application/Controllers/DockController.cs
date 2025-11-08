@@ -1,7 +1,7 @@
 namespace Api.Application.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
-using Api.Application.Services;
+using Microsoft.AspNetCore.Authorization;
 using Api.Application.DataTransfer;
 using Api.Application.DataTransfer.Filters;
 using Api.Application.Exceptions;
@@ -9,6 +9,7 @@ using Api.Infrastructure.Exceptions;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize(Policy = "Dock.Manage")]
 public class DockController : ControllerBase, IDockController
 {
 	private readonly ILogger<DockController> _logger;

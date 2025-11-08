@@ -1,6 +1,7 @@
 namespace Api.Application.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Api.Application.Services;
 using Google.Apis.Auth;
 using Api.Application.DataTransfer;
@@ -13,6 +14,7 @@ using Api.Infrastructure.Utilities;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize(Policy = "ApiUser")]
 public class SystemUserController : ControllerBase, ISystemUserController
 {
     private readonly ILogger<SystemUserController> _logger;
@@ -27,6 +29,7 @@ public class SystemUserController : ControllerBase, ISystemUserController
     }
 
     [HttpGet(Name = "GetSystemUsers")]
+    [Authorize(Roles = "Administrator")]
     public async Task<ActionResult<IEnumerable<SystemUserDto>>> GetAll()
     {
         IEnumerable<SystemUserDto> systemUsersDto = await _systemUserService.GetAll();
@@ -34,6 +37,7 @@ public class SystemUserController : ControllerBase, ISystemUserController
     }
 
     [HttpGet("{emailAddress}", Name = "GetSystemUserByEmailAddress")]
+    [Authorize(Roles = "Administrator")]
     public async Task<ActionResult<SystemUserDto>> GetByEmailAddress(string emailAddress)
     {
         try
@@ -54,6 +58,7 @@ public class SystemUserController : ControllerBase, ISystemUserController
     }
 
     [HttpPost(Name = "CreateSystemUser")]
+    [Authorize(Roles = "Administrator")]
     public async Task<ActionResult<SystemUserDto>> Create(SystemUserDto systemUserDto)
     {
         try
@@ -74,6 +79,7 @@ public class SystemUserController : ControllerBase, ISystemUserController
     }
 
     [HttpPut("{emailAddress}/role", Name = "SetUserRole")]
+    [Authorize(Roles = "Administrator")]
     public async Task<ActionResult<SystemUserDto>> SetUserRole(string emailAddress, int role)
     {
         try
@@ -94,6 +100,7 @@ public class SystemUserController : ControllerBase, ISystemUserController
     }
 
     [HttpPut("{emailAddress}/deactivate", Name = "DeactivateUser")]
+    [Authorize(Roles = "Administrator")]
     public async Task<ActionResult> DeactivateUser(string emailAddress)
     {
         try
@@ -114,6 +121,7 @@ public class SystemUserController : ControllerBase, ISystemUserController
     }
 
     [HttpPut("{emailAddress}/activate", Name = "ActivateUser")]
+    [Authorize(Roles = "Administrator")]
     public async Task<ActionResult> ActivateUser(string emailAddress)
     {
         try
@@ -134,6 +142,7 @@ public class SystemUserController : ControllerBase, ISystemUserController
     }
 
     [HttpPost("activate-with-token", Name = "ActivateUserWithToken")]
+    [AllowAnonymous]
     public async Task<ActionResult> ActivateUserWithToken(string emailAddress, string token, [FromBody] Api.Application.DataTransfer.ActivationIdTokenRequest idTokenRequest)
     {
         try
@@ -185,6 +194,7 @@ public class SystemUserController : ControllerBase, ISystemUserController
     }
 
     [HttpDelete("{emailAddress}", Name = "DeleteUser")]
+    [Authorize(Roles = "Administrator")]
     public async Task<ActionResult> DeleteUser(string emailAddress)
     {
         try
@@ -205,6 +215,7 @@ public class SystemUserController : ControllerBase, ISystemUserController
     }
 
     [HttpGet("filter")]
+    [Authorize(Roles = "Administrator")]
     public async Task<ActionResult<Page<SystemUserDto>>> FilterUsers([FromQuery]SystemUserFilter filter)
     {
         try

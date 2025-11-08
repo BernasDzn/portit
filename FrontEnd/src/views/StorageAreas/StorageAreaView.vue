@@ -55,7 +55,7 @@ function filterDockServices(list: Array<any> | undefined) {
 						</div>
                     </div>
                 </div>
-                <RouterLink :to="`/storage-areas/edit/${encodeURIComponent(entity.element.id)}`">
+                <RouterLink :to="`/storage-areas/edit/${encodeURIComponent(entity.element.nameCode)}`">
                     <sl-button variant="default" size="large">
                         <sl-icon slot="prefix" name="pencil"></sl-icon>
                         {{ t('storageArea.tabs.edit') }}

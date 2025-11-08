@@ -68,13 +68,21 @@ public class LoginController : ControllerBase
             // We need to create this because the google token was issue by google and we cant accept any token not issued by us
             // (or any app with google signin could generate valid tokens for out backend), so we have to issue it ourselfs
             // sending as payload whatever we need from the google api
+            
+            // Convert role integer to role name string for JWT token
+            string roleName = "";
+            if (user.Role.HasValue && Enum.IsDefined(typeof(SystemUserRoleType), user.Role.Value))
+            {
+                roleName = ((SystemUserRoleType)user.Role.Value).ToString();
+            }
+            
             var token = _jwtTokenService.GenerateToken(new Dictionary<string, string>
             {
                 { "id", googleUserId},
                 { "email_address", email },
                 { "name", payload.Name ?? "" },
                 { "picture", payload.Picture ?? "" },
-                { "user_role", user.Role.ToString() ?? "" }
+                { "user_role", roleName }
             });
 
             var cookieOptions = new CookieOptions

@@ -1,16 +1,12 @@
 <script setup lang="ts">
-import { useAlerts } from '@/composables/alerts';
 import type { User } from '@/model/User';
-import { AuthService } from '@/service/AuthService';
-import AxiosHttpService from '@/service/AxiosHttpService';
-import { onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref, computed } from 'vue';
 import Logout from './Logout.vue';
 import { useSession } from '@/composables/session';
 
 const session = useSession();
 
-const user = ref<User>(session.authenticatedUser!);
+const user = computed<User | null>(() => session.authenticatedUser ?? null);
 
 const moreInfo = ref(false);
 const roles = [
@@ -42,11 +38,11 @@ const animateChevron = () => {
 <div>
     <div @click="toggleMoreInfo" class="user-info">
         <sl-avatar 
-            :image="user.avatar"
+            :image="user?.avatar"
             label="User avatar"
             loading="lazy"
         ></sl-avatar>
-        <p>{{user.name}}</p>
+        <p>{{ user?.name || 'Guest' }}</p>
         <sl-icon class="icon" name="chevron-down"></sl-icon>
     </div>
 
@@ -56,17 +52,17 @@ const animateChevron = () => {
             <div class="box">
                 <!-- <p class="title"><sl-badge variant="primary" pill>Admin</sl-badge> {{user.name}} </p> -->
                 <div class="opposed">
-                    <p class="title">{{ user.name }}</p>
+                    <p class="title">{{ user?.name || 'Guest' }}</p>
                     <sl-badge 
                         class="role"
-                        :variant="roles.find(r => r.value === user.role)?.color || 'default'" 
+                        :variant="roles.find(r => r.value === user?.role)?.color || 'default'" 
                         pill
                     >
-                        {{ roles.find(r => r.value === user.role)?.label || 'Unknown Role' }}
+                        {{ roles.find(r => r.value === user?.role)?.label || 'Unknown Role' }}
                     </sl-badge> 
                 </div>
 
-                <p class="subtitle">{{ user.email }}</p>
+                <p class="subtitle">{{ user?.email || '' }}</p>
                 <div class="logout-box">
                     <Logout />
                 </div>

@@ -1,16 +1,14 @@
 namespace Api.Infrastructure.Persistence;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Api.Domain.Entities;
 using Api.Domain.ValueObjects;
 using System.Text.Json;
 using Api.Infrastructure.Utilities;
 
-public class ApiContext : DbContext
+public class ApiContext : IdentityDbContext<SystemUser, SystemUserRole, Guid>
 {
-
-    protected readonly IConfiguration Configuration;
-
     public ApiContext(DbContextOptions<ApiContext> options) : base(options)
     {
         Database.EnsureCreated();
@@ -28,10 +26,13 @@ public class ApiContext : DbContext
     public DbSet<PhysicalResource> PhysicalResources { get; set; } = null!;
     public DbSet<VesselVisitNotification> VesselVisitNotifications { get; set; } = null!;
     public DbSet<Container> Containers { get; set; } = null!;
-    public DbSet<SystemUser> SystemUsers { get; set; } = null!;
+    // SystemUsers is inherited from IdentityDbContext, no need to redeclare
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        // Call base to configure Identity tables
+        base.OnModelCreating(modelBuilder);
+
         // Discriminator so EF knows to select the correct sub class
         // modelBuilder.Entity<PhysicalResource>()
         //     .HasDiscriminator<string>("resource_type")

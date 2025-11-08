@@ -17,7 +17,7 @@ public class StaffMechanographicNumberGenerator
 	public async Task<string> GenerateMechanographicNumber()
 	{
 		string year = DateTime.Now.Year.ToString().Substring(2, 2);
-		StaffFilter yearFilter = new StaffFilter{MechanographicNumber = $"STF{year}", PageNumber=1, PageSize=1000};
+		StaffFilter yearFilter = new StaffFilter{MechanographicNumber = $"STF{year}", PageNumber=1, PageSize=10000};
 		int numOfStaff = (await _staffRepository.FilterStaffsAsync(yearFilter)).Items.Count;
 		id += year + (numOfStaff + 1).ToString("D4");
 		return id;

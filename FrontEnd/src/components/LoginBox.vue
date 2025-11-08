@@ -17,12 +17,23 @@ const router = useRouter();
 const notifications = useAlerts();
 
 const loginFinished = (res: AppJWTResponse) => {
+    // Backend now returns an integer `role`. Parse it robustly and fall back to -1.
+    let numericRole = -1;
+    if (res && res.user) {
+        if (typeof res.user.role === 'number') {
+            numericRole = res.user.role;
+        } else {
+            const parsed = parseInt(String(res.user.role ?? ''), 10);
+            if (!isNaN(parsed)) numericRole = parsed;
+        }
+    }
+
     const sessionUser: User = {
         id: res.user.id,
         name: res.user.name,
         email: res.user.email,
         avatar: res.user.picture,
-        role: res.user.role
+        role: numericRole
     };
 
     session.setSession(sessionUser, res.token, res.expiresIn);

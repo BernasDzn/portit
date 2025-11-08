@@ -17,6 +17,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using NSwag.Generation.Processors.Security;
 using Api.Infrastructure.Utilities.Email;
+using Prometheus;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 // Logging definitions
@@ -37,12 +39,15 @@ builder.WebHost.ConfigureKestrel(options =>
 });
 */
 
-// Allow all requests from Vue dev server
+// Allow requests from one or more frontend origins (Vue dev server, hosted frontends, ...)
+// Read an array from configuration (frontend_urls). Fall back to single frontend_url for backward compatibility.
+var frontendUrls = builder.Configuration.GetSection("frontend_urls").Get<string[]>() ?? new[] { builder.Configuration.GetValue<string>("frontend_url")! };
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("VueDevPolicy", policy =>
     {
-        policy.WithOrigins(builder.Configuration.GetValue<string>("frontend_url")!)
+        policy.WithOrigins(frontendUrls)
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials();
@@ -67,10 +72,12 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuer = true, // Require that token iss claim matches configured issuer (us)
         ValidIssuer = builder.Configuration.GetValue<string>("backend_url")!,
         ValidateAudience = true, // Require that token aud claim matches configured audience (our front-end)
-        ValidAudience = builder.Configuration.GetValue<string>("frontend_url")!,
+    // Accept any of the configured frontend URLs as valid audiences for tokens
+    ValidAudiences = frontendUrls,
         ValidateLifetime = true, // Ensure token hasn't expired
         ValidateIssuerSigningKey = true, // Ensure token signature is valid so it cant be forged
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)),
+        RoleClaimType = "user_role", // Map the role claim type used when creating tokens.
         ClockSkew = TimeSpan.FromMinutes(2) // Allows for a small time difference between server and client
     };
     
@@ -88,6 +95,20 @@ builder.Services.AddAuthentication(options =>
                 }
             }
             return Task.CompletedTask;
+        },
+        OnTokenValidated = context =>
+        {
+            // Debug: Log the claims in the token
+            var claims = context.Principal?.Claims.Select(c => $"{c.Type}: {c.Value}");
+            if (claims != null)
+            {
+                Console.WriteLine("JWT Token Claims:");
+                foreach (var claim in claims)
+                {
+                    Console.WriteLine($"  {claim}");
+                }
+            }
+            return Task.CompletedTask;
         }
     };
 })
@@ -97,12 +118,33 @@ builder.Services.AddAuthentication(options =>
     options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]!;
 });
 
-// Authorization step, after identification of the user, we want to know what they can access
-// This policy just requires that the user is authenticated
-// It will be used for the "me" endpoint
 builder.Services.AddAuthorization(options =>
 {
+    // Authorization step, after identification of the user, we want to know what they can access
+    // This policy just requires that the user is authenticated
+    // It will be used for the "me" endpoint
     options.AddPolicy("ApiUser", policy => policy.RequireAuthenticatedUser());
+    // Port Authority Officer features
+    options.AddPolicy("VesselType.Manage", p => p.RequireRole("PortAuthorityOfficer", "Administrator"));
+    options.AddPolicy("Vessel.Manage", p => p.RequireRole("PortAuthorityOfficer", "Administrator"));
+    options.AddPolicy("StorageArea.Manage", p => p.RequireRole("PortAuthorityOfficer", "Administrator"));
+    options.AddPolicy("ShippingAgentOrg.Manage", p => p.RequireRole("PortAuthorityOfficer", "Administrator"));
+    options.AddPolicy("Representative.Manage", p => p.RequireRole("PortAuthorityOfficer", "Administrator"));
+    options.AddPolicy("Dock.Manage", p => p.RequireRole("PortAuthorityOfficer", "Administrator"));
+    // Vessel visit notification: 
+    // - viewing by SAORepresentative and PortAuthorityOfficer
+    // - edits/submissions by SAORepresentative, 
+    // - decisions by PortAuthorityOfficer
+    // TODO: refine these policies since VVNs are complicated...
+    options.AddPolicy("VesselVisitNotification.View", p => p.RequireRole("SAORepresentative", "PortAuthorityOfficer", "Administrator"));
+    options.AddPolicy("VesselVisitNotification.Edit", p => p.RequireRole("SAORepresentative", "Administrator"));
+    options.AddPolicy("VesselVisitNotification.Approve", p => p.RequireRole("PortAuthorityOfficer", "Administrator"));
+    // Logistics Operator features
+    options.AddPolicy("Qualification.Manage", p => p.RequireRole("LogisticsOperator", "Administrator"));
+    options.AddPolicy("Staff.Manage", p => p.RequireRole("LogisticsOperator", "Administrator"));
+    options.AddPolicy("PhysicalResource.Manage", p => p.RequireRole("LogisticsOperator", "Administrator"));
+    // Admin-only fallback for the rest of the features
+    options.AddPolicy("AdminOnly", p => p.RequireRole("Administrator"));
 });
 
 // Set encryption key for the application
@@ -125,6 +167,23 @@ else
             $"server={configuration["DatabaseSettings:server"]};port={configuration["DatabaseSettings:port"]};database={configuration["DatabaseSettings:database"]};user={configuration["DatabaseSettings:username"]};password={configuration["DatabaseSettings:password"]}"
         ));
 }
+
+// Configure ASP.NET Core Identity (using IdentityCore to avoid cookie-based authentication)
+builder.Services.AddIdentityCore<SystemUser>(options =>
+{
+    // Password settings (adjust as needed - we don't use passwords directly since we use Google OAuth)
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequiredLength = 6;
+    options.Password.RequiredUniqueChars = 0;
+    
+    // User settings
+    options.User.RequireUniqueEmail = true;
+})
+.AddRoles<SystemUserRole>()
+.AddEntityFrameworkStores<ApiContext>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -167,8 +226,10 @@ if (configuration.GetValue<bool>("NukeDatabaseAndRunBootstrap"))
     {
         var services = scope.ServiceProvider;
         var context = services.GetRequiredService<ApiContext>();
+        var userManager = services.GetRequiredService<UserManager<SystemUser>>();
+        var roleManager = services.GetRequiredService<RoleManager<SystemUserRole>>();
     
-        Bootstrap.Init(context, nukeDatabase: true);
+        await Bootstrap.InitAsync(context, userManager, roleManager, nukeDatabase: true);
     }
 }
 
@@ -181,7 +242,10 @@ if (app.Environment.IsDevelopment())
     {
         options.DocumentPath = "/openapi/v1.json";
     });
+    app.UseDeveloperExceptionPage();
 }
+
+app.UseSerilogRequestLogging();
 
 //app.UseHttpsRedirection();
 app.UseCors("VueDevPolicy");
@@ -189,7 +253,11 @@ app.UseCors("VueDevPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Prometheus metrics endpoint for Grafana
+app.UseHttpMetrics();  // Collects HTTP request metrics (duration, count, etc.)
+
 app.MapControllers();
+app.MapMetrics();      // Exposes /metrics endpoint at http://localhost:2226/metrics
 
 app.Run();
 

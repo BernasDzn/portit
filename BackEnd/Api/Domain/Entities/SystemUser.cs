@@ -7,29 +7,30 @@ using System;
 
 public class SystemUser : IdentityUser<Guid>, IDTOAble<SystemUserDto>
 {
-    // Use properties with PascalCase so EF Core maps them by convention
+    // Google OAuth sub identifier
     public string? Sub { get; set; }
+    // Whether the user account is active
     public bool Active { get; set; } = false;
-    public virtual SystemUserRole Role { get; set; }
+    // Token used for email-based activation
     public string? ActivationToken { get; set; }
+    // Expiration date for the activation token
     public DateTime? ActivationTokenExpiresAt { get; set; }
 
-    protected SystemUser()
+    public SystemUser() : base()
     {
         Id = Guid.NewGuid();
         Active = false;
     }
 
-    public SystemUser(string? sub, bool active, string email)
+    public SystemUser(string email) : this()
     {
-        Sub = sub;
-        Active = active;
         Email = email;
+        UserName = email; // Identity requires UserName to be set
     }
 
     public override string ToString()
     {
-        return $"SystemUser {{ Id: {Id}, Active: {Active}, Email: {Email}, Role: {Role} }}";
+        return $"SystemUser {{ Id: {Id}, Active: {Active}, Email: {Email}, UserName: {UserName} }}";
     }
 
     public SystemUserDto ToDTO()
@@ -38,7 +39,7 @@ public class SystemUser : IdentityUser<Guid>, IDTOAble<SystemUserDto>
         {
             Sub = Sub ?? string.Empty,
             IsActive = Active,
-            Role = (int) Role,
+            Role = 0, // Will be set by service layer from roles
             Email = Email!
         };
     }

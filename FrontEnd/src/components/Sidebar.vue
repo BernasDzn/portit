@@ -6,8 +6,9 @@ import { useSession } from '@/composables/session';
 
 const route = useRoute();
 const { t } = useI18n();
+const session = useSession();
 
-const role = ref(useSession().authenticatedUser!.role);
+const role = computed(() => session.authenticatedUser?.role ?? -1);
 
 const sidebarItems = ref([
   // add a materialIcon property with the Material Icons name we want to render
@@ -31,13 +32,14 @@ const isCurrentTab = (itemRoute: string) => {
 };
 
 const itemsToShow = computed(() => {
-    return sidebarItems.value.filter(item => {
-        // Show sepereators only if admin
-        if (!item.roles && role.value == 0) return true;
-        // Check current role against item roles
-        const shouldShow = item.roles?.includes(role.value);
-        return shouldShow;
-    });
+  console.log('Computing sidebar items for role:', role.value);
+  return sidebarItems.value.filter(item => {
+    // separators have no roles; show them only for admins
+    if (!item.roles) return role.value === 0;
+    // if unauthenticated (role -1) hide role-protected items
+    if (role.value < 0) return false;
+    return item.roles.includes(role.value);
+  });
 });
 
 </script>

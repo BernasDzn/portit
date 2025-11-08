@@ -1,18 +1,13 @@
 <script setup lang="ts">
 
-import Loading from '@/components/Loading.vue';
-import Port3DHero from '@/components/Port3DHero.vue';
 import { useSession } from '@/composables/session';
-import router from '@/router';
-import { ref } from 'vue';
-import { useI18n } from 'vue-i18n'
-import AdminDashboard from './Admin/AdminDashboard.vue';
+import { computed } from 'vue';
 import SAORDashboard from './Dashboards/SAORDashboard.vue';
 import MainDashboard from './Dashboards/MainDashboard.vue';
 
 import "@/assets/dashboard.css"
 
-const role = ref(useSession().authenticatedUser!.role);
+const role = computed(() => useSession().authenticatedUser?.role ?? -1);
 
 </script>
 
