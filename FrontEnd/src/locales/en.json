@@ -36,7 +36,8 @@
         },
         "login": "Login",
         "goBackToLogin": "Go back to Login",
-        "logout": "Logout"
+        "logout": "Logout",
+        "seeMore": "See More"
     },
     "unsavedChanges": {
         "title": "Discard changes?",

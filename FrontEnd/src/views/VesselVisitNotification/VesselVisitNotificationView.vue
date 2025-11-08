@@ -31,14 +31,19 @@ const fetchNotification = async (): Promise<VesselVisitNotification | null> => {
     return n;
 };
 
+const openInfoPopup = () => {
+    const dialog = document.querySelector('#infoPopup') as any;
+    dialog.show();
+}
+
 const openLoadCargoManifest = () => {
-    
+
     const drawer = document.querySelector('#loadManifestDrawer') as any;
     drawer.show();
 }
 
 const openUnloadCargoManifest = () => {
-    
+
     const drawer = document.querySelector('#unloadManifestDrawer') as any;
     drawer.show();
 }
@@ -59,10 +64,12 @@ const closeUnloadManifest = () => {
     <div>
         <sl-breadcrumb>
             <sl-breadcrumb-item>
-                <RouterLink to="/vessel-visit-notifications/dashboard" class="breadcrumb-link">{{ t('notification.tabs.dashboard') }}</RouterLink>
+                <RouterLink to="/vessel-visit-notifications/dashboard" class="breadcrumb-link">{{
+                    t('notification.tabs.dashboard') }}</RouterLink>
             </sl-breadcrumb-item>
             <sl-breadcrumb-item>
-                <RouterLink to="/vessel-visit-notifications/search" class="breadcrumb-link">{{ t('notification.tabs.search') }}</RouterLink>
+                <RouterLink to="/vessel-visit-notifications/search" class="breadcrumb-link">{{
+                    t('notification.tabs.search') }}</RouterLink>
             </sl-breadcrumb-item>
             <sl-breadcrumb-item>{{ notificationId || t('notification.errors.noNotificationId') }}</sl-breadcrumb-item>
         </sl-breadcrumb>
@@ -87,35 +94,48 @@ const closeUnloadManifest = () => {
 
                     <div class="notification-row">
                         <sl-card class="notification-progress">
-
                             <div class="timeline">
                                 <div class="timeline-point">
                                     <span class="timeline-icon material-icons" aria-hidden="true">check_circle</span>
-                                    <p>{{t("notification.timeline.pending")}}</p>
+                                    <p>{{ t("notification.timeline.pending") }}</p>
                                 </div>
                                 <div class="timeline-point">
                                     <span class="timeline-icon material-icons" aria-hidden="true">check_circle</span>
-                                    <p>{{t("notification.timeline.submitted")}}</p>
+                                    <p>{{ t("notification.timeline.submitted") }}</p>
                                 </div>
                                 <div class="timeline-point">
                                     <span class="timeline-icon material-icons" aria-hidden="true">check_circle</span>
-                                    <p>{{t("notification.timeline.inProgress")}}</p>
+                                    <p>{{ t("notification.timeline.inProgress") }}</p>
                                 </div>
                                 <div class="timeline-point">
                                     <span class="timeline-icon material-icons" aria-hidden="true">check_circle</span>
-                                    <p>{{t("notification.timeline.completed")}}</p>
+                                    <p>{{ t("notification.timeline.completed") }}</p>
                                 </div>
                             </div>
+                            <sl-button @click="openInfoPopup">{{ t("buttons.seeMore") }}</sl-button>
                         </sl-card>
 
                         <sl-card class="notification-manifest">
                             <p>{{ t("notification.manifestInfo") }}</p>
                             <div>
-                                <sl-button @click="openLoadCargoManifest" :disabled="entity.element.loadCargoManifest.length == 0" size="medium" pill>{{t("notification.fields.openLoadManifest")}}</sl-button>
-                                <sl-button @click="openUnloadCargoManifest" :disabled="entity.element.unloadCargoManifest.length == 0" size="medium" pill>{{t("notification.fields.openUnloadManifest")}}</sl-button>
+                                <sl-button @click="openLoadCargoManifest"
+                                    :disabled="entity.element.loadCargoManifest.length == 0" size="medium" pill>{{t("notification.fields.openLoadManifest") }}</sl-button>
+                                <sl-button @click="openUnloadCargoManifest"
+                                    :disabled="entity.element.unloadCargoManifest.length == 0" size="medium" pill>{{t("notification.fields.openUnloadManifest") }}</sl-button>
                             </div>
                         </sl-card>
                     </div>
+
+                    <sl-dialog id="infoPopup" label="Status Overview" class="dialog-overview">
+                        <div class="timeline-expanded">
+                            <div class="timeline-point" v-for="step in 15" :key="step">
+                                <p>{{ t("notification.timeline.inProgress") }}</p>
+                                <span class="timeline-icon material-icons" aria-hidden="true">check_circle</span>
+                                <p>01/11 12:00</p>
+                            </div>
+                        </div>
+                    </sl-dialog>
+
                     <div class="notification-main-column">
                         <sl-card class="notification-main-info">
                             <p>{{ t('notification.infoTitle') }}</p>
@@ -155,18 +175,17 @@ const closeUnloadManifest = () => {
                                         <span class="label">{{ t('notification.fields.crewMembers') }}</span>
                                         <div>
                                             <ul>
-                                                <li v-for="member in entity.element.crewDetails.safetyOfficers" :key="member.citizenID">
+                                                <li v-for="member in entity.element.crewDetails.safetyOfficers"
+                                                    :key="member.citizenID">
                                                     {{ member.name }} ({{ member.nationality }}) {{ member.citizenID }}
                                                 </li>
                                             </ul>
                                         </div>
-                                        <div v-if="entity.element.crewDetails.safetyOfficers.length === 0">
-                                            {{ t('notification.none') }}
-                                        </div>
                                     </div>
                                     <div class="info-block">
                                         <span class="label"> Submitter </span>
-                                        <p>{{ entity.element.submitter.name }} ({{ entity.element.submitter.citizenshipId }})</p>
+                                        <p>{{ entity.element.submitter.name }} ({{
+                                            entity.element.submitter.citizenshipId }})</p>
                                     </div>
                                 </div>
                             </div>
@@ -177,35 +196,37 @@ const closeUnloadManifest = () => {
             <template v-else>
                 <NoResults :message="t('notification.errors.noNotificationId')" />
             </template>
-    
+
             <!-- Cargo manifest drawer -->
             <sl-drawer id="loadManifestDrawer" label="Drawer" class="drawer-overview">
-                <h2>{{t("notification.fields.loadCargoManifest")}}</h2>
+                <h2>{{ t("notification.fields.loadCargoManifest") }}</h2>
                 <sl-card class="manifest-item" v-for="item in entity.element.loadCargoManifest" :key="item.containerId">
-                    <p>{{ item.container.description }} ({{item.container.container}})</p>
+                    <p>{{ item.container.description }} ({{ item.container.container }})</p>
                     <p>To: {{ item.area.nameCode }}</p>
                 </sl-card>
-    
+
                 <sl-button @click="closeLoadManifest" slot="footer" variant="primary">Close</sl-button>
             </sl-drawer>
-    
-            <sl-drawer id="unloadManifestDrawer" label="Drawer" class="drawer-overview"  style="--size: 35vw;">
-                <h2>{{t("notification.fields.unloadCargoManifest")}}</h2>
-                <sl-card class="manifest-item" v-for="item in entity.element.unloadCargoManifest" :key="item.containerId">
+
+            <sl-drawer id="unloadManifestDrawer" label="Drawer" class="drawer-overview" style="--size: 35vw;">
+                <h2>{{ t("notification.fields.unloadCargoManifest") }}</h2>
+                <sl-card class="manifest-item" v-for="item in entity.element.unloadCargoManifest"
+                    :key="item.containerId">
                     <div class="opposed">
                         <div>
-                            <p class="title">{{ item.container.description }}</p> 
-                            <p class="subtitle">{{item.container.containerNumber}}</p>
+                            <p class="title">{{ item.container.description }}</p>
+                            <p class="subtitle">{{ item.container.containerNumber }}</p>
                         </div>
-                        <sl-tag variant="neutral">{{cargoTypes[item.container.cargoType]}}</sl-tag>
+                        <sl-tag variant="neutral">{{ cargoTypes[item.container.cargoType] }}</sl-tag>
                     </div>
                     <div class="manifest-direction">
                         <p>{{ t("notification.from") }}: {{ item.area.nameCode }}</p>
                         <span class="material-icons" aria-hidden="true">arrow_right_alt</span>
-                        <p>{{ t("notification.to") }}: ({{item.position.bay}}, {{item.position.row}}, {{item.position.tier}})</p>
+                        <p>{{ t("notification.to") }}: ({{ item.position.bay }}, {{ item.position.row }},
+                            {{ item.position.tier }})</p>
                     </div>
                 </sl-card>
-    
+
                 <sl-button @click="closeUnloadManifest" slot="footer" variant="primary">Close</sl-button>
             </sl-drawer>
         </EntityView>
@@ -218,7 +239,7 @@ const closeUnloadManifest = () => {
     flex-direction: row;
     gap: 1rem;
 }
-  
+
 .notification-row {
     display: flex;
     flex-direction: column;
@@ -247,7 +268,7 @@ const closeUnloadManifest = () => {
     gap: 0.5rem;
 }
 
-.notification-manifest > div {
+.notification-manifest>div {
     display: flex;
     gap: 1rem;
     align-items: start;
@@ -261,9 +282,42 @@ const closeUnloadManifest = () => {
 .timeline {
     display: flex;
     flex-direction: column;
-    align-items: left;
     padding: 1rem;
 }
+
+.dialog-overview {
+    --width: 50vw;
+}
+
+.timeline-expanded {
+    display: flex;
+    flex-direction: row;
+    padding: 1rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    gap: 4rem;
+    width: fit-content;
+}
+
+.timeline-expanded>.timeline-point {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-size: small;
+    width: 5rem;
+}
+
+.timeline-expanded::before {
+    content: "";
+    position: absolute;
+    left: 4.5rem;
+    right: 6.5rem;
+    top: 5.5rem;
+    height: 2px;
+    background-color: var(--sl-color-neutral-300);
+    z-index: 1;
+}
+
 .timeline-icon {
     font-size: 32px;
     color: var(--sl-color-success-600);
@@ -283,7 +337,7 @@ const closeUnloadManifest = () => {
     left: 4.8rem;
     top: 14rem;
     width: 2px;
-    height: calc(100% - 28rem);
+    height: calc(100% - 30rem);
     background-color: var(--sl-color-neutral-300);
     z-index: 0;
 }
@@ -295,12 +349,12 @@ const closeUnloadManifest = () => {
     position: relative;
     z-index: 1;
     margin-bottom: 1.5rem;
-  }
-  
+}
+
 .timeline-point:last-child {
     margin-bottom: 0;
 }
-  
+
 .timeline-icon {
     font-size: 32px;
     color: var(--sl-color-success-600);
@@ -308,5 +362,4 @@ const closeUnloadManifest = () => {
     border-radius: 50%;
     z-index: 1;
 }
-
 </style>
