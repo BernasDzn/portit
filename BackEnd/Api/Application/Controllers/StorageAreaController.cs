@@ -1,6 +1,7 @@
 namespace Api.Application.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Api.Application.Services;
 using Api.Application.DataTransfer;
 using Api.Application.Exceptions;
@@ -9,6 +10,7 @@ using Api.Application.DataTransfer.Filters;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize(Policy = "StorageArea.Manage")]
 public class StorageAreaController : ControllerBase, IStorageAreaController
 {
     private readonly IStorageAreaService _storageAreaService;

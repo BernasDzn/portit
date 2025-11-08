@@ -1,6 +1,7 @@
 namespace Api.Application.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Api.Application.Services;
 using Api.Application.DataTransfer;
 using Api.Infrastructure.Utilities;
@@ -10,6 +11,7 @@ using Api.Infrastructure.Exceptions;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize(Policy = "Vessel.Manage")]
 public class VesselController : ControllerBase, IVesselController
 {
     private readonly ILogger<VesselController> _logger;

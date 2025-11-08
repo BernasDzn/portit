@@ -1,6 +1,7 @@
 namespace Api.Application.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Api.Application.Services;
 using Api.Application.DataTransfer;
 using Api.Application.DataTransfer.Filters;
@@ -10,6 +11,7 @@ using Api.Application.Exceptions;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize(Policy = "VesselVisitNotification.View")]
 public class VesselVisitNotificationController : ControllerBase, IVesselVisitNotificationController
 {
     private readonly ILogger<VesselVisitNotificationController> _logger;
@@ -79,6 +81,7 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
     }
 
     [HttpPost(Name = "CreateVesselVisitNotification")]
+    [Authorize(Policy = "VesselVisitNotification.Edit")]
     public async Task<ActionResult<VesselVisitNotificationDto>> Create([FromBody] CreateVesselVisitNotificationDto vesselVisitNotificationDto)
     {
         try
@@ -110,6 +113,7 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
     }
 
     [HttpPost("decisions", Name = "CreateNotificationDecision")]
+    [Authorize(Policy = "VesselVisitNotification.Approve")]
     public async Task<ActionResult<NotificationDecisionDto>> CreateDecision([FromQuery] string vesselVisitNotificationId, [FromBody] CreateNotificationDecisionDto notificationDecisionDto)
     {
         try
@@ -136,6 +140,7 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
     }
 
     [HttpPut("{id?}", Name = "UpdateVesselVisitNotification")]
+    [Authorize(Policy = "VesselVisitNotification.Edit")]
     public async Task<ActionResult> Update(string id, CreateVesselVisitNotificationDto vesselVisitNotificationDto)
     {
         try
@@ -168,6 +173,7 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
 
 
     [HttpPut("submit/{id}", Name = "SubmitVesselVisitNotification")]
+    [Authorize(Policy = "VesselVisitNotification.Edit")]
     public async Task<ActionResult> Submit(string id)
     {
         try
@@ -218,6 +224,7 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
     }
 
     [HttpDelete(Name = "DeleteDraft")]
+    [Authorize(Policy = "VesselVisitNotification.Edit")]
     public async Task<ActionResult> DeleteDraft(string id)
     {
         try

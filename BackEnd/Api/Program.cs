@@ -71,6 +71,7 @@ builder.Services.AddAuthentication(options =>
         ValidateLifetime = true, // Ensure token hasn't expired
         ValidateIssuerSigningKey = true, // Ensure token signature is valid so it cant be forged
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)),
+        RoleClaimType = "user_role", // Map the role claim type used when creating tokens.
         ClockSkew = TimeSpan.FromMinutes(2) // Allows for a small time difference between server and client
     };
     
@@ -103,6 +104,27 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("ApiUser", policy => policy.RequireAuthenticatedUser());
+    // Port Authority Officer features
+    options.AddPolicy("VesselType.Manage", p => p.RequireRole("PortAuthorityOfficer", "Administrator"));
+    options.AddPolicy("Vessel.Manage", p => p.RequireRole("PortAuthorityOfficer", "Administrator"));
+    options.AddPolicy("StorageArea.Manage", p => p.RequireRole("PortAuthorityOfficer", "Administrator"));
+    options.AddPolicy("ShippingAgentOrg.Manage", p => p.RequireRole("PortAuthorityOfficer", "Administrator"));
+    options.AddPolicy("Representative.Manage", p => p.RequireRole("PortAuthorityOfficer", "Administrator"));
+    options.AddPolicy("Dock.Manage", p => p.RequireRole("PortAuthorityOfficer", "Administrator"));
+    // Vessel visit notification: 
+    // - viewing by SAORepresentative and PortAuthorityOfficer
+    // - edits/submissions by SAORepresentative, 
+    // - decisions by PortAuthorityOfficer
+    // TODO: refine these policies since VVNs are complicated...
+    options.AddPolicy("VesselVisitNotification.View", p => p.RequireRole("SAORepresentative", "PortAuthorityOfficer", "Administrator"));
+    options.AddPolicy("VesselVisitNotification.Edit", p => p.RequireRole("SAORepresentative", "Administrator"));
+    options.AddPolicy("VesselVisitNotification.Approve", p => p.RequireRole("PortAuthorityOfficer", "Administrator"));
+    // Logistics Operator features
+    options.AddPolicy("Qualification.Manage", p => p.RequireRole("LogisticsOperator", "Administrator"));
+    options.AddPolicy("Staff.Manage", p => p.RequireRole("LogisticsOperator", "Administrator"));
+    options.AddPolicy("PhysicalResource.Manage", p => p.RequireRole("LogisticsOperator", "Administrator"));
+    // Admin-only fallback for the rest of the features
+    options.AddPolicy("AdminOnly", p => p.RequireRole("Administrator"));
 });
 
 // Set encryption key for the application

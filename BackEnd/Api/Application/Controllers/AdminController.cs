@@ -1,14 +1,11 @@
 namespace Api.Application.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
-using Api.Application.Services;
-using Api.Application.DataTransfer;
-using Api.Application.DataTransfer.Filters;
-using Api.Application.Exceptions;
-using Api.Infrastructure.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize(Policy = "AdminOnly")]
 public class AdminController : ControllerBase, IAdminController
 {
 	private readonly ILogger<AdminController> _logger;

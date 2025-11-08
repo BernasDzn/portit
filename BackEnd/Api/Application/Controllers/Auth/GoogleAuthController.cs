@@ -68,13 +68,22 @@ public class LoginController : ControllerBase
             // We need to create this because the google token was issue by google and we cant accept any token not issued by us
             // (or any app with google signin could generate valid tokens for out backend), so we have to issue it ourselfs
             // sending as payload whatever we need from the google api
+            string roleName = "";
+            if (user.Role != null)
+            {
+                var roleInt = user.Role.Value;
+                // convert role int value to the corresponding enum name so it doesnt s**t itself in the frontend
+                var maybeName = Enum.GetName(typeof(SystemUserRole), roleInt);
+                roleName = maybeName ?? roleInt.ToString();
+            }
+
             var token = _jwtTokenService.GenerateToken(new Dictionary<string, string>
             {
                 { "id", googleUserId},
                 { "email_address", email },
                 { "name", payload.Name ?? "" },
                 { "picture", payload.Picture ?? "" },
-                { "user_role", user.Role.ToString() ?? "" }
+                { "user_role", roleName }
             });
 
             var cookieOptions = new CookieOptions
@@ -91,7 +100,7 @@ public class LoginController : ControllerBase
             {
                 Token = token, // This is the token that will have tobe used as a bearer in the future
                 expiresIn = _config.GetValue<int>("Jwt:ExpiresMinutes"),
-                user = new { id = googleUserId, email = email, name = payload.Name, picture = payload.Picture, role = user.Role }
+                user = new { id = googleUserId, email = email, name = payload.Name, picture = payload.Picture, role = user.Role, roleName = roleName }
             });
         }
         catch (InvalidJwtException ex)

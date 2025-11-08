@@ -1,6 +1,7 @@
 namespace Api.Application.Controllers;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Api.Application.DataTransfer;
 using Api.Infrastructure.Persistence;
 using Api.Domain.Entities;
@@ -8,6 +9,7 @@ using Api.Domain.ValueObjects;
 
 [ApiController]
 [Route("[controller]")]
+[Authorize(Policy = "Representative.Manage")]
 public class RepresentativeController : ControllerBase
 {
     private readonly ApiContext _context;
