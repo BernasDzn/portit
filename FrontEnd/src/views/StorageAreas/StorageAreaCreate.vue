@@ -100,7 +100,7 @@ const submitStorageArea = (obj: any) =>
                     <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
                         <sl-card class="card-header" style="width: fit-content;" v-for="dock in storageArea.dockServices" :key="dock.dockCode" >
                             <div slot="header">
-                                {{ dock.dockCode }}
+                                {{ dock.dockCode }} {{ t('storageArea.create.distance_meters') }}
                             </div>
                             <FormField class="field" :name="`null`" v-model="dock.distance" :placeholderText="t('storageArea.create.distance_meters')" pattern="^[0-9]+(\.[0-9]{1,2})?$" required/>
                         </sl-card>

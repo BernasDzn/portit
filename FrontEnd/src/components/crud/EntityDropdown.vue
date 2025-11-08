@@ -15,31 +15,52 @@ const props = defineProps({
     valueKey: { type: String, default: 'id' },
     labelKey: { type: String, default: 'name' },
     required: { type: Boolean, default: false },
-    multiple: { type: Boolean, default: false }
+    multiple: { type: Boolean, default: false },
+    // Optional initial defaults applied once on mount (or after items load)
+    // Use null so an absent prop doesn't force an empty selection.
+    defaultValues: { type: Array, default: null }
 });
 
 const emit = defineEmits(['update:modelValue']);
+const options = ref(Array.isArray(props.items) ? props.items.slice() : []);
+const loading = ref(false);
+const defaultApplied = ref(false);
 
 function encodeRaw(v) {
     return typeof v === 'string' ? encodeURIComponent(v) : encodeURIComponent(String(v ?? ''));
 }
+
 function decodeKey(k) {
     try { return decodeURIComponent(k); } catch { return k; }
 }
+
 function optionKeyFor(opt) {
     const raw = (opt && typeof opt === 'object') ? opt[props.valueKey] : opt;
     return encodeRaw(raw);
 }
 
-const options = ref(Array.isArray(props.items) ? props.items.slice() : []);
-const loading = ref(false);
+function applyDefaultsIfNeeded() {
+    if (defaultApplied.value) return;
+    const modelEmpty = props.modelValue === undefined || props.modelValue === null || (props.multiple && Array.isArray(props.modelValue) && props.modelValue.length === 0) || props.modelValue === '';
+    if (!modelEmpty) return; // parent already provided a value
+    if (!Array.isArray(props.defaultValues) || !props.defaultValues.length) return;
+
+    if (props.multiple) {
+        internalValue.value = props.defaultValues.map(encodeRaw);
+    } else {
+        internalValue.value = encodeRaw(props.defaultValues[0]);
+    }
+    defaultApplied.value = true;
+}
 
 const internalValue = ref(props.multiple
     ? (Array.isArray(props.modelValue) && props.modelValue.length ? props.modelValue.map(encodeRaw) : [])
     : (props.modelValue !== undefined && props.modelValue !== null ? encodeRaw(props.modelValue) : null));
 
 watch(() => props.items, (val) => {
+    // items changed — try applying defaults now that options exist
     options.value = val;
+    applyDefaultsIfNeeded();
 });
 
 watch(() => props.modelValue, (val) => {
@@ -89,6 +110,8 @@ async function loadItems() {
                 console.warn('EntityDropdown: fetchFunction returned unexpected shape', resolved);
                 options.value = [];
             }
+            // After loading items from fetchFunction, apply defaults if appropriate
+            applyDefaultsIfNeeded();
         } catch (err) {
             // eslint-disable-next-line no-console
             console.error('EntityDropdown: error loading items', err);

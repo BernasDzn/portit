@@ -1,114 +1,157 @@
 <script setup lang="ts">
+import { onMounted, ref, watch } from 'vue';
+import { useI18n } from 'vue-i18n';
+import AxiosHttpService from '@/service/AxiosHttpService';
+import { StorageAreaService } from '@/service/StorageAreaService';
+import type { StorageAreaCreate, DockRelationCreate } from '@/model/StorageArea';
+
 import EntityDropdown from '@/components/crud/EntityDropdown.vue';
 import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
-import type { Vessel } from '@/model/Vessel';
-import AxiosHttpService from '@/service/AxiosHttpService';
-import { VesselService } from '@/service/VesselService';
-import { VesselTypeService } from '@/service/VesselTypeService';
-import { ref, onMounted } from 'vue';
+import { DockService } from '@/service/DockService';
+import type { Dock } from '@/model/Dock';
 import { useRoute, RouterLink } from 'vue-router';
+import EntityDropdownTwo from './EntityDropdownTwo.vue';
 
 const http = new AxiosHttpService();
-const vesselService = new VesselService(http);
-const vesselTypeService = new VesselTypeService(http);
+const storageAreaService = new StorageAreaService(http);
+const dockService = new DockService(http);
 
 const route = useRoute();
-const vesselIMO = String(route.params.imo || '');
+const storageAreaNameCode = String(route.params.name || '');
 
-let vessel = ref<Vessel>({
-    name: '',
-    imoNumber: '',
-    type: {} as any,
-    owner: 'Global Shipping Co.', // SUBSTITUIR PELO OWNER REPRESENTADO PELO USER DEPOIS
-    length: 0,
-    depth: 0,
-    draft: 0
+const { t } = useI18n();
+
+const storageArea = ref<StorageAreaCreate>({
+    nameCode: '',
+    location: '',
+    type: 0,
+    capacity: 0,
+    currentOccupancy: 0,
+    dockServices: [] as DockRelationCreate[],
 });
 
-// Load vessel on mount
-onMounted(async () => {
-    if (!vesselIMO) return;
-    try {
-        const data = await vesselService.getVesselByIMO(vesselIMO);
-        vessel.value.name = data.name;
-        vessel.value.imoNumber = data.imoNumber;
-        vessel.value.type = data.type.name;
-        vessel.value.length = data.physicalCharacteristics.length;
-        vessel.value.depth = data.physicalCharacteristics.depth;
-        vessel.value.draft = data.physicalCharacteristics.draft;
-    } catch (err) {
-        // eslint-disable-next-line no-console
-        console.error('Failed to load vessel', err);
+const allDocks = ref<Array<Dock>>([]);
+
+function getDockLabel(rel: any) {
+    // If the server already included the nested dock object
+    if (rel && rel.dock) {
+        if (rel.dock.code) return rel.dock.code;
+        if (rel.dock.name) return rel.dock.name;
     }
+}
+
+function updateDockRelations(dockCodes: string[]) {
+    const selected = new Set(dockCodes || [])
+
+    storageArea.value.dockServices = storageArea.value.dockServices.filter(rel => selected.has(rel.dockCode))
+
+    dockCodes.forEach(dockCode => {
+        const existingRelation = storageArea.value.dockServices.find(relation => relation.dockCode === dockCode);
+        if (!existingRelation) {
+            const dock = allDocks.value.find(d => d.code === dockCode);
+            if (dock) {
+                storageArea.value.dockServices.push({ dockCode: dock.code, isServingDock: true });
+            }
+        }
+    });
+}
+
+onMounted(async () => {
+    if (!storageAreaNameCode) return;
+    dockService.getDocks().then(page => {
+        allDocks.value = page.items || [];
+    });
 });
 
-// Return the promise so the parent EntityForm can attach .catch/.then handlers
-const submitVessel = (obj: any) =>
-    vesselService.updateVessel(vesselIMO, obj);
-    
+const updateStorageArea = (obj: any) => 
+    storageAreaService.updateStorageArea(storageAreaNameCode, obj);
+
 </script>
 
 <template>
-    <div class="vessel-edit">
+    <div>
         <sl-breadcrumb>
+            <sl-breadcrumb-item><RouterLink to="/storage-areas/dashboard" class="breadcrumb-link">{{ t('storageArea.tabs.dashboard') }}</RouterLink></sl-breadcrumb-item>
+            <sl-breadcrumb-item><RouterLink to="/storage-areas/search" class="breadcrumb-link">{{ t('storageArea.tabs.search') }}</RouterLink></sl-breadcrumb-item>
             <sl-breadcrumb-item>
-                <RouterLink to="/vessels/dashboard" class="link">Vessel Dashboard</RouterLink>
+                <RouterLink 
+                    :to="storageAreaNameCode ? `/storage-areas/view/${storageAreaNameCode}` : '/storage-areas/search'" 
+                    class="breadcrumb-link"
+                >{{ storageAreaNameCode }}</RouterLink>
             </sl-breadcrumb-item>
-            <sl-breadcrumb-item>
-                <RouterLink to="/vessels/search" class="link">Search Vessels</RouterLink>
-            </sl-breadcrumb-item>
-            <sl-breadcrumb-item>
-                <RouterLink :to="vessel.imoNumber ? `/vessels/view/${vessel.imoNumber}` : '/vessels/search'" class="link">
-                    {{ vessel.imoNumber || 'IMO' }}
-                </RouterLink>
-            </sl-breadcrumb-item>
-            <sl-breadcrumb-item>Edit Vessel</sl-breadcrumb-item>
+            <sl-breadcrumb-item>{{ t('storageArea.tabs.edit') }}</sl-breadcrumb-item>
         </sl-breadcrumb>
 
-        <h1 class="title">Edit Vessel</h1>
-        <p class="subtitle">Edit an existing vessel from the system</p>
-        <EntityForm :editing="true" :object="vessel" :submit-function="submitVessel">
-            <div class="name-imo">
-                <FormField :required="true" class="field" name="Vessel Name*" v-model="vessel.name" placeholderText="Vessel name"/>
-                <FormField :enabled="false" class="field" name="IMO Number" v-model="vessel.imoNumber" placeholderText="IMO number" pattern="IMO [0-9]{7}"/>
-                <EntityDropdown
-                class="field-dropdown"
-                name="Vessel Type*"
-                v-model="vessel.type"
-                :fetch-function="() => vesselTypeService.getVesselTypes().then(page => (page.items || []).map(t => t.name))"
-                :fetch-on-mount="true"
-                placeholderText="Select vessel type"
-                :required="true"
-                valueKey="name"
-                labelKey="name"
-                />
-            </div>
-            <div class="measurements">
-                <FormField :required="true" class="field" name="Length (m)*" v-model.number="vessel.length"
-                placeholderText="Length in meters" pattern="^\d+(\.\d{1,2})?$"/>
-                <FormField :required="true" class="field" name="Depth (m)*" v-model.number="vessel.depth"
-                placeholderText="Depth in meters" pattern="^\d+(\.\d{1,2})?$"/>
-                <FormField :required="true" class="field" name="Draft (m)*" v-model.number="vessel.draft"
-                placeholderText="Draft in meters" pattern="^\d+(\.\d{1,2})?$"/>
+        <h1 class="title">{{ t('storageArea.tabs.edit') }}</h1>
+        <p class="subtitle">{{ t('storageArea.subtitle.edit') }}</p>
+        <EntityForm :object="storageArea" :editing-id="storageAreaNameCode" :submit-function="updateStorageArea" :fetchingFunction="() => storageAreaService.getStorageAreaById(storageAreaNameCode)">
+            <div class="form" style="display: flex; flex-wrap: wrap;">
+                <div class="general-info">
+                    <p class="section-title">{{ t('dock.generalFields') }}</p>
+                    <FormField class="field" :name="t('storageArea.fields.nameCode.title')" v-model="storageArea.nameCode" :placeholderText="t('storageArea.fields.nameCode.placeholder')" required pattern="^[a-zA-Z0-9]*$"/>
+                    <FormField class="field" :name="t('storageArea.fields.location.title')" v-model="storageArea.location" :placeholderText="t('storageArea.fields.location.placeholder')" required/>
+                </div>
+
+                <span class="section-divider"></span>
+                
+                <div class="measurements">
+                    <p class="section-title">{{ t('storageArea.fields.capacity.title') }}</p>
+                        <FormField class="field" :name="t('storageArea.fields.capacity.title')" v-model.number="storageArea.capacity" :placeholderText="t('storageArea.capacity.placeholder')" pattern="^[0-9]\d*$" required/>
+                        <FormField class="field" :name="t('storageArea.fields.occupancy.placeholder')" v-model.number="storageArea.currentOccupancy" :placeholderText="t('storage-areas.currentOccupancy.placeholder')" pattern="^[0-9]\d*$" required/>
+                </div>
+
+                <span class="section-divider"></span>
+
+                <div class="measurements" style="flex: 100%;">
+                    <p class="section-title">{{ t('dock.title') }}</p>
+                    <EntityDropdown
+                        class="field-dropdown"
+                        :name="t('physicalResource.fields.servingDocks.title')"
+                        :fetch-function="() => dockService.getDocks().then(page => (page.items || []).map(t => t.code))"
+                        :fetch-on-mount="true"
+                        :placeholderText="t('physicalResource.fields.servingDocks.placeholder')"
+                        :default-values="storageArea.dockServices.map(ds => getDockLabel(ds))"
+                        :required="true"
+                        :multiple="true"
+                        valueKey="code"
+                        labelKey="name"
+                        @sl-change="updateDockRelations($event.target.value)"
+                    />
+                    <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+                        <sl-card class="card-header" style="width: fit-content;" v-for="dock_p in storageArea.dockServices" :key="dock_p.dockCode">
+                            <div slot="header">
+                                {{ dock_p.dockCode? dock_p.dockCode : getDockLabel(dock_p) }} {{ t('storageArea.create.distance_meters') }}
+                            </div>
+                            <FormField class="field" :name="`null`" v-model="dock_p.distance" :placeholderText="t('storageArea.create.distance_meters')" pattern="^[0-9]+(\.[0-9]{1,2})?$" required/>
+                        </sl-card>
+                    </div>
+                </div>
             </div>
         </EntityForm>
     </div>
 </template>
 
 <style scoped>
-.name-imo {
+
+.form{
     display: flex;
-    gap: .5rem;
+    flex-direction: row;
+}
+
+.general-info {
+    display: flex;
+    flex-direction: column;
 }
 
 .measurements {
     display: flex;
-    gap: .5rem;
+    flex-direction: column;
 }
 
-.create-vessel-form {
-    width: 100%;
+.measurements-grid {
+    display: flex;
+    flex-direction: row;
 }
 
 .field {
@@ -127,32 +170,16 @@ const submitVessel = (obj: any) =>
     max-width: 30rem;
 }
 
-.buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
+.section-divider {
+    width: 1px;
+    margin: 0 1rem;
+    background-color: var(--sl-color-neutral-200);
 }
 
-.form-button {
-    min-width: 100px;
-}
-
-.form-messages {
-    margin: 0.5rem 0 1rem 0;
-    bottom: 1rem;
-}
-
-.form-tip {
-    font-size: 0.9rem;
-    color: #666666;
+.section-title {
+    font-size: 0.8rem;
     margin-bottom: 1rem;
-    display: flex;
-    justify-content: flex-end;
-}
-
-.link {
-  text-decoration: none;
-  color: inherit;
+    color: var(--sl-color-neutral-400);
 }
 
 </style>
