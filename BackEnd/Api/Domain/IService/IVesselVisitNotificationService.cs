@@ -6,6 +6,7 @@ namespace Api.Application.Services;
 public interface IVesselVisitNotificationService
 {
     Task<IEnumerable<VesselVisitNotificationDto>> GetVesselVisitNotifications();
+    Task<IEnumerable<VesselVisitNotificationDto>> GetVesselVisitNotificationsOnDay(DateTime day);
     Task<VesselVisitNotificationDto> GetById(string vvnID);
     Task<VesselVisitNotificationDto> Add(CreateVesselVisitNotificationDto vesselVisitNotificationDto);
     Task<VesselVisitNotificationDto> Update(string vvnID, CreateVesselVisitNotificationDto vvnDTO);

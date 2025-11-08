@@ -3,8 +3,15 @@
 :- use_module(library(http/http_open)).
 :- use_module(library(http/http_json)).
 
-get_all_vvn(_Request) :-
+get_all_vvn(Request) :-
     http_open("http://localhost:5195/VesselVisitNotification", Stream, []),
+    json_read_dict(Stream, JsonData),
+    close(Stream),
+    reply_json(JsonData).
+
+get_vvns_on_day(date) :-
+    format(string(URL), "http://localhost:5195/VesselVisitNotification/OnDay/~w", [date]),
+    http_open(URL, Stream, []),
     json_read_dict(Stream, JsonData),
     close(Stream),
     reply_json(JsonData).

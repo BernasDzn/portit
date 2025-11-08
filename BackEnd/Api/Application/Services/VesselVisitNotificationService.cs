@@ -196,4 +196,11 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         
         await _notificationRepository.DeleteAsync(existingNotification);
     }
+
+    public async Task<IEnumerable<VesselVisitNotificationDto>> GetVesselVisitNotificationsOnDay(DateTime day)
+    {
+        List<VesselVisitNotification> items = await _notificationRepository.GetVesselVisitNotificationsOnDayAsync(day);
+        AppLogEvents.LogFilter(_logger, "vessel visit notifications", items.Count);
+        return items.Select(n => n.ToDTO());
+    }
 }

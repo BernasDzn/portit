@@ -6,6 +6,7 @@
 % Importa outros ficheiros Prolog
 :- consult('services/staff_service.pl').
 :- consult('services/vvn_service.pl').
+:- consult('controller/handle_schedule_request.pl').
 
 % Relação entre pedidos HTTP e predicados que os processam
 :- http_handler('/lapr5', responde_ola, []).
@@ -13,6 +14,7 @@
 :- http_handler('/register_user', register_user, []).
 :- http_handler('/send_file_post', send_file_post, []).
 :- http_handler('/get_all_vvn', get_all_vvn, []).
+:- http_handler('/schedule', handle_schedule_request, []).
 
 open_server(Port) :-
         write("Starting on port "), write(Port), nl,
