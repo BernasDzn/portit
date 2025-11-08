@@ -5,10 +5,11 @@ using Api.Domain.Entities;
 using Api.Domain.ValueObjects;
 using Api.Infrastructure.Persistence;
 using Api.Infrastructure.Utilities;
+using Microsoft.AspNetCore.Identity;
 
 public static class Bootstrap
 {
-    public static void Init(ApiContext context, bool nukeDatabase = false)
+    public static async Task InitAsync(ApiContext context, UserManager<SystemUser> userManager, RoleManager<SystemUserRole> roleManager, bool nukeDatabase = false)
     {
         // Delete the database if we need that
         if (nukeDatabase)
@@ -17,7 +18,8 @@ public static class Bootstrap
         // Ensure the database is created
         context.Database.EnsureCreated();
 
-        BootstrapUsers(context);
+        await BootstrapRolesAsync(roleManager);
+        await BootstrapUsersAsync(context, userManager);
 
         // Bootstrap Qualifications
         BootstrapQualifications(context);
@@ -35,43 +37,55 @@ public static class Bootstrap
         BootstrapVVN(context);
     }
 
-    private static void BootstrapUsers(ApiContext context)
+    private static async Task BootstrapRolesAsync(RoleManager<SystemUserRole> roleManager)
+    {
+        // Create all roles if they don't exist
+        var roleTypes = Enum.GetValues<SystemUserRoleType>();
+        foreach (var roleType in roleTypes)
+        {
+            var roleName = roleType.ToString();
+            if (!await roleManager.RoleExistsAsync(roleName))
+            {
+                await roleManager.CreateAsync(new SystemUserRole(roleName));
+            }
+        }
+    }
+
+    private static async Task BootstrapUsersAsync(ApiContext context, UserManager<SystemUser> userManager)
     {
         // Check if there are any users already in the database
-        if (context.SystemUsers.Any())
+        if (context.Users.Any())
             return;
 
-        SystemUser bern = new SystemUser(
-            "109730045337224782667",
-            true,
-            "bernardogranjacardoso@gmail.com"
-        );
+        var users = new[]
+        {
+            new SystemUser("bernardogranjacardoso@gmail.com")
+            {
+                Sub = "109730045337224782667",
+                Active = true
+            },
+            new SystemUser("franciscolousada19@gmail.com")
+            {
+                Sub = "111839515929489386087",
+                Active = true
+            },
+            new SystemUser("ruisantiago.jp@gmail.com")
+            {
+                Sub = "114350264242626181256",
+                Active = true
+            },
+            new SystemUser("tiagobarrossao@gmail.com")
+            {
+                Sub = "111642040238696442904",
+                Active = true
+            }
+        };
 
-        SystemUser francis = new SystemUser(
-            "111839515929489386087",
-            true,
-            "franciscolousada19@gmail.com"
-        );
-
-        SystemUser kray = new SystemUser(
-            "114350264242626181256",
-            true,
-            "ruisantiago.jp@gmail.com"
-        );
-
-        SystemUser taiko = new SystemUser(
-            "111642040238696442904",
-            true,
-            "tiagobarrossao@gmail.com"
-        );
-
-        bern.Role = SystemUserRole.Administrator;
-        francis.Role = SystemUserRole.Administrator;
-        kray.Role = SystemUserRole.Administrator;
-        taiko.Role = SystemUserRole.Administrator;
-
-        context.SystemUsers.AddRange(bern, francis, kray, taiko);
-        context.SaveChanges();
+        foreach (var user in users)
+        {
+            await userManager.CreateAsync(user);
+            await userManager.AddToRoleAsync(user, SystemUserRoleType.Administrator.ToString());
+        }
     }
 
     private static void BootstrapQualifications(ApiContext context)

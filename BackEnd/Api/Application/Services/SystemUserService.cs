@@ -13,6 +13,7 @@ using Api.Application.Exceptions;
 using Api.Infrastructure.Exceptions;
 using Api.Application.DataTransfer.Filters;
 using Api.Infrastructure.Utilities;
+using Microsoft.AspNetCore.Identity;
 
 public class SystemUserService : ISystemUserService
 {
@@ -20,13 +21,15 @@ public class SystemUserService : ISystemUserService
     private readonly IEmailService _emailService;
     private readonly IConfiguration _configuration;
     private readonly ILogger<SystemUserService> _logger = LoggerFactory.Create(builder => builder.AddConsole()).CreateLogger<SystemUserService>();
+    private readonly UserManager<SystemUser> _userManager;
 
-    public SystemUserService(ISystemUserRepository systemUserRepository, IEmailService emailService, IConfiguration configuration, ILogger<SystemUserService> logger)
+    public SystemUserService(ISystemUserRepository systemUserRepository, IEmailService emailService, IConfiguration configuration, ILogger<SystemUserService> logger, UserManager<SystemUser> userManager)
     {
         _systemUserRepository = systemUserRepository;
         _emailService = emailService;
         _configuration = configuration;
         _logger = logger;
+        _userManager = userManager;
     }
 
     public async Task<IEnumerable<SystemUserDto>> GetAll()
@@ -43,7 +46,21 @@ public class SystemUserService : ISystemUserService
             _logger.LogWarning($"System user with sub '{sub}' not found.");
             throw new EntityNotFoundException($"System user with sub '{sub}' not found.");
         }
-        return systemUser.ToDTO();
+        var dto = systemUser.ToDTO();
+        
+        // Get user roles from Identity
+        var roles = await _userManager.GetRolesAsync(systemUser);
+        if (roles.Any())
+        {
+            // Map first role to the enum value
+            var roleName = roles.First();
+            if (Enum.TryParse<SystemUserRoleType>(roleName, out var roleType))
+            {
+                dto.Role = (int)roleType;
+            }
+        }
+        
+        return dto;
     }
 
     public async Task<SystemUserDto> GetByEmailAddress(string emailAddress)
@@ -54,7 +71,21 @@ public class SystemUserService : ISystemUserService
             _logger.LogWarning($"System user with email '{emailAddress}' not found.");
             throw new EntityNotFoundException($"System user with email '{emailAddress}' not found.");
         }
-        return systemUser.ToDTO();
+        var dto = systemUser.ToDTO();
+        
+        // Get user roles from Identity
+        var roles = await _userManager.GetRolesAsync(systemUser);
+        if (roles.Any())
+        {
+            // Map first role to the enum value
+            var roleName = roles.First();
+            if (Enum.TryParse<SystemUserRoleType>(roleName, out var roleType))
+            {
+                dto.Role = (int)roleType;
+            }
+        }
+        
+        return dto;
     }
 
     public async Task<SystemUserDto> CreateSystemUser(SystemUserDto systemUserDto)
@@ -65,9 +96,21 @@ public class SystemUserService : ISystemUserService
             throw new EntityAlreadyExistsException($"System user with email '{systemUserDto.Email}' already exists.");
         }
         // By default newly created users are deactivated
-        var systemUser = new SystemUser(null, false, systemUserDto.Email) { Sub = null, Active = false , Email = systemUserDto.Email};
-        var createdUser = await _systemUserRepository.Add(systemUser);
-        return createdUser.ToDTO();
+        var systemUser = new SystemUser(systemUserDto.Email)
+        {
+            Sub = null,
+            Active = false
+        };
+        
+        // Use UserManager to create the user properly (this sets SecurityStamp and other required fields)
+        var result = await _userManager.CreateAsync(systemUser);
+        if (!result.Succeeded)
+        {
+            _logger.LogError($"Failed to create user '{systemUserDto.Email}': {string.Join(", ", result.Errors.Select(e => e.Description))}");
+            throw new InvalidOperationException($"Failed to create user: {string.Join(", ", result.Errors.Select(e => e.Description))}");
+        }
+        
+        return systemUser.ToDTO();
     }
 
     public async Task<SystemUserDto> UpdateSystemUser(string emailAddress, SystemUserDto systemUserDto)
@@ -96,7 +139,30 @@ public class SystemUserService : ISystemUserService
 
         var wasActive = systemUser.Active;
 
-        systemUser.Role = (SystemUserRole)role;
+        // Ensure SecurityStamp is set (for users created before Identity migration)
+        if (string.IsNullOrEmpty(systemUser.SecurityStamp))
+        {
+            await _userManager.UpdateSecurityStampAsync(systemUser);
+        }
+
+        // Use UserManager to assign roles properly with Identity
+        var roleType = (SystemUserRoleType)role;
+        var roleName = roleType.ToString();
+        
+        // Remove existing roles
+        var currentRoles = await _userManager.GetRolesAsync(systemUser);
+        if (currentRoles.Any())
+        {
+            await _userManager.RemoveFromRolesAsync(systemUser, currentRoles);
+        }
+        
+        // Add the new role
+        var result = await _userManager.AddToRoleAsync(systemUser, roleName);
+        if (!result.Succeeded)
+        {
+            _logger.LogError($"Failed to add role '{roleName}' to user '{emailAddress}': {string.Join(", ", result.Errors.Select(e => e.Description))}");
+            throw new InvalidOperationException($"Failed to add role to user.");
+        }
 
         // If the user is being authorized for the first time (was not active), generate activation token and send email
         if (!wasActive)
@@ -126,7 +192,9 @@ public class SystemUserService : ISystemUserService
         }
 
         var updatedUser = await _systemUserRepository.Update(systemUser);
-        return updatedUser.ToDTO();
+        var dto = updatedUser.ToDTO();
+        dto.Role = role; // Set the role in the DTO
+        return dto;
     }
     public async Task<SystemUserDto> ActivateUserWithToken(string emailAddress, string token, string sub)
     {

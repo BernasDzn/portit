@@ -18,6 +18,7 @@ using System.Text;
 using NSwag.Generation.Processors.Security;
 using Api.Infrastructure.Utilities.Email;
 using Prometheus;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 // Logging definitions
@@ -94,6 +95,20 @@ builder.Services.AddAuthentication(options =>
                 }
             }
             return Task.CompletedTask;
+        },
+        OnTokenValidated = context =>
+        {
+            // Debug: Log the claims in the token
+            var claims = context.Principal?.Claims.Select(c => $"{c.Type}: {c.Value}");
+            if (claims != null)
+            {
+                Console.WriteLine("JWT Token Claims:");
+                foreach (var claim in claims)
+                {
+                    Console.WriteLine($"  {claim}");
+                }
+            }
+            return Task.CompletedTask;
         }
     };
 })
@@ -103,11 +118,11 @@ builder.Services.AddAuthentication(options =>
     options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]!;
 });
 
-// Authorization step, after identification of the user, we want to know what they can access
-// This policy just requires that the user is authenticated
-// It will be used for the "me" endpoint
 builder.Services.AddAuthorization(options =>
 {
+    // Authorization step, after identification of the user, we want to know what they can access
+    // This policy just requires that the user is authenticated
+    // It will be used for the "me" endpoint
     options.AddPolicy("ApiUser", policy => policy.RequireAuthenticatedUser());
     // Port Authority Officer features
     options.AddPolicy("VesselType.Manage", p => p.RequireRole("PortAuthorityOfficer", "Administrator"));
@@ -153,6 +168,23 @@ else
         ));
 }
 
+// Configure ASP.NET Core Identity (using IdentityCore to avoid cookie-based authentication)
+builder.Services.AddIdentityCore<SystemUser>(options =>
+{
+    // Password settings (adjust as needed - we don't use passwords directly since we use Google OAuth)
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequiredLength = 6;
+    options.Password.RequiredUniqueChars = 0;
+    
+    // User settings
+    options.User.RequireUniqueEmail = true;
+})
+.AddRoles<SystemUserRole>()
+.AddEntityFrameworkStores<ApiContext>();
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
@@ -194,8 +226,10 @@ if (configuration.GetValue<bool>("NukeDatabaseAndRunBootstrap"))
     {
         var services = scope.ServiceProvider;
         var context = services.GetRequiredService<ApiContext>();
+        var userManager = services.GetRequiredService<UserManager<SystemUser>>();
+        var roleManager = services.GetRequiredService<RoleManager<SystemUserRole>>();
     
-        Bootstrap.Init(context, nukeDatabase: true);
+        await Bootstrap.InitAsync(context, userManager, roleManager, nukeDatabase: true);
     }
 }
 
