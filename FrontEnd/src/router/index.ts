@@ -48,6 +48,7 @@ import VVNSearch from '@/views/VesselVisitNotification/VesselVisitNotificationSe
 import VVNView from '@/views/VesselVisitNotification/VesselVisitNotificationView.vue'
 import PhysicalResourceEdit from '@/views/PhysicalResources/PhysicalResourceEdit.vue'
 import AuditLogs from '@/views/Admin/AuditLogs.vue'
+import { useSession } from '@/composables/session'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -385,3 +386,51 @@ const router = createRouter({
 })
 
 export default router
+
+// Execute before each route change, also called "navigation guard"
+// see https://router.vuejs.org/guide/advanced/navigation-guards.html
+router.beforeEach((to, from, next) => {
+  const session = useSession();
+  const role = session.authenticatedUser?.role ?? -1;
+
+  // Public routes that anyone (including unauthenticated users) can access
+  const publicPaths = ['/login', '/activate', '/unauthorized', '/'];
+  if (publicPaths.includes(to.path)) {
+    return next();
+  }
+
+  // (0=Administrator, 1=PortAuthorityOfficer, 2=SAORepresentative, 3=LogisticsOperator)
+  // Map route prefixes to allowed numeric roles, this should probably be put in a config file
+  // but we can keep it here for simplicity. Probably not very scalable but OK for this sprint?
+  const routeRoleMap: Array<{ prefix: string; roles: number[] }> = [
+    { prefix: '/vessels', roles: [0, 1] },
+    { prefix: '/vessel-types', roles: [0, 1] },
+    { prefix: '/docks', roles: [0, 1] },
+    { prefix: '/vessel-visit-notifications', roles: [0, 1, 2] },
+    { prefix: '/qualifications', roles: [0, 3] },
+    { prefix: '/resources', roles: [0, 3] },
+    { prefix: '/staff', roles: [0, 3] },
+    { prefix: '/storage-areas', roles: [0, 1] },
+    { prefix: '/admin', roles: [0] }
+  ];
+
+  for (const entry of routeRoleMap) {
+    if (to.path.startsWith(entry.prefix)) {
+      // Here we check the role against the allowed roles for the route
+      // if the role is not allowed, redirect to unauthorized.
+      // Prolly should make the unauthorized route configurable using a const???
+      if (role < 0 || !entry.roles.includes(role)) {
+        if (to.path === '/unauthorized') return next();
+        return next({ path: '/unauthorized' });
+      }
+      return next();
+    }
+  }
+
+  // If route is not listed, require admin by default (matches backend AdminOnly fallback)
+  if (role !== 0) {
+    if (to.path === '/unauthorized') return next();
+    return next({ path: '/unauthorized' });
+  }
+  return next();
+});
