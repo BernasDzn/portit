@@ -26,7 +26,7 @@ export class StorageAreaService implements IStorageAreaService {
 		return res.data;
 	}
 
-	async getStorageAreaById(id: string): Promise<StorageArea | undefined> {
+	async getStorageAreaById(id: string): Promise<StorageArea> {
 		const res = await this.http.get<StorageArea>(`/StorageArea/${id}`);
 		return res.data;
 	}
