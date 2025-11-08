@@ -1,0 +1,32 @@
+# Promtail configuration for shipping logs to Loki (Grafana's log aggregator)
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /var/lib/promtail/positions.yaml
+
+clients:
+  - url: http://localhost:3100/loki/api/v1/push
+
+scrape_configs:
+  - job_name: aspnet-audit-logs
+    static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: aspnet-api
+          environment: production
+          host: vs228
+          __path__: /root/LEI-SEM5-PI-2025-26-3DJ-01/BackEnd/Api/Logs/audit-*.log
+    
+    pipeline_stages:
+      # Parse Serilog structured logs
+      - regex:
+          expression: '^\[(?P<timestamp>\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}) (?P<level>[A-Z]+)\]\s*\(\s*\{\s*Id:\s*(?P<request_id>\d+)(?:,[^}]*)?\s*\}\s*\)\s*(?P<message>.*)$'
+      - labels:
+          level:
+          request_id:
+      - timestamp:
+          source: timestamp
+          format: '2006-01-02 15:04:05'

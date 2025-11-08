@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using NSwag.Generation.Processors.Security;
 using Api.Infrastructure.Utilities.Email;
+using Prometheus;
 
 var builder = WebApplication.CreateBuilder(args);
 // Logging definitions
@@ -185,7 +186,10 @@ if (app.Environment.IsDevelopment())
     {
         options.DocumentPath = "/openapi/v1.json";
     });
+    app.UseDeveloperExceptionPage();
 }
+
+app.UseSerilogRequestLogging();
 
 //app.UseHttpsRedirection();
 app.UseCors("VueDevPolicy");
@@ -193,7 +197,11 @@ app.UseCors("VueDevPolicy");
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Prometheus metrics endpoint for Grafana
+app.UseHttpMetrics();  // Collects HTTP request metrics (duration, count, etc.)
+
 app.MapControllers();
+app.MapMetrics();      // Exposes /metrics endpoint at http://localhost:2226/metrics
 
 app.Run();
 
