@@ -10,6 +10,7 @@ export interface VesselVisitNotification {
     unloadCargoManifest: string[];
     vessel: Vessel;
     submitter: Person;
+    notificationDecisions: NotificationDecision[];
 }
 
 export interface VesselVisitNotificationFilter {
@@ -124,10 +125,15 @@ export enum VesselVisitNotificationStatus {
 }
 
 export interface NotificationDecision {
-    status: number;
+    status: NotificationDecisionStatus;
     reason?: string;
     decisionDate: string;
     officerId?: number;
     assignedDock?: Dock;
     isFinal: boolean;
+}
+
+export enum NotificationDecisionStatus {
+    Rejected = 0,
+    Accepted = 1
 }

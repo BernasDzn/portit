@@ -27,8 +27,10 @@ const cargoTypes = [
 
 const fetchNotification = async (): Promise<VesselVisitNotification | null> => {
     const n = await notificationService.getVesselVisitNotificationById(notificationId);
+    const decisions = await notificationService.getNotificationDecisions(notificationId);
     console.log(n);
-    return n;
+    console.log(decisions);
+    return { ...n, notificationDecisions: decisions };
 };
 
 const openInfoPopup = () => {
@@ -96,42 +98,65 @@ const closeUnloadManifest = () => {
                         <sl-card class="notification-progress">
                             <div class="timeline">
                                 <div class="timeline-point">
-                                    <span class="timeline-icon material-icons" aria-hidden="true">check_circle</span>
-                                    <p>{{ t("notification.timeline.pending") }}</p>
-                                </div>
-                                <div class="timeline-point">
-                                    <span class="timeline-icon material-icons" aria-hidden="true">check_circle</span>
-                                    <p>{{ t("notification.timeline.submitted") }}</p>
-                                </div>
-                                <div class="timeline-point">
-                                    <span class="timeline-icon material-icons" aria-hidden="true">check_circle</span>
+                                    <span class="timeline-icon material-icons"
+                                        :class="entity.element.status >= 0 ? 'accepted' : 'nothing'"
+                                        aria-hidden="true">check_circle</span>
                                     <p>{{ t("notification.timeline.inProgress") }}</p>
                                 </div>
                                 <div class="timeline-point">
-                                    <span class="timeline-icon material-icons" aria-hidden="true">check_circle</span>
+                                    <span class="timeline-icon material-icons"
+                                        :class="entity.element.status >= 1 ? 'accepted' : 'nothing'"
+                                        aria-hidden="true">check_circle</span>
+                                    <p>{{ t("notification.timeline.submitted") }}</p>
+                                </div>
+                                <div class="timeline-point">
+                                    <span class="timeline-icon material-icons"
+                                        :class="entity.element.status === 2 ? 'accepted' : 'nothing'"
+                                        aria-hidden="true">check_circle</span>
                                     <p>{{ t("notification.timeline.completed") }}</p>
                                 </div>
                             </div>
-                            <sl-button @click="openInfoPopup">{{ t("buttons.seeMore") }}</sl-button>
+                            <sl-button @click="openInfoPopup" v-if="entity.element.notificationDecisions.length > 0">{{ t("buttons.seeMore") }}</sl-button>
                         </sl-card>
 
                         <sl-card class="notification-manifest">
                             <p>{{ t("notification.manifestInfo") }}</p>
                             <div>
                                 <sl-button @click="openLoadCargoManifest"
-                                    :disabled="entity.element.loadCargoManifest.length == 0" size="medium" pill>{{t("notification.fields.openLoadManifest") }}</sl-button>
+                                    :disabled="entity.element.loadCargoManifest.length == 0" size="medium" pill>{{
+                                        t("notification.fields.openLoadManifest") }}</sl-button>
                                 <sl-button @click="openUnloadCargoManifest"
-                                    :disabled="entity.element.unloadCargoManifest.length == 0" size="medium" pill>{{t("notification.fields.openUnloadManifest") }}</sl-button>
+                                    :disabled="entity.element.unloadCargoManifest.length == 0" size="medium" pill>{{
+                                        t("notification.fields.openUnloadManifest") }}</sl-button>
                             </div>
                         </sl-card>
                     </div>
 
                     <sl-dialog id="infoPopup" label="Status Overview" class="dialog-overview">
                         <div class="timeline-expanded">
-                            <div class="timeline-point" v-for="step in 15" :key="step">
-                                <p>{{ t("notification.timeline.inProgress") }}</p>
-                                <span class="timeline-icon material-icons" aria-hidden="true">check_circle</span>
-                                <p>01/11 12:00</p>
+                            <template v-for="decision in entity.element.notificationDecisions" :key="decision.id">
+                                <div class="timeline-point">
+                                    <p>{{ t("notification.timeline.inProgress") }}</p>
+                                    <span class="timeline-icon nothing material-icons" aria-hidden="true">circle</span>
+                                </div>
+                                <div class="timeline-point">
+                                    <p>{{ t("notification.timeline.submitted") }}</p>
+                                    <span class="timeline-icon nothing material-icons" aria-hidden="true">circle</span>
+                                </div>
+                                <div class="timeline-point">
+                                    <p>{{ decision.status == 1 ? t("notification.timeline.accepted") :
+                                        t("notification.timeline.rejected") }}</p>
+                                    <span
+                                        :class="decision.status == 1 ? ' timeline-icon accepted material-icons' : 'timeline-icon rejected material-icons'"
+                                        aria-hidden="true">{{ decision.status == 1 ? 'check_circle' : 'cancel' }}</span>
+                                    <p>{{ new Date(decision.decisionDate).toUTCString() }}</p>
+                                </div>
+                            </template>
+
+                            <div class="timeline-point" v-if="entity.element.status === 2">
+                                <p>{{ t("notification.timeline.completed") }}</p>
+                                <span class="timeline-icon accepted material-icons"
+                                    aria-hidden="true">check_circle</span>
                             </div>
                         </div>
                     </sl-dialog>
@@ -222,8 +247,9 @@ const closeUnloadManifest = () => {
                     <div class="manifest-direction">
                         <p>{{ t("notification.from") }}: {{ item.area.nameCode }}</p>
                         <span class="material-icons" aria-hidden="true">arrow_right_alt</span>
-                        <p>{{ t("notification.to") }}: ({{ item.position.bay }}, {{ item.position.row }},
-                            {{ item.position.tier }})</p>
+                        <p>{{ t("notification.to") }}: ({{ item.position.bay }}, {{ item.position.row }}, {{
+                            item.position.tier }})
+                        </p>
                     </div>
                 </sl-card>
 
@@ -286,16 +312,18 @@ const closeUnloadManifest = () => {
 }
 
 .dialog-overview {
-    --width: 50vw;
+    --width: 40vw;
 }
 
 .timeline-expanded {
     display: flex;
     flex-direction: row;
     padding: 1rem;
-    padding-left: 3rem;
-    padding-right: 3rem;
-    gap: 4rem;
+    --point-width: 5rem;
+    position: relative;
+    padding-left: calc(var(--point-width) / 2);
+    padding-right: calc(var(--point-width) / 2);
+    gap: 2.5rem;
     width: fit-content;
 }
 
@@ -310,20 +338,30 @@ const closeUnloadManifest = () => {
 .timeline-expanded::before {
     content: "";
     position: absolute;
-    left: 4.5rem;
-    right: 6.5rem;
+    left: calc(var(--point-width) / 2);
+    right: calc(var(--point-width) / 2);
     top: 5.5rem;
     height: 2px;
     background-color: var(--sl-color-neutral-300);
-    z-index: 1;
+    z-index: 0;
 }
 
 .timeline-icon {
     font-size: 32px;
-    color: var(--sl-color-success-600);
-
     z-index: 1;
     background-color: white;
+}
+
+.accepted {
+    color: var(--sl-color-success-600);
+}
+
+.rejected {
+    color: var(--sl-color-danger-600);
+}
+
+.nothing {
+    color: var(--sl-color-neutral-400);
 }
 
 .timeline-point p {
@@ -353,13 +391,5 @@ const closeUnloadManifest = () => {
 
 .timeline-point:last-child {
     margin-bottom: 0;
-}
-
-.timeline-icon {
-    font-size: 32px;
-    color: var(--sl-color-success-600);
-    background-color: var(--sl-color-neutral-0);
-    border-radius: 50%;
-    z-index: 1;
 }
 </style>
