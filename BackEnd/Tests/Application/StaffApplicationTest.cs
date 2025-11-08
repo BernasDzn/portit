@@ -1,10 +1,8 @@
 using Api.Application.DataTransfer;
-using Microsoft.AspNetCore.Mvc.Testing;
 using System.Net.Http.Json;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Api.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Api.Infrastructure.Utilities;
 using Api.Domain.Entities;
@@ -12,31 +10,18 @@ using Api.Domain.ValueObjects;
 
 namespace Tests.Application;
 
-public class StaffApplicationTest : WebApplicationFactory<Program>
+public class StaffApplicationTest : BaseApplicationTest
 {
-    private static readonly string DatabaseName = $"TestDatabase_Staff_{Guid.NewGuid()}";
     private readonly HttpClient _client;
 
     public StaffApplicationTest()
     {
-        _client = CreateClient();
+        _client = Client;
     }
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
-        builder.ConfigureServices(services =>
-        {
-            var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<ApiContext>));
-            if (descriptor != null)
-                services.Remove(descriptor);
-
-            services.AddDbContext<ApiContext>(options =>
-            {
-                options.UseInMemoryDatabase(DatabaseName);
-            });
-        });
-
-        builder.UseEnvironment("Testing");
+        base.ConfigureWebHost(builder);
 
         builder.ConfigureServices(services =>
         {
