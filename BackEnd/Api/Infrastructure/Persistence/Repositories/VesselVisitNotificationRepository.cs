@@ -190,11 +190,8 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
     {
         try
         {
-            DateTime startOfDay = day.Date;
-            DateTime endOfDay = startOfDay.AddDays(1).AddTicks(-1);
-
             List<VesselVisitNotification> notifications = _context.VesselVisitNotifications
-                .Where(vvn => vvn.ExpectedArrival >= startOfDay && vvn.ExpectedArrival <= endOfDay)
+                .Where(vvn => vvn.ExpectedArrival < day && vvn.ExpectedDeparture > day)
                 .ToList();
 
             return Task.FromResult(notifications);

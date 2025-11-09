@@ -1,14 +1,18 @@
-:- use_module(library(http/json_convert)).
-:- use_module(library(http/json)).
-:- use_module(library(http/http_open)).
-:- use_module(library(http/http_json)).
+:- consult('../services/scheduling_service.pl').
 
-% Main entry point for the scheduling algorithm
-% Format of Request:
-%   host:port/schedule?target_date=YYYY-MM-DD
+% Api entrypoint to handle scheduling requests
 handle_schedule_request(Request) :-
-    http_read_json_dict(Request, Data),
-    TargetDate = Data.get(target_date),
-    schedule_daily_operations(TargetDate, ScheduleResult),
-    
-    reply_json(ScheduleResult).
+    schedule_daily_operations('11%2F16%2F2025', Result),
+
+    format_timetable(Result, FormattedResult),
+    reply_json(#{status: success, data: FormattedResult}).
+
+% Format the list of tuples into a more readable structure
+format_timetable([], []).
+format_timetable([(Name, LoadingEnterTime, LoadingExitTime)|Rest], [Dict|FormattedRest]) :-
+    Dict = #{
+        name: Name,
+        loading_enter_time: LoadingEnterTime,
+        loading_exit_time: LoadingExitTime
+    },
+    format_timetable(Rest, FormattedRest).

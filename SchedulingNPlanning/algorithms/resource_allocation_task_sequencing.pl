@@ -2,6 +2,7 @@
 % Scheduling Vessels Unload/Load
 
 :-dynamic shortest_delay/2.
+:- dynamic vessel/5.
 
 vessel(zeus, 6, 63, 10, 16).
 vessel(poseidon, 23, 50, 9, 7).
@@ -12,7 +13,6 @@ vessel(floating, 36, 70, 12, 0).
 % Sequence temporization
 sequence_temporization(LV,SeqTriplets):-
 	sequence_temporization1(0,LV,SeqTriplets).
-
 
 sequence_temporization1(EndPrevSeq,[V|LV],[(V,TInUnload,TEndLoad)|SeqTriplets]):-
 			vessel(V,TIn,_,TUnload,TLoad),
