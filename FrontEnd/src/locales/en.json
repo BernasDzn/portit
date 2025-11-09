@@ -343,6 +343,12 @@
         }
     },
     "physicalResource": {
+        "deactivation": {
+            "title": "Deactivate Physical Resource",
+            "message": "Are you sure you want to deactivate this physical resource? This action cannot be undone.",
+            "successMessage": "Physical Resource has been successfully deactivated.",
+            "errorMessage": "An error occurred while trying to deactivate the Physical Resource. Please try again."
+        },
         "tabs": {
             "dashboard": "Physical Resource Dashboard",
             "view_dashboard": "View Physical Resources",

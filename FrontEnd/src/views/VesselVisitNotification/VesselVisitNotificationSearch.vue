@@ -25,7 +25,7 @@ const fetchVesselVisitNotifications = async (filtering?: Filter<VesselVisitNotif
     } 
 
     const representative = await representativeService.getByEmail(user.value.email);
-    return await vesselVisitNotificationService.getVesselVisitNotificationsByRepresentative(representative.citizenshipId, filtering);
+    return await vesselVisitNotificationService.getVesselVisitNotificationsByRepresentative(filtering);
 };
 </script>
 

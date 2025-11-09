@@ -27,9 +27,8 @@ export class VesselVisitNotificationService implements IVesselVisitNotificationS
         return page;
     }
 
-    async getVesselVisitNotificationsByRepresentative(citizenId: string, filter?: Filter<VesselVisitNotificationFilter>): Promise<Page<VesselVisitNotification>> {
+    async getVesselVisitNotificationsByRepresentative(filter?: Filter<VesselVisitNotificationFilter>): Promise<Page<VesselVisitNotification>> {
         let queryString: string[] = [];
-        queryString.push(`SubmitterCitizenshipId=${encodeURIComponent(citizenId)}`);
 
         if (filter) {
             queryString.push(filter.filter.Status !== undefined ? `Status=${encodeURIComponent(filter.filter.Status)}` : "");

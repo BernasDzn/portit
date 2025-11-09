@@ -82,6 +82,7 @@ onMounted(() => {
         if (!shiftsPerDay[shift.day]) {
             shiftsPerDay[shift.day] = [];
         }
+
         shiftsPerDay[shift.day]?.push(shift);
     }
 })

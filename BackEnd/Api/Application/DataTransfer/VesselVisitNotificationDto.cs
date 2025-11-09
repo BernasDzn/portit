@@ -29,7 +29,6 @@ public class CreateVesselVisitNotificationDto
     public ICollection<CreateCargoTransportDto>? LoadCargoManifest { get; set; }
     public ICollection<CreateCargoTransportDto>? UnloadCargoManifest { get; set; }
     public required string VesselImoNumber { get; set; }
-    public required uint SubmitterId { get; set; }
 }
 
 public class VesselVisitNotificationStatusDto

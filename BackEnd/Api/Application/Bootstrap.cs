@@ -113,7 +113,7 @@ public static class Bootstrap
 
         Representative r = new Representative(Guid.NewGuid(), 908029952, new Designation { Value = "Patricio Sharply" }, new Email { Value = "psharply0@yolasite.com" }, new PhoneNumber { Value = "6947302134" });
         Representative r1 = new Representative(Guid.NewGuid(), 319982093, new Designation { Value = "Kayley Begbie" }, new Email { Value = "kbegbie1@spotify.com" }, new PhoneNumber { Value = "6382283741" });
-        Representative r2 = new Representative(Guid.NewGuid(), 995128061, new Designation { Value = "Vivian Llewellin" }, new Email { Value = "vllewellin2@china.com" }, new PhoneNumber { Value = "2019448698" });
+        Representative r2 = new Representative(Guid.NewGuid(), 995128061, new Designation { Value = "Vivian Llewellin" }, new Email { Value = "u0242497470@gmail.com" }, new PhoneNumber { Value = "2019448698" });
         Representative r3 = new Representative(Guid.NewGuid(), 889716996, new Designation { Value = "Salli Burren" }, new Email { Value = "sburren3@ustream.tv" }, new PhoneNumber { Value = "2153449398" });
         Representative r4 = new Representative(Guid.NewGuid(), 733060890, new Designation { Value = "Jasmina Willshear" }, new Email { Value = "jwillshear4@netscape.com" }, new PhoneNumber { Value = "8416077007" });
         Representative r5 = new Representative(Guid.NewGuid(), 608839632, new Designation { Value = "Dore Whytock" }, new Email { Value = "dwhytock5@epa.gov" }, new PhoneNumber { Value = "5226915311" });
