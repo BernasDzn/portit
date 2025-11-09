@@ -518,14 +518,16 @@
             "edit": "Edit Notification",
             "create": "Create Notification",
             "makeDraft": "Create Draft Notification",
-            "myNotifications": "My Notifications"
+            "myNotifications": "My Notifications",
+            "review": "Review Notifications"
         },
         "title": "Vessel Visit Notifications",
         "subtitle": {
             "dashboard": "Overview of vessel visit notifications",
             "search": "Manage and view all vessel visit notifications",
             "create": "Create a new vessel visit notification",
-            "edit": "Edit an existing vessel visit notification"
+            "edit": "Edit an existing vessel visit notification",
+            "review": "Review pending vessel visit notifications"
         },
         "errors": {
             "noNotificationId": "No notification id provided"
