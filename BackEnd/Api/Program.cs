@@ -25,7 +25,26 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 builder.Host.UseSerilog((ctx, lc) => lc
-    .ReadFrom.Configuration(ctx.Configuration));
+    .ReadFrom.Configuration(ctx.Configuration)
+    .Filter.ByExcluding(logEvent => 
+    {
+        // Filter out Serilog request logging for /metrics
+        if (logEvent.Properties.ContainsKey("RequestPath") && 
+            logEvent.Properties["RequestPath"].ToString().Contains("/metrics"))
+            return true;
+        
+        // Filter out ASP.NET Core logs for /metrics endpoint
+        if (logEvent.Properties.ContainsKey("Name") && 
+            logEvent.Properties["Name"].ToString().Contains("Prometheus metrics"))
+            return true;
+        
+        // Filter out generic request logs that mention /metrics in the message
+        if (logEvent.MessageTemplate.Text.Contains("Request") && 
+            logEvent.RenderMessage().Contains("/metrics"))
+            return true;
+        
+        return false;
+    }));
 
 // Enable HTTPS
 /*
