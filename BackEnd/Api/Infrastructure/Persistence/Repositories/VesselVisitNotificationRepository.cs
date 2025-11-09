@@ -185,4 +185,20 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
             throw new PersistencyFailedException("Failed to delete vessel visit notification from the database.");
         }
     }
+
+    public Task<List<VesselVisitNotification>> GetVesselVisitNotificationsOnDayAsync(DateTime day)
+    {
+        try
+        {
+            List<VesselVisitNotification> notifications = _context.VesselVisitNotifications
+                .Where(vvn => vvn.ExpectedArrival < day && vvn.ExpectedDeparture > day)
+                .ToList();
+
+            return Task.FromResult(notifications);
+        }
+        catch
+        {
+            throw new PersistencyFailedException("Failed to retrieve vessel visit notifications for the specified day from the database.");
+        }
+    }
 }

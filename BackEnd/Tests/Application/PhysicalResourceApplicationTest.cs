@@ -1,68 +1,18 @@
 using Api.Application.DataTransfer;
-using Microsoft.AspNetCore.Mvc.Testing;
 using System.Net.Http.Json;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using Api.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Api.Infrastructure.Utilities;
 using Api.Domain.Entities;
 using Api.Domain.ValueObjects;
 
 namespace Tests.Application;
 
-public class PhysicalResourceApplicationTest : WebApplicationFactory<Program>
+public class PhysicalResourceApplicationTest : BaseApplicationTest
 {
-    private readonly string _databaseName;
     private readonly HttpClient _client;
 
     public PhysicalResourceApplicationTest()
     {
-        _databaseName = $"TestDatabase_{Guid.NewGuid()}";
-        _client = CreateClient();
-    }
-
-    protected override void ConfigureWebHost(IWebHostBuilder builder)
-    {
-        builder.ConfigureServices(services =>
-        {
-            // Remove the existing DbContext registration
-            var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<ApiContext>));
-            if (descriptor != null)
-                services.Remove(descriptor);
-
-            // Add a shared in-memory database for all tests in this class
-            services.AddDbContext<ApiContext>(options =>
-            {
-                options.UseInMemoryDatabase(_databaseName);
-            });
-        });
-
-        builder.UseEnvironment("Testing");
-
-        // Seed the database after configuration
-        builder.ConfigureServices(services =>
-        {
-            var sp = services.BuildServiceProvider();
-            using var scope = sp.CreateScope();
-            var context = scope.ServiceProvider.GetRequiredService<ApiContext>();
-
-            try
-            {
-                context.Database.EnsureCreated();
-
-                // Only seed if database is empty (to avoid duplicate seeding)
-                if (!context.Vessels.Any())
-                {
-                    Api.Application.Bootstrap.Init(context, false);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error seeding database: {ex.Message}");
-            }
-        });
+        _client = Client;
     }
 
     [Fact]

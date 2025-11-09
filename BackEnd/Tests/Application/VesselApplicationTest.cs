@@ -1,66 +1,17 @@
 using Api.Application.DataTransfer;
-using Microsoft.AspNetCore.Mvc.Testing;
 using System.Net.Http.Json;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using Api.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Api.Infrastructure.Utilities;
 
 
 namespace Tests.Application;
 
-public class VesselApplicationTest : WebApplicationFactory<Program>
+public class VesselApplicationTest : BaseApplicationTest
 {
-    private static readonly string DatabaseName = $"TestDatabase_{Guid.NewGuid()}";
     private readonly HttpClient _client;
 
     public VesselApplicationTest()
     {
-        _client = CreateClient();
-    }
-
-    protected override void ConfigureWebHost(IWebHostBuilder builder)
-    {
-        builder.ConfigureServices(services =>
-        {
-            // Remove the existing DbContext registration
-            var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<ApiContext>));
-            if (descriptor != null)
-                services.Remove(descriptor);
-
-            // Add a shared in-memory database for all tests in this class
-            services.AddDbContext<ApiContext>(options =>
-            {
-                options.UseInMemoryDatabase(DatabaseName);
-            });
-        });
-
-        builder.UseEnvironment("Testing");
-        
-        // Seed the database after configuration
-        builder.ConfigureServices(services =>
-        {
-            var sp = services.BuildServiceProvider();
-            using var scope = sp.CreateScope();
-            var context = scope.ServiceProvider.GetRequiredService<ApiContext>();
-            
-            try
-            {
-                context.Database.EnsureCreated();
-                
-                // Only seed if database is empty (to avoid duplicate seeding)
-                if (!context.Vessels.Any())
-                {
-                    Api.Application.Bootstrap.Init(context, false);
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error seeding database: {ex.Message}");
-            }
-        });
+        _client = Client;
     }
 
     [Fact]
@@ -198,7 +149,7 @@ public class VesselApplicationTest : WebApplicationFactory<Program>
         // Arrange
         var body = @"{
             ""name"": ""Maersk Triple E MKII"",
-            ""imoNumber"": ""IMO 8476310"",
+            ""imoNumber"": ""IMO 7585229"",
             ""type"": ""Post-Panamax"",
             ""owner"": ""Global Shipping Co."",
             ""length"": 360,

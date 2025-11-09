@@ -1,61 +1,17 @@
 using Api.Application.DataTransfer;
-using Microsoft.AspNetCore.Mvc.Testing;
 using System.Net.Http.Json;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.DependencyInjection;
-using Api.Infrastructure.Persistence;
-using Microsoft.EntityFrameworkCore;
-using Api.Application;
 using Api.Domain.Entities;
 using System.Net;
 
 namespace Tests.Application;
 
-public class StorageAreaApplicationTest : WebApplicationFactory<Program>
+public class StorageAreaApplicationTest : BaseApplicationTest
 {
-	private static readonly string DatabaseName = $"TestDatabase_{Guid.NewGuid()}";
 	private readonly HttpClient _client;
 
 	public StorageAreaApplicationTest()
 	{
-		_client = CreateClient();
-	}
-
-	protected override void ConfigureWebHost(IWebHostBuilder builder)
-	{
-		builder.ConfigureServices(services =>
-		{
-			var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<ApiContext>));
-			if (descriptor != null)
-				services.Remove(descriptor);
-
-			services.AddDbContext<ApiContext>(options =>
-			{
-				options.UseInMemoryDatabase(DatabaseName);
-			});
-		});
-
-		builder.UseEnvironment("Testing");
-
-		builder.ConfigureServices(services =>
-		{
-			var sp = services.BuildServiceProvider();
-			using var scope = sp.CreateScope();
-			var context = scope.ServiceProvider.GetRequiredService<ApiContext>();
-
-			try
-			{
-				context.Database.EnsureCreated();
-				if (!context.StorageAreas.Any())
-				{
-					Bootstrap.Init(context, false);
-				}
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine($"Error seeding database: {ex.Message}");
-			}
-		});
+		_client = Client;
 	}
 
 	[Fact]
@@ -214,7 +170,7 @@ public class StorageAreaApplicationTest : WebApplicationFactory<Program>
 		   // Ensure YARD01 exists first
 		   var initialDto = new CreateStorageAreaDto
 		   {
-			   NameCode = "YARD01",
+			   NameCode = "YARD03",
 			   Location = "Valid Location",
 			   Type = StorageAreaType.Yard,
 			   Capacity = 100,

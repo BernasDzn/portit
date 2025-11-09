@@ -228,8 +228,8 @@ public static class Bootstrap
             new StorageArea.DockRelation(dock3, 120, false)
         };
 
-        StorageArea sa1 = new StorageArea(Guid.NewGuid(), new Code { Value = "YARD1" }, new Designation { Value = "North Yard" }, StorageAreaType.Yard, 1000, 200, ds1);
-        StorageArea sa2 = new StorageArea(Guid.NewGuid(), new Code { Value = "YARD2" }, new Designation { Value = "South Yard" }, StorageAreaType.Yard, 1500, 300, ds2);
+        StorageArea sa1 = new StorageArea(Guid.NewGuid(), new Code { Value = "YARD01" }, new Designation { Value = "North Yard" }, StorageAreaType.Yard, 1000, 200, ds1);
+        StorageArea sa2 = new StorageArea(Guid.NewGuid(), new Code { Value = "YARD02" }, new Designation { Value = "South Yard" }, StorageAreaType.Yard, 1500, 300, ds2);
         StorageArea sa3 = new StorageArea(Guid.NewGuid(), new Code { Value = "WH1" }, new Designation { Value = "Main Warehouse" }, StorageAreaType.Warehouse, 2000, 500, []);
         StorageArea sa4 = new StorageArea(Guid.NewGuid(), new Code { Value = "WH2" }, new Designation { Value = "Secondary Warehouse" }, StorageAreaType.Warehouse, 1200, 400, []);
 
