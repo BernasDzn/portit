@@ -495,6 +495,71 @@ public static class Bootstrap
             vessel1.Owner.Representatives.First()
         );
 
+        // 4 VVns for day 10/11/2024 for testing the scheduling
+        VesselVisitNotification vvn6 = new VesselVisitNotification(
+            new VesselVisitNotificationId(
+                new Designation { Value = "PORTO" },
+                6,
+                2025
+            ),
+            new DateTime(2025, 11, 10, 8, 0, 0),
+            new DateTime(2025, 11, 15, 18, 0, 0),
+            false,
+            vessel2,
+            vessel2.Owner.Representatives.First()
+        );
+
+        VesselVisitNotification vvn7 = new VesselVisitNotification(
+            new VesselVisitNotificationId(
+                new Designation { Value = "PORTO" },
+                7,
+                2025
+            ),
+            new DateTime(2025, 11, 10, 9, 0, 0),
+            new DateTime(2025, 11, 14, 17, 0, 0),
+            false,
+            vessel3,
+            vessel3.Owner.Representatives.First()
+        );
+
+        VesselVisitNotification vvn8 = new VesselVisitNotification(
+            new VesselVisitNotificationId(
+                new Designation { Value = "PORTO" },
+                8,
+                2025
+            ),
+            new DateTime(2025, 11, 10, 10, 0, 0),
+            new DateTime(2025, 11, 13, 16, 0, 0),
+            false,
+            vessel4,
+            vessel4.Owner.Representatives.First()
+        );
+
+        VesselVisitNotification vvn9 = new VesselVisitNotification(
+            new VesselVisitNotificationId(
+                new Designation { Value = "PORTO" },
+                9,
+                2025
+            ),
+            new DateTime(2025, 11, 10, 11, 0, 0),
+            new DateTime(2025, 11, 12, 15, 0, 0),
+            false,
+            vessel1,
+            vessel1.Owner.Representatives.First()
+        );
+
+        vvn6.Submit();
+        vvn7.Submit();
+        vvn8.Submit();
+        vvn9.Submit();
+
+        vvn6.AddDecision(NotificationDecisionFactory.CreateAccepted("All criteria met", context.Docks.First()));
+        vvn7.AddDecision(NotificationDecisionFactory.CreateAccepted("All criteria met", context.Docks.First()));
+        vvn8.AddDecision(NotificationDecisionFactory.CreateAccepted("Approved after review", context.Docks.Skip(2).First()));
+        vvn9.AddDecision(NotificationDecisionFactory.CreateAccepted("All criteria met", context.Docks.First()));
+
+        context.VesselVisitNotifications.AddRange(vvn6, vvn7, vvn8, vvn9);
+
         NotificationDecision decision1 = NotificationDecisionFactory.CreateAccepted("All criteria met", context.Docks.First());
         NotificationDecision decision2 = NotificationDecisionFactory.CreateRejected("Insufficient documentation", false);
         NotificationDecision decision3 = NotificationDecisionFactory.CreateAccepted("Approved after review", context.Docks.Skip(2).First());

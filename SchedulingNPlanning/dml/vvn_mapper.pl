@@ -9,5 +9,7 @@ json_to_vvn_fact(JsonDict, vessel(VesselName, ArrivalTime, DepartureTime, Unload
     DepartureTime is round(DepartureTimestamp / 3600),
 
     % TODO we don't have this data yet
-    UnloadingTime is 0,
-    LoadingTime is 0.
+    % UnloadingTime is 0,
+    % LoadingTime is 0.
+    random_between(5, 15, UnloadingTime),
+    random_between(5, 15, LoadingTime).
