@@ -5,6 +5,7 @@
         "statistics": "Statistics",
         "yes": "Yes",
         "no": "No",
+        "weekDay": "Week Day",
         "days": {
             "sunday": "Sunday",
             "monday": "Monday",
@@ -13,7 +14,8 @@
             "thursday": "Thursday",
             "friday": "Friday",
             "saturday": "Saturday"
-        }
+        },
+        "number": "Number"
     },
     "buttons": {
         "save": "Save",
@@ -25,6 +27,7 @@
         "select": "Select",
         "activate": "Activate",
         "deactivate": "Deactivate",
+        "add": "Add",
         "filter": {
             "title": "Filters",
             "add": "Filter",
@@ -551,10 +554,11 @@
         }
     },
     "operationalWindow": {
+        "title": "Operational Window",
         "printer": {
             "addShift": "Add Shift",
             "shifts": "Shifts:",
-            "noShifts": "No shifts defined",
+            "noShifts": "No shifts.",
             "startTime": "Start Time",
             "endTime": "End Time",
             "weekDays": "Week Days"

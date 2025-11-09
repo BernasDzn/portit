@@ -2,7 +2,20 @@
     "common": {
         "loading": "Carregando...",
         "noData": "Sem dados disponíveis",
-        "statistics": "Estatísticas"
+        "statistics": "Estatísticas",
+        "yes": "Sim",
+        "no": "Não",
+        "weekDay": "Dia da Semana",
+        "days": {
+            "sunday": "Domingo",
+            "monday": "Segunda-feira",
+            "tuesday": "Terça-feira",
+            "wednesday": "Quarta-feira",
+            "thursday": "Quinta-feira",
+            "friday": "Sexta-feira",
+            "saturday": "Sábado"
+        },
+        "number": "Número"
     },
     "buttons": {
         "save": "Salvar",
@@ -11,9 +24,10 @@
         "edit": "Editar",
         "create": "Criar",
         "search": "Pesquisar",
-    "select": "Selecionar",
-    "activate": "Ativar",
-    "deactivate": "Desativar",
+        "select": "Selecionar",
+        "activate": "Ativar",
+        "deactivate": "Desativar",
+        "add": "Adicionar",
         "filter": {
             "title": "Filtros",
             "add": "Filtrar",
@@ -444,6 +458,20 @@
                 "title": "Ocupação",
                 "placeholder": "Ocupação atual"
             }
+        }
+    },
+    "operationalWindow": {
+        "title": "Janela Operacional",
+        "printer": {
+            "addShift": "Adicionar Turno",
+            "shifts": "Turnos:",
+            "noShifts": "Sem turnos.",
+            "startTime": "Hora de Início",
+            "endTime": "Hora de Fim",
+            "weekDays": "Dias da Semana"
+        },
+        "errors": {
+            "shiftOverlap": "Turno inválido. Sobreposição ou hora de fim antes da hora de início."
         }
     }
 

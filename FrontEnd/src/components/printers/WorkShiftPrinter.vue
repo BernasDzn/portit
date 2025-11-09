@@ -15,7 +15,7 @@ const emits = defineEmits(['removeShift'])
 
 let shiftsPerDay = ref<Record<number, Shift[]>>({});
 
-const weekDays = [t("common.days.sunday"), t("common.days.monday"), t("common.days.tuesday"), t("common.days.wednesday"), t("common.days.thursday"), t("common.days.friday"), t("common.days.saturday")];
+const weekDays = ["common.days.sunday", "common.days.monday", "common.days.tuesday", "common.days.wednesday", "common.days.thursday", "common.days.friday", "common.days.saturday"];
 
 onMounted(
     () => {
@@ -45,7 +45,7 @@ function FormatTime(qwertyuiop:string){
 			<sl-card v-if="shifts.length > 0" class="shift-flex
 				">
 				<div slot="header">
-					{{ weekDays[day] }}
+					{{t( weekDays[day]! )}}
 				</div>
 				<div class="tags-removable shift-flex-column">
 					<sl-tag v-for="(shift, idx) in shifts" :key="idx" variant="neutral" pill :removable="is_removable == undefined || is_removable" @sl-remove="$emit('removeShift', Number(day), idx)">
@@ -57,7 +57,7 @@ function FormatTime(qwertyuiop:string){
 	</div>
 	<div v-else>
 		<p style="color:gray;">
-			No shifts.
+			{{ t('operationalWindow.printer.noShifts') }}
 		</p>
 	</div>
 </template>
