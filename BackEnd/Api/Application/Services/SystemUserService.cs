@@ -35,7 +35,23 @@ public class SystemUserService : ISystemUserService
     public async Task<IEnumerable<SystemUserDto>> GetAll()
     {
         var systemUsers = await _systemUserRepository.GetAllAsync();
-        return systemUsers.Select(su => su.ToDTO());
+        // map roles from Identity
+        var systemUserDtos = new List<SystemUserDto>();
+        foreach (var systemUser in systemUsers)
+        {
+            var dto = systemUser.ToDTO();
+            var roles = await _userManager.GetRolesAsync(systemUser);
+            if (roles.Any())
+            {
+                var roleName = roles.First();
+                if (Enum.TryParse<SystemUserRoleType>(roleName, out var roleType))
+                {
+                    dto.Role = (int)roleType;
+                }
+            }
+            systemUserDtos.Add(dto);
+        }
+        return systemUserDtos;
     }
 
     public async Task<SystemUserDto> GetBySub(string sub)
@@ -269,6 +285,29 @@ public class SystemUserService : ISystemUserService
     public async Task<Page<SystemUserDto>> FilterUsers(SystemUserFilter filter)
     {
         Page<SystemUser> page = await _systemUserRepository.FilterUsersAsync(filter);
-        return page.Map(su => su.ToDTO());
+        // map roles from Identity
+        var systemUserDtos = new List<SystemUserDto>();
+        foreach (var systemUser in page.Items)
+        {
+            var dto = systemUser.ToDTO();
+            var roles = await _userManager.GetRolesAsync(systemUser);
+            if (roles.Any())
+            {
+                var roleName = roles.First();
+                if (Enum.TryParse<SystemUserRoleType>(roleName, out var roleType))
+                {
+                    dto.Role = (int)roleType;
+                }
+            }
+            _logger.LogInformation($"User '{systemUser.Email}' has role '{dto.Role}'.");
+            systemUserDtos.Add(dto);
+        }
+        return new Page<SystemUserDto>
+        {
+            Items = systemUserDtos,
+            PageNumber = page.PageNumber,
+            PageSize = page.PageSize,
+            PageCount = page.PageCount
+        };
     }
 }
