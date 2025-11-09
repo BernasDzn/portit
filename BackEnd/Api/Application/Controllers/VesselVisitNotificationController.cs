@@ -101,7 +101,14 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
     {
         try
         {
-            var createdNotification = await _notificationService.Add(vesselVisitNotificationDto);
+            string? userEmail = User.FindFirst("email_address")?.Value;
+            if (string.IsNullOrWhiteSpace(userEmail))
+            {
+                _logger.LogError("Create notification called without a user email");
+                return BadRequest("You require a valid user email to create a notification.");
+            }
+
+            var createdNotification = await _notificationService.Add(vesselVisitNotificationDto, userEmail);
             return CreatedAtAction(nameof(GetAll), new { id = createdNotification.NotificationId }, createdNotification);
         }
         catch (EntityAlreadyExistsException e)
@@ -165,8 +172,21 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
                 _logger.LogError("Update notification called without an id");
                 return BadRequest("Notification id is required.");
             }
-            var updatedNotification = await _notificationService.Update(id, vesselVisitNotificationDto);
+
+            string? userEmail = User.FindFirst("email_address")?.Value;
+            if (string.IsNullOrWhiteSpace(userEmail))
+            {
+                _logger.LogError("Update notification called without a user email");
+                return BadRequest("You require a valid user email to update a notification.");
+            }
+
+            var updatedNotification = await _notificationService.Update(id, vesselVisitNotificationDto, userEmail);
             return NoContent();
+        }
+        catch (UnauthorizedAccessException e)
+        {
+            _logger.LogError($"Unauthorized attempt to update notification with ID {id}: {e.Message}");
+            return Forbid();
         }
         catch (EntityNotFoundException e)
         {
@@ -188,7 +208,7 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
 
 
     [HttpPut("submit/{id}", Name = "SubmitVesselVisitNotification")]
-    [Authorize(Policy = "VesselVisitNotification.Edit")]
+    [Authorize(Policy = "VesselVisitNotification.Submit")]
     public async Task<ActionResult> Submit(string id)
     {
         try
@@ -200,14 +220,25 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
                     return BadRequest("Notification id is required.");
                 }
             }
+            string? userEmail = User.FindFirst("email_address")?.Value;
+            if (string.IsNullOrWhiteSpace(userEmail))
+            {
+                _logger.LogError("Submit notification called without a user email");
+                return BadRequest("You require a valid user email to submit a notification.");
+            }
 
-            await _notificationService.SubmitNotification(id);
+            await _notificationService.SubmitNotification(id, userEmail);
             return NoContent();
         }
         catch (EntityNotFoundException e)
         {
             _logger.LogError($"Error submitting notification with ID {id}: {e.Message}");
             return NotFound(e.Message);
+        }
+        catch (UnauthorizedAccessException e)
+        {
+            _logger.LogError($"Unauthorized attempt to submit notification with ID {id}: {e.Message}");
+            return Forbid();
         }
         catch (Exception ex)
         {
@@ -224,12 +255,25 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
 
 
     [HttpGet("filter", Name = "FilterVesselVisitNotifications")]
+    [Authorize(Policy = "VesselVisitNotification.View")]
     public async Task<ActionResult<Page<VesselVisitNotificationStatusDto>>> Filter([FromQuery] VesselVisitNotificationFilter filter)
     {
         try
         {
-            var filteredNotifications = await _notificationService.FilterNotifications(filter);
+            string? userEmail = User.FindFirst("email_address")?.Value;
+            if (string.IsNullOrWhiteSpace(userEmail))
+            {
+                _logger.LogError("Filter notifications called without a user email");
+                return BadRequest("You require a valid user email to filter notifications.");
+            }
+
+            var filteredNotifications = await _notificationService.FilterNotifications(filter, userEmail);
             return Ok(filteredNotifications);
+        }
+        catch (UnauthorizedAccessException e)
+        {
+            _logger.LogError($"Unauthorized attempt to filter notifications: {e.Message}");
+            return Forbid();
         }
         catch (Exception ex)
         {
@@ -244,13 +288,31 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
     {
         try
         {
-            await _notificationService.DeleteNotificationDraft(id);
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                _logger.LogError("Delete draft notification called without an id");
+                return BadRequest("Notification id is required.");
+            }
+
+            string? userEmail = User.FindFirst("email_address")?.Value;
+            if (string.IsNullOrWhiteSpace(userEmail))
+            {
+                _logger.LogError("Delete draft notification called without a user email");
+                return BadRequest("You require a valid user email to delete a draft notification.");
+            }
+
+            await _notificationService.DeleteNotificationDraft(id, userEmail);
             return NoContent();
         }
         catch (EntityNotFoundException e)
         {
             _logger.LogError($"Error deleting draft notification with ID {id}: {e.Message}");
             return NotFound(e.Message);
+        }
+        catch (UnauthorizedAccessException e)
+        {
+            _logger.LogError($"Unauthorized attempt to delete draft notification with ID {id}: {e.Message}");
+            return Forbid();
         }
         catch (System.Exception e)
         {

@@ -91,8 +91,8 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuer = true, // Require that token iss claim matches configured issuer (us)
         ValidIssuer = builder.Configuration.GetValue<string>("backend_url")!,
         ValidateAudience = true, // Require that token aud claim matches configured audience (our front-end)
-    // Accept any of the configured frontend URLs as valid audiences for tokens
-    ValidAudiences = frontendUrls,
+        // Accept any of the configured frontend URLs as valid audiences for tokens
+        ValidAudiences = frontendUrls,
         ValidateLifetime = true, // Ensure token hasn't expired
         ValidateIssuerSigningKey = true, // Ensure token signature is valid so it cant be forged
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)),
@@ -148,7 +148,7 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("Vessel.Manage", p => p.RequireRole("PortAuthorityOfficer", "Administrator"));
     options.AddPolicy("StorageArea.Manage", p => p.RequireRole("PortAuthorityOfficer", "Administrator"));
     options.AddPolicy("ShippingAgentOrg.Manage", p => p.RequireRole("PortAuthorityOfficer", "Administrator"));
-    options.AddPolicy("Representative.Manage", p => p.RequireRole("PortAuthorityOfficer", "Administrator"));
+    options.AddPolicy("Representative.Manage", p => p.RequireRole("SAORepresentative", "PortAuthorityOfficer", "Administrator"));
     options.AddPolicy("Dock.Manage", p => p.RequireRole("PortAuthorityOfficer", "Administrator"));
     // Vessel visit notification: 
     // - viewing by SAORepresentative and PortAuthorityOfficer
@@ -158,6 +158,7 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("VesselVisitNotification.View", p => p.RequireRole("SAORepresentative", "PortAuthorityOfficer", "Administrator"));
     options.AddPolicy("VesselVisitNotification.Edit", p => p.RequireRole("SAORepresentative", "Administrator"));
     options.AddPolicy("VesselVisitNotification.Approve", p => p.RequireRole("PortAuthorityOfficer", "Administrator"));
+    options.AddPolicy("VesselVisitNotification.Submit", p => p.RequireRole("SAORepresentative", "Administrator"));
     // Logistics Operator features
     options.AddPolicy("Qualification.Manage", p => p.RequireRole("LogisticsOperator", "Administrator"));
     options.AddPolicy("Staff.Manage", p => p.RequireRole("LogisticsOperator", "Administrator"));

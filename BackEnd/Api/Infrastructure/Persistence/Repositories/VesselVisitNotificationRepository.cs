@@ -104,20 +104,20 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
         }
     }
 
-    public Task<Page<VesselVisitNotification>> FilterVesselVisitNotificationsAsync(VesselVisitNotificationFilter filter)
+    public Task<Page<VesselVisitNotification>> FilterVesselVisitNotificationsAsync(VesselVisitNotificationFilter filter, uint userId)
     {
         try
         {
-            Representative? submitter = _context.Representatives.FirstOrDefault(rep => rep.CitizenshipId == filter.SubmitterCitizenshipId);
+            Representative? submitter = _context.Representatives.FirstOrDefault(rep => rep.CitizenshipId == userId);
             if (submitter == null)
-                throw new EntityNotFoundException($"No Representative found with Citizenship ID {filter.SubmitterCitizenshipId}");
+                throw new EntityNotFoundException($"No Representative found with Citizenship ID {userId}.");
             
             if (submitter.RepresentedOrganization == null)
-                throw new EntityNotFoundException($"The representative with Citizenship ID {filter.SubmitterCitizenshipId} does not represent any organization.");
+                throw new EntityNotFoundException($"The representative with Citizenship ID {userId} does not represent any organization.");
 
             IQueryable<VesselVisitNotification> query = _context.VesselVisitNotifications.AsQueryable();
-            ShippingAgentOrganization relatedOrg = _context.ShippingAgentOrganizations.FirstOrDefault(org => org.Representatives.Any(rep => rep.CitizenshipId == filter.SubmitterCitizenshipId)) 
-                ?? throw new EntityNotFoundException($"No Shipping Agent Organization found for Submitter Citizenship ID {filter.SubmitterCitizenshipId}");
+            ShippingAgentOrganization relatedOrg = _context.ShippingAgentOrganizations.FirstOrDefault(org => org.Representatives.Any(rep => rep.CitizenshipId == userId)) 
+                ?? throw new EntityNotFoundException($"No Shipping Agent Organization found for Submitter Citizenship ID {userId}");
 
             // Apply same company rule
             query = query.Where(vvn => vvn.Submitter.RepresentedOrganization!.Id == relatedOrg.Id);

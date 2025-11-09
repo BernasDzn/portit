@@ -13,7 +13,6 @@ public enum NotificationStatusFilter
 }
 public class VesselVisitNotificationFilter : Pageable
 {
-	public required uint SubmitterCitizenshipId { get; set; }
 	public NotificationStatusFilter? Status { get; set; }
 	public bool? WithReason { get; set; }
 	public bool? WithDockAssigned { get; set; }
