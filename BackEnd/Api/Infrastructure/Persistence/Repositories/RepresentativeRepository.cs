@@ -18,6 +18,7 @@ public class RepresentativeRepository : GenericRepository<Representative>, IRepr
     {
         try
         {
+            Console.WriteLine($"Searching for representative with email: {email}");
             Representative? representative = await _context.Representatives
                 .FirstOrDefaultAsync(q => q.EmailAddress.Value.Equals(email));
             if (representative == null)
@@ -26,9 +27,9 @@ public class RepresentativeRepository : GenericRepository<Representative>, IRepr
             }
             return representative;
         }
-        catch
+        catch 
         {
-            throw new PersistencyFailedException("Failed to select representatives by email");
+            throw;
         }
     }
 

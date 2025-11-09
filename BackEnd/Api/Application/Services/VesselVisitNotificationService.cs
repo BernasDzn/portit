@@ -9,6 +9,7 @@ using Api.Domain.IRepository;
 using Api.Domain.ValueObjects;
 using Api.Infrastructure.Exceptions;
 using Api.Infrastructure.Utilities;
+using Microsoft.AspNetCore.Authorization;
 
 public class VesselVisitNotificationService : IVesselVisitNotificationService
 {
@@ -18,6 +19,7 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
     private readonly IStorageAreaRepository _storageAreaRepository;
     private readonly IContainerRepository _containerRepository;
     private readonly VesselVisitNotificationIdGenerator _idGenerator;
+    private readonly ISystemUserService _systemUserService;
     private readonly ILogger<VesselVisitNotificationService> _logger;
 
     public VesselVisitNotificationService(
@@ -27,6 +29,7 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         IStorageAreaRepository storageAreaRepository,
         VesselVisitNotificationIdGenerator idGenerator,
         IContainerRepository containerRepository,
+        ISystemUserService systemUserService,
         ILogger<VesselVisitNotificationService> logger
     )
     {
@@ -36,6 +39,7 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         _storageAreaRepository = storageAreaRepository;
         _containerRepository = containerRepository;
         _idGenerator = idGenerator;
+        _systemUserService = systemUserService;
         _logger = logger;
     }
 
@@ -89,7 +93,7 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         return newCargoManifestItems;
     }
 
-    public async Task<VesselVisitNotificationDto> Add(CreateVesselVisitNotificationDto vesselVisitNotificationDto)
+    public async Task<VesselVisitNotificationDto> Add(CreateVesselVisitNotificationDto vesselVisitNotificationDto, string userEmail)
     {
         VesselVisitNotification? existingNotification =
             await _notificationRepository.GetVesselVisitNotificationByNotificationIdAsync(vesselVisitNotificationDto.NotificationId);
@@ -99,11 +103,11 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         Vessel? vessel = await _vesselRepository.GetVesselByIMOAsync(vesselVisitNotificationDto.VesselImoNumber);
         if (vessel == null) throw new EntityNotFoundException($"Vessel with IMO {vesselVisitNotificationDto.VesselImoNumber} was not found.");
 
-        Representative representative = await _representativeRepository.GetByCitizenIdAsync(
-            vesselVisitNotificationDto.SubmitterId
+        Representative representative = await _representativeRepository.GetByEmailAsync(
+            userEmail
         );
 
-        if (representative == null) throw new EntityNotFoundException($"Representative with Citizenship ID {vesselVisitNotificationDto.SubmitterId} was not found.");
+        if (representative == null) throw new EntityNotFoundException($"Representative with email {userEmail} was not found.");
 
         Crew? crew = null;
         if (vesselVisitNotificationDto.CrewDetails != null)
@@ -141,11 +145,18 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         return notification.ToDTO();
     }
 
-    public async Task<VesselVisitNotificationDto> Update(string vvnID, CreateVesselVisitNotificationDto vvnDTO)
+    public async Task<VesselVisitNotificationDto> Update(string vvnID, CreateVesselVisitNotificationDto vvnDTO, string userEmail)
     {
         var existingNotification =
             await _notificationRepository.GetVesselVisitNotificationByNotificationIdAsync(vvnID) ??
             throw new EntityNotFoundException($"Vessel Visit Notification with id {vvnID} was not found.");
+
+        var saor = await _representativeRepository.GetByEmailAsync(userEmail);
+        if (saor == null)
+            throw new EntityNotFoundException($"System user with email {userEmail} was not found.");
+
+        if (existingNotification.Submitter.Id != saor.Id)
+            throw new UnauthorizedAccessException("You may not update this notification, you are not its original author");
 
         Crew? newCrewDetails =
             vvnDTO.CrewDetails != null ?
@@ -164,26 +175,35 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         return (await _notificationRepository.UpdateAsync(existingNotification)).ToDTO();
     }
 
-    public async Task<Page<VesselVisitNotificationStatusDto>> FilterNotifications(VesselVisitNotificationFilter filter)
+    public async Task<Page<VesselVisitNotificationStatusDto>> FilterNotifications(VesselVisitNotificationFilter filter, string userEmail)
     {
-        Page<VesselVisitNotification> page = await _notificationRepository.FilterVesselVisitNotificationsAsync(filter);
+        var saor = await _representativeRepository.GetByEmailAsync(userEmail);
+        if (saor == null)
+            throw new EntityNotFoundException($"System user with email {userEmail} was not found.");
+
+        Page<VesselVisitNotification> page = await _notificationRepository.FilterVesselVisitNotificationsAsync(filter, saor.CitizenshipId);
         AppLogEvents.LogFilter(_logger, "vessel visit notifications", page.Items.Count);
         return page.Map(vvn => vvn.ToStatusDTO());
     }
 
-    public async Task SubmitNotification(string vvnID)
+    public async Task SubmitNotification(string vvnID, string userEmail)
     {
         var existingNotification =
             await _notificationRepository.GetVesselVisitNotificationByNotificationIdAsync(vvnID) ??
             throw new EntityNotFoundException($"Vessel Visit Notification with id {vvnID} was not found.");
 
-        // TODO: verificar com auth
+        var saor = await _representativeRepository.GetByEmailAsync(userEmail);
+        if (saor == null)
+            throw new EntityNotFoundException($"System user with email {userEmail} was not found.");
+
+        if (existingNotification.Submitter.Id != saor.Id)
+            throw new UnauthorizedAccessException("You may not submit this notification, you are not its original author");
 
         existingNotification.Submit();
         await _notificationRepository.UpdateAsync(existingNotification);
     }
 
-    public async Task DeleteNotificationDraft(string vvnID)
+    public async Task DeleteNotificationDraft(string vvnID, string userEmail)
     {
         var existingNotification =
             await _notificationRepository.GetVesselVisitNotificationByNotificationIdAsync(vvnID) ??
@@ -192,7 +212,12 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         if (existingNotification.Status != NotificationStatus.InProgress)
             throw new InvalidOperationException("Cannot delete this notification, it was already submitted");
 
-        // TODO: verificar com auth
+        var saor = await _representativeRepository.GetByEmailAsync(userEmail);
+        if (saor == null)
+            throw new EntityNotFoundException($"System user with email {userEmail} was not found.");
+
+        if (existingNotification.Submitter.Id != saor.Id)
+            throw new UnauthorizedAccessException("You may not delete this notification, you are not its original author");
         
         await _notificationRepository.DeleteAsync(existingNotification);
     }

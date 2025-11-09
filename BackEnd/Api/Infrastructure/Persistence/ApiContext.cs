@@ -89,13 +89,17 @@ public class ApiContext : IdentityDbContext<SystemUser, SystemUserRole, Guid>
         });
 
         // Encryption for sensitive data
-        modelBuilder.Entity<Representative>(entity =>
-        {
-            entity.Property(e => e.CitizenshipId).HasConversion<UIntEncryptionConvertor>();
-            entity.Property(e => e.Name).HasConversion<DesignationEncryptionConverter>();
-            entity.Property(e => e.EmailAddress).HasConversion<EmailEncryptionConverter>();
-            entity.Property(e => e.Phone).HasConversion<PhoneNumberEncryptionConverter>();
-        });
+        // modelBuilder.Entity<Representative>(entity =>
+        // {
+        //     // entity.OwnsOne(r => r.EmailAddress, e =>
+        //     // {
+        //     //     e.Property(p => p.Value).HasColumnName("EmailAddress");
+        //     // });
+        //     // entity.Property(e => e.CitizenshipId).HasConversion<UIntEncryptionConvertor>();
+        //     // entity.Property(e => e.Name).HasConversion<DesignationEncryptionConverter>();
+        //     // entity.Property(e => e.EmailAddress).HasConversion<EmailEncryptionConverter>();
+        //     // entity.Property(e => e.Phone).HasConversion<PhoneNumberEncryptionConverter>();
+        // });
 
         // modelBuilder.Entity<Staff>(entity =>
         // {
