@@ -1,4 +1,4 @@
 {
-  "remoteApi": "https://api.portit.me",
+  "remoteApi": "https://portit.me:10228",
   "localApiPort": 5195
 }
