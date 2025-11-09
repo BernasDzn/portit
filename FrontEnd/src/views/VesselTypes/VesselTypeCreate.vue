@@ -85,6 +85,7 @@ const submitVesselType = (obj: any) =>
 .form{
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .general-info {
