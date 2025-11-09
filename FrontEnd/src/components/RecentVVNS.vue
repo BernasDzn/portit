@@ -17,8 +17,8 @@ const {t} = useI18n();
 const fetchNotifications = async () => {
     try {
         const notifications = await vvnService.getVesselVisitNotifications();
-        vvnCount.value = notifications.length;
-        recentNotifs.value = notifications.slice(0, 3);
+        vvnCount.value = notifications.items.length;
+        recentNotifs.value = notifications.items.slice(0, 3);
 
         console.log('Recent Vessel Visit Notifications:', notifications);
     } catch (error) {
