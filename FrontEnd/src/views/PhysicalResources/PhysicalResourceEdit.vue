@@ -185,6 +185,12 @@ onMounted(async () => {
         <sl-breadcrumb>
             <sl-breadcrumb-item><RouterLink to="/resources/dashboard" class="breadcrumb-link">{{ t('physicalResource.tabs.dashboard') }}</RouterLink></sl-breadcrumb-item>
             <sl-breadcrumb-item><RouterLink to="/resources/search" class="breadcrumb-link">{{ t('physicalResource.tabs.search') }}</RouterLink></sl-breadcrumb-item>
+            <sl-breadcrumb-item>
+                <RouterLink 
+                    :to="resourceCode ? `/resources/view/${resourceCode}` : '/resources/search'"
+                    class="breadcrumb-link"
+                >{{ resourceCode }}</RouterLink>
+            </sl-breadcrumb-item>
             <sl-breadcrumb-item>{{ t('physicalResource.tabs.edit') }}</sl-breadcrumb-item>
         </sl-breadcrumb>
         
