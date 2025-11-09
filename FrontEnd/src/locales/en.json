@@ -467,7 +467,11 @@
             },
             "type": {
                 "title": "Type",
-                "placeholder": "Select Storage Area type"
+                "placeholder": "Select Storage Area type",
+                "options": {
+                    "yard": "Yard",
+                    "warehouse": "Warehouse"
+                }
             },
             "capacity": {
                 "title": "Capacity",
