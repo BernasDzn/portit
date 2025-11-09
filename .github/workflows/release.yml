@@ -48,6 +48,24 @@ jobs:
     - name: Run tests
       run: dotnet test ${{ env.Test_Project_Path }} --configuration ${{ matrix.configuration }} --no-build --verbosity normal
 
+    # Setup Node.js for frontend build
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+        cache: 'npm'
+        cache-dependency-path: FrontEnd/package-lock.json
+
+    # Install frontend dependencies
+    - name: Install frontend dependencies
+      run: npm ci
+      working-directory: FrontEnd
+
+    # Build frontend
+    - name: Build frontend
+      run: npm run build
+      working-directory: FrontEnd
+
     # Publish Linux self-contained executable
     - name: Publish Linux binaries
       run: |
@@ -82,6 +100,13 @@ jobs:
         zip -r ../../windows-release.zip ./*
         cd ../../
 
+    # Zip frontend dist folder
+    - name: Zip frontend build
+      run: |
+        cd FrontEnd/dist
+        zip -r ../../frontend-dist.zip ./*
+        cd ../../
+
     # Create GitHub Release
     - name: Create GitHub Release
       id: create_release
@@ -105,13 +130,24 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    # Upload Windows zip
+    # Upload Windows release asset
     - name: Upload Windows release asset
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ./windows-release.zip
         asset_name: windows-release.zip
+        asset_content_type: application/zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    # Upload frontend build
+    - name: Upload frontend build asset
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./frontend-dist.zip
+        asset_name: frontend-dist.zip
         asset_content_type: application/zip
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
