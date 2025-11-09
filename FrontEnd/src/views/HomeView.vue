@@ -78,13 +78,4 @@ onBeforeUnmount(() => {
   flex: 1;
 }
 
-.layout-content :deep(.sidebar) {
-    width: var(--sidebar-width, 250px);
-    flex-shrink: 0;
-    background-color: var(--primary, #333);
-    color: #fff;
-    height: 100%;
-    overflow-y: auto;
-}
-
 </style>

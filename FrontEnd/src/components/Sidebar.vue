@@ -69,6 +69,12 @@ const itemsToShow = computed(() => {
   color: inherit;
   display: inline-flex;
   align-items: center;
+  min-width: 24px;
+  justify-content: center;
+}
+
+.sidebar-menu-link {
+  overflow: hidden;
 }
 
 </style>
