@@ -191,6 +191,7 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
         try
         {
             List<VesselVisitNotification> notifications = _context.VesselVisitNotifications
+                .Where(vvn => vvn.NotificationDecisions.Any(nd => nd.AssignedDock != null))
                 .Where(vvn => vvn.ExpectedArrival < day && vvn.ExpectedDeparture > day)
                 .ToList();
 
