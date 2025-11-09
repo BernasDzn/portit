@@ -115,6 +115,10 @@
             "view": "View and manage existing users"
         }
     },
+    "representative": {
+        "title": "Representative",
+        "select": "Select a representative"
+    },
     "physicalCharacteristics": {
         "title": "Physical Characteristics (m)",
         "length": {

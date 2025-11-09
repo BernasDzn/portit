@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { reactive, computed } from 'vue';
 import { useRouter, RouterLink } from 'vue-router';
 import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
@@ -16,6 +16,7 @@ const alerts = useAlerts();
 
 const http = new AxiosHttpService();
 const adminService = new AdminService(http as any);
+const representativeService = new RepresentativeService(http as any);
 
 // Role items must match backend enum ordering: Administrator=0, PortAuthorityOfficer=1, SAORepresentative=2, LogisticsOperator=3
 const roleItems = [
@@ -32,17 +33,16 @@ const model = reactive<SystemUser>({
   role: 0
 });
 
+const showRepresentativeDropdown = computed(() => {
+  const roleNum = typeof model.role === 'number' ? model.role : Number(model.role);
+  return roleNum === 2;
+});
+
 const submitFunction = async (obj: SystemUser) => {
   const roleNum = typeof obj.role === 'number' ? obj.role : Number(obj.role);
 
-  if (roleNum == 2) {
-    const representativeService = new RepresentativeService(http as any);
-
-    try {
-      await representativeService.getByEmail(obj.emailAddress);
-    } catch {
-      throw new Error('Representative not found for the provided email address.');
-    }
+  if (roleNum == 2 && !obj.emailAddress) {
+    throw new Error('Please select a representative.');
   }
 
   return await adminService.inviteUser(obj.emailAddress, roleNum);
@@ -63,8 +63,7 @@ const submitFunction = async (obj: SystemUser) => {
       <p class="subtitle">{{ t('user.subtitle.create') }}</p>
 
       <EntityForm :object="model" :submitFunction="submitFunction" successMessage="User created successfully">
-        <FormField :name="t('user.fields.email.title')" v-model="model.emailAddress" :placeholderText="t('user.fields.email.placeholder')" required />
-
+        
         <EntityDropdown
           :name="t('user.fields.role.title')"
           :items="roleItems.map(r => ({ id: r.id, name: t(r.name) }))"
@@ -72,6 +71,26 @@ const submitFunction = async (obj: SystemUser) => {
           valueKey="id"
           labelKey="name"
           required
+        />
+
+        <EntityDropdown
+          v-if="showRepresentativeDropdown"
+          :name="t('representative.title')"
+          v-model="model.emailAddress"
+          :fetchFunction="() => representativeService.getAll()"
+          :fetchOnMount="true"
+          valueKey="emailAddress"
+          labelKey="emailAddress"
+          :placeholderText="t('representative.select')"
+          required
+        />
+
+        <FormField 
+          v-else
+          :name="t('user.fields.email.title')" 
+          v-model="model.emailAddress" 
+          :placeholderText="t('user.fields.email.placeholder')" 
+          required 
         />
 
       </EntityForm>
