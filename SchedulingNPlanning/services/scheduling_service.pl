@@ -7,7 +7,7 @@
 % following the scheduling algorithm.
 schedule_daily_operations(TargetDate, ScheduleResult) :-
     % Fetch data from database
-    get_vvns_on_day('2025-11-21', JsonData), 
+    get_vvns_on_day(TargetDate, JsonData), 
     % format(user_error, 'VVNs: ~w~n', [JsonData]),
 
     % Parse JSON data to extract vessel facts
@@ -22,8 +22,7 @@ schedule_daily_operations(TargetDate, ScheduleResult) :-
     assert_vessel_facts(VesselFacts),
 
     % Pass the list of vessel names to sequence_temporization
-    get_vessel_names(VesselFacts, VesselNames),
-    sequence_temporization(VesselNames, ScheduleResult),
+    obtain_seq_shortest_delay(ScheduleResult, _),
     format(user_error, 'Schedule Result: ~w~n', [ScheduleResult]).
 
 % get only the names of the vessels from the vessel facts

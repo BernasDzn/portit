@@ -2,7 +2,7 @@
 
 % Api entrypoint to handle scheduling requests
 handle_schedule_request(Request) :-
-    schedule_daily_operations('11%2F16%2F2025', Result),
+    schedule_daily_operations('2025-11-11', Result),
 
     format_timetable(Result, FormattedResult),
     reply_json(#{status: success, data: FormattedResult}).

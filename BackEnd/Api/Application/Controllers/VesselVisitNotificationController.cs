@@ -11,7 +11,7 @@ using Api.Application.Exceptions;
 
 [ApiController]
 [Route("[controller]")]
-[Authorize(Policy = "VesselVisitNotification.View")]
+[Authorize(Policy = "VesselVisitNotification.View")]    
 public class VesselVisitNotificationController : ControllerBase, IVesselVisitNotificationController
 {
     private readonly ILogger<VesselVisitNotificationController> _logger;
@@ -41,6 +41,7 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
     }
 
     [HttpGet("onDay", Name = "GetVesselVisitNotificationsOnDay")]
+    [AllowAnonymous]
     public async Task<ActionResult<IEnumerable<VesselVisitNotificationDto>>> GetAllOnDay([FromQuery] DateTime day)
     {
         try
