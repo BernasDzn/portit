@@ -1,54 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import Dashboard from '@/views/Dashboard.vue'
-import Login from '@/views/Login.vue'
-import VesselDashboard from '@/views/Vessels/VesselDashboard.vue'
-import VesselSearch from '@/views/Vessels/VesselSearch.vue'
-import VesselCreate from '@/views/Vessels/VesselCreate.vue'
-import VesselView from '@/views/Vessels/VesselView.vue'
-import VesselEdit from '@/views/Vessels/VesselEdit.vue'
-import DockDashboard from '@/views/Docks/DockDashboard.vue'
-import DockSearch from '@/views/Docks/DockSearch.vue'
-import DockCreate from '@/views/Docks/DockCreate.vue'
-import DockView from '@/views/Docks/DockView.vue'
-import DockEdit from '@/views/Docks/DockEdit.vue'
-import VesselTypeDashboard from '@/views/VesselTypes/VesselTypeDashboard.vue'
-import VesselTypeSearch from '@/views/VesselTypes/VesselTypeSearch.vue'
-import VesselTypeView from '@/views/VesselTypes/VesselTypeView.vue'
-import VesselTypeCreate from '@/views/VesselTypes/VesselTypeCreate.vue'
-import VesselTypeEdit from '@/views/VesselTypes/VesselTypeEdit.vue'
-import QualificationDashboard from '@/views/Qualifications/QualificationDashboard.vue'
-import QualificationsSearch from '@/views/Qualifications/QualificationsSearch.vue'
-import QualificationView from '@/views/Qualifications/QualificationView.vue'
-import StaffDashboard from '@/views/Staff/StaffDashboard.vue'
-import StaffSearch from '@/views/Staff/StaffSearch.vue'
-import StaffView from '@/views/Staff/StaffView.vue'
-import QualificationCreate from '@/views/Qualifications/QualificationCreate.vue'
-import Unauthorized from '@/views/Unauthorized.vue'
-import StaffCreate from '@/views/Staff/StaffCreate.vue'
-import QualificationEdit from '@/views/Qualifications/QualificationEdit.vue'
-import PhysicalResourceDashboard from '@/views/PhysicalResources/PhysicalResourceDashboard.vue'
-import PhysicalResourcesSearch from '@/views/PhysicalResources/PhysicalResourcesSearch.vue'
-import PhysicalResourceViewer from '@/views/PhysicalResources/PhysicalResourceViewer.vue'
-import PhysicalResourceCreate from '@/views/PhysicalResources/PhysicalResourceCreate.vue'
-import StorageAreaDashboard from '@/views/StorageAreas/StorageAreaDashboard.vue'
-import StorageAreaSearch from '@/views/StorageAreas/StorageAreaSearch.vue'
-import StorageAreaView from '@/views/StorageAreas/StorageAreaView.vue'
-import StorageAreaCreate from '@/views/StorageAreas/StorageAreaCreate.vue'
-import StorageAreaEdit from '@/views/StorageAreas/StorageAreaEdit.vue'
-import AdminDashboard from '@/views/Admin/AdminDashboard.vue'
-import UserDashboard from '@/views/Admin/UserDashboard.vue'
-import UserSearch from '@/views/Admin/UserSearch.vue'
-import UserCreate from '@/views/Admin/UserCreate.vue'
-import UserView from '@/views/Admin/UserView.vue'
-import Visualizer from '@/views/Visualizer.vue'
-import StaffEdit from '@/views/Staff/StaffEdit.vue'
-import VVNDashboard from '@/views/VesselVisitNotification/VesselVisitNotificationDashboard.vue'
-import VVNSearch from '@/views/VesselVisitNotification/VesselVisitNotificationSearch.vue'
-import VVNView from '@/views/VesselVisitNotification/VesselVisitNotificationView.vue'
-import PhysicalResourceEdit from '@/views/PhysicalResources/PhysicalResourceEdit.vue'
-import AuditLogs from '@/views/Admin/AuditLogs.vue'
 import { useSession } from '@/composables/session'
+
+// Only eagerly load critical components (layout and auth)
+import HomeView from '../views/HomeView.vue'
+import Login from '@/views/Login.vue'
+import Unauthorized from '@/views/Unauthorized.vue'
+
+// All other components are lazy-loaded when their route is accessed
+// This dramatically reduces initial bundle size and improves load time
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -60,7 +19,7 @@ const router = createRouter({
         {
           path: '/',
           name: 'Main Dashboard',
-          component: Dashboard,
+          component: () => import('@/views/Dashboard.vue'),
           meta: {
             icon: "directions_boat"
           }
@@ -68,7 +27,7 @@ const router = createRouter({
         {
           path: '/vessels/dashboard',
           name: 'Vessel Dashboard',
-          component: VesselDashboard,
+          component: () => import('@/views/Vessels/VesselDashboard.vue'),
           meta: {
             icon: "directions_boat"
           }
@@ -76,7 +35,7 @@ const router = createRouter({
         {
           path: '/vessels/search',
           name: 'Search for Vessels',
-          component: VesselSearch,
+          component: () => import('@/views/Vessels/VesselSearch.vue'),
           meta: {
             icon: "search"
           }
@@ -84,23 +43,23 @@ const router = createRouter({
         {
           path: '/vessels/create',
           name: 'Create a Vessel',
-          component: VesselCreate,
+          component: () => import('@/views/Vessels/VesselCreate.vue'),
           meta: {
             icon: "add"
           }
         },
         {
           path: '/vessels/view/:imo',
-          component: VesselView
+          component: () => import('@/views/Vessels/VesselView.vue')
         },
         {
           path: '/vessels/edit/:imo',
-          component: VesselEdit
+          component: () => import('@/views/Vessels/VesselEdit.vue')
         },
         {
           path: '/docks/dashboard',
           name: 'Dock Dashboard',
-          component: DockDashboard,
+          component: () => import('@/views/Docks/DockDashboard.vue'),
           meta: {
             icon: "anchor"
           }
@@ -108,31 +67,31 @@ const router = createRouter({
         {
           path: '/docks/search',
           name: 'Search for Docks',
-          component: DockSearch,
+          component: () => import('@/views/Docks/DockSearch.vue'),
           meta: {
             icon: "search"
           }
         },
         {
           path: '/docks/view/:code',
-          component: DockView
+          component: () => import('@/views/Docks/DockView.vue')
         },
         {
           path: '/docks/create',
           name: 'Create a Dock',
-          component: DockCreate,
+          component: () => import('@/views/Docks/DockCreate.vue'),
           meta: {
             icon: "add"
           }
         },
         {
           path: '/docks/edit/:code',
-          component: DockEdit
+          component: () => import('@/views/Docks/DockEdit.vue')
         },
         {
           path: '/vessel-types/dashboard',
           name: 'Vessel Types Dashboard',
-          component: VesselTypeDashboard,
+          component: () => import('@/views/VesselTypes/VesselTypeDashboard.vue'),
           meta: {
             icon: "sailing"
           }
@@ -140,31 +99,31 @@ const router = createRouter({
         {
           path: '/vessel-types/search',
           name: 'Search for Vessel Types',
-          component: VesselTypeSearch,
+          component: () => import('@/views/VesselTypes/VesselTypeSearch.vue'),
           meta: {
             icon: "search"
           }
         },
         {
           path: '/vessel-types/view/:name',
-          component: VesselTypeView
+          component: () => import('@/views/VesselTypes/VesselTypeView.vue')
         },
         {
           path: '/vessel-types/create',
           name: 'Create a Vessel Type',
-          component: VesselTypeCreate,
+          component: () => import('@/views/VesselTypes/VesselTypeCreate.vue'),
           meta: {
             icon: "add"
           }
         },
         {
           path: '/vessel-types/edit/:name',
-          component: VesselTypeEdit
+          component: () => import('@/views/VesselTypes/VesselTypeEdit.vue')
         },
         {
           path: '/qualifications/dashboard',
           name: 'Qualifications Dashboard',
-          component: QualificationDashboard,
+          component: () => import('@/views/Qualifications/QualificationDashboard.vue'),
           meta: {
             icon: "school"
           }
@@ -172,19 +131,19 @@ const router = createRouter({
         {
           path: '/qualifications/search',
           name: 'Search for Qualifications',
-          component: QualificationsSearch,
+          component: () => import('@/views/Qualifications/QualificationsSearch.vue'),
           meta: {
             icon: "search"
           }
         },
         {
           path: '/qualifications/view/:id',
-          component: QualificationView
+          component: () => import('@/views/Qualifications/QualificationView.vue')
         },
         {
           path: '/staff/dashboard',
           name: 'Staff Dashboard',
-          component: StaffDashboard,
+          component: () => import('@/views/Staff/StaffDashboard.vue'),
           meta: {
             icon: "people"
           }
@@ -192,39 +151,39 @@ const router = createRouter({
         {
           path: '/staff/search',
           name: 'Search for Staff',
-          component: StaffSearch,
+          component: () => import('@/views/Staff/StaffSearch.vue'),
           meta: {
             icon: "search"
           }
         },
         {
           path: '/staff/view/:mechanographicNumber',
-          component: StaffView
+          component: () => import('@/views/Staff/StaffView.vue')
         },
         {
           path: '/staff/create',
-          component: StaffCreate
+          component: () => import('@/views/Staff/StaffCreate.vue')
         },
         {
           path: '/staff/edit/:id',
-          component: StaffEdit
+          component: () => import('@/views/Staff/StaffEdit.vue')
         },
         {
           path: '/qualifications/create',
           name: 'Create a Qualification',
-          component: QualificationCreate,
+          component: () => import('@/views/Qualifications/QualificationCreate.vue'),
           meta: {
             icon: "add"
           }
         },
         {
             path: '/qualifications/edit/:id',
-            component: QualificationEdit
+            component: () => import('@/views/Qualifications/QualificationEdit.vue')
         },
         {
             path: '/resources/dashboard',
             name: 'Physical Resources Dashboard',
-            component: PhysicalResourceDashboard,
+            component: () => import('@/views/PhysicalResources/PhysicalResourceDashboard.vue'),
             meta: {
                 icon: "build"
             }
@@ -232,19 +191,19 @@ const router = createRouter({
         {
             path: '/resources/search',
             name: 'Search for Physical Resources',
-            component: PhysicalResourcesSearch,
+            component: () => import('@/views/PhysicalResources/PhysicalResourcesSearch.vue'),
             meta: {
                 icon: "search"
             }
         },
         {
             path: '/resources/view/:code',
-            component: PhysicalResourceViewer
+            component: () => import('@/views/PhysicalResources/PhysicalResourceViewer.vue')
         },
         {
             path: '/resources/create',
             name: 'Create a Physical Resource',
-            component: PhysicalResourceCreate,
+            component: () => import('@/views/PhysicalResources/PhysicalResourceCreate.vue'),
             meta: {
                 icon: "add"
             }
@@ -252,7 +211,7 @@ const router = createRouter({
         {
           path: '/storage-areas/dashboard',
           name: 'Storage Areas Dashboard',
-          component: StorageAreaDashboard,
+          component: () => import('@/views/StorageAreas/StorageAreaDashboard.vue'),
           meta: {
             icon: "warehouse"
           }
@@ -260,31 +219,31 @@ const router = createRouter({
         {
           path: '/storage-areas/search',
           name: 'Search for Storage Areas',
-          component: StorageAreaSearch,
+          component: () => import('@/views/StorageAreas/StorageAreaSearch.vue'),
           meta: {
             icon: "search"
           }
         },
         {
           path: '/storage-areas/view/:nameCode',
-          component: StorageAreaView
+          component: () => import('@/views/StorageAreas/StorageAreaView.vue')
         },
         {
           path: '/storage-areas/create',
           name: 'Create a Storage Area',
-          component: StorageAreaCreate,
+          component: () => import('@/views/StorageAreas/StorageAreaCreate.vue'),
           meta: {
             icon: "add"
           }
         },
         {
           path: '/storage-areas/edit/:name',
-          component: StorageAreaEdit
+          component: () => import('@/views/StorageAreas/StorageAreaEdit.vue')
         },
         {
           path: '/vessel-visit-notifications/dashboard',
           name: 'VVN Dashboard',
-          component: VVNDashboard,
+          component: () => import('@/views/VesselVisitNotification/VesselVisitNotificationDashboard.vue'),
           meta: {
             icon: "notifications"
           }
@@ -292,19 +251,19 @@ const router = createRouter({
         {
           path: '/vessel-visit-notifications/search',
           name: 'Search for VVNs',
-          component: VVNSearch,
+          component: () => import('@/views/VesselVisitNotification/VesselVisitNotificationSearch.vue'),
           meta: {
             icon: "search"
           }
         },
         {
           path : '/vessel-visit-notifications/view/:notificationId',
-          component: VVNView
+          component: () => import('@/views/VesselVisitNotification/VesselVisitNotificationView.vue')
         },
         {
           path: '/admin/dashboard',
           name: 'Admin Dashboard',
-          component: AdminDashboard,
+          component: () => import('@/views/Admin/AdminDashboard.vue'),
           meta: {
             icon: "admin_panel_settings"
           }
@@ -312,7 +271,7 @@ const router = createRouter({
         {
           path: '/admin/users',
           name: 'User Management',
-          component: UserDashboard,
+          component: () => import('@/views/Admin/UserDashboard.vue'),
           meta: {
             icon: "manage_accounts"
           }
@@ -320,7 +279,7 @@ const router = createRouter({
         {
           path: '/admin/users/search',
           name: 'Search for Users',
-          component: UserSearch,
+          component: () => import('@/views/Admin/UserSearch.vue'),
           meta: {
             icon: "search"
           }
@@ -328,26 +287,26 @@ const router = createRouter({
         {
           path: '/admin/users/create',
           name: 'Create a User',
-          component: UserCreate,
+          component: () => import('@/views/Admin/UserCreate.vue'),
           meta: {
             icon: "add"
           }
         },
         {
           path: '/admin/users/view/:emailAddress',
-          component: UserView,
+          component: () => import('@/views/Admin/UserView.vue'),
           meta: { 
             icon: "visibility"
           }
         },
         {
             path: '/resources/edit/:code',
-            component: PhysicalResourceEdit
+            component: () => import('@/views/PhysicalResources/PhysicalResourceEdit.vue')
         },
         {
             path: '/admin/audit-logs',
             name: 'Audit Logs',
-            component: AuditLogs,
+            component: () => import('@/views/Admin/AuditLogs.vue'),
             meta: {
               icon: "history"
             }
@@ -355,7 +314,7 @@ const router = createRouter({
         {
             path: '/visualization',
             name: 'Port 3D',
-            component: Visualizer,
+            component: () => import('@/views/Visualizer.vue'),
             meta: {
                 icon: "view_in_ar"
             }
