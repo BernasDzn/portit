@@ -11,7 +11,6 @@ import FormField from '@/components/crud/FormField.vue';
 import { DockService } from '@/service/DockService';
 import type { Dock } from '@/model/Dock';
 import { useRoute, RouterLink } from 'vue-router';
-import EntityDropdownTwo from './EntityDropdownTwo.vue';
 
 const http = new AxiosHttpService();
 const storageAreaService = new StorageAreaService(http);
