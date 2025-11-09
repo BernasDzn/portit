@@ -42,6 +42,9 @@
         "logout": "Logout",
         "seeMore": "See More"
     },
+    "search": {
+        "languages": "Search languages..."
+    },
     "unsavedChanges": {
         "title": "Discard changes?",
         "message": "You have unsaved changes. Are you sure you want to leave this page and discard your changes?",

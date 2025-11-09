@@ -44,6 +44,20 @@ const options = [
 
 const current = computed(() => options.find(o => o.code === locale.value) ?? options[0])
 
+function search(e: Event) {
+    const target = e.target as HTMLInputElement;
+    const filter = target.value.toLowerCase();
+    const items = document.querySelectorAll<HTMLElement>('.language-dropdown sl-menu-item');
+    items.forEach(item => {
+        const label = item.textContent?.toLowerCase() || '';
+        if (label.includes(filter)) {
+            item.style.display = '';
+        } else {
+            item.style.display = 'none';
+        }
+    });
+};
+
 function setLocale(code: string) {
     locale.value = code
     try { localStorage.setItem('locale', code) } catch { }
@@ -57,7 +71,8 @@ function setLocale(code: string) {
                 <span class="label">{{ current?.label }}</span>
             </sl-button>
 
-            <sl-menu>
+            <sl-menu class="language-dropdown">
+                <sl-input :placeholder="t('search.languages')" class="search-input" @sl-input="search" />
                 <sl-menu-item v-for="opt in options" :key="opt.code" @click="() => setLocale(opt.code)">
                     <span class="label opt">{{ opt.label }}</span>
                 </sl-menu-item>
@@ -84,5 +99,21 @@ function setLocale(code: string) {
 sl-button::part(base) {
     background: transparent;
     color: inherit;
+}
+
+.language-dropdown {
+    height: 20rem;
+    overflow-y: auto;
+}
+
+.search-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.5rem;
+}
+.search-input::part(base) {
+    border: transparent;
+    border-radius: 0;
+    border-bottom: 1px solid var(--sl-color-neutral-200);
 }
 </style>
