@@ -9,7 +9,7 @@ import AxiosHttpService from '@/service/AxiosHttpService';
 import { DockService } from '@/service/DockService';
 import { PhysicalResourceService } from '@/service/PhysicalResourceService';
 import { QualificationService } from '@/service/QualificationService';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 
@@ -29,7 +29,7 @@ const qualificationService = new QualificationService(http);
 const genericResourse = ref<any>({
     code: '',
     description: '',
-    status: 0,
+    status: '',
     setupTime: 0,
     qualifications: [],
     liftingCapacity: 0,
@@ -45,7 +45,11 @@ const genericResourse = ref<any>({
 
 const type = ref(0);
 
-const statuses = [t('physicalResource.fields.status.options.available'),t('physicalResource.fields.status.options.maintenance'),t('physicalResource.fields.status.options.outOfService')];
+const statusValues = {
+    'Available': 0,
+    'Maintenance': 1,
+    'Out of Service': 2
+};
 
 const updateSTSResource = (obj: any) => {
 
@@ -61,7 +65,7 @@ const updateSTSResource = (obj: any) => {
         type: "STS Crane",
         code: obj.code,
         description: obj.description,
-        status: statuses.indexOf(obj.status),
+        status: statusValues[obj.status],
         setupTimeInMinutes: obj.setupTime,
         operationalWindow: obj.operationalWindow,
         qualificationsCodes: obj.qualifications,
@@ -86,7 +90,7 @@ const updateYardGantryResource = (obj: any) => {
         type: "Yard Crane",
         code: obj.code,
         description: obj.description,
-        status: statuses.indexOf(obj.status),
+        status: statusValues[obj.status],
         setupTimeInMinutes: obj.setupTime,
         operationalWindow: obj.operationalWindow,
         qualificationsCodes: obj.qualifications,
@@ -110,7 +114,7 @@ const updateTruckResource = (obj: any) => {
         type: "Truck",
         code: obj.code,
         description: obj.description,
-        status: statuses.indexOf(obj.status),
+        status: statusValues[obj.status],
         setupTimeInMinutes: obj.setupTime,
         operationalWindow: obj.operationalWindow,
         qualificationsCodes: obj.qualifications,
@@ -122,6 +126,8 @@ const updateTruckResource = (obj: any) => {
 };
 
 const update = () => {
+
+    // Map status back to index
 
     if (type.value == 0) {
         return updateSTSResource(genericResourse.value);
@@ -142,6 +148,36 @@ const getById = async () => {
     return res;
 }
 
+onMounted(async () => {
+    if (!resourceCode) return;
+    try {
+        const data = await getById();
+        genericResourse.value.code = data.code;
+        genericResourse.value.description = data.description;
+        const statusKey = Object.keys(statusValues);
+        genericResourse.value.status = statusKey[data.status];
+        genericResourse.value.setupTime = data.setupTimeInMinutes;
+        genericResourse.value.operationalWindow = data.operationalWindow;
+        genericResourse.value.qualifications = data.qualifications?.map((q: any) => q.idCode) || [];
+
+        if (type.value == 0) {
+            genericResourse.value.liftingCapacity = data.liftingCapacity;
+            genericResourse.value.servingDock = data.servingDock.code;
+            genericResourse.value.containersPerHour = data.containersPerHour;
+        } else if (type.value == 1) {
+            genericResourse.value.liftingCapacity = data.liftingCapacity;
+            genericResourse.value.containersPerHour = data.containersPerHour;
+        } else {
+            genericResourse.value.maxLoadCapacity = data.maxLoadCapacity;
+            genericResourse.value.averageSpeed = data.averageSpeed;
+            genericResourse.value.containersPerTrip = data.containersPerTrip;
+        }
+
+    } catch (err) {
+        console.error('Failed to load physical resource', err);
+    }
+});
+
 </script>
 
 <template>
@@ -149,6 +185,12 @@ const getById = async () => {
         <sl-breadcrumb>
             <sl-breadcrumb-item><RouterLink to="/resources/dashboard" class="breadcrumb-link">{{ t('physicalResource.tabs.dashboard') }}</RouterLink></sl-breadcrumb-item>
             <sl-breadcrumb-item><RouterLink to="/resources/search" class="breadcrumb-link">{{ t('physicalResource.tabs.search') }}</RouterLink></sl-breadcrumb-item>
+            <sl-breadcrumb-item>
+                <RouterLink 
+                    :to="resourceCode ? `/resources/view/${resourceCode}` : '/resources/search'"
+                    class="breadcrumb-link"
+                >{{ resourceCode }}</RouterLink>
+            </sl-breadcrumb-item>
             <sl-breadcrumb-item>{{ t('physicalResource.tabs.edit') }}</sl-breadcrumb-item>
         </sl-breadcrumb>
         
@@ -159,7 +201,6 @@ const getById = async () => {
             :editing-id="resourceCode"
             :object="genericResourse" 
             :submit-function="update"
-            :fetching-function="getById"
             class="group"
         >
 
@@ -192,14 +233,14 @@ const getById = async () => {
                     class="field-dropdown"
                     :name="`${t('physicalResource.fields.status.title')}*`"
                     v-model="genericResourse.status"
-                    :items="statuses"
+                    :items="['Available', 'Maintenance', 'Out of Service']"
                     :placeholderText="t('physicalResource.fields.status.placeholder')"
                     required
                 />
             </div>
             <br>
             <div class="form">    
-                <EntityDropdown
+                <!-- <EntityDropdown
                     class="field-dropdown"
                     :name="`${t('physicalResource.fields.qualifications.title')}*`"
                     v-model="genericResourse.qualifications"
@@ -210,6 +251,18 @@ const getById = async () => {
                     labelKey="idCode"
                     multiple
                     required
+                /> -->
+                <EntityDropdown
+                    class="field-dropdown"
+                    :name="t('staff.fields.qualifications.title') + '*'"
+                    v-model="genericResourse.qualifications"
+                    :fetch-function="() => qualificationService.getQualifications().then(page => (page.items || []).map(t => t.idCode))"
+                    :fetch-on-mount="true"
+                    :placeholderText="t('staff.fields.qualifications.placeholder')"
+                    :required="false"
+                    :multiple="true"
+                    valueKey="idCode"
+                    labelKey="name"
                 />
 
                 <span class="section-divider"></span>
@@ -226,9 +279,10 @@ const getById = async () => {
 
             <div style="flex:100%; width: 100%;">
                 <OperationalWindowPicker
+                    v-if="genericResourse.operationalWindow && genericResourse.code"
                     v-model="genericResourse.operationalWindow"
                 />
-                </div>
+            </div>
         </div>
             
         <p class="section-title">{{ t('physicalResource.specificFields') }}</p>

@@ -3,6 +3,7 @@ using Api.Application.DataTransfer;
 using Api.Application.DataTransfer.Filters;
 using Api.Application.Exceptions;
 using Api.Application.Services;
+using Api.Domain.Entities;
 using Api.Domain.ValueObjects;
 using Api.Infrastructure.Exceptions;
 using Api.Infrastructure.Utilities;
@@ -100,6 +101,7 @@ public class VesselVisitNotificationControllerTest
         var expectedNotification = new VesselVisitNotificationDto
         {
             NotificationId = null!,
+            Status = NotificationStatus.InProgress,
             ExpectedArrival = DateTime.UtcNow,
             ExpectedDeparture = DateTime.UtcNow.AddDays(1),
             IsCargoHazardous = false,
@@ -296,6 +298,7 @@ public class VesselVisitNotificationControllerTest
         var expectedNotification = new VesselVisitNotificationDto
         {
             NotificationId = null!,
+            Status = NotificationStatus.InProgress,
             ExpectedArrival = DateTime.UtcNow,
             ExpectedDeparture = DateTime.UtcNow.AddDays(1),
             IsCargoHazardous = false,

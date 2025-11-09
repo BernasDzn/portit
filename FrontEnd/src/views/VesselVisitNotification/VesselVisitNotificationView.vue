@@ -27,18 +27,25 @@ const cargoTypes = [
 
 const fetchNotification = async (): Promise<VesselVisitNotification | null> => {
     const n = await notificationService.getVesselVisitNotificationById(notificationId);
+    const decisions = await notificationService.getNotificationDecisions(notificationId);
     console.log(n);
-    return n;
+    console.log(decisions);
+    return { ...n, notificationDecisions: decisions };
 };
 
+const openInfoPopup = () => {
+    const dialog = document.querySelector('#infoPopup') as any;
+    dialog.show();
+}
+
 const openLoadCargoManifest = () => {
-    
+
     const drawer = document.querySelector('#loadManifestDrawer') as any;
     drawer.show();
 }
 
 const openUnloadCargoManifest = () => {
-    
+
     const drawer = document.querySelector('#unloadManifestDrawer') as any;
     drawer.show();
 }
@@ -59,10 +66,12 @@ const closeUnloadManifest = () => {
     <div>
         <sl-breadcrumb>
             <sl-breadcrumb-item>
-                <RouterLink to="/vessel-visit-notifications/dashboard" class="breadcrumb-link">{{ t('notification.tabs.dashboard') }}</RouterLink>
+                <RouterLink to="/vessel-visit-notifications/dashboard" class="breadcrumb-link">{{
+                    t('notification.tabs.dashboard') }}</RouterLink>
             </sl-breadcrumb-item>
             <sl-breadcrumb-item>
-                <RouterLink to="/vessel-visit-notifications/search" class="breadcrumb-link">{{ t('notification.tabs.search') }}</RouterLink>
+                <RouterLink to="/vessel-visit-notifications/search" class="breadcrumb-link">{{
+                    t('notification.tabs.search') }}</RouterLink>
             </sl-breadcrumb-item>
             <sl-breadcrumb-item>{{ notificationId || t('notification.errors.noNotificationId') }}</sl-breadcrumb-item>
         </sl-breadcrumb>
@@ -87,35 +96,71 @@ const closeUnloadManifest = () => {
 
                     <div class="notification-row">
                         <sl-card class="notification-progress">
-
                             <div class="timeline">
                                 <div class="timeline-point">
-                                    <span class="timeline-icon material-icons" aria-hidden="true">check_circle</span>
-                                    <p>{{t("notification.timeline.pending")}}</p>
+                                    <span class="timeline-icon material-icons"
+                                        :class="entity.element.status >= 0 ? 'accepted' : 'nothing'"
+                                        aria-hidden="true">check_circle</span>
+                                    <p>{{ t("notification.timeline.inProgress") }}</p>
                                 </div>
                                 <div class="timeline-point">
-                                    <span class="timeline-icon material-icons" aria-hidden="true">check_circle</span>
-                                    <p>{{t("notification.timeline.submitted")}}</p>
+                                    <span class="timeline-icon material-icons"
+                                        :class="entity.element.status >= 1 ? 'accepted' : 'nothing'"
+                                        aria-hidden="true">check_circle</span>
+                                    <p>{{ t("notification.timeline.submitted") }}</p>
                                 </div>
                                 <div class="timeline-point">
-                                    <span class="timeline-icon material-icons" aria-hidden="true">check_circle</span>
-                                    <p>{{t("notification.timeline.inProgress")}}</p>
-                                </div>
-                                <div class="timeline-point">
-                                    <span class="timeline-icon material-icons" aria-hidden="true">check_circle</span>
-                                    <p>{{t("notification.timeline.completed")}}</p>
+                                    <span class="timeline-icon material-icons"
+                                        :class="entity.element.status === 2 ? 'accepted' : 'nothing'"
+                                        aria-hidden="true">check_circle</span>
+                                    <p>{{ t("notification.timeline.completed") }}</p>
                                 </div>
                             </div>
+                            <sl-button @click="openInfoPopup" v-if="entity.element.notificationDecisions.length > 0">{{ t("buttons.seeMore") }}</sl-button>
                         </sl-card>
 
                         <sl-card class="notification-manifest">
                             <p>{{ t("notification.manifestInfo") }}</p>
                             <div>
-                                <sl-button @click="openLoadCargoManifest" :disabled="entity.element.loadCargoManifest.length == 0" size="medium" pill>{{t("notification.fields.openLoadManifest")}}</sl-button>
-                                <sl-button @click="openUnloadCargoManifest" :disabled="entity.element.unloadCargoManifest.length == 0" size="medium" pill>{{t("notification.fields.openUnloadManifest")}}</sl-button>
+                                <sl-button @click="openLoadCargoManifest"
+                                    :disabled="entity.element.loadCargoManifest.length == 0" size="medium" pill>{{
+                                        t("notification.fields.openLoadManifest") }}</sl-button>
+                                <sl-button @click="openUnloadCargoManifest"
+                                    :disabled="entity.element.unloadCargoManifest.length == 0" size="medium" pill>{{
+                                        t("notification.fields.openUnloadManifest") }}</sl-button>
                             </div>
                         </sl-card>
                     </div>
+
+                    <sl-dialog id="infoPopup" label="Status Overview" class="dialog-overview">
+                        <div class="timeline-expanded">
+                            <template v-for="decision in entity.element.notificationDecisions" :key="decision.id">
+                                <div class="timeline-point">
+                                    <p>{{ t("notification.timeline.inProgress") }}</p>
+                                    <span class="timeline-icon nothing material-icons" aria-hidden="true">circle</span>
+                                </div>
+                                <div class="timeline-point">
+                                    <p>{{ t("notification.timeline.submitted") }}</p>
+                                    <span class="timeline-icon nothing material-icons" aria-hidden="true">circle</span>
+                                </div>
+                                <div class="timeline-point">
+                                    <p>{{ decision.status == 1 ? t("notification.timeline.accepted") :
+                                        t("notification.timeline.rejected") }}</p>
+                                    <span
+                                        :class="decision.status == 1 ? ' timeline-icon accepted material-icons' : 'timeline-icon rejected material-icons'"
+                                        aria-hidden="true">{{ decision.status == 1 ? 'check_circle' : 'cancel' }}</span>
+                                    <p>{{ new Date(decision.decisionDate).toUTCString() }}</p>
+                                </div>
+                            </template>
+
+                            <div class="timeline-point" v-if="entity.element.status === 2">
+                                <p>{{ t("notification.timeline.completed") }}</p>
+                                <span class="timeline-icon accepted material-icons"
+                                    aria-hidden="true">check_circle</span>
+                            </div>
+                        </div>
+                    </sl-dialog>
+
                     <div class="notification-main-column">
                         <sl-card class="notification-main-info">
                             <p>{{ t('notification.infoTitle') }}</p>
@@ -155,18 +200,17 @@ const closeUnloadManifest = () => {
                                         <span class="label">{{ t('notification.fields.crewMembers') }}</span>
                                         <div>
                                             <ul>
-                                                <li v-for="member in entity.element.crewDetails.safetyOfficers" :key="member.citizenID">
+                                                <li v-for="member in entity.element.crewDetails.safetyOfficers"
+                                                    :key="member.citizenID">
                                                     {{ member.name }} ({{ member.nationality }}) {{ member.citizenID }}
                                                 </li>
                                             </ul>
                                         </div>
-                                        <div v-if="entity.element.crewDetails.safetyOfficers.length === 0">
-                                            {{ t('notification.none') }}
-                                        </div>
                                     </div>
                                     <div class="info-block">
                                         <span class="label"> Submitter </span>
-                                        <p>{{ entity.element.submitter.name }} ({{ entity.element.submitter.citizenshipId }})</p>
+                                        <p>{{ entity.element.submitter.name }} ({{
+                                            entity.element.submitter.citizenshipId }})</p>
                                     </div>
                                 </div>
                             </div>
@@ -177,35 +221,38 @@ const closeUnloadManifest = () => {
             <template v-else>
                 <NoResults :message="t('notification.errors.noNotificationId')" />
             </template>
-    
+
             <!-- Cargo manifest drawer -->
             <sl-drawer id="loadManifestDrawer" label="Drawer" class="drawer-overview">
-                <h2>{{t("notification.fields.loadCargoManifest")}}</h2>
+                <h2>{{ t("notification.fields.loadCargoManifest") }}</h2>
                 <sl-card class="manifest-item" v-for="item in entity.element.loadCargoManifest" :key="item.containerId">
-                    <p>{{ item.container.description }} ({{item.container.container}})</p>
+                    <p>{{ item.container.description }} ({{ item.container.container }})</p>
                     <p>To: {{ item.area.nameCode }}</p>
                 </sl-card>
-    
+
                 <sl-button @click="closeLoadManifest" slot="footer" variant="primary">Close</sl-button>
             </sl-drawer>
-    
-            <sl-drawer id="unloadManifestDrawer" label="Drawer" class="drawer-overview"  style="--size: 35vw;">
-                <h2>{{t("notification.fields.unloadCargoManifest")}}</h2>
-                <sl-card class="manifest-item" v-for="item in entity.element.unloadCargoManifest" :key="item.containerId">
+
+            <sl-drawer id="unloadManifestDrawer" label="Drawer" class="drawer-overview" style="--size: 35vw;">
+                <h2>{{ t("notification.fields.unloadCargoManifest") }}</h2>
+                <sl-card class="manifest-item" v-for="item in entity.element.unloadCargoManifest"
+                    :key="item.containerId">
                     <div class="opposed">
                         <div>
-                            <p class="title">{{ item.container.description }}</p> 
-                            <p class="subtitle">{{item.container.containerNumber}}</p>
+                            <p class="title">{{ item.container.description }}</p>
+                            <p class="subtitle">{{ item.container.containerNumber }}</p>
                         </div>
-                        <sl-tag variant="neutral">{{cargoTypes[item.container.cargoType]}}</sl-tag>
+                        <sl-tag variant="neutral">{{ cargoTypes[item.container.cargoType] }}</sl-tag>
                     </div>
                     <div class="manifest-direction">
                         <p>{{ t("notification.from") }}: {{ item.area.nameCode }}</p>
                         <span class="material-icons" aria-hidden="true">arrow_right_alt</span>
-                        <p>{{ t("notification.to") }}: ({{item.position.bay}}, {{item.position.row}}, {{item.position.tier}})</p>
+                        <p>{{ t("notification.to") }}: ({{ item.position.bay }}, {{ item.position.row }}, {{
+                            item.position.tier }})
+                        </p>
                     </div>
                 </sl-card>
-    
+
                 <sl-button @click="closeUnloadManifest" slot="footer" variant="primary">Close</sl-button>
             </sl-drawer>
         </EntityView>
@@ -218,7 +265,7 @@ const closeUnloadManifest = () => {
     flex-direction: row;
     gap: 1rem;
 }
-  
+
 .notification-row {
     display: flex;
     flex-direction: column;
@@ -247,7 +294,7 @@ const closeUnloadManifest = () => {
     gap: 0.5rem;
 }
 
-.notification-manifest > div {
+.notification-manifest>div {
     display: flex;
     gap: 1rem;
     align-items: start;
@@ -261,15 +308,60 @@ const closeUnloadManifest = () => {
 .timeline {
     display: flex;
     flex-direction: column;
-    align-items: left;
     padding: 1rem;
 }
+
+.dialog-overview {
+    --width: 40vw;
+}
+
+.timeline-expanded {
+    display: flex;
+    flex-direction: row;
+    padding: 1rem;
+    --point-width: 5rem;
+    position: relative;
+    padding-left: calc(var(--point-width) / 2);
+    padding-right: calc(var(--point-width) / 2);
+    gap: 2.5rem;
+    width: fit-content;
+}
+
+.timeline-expanded>.timeline-point {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-size: small;
+    width: 5rem;
+}
+
+.timeline-expanded::before {
+    content: "";
+    position: absolute;
+    left: calc(var(--point-width) / 2);
+    right: calc(var(--point-width) / 2);
+    top: 5.5rem;
+    height: 2px;
+    background-color: var(--sl-color-neutral-300);
+    z-index: 0;
+}
+
 .timeline-icon {
     font-size: 32px;
-    color: var(--sl-color-success-600);
-
     z-index: 1;
     background-color: white;
+}
+
+.accepted {
+    color: var(--sl-color-success-600);
+}
+
+.rejected {
+    color: var(--sl-color-danger-600);
+}
+
+.nothing {
+    color: var(--sl-color-neutral-400);
 }
 
 .timeline-point p {
@@ -283,7 +375,7 @@ const closeUnloadManifest = () => {
     left: 4.8rem;
     top: 14rem;
     width: 2px;
-    height: calc(100% - 28rem);
+    height: calc(100% - 30rem);
     background-color: var(--sl-color-neutral-300);
     z-index: 0;
 }
@@ -295,18 +387,9 @@ const closeUnloadManifest = () => {
     position: relative;
     z-index: 1;
     margin-bottom: 1.5rem;
-  }
-  
+}
+
 .timeline-point:last-child {
     margin-bottom: 0;
 }
-  
-.timeline-icon {
-    font-size: 32px;
-    color: var(--sl-color-success-600);
-    background-color: var(--sl-color-neutral-0);
-    border-radius: 50%;
-    z-index: 1;
-}
-
 </style>

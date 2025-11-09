@@ -135,6 +135,7 @@ public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
         return new VesselVisitNotificationDto
         {
             NotificationId = NotificationId.ToString(),
+            Status = Status,
             ExpectedArrival = ExpectedArrival,
             ExpectedDeparture = ExpectedDeparture,
             IsCargoHazardous = IsCargoHazardous,

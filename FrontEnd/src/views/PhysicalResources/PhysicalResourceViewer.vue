@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { AxiosHttpService } from '@/service/AxiosHttpService';
 import type { Vessel } from '@/model/Vessel';
 import EntityView from '@/components/crud/EntityView.vue';
@@ -11,8 +11,11 @@ import { useI18n } from 'vue-i18n';
 import QualificationPrinter from '@/components/printers/QualificationPrinter.vue';
 import DockPrinter from '@/components/printers/DockPrinter.vue';
 import WorkShiftPrinter from '@/components/printers/WorkShiftPrinter.vue';
+import { useAlerts } from '@/composables/alerts';
 
 const route = useRoute();
+const notifications = useAlerts();
+const router = useRouter();
 
 const http = new AxiosHttpService();
 const physicalResourceService = new PhysicalResourceService(http);
@@ -36,6 +39,39 @@ onMounted(async () => {
 
 const { t } = useI18n();
 
+const closeModal = () => {
+    const dialog = document.querySelector('.dialog-overview') as any;
+    dialog.hide();
+};
+
+const openModal = () => {
+    const dialog = document.querySelector('.dialog-overview') as any;
+    dialog.show();
+};
+
+const deactivateResource = async () => {
+
+    await physicalResourceService.deactivatePhysicalResource(resourceId).then(() => {
+
+        notifications.enqueueNotification(
+            t('physicalResource.deactivation.successMessage'),
+            notifications.notificationTypes.SUCCESS
+        );
+        
+        closeModal();
+        router.back();
+
+    }).catch((error) => {
+        notifications.enqueueNotification(
+            t('physicalResource.deactivation.errorMessage') + ` (${error.message})`,
+            notifications.notificationTypes.DANGER
+        );
+        console.error('Error deactivating resource:', error);
+        closeModal();
+        router.back();
+    });
+};
+
 </script>
 
 <template>
@@ -45,6 +81,12 @@ const { t } = useI18n();
         <sl-breadcrumb-item><RouterLink to="/resources/search" class="breadcrumb-link">{{ t('physicalResource.tabs.search') }}</RouterLink></sl-breadcrumb-item>
         <sl-breadcrumb-item>{{ resourceId }}</sl-breadcrumb-item>
     </sl-breadcrumb>
+
+    <sl-dialog :label="t('physicalResource.deactivation.title')" class="dialog-overview">
+        {{ t('physicalResource.deactivation.message') }}
+        <sl-button slot="footer" @click="closeModal" variant="primary" sl-dialog-close>{{ t('buttons.cancel') }}</sl-button>
+        <sl-button slot="footer" @click="deactivateResource" variant="danger">{{ t('buttons.deactivate') }}</sl-button>
+      </sl-dialog>
 
     <EntityView :fetch-function="fetchResource" v-slot="entity">
         <div>
@@ -64,12 +106,10 @@ const { t } = useI18n();
                         </sl-button>
                     </RouterLink>
 
-                    <RouterLink :to="`/resources/deactivate/${encodeURIComponent(entity.element.code)}`">
-                        <sl-button variant="danger" size="large">
-                            <sl-icon slot="prefix" name="trash"></sl-icon>
-                            {{ t('physicalResource.actions.deactivate') }}
-                        </sl-button>
-                    </RouterLink>
+                    <sl-button @click="openModal" variant="danger" size="large">
+                        <sl-icon slot="prefix" name="trash"></sl-icon>
+                        {{ t('physicalResource.actions.deactivate') }}
+                    </sl-button>
                 </div>
     
             </div>

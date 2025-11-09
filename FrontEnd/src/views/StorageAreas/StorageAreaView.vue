@@ -111,7 +111,7 @@ function filterDockServices(list: Array<any> | undefined) {
                                 <DockPrinter
                                     class="listing-box"
                                     :dock="dock_relation.dock"
-                                    :link="`/docks/view/${dock_relation.dock}`"
+                                    :link="`/docks/view/${dock_relation.dock.code}`"
                                     :show-details="false"
                                     :distance_string="`${entity.element.nameCode}  —  ${dock_relation.distance}m -->  ${dock_relation.dock.code}`"
                                 />

@@ -40,7 +40,11 @@ function optionKeyFor(opt) {
 }
 
 function applyDefaultsIfNeeded() {
+
     if (defaultApplied.value) return;
+
+    console.log('EntityDropdown: checking to apply defaults', props.defaultValues);
+
     const modelEmpty = props.modelValue === undefined || props.modelValue === null || (props.multiple && Array.isArray(props.modelValue) && props.modelValue.length === 0) || props.modelValue === '';
     if (!modelEmpty) return; // parent already provided a value
     if (!Array.isArray(props.defaultValues) || !props.defaultValues.length) return;
@@ -58,7 +62,7 @@ const internalValue = ref(props.multiple
     : (props.modelValue !== undefined && props.modelValue !== null ? encodeRaw(props.modelValue) : null));
 
 watch(() => props.items, (val) => {
-    // items changed — try applying defaults now that options exist
+    // items changed
     options.value = val;
     applyDefaultsIfNeeded();
 });
@@ -105,15 +109,12 @@ async function loadItems() {
             } else if (resolved && Array.isArray(resolved.items)) {
                 options.value = resolved.items;
             } else {
-                // Unknown shape — try to be helpful by logging
-                // eslint-disable-next-line no-console
                 console.warn('EntityDropdown: fetchFunction returned unexpected shape', resolved);
                 options.value = [];
             }
             // After loading items from fetchFunction, apply defaults if appropriate
             applyDefaultsIfNeeded();
         } catch (err) {
-            // eslint-disable-next-line no-console
             console.error('EntityDropdown: error loading items', err);
             options.value = [];
         } finally {

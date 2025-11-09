@@ -6,6 +6,7 @@ namespace Api.Application.DataTransfer;
 public class VesselVisitNotificationDto
 {
     public string NotificationId { get; set; }
+    public required NotificationStatus Status { get; set; }
     public required DateTime ExpectedArrival { get; set; }
     public required DateTime ExpectedDeparture { get; set; }
     public required bool IsCargoHazardous { get; set; }
