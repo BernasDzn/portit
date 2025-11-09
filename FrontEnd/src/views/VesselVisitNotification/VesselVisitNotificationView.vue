@@ -116,7 +116,7 @@ const closeUnloadManifest = () => {
                                     <p>{{ t("notification.timeline.completed") }}</p>
                                 </div>
                             </div>
-                            <sl-button @click="openInfoPopup" v-if="entity.element.notificationDecisions.length > 0">{{ t("buttons.seeMore") }}</sl-button>
+                            <sl-button @click="openInfoPopup" :disabled="entity.element.notificationDecisions.length == 0">{{ t("buttons.seeMore") }}</sl-button>
                         </sl-card>
 
                         <sl-card class="notification-manifest">
