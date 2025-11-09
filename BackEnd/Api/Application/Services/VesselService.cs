@@ -117,4 +117,11 @@ public class VesselService : IVesselService
         AppLogEvents.LogFilter(_logger, "vessels", page.Items.Count);
         return page.Map(v => v.ToDTO());
     }
+
+    public async Task<int> CountVesselsAsync()
+    {
+        var count = await _vesselRepository.CountAsync();
+        AppLogEvents.LogRetrieve(_logger, "vessel-count", count);
+        return count;
+    }
 }

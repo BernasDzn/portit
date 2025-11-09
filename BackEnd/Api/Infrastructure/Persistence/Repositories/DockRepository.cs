@@ -94,4 +94,16 @@ public class DockRepository : GenericRepository<Dock>, IDockRepository
         }
     }
 
+    public async Task<int> CountAsync()
+    {
+        try
+        {
+            return await _context.Docks.CountAsync();
+        }
+        catch
+        {
+            throw new PersistencyFailedException("Failed to count docks in the database.");
+        }
+    }
+
 }

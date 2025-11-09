@@ -47,8 +47,8 @@ export class VesselService implements IVesselService {
 	}
 
 	async getNumberOfVessels(): Promise<number> {
-		const res = await this.getVessels();
-		return res.items.length;
+		const res = await this.http.get<number>(`/Vessel/count`);
+		return res.data;
 	}
     
 }

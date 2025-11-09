@@ -116,4 +116,11 @@ public class DockService : IDockService
         AppLogEvents.LogRetrieve(_logger, "vessel types", vesselTypes.Count);
         return vesselTypes;
     }
+
+    public async Task<int> CountDocksAsync()
+    {
+        var count = await _dockRepository.CountAsync();
+        AppLogEvents.LogRetrieve(_logger, "dock-count", count);
+        return count;
+    }
 }

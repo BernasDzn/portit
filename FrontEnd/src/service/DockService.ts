@@ -47,7 +47,7 @@ export class DockService implements IDockService {
     }
 
     async getNumberOfDocks(): Promise<number> {
-        const res = await this.getDocks();
-        return res.items.length;
+        const res = await this.http.get<number>(`/Dock/count`);
+        return res.data;
     }
 }
