@@ -12,7 +12,8 @@
     --primary: #1F2435;
     --primary-lighter: #2A2E42;
     --foreground: oklch(0.145 0 0);
-    --sidebar-width: 250px;
+    --sidebar-width: 300px;
+    --sidebar-collapsed-width: 75px;
     --icon-size: 110px;
 
     --accent-1: #485EA9;

@@ -75,7 +75,7 @@ const router = createRouter({
         },
         {
           path: '/vessels/search',
-          name: 'Search for vessels',
+          name: 'Search for Vessels',
           component: VesselSearch,
           meta: {
             icon: "search"
@@ -139,7 +139,7 @@ const router = createRouter({
         },
         {
           path: '/vessel-types/search',
-          name: 'Search for vessel types',
+          name: 'Search for Vessel Types',
           component: VesselTypeSearch,
           meta: {
             icon: "search"
@@ -171,7 +171,7 @@ const router = createRouter({
         },
         {
           path: '/qualifications/search',
-          name: 'Search for qualifications',
+          name: 'Search for Qualifications',
           component: QualificationsSearch,
           meta: {
             icon: "search"
@@ -191,7 +191,7 @@ const router = createRouter({
         },
         {
           path: '/staff/search',
-          name: 'Search for staff',
+          name: 'Search for Staff',
           component: StaffSearch,
           meta: {
             icon: "search"
@@ -231,7 +231,7 @@ const router = createRouter({
         },
         {
             path: '/resources/search',
-            name: 'Search for physical resources',
+            name: 'Search for Physical Resources',
             component: PhysicalResourcesSearch,
             meta: {
                 icon: "search"
@@ -259,7 +259,7 @@ const router = createRouter({
         },
         {
           path: '/storage-areas/search',
-          name: 'Search for storage areas',
+          name: 'Search for Storage Areas',
           component: StorageAreaSearch,
           meta: {
             icon: "search"
@@ -291,7 +291,7 @@ const router = createRouter({
         },
         {
           path: '/vessel-visit-notifications/search',
-          name: 'VVN Search',
+          name: 'Search for VVNs',
           component: VVNSearch,
           meta: {
             icon: "search"
@@ -319,7 +319,7 @@ const router = createRouter({
         },
         {
           path: '/admin/users/search',
-          name: 'Search for users',
+          name: 'Search for Users',
           component: UserSearch,
           meta: {
             icon: "search"
@@ -327,10 +327,10 @@ const router = createRouter({
         },
         {
           path: '/admin/users/create',
-          name: 'Create User',
+          name: 'Create a User',
           component: UserCreate,
           meta: {
-            icon: "person_add"
+            icon: "add"
           }
         },
         {
