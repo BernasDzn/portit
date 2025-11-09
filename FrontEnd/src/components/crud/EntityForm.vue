@@ -37,6 +37,7 @@ const props = defineProps({
 const router = useRouter();
 const cancelDialog = ref<HTMLElement | null>(null);
 const loading = ref(false);
+const buttonLoading = ref(false);
 
 const form = ref<HTMLFormElement | null>(null);
 
@@ -59,6 +60,7 @@ const submit = async () => {
         return;
     }
 
+    buttonLoading.value = true;
     props.submitFunction(props.object)
     .catch((error: any) => {
         notification.enqueueNotification(
@@ -66,6 +68,7 @@ const submit = async () => {
             notification.notificationTypes.DANGER,
         );
 
+        buttonLoading.value = false;
         return Promise.reject(error);
     })
     .then(() => {
@@ -77,6 +80,7 @@ const submit = async () => {
         router.back();
             
     });
+
 }
 
 const onCancel = () => {
@@ -128,14 +132,14 @@ onMounted(
             <sl-button class="form-button" variant="danger" outline @click="onCancel">
                 {{ t('buttons.cancel') }}
             </sl-button>
-            <sl-button class="form-button" variant="primary" type="submit" :loading="loading">
+            <sl-button class="form-button" variant="primary" type="submit" :loading="buttonLoading" :disabled="buttonLoading">
                 {{ props.editingId != null ? t('buttons.save') : t('buttons.create') }}
             </sl-button>
         </div>
 
         <sl-dialog ref="cancelDialog" :label="t('unsavedChanges.title')">
             <div>{{ t('unsavedChanges.message') }}</div>
-            <sl-button slot="footer" variant="text" @click="(cancelDialog as any).hide()">{{ t('unsavedChanges.cancel') }}</sl-button>
+            <sl-button slot="footer" variant="text" @click="(cancelDialog as any).hide()">{{ t('unsavedChanges.cancel') }} </sl-button>
             <sl-button slot="footer" variant="danger" @click="confirmCancel">{{ t('unsavedChanges.confirm') }}</sl-button>
         </sl-dialog>
     </form>
