@@ -8,13 +8,15 @@ const props = defineProps({
     modelValue: { type: [String, Number], default: '' },
     enabled: { type: Boolean, default: true },
     pattern: { type: String, default: '' },
-    required: { type: Boolean, default: false }
+    required: { type: Boolean, default: false },
+    // optional explicit id for the inner input element (useful for tests)
+    inputId: { type: String, default: null }
 });
 
 const emit = defineEmits(['update:modelValue']);
 
 const inputValue = ref(props.modelValue);
-const inputId = computed(() => `form-field-${props.name.replace(/\s+/g, '-').toLowerCase()}`);
+const inputId = computed(() => props.inputId ?? `form-field-${props.name.replace(/\s+/g, '-').toLowerCase()}`);
 
 watch(inputValue, (val) => emit('update:modelValue', val));
 watch(() => props.modelValue, (val) => (inputValue.value = val));
@@ -26,7 +28,7 @@ watch(() => props.modelValue, (val) => (inputValue.value = val));
         <sl-label class="label" :for="inputId" v-if="name != 'null'">{{ name }}</sl-label>
         <slot>
             <sl-input 
-                :id="props.inputId" 
+                :id="inputId" 
                 v-model="inputValue" 
                 :placeholder="props.placeholderText" 
                 :disabled="!props.enabled" 

@@ -18,14 +18,29 @@ import { useSession } from './composables/session';
 // Handle authentication on app load
 const checkForAuthorization = async () => {
 
+    // Allow tests to bypass authentication by setting VITE_TEST_BYPASS_AUTH=true
+    // This seeds the in-memory session with a dummy user so router guards permit access.
     try {
-    
+        if ((import.meta.env as any).VITE_TEST_BYPASS_AUTH === 'true') {
+            const session = useSession();
+            // Seed a test user with Administrator role (0) so tests can access all routes.
+            session.authenticatedUser = {
+                id: 'test-user',
+                email: 'test@example.com',
+                name: 'Playwright Test',
+                role: 0,
+            };
+            session.authToken = 'test-token';
+            startApp();
+            return;
+        }
+
         const http = new AxiosHttpService();
         const response = await new AuthService(http).whoAmI();
 
         const session = useSession();
         session.authenticatedUser = response;
-        
+
     } catch (error) {
 
         // we have to call this again grrr

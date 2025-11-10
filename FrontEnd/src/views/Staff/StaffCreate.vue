@@ -42,9 +42,9 @@ const submitStaff = (obj: any) =>
         <p class="subtitle">{{ t('staff.subtitle.create') }}</p>
         <EntityForm :object="staff" :submit-function="submitStaff">
             <div class="name-imo">
-                <FormField :required="true" class="field" :name="t('staff.fields.name.title') + '*'" v-model="staff.name" :placeholderText="t('staff.fields.name.placeholder')"/>
-                <FormField :required="true" class="field" :name="t('staff.fields.email.title') + '*'" v-model="staff.email" :placeholderText="t('staff.fields.email.placeholder')"/>
-                <FormField :required="true" class="field" :name="t('staff.fields.phoneNumber.title') + '*'" v-model="staff.phoneNumber" :placeholderText="t('staff.fields.phoneNumber.placeholder')"/>
+                <FormField input-id="staff-name" :required="true" class="field" :name="t('staff.fields.name.title') + '*'" v-model="staff.name" :placeholderText="t('staff.fields.name.placeholder')"/>
+                <FormField input-id="staff-email" :required="true" class="field" :name="t('staff.fields.email.title') + '*'" v-model="staff.email" :placeholderText="t('staff.fields.email.placeholder')"/>
+                <FormField input-id="staff-phone" :required="true" class="field" :name="t('staff.fields.phoneNumber.title') + '*'" v-model="staff.phoneNumber" :placeholderText="t('staff.fields.phoneNumber.placeholder')"/>
                 <EntityDropdown
                     class="field-dropdown"
                     :name="t('staff.fields.qualifications.title') + '*'"

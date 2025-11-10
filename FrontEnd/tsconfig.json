@@ -2,6 +2,7 @@
   "compilerOptions": {
     "types": ["@shoelace-style/shoelace/dist/types/vue"],
     "experimentalDecorators": true,
+    "allowImportingTsExtensions": true
   },
   "files": [],
   "references": [
