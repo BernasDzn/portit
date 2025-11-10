@@ -263,6 +263,14 @@ const router = createRouter({
           component: () => import('@/views/VesselVisitNotification/VesselVisitNotificationView.vue')
         },
         {
+          path : '/vessel-visit-notifications/pending',
+          component: () => import('@/views/VesselVisitNotification/VesselVisitNotificationPendingList.vue')
+        },
+        {
+          path : '/vessel-visit-notifications/review/:notificationId',
+          component: () => import('@/views/VesselVisitNotification/VesselVisitNotificationReview.vue')
+        },
+        {
           path: '/admin/dashboard',
           name: 'Admin Dashboard',
           component: () => import('@/views/Admin/AdminDashboard.vue'),

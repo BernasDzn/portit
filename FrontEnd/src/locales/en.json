@@ -28,6 +28,7 @@
         "activate": "Activate",
         "deactivate": "Deactivate",
         "add": "Add",
+        "review": "Review",
         "filter": {
             "title": "Filters",
             "add": "Filter",
@@ -574,6 +575,12 @@
             "expectedArrivalTo": "Expected Arrival To",
             "withReason": "With Reason",
             "withDockAssigned": "With Dock Assigned"
+        },
+        "decision": {
+            "isFinal": "Is Final",
+            "assignedDock": "Assigned Dock",
+            "reason": "Reason",
+            "status": "Decision Status"
         }
     },
     "operationalWindow": {

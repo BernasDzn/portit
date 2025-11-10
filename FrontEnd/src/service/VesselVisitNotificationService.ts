@@ -27,6 +27,18 @@ export class VesselVisitNotificationService implements IVesselVisitNotificationS
         return page;
     }
 
+    async getVesselVisitNotificationsForReview(): Promise<Page<VesselVisitNotification>> {
+        const res = await this.getVesselVisitNotifications();
+        const filteredItems = res.items.filter(item => item.status === 1);
+        const page: Page<VesselVisitNotification> = {
+            items: filteredItems,
+            pageNumber: 1,
+            pageSize: filteredItems.length,
+            pageCount: filteredItems.length > 0 ? 1 : 0
+        };
+        return page;
+    }
+
     async getVesselVisitNotifcationsByDay(date: Date): Promise<VesselVisitNotification[]> {    
         // Format to YYYY-MM-DD 
         const formatedDate = date.toISOString().split('T')[0];

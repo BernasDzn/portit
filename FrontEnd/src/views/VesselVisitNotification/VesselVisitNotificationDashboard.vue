@@ -25,7 +25,7 @@ const role = ref(useSession().authenticatedUser!.role);
                     :title="t('notification.tabs.review')"
                     :description="t('notification.subtitle.review')"
                     icon="rate_review"
-                    to="/vessel-visit-notifications/review"
+                    to="/vessel-visit-notifications/pending"
                 />
             </div>
             <div class="dashboard-items" v-else>

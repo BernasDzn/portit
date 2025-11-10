@@ -71,13 +71,6 @@ const loading = ref(false);
         </div>
         <div class="stats-overview" v-if="!loading">
           <div class="opposed">
-            <p>{{ numberOfPhysicalResources }}</p>
-            <span class="material-icons icon" style="color: var(--accent-1);">engineering</span>
-          </div>
-          <p>{{ t('physicalResource.title') }}</p>
-        </div>
-        <div class="stats-overview" v-if="!loading">
-          <div class="opposed">
             <p>{{ numberOfDocks }}</p>
             <span class="material-icons icon" style="color: var(--accent-1);">anchor</span>
           </div>
@@ -86,9 +79,16 @@ const loading = ref(false);
         <div class="stats-overview" v-if="!loading">
           <div class="opposed">
             <p>{{ numberOfStorageAreas }}</p>
-            <span class="material-icons icon" style="color: var(--accent-1);">inventory</span>
+            <span class="material-icons icon" style="color: var(--accent-1);">warehouse</span>
           </div>
           <p>{{ t('storageArea.title') }}</p>
+        </div>
+        <div class="stats-overview" v-if="!loading">
+          <div class="opposed">
+            <p>{{ numberOfPhysicalResources }}</p>
+            <span class="material-icons icon" style="color: var(--accent-1);">build</span>
+          </div>
+          <p>{{ t('physicalResource.title') }}</p>
         </div>
         <div class="stats-overview" v-if="!loading">
           <div class="opposed">

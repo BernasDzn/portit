@@ -7,7 +7,7 @@ import { useSession } from '@/composables/session';
 
 const { t } = useI18n();
 
-const props = defineProps<{ notification: VesselVisitNotification; link?: string; short?: boolean }>();
+const props = defineProps<{ notification: VesselVisitNotification; link?: string; short?: boolean, review?: boolean}>();
 </script>
 
 <template>
@@ -41,7 +41,11 @@ const props = defineProps<{ notification: VesselVisitNotification; link?: string
                             {{ t('notification.captain') }}: {{ props.notification.crewDetails && props.notification.crewDetails.captain ? props.notification.crewDetails.captain.value : t('notification.unknown') }}
                         </p>
                     </div>
-                    <span v-if="!props.short" class="material-icons icon" aria-hidden="true">notifications</span>
+                    <span v-if="!props.short && !props.review" class="material-icons icon" aria-hidden="true">notifications</span>
+                    <span v-if="!props.short && props.review" class="material-icons icon" aria-hidden="true">rate_review</span>
+                    <!--<button class="review-button" v-if="props.review" @click="props.reviewButtonFunction">
+                        <p>{{ t('buttons.review') }}</p> <span class="material-icons icon">rate_review</span>
+                    </button>-->
                 </div>
                 
             </div>
@@ -115,5 +119,27 @@ const props = defineProps<{ notification: VesselVisitNotification; link?: string
     color: var(--sl-color-neutral-800);
 }
 
+/*
+.review-button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+    background-color: transparent;
+    border: 1px solid var(--accent-1);
+    border-radius: var(--sl-border-radius-medium);
+    cursor: pointer;
+    padding: 5px;
+    height: fit-content;
+}
+
+.review-button:hover {
+    background-color: var(--sl-color-neutral-200);
+}
+
+.review-button .icon {
+    margin: 0;
+}
+*/
 
 </style>
