@@ -9,8 +9,8 @@
 %     close(Stream),
 %     reply_json(JsonData).
 
-get_vvns_on_day(Date, JsonData) :-
-    format(atom(URL), "http://localhost:5195/VesselVisitNotification/onDay?day=~w", [Date]),
+get_vvns_on_day(Date, DaysAhead, DockCode, JsonData) :-
+    format(atom(URL), "http://localhost:5195/VesselVisitNotification/collectScheduleData?Value=~w&daysAhead=~w&day=~w", [DockCode, DaysAhead, Date]),
     http_open(URL, Stream, []),
     json_read_dict(Stream, JsonData),
     close(Stream).

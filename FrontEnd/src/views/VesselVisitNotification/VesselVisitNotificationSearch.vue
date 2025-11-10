@@ -38,7 +38,7 @@ const fetchVesselVisitNotifications = async (filtering?: Filter<VesselVisitNotif
     // Get events
     const tempFiltering: Filter<VesselVisitNotificationFilter> = {
         pageNumber: 1,
-        pageSize: 1000,
+        pageSize: 99,
         filter: filtering?.filter
     };
 
