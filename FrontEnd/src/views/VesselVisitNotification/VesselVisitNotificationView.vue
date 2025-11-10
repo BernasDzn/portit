@@ -298,6 +298,13 @@ const closeUnloadManifest = () => {
     display: flex;
     gap: 1rem;
     align-items: start;
+    flex-wrap: wrap;
+}
+
+.notification-manifest>div>sl-button {
+    flex-grow: 1;
+    min-width: 50px;
+    max-width: 200px;
 }
 
 .manifest-item {
