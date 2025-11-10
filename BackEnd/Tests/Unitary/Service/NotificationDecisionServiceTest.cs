@@ -23,7 +23,7 @@ public class NotificationDecisionServiceTest
         Guid.NewGuid(),
         908029952,
         new Designation { Value = "Patricio Sharply" },
-        new Email { Value = "patricio.sharply@globalshipping.com" },
+        new Email { Value = "psharply0@yolasite.com" },
         new PhoneNumber { Value = "6947302134" }
     );
 

@@ -18,4 +18,5 @@ public interface IPhysicalResourceRepository : IGenericRepository<PhysicalResour
 	Task<STSCrane> UpdateSTSCrane(STSCrane crane);
 	Task<YardCrane> UpdateYardCrane(YardCrane crane);
 	Task<Truck> UpdateTruck(Truck truck);
+    Task<IEnumerable<STSCrane>> GetSTSCranesByDockCodeAsync(string value);
 }

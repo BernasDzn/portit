@@ -19,13 +19,15 @@ public class VesselVisitNotificationServiceTest
     private readonly Mock<IRepresentativeRepository> _representativeRepositoryMock;
     private readonly Mock<IStorageAreaRepository> _storageAreaRepositoryMock;
     private readonly Mock<IContainerRepository> _containerRepositoryMock;
+    private readonly Mock<IDockRepository> _dockRepositoryMock;
+    private readonly Mock<IPhysicalResourceRepository> _physicalResourceRepositoryMock;
     private readonly VesselVisitNotificationService _service;
 
     private static Representative representative = new Representative(
         Guid.NewGuid(),
         908029952,
         new Designation { Value = "Patricio Sharply" },
-        new Email { Value = "patricio.sharply@globalshipping.com" },
+        new Email { Value = "psharply0@yolasite.com" },
         new PhoneNumber { Value = "6947302134" }
     );
 
@@ -99,6 +101,8 @@ public class VesselVisitNotificationServiceTest
         _representativeRepositoryMock = new Mock<IRepresentativeRepository>();
         _storageAreaRepositoryMock = new Mock<IStorageAreaRepository>();
         _containerRepositoryMock = new Mock<IContainerRepository>();
+        _dockRepositoryMock = new Mock<IDockRepository>();
+        _physicalResourceRepositoryMock = new Mock<IPhysicalResourceRepository>();
 
         var idGenerator = new VesselVisitNotificationIdGenerator(_repositoryMock.Object);
 
@@ -109,6 +113,8 @@ public class VesselVisitNotificationServiceTest
             _storageAreaRepositoryMock.Object,
             idGenerator,
             _containerRepositoryMock.Object,
+            _dockRepositoryMock.Object,
+            _physicalResourceRepositoryMock.Object,
             new Mock<ILogger<VesselVisitNotificationService>>().Object
         );
     }

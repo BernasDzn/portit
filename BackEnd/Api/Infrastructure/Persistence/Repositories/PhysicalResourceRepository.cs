@@ -165,4 +165,21 @@ public class PhysicalResourceRepository : GenericRepository<PhysicalResource>, I
             throw new PersistencyFailedException("Failed to count physical resources in the database.");
         }
     }
+    
+    public Task<IEnumerable<STSCrane>> GetSTSCranesByDockCodeAsync(string value)
+    {
+        try
+        {
+            var cranes = _context.PhysicalResources
+                .OfType<STSCrane>()
+                .Where(c => c.ServingDock.Code.Value.Equals(value) && c.Active)
+                .AsEnumerable();
+
+            return Task.FromResult(cranes);
+        }
+        catch
+        {
+            throw new PersistencyFailedException("Failed to retrieve STS cranes by dock code from the database.");
+        }
+    }
 }

@@ -22,6 +22,7 @@ public class VesselVisitNotification_CtS_IntegrationTest
     private readonly Mock<IStorageAreaRepository> _storageAreaRepositoryMock = new Mock<IStorageAreaRepository>();
     private readonly Mock<IContainerRepository> _containerRepositoryMock = new Mock<IContainerRepository>();
     private readonly Mock<IDockRepository> _dockRepositoryMock = new Mock<IDockRepository>();
+    private readonly Mock<IPhysicalResourceRepository> _physicalResourceRepositoryMock = new Mock<IPhysicalResourceRepository>();
     private readonly VesselVisitNotificationIdGenerator _idGenerator;
 
 
@@ -29,7 +30,7 @@ public class VesselVisitNotification_CtS_IntegrationTest
         Guid.NewGuid(),
         908029952,
         new Designation { Value = "Patricio Sharply" },
-        new Email { Value = "patricio.sharply@globalshipping.com" },
+        new Email { Value = "psharply0@yolasite.com" },
         new PhoneNumber { Value = "6947302134" }
     );
 
@@ -82,6 +83,8 @@ public class VesselVisitNotification_CtS_IntegrationTest
             _storageAreaRepositoryMock.Object,
             _idGenerator,
             _containerRepositoryMock.Object,
+            _dockRepositoryMock.Object,
+            _physicalResourceRepositoryMock.Object,
             new Mock<ILogger<VesselVisitNotificationService>>().Object);
 
 

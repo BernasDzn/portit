@@ -1,5 +1,6 @@
 namespace Api.Application.Services;
 
+using System.Collections;
 using Api.Application.Controllers;
 using Api.Application.DataTransfer;
 using Api.Application.DataTransfer.Filters;
@@ -20,6 +21,7 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
     private readonly IContainerRepository _containerRepository;
     private readonly VesselVisitNotificationIdGenerator _idGenerator;
     private readonly IDockRepository _dockRepository;
+    private readonly IPhysicalResourceRepository _physicalResourceRepository;
     private readonly ILogger<VesselVisitNotificationService> _logger;
 
     public VesselVisitNotificationService(
@@ -30,6 +32,7 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         VesselVisitNotificationIdGenerator idGenerator,
         IContainerRepository containerRepository,
         IDockRepository dockRepository,
+        IPhysicalResourceRepository physicalResourceRepository,
         ILogger<VesselVisitNotificationService> logger
     )
     {
@@ -40,6 +43,7 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         _containerRepository = containerRepository;
         _idGenerator = idGenerator;
         _dockRepository = dockRepository;
+        _physicalResourceRepository = physicalResourceRepository;
         _logger = logger;
     }
 
@@ -253,10 +257,10 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
             VesselTaskFactDto vesselTaskFact = new VesselTaskFactDto
             {
                 Vessel = vessel.ToDTO(),
-                ETA = (uint)(notification.ExpectedArrival - date).TotalHours,
-                ETD = (uint)(notification.ExpectedDeparture - date).TotalHours,
-                LoadingTime = CalculateLoadingTime(notification).Result,
-                UnloadingTime = CalculateUnloadingTime(notification).Result
+                ETA = CalculateBaseHour(date, notification.ExpectedArrival),
+                ETD = CalculateBaseHour(date, notification.ExpectedDeparture),
+                LoadingTime = await CalculateLoadUnloadingTime(notification.LoadCargoManifest ?? new List<CargoTransport>(), dock),
+                UnloadingTime = await CalculateLoadUnloadingTime(notification.UnloadCargoManifest ?? new List<CargoTransport>(), dock),
             };
 
             result.VesselTaskFacts.Add(vesselTaskFact);
@@ -266,19 +270,24 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         return result;
     }
 
-    private async Task<uint> CalculateLoadingTime(VesselVisitNotification notification)
+    private uint CalculateBaseHour(DateTime pivot, DateTime target)
     {
-        // Placeholder logic for calculating loading time
-        // In a real implementation, this would consider various factors
-        await Task.CompletedTask;
-        return 36; // Example: fixed 36 hours loading time
+        return (uint)(target - pivot).TotalHours;
     }
-    
-    private async Task<uint> CalculateUnloadingTime(VesselVisitNotification notification)
+
+    private async Task<uint> CalculateLoadUnloadingTime(ICollection<CargoTransport> cargoManifest, Dock dock)
     {
-        // Placeholder logic for calculating unloading time
-        // In a real implementation, this would consider various factors
-        await Task.CompletedTask;
-        return 48; // Example: fixed 48 hours unloading time
+        IEnumerable<STSCrane> cranesServingDock = await _physicalResourceRepository.GetSTSCranesByDockCodeAsync(dock.Code.Value);
+
+        if (!cranesServingDock.Any())
+            throw new EntityNotFoundException($"No STS cranes found serving dock with code {dock.Code.Value}.");
+
+        // Crane selection algorithm
+        // For now we will choose the fastest crane available
+        // We will change this to support multiple cranes in the future (é uma US troll face)
+        STSCrane selectedCrane = cranesServingDock.OrderBy(c => c.ContainersPerHour).First();
+        uint totalContainers = (uint)cargoManifest.Count;
+
+        return (uint)Math.Ceiling((double)totalContainers / selectedCrane.ContainersPerHour);
     }
 }
