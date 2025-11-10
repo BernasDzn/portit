@@ -19,12 +19,19 @@ export interface VesselVisitNotification {
 }
 
 export interface VesselVisitNotificationFilter {
-    Status: VesselVisitNotificationStatus
+    Status: VesselVisitNotificationStatusFilter
     WithReason: boolean
     WithDockAssigned: boolean
     Vessel: string
     ExpectedArrivalFrom: Date
     ExpectedArrivalTo: Date
+}
+
+export enum VesselVisitNotificationStatusFilter{
+    InProgress = 0,
+	ApprovalPending = 1,
+	Accepted = 2,
+	Rejected = 3
 }
 
 export interface CrewDetails {

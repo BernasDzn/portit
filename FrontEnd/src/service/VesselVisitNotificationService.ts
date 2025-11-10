@@ -28,22 +28,22 @@ export class VesselVisitNotificationService implements IVesselVisitNotificationS
     }
 
     async getVesselVisitNotificationsByRepresentative(filter?: Filter<VesselVisitNotificationFilter>): Promise<Page<VesselVisitNotification>> {
-        let queryString: string[] = [];
+        let query: string[] = [];
 
         if (filter) {
-            queryString.push(filter.filter.Status !== undefined ? `Status=${encodeURIComponent(filter.filter.Status)}` : "");
-            queryString.push(filter.filter.WithReason !== undefined ? `WithReason=${filter.filter.WithReason}` : "");
-            queryString.push(filter.filter.WithDockAssigned !== undefined ? `WithDockAssigned=${filter.filter.WithDockAssigned}` : "");
-            queryString.push(filter.filter.Vessel !== undefined ? `Vessel=${encodeURIComponent(filter.filter.Vessel)}` : "");
-            queryString.push(filter.filter.ExpectedArrivalFrom !== undefined ? `ExpectedArrivalFrom=${encodeURIComponent(filter.filter.ExpectedArrivalFrom.toISOString())}` : "");
-            queryString.push(filter.filter.ExpectedArrivalTo !== undefined ? `ExpectedArrivalTo=${encodeURIComponent(filter.filter.ExpectedArrivalTo.toISOString())}` : "");
+            query.push(filter.filter.Status ? `Status=${filter.filter.Status}&` : "");
+            query.push(filter.filter.WithReason ? `WithReason=${filter.filter.WithReason}&` : "");
+            query.push(filter.filter.WithDockAssigned ? `WithDockAssigned=${filter.filter.WithDockAssigned}&` : "");
+            query.push(filter.filter.Vessel ? `Vessel=${encodeURIComponent(filter.filter.Vessel)}&` : "");
+            query.push(filter.filter.ExpectedArrivalFrom ? `ExpectedArrivalFrom=${encodeURIComponent(filter.filter.ExpectedArrivalFrom.toISOString())}&` : "");
+            query.push(filter.filter.ExpectedArrivalTo ? `ExpectedArrivalTo=${encodeURIComponent(filter.filter.ExpectedArrivalTo.toISOString())}&` : "");
 
-            queryString.push(filter.pageNumber !== undefined ? `pageNumber=${filter.pageNumber}` : "");
-            queryString.push(filter.pageSize !== undefined ? `pageSize=${filter.pageSize}` : "");
+            query.push(filter.pageNumber !== undefined ? `PageNumber=${filter.pageNumber}&` : "");
+            query.push(filter.pageSize !==undefined ? `PageSize=${filter.pageSize}` : "");
         }
-        const query = queryString.filter(Boolean).join("&");
+        console.log(query)
         try{
-            const res = await this.http.get<Page<VesselVisitNotification>>(`/VesselVisitNotification/filter?${query}`);
+            const res = await this.http.get<Page<VesselVisitNotification>>(`/VesselVisitNotification/filter${query.length ? `?${query.join('')}` : ''}`);
             return res.data;
         }
         catch{

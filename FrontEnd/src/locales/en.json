@@ -551,7 +551,8 @@
             "position": "Position",
             "area": "Area",
             "container": "Container",
-            "crewMembers": "Crew Members"
+            "crewMembers": "Crew Members",
+            "status": "Status"
         },
         "timeline": {
             "pending": "Pending",
@@ -560,6 +561,12 @@
             "submitted": "Submitted",
             "accepted": "Accepted",
             "rejected": "Rejected"
+        },
+        "filters": {
+            "expectedArrivalFrom": "Expected Arrival From",
+            "expectedArrivalTo": "Expected Arrival To",
+            "withReason": "With Reason",
+            "withDockAssigned": "With Dock Assigned"
         }
     },
     "operationalWindow": {

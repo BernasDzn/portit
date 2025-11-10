@@ -166,7 +166,7 @@ onBeforeUnmount(() => {
                   <div class="filters-container">
                     <p class="filter-title">{{ t('buttons.filter.title') }}</p>
                     <template class="filter-container" v-for="(def, key) in props.filterDefinition" :key="key">
-                        <div class="filter-field">
+                        <div :class="'filter-field' + (def.type === 'checkbox' ? ' filter-checkbox' : '')">
                             <label class="filter-label">{{ def.label }}</label>
                             <sl-input
                             class="filter-input"
@@ -193,6 +193,23 @@ onBeforeUnmount(() => {
                                     {{ option.text }}
                                 </sl-option>
                             </sl-select>
+                            <sl-checkbox
+                                class="filter-input"
+                                v-else-if="def.type === 'checkbox'"
+                                size="medium"
+                                :checked="filters[key]"
+                                @sl-change="(e: any) => filters[key] = e.target.checked"
+                            />
+                            <input
+                                class="filter-input"
+                                v-else-if="def.type === 'date'"
+                                size="medium"
+                                clearable
+                                type="date"
+                                :placeholder="def.label"
+                                :value="filters[key]"
+                                @sl-change="(e: any) => filters[key] = e.target.value"
+                            />
                         </div>
                     </template>
               
@@ -248,6 +265,18 @@ onBeforeUnmount(() => {
 .filter-field {
     width: fit-content;
     margin-bottom: 1rem !important;
+}
+
+.filter-checkbox {
+    display: flex;
+    gap: 0.5rem;
+    align-items: baseline;
+    align-self: center;
+}
+
+sl-checkbox.filter-input::part(base) {
+    margin: 0 !important;
+    padding: 0;
 }
 
 .filter-title {
