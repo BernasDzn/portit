@@ -22,10 +22,10 @@ const role = ref(useSession().authenticatedUser!.role);
                     to="/vessel-visit-notifications/search"
                 />
                 <DashboardItem
-                    :title="t('notification.tabs.create')"
-                    :description="t('notification.subtitle.create')"
-                    icon="add"
-                    to="/vessel-visit-notifications/create"
+                    :title="t('notification.tabs.review')"
+                    :description="t('notification.subtitle.review')"
+                    icon="rate_review"
+                    to="/vessel-visit-notifications/review"
                 />
             </div>
             <div class="dashboard-items" v-else>

@@ -112,4 +112,19 @@ public class VesselController : ControllerBase, IVesselController
             return BadRequest(e.Message);
         }
     }
+    
+    [HttpGet("count")]
+    public async Task<ActionResult<int>> Count()
+    {
+        try
+        {
+            var count = await _vesselService.CountVesselsAsync();
+            return Ok(count);
+        }
+        catch (System.Exception e)
+        {
+            _logger.LogError("Error counting vessels, {Message}", e.Message);
+            return StatusCode(500);
+        }
+    }
 }

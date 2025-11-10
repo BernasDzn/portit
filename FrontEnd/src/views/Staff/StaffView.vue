@@ -94,7 +94,7 @@ const fetchStaff = async (): Promise<Staff | undefined> => {
                     </div>
                 </sl-card>
                 <sl-card class="info-card" style="flex: 100%;">
-                    <p>{{ t("staff.fields.operationalWindow") }}:</p>
+                    <p>{{ t("operationalWindow.title") }}:</p>
                     <WorkShiftPrinter
                         :op_window="entity.element.operationalWindow"
                     />

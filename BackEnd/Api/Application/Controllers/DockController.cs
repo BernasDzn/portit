@@ -6,6 +6,7 @@ using Api.Application.DataTransfer;
 using Api.Application.DataTransfer.Filters;
 using Api.Application.Exceptions;
 using Api.Infrastructure.Exceptions;
+using Api.Application.Services;
 
 [ApiController]
 [Route("[controller]")]
@@ -123,4 +124,19 @@ public class DockController : ControllerBase, IDockController
 		}
 	}
 
+
+	[HttpGet("count")]
+	public async Task<ActionResult<int>> Count()
+	{
+		try
+		{
+			var count = await _dockService.CountDocksAsync();
+			return Ok(count);
+		}
+		catch (System.Exception e)
+		{
+			_logger.LogError("Error counting docks, {Message}", e.Message);
+			return StatusCode(500);
+		}
+	}
 }

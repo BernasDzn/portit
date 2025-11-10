@@ -10,4 +10,5 @@ public interface IVesselService
     Task<VesselDto> Update(string imoNumber, CreateVesselDto vesselDto);
     Task<VesselDto> GetByImo(string imo);
     Task<Page<VesselDto>> FilterVessels(VesselFilter filter);
+    Task<int> CountVesselsAsync();
 }

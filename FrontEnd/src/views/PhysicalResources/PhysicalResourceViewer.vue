@@ -197,7 +197,7 @@ const deactivateResource = async () => {
             <br>
 
             <sl-card class="info-card" style="flex: 100%;">
-                <p>Operational Window:</p>
+                <p>{{ t('operationalWindow.title') }}:</p>
                 <WorkShiftPrinter
                     :op_window="entity.element.operationalWindow"
                 />

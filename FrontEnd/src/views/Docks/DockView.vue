@@ -40,7 +40,7 @@ const fetchDock = async (): Promise<Dock | undefined> => {
             <div>
                 <div class="opposed">
                     <div class="view-header">
-                        <span class="material-icons icon" aria-hidden="true">houseboat</span>
+                        <span class="material-icons icon" aria-hidden="true">anchor</span>
                         <div>
                             <h2 class="title">{{ entity.element.name }}</h2>
                             <p class="subtitle">{{ entity.element.code }}</p>

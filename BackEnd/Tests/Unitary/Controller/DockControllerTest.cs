@@ -17,6 +17,7 @@ using Api.Application.DataTransfer.Filters;
 using Api.Infrastructure.Utilities;
 using Api.Application.Exceptions;
 using Api.Infrastructure.Exceptions;
+using Api.Application.Services;
 
 namespace Tests.Unitary.Controller
 {

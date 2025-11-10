@@ -41,14 +41,40 @@ public class ShippingAgentOrganizationController : ControllerBase
 
         ShippingAgentOrganization sao = new ShippingAgentOrganization(
             Guid.NewGuid(),
-            new Designation{Value = saoDto.Name},
+            new Designation { Value = saoDto.Name },
             altNames,
             saoDto.Address,
-            new TaxNumber{Value = saoDto.TaxNumber},
+            new TaxNumber { Value = saoDto.TaxNumber },
             representatives
         );
         var createdSAO = _context.ShippingAgentOrganizations.Add(sao);
         _context.SaveChanges();
         return CreatedAtRoute("GetShippingAgentOrganizations", new { id = createdSAO.Entity.Id }, createdSAO.Entity.ToDTO());
+    }
+
+    [HttpPut("AssignRepresentatives")]
+    public ActionResult<ShippingAgentOrganizationDto> AssignRepresentatives(string saoTaxNumber, ICollection<uint> representativeIds)
+    {
+        var existingSAO = _context.ShippingAgentOrganizations
+            .FirstOrDefault(sao => sao.TaxId.Value == saoTaxNumber);
+
+        if (existingSAO == null)
+        {
+            return NotFound();
+        }
+
+        HashSet<Representative> representatives = _context.Representatives
+            .Where(rep => representativeIds.Contains(rep.CitizenshipId))
+            .ToHashSet();
+
+        foreach (var rep in representatives)
+        {
+            existingSAO.AddRepresentative(rep);
+        }
+
+        _context.ShippingAgentOrganizations.Update(existingSAO);
+        _context.SaveChanges();
+
+        return Ok(existingSAO.ToDTO());
     }
 }

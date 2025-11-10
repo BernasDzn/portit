@@ -1,3 +1,8 @@
+import type { Address } from "./Address";
+import type { Dock } from "./Dock";
+import type { StorageArea } from "./StorageArea";
+import type { Vessel } from "./Vessel";
+
 export interface VesselVisitNotification {
     notificationId: string;
     status: VesselVisitNotificationStatus;
@@ -6,8 +11,8 @@ export interface VesselVisitNotification {
     isCargoHazardous: boolean;
     specialRequirements: string;
     crewDetails: CrewDetails;
-    loadCargoManifest: LoadCargoManifestItem[];
-    unloadCargoManifest: string[];
+    loadCargoManifest: CargoManifestItem[];
+    unloadCargoManifest: CargoManifestItem[];
     vessel: Vessel;
     submitter: Person;
     notificationDecisions: NotificationDecision[];
@@ -30,9 +35,9 @@ export interface CrewDetails {
     safetyOfficers: string | null;
 }
 
-export interface LoadCargoManifestItem {
+export interface CargoManifestItem {
     position: Position;
-    area: Area;
+    area: StorageArea;
     container: Container;
 }
 
@@ -42,57 +47,10 @@ export interface Position {
     tier: string;
 }
 
-export interface Area {
-    nameCode: string;
-    location: string;
-    type: number;
-    capacity: number;
-    currentOccupancy: number;
-    dockServices: DockService[];
-}
-
-export interface DockService {
-    dock: Dock;
-    distance: number;
-    isServingDock: boolean;
-}
-
-export interface Dock {
-    code: string;
-    name: string;
-    location: string;
-    physicalCharacteristics: PhysicalCharacteristics;
-    supportedVesselTypes: VesselType[];
-}
-
-export interface VesselType {
-    name: string;
-    description: string;
-    maxNumberOfRows: number;
-    maxNumberOfBays: number;
-    maxNumberOfTiers: number;
-    capacity: number;
-    physicalCharacteristics: PhysicalCharacteristics;
-}
-
-export interface PhysicalCharacteristics {
-    length: number;
-    depth: number;
-    draft: number;
-}
-
 export interface Container {
     containerNumber: string;
     cargoType: number;
     description: string;
-}
-
-export interface Vessel {
-    name: string;
-    imoNumber: string;
-    type: VesselType;
-    owner: Owner;
-    physicalCharacteristics: PhysicalCharacteristics;
 }
 
 export interface Owner {
@@ -101,14 +59,6 @@ export interface Owner {
     taxNumber: string;
     address: Address;
     representatives: Person[];
-}
-
-export interface Address {
-    id: string;
-    street: string;
-    city: string;
-    zipCode: string;
-    country: string;
 }
 
 export interface Person {

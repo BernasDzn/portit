@@ -10,15 +10,17 @@ const http = new AxiosHttpService();
 const vvnService = new VesselVisitNotificationService(http);
 
 const vvnCount = ref(0);
+const pendingVVNCount = ref(0);
 const recentNotifs = ref<VesselVisitNotification[]>([]);
 
 const {t} = useI18n();
 
 const fetchNotifications = async () => {
     try {
-        const notifications = await vvnService.getVesselVisitNotifications();
-        vvnCount.value = notifications.length;
-        recentNotifs.value = notifications.slice(0, 3);
+        const notifications = await vvnService.getVesselVisitNotificationsByRepresentative();
+        vvnCount.value = notifications.items.length;
+        recentNotifs.value = notifications.items.slice(0, 3);
+        pendingVVNCount.value = notifications.items.filter(item => item.status === 1).length;
 
         console.log('Recent Vessel Visit Notifications:', notifications);
     } catch (error) {
@@ -44,7 +46,7 @@ onMounted(() => {
             </div>
             <div class="stats-overview">
             <div class="opposed">
-                <p>2</p>
+                <p>{{ pendingVVNCount }}</p>
                 <span class="material-icons icon" style="color: var(--accent-1);">sailing</span>
             </div>
             <p>{{ t('dashboard.SAOR.pendingNotifications') }}</p>

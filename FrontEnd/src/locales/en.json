@@ -5,6 +5,7 @@
         "statistics": "Statistics",
         "yes": "Yes",
         "no": "No",
+        "weekDay": "Week Day",
         "days": {
             "sunday": "Sunday",
             "monday": "Monday",
@@ -13,7 +14,8 @@
             "thursday": "Thursday",
             "friday": "Friday",
             "saturday": "Saturday"
-        }
+        },
+        "number": "Number"
     },
     "buttons": {
         "save": "Save",
@@ -25,6 +27,7 @@
         "select": "Select",
         "activate": "Activate",
         "deactivate": "Deactivate",
+        "add": "Add",
         "filter": {
             "title": "Filters",
             "add": "Filter",
@@ -38,6 +41,9 @@
         "goBackToLogin": "Go back to Login",
         "logout": "Logout",
         "seeMore": "See More"
+    },
+    "search": {
+        "languages": "Search languages..."
     },
     "unsavedChanges": {
         "title": "Discard changes?",
@@ -114,6 +120,10 @@
             "create": "Register a new user into the system",
             "view": "View and manage existing users"
         }
+    },
+    "representative": {
+        "title": "Representative",
+        "select": "Select a representative"
     },
     "physicalCharacteristics": {
         "title": "Physical Characteristics (m)",
@@ -233,7 +243,7 @@
             },
             "owner": {
                 "title": "Owning organization",
-                "placeholder": "Owning organization"
+                "placeholder": "Select owning organization"
             },
             "vesselType": {
                 "title": "Vessel Type",
@@ -473,7 +483,11 @@
             },
             "type": {
                 "title": "Type",
-                "placeholder": "Select Storage Area type"
+                "placeholder": "Select Storage Area type",
+                "options": {
+                    "yard": "Yard",
+                    "warehouse": "Warehouse"
+                }
             },
             "capacity": {
                 "title": "Capacity",
@@ -504,14 +518,16 @@
             "edit": "Edit Notification",
             "create": "Create Notification",
             "makeDraft": "Create Draft Notification",
-            "myNotifications": "My Notifications"
+            "myNotifications": "My Notifications",
+            "review": "Review Notifications"
         },
         "title": "Vessel Visit Notifications",
         "subtitle": {
             "dashboard": "Overview of vessel visit notifications",
             "search": "Manage and view all vessel visit notifications",
             "create": "Create a new vessel visit notification",
-            "edit": "Edit an existing vessel visit notification"
+            "edit": "Edit an existing vessel visit notification",
+            "review": "Review pending vessel visit notifications"
         },
         "errors": {
             "noNotificationId": "No notification id provided"
@@ -547,10 +563,11 @@
         }
     },
     "operationalWindow": {
+        "title": "Operational Window",
         "printer": {
             "addShift": "Add Shift",
             "shifts": "Shifts:",
-            "noShifts": "No shifts defined",
+            "noShifts": "No shifts.",
             "startTime": "Start Time",
             "endTime": "End Time",
             "weekDays": "Week Days"

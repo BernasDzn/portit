@@ -14,7 +14,7 @@ const props = defineProps<{
 }>();
 
 const statuses = [
-	"Yard", "Warehouse"
+	"storageArea.fields.type.options.yard", "storageArea.fields.type.options.warehouse"
 ];
 
 </script>
@@ -43,7 +43,7 @@ const statuses = [
 						</div>
 					</div>
                 </div>
-                <sl-tag>{{ statuses[storageArea.type] }}</sl-tag>
+                <sl-tag>{{ t(statuses[storageArea.type]!) }}</sl-tag>
             </div>
 			<sl-divider></sl-divider>
             <StorageCapacityPrinter :storage-area="storageArea" />

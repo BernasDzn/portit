@@ -13,7 +13,7 @@ const props = defineProps<{
 
 let shiftsPerDay = reactive<Record<number, Shift[]>>({});
 
-const weekDays = [t("common.days.sunday"), t("common.days.monday"), t("common.days.tuesday"), t("common.days.wednesday"), t("common.days.thursday"), t("common.days.friday"), t("common.days.saturday")];
+const weekDays = ["common.days.sunday", "common.days.monday", "common.days.tuesday", "common.days.wednesday", "common.days.thursday", "common.days.friday", "common.days.saturday"];
 const selectedDays = ref<number[]>([]);
 const startTime = ref<string>('08:00');
 const endTime = ref<string>('13:00');
@@ -91,7 +91,7 @@ onMounted(() => {
 
 <template>
 	<div>
-		<p>Operational Window:</p>
+		<p>{{ t('operationalWindow.title') }}:</p>
 		<sl-card style="width: 100%;">
 			<div>
 				<sl-details :summary="t('operationalWindow.printer.addShift')" class="custom-icons">
@@ -99,16 +99,16 @@ onMounted(() => {
 					<sl-icon name="dash-square" slot="collapse-icon"></sl-icon>
 					<div style="display: flex; gap: 1rem; align-items: center;">
 						<sl-button variant="default" size="medium" pill @click="addShift(selectedDays, startTime, endTime)">
-							Add
+							{{t('buttons.add')}}
 						</sl-button>
-						<sl-input :label="t('operationalWindow.printer.startTime')" type="time" placeholder="Number" v-model="startTime"></sl-input>
-						<sl-input :label="t('operationalWindow.printer.endTime')" type="time" placeholder="Number" v-model="endTime"></sl-input>
-						<sl-select id=multiSelect :label="t('operationalWindow.printer.weekDays')" placeholder="Weekday" multiple clearable hoist @sl-change="updateSelectedDays">
-							<sl-option v-for="(weekday, idx) in weekDays" :key="idx" :value="idx">{{ weekday }}</sl-option>
+						<sl-input :label="t('operationalWindow.printer.startTime')" type="time" :placeholder="t('common.number')" v-model="startTime"></sl-input>
+						<sl-input :label="t('operationalWindow.printer.endTime')" type="time" :placeholder="t('common.number')" v-model="endTime"></sl-input>
+						<sl-select id=multiSelect :label="t('operationalWindow.printer.weekDays')" :placeholder="t('common.weekDay')" multiple clearable hoist @sl-change="updateSelectedDays">
+							<sl-option v-for="(weekday, idx) in weekDays" :key="idx" :value="idx">{{ t(weekday) }}</sl-option>
 						</sl-select>
 					</div>
 				</sl-details>
-				<p>Shifts:</p>
+				<p>{{ t('operationalWindow.printer.shifts') }}</p>
 				<WorkShiftPrinter
 					:shift_record="shiftsPerDay"
 					:is_removable="true"

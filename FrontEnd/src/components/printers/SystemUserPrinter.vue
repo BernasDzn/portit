@@ -28,22 +28,28 @@ const NUM_ROLE_LABELS: Record<number, string> = {
 const roleLabel = computed(() => {
     const r = props.systemUser?.role;
     if (r === undefined || r === null || r === '') return '';
+    
     // If backend sends numeric enum values, map them first
     if (typeof r === 'number') {
-        return t(NUM_ROLE_LABELS[r] as string) ?? String(r);
+        const label = NUM_ROLE_LABELS[r];
+        return label ? t(label) : String(r);
     }
+    
     // Direct match (key)
-    if (ROLE_LABELS[r]) return t(ROLE_LABELS[r] as string);
+    if (ROLE_LABELS[r]) return t(ROLE_LABELS[r]);
+    
     // Direct match by value (maybe already a friendly string)
     for (const v of Object.values(ROLE_LABELS)) {
-        if (String(v).toLowerCase() === String(r).toLowerCase()) return v;
+        if (String(v).toLowerCase() === String(r).toLowerCase()) return t(v);
     }
+    
     // Try to normalize incoming role like 'Port Authority Officer', 'PORTAUTHORITYOFFICER', 'port_authority_officer'
     const normalized = String(r).toUpperCase().replace(/[^A-Z0-9]/g, '');
     for (const key of Object.keys(ROLE_LABELS)) {
-        if (key.replace(/_/g, '') === normalized) return ROLE_LABELS[key];
+        if (key.replace(/_/g, '') === normalized) return t(ROLE_LABELS[key]);
     }
-    return r;
+    
+    return String(r);
 });
 
 </script>

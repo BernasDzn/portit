@@ -38,6 +38,15 @@ public class ShippingAgentOrganization : IDTOAble<ShippingAgentOrganizationDto>
         return Representatives.Contains(representative);
     }
 
+    public void AddRepresentative(Representative representative)
+    {
+        if (!Representatives.Contains(representative))
+        {
+            Representatives.Add(representative);
+            representative.AssignToOrganization(this);
+        }
+    }
+
     public ShippingAgentOrganizationDto ToDTO()
     {
         return new ShippingAgentOrganizationDto
