@@ -95,8 +95,7 @@ public class VesselVisitNotificationControllerTest
             ExpectedArrival = DateTime.UtcNow,
             ExpectedDeparture = DateTime.UtcNow.AddDays(1),
             IsCargoHazardous = false,
-            VesselImoNumber = null!,
-            SubmitterId = 123456789
+            VesselImoNumber = null!
         };
         var expectedNotification = new VesselVisitNotificationDto
         {
@@ -109,7 +108,7 @@ public class VesselVisitNotificationControllerTest
             Submitter = null!
         };
 
-        _notificationServiceMock.Setup(service => service.Add(It.IsAny<CreateVesselVisitNotificationDto>()))
+        _notificationServiceMock.Setup(service => service.Add(It.IsAny<CreateVesselVisitNotificationDto>(), "psharply0@yolasite.com"))
             .ReturnsAsync(expectedNotification);
 
         var result = await _controller.Create(newNotification);
@@ -127,11 +126,10 @@ public class VesselVisitNotificationControllerTest
             ExpectedArrival = DateTime.UtcNow,
             ExpectedDeparture = DateTime.UtcNow.AddDays(1),
             IsCargoHazardous = false,
-            VesselImoNumber = null!,
-            SubmitterId = 123456789
+            VesselImoNumber = null!
         };
 
-        _notificationServiceMock.Setup(service => service.Add(It.IsAny<CreateVesselVisitNotificationDto>()))
+        _notificationServiceMock.Setup(service => service.Add(It.IsAny<CreateVesselVisitNotificationDto>(), "psharply0@yolasite.com"))
             .ThrowsAsync(new ArgumentException());
 
         var result = await _controller.Create(newNotification);
@@ -148,11 +146,10 @@ public class VesselVisitNotificationControllerTest
             ExpectedArrival = DateTime.UtcNow,
             ExpectedDeparture = DateTime.UtcNow.AddDays(1),
             IsCargoHazardous = false,
-            VesselImoNumber = null!,
-            SubmitterId = 123456789
+            VesselImoNumber = null!
         };
 
-        _notificationServiceMock.Setup(service => service.Add(It.IsAny<CreateVesselVisitNotificationDto>()))
+        _notificationServiceMock.Setup(service => service.Add(It.IsAny<CreateVesselVisitNotificationDto>(), "psharply0@yolasite.com"))
             .ThrowsAsync(new EntityNotFoundException());
 
         var result = await _controller.Create(newNotification);
@@ -169,11 +166,10 @@ public class VesselVisitNotificationControllerTest
             ExpectedArrival = DateTime.UtcNow,
             ExpectedDeparture = DateTime.UtcNow.AddDays(1),
             IsCargoHazardous = false,
-            VesselImoNumber = null!,
-            SubmitterId = 123456789
+            VesselImoNumber = null!
         };
 
-        _notificationServiceMock.Setup(service => service.Add(It.IsAny<CreateVesselVisitNotificationDto>()))
+        _notificationServiceMock.Setup(service => service.Add(It.IsAny<CreateVesselVisitNotificationDto>(), "psharply0@yolasite.com"))
             .ThrowsAsync(new EntityAlreadyExistsException());
 
         var result = await _controller.Create(newNotification);
@@ -190,11 +186,10 @@ public class VesselVisitNotificationControllerTest
             ExpectedArrival = DateTime.UtcNow,
             ExpectedDeparture = DateTime.UtcNow.AddDays(1),
             IsCargoHazardous = false,
-            VesselImoNumber = null!,
-            SubmitterId = 123456789
+            VesselImoNumber = null!
         };
 
-        _notificationServiceMock.Setup(service => service.Add(It.IsAny<CreateVesselVisitNotificationDto>()))
+        _notificationServiceMock.Setup(service => service.Add(It.IsAny<CreateVesselVisitNotificationDto>(), "psharply0@yolasite.com"))
             .ThrowsAsync(new System.Exception());
 
         var result = await _controller.Create(newNotification);
@@ -292,8 +287,7 @@ public class VesselVisitNotificationControllerTest
             ExpectedArrival = DateTime.UtcNow,
             ExpectedDeparture = DateTime.UtcNow.AddDays(1),
             IsCargoHazardous = false,
-            VesselImoNumber = null!,
-            SubmitterId = 123456789
+            VesselImoNumber = null!
         };
         var expectedNotification = new VesselVisitNotificationDto
         {
@@ -306,7 +300,7 @@ public class VesselVisitNotificationControllerTest
             Submitter = null!
         };
 
-        _notificationServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<CreateVesselVisitNotificationDto>()))
+        _notificationServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<CreateVesselVisitNotificationDto>(), "psharply0@yolasite.com"))
             .ReturnsAsync(expectedNotification);
 
         var result = await _controller.Update("test-id", updatedNotification);
@@ -322,11 +316,10 @@ public class VesselVisitNotificationControllerTest
             ExpectedArrival = DateTime.UtcNow,
             ExpectedDeparture = DateTime.UtcNow.AddDays(1),
             IsCargoHazardous = false,
-            VesselImoNumber = null!,
-            SubmitterId = 123456789
+            VesselImoNumber = null!
         };
 
-        _notificationServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<CreateVesselVisitNotificationDto>()))
+        _notificationServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<CreateVesselVisitNotificationDto>(), "psharply0@yolasite.com"))
             .ThrowsAsync(new ArgumentException());
 
         var result = await _controller.Update("test-id", updatedNotification);
@@ -343,11 +336,10 @@ public class VesselVisitNotificationControllerTest
             ExpectedArrival = DateTime.UtcNow,
             ExpectedDeparture = DateTime.UtcNow.AddDays(1),
             IsCargoHazardous = false,
-            VesselImoNumber = null!,
-            SubmitterId = 123456789
+            VesselImoNumber = null!
         };
 
-        _notificationServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<CreateVesselVisitNotificationDto>()))
+        _notificationServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<CreateVesselVisitNotificationDto>(), "psharply0@yolasite.com"))
             .ThrowsAsync(new EntityNotFoundException());
 
         var result = await _controller.Update("test-id", updatedNotification);
@@ -364,11 +356,10 @@ public class VesselVisitNotificationControllerTest
             ExpectedArrival = DateTime.UtcNow,
             ExpectedDeparture = DateTime.UtcNow.AddDays(1),
             IsCargoHazardous = false,
-            VesselImoNumber = null!,
-            SubmitterId = 123456789
+            VesselImoNumber = null!
         };
 
-        _notificationServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<CreateVesselVisitNotificationDto>()))
+        _notificationServiceMock.Setup(service => service.Update(It.IsAny<string>(), It.IsAny<CreateVesselVisitNotificationDto>(), "psharply0@yolasite.com"))
             .ThrowsAsync(new System.Exception());
 
         var result = await _controller.Update("test-id", updatedNotification);
@@ -380,12 +371,9 @@ public class VesselVisitNotificationControllerTest
     [Fact]
     public async Task Filter_ReturnsOkResult_WithPageOfVesselVisitNotificationStatusDto()
     {
-        var filter = new VesselVisitNotificationFilter
-        {
-            SubmitterCitizenshipId = 908029952,
-        };
+        var filter = new VesselVisitNotificationFilter{};
 
-        _notificationServiceMock.Setup(service => service.FilterNotifications(It.IsAny<VesselVisitNotificationFilter>()))
+        _notificationServiceMock.Setup(service => service.FilterNotifications(It.IsAny<VesselVisitNotificationFilter>(), "psharply0@yolasite.com"))
             .ReturnsAsync(new Page<VesselVisitNotificationStatusDto>
             {
                 Items = new List<VesselVisitNotificationStatusDto>(),
@@ -403,12 +391,9 @@ public class VesselVisitNotificationControllerTest
     [Fact]
     public async Task Filter_ReturnsInternalServerError_WhenExceptionIsThrown()
     {
-        var filter = new VesselVisitNotificationFilter
-        {
-            SubmitterCitizenshipId = 908029952,
-        };
+        var filter = new VesselVisitNotificationFilter{};
 
-        _notificationServiceMock.Setup(service => service.FilterNotifications(It.IsAny<VesselVisitNotificationFilter>()))
+        _notificationServiceMock.Setup(service => service.FilterNotifications(It.IsAny<VesselVisitNotificationFilter>(), "psharply0@yolasite.com"))
             .ThrowsAsync(new System.Exception());
 
         var result = await _controller.Filter(filter);

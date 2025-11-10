@@ -19,7 +19,6 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
     private readonly IStorageAreaRepository _storageAreaRepository;
     private readonly IContainerRepository _containerRepository;
     private readonly VesselVisitNotificationIdGenerator _idGenerator;
-    private readonly ISystemUserService _systemUserService;
     private readonly ILogger<VesselVisitNotificationService> _logger;
 
     public VesselVisitNotificationService(
@@ -29,7 +28,6 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         IStorageAreaRepository storageAreaRepository,
         VesselVisitNotificationIdGenerator idGenerator,
         IContainerRepository containerRepository,
-        ISystemUserService systemUserService,
         ILogger<VesselVisitNotificationService> logger
     )
     {
@@ -39,7 +37,6 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         _storageAreaRepository = storageAreaRepository;
         _containerRepository = containerRepository;
         _idGenerator = idGenerator;
-        _systemUserService = systemUserService;
         _logger = logger;
     }
 
@@ -222,10 +219,15 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         await _notificationRepository.DeleteAsync(existingNotification);
     }
 
-    public async Task<IEnumerable<VesselVisitNotificationDto>> GetVesselVisitNotificationsOnDay(DateTime day)
+    public async Task<IEnumerable<VesselVisitNotificationDto>> GetVesselVisitNotificationsOnDay(DateTime day, uint daysAhead)
     {
-        List<VesselVisitNotification> items = await _notificationRepository.GetVesselVisitNotificationsOnDayAsync(day);
+        List<VesselVisitNotification> items = await _notificationRepository.GetVesselVisitNotificationsOnDayAsync(day, daysAhead);
         AppLogEvents.LogFilter(_logger, "vessel visit notifications", items.Count);
         return items.Select(n => n.ToDTO());
+    }
+
+    public Task<SchedulingResultDto> CollectSchedulingData(DateTime date, uint daysAhead)
+    {
+        throw new NotImplementedException();
     }
 }

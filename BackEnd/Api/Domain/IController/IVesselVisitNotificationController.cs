@@ -17,4 +17,7 @@ public interface IVesselVisitNotificationController
     // Draft operations
     public Task<ActionResult> Submit(string id);
     public Task<ActionResult> DeleteDraft(string id);
+
+    // Scheduling operations
+    public Task<ActionResult<SchedulingResultDto>> CollectSchedulingData([FromQuery] DateTime day, uint daysAhead);
 }

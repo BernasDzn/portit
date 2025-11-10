@@ -1,5 +1,4 @@
 export const TYPES = {
-
     adminService: Symbol.for('AdminService'),
     authService: Symbol.for('AuthService'),
     dockService: Symbol.for('DockService'),

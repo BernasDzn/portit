@@ -40,19 +40,19 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
         }
     }
 
-    [HttpGet("onDay", Name = "GetVesselVisitNotificationsOnDay")]
+    [HttpGet("collectScheduleData", Name = "GetVesselVisitNotificationsOnDay")]
     [AllowAnonymous]
-    public async Task<ActionResult<IEnumerable<VesselVisitNotificationDto>>> GetAllOnDay([FromQuery] DateTime day)
+    public async Task<ActionResult<SchedulingResultDto>> CollectSchedulingData([FromQuery] DateTime day, uint daysAhead = 1)
     {
         try
         {
-            IEnumerable<VesselVisitNotificationDto> notificationsDto = await _notificationService.GetVesselVisitNotificationsOnDay(day);
-            return Ok(notificationsDto);
+            SchedulingResultDto resultDto = await _notificationService.CollectSchedulingData(day, daysAhead);
+            return Ok(resultDto);
         }
         catch (System.Exception e)
         {
-            _logger.LogCritical("Error retrieving vessel visit notifications on day {Day}, {Message}", day, e.Message);
-            return StatusCode(500, "An error occurred while retrieving vessel visit notifications.");
+            _logger.LogCritical("Error collecting scheduling data for vessel visit notifications, {Message}", e.Message);
+            return StatusCode(500, "An error occurred while collecting scheduling data for vessel visit notifications.");
         }
     }
 

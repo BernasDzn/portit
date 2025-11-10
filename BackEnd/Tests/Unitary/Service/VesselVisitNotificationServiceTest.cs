@@ -156,20 +156,19 @@ public class VesselVisitNotificationServiceTest
             ExpectedArrival = DateTime.UtcNow.AddDays(1),
             ExpectedDeparture = DateTime.UtcNow.AddDays(5),
             IsCargoHazardous = true,
-            VesselImoNumber = "IMO 7585229",
-            SubmitterId = 908029952
+            VesselImoNumber = "IMO 7585229"
         };
 
         _vesselRepositoryMock.Setup(repo => repo.GetVesselByIMOAsync(newNotificationDto.VesselImoNumber))
             .ReturnsAsync(vessel);
 
-        _representativeRepositoryMock.Setup(repo => repo.GetByCitizenIdAsync(newNotificationDto.SubmitterId))
+        _representativeRepositoryMock.Setup(repo => repo.GetByCitizenIdAsync(908029952))
             .ReturnsAsync(representative);
 
         _repositoryMock.Setup(repo => repo.AddAsync(It.IsAny<VesselVisitNotification>()))
             .ReturnsAsync((VesselVisitNotification n) => n);
 
-        var result = await _service.Add(newNotificationDto);
+        var result = await _service.Add(newNotificationDto, "psharply0@yolasite.com");
 
         Assert.NotNull(result);
 
@@ -187,14 +186,13 @@ public class VesselVisitNotificationServiceTest
             ExpectedArrival = DateTime.UtcNow.AddDays(1),
             ExpectedDeparture = DateTime.UtcNow.AddDays(5),
             IsCargoHazardous = true,
-            VesselImoNumber = "IMO 7585229",
-            SubmitterId = 908029952
+            VesselImoNumber = "IMO 7585229"
         };
 
         _repositoryMock.Setup(repo => repo.GetVesselVisitNotificationByNotificationIdAsync(existingNotificationDto.NotificationId))
             .ReturnsAsync(notifications.FirstOrDefault(n => n.NotificationId.ToString() == existingNotificationDto.NotificationId));
 
-        await Assert.ThrowsAsync<EntityAlreadyExistsException>(() => _service.Add(existingNotificationDto));
+        await Assert.ThrowsAsync<EntityAlreadyExistsException>(() => _service.Add(existingNotificationDto, "psharply0@yolasite.com"));
     }
 
     [Fact]
@@ -206,8 +204,7 @@ public class VesselVisitNotificationServiceTest
             ExpectedArrival = DateTime.UtcNow.AddDays(1),
             ExpectedDeparture = DateTime.UtcNow.AddDays(5),
             IsCargoHazardous = true,
-            VesselImoNumber = "IMO 0000000",
-            SubmitterId = 908029952
+            VesselImoNumber = "IMO 0000000"
         };
 
         _repositoryMock.Setup(repo => repo.GetVesselVisitNotificationByNotificationIdAsync(It.Is<string>(s => s == newNotificationDto.NotificationId)))
@@ -216,7 +213,7 @@ public class VesselVisitNotificationServiceTest
         _vesselRepositoryMock.Setup(repo => repo.GetVesselByIMOAsync(It.IsAny<string>()))
             .ReturnsAsync((Vessel?)null);
 
-        await Assert.ThrowsAsync<EntityNotFoundException>(() => _service.Add(newNotificationDto));
+        await Assert.ThrowsAsync<EntityNotFoundException>(() => _service.Add(newNotificationDto, "psharply0@yolasite.com"));
     }
 
     [Fact]
@@ -228,8 +225,7 @@ public class VesselVisitNotificationServiceTest
             ExpectedArrival = DateTime.UtcNow.AddDays(1),
             ExpectedDeparture = DateTime.UtcNow.AddDays(5),
             IsCargoHazardous = true,
-            VesselImoNumber = "IMO 0000000",
-            SubmitterId = 908029952
+            VesselImoNumber = "IMO 0000000"
         };
 
         _repositoryMock.Setup(repo => repo.GetVesselVisitNotificationByNotificationIdAsync(It.Is<string>(s => s == newNotificationDto.NotificationId)))
@@ -238,7 +234,7 @@ public class VesselVisitNotificationServiceTest
         _vesselRepositoryMock.Setup(repo => repo.GetVesselByIMOAsync(It.IsAny<string>()))
             .ReturnsAsync((Vessel?)null);
 
-        await Assert.ThrowsAsync<EntityNotFoundException>(() => _service.Add(newNotificationDto));
+        await Assert.ThrowsAsync<EntityNotFoundException>(() => _service.Add(newNotificationDto, "psharply0@yolasite.com"));
     }
 
     [Fact]
@@ -252,7 +248,6 @@ public class VesselVisitNotificationServiceTest
             ExpectedDeparture = DateTime.UtcNow.AddDays(6),
             IsCargoHazardous = existingNotification.IsCargoHazardous,
             VesselImoNumber = existingNotification.Vessel.ImoIdentifier.Value,
-            SubmitterId = existingNotification.Submitter.CitizenshipId,
             SpecialRequirements = "Updated special requirements"
         };
 
@@ -262,7 +257,7 @@ public class VesselVisitNotificationServiceTest
         _repositoryMock.Setup(repo => repo.UpdateAsync(It.IsAny<VesselVisitNotification>()))
             .ReturnsAsync((VesselVisitNotification n) => n);
 
-        var result = await _service.Update(existingNotification.NotificationId.ToString(), updatedNotificationDto);
+        var result = await _service.Update(existingNotification.NotificationId.ToString(), updatedNotificationDto, "psharply0@yolasite.com");
 
         Assert.NotNull(result);
         Assert.Equal(updatedNotificationDto.NotificationId, result.NotificationId.ToString());
@@ -280,22 +275,21 @@ public class VesselVisitNotificationServiceTest
             ExpectedArrival = DateTime.UtcNow.AddDays(1),
             ExpectedDeparture = DateTime.UtcNow.AddDays(5),
             IsCargoHazardous = true,
-            VesselImoNumber = "IMO 7585229",
-            SubmitterId = 908029952
+            VesselImoNumber = "IMO 7585229"
         };
 
         _repositoryMock.Setup(repo => repo.GetVesselVisitNotificationByNotificationIdAsync(nonExistentNotificationDto.NotificationId))
             .ReturnsAsync((VesselVisitNotification?)null);
 
-        await Assert.ThrowsAsync<EntityNotFoundException>(() => _service.Update(nonExistentNotificationDto.NotificationId, nonExistentNotificationDto));
+        await Assert.ThrowsAsync<EntityNotFoundException>(() => _service.Update(nonExistentNotificationDto.NotificationId, nonExistentNotificationDto, "psharply0@yolasite.com"));
     }
 
     [Fact]
     public async Task FilteredVesselVisitNotification_ReturnsPage()
     {
-        var filter = new VesselVisitNotificationFilter { SubmitterCitizenshipId = 908029952 };
+        var filter = new VesselVisitNotificationFilter { };
 
-        _repositoryMock.Setup(repo => repo.FilterVesselVisitNotificationsAsync(filter))
+        _repositoryMock.Setup(repo => repo.FilterVesselVisitNotificationsAsync(filter, 908029952))
             .ReturnsAsync(new Page<VesselVisitNotification>
             {
                 Items = notifications.ToList(),
@@ -303,7 +297,7 @@ public class VesselVisitNotificationServiceTest
                 PageSize = notifications.Count
             });
 
-        var result = await _service.FilterNotifications(filter);
+        var result = await _service.FilterNotifications(filter,  "psharply0@yolasite.com");
 
         Assert.NotNull(result);
         Assert.IsType<Page<VesselVisitNotificationStatusDto>>(result);
@@ -313,9 +307,9 @@ public class VesselVisitNotificationServiceTest
     [Fact]
     public async Task FilteredVesselVisitNotification_ReturnsEmptyPage_WhenNoMatches()
     {
-        var filter = new VesselVisitNotificationFilter { SubmitterCitizenshipId = 123456789 };
+        var filter = new VesselVisitNotificationFilter { };
 
-        _repositoryMock.Setup(repo => repo.FilterVesselVisitNotificationsAsync(filter))
+        _repositoryMock.Setup(repo => repo.FilterVesselVisitNotificationsAsync(filter, 908029952))
             .ReturnsAsync(new Page<VesselVisitNotification>
             {
                 Items = new List<VesselVisitNotification>(),
@@ -323,7 +317,7 @@ public class VesselVisitNotificationServiceTest
                 PageSize = 0
             });
 
-        var result = await _service.FilterNotifications(filter);
+        var result = await _service.FilterNotifications(filter, "psharply0@yolasite.com");
 
         Assert.NotNull(result);
         Assert.IsType<Page<VesselVisitNotificationStatusDto>>(result);
