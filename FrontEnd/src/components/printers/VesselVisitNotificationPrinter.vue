@@ -37,7 +37,7 @@ const props = defineProps<{ notification: VesselVisitNotification; link?: string
                         </div>
                         <p v-if="!props.short" class="item-description">
                             {{ t('notification.specialRequirements') }}: {{ props.notification.specialRequirements || t('notification.none') }}<br/>
-                            {{ t('notification.crew') }}: {{ props.notification.crewDetails ? props.notification.crewDetails.totalCrewMembers : t('notification.unknown') }}<br/>
+                            <!-- {{ t('notification.crew') }}: {{ props.notification.crewDetails ? props.notification.crewDetails.totalCrewMembers : t('notification.unknown') }}<br/> -->
                             {{ t('notification.captain') }}: {{ props.notification.crewDetails && props.notification.crewDetails.captain ? props.notification.crewDetails.captain.value : t('notification.unknown') }}
                         </p>
                     </div>
