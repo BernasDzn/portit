@@ -6,18 +6,20 @@ import type { Vessel } from '@/model/Vessel';
 import AxiosHttpService from '@/service/AxiosHttpService';
 import { VesselService } from '@/service/VesselService';
 import { VesselTypeService } from '@/service/VesselTypeService';
+import { ShippingAgentOrganizationService } from '@/service/ShippingAgentOrganizationService';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 const http = new AxiosHttpService();
 const vesselService = new VesselService(http);
 const vesselTypeService = new VesselTypeService(http);
+const saoService = new ShippingAgentOrganizationService(http);
 
 const vessel = ref<Vessel>({
     name: '',
     imoNumber: '',
     type: '',
-    owner: 'Global Shipping Co.', // SUBSTITUIR PELO OWNER REPRESENTADO PELO USER DEPOIS
+    owner: '',
     length: null!,
     depth: null!,
     draft: null!
@@ -49,6 +51,17 @@ const submitVessel = (obj: any) =>
                 :fetch-function="() => vesselTypeService.getVesselTypes().then(page => (page.items || []).map(t => t.name))"
                 :fetch-on-mount="true"
                 :placeholderText="t('vessel.fields.vesselType.placeholder')"
+                :required="true"
+                valueKey="name"
+                labelKey="name"
+                />
+                <EntityDropdown
+                class="field-dropdown"
+                :name="t('vessel.fields.owner.title') + '*'"
+                v-model="vessel.owner"
+                :fetch-function="() => saoService.getShippingAgentOrganizations().then(page => (page.items || []).map(t => t.name))"
+                :fetch-on-mount="true"
+                :placeholderText="t('vessel.fields.owner.placeholder')"
                 :required="true"
                 valueKey="name"
                 labelKey="name"

@@ -14,8 +14,13 @@ export class ShippingAgentOrganizationService implements IShippingAgentOrganizat
         private http: IHttpService
     ) { }
 
-    async getAll(): Promise<Page<ShippingAgentOrganization>> {
-        const response = await this.http.get<Page<ShippingAgentOrganization>>('/ShippingAgentOrganization');
-        return response.data;
+    async getShippingAgentOrganizations(): Promise<Page<ShippingAgentOrganization>> {
+        const response = await this.http.get<ShippingAgentOrganization[]>('/ShippingAgentOrganization');
+        return {
+            items: response.data,
+            pageNumber: 1,
+            pageSize: response.data.length,
+            pageCount: 1
+        };
     }
 }
