@@ -6,11 +6,13 @@ import EntityView from '@/components/crud/EntityView.vue';
 import { QualificationService } from '@/service/QualificationService';
 import type { Qualification } from '@/model/Qualifications';
 import { useI18n } from 'vue-i18n';
+import type { IQualificationService } from '@/service/IService/IQualificationService';
+import { container } from '@/inversify.config';
+import TYPES from '@/inversify/types';
 
 const route = useRoute();
 
-const http = new AxiosHttpService();
-const qualificationService = new QualificationService(http);
+const qualificationService = container.get<IQualificationService>(TYPES.qualificationService);
 const qualId = decodeURIComponent((route.params.id ?? '') as string);
 
 const fetchQualification = async (): Promise<Qualification | null> => {

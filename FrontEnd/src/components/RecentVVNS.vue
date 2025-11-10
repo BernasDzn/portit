@@ -5,9 +5,10 @@ import { VesselVisitNotificationService } from '@/service/VesselVisitNotificatio
 import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import VesselVisitNotificationPrinter from './printers/VesselVisitNotificationPrinter.vue';
+import { container } from '@/inversify.config';
+import TYPES from '@/inversify/types';
 
-const http = new AxiosHttpService();
-const vvnService = new VesselVisitNotificationService(http);
+const vvnService = container.get<VesselVisitNotificationService>(TYPES.vesselVisitNotificationService);
 
 const vvnCount = ref(0);
 const pendingVVNCount = ref(0);

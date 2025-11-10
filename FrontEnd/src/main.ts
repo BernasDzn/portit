@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+
 import './assets/main.css'
 import './assets/navigation.css'
 
@@ -14,6 +16,9 @@ import i18n from './composables/i18n'
 import AxiosHttpService from './service/AxiosHttpService';
 import { AuthService } from './service/AuthService';
 import { useSession } from './composables/session';
+import { container } from './inversify.config';
+import type { IAuthService } from './service/IService/IAuthService';
+import TYPES from './inversify/types';
 
 // Handle authentication on app load
 const checkForAuthorization = async () => {
@@ -35,8 +40,7 @@ const checkForAuthorization = async () => {
             return;
         }
 
-        const http = new AxiosHttpService();
-        const response = await new AuthService(http).whoAmI();
+        const response = await container.get<IAuthService>(TYPES.authService).whoAmI();
 
         const session = useSession();
         session.authenticatedUser = response;

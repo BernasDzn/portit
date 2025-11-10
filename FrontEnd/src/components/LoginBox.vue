@@ -1,15 +1,16 @@
 <script setup lang="ts">
 import { useAlerts } from '@/composables/alerts';
 import { useSession } from '@/composables/session';
+import { container } from '@/inversify.config';
+import { TYPES } from '@/inversify/types';
 import type { User } from '@/model/User';
 import { AuthService } from '@/service/AuthService';
 import AxiosHttpService from '@/service/AxiosHttpService';
-import type { AppJWTResponse } from '@/service/IService/IAuthService';
+import type { AppJWTResponse, IAuthService } from '@/service/IService/IAuthService';
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
-const http = new AxiosHttpService();
-const authService = new AuthService(http);
+const authService = container.get<IAuthService>(TYPES.authService);
 
 const session = useSession();
 const router = useRouter();

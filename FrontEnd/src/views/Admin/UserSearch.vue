@@ -8,11 +8,13 @@ import { AdminService } from '@/service/AdminService';
 import type { SystemUser } from '@/model/SystemUser';
 import SystemUserPrinter from '@/components/printers/SystemUserPrinter.vue';
 import { useI18n } from 'vue-i18n';
+import type { IAdminService } from '@/service/IService/IAdminService';
+import { container } from '@/inversify.config';
+import TYPES from '@/inversify/types';
 
 const { t } = useI18n();
 
-const http = new AxiosHttpService()
-const adminService = new AdminService(http as any)
+const adminService = container.get<IAdminService>(TYPES.authService);
 
 const fetchUsers = async (filter?: Filter<SystemUser>): Promise<Page<SystemUser>> => {
   // ListingBox may call fetch with no args; ensure we supply a default filter shape

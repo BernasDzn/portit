@@ -3,37 +3,38 @@ import type { AxiosInstance } from 'axios';
 import type { IHttpService, Response, Headers, IGetOptions } from './IService/IHttpService';
 import { api } from './api';
 import { useSession } from '@/composables/session';
+import TYPES from '@/inversify/types';
+import { inject, injectable } from 'inversify';
 
 const session = useSession();
 
+@injectable()
 export class AxiosHttpService implements IHttpService {
-  private axiosInstance: AxiosInstance;
+    private axiosInstance: AxiosInstance;
 
-  constructor(instanceOrBase?: AxiosInstance | string) {
-    if (!instanceOrBase) {
-      this.axiosInstance = api as AxiosInstance;
-    } else {
-      this.axiosInstance = axios.create(
+    constructor() {
+        
+        if (this.axiosInstance) return;
+        
+        this.axiosInstance = axios.create(
         { 
-            baseURL: instanceOrBase as string ,
+            baseURL: "/api",
             withCredentials: true
         });
-    }
 
-    this.axiosInstance.interceptors.request.use(
-
-        
-      (config) => {
-        // Add auth token to headers if available
-        if (session.authToken) {
-          config.headers.Authorization = `Bearer ${session.authToken}`;
-        }
-        return config;
-      },
-      (error) => {
-        return Promise.reject(error);
-      }
-    );
+        this.axiosInstance.interceptors.request.use(
+            
+            (config) => {
+            // Add auth token to headers if available
+            if (session.authToken) {
+                config.headers.Authorization = `Bearer ${session.authToken}`;
+            }
+            return config;
+            },
+            (error) => {
+            return Promise.reject(error);
+            }
+        );
   }
 
   private toResponse<T>(res: import('axios').AxiosResponse<T>): Response<T> {

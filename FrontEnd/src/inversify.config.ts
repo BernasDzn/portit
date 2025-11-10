@@ -1,0 +1,50 @@
+import { Container } from "inversify";
+import type { IHttpService } from "./service/IService/IHttpService";
+import AxiosHttpService from "./service/AxiosHttpService";
+import TYPES from "./inversify/types";
+import type { IQualificationService } from "./service/IService/IQualificationService";
+import { QualificationService } from "./service/QualificationService";
+import type { IPhysicalResourceService } from "./service/IService/IPhysicalResourceService";
+import { PhysicalResourceService } from "./service/PhysicalResourceService";
+import { DockService } from "./service/DockService";
+import type { IDockService } from "./service/IService/IDockService";
+import { AdminService } from "./service/AdminService";
+import type { IAdminService } from "./service/IService/IAdminService";
+import { AuthService } from "./service/AuthService";
+import type { IAuthService } from "./service/IService/IAuthService";
+import type { IRepresentativeService } from "./service/IService/IRepresentativeService";
+import type { ISchedulingService } from "./service/IService/ISchedulingService";
+import type { IShippingAgentOrganizationService } from "./service/IService/IShippingAgentOrganizationService";
+import type { IStaffService } from "./service/IService/IStaffService";
+import type { IStorageAreaService } from "./service/IService/IStorageAreaService";
+import type { IVesselService } from "./service/IService/IVesselService";
+import type { IVesselVisitNotificationService } from "./service/IService/IVesselVisitNotificationService";
+import type { IVesselTypeService } from "./service/IService/IVesselTypeService";
+import { VesselService } from "./service/VesselService";
+import { RepresentativeService } from "./service/RepresentativeService";
+import { SchedulingService } from "./service/SchedulingService";
+import { ShippingAgentOrganizationService } from "./service/ShippingAgentOrganizationService";
+import { StaffService } from "./service/StaffService";
+import { StorageAreaService } from "./service/StorageAreaService";
+import { VesselTypeService } from "./service/VesselTypeService";
+import { VesselVisitNotificationService } from "./service/VesselVisitNotificationService";
+
+const container = new Container();
+
+container.bind<IHttpService>(TYPES.api).to(AxiosHttpService).inSingletonScope();
+container.bind<IAdminService>(TYPES.adminService).to(AdminService).inSingletonScope();
+container.bind<IAuthService>(TYPES.authService).to(AuthService).inSingletonScope();
+container.bind<IDockService>(TYPES.dockService).to(DockService).inSingletonScope();
+container.bind<IPhysicalResourceService>(TYPES.physicalResourceService).to(PhysicalResourceService).inSingletonScope();
+container.bind<IQualificationService>(TYPES.qualificationService).to(QualificationService).inSingletonScope();
+container.bind<IRepresentativeService>(TYPES.representativeService).to(RepresentativeService).inSingletonScope();
+container.bind<ISchedulingService>(TYPES.schedulingService).to(SchedulingService).inSingletonScope();
+container.bind<IShippingAgentOrganizationService>(TYPES.shippingAgentOrganizationService).to(ShippingAgentOrganizationService).inSingletonScope();
+container.bind<IStaffService>(TYPES.staffService).to(StaffService).inSingletonScope();
+container.bind<IStorageAreaService>(TYPES.storageAreaService).to(StorageAreaService).inSingletonScope();
+container.bind<IVesselService>(TYPES.vesselService).to(VesselService).inSingletonScope();
+container.bind<IVesselTypeService>(TYPES.vesselTypeService).to(VesselTypeService).inSingletonScope();
+container.bind<IVesselVisitNotificationService>(TYPES.vesselVisitNotificationService).to(VesselVisitNotificationService).inSingletonScope();
+
+
+export { container };

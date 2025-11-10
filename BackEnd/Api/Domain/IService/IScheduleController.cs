@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Application.Controllers;
 
-public interface ISchedulingController
+public interface ISchedulingService
 {
-    Task<ActionResult<IEnumerable<QualificationDto>>> Schedule();
+    Task<ActionResult<IEnumerable<QualificationDto>>> Schedule(DateTime date);
 }

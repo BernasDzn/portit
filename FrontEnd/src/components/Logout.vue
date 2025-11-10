@@ -3,11 +3,13 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { AuthService } from '@/service/AuthService';
 import AxiosHttpService from '@/service/AxiosHttpService';
+import { container } from '@/inversify.config';
+import TYPES from '@/inversify/types';
+import type { IAuthService } from '@/service/IService/IAuthService';
 
 const router = useRouter();
 
-const http = new AxiosHttpService();
-const authService = new AuthService(http);
+const authService = container.get<IAuthService>(TYPES.authService);
 
 async function onLogout() {
   try {

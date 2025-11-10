@@ -6,14 +6,17 @@ import Loading from '@/components/Loading.vue';
 import { ref, onMounted } from 'vue';
 import { AdminService } from '@/service/AdminService';
 import { useI18n } from 'vue-i18n';
+import type { IAdminService } from '@/service/IService/IAdminService';
+import { container } from '@/inversify.config';
+import TYPES from '@/inversify/types';
 
 const { t } = useI18n();
 
-const http = new AxiosHttpService();
-const adminService = new AdminService(http);
+const adminService = container.get<IAdminService>(TYPES.adminService)
 onMounted(async () => {
 
 });
+
 </script>
 
 <template>

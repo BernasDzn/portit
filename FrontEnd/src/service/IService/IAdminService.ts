@@ -1,6 +1,7 @@
 import type { Logs } from "@/model/Logs";
 import type { Filter, Page } from "@/model/Page";
 import type { SystemUser } from "@/model/SystemUser";
+import type { User } from "@/model/User";
 
 export interface IAdminService {
     changeUserRole(emailAddress: string, newRole: number): Promise<SystemUser>;
@@ -12,4 +13,5 @@ export interface IAdminService {
     deleteUser(emailAddress: string): Promise<void>;
     filterSystemUsers(filter: Filter<SystemUser>): Promise<Page<SystemUser>>;
     getLogs(): Promise<Logs[]>;
+    inviteUser(emailAddress: string, role: number): Promise<SystemUser>;
 }

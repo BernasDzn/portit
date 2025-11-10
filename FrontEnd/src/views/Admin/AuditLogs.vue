@@ -10,11 +10,13 @@ import SystemUserPrinter from '@/components/printers/SystemUserPrinter.vue';
 import { useI18n } from 'vue-i18n';
 import type { Logs } from '@/model/Logs';
 import LogPrinter from '@/components/printers/LogPrinter.vue';
+import type { IAdminService } from '@/service/IService/IAdminService';
+import TYPES from '@/inversify/types';
+import { container } from '@/inversify.config';
 
 const { t } = useI18n();
 
-const http = new AxiosHttpService()
-const adminService = new AdminService(http)
+const adminService = container.get<IAdminService>(TYPES.authService)
 
 const logs = ref<Logs[]>([] as Logs[]);
 

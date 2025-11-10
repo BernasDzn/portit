@@ -2,14 +2,13 @@
 import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
 import { useI18n } from 'vue-i18n';
-import { useAlerts } from '@/composables/alerts';
 import type { Qualification } from '@/model/Qualifications';
-import AxiosHttpService from '@/service/AxiosHttpService';
-import { QualificationService } from '@/service/QualificationService';
 import { ref } from 'vue';
+import { container } from '@/inversify.config';
+import type { IQualificationService } from '@/service/IService/IQualificationService';
+import TYPES from '@/inversify/types';
 
-const http = new AxiosHttpService();
-const qualificationService = new QualificationService(http as any);
+const qualificationService = container.get<IQualificationService>(TYPES.qualificationService);
 
 const qualification = ref<Qualification>({
     idCode: '',
