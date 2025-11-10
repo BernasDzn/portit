@@ -352,6 +352,13 @@
             }
         }
     },
+    "scheduling": {
+        "title": "Request daily schedule",
+        "subtitle": "Use our automated scheduling algorithm to analise the scheduled tasks for a certain day.",
+        "noVisits": "No vessel visits scheduled for the selected date.",
+        "visitsOnSelectedDay": "Vessel visits on selected date",
+        "viewVisits": "Generate task schedule"
+    },
     "physicalResource": {
         "deactivation": {
             "title": "Deactivate Physical Resource",
