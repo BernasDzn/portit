@@ -11,4 +11,5 @@ public interface IQualificationService
     Task<QualificationDto> Add(QualificationDto qualificationDto);
     Task<QualificationDto> Update(string id, QualificationDto qualificationDto);
     Task<Page<QualificationDto>> FilterQualifications(QualificationFilter filter);
+    Task<int> CountQualificationsAsync();
 }

@@ -7,4 +7,5 @@ export interface IStorageAreaService {
 	createStorageArea(storageArea: StorageAreaCreate): Promise<StorageAreaCreate>;
 	updateStorageArea(id: string, storageArea: StorageArea): Promise<StorageArea>;
 	deleteStorageArea(id: string): Promise<void>;
+	getNumberOfStorageAreas(): Promise<number>;
 }

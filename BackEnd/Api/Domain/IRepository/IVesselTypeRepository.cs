@@ -11,4 +11,5 @@ public interface IVesselTypeRepository : IGenericRepository<VesselType>
     Task<Page<VesselType>> FilterVesselTypesAsync(VesselTypeFilter filter);
     new Task<VesselType> Add(VesselType vesselType);
     Task<VesselType> Update(VesselType vesselTypeDto);
+    Task<int> CountAsync();
 }

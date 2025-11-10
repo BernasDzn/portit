@@ -10,4 +10,5 @@ public interface IStaffService
 	Task<StaffDto?> Update(string mechanographicNumber, CreateStaffDto staffDto);
 	Task<Page<StaffDto>> FilterStaffs(StaffFilter filter);
 	Task<StaffDto> Deactivate(string mechanographicNumber);
+	Task<int> CountStaffsAsync();
 }

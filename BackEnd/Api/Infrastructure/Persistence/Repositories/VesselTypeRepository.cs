@@ -93,4 +93,16 @@ public class VesselTypeRepository : GenericRepository<VesselType>, IVesselTypeRe
             throw new PersistencyFailedException("Failed to update vessel type in the database.");
         }
     }
+
+    public async Task<int> CountAsync()
+    {
+        try
+        {
+            return await _context.VesselTypes.CountAsync();
+        }
+        catch
+        {
+            throw new PersistencyFailedException("Failed to count vessel types in the database.");
+        }
+    }
 }

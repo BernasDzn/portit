@@ -107,11 +107,11 @@ public class StaffRepository : GenericRepository<Staff>, IStaffRepository
 		{
 			IQueryable<Staff> query = _context.Staffs.AsQueryable();
 			query = query.Where(s => s.isActive);
-            
-            int pageCount = (int) Math.Ceiling((double)query.Count() / filter.PageSize);
+
+			int pageCount = (int)Math.Ceiling((double)query.Count() / filter.PageSize);
 
 			if (!string.IsNullOrEmpty(filter.MechanographicNumber))
-                query = query.Where(s => s.MechanographicNumber.Value.ToLower().Contains(filter.MechanographicNumber.ToLower()));
+				query = query.Where(s => s.MechanographicNumber.Value.ToLower().Contains(filter.MechanographicNumber.ToLower()));
 
 			if (!string.IsNullOrEmpty(filter.Name))
 				query = query.Where(s => s.Name.Value.ToLower().Contains(filter.Name.ToLower()));
@@ -128,16 +128,31 @@ public class StaffRepository : GenericRepository<Staff>, IStaffRepository
 			if (filter.QualificationCodes != null && filter.QualificationCodes.Any())
 				foreach (string qualificationCode in filter.QualificationCodes)
 					query = query.Where(s => s.Qualifications.Any(q => q.NameCode.Value.ToLower().Equals(qualificationCode.ToLower())));
-			
+
 			query = query.Skip((filter.PageNumber - 1) * filter.PageSize).Take(filter.PageSize);
 			return Task.FromResult(
 				Page<Staff>.Of(query.ToList(), filter, pageCount)
 			);
-			
+
 		}
 		catch (Exception ex)
 		{
 			throw new PersistencyFailedException("Failed to filter staffs: " + ex.Message);
+		}
+	}
+	
+	public async Task<int> CountAsync()
+	{
+		try
+		{
+			int count = await _context.Staffs
+				.Where(s => s.isActive)
+				.CountAsync();
+			return count;
+		}
+		catch (Exception ex)
+		{
+			throw new PersistencyFailedException("Failed to count staffs: " + ex.Message);
 		}
 	}
 }

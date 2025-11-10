@@ -75,6 +75,13 @@ public class PhysicalResourceService : IPhysicalResourceService
         return resourceDto;
     }
 
+    public async Task<int> CountPhysicalResourcesAsync()
+    {
+        int count = await _physicalResourceRepository.CountAsync();
+        AppLogEvents.LogRetrieve(_logger, "physical resources", count);
+        return count;
+    }
+
     public async Task<STSCraneDto> AddSTSCraneAsync(CreateSTSCraneDto resourceDto)
     {
         bool exists = await _physicalResourceRepository.GetResourceByCodeAsync(resourceDto.Code) != null;

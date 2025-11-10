@@ -73,4 +73,9 @@ export class PhysicalResourceService implements IPhysicalResourceService {
         const res = await this.http.put<PhysicalResource>(`/PhysicalResource/UpdateTruck/${code}`, value);
         return res.data as Truck;
     }
+
+    async getNumberOfPhysicalResources(): Promise<number> {
+        const res = await this.http.get<number>(`/PhysicalResource/count`);
+        return res.data;
+    }
 }

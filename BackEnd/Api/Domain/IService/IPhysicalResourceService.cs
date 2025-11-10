@@ -14,6 +14,7 @@ public interface IPhysicalResourceService
     public Task<STSCraneDto> UpdateSTSCraneAsync(string code, CreateSTSCraneDto crane);
     public Task<YardCraneDto> UpdateYardCraneAsync(string code, CreateYardCraneDto crane);
     public Task<TruckDto> UpdateTruckAsync(string code, CreateTruckDto truck);
+    public Task<int> CountPhysicalResourcesAsync();
     public Task<Page<object>> FilterPhysicalResources(PhysicalResourceFilter filter);
     public Task<bool> DeactivateResource(string code);
 }

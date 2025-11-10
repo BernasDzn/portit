@@ -73,6 +73,21 @@ public class PhysicalResourceController : ControllerBase, IPhysicalResourceContr
         }
     }
 
+    [HttpGet("count", Name = "Count")]
+    public async Task<ActionResult<int>> Count()
+    {
+        try
+        {
+            var count = await _physicalResourceService.CountPhysicalResourcesAsync();
+            return Ok(count);
+        }
+        catch (System.Exception e)
+        {
+            _logger.LogCritical("Error counting physical resources, {Message}", e.Message);
+            return StatusCode(500, "An error occurred while counting physical resources.");
+        }
+    }
+
     private async Task<ActionResult> HandleCreationAsync<TInput, TOutput>(TInput resourceDto, Func<TInput, Task<TOutput>> creationFunc, string resourceName)
         where TInput : class
         where TOutput : class

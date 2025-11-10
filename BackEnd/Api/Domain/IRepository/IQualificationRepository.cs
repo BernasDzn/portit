@@ -11,4 +11,5 @@ public interface IQualificationRepository : IGenericRepository<Qualification>
 	Task<Qualification?> GetQualificationByIdAsync(string id);
 	new Task<Qualification> Add(Qualification qualification);
 	Task<Qualification> Update(Qualification qualification);
+	Task<int> CountAsync();
 }

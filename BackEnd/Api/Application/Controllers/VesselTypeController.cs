@@ -48,13 +48,13 @@ public class VesselTypeController : ControllerBase, IVesselTypeController
 		{
 			_logger.LogCritical("Error retrieving vessel type by name, {Message}", e.Message);
 			return StatusCode(500, "An error occurred while retrieving the vessel type.");
-        }
+		}
 	}
 
 	[HttpGet("filter")]
-    public async Task<ActionResult<Page<VesselTypeDto>>> Filter([FromQuery] VesselTypeFilter filter)
-    {
-        try
+	public async Task<ActionResult<Page<VesselTypeDto>>> Filter([FromQuery] VesselTypeFilter filter)
+	{
+		try
 		{
 			var vesselTypesDtos = await _vesselTypeService.FilterVesselTypes(filter);
 
@@ -65,7 +65,7 @@ public class VesselTypeController : ControllerBase, IVesselTypeController
 			_logger.LogError("Error filtering vessel types, {Message}", e.Message);
 			return StatusCode(500, "An error occurred while filtering vessel types.");
 		}
-    }
+	}
 	[HttpPost(Name = "CreateVesselType")]
 	public async Task<ActionResult<VesselTypeDto>> Create(VesselTypeDto vesselTypeDto)
 	{
@@ -123,6 +123,21 @@ public class VesselTypeController : ControllerBase, IVesselTypeController
 
 			_logger.LogError("Error updating vessel type, {Message}", e.Message);
 			return StatusCode(500, "An error occurred while updating the vessel type.");
+		}
+	}
+
+	[HttpGet("count")]
+	public async Task<ActionResult<int>> Count()
+	{
+		try
+		{
+			var count = await _vesselTypeService.CountVesselTypesAsync();
+			return Ok(count);
+		}
+		catch (System.Exception e)
+		{
+			_logger.LogError("Error counting vessel types, {Message}", e.Message);
+			return StatusCode(500);
 		}
 	}
 

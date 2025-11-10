@@ -7,21 +7,41 @@ import { onMounted, ref } from 'vue';
 import AxiosHttpService from '@/service/AxiosHttpService';
 import { VesselService } from '@/service/VesselService';
 import { DockService } from '@/service/DockService';
+import { VesselTypeService } from '@/service/VesselTypeService';
+import { QualificationService } from '@/service/QualificationService';
+import { StaffService } from '@/service/StaffService';
+import { StorageAreaService } from '@/service/StorageAreaService';
+import { PhysicalResourceService } from '@/service/PhysicalResourceService';
 
 const http = new AxiosHttpService();
 const vesselService = new VesselService(http);
 const dockService = new DockService(http);
+const vesselTypeService = new VesselTypeService(http);
+const qualificationService = new QualificationService(http);
+const staffService = new StaffService(http);
+const storageAreaService = new StorageAreaService(http);
+const physicalResourceService = new PhysicalResourceService(http);
 
 const numberOfVessels = ref(0);
 const numberOfDocks = ref(0);
+const numberOfVesselTypes = ref(0);
+const numberOfQualifications = ref(0);
+const numberOfPhysicalResources = ref(0);
+const numberOfStaffs = ref(0);
+const numberOfStorageAreas = ref(0);
 
 onMounted(async () => {
-    try {
-        numberOfVessels.value = await vesselService.getNumberOfVessels();
-        numberOfDocks.value = await dockService.getNumberOfDocks();
-    } catch (err) {
-        console.error('Failed to load vessels', err);
-    }
+  try {
+    numberOfVessels.value = await vesselService.getNumberOfVessels();
+    numberOfDocks.value = await dockService.getNumberOfDocks();
+    numberOfVesselTypes.value = await vesselTypeService.getNumberOfVesselTypes();
+    numberOfQualifications.value = await qualificationService.getNumberOfQualifications();
+    numberOfPhysicalResources.value = await physicalResourceService.getNumberOfPhysicalResources();
+    numberOfStorageAreas.value = await storageAreaService.getNumberOfStorageAreas();
+    numberOfStaffs.value = await staffService.getNumberOfStaffs();
+  } catch (err) {
+    console.error('Failed to load vessels', err);
+  }
 });
 
 const { t } = useI18n();
@@ -44,10 +64,17 @@ const loading = ref(false);
         </div>
         <div class="stats-overview" v-if="!loading">
           <div class="opposed">
-            <p>8</p>
+            <p>{{ numberOfVesselTypes }}</p>
             <span class="material-icons icon" style="color: var(--accent-1);">sailing</span>
           </div>
           <p>{{ t('vesselType.title') }}</p>
+        </div>
+        <div class="stats-overview" v-if="!loading">
+          <div class="opposed">
+            <p>{{ numberOfPhysicalResources }}</p>
+            <span class="material-icons icon" style="color: var(--accent-1);">engineering</span>
+          </div>
+          <p>{{ t('physicalResource.title') }}</p>
         </div>
         <div class="stats-overview" v-if="!loading">
           <div class="opposed">
@@ -58,14 +85,21 @@ const loading = ref(false);
         </div>
         <div class="stats-overview" v-if="!loading">
           <div class="opposed">
-            <p>25</p>
+            <p>{{ numberOfStorageAreas }}</p>
+            <span class="material-icons icon" style="color: var(--accent-1);">inventory</span>
+          </div>
+          <p>{{ t('storageArea.title') }}</p>
+        </div>
+        <div class="stats-overview" v-if="!loading">
+          <div class="opposed">
+            <p>{{ numberOfQualifications }}</p>
             <span class="material-icons icon" style="color: var(--accent-1);">school</span>
           </div>
           <p>{{ t('qualification.title') }}</p>
         </div>
         <div class="stats-overview" v-if="!loading">
           <div class="opposed">
-            <p>30</p>
+            <p>{{ numberOfStaffs }}</p>
             <span class="material-icons icon" style="color: var(--accent-1);">people</span>
           </div>
           <p>{{ t('staff.title') }}</p>

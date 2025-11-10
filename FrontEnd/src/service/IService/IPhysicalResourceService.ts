@@ -4,6 +4,7 @@ import type { PhysicalResource, PhysicalResourceFilter, STSCrane, Truck, YardCra
 export interface IPhysicalResourceService {
     getPhysicalResources(filtering?: Filter<PhysicalResourceFilter>): Promise<Page<any>>;
     getPhysicalResourceById(id: string): Promise<PhysicalResource>;
+    getNumberOfPhysicalResources(): Promise<number>;
     deactivatePhysicalResource(id: string): Promise<void>;
 
     addSTSCrane(value: STSCrane): Promise<STSCrane>;

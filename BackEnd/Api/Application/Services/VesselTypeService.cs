@@ -94,4 +94,11 @@ public class VesselTypeService : IVesselTypeService
         AppLogEvents.LogUpdate(_logger, "Vessel Type", vesselType.Id);
         return updated.ToDTO();
     }
+
+    public async Task<int> CountVesselTypesAsync()
+    {
+        int count = await _vesselTypeRepository.CountAsync();
+        AppLogEvents.LogRetrieve(_logger, "vessel types", count);
+        return count;
+    }
 }

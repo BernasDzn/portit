@@ -44,4 +44,9 @@ export class VesselTypeService implements IVesselTypeService {
         const res = await this.http.put<VesselType>(`/VesselType/${name}`, vesselType);
         return res.data;
     }
+
+    async getNumberOfVesselTypes(): Promise<number> {
+        const res = await this.http.get<number>(`/VesselType/count`);
+        return res.data;
+    }
 }

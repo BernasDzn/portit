@@ -78,4 +78,11 @@ public class QualificationService : IQualificationService
 		AppLogEvents.LogFilter(_logger, "qualifications", page.Items.Count);
 		return page.Map<QualificationDto>(q => q.ToDTO());
 	}
+
+	public async Task<int> CountQualificationsAsync()
+	{
+		int count = await _qualificationRepository.CountAsync();
+		AppLogEvents.LogRetrieve(_logger, "qualifications", count);
+		return count;
+	}
 }

@@ -7,4 +7,5 @@ export interface IStaffService {
 	createStaff(staff: StaffCreate): Promise<Staff>;
 	deactivateStaff(mechanographicNumber: string): Promise<void>;
 	updateStaff(mechanographicNumber: string, staff: StaffCreate): Promise<Staff>;
+	getNumberOfStaffs(): Promise<number>;
 }

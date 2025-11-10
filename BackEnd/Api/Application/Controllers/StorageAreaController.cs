@@ -128,4 +128,19 @@ public class StorageAreaController : ControllerBase, IStorageAreaController
             return StatusCode(500, "An error occurred while retrieving storage areas.");
         }
     }
+
+    [HttpGet("count")]
+    public async Task<ActionResult<int>> Count()
+    {
+        try
+        {
+            var count = await _storageAreaService.CountStorageAreasAsync();
+            return Ok(count);
+        }
+        catch (System.Exception e)
+        {
+            _logger.LogError("Error counting storage areas, {Message}", e.Message);
+            return StatusCode(500);
+        }
+    }
 }

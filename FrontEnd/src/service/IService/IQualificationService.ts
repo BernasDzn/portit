@@ -6,4 +6,5 @@ export interface IQualificationService {
     getQualificationById(id: string): Promise<Qualification>;
     addQualification(value: Qualification): Promise<Qualification>;
     updateQualification(id: string, value: Qualification): Promise<Qualification>;
+    getNumberOfQualifications(): Promise<number>;
 }

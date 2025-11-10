@@ -52,5 +52,10 @@ export class StaffService implements IStaffService {
 		const res = await this.http.put<Staff>(`/Staff/${mechanographicNumber}`, staff);
 		return res.data;
 	}
+
+	async getNumberOfStaffs(): Promise<number> {
+		const res = await this.http.get<number>(`/Staff/count`);
+		return res.data;
+	}
     
 }

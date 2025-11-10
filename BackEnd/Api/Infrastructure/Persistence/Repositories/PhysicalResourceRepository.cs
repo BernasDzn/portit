@@ -153,4 +153,16 @@ public class PhysicalResourceRepository : GenericRepository<PhysicalResource>, I
 			Page<PhysicalResource>.Of(query.ToList(), filter, pageCount)
 		);
     }
+
+    public async Task<int> CountAsync()
+    {
+        try
+        {
+            return await _context.PhysicalResources.Where(r => r.Active).CountAsync();
+        }
+        catch
+        {
+            throw new PersistencyFailedException("Failed to count physical resources in the database.");
+        }
+    }
 }

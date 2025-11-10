@@ -137,4 +137,19 @@ public class StaffController : ControllerBase, IStaffController
 		}
 	}
 
+	[HttpGet("count")]
+	public async Task<ActionResult<int>> Count()
+	{
+		try
+		{
+			var count = await _staffService.CountStaffsAsync();
+			return Ok(count);
+		}
+		catch (System.Exception e)
+		{
+			_logger.LogError("Error counting staffs, {Message}", e.Message);
+			return StatusCode(500);
+		}
+	}
+
 }

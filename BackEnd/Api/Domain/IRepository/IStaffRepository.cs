@@ -8,6 +8,8 @@ public interface IStaffRepository : IGenericRepository<Staff>
 {
 	Task<IEnumerable<Staff>> GetStaffsAsync();
 
+	Task<int> CountAsync();
+
 	Task<Staff?> GetStaffByMecNumberAsync(string mecNumber);
 
 	Task<Page<Staff>> FilterStaffsAsync(StaffFilter filter);

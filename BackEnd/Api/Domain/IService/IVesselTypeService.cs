@@ -10,4 +10,5 @@ public interface IVesselTypeService
     public Task<Page<VesselTypeDto>> FilterVesselTypes(VesselTypeFilter filter);
     public Task<VesselTypeDto> Add(VesselTypeDto vesselTypeDto);
     public Task<VesselTypeDto> Update(string id, VesselTypeDto vesselTypeDto);
+    public Task<int> CountVesselTypesAsync();
 }

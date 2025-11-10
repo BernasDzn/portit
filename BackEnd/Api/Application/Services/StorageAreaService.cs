@@ -105,4 +105,11 @@ public class StorageAreaService : IStorageAreaService
 		AppLogEvents.LogFilter(_logger, "storage areas", page.Items.Count);
 		return page.Map<StorageAreaDto>(s => s.ToDTO());
 	}
+
+    public async Task<int> CountStorageAreasAsync()
+    {
+        int count = await _storageAreaRepository.CountAsync();
+        AppLogEvents.LogRetrieve(_logger, "storage areas", count);
+        return count;
+    }
 }

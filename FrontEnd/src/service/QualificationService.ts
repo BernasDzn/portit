@@ -45,4 +45,9 @@ export class QualificationService implements IQualificationService {
         const res = await this.http.get<Qualification>(`/Qualification/${id}`);
         return res.data;
     }
+
+    async getNumberOfQualifications(): Promise<number> {
+        const res = await this.http.get<number>(`/Qualification/count`);
+        return res.data;
+    }
 }

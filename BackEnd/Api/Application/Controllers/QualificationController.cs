@@ -124,4 +124,19 @@ public class QualificationController : ControllerBase, IQualificationController
 			return StatusCode(500, "An error occurred while updating the qualification.");
 		}
 	}
+
+	[HttpGet("count")]
+	public async Task<ActionResult<int>> Count()
+	{
+		try
+		{
+			var count = await _qualificationService.CountQualificationsAsync();
+			return Ok(count);
+		}
+		catch (System.Exception e)
+		{
+			_logger.LogError("Error counting qualifications, {Message}", e.Message);
+			return StatusCode(500);
+		}
+	}
 }

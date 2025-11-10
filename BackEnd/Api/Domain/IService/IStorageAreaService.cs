@@ -11,4 +11,5 @@ public interface IStorageAreaService
 	Task<StorageAreaDto> CreateStorageArea(CreateStorageAreaDto createStorageAreaDto);
 	Task<StorageAreaDto> UpdateStorageArea(string id, CreateStorageAreaDto updateStorageAreaDto);
 	Task<Page<StorageAreaDto>> FilterStorageAreas(StorageAreaFilter filter);
+	Task<int> CountStorageAreasAsync();
 }

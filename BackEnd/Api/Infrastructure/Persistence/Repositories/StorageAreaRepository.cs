@@ -92,4 +92,16 @@ public class StorageAreaRepository : GenericRepository<StorageArea>, IStorageAre
 			throw new PersistencyFailedException("Failed to filter storage areas: " + ex.Message);
 		}
 	}
+    public async Task<int> CountAsync()
+    {
+        try
+        {
+            int count = await _context.StorageAreas.CountAsync();
+            return count;
+        }
+        catch (System.Exception ex)
+        {
+            throw new PersistencyFailedException("Failed to count storage areas: " + ex.Message);
+        }
+    }
 }

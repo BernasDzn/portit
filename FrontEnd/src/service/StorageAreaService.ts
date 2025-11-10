@@ -45,4 +45,9 @@ export class StorageAreaService implements IStorageAreaService {
 		await this.http.delete<void>(`/StorageArea/${id}`);
 	}
 
+	async getNumberOfStorageAreas(): Promise<number> {
+		const res = await this.http.get<number>(`/StorageArea/count`);
+		return res.data;
+	}
+
 }

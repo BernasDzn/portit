@@ -121,4 +121,11 @@ public class StaffService : IStaffService
 		return staff.ToDTO();
 	}
 
+	public async Task<int> CountStaffsAsync()
+	{
+		int count = await _staffRepository.CountAsync();
+		AppLogEvents.LogRetrieve(_logger, "staffs", count);
+		return count;
+	}
+
 }
