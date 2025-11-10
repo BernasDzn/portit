@@ -10,7 +10,7 @@ import type { Schedule } from '@/model/Schedule';
 const http = new AxiosHttpService();
 const vvnService = new VesselVisitNotificationService(http);
 
-const scheduleHttp = new AxiosHttpService("http://localhost:8080");
+const scheduleHttp = new AxiosHttpService("https://vs-gate.dei.isep.ipp.pt:30228");
 const scheduleService = new SchedulingService(scheduleHttp);
 
 const { t } = useI18n();
