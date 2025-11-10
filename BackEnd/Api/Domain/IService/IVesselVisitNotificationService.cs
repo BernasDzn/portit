@@ -1,5 +1,6 @@
 using Api.Application.DataTransfer;
 using Api.Application.DataTransfer.Filters;
+using Api.Domain.ValueObjects;
 using Api.Infrastructure.Utilities;
 using Microsoft.AspNetCore.Mvc;
 namespace Api.Application.Services;
@@ -18,5 +19,5 @@ public interface IVesselVisitNotificationService
     Task DeleteNotificationDraft(string id, string userEmail);
     
     // Schedule operations
-    Task<SchedulingResultDto> CollectSchedulingData(DateTime date, uint daysAhead);
+    Task<SchedulingResultDto> CollectSchedulingData(DateTime date, uint daysAhead, Code dockCode);
 }
