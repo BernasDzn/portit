@@ -42,7 +42,7 @@ export class VesselVisitNotificationService implements IVesselVisitNotificationS
             query.push(filter.filter.Status ? `Status=${filter.filter.Status}&` : "");
             query.push(filter.filter.WithReason ? `WithReason=${filter.filter.WithReason}&` : "");
             query.push(filter.filter.WithDockAssigned ? `WithDockAssigned=${filter.filter.WithDockAssigned}&` : "");
-            query.push(filter.filter.Vessel ? `Vessel=${encodeURIComponent(filter.filter.Vessel)}&` : "");
+            query.push(filter.filter.Vessel ? `Vessel.Value=${encodeURIComponent(filter.filter.Vessel)}&` : "");
             query.push(filter.filter.ExpectedArrivalFrom ? `ExpectedArrivalFrom=${encodeURIComponent(filter.filter.ExpectedArrivalFrom.toISOString())}&` : "");
             query.push(filter.filter.ExpectedArrivalTo ? `ExpectedArrivalTo=${encodeURIComponent(filter.filter.ExpectedArrivalTo.toISOString())}&` : "");
 

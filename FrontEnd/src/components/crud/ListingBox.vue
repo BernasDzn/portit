@@ -6,6 +6,7 @@ import type { Filter, Page } from '@/model/Page';
 import Pagination from '../Pagination.vue';
 import NoResults from '../NoResults.vue';
 import { useI18n } from 'vue-i18n';
+import DatePicker from '../DatePicker.vue';
 
 const {t} = useI18n();
 
@@ -200,15 +201,12 @@ onBeforeUnmount(() => {
                                 :checked="filters[key]"
                                 @sl-change="(e: any) => filters[key] = e.target.checked"
                             />
-                            <input
+                            <DatePicker
                                 class="filter-input"
                                 v-else-if="def.type === 'date'"
-                                size="medium"
-                                clearable
                                 type="date"
-                                :placeholder="def.label"
                                 :value="filters[key]"
-                                @sl-change="(e: any) => filters[key] = e.target.value"
+                                @OnChange="(val: Date | null) => filters[key] = val"
                             />
                         </div>
                     </template>
