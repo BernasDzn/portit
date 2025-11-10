@@ -1,3 +1,4 @@
+import type { Address } from "./Address";
 import type { Dock } from "./Dock";
 import type { StorageArea } from "./StorageArea";
 import type { Vessel } from "./Vessel";
@@ -58,14 +59,6 @@ export interface Owner {
     taxNumber: string;
     address: Address;
     representatives: Person[];
-}
-
-export interface Address {
-    id: string;
-    street: string;
-    city: string;
-    zipCode: string;
-    country: string;
 }
 
 export interface Person {
