@@ -29,11 +29,11 @@ const showFiltermenu = ref(false);
 const filters = ref<{ [key: string]: any }>({});
 
 onMounted(async () => {
-  // Initialize filters before loading data
-  if (props.filterDefinition) {
-    for (const key in props.filterDefinition)
-      filters.value[key] = '';
-  }
+    if (props.filterDefinition) {
+        for (const key in props.filterDefinition) {
+            filters.value[key] = props.filterDefinition[key] && props.filterDefinition[key].type === 'date' ? null : '';
+        }
+    }
 
   await loadElements({
     filter: {},
@@ -205,8 +205,7 @@ onBeforeUnmount(() => {
                                 class="filter-input"
                                 v-else-if="def.type === 'date'"
                                 type="date"
-                                :value="filters[key]"
-                                @OnChange="(val: Date | null) => filters[key] = val"
+                                v-model="filters[key]"
                             />
                         </div>
                     </template>
