@@ -9,13 +9,11 @@ import { AdminService } from '@/service/AdminService';
 import { useAlerts } from '@/composables/alerts';
 import type { SystemUser } from '@/model/SystemUser';
 import { useI18n } from 'vue-i18n';
-import { container } from '@/inversify.config';
-import TYPES from '@/inversify/types';
-import type { IAdminService } from '@/service/IService/IAdminService';
 
 const { t } = useI18n();
 
-const adminService = container.get<IAdminService>(TYPES.authService);
+const http = new AxiosHttpService();
+const adminService = new AdminService(http as any);
 const notifications = useAlerts();
 
 const route = useRoute();

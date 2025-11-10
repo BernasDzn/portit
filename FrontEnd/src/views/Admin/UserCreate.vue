@@ -10,16 +10,13 @@ import { RepresentativeService } from '@/service/RepresentativeService';
 import type { SystemUser } from '@/model/SystemUser';
 import { useI18n } from 'vue-i18n';
 import { useAlerts } from '@/composables/alerts';
-import type { IRepresentativeService } from '@/service/IService/IRepresentativeService';
-import { container } from '@/inversify.config';
-import TYPES from '@/inversify/types';
-import type { IAdminService } from '@/service/IService/IAdminService';
 
 const { t } = useI18n();
 const alerts = useAlerts();
 
-const adminService = container.get<IAdminService>(TYPES.authService);
-const representativeService = container.get<IRepresentativeService>(TYPES.representativeService)
+const http = new AxiosHttpService();
+const adminService = new AdminService(http as any);
+const representativeService = new RepresentativeService(http as any);
 
 // Role items must match backend enum ordering: Administrator=0, PortAuthorityOfficer=1, SAORepresentative=2, LogisticsOperator=3
 const roleItems = [
