@@ -9,14 +9,16 @@ import type { Qualification } from '@/model/Qualifications';
 import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
 import { useI18n } from 'vue-i18n';
+import { container } from '@/inversify.config';
+import type { IQualificationService } from '@/service/IService/IQualificationService';
+import TYPES from '@/inversify/types';
 
 const route = useRoute();
 const qualificationId = String(route.params.id || '');
 
 const notifications = useAlerts();
 
-const http = new AxiosHttpService();
-const qualificationService = new QualificationService(http as any);
+const qualificationService = container.get<IQualificationService>(TYPES.qualificationService);
 
 const qualification = ref<Qualification>({
     idCode: qualificationId,

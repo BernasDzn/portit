@@ -21,9 +21,12 @@
 
 <script setup lang="ts">
 import { useSession } from '@/composables/session'
+import { container } from '@/inversify.config';
+import TYPES from '@/inversify/types';
+import type { User } from '@/model/User';
 import { AuthService } from '@/service/AuthService'
 import AxiosHttpService from '@/service/AxiosHttpService'
-import type { AppJWTResponse } from '@/service/IService/IAuthService';
+import type { AppJWTResponse, IAuthService } from '@/service/IService/IAuthService';
 import { ref, onMounted } from 'vue'
 
 
@@ -31,8 +34,7 @@ const loading = ref(true)
 const success = ref(false)
 const error = ref(false)
 const errorMessage = ref('')
-const httpService = new AxiosHttpService();
-const authService = new AuthService(httpService);
+const authService = container.get<IAuthService>(TYPES.authService);
 
 const session = useSession();
 
@@ -88,11 +90,12 @@ const loginFinished = async (googleResponse: any) => {
     const appRes = await authService.getAppJWTToken(idToken);
 
     // Set the session like the login flow so we have authenticatedUser available
-    const sessionUser: import('@/model/User').User = {
+    const sessionUser: User = {
       id: appRes.user.id,
       name: appRes.user.name,
       email: appRes.user.email,
-      avatar: appRes.user.picture
+      avatar: appRes.user.picture,
+      role: appRes.user.role
     }
 
     // store token and expiry in session (mirrors LoginBox behaviour)

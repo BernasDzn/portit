@@ -1,5 +1,6 @@
 using Api.Application.DataTransfer;
 using Api.Application.DataTransfer.Filters;
+using Api.Domain.ValueObjects;
 using Api.Infrastructure.Utilities;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,4 +18,7 @@ public interface IVesselVisitNotificationController
     // Draft operations
     public Task<ActionResult> Submit(string id);
     public Task<ActionResult> DeleteDraft(string id);
+
+    // Scheduling operations
+    public Task<ActionResult<SchedulingResultDto>> CollectSchedulingData([FromQuery]Code dockCode, DateTime day, uint daysAhead);
 }

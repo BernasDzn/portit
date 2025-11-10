@@ -3,17 +3,16 @@ import QualificationPrinter from '@/components/printers/QualificationPrinter.vue
 import ListingBox from '@/components/crud/ListingBox.vue';
 import type { Filter, Page } from '@/model/Page';
 import type { Qualification } from '@/model/Qualifications';
-import AxiosHttpService from '@/service/AxiosHttpService';
-import { QualificationService } from '@/service/QualificationService';
+import { useI18n } from 'vue-i18n';
+import { container } from '@/inversify.config';
+import type { IQualificationService } from '@/service/IService/IQualificationService';
+import TYPES from '@/inversify/types';
 
-const http = new AxiosHttpService()
-const qualificationService = new QualificationService(http as any)
+const qualificationService = container.get<IQualificationService>(TYPES.qualificationService);
 
 const fetchQualifications = async (filtering?: Filter<Qualification>): Promise<Page<Qualification>> => {
     return await qualificationService.getQualifications(filtering);
 }
-
-import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 

@@ -186,13 +186,13 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
         }
     }
 
-    public Task<List<VesselVisitNotification>> GetVesselVisitNotificationsOnDayAsync(DateTime day)
+    public Task<List<VesselVisitNotification>> GetVesselVisitNotificationsOnDayAsync(DateTime day, uint daysAhead)
     {
         try
         {
             List<VesselVisitNotification> notifications = _context.VesselVisitNotifications
-                .Where(vvn => vvn.NotificationDecisions.Any(nd => nd.AssignedDock != null))
-                .Where(vvn => vvn.ExpectedArrival < day && vvn.ExpectedDeparture > day)
+                .Where(vvn => vvn.NotificationDecisions.Any(nd => nd.AssignedDock != null)) // Needs to be accepted and have a dock assigned
+                .Where(vvn => vvn.ExpectedArrival > day && vvn.ExpectedArrival < day.AddDays(daysAhead)) // Within the specified day range
                 .ToList();
 
             return Task.FromResult(notifications);

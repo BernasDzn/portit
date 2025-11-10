@@ -116,8 +116,7 @@ public class VesselVisitNotificationApplicationTest : BaseApplicationTest
             CrewDetails = null,
             LoadCargoManifest = null,
             UnloadCargoManifest = null,
-            VesselImoNumber = "IMO 7585229",
-            SubmitterId = 908029952
+            VesselImoNumber = "IMO 7585229"
         };
 
         var response = await _client.PostAsJsonAsync("/VesselVisitNotification", newVesselVisitNotification);
@@ -138,8 +137,7 @@ public class VesselVisitNotificationApplicationTest : BaseApplicationTest
             CrewDetails = null,
             LoadCargoManifest = null,
             UnloadCargoManifest = null,
-            VesselImoNumber = "IMO 7585229",
-            SubmitterId = 908029952
+            VesselImoNumber = "IMO 7585229"
         };
 
         var response = await _client.PostAsJsonAsync("/VesselVisitNotification", newVesselVisitNotification);
@@ -160,8 +158,7 @@ public class VesselVisitNotificationApplicationTest : BaseApplicationTest
             CrewDetails = null,
             LoadCargoManifest = null,
             UnloadCargoManifest = null,
-            VesselImoNumber = "IMO 0000000",
-            SubmitterId = 908029952
+            VesselImoNumber = "IMO 0000000"
         };
 
         var response = await _client.PostAsJsonAsync("/VesselVisitNotification", newVesselVisitNotification);
@@ -182,8 +179,7 @@ public class VesselVisitNotificationApplicationTest : BaseApplicationTest
             CrewDetails = null,
             LoadCargoManifest = null,
             UnloadCargoManifest = null,
-            VesselImoNumber = "IMO 7585229",
-            SubmitterId = 900000000
+            VesselImoNumber = "IMO 7585229"
         };
 
         var response = await _client.PostAsJsonAsync("/VesselVisitNotification", newVesselVisitNotification);
@@ -227,8 +223,7 @@ public class VesselVisitNotificationApplicationTest : BaseApplicationTest
             CrewDetails = null,
             LoadCargoManifest = null,
             UnloadCargoManifest = null,
-            VesselImoNumber = "IMO 7585229",
-            SubmitterId = 908029952
+            VesselImoNumber = "IMO 7585229"
         };
 
         var response = await _client.PutAsJsonAsync($"/VesselVisitNotification/{updatedVesselVisitNotification.NotificationId}", updatedVesselVisitNotification);
@@ -249,8 +244,7 @@ public class VesselVisitNotificationApplicationTest : BaseApplicationTest
             CrewDetails = null,
             LoadCargoManifest = null,
             UnloadCargoManifest = null,
-            VesselImoNumber = "IMO 7585229",
-            SubmitterId = 908029952
+            VesselImoNumber = "IMO 7585229"
         };
 
         var response = await _client.PutAsJsonAsync($"/VesselVisitNotification/{updatedVesselVisitNotification.NotificationId}", updatedVesselVisitNotification);
@@ -271,8 +265,7 @@ public class VesselVisitNotificationApplicationTest : BaseApplicationTest
             CrewDetails = null,
             LoadCargoManifest = null,
             UnloadCargoManifest = null,
-            VesselImoNumber = "IMO 7585229",
-            SubmitterId = 908029952
+            VesselImoNumber = "IMO 7585229"
         };
 
         var response = await _client.PutAsJsonAsync($"/VesselVisitNotification/{updatedVesselVisitNotification.NotificationId}", updatedVesselVisitNotification);

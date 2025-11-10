@@ -5,15 +5,16 @@
 % Schedule daily operations given a date
 % This predicate will see what operations need to be scheduled for loading or unloading on a given date 
 % following the scheduling algorithm.
-schedule_daily_operations(TargetDate, ScheduleResult) :-
+schedule_daily_operations(TargetDate, DaysAhead, DockCode, ScheduleResult) :-
     % Fetch data from database
-    get_vvns_on_day(TargetDate, JsonData), 
-    % format(user_error, 'VVNs: ~w~n', [JsonData]),
+    get_vvns_on_day(TargetDate, DaysAhead, DockCode, JsonData),
+    % format(user_error, 'Fetched JSON Data: ~w~n', [JsonData]),
 
     % Parse JSON data to extract vessel facts
-    extract_scheduling_data(JsonData, VesselFacts),
+    JsonList = JsonData.vesselTaskFacts,
+    extract_scheduling_data(JsonList, VesselFacts),
 
-    format(user_error, 'Vessel Facts: ~w~n', [VesselFacts]),
+    % format(user_error, 'Vessel Facts: ~w~n', [VesselFacts]),
 
     % Cleanup any previous facts
     retractall(vessel(_,_,_,_,_)),

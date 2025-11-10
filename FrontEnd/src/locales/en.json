@@ -527,8 +527,12 @@
             "create": "Create Notification",
             "makeDraft": "Create Draft Notification",
             "myNotifications": "My Notifications",
-            "review": "Review Notifications"
+            "review": "Review Notifications",
+            "general": "Generic listing",
+            "byDate": "Calendar listing"
         },
+        "eventsOnDate": "Events on selected date",
+        "noEventsOnDate": "No events on selected date",
         "title": "Vessel Visit Notifications",
         "subtitle": {
             "dashboard": "Overview of vessel visit notifications",

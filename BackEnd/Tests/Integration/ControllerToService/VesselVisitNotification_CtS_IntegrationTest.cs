@@ -178,15 +178,14 @@ public class VesselVisitNotification_CtS_IntegrationTest
             CrewDetails = null,
             LoadCargoManifest = null,
             UnloadCargoManifest = null,
-            VesselImoNumber = "IMO 7585229",
-            SubmitterId = 908029952,
+            VesselImoNumber = "IMO 7585229"
         };
 
 
         _vesselRepositoryMock.Setup(repo => repo.GetVesselByIMOAsync(newNotificationDto.VesselImoNumber))
             .ReturnsAsync(vessel);
 
-        _representativeRepositoryMock.Setup(repo => repo.GetByCitizenIdAsync(newNotificationDto.SubmitterId))
+        _representativeRepositoryMock.Setup(repo => repo.GetByCitizenIdAsync(908029952))
             .ReturnsAsync(representative);
 
         _repositoryMock.Setup(repo => repo.AddAsync(It.IsAny<VesselVisitNotification>()))
@@ -213,8 +212,7 @@ public class VesselVisitNotification_CtS_IntegrationTest
             CrewDetails = null,
             LoadCargoManifest = null,
             UnloadCargoManifest = null,
-            VesselImoNumber = "IMO 7585229",
-            SubmitterId = 908029952,
+            VesselImoNumber = "IMO 7585229"
         };
 
         _repositoryMock.Setup(repo => repo.GetVesselVisitNotificationByNotificationIdAsync(newNotificationDto.NotificationId))
@@ -246,8 +244,7 @@ public class VesselVisitNotification_CtS_IntegrationTest
             CrewDetails = null,
             LoadCargoManifest = null,
             UnloadCargoManifest = null,
-            VesselImoNumber = "IMO 00000000",
-            SubmitterId = 908029952,
+            VesselImoNumber = "IMO 00000000"
         };
 
         _vesselRepositoryMock.Setup(repo => repo.GetVesselByIMOAsync("IMO 00000000"))
@@ -271,8 +268,7 @@ public class VesselVisitNotification_CtS_IntegrationTest
             CrewDetails = null,
             LoadCargoManifest = null,
             UnloadCargoManifest = null,
-            VesselImoNumber = "IMO 7585229",
-            SubmitterId = 100000000,
+            VesselImoNumber = "IMO 7585229"
         };
 
         _representativeRepositoryMock.Setup(repo => repo.GetByCitizenIdAsync(100000000))
@@ -296,8 +292,7 @@ public class VesselVisitNotification_CtS_IntegrationTest
             CrewDetails = null,
             LoadCargoManifest = null,
             UnloadCargoManifest = null,
-            VesselImoNumber = "IMO 7585229",
-            SubmitterId = 908029952,
+            VesselImoNumber = "IMO 7585229"
         };
 
         _repositoryMock.Setup(repo => repo.GetVesselVisitNotificationByNotificationIdAsync(newVesselVisitNotificationDto.NotificationId))
@@ -323,8 +318,7 @@ public class VesselVisitNotification_CtS_IntegrationTest
             CrewDetails = null,
             LoadCargoManifest = null,
             UnloadCargoManifest = null,
-            VesselImoNumber = "IMO 7585229",
-            SubmitterId = 908029952,
+            VesselImoNumber = "IMO 7585229"
         };
 
 
@@ -332,7 +326,7 @@ public class VesselVisitNotification_CtS_IntegrationTest
         _vesselRepositoryMock.Setup(repo => repo.GetVesselByIMOAsync(updateVesselVisitNotificationDto.VesselImoNumber))
             .ReturnsAsync(vessel);
 
-        _representativeRepositoryMock.Setup(repo => repo.GetByCitizenIdAsync(updateVesselVisitNotificationDto.SubmitterId))
+        _representativeRepositoryMock.Setup(repo => repo.GetByCitizenIdAsync(908029952))
             .ReturnsAsync(representative);
 
         _repositoryMock.Setup(repo => repo.GetVesselVisitNotificationByNotificationIdAsync(notificationIdToUpdate))
@@ -365,8 +359,6 @@ public class VesselVisitNotification_CtS_IntegrationTest
             ExpectedDeparture = DateTime.UtcNow.AddDays(1),
             IsCargoHazardous = false,
             VesselImoNumber = "IMO 7585229",
-            SubmitterId = 908029952,
-
         };
 
         _repositoryMock.Setup(r => r.GetVesselVisitNotificationByNotificationIdAsync(It.IsAny<string>()))
@@ -386,9 +378,7 @@ public class VesselVisitNotification_CtS_IntegrationTest
             ExpectedArrival = DateTime.UtcNow,
             ExpectedDeparture = DateTime.UtcNow.AddDays(1),
             IsCargoHazardous = false,
-            VesselImoNumber = "IMO 7585229",
-            SubmitterId = 908029952,
-
+            VesselImoNumber = "IMO 7585229"
         };
 
         _repositoryMock.Setup(repo => repo.GetVesselVisitNotificationByNotificationIdAsync(existingNotificationId))
@@ -406,7 +396,6 @@ public class VesselVisitNotification_CtS_IntegrationTest
     {
         var filter = new VesselVisitNotificationFilter
         {
-            SubmitterCitizenshipId = 908029952,
             Status = NotificationStatusFilter.InProgress,
             WithReason = null,
             WithDockAssigned = null,
@@ -414,7 +403,7 @@ public class VesselVisitNotification_CtS_IntegrationTest
             ExpectedArrivalFrom = null,
             ExpectedArrivalTo = null,
         };
-        _repositoryMock.Setup(repo => repo.FilterVesselVisitNotificationsAsync(filter))
+        _repositoryMock.Setup(repo => repo.FilterVesselVisitNotificationsAsync(filter, 908029952))
             .ReturnsAsync(new Page<VesselVisitNotification>
             {
                 Items = new List<VesselVisitNotification>(),
@@ -434,10 +423,10 @@ public class VesselVisitNotification_CtS_IntegrationTest
     public async Task FilterVesselVisitNotification_ReturnsInternalServerError_OnException()
     {
 
-        _repositoryMock.Setup(r => r.FilterVesselVisitNotificationsAsync(It.IsAny<VesselVisitNotificationFilter>()))
+        _repositoryMock.Setup(r => r.FilterVesselVisitNotificationsAsync(It.IsAny<VesselVisitNotificationFilter>(), 1))
             .ThrowsAsync(new Exception("Test Exception"));
 
-        var result = await _controller.Filter(new VesselVisitNotificationFilter { SubmitterCitizenshipId = 1 });
+        var result = await _controller.Filter(new VesselVisitNotificationFilter { });
         var statusCodeResult = Assert.IsType<ObjectResult>(result.Result);
         Assert.Equal(500, statusCodeResult.StatusCode);
     }

@@ -19,7 +19,7 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
     private readonly IStorageAreaRepository _storageAreaRepository;
     private readonly IContainerRepository _containerRepository;
     private readonly VesselVisitNotificationIdGenerator _idGenerator;
-    private readonly ISystemUserService _systemUserService;
+    private readonly IDockRepository _dockRepository;
     private readonly ILogger<VesselVisitNotificationService> _logger;
 
     public VesselVisitNotificationService(
@@ -29,7 +29,7 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         IStorageAreaRepository storageAreaRepository,
         VesselVisitNotificationIdGenerator idGenerator,
         IContainerRepository containerRepository,
-        ISystemUserService systemUserService,
+        IDockRepository dockRepository,
         ILogger<VesselVisitNotificationService> logger
     )
     {
@@ -39,7 +39,7 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         _storageAreaRepository = storageAreaRepository;
         _containerRepository = containerRepository;
         _idGenerator = idGenerator;
-        _systemUserService = systemUserService;
+        _dockRepository = dockRepository;
         _logger = logger;
     }
 
@@ -218,14 +218,67 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
 
         if (existingNotification.Submitter.Id != saor.Id)
             throw new UnauthorizedAccessException("You may not delete this notification, you are not its original author");
-        
+
         await _notificationRepository.DeleteAsync(existingNotification);
     }
 
-    public async Task<IEnumerable<VesselVisitNotificationDto>> GetVesselVisitNotificationsOnDay(DateTime day)
+    public async Task<IEnumerable<VesselVisitNotificationDto>> GetVesselVisitNotificationsOnDay(DateTime day, uint daysAhead)
     {
-        List<VesselVisitNotification> items = await _notificationRepository.GetVesselVisitNotificationsOnDayAsync(day);
+        List<VesselVisitNotification> items = await _notificationRepository.GetVesselVisitNotificationsOnDayAsync(day, daysAhead);
         AppLogEvents.LogFilter(_logger, "vessel visit notifications", items.Count);
         return items.Select(n => n.ToDTO());
+    }
+
+    public async Task<SchedulingResultDto> CollectSchedulingData(DateTime date, uint daysAhead, Code dockCode)
+    {
+        var dock = await _dockRepository.GetDockByCodeAsync(dockCode.Value);
+        if (dock == null)
+            throw new EntityNotFoundException($"Dock with code {dockCode.Value} was not found.");
+
+        SchedulingResultDto result = new SchedulingResultDto
+        {
+            VesselTaskFacts = new List<VesselTaskFactDto>()
+        };
+
+        List<VesselVisitNotification> notifications = await _notificationRepository.GetVesselVisitNotificationsOnDayAsync(date, daysAhead);
+        // Filter notifications to only those assigned to the specified dock
+        // In the future, we might need to handle multiple docks
+        var filteredNotifications = notifications.Where(n => n.GetLatestDecision()!.AssignedDock!.Code.Value == dockCode.Value);
+
+        foreach (var notification in filteredNotifications)
+        {
+            var decision = notification.GetLatestDecision()!;
+            var vessel = notification.Vessel;
+
+            VesselTaskFactDto vesselTaskFact = new VesselTaskFactDto
+            {
+                Vessel = vessel.ToDTO(),
+                ETA = (uint)(notification.ExpectedArrival - date).TotalHours,
+                ETD = (uint)(notification.ExpectedDeparture - date).TotalHours,
+                LoadingTime = CalculateLoadingTime(notification).Result,
+                UnloadingTime = CalculateUnloadingTime(notification).Result
+            };
+
+            result.VesselTaskFacts.Add(vesselTaskFact);
+        }
+
+        AppLogEvents.LogRetrieve(_logger, "scheduling data", result.VesselTaskFacts.Count);
+        return result;
+    }
+
+    private async Task<uint> CalculateLoadingTime(VesselVisitNotification notification)
+    {
+        // Placeholder logic for calculating loading time
+        // In a real implementation, this would consider various factors
+        await Task.CompletedTask;
+        return 36; // Example: fixed 36 hours loading time
+    }
+    
+    private async Task<uint> CalculateUnloadingTime(VesselVisitNotification notification)
+    {
+        // Placeholder logic for calculating unloading time
+        // In a real implementation, this would consider various factors
+        await Task.CompletedTask;
+        return 48; // Example: fixed 48 hours unloading time
     }
 }
