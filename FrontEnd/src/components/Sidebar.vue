@@ -23,6 +23,7 @@ const sidebarItems = ref([
   { name: 'physicalResource.title', route: '/resources/dashboard', icon: "inventory", materialIcon: 'build', roles: [0, 3] },
   { name: 'staff.title', route: '/staff/dashboard', icon: "people", materialIcon: 'people', roles: [0, 3] },
   { name: 'storageArea.title', route: '/storage-areas/dashboard', icon: "warehouse", materialIcon: 'warehouse', roles: [0, 1] },
+  { name: 'scheduling.title', route: '/schedule', icon: "calendar_month", materialIcon: 'calendar_month', roles: [0, 3] },
   {},
   { name: "admin.sidebarTitle", route: '/admin/dashboard', icon: "admin_panel_settings", materialIcon: 'admin_panel_settings', roles: [0] }
 ]);

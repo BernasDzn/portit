@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useSession } from '@/composables/session'
+import Activate from '@/views/Activate.vue'
+import SchedulingRequest from '@/views/Scheduling/SchedulingRequest.vue'
 
 // Only eagerly load critical components (layout and auth)
 import HomeView from '../views/HomeView.vue'
@@ -318,6 +320,14 @@ const router = createRouter({
             meta: {
                 icon: "view_in_ar"
             }
+        },
+        {
+            path: '/schedule',
+            name: 'Schedule',
+            component: () => SchedulingRequest,
+            meta: {
+                icon: "calendar_month"
+            }
         }
       ]
     },
@@ -331,7 +341,7 @@ const router = createRouter({
         path: '/activate',
         name: 'activate',
         meta: { hideFromSearch: true },
-        component: () => import('@/views/Activate.vue')
+        component: Activate
     },
     {
       path: '/unauthorized',
@@ -368,7 +378,8 @@ router.beforeEach((to, from, next) => {
     { prefix: '/resources', roles: [0, 3] },
     { prefix: '/staff', roles: [0, 3] },
     { prefix: '/storage-areas', roles: [0, 1] },
-    { prefix: '/admin', roles: [0] }
+    { prefix: '/admin', roles: [0] },
+    { prefix: '/schedule', roles: [0,3] }
   ];
 
   for (const entry of routeRoleMap) {

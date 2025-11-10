@@ -27,6 +27,14 @@ export class VesselVisitNotificationService implements IVesselVisitNotificationS
         return page;
     }
 
+    async getVesselVisitNotifcationsByDay(date: Date): Promise<VesselVisitNotification[]> {    
+        // Format to YYYY-MM-DD 
+        const formatedDate = date.toISOString().split('T')[0];
+        console.log(`/VesselVisitNotification/onDay?day=${formatedDate}`);
+        const res = await this.http.get<VesselVisitNotification[]>(`/VesselVisitNotification/onDay?day=${formatedDate}`);
+        return res.data;
+    }
+
     async getVesselVisitNotificationsByRepresentative(filter?: Filter<VesselVisitNotificationFilter>): Promise<Page<VesselVisitNotification>> {
         let queryString: string[] = [];
 
