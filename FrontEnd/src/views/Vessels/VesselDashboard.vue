@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import DashboardItem from '@/components/DashboardItem.vue';
-
-import AxiosHttpService from '@/service/AxiosHttpService';
-import { VesselService } from '@/service/VesselService';
 import Loading from '@/components/Loading.vue';
 import { ref, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n'
+import { container } from '@/inversify.config';
+import type { IVesselService } from '@/service/IService/IVesselService';
+import TYPES from '@/inversify/types';
 
-const http = new AxiosHttpService();
-const vesselService = new VesselService(http);
+const vesselService = container.get<IVesselService>(TYPES.vesselService);
 const { t } = useI18n()
 
 const numberOfVessels = ref(0);

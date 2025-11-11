@@ -6,6 +6,7 @@ export interface IVesselVisitNotificationService {
     getVesselVisitNotificationsForReview(): Promise<Page<VesselVisitNotification>>;
     getVesselVisitNotificationsByRepresentative(filter?: Filter<VesselVisitNotificationFilter>): Promise<Page<VesselVisitNotification>>;
     getVesselVisitNotificationById(id: string): Promise<VesselVisitNotification>;
+    getVesselVisitNotifcationsByDay(date: Date): Promise<VesselVisitNotification[]>;
     getNotificationDecisions(vesselVisitNotificationId: string): Promise<NotificationDecision[]>;
     createVesselVisitNotification(notification: VesselVisitNotification): Promise<VesselVisitNotification>;
     createNotificationDecision(vesselVisitNotificationId: string, decision: NotificationDecision): Promise<NotificationDecision>;

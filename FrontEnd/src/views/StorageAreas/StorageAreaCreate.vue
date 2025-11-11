@@ -1,19 +1,18 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import AxiosHttpService from '@/service/AxiosHttpService';
-import { StorageAreaService } from '@/service/StorageAreaService';
 import type { StorageAreaCreate } from '@/model/StorageArea';
-
 import EntityDropdown from '@/components/crud/EntityDropdown.vue';
 import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
-import { DockService } from '@/service/DockService';
 import type { Dock } from '@/model/Dock';
+import { container } from '@/inversify.config';
+import type { IStorageAreaService } from '@/service/IService/IStorageAreaService';
+import TYPES from '@/inversify/types';
+import type { IDockService } from '@/service/IService/IDockService';
 
-const http = new AxiosHttpService();
-const storageAreaService = new StorageAreaService(http);
-const dockService = new DockService(http);
+const storageAreaService = container.get<IStorageAreaService>(TYPES.storageAreaService);
+const dockService = container.get<IDockService>(TYPES.dockService);
 
 const { t } = useI18n();
 

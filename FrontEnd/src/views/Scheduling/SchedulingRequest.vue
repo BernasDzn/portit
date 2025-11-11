@@ -1,10 +1,6 @@
 <script setup lang="ts">
-import DatePicker from '@/components/DatePicker.vue';
 import { useI18n } from 'vue-i18n';
 import { computed, onMounted, ref, watch } from 'vue'
-import AxiosHttpService from '@/service/AxiosHttpService';
-import { VesselVisitNotificationService } from '@/service/VesselVisitNotificationService';
-import { SchedulingService } from '@/service/SchedulingService';
 import type { Schedule } from '@/model/Schedule';
 import type { VesselVisitNotification } from '@/model/VesselVisitNotification';
 import type { IVesselVisitNotificationService } from '@/service/IService/IVesselVisitNotificationService';
@@ -16,7 +12,6 @@ import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
 import EntityDropdown from '@/components/crud/EntityDropdown.vue';
 import type { IDockService } from '@/service/IService/IDockService';
-import DockPrinter from '@/components/printers/DockPrinter.vue';
 import { useAlerts } from '@/composables/alerts';
 
 const vvnService = container.get<IVesselVisitNotificationService>(TYPES.vesselVisitNotificationService);

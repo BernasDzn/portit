@@ -4,18 +4,18 @@ import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
 import { useAlerts } from '@/composables/alerts';
 import type { Dock } from '@/model/Dock';
-import AxiosHttpService from '@/service/AxiosHttpService';
-import { DockService } from '@/service/DockService';
-import { VesselTypeService } from '@/service/VesselTypeService';
 import { ref, onMounted } from 'vue';
 import { useRoute, RouterLink } from 'vue-router';
 import {useI18n} from 'vue-i18n';
+import type { IDockService } from '@/service/IService/IDockService';
+import { container } from '@/inversify.config';
+import TYPES from '@/inversify/types';
+import type { IVesselTypeService } from '@/service/IService/IVesselTypeService';
 
 const {t} = useI18n();
 
-const http = new AxiosHttpService();
-const dockService = new DockService(http);
-const vesselTypeService = new VesselTypeService(http);
+const dockService = container.get<IDockService>(TYPES.dockService);
+const vesselTypeService = container.get<IVesselTypeService>(TYPES.vesselTypeService);
 
 const notifications = useAlerts();
 

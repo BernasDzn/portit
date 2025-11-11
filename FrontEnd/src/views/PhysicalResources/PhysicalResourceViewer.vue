@@ -1,24 +1,21 @@
 <script setup lang="ts">
 import { useRoute, useRouter } from 'vue-router';
-import { AxiosHttpService } from '@/service/AxiosHttpService';
-import type { Vessel } from '@/model/Vessel';
 import EntityView from '@/components/crud/EntityView.vue';
-import { QualificationService } from '@/service/QualificationService';
-import type { Qualification } from '@/model/Qualifications';
-import { PhysicalResourceService } from '@/service/PhysicalResourceService';
 import { computed, onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import QualificationPrinter from '@/components/printers/QualificationPrinter.vue';
 import DockPrinter from '@/components/printers/DockPrinter.vue';
 import WorkShiftPrinter from '@/components/printers/WorkShiftPrinter.vue';
 import { useAlerts } from '@/composables/alerts';
+import type { IPhysicalResourceService } from '@/service/IService/IPhysicalResourceService';
+import TYPES from '@/inversify/types';
+import { container } from '@/inversify.config';
 
 const route = useRoute();
 const notifications = useAlerts();
 const router = useRouter();
 
-const http = new AxiosHttpService();
-const physicalResourceService = new PhysicalResourceService(http);
+const physicalResourceService = container.get<IPhysicalResourceService>(TYPES.physicalResourceService);
 const resourceId = decodeURIComponent((route.params.code ?? '') as string);
 
 const fetchResource = async (): Promise<any | null> => {

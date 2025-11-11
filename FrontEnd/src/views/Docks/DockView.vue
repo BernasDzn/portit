@@ -1,21 +1,18 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
-import { AxiosHttpService } from '@/service/AxiosHttpService';
-import { DockService } from '@/service/DockService';
-
 import type { Dock } from '@/model/Dock';
-
 import EntityView from '@/components/crud/EntityView.vue';
 import VesselTypePrinter from '@/components/printers/VesselTypePrinter.vue';
-
 import {useI18n} from "vue-i18n";
+import type { IDockService } from '@/service/IService/IDockService';
+import { container } from '@/inversify.config';
+import TYPES from '@/inversify/types';
 
 const {t} = useI18n();
 
 const route = useRoute();
 
-const http = new AxiosHttpService();
-const dockService = new DockService(http);
+const dockService = container.get<IDockService>(TYPES.dockService);
 const dockCode = decodeURIComponent((route.params.code ?? '') as string);
 
 const fetchDock = async (): Promise<Dock | undefined> => {

@@ -3,15 +3,14 @@ import ListingBox from '@/components/crud/ListingBox.vue';
 import { useI18n } from 'vue-i18n'
 import type { Filter, Page } from '@/model/Page';
 import type { VesselType } from '@/model/VesselType';
-import AxiosHttpService from '@/service/AxiosHttpService';
-import { VesselTypeService } from '@/service/VesselTypeService';
 import VesselTypePrinter from '@/components/printers/VesselTypePrinter.vue';
+import { container } from '@/inversify.config';
+import type { IVesselTypeService } from '@/service/IService/IVesselTypeService';
+import TYPES from '@/inversify/types';
 
 const {t} = useI18n();
 
-
-const http = new AxiosHttpService()
-const vesselTypeService = new VesselTypeService(http as any)
+const vesselTypeService = container.get<IVesselTypeService>(TYPES.vesselTypeService);
 
 const fetchVesselTypes = async (filtering?: Filter<VesselType>): Promise<Page<VesselType>> => {
   return await vesselTypeService.getVesselTypes(filtering);

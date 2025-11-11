@@ -3,17 +3,17 @@ import EntityDropdown from '@/components/crud/EntityDropdown.vue';
 import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
 import type { Vessel } from '@/model/Vessel';
-import AxiosHttpService from '@/service/AxiosHttpService';
-import { VesselService } from '@/service/VesselService';
-import { VesselTypeService } from '@/service/VesselTypeService';
-import { ShippingAgentOrganizationService } from '@/service/ShippingAgentOrganizationService';
 import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { container } from '@/inversify.config';
+import type { IVesselService } from '@/service/IService/IVesselService';
+import TYPES from '@/inversify/types';
+import type { IVesselTypeService } from '@/service/IService/IVesselTypeService';
+import type { IShippingAgentOrganizationService } from '@/service/IService/IShippingAgentOrganizationService';
 
-const http = new AxiosHttpService();
-const vesselService = new VesselService(http);
-const vesselTypeService = new VesselTypeService(http);
-const saoService = new ShippingAgentOrganizationService(http);
+const vesselService = container.get<IVesselService>(TYPES.vesselService);
+const vesselTypeService = container.get<IVesselTypeService>(TYPES.vesselTypeService);
+const saoService = container.get<IShippingAgentOrganizationService>(TYPES.shippingAgentOrganizationService);
 
 const vessel = ref<Vessel>({
     name: '',

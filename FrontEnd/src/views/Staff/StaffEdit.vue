@@ -3,17 +3,17 @@ import EntityDropdown from '@/components/crud/EntityDropdown.vue';
 import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
 import OperationalWindowPicker from '@/components/OperationalWindowPicker.vue';
+import { container } from '@/inversify.config';
+import TYPES from '@/inversify/types';
 import type { StaffCreate } from '@/model/Staff';
-import AxiosHttpService from '@/service/AxiosHttpService';
-import { QualificationService } from '@/service/QualificationService';
-import { StaffService } from '@/service/StaffService';
+import type { IQualificationService } from '@/service/IService/IQualificationService';
+import type { IStaffService } from '@/service/IService/IStaffService';
 import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute, RouterLink } from 'vue-router';
 
-const http = new AxiosHttpService();
-const staffService = new StaffService(http);
-const qualificationService = new QualificationService(http);
+const staffService = container.get<IStaffService>(TYPES.staffService);
+const qualificationService = container.get<IQualificationService>(TYPES.qualificationService);
 
 const route = useRoute();
 const staffMecNumber = String(route.params.id || '');

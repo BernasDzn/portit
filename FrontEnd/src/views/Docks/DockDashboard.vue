@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import DashboardItem from '@/components/DashboardItem.vue';
 import { useI18n } from 'vue-i18n'
-import AxiosHttpService from '@/service/AxiosHttpService';
-import { DockService } from '@/service/DockService';
 import Loading from '@/components/Loading.vue';
 import { ref, onMounted } from 'vue';
+import type { IDockService } from '@/service/IService/IDockService';
+import { container } from '@/inversify.config';
+import TYPES from '@/inversify/types';
 
 const { t } = useI18n();
 
-const http = new AxiosHttpService();
-const dockService = new DockService(http);
+const dockService = container.get<IDockService>(TYPES.dockService);
 const numberOfDocks = ref(0);
 const loading = ref(true);
 onMounted(async () => {

@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { AxiosHttpService } from '@/service/AxiosHttpService';
-import { VesselTypeService } from '@/service/VesselTypeService';
 import type { VesselType } from '@/model/VesselType';
 import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
 import { useI18n } from 'vue-i18n';
+import { container } from '@/inversify.config';
+import type { IVesselTypeService } from '@/service/IService/IVesselTypeService';
+import TYPES from '@/inversify/types';
 
 
 const vesselType = ref<VesselType>({
@@ -30,8 +31,7 @@ const capacity = computed(() => {
 
 const {t} = useI18n();
 
-const http = new AxiosHttpService();
-const vesselTypeService = new VesselTypeService(http);
+const vesselTypeService = container.get<IVesselTypeService>(TYPES.vesselTypeService);
 
 const submitVesselType = (obj: any) =>
     vesselTypeService.createVesselType(obj);
