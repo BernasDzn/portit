@@ -150,3 +150,79 @@ export default class Vessel {
         }
     }
 } 
+
+export class Crane {
+    name;
+    model;
+    position;
+    rotation;
+
+    label;
+    meshes = [];
+
+    constructor(name, model, position, rotation) {
+        this.name = name;
+        this.model = model;
+        this.position = position;
+        this.rotation = rotation;
+    }
+
+    init(scene) {
+        this.model.position.copy(this.position);
+        this.model.scale.set(0.1, 0.1, 0.1);
+        this.model.rotation.y = this.rotation || 0;
+        
+        this.model.traverse((child) => {
+            if (child.isMesh) {
+                this.meshes.push(child);
+                child.userData.craneId = this.name;
+                child.meta = {
+                    title: 'Crane',
+                    description: `${this.name} - Container crane\nPosition: (${this.position.x.toFixed(2)}, ${this.position.y.toFixed(2)}, ${this.position.z.toFixed(2)})\nRotation: ${((this.rotation || 0) * 180 / Math.PI).toFixed(1)}°`,
+                    killable: true,
+                    killFunction: () => { this.kill(); }
+                };
+                
+                if (child.material) {
+                    child.material.depthTest = true;
+                    child.material.depthWrite = true;
+                    
+                    if (child.material.transparent && child.material.opacity >= 1.0) {
+                        child.material.transparent = false;
+                    }
+                    
+                    child.material.polygonOffset = true;
+                    child.material.polygonOffsetFactor = 1;
+                    child.material.polygonOffsetUnits = 1;
+                    
+                    child.material.needsUpdate = true;
+                }
+            }
+        });
+        
+        scene.add(this.model);
+
+        // Make label billboard
+        this.label = makeBillboard(this.name, 16, 0xffffff);
+        const labelOffset = new THREE.Vector3(0, 15, 0);
+        const craneRoot = new THREE.Object3D();
+        craneRoot.position.copy(this.position).add(labelOffset);
+        craneRoot.add(this.label);
+        scene.add(craneRoot);
+    }
+
+    update() {
+        // update label position
+        this.label.position.set(this.model.position.x, this.model.position.y + 15, this.model.position.z);
+    }
+
+    kill(){
+        // Remove from scene
+        if (this.model.parent) {
+            this.model.parent.remove(this.model);
+        }
+        if (this.label.parent) {
+            this.label.parent.remove(this.label);
+        }
+    }
+}

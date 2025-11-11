@@ -99,6 +99,8 @@ export default class Port3D {
         this.portLayout = new PortLayout(this.scene, this.camera);
         this.portLayout.addVessel("Vessel 1", new THREE.Vector3(0, -12, -40), this.scene);
 
+        this.portLayout.addCrane("Crane 1", new THREE.Vector3(-100, 0, -25), this.scene, 90);
+
         // Setup time manager
         initTime(this);
 
