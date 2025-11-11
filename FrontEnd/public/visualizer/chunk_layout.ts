@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import {loadModel, loadModelRaw} from "./helpers/model_helper.ts";
 import {makeBillboard} from "./helpers/billboard_helper.ts";
-import Vessel from "./entities.ts";
+import Vessel, { Crane } from "./entities.ts";
 import PickHelper from "./helpers/pick_helper.ts";
 import { hideInfoText, setInfoText } from "./helpers/info_helper.ts";
 
@@ -205,6 +205,7 @@ export default class PortLayout {
     picker;
 
     vesselList = []; // The vessels in the port
+    craneList = []; // The cranes in the port
     chunkData = []; // The chunks that make up the port layout
 
     constructor(scene, camera) {
@@ -281,6 +282,25 @@ export default class PortLayout {
         this.vesselList.push(vessel);
     }
 
+    async addCrane(name, position, scene, rotation = 0) {
+
+        const model = await loadModel("/visualizer/models/crane/scene.gltf");
+        const rotationRadians = rotation * (Math.PI / 180);
+        let crane = new Crane(name, model, position, rotationRadians);
+        crane.init(scene);
+
+        this.craneList.push(crane);
+    }
+
+    removeCrane(crane) {
+        const index = this.craneList.indexOf(crane);
+        if (index > -1) {
+            this.craneList[index].kill();
+            this.craneList.splice(index, 1);
+        }
+    }
+        
+
     removeVessel(vessel) {
         const index = this.vesselList.indexOf(vessel);
         if (index > -1) {
@@ -308,9 +328,19 @@ export default class PortLayout {
             y: -(event.clientY / window.innerHeight) * 2 + 1
         };
     
+        const craneMeshes = [];
+        this.craneList.forEach(crane => {
+            crane.model.traverse((child) => {
+                if (child.isMesh) {
+                    craneMeshes.push(child);
+                }
+            });
+        });
+        
         const objectlist = [
             ...this.chunkData.map(chunk => chunk.base),
-            ...this.vesselList.map(vessel => vessel.model.children[1])
+            ...this.vesselList.map(vessel => vessel.model.children[1]),
+            ...craneMeshes
         ];
 
         const picked = this.picker.pickFromList(normalizedPosition, scene, camera, objectlist);
@@ -318,43 +348,47 @@ export default class PortLayout {
     
         const highlightMesh = (obj, color) => {
             if (obj && obj.material) {
-
                 if (Array.isArray(obj.material)) {
                     obj.material.forEach((mat) => {
                         mat.emissive = new THREE.Color(color);
                     });
-                } else
+                } else {
                     obj.material.emissive = new THREE.Color(color);
+                }
             }
         }
 
-        // highlight picked
+        let clickedCrane = null;
+        if (pickedObject && pickedObject.userData && pickedObject.userData.craneId) {
+            clickedCrane = this.craneList.find(crane => crane.name === pickedObject.userData.craneId);
+        }
+
+        objectlist.forEach((obj) => {
+            highlightMesh(obj, 0x000000);
+        });
+
         if (pickedObject) {
             this.selectedObject = pickedObject;
             console.log("Picked object:", this.selectedObject);
+            
             try {
-                
                 const userData = this.selectedObject.meta;
                 setInfoText(userData);
-
             } catch (error) {
-
                 console.warn("No meta information available for selected object.");
             }
-            highlightMesh(this.selectedObject, 0x444477);
-        } else 
-        {
+            
+            if (clickedCrane) {
+                clickedCrane.meshes.forEach((mesh) => {
+                    highlightMesh(mesh, 0x444477);
+                });
+            } else {
+                highlightMesh(this.selectedObject, 0x444477);
+            }
+        } else {
             this.selectedObject = null;
-            // Clear info text
             hideInfoText();
         }
-
-        // unhighlight previous
-        objectlist.forEach((obj) => {
-            if (obj !== this.selectedObject) {
-                highlightMesh(obj, 0x000000);
-            }
-        });
     }
     
 }
