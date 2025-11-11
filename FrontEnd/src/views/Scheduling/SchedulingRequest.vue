@@ -94,12 +94,22 @@ const events = ref<Array<{ title: string, start: string }>>([]);
 });
 
 const openModal = () => {
-    const dialog = document.querySelector('sl-dialog') as any;
+    const dialog = document.getElementById('generate-tasks-modal') as any;
     dialog.show();
 };
 
 const closeModal = () => {
-    const dialog = document.querySelector('sl-dialog') as any;
+    const dialog = document.getElementById('generate-tasks-modal') as any;
+    dialog.hide();
+};
+
+const openAboutModal = () => {
+    const dialog = document.getElementById('about') as any;
+    dialog.show();
+};
+
+const closeAboutModal = () => {
+    const dialog = document.getElementById('about') as any;
     dialog.hide();
 };
 
@@ -133,14 +143,18 @@ const closeModal = () => {
 
         <br>
 
+        <sl-button variant="default" style="margin-right: 20px;" @click="openAboutModal">
+            {{ t('scheduling.aboutAlgorithmButton') }}
+        </sl-button>
+
         <sl-button v-if="vvnsOnDate.length != 0" variant="primary" @click="openModal">
             {{ t('scheduling.generateTasksButton') }}
         </sl-button>
 
         <!-- Dock select modal -->
 
-        <sl-dialog label="Additional logistics" class="dialog-overview">
-            
+        <sl-dialog :label="t('scheduling.generateTasksModal.title')" class="dialog-overview" id="generate-tasks-modal">
+
             <div>
                 <EntityDropdown
                     class="field-dropdown"
@@ -182,6 +196,13 @@ const closeModal = () => {
 
         </sl-dialog>
 
+        <sl-dialog :label="t('scheduling.aboutAlgorithmModal.title')" class="dialog-overview" id="about">
+            {{ t('scheduling.aboutAlgorithmModal.content') }}
+
+            <sl-button slot="footer" variant="primary" @click="closeAboutModal">
+                {{ t('buttons.close') }}
+            </sl-button>
+        </sl-dialog>
     </div>
 </template>
 

@@ -45,8 +45,8 @@ export class SchedulingService implements ISchedulingService {
             console.log(entry);
             yPosition += 10;
             doc.text(entry.name, 14, yPosition);
-            doc.text(this.calculateDateOffset(date, entry.loading_exit_time).toLocaleString(), 64, yPosition);
-            doc.text(this.calculateDateOffset(date, entry.loading_enter_time).toLocaleString(), 114, yPosition);
+            doc.text(this.calculateDateOffset(date, entry.loading_enter_time).toLocaleString(), 64, yPosition);
+            doc.text(this.calculateDateOffset(date, entry.loading_exit_time).toLocaleString(), 114, yPosition);
         }
 
         doc.setFontSize(10);

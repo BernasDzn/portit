@@ -40,4 +40,5 @@ assert_vessel_facts([vessel(Name, ArrivalTime, DepartureTime, UnloadingTime, Loa
 extract_scheduling_data([], []).
 extract_scheduling_data([VesselJson|RestJson], [VesselFact|RestFacts]) :-
     json_to_vvn_fact(VesselJson, VesselFact),
+    format(user_error, 'Extracted Vessel Fact: ~w~n', [VesselFact]),
     extract_scheduling_data(RestJson, RestFacts).

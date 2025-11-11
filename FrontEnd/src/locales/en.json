@@ -28,6 +28,7 @@
         "activate": "Activate",
         "deactivate": "Deactivate",
         "generate": "Generate",
+        "close": "Close",
         "add": "Add",
         "review": "Review",
         "filter": {
@@ -361,12 +362,20 @@
         "visitsOnSelectedDay": "Vessel visits on selected date",
         "viewVisits": "Generate task schedule",
         "generateTasksButton": "Generate tasks Schedule",
+        "aboutAlgorithmButton": "About the algorithm",
         "fields": {
             "algorithm": {
                 "title": "Scheduling Algorithm",
                 "placeholder": "Select scheduling algorithm"
             },
             "relatedDocks": "Select related dock"
+        },
+        "generateTasksModal": {
+            "title": "Additional logistics"
+        },
+        "aboutAlgorithmModal": {
+            "title": "About the algorithm",
+            "content": "The current algorithm takes into account the vessel visit notifications scheduled for the selected date and dock. \nIt then checks the availability of STS cranes for the specified dock and decides the duration of each task based on the speed of the crane.\nIt also ignores visits that are for maintenance or other non-loading/unloading activities."
         }
     },
     "physicalResource": {

@@ -265,7 +265,8 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
                     UnloadingTime = await CalculateLoadUnloadingTime(notification.UnloadCargoManifest ?? new List<CargoTransport>(), dock),
                 };
 
-                result.VesselTaskFacts.Add(vesselTaskFact);
+                if (vesselTaskFact.LoadingTime > 0 && vesselTaskFact.UnloadingTime > 0)
+                    result.VesselTaskFacts.Add(vesselTaskFact);
             }
         }
         catch (System.Exception e)
