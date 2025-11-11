@@ -5,6 +5,7 @@ import FormField from '@/components/crud/FormField.vue';
 import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
 import type { Vessel } from '@/model/Vessel';
+import type { IShippingAgentOrganizationService } from '@/service/IService/IShippingAgentOrganizationService';
 import type { IVesselService } from '@/service/IService/IVesselService';
 import type { IVesselTypeService } from '@/service/IService/IVesselTypeService';
 import { ref, onMounted } from 'vue';
@@ -14,6 +15,7 @@ import { useRoute, RouterLink } from 'vue-router';
 
 const vesselService = container.get<IVesselService>(TYPES.vesselService);
 const vesselTypeService = container.get<IVesselTypeService>(TYPES.vesselTypeService);
+const saoService = container.get<IShippingAgentOrganizationService>(TYPES.shippingAgentOrganizationService);
 
 const route = useRoute();
 const vesselIMO = String(route.params.imo || '');
@@ -21,11 +23,12 @@ const vesselIMO = String(route.params.imo || '');
 let vessel = ref<Vessel>({
     name: '',
     imoNumber: '',
-    type: {} as any,
-    owner: 'Global Shipping Co.', // SUBSTITUIR PELO OWNER REPRESENTADO PELO USER DEPOIS
-    length: 0,
-    depth: 0,
-    draft: 0
+    type: '',
+    owner: '',
+    length: null!,
+    depth: null!,
+    draft: null!
+
 });
 
 // Load vessel on mount
@@ -35,10 +38,11 @@ onMounted(async () => {
         const data = await vesselService.getVesselByIMO(vesselIMO);
         vessel.value.name = data.name;
         vessel.value.imoNumber = data.imoNumber;
-        vessel.value.type = data.type;
-        vessel.value.length = data.length;
-        vessel.value.depth = data.depth;
-        vessel.value.draft = data.draft;
+        vessel.value.type = data.type.name;
+        vessel.value.owner = data.owner.name;
+        vessel.value.length = data.physicalCharacteristics.length;
+        vessel.value.depth = data.physicalCharacteristics.depth;
+        vessel.value.draft = data.physicalCharacteristics.draft;
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error('Failed to load vessel', err);
@@ -70,7 +74,7 @@ const submitVessel = (obj: any) =>
 
         <h1 class="title">{{ t('vessel.tabs.edit') }}</h1>
         <p class="subtitle">{{ t('vessel.subtitle.edit') }}</p>
-        <EntityForm :editing="true" :object="vessel" :submit-function="submitVessel">
+        <EntityForm editing-id="imoNumber" :object="vessel" :submit-function="submitVessel">
             <div class="name-imo">
                 <FormField :required="true" class="field" :name="`${t('vessel.fields.name.title')}*`" v-model="vessel.name" :placeholderText="t('vessel.fields.name.placeholder')"/>
                 <FormField :enabled="false" class="field" :name="t('vessel.fields.imoNumber.title')" v-model="vessel.imoNumber" :placeholderText="t('vessel.fields.imoNumber.placeholder')" pattern="IMO [0-9]{7}"/>
@@ -81,6 +85,17 @@ const submitVessel = (obj: any) =>
                 :fetch-function="() => vesselTypeService.getVesselTypes().then(page => (page.items || []).map(t => t.name))"
                 :fetch-on-mount="true"
                 :placeholderText="t('vessel.fields.vesselType.placeholder')"
+                :required="true"
+                valueKey="name"
+                labelKey="name"
+                />
+                <EntityDropdown
+                class="field-dropdown"
+                :name="t('vessel.fields.owner.title') + '*'"
+                v-model="vessel.owner"
+                :fetch-function="() => saoService.getShippingAgentOrganizations().then(page => (page.items || []).map(t => t.name))"
+                :fetch-on-mount="true"
+                :placeholderText="t('vessel.fields.owner.placeholder')"
                 :required="true"
                 valueKey="name"
                 labelKey="name"

@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Identity;
 // Enum for role types (for convenience and type safety)
 public enum SystemUserRoleType
 {
-	Administrator,
-	PortAuthorityOfficer,
-	SAORepresentative,
-	LogisticsOperator
+	Administrator = 0,
+	PortAuthorityOfficer = 1,
+	SAORepresentative = 2,
+	LogisticsOperator = 3
 }
 
 // Identity role class for ASP.NET Core Identity

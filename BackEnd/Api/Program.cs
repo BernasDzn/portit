@@ -1,3 +1,4 @@
+using Api.Application.Services.Auth.Providers;
 using Api.Application;
 using Api.Application.Services;
 using Api.Domain.Entities;
@@ -173,6 +174,22 @@ EncryptionHelper.SetEncryptionKey(builder.Configuration["EncryptionKey"]!);
 // Add services to the container.
 builder.Services.AddControllers();
 IConfiguration configuration = builder.Configuration;
+
+// Register authentication providers
+builder.Services.AddTransient<IAuthProvider, GoogleAuthProvider>();
+//builder.Services.AddTransient<IAuthProvider, OtherAuthProvider>();
+
+// Register IJwtTokenService with config-based factory
+builder.Services.AddTransient<IJwtTokenService>(sp =>
+{
+    var config = sp.GetRequiredService<IConfiguration>();
+    return new JwtTokenService(
+        config["Jwt:Key"]!,
+        config["backend_url"]!,
+        config["frontend_url"]!,
+        config.GetValue<int>("Jwt:ExpiresMinutes")
+    );
+});
 
 // Add database contexts
 if(builder.Environment.IsEnvironment("Testing"))
