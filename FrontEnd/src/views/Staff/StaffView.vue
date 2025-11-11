@@ -1,23 +1,18 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
-import { AxiosHttpService } from '@/service/AxiosHttpService';
-import { StaffService } from '@/service/StaffService';
-
 import type { Staff } from '@/model/Staff';
-
 import EntityView from '@/components/crud/EntityView.vue';
 import ActivityTag from '@/components/ActivityTag.vue';
 import QualificationPrinter from '@/components/printers/QualificationPrinter.vue';
 import { useI18n } from 'vue-i18n';
-
 const { t } = useI18n();
-
 import WorkShiftPrinter from '@/components/printers/WorkShiftPrinter.vue';
-
+import { container } from '@/inversify.config';
+import TYPES from '@/inversify/types';
+import type { IStaffService } from '@/service/IService/IStaffService';
 const route = useRoute();
 
-const http = new AxiosHttpService();
-const staffService = new StaffService(http);
+const staffService = container.get<IStaffService>(TYPES.staffService);
 const mechanographicNumber = decodeURIComponent((route.params.mechanographicNumber ?? '') as string);
 
 const fetchStaff = async (): Promise<Staff | undefined> => {

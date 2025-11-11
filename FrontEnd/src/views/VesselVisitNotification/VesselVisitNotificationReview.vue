@@ -1,7 +1,5 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
-import { AxiosHttpService } from '@/service/AxiosHttpService';
-import { VesselVisitNotificationService } from '@/service/VesselVisitNotificationService';
 import type { NotificationDecision, VesselVisitNotification } from '@/model/VesselVisitNotification';
 import NoResults from '@/components/NoResults.vue';
 import EntityView from '@/components/crud/EntityView.vue';
@@ -10,7 +8,10 @@ import EntityForm from '@/components/crud/EntityForm.vue';
 import { computed, ref } from 'vue';
 import EntityDropdown from '@/components/crud/EntityDropdown.vue';
 import FormField from '@/components/crud/FormField.vue';
-import { DockService } from '@/service/DockService';
+import { container } from '@/inversify.config';
+import type { IVesselVisitNotificationService } from '@/service/IService/IVesselVisitNotificationService';
+import TYPES from '@/inversify/types';
+import type { IDockService } from '@/service/IService/IDockService';
 
 const { t } = useI18n();
 const route = useRoute();
@@ -24,9 +25,8 @@ const decision = ref<NotificationDecision>({
     isFinal: true 
 });
 
-const http = new AxiosHttpService();
-const notificationService = new VesselVisitNotificationService(http);
-const dockService = new DockService(http);
+const notificationService = container.get<IVesselVisitNotificationService>(TYPES.vesselVisitNotificationService);
+const dockService = container.get<IDockService>(TYPES.dockService);
 const notificationId = route.params.notificationId && route.params.notificationId !== 'undefined'
     ? decodeURIComponent(route.params.notificationId as string)
     : '';

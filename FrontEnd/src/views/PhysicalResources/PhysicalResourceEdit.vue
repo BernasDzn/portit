@@ -4,11 +4,12 @@ import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
 import OperationalWindowPicker from '@/components/OperationalWindowPicker.vue';
 import { useAlerts } from '@/composables/alerts';
+import { container } from '@/inversify.config';
+import TYPES from '@/inversify/types';
 import type { PhysicalResource, STSCrane, Truck, YardCrane } from '@/model/PhysicalResource';
-import AxiosHttpService from '@/service/AxiosHttpService';
-import { DockService } from '@/service/DockService';
-import { PhysicalResourceService } from '@/service/PhysicalResourceService';
-import { QualificationService } from '@/service/QualificationService';
+import type { IDockService } from '@/service/IService/IDockService';
+import type { IPhysicalResourceService } from '@/service/IService/IPhysicalResourceService';
+import type { IQualificationService } from '@/service/IService/IQualificationService';
 import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
@@ -21,10 +22,9 @@ const resourceCode = String(route.params.code || '');
 
 const notifications = useAlerts();
 
-const http = new AxiosHttpService();
-const resourceService = new PhysicalResourceService(http);
-const dockService = new DockService(http);
-const qualificationService = new QualificationService(http);
+const resourceService = container.get<IPhysicalResourceService>(TYPES.physicalResourceService);
+const dockService = container.get<IDockService>(TYPES.dockService);
+const qualificationService = container.get<IQualificationService>(TYPES.qualificationService);
 
 const genericResourse = ref<any>({
     code: '',

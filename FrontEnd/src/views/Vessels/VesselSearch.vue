@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import VesselPrinter from '@/components/printers/VesselPrinter.vue';
 import ListingBox from '@/components/crud/ListingBox.vue';
-import { useRouter } from 'vue-router';
 import type { Filter, Page } from '@/model/Page';
 import type { Vessel } from '@/model/Vessel';
-import AxiosHttpService from '@/service/AxiosHttpService';
-import { VesselService } from '@/service/VesselService';
 import { useI18n } from 'vue-i18n';
+import { container } from '@/inversify.config';
+import type { IVesselService } from '@/service/IService/IVesselService';
+import TYPES from '@/inversify/types';
 
-const http = new AxiosHttpService()
-const vesselService = new VesselService(http as any);
+const vesselService = container.get<IVesselService>(TYPES.vesselService);
 const { t } = useI18n();
 
 const fetchVessels = async (filtering?: Filter<Vessel>): Promise<Page<Vessel>> => {

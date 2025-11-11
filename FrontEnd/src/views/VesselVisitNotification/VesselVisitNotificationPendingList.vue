@@ -4,16 +4,16 @@ import ListingBox from '@/components/crud/ListingBox.vue';
 import { useRouter } from 'vue-router';
 import type { Filter, Page } from '@/model/Page';
 import type { VesselVisitNotification, VesselVisitNotificationFilter } from '@/model/VesselVisitNotification';
-import AxiosHttpService from '@/service/AxiosHttpService';
-import { VesselVisitNotificationService } from '@/service/VesselVisitNotificationService';
 import { useI18n } from 'vue-i18n';
 import { useSession } from '@/composables/session';
 import { onMounted, ref } from 'vue';
+import type { IVesselVisitNotificationService } from '@/service/IService/IVesselVisitNotificationService';
+import { container } from '@/inversify.config';
+import TYPES from '@/inversify/types';
 
 const router = useRouter();
 
-const http = new AxiosHttpService();
-const vesselVisitNotificationService = new VesselVisitNotificationService(http as any);
+const vesselVisitNotificationService = container.get<IVesselVisitNotificationService>(TYPES.vesselVisitNotificationService);
 const user = ref(useSession().authenticatedUser!);
 
 const { t } = useI18n();

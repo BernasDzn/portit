@@ -1,17 +1,14 @@
 <script setup lang="ts">
-import AxiosHttpService from '@/service/AxiosHttpService';
-import { StorageAreaService } from '@/service/StorageAreaService';
-
 import type { StorageArea } from '@/model/StorageArea';
 import type { Filter, Page } from '@/model/Page';
-// @ts-ignore: missing type declarations for 'vue-i18n' in this project
 import { useI18n } from 'vue-i18n';
-
 import ListingBox from '@/components/crud/ListingBox.vue';
 import StorageAreaPrinter from '@/components/printers/StorageAreaPrinter.vue';
+import type { IStorageAreaService } from '@/service/IService/IStorageAreaService';
+import { container } from '@/inversify.config';
+import TYPES from '@/inversify/types';
 
-const http = new AxiosHttpService();
-const storageAreaService = new StorageAreaService(http as any);
+const storageAreaService = container.get<IStorageAreaService>(TYPES.storageAreaService);
 
 const { t } = useI18n();
 

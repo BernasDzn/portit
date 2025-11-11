@@ -1,22 +1,19 @@
 <script setup lang="ts">
-// @ts-ignore: missing type declarations for 'vue-i18n' in this project
 import {useI18n} from 'vue-i18n';
 import { useRoute } from 'vue-router';
-import { AxiosHttpService } from '@/service/AxiosHttpService';
-import { StorageAreaService } from '@/service/StorageAreaService';
-
 import type { StorageArea } from '@/model/StorageArea';
-
 import EntityView from '@/components/crud/EntityView.vue';
 import StorageCapacityPrinter from '@/components/StorageCapacityPrinter.vue';
 import DockPrinter from '@/components/printers/DockPrinter.vue';
+import type { IStorageAreaService } from '@/service/IService/IStorageAreaService';
+import { container } from '@/inversify.config';
+import TYPES from '@/inversify/types';
 
 const { t } = useI18n();
 
 const route = useRoute();
 
-const http = new AxiosHttpService();
-const storageAreaService = new StorageAreaService(http);
+const storageAreaService = container.get<IStorageAreaService>(TYPES.storageAreaService);
 const nameCode = decodeURIComponent((route.params.nameCode ?? '') as string);
 
 const fetchStorageArea = async (): Promise<StorageArea | undefined> => {

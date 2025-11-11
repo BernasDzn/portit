@@ -3,15 +3,15 @@ import DatePicker from '@/components/DatePicker.vue';
 import { useI18n } from 'vue-i18n';
 import { computed, ref, watch } from 'vue'
 import AxiosHttpService from '@/service/AxiosHttpService';
-import { VesselVisitNotificationService } from '@/service/VesselVisitNotificationService';
 import { SchedulingService } from '@/service/SchedulingService';
 import type { Schedule } from '@/model/Schedule';
+import { container } from '@/inversify.config';
+import type { IVesselVisitNotificationService } from '@/service/IService/IVesselVisitNotificationService';
+import TYPES from '@/inversify/types';
+import type { ISchedulingService } from '@/service/IService/ISchedulingService';
 
-const http = new AxiosHttpService();
-const vvnService = new VesselVisitNotificationService(http);
-
-const scheduleHttp = new AxiosHttpService("https://vs-gate.dei.isep.ipp.pt:30228");
-const scheduleService = new SchedulingService(scheduleHttp);
+const vvnService = container.get<IVesselVisitNotificationService>(TYPES.vesselVisitNotificationService);
+const scheduleService = container.get<ISchedulingService>(TYPES.schedulingService);
 
 const { t } = useI18n();
 

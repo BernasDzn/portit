@@ -4,19 +4,19 @@ import { useRouter, RouterLink } from 'vue-router';
 import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
 import EntityDropdown from '@/components/crud/EntityDropdown.vue';
-import AxiosHttpService from '@/service/AxiosHttpService';
-import { AdminService } from '@/service/AdminService';
-import { RepresentativeService } from '@/service/RepresentativeService';
 import type { SystemUser } from '@/model/SystemUser';
 import { useI18n } from 'vue-i18n';
 import { useAlerts } from '@/composables/alerts';
+import { container } from '@/inversify.config';
+import type { IAdminService } from '@/service/IService/IAdminService';
+import TYPES from '@/inversify/types';
+import type { IRepresentativeService } from '@/service/IService/IRepresentativeService';
 
 const { t } = useI18n();
 const alerts = useAlerts();
 
-const http = new AxiosHttpService();
-const adminService = new AdminService(http as any);
-const representativeService = new RepresentativeService(http as any);
+const adminService = container.get<IAdminService>(TYPES.adminService);
+const representativeService = container.get<IRepresentativeService>(TYPES.representativeService);
 
 // Role items must match backend enum ordering: Administrator=0, PortAuthorityOfficer=1, SAORepresentative=2, LogisticsOperator=3
 const roleItems = [

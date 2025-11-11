@@ -1,20 +1,17 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import { AxiosHttpService } from '@/service/AxiosHttpService';
-import { VesselService } from '@/service/VesselService';
 import type { Vessel } from '@/model/Vessel';
-import Loading from '@/components/Loading.vue';
-import NoResults from '@/components/NoResults.vue';
 import EntityView from '@/components/crud/EntityView.vue';
 import {useI18n} from 'vue-i18n';
+import type { IVesselService } from '@/service/IService/IVesselService';
+import { container } from '@/inversify.config';
+import TYPES from '@/inversify/types';
 
 const { t } = useI18n();
 
 const route = useRoute();
 
-const http = new AxiosHttpService();
-const vesselService = new VesselService(http);
+const vesselService = container.get<IVesselService>(TYPES.vesselService);
 const imoNumber = decodeURIComponent((route.params.imo ?? '') as string);
 
 const fetchVessel = async (): Promise<Vessel | null> => {

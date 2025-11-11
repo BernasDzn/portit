@@ -1,17 +1,17 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
-import { AxiosHttpService } from '@/service/AxiosHttpService';
-import { VesselVisitNotificationService } from '@/service/VesselVisitNotificationService';
 import type { VesselVisitNotification } from '@/model/VesselVisitNotification';
 import NoResults from '@/components/NoResults.vue';
 import EntityView from '@/components/crud/EntityView.vue';
 import { useI18n } from 'vue-i18n';
+import type { IVesselVisitNotificationService } from '@/service/IService/IVesselVisitNotificationService';
+import { container } from '@/inversify.config';
+import TYPES from '@/inversify/types';
 
 const { t } = useI18n();
 const route = useRoute();
 
-const http = new AxiosHttpService();
-const notificationService = new VesselVisitNotificationService(http);
+const notificationService = container.get<IVesselVisitNotificationService>(TYPES.vesselVisitNotificationService);
 const notificationId = route.params.notificationId && route.params.notificationId !== 'undefined'
     ? decodeURIComponent(route.params.notificationId as string)
     : '';

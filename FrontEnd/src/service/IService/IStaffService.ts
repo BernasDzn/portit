@@ -1,8 +1,8 @@
-import type { Page } from "@/model/Page";
+import type { Filter, Page } from "@/model/Page";
 import { type Staff, type StaffCreate } from "../../model/Staff";
 
 export interface IStaffService {
-	getStaffs(): Promise<Page<Staff>>;
+	getStaffs(filtering?: Filter<Staff>): Promise<Page<Staff>>;
 	getStaffByMechanographicNumber(mechanographicNumber: string): Promise<Staff>;
 	createStaff(staff: StaffCreate): Promise<Staff>;
 	deactivateStaff(mechanographicNumber: string): Promise<void>;

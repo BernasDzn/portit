@@ -11,10 +11,13 @@ import FormField from '@/components/crud/FormField.vue';
 import { DockService } from '@/service/DockService';
 import type { Dock } from '@/model/Dock';
 import { useRoute, RouterLink } from 'vue-router';
+import type { IDockService } from '@/service/IService/IDockService';
+import { container } from '@/inversify.config';
+import type { IStorageAreaService } from '@/service/IService/IStorageAreaService';
+import TYPES from '@/inversify/types';
 
-const http = new AxiosHttpService();
-const storageAreaService = new StorageAreaService(http);
-const dockService = new DockService(http);
+const storageAreaService = container.get<IStorageAreaService>(TYPES.storageAreaService);
+const dockService = container.get<IDockService>(TYPES.dockService);
 
 const route = useRoute();
 const storageAreaNameCode = String(route.params.name || '');

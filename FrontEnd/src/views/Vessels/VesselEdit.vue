@@ -2,18 +2,18 @@
 import EntityDropdown from '@/components/crud/EntityDropdown.vue';
 import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
+import { container } from '@/inversify.config';
+import TYPES from '@/inversify/types';
 import type { Vessel } from '@/model/Vessel';
-import AxiosHttpService from '@/service/AxiosHttpService';
-import { VesselService } from '@/service/VesselService';
-import { VesselTypeService } from '@/service/VesselTypeService';
+import type { IVesselService } from '@/service/IService/IVesselService';
+import type { IVesselTypeService } from '@/service/IService/IVesselTypeService';
 import { ref, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n'
 const { t } = useI18n()
 import { useRoute, RouterLink } from 'vue-router';
 
-const http = new AxiosHttpService();
-const vesselService = new VesselService(http);
-const vesselTypeService = new VesselTypeService(http);
+const vesselService = container.get<IVesselService>(TYPES.vesselService);
+const vesselTypeService = container.get<IVesselTypeService>(TYPES.vesselTypeService);
 
 const route = useRoute();
 const vesselIMO = String(route.params.imo || '');
@@ -35,10 +35,10 @@ onMounted(async () => {
         const data = await vesselService.getVesselByIMO(vesselIMO);
         vessel.value.name = data.name;
         vessel.value.imoNumber = data.imoNumber;
-        vessel.value.type = data.type.name;
-        vessel.value.length = data.physicalCharacteristics.length;
-        vessel.value.depth = data.physicalCharacteristics.depth;
-        vessel.value.draft = data.physicalCharacteristics.draft;
+        vessel.value.type = data.type;
+        vessel.value.length = data.length;
+        vessel.value.depth = data.depth;
+        vessel.value.draft = data.draft;
     } catch (err) {
         // eslint-disable-next-line no-console
         console.error('Failed to load vessel', err);

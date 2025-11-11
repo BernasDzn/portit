@@ -1,17 +1,16 @@
 <script setup lang="ts">
-import AxiosHttpService from '@/service/AxiosHttpService'
-
 import ListingBox from '@/components/crud/ListingBox.vue';
 import StaffPrinter from '@/components/printers/StaffPrinter.vue'
-
 import { StaffService } from '@/service/StaffService'
 import type { Staff } from '@/model/Staff'
 import type { Filter } from '@/model/Page'
 import type { Page } from '@/model/Page'
 import { useI18n } from 'vue-i18n';
+import type { IStaffService } from '@/service/IService/IStaffService';
+import { container } from '@/inversify.config';
+import TYPES from '@/inversify/types';
 
-const http = new AxiosHttpService()
-const staffService = new StaffService(http as any)
+const staffService = container.get<IStaffService>(TYPES.staffService);
 
 const fetchStaffs = async (filtering?: Filter<Staff>): Promise<Page<Staff>> => {
   return await staffService.getStaffs(filtering);
