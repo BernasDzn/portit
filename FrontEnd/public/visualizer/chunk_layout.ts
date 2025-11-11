@@ -73,6 +73,29 @@ class PortChunk {
     }
 }
 
+class WarehouseChunk extends PortChunk {
+    constructor(x,y) {
+        super(x,y);
+        this.base = null;
+    }
+
+    async init(scene) {
+        const model = new THREE.BoxGeometry(chunkSize.x, chunkSize.y, chunkSize.z);
+        let baseMesh = new THREE.MeshStandardMaterial({ color: 0xaaaaaa });
+        this.base = new THREE.Mesh(model, baseMesh);
+        this.base.position.copy(this.position);
+        this.base.castShadow = true;
+        this.base.receiveShadow = true;
+
+        this.base.meta = {
+            title: "Warehouse Chunk",
+            description: "This is a warehouse chunk.\n Located at (" + this.position.x.toFixed(2) + ", " + this.position.z.toFixed(2) + ").",
+        };
+
+        scene.add(this.base);
+    }
+}
+
 class LandChunk extends PortChunk {
 
     constructor(x,y) {
@@ -195,7 +218,11 @@ export default class PortLayout {
         let portChunk = new LandChunk(4, 4);
         let buoyChunk = new BuoyChunk(4, 3);
         let dockChunk = new DockChunk(4, 5);
+        let warehouseChunk = new WarehouseChunk(3, 4);
+        let warehouseChunk2 = new WarehouseChunk(2, 4);
 
+        this.chunkData.push(warehouseChunk2);
+        this.chunkData.push(warehouseChunk);
         this.chunkData.push(portChunk);
         this.chunkData.push(buoyChunk);
         this.chunkData.push(dockChunk);
