@@ -106,12 +106,6 @@ const submitDock = (obj: any) =>
     max-width: 30rem;
 }
 
-.section-divider {
-    width: 1px;
-    margin: 0 2rem;
-    background-color: var(--sl-color-neutral-200);
-}
-
 .section-title {
     font-size: 0.8rem;
     margin-bottom: 1rem;

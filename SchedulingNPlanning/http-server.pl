@@ -9,7 +9,6 @@
 :- consult('controller/handle_schedule_request.pl').
 
 :- use_module(library(http/http_cors)).
-:- set_setting(http:cors, [*]).  % allow requests from any origin
 
 % Relação entre pedidos HTTP e predicados que os processam
 :- http_handler('/lapr5', responde_ola, []).

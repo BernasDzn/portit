@@ -273,3 +273,9 @@ body {
     margin: 0rem 0.25rem;
 }
 /*----------------------*/
+
+.section-divider {
+    width: 1px;
+    margin: 0 2rem;
+    background-color: var(--sl-color-neutral-200);
+}

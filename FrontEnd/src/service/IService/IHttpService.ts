@@ -26,6 +26,7 @@ export interface IGetOptions {
 
 export interface IHttpService {
 	get<T>(url: string, options?: IGetOptions): Promise<Response<T>>;
+    getWithoutCredentials<T>(url: string, options?: IGetOptions): Promise<Response<T>>;
 	post<T>(url: string, data: unknown, headers?: Headers): Promise<Response<T>>;
 	put<T>(url: string, data: unknown, headers?: Headers): Promise<Response<T>>;
 	patch<T>(url: string, data: unknown, headers?: Headers): Promise<Response<T>>;

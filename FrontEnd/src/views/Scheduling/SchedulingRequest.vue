@@ -1,53 +1,106 @@
 <script setup lang="ts">
-import DatePicker from '@/components/DatePicker.vue';
 import { useI18n } from 'vue-i18n';
-import { computed, ref, watch } from 'vue'
-import AxiosHttpService from '@/service/AxiosHttpService';
-import { SchedulingService } from '@/service/SchedulingService';
+import { computed, onMounted, ref, watch } from 'vue'
 import type { Schedule } from '@/model/Schedule';
-import { container } from '@/inversify.config';
+import type { VesselVisitNotification } from '@/model/VesselVisitNotification';
 import type { IVesselVisitNotificationService } from '@/service/IService/IVesselVisitNotificationService';
-import TYPES from '@/inversify/types';
 import type { ISchedulingService } from '@/service/IService/ISchedulingService';
+import CalendarEvents from '@/components/crud/CalendarEvents.vue';
+import VesselVisitNotificationPrinter from '@/components/printers/VesselVisitNotificationPrinter.vue';
+import Loading from '@/components/Loading.vue';
+import { container } from '@/inversify.config';
+import TYPES from '@/inversify/types';
+import EntityDropdown from '@/components/crud/EntityDropdown.vue';
+import type { IDockService } from '@/service/IService/IDockService';
+import { useAlerts } from '@/composables/alerts';
 
 const vvnService = container.get<IVesselVisitNotificationService>(TYPES.vesselVisitNotificationService);
 const scheduleService = container.get<ISchedulingService>(TYPES.schedulingService);
+const dockService = container.get<IDockService>(TYPES.dockService);
+
+const notifications = useAlerts();
 
 const { t } = useI18n();
 
-const selectedDate = ref<Date | null>(null);
-const numberOfVVNonDay = ref<number>(0);
-const loading = ref<boolean>(false);
+const algorithmList = [
+    "Standard Scheduling",
+    "Optimized Scheduling"
+]
 
-watch(selectedDate, async (newDate) => {
-  if (!newDate) {
-    numberOfVVNonDay.value = 0;
-    return;
-  }
+const selectedDate = ref<Date | null>(new Date());
+const selectedAlgorithm = ref<string | null>(null);
+const vvnList = ref<VesselVisitNotification[]>([]);
+const dock = ref<string | null>(null);
+const daysAhead = ref<number>(1);
+const loading = ref(false);
+const generating = ref(false);
 
-  const startOfDay = new Date(newDate);
-  startOfDay.setHours(0, 0, 0, 0);
+const fetchVVNs = async () => {
 
-  
-  try {
-        
-        loading.value = true;
-        const res = await vvnService.getVesselVisitNotifcationsByDay(startOfDay);
-        numberOfVVNonDay.value = res.length;
-        console.log('Vessel Visit Notifications for', startOfDay, ':', res);
-        loading.value = false;
+    loading.value = true;
 
-  } catch (err) {
-    console.error('Error fetching VVN:', err);
-    numberOfVVNonDay.value = 0;
+    const response = await vvnService.getVesselVisitNotifications();
+    vvnList.value = response.items;
+
+    events.value = vvnList.value.map(vvn => ({
+        title: vvn.vessel.name,
+        start: vvn.expectedArrival,
+    }));
+
     loading.value = false;
-  }
+};
+
+onMounted(async () => {
+    await fetchVVNs();
 });
 
 const generateTasksForDate = async () => {
-    // Placeholder function to generate tasks for the selected date
-    const results: Schedule = await scheduleService.scheduleForDay(selectedDate.value!);
+    
+    if (!selectedDate.value || !dock.value || !selectedAlgorithm.value) return;
+    generating.value = true;
+
+    const results: Schedule = await scheduleService.scheduleForDay(selectedDate.value, dock.value, selectedAlgorithm.value, daysAhead.value);
     console.log('Generated Schedule:', results);
+
+    generating.value = false;
+
+    if (results.data.length > 0) {
+        
+        notifications.enqueueNotification(`Successfully generated ${results.data.length} tasks for dock ${dock.value} using ${selectedAlgorithm.value}.`, notifications.notificationTypes.SUCCESS);
+        closeModal();
+
+        // Generate and open schedule pdf
+        const pdfResponse = await scheduleService.generateSchedulePDF(results, selectedDate.value, dock.value);
+        const pdfBlob = new Blob([pdfResponse], { type: 'application/pdf' });
+        const pdfUrl = URL.createObjectURL(pdfBlob);
+        window.open(pdfUrl, '_blank');
+
+    } else {
+        
+        notifications.enqueueNotification("The requested schedule came back empty, nothing to do on that dock at this time.", notifications.notificationTypes.NEUTRAL);
+    }
+};
+
+const events = ref<Array<{ title: string, start: string }>>([]);
+    const vvnsOnDate = computed(() => {
+    if (!selectedDate.value) return [];
+    const selected = selectedDate.value;
+    return vvnList.value.filter(vvn => {
+        const arrival = new Date(vvn.expectedArrival);
+        return arrival.getFullYear() === selected.getFullYear() &&
+            arrival.getMonth() === selected.getMonth() &&
+            arrival.getDate() === selected.getDate();
+    });
+});
+
+const openModal = () => {
+    const dialog = document.querySelector('sl-dialog') as any;
+    dialog.show();
+};
+
+const closeModal = () => {
+    const dialog = document.querySelector('sl-dialog') as any;
+    dialog.hide();
 };
 
 </script>
@@ -57,24 +110,78 @@ const generateTasksForDate = async () => {
         <h1 class="title">{{ t("scheduling.title") }}</h1>
         <p class="subtitle">{{ t("scheduling.subtitle") }}</p>
 
-        <div class="date-selector">
-            <DatePicker v-model="selectedDate" />
-            <p> {{ t("scheduling.visitsOnSelectedDay") }}
-                <span v-if="loading">...</span>
-                <span v-else>{{ numberOfVVNonDay }}</span>
-            </p>
-        </div>
-
-        <sl-divider></sl-divider>
-
-        <div v-if="numberOfVVNonDay > 0">
-            <sl-button @click="generateTasksForDate" variant="primary" :disabled="loading">
-                {{ t("scheduling.viewVisits") }}
-            </sl-button>
-        </div>
+        <Loading v-if="loading" />
         <div v-else>
-            <p>{{ t("scheduling.noVisits") }}</p>
+
+            <div class="calendar-events">
+                <CalendarEvents class="calendar" :events="events" v-model="selectedDate" />
+                <div class="mt-4">
+                    <h2 class="subtitle">{{ t('notification.eventsOnDate', { date: selectedDate.toDateString() }) }}</h2>
+                    <ul v-if="vvnsOnDate.length !== 0">
+                        <li v-for="vvn in vvnsOnDate" :key="vvn.notificationId">
+                            <VesselVisitNotificationPrinter class="listing-box" 
+                                :notification="vvn"
+                                :link="`/vessel-visit-notifications/view/${vvn.notificationId}`" 
+                                :short="true"
+                            />
+                        </li>
+                    </ul>
+                    <p v-else>{{ t('notification.noEventsOnDate') }}</p>
+                </div>
+            </div>
         </div>
+
+        <br>
+
+        <sl-button v-if="vvnsOnDate.length != 0" variant="primary" @click="openModal">
+            {{ t('scheduling.generateTasksButton') }}
+        </sl-button>
+
+        <!-- Dock select modal -->
+
+        <sl-dialog label="Additional logistics" class="dialog-overview">
+            
+            <div>
+                <EntityDropdown
+                    class="field-dropdown"
+                    :name="t('scheduling.fields.relatedDocks')"
+                    v-model="dock"
+                    :fetch-function="() => dockService.getDocks(null)"
+                    :fetch-on-mount="true"
+                    :placeholderText="t('physicalResource.fields.servingDocks.placeholder')"
+                    valueKey="code"
+                    labelKey="name"
+                    required
+                />
+
+                <br>
+
+                <!-- Select algorithm -->
+                <EntityDropdown
+                    class="field-dropdown"
+                    :name="t('scheduling.fields.algorithm.title')"
+                    v-model="selectedAlgorithm"
+                    :items="algorithmList"
+                    :placeholderText="t('scheduling.fields.algorithm.placeholder')"
+                    required
+                />
+            </div>
+
+            <sl-button slot="footer" variant="danger" @click="closeModal">
+                {{ t('buttons.cancel') }}
+            </sl-button>
+            <sl-button 
+                :disabled="!dock || !selectedAlgorithm"
+                :loading="generating"
+                slot="footer" 
+                variant="primary" 
+                @click="generateTasksForDate"
+            >
+                {{ t('buttons.generate') }}
+            </sl-button>
+
+        </sl-dialog>
+
     </div>
 </template>
 
@@ -82,7 +189,7 @@ const generateTasksForDate = async () => {
 <style scoped>
 
 .full-height {
-    height: 100vh
+  height: auto;
 }
 
 .date-selector {
@@ -93,5 +200,47 @@ const generateTasksForDate = async () => {
     align-items: center;
     gap: 20px;
 }
+
+
+.calendar-events {
+    margin-top: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 5rem;
+}
+
+.calendar {
+    min-width: 350px;
+    height: 600px;
+}
+
+.mt-4 {
+    flex: 1;
+    height: 600px;
+    overflow-y: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    padding: 0 30px;
+}
+
+.mt-4::-webkit-scrollbar {
+    display: none;
+}
+
+
+.calendar-events ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.calendar-events li {
+    margin-bottom: 1rem;
+}
+
 
 </style>

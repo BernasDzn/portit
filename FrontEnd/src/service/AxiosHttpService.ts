@@ -36,6 +36,17 @@ export class AxiosHttpService implements IHttpService {
             }
         );
   }
+    
+    async getWithoutCredentials<T>(url: string, options?: IGetOptions): Promise<Response<T>> {
+        
+        const res = await axios.get<T>(
+            url, 
+            { 
+                params: options?.params, 
+                headers: options?.headers
+            } as any)
+        return this.toResponse(res);
+    }
 
   private toResponse<T>(res: import('axios').AxiosResponse<T>): Response<T> {
     return { status: res.status, statusText: res.statusText, data: res.data, payload: res.data } as Response<T>;
