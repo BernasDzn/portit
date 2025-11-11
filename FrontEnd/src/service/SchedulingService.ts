@@ -17,13 +17,9 @@ export class SchedulingService implements ISchedulingService {
     ) {}
 
     calculateDateOffset(baseDate: Date, offsetHours: number): Date {
-
-        console.log(`Calculating date offset: baseDate=${baseDate}, offsetHours=${offsetHours}`);
-
-        const newDate = new Date(baseDate);
-        newDate.setHours(newDate.getHours() + offsetHours);
+        const newDate = new Date(baseDate.getTime() + offsetHours * 60 * 60 * 1000);
         return newDate;
-    }
+    }    
 
     async generateSchedulePDF(schedule: Schedule, date: Date, dock: string): Promise<Uint8Array> {
         

@@ -15,7 +15,7 @@ public class ContainerNumber
         set
         {
             if (!IsValidContainerNumber(value))
-                throw new ArgumentException("Invalid owner code format.", nameof(value));
+                throw new ArgumentException("Invalid container code format.", nameof(value));
             _value = value;
         }
     }

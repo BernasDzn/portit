@@ -3,10 +3,10 @@ namespace Api.Application.DataTransfer;
 public class VesselTaskFactDto
 {
     public VesselDto Vessel { get; set; }
-    public uint ETA { get; set; }
-    public uint ETD { get; set; }
-    public uint LoadingTime { get; set; }
-    public uint UnloadingTime { get; set; }
+    public double ETA { get; set; }
+    public double ETD { get; set; }
+    public double LoadingTime { get; set; }
+    public double UnloadingTime { get; set; }
 }
 
 public class SchedulingResultDto
