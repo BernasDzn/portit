@@ -84,13 +84,13 @@ export enum VesselVisitNotificationStatus {
 export interface NotificationDecision {
     status: NotificationDecisionStatus;
     reason?: string;
-    decisionDate: string;
-    officerId?: number;
-    assignedDock?: Dock;
+    decisionDate: Date;
+    officerID?: number;
+    assignedDockCode?: string;
     isFinal: boolean;
 }
 
 export enum NotificationDecisionStatus {
-    Rejected = 0,
-    Accepted = 1
+    Accepted = 1,
+    Rejected = 2,
 }

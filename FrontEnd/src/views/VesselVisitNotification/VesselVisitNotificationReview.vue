@@ -7,22 +7,26 @@ import NoResults from '@/components/NoResults.vue';
 import EntityView from '@/components/crud/EntityView.vue';
 import { useI18n } from 'vue-i18n';
 import EntityForm from '@/components/crud/EntityForm.vue';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
+import EntityDropdown from '@/components/crud/EntityDropdown.vue';
+import FormField from '@/components/crud/FormField.vue';
+import { DockService } from '@/service/DockService';
 
 const { t } = useI18n();
 const route = useRoute();
 
 const decision = ref<NotificationDecision>({
-    status: undefined,
+    status: null,
     reason: '',
-    decisionDate: '',
-    officerId: undefined,
-    assignedDock: undefined,
-    isFinal: false
+    decisionDate: new Date(),
+    officerID: null,
+    assignedDockCode: null,
+    isFinal: true 
 });
 
 const http = new AxiosHttpService();
 const notificationService = new VesselVisitNotificationService(http);
+const dockService = new DockService(http);
 const notificationId = route.params.notificationId && route.params.notificationId !== 'undefined'
     ? decodeURIComponent(route.params.notificationId as string)
     : '';
@@ -36,15 +40,19 @@ const cargoTypes = [
     "Other"
 ]
 
-const submitDecision = (obj: any) =>
+const isRejected = computed(() => {
+    const statusNum = typeof decision.value.status === 'number' ? decision.value.status : Number(decision.value.status);
+    return statusNum === 2;
+});
+
+const submitDecision = (obj: any) =>{
+    console.log(obj);
     notificationService.createNotificationDecision(notificationId, obj);
+}
 
 const fetchNotification = async (): Promise<VesselVisitNotification | null> => {
     const n = await notificationService.getVesselVisitNotificationById(notificationId);
-    const decisions = await notificationService.getNotificationDecisions(notificationId);
-    console.log(n);
-    console.log(decisions);
-    return { ...n, notificationDecisions: decisions };
+    return n;
 };
 
 const openLoadCargoManifest = () => {
@@ -79,7 +87,7 @@ const closeUnloadManifest = () => {
                     t('notification.tabs.dashboard') }}</RouterLink>
             </sl-breadcrumb-item>
             <sl-breadcrumb-item>
-                <RouterLink to="/vessel-visit-notifications/search" class="breadcrumb-link">{{
+                <RouterLink to="/vessel-visit-notifications/pending" class="breadcrumb-link">{{
                     t('notification.tabs.review') }}</RouterLink>
             </sl-breadcrumb-item>
             <sl-breadcrumb-item>{{ notificationId || t('notification.errors.noNotificationId') }}</sl-breadcrumb-item>
@@ -98,21 +106,34 @@ const closeUnloadManifest = () => {
                 <div class="review-container">
                     <div class="review-form">
                         <EntityForm :object="decision" :submit-function="submitDecision">
-                            <sl-select label="Decision Status" placeholder="Select status" required
-                                v-model="decision.status">
-                                <sl-option value="0">{{ t('notification.timeline.accepted') }}</sl-option>
-                                <sl-option value="1">{{ t('notification.timeline.rejected') }}</sl-option>
-                            </sl-select>
+                            <EntityDropdown
+                                :name="t('notification.decision.status') + '*'"
+                                :items="[
+                                    { id: 1, name: t('notification.timeline.accepted') },
+                                    { id: 2, name: t('notification.timeline.rejected') }
+                                ]"
+                                v-model="decision.status"
+                                valueKey="id"
+                                labelKey="name"
+                                required
+                            />
 
-                            <sl-textarea label="Reason" placeholder="Enter reason for decision"
-                                v-model="decision.reason"></sl-textarea>
+                            <FormField type="textarea" :name="t('notification.decision.reason.title') + (isRejected ? '*' : '')" v-model="decision.reason"
+                               :placeholder="t('notification.decision.reason.placeholder')" :required="isRejected" />
 
-                            <sl-input type="date" label="Decision Date" placeholder="Select decision date"
-                                v-model="decision.decisionDate" required></sl-input>
+                            <EntityDropdown
+                                v-if="!isRejected"
+                                :name="t('notification.decision.assignedDock.title') + '*'"
+                                :placeholderText="t('notification.decision.assignedDock.placeholder')"
+                                :fetch-function="() => dockService.getDocks()"
+                                :fetch-on-mount="true"
+                                v-model="decision.assignedDockCode"
+                                valueKey="code"
+                                labelKey="name"
+                                required
+                            />
 
-                            <sl-input type="text" label="Assigned Dock Code" placeholder="Enter dock code"
-                                v-model="decision.assignedDock" required></sl-input>
-                            <sl-checkbox label="Is Final Decision" v-model="decision.isFinal">
+                            <sl-checkbox v-if="isRejected" :label="t('notification.decision.isFinal')" v-model="decision.isFinal">
                                 {{ t('notification.decision.isFinal') }}
                             </sl-checkbox>
 
@@ -132,38 +153,6 @@ const closeUnloadManifest = () => {
                                 </div>
                             </sl-card>
                         </div>
-
-                        <sl-dialog id="infoPopup" label="Status Overview" class="dialog-overview">
-                            <div class="timeline-expanded">
-                                <template v-for="decision in entity.element.notificationDecisions" :key="decision.id">
-                                    <div class="timeline-point">
-                                        <p>{{ t("notification.timeline.inProgress") }}</p>
-                                        <span class="timeline-icon nothing material-icons"
-                                            aria-hidden="true">circle</span>
-                                    </div>
-                                    <div class="timeline-point">
-                                        <p>{{ t("notification.timeline.submitted") }}</p>
-                                        <span class="timeline-icon nothing material-icons"
-                                            aria-hidden="true">circle</span>
-                                    </div>
-                                    <div class="timeline-point">
-                                        <p>{{ decision.status == 1 ? t("notification.timeline.accepted") :
-                                            t("notification.timeline.rejected") }}</p>
-                                        <span
-                                            :class="decision.status == 1 ? ' timeline-icon accepted material-icons' : 'timeline-icon rejected material-icons'"
-                                            aria-hidden="true">{{ decision.status == 1 ? 'check_circle' : 'cancel'
-                                            }}</span>
-                                        <p>{{ new Date(decision.decisionDate).toUTCString() }}</p>
-                                    </div>
-                                </template>
-
-                                <div class="timeline-point" v-if="entity.element.status === 2">
-                                    <p>{{ t("notification.timeline.completed") }}</p>
-                                    <span class="timeline-icon accepted material-icons"
-                                        aria-hidden="true">check_circle</span>
-                                </div>
-                            </div>
-                        </sl-dialog>
 
                         <div class="notification-main-column">
                             <sl-card class="notification-main-info">

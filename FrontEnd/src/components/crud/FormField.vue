@@ -10,7 +10,8 @@ const props = defineProps({
     pattern: { type: String, default: '' },
     required: { type: Boolean, default: false },
     // optional explicit id for the inner input element (useful for tests)
-    inputId: { type: String, default: null }
+    inputId: { type: String, default: null },
+    type: { type: String, default: 'text' }
 });
 
 const emit = defineEmits(['update:modelValue']);
@@ -27,7 +28,7 @@ watch(() => props.modelValue, (val) => (inputValue.value = val));
     <div class="form-field">
         <sl-label class="label" :for="inputId" v-if="name != 'null'">{{ name }}</sl-label>
         <slot>
-            <sl-input 
+            <sl-input v-if="type==='text'"
                 :id="inputId" 
                 v-model="inputValue" 
                 :placeholder="props.placeholderText" 
@@ -35,6 +36,15 @@ watch(() => props.modelValue, (val) => (inputValue.value = val));
                 v-bind="pattern ? { pattern } : {}" 
                 :required="props.required" 
                 filled 
+            />
+            <sl-textarea v-else-if="type==='textarea'"
+                :id="inputId" 
+                v-model="inputValue" 
+                :placeholder="props.placeholderText" 
+                :disabled="!props.enabled" 
+                v-bind="pattern ? { pattern } : {}" 
+                :required="props.required" 
+                filled
             />
         </slot>
     </div>

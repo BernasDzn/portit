@@ -582,8 +582,14 @@
         },
         "decision": {
             "isFinal": "Is Final",
-            "assignedDock": "Assigned Dock",
-            "reason": "Reason",
+            "assignedDock": {
+                "title": "Assigned Dock",
+                "placeholder": "Select assigned dock"
+            },
+            "reason": {
+                "title": "Reason",
+                "placeholder": "Provide reason for decision"
+            },
             "status": "Decision Status"
         }
     },

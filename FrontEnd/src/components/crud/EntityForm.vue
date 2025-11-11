@@ -61,6 +61,8 @@ const submit = async () => {
     }
 
     buttonLoading.value = true;
+    console.log(props.object);
+    console.log(props.submitFunction);
     props.submitFunction(props.object)
     .catch((error: any) => {
         notification.enqueueNotification(
@@ -100,6 +102,7 @@ function confirmCancel() {
 
 onMounted(
     async () => {
+
         if (props.editingId != null && props.fetchingFunction != null) {
             try {
                 loading.value = true;
