@@ -249,21 +249,29 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         // In the future, we might need to handle multiple docks
         var filteredNotifications = notifications.Where(n => n.GetLatestDecision()!.AssignedDock!.Code.Value == dockCode.Value);
 
-        foreach (var notification in filteredNotifications)
+        try
         {
-            var decision = notification.GetLatestDecision()!;
-            var vessel = notification.Vessel;
-
-            VesselTaskFactDto vesselTaskFact = new VesselTaskFactDto
+            foreach (var notification in filteredNotifications)
             {
-                Vessel = vessel.ToDTO(),
-                ETA = CalculateBaseHour(date, notification.ExpectedArrival),
-                ETD = CalculateBaseHour(date, notification.ExpectedDeparture),
-                LoadingTime = await CalculateLoadUnloadingTime(notification.LoadCargoManifest ?? new List<CargoTransport>(), dock),
-                UnloadingTime = await CalculateLoadUnloadingTime(notification.UnloadCargoManifest ?? new List<CargoTransport>(), dock),
-            };
+                var decision = notification.GetLatestDecision()!;
+                var vessel = notification.Vessel;
 
-            result.VesselTaskFacts.Add(vesselTaskFact);
+                VesselTaskFactDto vesselTaskFact = new VesselTaskFactDto
+                {
+                    Vessel = vessel.ToDTO(),
+                    ETA = CalculateBaseHour(date, notification.ExpectedArrival),
+                    ETD = CalculateBaseHour(date, notification.ExpectedDeparture),
+                    LoadingTime = await CalculateLoadUnloadingTime(notification.LoadCargoManifest ?? new List<CargoTransport>(), dock),
+                    UnloadingTime = await CalculateLoadUnloadingTime(notification.UnloadCargoManifest ?? new List<CargoTransport>(), dock),
+                };
+
+                result.VesselTaskFacts.Add(vesselTaskFact);
+            }
+        }
+        catch (System.Exception e)
+        {
+            result.VesselTaskFacts.Clear();
+            result.Comment = "Error calculating scheduling data. " + e.Message;
         }
 
         AppLogEvents.LogRetrieve(_logger, "scheduling data", result.VesselTaskFacts.Count);

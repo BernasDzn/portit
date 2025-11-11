@@ -12,4 +12,5 @@ public class VesselTaskFactDto
 public class SchedulingResultDto
 {
     public List<VesselTaskFactDto> VesselTaskFacts { get; set; }
+    public string Comment { get; set; }
 }
