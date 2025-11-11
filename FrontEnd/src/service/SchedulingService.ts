@@ -57,7 +57,7 @@ export class SchedulingService implements ISchedulingService {
 
     async scheduleForDay(day: Date, dock: string, alg: string, daysAhead: number = 2): Promise<Schedule> {
         const dayString = day.toISOString().split('T')[0];
-        const url = `http://localhost:8080/schedule?day=${dayString}&dock=${dock}&alg=${alg}&daysAhead=${daysAhead}`;
+        const url = `https://vs-gate.dei.isep.ipp.pt:30228/schedule?day=${dayString}&dock=${dock}&alg=${alg}&daysAhead=${daysAhead}`;
         const res = await this.http.getWithoutCredentials(url);
         return res.data as Schedule;
     }
