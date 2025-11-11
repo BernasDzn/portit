@@ -47,6 +47,7 @@ onMounted(async () => {
         dock.value.physicalCharacteristics.depth = data.physicalCharacteristics?.depth;
         dock.value.physicalCharacteristics.draft = data.physicalCharacteristics?.draft;
         dock.value.supportedVesselTypes = (data.supportedVesselTypes ?? []).map((vt: any) =>vt.name);
+        
     } catch (err) {
         console.error('Failed to load dock', err);
     }
@@ -61,7 +62,7 @@ const updateDock = async (obj: Dock) => {
         return;
     }
 
-    dockService.updateDock(dockCode, obj);
+    return dockService.updateDock(dockCode, obj);
 };
 </script>
 
