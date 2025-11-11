@@ -33,7 +33,6 @@ const isCurrentTab = (itemRoute: string) => {
 };
 
 const itemsToShow = computed(() => {
-  console.log('Computing sidebar items for role:', role.value);
   return sidebarItems.value.filter(item => {
     // separators have no roles; show them only for admins
     if (!item.roles) return role.value === 0;

@@ -8,12 +8,6 @@ import type { User } from '@/model/User';
 export class AuthService implements IAuthService {
 
     googleClientId: string;
-    roles : Map<string, number> = new Map<string, number>([
-        ['Administrator', 0],
-        ['PortAuthorityOfficer', 1],
-        ['SAORepresentative', 2],
-        ['LogisticsOperator', 3]
-    ]);
 
     constructor(
         @inject(TYPES.api)
@@ -25,7 +19,7 @@ export class AuthService implements IAuthService {
 
     async getAppJWTToken(token: string): Promise<AppJWTResponse> {
 
-        let res = await this.http.post('/Login/google', JSON.stringify({ token: token }));
+        let res = await this.http.post('/auth/login/google', JSON.stringify({ token: token }));
         return res.data as AppJWTResponse;
     }
 
@@ -101,53 +95,25 @@ export class AuthService implements IAuthService {
     }
 
     async whoAmI(): Promise<User> {
-        let roleNumeric: number = -1;
         try {
-            let res: any = await this.http.get('/Login/me');
+            let res: any = await this.http.get('/auth/me');
             if (res && res.data) {
-                roleNumeric = this.roles.get(res.data.role) ?? -1;
-                console.log('Role determined from role name:', roleNumeric);
                 return {
                     id: res.data.sub,
                     name: res.data.name,
                     email: res.data.email,
                     avatar: res.data.picture,
-                    role: roleNumeric
+                    role: res.data.role
                 }
             }
         } catch (err) {
             console.debug('whoAmI failed or returned no data; treating as unauthenticated', err);
         }
-        // Default to unauthenticated user "Guest"
-        return {
-            id: '',
-            name: '',
-            email: '',
-            avatar: '',
-            role: -1
-        }
+        return null;
     }
 
     async logout(): Promise<void> {
-        await this.http.post('/Login/logout', {});
+        await this.http.post('/auth/logout', {});
     }
    
-    // async handleCredentialResponse(response: any) {
-    //     const idToken = response.credential;
-
-    //     let res = await this.getAppJWTToken(idToken);
-
-    //     // if (res.ok) {
-    //     //     let token = await res.text();
-    //     //     token = JSON.parse(token).token;
-
-    //     //     // NAO FAZER ISTO !!
-    //     //     // ATENÇAO CODIGO MAL FEITO
-    //     //     localStorage.setItem('authToken', token);
-    //     //     window.location.href = '/';
-
-    //     // } else {
-    //     //     console.error('uh oh', res.status)
-    //     // }
-    // };
 }
