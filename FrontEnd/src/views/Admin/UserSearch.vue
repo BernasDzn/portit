@@ -1,18 +1,16 @@
 <script setup lang="ts">
 import ListingBox from '@/components/crud/ListingBox.vue';
-import { useRouter } from 'vue-router';
 import type { Filter, Page } from '@/model/Page';
-import type { Vessel } from '@/model/Vessel';
-import AxiosHttpService from '@/service/AxiosHttpService';
-import { AdminService } from '@/service/AdminService';
 import type { SystemUser } from '@/model/SystemUser';
 import SystemUserPrinter from '@/components/printers/SystemUserPrinter.vue';
 import { useI18n } from 'vue-i18n';
+import type { IAdminService } from '@/service/IService/IAdminService';
+import { container } from '@/inversify.config';
+import TYPES from '@/inversify/types';
 
 const { t } = useI18n();
 
-const http = new AxiosHttpService()
-const adminService = new AdminService(http as any)
+const adminService = container.get<IAdminService>(TYPES.adminService);
 
 const fetchUsers = async (filter?: Filter<SystemUser>): Promise<Page<SystemUser>> => {
   // ListingBox may call fetch with no args; ensure we supply a default filter shape

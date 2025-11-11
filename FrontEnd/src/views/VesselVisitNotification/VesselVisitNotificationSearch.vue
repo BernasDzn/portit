@@ -1,18 +1,17 @@
 <script setup lang="ts">
 import VesselVisitNotificationPrinter from '@/components/printers/VesselVisitNotificationPrinter.vue';
 import ListingBox from '@/components/crud/ListingBox.vue';
-import { useRouter } from 'vue-router';
 import type { Filter, Page } from '@/model/Page';
 import type { VesselVisitNotification, VesselVisitNotificationFilter } from '@/model/VesselVisitNotification';
-import AxiosHttpService from '@/service/AxiosHttpService';
-import { VesselVisitNotificationService } from '@/service/VesselVisitNotificationService';
 import { useI18n } from 'vue-i18n';
 import { useSession } from '@/composables/session';
 import { computed, onMounted, ref, watch } from 'vue';
 import CalendarEvents from '@/components/crud/CalendarEvents.vue';
+import type { IVesselVisitNotificationService } from '@/service/IService/IVesselVisitNotificationService';
+import { container } from '@/inversify.config';
+import TYPES from '@/inversify/types';
 
-const http = new AxiosHttpService();
-const vesselVisitNotificationService = new VesselVisitNotificationService(http as any);
+const vesselVisitNotificationService = container.get<IVesselVisitNotificationService>(TYPES.vesselVisitNotificationService);
 const user = ref(useSession().authenticatedUser!);
 
 const { t } = useI18n();
@@ -36,20 +35,14 @@ const fetchVesselVisitNotifications = async (filtering?: Filter<VesselVisitNotif
     } 
 
     // Get events
-    const tempFiltering: Filter<VesselVisitNotificationFilter> = {
-        pageNumber: 1,
-        pageSize: 99,
-        filter: filtering?.filter
-    };
-
-    const tempList = await vesselVisitNotificationService.getVesselVisitNotificationsByRepresentative(tempFiltering);
+    const tempList = await vesselVisitNotificationService.getVesselVisitNotificationsByRepresentative(filtering);
     events.value = tempList.items.map(ev => ({
             title: ev.vessel.name,
             start: ev.expectedArrival.toString(),
     }));
 
     vvnList.value = tempList.items;
-    return await vesselVisitNotificationService.getVesselVisitNotificationsByRepresentative(filtering);
+    return await tempList;
 };
 
 const filterDefinition = ref({});
@@ -138,7 +131,7 @@ const events = ref<Array<{ title: string, start: string }>>([]);
                         <CalendarEvents class="calendar" :events="events" v-model="selectedDate" />
                         <div class="mt-4">
                             <h2 class="subtitle">{{ t('notification.eventsOnDate', { date: selectedDate.toDateString() }) }}</h2>
-                            <ul v-if="vvnsOnDate.length !== 0">
+                            <ul class="notification-list" v-if="vvnsOnDate.length !== 0">
                                 <li v-for="vvn in vvnsOnDate" :key="vvn.notificationId">
                                     <VesselVisitNotificationPrinter class="listing-box" 
                                         :notification="vvn"
@@ -163,21 +156,44 @@ const events = ref<Array<{ title: string, start: string }>>([]);
     color: inherit;
 }
 
+.date-selector {
+    margin-top: 20px;
+    display: flex;
+
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+
+
 .calendar-events {
     margin-top: 1rem;
     margin-left: auto;
     margin-right: auto;
-
     display: flex;
-    align-items: center;
-    
+    align-items: flex-start;
     justify-content: center;
     gap: 5rem;
 }
 
 .calendar {
     min-width: 350px;
+    height: 600px;
 }
+
+.mt-4 {
+    flex: 1;
+    height: 600px;
+    overflow-y: auto;
+    scrollbar-width: none;
+    padding: 0 20px;
+    -ms-overflow-style: none;
+}
+
+.mt-4::-webkit-scrollbar {
+    display: none;
+}
+
 
 .calendar-events ul {
     list-style-type: none;

@@ -4,16 +4,16 @@ import { useRoute, useRouter, RouterLink } from 'vue-router';
 import FormField from '@/components/crud/FormField.vue';
 import EntityDropdown from '@/components/crud/EntityDropdown.vue';
 import Loading from '@/components/Loading.vue';
-import AxiosHttpService from '@/service/AxiosHttpService';
-import { AdminService } from '@/service/AdminService';
 import { useAlerts } from '@/composables/alerts';
 import type { SystemUser } from '@/model/SystemUser';
 import { useI18n } from 'vue-i18n';
+import type { IAdminService } from '@/service/IService/IAdminService';
+import { container } from '@/inversify.config';
+import TYPES from '@/inversify/types';
 
 const { t } = useI18n();
 
-const http = new AxiosHttpService();
-const adminService = new AdminService(http as any);
+const adminService = container.get<IAdminService>(TYPES.adminService);
 const notifications = useAlerts();
 
 const route = useRoute();

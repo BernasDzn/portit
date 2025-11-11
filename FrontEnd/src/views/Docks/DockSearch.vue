@@ -3,17 +3,17 @@ import DockPrinter from '@/components/printers/DockPrinter.vue';
 import ListingBox from '@/components/crud/ListingBox.vue';
 import type { Filter, Page } from '@/model/Page';
 import type { Dock, DockFilter } from '@/model/Dock';
-import AxiosHttpService from '@/service/AxiosHttpService';
-import { DockService } from '@/service/DockService';
-import { VesselTypeService } from '@/service/VesselTypeService';
 import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { container } from '@/inversify.config';
+import type { IDockService } from '@/service/IService/IDockService';
+import TYPES from '@/inversify/types';
+import type { IVesselTypeService } from '@/service/IService/IVesselTypeService';
 
 const { t } = useI18n();
 
-const http = new AxiosHttpService()
-const dockService = new DockService(http)
-const vesselTypes = new VesselTypeService(http);
+const dockService = container.get<IDockService>(TYPES.dockService);
+const vesselTypes = container.get<IVesselTypeService>(TYPES.vesselTypeService);
 
 const fetchDocks = async (filtering?: Filter<DockFilter>): Promise<Page<Dock>> => {
     return await dockService.getDocks(filtering);

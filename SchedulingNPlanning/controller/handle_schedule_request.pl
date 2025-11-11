@@ -1,8 +1,26 @@
 :- consult('../services/scheduling_service.pl').
+:- consult('../config.pl').
 
 % Api entrypoint to handle scheduling requests
 handle_schedule_request(Request) :-
-    schedule_daily_operations('2025-11-9', 2, 'DCK002' ,Result),
+    
+    frontend_url(FrontendURL),
+
+    % Enable CORS for frontend communication
+    cors_enable(Request, [
+        methods([get, post, options]),
+        origin(FrontendURL)
+    ]),
+
+    % Parse URL parameters: ?day=2025-11-09&dock=DCK002&days_ahead=2
+    http_parameters(Request, [
+        day(Day, [string]),
+        dock(Dock, [string]),
+        daysAhead(DaysAhead, [integer, default(0)])
+        % add alg(Alg, [string]) one day 
+    ]),
+
+    schedule_daily_operations(Day, DaysAhead, Dock ,Result),
 
     format_timetable(Result, FormattedResult),
     reply_json(#{status: success, data: FormattedResult}).

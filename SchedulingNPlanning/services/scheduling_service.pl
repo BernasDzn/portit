@@ -8,7 +8,6 @@
 schedule_daily_operations(TargetDate, DaysAhead, DockCode, ScheduleResult) :-
     % Fetch data from database
     get_vvns_on_day(TargetDate, DaysAhead, DockCode, JsonData),
-    % format(user_error, 'Fetched JSON Data: ~w~n', [JsonData]),
 
     % Parse JSON data to extract vessel facts
     JsonList = JsonData.vesselTaskFacts,

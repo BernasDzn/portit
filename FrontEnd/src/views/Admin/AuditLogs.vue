@@ -1,20 +1,15 @@
 <script setup lang="ts">
 import DataTable from '@/components/crud/DataTable.vue';
 import { onMounted, ref, computed } from 'vue';
-import type { Filter, Page } from '@/model/Page';
-import type { Vessel } from '@/model/Vessel';
-import AxiosHttpService from '@/service/AxiosHttpService';
-import { AdminService } from '@/service/AdminService';
-import type { SystemUser } from '@/model/SystemUser';
-import SystemUserPrinter from '@/components/printers/SystemUserPrinter.vue';
 import { useI18n } from 'vue-i18n';
 import type { Logs } from '@/model/Logs';
-import LogPrinter from '@/components/printers/LogPrinter.vue';
+import { container } from '@/inversify.config';
+import TYPES from '@/inversify/types';
+import type { IAdminService } from '@/service/IService/IAdminService';
 
 const { t } = useI18n();
 
-const http = new AxiosHttpService()
-const adminService = new AdminService(http)
+const adminService = container.get<IAdminService>(TYPES.adminService);
 
 const logs = ref<Logs[]>([] as Logs[]);
 

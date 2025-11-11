@@ -506,7 +506,104 @@ public static class Bootstrap
             new DateTime(2025, 11, 15, 18, 0, 0),
             false,
             vessel2,
-            vessel2.Owner.Representatives.First()
+            vessel2.Owner.Representatives.First(),
+            null, null,
+            new List<CargoTransport>
+            {
+                new CargoTransport(
+                    new ContainerPosition { Row = "14", Bay = "7", Tier = "9" },
+                    sa1,
+                    new Container(
+                        Guid.NewGuid(),
+                        new ContainerNumber { Value = "TGHU7654324" },
+                        CargoType.OVERSIZED_INDUSTRIAL_EQUIPMENT,
+                        new Designation { Value = "industrial machinery" }
+                    )
+                ),
+                new CargoTransport(
+                    new ContainerPosition { Row = "16", Bay = "8", Tier = "6" },
+                    sa1,
+                    new Container(
+                        Guid.NewGuid(),
+                        new ContainerNumber { Value = "MAEU9999993" },
+                        CargoType.OTHER,
+                        new Designation { Value = "chemical products" }
+                    )
+                )
+            },
+            new List<CargoTransport>()
+            {
+                new CargoTransport(
+                    new ContainerPosition { Row = "18", Bay = "9", Tier = "5" },
+                    sa1,
+                    new Container(
+                        Guid.NewGuid(),
+                        new ContainerNumber { Value = "MSKU1234562" },
+                        CargoType.GENERAL_CONSUMER_PRODUCTS,
+                        new Designation { Value = "assorted goods" }
+                    )
+                ),
+                new CargoTransport(
+                    new ContainerPosition { Row = "20", Bay = "10", Tier = "4" },
+                    sa1,
+                    new Container(
+                        Guid.NewGuid(),
+                        new ContainerNumber { Value = "CMAU0000017" },
+                        CargoType.ELECTRONICS,
+                        new Designation { Value = "various electronic items" }
+                    )
+                ),
+                new CargoTransport(
+                    new ContainerPosition { Row = "22", Bay = "11", Tier = "3" },
+                    sa1,
+                    new Container(
+                        Guid.NewGuid(),
+                        new ContainerNumber { Value = "ABCD1234562" },
+                        CargoType.ELECTRONICS,
+                        new Designation { Value = "various electronic items" }
+                    )
+                ),
+                new CargoTransport(
+                    new ContainerPosition { Row = "24", Bay = "12", Tier = "2" },
+                    sa1,
+                    new Container(
+                        Guid.NewGuid(),
+                        new ContainerNumber { Value = "CMAU2468102" },
+                        CargoType.GENERAL_CONSUMER_PRODUCTS,
+                        new Designation { Value = "chilly yummy food" }
+                    )
+                ),
+                new CargoTransport(
+                    new ContainerPosition { Row = "26", Bay = "13", Tier = "1" },
+                    sa1,
+                    new Container(
+                        Guid.NewGuid(),
+                        new ContainerNumber { Value = "EFGH6543215" },
+                        CargoType.OTHER,
+                        new Designation { Value = "miscellaneous items" }
+                    )
+                ),
+                new CargoTransport(
+                    new ContainerPosition { Row = "28", Bay = "14", Tier = "0" },
+                    sa1,
+                    new Container(
+                        Guid.NewGuid(),
+                        new ContainerNumber { Value = "IJKL0987658" },
+                        CargoType.GENERAL_CONSUMER_PRODUCTS,
+                        new Designation { Value = "various goods" }
+                    )
+                ),
+                new CargoTransport(
+                    new ContainerPosition { Row = "30", Bay = "15", Tier = "5" },
+                    sa1,
+                    new Container(
+                        Guid.NewGuid(),
+                        new ContainerNumber { Value = "MNOP5678908" },
+                        CargoType.ELECTRONICS,
+                        new Designation { Value = "electronic devices" }
+                    )
+                )
+            }
         );
 
         VesselVisitNotification vvn7 = new VesselVisitNotification(
@@ -519,7 +616,54 @@ public static class Bootstrap
             new DateTime(2025, 11, 14, 17, 0, 0),
             false,
             vessel3,
-            vessel3.Owner.Representatives.First()
+            vessel3.Owner.Representatives.First(),
+            null, null,
+            new List<CargoTransport>()
+            {
+                new CargoTransport(
+                    new ContainerPosition { Row = "28", Bay = "14", Tier = "6" },
+                    sa1,
+                    new Container(
+                        Guid.NewGuid(),
+                        new ContainerNumber { Value = "EFGH6543215" },
+                        CargoType.OTHER,
+                        new Designation { Value = "chemical products" }
+                    )
+                ),
+                new CargoTransport(
+                    new ContainerPosition { Row = "30", Bay = "15", Tier = "7" },
+                    sa1,
+                    new Container(
+                        Guid.NewGuid(),
+                        new ContainerNumber { Value = "IJKL0987658" },
+                        CargoType.OVERSIZED_INDUSTRIAL_EQUIPMENT,
+                        new Designation { Value = "industrial machinery" }
+                    )
+                )
+            },
+            new List<CargoTransport>()
+            {
+                new CargoTransport(
+                    new ContainerPosition { Row = "32", Bay = "16", Tier = "4" },
+                    sa1,
+                    new Container(
+                        Guid.NewGuid(),
+                        new ContainerNumber { Value = "ZXCV1122339" },
+                        CargoType.GENERAL_CONSUMER_PRODUCTS,
+                        new Designation { Value = "assorted goods" }
+                    )
+                ),
+                new CargoTransport(
+                    new ContainerPosition { Row = "34", Bay = "17", Tier = "3" },
+                    sa1,
+                    new Container(
+                        Guid.NewGuid(),
+                        new ContainerNumber { Value = "QWER5566774" },
+                        CargoType.ELECTRONICS,
+                        new Designation { Value = "various electronic items" }
+                    )
+                )
+            }
         );
 
         VesselVisitNotification vvn8 = new VesselVisitNotification(
@@ -532,7 +676,21 @@ public static class Bootstrap
             new DateTime(2025, 11, 13, 16, 0, 0),
             false,
             vessel4,
-            vessel4.Owner.Representatives.First()
+            vessel4.Owner.Representatives.First(),
+            null, null,
+            new List<CargoTransport>()
+            {
+                new CargoTransport(
+                    new ContainerPosition { Row = "36", Bay = "18", Tier = "8" },
+                    sa1,
+                    new Container(
+                        Guid.NewGuid(),
+                        new ContainerNumber { Value = "TYUI7788993" },
+                        CargoType.OVERSIZED_INDUSTRIAL_EQUIPMENT,
+                        new Designation { Value = "industrial machinery" }
+                    )
+                )
+            }
         );
 
         VesselVisitNotification vvn9 = new VesselVisitNotification(

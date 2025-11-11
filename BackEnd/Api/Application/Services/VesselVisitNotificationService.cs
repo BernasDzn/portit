@@ -249,21 +249,34 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         // In the future, we might need to handle multiple docks
         var filteredNotifications = notifications.Where(n => n.GetLatestDecision()!.AssignedDock!.Code.Value == dockCode.Value);
 
-        foreach (var notification in filteredNotifications)
+        try
         {
-            var decision = notification.GetLatestDecision()!;
-            var vessel = notification.Vessel;
-
-            VesselTaskFactDto vesselTaskFact = new VesselTaskFactDto
+            foreach (var notification in filteredNotifications)
             {
-                Vessel = vessel.ToDTO(),
-                ETA = CalculateBaseHour(date, notification.ExpectedArrival),
-                ETD = CalculateBaseHour(date, notification.ExpectedDeparture),
-                LoadingTime = await CalculateLoadUnloadingTime(notification.LoadCargoManifest ?? new List<CargoTransport>(), dock),
-                UnloadingTime = await CalculateLoadUnloadingTime(notification.UnloadCargoManifest ?? new List<CargoTransport>(), dock),
-            };
+                var decision = notification.GetLatestDecision()!;
+                var vessel = notification.Vessel;
 
-            result.VesselTaskFacts.Add(vesselTaskFact);
+                VesselTaskFactDto vesselTaskFact = new VesselTaskFactDto
+                {
+                    Vessel = vessel.ToDTO(),
+                    ETA = CalculateBaseHour(date, notification.ExpectedArrival),
+                    ETD = CalculateBaseHour(date, notification.ExpectedDeparture),
+                    LoadingTime = await CalculateLoadUnloadingTime(notification.LoadCargoManifest ?? new List<CargoTransport>(), dock),
+                    UnloadingTime = await CalculateLoadUnloadingTime(notification.UnloadCargoManifest ?? new List<CargoTransport>(), dock),
+                };
+
+                result.VesselTaskFacts.Add(vesselTaskFact);
+            }
+        }
+        catch (System.Exception e)
+        {
+            result.VesselTaskFacts.Clear();
+            result.Comment = "Error calculating scheduling data. " + e.Message;
+        }
+
+        foreach (var vt in result.VesselTaskFacts)
+        {
+            Console.WriteLine($"Vessel {vt.Vessel.Name} - ETA: {vt.ETA}, ETD: {vt.ETD}, LoadingTime: {vt.LoadingTime}, UnloadingTime: {vt.UnloadingTime}");
         }
 
         AppLogEvents.LogRetrieve(_logger, "scheduling data", result.VesselTaskFacts.Count);
@@ -275,9 +288,11 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         return (uint)(target - pivot).TotalHours;
     }
 
-    private async Task<uint> CalculateLoadUnloadingTime(ICollection<CargoTransport> cargoManifest, Dock dock)
+    private async Task<double> CalculateLoadUnloadingTime(ICollection<CargoTransport> cargoManifest, Dock dock)
     {
         IEnumerable<STSCrane> cranesServingDock = await _physicalResourceRepository.GetSTSCranesByDockCodeAsync(dock.Code.Value);
+        // Select only available cranes
+        cranesServingDock = cranesServingDock.Where(c => c.Status == ResourceStatus.Available);
 
         if (!cranesServingDock.Any())
             throw new EntityNotFoundException($"No STS cranes found serving dock with code {dock.Code.Value}.");
@@ -288,6 +303,10 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         STSCrane selectedCrane = cranesServingDock.OrderBy(c => c.ContainersPerHour).First();
         uint totalContainers = (uint)cargoManifest.Count;
 
-        return (uint)Math.Ceiling((double)totalContainers / selectedCrane.ContainersPerHour);
+        Console.WriteLine($"Selected crane {selectedCrane.Description} with capacity {selectedCrane.ContainersPerHour} containers/hour for dock {dock.Code.Value}.");
+        Console.WriteLine($"Total containers to handle: {totalContainers}.");
+        Console.WriteLine($"Estimated time: {Math.Ceiling((double)totalContainers / (double)selectedCrane.ContainersPerHour)} hours.");
+
+        return (double)totalContainers / (double)selectedCrane.ContainersPerHour;
     }
 }

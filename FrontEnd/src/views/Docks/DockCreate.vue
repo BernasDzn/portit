@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
-import { AxiosHttpService } from '@/service/AxiosHttpService';
-import { DockService } from '@/service/DockService';
+import type { IDockService } from '@/service/IService/IDockService';
 import type { Dock } from '@/model/Dock';
-import { VesselTypeService } from '@/service/VesselTypeService';
+import type { IVesselTypeService } from '@/service/IService/IVesselTypeService';
 import EntityForm from '@/components/crud/EntityForm.vue';
 import EntityDropdown from '@/components/crud/EntityDropdown.vue';
 import FormField from '@/components/crud/FormField.vue';
 import {useI18n} from 'vue-i18n';
-import VesselTypePrinter from '@/components/printers/VesselTypePrinter.vue';
+import { container } from '@/inversify.config';
+import TYPES from '@/inversify/types';
 
 const { t } = useI18n();
 
@@ -24,9 +24,8 @@ const dock = ref<Dock>({
     supportedVesselTypes: []
 });
 
-const http = new AxiosHttpService();
-const dockService = new DockService(http);
-const vesselTypeService = new VesselTypeService(http);
+const dockService = container.get<IDockService>(TYPES.dockService);
+const vesselTypeService = container.get<IVesselTypeService>(TYPES.vesselTypeService);
 
 const submitDock = (obj: any) => 
     dockService.createDock(obj);
@@ -105,12 +104,6 @@ const submitDock = (obj: any) =>
     margin-top: 0.5rem;
     margin-left: 0.5rem;
     max-width: 30rem;
-}
-
-.section-divider {
-    width: 1px;
-    margin: 0 2rem;
-    background-color: var(--sl-color-neutral-200);
 }
 
 .section-title {

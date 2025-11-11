@@ -6,5 +6,5 @@ export interface IVesselService {
     createVessel(vessel: Vessel): Promise<Vessel>;
     getVesselByIMO(imo: string): Promise<Vessel>;
     updateVessel(imo: string, vessel: Vessel): Promise<Vessel>;
-    // filter
+    getNumberOfVessels(): Promise<number>;
 }

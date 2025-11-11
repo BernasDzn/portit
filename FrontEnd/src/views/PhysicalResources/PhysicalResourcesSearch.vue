@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import ListingBox from '@/components/crud/ListingBox.vue';
 import PhysicalResourcePrinter from '@/components/printers/PhysicalResourcePrinter.vue';
+import { container } from '@/inversify.config';
+import TYPES from '@/inversify/types';
 import type { Filter, Page } from '@/model/Page';
 import type { PhysicalResource, PhysicalResourceFilter } from '@/model/PhysicalResource';
-import AxiosHttpService from '@/service/AxiosHttpService';
-import { PhysicalResourceService } from '@/service/PhysicalResourceService';
+import type { IPhysicalResourceService } from '@/service/IService/IPhysicalResourceService';
 import { useI18n } from 'vue-i18n';
 
-const http = new AxiosHttpService()
-const resourceService = new PhysicalResourceService(http as any)
+const resourceService = container.get<IPhysicalResourceService>(TYPES.physicalResourceService);
 
 const fetchResources = async (filtering?: Filter<PhysicalResourceFilter>): Promise<Page<PhysicalResource>> => {
     return await resourceService.getPhysicalResources(filtering);

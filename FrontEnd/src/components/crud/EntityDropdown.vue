@@ -161,6 +161,7 @@ function onChange(e) {
                 :required="required"
                 :multiple="multiple"
                 :placeholder="placeholderText"
+                hoist
             >
                 <sl-option
                     v-for="(opt, idx) in options"
