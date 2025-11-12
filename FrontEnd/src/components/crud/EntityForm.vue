@@ -75,8 +75,9 @@ const submit = async () => {
         
     } catch (error) {
         
+        // Include reponse message in notification if available
         notification.enqueueNotification(
-            'Failed to submit form.',
+            'Failed to submit form: ' + ((error as any)?.response?.data || (error as Error).message),
             notification.notificationTypes.DANGER,
         );
         

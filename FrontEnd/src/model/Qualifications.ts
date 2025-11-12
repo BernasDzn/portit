@@ -27,11 +27,4 @@ export class Qualification {
             qualificationName: this.qualificationName,
         };
     }
-
-    static fromDto(dto: QualificationDto): Qualification {
-        return new Qualification({
-            idCode: dto.idCode,
-            qualificationName: dto.qualificationName,
-        });
-    }
 }

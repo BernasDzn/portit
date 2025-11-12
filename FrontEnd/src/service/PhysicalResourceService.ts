@@ -5,6 +5,7 @@ import type { IHttpService } from './IService/IHttpService';
 import type { Filter, Page } from '@/model/Page';
 import type { IPhysicalResourceService } from './IService/IPhysicalResourceService';
 import type { PhysicalResourceFilter, PhysicalResource, STSCrane, YardCrane, Truck } from '@/model/PhysicalResource';
+import type { STSCraneDto, TruckDto, YardCraneDto } from '@/model/dto/PhysicalResourceDto';
 
 @injectable()
 export class PhysicalResourceService implements IPhysicalResourceService {
@@ -43,34 +44,34 @@ export class PhysicalResourceService implements IPhysicalResourceService {
         return res.data;
     }
 
-    async addSTSCrane(value: STSCrane): Promise<STSCrane> {
+    async addSTSCrane(value: STSCraneDto): Promise<STSCrane> {
         // console.log('Adding STS Crane:', JSON.stringify(value));
         const res = await this.http.post<PhysicalResource>(`/PhysicalResource/AddSTSCrane`, value);
         return res.data as STSCrane;
     }
 
-    async updateSTSCrane(code: string, value: STSCrane): Promise<STSCrane> {
-        const res = await this.http.put<PhysicalResource>(`/PhysicalResource/UpdateSTSCrane/${code}`, value);
+    async updateSTSCrane(value: STSCraneDto): Promise<STSCrane> {
+        const res = await this.http.put<PhysicalResource>(`/PhysicalResource/UpdateSTSCrane/${value.code}`, value);
         return res.data as STSCrane;
     }
 
-    async addYardCrane(value: YardCrane): Promise<YardCrane> {
+    async addYardCrane(value: YardCraneDto): Promise<YardCrane> {
         const res = await this.http.post<PhysicalResource>(`/PhysicalResource/AddYardCrane`, value);
         return res.data as YardCrane;
     }
 
-    async updateYardCrane(code: string, value: YardCrane): Promise<YardCrane> {
-        const res = await this.http.put<PhysicalResource>(`/PhysicalResource/UpdateYardCrane/${code}`, value);
+    async updateYardCrane(value: YardCraneDto): Promise<YardCrane> {
+        const res = await this.http.put<PhysicalResource>(`/PhysicalResource/UpdateYardCrane/${value.code}`, value);
         return res.data as YardCrane;
     }
 
-    async addTruck(value: Truck): Promise<Truck> {
+    async addTruck(value: TruckDto): Promise<Truck> {
         const res = await this.http.post<PhysicalResource>(`/PhysicalResource/AddTruck`, value);
         return res.data as Truck;
     }
 
-    async updateTruck(code: string, value: Truck): Promise<Truck> {
-        const res = await this.http.put<PhysicalResource>(`/PhysicalResource/UpdateTruck/${code}`, value);
+    async updateTruck(value: TruckDto): Promise<Truck> {
+        const res = await this.http.put<PhysicalResource>(`/PhysicalResource/UpdateTruck/${value.code}`, value);
         return res.data as Truck;
     }
 

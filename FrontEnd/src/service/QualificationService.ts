@@ -37,20 +37,13 @@ export class QualificationService implements IQualificationService {
             query.push(filtering.pageSize !== undefined ? `PageSize=${filtering.pageSize}` : '');
         }
 
-		const res = await this.http.get<Page<QualificationDto>>(`/Qualification/filter${query.length ? `?${query.join('')}` : ''}`);
-		
-        const items = res.data.items.map((dto) => Qualification.fromDto(dto));
-        return new Page<Qualification>({
-            items: items,
-            pageNumber: res.data.pageNumber,
-            pageSize:  res.data.pageSize,
-            pageCount: res.data.pageCount,
-        });
+		const res = await this.http.get<Page<Qualification>>(`/Qualification/filter${query.length ? `?${query.join('')}` : ''}`);
+        return res.data;
 	}
     
     async getQualificationById(id: string): Promise<Qualification> {
-        const res = await this.http.get<QualificationDto>(`/Qualification/${id}`);
-        return Qualification.fromDto(res.data);
+        const res = await this.http.get<Qualification>(`/Qualification/${id}`);
+        return res.data;
     }
 
     async getNumberOfQualifications(): Promise<number> {
