@@ -20,12 +20,12 @@ const notifications = useAlerts();
 
 const qualificationService = container.get<IQualificationService>(TYPES.qualificationService);
 
-const qualification = ref<Qualification>({
+const qualification = ref<QualificationDto>({
     idCode: qualificationId,
     qualificationName: ''
 });
 
-const updateQualification = async (obj: Qualification) => {
+const updateQualification = async (obj: QualificationDto) => {
     if (!qualificationId) {
         notifications.enqueueNotification(
             'Cannot update qualifications at this time.',
@@ -34,7 +34,7 @@ const updateQualification = async (obj: Qualification) => {
         return;
     }
 
-    qualificationService.updateQualification(qualificationId, obj);
+    qualificationService.updateQualification(obj);
 };
 
 const getById = async (id: string) => 

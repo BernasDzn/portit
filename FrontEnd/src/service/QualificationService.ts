@@ -3,8 +3,9 @@ import { TYPES } from '@/inversify/types';
 
 import type { IHttpService } from './IService/IHttpService';
 import type { IQualificationService } from './IService/IQualificationService';
-import type { Qualification } from '@/model/Qualifications';
-import type { Filter, Page } from '@/model/Page';
+import { Qualification } from '@/model/Qualifications';
+import { Page, type Filter } from '@/model/Page';
+import type { QualificationDto } from '@/model/dto/QualificationDto';
 
 @injectable()
 export class QualificationService implements IQualificationService {
@@ -14,12 +15,12 @@ export class QualificationService implements IQualificationService {
 		private http: IHttpService
 	){}
 
-    async updateQualification(id: string, value: Qualification): Promise<Qualification> {
-        const res = await this.http.put<Qualification>(`/Qualification/${id}`, value);
+    async updateQualification(value: QualificationDto): Promise<Qualification> {
+        const res = await this.http.put<Qualification>(`/Qualification/${value.idCode}`, value);
         return res.data;
     }
 
-    async addQualification(value: Qualification): Promise<Qualification> {
+    async addQualification(value: QualificationDto): Promise<Qualification> {
         
         const res = await this.http.post<Qualification>('/Qualification', value);
         return res.data;
@@ -36,14 +37,20 @@ export class QualificationService implements IQualificationService {
             query.push(filtering.pageSize !== undefined ? `PageSize=${filtering.pageSize}` : '');
         }
 
-		const res = await this.http.get<Page<Qualification>>(`/Qualification/filter${query.length ? `?${query.join('')}` : ''}`);
-
-		return res.data;
+		const res = await this.http.get<Page<QualificationDto>>(`/Qualification/filter${query.length ? `?${query.join('')}` : ''}`);
+		
+        const items = res.data.items.map((dto) => Qualification.fromDto(dto));
+        return new Page<Qualification>({
+            items: items,
+            pageNumber: res.data.pageNumber,
+            pageSize:  res.data.pageSize,
+            pageCount: res.data.pageCount,
+        });
 	}
     
     async getQualificationById(id: string): Promise<Qualification> {
-        const res = await this.http.get<Qualification>(`/Qualification/${id}`);
-        return res.data;
+        const res = await this.http.get<QualificationDto>(`/Qualification/${id}`);
+        return Qualification.fromDto(res.data);
     }
 
     async getNumberOfQualifications(): Promise<number> {

@@ -10,14 +10,14 @@ import TYPES from '@/inversify/types';
 
 const qualificationService = container.get<IQualificationService>(TYPES.qualificationService);
 
-const qualification = ref<Qualification>({
+const qualification = ref<QualificationDto>({
     idCode: '',
     qualificationName: ''
 });
 
 const { t } = useI18n();
 
-const submitQualification = (obj: Qualification) => 
+const submitQualification = (obj: QualificationDto) => 
     qualificationService.addQualification(obj);
 
 </script>
