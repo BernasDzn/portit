@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import {loadModel, loadModelRaw} from "./helpers/model_helper.ts";
 import {makeBillboard} from "./helpers/billboard_helper.ts";
-import Vessel, { Crane } from "./entities.ts";
+import Vessel, { Crane, Seagull } from "./entities.ts";
 import PickHelper from "./helpers/pick_helper.ts";
 import { hideInfoText, setInfoText } from "./helpers/info_helper.ts";
 
@@ -210,10 +210,13 @@ export default class PortLayout {
     lighthouse;
     lighthouseLight;
 
+    showPaths = false;
+
     picker;
 
     vesselList = []; // The vessels in the port
     craneList = []; // The cranes in the port
+    seagullList = []; // The seagulls in the port
     chunkData = []; // The chunks that make up the port layout
 
     constructor(scene, camera) {
@@ -244,6 +247,18 @@ export default class PortLayout {
         for (let chunk of this.chunkData) {
             chunk.init(scene);
         }
+    }
+
+    togglePaths(visible) {
+        this.showPath = visible;
+
+        this.vesselList.forEach((vessel) => {
+            vessel.setPathVisible(visible);
+        });
+
+        this.seagullList.forEach((seagull) => {
+            seagull.setPathVisible(visible);
+        });
     }
 
     // Load terrain
@@ -281,10 +296,20 @@ export default class PortLayout {
         scene.add(this.lighthouseLight);
     }
 
+    async addSeagull(scene) {
+
+        const model = await loadModel("/visualizer/models/seagull.obj");
+        let seagull = new Seagull(model, new THREE.Vector3(0, 0, 0), this);
+        seagull.init(scene);
+
+        this.seagullList.push(seagull);
+    }
+
+
     async addVessel(name, position, scene) {
 
         const model = await loadModel("/visualizer/models/vessel/12219_boat_v2_L2.obj");
-        let vessel = new Vessel(name, model, position);
+        let vessel = new Vessel(name, model, position, this);
         vessel.init(scene);
 
         this.vesselList.push(vessel);
@@ -326,6 +351,10 @@ export default class PortLayout {
             if (chunk instanceof BuoyChunk) {
                 chunk.update();
             }
+        });
+
+        this.seagullList.forEach((seagull) => {
+            seagull.update();
         });
     }
 

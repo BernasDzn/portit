@@ -30,9 +30,9 @@ export default class Port3D {
     composer; // Post-processing composer
     portsProcessing = {
         bloom: {
-            strength: 0.8,
-            radius: 0.55,
-            threshold: 0.72
+            strength: 0.5,
+            radius: 0.8,
+            threshold: 0.6
         }
     }
 
@@ -98,6 +98,9 @@ export default class Port3D {
         // Add port base
         this.portLayout = new PortLayout(this.scene, this.camera);
         this.portLayout.addVessel("Vessel 1", new THREE.Vector3(0, -12, -40), this.scene);
+
+        for (let i = 0; i < 3; i++) 
+            this.portLayout.addSeagull(this.scene);
 
         this.portLayout.addCrane("Crane 1", new THREE.Vector3(-100, 0, -25), this.scene, 90);
 

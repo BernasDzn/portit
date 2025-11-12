@@ -37,4 +37,9 @@ export default function setupGUI(port3D) {
     cameraRotationFolder.add(port3D.camera.rotation, 'y', -Math.PI, Math.PI).listen();
     cameraRotationFolder.add(port3D.camera.rotation, 'z', -Math.PI, Math.PI).listen();
     cameraRotationFolder.open();
+
+    const splineFolder = gui.addFolder('Spline Path');
+    splineFolder.add(port3D.portLayout, 'showPaths').name('Toggle Paths').onChange(() => {
+        port3D.portLayout.togglePaths(!port3D.portLayout.showPaths);
+    });
 }

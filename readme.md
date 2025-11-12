@@ -79,3 +79,4 @@ Every asset that is not in the list bellow is of our own
 - [Lighthouse 3D Model by apocalypse_67](https://free3d.com/3d-model/lighthouse-44581.html)
 - [Threex.daynight](https://github.com/jeromeetienne/threex.daynight)
 - [Wooden texture background by dotstudio](https://www.freepik.com/free-vector/wooden-texture-background_851099.htm#fromView=keyword&page=1&position=3&uuid=c4d347d5-55a6-479e-8835-00f7babebaa7&query=Wooden+road+texture)
+- [Flying seagull](https://sketchfab.com/3d-models/flying-seagull-07dde3ea7d9048588d3c4edfd37ac20d)

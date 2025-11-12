@@ -63,26 +63,26 @@ const submit = async () => {
     buttonLoading.value = true;
     console.log(props.object);
     console.log(props.submitFunction);
-    props.submitFunction(props.object)
-    .catch((error: any) => {
-        notification.enqueueNotification(
-            error.response?.data || error.message || 'Could not pinpoint the error. Please try again later.',
-            notification.notificationTypes.DANGER,
-        );
-
-        buttonLoading.value = false;
-        return Promise.reject(error);
-    })
-    .then(() => {
+    
+    try {
+    
+        const res = await props.submitFunction(props.object)
         notification.enqueueNotification(
             props.successMessage,
             notification.notificationTypes.SUCCESS,
         );
-
         router.back();
-            
-    });
-
+        
+    } catch (error) {
+        
+        notification.enqueueNotification(
+            'Failed to submit form.',
+            notification.notificationTypes.DANGER,
+        );
+        
+    } finally {
+        buttonLoading.value = false;
+    }
 }
 
 const onCancel = () => {
