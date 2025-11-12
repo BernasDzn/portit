@@ -46,6 +46,7 @@ async function createWaterFromPlaneGeometry(object, scene) {
 export default class Environment {
 
     ambientLight;
+    hemisphereLight;
     directionalLight; pointLight;
     skybox;
 
@@ -64,21 +65,23 @@ export default class Environment {
     }
 
     camera;
+    scene;
 
     async init(scene, camera) {
 
         this.camera = camera;
+        this.scene = scene;
 
         // Ambient light
-        this.ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        this.ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
         scene.add(this.ambientLight);
 
-        // Directional light
-        this.directionalLight = new THREE.DirectionalLight(0xffffff, 1.0);
-        this.directionalLight.position.set(5, 10, 7.5);
-        this.directionalLight.castShadow = true;
-
-        scene.add(this.directionalLight);
+        this.hemisphereLight = new THREE.HemisphereLight(
+            0x87ceeb,
+            0x2c3e50,
+            0.0
+        );
+        scene.add(this.hemisphereLight);
 
         // const testCube = new THREE.BoxGeometry(5, 5, 5);
         // const testCubeMesh = new THREE.Mesh(testCube);
@@ -90,6 +93,17 @@ export default class Environment {
         this.sunSphere = new THREEx.DayNight.SunSphere();
         scene.add(this.sunSphere.object3d);
         this.sunLight = new THREEx.DayNight.SunLight();
+        
+        this.sunLight.object3d.castShadow = true;
+        this.sunLight.object3d.shadow.mapSize.width = 4096;
+        this.sunLight.object3d.shadow.mapSize.height = 4096;
+        this.sunLight.object3d.shadow.camera.near = 1;
+        this.sunLight.object3d.shadow.camera.far = 100000; // sun distance is 90000
+        this.sunLight.object3d.shadow.camera.left = -600;
+        this.sunLight.object3d.shadow.camera.right = 600;
+        this.sunLight.object3d.shadow.camera.top = 600;
+        this.sunLight.object3d.shadow.camera.bottom = -600;
+        
         scene.add(this.sunLight.object3d);
         this.skydom	= new THREEx.DayNight.Skydom()
         scene.add(this.skydom.object3d);
@@ -150,5 +164,33 @@ export default class Environment {
         this.sunLight.update(this.sunAngle);
         this.skydom.update(this.sunAngle);
         //console.log(this.starField);
+        
+        if (this.sunLight && this.sunLight.object3d) {
+            var phase = Math.sin(this.sunAngle) > Math.sin(0) ? 'day' : 
+                       Math.sin(this.sunAngle) > Math.sin(-Math.PI/6) ? 'twilight' : 'night';
+            
+            if (phase === 'night') {
+                this.hemisphereLight.intensity = 0.5;
+            } else if (phase === 'twilight') {
+                this.hemisphereLight.intensity = 0.15;
+            } else {
+                this.hemisphereLight.intensity = 0.0;
+            }
+            
+            if (!this.sunLight.object3d.target.parent) {
+                this.scene.add(this.sunLight.object3d.target);
+            }
+            this.sunLight.object3d.target.position.set(0, 0, 0);
+            this.sunLight.object3d.target.updateMatrixWorld();
+            
+            this.sunLight.object3d.updateMatrixWorld(true);
+            
+            if (this.sunLight.object3d.shadow && this.sunLight.object3d.shadow.camera) {
+                this.sunLight.object3d.shadow.camera.position.copy(this.sunLight.object3d.position);
+                this.sunLight.object3d.shadow.camera.lookAt(0, 0, 0);
+                this.sunLight.object3d.shadow.camera.updateProjectionMatrix();
+                this.sunLight.object3d.shadow.camera.updateMatrixWorld(true);
+            }
+        }
     }
 }

@@ -284,14 +284,30 @@ export default class PortLayout {
         // Lighthouse
         this.lighthouse = await loadModelRaw("/visualizer/models/lighthouse.obj");
         this.lighthouse.scale.set(0.4, 0.4, 0.4);
-        this.lighthouse.position.set(-250, layoutY + 10, 250);   
+        this.lighthouse.position.set(-250, layoutY + 10, 250);
+
+        this.lighthouse.traverse((child) => {
+            if (child.isMesh) {
+                child.castShadow = true;
+                child.receiveShadow = true;
+            }
+        });
 
         scene.add(this.lighthouse);
 
-        // Lighthouse light
-        this.lighthouseLight = new THREE.PointLight(0xffffff, 2, 200); 
-        this.lighthouseLight.position.set(-250, layoutY, 250);
+        this.lighthouseLight = new THREE.SpotLight(0xffffaa, 75000, 0, Math.PI / 5, 0.2, 2);
+        this.lighthouseLight.position.set(-249.2, layoutY + 130, 239.8);
         this.lighthouseLight.castShadow = true;
+        
+        this.lighthouseLight.shadow.mapSize.width = 2048;
+        this.lighthouseLight.shadow.mapSize.height = 2048;
+        this.lighthouseLight.shadow.camera.near = 10;
+        this.lighthouseLight.shadow.camera.far = 1000;
+        this.lighthouseLight.shadow.camera.fov = 60;
+        this.lighthouseLight.shadow.bias = -0.0001;
+        
+        this.lighthouseLight.target.position.set(-249.2, layoutY + 130, 300);
+        scene.add(this.lighthouseLight.target);
 
         scene.add(this.lighthouseLight);
     }
@@ -356,6 +372,22 @@ export default class PortLayout {
         this.seagullList.forEach((seagull) => {
             seagull.update();
         });
+
+        if (this.lighthouseLight && this.lighthouseLight.target) {
+            const time = Date.now() * 0.0005;
+            const lighthouseCenter = { x: -249.2, z: 239.8 };
+            const lightRadius = 5;
+            const targetRadius = 200;
+            
+            const lightX = lighthouseCenter.x + Math.cos(time) * lightRadius;
+            const lightZ = lighthouseCenter.z + Math.sin(time) * lightRadius;
+            this.lighthouseLight.position.set(lightX, layoutY + 125, lightZ);
+            
+            const targetX = lighthouseCenter.x + Math.cos(time) * targetRadius;
+            const targetZ = lighthouseCenter.z + Math.sin(time) * targetRadius;
+            this.lighthouseLight.target.position.set(targetX, layoutY + 125, targetZ);
+            this.lighthouseLight.target.updateMatrixWorld();
+        }
     }
 
     selectedObject;
