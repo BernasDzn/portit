@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { StorageAreaCreate } from '@/model/StorageArea';
 import EntityDropdown from '@/components/crud/EntityDropdown.vue';
 import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
@@ -10,13 +9,14 @@ import { container } from '@/inversify.config';
 import type { IStorageAreaService } from '@/service/IService/IStorageAreaService';
 import TYPES from '@/inversify/types';
 import type { IDockService } from '@/service/IService/IDockService';
+import type { StorageAreaDto } from '@/model/dto/StorageAreaDto';
 
 const storageAreaService = container.get<IStorageAreaService>(TYPES.storageAreaService);
 const dockService = container.get<IDockService>(TYPES.dockService);
 
 const { t } = useI18n();
 
-const storageArea = ref<StorageAreaCreate>({
+const storageArea = ref<StorageAreaDto>({
     nameCode: '',
     location: '',
     type: 0,
@@ -30,15 +30,15 @@ const allDocks = ref<Array<Dock>>([]);
 function updateDockRelations(dockCodes: string[]) {
     const selected = new Set(dockCodes || [])
 
-    storageArea.value.dockServices = storageArea.value.dockServices.filter(rel => selected.has(rel.dockCode))
+    storageArea.value.dockServices = storageArea.value.dockServices.filter(rel => selected.has(rel.dock))
 
     // Add new relations for any selected codes not already present
     dockCodes.forEach(dockCode => {
-        const existingRelation = storageArea.value.dockServices.find(relation => relation.dockCode === dockCode);
+        const existingRelation = storageArea.value.dockServices.find(relation => relation.dock === dockCode);
         if (!existingRelation) {
             const dock = allDocks.value.find(d => d.code === dockCode);
             if (dock) {
-                storageArea.value.dockServices.push({ dockCode: dock.code, isServingDock: true });
+                storageArea.value.dockServices.push({ dock: dock.code, isServingDock: true });
             }
         }
     });
@@ -58,7 +58,7 @@ const submitStorageArea = (obj: any) =>
 <template>
     <div>
         <sl-breadcrumb>
-            <sl-breadcrumb-item><RouterLink to="/storage-area/dashboard" class="breadcrumb-link">{{ t('storageArea.tabs.dashboard') }}</RouterLink></sl-breadcrumb-item>
+            <sl-breadcrumb-item><RouterLink to="/storage-areas/dashboard" class="breadcrumb-link">{{ t('storageArea.tabs.dashboard') }}</RouterLink></sl-breadcrumb-item>
             <sl-breadcrumb-item>{{ t('storageArea.tabs.create') }}</sl-breadcrumb-item>
         </sl-breadcrumb>
 
@@ -97,9 +97,9 @@ const submitStorageArea = (obj: any) =>
                         @sl-change="console.log($event.target.value), updateDockRelations($event.target.value)"
                     />
                     <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
-                        <sl-card class="card-header" style="width: fit-content;" v-for="dock in storageArea.dockServices" :key="dock.dockCode" >
+                        <sl-card class="card-header" style="width: fit-content;" v-for="dock in storageArea.dockServices" :key="dock.dock" >
                             <div slot="header">
-                                {{ dock.dockCode }} {{ t('storageArea.create.distance_meters') }}
+                                {{ dock.dock }} {{ t('storageArea.create.distance_meters') }}
                             </div>
                             <FormField class="field" :name="`null`" v-model="dock.distance" :placeholderText="t('storageArea.create.distance_meters')" pattern="^[0-9]+(\.[0-9]{1,2})?$" required/>
                         </sl-card>

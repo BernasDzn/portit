@@ -5,7 +5,7 @@ import FormField from '@/components/crud/FormField.vue';
 import OperationalWindowPicker from '@/components/OperationalWindowPicker.vue';
 import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
-import type { StaffCreate } from '@/model/Staff';
+import type { StaffDto } from '@/model/dto/StaffDto';
 import type { IQualificationService } from '@/service/IService/IQualificationService';
 import type { IStaffService } from '@/service/IService/IStaffService';
 import { ref } from 'vue';
@@ -14,7 +14,7 @@ import { useI18n } from 'vue-i18n';
 const staffService = container.get<IStaffService>( TYPES.staffService );
 const qualificationService = container.get<IQualificationService>( TYPES.qualificationService );
 
-const staff = ref<StaffCreate>({
+const staff = ref<StaffDto>({
     mechanographicNumber: '',
     name: '',
     email: '',

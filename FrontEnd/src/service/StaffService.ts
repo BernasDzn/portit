@@ -1,10 +1,11 @@
 import {inject, injectable} from 'inversify';
 import { TYPES } from '@/inversify/types';
 
-import type { Staff, StaffCreate } from '@/model/Staff';
+import type { Staff } from '@/model/Staff';
 import type { IStaffService } from './IService/IStaffService';
 import type { IHttpService } from './IService/IHttpService';
 import type { Filter, Page } from '@/model/Page';
+import type { StaffDto } from '@/model/dto/StaffDto';
 
 @injectable()
 export class StaffService implements IStaffService {
@@ -39,7 +40,7 @@ export class StaffService implements IStaffService {
 		return staff!;
 	}
 
-	async createStaff(staff: StaffCreate): Promise<Staff> {
+	async createStaff(staff: StaffDto): Promise<Staff> {
 		const res =  await this.http.post<Staff>('/Staff', staff);
 		return res.data;
 	}
@@ -48,8 +49,8 @@ export class StaffService implements IStaffService {
 		await this.http.delete<void>(`/Staff/${mechanographicNumber}`);
 	}
 
-	async updateStaff(mechanographicNumber: string, staff: StaffCreate): Promise<Staff> {
-		const res = await this.http.put<Staff>(`/Staff/${mechanographicNumber}`, staff);
+	async updateStaff(staff: StaffDto): Promise<Staff> {
+		const res = await this.http.put<Staff>(`/Staff/${staff.mechanographicNumber}`, staff);
 		return res.data;
 	}
 

@@ -477,6 +477,9 @@
             "view": "View Storage Area",
             "edit": "Edit Storage Area"
         },
+        "create": {
+            "distance_meters": "Distance (meters)"
+        },
         "infoTitle": "Storage Area Information",
         "title": "Storage Areas",
         "subtitle": {

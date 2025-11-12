@@ -21,6 +21,6 @@ export class ShippingAgentOrganizationService implements IShippingAgentOrganizat
             pageNumber: 1,
             pageSize: response.data.length,
             pageCount: 1
-        };
+        } as Page<ShippingAgentOrganization>;
     }
 }

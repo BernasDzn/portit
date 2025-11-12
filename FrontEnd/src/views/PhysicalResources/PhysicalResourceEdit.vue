@@ -68,7 +68,6 @@ const update = () => {
     case 0:
       return resourceService.updateSTSCrane({
         ...base,
-        type: 'STS Crane',
         liftingCapacity: obj.liftingCapacity,
         servingDockCode: obj.servingDock,
         containersPerHour: obj.containersPerHour,
@@ -76,14 +75,12 @@ const update = () => {
     case 1:
       return resourceService.updateYardCrane({
         ...base,
-        type: 'Yard Crane',
         liftingCapacity: obj.liftingCapacity,
         containersPerHour: obj.containersPerHour,
       });
     case 2:
       return resourceService.updateTruck({
         ...base,
-        type: 'Truck',
         maxLoadCapacity: obj.maxLoadCapacity,
         averageSpeed: obj.averageSpeed,
         containersPerTrip: obj.containersPerTrip,

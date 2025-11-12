@@ -1,10 +1,11 @@
 import {inject, injectable} from 'inversify';
 import { TYPES } from '@/inversify/types';
 
-import type { StorageArea, StorageAreaCreate } from '@/model/StorageArea';
+import type { StorageArea } from '@/model/StorageArea';
 import type { IStorageAreaService } from './IService/IStorageAreaService';
 import type { IHttpService } from './IService/IHttpService';
 import type { Filter, Page } from '@/model/Page';
+import type { StorageAreaDto } from '@/model/dto/StorageAreaDto';
 
 @injectable()
 export class StorageAreaService implements IStorageAreaService {
@@ -31,13 +32,13 @@ export class StorageAreaService implements IStorageAreaService {
 		return res.data;
 	}
 
-	async createStorageArea(storageArea: StorageAreaCreate): Promise<StorageAreaCreate> {
-		const res =  await this.http.post<StorageAreaCreate>('/StorageArea', storageArea);
+	async createStorageArea(storageArea: StorageAreaDto): Promise<StorageArea> {
+		const res =  await this.http.post<StorageArea>('/StorageArea', storageArea);
 		return res.data;
 	}
 
-	async updateStorageArea(id: string, storageArea: StorageArea): Promise<StorageArea> {
-		const res = await this.http.put<StorageArea>(`/StorageArea/${id}`, storageArea);
+	async updateStorageArea(storageArea: StorageAreaDto): Promise<StorageArea> {
+		const res = await this.http.put<StorageArea>(`/StorageArea/${storageArea.nameCode}`, storageArea);
 		return res.data;
 	}
 

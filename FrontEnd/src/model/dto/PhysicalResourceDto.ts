@@ -1,4 +1,4 @@
-import type { OperationalWindow } from "../OperationalWindow";
+import type { OperationalWindow } from "../values/OperationalWindow";
 
 export interface PhysicalResourceDto {
     code: string;

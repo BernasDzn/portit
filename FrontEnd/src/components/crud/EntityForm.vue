@@ -61,8 +61,6 @@ const submit = async () => {
     }
 
     buttonLoading.value = true;
-    console.log(props.object);
-    console.log(props.submitFunction);
     
     try {
     
@@ -74,6 +72,15 @@ const submit = async () => {
         router.back();
         
     } catch (error) {
+
+        if ((error as any)?.response?.status === 400) {
+            // Validation error from server
+            notification.enqueueNotification(
+                'Validation error: ' + (error as any)?.response?.data,
+                notification.notificationTypes.DANGER,
+            );
+            return;
+        }
         
         // Include reponse message in notification if available
         notification.enqueueNotification(

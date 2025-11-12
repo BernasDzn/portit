@@ -1,4 +1,4 @@
-import type { Address } from "./Address";
+import type { Address } from "./values/Address";
 import type { Dock } from "./Dock";
 import type { StorageArea } from "./StorageArea";
 import type { Vessel } from "./Vessel";
