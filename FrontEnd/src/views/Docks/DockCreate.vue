@@ -9,10 +9,11 @@ import FormField from '@/components/crud/FormField.vue';
 import {useI18n} from 'vue-i18n';
 import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
+import type { DockDto } from '@/model/dto/DockDto';
 
 const { t } = useI18n();
 
-const dock = ref<Dock>({
+const dock = ref<DockDto>({
     code: '',
     name: '',
     location: '',

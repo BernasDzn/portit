@@ -4,6 +4,7 @@ import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
 import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
+import type { VesselDto } from '@/model/dto/VesselDto';
 import type { Vessel } from '@/model/Vessel';
 import type { IShippingAgentOrganizationService } from '@/service/IService/IShippingAgentOrganizationService';
 import type { IVesselService } from '@/service/IService/IVesselService';
@@ -20,7 +21,7 @@ const saoService = container.get<IShippingAgentOrganizationService>(TYPES.shippi
 const route = useRoute();
 const vesselIMO = String(route.params.imo || '');
 
-let vessel = ref<Vessel>({
+let vessel = ref<VesselDto>({
     name: '',
     imoNumber: '',
     type: '',
@@ -33,25 +34,27 @@ let vessel = ref<Vessel>({
 
 // Load vessel on mount
 onMounted(async () => {
-    if (!vesselIMO) return;
     try {
-        const data = await vesselService.getVesselByIMO(vesselIMO);
+        const data: Vessel = await vesselService.getVesselByIMO(vesselIMO);
+        if (!data) return;
+        console.log('Loaded vessel data:', data);
+
         vessel.value.name = data.name;
         vessel.value.imoNumber = data.imoNumber;
-        vessel.value.type = data.type.name;
-        vessel.value.owner = data.owner.name;
+        vessel.value.type = data.type?.name || '';
+        vessel.value.owner = data.owner?.name || '';
         vessel.value.length = data.physicalCharacteristics.length;
         vessel.value.depth = data.physicalCharacteristics.depth;
         vessel.value.draft = data.physicalCharacteristics.draft;
+
     } catch (err) {
-        // eslint-disable-next-line no-console
         console.error('Failed to load vessel', err);
     }
 });
 
 // Return the promise so the parent EntityForm can attach .catch/.then handlers
 const submitVessel = (obj: any) =>
-    vesselService.updateVessel(vesselIMO, obj);
+    vesselService.updateVessel(obj);
     
 </script>
 

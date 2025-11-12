@@ -1,10 +1,11 @@
 import { inject, injectable } from 'inversify';
 import { TYPES } from '@/inversify/types';
 
-import type { Dock, DockFilter } from '@/model/Dock';
+import type { Dock } from '@/model/Dock';
 import type { IDockService } from './IService/IDockService';
 import type { IHttpService } from './IService/IHttpService';
 import type { Filter, Page } from '@/model/Page';
+import type { DockDto, DockFilter } from '@/model/dto/DockDto';
 
 @injectable()
 export class DockService implements IDockService {
@@ -36,13 +37,13 @@ export class DockService implements IDockService {
         return res.data;
     }
 
-    async createDock(dock: Dock): Promise<Dock> {
+    async createDock(dock: DockDto): Promise<Dock> {
         const res = await this.http.post<Dock>('/Dock', dock);
         return res.data;
     }
 
-    async updateDock(code: string, dock: Dock): Promise<Dock> {
-        const res = await this.http.put<Dock>(`/Dock/${code}`, dock);
+    async updateDock(dock: DockDto): Promise<Dock> {
+        const res = await this.http.put<Dock>(`/Dock/${dock.code}`, dock);
         return res.data;
     }
 
