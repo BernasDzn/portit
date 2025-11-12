@@ -46,7 +46,7 @@ async function createWaterFromPlaneGeometry(object, scene) {
 export default class Environment {
 
     ambientLight;
-    directionalLight;
+    directionalLight; pointLight;
     skybox;
 
     water;
@@ -79,6 +79,11 @@ export default class Environment {
         this.directionalLight.castShadow = true;
 
         scene.add(this.directionalLight);
+
+        // const testCube = new THREE.BoxGeometry(5, 5, 5);
+        // const testCubeMesh = new THREE.Mesh(testCube);
+        // testCubeMesh.position.set(-100, 30, 100);
+        // scene.add(testCubeMesh);
 
         // Day night cycle 
         this.sunAngle = 1.9;
@@ -121,6 +126,8 @@ export default class Environment {
         waterPlane.rotation.x = -Math.PI / 2;
         waterPlane.position.y = waterLevel;
         waterPlane.name = "WaterPlane";
+        waterPlane.castShadow = true;
+        waterPlane.receiveShadow = true;
         scene.add(waterPlane);
 
         // Make water from water plane

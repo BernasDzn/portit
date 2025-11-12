@@ -40,6 +40,8 @@ export default class Vessel {
         this.model.receiveShadow = true;
         this.model.castShadow = true;
 
+        this.model.isRoot = true;
+
         this.model.children[1].meta = {
             title: 'Vessel',
             description: `${this.name} is a vessel`,
@@ -59,17 +61,20 @@ export default class Vessel {
 
         scene.add(vesselRoot);
 
-        // this.setPath(scene, [
-        //     new THREE.Vector3(this.position.x + 50, this.position.y, this.position.z + 50),
-        //     new THREE.Vector3(this.position.x + 100, this.position.y, this.position.z + 30),
-        //     new THREE.Vector3(this.position.x + 190, this.position.y, this.position.z + 180),
-        // ]);
-        this.makePathFromChunks([
-            {x: 4, y: 4},
-            {x: 3, y: 4},
-            {x: 3, y: 3},
-            {x: 3, y: 2},
+        this.setPath(scene, [
+            new THREE.Vector3(this.position.x + 50, this.position.y, this.position.z + 50),
+            new THREE.Vector3(this.position.x + 100, this.position.y, this.position.z + 30),
+            new THREE.Vector3(this.position.x + 190, this.position.y, this.position.z + 180),
+            new THREE.Vector3(this.position.x + 250, this.position.y, this.position.z + 100),
+            new THREE.Vector3(this.position.x + 300, this.position.y, this.position.z + 150),
+            new THREE.Vector3(this.position.x + 350, this.position.y, this.position.z + 50),
         ]);
+        // this.makePathFromChunks([
+        //     {x: 5, y: 4},
+        //     {x: 5, y: 3},
+        //     {x: 5, y: 4},
+        //     {x: 3, y: 2},
+        // ]);
     }
 
     makePathFromChunks(chunkList) {

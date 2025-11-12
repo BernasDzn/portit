@@ -122,6 +122,9 @@ class LandChunk extends PortChunk {
 }
 
 class BuoyChunk extends PortChunk {
+
+    pointLight;
+
     constructor(x, y) {
         super(x, y);
         this.base = null;
@@ -131,8 +134,8 @@ class BuoyChunk extends PortChunk {
         const model = await loadModel("/visualizer/models/buoy.obj");
 
         // position and scale adjustments
+        this.position.y -= 7;
         model.position.copy(this.position);
-        model.position.y += 10;
         model.scale.set(3, 3, 3);
         model.traverse((child) => {
             if (child.isMesh) {
@@ -143,6 +146,11 @@ class BuoyChunk extends PortChunk {
 
         this.base = model;
         scene.add(this.base);
+
+        this.pointLight = new THREE.PointLight(0xff0000, 10, 100, 0);
+        this.pointLight.position.set(this.position.x + chunkSize.x / 2, this.position.y + 10, this.position.z - chunkSize.z / 2);
+      
+        scene.add(this.pointLight);
     }
 
     update() {
