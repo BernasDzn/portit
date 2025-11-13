@@ -269,6 +269,7 @@ export default class PortLayout {
     terrain;
     lighthouse;
     lighthouseLight;
+    lighthousePointLight;
 
     showPaths = false;
 
@@ -343,14 +344,13 @@ export default class PortLayout {
         scene.add(this.terrain);
 
         // Lighthouse
-        this.lighthouse = await loadModelRaw("/visualizer/models/lighthouse.obj");
+        this.lighthouse = await loadModel("/visualizer/models/lighthouse.obj");
         this.lighthouse.scale.set(0.4, 0.4, 0.4);
         this.lighthouse.position.set(-250, layoutY + 10, 250);
 
         this.lighthouse.traverse((child) => {
             if (child.isMesh) {
-                child.castShadow = true;
-                child.receiveShadow = true;
+                console.log(child.material);
             }
         });
 
@@ -372,6 +372,11 @@ export default class PortLayout {
 
         scene.add(this.lighthouseLight);
 
+        // Add point light to lighthouse structure
+        this.lighthousePointLight = new THREE.PointLight(0xffffaa, 10, 50, 0);
+        this.lighthousePointLight.position.set(-249.2, layoutY + 125, 239.8);
+        scene.add(this.lighthousePointLight);
+
         this.turnOffEvent = new TimedEvent(6, () => {
             this.turnOffLighthouse();
         });
@@ -384,12 +389,14 @@ export default class PortLayout {
     turnOnLighthouse() {
         if (this.lighthouseLight) {
             this.lighthouseLight.intensity = 75000;
+            this.lighthousePointLight.intensity = 10;
         }
     }
 
     turnOffLighthouse() {
         if (this.lighthouseLight) {
             this.lighthouseLight.intensity = 0;
+            this.lighthousePointLight.intensity = 0;
         }
     }
 
