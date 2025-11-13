@@ -80,7 +80,7 @@ const submit = async () => {
 
         let message = (error as any)?.response?.data;
         if (typeof message === 'object' && message !== null) {
-            message = message.message;
+            message = message.errors[0].error;
         }
 
         if ((error as any)?.response?.status === 400) {

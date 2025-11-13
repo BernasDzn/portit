@@ -58,6 +58,10 @@ public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
         UnloadCargoManifest = unloadCargoManifest ?? new List<CargoTransport>();
         Vessel = vessel ?? throw new ArgumentNullException(nameof(vessel));
 
+        if (submitter == null) throw new ArgumentNullException(nameof(submitter));
+        if (expectedArrival >= expectedDeparture)
+            throw new ArgumentException("Expected arrival must be before expected departure.");
+
         if (!vessel.Owner.IsRepresentedBy(submitter))
             throw new InvalidRepresentativeException("The provided representative does not represent the vessel owner.");
 

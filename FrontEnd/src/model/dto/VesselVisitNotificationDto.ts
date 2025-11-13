@@ -65,9 +65,8 @@ export interface Container {
 
 export interface Person {
     name: string;
-    citizenshipId: number;
-    emailAddress: string;
-    phone: string;
+    citizenId: string;
+    nationality: string;
 }
 
 export interface NotificationDecisionDto {
