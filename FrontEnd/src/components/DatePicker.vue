@@ -1,3 +1,77 @@
+<script setup>
+import { ref, computed, watch, onMounted } from 'vue'
+
+const modelValue = defineModel() 
+
+onMounted(() => {
+  if (!window.ShoelaceLoaded) {
+    const script = document.createElement('script')
+    script.type = 'module'
+    script.src = 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.0/dist/shoelace.js'
+    document.head.appendChild(script)
+    window.ShoelaceLoaded = true
+  }
+})
+
+const selected = ref(modelValue.value ? new Date(modelValue.value) : null)
+const showCalendar = ref(false)
+const current = ref(selected.value ? new Date(selected.value) : new Date())
+
+watch(modelValue, (newVal) => {
+  if (newVal) selected.value = new Date(newVal)
+})
+
+const year = computed(() => current.value.getFullYear())
+const month = computed(() => current.value.getMonth())
+
+const weekDays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
+
+const monthName = computed(() =>
+  current.value.toLocaleString('default', { month: 'long' })
+)
+
+const days = computed(() => {
+  const first = new Date(year.value, month.value, 1).getDay()
+  const total = new Date(year.value, month.value + 1, 0).getDate()
+  const blanks = Array(first).fill(null)
+  const nums = Array.from({ length: total }, (_, i) => i + 1)
+  return [...blanks, ...nums]
+})
+
+const formattedDate = computed(() =>
+  selected.value ? selected.value.toLocaleDateString() : ''
+)
+
+function toggleCalendar() {
+  showCalendar.value = !showCalendar.value
+}
+
+function prevMonth() {
+  current.value = new Date(year.value, month.value - 1, 1)
+}
+
+function nextMonth() {
+  current.value = new Date(year.value, month.value + 1, 1)
+}
+
+function selectDate(day) {
+  if (!day) return
+  const date = new Date(year.value, month.value, day)
+  selected.value = date
+  modelValue.value = date
+  showCalendar.value = false
+}
+
+function isSelected(day) {
+  return (
+    selected.value &&
+    day === selected.value.getDate() &&
+    month.value === selected.value.getMonth() &&
+    year.value === selected.value.getFullYear()
+  )
+}
+</script>
+
 <template>
     <div class="date-picker">
       <sl-input
@@ -31,80 +105,6 @@
       </div>
     </div>
   </template>
-  
-  <script setup>
-  import { ref, computed, watch, onMounted } from 'vue'
-  
-  const modelValue = defineModel() 
-
-  onMounted(() => {
-    if (!window.ShoelaceLoaded) {
-      const script = document.createElement('script')
-      script.type = 'module'
-      script.src = 'https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.15.0/dist/shoelace.js'
-      document.head.appendChild(script)
-      window.ShoelaceLoaded = true
-    }
-  })
-  
-  const selected = ref(modelValue.value ? new Date(modelValue.value) : null)
-  const showCalendar = ref(false)
-  const current = ref(selected.value ? new Date(selected.value) : new Date())
-  
-  watch(modelValue, (newVal) => {
-    if (newVal) selected.value = new Date(newVal)
-  })
-  
-  const year = computed(() => current.value.getFullYear())
-  const month = computed(() => current.value.getMonth())
-  
-  const weekDays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
-  
-  const monthName = computed(() =>
-    current.value.toLocaleString('default', { month: 'long' })
-  )
-  
-  const days = computed(() => {
-    const first = new Date(year.value, month.value, 1).getDay()
-    const total = new Date(year.value, month.value + 1, 0).getDate()
-    const blanks = Array(first).fill(null)
-    const nums = Array.from({ length: total }, (_, i) => i + 1)
-    return [...blanks, ...nums]
-  })
-  
-  const formattedDate = computed(() =>
-    selected.value ? selected.value.toLocaleDateString() : ''
-  )
-  
-  function toggleCalendar() {
-    showCalendar.value = !showCalendar.value
-  }
-  
-  function prevMonth() {
-    current.value = new Date(year.value, month.value - 1, 1)
-  }
-  
-  function nextMonth() {
-    current.value = new Date(year.value, month.value + 1, 1)
-  }
-  
-  function selectDate(day) {
-    if (!day) return
-    const date = new Date(year.value, month.value, day)
-    selected.value = date
-    modelValue.value = date
-    showCalendar.value = false
-  }
-  
-  function isSelected(day) {
-    return (
-      selected.value &&
-      day === selected.value.getDate() &&
-      month.value === selected.value.getMonth() &&
-      year.value === selected.value.getFullYear()
-    )
-  }
-  </script>
   
   <style scoped>
   .date-picker {

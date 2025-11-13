@@ -11,6 +11,8 @@ import type { IVesselVisitNotificationService } from '@/service/IService/IVessel
 import type { IVesselService } from '@/service/IService/IVesselService';
 import type { VesselVisitNotificationDto } from '@/model/dto/VesselVisitNotificationDto';
 import { useSession } from '@/composables/session';
+import DatePicker from '@/components/DatePicker.vue';
+import SafetyOfficerInput from '@/components/SafetyOfficerInput.vue';
 
 const { t } = useI18n();
 
@@ -115,10 +117,21 @@ const isLastStep = () => currentStep.value === totalSteps;
       <div v-if="currentStep === 1" class="step">
         <p class="section-title">Visit Information</p>
 
-        <FormField required name="Expected Arrival*" v-model="vvn.expectedArrival" placeholderText="Enter Expected Arrival Date and Time" type="datetime-local" />
-        <br>
+        <div style="display: flex; gap: 20px;">
+            <div>
+                <p> Expected Arrival*</p>
+                <DatePicker
+                    v-model="vvn.expectedArrival"
+                />
+            </div>
 
-        <FormField required name="Expected Departure*" v-model="vvn.expectedDeparture" placeholderText="Enter Expected Departure Date and Time" type="datetime-local" />
+            <div>
+                <p> Expected Departure*</p>
+                <DatePicker
+                    v-model="vvn.expectedDeparture"
+                />
+            </div>
+        </div>
         <br>
 
         <EntityDropdown
@@ -150,12 +163,14 @@ const isLastStep = () => currentStep.value === totalSteps;
 
         <FormField name="Is Cargo Hazardous?" v-model="vvn.isCargoHazardous" type="checkbox" />
         
+        <div v-if="vvn.isCargoHazardous">
+            <p>Safety officers</p>
+            <SafetyOfficerInput v-model="vvn.crewDetails.safetyOfficers" />
+        </div>
+
         <br>
 
-        <div v-if="vvn.isCargoHazardous">
-          <FormField name="Special Requirements" v-model="vvn.specialRequirements"
-            placeholderText="Enter any special requirements" type="textarea" />
-        </div>
+        <FormField name="Special Requirements" v-model="vvn.specialRequirements" placeholderText="Enter any special requirements" type="textarea" />
       </div>
 
       <!-- STEP 4 -->
