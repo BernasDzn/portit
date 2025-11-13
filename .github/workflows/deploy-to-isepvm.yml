@@ -1,0 +1,26 @@
+name: Automated Deployment to Debian VM
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy to Debian VM
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VM_HOST }}
+          port: ${{ secrets.VM_PORT }}
+          username: ${{ secrets.VM_USER }}
+          password: ${{ secrets.VM_PASSWORD }}
+          envs: GITHUB_TOKEN
+          script: |
+            export GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}
+            bash ~/start_server.sh
