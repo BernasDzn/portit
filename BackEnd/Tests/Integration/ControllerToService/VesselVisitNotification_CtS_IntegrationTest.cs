@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 using Api.Domain.ValueObjects;
 using Api.Application.DataTransfer.Filters;
 using Api.Infrastructure.Utilities;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 
 namespace Tests.Integration.ControllerToService;
 
@@ -98,6 +100,24 @@ public class VesselVisitNotification_CtS_IntegrationTest
             notificationDecisionService,
             new Mock<ILogger<VesselVisitNotificationController>>().Object);
 
+        var claims = new List<Claim>
+        {
+            new Claim("email_address", "psharply0@yolasite.com"),
+            new Claim("id", "test-user-id"),
+            new Claim("name", "Test User"),
+            new Claim("user_role", "Administrator")
+        };
+        var identity = new ClaimsIdentity(claims, "TestAuth");
+        var claimsPrincipal = new ClaimsPrincipal(identity);
+        
+        _controller.ControllerContext = new ControllerContext
+        {
+            HttpContext = new DefaultHttpContext { User = claimsPrincipal }
+        };
+
+        // Mock representative lookup for authentication
+        _representativeRepositoryMock.Setup(repo => repo.GetByEmailAsync(It.IsAny<string>()))
+            .ReturnsAsync(representative);
     }
 
     [Fact]
@@ -448,7 +468,7 @@ public class VesselVisitNotification_CtS_IntegrationTest
         );
 
         vvn.Submit();
-        var decision = NotificationDecisionFactory.CreateRejected("No reason", true, DateTime.UtcNow);
+        var decision = NotificationDecisionFactory.CreateRejected("officer@email.com", "No reason", true, DateTime.UtcNow);
 
         _repositoryMock.Setup(r => r.GetNotificationDecisionsAsync(It.IsAny<string>()))
             .ReturnsAsync(new List<NotificationDecision> { decision });

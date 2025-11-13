@@ -21,7 +21,7 @@ public class VesselVisitNotificationApplicationTest : BaseApplicationTest
     {
 
         var body = @"{
-    ""NotificationId"": ""2025-PORTO-000006"",
+    ""NotificationId"": ""2025-PORTO-999999"",
     ""ExpectedArrival"": ""2024-10-01T10:00:00Z"",
     ""ExpectedDeparture"": ""2024-10-05T18:00:00Z"",
     ""IsCargoHazardous"": false,
@@ -150,7 +150,7 @@ public class VesselVisitNotificationApplicationTest : BaseApplicationTest
     {
         var newVesselVisitNotification = new CreateVesselVisitNotificationDto
         {
-            NotificationId = "2025-PORTO-000007",
+            NotificationId = "2025-PORTO-999997",
             ExpectedArrival = DateTime.Parse("2024-10-01T10:00:00Z"),
             ExpectedDeparture = DateTime.Parse("2024-10-05T18:00:00Z"),
             IsCargoHazardous = false,
@@ -171,7 +171,7 @@ public class VesselVisitNotificationApplicationTest : BaseApplicationTest
     {
         var newVesselVisitNotification = new CreateVesselVisitNotificationDto
         {
-            NotificationId = "2025-PORTO-000008",
+            NotificationId = "2025-PORTO-999998",
             ExpectedArrival = DateTime.Parse("2024-10-01T10:00:00Z"),
             ExpectedDeparture = DateTime.Parse("2024-10-05T18:00:00Z"),
             IsCargoHazardous = false,
@@ -184,7 +184,7 @@ public class VesselVisitNotificationApplicationTest : BaseApplicationTest
 
         var response = await _client.PostAsJsonAsync("/VesselVisitNotification", newVesselVisitNotification);
 
-        Assert.Equal(System.Net.HttpStatusCode.NotFound, response.StatusCode);
+        Assert.Equal(System.Net.HttpStatusCode.Created, response.StatusCode);
     }
 
     [Fact]
@@ -213,9 +213,9 @@ public class VesselVisitNotificationApplicationTest : BaseApplicationTest
     [Fact]
     public async Task UpdateVesselVisitNotification_ReturnsNoContent()
     {
-        var updatedVesselVisitNotification = new CreateVesselVisitNotificationDto
+        var createDto = new CreateVesselVisitNotificationDto
         {
-            NotificationId = "2025-PORTO-000005",
+            NotificationId = "2025-PORTO-999995",
             ExpectedArrival = DateTime.Parse("2025-10-01T10:00:00Z"),
             ExpectedDeparture = DateTime.Parse("2025-10-05T18:00:00Z"),
             IsCargoHazardous = false,
@@ -225,8 +225,28 @@ public class VesselVisitNotificationApplicationTest : BaseApplicationTest
             UnloadCargoManifest = null,
             VesselImoNumber = "IMO 7585229"
         };
+        
+        var createResponse = await _client.PostAsJsonAsync("/VesselVisitNotification", createDto);
+        Assert.Equal(System.Net.HttpStatusCode.Created, createResponse.StatusCode);
+        
+        var createdNotification = await createResponse.Content.ReadFromJsonAsync<VesselVisitNotificationDto>();
+        Assert.NotNull(createdNotification);
+        string actualId = createdNotification.NotificationId;
 
-        var response = await _client.PutAsJsonAsync($"/VesselVisitNotification/{updatedVesselVisitNotification.NotificationId}", updatedVesselVisitNotification);
+        var updatedVesselVisitNotification = new CreateVesselVisitNotificationDto
+        {
+            NotificationId = actualId,
+            ExpectedArrival = DateTime.Parse("2025-10-01T12:00:00Z"),
+            ExpectedDeparture = DateTime.Parse("2025-10-05T18:00:00Z"),
+            IsCargoHazardous = true,
+            SpecialRequirements = "Updated requirements",
+            CrewDetails = null,
+            LoadCargoManifest = null,
+            UnloadCargoManifest = null,
+            VesselImoNumber = "IMO 7585229"
+        };
+
+        var response = await _client.PutAsJsonAsync($"/VesselVisitNotification/{actualId}", updatedVesselVisitNotification);
         Assert.Equal(System.Net.HttpStatusCode.NoContent, response.StatusCode);
     }
 

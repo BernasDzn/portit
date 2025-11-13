@@ -95,7 +95,7 @@ public class NotificationDecisionServiceTest
         new NotificationDecision(
             NotificationDecisionStatus.Approved,
             DateTime.UtcNow,
-            1,
+            "officer@email.com",
             new Dock(
                 Guid.NewGuid(),
                 new Code { Value = "DCK001" },
@@ -126,7 +126,7 @@ public class NotificationDecisionServiceTest
         new NotificationDecision(
             NotificationDecisionStatus.Rejected,
             DateTime.UtcNow,
-            2,
+            "officer2@email.com",
             null,
             "Insufficient documentation"
         )
@@ -188,7 +188,7 @@ public class NotificationDecisionServiceTest
             IsFinal = false
         };
 
-        var result = await _service.Add(newDecisionDto, notifications.ElementAt(0).NotificationId.ToString());
+        var result = await _service.Add(newDecisionDto, notifications.ElementAt(0).NotificationId.ToString(), "officer@email.com");
 
         Assert.NotNull(result);
         Assert.Equal(newDecisionDto.Status, result.Status);
@@ -205,7 +205,7 @@ public class NotificationDecisionServiceTest
             IsFinal = false
         };
 
-        await Assert.ThrowsAsync<InvalidOperationException>(() => _service.Add(newDecisionDto, notifications.ElementAt(1).NotificationId.ToString()));
+        await Assert.ThrowsAsync<InvalidOperationException>(() => _service.Add(newDecisionDto, notifications.ElementAt(1).NotificationId.ToString(), "officer@email.com"));
     }
 
     [Fact]
@@ -222,7 +222,7 @@ public class NotificationDecisionServiceTest
         _repositoryMock.Setup(repo => repo.GetVesselVisitNotificationByNotificationIdAsync(It.Is<string>(s => s == notifications.ElementAt(0).NotificationId.ToString())))
             .ReturnsAsync((VesselVisitNotification?)null);
 
-        await Assert.ThrowsAsync<EntityNotFoundException>(() => _service.Add(newDecisionDto, notifications.ElementAt(0).NotificationId.ToString()));
+        await Assert.ThrowsAsync<EntityNotFoundException>(() => _service.Add(newDecisionDto, notifications.ElementAt(0).NotificationId.ToString(), "officer@email.com"));
     }
 
     [Fact]
@@ -236,7 +236,7 @@ public class NotificationDecisionServiceTest
             IsFinal = false
         };
 
-        await Assert.ThrowsAsync<ArgumentException>(() => _service.Add(newDecisionDto, notifications.ElementAt(0).NotificationId.ToString()));
+        await Assert.ThrowsAsync<ArgumentException>(() => _service.Add(newDecisionDto, notifications.ElementAt(0).NotificationId.ToString(), "officer@email.com"));
     }
 
     [Fact]
@@ -251,6 +251,6 @@ public class NotificationDecisionServiceTest
             AssignedDockCode = null
         };
 
-        await Assert.ThrowsAsync<ArgumentException>(() => _service.Add(newDecisionDto, notifications.ElementAt(0).NotificationId.ToString()));
+        await Assert.ThrowsAsync<ArgumentException>(() => _service.Add(newDecisionDto, notifications.ElementAt(0).NotificationId.ToString(), "officer@email.com"));
     }
 }

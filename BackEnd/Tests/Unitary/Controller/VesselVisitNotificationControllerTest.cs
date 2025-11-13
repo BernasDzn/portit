@@ -10,6 +10,8 @@ using Api.Infrastructure.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 
 namespace Tests.Unitary.Controller;
 
@@ -24,6 +26,21 @@ public class VesselVisitNotificationControllerTest
         _notificationServiceMock = new Mock<IVesselVisitNotificationService>();
         _notificationDecisionServiceMock = new Mock<INotificationDecisionService>();
         _controller = new VesselVisitNotificationController(_notificationServiceMock.Object, _notificationDecisionServiceMock.Object, new Mock<ILogger<VesselVisitNotificationController>>().Object);
+        
+        var claims = new List<Claim>
+        {
+            new Claim("email_address", "psharply0@yolasite.com"),
+            new Claim("id", "test-user-id"),
+            new Claim("name", "Test User"),
+            new Claim("user_role", "Administrator")
+        };
+        var identity = new ClaimsIdentity(claims, "TestAuth");
+        var claimsPrincipal = new ClaimsPrincipal(identity);
+        
+        _controller.ControllerContext = new ControllerContext
+        {
+            HttpContext = new DefaultHttpContext { User = claimsPrincipal }
+        };
     }
 
     [Fact]
@@ -214,7 +231,7 @@ public class VesselVisitNotificationControllerTest
             IsFinal = false
         };
 
-        _notificationDecisionServiceMock.Setup(service => service.Add(It.IsAny<CreateNotificationDecisionDto>(), It.IsAny<string>()))
+        _notificationDecisionServiceMock.Setup(service => service.Add(It.IsAny<CreateNotificationDecisionDto>(), It.IsAny<string>(), It.IsAny<string>()))
             .ReturnsAsync(expectedDecision);
 
         var result = await _controller.CreateDecision("test-id", newDecision);
@@ -233,7 +250,7 @@ public class VesselVisitNotificationControllerTest
             IsFinal = false
         };
 
-        _notificationDecisionServiceMock.Setup(service => service.Add(It.IsAny<CreateNotificationDecisionDto>(), It.IsAny<string>()))
+        _notificationDecisionServiceMock.Setup(service => service.Add(It.IsAny<CreateNotificationDecisionDto>(), It.IsAny<string>(), It.IsAny<string>()))
             .ThrowsAsync(new ArgumentException());
 
         var result = await _controller.CreateDecision("test-id", newDecision);
@@ -251,7 +268,7 @@ public class VesselVisitNotificationControllerTest
             IsFinal = false
         };
 
-        _notificationDecisionServiceMock.Setup(service => service.Add(It.IsAny<CreateNotificationDecisionDto>(), It.IsAny<string>()))
+        _notificationDecisionServiceMock.Setup(service => service.Add(It.IsAny<CreateNotificationDecisionDto>(), It.IsAny<string>(), It.IsAny<string>()))
             .ThrowsAsync(new EntityNotFoundException());
 
         var result = await _controller.CreateDecision("test-id", newDecision);
@@ -269,7 +286,7 @@ public class VesselVisitNotificationControllerTest
             IsFinal = false
         };
 
-        _notificationDecisionServiceMock.Setup(service => service.Add(It.IsAny<CreateNotificationDecisionDto>(), It.IsAny<string>()))
+        _notificationDecisionServiceMock.Setup(service => service.Add(It.IsAny<CreateNotificationDecisionDto>(), It.IsAny<string>(), It.IsAny<string>()))
             .ThrowsAsync(new System.Exception());
 
         var result = await _controller.CreateDecision("test-id", newDecision);

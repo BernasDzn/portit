@@ -275,8 +275,8 @@ public class VesselVisitNotificationTest
                 1,
                 (uint)DateTime.UtcNow.Year
             ),
-            DateTime.Parse("2024-07-01T12:00:00Z"),
             DateTime.Parse("2024-07-01T10:00:00Z"),
+            DateTime.Parse("2024-07-01T12:00:00Z"),
             false,
             vessel,
             representative,
@@ -287,6 +287,8 @@ public class VesselVisitNotificationTest
         );
 
         vvn.Submit();
+
+        Assert.Equal(NotificationStatus.ApprovalPending, vvn.Status);
     }
 
     [Theory]
@@ -301,8 +303,8 @@ public class VesselVisitNotificationTest
                 1,
                 (uint)DateTime.UtcNow.Year
             ),
-            DateTime.Parse("2024-07-01T12:00:00Z"),
             DateTime.Parse("2024-07-01T10:00:00Z"),
+            DateTime.Parse("2024-07-01T12:00:00Z"),
             isCargoHazardous,
             vessel,
             representative,
@@ -328,8 +330,8 @@ public class VesselVisitNotificationTest
                 1,
                 (uint)DateTime.UtcNow.Year
             ),
-            DateTime.Parse("2024-07-01T12:00:00Z"),
             DateTime.Parse("2024-07-01T10:00:00Z"),
+            DateTime.Parse("2024-07-01T12:00:00Z"),
             true,
             vessel,
             representative,
@@ -340,8 +342,8 @@ public class VesselVisitNotificationTest
         );
 
         vvn.Update(
-            DateTime.Parse("2024-07-05T12:00:00Z"),
-            DateTime.Parse("2024-07-10T10:00:00Z"),
+            DateTime.Parse("2024-07-05T10:00:00Z"),
+            DateTime.Parse("2024-07-10T12:00:00Z"),
             false
         );
     }
@@ -355,9 +357,9 @@ public class VesselVisitNotificationTest
                 1,
                 (uint)DateTime.UtcNow.Year
             ),
-            DateTime.Parse("2024-07-01T12:00:00Z"),
             DateTime.Parse("2024-07-01T10:00:00Z"),
-            true,
+            DateTime.Parse("2024-07-01T12:00:00Z"),
+            false,
             vessel,
             representative,
             null,
@@ -376,9 +378,9 @@ public class VesselVisitNotificationTest
     }
 
     [Theory]
-    [InlineData(NotificationDecisionStatus.Approved, 101, null)]
-    [InlineData(NotificationDecisionStatus.Rejected, 101, "Insufficient safety measures")]
-    public void WhenAddingValidDecision_ThenAdds(NotificationDecisionStatus status, int officerID, string? reason)
+    [InlineData(NotificationDecisionStatus.Approved, null)]
+    [InlineData(NotificationDecisionStatus.Rejected, "Insufficient safety measures")]
+    public void WhenAddingValidDecision_ThenAdds(NotificationDecisionStatus status, string? reason)
     {
         var vvn = new VesselVisitNotification(
             new VesselVisitNotificationId(
@@ -386,8 +388,8 @@ public class VesselVisitNotificationTest
                 1,
                 (uint)DateTime.UtcNow.Year
             ),
-            DateTime.Parse("2024-07-01T12:00:00Z"),
             DateTime.Parse("2024-07-01T10:00:00Z"),
+            DateTime.Parse("2024-07-01T12:00:00Z"),
             true,
             vessel,
             representative,
@@ -403,7 +405,7 @@ public class VesselVisitNotificationTest
             new NotificationDecision(
                 status,
                 DateTime.UtcNow,
-                officerID,
+                "officer@email.com",
                 status == NotificationDecisionStatus.Approved ? new Dock(
                     Guid.NewGuid(),
                     new Code { Value = "DCK003" },
@@ -426,8 +428,8 @@ public class VesselVisitNotificationTest
                 1,
                 (uint)DateTime.UtcNow.Year
             ),
-            DateTime.Parse("2024-07-01T12:00:00Z"),
             DateTime.Parse("2024-07-01T10:00:00Z"),
+            DateTime.Parse("2024-07-01T12:00:00Z"),
             true,
             vessel,
             representative,
@@ -452,9 +454,9 @@ public class VesselVisitNotificationTest
                 1,
                 (uint)DateTime.UtcNow.Year
             ),
-            DateTime.Parse("2024-07-01T12:00:00Z"),
             DateTime.Parse("2024-07-01T10:00:00Z"),
-            true,
+            DateTime.Parse("2024-07-01T12:00:00Z"),
+            false,
             vessel,
             representative,
             null,
@@ -467,7 +469,7 @@ public class VesselVisitNotificationTest
             new NotificationDecision(
                 NotificationDecisionStatus.Approved,
                 DateTime.UtcNow,
-                101,
+                "officer@email.com",
                 new Dock(
                     Guid.NewGuid(),
                     new Code { Value = "DCK003" },
@@ -490,8 +492,8 @@ public class VesselVisitNotificationTest
                 1,
                 (uint)DateTime.UtcNow.Year
             ),
-            DateTime.Parse("2024-07-01T12:00:00Z"),
             DateTime.Parse("2024-07-01T10:00:00Z"),
+            DateTime.Parse("2024-07-01T12:00:00Z"),
             true,
             vessel,
             representative,
@@ -507,7 +509,7 @@ public class VesselVisitNotificationTest
             new NotificationDecision(
                 NotificationDecisionStatus.Approved,
                 DateTime.UtcNow,
-                101,
+                "officer@email.com",
                 new Dock(
                     Guid.NewGuid(),
                     new Code { Value = "DCK003" },
@@ -524,7 +526,7 @@ public class VesselVisitNotificationTest
             new NotificationDecision(
                 NotificationDecisionStatus.Approved,
                 DateTime.UtcNow.AddHours(-1),
-                101,
+                "officer@email.com",
                 new Dock(
                     Guid.NewGuid(),
                     new Code { Value = "DCK003" },

@@ -106,6 +106,9 @@ public class VesselVisitNotificationServiceTest
 
         var idGenerator = new VesselVisitNotificationIdGenerator(_repositoryMock.Object);
 
+        _representativeRepositoryMock.Setup(repo => repo.GetByEmailAsync(It.IsAny<string>()))
+            .ReturnsAsync(representative);
+
         _service = new VesselVisitNotificationService(
             _repositoryMock.Object,
             _vesselRepositoryMock.Object,

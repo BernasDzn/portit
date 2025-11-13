@@ -24,7 +24,10 @@ public class TestAuthHandler : AuthenticationHandler<AuthenticationSchemeOptions
             new Claim(ClaimTypes.NameIdentifier, "test-user-id"),
             new Claim(ClaimTypes.Email, "test@example.com"),
             new Claim(ClaimTypes.Role, "Administrator"),
-            new Claim("user_role", "Administrator")
+            new Claim("user_role", "Administrator"),
+            new Claim("email_address", "psharply0@yolasite.com"), // Match the test representative email
+            new Claim("id", "test-user-id"),
+            new Claim("name", "Test User")
         };
 
         var identity = new ClaimsIdentity(claims, "Test");
