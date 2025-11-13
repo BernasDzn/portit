@@ -4,6 +4,7 @@ import { makeBillboard } from "./helpers/billboard_helper.ts";
 import Vessel, { Crane, Seagull } from "./entities.ts";
 import PickHelper from "./helpers/pick_helper.ts";
 import { hideInfoText, setInfoText } from "./helpers/info_helper.ts";
+import {TimedEvent} from "./time.ts";
 
 const worldBorder = 1000;
 
@@ -79,10 +80,27 @@ class WarehouseChunk extends PortChunk {
     warehouseLabel;
     pointLight;
 
+    turnOffEvent;
+    turnOnEvent;
+
     constructor(x, y) {
         super(x, y);
         this.base = null;
         this.warehouseLabel = makeBillboard("Warehouse", 32, 0xffffff);
+    }
+
+    turnOnLight() {
+        console.log("Turning on warehouse light");
+        if (this.pointLight) {
+            this.pointLight.intensity = 2;
+        }
+    }
+
+    turnOffLight() {
+        console.log("Turning off warehouse light");
+        if (this.pointLight) {
+            this.pointLight.intensity = 0;
+        }
     }
 
     async init(scene) {
@@ -127,6 +145,14 @@ class WarehouseChunk extends PortChunk {
         this.pointLight.castShadow = true;
 
         scene.add(this.pointLight);
+
+        this.turnOffEvent = new TimedEvent(6, () => {
+            this.turnOffLight();
+        });
+
+        this.turnOnEvent = new TimedEvent(22, () => {
+            this.turnOnLight();
+        });
     }
 }
 

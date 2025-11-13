@@ -4,6 +4,8 @@ const offsetDegrees = -90;
 const timeIncrement = 10; // 10 minutes
 const updateInterval = 1000; // 1 second
 
+var timedEvents = [];
+
 function incrementTimeByMinutes() {
     currentDate.setMinutes(currentDate.getMinutes() + timeIncrement);
 }
@@ -34,6 +36,35 @@ function updateTime(app) {
     incrementTimeByMinutes();
     setSunAngle(app);
     updateDateTable();
+
+    // Check timed events
+    timedEvents.forEach(event => {
+        event.checkAndTrigger(currentDate);
+    });
+}
+
+export class TimedEvent {
+    targetHour;
+    callback;
+    triggeredToday = false;
+
+    constructor(targetHour, callback) {
+        this.targetHour = targetHour;
+        this.callback = callback;
+
+        timedEvents.push(this);
+    }
+
+    checkAndTrigger(currentDate) {
+        if (currentDate.getHours() === this.targetHour) {
+            if (!this.triggeredToday) {
+                this.callback();
+                this.triggeredToday = true;
+            }
+        } else {
+            this.triggeredToday = false;
+        }
+    }
 }
 
 export default function initTime(app) {

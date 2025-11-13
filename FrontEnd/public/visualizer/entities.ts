@@ -255,6 +255,8 @@ export class Seagull {
             scene,
             this.model,
             this.layout,
+            0,
+            3.2
         );
 
         console.log(this.model)

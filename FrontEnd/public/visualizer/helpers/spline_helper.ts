@@ -12,13 +12,19 @@ export default class PathFollower {
     currentPointIndex = 0;
     facePoint;
     model;
+    speed;
+    clock;
 
-    constructor(pathPoints, facePoint, scene, model, layout, offsetHeight = 0) {
+
+    constructor(pathPoints, facePoint, scene, model, layout, offsetHeight = 0, speed = 4) {
         this.facePoint = facePoint;
         this.model = model;
+        this.speed = speed;
 
         this.curve = new THREE.CatmullRomCurve3(pathPoints);
         this.curve.closed = true;
+
+        this.clock = new THREE.Clock();
 
         // Build visible line geometry
         const points = this.curve.getPoints(50);
@@ -52,6 +58,7 @@ export default class PathFollower {
         const nextPoint = this.curve.getPoint((this.currentPointIndex + 5) / 100);
         this.facePoint(nextPoint, this.model);
 
-        this.currentPointIndex += 0.1;
+        // this.currentPointIndex += 0.1;
+        this.currentPointIndex += this.clock.getDelta() * this.speed;
     }
 }
