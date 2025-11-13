@@ -1,96 +1,94 @@
-import type { Address } from "./values/Address";
-import type { Dock } from "./Dock";
-import type { StorageArea } from "./StorageArea";
-import type { Vessel } from "./Vessel";
+import type { VesselVisitNotificationDto, CrewDetails, CargoManifestItem, Person } from './dto/VesselVisitNotificationDto';
+import { VesselVisitNotificationStatus, NotificationDecisionStatus } from './dto/VesselVisitNotificationDto';
+import type { Representative } from './Representative';
+import { Vessel } from './Vessel';
 
-export interface VesselVisitNotification {
-    notificationId: string;
-    status: VesselVisitNotificationStatus;
-    expectedArrival: string;
-    expectedDeparture: string;
-    isCargoHazardous: boolean;
-    specialRequirements: string;
-    crewDetails: CrewDetails;
-    loadCargoManifest: CargoManifestItem[];
-    unloadCargoManifest: CargoManifestItem[];
-    vessel: Vessel;
-    submitter: Person;
-    notificationDecisions: NotificationDecision[];
+export class VesselVisitNotification {
+    readonly notificationId: string;
+    readonly status: VesselVisitNotificationStatus;
+    readonly expectedArrival: Date;
+    readonly expectedDeparture: Date;
+    readonly isCargoHazardous: boolean;
+    readonly specialRequirements?: string;
+    readonly crewDetails?: CrewDetails;
+    readonly loadCargoManifest: CargoManifestItem[];
+    readonly unloadCargoManifest: CargoManifestItem[];
+    readonly vessel: Vessel;
+    readonly submitter: Representative;
+
+    constructor(params: {
+        notificationId: string;
+        status: VesselVisitNotificationStatus;
+        expectedArrival: Date;
+        expectedDeparture: Date;
+        isCargoHazardous: boolean;
+        specialRequirements?: string;
+        crewDetails?: CrewDetails;
+        loadCargoManifest?: CargoManifestItem[];
+        unloadCargoManifest?: CargoManifestItem[];
+        vessel: Vessel;
+        submitter: Representative;
+    }) {
+        this.notificationId = params.notificationId;
+        this.status = params.status;
+        this.expectedArrival = params.expectedArrival;
+        this.expectedDeparture = params.expectedDeparture;
+        this.isCargoHazardous = params.isCargoHazardous;
+        this.specialRequirements = params.specialRequirements;
+        this.crewDetails = params.crewDetails;
+        this.loadCargoManifest = params.loadCargoManifest ?? [];
+        this.unloadCargoManifest = params.unloadCargoManifest ?? [];
+        this.vessel = params.vessel;
+        this.submitter = params.submitter;
+    }
+
+    toDto(): VesselVisitNotificationDto {
+        return {
+            notificationId: this.notificationId,
+            expectedArrival: this.expectedArrival.toISOString(),
+            expectedDeparture: this.expectedDeparture.toISOString(),
+            isCargoHazardous: this.isCargoHazardous,
+            specialRequirements: this.specialRequirements,
+            crewDetails: this.crewDetails,
+            loadCargoManifest: this.loadCargoManifest,
+            unloadCargoManifest: this.unloadCargoManifest,
+            vesselImoNumber: (this.vessel as any).imoNumber ?? ''
+        };
+    }
 }
 
-export interface VesselVisitNotificationFilter {
-    Status: VesselVisitNotificationStatusFilter
-    WithReason: boolean
-    WithDockAssigned: boolean
-    Vessel: string
-    ExpectedArrivalFrom: Date
-    ExpectedArrivalTo: Date
-}
+export class NotificationDecision {
+    readonly status: NotificationDecisionStatus;
+    readonly reason?: string;
+    readonly decisionDate: Date;
+    readonly officerID?: number;
+    readonly assignedDockCode?: string;
+    readonly isFinal: boolean;
 
-export enum VesselVisitNotificationStatusFilter{
-    InProgress = 0,
-	ApprovalPending = 1,
-	Accepted = 2,
-	Rejected = 3
-}
+    constructor(params: {
+        status: NotificationDecisionStatus;
+        reason?: string;
+        decisionDate: Date;
+        officerID?: number;
+        assignedDockCode?: string;
+        isFinal: boolean;
+    }) {
+        this.status = params.status;
+        this.reason = params.reason;
+        this.decisionDate = params.decisionDate;
+        this.officerID = params.officerID;
+        this.assignedDockCode = params.assignedDockCode;
+        this.isFinal = params.isFinal;
+    }
 
-export interface CrewDetails {
-    captain: {
-        value: string;
-    };
-    totalCrewMembers: number;
-    safetyOfficers: string | null;
-}
-
-export interface CargoManifestItem {
-    position: Position;
-    area: StorageArea;
-    container: Container;
-}
-
-export interface Position {
-    bay: string;
-    row: string;
-    tier: string;
-}
-
-export interface Container {
-    containerNumber: string;
-    cargoType: number;
-    description: string;
-}
-
-export interface Owner {
-    name: string;
-    altNames: string[];
-    taxNumber: string;
-    address: Address;
-    representatives: Person[];
-}
-
-export interface Person {
-    name: string;
-    citizenshipId: number;
-    emailAddress: string;
-    phone: string;
-}
-
-export enum VesselVisitNotificationStatus {
-    InProgress = 0,
-    ApprovalPending = 1,
-    Decided = 2
-}
-
-export interface NotificationDecision {
-    status: NotificationDecisionStatus;
-    reason?: string;
-    decisionDate: Date;
-    officerID?: number;
-    assignedDockCode?: string;
-    isFinal: boolean;
-}
-
-export enum NotificationDecisionStatus {
-    Accepted = 1,
-    Rejected = 2,
+    toDto() {
+        return {
+            status: this.status,
+            reason: this.reason,
+            decisionDate: this.decisionDate,
+            officerID: this.officerID,
+            assignedDockCode: this.assignedDockCode,
+            isFinal: this.isFinal
+        };
+    }
 }
