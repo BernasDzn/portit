@@ -3,8 +3,9 @@ import { TYPES } from '@/inversify/types';
 
 import type { IHttpService } from './IService/IHttpService';
 import type { IVesselService } from './IService/IVesselService';
-import type { Vessel, VesselFilter } from '@/model/Vessel';
+import type { Vessel } from '@/model/Vessel';
 import type { Filter, Page } from '@/model/Page';
+import type { VesselDto, VesselFilter } from '@/model/dto/VesselDto';
 
 @injectable()
 export class VesselService implements IVesselService {
@@ -31,7 +32,7 @@ export class VesselService implements IVesselService {
 		return res.data;
 	}
 
-	async createVessel(vessel: Vessel): Promise<Vessel> {
+	async createVessel(vessel: VesselDto): Promise<Vessel> {
 		const res =  await this.http.post<Vessel>('/Vessel', vessel);
 		return res.data;
 	}
@@ -41,8 +42,8 @@ export class VesselService implements IVesselService {
 		return res.data;
 	}
 
-	async updateVessel(imo: string, vessel: Vessel): Promise<Vessel> {
-		const res = await this.http.put<Vessel>(`/Vessel/${imo}`, vessel);
+	async updateVessel(vessel: VesselDto): Promise<Vessel> {
+		const res = await this.http.put<Vessel>(`/Vessel/${vessel.imoNumber}`, vessel);
 		return res.data;
 	}
 

@@ -5,6 +5,7 @@ import type { VesselType } from '@/model/VesselType';
 import type { IVesselTypeService } from './IService/IVesselTypeService';
 import type { IHttpService } from './IService/IHttpService';
 import type { Filter, Page } from '@/model/Page';
+import type { VesselTypeDto } from '@/model/dto/VesselTypeDto';
 
 @injectable()
 export class VesselTypeService implements IVesselTypeService {
@@ -35,13 +36,13 @@ export class VesselTypeService implements IVesselTypeService {
         return res.data;
     }
 
-    async createVesselType(vesselType: VesselType): Promise<VesselType> {
+    async createVesselType(vesselType: VesselTypeDto): Promise<VesselType> {
         const res = await this.http.post<VesselType>('/VesselType', vesselType);
         return res.data;
     }
 
-    async updateVesselType(name: string, vesselType: VesselType): Promise<VesselType> {
-        const res = await this.http.put<VesselType>(`/VesselType/${name}`, vesselType);
+    async updateVesselType(vesselType: VesselTypeDto): Promise<VesselType> {
+        const res = await this.http.put<VesselType>(`/VesselType/${vesselType.name}`, vesselType);
         return res.data;
     }
 

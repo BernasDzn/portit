@@ -11,6 +11,7 @@ import type { IDockService } from '@/service/IService/IDockService';
 import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
 import type { IVesselTypeService } from '@/service/IService/IVesselTypeService';
+import type { DockDto } from '@/model/dto/DockDto';
 
 const {t} = useI18n();
 
@@ -22,7 +23,7 @@ const notifications = useAlerts();
 const route = useRoute();
 const dockCode = String(route.params.code || '');
 
-let dock = ref<Dock>({
+let dock = ref<DockDto>({
     code: '',
     name: '',
     location: '',
@@ -53,7 +54,7 @@ onMounted(async () => {
     }
 });
 
-const updateDock = async (obj: Dock) => {
+const updateDock = async (obj: DockDto) => {
     if (!dockCode) {
         notifications.enqueueNotification(
             'Cannot update docks at this time.',
@@ -62,7 +63,7 @@ const updateDock = async (obj: Dock) => {
         return;
     }
 
-    return dockService.updateDock(dockCode, obj);
+    return dockService.updateDock(obj);
 };
 </script>
 

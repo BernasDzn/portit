@@ -7,9 +7,10 @@ import { useI18n } from 'vue-i18n';
 import { container } from '@/inversify.config';
 import type { IVesselTypeService } from '@/service/IService/IVesselTypeService';
 import TYPES from '@/inversify/types';
+import type { VesselTypeDto } from '@/model/dto/VesselTypeDto';
 
 
-const vesselType = ref<VesselType>({
+const vesselType = ref<VesselTypeDto>({
     name: '',
     description: '',
     maxNumberOfRows: null!,

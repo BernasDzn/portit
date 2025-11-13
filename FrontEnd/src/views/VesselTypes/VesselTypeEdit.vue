@@ -4,6 +4,7 @@ import FormField from '@/components/crud/FormField.vue';
 import { useAlerts } from '@/composables/alerts';
 import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
+import type { VesselTypeDto } from '@/model/dto/VesselTypeDto';
 import type { VesselType } from '@/model/VesselType';
 import type { IVesselTypeService } from '@/service/IService/IVesselTypeService';
 import { ref, onMounted, computed } from 'vue';
@@ -18,7 +19,7 @@ const route = useRoute();
 const vesselTypeName = String(route.params.name || '');
 const notifications = useAlerts();
 
-let vesselType = ref<VesselType>({
+let vesselType = ref<VesselTypeDto>({
     name: '',
     description: '',
     physicalCharacteristics: {
@@ -67,7 +68,7 @@ const updateVesselType = async (obj: VesselType) => {
         return;
     }
 
-    vesselTypeService.updateVesselType(vesselTypeName, obj);
+    vesselTypeService.updateVesselType(obj);
 };
 
 </script>
@@ -95,7 +96,7 @@ const updateVesselType = async (obj: VesselType) => {
             <div class="form">
                 <div class="general-info">
                     <p class="section-title">{{ t('vesselType.infoTitle') }}</p>
-                    <FormField class="field" :name="t('vesselType.fields.name.title') + '*'" v-model="vesselType.name" :placeholderText="t('vesselType.fields.name.placeholder')" required/>
+                    <FormField class="field" :enabled="false" :name="t('vesselType.fields.name.title') + '*'" v-model="vesselType.name" :placeholderText="t('vesselType.fields.name.placeholder')" required/>
                     <FormField class="field" :name="t('vesselType.fields.description.title') + '*'" v-model="vesselType.description" :placeholderText="t('vesselType.fields.description.placeholder')" required/>
                 </div>
 

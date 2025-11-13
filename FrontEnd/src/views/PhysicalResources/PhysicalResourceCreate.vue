@@ -58,7 +58,6 @@ function submitResource(obj: any, type: 'STS' | 'YardCrane' | 'Truck') {
     case 'STS':
         return resourceService.addSTSCrane({
             ...base,
-            type: 'STS Crane',
             liftingCapacity: obj.liftingCapacity,
             servingDockCode: obj.servingDock,
             containersPerHour: obj.containersPerHour
@@ -66,14 +65,12 @@ function submitResource(obj: any, type: 'STS' | 'YardCrane' | 'Truck') {
     case 'YardCrane':
         return resourceService.addYardCrane({
             ...base,
-            type: 'Yard Crane',
             liftingCapacity: obj.liftingCapacity,
             containersPerHour: obj.containersPerHour
         });
     case 'Truck':
         return resourceService.addTruck({
             ...base,
-            type: 'Truck',
             maxLoadCapacity: obj.maxLoadCapacity,
             averageSpeed: obj.averageSpeed,
             containersPerTrip: obj.containersPerTrip

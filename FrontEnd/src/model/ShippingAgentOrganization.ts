@@ -1,4 +1,4 @@
-import type { Address } from "./Address";
+import type { Address } from "./values/Address";
 import type { Representative } from "./Representative";
 
 export interface ShippingAgentOrganization {

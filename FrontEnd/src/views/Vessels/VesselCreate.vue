@@ -10,12 +10,13 @@ import type { IVesselService } from '@/service/IService/IVesselService';
 import TYPES from '@/inversify/types';
 import type { IVesselTypeService } from '@/service/IService/IVesselTypeService';
 import type { IShippingAgentOrganizationService } from '@/service/IService/IShippingAgentOrganizationService';
+import type { VesselDto } from '@/model/dto/VesselDto';
 
 const vesselService = container.get<IVesselService>(TYPES.vesselService);
 const vesselTypeService = container.get<IVesselTypeService>(TYPES.vesselTypeService);
 const saoService = container.get<IShippingAgentOrganizationService>(TYPES.shippingAgentOrganizationService);
 
-const vessel = ref<Vessel>({
+const vessel = ref<VesselDto>({
     name: '',
     imoNumber: '',
     type: '',

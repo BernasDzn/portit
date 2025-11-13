@@ -5,7 +5,7 @@ import FormField from '@/components/crud/FormField.vue';
 import OperationalWindowPicker from '@/components/OperationalWindowPicker.vue';
 import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
-import type { StaffCreate } from '@/model/Staff';
+import type { StaffDto } from '@/model/dto/StaffDto';
 import type { IQualificationService } from '@/service/IService/IQualificationService';
 import type { IStaffService } from '@/service/IService/IStaffService';
 import { onMounted, ref } from 'vue';
@@ -19,7 +19,7 @@ const route = useRoute();
 const staffMecNumber = String(route.params.id || '');
 
 
-const staff = ref<StaffCreate>({
+const staff = ref<StaffDto>({
     mechanographicNumber: '',
     name: '',
     email: '',
@@ -33,6 +33,9 @@ onMounted(async () => {
     if (!staffMecNumber) return;
     try {
         const data = await staffService.getStaffByMechanographicNumber(staffMecNumber);
+        if (!data) return;
+
+        staff.value.mechanographicNumber = data.mechanographicNumber;
         staff.value.name = data.name;
         staff.value.email = data.email;
         staff.value.phoneNumber = data.phoneNumber;
@@ -47,7 +50,7 @@ onMounted(async () => {
 const { t } = useI18n();
 
 const editStaff = (obj: any) => 
-    staffService.updateStaff(staffMecNumber, obj);
+    staffService.updateStaff(obj);
 
 </script>
 
@@ -69,6 +72,8 @@ const editStaff = (obj: any) =>
         <p class="subtitle">{{ t('staff.subtitle.edit') }}</p>
         <EntityForm editingId="true" :object="staff" :submit-function="editStaff">
             <div class="name-imo">
+
+                <FormField :required="true" class="field" :name="t('staff.fields.mechanographicNumber.title') + '*'" v-model="staff.mechanographicNumber" :placeholderText="t('staff.fields.mechanographicNumber.placeholder')" :enabled="false"/>
                 <FormField :required="true" class="field" :name="t('staff.fields.name.title') + '*'" v-model="staff.name" :placeholderText="t('staff.fields.name.placeholder')"/>
                 <FormField :required="true" class="field" :name="t('staff.fields.email.title') + '*'" v-model="staff.email" :placeholderText="t('staff.fields.email.placeholder')"/>
                 <FormField :required="true" class="field" :name="t('staff.fields.phoneNumber.title') + '*'" v-model="staff.phoneNumber" :placeholderText="t('staff.fields.phoneNumber.placeholder')"/>

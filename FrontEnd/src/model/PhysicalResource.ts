@@ -1,7 +1,7 @@
 import type { Dock } from "./Dock";
 import type { Qualification } from "./Qualifications";
-import type { OperationalWindow } from "./OperationalWindow";
-import type { PhysicalResourceDto, STSCrane as STSCraneDto, YardCrane as YardCraneDto, Truck as TruckDto } from "./dto/PhysicalResourceDto";
+import type { OperationalWindow } from "./values/OperationalWindow";
+import type { PhysicalResourceDto, STSCraneDto, YardCraneDto, TruckDto } from "./dto/PhysicalResourceDto";
 
 export interface PhysicalResourceFilter {
     Code?: string;

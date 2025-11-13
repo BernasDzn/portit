@@ -3,7 +3,6 @@ import { onMounted, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import AxiosHttpService from '@/service/AxiosHttpService';
 import { StorageAreaService } from '@/service/StorageAreaService';
-import type { StorageAreaCreate, DockRelationCreate } from '@/model/StorageArea';
 
 import EntityDropdown from '@/components/crud/EntityDropdown.vue';
 import EntityForm from '@/components/crud/EntityForm.vue';
@@ -15,6 +14,7 @@ import type { IDockService } from '@/service/IService/IDockService';
 import { container } from '@/inversify.config';
 import type { IStorageAreaService } from '@/service/IService/IStorageAreaService';
 import TYPES from '@/inversify/types';
+import type { DockRelationDto, StorageAreaDto } from '@/model/dto/StorageAreaDto';
 
 const storageAreaService = container.get<IStorageAreaService>(TYPES.storageAreaService);
 const dockService = container.get<IDockService>(TYPES.dockService);
@@ -24,13 +24,13 @@ const storageAreaNameCode = String(route.params.name || '');
 
 const { t } = useI18n();
 
-const storageArea = ref<StorageAreaCreate>({
+const storageArea = ref<StorageAreaDto>({
     nameCode: '',
     location: '',
     type: 0,
     capacity: 0,
     currentOccupancy: 0,
-    dockServices: [] as DockRelationCreate[],
+    dockServices: [] as DockRelationDto[],
 });
 
 const allDocks = ref<Array<Dock>>([]);
@@ -46,14 +46,14 @@ function getDockLabel(rel: any) {
 function updateDockRelations(dockCodes: string[]) {
     const selected = new Set(dockCodes || [])
 
-    storageArea.value.dockServices = storageArea.value.dockServices.filter(rel => selected.has(rel.dockCode))
+    storageArea.value.dockServices = storageArea.value.dockServices.filter(rel => selected.has(rel.dock))
 
     dockCodes.forEach(dockCode => {
-        const existingRelation = storageArea.value.dockServices.find(relation => relation.dockCode === dockCode);
+        const existingRelation = storageArea.value.dockServices.find(relation => relation.dock === dockCode);
         if (!existingRelation) {
             const dock = allDocks.value.find(d => d.code === dockCode);
             if (dock) {
-                storageArea.value.dockServices.push({ dockCode: dock.code, isServingDock: true });
+                storageArea.value.dockServices.push({ dock: dock.code, isServingDock: true });
             }
         }
     });
@@ -66,8 +66,11 @@ onMounted(async () => {
     });
 });
 
-const updateStorageArea = (obj: any) => 
-    storageAreaService.updateStorageArea(storageAreaNameCode, obj);
+const updateStorageArea = (obj: any) => {
+
+    console.log('Updating storage area:', obj);
+    storageAreaService.updateStorageArea(obj);
+}
 
 </script>
 
@@ -121,9 +124,9 @@ const updateStorageArea = (obj: any) =>
                         @sl-change="updateDockRelations($event.target.value)"
                     />
                     <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
-                        <sl-card class="card-header" style="width: fit-content;" v-for="dock_p in storageArea.dockServices" :key="dock_p.dockCode">
+                        <sl-card class="card-header" style="width: fit-content;" v-for="dock_p in storageArea.dockServices" :key="dock_p.dock">
                             <div slot="header">
-                                {{ dock_p.dockCode? dock_p.dockCode : getDockLabel(dock_p) }} {{ t('storageArea.create.distance_meters') }}
+                                {{ getDockLabel(dock_p) }} {{ t('storageArea.create.distance_meters') }}
                             </div>
                             <FormField class="field" :name="`null`" v-model="dock_p.distance" :placeholderText="t('storageArea.create.distance_meters')" pattern="^[0-9]+(\.[0-9]{1,2})?$" required/>
                         </sl-card>
