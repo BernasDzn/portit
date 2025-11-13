@@ -22,7 +22,7 @@ const decision = ref<NotificationDecision>({
     decisionDate: new Date(),
     officerID: null,
     assignedDockCode: null,
-    isFinal: true 
+    isFinal: false 
 });
 
 const notificationService = container.get<IVesselVisitNotificationService>(TYPES.vesselVisitNotificationService);
@@ -45,9 +45,9 @@ const isRejected = computed(() => {
     return statusNum === 2;
 });
 
-const submitDecision = (obj: any) =>{
+const submitDecision = (obj: any) => {
     console.log(obj);
-    notificationService.createNotificationDecision(notificationId, obj);
+    return notificationService.createNotificationDecision(notificationId, obj);
 }
 
 const fetchNotification = async (): Promise<VesselVisitNotification | null> => {
@@ -133,7 +133,7 @@ const closeUnloadManifest = () => {
                                 required
                             />
 
-                            <sl-checkbox v-if="isRejected" :label="t('notification.decision.isFinal')" v-model="decision.isFinal">
+                            <sl-checkbox v-if="isRejected" :label="t('notification.decision.isFinal')" v-model="decision.isFinal" @sl-change="decision.isFinal = $event.target.checked">
                                 {{ t('notification.decision.isFinal') }}
                             </sl-checkbox>
 

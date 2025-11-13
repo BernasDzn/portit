@@ -711,17 +711,17 @@ public static class Bootstrap
         vvn8.Submit();
         vvn9.Submit();
 
-        vvn6.AddDecision(NotificationDecisionFactory.CreateAccepted("All criteria met", context.Docks.First()));
-        vvn7.AddDecision(NotificationDecisionFactory.CreateAccepted("All criteria met", context.Docks.First()));
-        vvn8.AddDecision(NotificationDecisionFactory.CreateAccepted("Approved after review", context.Docks.Skip(2).First()));
-        vvn9.AddDecision(NotificationDecisionFactory.CreateAccepted("All criteria met", context.Docks.First()));
+        vvn6.AddDecision(NotificationDecisionFactory.CreateAccepted(context.Users.First().Email!, "All criteria met", context.Docks.First()));
+        vvn7.AddDecision(NotificationDecisionFactory.CreateAccepted(context.Users.First().Email!, "All criteria met", context.Docks.First()));
+        vvn8.AddDecision(NotificationDecisionFactory.CreateAccepted(context.Users.Skip(1).First().Email!, "Approved after review", context.Docks.Skip(2).First()));
+        vvn9.AddDecision(NotificationDecisionFactory.CreateAccepted(context.Users.Skip(2).First().Email!, "All criteria met", context.Docks.First()));
 
         context.VesselVisitNotifications.AddRange(vvn6, vvn7, vvn8, vvn9);
 
-        NotificationDecision decision1 = NotificationDecisionFactory.CreateAccepted("All criteria met", context.Docks.First());
-        NotificationDecision decision2 = NotificationDecisionFactory.CreateRejected("Insufficient documentation", false);
-        NotificationDecision decision3 = NotificationDecisionFactory.CreateAccepted("Approved after review", context.Docks.Skip(2).First());
-        NotificationDecision decision4 = NotificationDecisionFactory.CreateRejected("Safety concerns", true);
+        NotificationDecision decision1 = NotificationDecisionFactory.CreateAccepted(context.Users.First().Email!, "All criteria met", context.Docks.First());
+        NotificationDecision decision2 = NotificationDecisionFactory.CreateRejected(context.Users.Skip(1).First().Email!, "Insufficient documentation", false);
+        NotificationDecision decision3 = NotificationDecisionFactory.CreateAccepted(context.Users.Skip(3).First().Email!, "Approved after review", context.Docks.Skip(2).First());
+        NotificationDecision decision4 = NotificationDecisionFactory.CreateRejected(context.Users.Skip(3).First().Email!, "Safety concerns", true);
 
         vvn1.Submit();
         vvn1.AddDecision(decision1);
