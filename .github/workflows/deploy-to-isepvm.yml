@@ -32,7 +32,7 @@ jobs:
           port: ${{ secrets.VM_PORT }}
           username: ${{ secrets.VM_USER }}
           password: ${{ secrets.VM_PASSWORD }}
-          source: "/root/deployment_logs/*"
+          source: "/root/deployment_logs/"
           target: "./logs"
           strip_components: 1
 
