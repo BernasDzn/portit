@@ -147,6 +147,7 @@ builder.Services.AddAuthorization(options =>
     // Port Authority Officer features
     options.AddPolicy("VesselType.Manage", p => p.RequireRole("PortAuthorityOfficer", "Administrator"));
     options.AddPolicy("Vessel.Manage", p => p.RequireRole("PortAuthorityOfficer", "Administrator"));
+    options.AddPolicy("Vessel.View", p => p.RequireRole("SAORepresentative", "PortAuthorityOfficer", "Administrator"));
     options.AddPolicy("StorageArea.Manage", p => p.RequireRole("PortAuthorityOfficer", "Administrator"));
     options.AddPolicy("ShippingAgentOrg.Manage", p => p.RequireRole("PortAuthorityOfficer", "Administrator"));
     options.AddPolicy("Representative.Manage", p => p.RequireRole("SAORepresentative", "PortAuthorityOfficer", "Administrator"));

@@ -61,7 +61,7 @@ export class NotificationDecision {
     readonly status: NotificationDecisionStatus;
     readonly reason?: string;
     readonly decisionDate: Date;
-    readonly officerID?: number;
+    readonly officerEmail: string;
     readonly assignedDockCode?: string;
     readonly isFinal: boolean;
 
@@ -69,14 +69,14 @@ export class NotificationDecision {
         status: NotificationDecisionStatus;
         reason?: string;
         decisionDate: Date;
-        officerID?: number;
+        officerEmail: string;
         assignedDockCode?: string;
         isFinal: boolean;
     }) {
         this.status = params.status;
         this.reason = params.reason;
         this.decisionDate = params.decisionDate;
-        this.officerID = params.officerID;
+        this.officerEmail = params.officerEmail;
         this.assignedDockCode = params.assignedDockCode;
         this.isFinal = params.isFinal;
     }
@@ -86,7 +86,7 @@ export class NotificationDecision {
             status: this.status,
             reason: this.reason,
             decisionDate: this.decisionDate,
-            officerID: this.officerID,
+            officerID: this.officerEmail,
             assignedDockCode: this.assignedDockCode,
             isFinal: this.isFinal
         };

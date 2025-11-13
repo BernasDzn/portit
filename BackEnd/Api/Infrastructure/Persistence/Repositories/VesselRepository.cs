@@ -107,4 +107,19 @@ public class VesselRepository : GenericRepository<Vessel>, IVesselRepository
             throw new PersistencyFailedException("Failed to count vessels in the database.");
         }
     }
+
+    public async Task<IEnumerable<Vessel>> GetVesselByOwner(string taxId)
+    {
+        try
+        {
+            var vessels = await _context.Vessels
+                .Where(v => v.Owner.TaxId.Value == taxId)
+                .ToListAsync();
+            return vessels;
+        }
+        catch
+        {
+            throw new PersistencyFailedException("Failed to retrieve vessel by owner from the database.");
+        }
+    }
 }

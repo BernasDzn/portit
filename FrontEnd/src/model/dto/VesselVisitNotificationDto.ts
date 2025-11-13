@@ -74,7 +74,7 @@ export interface NotificationDecisionDto {
     status: NotificationDecisionStatus;
     reason?: string;
     decisionDate: Date;
-    officerID?: number;
+    officerEmail?: string;
     assignedDockCode?: string;
     isFinal: boolean;
 }

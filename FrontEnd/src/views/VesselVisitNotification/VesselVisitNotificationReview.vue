@@ -12,15 +12,16 @@ import { container } from '@/inversify.config';
 import type { IVesselVisitNotificationService } from '@/service/IService/IVesselVisitNotificationService';
 import TYPES from '@/inversify/types';
 import type { IDockService } from '@/service/IService/IDockService';
+import type { NotificationDecisionDto } from '@/model/dto/VesselVisitNotificationDto';
 
 const { t } = useI18n();
 const route = useRoute();
 
-const decision = ref<NotificationDecision>({
+const decision = ref<NotificationDecisionDto>({
     status: null,
     reason: '',
     decisionDate: new Date(),
-    officerID: null,
+    officerEmail: null,
     assignedDockCode: null,
     isFinal: false 
 });

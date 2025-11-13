@@ -6,8 +6,8 @@ import type { Filter, Page } from "@/model/Page";
 import type {
     VesselVisitNotification,
     NotificationDecision,
-    VesselVisitNotificationFilter
 } from "@/model/VesselVisitNotification";
+import type { NotificationDecisionDto, VesselVisitNotificationDto, VesselVisitNotificationFilter } from "@/model/dto/VesselVisitNotificationDto";
 
 @injectable()
 export class VesselVisitNotificationService implements IVesselVisitNotificationService {
@@ -73,12 +73,12 @@ export class VesselVisitNotificationService implements IVesselVisitNotificationS
         return res.data;
     }
 
-    async createVesselVisitNotification(notification: VesselVisitNotification): Promise<VesselVisitNotification> {
+    async createVesselVisitNotification(notification: VesselVisitNotificationDto): Promise<VesselVisitNotification> {
         const res = await this.http.post<VesselVisitNotification>("/VesselVisitNotification", notification);
         return res.data;
     }
 
-    async createNotificationDecision(vesselVisitNotificationId: string, decision: NotificationDecision): Promise<NotificationDecision> {
+    async createNotificationDecision(vesselVisitNotificationId: string, decision: NotificationDecisionDto): Promise<NotificationDecision> {
         const res = await this.http.post<NotificationDecision>(
             `/VesselVisitNotification/decisions?vesselVisitNotificationId=${vesselVisitNotificationId}`,
             decision
@@ -86,8 +86,8 @@ export class VesselVisitNotificationService implements IVesselVisitNotificationS
         return res.data;
     }
 
-    async updateVesselVisitNotification(id: string, notification: VesselVisitNotification): Promise<VesselVisitNotification> {
-        const res = await this.http.put<VesselVisitNotification>(`/VesselVisitNotification/${id}`, notification);
+    async updateVesselVisitNotification(notification: VesselVisitNotificationDto): Promise<VesselVisitNotification> {
+        const res = await this.http.put<VesselVisitNotification>(`/VesselVisitNotification/${notification.notificationId}`, notification);
         return res.data;
     }
 

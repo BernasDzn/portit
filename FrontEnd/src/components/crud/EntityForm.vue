@@ -31,6 +31,11 @@ const props = defineProps({
         type: String,
         default: 'Form submitted successfully!',
         required: false
+    },
+    hideButtons: {
+        type: Boolean,
+        default: false,
+        required: false
     }
 });
 
@@ -139,14 +144,14 @@ onMounted(
             <slot v-else class="form-content"></slot>
         </div>
 
-        <div class="form-operations">
+        <div v-if="!props.hideButtons" class="form-operations">
             <sl-button class="form-button" variant="danger" outline @click="onCancel">
                 {{ t('buttons.cancel') }}
             </sl-button>
             <sl-button class="form-button" variant="primary" type="submit" :loading="buttonLoading" :disabled="buttonLoading">
                 {{ props.editingId != null ? t('buttons.save') : t('buttons.create') }}
             </sl-button>
-        </div>
+        </div>        
 
         <sl-dialog ref="cancelDialog" :label="t('unsavedChanges.title')">
             <div>{{ t('unsavedChanges.message') }}</div>
