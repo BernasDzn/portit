@@ -29,7 +29,9 @@ export class VesselVisitNotificationService implements IVesselVisitNotificationS
 
     async getVesselVisitNotificationsForReview(): Promise<Page<VesselVisitNotification>> {
         const res = await this.getVesselVisitNotifications();
+        console.log(res);
         const filteredItems = res.items.filter(item => item.status === 1);
+        console.log(filteredItems);
         const page: Page<VesselVisitNotification> = {
             items: filteredItems,
             pageNumber: 1,
