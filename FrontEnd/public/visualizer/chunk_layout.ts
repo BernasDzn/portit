@@ -319,6 +319,9 @@ export default class PortLayout {
         });
     }
 
+    turnOffEvent;
+    turnOnEvent;
+
     // Load terrain
     async loadTerrain(scene) {
         this.terrain = await loadModelRaw("/visualizer/models/terrain.obj");
@@ -368,6 +371,26 @@ export default class PortLayout {
         scene.add(this.lighthouseLight.target);
 
         scene.add(this.lighthouseLight);
+
+        this.turnOffEvent = new TimedEvent(6, () => {
+            this.turnOffLighthouse();
+        });
+
+        this.turnOnEvent = new TimedEvent(22, () => {
+            this.turnOnLighthouse();
+        });
+    }
+
+    turnOnLighthouse() {
+        if (this.lighthouseLight) {
+            this.lighthouseLight.intensity = 75000;
+        }
+    }
+
+    turnOffLighthouse() {
+        if (this.lighthouseLight) {
+            this.lighthouseLight.intensity = 0;
+        }
     }
 
     async addSeagull(scene) {
