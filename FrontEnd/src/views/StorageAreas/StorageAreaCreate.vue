@@ -30,15 +30,15 @@ const allDocks = ref<Array<Dock>>([]);
 function updateDockRelations(dockCodes: string[]) {
     const selected = new Set(dockCodes || [])
 
-    storageArea.value.dockServices = storageArea.value.dockServices.filter(rel => selected.has(rel.dock))
+    storageArea.value.dockServices = storageArea.value.dockServices.filter(rel => selected.has(rel.dockCode))
 
     // Add new relations for any selected codes not already present
     dockCodes.forEach(dockCode => {
-        const existingRelation = storageArea.value.dockServices.find(relation => relation.dock === dockCode);
+        const existingRelation = storageArea.value.dockServices.find(relation => relation.dockCode === dockCode);
         if (!existingRelation) {
             const dock = allDocks.value.find(d => d.code === dockCode);
             if (dock) {
-                storageArea.value.dockServices.push({ dock: dock.code, isServingDock: true });
+                storageArea.value.dockServices.push({ dockCode: dock.code, isServingDock: true });
             }
         }
     });
@@ -97,9 +97,9 @@ const submitStorageArea = (obj: any) =>
                         @sl-change="console.log($event.target.value), updateDockRelations($event.target.value)"
                     />
                     <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
-                        <sl-card class="card-header" style="width: fit-content;" v-for="dock in storageArea.dockServices" :key="dock.dock" >
+                        <sl-card class="card-header" style="width: fit-content;" v-for="dock in storageArea.dockServices" :key="dock.dockCode" >
                             <div slot="header">
-                                {{ dock.dock }} {{ t('storageArea.create.distance_meters') }}
+                                {{ dock.dockCode }} {{ t('storageArea.create.distance_meters') }}
                             </div>
                             <FormField class="field" :name="`null`" v-model="dock.distance" :placeholderText="t('storageArea.create.distance_meters')" pattern="^[0-9]+(\.[0-9]{1,2})?$" required/>
                         </sl-card>

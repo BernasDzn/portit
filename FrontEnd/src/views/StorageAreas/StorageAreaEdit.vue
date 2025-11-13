@@ -46,14 +46,14 @@ function getDockLabel(rel: any) {
 function updateDockRelations(dockCodes: string[]) {
     const selected = new Set(dockCodes || [])
 
-    storageArea.value.dockServices = storageArea.value.dockServices.filter(rel => selected.has(rel.dock))
+    storageArea.value.dockServices = storageArea.value.dockServices.filter(rel => selected.has(rel.dockCode))
 
     dockCodes.forEach(dockCode => {
-        const existingRelation = storageArea.value.dockServices.find(relation => relation.dock === dockCode);
+        const existingRelation = storageArea.value.dockServices.find(relation => relation.dockCode === dockCode);
         if (!existingRelation) {
             const dock = allDocks.value.find(d => d.code === dockCode);
             if (dock) {
-                storageArea.value.dockServices.push({ dock: dock.code, isServingDock: true });
+                storageArea.value.dockServices.push({ dockCode: dock.code, isServingDock: true });
             }
         }
     });
@@ -124,7 +124,7 @@ const updateStorageArea = (obj: any) => {
                         @sl-change="updateDockRelations($event.target.value)"
                     />
                     <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
-                        <sl-card class="card-header" style="width: fit-content;" v-for="dock_p in storageArea.dockServices" :key="dock_p.dock">
+                        <sl-card class="card-header" style="width: fit-content;" v-for="dock_p in storageArea.dockServices" :key="dock_p.dockCode">
                             <div slot="header">
                                 {{ getDockLabel(dock_p) }} {{ t('storageArea.create.distance_meters') }}
                             </div>
