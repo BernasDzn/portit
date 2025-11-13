@@ -20,6 +20,9 @@ using NSwag.Generation.Processors.Security;
 using Api.Infrastructure.Utilities.Email;
 using Prometheus;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Api.Infrastructure.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 // Logging definitions
@@ -173,7 +176,32 @@ builder.Services.AddAuthorization(options =>
 EncryptionHelper.SetEncryptionKey(builder.Configuration["EncryptionKey"]!);
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    // Safeguard validation errors from leaking implementation details (and to help the UI not display insane logs)
+    options.Filters.Add(new GlobalExceptionFilter());
+})
+.ConfigureApiBehaviorOptions(options =>
+{
+    // Override automatic ModelState validation response
+    options.InvalidModelStateResponseFactory = context =>
+    {
+        var errors = context.ModelState
+            .Where(e => e.Value?.Errors.Count > 0)
+            .Select(e => new
+            {
+                Field = e.Key,
+                Error = e.Value!.Errors.First().ErrorMessage
+            })
+            .ToList();
+
+        return new BadRequestObjectResult(new
+        {
+            Message = "Validation failed",
+            Errors = errors
+        });
+    };
+});;
 IConfiguration configuration = builder.Configuration;
 
 // Register authentication providers
@@ -193,7 +221,7 @@ builder.Services.AddTransient<IJwtTokenService>(sp =>
 });
 
 // Add database contexts
-if(builder.Environment.IsEnvironment("Testing"))
+if (builder.Environment.IsEnvironment("Testing"))
 {
     builder.Services.AddDbContext<ApiContext>(opt =>
         opt.UseLazyLoadingProxies().UseInMemoryDatabase("TestDatabase"));

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import type { CargoManifestItem, Container, Position } from '@/model/dto/VesselVisitNotificationDto';
+import { useAlerts } from '@/composables/alerts';
 
 const props = defineProps({
   modelValue: {
@@ -8,6 +9,8 @@ const props = defineProps({
     default: () => []
   }
 });
+
+const notifications = useAlerts();
 
 const emit = defineEmits(['update:modelValue']);
 
@@ -42,34 +45,42 @@ const types: Record<number, string> = {
 };
 
 const parseCSV = (text: string) => {
-    console.log('CSV content:', text);
-
-    const items: CargoManifestItem[] = [];
-    const lines = text.split('\n');
-    // skip header line
-    lines.shift();
-
-    for (let line of lines) {
+    
+    try {
+        const items: CargoManifestItem[] = [];
+        const lines = text.split('\n');
+        // skip header line
+        lines.shift();
+    
+        for (let line of lines) {
+            
+            const row = line.split(';');
+            const item = {
+                position: {
+                    bay: row[0].toString() || '',
+                    row: row[1].toString() || '',
+                    tier: row[2].toString() || ''
+                } as Position,
+                    storageAreaCode: row[3].toString() || '',
+                    container: {
+                        containerNumber: row[4].toString() || '',
+                        cargoType: Number(row[5].toString() || 0),
+                        description: row[6].toString() || ''
+                    } as Container
+            };
+    
+            items.push(item);
+        }
         
-        const row = line.split(';');
-        const item = {
-            position: {
-                bay: row[0] || '',
-                row: row[1] || '',
-                tier: row[2] || ''
-            } as Position,
-                storageAreaCode: row[3] || '',
-                container: {
-                containerNumber: row[4] || '',
-                cargoType: Number(row[5] || 0),
-                description: row[6] || ''
-            } as Container
-        };
-
-        items.push(item);
+        emit('update:modelValue', items);
+        
+    } catch (error) {
+        
+        notifications.enqueueNotification(
+            'Error parsing CSV file. Please ensure the file format is correct.',
+            'danger'
+        );
     }
-  
-    emit('update:modelValue', items);
 };
 
 const openFileDialog = () => fileInput.value?.click();

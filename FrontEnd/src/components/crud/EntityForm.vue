@@ -78,10 +78,16 @@ const submit = async () => {
         
     } catch (error) {
 
+        let message = (error as any)?.response?.data;
+        if (typeof message === 'object' && message !== null) {
+            message = message.message;
+        }
+
         if ((error as any)?.response?.status === 400) {
+
             // Validation error from server
             notification.enqueueNotification(
-                'Validation error: ' + (error as any)?.response?.data,
+                'Validation error: ' + message || 'Please check your input.',
                 notification.notificationTypes.DANGER,
             );
             return;
@@ -89,7 +95,7 @@ const submit = async () => {
         
         // Include reponse message in notification if available
         notification.enqueueNotification(
-            'Failed to submit form: ' + ((error as any)?.response?.data || (error as Error).message),
+            'Failed to submit form: ' + (message || (error as Error).message),
             notification.notificationTypes.DANGER,
         );
         
