@@ -550,7 +550,9 @@
             "myNotifications": "My Notifications",
             "review": "Review Notifications",
             "general": "Generic listing",
-            "byDate": "Calendar listing"
+            "byDate": "Calendar listing",
+            "submit": "Submit Notification",
+            "delete": "Delete Notification"
         },
         "eventsOnDate": "Events on selected date",
         "noEventsOnDate": "No events on selected date",

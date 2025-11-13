@@ -3,6 +3,7 @@ namespace Api.Domain.IRepository;
 using Api.Domain.Entities;
 using Api.Application.DataTransfer.Filters;
 using Api.Infrastructure.Utilities;
+using System;
 
 public interface IVesselRepository : IGenericRepository<Vessel>
 {
@@ -12,4 +13,5 @@ public interface IVesselRepository : IGenericRepository<Vessel>
     new Task<Vessel> Add(Vessel vessel);
     Task<Vessel> Update(Vessel vessel);
     Task<int> CountAsync();
+    Task<IEnumerable<Vessel>> GetVesselByOwner(string taxId);
 }

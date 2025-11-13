@@ -11,4 +11,5 @@ public interface IVesselService
     Task<VesselDto> GetByImo(string imo);
     Task<Page<VesselDto>> FilterVessels(VesselFilter filter);
     Task<int> CountVesselsAsync();
+    Task<IEnumerable<VesselDto>> GetVesselByOwner(string ownerEmail);
 }

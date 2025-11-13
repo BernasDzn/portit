@@ -63,7 +63,7 @@ export class AxiosHttpService implements IHttpService {
   }
 
   async post<T>(url: string, data: unknown, headers?: Headers): Promise<Response<T>> {
-    console.log('POST to ', url, ' with data ', data);
+    console.log('POST to ', url, ' with data ', JSON.stringify(data));
     const res = await this.axiosInstance.post<T>(
       url,
       data,

@@ -31,6 +31,11 @@ const props = defineProps({
         type: String,
         default: 'Form submitted successfully!',
         required: false
+    },
+    hideButtons: {
+        type: Boolean,
+        default: false,
+        required: false
     }
 });
 
@@ -73,10 +78,16 @@ const submit = async () => {
         
     } catch (error) {
 
+        let message = (error as any)?.response?.data;
+        if (typeof message === 'object' && message !== null) {
+            message = message.errors[0].error;
+        }
+
         if ((error as any)?.response?.status === 400) {
+
             // Validation error from server
             notification.enqueueNotification(
-                'Validation error: ' + (error as any)?.response?.data,
+                'Validation error: ' + message || 'Please check your input.',
                 notification.notificationTypes.DANGER,
             );
             return;
@@ -84,7 +95,7 @@ const submit = async () => {
         
         // Include reponse message in notification if available
         notification.enqueueNotification(
-            'Failed to submit form: ' + ((error as any)?.response?.data || (error as Error).message),
+            'Failed to submit form: ' + (message || (error as Error).message),
             notification.notificationTypes.DANGER,
         );
         
@@ -139,14 +150,14 @@ onMounted(
             <slot v-else class="form-content"></slot>
         </div>
 
-        <div class="form-operations">
+        <div v-if="!props.hideButtons" class="form-operations">
             <sl-button class="form-button" variant="danger" outline @click="onCancel">
                 {{ t('buttons.cancel') }}
             </sl-button>
             <sl-button class="form-button" variant="primary" type="submit" :loading="buttonLoading" :disabled="buttonLoading">
                 {{ props.editingId != null ? t('buttons.save') : t('buttons.create') }}
             </sl-button>
-        </div>
+        </div>        
 
         <sl-dialog ref="cancelDialog" :label="t('unsavedChanges.title')">
             <div>{{ t('unsavedChanges.message') }}</div>

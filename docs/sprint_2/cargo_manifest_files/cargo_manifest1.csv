@@ -1,0 +1,21 @@
+Bay;Row;Tier;Area code;Container number;Container type;Description
+1;1;1;A1;ABC1234567;0;Electronics
+1;1;2;A1;DEF1234567;1;Clothing
+1;2;1;B2;GHI1234567;2;Furniture
+1;2;2;B2;JKL1234567;0;Electronics
+1;3;1;C3;MNO1234567;1;Clothing
+1;3;2;C3;PQR1234567;2;Furniture
+2;1;1;D4;STU1234567;0;Electronics
+2;1;2;D4;VWX1234567;1;Clothing
+2;2;1;E5;YZA1234567;2;Furniture
+2;2;2;E5;BCD1234567;0;Electronics
+2;3;1;F6;EFG1234567;1;Clothing
+2;3;2;F6;HIJ1234567;2;Furniture
+3;1;1;G7;KLM1234567;0;Electronics
+3;1;2;G7;NOP1234567;1;Clothing
+3;2;1;H8;QRS1234567;2;Furniture
+3;2;2;H8;TUV1234567;0;Electronics
+3;3;1;I9;WXY1234567;1;Clothing
+3;3;2;I9;ZAB1234567;2;Furniture
+4;1;1;J10;CDE1234567;0;Electronics
+4;1;2;J10;FGH1234567;1;Clothing

@@ -13,16 +13,6 @@ export class Page<T> {
     pageNumber: number;
     pageSize: number;
     pageCount: number;
-
-    mapItems<U>(mapper: (item: T) => U): Page<U> {
-        const mappedItems = this.items.map(mapper);
-        return new Page<U> ({
-            items: mappedItems,
-            pageNumber: this.pageNumber,
-            pageSize: this.pageSize,
-            pageCount: this.pageCount,
-        });
-    }
 }
 
 export interface Filter<T> {

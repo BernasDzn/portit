@@ -12,17 +12,18 @@ import { container } from '@/inversify.config';
 import type { IVesselVisitNotificationService } from '@/service/IService/IVesselVisitNotificationService';
 import TYPES from '@/inversify/types';
 import type { IDockService } from '@/service/IService/IDockService';
+import type { NotificationDecisionDto } from '@/model/dto/VesselVisitNotificationDto';
 
 const { t } = useI18n();
 const route = useRoute();
 
-const decision = ref<NotificationDecision>({
+const decision = ref<NotificationDecisionDto>({
     status: null,
     reason: '',
     decisionDate: new Date(),
-    officerID: null,
+    officerEmail: null,
     assignedDockCode: null,
-    isFinal: true 
+    isFinal: false 
 });
 
 const notificationService = container.get<IVesselVisitNotificationService>(TYPES.vesselVisitNotificationService);
@@ -45,9 +46,9 @@ const isRejected = computed(() => {
     return statusNum === 2;
 });
 
-const submitDecision = (obj: any) =>{
+const submitDecision = (obj: any) => {
     console.log(obj);
-    notificationService.createNotificationDecision(notificationId, obj);
+    return notificationService.createNotificationDecision(notificationId, obj);
 }
 
 const fetchNotification = async (): Promise<VesselVisitNotification | null> => {
@@ -133,7 +134,7 @@ const closeUnloadManifest = () => {
                                 required
                             />
 
-                            <sl-checkbox v-if="isRejected" :label="t('notification.decision.isFinal')" v-model="decision.isFinal">
+                            <sl-checkbox v-if="isRejected" :label="t('notification.decision.isFinal')" v-model="decision.isFinal" @sl-change="decision.isFinal = $event.target.checked">
                                 {{ t('notification.decision.isFinal') }}
                             </sl-checkbox>
 

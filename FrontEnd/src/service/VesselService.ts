@@ -14,6 +14,11 @@ export class VesselService implements IVesselService {
 		@inject(TYPES.api) 
 		private http: IHttpService
 	){}
+    getVesselByOwner(email: string): Promise<Vessel[]> {
+        
+        const res = this.http.get<Vessel[]>(`/Vessel/owner/${email}`);
+        return res.then(response => response.data);
+    }
 
 	async getVessels(filtering?: Filter<VesselFilter>): Promise<Page<Vessel>> {
 

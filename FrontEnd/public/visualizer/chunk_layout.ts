@@ -1,6 +1,6 @@
 import * as THREE from "three";
-import {loadModel, loadModelRaw} from "./helpers/model_helper.ts";
-import {makeBillboard} from "./helpers/billboard_helper.ts";
+import { loadModel, loadModelRaw } from "./helpers/model_helper.ts";
+import { makeBillboard } from "./helpers/billboard_helper.ts";
 import Vessel, { Crane, Seagull } from "./entities.ts";
 import PickHelper from "./helpers/pick_helper.ts";
 import { hideInfoText, setInfoText } from "./helpers/info_helper.ts";
@@ -41,7 +41,7 @@ const chunkTypes = Object.freeze({
     WAREHOUSE: 3,
 });
 
-export function chunkIndexToPosition(x, y, centered=false) {
+export function chunkIndexToPosition(x, y, centered = false) {
     let position = new THREE.Vector3();
     position.x = chunkSize.x * x + worldOrigin.x;
     position.y = layoutY;
@@ -60,23 +60,29 @@ class PortChunk {
     base;
     position;
 
-    constructor(x,y) {
+    constructor(x, y) {
 
         // Determine position based on chunk index
         if (validChunkPositions[x][y] === 0) {
             console.warn(`Invalid chunk position at (${x}, ${y})`);
             return;
         }
-        
+
         this.position = chunkIndexToPosition(x, y);
         this.position.y += chunkSize.y / 2;
     }
 }
 
 class WarehouseChunk extends PortChunk {
-    constructor(x,y) {
-        super(x,y);
+
+    warehouseModel;
+    warehouseLabel;
+    pointLight;
+
+    constructor(x, y) {
+        super(x, y);
         this.base = null;
+        this.warehouseLabel = makeBillboard("Warehouse", 32, 0xffffff);
     }
 
     async init(scene) {
@@ -93,13 +99,41 @@ class WarehouseChunk extends PortChunk {
         };
 
         scene.add(this.base);
+
+        this.warehouseModel = await loadModel("/visualizer/models/warehouse/warehouse.obj");
+        this.warehouseModel.position.copy(this.position);
+        this.warehouseModel.position.y += 21;
+        this.warehouseModel.rotateY(Math.PI / 2);
+        this.warehouseModel.scale.set(6, 6, 6);
+        this.warehouseModel.traverse((child) => {
+            if (child.isMesh) {
+                child.castShadow = true;
+                child.receiveShadow = true;
+            }
+        });
+
+        scene.add(this.warehouseModel);
+
+        this.warehouseLabel.position.set(
+            this.position.x,
+            this.position.y + 45,
+            this.position.z - 20
+        );
+
+        scene.add(this.warehouseLabel);
+
+        this.pointLight = new THREE.PointLight(0xfcfc95, 2, 100, 0);
+        this.pointLight.position.set(this.position.x, this.position.y + 30, this.position.z);
+        this.pointLight.castShadow = true;
+
+        scene.add(this.pointLight);
     }
 }
 
 class LandChunk extends PortChunk {
 
-    constructor(x,y) {
-        super(x,y);
+    constructor(x, y) {
+        super(x, y);
         this.base = null;
     }
 
@@ -149,7 +183,7 @@ class BuoyChunk extends PortChunk {
 
         this.pointLight = new THREE.PointLight(0xff0000, 10, 100, 0);
         this.pointLight.position.set(this.position.x + chunkSize.x / 2, this.position.y + 10, this.position.z - chunkSize.z / 2);
-      
+
         scene.add(this.pointLight);
     }
 
@@ -163,11 +197,11 @@ class BuoyChunk extends PortChunk {
 }
 
 class DockChunk extends PortChunk {
-    
+
     dockLabel;
 
-    constructor(x,y, label) {
-        super(x,y);
+    constructor(x, y, label) {
+        super(x, y);
         this.base = null;
 
         this.dockLabel = makeBillboard("Dock", 32, 0xffffff);
@@ -220,7 +254,7 @@ export default class PortLayout {
     chunkData = []; // The chunks that make up the port layout
 
     constructor(scene, camera) {
-        
+
         this.picker = new PickHelper();
 
         window.addEventListener('click', (event) => {
@@ -231,14 +265,12 @@ export default class PortLayout {
         let buoyChunk = new BuoyChunk(4, 3);
         let dockChunk = new DockChunk(4, 5);
         let warehouseChunk = new WarehouseChunk(3, 4);
-        let warehouseChunk2 = new WarehouseChunk(2, 4);
 
-        this.chunkData.push(warehouseChunk2);
         this.chunkData.push(warehouseChunk);
         this.chunkData.push(portChunk);
         this.chunkData.push(buoyChunk);
         this.chunkData.push(dockChunk);
-     
+
         this.loadChunks(scene);
         this.loadTerrain(scene);
     }
@@ -348,7 +380,7 @@ export default class PortLayout {
             this.craneList.splice(index, 1);
         }
     }
-        
+
 
     removeVessel(vessel) {
         const index = this.vesselList.indexOf(vessel);
@@ -396,7 +428,7 @@ export default class PortLayout {
             x: (event.clientX / window.innerWidth) * 2 - 1,
             y: -(event.clientY / window.innerHeight) * 2 + 1
         };
-    
+
         const craneMeshes = [];
         this.craneList.forEach(crane => {
             crane.model.traverse((child) => {
@@ -405,7 +437,7 @@ export default class PortLayout {
                 }
             });
         });
-        
+
         const objectlist = [
             ...this.chunkData.map(chunk => chunk.base),
             ...this.vesselList.map(vessel => vessel.model.children[1]),
@@ -414,7 +446,7 @@ export default class PortLayout {
 
         const picked = this.picker.pickFromList(normalizedPosition, scene, camera, objectlist);
         let pickedObject = picked ? picked.object : null;
-    
+
         const highlightMesh = (obj, color) => {
             if (obj && obj.material) {
                 if (Array.isArray(obj.material)) {
@@ -439,14 +471,14 @@ export default class PortLayout {
         if (pickedObject) {
             this.selectedObject = pickedObject;
             console.log("Picked object:", this.selectedObject);
-            
+
             try {
                 const userData = this.selectedObject.meta;
                 setInfoText(userData);
             } catch (error) {
                 console.warn("No meta information available for selected object.");
             }
-            
+
             if (clickedCrane) {
                 clickedCrane.meshes.forEach((mesh) => {
                     highlightMesh(mesh, 0x444477);
@@ -459,5 +491,5 @@ export default class PortLayout {
             hideInfoText();
         }
     }
-    
+
 }

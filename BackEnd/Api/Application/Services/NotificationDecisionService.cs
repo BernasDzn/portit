@@ -30,7 +30,7 @@ public class NotificationDecisionService : INotificationDecisionService
         return decisions.Select(n => n.ToDTO()).ToList();
     }
 
-    public async Task<NotificationDecisionDto> Add(CreateNotificationDecisionDto notificationDecisionDto, string vesselVisitNotificationId)
+    public async Task<NotificationDecisionDto> Add(CreateNotificationDecisionDto notificationDecisionDto, string vesselVisitNotificationId, string officerEmail)
     {
         VesselVisitNotification? notification = await _notificationRepository.GetVesselVisitNotificationByNotificationIdAsync(vesselVisitNotificationId);
 
@@ -48,10 +48,10 @@ public class NotificationDecisionService : INotificationDecisionService
             if (assignedDock == null)
                 throw new EntityNotFoundException("Assigned Dock not found.");
 
-            notificationDecision = NotificationDecisionFactory.CreateAccepted(notificationDecisionDto.Reason, assignedDock, notificationDecisionDto.DecisionDate);
+            notificationDecision = NotificationDecisionFactory.CreateAccepted(officerEmail, notificationDecisionDto.Reason, assignedDock, notificationDecisionDto.DecisionDate);
         }
         else if (notificationDecisionDto.Status == 2)
-            notificationDecision = NotificationDecisionFactory.CreateRejected(notificationDecisionDto.Reason ?? "No reason provided",
+            notificationDecision = NotificationDecisionFactory.CreateRejected(officerEmail, notificationDecisionDto.Reason ?? "No reason provided",
              notificationDecisionDto.IsFinal, notificationDecisionDto.DecisionDate);
         else
             throw new ArgumentException("Invalid status value.", nameof(notificationDecisionDto.Status));

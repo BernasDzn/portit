@@ -11,7 +11,7 @@ using Api.Infrastructure.Exceptions;
 
 [ApiController]
 [Route("[controller]")]
-[Authorize(Policy = "Vessel.Manage")]
+[Authorize]
 public class VesselController : ControllerBase, IVesselController
 {
     private readonly ILogger<VesselController> _logger;
@@ -24,6 +24,7 @@ public class VesselController : ControllerBase, IVesselController
     }
 
     [HttpGet(Name = "GetVessels")]
+    [Authorize(Policy = "Vessel.Manage")]
     public async Task<ActionResult<IEnumerable<VesselDto>>> GetAll()
     {
         IEnumerable<VesselDto> vesselsDto = await _vesselService.GetVessels();
@@ -31,6 +32,7 @@ public class VesselController : ControllerBase, IVesselController
     }
 
     [HttpGet("{imo}", Name = "GetVesselByImo")]
+    [Authorize(Policy = "Vessel.Manage")]
     public async Task<ActionResult<VesselDto>> GetByImo(string imo)
     {
         try
@@ -51,6 +53,7 @@ public class VesselController : ControllerBase, IVesselController
     }
 
     [HttpPost(Name = "PostVessel")]
+    [Authorize(Policy = "Vessel.Manage")]
     public async Task<ActionResult<VesselDto>> Create(CreateVesselDto vesselDto)
     {
         try
@@ -82,6 +85,7 @@ public class VesselController : ControllerBase, IVesselController
     }
 
     [HttpGet("filter")]
+    [Authorize(Policy = "Vessel.Manage")]
     public async Task<ActionResult<Page<VesselDto>>> Filter([FromQuery] VesselFilter filter)
     {
         try
@@ -98,6 +102,7 @@ public class VesselController : ControllerBase, IVesselController
     }
 
     [HttpPut("{imo}", Name = "UpdateVessel")]
+    [Authorize(Policy = "Vessel.Manage")]
     public async Task<ActionResult<VesselDto>> Update(string imo, CreateVesselDto vesselDto)
     {
         try
@@ -112,8 +117,9 @@ public class VesselController : ControllerBase, IVesselController
             return BadRequest(e.Message);
         }
     }
-    
+
     [HttpGet("count")]
+    [Authorize(Policy = "Vessel.Manage")]
     public async Task<ActionResult<int>> Count()
     {
         try
@@ -124,6 +130,27 @@ public class VesselController : ControllerBase, IVesselController
         catch (System.Exception e)
         {
             _logger.LogError("Error counting vessels, {Message}", e.Message);
+            return StatusCode(500);
+        }
+    }
+
+    [HttpGet("owner/{ownerEmail}", Name = "GetVesselsByOwner")]
+    [Authorize(Policy = "Vessel.View")]
+    public async Task<ActionResult<IEnumerable<VesselDto>>> GetByOwner(string ownerEmail)
+    {
+        try
+        {
+            var vesselsDto = await _vesselService.GetVesselByOwner(ownerEmail);
+            return Ok(vesselsDto);
+        }
+        catch (EntityNotFoundException ex)
+        {
+            _logger.LogWarning("Owner not found, {Message}", ex.Message);
+            return NotFound(ex.Message);
+        }
+        catch (System.Exception)
+        {
+            _logger.LogError("Error retrieving vessels by owner.");
             return StatusCode(500);
         }
     }

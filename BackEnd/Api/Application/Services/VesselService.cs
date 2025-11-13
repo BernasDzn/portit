@@ -124,4 +124,15 @@ public class VesselService : IVesselService
         AppLogEvents.LogRetrieve(_logger, "vessel-count", count);
         return count;
     }
+
+    public async Task<IEnumerable<VesselDto>> GetVesselByOwner(string ownerEmail)
+    {
+        var ownerOrganization = await _shippingAgentOrgRepository.GetByRepEmailAsync(ownerEmail);
+        if (ownerOrganization == null)
+            throw new EntityNotFoundException("Shipping agent organization not found for the given representative email.");
+
+        var vessels = await _vesselRepository.GetVesselByOwner(ownerOrganization.TaxId.Value);
+        AppLogEvents.LogRetrieve(_logger, "vessels by owner", vessels.Count());
+        return vessels.Select(v => v.ToDTO()).ToList();
+    }
 }

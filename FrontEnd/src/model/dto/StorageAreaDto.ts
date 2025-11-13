@@ -8,7 +8,7 @@ export interface StorageAreaDto {
 }
 
 export interface DockRelationDto {
-    dock: string;
+    dockCode: string;
     distance?: number;
     isServingDock: boolean;
 }

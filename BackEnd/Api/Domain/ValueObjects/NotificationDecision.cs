@@ -16,17 +16,17 @@ public class NotificationDecision : IDTOAble<NotificationDecisionDto>
     public NotificationDecisionStatus Status { get; private set; }
     public string? Reason { get; private set; }
     public DateTime DecisionDate { get; private set; }
-    public int? OfficerID { get; private set; }
+    public string OfficerEmail { get; private set; }
     public bool isFinal = false;
     public virtual Dock? AssignedDock { get; private set; }
 
     protected NotificationDecision() { }
-    public NotificationDecision(NotificationDecisionStatus status, DateTime decisionDate, int? officerID = null, Dock? assignedDock = null, string? reason = null)
+    public NotificationDecision(NotificationDecisionStatus status, DateTime decisionDate, string officerEmail, Dock? assignedDock = null, string? reason = null)
     {
         Status = status;
         Reason = reason;
         DecisionDate = decisionDate;
-        OfficerID = officerID;
+        OfficerEmail = officerEmail;
         AssignedDock = assignedDock;
     }
 
@@ -42,7 +42,7 @@ public class NotificationDecision : IDTOAble<NotificationDecisionDto>
             Status = (int)Status,
             Reason = Reason,
             DecisionDate = DecisionDate,
-            OfficerID = OfficerID,
+            OfficerEmail = OfficerEmail,
             AssignedDock = AssignedDock?.ToDTO(),
             IsFinal = isFinal
         };

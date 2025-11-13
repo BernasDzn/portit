@@ -12,4 +12,5 @@ public interface IVesselController
     public Task<ActionResult<VesselDto>> Create(CreateVesselDto vesselDto);
     public Task<ActionResult<VesselDto>> Update(string imo, CreateVesselDto vesselDto);
     public Task<ActionResult<Page<VesselDto>>> Filter([FromQuery] VesselFilter filter);
+    public Task<ActionResult<IEnumerable<VesselDto>>> GetByOwner(string taxId);
 }

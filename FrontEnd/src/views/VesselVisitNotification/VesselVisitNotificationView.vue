@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import type { VesselVisitNotification } from '@/model/VesselVisitNotification';
 import NoResults from '@/components/NoResults.vue';
 import EntityView from '@/components/crud/EntityView.vue';
@@ -7,6 +7,9 @@ import { useI18n } from 'vue-i18n';
 import type { IVesselVisitNotificationService } from '@/service/IService/IVesselVisitNotificationService';
 import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
+import { onMounted, ref } from 'vue';
+import { useSession } from '@/composables/session';
+import { useAlerts } from '@/composables/alerts';
 
 const { t } = useI18n();
 const route = useRoute();
@@ -24,6 +27,9 @@ const cargoTypes = [
     "Oversized industrial equipment",
     "Other"
 ]
+
+const notifications = useAlerts();
+const router = useRouter();
 
 const fetchNotification = async (): Promise<VesselVisitNotification | null> => {
     const n = await notificationService.getVesselVisitNotificationById(notificationId);
@@ -60,6 +66,60 @@ const closeUnloadManifest = () => {
     drawer.hide();
 }
 
+const isMine = ref(false);
+
+onMounted(async () => {
+    if (notificationId) {
+        const notif = await notificationService.getVesselVisitNotificationById(notificationId);
+        isMine.value = notif.submitter.emailAddress == useSession().authenticatedUser.email && notif.status == 0;
+    }
+});
+
+const submit = async () => {
+    try {
+        if (notificationId) {
+            await notificationService.submitVesselVisitNotification(notificationId);
+            window.location.reload();
+        }
+    
+        notifications.enqueueNotification(
+            "Notification submitted successfully.",    
+            'success'
+        );
+
+        router.back();
+        
+    } catch (error) {
+
+        notifications.enqueueNotification(
+            "Could not submit notification: " + error.message,    
+            'danger'
+        );
+    }
+};
+
+const deleteNotification = async () => {
+    if (notificationId) {
+
+        try {
+            
+            await notificationService.deleteDraft(notificationId);
+            notifications.enqueueNotification(
+                "Notification deleted successfully.",    
+                'success'
+            );
+            router.back();
+
+        } catch (error) {
+            
+            notifications.enqueueNotification(
+                "Could not delete notification: " + error.message,    
+                'danger'
+            );
+        }
+    }
+};
+
 </script>
 
 <template>
@@ -85,12 +145,26 @@ const closeUnloadManifest = () => {
                             <p class="subtitle">{{ entity.element.vessel.imoNumber }}</p>
                         </div>
                     </div>
-                    <RouterLink :to="`/notifications/edit/${encodeURIComponent(entity.element.notificationId)}`">
-                        <sl-button variant="default" size="large">
-                            <sl-icon slot="prefix" name="pencil"></sl-icon>
-                            {{ t('notification.tabs.edit') }}
+
+                    <div style="display: flex; gap: 0.5rem;" v-if="isMine">
+                        <RouterLink :to="`/notifications/edit/${encodeURIComponent(entity.element.notificationId)}`">
+                            <sl-button variant="default" size="large">
+                                <sl-icon slot="prefix" name="pencil"></sl-icon>
+                                {{ t('notification.tabs.edit') }}
+                            </sl-button>
+                        </RouterLink>
+
+                        <!-- Control panel, only visible if is my notification -->
+                        <sl-button variant="primary" size="large" @click="submit">
+                            <sl-icon slot="prefix" name="send"></sl-icon>
+                            {{ t('notification.tabs.submit') }}
                         </sl-button>
-                    </RouterLink>
+
+                        <sl-button variant="danger" size="large" @click="deleteNotification">
+                            <sl-icon slot="prefix" name="trash"></sl-icon>
+                            {{ t('notification.tabs.delete') }}
+                        </sl-button>
+                    </div>
                 </div>
                 <div class="viewing-content">
 

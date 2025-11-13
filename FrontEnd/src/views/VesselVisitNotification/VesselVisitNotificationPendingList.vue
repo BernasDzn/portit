@@ -3,7 +3,7 @@ import VesselVisitNotificationPrinter from '@/components/printers/VesselVisitNot
 import ListingBox from '@/components/crud/ListingBox.vue';
 import { useRouter } from 'vue-router';
 import type { Filter, Page } from '@/model/Page';
-import type { VesselVisitNotification, VesselVisitNotificationFilter } from '@/model/VesselVisitNotification';
+import type { VesselVisitNotification } from '@/model/VesselVisitNotification';
 import { useI18n } from 'vue-i18n';
 import { useSession } from '@/composables/session';
 import { onMounted, ref } from 'vue';

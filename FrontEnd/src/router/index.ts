@@ -7,6 +7,7 @@ import SchedulingRequest from '@/views/Scheduling/SchedulingRequest.vue'
 import HomeView from '../views/HomeView.vue'
 import Login from '@/views/Login.vue'
 import Unauthorized from '@/views/Unauthorized.vue'
+import VesselVisitNotificationCreate from '@/views/VesselVisitNotification/VesselVisitNotificationCreate.vue'
 
 // All other components are lazy-loaded when their route is accessed
 // This dramatically reduces initial bundle size and improves load time
@@ -335,6 +336,14 @@ const router = createRouter({
             component: () => SchedulingRequest,
             meta: {
                 icon: "calendar_month"
+            }
+        },
+        {
+            path: '/vessel-visit-notifications/create',
+            name: 'Create Vessel Visit Notification',
+            component: VesselVisitNotificationCreate,
+            meta: {
+                icon: "add"
             }
         }
       ]

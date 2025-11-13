@@ -147,7 +147,14 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
     {
         try
         {
-            var createdDecision = await _notificationDecisionService.Add(notificationDecisionDto, vesselVisitNotificationId);
+            string? userEmail = User.FindFirst("email_address")?.Value;
+            if (string.IsNullOrWhiteSpace(userEmail))
+            {
+                _logger.LogError("Create decision called without a user email");
+                return BadRequest("You require a valid user email to create a decision.");
+            }
+
+            var createdDecision = await _notificationDecisionService.Add(notificationDecisionDto, vesselVisitNotificationId, userEmail);
             return CreatedAtAction(nameof(GetDecisions), new { vesselVisitNotificationId }, createdDecision);
         }
         catch (EntityNotFoundException e)
