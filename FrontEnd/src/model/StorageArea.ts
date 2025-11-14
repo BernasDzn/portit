@@ -26,6 +26,10 @@ export class DockRelation {
 }
 
 export class StorageArea {
+	static readonly sa_type : Record<number, string> = {
+		0: "Yard",
+		1: "Warehouse"
+	};
 	readonly nameCode: string;
 	readonly location: string;
 	readonly type: number;
