@@ -18,6 +18,11 @@ get_vvns_on_day(Date, DaysAhead, DockCode, JsonData) :-
 
     format(user_error, 'Fetching VVN data from URL: ~w~n', [URL]),  % Debug
     
-    http_open(URL, Stream, []),
+    % Disable SSL certificate verification for self-signed certificates
+    http_open(URL, Stream, [cert_verify_hook(ssl_verify)]),
     json_read_dict(Stream, JsonData),
     close(Stream).
+
+% Hook to accept any SSL certificate (for development with self-signed certs)
+:- public ssl_verify/5.
+ssl_verify(_SSL, _ProblemCert, _AllCerts, _FirstCert, _Error).
