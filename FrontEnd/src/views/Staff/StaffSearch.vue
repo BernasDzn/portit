@@ -6,6 +6,7 @@ import type { Staff } from '@/model/Staff'
 import type { Filter } from '@/model/Page'
 import type { Page } from '@/model/Page'
 import { useI18n } from 'vue-i18n';
+import { ref, onMounted, watch } from 'vue';
 import type { IStaffService } from '@/service/IService/IStaffService';
 import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
@@ -16,32 +17,38 @@ const fetchStaffs = async (filtering?: Filter<Staff>): Promise<Page<Staff>> => {
   return await staffService.getStaffs(filtering);
 }
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
+const filterDefinition = ref({});
 
-const filterDefinition = {
+function buildFilterDefinition() {
+  filterDefinition.value = {
     mechanographicNumber: {
-        type: 'text',
-        label: t('staff.fields.mechanographicNumber.title'),
+      type: 'text',
+      label: t('staff.fields.mechanographicNumber.title'),
     },
     email: {
-        type: 'text',
-        label: t('staff.fields.email.title'),
+      type: 'text',
+      label: t('staff.fields.email.title'),
     },
     status: {
-        type: 'select',
-        label: t('staff.fields.status.title'),
-        options: [
-            { value: '0', text: t('staff.fields.status.options.available') },
-            { value: '1', text: t('staff.fields.status.options.unavailable') },
-            { value: '2', text: t('staff.fields.status.options.temporarilyReassigned') },
-        ],
+      type: 'select',
+      label: t('staff.fields.status.title'),
+      options: [
+        { value: '0', text: t('staff.fields.status.options.available') },
+        { value: '1', text: t('staff.fields.status.options.unavailable') },
+        { value: '2', text: t('staff.fields.status.options.temporarilyReassigned') },
+      ],
     },
     phoneNumber: {
-        type: 'text',
-        label: t('staff.fields.phoneNumber.title'),
+      type: 'text',
+      label: t('staff.fields.phoneNumber.title'),
     },
-};
+  };
+}
+
+onMounted(() => buildFilterDefinition());
+watch(locale, () => buildFilterDefinition());
 
 </script>
 

@@ -4,6 +4,7 @@ import ListingBox from '@/components/crud/ListingBox.vue';
 import type { Filter, Page } from '@/model/Page';
 import type { Qualification } from '@/model/Qualifications';
 import { useI18n } from 'vue-i18n';
+import { ref, onMounted, watch } from 'vue';
 import { container } from '@/inversify.config';
 import type { IQualificationService } from '@/service/IService/IQualificationService';
 import TYPES from '@/inversify/types';
@@ -14,14 +15,21 @@ const fetchQualifications = async (filtering?: Filter<Qualification>): Promise<P
     return await qualificationService.getQualifications(filtering);
 }
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
-const filterDefinition = {
-    idCode: {
-        type: 'text',
-        label: t('qualification.fields.idCode.title'),
-    }
-};
+const filterDefinition = ref({});
+
+function buildFilterDefinition() {
+    filterDefinition.value = {
+        idCode: {
+            type: 'text',
+            label: t('qualification.fields.idCode.title'),
+        }
+    };
+}
+
+onMounted(() => buildFilterDefinition());
+watch(locale, () => buildFilterDefinition());
 
 </script>
 

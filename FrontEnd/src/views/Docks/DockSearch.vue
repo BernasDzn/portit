@@ -2,15 +2,16 @@
 import DockPrinter from '@/components/printers/DockPrinter.vue';
 import ListingBox from '@/components/crud/ListingBox.vue';
 import type { Filter, Page } from '@/model/Page';
-import type { Dock, DockFilter } from '@/model/Dock';
-import { onMounted, ref } from 'vue';
+import type { Dock } from '@/model/Dock';
+import type { DockFilter } from '@/model/dto/DockDto';
+import { onMounted, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { container } from '@/inversify.config';
 import type { IDockService } from '@/service/IService/IDockService';
 import TYPES from '@/inversify/types';
 import type { IVesselTypeService } from '@/service/IService/IVesselTypeService';
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
 const dockService = container.get<IDockService>(TYPES.dockService);
 const vesselTypes = container.get<IVesselTypeService>(TYPES.vesselTypeService);
@@ -21,7 +22,7 @@ const fetchDocks = async (filtering?: Filter<DockFilter>): Promise<Page<Dock>> =
 
 const filterDefinition = ref({});
 
-onMounted(async () => {
+async function buildFilterDefinition() {
     const vtPage = await vesselTypes.getVesselTypes();
     const optionTypes = vtPage.items.map(vt => ({ value: encodeURIComponent(vt.name), text: vt.name }));
 
@@ -36,7 +37,10 @@ onMounted(async () => {
             options: optionTypes,
         }
     };
-});
+}
+
+onMounted(async () => buildFilterDefinition());
+watch(locale, () => buildFilterDefinition());
 
 </script>
 
