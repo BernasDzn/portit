@@ -19,6 +19,7 @@ const current = ref(selected.value ? new Date(selected.value) : new Date())
 
 watch(modelValue, (newVal) => {
   if (newVal) selected.value = new Date(newVal)
+  else selected.value = null
 })
 
 const year = computed(() => current.value.getFullYear())

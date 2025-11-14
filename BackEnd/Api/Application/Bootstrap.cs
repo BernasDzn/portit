@@ -119,6 +119,7 @@ public static class Bootstrap
         Representative r5 = new Representative(Guid.NewGuid(), 608839632, new Designation { Value = "Dore Whytock" }, new Email { Value = "dwhytock5@epa.gov" }, new PhoneNumber { Value = "5226915311" });
         Representative r6 = new Representative(Guid.NewGuid(), 398096220, new Designation { Value = "Rand Broadbere" }, new Email { Value = "rbroadbere6@springer.com" }, new PhoneNumber { Value = "1614875657" });
         Representative r7 = new Representative(Guid.NewGuid(), 446072968, new Designation { Value = "Bernardo Ansty" }, new Email { Value = "bansty7@geocities.com" }, new PhoneNumber { Value = "3507887407" });
+        Representative r8 = new Representative(Guid.NewGuid(), 889716996, new Designation { Value = "Francis The III" }, new Email { Value = "numcheixd@gmail.com" }, new PhoneNumber { Value = "2153449398" });
 
         // Add Bootstrap data
         context.ShippingAgentOrganizations.Add(
@@ -128,7 +129,7 @@ public static class Bootstrap
                 new List<Designation> { new Designation { Value = "GSC" }, new Designation { Value = "Global Ship" } },
                 new Address("123 Ocean Drive", "Maritime City", "90210", "USA"),
                 new TaxNumber { Value = "PT123456789" },
-                new HashSet<Representative> { r, r1 }
+                new HashSet<Representative> { r, r1, r8 }
             )
         );
 

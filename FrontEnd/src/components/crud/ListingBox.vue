@@ -31,7 +31,10 @@ const filters = ref<{ [key: string]: any }>({});
 onMounted(async () => {
     if (props.filterDefinition) {
         for (const key in props.filterDefinition) {
-            filters.value[key] = props.filterDefinition[key] && props.filterDefinition[key].type === 'date' ? null : '';
+            const def = props.filterDefinition[key];
+            if (def && def.type === 'date') filters.value[key] = null;
+            else if (def && def.type === 'checkbox') filters.value[key] = false;
+            else filters.value[key] = '';
         }
     }
 
@@ -210,15 +213,22 @@ onBeforeUnmount(() => {
                         </div>
                     </template>
               
-                    <sl-button
-                      class="clear-button"
-                      variant="neutral"
-                      outline
-                      size="small"
-                      @click="() => Object.keys(filters).forEach(k => filters[k] = '')"
-                    >
-                      {{ t('buttons.filter.clear') }}
-                    </sl-button>
+                                        <sl-button
+                                            class="clear-button"
+                                            variant="neutral"
+                                            outline
+                                            size="small"
+                                            @click="() => {
+                                                Object.keys(filters).forEach(k => {
+                                                    const def = props.filterDefinition && props.filterDefinition[k];
+                                                    if (def && def.type === 'date') filters[k] = null;
+                                                    else if (def && def.type === 'checkbox') filters[k] = false;
+                                                    else filters[k] = '';
+                                                });
+                                            }"
+                                        >
+                                            {{ t('buttons.filter.clear') }}
+                                        </sl-button>
                   </div>
                 </div>
             </transition>              
