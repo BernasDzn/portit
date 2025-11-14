@@ -7,38 +7,46 @@ import type { Filter, Page } from '@/model/Page';
 import type { PhysicalResource, PhysicalResourceFilter } from '@/model/PhysicalResource';
 import type { IPhysicalResourceService } from '@/service/IService/IPhysicalResourceService';
 import { useI18n } from 'vue-i18n';
+import { ref, onMounted, watch } from 'vue';
 
 const resourceService = container.get<IPhysicalResourceService>(TYPES.physicalResourceService);
 
 const fetchResources = async (filtering?: Filter<PhysicalResourceFilter>): Promise<Page<PhysicalResource>> => {
     return await resourceService.getPhysicalResources(filtering);
 }
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
-const filterDefinition = {
-    Code: {
-        type: 'text',
-        label: t('physicalResource.fields.code.title'),
-    },
-    Status: {
-        type: 'select',
-        label: t('physicalResource.fields.status.title'),
-        options: [
-            { value: '0', text: t('physicalResource.fields.status.options.available') },
-            { value: '1', text: t('physicalResource.fields.status.options.maintenance') },
-            { value: '2', text: t('physicalResource.fields.status.options.outOfService') },
-        ],
-    },
-    Type: {
-        type: 'select',
-        label: t('physicalResource.fields.type.title'),
-        options: [
-            { value: '0', text: t('physicalResource.fields.type.options.stsCrane') },
-            { value: '1', text: t('physicalResource.fields.type.options.yardGantry') },
-            { value: '2', text: t('physicalResource.fields.type.options.truck') },
-        ],
-    }
-};
+const filterDefinition = ref({});
+
+function buildFilterDefinition() {
+    filterDefinition.value = {
+        Code: {
+            type: 'text',
+            label: t('physicalResource.fields.code.title'),
+        },
+        Status: {
+            type: 'select',
+            label: t('physicalResource.fields.status.title'),
+            options: [
+                { value: '0', text: t('physicalResource.fields.status.options.available') },
+                { value: '1', text: t('physicalResource.fields.status.options.maintenance') },
+                { value: '2', text: t('physicalResource.fields.status.options.outOfService') },
+            ],
+        },
+        Type: {
+            type: 'select',
+            label: t('physicalResource.fields.type.title'),
+            options: [
+                { value: '0', text: t('physicalResource.fields.type.options.stsCrane') },
+                { value: '1', text: t('physicalResource.fields.type.options.yardGantry') },
+                { value: '2', text: t('physicalResource.fields.type.options.truck') },
+            ],
+        }
+    };
+}
+
+onMounted(() => buildFilterDefinition());
+watch(locale, () => buildFilterDefinition());
 
 </script>
 

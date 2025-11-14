@@ -2,7 +2,8 @@
 import VesselVisitNotificationPrinter from '@/components/printers/VesselVisitNotificationPrinter.vue';
 import ListingBox from '@/components/crud/ListingBox.vue';
 import type { Filter, Page } from '@/model/Page';
-import type { VesselVisitNotification, VesselVisitNotificationFilter } from '@/model/VesselVisitNotification';
+import type { VesselVisitNotification } from '@/model/VesselVisitNotification';
+import type { VesselVisitNotificationFilter } from '@/model/dto/VesselVisitNotificationDto';
 import { useI18n } from 'vue-i18n';
 import { useSession } from '@/composables/session';
 import { computed, onMounted, ref, watch } from 'vue';
@@ -14,7 +15,7 @@ import TYPES from '@/inversify/types';
 const vesselVisitNotificationService = container.get<IVesselVisitNotificationService>(TYPES.vesselVisitNotificationService);
 const user = ref(useSession().authenticatedUser!);
 
-const { t } = useI18n();
+const { t,locale } = useI18n();
 
 const vvnList = ref<VesselVisitNotification[]>([]);
 
@@ -46,7 +47,7 @@ const fetchVesselVisitNotifications = async (filtering?: Filter<VesselVisitNotif
 };
 
 const filterDefinition = ref({});
-onMounted(async () => {
+function buildFilterDefinition() {
     filterDefinition.value = {
         Status: {
             type: 'select',
@@ -79,7 +80,9 @@ onMounted(async () => {
             label: t('notification.filters.expectedArrivalTo') as string
         }
     };
-});
+}
+onMounted(async () => buildFilterDefinition());
+watch(locale, () => buildFilterDefinition());
 
 const selectedDate = ref(new Date())
 const events = ref<Array<{ title: string, start: string }>>([]);

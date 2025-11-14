@@ -7,8 +7,9 @@ import VesselTypePrinter from '@/components/printers/VesselTypePrinter.vue';
 import { container } from '@/inversify.config';
 import type { IVesselTypeService } from '@/service/IService/IVesselTypeService';
 import TYPES from '@/inversify/types';
+import { ref, onMounted, watch } from 'vue';
 
-const {t} = useI18n();
+const {t, locale} = useI18n();
 
 const vesselTypeService = container.get<IVesselTypeService>(TYPES.vesselTypeService);
 
@@ -16,12 +17,19 @@ const fetchVesselTypes = async (filtering?: Filter<VesselType>): Promise<Page<Ve
   return await vesselTypeService.getVesselTypes(filtering);
 }
 
-const filterDefinition = {
-    description: {
-        type: 'text',
-        label: t('vesselType.fields.description.title') as string,
-    }
-};
+const filterDefinition = ref({});
+
+function buildFilterDefinition() {
+    filterDefinition.value = {
+        description: {
+            type: 'text',
+            label: t('vesselType.fields.description.title') as string,
+        }
+    };
+}
+
+onMounted(() => buildFilterDefinition());
+watch(locale, () => buildFilterDefinition());
 
 </script>
 

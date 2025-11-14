@@ -4,27 +4,35 @@ import ListingBox from '@/components/crud/ListingBox.vue';
 import type { Filter, Page } from '@/model/Page';
 import type { Vessel } from '@/model/Vessel';
 import { useI18n } from 'vue-i18n';
+import { ref, onMounted, watch } from 'vue';
 import { container } from '@/inversify.config';
 import type { IVesselService } from '@/service/IService/IVesselService';
 import TYPES from '@/inversify/types';
 
 const vesselService = container.get<IVesselService>(TYPES.vesselService);
-const { t } = useI18n();
+const { t, locale } = useI18n();
 
 const fetchVessels = async (filtering?: Filter<Vessel>): Promise<Page<Vessel>> => {
   return await vesselService.getVessels(filtering);
 }
 
-const filterDefinition = {
+const filterDefinition = ref({});
+
+function buildFilterDefinition() {
+  filterDefinition.value = {
     imoNumber: {
-        type: 'text',
-        label: t('vessel.fields.imoNumber.title'),
+      type: 'text',
+      label: t('vessel.fields.imoNumber.title'),
     },
     taxNumber: {
-        type: 'text',
-        label: t('vessel.fields.taxNumber.title'),
+      type: 'text',
+      label: t('vessel.fields.taxNumber.title'),
     }
-};
+  };
+}
+
+onMounted(() => buildFilterDefinition());
+watch(locale, () => buildFilterDefinition());
 
 </script>
 
