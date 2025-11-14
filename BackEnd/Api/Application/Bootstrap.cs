@@ -119,6 +119,7 @@ public static class Bootstrap
         Representative r5 = new Representative(Guid.NewGuid(), 608839632, new Designation { Value = "Dore Whytock" }, new Email { Value = "dwhytock5@epa.gov" }, new PhoneNumber { Value = "5226915311" });
         Representative r6 = new Representative(Guid.NewGuid(), 398096220, new Designation { Value = "Rand Broadbere" }, new Email { Value = "rbroadbere6@springer.com" }, new PhoneNumber { Value = "1614875657" });
         Representative r7 = new Representative(Guid.NewGuid(), 446072968, new Designation { Value = "Bernardo Ansty" }, new Email { Value = "bansty7@geocities.com" }, new PhoneNumber { Value = "3507887407" });
+        Representative r8 = new Representative(Guid.NewGuid(), 889716996, new Designation { Value = "Francis The III" }, new Email { Value = "numcheixd@gmail.com" }, new PhoneNumber { Value = "2153449398" });
 
         // Add Bootstrap data
         context.ShippingAgentOrganizations.Add(
@@ -128,7 +129,7 @@ public static class Bootstrap
                 new List<Designation> { new Designation { Value = "GSC" }, new Designation { Value = "Global Ship" } },
                 new Address("123 Ocean Drive", "Maritime City", "90210", "USA"),
                 new TaxNumber { Value = "PT123456789" },
-                new HashSet<Representative> { r, r1 }
+                new HashSet<Representative> { r, r1, r8 }
             )
         );
 
@@ -336,6 +337,8 @@ public static class Bootstrap
 
         var qual1 = context.Qualifications.First();
         var qual2 = context.Qualifications.Skip(1).First();
+        var qual3 = context.Qualifications.Skip(2).First();
+        var qual4 = context.Qualifications.Skip(3).First();
 
         Staff staff1 = new Staff(
             new StaffMechanographicNumber { Value = "STF250001" },
@@ -352,7 +355,7 @@ public static class Bootstrap
             new Email { Value = "maria.silva@oceanicport.com" },
             new PhoneNumber { Value = "911222444" },
             OperationalWindow.Weekdays(new TimeOnly(8, 0), new TimeOnly(17, 0)),
-            new List<Qualification> { qual1, qual2 }
+            new List<Qualification> { qual2, qual3 }
         );
 
         Staff staff3 = new Staff(
@@ -361,7 +364,7 @@ public static class Bootstrap
             new Email { Value = "carlos.santos@oceanicport.com" },
             new PhoneNumber { Value = "911222555" },
             OperationalWindow.Weekdays(new TimeOnly(10, 0), new TimeOnly(18, 0)),
-            new List<Qualification> { qual1 }
+            new List<Qualification> { qual1, qual4 }
         );
 
         context.Staffs.AddRange(staff1, staff2, staff3);
