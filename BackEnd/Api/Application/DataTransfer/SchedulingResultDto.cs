@@ -1,3 +1,5 @@
+using Api.Domain.ValueObjects;
+
 namespace Api.Application.DataTransfer;
 
 public class VesselTaskFactDto
@@ -9,8 +11,15 @@ public class VesselTaskFactDto
     public double UnloadingTime { get; set; }
 }
 
+public class CraneWorkloadDto
+{
+    public string Crane { get; set; }
+    public OperationalWindow operatingWindow { get; set; }
+    public List<VesselTaskFactDto> VesselTaskFacts { get; set; }
+}
+
 public class SchedulingResultDto
 {
-    public List<VesselTaskFactDto> VesselTaskFacts { get; set; }
+    public List<CraneWorkloadDto> CraneWorkloads { get; set; }
     public string Comment { get; set; }
 }

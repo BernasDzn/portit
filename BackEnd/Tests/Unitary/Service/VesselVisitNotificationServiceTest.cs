@@ -21,6 +21,7 @@ public class VesselVisitNotificationServiceTest
     private readonly Mock<IContainerRepository> _containerRepositoryMock;
     private readonly Mock<IDockRepository> _dockRepositoryMock;
     private readonly Mock<IPhysicalResourceRepository> _physicalResourceRepositoryMock;
+    private readonly Mock<IStaffRepository> _staffRepositoryMock;
     private readonly VesselVisitNotificationService _service;
 
     private static Representative representative = new Representative(
@@ -118,6 +119,7 @@ public class VesselVisitNotificationServiceTest
             _containerRepositoryMock.Object,
             _dockRepositoryMock.Object,
             _physicalResourceRepositoryMock.Object,
+            _staffRepositoryMock.Object,
             new Mock<ILogger<VesselVisitNotificationService>>().Object
         );
     }

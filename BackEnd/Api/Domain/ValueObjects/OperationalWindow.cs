@@ -14,6 +14,61 @@ public class OperationalWindow
         public required TimeOnly EndTime { get; set; }
         public override string ToString() => $"{Day}: {StartTime} - {EndTime}";
     }
+    public static OperationalWindow Merge(ICollection<OperationalWindow> windows)
+    {
+        var merged = new OperationalWindow();
+        var allShifts = windows.SelectMany(w => w.Shifts).ToList();
+
+        // Group by day
+        foreach (var group in allShifts.GroupBy(s => s.Day))
+        {
+            var shifts = group
+                .OrderBy(s => s.StartTime)
+                .ToList();
+
+            var mergedShifts = new List<Shift>();
+
+            // Start with first shift
+            var current = new Shift
+            {
+                Day = group.Key,
+                StartTime = shifts[0].StartTime,
+                EndTime = shifts[0].EndTime
+            };
+
+            for (int i = 1; i < shifts.Count; i++)
+            {
+                var next = shifts[i];
+
+                // Overlapping or touching?
+                if (next.StartTime <= current.EndTime)
+                {
+                    // Extend
+                    if (next.EndTime > current.EndTime)
+                        current.EndTime = next.EndTime;
+                }
+                else
+                {
+                    // No overlap, push previous block
+                    mergedShifts.Add(current);
+                    current = new Shift
+                    {
+                        Day = group.Key,
+                        StartTime = next.StartTime,
+                        EndTime = next.EndTime
+                    };
+                }
+            }
+
+            // Add last shift block
+            mergedShifts.Add(current);
+
+            foreach (var s in mergedShifts)
+                merged.Shifts.Add(s);
+        }
+
+        return merged;
+    }
 
     public static OperationalWindow FullWeek() => new OperationalWindow
     {
@@ -75,5 +130,44 @@ public class OperationalWindow
                 return false;
         }
         return shift.EndTime > shift.StartTime;
+    }
+
+    public OperationalWindow Intercept(OperationalWindow other)
+    {
+        var intersected = new OperationalWindow();
+
+        foreach (var shiftA in Shifts)
+        {
+            foreach (var shiftB in other.Shifts)
+            {
+                if (shiftA.Day == shiftB.Day)
+                {
+                    var latestStart = shiftA.StartTime > shiftB.StartTime ? shiftA.StartTime : shiftB.StartTime;
+                    var earliestEnd = shiftA.EndTime < shiftB.EndTime ? shiftA.EndTime : shiftB.EndTime;
+
+                    if (latestStart < earliestEnd)
+                    {
+                        intersected.Shifts.Add(new Shift
+                        {
+                            Day = shiftA.Day,
+                            StartTime = latestStart,
+                            EndTime = earliestEnd
+                        });
+                    }
+                }
+            }
+        }
+
+        return intersected;
+    }
+
+    public bool IsEmpty()
+    {
+        return !Shifts.Any();
+    }
+    
+    public override string ToString()
+    {
+        return string.Join("; ", Shifts.Select(s => s.ToString()));
     }
 }

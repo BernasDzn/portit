@@ -15,7 +15,6 @@ export default class PathFollower {
     speed;
     clock;
 
-
     constructor(pathPoints, facePoint, scene, model, layout, offsetHeight = 0, speed = 4) {
         this.facePoint = facePoint;
         this.model = model;

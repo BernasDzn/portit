@@ -179,6 +179,37 @@ const closeAboutModal = () => {
                     :placeholderText="t('scheduling.fields.algorithm.placeholder')"
                     required
                 />
+
+                <br>
+
+                <!-- Days ahead input -->
+                <EntityDropdown
+                    class="field-dropdown"
+                    name="Days Ahead"
+                    v-model="daysAhead"
+                    :items="[
+                        {
+                            label: 'Today',
+                            value: 1
+                        },
+                        {
+                            label: 'Next 3 Days',
+                            value: 3
+                        },
+                        {
+                            label: 'A week from now',
+                            value: 7
+                        },
+                        {
+                            label: 'A month from now',
+                            value: 30
+                        }
+                    ]"
+                    :placeholderText="t('scheduling.fields.algorithm.placeholder')"
+                    valueKey="value"
+                    labelKey="label"
+                    required
+                />
             </div>
 
             <sl-button slot="footer" variant="danger" @click="closeModal">

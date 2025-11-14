@@ -150,7 +150,7 @@ class WarehouseChunk extends PortChunk {
             this.turnOffLight();
         });
 
-        this.turnOnEvent = new TimedEvent(22, () => {
+        this.turnOnEvent = new TimedEvent(20, () => {
             this.turnOnLight();
         });
     }
@@ -381,7 +381,7 @@ export default class PortLayout {
             this.turnOffLighthouse();
         });
 
-        this.turnOnEvent = new TimedEvent(22, () => {
+        this.turnOnEvent = new TimedEvent(20, () => {
             this.turnOnLighthouse();
         });
     }

@@ -25,8 +25,8 @@ public class VesselVisitNotification_CtS_IntegrationTest
     private readonly Mock<IContainerRepository> _containerRepositoryMock = new Mock<IContainerRepository>();
     private readonly Mock<IDockRepository> _dockRepositoryMock = new Mock<IDockRepository>();
     private readonly Mock<IPhysicalResourceRepository> _physicalResourceRepositoryMock = new Mock<IPhysicalResourceRepository>();
+    private readonly Mock<IStaffRepository> _staffRepositoryMock = new Mock<IStaffRepository>();
     private readonly VesselVisitNotificationIdGenerator _idGenerator;
-
 
     private static Representative representative = new Representative(
         Guid.NewGuid(),
@@ -87,6 +87,7 @@ public class VesselVisitNotification_CtS_IntegrationTest
             _containerRepositoryMock.Object,
             _dockRepositoryMock.Object,
             _physicalResourceRepositoryMock.Object,
+            _staffRepositoryMock.Object,
             new Mock<ILogger<VesselVisitNotificationService>>().Object);
 
 

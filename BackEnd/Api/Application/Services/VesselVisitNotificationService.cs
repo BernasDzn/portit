@@ -22,6 +22,7 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
     private readonly VesselVisitNotificationIdGenerator _idGenerator;
     private readonly IDockRepository _dockRepository;
     private readonly IPhysicalResourceRepository _physicalResourceRepository;
+    private readonly IStaffRepository _staffRepository;
     private readonly ILogger<VesselVisitNotificationService> _logger;
 
     public VesselVisitNotificationService(
@@ -33,6 +34,7 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         IContainerRepository containerRepository,
         IDockRepository dockRepository,
         IPhysicalResourceRepository physicalResourceRepository,
+        IStaffRepository staffRepository,
         ILogger<VesselVisitNotificationService> logger
     )
     {
@@ -44,6 +46,7 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         _idGenerator = idGenerator;
         _dockRepository = dockRepository;
         _physicalResourceRepository = physicalResourceRepository;
+        _staffRepository = staffRepository;
         _logger = logger;
     }
 
@@ -239,15 +242,43 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         if (dock == null)
             throw new EntityNotFoundException($"Dock with code {dockCode.Value} was not found.");
 
-        SchedulingResultDto result = new SchedulingResultDto
-        {
-            VesselTaskFacts = new List<VesselTaskFactDto>()
-        };
-
         List<VesselVisitNotification> notifications = await _notificationRepository.GetVesselVisitNotificationsOnDayAsync(date, daysAhead);
         // Filter notifications to only those assigned to the specified dock
         // In the future, we might need to handle multiple docks
         var filteredNotifications = notifications.Where(n => n.GetLatestDecision()!.AssignedDock!.Code.Value == dockCode.Value);
+
+        IEnumerable<STSCrane> cranesServingDock = await _physicalResourceRepository.GetSTSCranesByDockCodeAsync(dock.Code.Value);
+        // Select only available cranes
+        cranesServingDock = cranesServingDock.Where(c => c.Status == ResourceStatus.Available);
+
+        if (!cranesServingDock.Any())
+            throw new EntityNotFoundException($"No STS cranes found serving dock with code {dock.Code.Value}.");
+
+        // Crane selection algorithm
+        // For now we will choose the fastest crane available
+        // We will change this to support multiple cranes in the future (é uma US troll face)
+        STSCrane selectedCrane = cranesServingDock.OrderBy(c => c.ContainersPerHour).First();
+
+        SchedulingResultDto result = new SchedulingResultDto
+        {
+            CraneWorkloads = new List<CraneWorkloadDto>
+            {
+                new CraneWorkloadDto
+                {
+                    Crane = selectedCrane.Code.Value,
+                    operatingWindow = await CalculateEffectiveCraneOperatingWindow(selectedCrane, date, daysAhead),
+                    VesselTaskFacts = new List<VesselTaskFactDto>()
+                }
+            },
+            Comment = string.Empty
+        };
+
+        // TODO: Extend this logic when supporting multiple cranes
+        if (result.CraneWorkloads[0].operatingWindow.IsEmpty())
+        {
+            result.Comment = "No qualified staff available to operate the selected resource.";
+            return result;
+        }
 
         try
         {
@@ -261,26 +292,21 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
                     Vessel = vessel.ToDTO(),
                     ETA = CalculateBaseHour(date, notification.ExpectedArrival),
                     ETD = CalculateBaseHour(date, notification.ExpectedDeparture),
-                    LoadingTime = await CalculateLoadUnloadingTime(notification.LoadCargoManifest ?? new List<CargoTransport>(), dock),
-                    UnloadingTime = await CalculateLoadUnloadingTime(notification.UnloadCargoManifest ?? new List<CargoTransport>(), dock),
+                    LoadingTime = CalculateLoadUnloadingTime(notification.LoadCargoManifest ?? new List<CargoTransport>(), selectedCrane),
+                    UnloadingTime = CalculateLoadUnloadingTime(notification.UnloadCargoManifest ?? new List<CargoTransport>(), selectedCrane),
                 };
 
                 if (vesselTaskFact.LoadingTime > 0 && vesselTaskFact.UnloadingTime > 0)
-                    result.VesselTaskFacts.Add(vesselTaskFact);
+                    result.CraneWorkloads[0].VesselTaskFacts.Add(vesselTaskFact);
             }
         }
         catch (System.Exception e)
         {
-            result.VesselTaskFacts.Clear();
+            result.CraneWorkloads[0].VesselTaskFacts.Clear();
             result.Comment = "Error calculating scheduling data. " + e.Message;
         }
 
-        foreach (var vt in result.VesselTaskFacts)
-        {
-            Console.WriteLine($"Vessel {vt.Vessel.Name} - ETA: {vt.ETA}, ETD: {vt.ETD}, LoadingTime: {vt.LoadingTime}, UnloadingTime: {vt.UnloadingTime}");
-        }
-
-        AppLogEvents.LogRetrieve(_logger, "scheduling data", result.VesselTaskFacts.Count);
+        AppLogEvents.LogRetrieve(_logger, "scheduling data", result.CraneWorkloads.Count);
         return result;
     }
 
@@ -289,25 +315,31 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         return (uint)(target - pivot).TotalHours;
     }
 
-    private async Task<double> CalculateLoadUnloadingTime(ICollection<CargoTransport> cargoManifest, Dock dock)
+    private double CalculateLoadUnloadingTime(ICollection<CargoTransport> cargoManifest, STSCrane crane)
     {
-        IEnumerable<STSCrane> cranesServingDock = await _physicalResourceRepository.GetSTSCranesByDockCodeAsync(dock.Code.Value);
-        // Select only available cranes
-        cranesServingDock = cranesServingDock.Where(c => c.Status == ResourceStatus.Available);
-
-        if (!cranesServingDock.Any())
-            throw new EntityNotFoundException($"No STS cranes found serving dock with code {dock.Code.Value}.");
-
-        // Crane selection algorithm
-        // For now we will choose the fastest crane available
-        // We will change this to support multiple cranes in the future (é uma US troll face)
-        STSCrane selectedCrane = cranesServingDock.OrderBy(c => c.ContainersPerHour).First();
         uint totalContainers = (uint)cargoManifest.Count;
+        return (double)totalContainers / (double)crane.ContainersPerHour;
+    }
 
-        Console.WriteLine($"Selected crane {selectedCrane.Description} with capacity {selectedCrane.ContainersPerHour} containers/hour for dock {dock.Code.Value}.");
-        Console.WriteLine($"Total containers to handle: {totalContainers}.");
-        Console.WriteLine($"Estimated time: {Math.Ceiling((double)totalContainers / (double)selectedCrane.ContainersPerHour)} hours.");
+    private async Task<OperationalWindow> CalculateEffectiveCraneOperatingWindow(STSCrane crane, DateTime date, uint daysAhead)
+    {
+        // To calculate the effective operating window of the crane, we need to consider its own operational window
+        // and the operational window of the staff that may operate it. That is get the qualifications required to operate the crane,
+        // then get the staff that have those qualifications, and get their operational windows. And merge everything together badabing badaboom
+        IEnumerable<string> qualificationCodes = crane.Qualifications.Select(q => q.NameCode.Value).AsEnumerable();
+        Page<Staff> staff = await _staffRepository.FilterStaffsAsync(
+            new StaffFilter
+            {
+                QualificationCodes = qualificationCodes,
+                PageSize = await _staffRepository.CountAsync()
+            }
+        );
 
-        return (double)totalContainers / (double)selectedCrane.ContainersPerHour;
+        List<OperationalWindow> staffOperationalWindows = staff.Items
+            .Select(s => s.OperationalWindow)
+            .ToList();
+
+        OperationalWindow qualifiedStaffAvailablity = OperationalWindow.Merge(staffOperationalWindows);
+        return crane.OperationalWindow.Intercept(qualifiedStaffAvailablity);
     }
 }
