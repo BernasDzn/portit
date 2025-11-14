@@ -336,6 +336,8 @@ public static class Bootstrap
 
         var qual1 = context.Qualifications.First();
         var qual2 = context.Qualifications.Skip(1).First();
+        var qual3 = context.Qualifications.Skip(2).First();
+        var qual4 = context.Qualifications.Skip(3).First();
 
         Staff staff1 = new Staff(
             new StaffMechanographicNumber { Value = "STF250001" },
@@ -352,7 +354,7 @@ public static class Bootstrap
             new Email { Value = "maria.silva@oceanicport.com" },
             new PhoneNumber { Value = "911222444" },
             OperationalWindow.Weekdays(new TimeOnly(8, 0), new TimeOnly(17, 0)),
-            new List<Qualification> { qual1, qual2 }
+            new List<Qualification> { qual2, qual3 }
         );
 
         Staff staff3 = new Staff(
@@ -361,7 +363,7 @@ public static class Bootstrap
             new Email { Value = "carlos.santos@oceanicport.com" },
             new PhoneNumber { Value = "911222555" },
             OperationalWindow.Weekdays(new TimeOnly(10, 0), new TimeOnly(18, 0)),
-            new List<Qualification> { qual1 }
+            new List<Qualification> { qual1, qual4 }
         );
 
         context.Staffs.AddRange(staff1, staff2, staff3);
