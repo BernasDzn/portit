@@ -104,6 +104,7 @@ public class VesselVisitNotificationServiceTest
         _containerRepositoryMock = new Mock<IContainerRepository>();
         _dockRepositoryMock = new Mock<IDockRepository>();
         _physicalResourceRepositoryMock = new Mock<IPhysicalResourceRepository>();
+        _staffRepositoryMock = new Mock<IStaffRepository>();
 
         var idGenerator = new VesselVisitNotificationIdGenerator(_repositoryMock.Object);
 
