@@ -5,4 +5,6 @@
 run :-
 	URL = 'https://vs-gate.dei.isep.ipp.pt:10228/Staff',
 	PORT = 2228,
-	open_server(PORT).
+	open_server(PORT),
+	writeln('Server started. Press Ctrl+C to stop.'),
+	thread_get_message(_).
