@@ -11,7 +11,7 @@ import { defineConfig, devices } from '@playwright/test'
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  testDir: './e2e',
+  testDir: './tests/e2e',
   /* Maximum time one test can run for. */
   timeout: 30 * 1000,
   expect: {
@@ -106,5 +106,8 @@ export default defineConfig({
     command: process.env.CI ? 'npm run preview' : 'npm run dev',
     port: process.env.CI ? 4173 : 5173,
     reuseExistingServer: !process.env.CI,
+    env: {
+      VITE_TEST_BYPASS_AUTH: 'true',
+    },
   },
 })
