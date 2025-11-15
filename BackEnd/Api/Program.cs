@@ -25,6 +25,15 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Api.Infrastructure.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Check if we're in Testing environment (skip auth/authz and use in-memory database)
+var isTestingEnvironment = builder.Environment.IsEnvironment("Testing");
+if (isTestingEnvironment)
+{
+    Console.WriteLine("⚠️  WARNING: Running in TESTING ENVIRONMENT - Authentication and Authorization are DISABLED!");
+    Console.WriteLine("⚠️  WARNING: Using IN-MEMORY DATABASE - All data will be lost on restart!");
+}
+
 // Logging definitions
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
@@ -77,14 +86,16 @@ builder.Services.AddCors(options =>
     });
 });
 
-// Authentication
-builder.Services.AddAuthentication(options =>
+// Authentication (skip if Testing environment)
+if (!isTestingEnvironment)
 {
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-})
-// JwtBearer for API authorization
-.AddJwtBearer(options =>
+    builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    // JwtBearer for API authorization
+    .AddJwtBearer(options =>
 {
     // Define validation parameters for Bearer token headers
     // When an HTTP request with a Bearer token is received, these parameters are used to validate the token
@@ -135,13 +146,13 @@ builder.Services.AddAuthentication(options =>
         }
     };
 })
-.AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
-{
-    options.ClientId = builder.Configuration["Authentication:Google:ClientId"]!;
-    options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]!;
-});
+    .AddGoogle(GoogleDefaults.AuthenticationScheme, options =>
+    {
+        options.ClientId = builder.Configuration["Authentication:Google:ClientId"]!;
+        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]!;
+    });
 
-builder.Services.AddAuthorization(options =>
+    builder.Services.AddAuthorization(options =>
 {
     // Authorization step, after identification of the user, we want to know what they can access
     // This policy just requires that the user is authenticated
@@ -168,9 +179,33 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("Qualification.Manage", p => p.RequireRole("LogisticsOperator", "Administrator"));
     options.AddPolicy("Staff.Manage", p => p.RequireRole("LogisticsOperator", "Administrator"));
     options.AddPolicy("PhysicalResource.Manage", p => p.RequireRole("LogisticsOperator", "Administrator"));
-    // Admin-only fallback for the rest of the features
-    options.AddPolicy("AdminOnly", p => p.RequireRole("Administrator"));
-});
+        // Admin-only fallback for the rest of the features
+        options.AddPolicy("AdminOnly", p => p.RequireRole("Administrator"));
+    });
+}
+else
+{
+    // When skipping auth/authz, add all policies but with no requirements (allow all)
+    builder.Services.AddAuthorization(options =>
+    {
+        options.AddPolicy("ApiUser", policy => policy.RequireAssertion(_ => true));
+        options.AddPolicy("VesselType.Manage", policy => policy.RequireAssertion(_ => true));
+        options.AddPolicy("Vessel.Manage", policy => policy.RequireAssertion(_ => true));
+        options.AddPolicy("Vessel.View", policy => policy.RequireAssertion(_ => true));
+        options.AddPolicy("StorageArea.Manage", policy => policy.RequireAssertion(_ => true));
+        options.AddPolicy("ShippingAgentOrg.Manage", policy => policy.RequireAssertion(_ => true));
+        options.AddPolicy("Representative.Manage", policy => policy.RequireAssertion(_ => true));
+        options.AddPolicy("Dock.Manage", policy => policy.RequireAssertion(_ => true));
+        options.AddPolicy("VesselVisitNotification.View", policy => policy.RequireAssertion(_ => true));
+        options.AddPolicy("VesselVisitNotification.Edit", policy => policy.RequireAssertion(_ => true));
+        options.AddPolicy("VesselVisitNotification.Approve", policy => policy.RequireAssertion(_ => true));
+        options.AddPolicy("VesselVisitNotification.Submit", policy => policy.RequireAssertion(_ => true));
+        options.AddPolicy("Qualification.Manage", policy => policy.RequireAssertion(_ => true));
+        options.AddPolicy("Staff.Manage", policy => policy.RequireAssertion(_ => true));
+        options.AddPolicy("PhysicalResource.Manage", policy => policy.RequireAssertion(_ => true));
+        options.AddPolicy("AdminOnly", policy => policy.RequireAssertion(_ => true));
+    });
+}
 
 // Set encryption key for the application
 EncryptionHelper.SetEncryptionKey(builder.Configuration["EncryptionKey"]!);
@@ -221,7 +256,7 @@ builder.Services.AddTransient<IJwtTokenService>(sp =>
 });
 
 // Add database contexts
-if (builder.Environment.IsEnvironment("Testing"))
+if (isTestingEnvironment)
 {
     builder.Services.AddDbContext<ApiContext>(opt =>
         opt.UseLazyLoadingProxies().UseInMemoryDatabase("TestDatabase"));
@@ -300,7 +335,7 @@ if (configuration.GetValue<bool>("NukeDatabaseAndRunBootstrap"))
 }
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || isTestingEnvironment)
 {
     app.UseOpenApi();
     app.MapOpenApi();
@@ -316,8 +351,15 @@ app.UseSerilogRequestLogging();
 //app.UseHttpsRedirection();
 app.UseCors("VueDevPolicy");
 
-app.UseAuthentication();
-app.UseAuthorization();
+if (!isTestingEnvironment)
+{
+    app.UseAuthentication();
+    app.UseAuthorization();
+}
+else
+{
+    app.Logger.LogWarning("⚠️  Authentication and Authorization middleware are DISABLED!");
+}
 
 // Prometheus metrics endpoint for Grafana
 app.UseHttpMetrics();  // Collects HTTP request metrics (duration, count, etc.)
