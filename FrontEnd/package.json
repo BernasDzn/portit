@@ -13,6 +13,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "test:unit": "vitest",
+    "test:unitary": "vitest run tests/unitary",
+    "test:integration": "vitest run tests/integration",
     "test:e2e": "playwright test",
     "build-only": "vite build",
     "type-check": "vue-tsc --build"
