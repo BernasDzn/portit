@@ -11,7 +11,7 @@ using Api.Infrastructure.Exceptions;
 
 [ApiController]
 [Route("[controller]")]
-[Authorize]
+[Authorize(Policy = "Vessel.Manage")]
 public class VesselController : ControllerBase, IVesselController
 {
     private readonly ILogger<VesselController> _logger;
