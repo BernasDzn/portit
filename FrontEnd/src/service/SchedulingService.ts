@@ -70,6 +70,14 @@ export class SchedulingService implements ISchedulingService {
         const dayString = day.toISOString().split('T')[0];
         const url = `https://vs-gate.dei.isep.ipp.pt:30228/schedule?day=${dayString}&dock=${dock}&alg=${alg}&daysAhead=${daysAhead}`;
         const res = await this.http.getWithoutCredentials(url);
-        return res.data as Schedule;
+
+        const apiResponse = res as any;
+        
+        return {
+            status: apiResponse.status || 'success',
+            comment: '',
+            data: apiResponse.data || [],
+            metrics: apiResponse.metrics
+        } as Schedule;
     }
 }
