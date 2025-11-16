@@ -6,4 +6,10 @@ export interface Schedule {
         loading_exit_time: number;
         name: string;
     }[];
+    metrics?: {
+        algorithm: string;
+        totalDelay: number;
+        computationTime: number;
+        vesselCount: number;
+    };
 }

@@ -23,8 +23,8 @@ const notifications = useAlerts();
 const { t } = useI18n();
 
 const algorithmList = [
-    "Standard Scheduling",
-    "Optimized Scheduling"
+    { label: "Optimal Scheduling (Exhaustive)", value: "optimal" },
+    { label: "Greedy Scheduling (Fast - EDD)", value: "greedy" }
 ]
 
 const selectedDate = ref<Date | null>(new Date());
@@ -66,7 +66,15 @@ const generateTasksForDate = async () => {
 
     if (results.data.length > 0) {
         
-        notifications.enqueueNotification(`Successfully generated ${results.data.length} tasks for dock ${dock.value} using ${selectedAlgorithm.value}.`, notifications.notificationTypes.SUCCESS);
+        const algorithmLabel = algorithmList.find(a => a.value === selectedAlgorithm.value)?.label || selectedAlgorithm.value;
+        let message = `Successfully generated ${results.data.length} tasks for dock ${dock.value} using ${algorithmLabel}.`;
+        
+        // Add metrics to notification if available
+        if (results.metrics) {
+            message += ` Total delay: ${results.metrics.totalDelay}h, Computation time: ${(results.metrics.computationTime * 1000).toFixed(2)}ms`;
+        }
+        
+        notifications.enqueueNotification(message, notifications.notificationTypes.SUCCESS);
         closeModal();
 
         // Generate and open schedule pdf
@@ -176,6 +184,8 @@ const closeAboutModal = () => {
                     :name="t('scheduling.fields.algorithm.title')"
                     v-model="selectedAlgorithm"
                     :items="algorithmList"
+                    valueKey="value"
+                    labelKey="label"
                     :placeholderText="t('scheduling.fields.algorithm.placeholder')"
                     required
                 />

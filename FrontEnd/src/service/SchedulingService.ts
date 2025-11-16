@@ -33,7 +33,17 @@ export class SchedulingService implements ISchedulingService {
         doc.setFontSize(12);
         doc.text(`Concern: ${dock}, on day ${date.toDateString()}`, 14, 32);
         
-        let yPosition = 42;
+        // Add metrics if available
+        if (schedule.metrics) {
+            doc.setFontSize(10);
+            doc.text(`Algorithm: ${schedule.metrics.algorithm}`, 14, 40);
+            doc.text(`Total Delay: ${schedule.metrics.totalDelay} hours`, 14, 46);
+            doc.text(`Computation Time: ${(schedule.metrics.computationTime * 1000).toFixed(2)} ms`, 14, 52);
+            doc.text(`Vessels Scheduled: ${schedule.metrics.vesselCount}`, 14, 58);
+        }
+        
+        let yPosition = schedule.metrics ? 68 : 42;
+        doc.setFontSize(12);
         doc.setFont('helvetica', 'bold');
         doc.text('Ship name', 14, yPosition);
         doc.text('Arrival', 64, yPosition);

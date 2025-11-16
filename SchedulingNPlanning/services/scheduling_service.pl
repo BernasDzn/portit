@@ -1,13 +1,14 @@
 :- consult('./vvn_service.pl').
 :- consult('../dml/vvn_mapper.pl').
 :- consult('../algorithms/resource_allocation_task_sequencing.pl').
+:- consult('../algorithms/greedy_scheduling.pl').
 
 :- use_module(library(lists)).
 
-% Schedule daily operations given a date
+% Schedule daily operations given a date with algorithm selection
 % This predicate will see what operations need to be scheduled for loading or unloading on a given date 
-% following the scheduling algorithm.
-schedule_daily_operations(TargetDate, DaysAhead, DockCode, ScheduleResult) :-
+% following the specified scheduling algorithm.
+schedule_daily_operations(TargetDate, DaysAhead, DockCode, Algorithm, ScheduleResult, Metrics) :-
     % Fetch data from database
     get_vvns_on_day(TargetDate, DaysAhead, DockCode, JsonData),
 
@@ -24,9 +25,34 @@ schedule_daily_operations(TargetDate, DaysAhead, DockCode, ScheduleResult) :-
     % Assert new facts dynamically
     assert_vessel_facts(FlatVesselFacts),
 
-    % Pass the list of vessel names to sequence_temporization
-    obtain_seq_shortest_delay(ScheduleResult, _),
-    format(user_error, 'Schedule Result: ~w~n', [ScheduleResult]).
+    % Run the appropriate algorithm based on selection
+    run_scheduling_algorithm(Algorithm, ScheduleResult, TotalDelay, ComputationTime),
+    
+    % Prepare metrics for comparison
+    Metrics = #{
+        algorithm: Algorithm,
+        totalDelay: TotalDelay,
+        computationTime: ComputationTime,
+        vesselCount: length(FlatVesselFacts)
+    },
+    
+    format(user_error, 'Schedule Result: ~w~n', [ScheduleResult]),
+    format(user_error, 'Metrics: ~w~n', [Metrics]).
+
+% Route to the appropriate scheduling algorithm
+run_scheduling_algorithm('optimal', ScheduleResult, TotalDelay, ComputationTime) :-
+    statistics(cputime, StartTime),
+    obtain_seq_shortest_delay(ScheduleResult, TotalDelay),
+    statistics(cputime, EndTime),
+    ComputationTime is EndTime - StartTime.
+
+run_scheduling_algorithm('greedy', ScheduleResult, TotalDelay, ComputationTime) :-
+    obtain_seq_greedy(ScheduleResult, TotalDelay, ComputationTime).
+
+% Default to optimal if algorithm not recognized
+run_scheduling_algorithm(_, ScheduleResult, TotalDelay, ComputationTime) :-
+    format(user_error, 'Unknown algorithm, defaulting to optimal~n', []),
+    run_scheduling_algorithm('optimal', ScheduleResult, TotalDelay, ComputationTime).
 
 % get only the names of the vessels from the vessel facts
 get_vessel_names([], []).
