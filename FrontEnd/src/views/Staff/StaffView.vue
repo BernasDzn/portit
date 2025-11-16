@@ -1,22 +1,61 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router';
-import type { Staff } from '@/model/Staff';
+import { useRoute, useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+import { container } from '@/inversify.config';
+import { useAlerts } from '@/composables/alerts';
+
 import EntityView from '@/components/crud/EntityView.vue';
 import ActivityTag from '@/components/ActivityTag.vue';
 import QualificationPrinter from '@/components/printers/QualificationPrinter.vue';
-import { useI18n } from 'vue-i18n';
-const { t } = useI18n();
 import WorkShiftPrinter from '@/components/printers/WorkShiftPrinter.vue';
-import { container } from '@/inversify.config';
+
 import TYPES from '@/inversify/types';
 import type { IStaffService } from '@/service/IService/IStaffService';
+import type { Staff } from '@/model/Staff';
+
+
+const { t } = useI18n();
 const route = useRoute();
+const router = useRouter();
+const notifications = useAlerts();
 
 const staffService = container.get<IStaffService>(TYPES.staffService);
 const mechanographicNumber = decodeURIComponent((route.params.mechanographicNumber ?? '') as string);
 
 const fetchStaff = async (): Promise<Staff | undefined> => {
     return await staffService.getStaffByMechanographicNumber(mechanographicNumber);
+};
+
+const openDeactivationModal = () => {
+    const dialog = document.querySelector('.dialog-overview') as any;
+    dialog.show();
+};
+
+const closeModal = () => {
+    const dialog = document.querySelector('.dialog-overview') as any;
+    dialog.hide();
+};
+
+const deactivateStaff = async () => {
+    await staffService.deactivateStaff(mechanographicNumber).then(() => {
+
+        notifications.enqueueNotification(
+            t('staff.deactivation.successMessage'),
+            notifications.notificationTypes.SUCCESS
+        );
+        
+        closeModal();
+        router.back();
+
+    }).catch((error) => {
+        notifications.enqueueNotification(
+            t('staff.deactivation.errorMessage') + ` (${error.message})`,
+            notifications.notificationTypes.DANGER
+        );
+        console.error('Error deactivating resource:', error);
+        closeModal();
+        router.back();
+    });
 };
 
 </script>
@@ -29,6 +68,12 @@ const fetchStaff = async (): Promise<Staff | undefined> => {
         <sl-breadcrumb-item>{{ mechanographicNumber }}</sl-breadcrumb-item>
     </sl-breadcrumb>
 
+    <sl-dialog :label="t('staff.deactivation.title')" class="dialog-overview">
+        {{ t('staff.deactivation.message') }}
+        <sl-button slot="footer" @click="closeModal" variant="primary" sl-dialog-close>{{ t('buttons.cancel') }}</sl-button>
+        <sl-button slot="footer" @click="deactivateStaff" variant="danger">{{ t('buttons.deactivate') }}</sl-button>
+    </sl-dialog>
+
     <EntityView :fetch-function="fetchStaff" v-slot="entity">
         <div>
             <div class="opposed">
@@ -39,13 +84,18 @@ const fetchStaff = async (): Promise<Staff | undefined> => {
                         <p class="subtitle">{{ entity.element.mechanographicNumber }}</p>
                     </div>
                 </div>
-                <RouterLink :to="`/staff/edit/${encodeURIComponent(entity.element.mechanographicNumber)}`">
-                    <sl-button variant="default" size="large">
+                <div>
+                    <RouterLink :to="`/staff/edit/${encodeURIComponent(entity.element.mechanographicNumber)}`">
+                    <sl-button slot="footer" variant="default" size="large">
                         <sl-icon slot="prefix" name="pencil"></sl-icon>
                         {{ t('staff.tabs.edit') }}
                     </sl-button>
-                </RouterLink>
-    
+                    </RouterLink>
+                    <sl-button slot="footer" variant="danger" size="large" style="margin-left: 0.5rem;" @click="openDeactivationModal">
+                        <sl-icon slot="prefix" name="x"></sl-icon>
+                        {{ t('buttons.deactivate') }}
+                    </sl-button>
+                </div>
             </div>
             <div class="viewing-content">
                 <sl-card class="info-card" style="flex: 65%;">

@@ -277,6 +277,12 @@
         "registeredVessels": "Registered Vessels"
     },
     "staff": {
+        "deactivation": {
+            "title": "Deactivate Staff Member",
+            "message": "Are you sure you want to deactivate this staff member? This action cannot be undone.",
+            "successMessage": "Staff member has been successfully deactivated.",
+            "errorMessage": "An error occurred while trying to deactivate the staff member. Please try again."
+        },
         "fields": {
             "mechanographicNumber": {
                 "title": "Mechanographic Number",
