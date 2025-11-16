@@ -29,11 +29,12 @@ schedule_daily_operations(TargetDate, DaysAhead, DockCode, Algorithm, ScheduleRe
     run_scheduling_algorithm(Algorithm, ScheduleResult, TotalDelay, ComputationTime),
     
     % Prepare metrics for comparison
+    length(FlatVesselFacts, VesselCount),
     Metrics = #{
         algorithm: Algorithm,
         totalDelay: TotalDelay,
         computationTime: ComputationTime,
-        vesselCount: length(FlatVesselFacts)
+        vesselCount: VesselCount
     },
     
     format(user_error, 'Schedule Result: ~w~n', [ScheduleResult]),
