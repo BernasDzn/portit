@@ -62,6 +62,12 @@ const generateTasksForDate = async () => {
     const results: Schedule = await scheduleService.scheduleForDay(selectedDate.value, dock.value, selectedAlgorithm.value, daysAhead.value);
     console.log('Generated Schedule:', results);
 
+    if (!Array.isArray(results.data)){
+        notifications.enqueueNotification("An error occurred while generating the schedule. " + results.data, notifications.notificationTypes.DANGER);
+        generating.value = false;
+        return;
+    }
+
     generating.value = false;
 
     if (results.data.length > 0) {
@@ -151,7 +157,7 @@ const closeAboutModal = () => {
 
         <br>
 
-        <sl-button variant="default" style="margin-right: 20px;" @click="openAboutModal">
+        <sl-button v-if="vvnsOnDate.length != 0" variant="default" style="margin-right: 20px;" @click="openAboutModal">
             {{ t('scheduling.aboutAlgorithmButton') }}
         </sl-button>
 

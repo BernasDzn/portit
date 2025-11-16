@@ -22,8 +22,10 @@ handle_schedule_request(Request) :-
 
     schedule_daily_operations(Day, DaysAhead, Dock, Algorithm, Result, Metrics),
 
+    format(user_error, 'Scheduling Result: ~w~n', [Result]),
+
     format_timetable(Result, FormattedResult),
-    reply_json(#{status: success, data: FormattedResult, metrics: Metrics}).
+    reply_json(#{data: FormattedResult, metrics: Metrics}).
 
 % Format the list of tuples into a more readable structure
 format_timetable([], []).
@@ -34,3 +36,6 @@ format_timetable([(Name, LoadingEnterTime, LoadingExitTime)|Rest], [Dict|Formatt
         loading_exit_time: LoadingExitTime
     },
     format_timetable(Rest, FormattedRest).
+
+% Fall back, should only be called for non list inputs
+format_timetable(Error, Error).

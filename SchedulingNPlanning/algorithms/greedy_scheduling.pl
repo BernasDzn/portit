@@ -2,7 +2,7 @@
 % This algorithm prioritizes computational efficiency over optimality
 % Strategy: Schedule vessels in order of earliest departure time (EDD - Earliest Due Date)
 
-:- dynamic vessel/6.
+:- dynamic vessel/5.
 
 % ============================================================================
 % MAIN ENTRY POINT: GREEDY SCHEDULING ALGORITHM (Earliest Due Date)
@@ -15,7 +15,7 @@ obtain_seq_greedy(SeqTriplets, STotalDelay) :-
     % Step 1: Get all vessel names from the knowledge base
     % findall collects all vessels V where vessel(V,...) is true
     % Result: LV = [zeus, poseidon, marenostrum, nautilus, floating]
-    findall(V, vessel(V,_,_,_,_,_), LV),
+    findall(V, vessel(V,_,_,_,_), LV),
     
     % Step 2: Sort vessels by their departure deadline (earliest first)
     % This is the GREEDY HEURISTIC: prioritize urgent vessels
@@ -63,7 +63,7 @@ map_vessels_with_departure([V|Rest], [(TDep, V)|RestPairs]) :-
     % Look up this vessel's departure time in the knowledge base
     % vessel(Name, Arrival, Departure, Unload, Load, Crane)
     %         V      _      TDep      _      _     _
-    vessel(V, _, TDep, _, _, _),
+    vessel(V, _, TDep, _, _),
     
     % Recursively process the remaining vessels
     map_vessels_with_departure(Rest, RestPairs).
@@ -99,7 +99,7 @@ sequence_temporization_greedy(LV, SeqTriplets) :-
 sequence_temporization_greedy1(EndPrevSeq, [V|LV], [(V, TInUnload, TEndLoad)|SeqTriplets]) :-
     % Look up this vessel's data from the knowledge base
     % vessel(Name, ArrivalTime, DepartureDeadline, UnloadTime, LoadTime, Crane)
-    vessel(V, TIn, _, TUnload, TLoad, _),
+    vessel(V, TIn, _, TUnload, TLoad),
     
     % Decide when this vessel can start being serviced:
     % CASE 1: If the vessel hasn't arrived yet (TIn > EndPrevSeq)
@@ -143,7 +143,7 @@ sum_delays([], 0).
 sum_delays([(V, _, TEndLoad)|LV], S) :-
     % Look up when this vessel wanted to depart from the knowledge base
     % vessel(Name, _, DesiredDeparture, _, _, _)
-    vessel(V, _, TDep, _, _, _),
+    vessel(V, _, TDep, _, _),
     
     % Calculate when this vessel can actually depart
     % Operations finish at TEndLoad, so vessel can leave at TEndLoad + 1
