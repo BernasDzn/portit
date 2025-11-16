@@ -1,6 +1,6 @@
-# Testing Guide
+# Testing Guide for Backend and Frontend
 
-This document explains how to run the different types of tests in this project.
+This document explains how to run the different types of tests found in this project. That includes Frontend tests and Backend tests, as well as tests that span the whole system.
 
 ## Table of Contents
 - [Backend Tests](#backend-tests)
