@@ -42,13 +42,16 @@ schedule_daily_operations(TargetDate, DaysAhead, DockCode, Algorithm, ScheduleRe
 
 % Route to the appropriate scheduling algorithm
 run_scheduling_algorithm('optimal', ScheduleResult, TotalDelay, ComputationTime) :-
-    statistics(cputime, StartTime),
+    get_time(StartTime),
     obtain_seq_shortest_delay(ScheduleResult, TotalDelay),
-    statistics(cputime, EndTime),
+    get_time(EndTime),
     ComputationTime is EndTime - StartTime.
 
 run_scheduling_algorithm('greedy', ScheduleResult, TotalDelay, ComputationTime) :-
-    obtain_seq_greedy(ScheduleResult, TotalDelay, ComputationTime).
+    get_time(StartTime),
+    obtain_seq_greedy(ScheduleResult, TotalDelay).
+    get_time(EndTime),
+    ComputationTime is EndTime - StartTime.
 
 % Default to optimal if algorithm not recognized
 run_scheduling_algorithm(_, ScheduleResult, TotalDelay, ComputationTime) :-

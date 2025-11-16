@@ -11,11 +11,7 @@
 % Input:  (no input parameters - reads from vessel/6 facts in knowledge base)
 % Output: SeqTriplets = list of (VesselName, StartTime, EndTime) tuples
 %         STotalDelay = total delay in hours across all vessels
-%         ComputationTime = how long the algorithm took to run (in seconds)
-obtain_seq_greedy(SeqTriplets, STotalDelay, ComputationTime) :-
-    % Record the start time (for performance measurement)
-    statistics(cputime, StartTime),
-    
+obtain_seq_greedy(SeqTriplets, STotalDelay) :-    
     % Step 1: Get all vessel names from the knowledge base
     % findall collects all vessels V where vessel(V,...) is true
     % Result: LV = [zeus, poseidon, marenostrum, nautilus, floating]
@@ -31,11 +27,7 @@ obtain_seq_greedy(SeqTriplets, STotalDelay, ComputationTime) :-
     
     % Step 4: Calculate how much delay we accumulated
     % Delay = how many hours late each vessel is compared to its desired departure
-    sum_delays(SeqTriplets, STotalDelay),
-    
-    % Record the end time and calculate duration
-    statistics(cputime, EndTime),
-    ComputationTime is EndTime - StartTime.
+    sum_delays(SeqTriplets, STotalDelay).
 
 % ============================================================================
 % SORTING VESSELS BY DEPARTURE TIME (GREEDY HEURISTIC)
