@@ -50,7 +50,7 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
             SchedulingResultDto resultDto = await _notificationService.CollectSchedulingData(day, daysAhead, dockCode);
             return Ok(resultDto);
         }
-                catch (EntityNotFoundException e)
+        catch (EntityNotFoundException e)
         {
             _logger.LogError($"Error retrieving scheduling data for vessel visit notifications: {e.Message}");
             return NotFound(e.Message);

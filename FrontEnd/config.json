@@ -1,4 +1,5 @@
 {
-  "remoteApi": "https://portit.me:10228",
-  "localApiPort": 5195
+    "remotePrologApi": "https://vs-gate.dei.isep.ipp.pt:30228",
+    "remoteApi": "https://portit.me:10228",
+    "localApiPort": 5195
 }

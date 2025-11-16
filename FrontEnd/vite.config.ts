@@ -16,6 +16,7 @@ const localPort = cfg.localApiPort
 
 // Allow explicit override via VITE_API_URL (set in npm script for local runs)
 const proxyTarget = process.env.VITE_API_URL ?? (isLocal ? `http://localhost:${localPort}` : remoteApi)
+const prologTarget = (isLocal ? `http://localhost:2228` : cfg.remotePrologApi)
 
 export default defineConfig({
   plugins: [
@@ -40,12 +41,18 @@ export default defineConfig({
     // Proxy API calls to backend dev server to avoid browser TLS issues with self-signed certs
     
     proxy: {
-      '^/api': {
-        target: proxyTarget,
-        changeOrigin: true,
-        secure: false,
-        rewrite: (path) => path.replace(/^\/api/, ''),
-      }
+        '^/api': {
+            target: proxyTarget,
+            changeOrigin: true,
+            secure: false,
+            rewrite: (path) => path.replace(/^\/api/, ''),
+        },
+        '^/prolog': {
+            target: prologTarget,
+            changeOrigin: true,
+            secure: false,
+            rewrite: (path) => path.replace(/^\/prolog/, ''),
+        }
     }
   },
 })
