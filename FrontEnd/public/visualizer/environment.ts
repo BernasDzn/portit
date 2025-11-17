@@ -9,6 +9,7 @@ const fogColor = 0xcccccc;
 
 const waterNormalsPath = '/visualizer/textures/maps/waternormals.jpg';
 const worldBorder = 1000;
+const waterExtent = 4000; // Extend water to reach the skybox (skybox radius is 2000)
 
 async function createWaterFromPlaneGeometry(object, scene) {
     return new Promise((resolve) => {
@@ -133,8 +134,8 @@ export default class Environment {
         // this.skybox = new THREE.Mesh(letSkyboxGeometry, materialArray); 
         // scene.add(this.skybox);
 
-        // Water plane
-        let waterGeometry = new THREE.PlaneGeometry(worldBorder * 2, worldBorder * 2);
+        // Water plane - extends to skybox
+        let waterGeometry = new THREE.PlaneGeometry(waterExtent, waterExtent);
 
         let waterPlane = new THREE.Mesh(waterGeometry);
         waterPlane.rotation.x = -Math.PI / 2;

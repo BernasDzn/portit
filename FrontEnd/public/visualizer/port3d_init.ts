@@ -52,7 +52,7 @@ export default class Port3D {
             15,
             window.innerWidth / window.innerHeight,
             1,
-            3000
+            10000
         );
 
         // Create the renderer
