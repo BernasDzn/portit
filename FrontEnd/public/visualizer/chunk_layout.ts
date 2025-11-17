@@ -382,7 +382,8 @@ export default class PortLayout {
     picker;
 
     vesselList = []; // The vessels in the port
-    craneList = []; // The cranes in the port
+    /** @type {Array<Crane|GantryCrane>} */
+    craneList = []; // The cranes in the port (both STS and gantry cranes)
     seagullList = []; // The seagulls in the port
     chunkData = []; // The chunks that make up the port layout
     
@@ -653,8 +654,19 @@ export default class PortLayout {
             this.modelCache[modelPath] = await loadModel(modelPath);
         }
         
-        // Clone the cached model for this crane instance
+        // Clone the cached model for this crane instance with unique materials
         const model = this.modelCache[modelPath].clone();
+        model.traverse((child) => {
+            if (child.isMesh && child.material) {
+                // Clone materials to avoid shared material references
+                if (Array.isArray(child.material)) {
+                    child.material = child.material.map(mat => mat.clone());
+                } else {
+                    child.material = child.material.clone();
+                }
+            }
+        });
+        
         const rotationRadians = rotation * (Math.PI / 180);
         let crane = new Crane(name, model, position, rotationRadians);
         crane.init(scene, scaleMultiplier);
@@ -670,11 +682,24 @@ export default class PortLayout {
             this.modelCache[modelPath] = await loadModel(modelPath);
         }
         
-        // Clone the cached model for this crane instance
+        // Clone the cached model for this crane instance with unique materials
         const model = this.modelCache[modelPath].clone();
+        model.traverse((child) => {
+            if (child.isMesh && child.material) {
+                // Clone materials to avoid shared material references
+                if (Array.isArray(child.material)) {
+                    child.material = child.material.map(mat => mat.clone());
+                } else {
+                    child.material = child.material.clone();
+                }
+            }
+        });
+        
         const rotationRadians = rotation * (Math.PI / 180);
         let crane = new GantryCrane(name, model, position, rotationRadians);
         crane.init(scene, scaleMultiplier);
+
+        this.craneList.push(crane);
     }
 
     removeCrane(crane) {
@@ -763,16 +788,6 @@ export default class PortLayout {
             }
         }
 
-        let clickedCrane = null;
-        if (pickedObject && pickedObject.userData && pickedObject.userData.craneId) {
-            clickedCrane = this.craneList.find(crane => crane.name === pickedObject.userData.craneId);
-        }
-
-        let clickedGantryCrane = null;
-        if (pickedObject && pickedObject.userData && pickedObject.userData.gantryCraneId) {
-            clickedGantryCrane = this.craneList.find(crane => crane.name === pickedObject.userData.gantryCraneId);
-        }
-
         objectlist.forEach((obj) => {
             highlightMesh(obj, 0x000000);
         });
@@ -788,10 +803,19 @@ export default class PortLayout {
                 console.warn("No meta information available for selected object.");
             }
 
-            if (clickedCrane) {
-                clickedCrane.meshes.forEach((mesh) => {
-                    highlightMesh(mesh, 0x444477);
-                });
+            if (pickedObject.userData && pickedObject.userData.craneId) {
+                console.log("Clicked crane ID:", pickedObject.userData.craneId);
+                const clickedCrane = this.craneList.find(crane => crane.name === pickedObject.userData.craneId);
+                console.log("Found crane:", clickedCrane ? clickedCrane.name : "not found");
+                console.log("Total cranes in list:", this.craneList.length);
+                if (clickedCrane) {
+                    console.log("Highlighting", clickedCrane.meshes.length, "meshes for crane", clickedCrane.name);
+                    clickedCrane.meshes.forEach((mesh) => {
+                        highlightMesh(mesh, 0x444477);
+                    });
+                } else {
+                    highlightMesh(this.selectedObject, 0x444477);
+                }
             } else {
                 highlightMesh(this.selectedObject, 0x444477);
             }
