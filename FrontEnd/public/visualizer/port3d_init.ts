@@ -97,7 +97,11 @@ export default class Port3D {
 
         // Add port base
         this.portLayout = new PortLayout(this.scene, this.camera);
-        this.portLayout.addVessel("Vessel 1", new THREE.Vector3(0, -12, -40), this.scene);
+        
+        // Load vessel asynchronously
+        this.portLayout.addVessel("Vessel 1", new THREE.Vector3(0, -12, -40), this.scene).catch(err => {
+            console.error("Failed to load vessel:", err);
+        });
 
         for (let i = 0; i < 3; i++) 
             this.portLayout.addSeagull(this.scene);

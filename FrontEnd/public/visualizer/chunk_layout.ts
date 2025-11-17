@@ -78,6 +78,21 @@ class PortChunk {
 // Shared model cache for all chunks
 const sharedModelCache = {};
 
+// Helper function to center a model
+function centerModel(model) {
+    const box = new THREE.Box3().setFromObject(model);
+    const center = box.getCenter(new THREE.Vector3());
+    
+    // Offset all children to center the model at origin
+    model.traverse((child) => {
+        if (child.isMesh) {
+            child.geometry.translate(-center.x, -center.y, -center.z);
+        }
+    });
+    
+    return model;
+}
+
 class WarehouseChunk extends PortChunk {
 
     warehouseModel;
@@ -124,7 +139,7 @@ class WarehouseChunk extends PortChunk {
 
         scene.add(this.base);
 
-        const modelPath = "/visualizer/models/warehouse/warehouse.obj";
+        const modelPath = "/visualizer/models/lowpoly/building1.obj";
         
         // Load model once and cache it
         if (!sharedModelCache[modelPath]) {
@@ -134,9 +149,9 @@ class WarehouseChunk extends PortChunk {
         // Clone the cached model for this warehouse instance
         this.warehouseModel = sharedModelCache[modelPath].clone();
         this.warehouseModel.position.copy(this.position);
-        this.warehouseModel.position.y += 21;
+        this.warehouseModel.position.y -= 1;
         this.warehouseModel.rotateY(Math.PI / 2);
-        this.warehouseModel.scale.set(6, 6, 6);
+        this.warehouseModel.scale.set(2, 2, 2);
         this.warehouseModel.traverse((child) => {
             if (child.isMesh) {
                 child.castShadow = true;
@@ -155,7 +170,7 @@ class WarehouseChunk extends PortChunk {
         scene.add(this.warehouseLabel);
 
         this.pointLight = new THREE.PointLight(0xfcfc95, 2, 100, 0);
-        this.pointLight.position.set(this.position.x, this.position.y + 30, this.position.z);
+        this.pointLight.position.set(this.position.x, this.position.y+12, this.position.z - 8);
         this.pointLight.castShadow = true;
 
         scene.add(this.pointLight);
@@ -505,8 +520,10 @@ export default class PortLayout {
             //}
 
             if (type === 'container') {
-                await this.addContainerCrane(crane.name, position, scene, 90, scaleMultiplier);
+                position.y -= 1; // Slightly lower container cranes
+                await this.addContainerCrane(crane.name, position, scene, 180, scaleMultiplier);
             } else if (type === 'yard') {
+                position.y += 18; // Slightly raise yard gantry cranes
                 await this.addYardGantryCrane(crane.name, position, scene, 0, scaleMultiplier);
             }
         }
@@ -661,9 +678,10 @@ export default class PortLayout {
         // Load model once and cache it
         if (!this.modelCache[modelPath]) {
             this.modelCache[modelPath] = await loadModel(modelPath);
+            centerModel(this.modelCache[modelPath]);
         }
         
-        // Clone the cached model for this seagull instance
+        // Clone the cached model for this crane instance
         const model = this.modelCache[modelPath].clone();
         let seagull = new Seagull(model, new THREE.Vector3(0, 0, 0), this);
         seagull.init(scene);
@@ -673,15 +691,19 @@ export default class PortLayout {
 
 
     async addVessel(name, position, scene) {
-        const modelPath = "/visualizer/models/vessel/12219_boat_v2_L2.obj";
+        const modelPath = "/visualizer/models/lowpoly/ship.obj";
+        
+        console.log("Loading vessel model from:", modelPath);
         
         // Load model once and cache it
         if (!this.modelCache[modelPath]) {
             this.modelCache[modelPath] = await loadModel(modelPath);
+            centerModel(this.modelCache[modelPath]);
         }
         
         // Clone the cached model for this vessel instance
         const model = this.modelCache[modelPath].clone();
+        position.y += 10; // Slightly raise vessel above water
         let vessel = new Vessel(name, model, position, this);
         vessel.init(scene);
 
@@ -689,7 +711,7 @@ export default class PortLayout {
     }
 
     async addContainerCrane(name, position, scene, rotation = 0, scaleMultiplier = 1.0) {
-        const modelPath = "/visualizer/models/crane/scene.gltf";
+        const modelPath = "/visualizer/models/lowpoly/crane1.obj";
         
         // Load model once and cache it
         if (!this.modelCache[modelPath]) {
@@ -699,12 +721,20 @@ export default class PortLayout {
         // Clone the cached model for this crane instance with unique materials
         const model = this.modelCache[modelPath].clone();
         model.traverse((child) => {
-            if (child.isMesh && child.material) {
+            if (child.isMesh) {
+                // Adjust mesh position to fix rotation pivot point
+                child.position.z -= 25;
+                child.position.y -= 5;
+                child.position.x += 15;
+                
+                
+                if (child.material) {
                 // Clone materials to avoid shared material references
-                if (Array.isArray(child.material)) {
-                    child.material = child.material.map(mat => mat.clone());
-                } else {
-                    child.material = child.material.clone();
+                    if (Array.isArray(child.material)) {
+                        child.material = child.material.map(mat => mat.clone());
+                    } else {
+                        child.material = child.material.clone();
+                    }
                 }
             }
         });
@@ -717,22 +747,26 @@ export default class PortLayout {
     }
 
     async addYardGantryCrane(name, position, scene, rotation = 0, scaleMultiplier = 1.0) {
-        const modelPath = "/visualizer/models/gantryCrane/gantryCrane.obj";
+        const modelPath = "/visualizer/models/lowpoly/crane2.obj";
         
         // Load model once and cache it
         if (!this.modelCache[modelPath]) {
             this.modelCache[modelPath] = await loadModel(modelPath);
+            centerModel(this.modelCache[modelPath]);
         }
         
         // Clone the cached model for this crane instance with unique materials
         const model = this.modelCache[modelPath].clone();
+        
         model.traverse((child) => {
-            if (child.isMesh && child.material) {
+            if (child.isMesh) {
                 // Clone materials to avoid shared material references
-                if (Array.isArray(child.material)) {
-                    child.material = child.material.map(mat => mat.clone());
-                } else {
-                    child.material = child.material.clone();
+                if (child.material) {
+                    if (Array.isArray(child.material)) {
+                        child.material = child.material.map(mat => mat.clone());
+                    } else {
+                        child.material = child.material.clone();
+                    }
                 }
             }
         });

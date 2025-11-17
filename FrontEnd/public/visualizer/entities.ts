@@ -24,12 +24,13 @@ export default class Vessel {
         this.name = name;
         this.model = model;
         this.position = position;
+        this.position.y += 10;
         this.layout = layout;
     }
 
     init(scene) {
         this.model.position.copy(this.position);
-        this.model.scale.set(0.05, 0.05, 0.05);
+        this.model.scale.set(1,1,1);
 
         // Enable shadows for all child meshes
         this.model.traverse((child) => {
@@ -44,7 +45,9 @@ export default class Vessel {
 
         this.model.isRoot = true;
 
-        this.model.children[1].meta = {
+        // Add meta to the model itself or first available child
+        const targetForMeta = this.model.children[1] || this.model.children[0] || this.model;
+        targetForMeta.meta = {
             title: 'Vessel',
             description: `${this.name} is a vessel`,
             killable: true,
@@ -152,7 +155,7 @@ export class Crane {
 
     init(scene, scaleMultiplier = 1.0) {
         this.model.position.copy(this.position);
-        const baseScale = 0.1 * scaleMultiplier;
+        const baseScale = 2 * scaleMultiplier;
         this.model.scale.set(baseScale, baseScale, baseScale);
         this.model.rotation.y = this.rotation || 0;
         
@@ -302,7 +305,7 @@ export class GantryCrane {
 
     init(scene, scaleMultiplier = 1.0) {
         this.model.position.copy(this.position);
-        const baseScale = 7.5 * scaleMultiplier;
+        const baseScale = 6 * scaleMultiplier;
         this.model.scale.set(baseScale, baseScale, baseScale);
         this.model.rotation.y = this.rotation || 0;
         
