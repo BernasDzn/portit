@@ -64,7 +64,7 @@ run_scheduling_algorithm('optimal', ScheduleResult, TotalDelay, ComputationTime)
 
 run_scheduling_algorithm('greedy', ScheduleResult, TotalDelay, ComputationTime) :-
     get_time(StartTime),
-    obtain_seq_greedy(ScheduleResult, TotalDelay).
+    obtain_seq_greedy(ScheduleResult, TotalDelay),
     get_time(EndTime),
     ComputationTime is EndTime - StartTime.
 
