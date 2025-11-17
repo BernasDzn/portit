@@ -11,16 +11,16 @@ const worldBorder = 1000;
 
 // 5x5 world chunks
 const validChunkPositions = [
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
 
 const layoutY = -20;
@@ -65,7 +65,7 @@ class PortChunk {
     constructor(x, y) {
 
         // Determine position based on chunk index
-        if (validChunkPositions[x][y] === 0) {
+        if (validChunkPositions[x][y] === 1) {
             console.warn(`Invalid chunk position at (${x}, ${y})`);
             return;
         }
@@ -330,21 +330,29 @@ function generateChunkLayoutFromAPI(portChunks) {
 
             case ChunkType.Land:
                 chunk = new LandChunk(portChunk.x, portChunk.y);
+                // Set as occupied
+                validChunkPositions[portChunk.x][portChunk.y] = 1;
                 chunks.push(chunk);
                 break;
 
             case ChunkType.Warehouse:
                 chunk = new WarehouseChunk(portChunk.x, portChunk.y, portChunk.name);
+                // Set as occupied
+                validChunkPositions[portChunk.x][portChunk.y] = 1;
                 chunks.push(chunk);
                 break;
 
             case ChunkType.Yard:
                 chunk = new YardChunk(portChunk.x, portChunk.y, portChunk.name);
+                // Set as occupied
+                validChunkPositions[portChunk.x][portChunk.y] = 1;
                 chunks.push(chunk);
                 break;
 
             case ChunkType.Dock:
                 chunk = new DockChunk(portChunk.x, portChunk.y, portChunk.name);
+                // Set as occupied
+                validChunkPositions[portChunk.x][portChunk.y] = 1;
                 chunks.push(chunk);
                 break;
 
@@ -365,6 +373,28 @@ function generateChunkLayoutFromAPI(portChunks) {
                 });
                 break;
         }
+    }
+
+    // Add some funny buoys randomly for fun
+    for (let i = 0; i < 5; i++) {
+
+        let validPosition = false;
+        let buoyX = 0;
+        let buoyY = 0;
+
+        while (!validPosition) {
+            buoyX = Math.floor(Math.random() * validChunkPositions.length);
+            buoyY = Math.floor(Math.random() * validChunkPositions[0].length);
+
+            // Check if position is water (0)
+            if (validChunkPositions[buoyX][buoyY] === 0) {
+                validPosition = true;
+            }
+            
+        }
+
+        const buoyChunk = new BuoyChunk(buoyX, buoyY);
+        chunks.push(buoyChunk);
     }
 
     return { chunks, containerCranePositions, yardCranePositions };
@@ -538,14 +568,18 @@ export default class PortLayout {
 
     // Load terrain
     async loadTerrain(scene) {
-        //this.terrain = await loadModelRaw("/visualizer/models/terrain.obj");
+
+        const terrainX = -300 - 330;
+        const terrainZ = 300 + 140;
+
+        this.terrain = await loadModelRaw("/visualizer/models/terrain.obj");
 
         this.terrain.scale.set(300, 300, 300);
         this.terrain.position.y = layoutY - 2;
 
         // move to the border
-        this.terrain.position.x = -300;
-        this.terrain.position.z = 300;
+        this.terrain.position.x = terrainX;
+        this.terrain.position.z = terrainZ; 
 
         this.terrain.traverse((child) => {
             if (child.isMesh) {
@@ -559,7 +593,7 @@ export default class PortLayout {
         // Lighthouse
         this.lighthouse = await loadModel("/visualizer/models/lighthouse.obj");
         this.lighthouse.scale.set(0.4, 0.4, 0.4);
-        this.lighthouse.position.set(-250, layoutY + 10, 10);
+        this.lighthouse.position.set(-250 - 370, layoutY + 10, 10 + 190);
 
         this.lighthouse.traverse((child) => {
             if (child.isMesh) {
@@ -570,7 +604,7 @@ export default class PortLayout {
         scene.add(this.lighthouse);
 
         this.lighthouseLight = new THREE.SpotLight(0xffffaa, 75000, 0, Math.PI / 5, 0.2, 2);
-        this.lighthouseLight.position.set(-249.2, layoutY + 130, 239.8);
+        this.lighthouseLight.position.set(-249.2 - 370, layoutY + 130, 10 + 190);
         this.lighthouseLight.castShadow = true;
         
         this.lighthouseLight.shadow.mapSize.width = 2048;
@@ -580,14 +614,14 @@ export default class PortLayout {
         this.lighthouseLight.shadow.camera.fov = 60;
         this.lighthouseLight.shadow.bias = -0.0001;
         
-        this.lighthouseLight.target.position.set(-249.2, layoutY + 130, 300);
+        this.lighthouseLight.target.position.set(-249.2 - 370, layoutY + 130, 300 + 190)
         scene.add(this.lighthouseLight.target);
 
         scene.add(this.lighthouseLight);
 
         // Add point light to lighthouse structure
         this.lighthousePointLight = new THREE.PointLight(0xffffaa, 10, 50, 0);
-        this.lighthousePointLight.position.set(-249.2, layoutY + 125, 239.8);
+        this.lighthousePointLight.position.set(-249.2 - 370, layoutY + 125, 10 + 190);
         scene.add(this.lighthousePointLight);
 
         this.turnOffEvent = new TimedEvent(6, () => {
@@ -736,7 +770,7 @@ export default class PortLayout {
 
         if (this.lighthouseLight && this.lighthouseLight.target) {
             const time = Date.now() * 0.0005;
-            const lighthouseCenter = { x: -249.2, z: 239.8 };
+            const lighthouseCenter = { x: -249.2 - 370, z: 10 + 190 };
             const lightRadius = 5;
             const targetRadius = 200;
             
