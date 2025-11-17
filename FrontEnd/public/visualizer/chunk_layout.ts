@@ -4,7 +4,8 @@ import { makeBillboard } from "./helpers/billboard_helper.ts";
 import Vessel, { Crane, Seagull } from "./entities.ts";
 import PickHelper from "./helpers/pick_helper.ts";
 import { hideInfoText, setInfoText } from "./helpers/info_helper.ts";
-import {TimedEvent} from "./time.ts";
+import { TimedEvent } from "./time.ts";
+import { fetchPortLayout, ChunkType } from "./chunk_service.ts";
 
 const worldBorder = 1000;
 
@@ -79,14 +80,16 @@ class WarehouseChunk extends PortChunk {
     warehouseModel;
     warehouseLabel;
     pointLight;
+    warehouseName;
 
     turnOffEvent;
     turnOnEvent;
 
-    constructor(x, y) {
+    constructor(x, y, name = "Warehouse") {
         super(x, y);
         this.base = null;
-        this.warehouseLabel = makeBillboard("Warehouse", 32, 0xffffff);
+        this.warehouseName = name;
+        this.warehouseLabel = makeBillboard(name, 32, 0xffffff);
     }
 
     turnOnLight() {
@@ -112,8 +115,8 @@ class WarehouseChunk extends PortChunk {
         this.base.receiveShadow = true;
 
         this.base.meta = {
-            title: "Warehouse Chunk",
-            description: "This is a warehouse chunk.\n Located at (" + this.position.x.toFixed(2) + ", " + this.position.z.toFixed(2) + ").",
+            title: this.warehouseName,
+            description: `Warehouse: ${this.warehouseName}\nLocated at (${this.position.x.toFixed(2)}, ${this.position.z.toFixed(2)}).`,
         };
 
         scene.add(this.base);
@@ -225,12 +228,13 @@ class BuoyChunk extends PortChunk {
 class DockChunk extends PortChunk {
 
     dockLabel;
+    dockName;
 
-    constructor(x, y, label) {
+    constructor(x, y, label = "Dock") {
         super(x, y);
         this.base = null;
-
-        this.dockLabel = makeBillboard("Dock", 32, 0xffffff);
+        this.dockName = label;
+        this.dockLabel = makeBillboard(label, 32, 0xffffff);
     }
 
     async init(scene) {
@@ -245,8 +249,8 @@ class DockChunk extends PortChunk {
         this.base.position.copy(this.position);
 
         this.base.meta = {
-            title: "Dock Chunk",
-            description: "This is a dock chunk where vessels can berth.\n Located at (" + this.position.x.toFixed(2) + ", " + this.position.z.toFixed(2) + ").",
+            title: this.dockName,
+            description: `Dock: ${this.dockName}\nLocated at (${this.position.x.toFixed(2)}, ${this.position.z.toFixed(2)}).`,
         };
 
         this.base.castShadow = true;
@@ -262,6 +266,56 @@ class DockChunk extends PortChunk {
 
         scene.add(this.dockLabel);
     }
+}
+
+/**
+ * Generates chunk instances from API data
+ * Creates appropriate chunk objects based on ChunkType
+ */
+function generateChunkLayoutFromAPI(portChunks) {
+    const chunks = [];
+    const cranePositions = []; // Track crane positions
+
+    for (const portChunk of portChunks) {
+        let chunk = null;
+
+        switch (portChunk.type) {
+
+            case ChunkType.Land:
+                chunk = new LandChunk(portChunk.x, portChunk.y);
+                chunks.push(chunk);
+                break;
+
+            case ChunkType.Warehouse:
+                chunk = new WarehouseChunk(portChunk.x, portChunk.y, portChunk.name);
+                chunks.push(chunk);
+                break;
+
+            case ChunkType.Yard:
+                chunk = new WarehouseChunk(portChunk.x, portChunk.y, portChunk.name);
+                chunks.push(chunk);
+                break;
+
+            case ChunkType.Dock:
+                chunk = new DockChunk(portChunk.x, portChunk.y, portChunk.name);
+                chunks.push(chunk);
+                break;
+
+            case ChunkType.STSCrane:
+            case ChunkType.YardCrane:
+                // Yard cranes and STS cranes are not yet implemented as separate chunk types
+                // so we can handle them all as cranes for now
+                cranePositions.push({
+                    name: portChunk.name,
+                    x: portChunk.x,
+                    y: portChunk.y,
+                    type: portChunk.type
+                });
+                break;
+        }
+    }
+
+    return { chunks, cranePositions };
 }
 
 export default class PortLayout {
@@ -288,18 +342,33 @@ export default class PortLayout {
             this.pick(scene, camera);
         });
 
-        let portChunk = new LandChunk(4, 4);
-        let buoyChunk = new BuoyChunk(4, 3);
-        let dockChunk = new DockChunk(4, 5);
-        let warehouseChunk = new WarehouseChunk(3, 4);
-
-        this.chunkData.push(warehouseChunk);
-        this.chunkData.push(portChunk);
-        this.chunkData.push(buoyChunk);
-        this.chunkData.push(dockChunk);
-
-        this.loadChunks(scene);
+        // Load chunks dynamically from API
+        this.loadChunksFromAPI(scene);
         this.loadTerrain(scene);
+    }
+
+    async loadChunksFromAPI(scene) {
+        try {
+            const portChunks = await fetchPortLayout();
+            console.log('Loaded port layout data:', portChunks);
+
+            const { chunks, cranePositions } = generateChunkLayoutFromAPI(portChunks);
+            this.chunkData = chunks;
+
+            // Initialize all chunks
+            await this.loadChunks(scene);
+            
+            // Add cranes at their designated positions
+            for (const crane of cranePositions) {
+                const position = chunkIndexToPosition(crane.x, crane.y, false);
+                position.y += chunkSize.y; // Raise cranes above the chunk
+                
+                const rotation = crane.type === ChunkType.STSCrane ? 90 : 0;
+                await this.addCrane(crane.name, position, scene, rotation);
+            }
+        } catch (error) {
+            console.error('Failed to load port layout from API:', error);
+        }
     }
 
     async loadChunks(scene) {
@@ -325,7 +394,7 @@ export default class PortLayout {
 
     // Load terrain
     async loadTerrain(scene) {
-        this.terrain = await loadModelRaw("/visualizer/models/terrain.obj");
+        //this.terrain = await loadModelRaw("/visualizer/models/terrain.obj");
 
         this.terrain.scale.set(300, 300, 300);
         this.terrain.position.y = layoutY - 2;
@@ -346,7 +415,7 @@ export default class PortLayout {
         // Lighthouse
         this.lighthouse = await loadModel("/visualizer/models/lighthouse.obj");
         this.lighthouse.scale.set(0.4, 0.4, 0.4);
-        this.lighthouse.position.set(-250, layoutY + 10, 250);
+        this.lighthouse.position.set(-250, layoutY + 10, 10);
 
         this.lighthouse.traverse((child) => {
             if (child.isMesh) {
