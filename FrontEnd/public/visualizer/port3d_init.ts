@@ -102,8 +102,6 @@ export default class Port3D {
         for (let i = 0; i < 3; i++) 
             this.portLayout.addSeagull(this.scene);
 
-        this.portLayout.addCrane("Crane 1", new THREE.Vector3(-100, 0, -25), this.scene, 90);
-
         // Setup time manager
         initTime(this);
 
