@@ -88,8 +88,8 @@ THREEx.DayNight.SunSphere	= function(){
 
 	this.update	= function(sunAngle){
 		mesh.position.x = 0;
-		mesh.position.y = Math.sin(sunAngle) * 400;
-		mesh.position.z = Math.cos(sunAngle) * 400;
+		mesh.position.y = Math.sin(sunAngle) * 800;
+		mesh.position.z = Math.cos(sunAngle) * 800;
 
 		var phase	= THREEx.DayNight.currentPhase(sunAngle)
 		if( phase === 'day' ){
@@ -107,7 +107,7 @@ THREEx.DayNight.SunSphere	= function(){
 //////////////////////////////////////////////////////////////////////////////////
 
 THREEx.DayNight.Skydom		= function(){
-	var geometry	= new THREE.SphereGeometry( 700, 32, 15 );
+	var geometry	= new THREE.SphereGeometry( 1000, 32, 15 );
 	var shader	= THREEx.DayNight.Skydom.Shader
 	var uniforms	= THREE.UniformsUtils.clone(shader.uniforms)
 	var material	= new THREE.ShaderMaterial({
