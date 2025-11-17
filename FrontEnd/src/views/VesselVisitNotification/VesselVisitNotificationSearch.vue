@@ -3,7 +3,7 @@ import VesselVisitNotificationPrinter from '@/components/printers/VesselVisitNot
 import ListingBox from '@/components/crud/ListingBox.vue';
 import type { Filter, Page } from '@/model/Page';
 import type { VesselVisitNotification } from '@/model/VesselVisitNotification';
-import type { VesselVisitNotificationFilter } from '@/model/dto/VesselVisitNotificationDto';
+import type { VesselVisitNotificationFilter, VesselVisitNotificationFilterPa } from '@/model/dto/VesselVisitNotificationDto';
 import { useI18n } from 'vue-i18n';
 import { useSession } from '@/composables/session';
 import { computed, onMounted, ref, watch } from 'vue';
@@ -19,20 +19,10 @@ const { t,locale } = useI18n();
 
 const vvnList = ref<VesselVisitNotification[]>([]);
 
-const fetchVesselVisitNotifications = async (filtering?: Filter<VesselVisitNotificationFilter>): Promise<Page<VesselVisitNotification>> => {
+const fetchVesselVisitNotifications = async (filtering?: any): Promise<Page<VesselVisitNotification>> => {
     // For now admins cant filter the notifications, they just get all of them
     if (user.value.role === 0) {
-    
-        // Get events
-        const tempList = (await vesselVisitNotificationService.getVesselVisitNotifications());
-        events.value = tempList.items.map(ev => ({
-            title: ev.vessel.name,
-            start: ev.expectedArrival.toString(),
-            end: ev.expectedDeparture.toString()
-        }));
-
-        vvnList.value = tempList.items;
-        return await tempList;
+        return await fetchVVNsPa(filtering);
     } 
 
     // Get events
@@ -40,6 +30,19 @@ const fetchVesselVisitNotifications = async (filtering?: Filter<VesselVisitNotif
     events.value = tempList.items.map(ev => ({
             title: ev.vessel.name,
             start: ev.expectedArrival.toString(),
+    }));
+
+    vvnList.value = tempList.items;
+    return await tempList;
+};
+
+const fetchVVNsPa = async (filtering?: Filter<null>): Promise<Page<VesselVisitNotification>> => {
+    // Get events
+    const tempList = (await vesselVisitNotificationService.getVesselVisitNotifications(filtering));
+    events.value = tempList.items.map(ev => ({
+        title: ev.vessel.name,
+        start: ev.expectedArrival.toString(),
+        end: ev.expectedDeparture.toString()
     }));
 
     vvnList.value = tempList.items;

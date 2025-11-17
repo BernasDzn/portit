@@ -14,6 +14,7 @@ public interface IVesselVisitNotificationController
     public Task<ActionResult<NotificationDecisionDto>> CreateDecision([FromQuery] string vesselVisitNotificationId, [FromBody] CreateNotificationDecisionDto notificationDecisionDto);
     public Task<ActionResult> Update(string id, CreateVesselVisitNotificationDto vesselVisitNotificationDto);
     public Task<ActionResult<Page<VesselVisitNotificationStatusDto>>> Filter([FromQuery] VesselVisitNotificationFilter filter);
+    public Task<ActionResult<Page<VesselVisitNotificationStatusDto>>> FilterPa([FromQuery] VesselVisitNotificationFilterPa filter);
 
     // Draft operations
     public Task<ActionResult> Submit(string id);

@@ -13,6 +13,7 @@ public interface IVesselVisitNotificationService
     Task<VesselVisitNotificationDto> Add(CreateVesselVisitNotificationDto vesselVisitNotificationDto, string userEmail);
     Task<VesselVisitNotificationDto> Update(string vvnID, CreateVesselVisitNotificationDto vvnDTO, string userEmail);
     Task<Page<VesselVisitNotificationStatusDto>> FilterNotifications(VesselVisitNotificationFilter filter, string userEmail);
+    Task<Page<VesselVisitNotificationStatusDto>> FilterNotificationsPa(VesselVisitNotificationFilterPa filter);
 
     // Draft operations
     Task SubmitNotification(string id, string userEmail);

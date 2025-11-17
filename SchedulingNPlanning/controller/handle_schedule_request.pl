@@ -22,8 +22,6 @@ handle_schedule_request(Request) :-
 
     schedule_daily_operations(Day, DaysAhead, Dock, Algorithm, Result, Metrics),
 
-    format(user_error, 'Scheduling Result: ~w~n', [Result]),
-
     format_timetable(Result, FormattedResult),
     reply_json(#{data: FormattedResult, metrics: Metrics}).
 

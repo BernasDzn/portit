@@ -1,23 +1,46 @@
 :- consult('./vvn_service.pl').
 :- consult('../dml/vvn_mapper.pl').
-:- consult('../algorithms/resource_allocation_task_sequencing.pl').
+:- consult('../dml/operational_window_mapper.pl').
+:- consult('../algorithms/optimal_scheduling.pl').
 :- consult('../algorithms/greedy_scheduling.pl').
 
 :- use_module(library(lists)).
+
+:- dynamic current_schedule_day/1.
+
+date_weekday(DateString, Weekday) :-
+    split_string(DateString, "-", "", [YearStr, MonthStr, DayStr]),
+    number_string(Year, YearStr),
+    number_string(Month, MonthStr),
+    number_string(Day, DayStr),
+    day_of_the_week(date(Year, Month, Day), TempWeekday),
+    % make sunday = 0 instead of 7
+    Weekday is TempWeekday mod 7.
 
 % Schedule daily operations given a date with algorithm selection
 % This predicate will see what operations need to be scheduled for loading or unloading on a given date 
 % following the specified scheduling algorithm.
 schedule_daily_operations(TargetDate, DaysAhead, DockCode, Algorithm, ScheduleResult, Metrics) :-
+
+    % ok this is gonna caus eproblems with the operational window
+    % so lets just set days ahead to 1 for now
+    DaysAhead = 1,
+
     % Fetch data from database
     get_vvns_on_day(TargetDate, DaysAhead, DockCode, JsonData),
     
+    % Set the current schedule day for use in other predicates
+    date_weekday(TargetDate, Weekday),
+    assertz(current_schedule_day(Weekday)),
+    
     % use axuiliary predicate to check for errors
-    schedule_daily_operations1(JsonData, Algorithm, ScheduleResult, Metrics).
+    schedule_daily_operations1(JsonData, Algorithm, ScheduleResult, Metrics),
+    retractall(current_schedule_day(_)).
 
 schedule_daily_operations1(JsonData, _, 'Missing resource (qualified staff or STS cranes on dock)', Metrics) :-
     _{ error: ErrorMsg } :< JsonData,
     format(user_error, 'Error in JSON Data: ~w~n', [JsonData]),
+    !,
     Metrics = #{
         algorithm: none,
         totalDelay: 0,
@@ -28,17 +51,21 @@ schedule_daily_operations1(JsonData, _, 'Missing resource (qualified staff or ST
 schedule_daily_operations1(JsonData, Algorithm, ScheduleResult, Metrics) :-
     % Parse JSON data to extract vessel facts
     JsonList = JsonData.craneWorkloads,
-    format(user_error, 'JSON List: ~w~n', [JsonList]),
-    extract_scheduling_data(JsonList, VesselFacts),
+    extract_scheduling_data(JsonList, VesselFacts, IntervalFact),
+    
+    format(user_error, 'Extracted Vessel Facts: ~w~n', [VesselFacts]),
+    format(user_error, 'Extracted Interval Facts: ~w~n', [IntervalFact]),
 
     % Cleanup any previous facts
     retractall(vessel(_,_,_,_,_)),
+    retractall(interval(_,_,_)),
     
     flatten(VesselFacts, FlatVesselFacts),
-    format(user_error, 'Vessel Facts: ~w~n', [FlatVesselFacts]),
+    flatten(IntervalFact, FlatIntervalFacts),
 
     % Assert new facts dynamically
     assert_vessel_facts(FlatVesselFacts),
+    assert_interval_facts(FlatIntervalFacts),
 
     % Run the appropriate algorithm based on selection
     run_scheduling_algorithm(Algorithm, ScheduleResult, TotalDelay, ComputationTime),
@@ -84,14 +111,26 @@ assert_vessel_facts([vessel(Name, ArrivalTime, DepartureTime, UnloadingTime, Loa
     assertz(vessel(Name, ArrivalTime, DepartureTime, UnloadingTime, LoadingTime)),
     assert_vessel_facts(Rest).
 
+assert_interval_facts([]).
+assert_interval_facts([interval(Day, StartTime, EndTime)|Rest]) :-
+    assertz(interval(Day, StartTime, EndTime)),
+    assert_interval_facts(Rest).
+
 % Extract scheduling data from JSON list into a list of vessel facts and scheduling facts
-extract_scheduling_data([], []).
-extract_scheduling_data([WorkloadJson|RestJson], [VesselFact | RestVesselFacts ]) :-
+extract_scheduling_data([], [], []).
+extract_scheduling_data([WorkloadJson|RestJson], [VesselFact | RestVesselFacts], [IntervalFact, RestIntervalFacts]) :-
     extract_vessel_data(WorkloadJson.vesselTaskFacts, VesselFact),
-    extract_scheduling_data(RestJson, RestVesselFacts).
+    extract_interval_data(WorkloadJson.operatingWindow.shifts, IntervalFact),
+    extract_scheduling_data(RestJson, RestVesselFacts, RestIntervalFacts).
 
 extract_vessel_data([], []).
 extract_vessel_data([JsonData | RestJson], [VesselFact | RestVesselFacts]) :-
     json_to_vvn_fact(JsonData, VesselFact),
-    format(user_error, 'Extracted Vessel Fact: ~w~n', [VesselFact]),
+    % format(user_error, 'Extracted Vessel Fact: ~w~n', [VesselFact]),
     extract_vessel_data(RestJson, RestVesselFacts).
+
+extract_interval_data([], []).
+extract_interval_data([JsonData | RestJson], [IntervalFact | RestIntervalFacts]) :-
+    json_to_interval_fact(JsonData, IntervalFact),
+    % format(user_error, 'Extracted Interval Fact: ~w~n', [IntervalFact]),
+    extract_interval_data(RestJson, RestIntervalFacts).

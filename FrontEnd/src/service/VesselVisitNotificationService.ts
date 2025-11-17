@@ -7,7 +7,7 @@ import type {
     VesselVisitNotification,
     NotificationDecision,
 } from "@/model/VesselVisitNotification";
-import type { NotificationDecisionDto, VesselVisitNotificationDto, VesselVisitNotificationFilter } from "@/model/dto/VesselVisitNotificationDto";
+import type { NotificationDecisionDto, VesselVisitNotificationDto, VesselVisitNotificationFilter, VesselVisitNotificationFilterPa } from "@/model/dto/VesselVisitNotificationDto";
 
 @injectable()
 export class VesselVisitNotificationService implements IVesselVisitNotificationService {
@@ -16,29 +16,28 @@ export class VesselVisitNotificationService implements IVesselVisitNotificationS
         private http: IHttpService
     ) { }
 
-    async getVesselVisitNotifications(): Promise<Page<VesselVisitNotification>> {
-        const res = await this.http.get<VesselVisitNotification[]>(`/VesselVisitNotification`);
-        const page: Page<VesselVisitNotification> = {
-            items: res.data || [],
-            pageNumber: 1,
-            pageSize: res.data ? res.data.length : 0,
-            pageCount: res.data && res.data.length > 0 ? 1 : 0
-        };
-        return page;
+    async getVesselVisitNotifications(filter: Filter<VesselVisitNotificationFilterPa>): Promise<Page<VesselVisitNotification>> {
+
+        const query: string[] = [];
+        if (filter) {
+            query.push(filter.pageNumber !== undefined ? `PageNumber=${filter.pageNumber}&` : "");
+            query.push(filter.pageSize !==undefined ? `PageSize=${filter.pageSize}` : "");
+        }
+
+        const res = await this.http.get<Page<VesselVisitNotification>>(`/VesselVisitNotification/filterPa${query.length ? `?${query.join('')}` : ''}`);
+        return res.data;
     }
 
-    async getVesselVisitNotificationsForReview(): Promise<Page<VesselVisitNotification>> {
-        const res = await this.getVesselVisitNotifications();
-        console.log(res);
-        const filteredItems = res.items.filter(item => item.status === 1);
-        console.log(filteredItems);
-        const page: Page<VesselVisitNotification> = {
-            items: filteredItems,
-            pageNumber: 1,
-            pageSize: filteredItems.length,
-            pageCount: filteredItems.length > 0 ? 1 : 0
-        };
-        return page;
+    async getVesselVisitNotificationsForReview(filter: Filter<null>): Promise<Page<VesselVisitNotification>> {
+
+        const query: string[] = [];
+        if (filter) {
+            query.push(filter.pageNumber !== undefined ? `PageNumber=${filter.pageNumber}&` : "");
+            query.push(filter.pageSize !==undefined ? `PageSize=${filter.pageSize}` : "");
+        }
+
+        const res = await this.http.get<Page<VesselVisitNotification>>(`/VesselVisitNotification/filterPa?OnlyPending=true`);
+        return res.data;
     }
 
     async getVesselVisitNotificationsByRepresentative(filter?: Filter<VesselVisitNotificationFilter>): Promise<Page<VesselVisitNotification>> {

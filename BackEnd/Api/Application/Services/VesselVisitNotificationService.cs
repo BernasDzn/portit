@@ -193,6 +193,13 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         return page.Map(vvn => vvn.ToStatusDTO());
     }
 
+    public async Task<Page<VesselVisitNotificationStatusDto>> FilterNotificationsPa(VesselVisitNotificationFilterPa filter)
+    {
+        Page<VesselVisitNotification> page = await _notificationRepository.FilterVesselVisitNotificationsPaAsync(filter);
+        AppLogEvents.LogFilter(_logger, "vessel visit notifications for port authority", page.Items.Count);
+        return page.Map(vvn => vvn.ToStatusDTO());
+    }
+
     public async Task SubmitNotification(string vvnID, string userEmail)
     {
         var existingNotification =
@@ -225,6 +232,10 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
 
         if (existingNotification.Submitter.Id != saor.Id)
             throw new UnauthorizedAccessException("You may not delete this notification, you are not its original author");
+
+        // Check if there are any decisions associated with this notification
+        if (existingNotification.NotificationDecisions.Any())
+            throw new NotificationIsPermanentException("Cannot delete this notification, it has associated decisions");
 
         await _notificationRepository.DeleteAsync(existingNotification);
     }

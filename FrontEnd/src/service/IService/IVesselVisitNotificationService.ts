@@ -1,11 +1,11 @@
-import type { NotificationDecisionDto, VesselVisitNotificationDto, VesselVisitNotificationFilter } from "@/model/dto/VesselVisitNotificationDto";
+import type { NotificationDecisionDto, VesselVisitNotificationDto, VesselVisitNotificationFilter, VesselVisitNotificationFilterPa } from "@/model/dto/VesselVisitNotificationDto";
 import type { Filter, Page } from "@/model/Page";
 import type { VesselVisitNotification, NotificationDecision } from "@/model/VesselVisitNotification";
 
 export interface IVesselVisitNotificationService {
 
-    getVesselVisitNotifications(): Promise<Page<VesselVisitNotification>>;
-    getVesselVisitNotificationsForReview(): Promise<Page<VesselVisitNotification>>;
+    getVesselVisitNotifications(filter: Filter<null>): Promise<Page<VesselVisitNotification>>;
+    getVesselVisitNotificationsForReview(filter: Filter<null>): Promise<Page<VesselVisitNotification>>;
     getVesselVisitNotificationsByRepresentative(filter?: Filter<VesselVisitNotificationFilter>): Promise<Page<VesselVisitNotification>>;
     getVesselVisitNotificationById(id: string): Promise<VesselVisitNotification>;
     getNotificationDecisions(vesselVisitNotificationId: string): Promise<NotificationDecision[]>;

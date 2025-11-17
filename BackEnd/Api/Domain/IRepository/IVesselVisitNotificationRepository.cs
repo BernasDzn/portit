@@ -16,4 +16,5 @@ public interface IVesselVisitNotificationRepository : IGenericRepository<VesselV
 	Task DeleteAsync(VesselVisitNotification notification);
     Task<Page<VesselVisitNotification>> FilterVesselVisitNotificationsAsync(VesselVisitNotificationFilter filter, uint userId);
     Task<List<VesselVisitNotification>> GetVesselVisitNotificationsOnDayAsync(DateTime day, uint daysAhead);
+    Task<Page<VesselVisitNotification>> FilterVesselVisitNotificationsPaAsync(VesselVisitNotificationFilterPa filter);
 } 

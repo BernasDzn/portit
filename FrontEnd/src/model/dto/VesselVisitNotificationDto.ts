@@ -30,6 +30,10 @@ export interface VesselVisitNotificationFilter {
     ExpectedArrivalTo: Date
 }
 
+export interface VesselVisitNotificationFilterPa {
+    OnlyPending: boolean
+}
+
 export enum VesselVisitNotificationStatusFilter{
     InProgress = 0,
     ApprovalPending = 1,

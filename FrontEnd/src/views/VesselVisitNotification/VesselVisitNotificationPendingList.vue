@@ -18,8 +18,8 @@ const user = ref(useSession().authenticatedUser!);
 
 const { t } = useI18n();
 
-const fetchVesselVisitNotifications = async (): Promise<Page<VesselVisitNotification>> => {
-        return await vesselVisitNotificationService.getVesselVisitNotificationsForReview();
+const fetchVesselVisitNotifications = async (filter: Filter<null>): Promise<Page<VesselVisitNotification>> => {
+        return await vesselVisitNotificationService.getVesselVisitNotificationsForReview(filter);
 };
 
 onMounted(async () => {

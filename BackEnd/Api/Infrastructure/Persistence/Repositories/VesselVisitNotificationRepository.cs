@@ -103,6 +103,30 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
             throw new PersistencyFailedException($"Failed to update vessel visit notification in the database.");
         }
     }
+    
+    public Task<Page<VesselVisitNotification>> FilterVesselVisitNotificationsPaAsync(VesselVisitNotificationFilterPa filter)
+    {
+        try
+        {
+            IQueryable<VesselVisitNotification> query = _context.VesselVisitNotifications.AsQueryable();
+
+            if (filter.OnlyPending != null && filter.OnlyPending.Value)
+            {
+                query = query.Where(vvn => vvn.Status == NotificationStatus.ApprovalPending);
+            }
+
+            // Pagination
+            int pageCount = (int)Math.Ceiling((double)query.Count() / filter.PageSize);
+            query = query.Skip((filter.PageNumber - 1) * filter.PageSize).Take(filter.PageSize);
+            List<VesselVisitNotification> result = query.ToList();
+
+            return Task.FromResult(Page<VesselVisitNotification>.Of(result, filter, pageCount));
+        }
+        catch (System.Exception)
+        {
+            throw;
+        }
+    }
 
     public Task<Page<VesselVisitNotification>> FilterVesselVisitNotificationsAsync(VesselVisitNotificationFilter filter, uint userId)
     {
@@ -111,12 +135,12 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
             Representative? submitter = _context.Representatives.FirstOrDefault(rep => rep.CitizenshipId == userId);
             if (submitter == null)
                 throw new EntityNotFoundException($"No Representative found with Citizenship ID {userId}.");
-            
+
             if (submitter.RepresentedOrganization == null)
                 throw new EntityNotFoundException($"The representative with Citizenship ID {userId} does not represent any organization.");
 
             IQueryable<VesselVisitNotification> query = _context.VesselVisitNotifications.AsQueryable();
-            ShippingAgentOrganization relatedOrg = _context.ShippingAgentOrganizations.FirstOrDefault(org => org.Representatives.Any(rep => rep.CitizenshipId == userId)) 
+            ShippingAgentOrganization relatedOrg = _context.ShippingAgentOrganizations.FirstOrDefault(org => org.Representatives.Any(rep => rep.CitizenshipId == userId))
                 ?? throw new EntityNotFoundException($"No Shipping Agent Organization found for Submitter Citizenship ID {userId}");
 
             // Apply same company rule
@@ -144,8 +168,8 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
                     : query.Where(vvn => vvn.NotificationDecisions.All(nd => string.IsNullOrEmpty(nd.Reason)));
 
             if (filter.WithDockAssigned != null)
-                query = filter.WithDockAssigned.Value 
-                    ? query.Where(vvn => vvn.NotificationDecisions.Any(nd => nd.AssignedDock != null)) 
+                query = filter.WithDockAssigned.Value
+                    ? query.Where(vvn => vvn.NotificationDecisions.Any(nd => nd.AssignedDock != null))
                     : query.Where(vvn => vvn.NotificationDecisions.All(nd => nd.AssignedDock == null));
 
             if (filter.ExpectedArrivalFrom != null)
@@ -155,7 +179,7 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
                 query = query.Where(vvn => vvn.ExpectedArrival <= filter.ExpectedArrivalTo);
 
             // Pagination
-            int pageCount = (int) Math.Ceiling((double)query.Count() / filter.PageSize);
+            int pageCount = (int)Math.Ceiling((double)query.Count() / filter.PageSize);
             query = query.Skip((filter.PageNumber - 1) * filter.PageSize).Take(filter.PageSize);
             List<VesselVisitNotification> result = query.ToList();
 
