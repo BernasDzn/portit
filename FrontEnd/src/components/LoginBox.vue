@@ -3,7 +3,7 @@ import { useAlerts } from '@/composables/alerts';
 import { useSession } from '@/composables/session';
 import { container } from '@/inversify.config';
 import { TYPES } from '@/inversify/types';
-import type { User } from '@/model/User';
+import type { User } from '@/model/SystemUser';
 import { AuthService } from '@/service/AuthService';
 import AxiosHttpService from '@/service/AxiosHttpService';
 import type { AppJWTResponse, IAuthService } from '@/service/IService/IAuthService';

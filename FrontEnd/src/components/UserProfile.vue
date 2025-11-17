@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { User } from '@/model/User';
 import { ref, computed } from 'vue';
 import Logout from './Logout.vue';
 import { useSession } from '@/composables/session';
+import type { User } from '@/model/SystemUser';
 
 const session = useSession();
 
