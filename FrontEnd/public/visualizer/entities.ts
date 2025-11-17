@@ -150,9 +150,10 @@ export class Crane {
         this.rotation = rotation;
     }
 
-    init(scene) {
+    init(scene, scaleMultiplier = 1.0) {
         this.model.position.copy(this.position);
-        this.model.scale.set(0.1, 0.1, 0.1);
+        const baseScale = 0.1 * scaleMultiplier;
+        this.model.scale.set(baseScale, baseScale, baseScale);
         this.model.rotation.y = this.rotation || 0;
         
         this.model.traverse((child) => {
@@ -190,7 +191,7 @@ export class Crane {
 
         // Make label billboard
         this.label = makeBillboard(this.name, 16, 0xffffff);
-        const labelOffset = new THREE.Vector3(0, 15, 0);
+        const labelOffset = new THREE.Vector3(0, 15, -15);
         const craneRoot = new THREE.Object3D();
         craneRoot.position.copy(this.position).add(labelOffset);
         craneRoot.add(this.label);
@@ -280,5 +281,90 @@ export class Seagull {
     update() {
         
         this.path.goOnAnAdventure();
+    }
+}
+
+export class GantryCrane {
+    name;
+    model;
+    position;
+    rotation;
+
+    label;
+    meshes = [];
+
+    constructor(name, model, position, rotation) {
+        this.name = name;
+        this.model = model;
+        this.position = position;
+        this.rotation = rotation;
+    }
+
+    init(scene, scaleMultiplier = 1.0) {
+        this.model.position.copy(this.position);
+        const baseScale = 7.5 * scaleMultiplier;
+        this.model.scale.set(baseScale, baseScale, baseScale);
+        this.model.rotation.y = this.rotation || 0;
+        
+        // Load PBR textures
+        const textureLoader = new THREE.TextureLoader();
+        const basePath = '/visualizer/models/gantryCrane/texture/';
+        
+        const baseColorMap = textureLoader.load(basePath + 'maquina portico_BaseColor.png');
+        const normalMap = textureLoader.load(basePath + 'maquina portico_Normal.png');
+        const roughnessMap = textureLoader.load(basePath + 'maquina portico_Roughness.png');
+        const metalnessMap = textureLoader.load(basePath + 'maquina portico_Metallic.png');
+        
+        this.model.traverse((child) => {
+            if (child.isMesh) {
+                this.meshes.push(child);
+                child.userData.craneId = this.name;
+                child.meta = {
+                    title: 'Yard Gantry Crane',
+                    description: `${this.name} - Yard gantry crane\nPosition: (${this.position.x.toFixed(2)}, ${this.position.y.toFixed(2)}, ${this.position.z.toFixed(2)})\nRotation: ${((this.rotation || 0) * 180 / Math.PI).toFixed(1)}°`,
+                    killable: true,
+                    killFunction: () => { this.kill(); }
+                };
+                
+                // Apply PBR material
+                child.material = new THREE.MeshStandardMaterial({
+                    map: baseColorMap,
+                    normalMap: normalMap,
+                    roughnessMap: roughnessMap,
+                    metalnessMap: metalnessMap,
+                    metalness: 1.0,
+                    roughness: 1.0,
+                });
+                
+                child.material.needsUpdate = true;
+                child.castShadow = true;
+                child.receiveShadow = true;
+            }
+        });
+        
+        scene.add(this.model);
+
+        // Make label billboard
+        this.label = makeBillboard(this.name, 16, 0xffffff);
+        const labelOffset = new THREE.Vector3(0, 15, -15);
+        const craneRoot = new THREE.Object3D();
+        craneRoot.position.copy(this.position).add(labelOffset);
+        craneRoot.add(this.label);
+        scene.add(craneRoot);
+    }
+
+    update() {
+        // update label position
+        this.label.position.set(this.model.position.x, this.model.position.y + 15, this.model.position.z);
+    }
+
+    kill(){
+        // Remove from scene
+        if (this.model.parent) {
+            this.model.parent.remove(this.model);
+        }
+        if (this.label.parent) {
+            this.label.parent.remove(this.label);
+        }
     }
 }

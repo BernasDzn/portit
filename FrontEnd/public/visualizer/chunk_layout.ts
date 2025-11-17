@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { loadModel, loadModelRaw } from "./helpers/model_helper.ts";
 import { makeBillboard } from "./helpers/billboard_helper.ts";
-import Vessel, { Crane, Seagull } from "./entities.ts";
+import Vessel, { Crane, Seagull, GantryCrane } from "./entities.ts";
 import PickHelper from "./helpers/pick_helper.ts";
 import { hideInfoText, setInfoText } from "./helpers/info_helper.ts";
 import { TimedEvent } from "./time.ts";
@@ -268,13 +268,49 @@ class DockChunk extends PortChunk {
     }
 }
 
+class YardChunk extends PortChunk {
+
+    yardName;
+    yardLabel;
+
+    constructor(x, y, label = "Yard") {
+        super(x, y);
+        this.base = null;
+        this.yardLabel = makeBillboard(label, 32, 0xffffff);
+        this.yardName = label;
+    }
+
+    async init(scene) {
+        this.base = new THREE.BoxGeometry(chunkSize.x, chunkSize.y, chunkSize.z);
+        let baseMesh = new THREE.MeshStandardMaterial({ color: 0x555555 });
+        this.base = new THREE.Mesh(this.base, baseMesh);
+        this.base.position.copy(this.position);
+        this.base.castShadow = true;
+        this.base.receiveShadow = true;
+        this.base.meta = {
+            title: "Yard Chunk",
+            description: "This is a yard chunk.\n Located at (" + this.position.x.toFixed(2) + ", " + this.position.z.toFixed(2) + ").",
+        };
+        scene.add(this.base);
+
+        this.yardLabel.position.set(
+            this.position.x,
+            this.position.y + 30,
+            this.position.z
+        );
+
+        scene.add(this.yardLabel);
+    }
+}
+
 /**
  * Generates chunk instances from API data
  * Creates appropriate chunk objects based on ChunkType
  */
 function generateChunkLayoutFromAPI(portChunks) {
     const chunks = [];
-    const cranePositions = []; // Track crane positions
+    const containerCranePositions = []; // Track STS crane positions
+    const yardCranePositions = []; // Track yard gantry crane positions
 
     for (const portChunk of portChunks) {
         let chunk = null;
@@ -292,7 +328,7 @@ function generateChunkLayoutFromAPI(portChunks) {
                 break;
 
             case ChunkType.Yard:
-                chunk = new WarehouseChunk(portChunk.x, portChunk.y, portChunk.name);
+                chunk = new YardChunk(portChunk.x, portChunk.y, portChunk.name);
                 chunks.push(chunk);
                 break;
 
@@ -302,10 +338,15 @@ function generateChunkLayoutFromAPI(portChunks) {
                 break;
 
             case ChunkType.STSCrane:
+                containerCranePositions.push({
+                    name: portChunk.name,
+                    x: portChunk.x,
+                    y: portChunk.y,
+                    type: portChunk.type
+                });
+                break;
             case ChunkType.YardCrane:
-                // Yard cranes and STS cranes are not yet implemented as separate chunk types
-                // so we can handle them all as cranes for now
-                cranePositions.push({
+                yardCranePositions.push({
                     name: portChunk.name,
                     x: portChunk.x,
                     y: portChunk.y,
@@ -315,7 +356,7 @@ function generateChunkLayoutFromAPI(portChunks) {
         }
     }
 
-    return { chunks, cranePositions };
+    return { chunks, containerCranePositions, yardCranePositions };
 }
 
 export default class PortLayout {
@@ -352,23 +393,111 @@ export default class PortLayout {
             const portChunks = await fetchPortLayout();
             console.log('Loaded port layout data:', portChunks);
 
-            const { chunks, cranePositions } = generateChunkLayoutFromAPI(portChunks);
+            const { chunks, containerCranePositions, yardCranePositions } = generateChunkLayoutFromAPI(portChunks);
             this.chunkData = chunks;
 
             // Initialize all chunks
             await this.loadChunks(scene);
             
-            // Add cranes at their designated positions
-            for (const crane of cranePositions) {
-                const position = chunkIndexToPosition(crane.x, crane.y, false);
-                position.y += chunkSize.y; // Raise cranes above the chunk
-                
-                const rotation = crane.type === ChunkType.STSCrane ? 90 : 0;
-                await this.addCrane(crane.name, position, scene, rotation);
+            // Group cranes by chunk position
+            const containerCranesByChunk = this.groupCranesByChunk(containerCranePositions);
+            const yardCranesByChunk = this.groupCranesByChunk(yardCranePositions);
+            
+            // Add container cranes with spacing
+            for (const [chunkKey, cranes] of Object.entries(containerCranesByChunk)) {
+                await this.addCranesAtChunk(cranes, scene, 'container', 90);
+            }
+
+            // Add yard cranes with spacing
+            for (const [chunkKey, cranes] of Object.entries(yardCranesByChunk)) {
+                await this.addCranesAtChunk(cranes, scene, 'yard', 0);
             }
         } catch (error) {
             console.error('Failed to load port layout from API:', error);
         }
+    }
+
+    groupCranesByChunk(cranes) {
+        const grouped = {};
+        for (const crane of cranes) {
+            const key = `${crane.x}_${crane.y}`;
+            if (!grouped[key]) {
+                grouped[key] = [];
+            }
+            grouped[key].push(crane);
+        }
+        return grouped;
+    }
+
+    async addCranesAtChunk(cranes, scene, type, baseRotation) {
+        const numCranes = cranes.length;
+        if (numCranes === 0) return;
+
+        const firstCrane = cranes[0];
+        const basePosition = chunkIndexToPosition(firstCrane.x, firstCrane.y, false);
+        basePosition.y += chunkSize.y;
+
+        // Calculate scale based on number of cranes (scale down if more than 1)
+        let scaleMultiplier = 1.0;
+        if (numCranes > 1) {
+            scaleMultiplier = Math.max(0.4, 1.0 / numCranes); // Min scale 0.4
+        }
+
+        // Calculate spacing along X axis within the chunk
+        const spacing = chunkSize.x / (numCranes + 1);
+
+        for (let i = 0; i < numCranes; i++) {
+            const crane = cranes[i];
+            const position = basePosition.clone();
+            
+            // Offset along y axis to spread cranes across the chunk
+            position.z += spacing * (i + 1) - chunkSize.z / 2;
+
+            // For STS cranes, each crane calculates its own rotation based on closest water
+            //let rotation = baseRotation;
+            //if (type === 'container') {
+            //    rotation = this.calculateWaterFacingRotationFromPosition(position);
+            //}
+
+            if (type === 'container') {
+                await this.addContainerCrane(crane.name, position, scene, 90, scaleMultiplier);
+            } else if (type === 'yard') {
+                await this.addYardGantryCrane(crane.name, position, scene, 0, scaleMultiplier);
+            }
+        }
+    }
+
+    calculateWaterFacingRotationFromPosition(position) {
+        // Find which chunk grid cell this position is closest to
+        const centerX = position.x - worldOrigin.x;
+        const centerZ = -(position.z - worldOrigin.z);
+        
+        const chunkX = Math.floor(centerX / chunkSize.x);
+        const chunkY = Math.floor(centerZ / chunkSize.z);
+        
+        // Check all 4 cardinal directions and find closest water
+        const directions = [
+            { dx: 0, dy: -1, rotation: 0, name: 'North' },
+            { dx: 1, dy: 0, rotation: 90, name: 'East' },
+            { dx: 0, dy: 1, rotation: 180, name: 'South' },
+            { dx: -1, dy: 0, rotation: 270, name: 'West' }
+        ];
+
+        // Find the closest water direction
+        for (const dir of directions) {
+            const checkX = chunkX + dir.dx;
+            const checkY = chunkY + dir.dy;
+            
+            // Check if out of bounds (water) or invalid chunk (water)
+            if (checkX < 0 || checkX >= validChunkPositions.length ||
+                checkY < 0 || checkY >= validChunkPositions[0].length ||
+                validChunkPositions[checkX][checkY] === 0) {
+                return dir.rotation;
+            }
+        }
+        
+        // Default rotation if no water found
+        return 90;
     }
 
     async loadChunks(scene) {
@@ -488,14 +617,22 @@ export default class PortLayout {
         this.vesselList.push(vessel);
     }
 
-    async addCrane(name, position, scene, rotation = 0) {
+    async addContainerCrane(name, position, scene, rotation = 0, scaleMultiplier = 1.0) {
 
         const model = await loadModel("/visualizer/models/crane/scene.gltf");
         const rotationRadians = rotation * (Math.PI / 180);
         let crane = new Crane(name, model, position, rotationRadians);
-        crane.init(scene);
+        crane.init(scene, scaleMultiplier);
 
         this.craneList.push(crane);
+    }
+
+    async addYardGantryCrane(name, position, scene, rotation = 0, scaleMultiplier = 1.0) {
+
+        const model = await loadModel("/visualizer/models/gantryCrane/gantryCrane.obj");
+        const rotationRadians = rotation * (Math.PI / 180);
+        let crane = new GantryCrane(name, model, position, rotationRadians);
+        crane.init(scene, scaleMultiplier);
     }
 
     removeCrane(crane) {
@@ -587,6 +724,11 @@ export default class PortLayout {
         let clickedCrane = null;
         if (pickedObject && pickedObject.userData && pickedObject.userData.craneId) {
             clickedCrane = this.craneList.find(crane => crane.name === pickedObject.userData.craneId);
+        }
+
+        let clickedGantryCrane = null;
+        if (pickedObject && pickedObject.userData && pickedObject.userData.gantryCraneId) {
+            clickedGantryCrane = this.craneList.find(crane => crane.name === pickedObject.userData.gantryCraneId);
         }
 
         objectlist.forEach((obj) => {
