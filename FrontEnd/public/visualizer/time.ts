@@ -1,19 +1,21 @@
 let currentDate;
 const offsetDegrees = -90;
 
-const timeIncrement = 10; // 10 minutes
-const updateInterval = 1000; // 1 second
+const timeIncrementSeconds = 1; // 30 seconds for smooth sun movement
+const updateInterval = 16; // 1 second
 
 var timedEvents = [];
 
-function incrementTimeByMinutes() {
-    currentDate.setMinutes(currentDate.getMinutes() + timeIncrement);
+function incrementTimeByMinutes(timeScale) {
+    // Add seconds scaled by timeScale for smooth sun movement
+    currentDate.setSeconds(currentDate.getSeconds() + (timeIncrementSeconds * timeScale));
 }
 
 function setSunAngle(app) {
 
-    // calculate current sun angle
-    const percentageOfTheDay = (currentDate.getHours() * 60 + currentDate.getMinutes()) / (24 * 60);
+    // calculate current sun angle with full precision (hours, minutes, and seconds)
+    const totalSeconds = currentDate.getHours() * 3600 + currentDate.getMinutes() * 60 + currentDate.getSeconds();
+    const percentageOfTheDay = totalSeconds / (24 * 3600);
     const currentSunAngle = percentageOfTheDay * 2 * Math.PI;
 
     // offset to make it look better
@@ -33,7 +35,7 @@ function updateDateTable() {
 
 function updateTime(app) {
     
-    incrementTimeByMinutes();
+    incrementTimeByMinutes(app.timeScale);
     setSunAngle(app);
     updateDateTable();
 
@@ -75,11 +77,11 @@ export default function initTime(app) {
     setTimeout(function tick() {
 
         if (app.paused) {
-            setTimeout(tick, updateInterval * app.timeScale);
+            setTimeout(tick, updateInterval);
             return;
         }
 
         updateTime(app);
-        setTimeout(tick, updateInterval * app.timeScale);
-    }, updateInterval * app.timeScale);
+        setTimeout(tick, updateInterval);
+    }, updateInterval);
 }
