@@ -843,9 +843,18 @@ export default class PortLayout {
             });
         });
 
+        const vesselMeshes = [];
+        this.vesselList.forEach(vessel => {
+            vessel.model.traverse((child) => {
+                if (child.isMesh) {
+                    vesselMeshes.push(child);
+                }
+            });
+        });
+
         const objectlist = [
-            ...this.chunkData.map(chunk => chunk.base),
-            ...this.vesselList.map(vessel => vessel.model.children[1]),
+            ...this.chunkData.map(chunk => chunk.base).filter(base => base),
+            ...vesselMeshes,
             ...craneMeshes
         ];
 
@@ -879,13 +888,22 @@ export default class PortLayout {
                 console.warn("No meta information available for selected object.");
             }
 
+            if(pickedObject.userData && pickedObject.userData.vesselName) {
+                const clickedVessel = this.vesselList.find(vessel => vessel.name === pickedObject.userData.vesselName);
+                if (clickedVessel) {
+                    clickedVessel.model.traverse((child) => {
+                        if (child.isMesh) {
+                            highlightMesh(child, 0x444477);
+                        }
+                    });
+                }
+            } else {
+                highlightMesh(this.selectedObject, 0x444477);
+            }
+
             if (pickedObject.userData && pickedObject.userData.craneId) {
-                console.log("Clicked crane ID:", pickedObject.userData.craneId);
                 const clickedCrane = this.craneList.find(crane => crane.name === pickedObject.userData.craneId);
-                console.log("Found crane:", clickedCrane ? clickedCrane.name : "not found");
-                console.log("Total cranes in list:", this.craneList.length);
                 if (clickedCrane) {
-                    console.log("Highlighting", clickedCrane.meshes.length, "meshes for crane", clickedCrane.name);
                     clickedCrane.meshes.forEach((mesh) => {
                         highlightMesh(mesh, 0x444477);
                     });

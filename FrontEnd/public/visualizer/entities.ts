@@ -32,11 +32,22 @@ export default class Vessel {
         this.model.position.copy(this.position);
         this.model.scale.set(1,1,1);
 
-        // Enable shadows for all child meshes
+        // Vessel metadata
+        const vesselMeta = {
+            title: 'Vessel',
+            description: `${this.name} is a vessel`,
+            killable: true,
+            killFunction: () => { this.kill(); }
+        };
+
+        // Enable shadows and add metadata to all child meshes
         this.model.traverse((child) => {
             if (child.isMesh) {
                 child.castShadow = true;
                 child.receiveShadow = true;
+                // Add metadata to each mesh so clicking any part shows vessel info
+                child.meta = vesselMeta;
+                child.userData.vesselName = this.name;
             }
         });
 
@@ -44,15 +55,6 @@ export default class Vessel {
         this.model.castShadow = true;
 
         this.model.isRoot = true;
-
-        // Add meta to the model itself or first available child
-        const targetForMeta = this.model.children[1] || this.model.children[0] || this.model;
-        targetForMeta.meta = {
-            title: 'Vessel',
-            description: `${this.name} is a vessel`,
-            killable: true,
-            killFunction: () => { this.kill(); }
-        };
 
         scene.add(this.model);
 
