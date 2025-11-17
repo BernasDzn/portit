@@ -572,7 +572,15 @@ export default class PortLayout {
         const terrainX = -300 - 330;
         const terrainZ = 300 + 140;
 
-        this.terrain = await loadModelRaw("/visualizer/models/terrain.obj");
+        this.terrain = await loadModel("/visualizer/models/terrain.obj");
+        // Add bump map
+        const bumpTexture = new THREE.TextureLoader().load('/visualizer/textures/maps/bump.jpg');
+        this.terrain.traverse((child) => {
+            if (child.isMesh) {
+                child.material.bumpMap = bumpTexture;
+                child.material.bumpScale = 5;
+            }
+        });
 
         this.terrain.scale.set(300, 300, 300);
         this.terrain.position.y = layoutY - 2;
