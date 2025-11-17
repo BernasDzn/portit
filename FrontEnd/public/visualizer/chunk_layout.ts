@@ -75,6 +75,9 @@ class PortChunk {
     }
 }
 
+// Shared model cache for all chunks
+const sharedModelCache = {};
+
 class WarehouseChunk extends PortChunk {
 
     warehouseModel;
@@ -121,7 +124,15 @@ class WarehouseChunk extends PortChunk {
 
         scene.add(this.base);
 
-        this.warehouseModel = await loadModel("/visualizer/models/warehouse/warehouse.obj");
+        const modelPath = "/visualizer/models/warehouse/warehouse.obj";
+        
+        // Load model once and cache it
+        if (!sharedModelCache[modelPath]) {
+            sharedModelCache[modelPath] = await loadModel(modelPath);
+        }
+        
+        // Clone the cached model for this warehouse instance
+        this.warehouseModel = sharedModelCache[modelPath].clone();
         this.warehouseModel.position.copy(this.position);
         this.warehouseModel.position.y += 21;
         this.warehouseModel.rotateY(Math.PI / 2);
@@ -374,6 +385,9 @@ export default class PortLayout {
     craneList = []; // The cranes in the port
     seagullList = []; // The seagulls in the port
     chunkData = []; // The chunks that make up the port layout
+    
+    // Model cache to avoid reloading the same models
+    modelCache = {};
 
     constructor(scene, camera) {
 
@@ -599,8 +613,15 @@ export default class PortLayout {
     }
 
     async addSeagull(scene) {
-
-        const model = await loadModel("/visualizer/models/seagull.obj");
+        const modelPath = "/visualizer/models/seagull.obj";
+        
+        // Load model once and cache it
+        if (!this.modelCache[modelPath]) {
+            this.modelCache[modelPath] = await loadModel(modelPath);
+        }
+        
+        // Clone the cached model for this seagull instance
+        const model = this.modelCache[modelPath].clone();
         let seagull = new Seagull(model, new THREE.Vector3(0, 0, 0), this);
         seagull.init(scene);
 
@@ -609,8 +630,15 @@ export default class PortLayout {
 
 
     async addVessel(name, position, scene) {
-
-        const model = await loadModel("/visualizer/models/vessel/12219_boat_v2_L2.obj");
+        const modelPath = "/visualizer/models/vessel/12219_boat_v2_L2.obj";
+        
+        // Load model once and cache it
+        if (!this.modelCache[modelPath]) {
+            this.modelCache[modelPath] = await loadModel(modelPath);
+        }
+        
+        // Clone the cached model for this vessel instance
+        const model = this.modelCache[modelPath].clone();
         let vessel = new Vessel(name, model, position, this);
         vessel.init(scene);
 
@@ -618,8 +646,15 @@ export default class PortLayout {
     }
 
     async addContainerCrane(name, position, scene, rotation = 0, scaleMultiplier = 1.0) {
-
-        const model = await loadModel("/visualizer/models/crane/scene.gltf");
+        const modelPath = "/visualizer/models/crane/scene.gltf";
+        
+        // Load model once and cache it
+        if (!this.modelCache[modelPath]) {
+            this.modelCache[modelPath] = await loadModel(modelPath);
+        }
+        
+        // Clone the cached model for this crane instance
+        const model = this.modelCache[modelPath].clone();
         const rotationRadians = rotation * (Math.PI / 180);
         let crane = new Crane(name, model, position, rotationRadians);
         crane.init(scene, scaleMultiplier);
@@ -628,8 +663,15 @@ export default class PortLayout {
     }
 
     async addYardGantryCrane(name, position, scene, rotation = 0, scaleMultiplier = 1.0) {
-
-        const model = await loadModel("/visualizer/models/gantryCrane/gantryCrane.obj");
+        const modelPath = "/visualizer/models/gantryCrane/gantryCrane.obj";
+        
+        // Load model once and cache it
+        if (!this.modelCache[modelPath]) {
+            this.modelCache[modelPath] = await loadModel(modelPath);
+        }
+        
+        // Clone the cached model for this crane instance
+        const model = this.modelCache[modelPath].clone();
         const rotationRadians = rotation * (Math.PI / 180);
         let crane = new GantryCrane(name, model, position, rotationRadians);
         crane.init(scene, scaleMultiplier);
