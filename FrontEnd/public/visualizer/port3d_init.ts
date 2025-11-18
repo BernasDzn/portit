@@ -32,7 +32,7 @@ export default class Port3D {
         bloom: {
             strength: 0.5,
             radius: 0.8,
-            threshold: 0.6
+            threshold: 0.75
         }
     }
 
@@ -52,7 +52,7 @@ export default class Port3D {
             15,
             window.innerWidth / window.innerHeight,
             1,
-            3000
+            10000
         );
 
         // Create the renderer
@@ -97,7 +97,11 @@ export default class Port3D {
 
         // Add port base
         this.portLayout = new PortLayout(this.scene, this.camera);
-        this.portLayout.addVessel("Vessel 1", new THREE.Vector3(0, -12, -40), this.scene);
+        
+        // Load vessel asynchronously
+        this.portLayout.addVessel("Vessel 1", new THREE.Vector3(0, -12, -40), this.scene).catch(err => {
+            console.error("Failed to load vessel:", err);
+        });
 
         for (let i = 0; i < 3; i++) 
             this.portLayout.addSeagull(this.scene);

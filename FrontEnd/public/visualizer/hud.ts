@@ -10,7 +10,7 @@ export default function setupGUI(port3D) {
     lightingFolder.open();
 
     const timeFolder = gui.addFolder('Time Control');
-    timeFolder.add(port3D, 'timeScale', 0.1, 5).name('Time Scale');
+    timeFolder.add(port3D, 'timeScale', 1, 3600).name('Time Scale');
     timeFolder.add(port3D, 'paused').name('Paused');
     timeFolder.open();
 

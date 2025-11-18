@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { loadModel, loadModelRaw } from "./helpers/model_helper.ts";
 import { makeBillboard } from "./helpers/billboard_helper.ts";
-import Vessel, { Crane, Seagull } from "./entities.ts";
+import Vessel, { Crane, Seagull, GantryCrane } from "./entities.ts";
 import PickHelper from "./helpers/pick_helper.ts";
 import { hideInfoText, setInfoText } from "./helpers/info_helper.ts";
 import { TimedEvent } from "./time.ts";
@@ -11,16 +11,16 @@ const worldBorder = 1000;
 
 // 5x5 world chunks
 const validChunkPositions = [
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 ];
 
 const layoutY = -20;
@@ -65,7 +65,7 @@ class PortChunk {
     constructor(x, y) {
 
         // Determine position based on chunk index
-        if (validChunkPositions[x][y] === 0) {
+        if (validChunkPositions[x][y] === 1) {
             console.warn(`Invalid chunk position at (${x}, ${y})`);
             return;
         }
@@ -73,6 +73,33 @@ class PortChunk {
         this.position = chunkIndexToPosition(x, y);
         this.position.y += chunkSize.y / 2;
     }
+}
+
+// Shared model cache for all chunks
+const sharedModelCache = {};
+
+// Helper function to center a model
+function centerModel(model) {
+    const box = new THREE.Box3().setFromObject(model);
+    const center = box.getCenter(new THREE.Vector3());
+    
+    // Offset all children to center the model at origin
+    model.traverse((child) => {
+        if (child.isMesh) {
+            child.geometry.translate(-center.x, -center.y, -center.z);
+        }
+    });
+
+    // offset children so origin is at the bottom
+    const boxAfter = new THREE.Box3().setFromObject(model);
+    const min = boxAfter.min;
+    model.traverse((child) => {
+        if (child.isMesh) {
+            child.geometry.translate(0, -min.y, 0);
+        }
+    });
+    
+    return model;
 }
 
 class WarehouseChunk extends PortChunk {
@@ -121,11 +148,19 @@ class WarehouseChunk extends PortChunk {
 
         scene.add(this.base);
 
-        this.warehouseModel = await loadModel("/visualizer/models/warehouse/warehouse.obj");
+        const modelPath = "/visualizer/models/lowpoly/building1.obj";
+        
+        // Load model once and cache it
+        if (!sharedModelCache[modelPath]) {
+            sharedModelCache[modelPath] = await loadModel(modelPath);
+        }
+        
+        // Clone the cached model for this warehouse instance
+        this.warehouseModel = sharedModelCache[modelPath].clone();
         this.warehouseModel.position.copy(this.position);
-        this.warehouseModel.position.y += 21;
+        this.warehouseModel.position.y -= 1;
         this.warehouseModel.rotateY(Math.PI / 2);
-        this.warehouseModel.scale.set(6, 6, 6);
+        this.warehouseModel.scale.set(2, 2, 2);
         this.warehouseModel.traverse((child) => {
             if (child.isMesh) {
                 child.castShadow = true;
@@ -144,7 +179,7 @@ class WarehouseChunk extends PortChunk {
         scene.add(this.warehouseLabel);
 
         this.pointLight = new THREE.PointLight(0xfcfc95, 2, 100, 0);
-        this.pointLight.position.set(this.position.x, this.position.y + 30, this.position.z);
+        this.pointLight.position.set(this.position.x, this.position.y+12, this.position.z - 8);
         this.pointLight.castShadow = true;
 
         scene.add(this.pointLight);
@@ -268,13 +303,49 @@ class DockChunk extends PortChunk {
     }
 }
 
+class YardChunk extends PortChunk {
+
+    yardName;
+    yardLabel;
+
+    constructor(x, y, label = "Yard") {
+        super(x, y);
+        this.base = null;
+        this.yardLabel = makeBillboard(label, 32, 0xffffff);
+        this.yardName = label;
+    }
+
+    async init(scene) {
+        this.base = new THREE.BoxGeometry(chunkSize.x, chunkSize.y, chunkSize.z);
+        let baseMesh = new THREE.MeshStandardMaterial({ color: 0x555555 });
+        this.base = new THREE.Mesh(this.base, baseMesh);
+        this.base.position.copy(this.position);
+        this.base.castShadow = true;
+        this.base.receiveShadow = true;
+        this.base.meta = {
+            title: "Yard Chunk",
+            description: "This is a yard chunk.\n Located at (" + this.position.x.toFixed(2) + ", " + this.position.z.toFixed(2) + ").",
+        };
+        scene.add(this.base);
+
+        this.yardLabel.position.set(
+            this.position.x,
+            this.position.y + 30,
+            this.position.z
+        );
+
+        scene.add(this.yardLabel);
+    }
+}
+
 /**
  * Generates chunk instances from API data
  * Creates appropriate chunk objects based on ChunkType
  */
 function generateChunkLayoutFromAPI(portChunks) {
     const chunks = [];
-    const cranePositions = []; // Track crane positions
+    const containerCranePositions = []; // Track STS crane positions
+    const yardCranePositions = []; // Track yard gantry crane positions
 
     for (const portChunk of portChunks) {
         let chunk = null;
@@ -283,29 +354,42 @@ function generateChunkLayoutFromAPI(portChunks) {
 
             case ChunkType.Land:
                 chunk = new LandChunk(portChunk.x, portChunk.y);
+                // Set as occupied
+                validChunkPositions[portChunk.x][portChunk.y] = 1;
                 chunks.push(chunk);
                 break;
 
             case ChunkType.Warehouse:
                 chunk = new WarehouseChunk(portChunk.x, portChunk.y, portChunk.name);
+                // Set as occupied
+                validChunkPositions[portChunk.x][portChunk.y] = 1;
                 chunks.push(chunk);
                 break;
 
             case ChunkType.Yard:
-                chunk = new WarehouseChunk(portChunk.x, portChunk.y, portChunk.name);
+                chunk = new YardChunk(portChunk.x, portChunk.y, portChunk.name);
+                // Set as occupied
+                validChunkPositions[portChunk.x][portChunk.y] = 1;
                 chunks.push(chunk);
                 break;
 
             case ChunkType.Dock:
                 chunk = new DockChunk(portChunk.x, portChunk.y, portChunk.name);
+                // Set as occupied
+                validChunkPositions[portChunk.x][portChunk.y] = 1;
                 chunks.push(chunk);
                 break;
 
             case ChunkType.STSCrane:
+                containerCranePositions.push({
+                    name: portChunk.name,
+                    x: portChunk.x,
+                    y: portChunk.y,
+                    type: portChunk.type
+                });
+                break;
             case ChunkType.YardCrane:
-                // Yard cranes and STS cranes are not yet implemented as separate chunk types
-                // so we can handle them all as cranes for now
-                cranePositions.push({
+                yardCranePositions.push({
                     name: portChunk.name,
                     x: portChunk.x,
                     y: portChunk.y,
@@ -315,7 +399,29 @@ function generateChunkLayoutFromAPI(portChunks) {
         }
     }
 
-    return { chunks, cranePositions };
+    // Add some funny buoys randomly for fun
+    for (let i = 0; i < 5; i++) {
+
+        let validPosition = false;
+        let buoyX = 0;
+        let buoyY = 0;
+
+        while (!validPosition) {
+            buoyX = Math.floor(Math.random() * validChunkPositions.length);
+            buoyY = Math.floor(Math.random() * validChunkPositions[0].length);
+
+            // Check if position is water (0)
+            if (validChunkPositions[buoyX][buoyY] === 0) {
+                validPosition = true;
+            }
+            
+        }
+
+        const buoyChunk = new BuoyChunk(buoyX, buoyY);
+        chunks.push(buoyChunk);
+    }
+
+    return { chunks, containerCranePositions, yardCranePositions };
 }
 
 export default class PortLayout {
@@ -330,9 +436,13 @@ export default class PortLayout {
     picker;
 
     vesselList = []; // The vessels in the port
-    craneList = []; // The cranes in the port
+    /** @type {Array<Crane|GantryCrane>} */
+    craneList = []; // The cranes in the port (both STS and gantry cranes)
     seagullList = []; // The seagulls in the port
     chunkData = []; // The chunks that make up the port layout
+    
+    // Model cache to avoid reloading the same models
+    modelCache = {};
 
     constructor(scene, camera) {
 
@@ -352,23 +462,112 @@ export default class PortLayout {
             const portChunks = await fetchPortLayout();
             console.log('Loaded port layout data:', portChunks);
 
-            const { chunks, cranePositions } = generateChunkLayoutFromAPI(portChunks);
+            const { chunks, containerCranePositions, yardCranePositions } = generateChunkLayoutFromAPI(portChunks);
             this.chunkData = chunks;
 
             // Initialize all chunks
             await this.loadChunks(scene);
             
-            // Add cranes at their designated positions
-            for (const crane of cranePositions) {
-                const position = chunkIndexToPosition(crane.x, crane.y, false);
-                position.y += chunkSize.y; // Raise cranes above the chunk
-                
-                const rotation = crane.type === ChunkType.STSCrane ? 90 : 0;
-                await this.addCrane(crane.name, position, scene, rotation);
+            // Group cranes by chunk position
+            const containerCranesByChunk = this.groupCranesByChunk(containerCranePositions);
+            const yardCranesByChunk = this.groupCranesByChunk(yardCranePositions);
+            
+            // Add container cranes with spacing
+            for (const [chunkKey, cranes] of Object.entries(containerCranesByChunk)) {
+                await this.addCranesAtChunk(cranes, scene, 'container', 90);
+            }
+
+            // Add yard cranes with spacing
+            for (const [chunkKey, cranes] of Object.entries(yardCranesByChunk)) {
+                await this.addCranesAtChunk(cranes, scene, 'yard', 0);
             }
         } catch (error) {
             console.error('Failed to load port layout from API:', error);
         }
+    }
+
+    groupCranesByChunk(cranes) {
+        const grouped = {};
+        for (const crane of cranes) {
+            const key = `${crane.x}_${crane.y}`;
+            if (!grouped[key]) {
+                grouped[key] = [];
+            }
+            grouped[key].push(crane);
+        }
+        return grouped;
+    }
+
+    async addCranesAtChunk(cranes, scene, type, baseRotation) {
+        const numCranes = cranes.length;
+        if (numCranes === 0) return;
+
+        const firstCrane = cranes[0];
+        const basePosition = chunkIndexToPosition(firstCrane.x, firstCrane.y, false);
+        basePosition.y += chunkSize.y;
+
+        // Calculate scale based on number of cranes (scale down if more than 1)
+        let scaleMultiplier = 1.0;
+        if (numCranes > 1) {
+            scaleMultiplier = Math.max(0.6, 1.0 / numCranes); // Min scale 0.6
+        }
+
+        // Calculate spacing along X axis within the chunk
+        const spacing = chunkSize.x / (numCranes + 1);
+
+        for (let i = 0; i < numCranes; i++) {
+            const crane = cranes[i];
+            const position = basePosition.clone();
+            
+            // Offset along y axis to spread cranes across the chunk
+            position.z += spacing * (i + 1) - chunkSize.z / 2;
+
+            // For STS cranes, each crane calculates its own rotation based on closest water
+            //let rotation = baseRotation;
+            //if (type === 'container') {
+            //    rotation = this.calculateWaterFacingRotationFromPosition(position);
+            //}
+
+            if (type === 'container') {
+                position.y -= 1; // Slightly lower container cranes
+                await this.addContainerCrane(crane.name, position, scene, 180, scaleMultiplier);
+            } else if (type === 'yard') {
+                await this.addYardGantryCrane(crane.name, position, scene, 0, scaleMultiplier);
+            }
+        }
+    }
+
+    calculateWaterFacingRotationFromPosition(position) {
+        // Find which chunk grid cell this position is closest to
+        const centerX = position.x - worldOrigin.x;
+        const centerZ = -(position.z - worldOrigin.z);
+        
+        const chunkX = Math.floor(centerX / chunkSize.x);
+        const chunkY = Math.floor(centerZ / chunkSize.z);
+        
+        // Check all 4 cardinal directions and find closest water
+        const directions = [
+            { dx: 0, dy: -1, rotation: 0, name: 'North' },
+            { dx: 1, dy: 0, rotation: 90, name: 'East' },
+            { dx: 0, dy: 1, rotation: 180, name: 'South' },
+            { dx: -1, dy: 0, rotation: 270, name: 'West' }
+        ];
+
+        // Find the closest water direction
+        for (const dir of directions) {
+            const checkX = chunkX + dir.dx;
+            const checkY = chunkY + dir.dy;
+            
+            // Check if out of bounds (water) or invalid chunk (water)
+            if (checkX < 0 || checkX >= validChunkPositions.length ||
+                checkY < 0 || checkY >= validChunkPositions[0].length ||
+                validChunkPositions[checkX][checkY] === 0) {
+                return dir.rotation;
+            }
+        }
+        
+        // Default rotation if no water found
+        return 90;
     }
 
     async loadChunks(scene) {
@@ -394,14 +593,26 @@ export default class PortLayout {
 
     // Load terrain
     async loadTerrain(scene) {
-        //this.terrain = await loadModelRaw("/visualizer/models/terrain.obj");
+
+        const terrainX = -300 - 330;
+        const terrainZ = 300 + 140;
+
+        this.terrain = await loadModel("/visualizer/models/terrain.obj");
+        // Add bump map
+        const bumpTexture = new THREE.TextureLoader().load('/visualizer/textures/maps/bump.jpg');
+        this.terrain.traverse((child) => {
+            if (child.isMesh) {
+                child.material.bumpMap = bumpTexture;
+                child.material.bumpScale = 5;
+            }
+        });
 
         this.terrain.scale.set(300, 300, 300);
         this.terrain.position.y = layoutY - 2;
 
         // move to the border
-        this.terrain.position.x = -300;
-        this.terrain.position.z = 300;
+        this.terrain.position.x = terrainX;
+        this.terrain.position.z = terrainZ; 
 
         this.terrain.traverse((child) => {
             if (child.isMesh) {
@@ -415,7 +626,7 @@ export default class PortLayout {
         // Lighthouse
         this.lighthouse = await loadModel("/visualizer/models/lighthouse.obj");
         this.lighthouse.scale.set(0.4, 0.4, 0.4);
-        this.lighthouse.position.set(-250, layoutY + 10, 10);
+        this.lighthouse.position.set(-250 - 370, layoutY + 10, 10 + 190);
 
         this.lighthouse.traverse((child) => {
             if (child.isMesh) {
@@ -426,7 +637,7 @@ export default class PortLayout {
         scene.add(this.lighthouse);
 
         this.lighthouseLight = new THREE.SpotLight(0xffffaa, 75000, 0, Math.PI / 5, 0.2, 2);
-        this.lighthouseLight.position.set(-249.2, layoutY + 130, 239.8);
+        this.lighthouseLight.position.set(-249.2 - 370, layoutY + 130, 10 + 190);
         this.lighthouseLight.castShadow = true;
         
         this.lighthouseLight.shadow.mapSize.width = 2048;
@@ -436,14 +647,14 @@ export default class PortLayout {
         this.lighthouseLight.shadow.camera.fov = 60;
         this.lighthouseLight.shadow.bias = -0.0001;
         
-        this.lighthouseLight.target.position.set(-249.2, layoutY + 130, 300);
+        this.lighthouseLight.target.position.set(-249.2 - 370, layoutY + 130, 300 + 190)
         scene.add(this.lighthouseLight.target);
 
         scene.add(this.lighthouseLight);
 
         // Add point light to lighthouse structure
         this.lighthousePointLight = new THREE.PointLight(0xffffaa, 10, 50, 0);
-        this.lighthousePointLight.position.set(-249.2, layoutY + 125, 239.8);
+        this.lighthousePointLight.position.set(-249.2 - 370, layoutY + 125, 10 + 190);
         scene.add(this.lighthousePointLight);
 
         this.turnOffEvent = new TimedEvent(6, () => {
@@ -470,8 +681,16 @@ export default class PortLayout {
     }
 
     async addSeagull(scene) {
-
-        const model = await loadModel("/visualizer/models/seagull.obj");
+        const modelPath = "/visualizer/models/seagull.obj";
+        
+        // Load model once and cache it
+        if (!this.modelCache[modelPath]) {
+            this.modelCache[modelPath] = await loadModel(modelPath);
+            centerModel(this.modelCache[modelPath]);
+        }
+        
+        // Clone the cached model for this crane instance
+        const model = this.modelCache[modelPath].clone();
         let seagull = new Seagull(model, new THREE.Vector3(0, 0, 0), this);
         seagull.init(scene);
 
@@ -480,20 +699,89 @@ export default class PortLayout {
 
 
     async addVessel(name, position, scene) {
-
-        const model = await loadModel("/visualizer/models/vessel/12219_boat_v2_L2.obj");
+        const modelPath = "/visualizer/models/lowpoly/ship.obj";
+        
+        console.log("Loading vessel model from:", modelPath);
+        
+        // Load model once and cache it
+        if (!this.modelCache[modelPath]) {
+            this.modelCache[modelPath] = await loadModel(modelPath);
+            centerModel(this.modelCache[modelPath]);
+        }
+        
+        // Clone the cached model for this vessel instance
+        const model = this.modelCache[modelPath].clone();
+        position.y -= 2; // Slightly lower vessel into water
         let vessel = new Vessel(name, model, position, this);
         vessel.init(scene);
 
         this.vesselList.push(vessel);
     }
 
-    async addCrane(name, position, scene, rotation = 0) {
-
-        const model = await loadModel("/visualizer/models/crane/scene.gltf");
+    async addContainerCrane(name, position, scene, rotation = 0, scaleMultiplier = 1.0) {
+        const modelPath = "/visualizer/models/lowpoly/crane1.obj";
+        
+        // Load model once and cache it
+        if (!this.modelCache[modelPath]) {
+            this.modelCache[modelPath] = await loadModel(modelPath);
+        }
+        
+        // Clone the cached model for this crane instance with unique materials
+        const model = this.modelCache[modelPath].clone();
+        model.traverse((child) => {
+            if (child.isMesh) {
+                // Adjust mesh position to fix rotation pivot point
+                child.position.z -= 25;
+                child.position.y -= 5;
+                child.position.x += 15;
+                
+                
+                if (child.material) {
+                // Clone materials to avoid shared material references
+                    if (Array.isArray(child.material)) {
+                        child.material = child.material.map(mat => mat.clone());
+                    } else {
+                        child.material = child.material.clone();
+                    }
+                }
+            }
+        });
+        
         const rotationRadians = rotation * (Math.PI / 180);
         let crane = new Crane(name, model, position, rotationRadians);
-        crane.init(scene);
+        crane.init(scene, scaleMultiplier);
+
+        this.craneList.push(crane);
+    }
+
+    async addYardGantryCrane(name, position, scene, rotation = 0, scaleMultiplier = 1.0) {
+        const modelPath = "/visualizer/models/lowpoly/crane2.obj";
+        
+        // Load model once and cache it
+        if (!this.modelCache[modelPath]) {
+            this.modelCache[modelPath] = await loadModel(modelPath);
+            centerModel(this.modelCache[modelPath]);
+        }
+        
+        // Clone the cached model for this crane instance with unique materials
+        const model = this.modelCache[modelPath].clone();
+        
+        model.traverse((child) => {
+            if (child.isMesh) {
+                // Clone materials to avoid shared material references
+                if (child.material) {
+                    if (Array.isArray(child.material)) {
+                        child.material = child.material.map(mat => mat.clone());
+                    } else {
+                        child.material = child.material.clone();
+                    }
+                }
+            }
+        });
+        
+        const rotationRadians = rotation * (Math.PI / 180);
+        let crane = new GantryCrane(name, model, position, rotationRadians);
+        crane.init(scene, scaleMultiplier);
 
         this.craneList.push(crane);
     }
@@ -532,7 +820,7 @@ export default class PortLayout {
 
         if (this.lighthouseLight && this.lighthouseLight.target) {
             const time = Date.now() * 0.0005;
-            const lighthouseCenter = { x: -249.2, z: 239.8 };
+            const lighthouseCenter = { x: -249.2 - 370, z: 10 + 190 };
             const lightRadius = 5;
             const targetRadius = 200;
             
@@ -563,9 +851,18 @@ export default class PortLayout {
             });
         });
 
+        const vesselMeshes = [];
+        this.vesselList.forEach(vessel => {
+            vessel.model.traverse((child) => {
+                if (child.isMesh) {
+                    vesselMeshes.push(child);
+                }
+            });
+        });
+
         const objectlist = [
-            ...this.chunkData.map(chunk => chunk.base),
-            ...this.vesselList.map(vessel => vessel.model.children[1]),
+            ...this.chunkData.map(chunk => chunk.base).filter(base => base),
+            ...vesselMeshes,
             ...craneMeshes
         ];
 
@@ -584,11 +881,6 @@ export default class PortLayout {
             }
         }
 
-        let clickedCrane = null;
-        if (pickedObject && pickedObject.userData && pickedObject.userData.craneId) {
-            clickedCrane = this.craneList.find(crane => crane.name === pickedObject.userData.craneId);
-        }
-
         objectlist.forEach((obj) => {
             highlightMesh(obj, 0x000000);
         });
@@ -604,10 +896,28 @@ export default class PortLayout {
                 console.warn("No meta information available for selected object.");
             }
 
-            if (clickedCrane) {
-                clickedCrane.meshes.forEach((mesh) => {
-                    highlightMesh(mesh, 0x444477);
-                });
+            if(pickedObject.userData && pickedObject.userData.vesselName) {
+                const clickedVessel = this.vesselList.find(vessel => vessel.name === pickedObject.userData.vesselName);
+                if (clickedVessel) {
+                    clickedVessel.model.traverse((child) => {
+                        if (child.isMesh) {
+                            highlightMesh(child, 0x444477);
+                        }
+                    });
+                }
+            } else {
+                highlightMesh(this.selectedObject, 0x444477);
+            }
+
+            if (pickedObject.userData && pickedObject.userData.craneId) {
+                const clickedCrane = this.craneList.find(crane => crane.name === pickedObject.userData.craneId);
+                if (clickedCrane) {
+                    clickedCrane.meshes.forEach((mesh) => {
+                        highlightMesh(mesh, 0x444477);
+                    });
+                } else {
+                    highlightMesh(this.selectedObject, 0x444477);
+                }
             } else {
                 highlightMesh(this.selectedObject, 0x444477);
             }

@@ -2,7 +2,7 @@ import { inject, injectable } from 'inversify';
 import { TYPES } from '@/inversify/types';
 import type { AppJWTResponse, IAuthService } from './IService/IAuthService';
 import type { IHttpService } from './IService/IHttpService';
-import type { User } from '@/model/User';
+import type { User } from '@/model/SystemUser';
 
 @injectable()
 export class AuthService implements IAuthService {

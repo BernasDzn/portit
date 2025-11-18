@@ -24,7 +24,7 @@ get_vvns_on_day(Date, DaysAhead, DockCode, JsonData) :-
 
 handle_response(200, Stream, JsonData) :-
     json_read_dict(Stream, JsonData),
-    format(user_error, 'Successfully fetched VVN data.~n', []), 
+    !,
     close(Stream).
 
 handle_response(Code, Stream, JsonData) :-

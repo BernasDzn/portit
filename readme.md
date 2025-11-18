@@ -24,13 +24,7 @@ After building, the compiled output should be at `Backend/Api/bin/Debug/net9.0/A
 Unlike the development version, this production build has no UI. To check if it's working, curl (or visit through a web browser) this URL: `http://localhost:5000/Qualification` (host and port subject to change, please double check with the console logs).
 
 ### 4. How to Execute Tests
-Read more about test [here](docs/global-docs/testing-guide.md)
-
-#### Using the scripts
-Navigate to the `scripts` directory and from there execute either `test.cmd` or `test.sh` depending on your system.
-
-#### Testing with dotnet
-Navigate to the `Backend/Tests` directory and use `dotnet test`
+For the complete testing instructions read [this](docs/global-docs/testing-guide.md).
 
 ### 5. How to Run
 You will need the following dependencies to run this project:

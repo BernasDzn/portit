@@ -92,7 +92,7 @@ const submit = async () => {
     } catch (error) {
 
         notifications.enqueueNotification(
-            "Could not submit notification: " + error.message,    
+            error.response.data,
             'danger'
         );
     }
@@ -112,8 +112,9 @@ const deleteNotification = async () => {
 
         } catch (error) {
             
+            console.log(error);
             notifications.enqueueNotification(
-                "Could not delete notification: " + error.message,    
+                error.response.data,    
                 'danger'
             );
         }

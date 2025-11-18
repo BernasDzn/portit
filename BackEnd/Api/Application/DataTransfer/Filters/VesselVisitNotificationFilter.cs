@@ -13,10 +13,15 @@ public enum NotificationStatusFilter
 }
 public class VesselVisitNotificationFilter : Pageable
 {
-	public NotificationStatusFilter? Status { get; set; }
-	public bool? WithReason { get; set; }
-	public bool? WithDockAssigned { get; set; }
-	public ImoNumber? Vessel { get; set; }
-	public DateTime? ExpectedArrivalFrom { get; set; }
-	public DateTime? ExpectedArrivalTo { get; set; }
+    public NotificationStatusFilter? Status { get; set; }
+    public bool? WithReason { get; set; }
+    public bool? WithDockAssigned { get; set; }
+    public ImoNumber? Vessel { get; set; }
+    public DateTime? ExpectedArrivalFrom { get; set; }
+    public DateTime? ExpectedArrivalTo { get; set; }
+}
+
+public class VesselVisitNotificationFilterPa : Pageable
+{
+    public bool? OnlyPending { get; set; }
 }

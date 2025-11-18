@@ -295,6 +295,21 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
             return StatusCode(500, "An error occurred while filtering vessel visit notifications.");
         }
     }
+    
+    [HttpGet("filterPa", Name = "FilterVesselVisitNotificationsPa")]
+    public async Task<ActionResult<Page<VesselVisitNotificationStatusDto>>> FilterPa([FromQuery] VesselVisitNotificationFilterPa filter)
+    {
+        try
+        {
+            var filteredNotifications =  await _notificationService.FilterNotificationsPa(filter);
+            return Ok(filteredNotifications);
+        }
+        catch (System.Exception)
+        {
+            _logger.LogCritical("Error filtering notifications for port authority");
+            throw;
+        }
+    }
 
     [HttpDelete(Name = "DeleteDraft")]
     [Authorize(Policy = "VesselVisitNotification.Edit")]
@@ -328,6 +343,11 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
             _logger.LogError($"Unauthorized attempt to delete draft notification with ID {id}: {e.Message}");
             return Forbid();
         }
+        catch (NotificationIsPermanentException e)
+        {
+            _logger.LogError($"Attempt to delete permanent notification with ID {id}: {e.Message}");
+            return BadRequest(e.Message);
+        }
         catch (System.Exception e)
         {
             if (e is ArgumentException || e is ArgumentNullException || e is InvalidOperationException)
@@ -340,4 +360,5 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
             return StatusCode(500, "An error occurred while deleting the vessel visit notification draft.");
         }
     }
+
 }
