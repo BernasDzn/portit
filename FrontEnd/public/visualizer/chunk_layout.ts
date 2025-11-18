@@ -102,6 +102,32 @@ function centerModel(model) {
     return model;
 }
 
+function makeAsphaltMaterial() {
+    const loader = new THREE.TextureLoader();
+    const asphalt = loader.load('/visualizer/textures/asphalt.jpg');
+    const asphaltNormal = loader.load('/visualizer/textures/maps/asphalt_normal.png');
+    const stone = loader.load('/visualizer/textures/stone.png');
+    stone.wrapS = THREE.RepeatWrapping;
+    stone.wrapT = THREE.RepeatWrapping;
+
+    stone.repeat.set(1, 0.01);
+
+    const materials = [
+        new THREE.MeshStandardMaterial({ map: stone }),  // right
+        new THREE.MeshStandardMaterial({ map: stone }),  // left
+        new THREE.MeshStandardMaterial({                 // top (asphalt)
+            color: new THREE.Color(0x666666),
+            map: asphalt,
+            normalMap: asphaltNormal
+        }),
+        new THREE.MeshStandardMaterial({ map: stone }),  // bottom
+        new THREE.MeshStandardMaterial({ map: stone }),  // front
+        new THREE.MeshStandardMaterial({ map: stone })   // back
+    ];
+
+    return materials;
+}
+
 class WarehouseChunk extends PortChunk {
 
     warehouseModel;
@@ -135,7 +161,7 @@ class WarehouseChunk extends PortChunk {
 
     async init(scene) {
         const model = new THREE.BoxGeometry(chunkSize.x, chunkSize.y, chunkSize.z);
-        let baseMesh = new THREE.MeshStandardMaterial({ color: 0xaaaaaa });
+        let baseMesh = makeAsphaltMaterial();
         this.base = new THREE.Mesh(model, baseMesh);
         this.base.position.copy(this.position);
         this.base.castShadow = true;
@@ -196,14 +222,19 @@ class WarehouseChunk extends PortChunk {
 
 class LandChunk extends PortChunk {
 
+    x;
+    y;
+
     constructor(x, y) {
         super(x, y);
+        this.x = x;
+        this.y = y;
         this.base = null;
     }
 
     async init(scene) {
         this.base = new THREE.BoxGeometry(chunkSize.x, chunkSize.y, chunkSize.z);
-        let baseMesh = new THREE.MeshStandardMaterial({ color: 0x808080 });
+        let baseMesh = makeAsphaltMaterial();
 
         this.base = new THREE.Mesh(this.base, baseMesh);
         this.base.position.copy(this.position);
@@ -317,7 +348,7 @@ class YardChunk extends PortChunk {
 
     async init(scene) {
         this.base = new THREE.BoxGeometry(chunkSize.x, chunkSize.y, chunkSize.z);
-        let baseMesh = new THREE.MeshStandardMaterial({ color: 0x555555 });
+        let baseMesh = makeAsphaltMaterial();
         this.base = new THREE.Mesh(this.base, baseMesh);
         this.base.position.copy(this.position);
         this.base.castShadow = true;

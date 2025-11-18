@@ -39,37 +39,45 @@ public class PortLayoutController : ControllerBase
 
 			// Grid configuration
 			const int gridWidth = 10;
+            const int maxLandPadding = 3;
+            int currentLandPadding = 0;
 			
 			// First 2 rows: Warehouses and Yards (column by column)
-			var storageAreasList = storageAreas.ToList();
+            var storageAreasList = storageAreas.ToList();
 			int storageIndex = 0;
 
 			for (int col = 0; col < gridWidth; col++)
 			{
 				for (int row = 0; row < 2; row++)
 				{
-					if (storageIndex < storageAreasList.Count)
-					{
-						var storage = storageAreasList[storageIndex];
-						var chunkType = storage.Type == Domain.Entities.StorageAreaType.Warehouse 
-							? ChunkType.Warehouse 
-							: ChunkType.Yard;
+                    if (storageIndex < storageAreasList.Count)
+                    {
+                        var storage = storageAreasList[storageIndex];
+                        var chunkType = storage.Type == Domain.Entities.StorageAreaType.Warehouse
+                            ? ChunkType.Warehouse
+                            : ChunkType.Yard;
 
-						chunks.Add(new PortChunk(
-							storage.NameCode,
-							chunkType,
-							col,
-							row
-						));
-						storageIndex++;
-					}else{
-						// Fill remaining spaces with Land chunks
-						chunks.Add(new PortChunk(
-							"Land",
-							ChunkType.Land,
-							col,
-							row
-						));
+                        chunks.Add(new PortChunk(
+                            storage.NameCode,
+                            chunkType,
+                            col,
+                            row
+                        ));
+                        storageIndex++;
+                    }
+                    else
+                    {
+                        if (currentLandPadding < maxLandPadding)
+                        {
+                            chunks.Add(new PortChunk(
+                                "Land",
+                                ChunkType.Land,
+                                col,
+                                row
+                            ));
+
+                            currentLandPadding++;
+                        }
 					}
 				}
 			}
