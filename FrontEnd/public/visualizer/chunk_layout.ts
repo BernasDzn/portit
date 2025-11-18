@@ -630,9 +630,13 @@ export default class PortLayout {
 
         this.lighthouse.traverse((child) => {
             if (child.isMesh) {
-                console.log(child.material);
+                child.castShadow = true;
+                child.receiveShadow = true;
             }
         });
+
+        this.lighthouse.castShadow = true;
+        this.lighthouse.receiveShadow = true;
 
         scene.add(this.lighthouse);
 

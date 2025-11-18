@@ -99,10 +99,10 @@ export default class Environment {
         this.sunLight.object3d.shadow.mapSize.height = 4096;
         this.sunLight.object3d.shadow.camera.near = 1;
         this.sunLight.object3d.shadow.camera.far = 100000; // sun distance is 90000
-        this.sunLight.object3d.shadow.camera.left = -600;
-        this.sunLight.object3d.shadow.camera.right = 600;
-        this.sunLight.object3d.shadow.camera.top = 600;
-        this.sunLight.object3d.shadow.camera.bottom = -600;
+        this.sunLight.object3d.shadow.camera.left = -800;
+        this.sunLight.object3d.shadow.camera.right = 800;
+        this.sunLight.object3d.shadow.camera.top = 800;
+        this.sunLight.object3d.shadow.camera.bottom = -800;
         
         scene.add(this.sunLight.object3d);
         this.skydom	= new THREEx.DayNight.Skydom()
