@@ -11,3 +11,4 @@ Ni 1.450000
 d 1.000000
 illum 2
 map_Kd textures/hangar_Base_Color.PNG
+map_Bump textures/hangar_Normal_Map.png
