@@ -92,16 +92,19 @@ function submitResource(obj: any, type: 'STS' | 'YardCrane' | 'Truck') {
 
     <h1 class="title">{{ t('physicalResource.tabs.create') }}</h1>
     <p class="subtitle">{{ t('physicalResource.subtitle.create') }}</p>
-
+    
     <sl-tab-group>
-      <sl-tab slot="nav" panel="sts">{{ t('physicalResource.fields.type.options.stsCrane') }}</sl-tab>
-      <sl-tab slot="nav" panel="yard">{{ t('physicalResource.fields.type.options.yardGantry') }}</sl-tab>
-      <sl-tab slot="nav" panel="truck">{{ t('physicalResource.fields.type.options.truck') }}</sl-tab>
+        <sl-tab slot="nav" panel="sts">{{ t('physicalResource.fields.type.options.stsCrane') }}</sl-tab>
+        <sl-tab slot="nav" panel="yard">{{ t('physicalResource.fields.type.options.yardGantry') }}</sl-tab>
+        <sl-tab slot="nav" panel="truck">{{ t('physicalResource.fields.type.options.truck') }}</sl-tab>
+    
+        <GeneralFields :t="t" :genericResource="genericResource" :statuses="statuses" :qualificationService="qualificationService" />
+        <OperationalWindowPicker v-model="genericResource.operationalWindow" />
 
       <!-- ========== STS Crane ========== -->
       <sl-tab-panel name="sts">
+
         <EntityForm :object="genericResource" :submit-function="(obj) => submitResource(obj, 'STS')" class="group">
-          <GeneralFields :t="t" :genericResource="genericResource" :statuses="statuses" :qualificationService="qualificationService" />
 
           <p class="section-title">{{ t('physicalResource.specificFields') }}</p>
           <EntityDropdown
@@ -123,7 +126,6 @@ function submitResource(obj: any, type: 'STS' | 'YardCrane' | 'Truck') {
       <!-- ========== Yard Crane ========== -->
       <sl-tab-panel name="yard">
         <EntityForm :object="genericResource" :submit-function="(obj) => submitResource(obj, 'YardCrane')" class="group">
-          <GeneralFields :t="t" :genericResource="genericResource" :statuses="statuses" :qualificationService="qualificationService" />
           <p class="section-title">{{ t('physicalResource.specificFields') }}</p>
           <FormField :required="true" class="field" :name="t('physicalResource.fields.liftingCapacity.title')" v-model="genericResource.liftingCapacity" pattern="^[0-9]+$" />
           <FormField :required="true" class="field" :name="t('physicalResource.fields.containersPerHour.title')" v-model="genericResource.containersPerHour" pattern="^[0-9]+$" />
@@ -133,7 +135,6 @@ function submitResource(obj: any, type: 'STS' | 'YardCrane' | 'Truck') {
       <!-- ========== Truck ========== -->
       <sl-tab-panel name="truck">
         <EntityForm :object="genericResource" :submit-function="(obj) => submitResource(obj, 'Truck')" class="group">
-          <GeneralFields :t="t" :genericResource="genericResource" :statuses="statuses" :qualificationService="qualificationService" />
           <p class="section-title">{{ t('physicalResource.specificFields') }}</p>
           <FormField :required="true" class="field" :name="t('physicalResource.fields.maxLoadCapacity.title')" v-model="genericResource.maxLoadCapacity" pattern="^[0-9]+$" />
           <FormField :required="true" class="field" :name="t('physicalResource.fields.averageSpeed.title')" v-model="genericResource.averageSpeed" pattern="^[0-9]+$" />
