@@ -25,6 +25,7 @@ export default {
         :name="`${t('physicalResource.fields.code.title')}*`"
         v-model="genericResource.code"
         pattern="^[a-zA-Z0-9]+$"
+        input-id="pr-code"
       />
       <span class="section-divider"></span>
 
@@ -33,6 +34,7 @@ export default {
         class="field"
         :name="`${t('physicalResource.fields.description.title')}*`"
         v-model="genericResource.description"
+        input-id="pr-description"
       />
       <span class="section-divider"></span>
 
@@ -42,6 +44,7 @@ export default {
             v-model="genericResource.status"
             :items="statuses"
             required
+            input-id="pr-status"
         />
 
         <span class="section-divider"></span>
@@ -56,6 +59,7 @@ export default {
             labelKey="idCode"
             multiple
             required
+            input-id="pr-qualifications"
         />
 
         <span class="section-divider"></span>
@@ -66,6 +70,7 @@ export default {
             :name="`${t('physicalResource.fields.setupTime.title')}*`"
             v-model="genericResource.setupTime"
             pattern="^[0-9]+$"
+            input-id="pr-setupTime"
         />
     </div>
   </div>
