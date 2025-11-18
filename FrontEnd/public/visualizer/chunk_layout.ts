@@ -433,6 +433,7 @@ class YardChunk extends PortChunk {
 
     yardName;
     yardLabel;
+    fences = [];
 
     constructor(x, y, label = "Yard") {
         super(x, y);
@@ -461,6 +462,113 @@ class YardChunk extends PortChunk {
         );
 
         scene.add(this.yardLabel);
+
+        // Add fences around the yard
+        await this.addFences(scene);
+    }
+
+    async addFences(scene) {
+        const fenceModelPath = "/visualizer/models/lowpoly/fence.obj";
+        
+        // Load and cache the fence model
+        if (!sharedModelCache[fenceModelPath]) {
+            const model = await loadModel(fenceModelPath);
+            centerModel(model);
+            sharedModelCache[fenceModelPath] = model;
+        }
+        
+        const fenceModel = sharedModelCache[fenceModelPath];
+        
+        const fenceScale = 2.0;
+        const buffer = 1;
+        
+        // Create a test instance to measure actual dimensions after scaling
+        const tempFence = fenceModel.clone();
+        tempFence.scale.set(fenceScale, fenceScale, fenceScale);
+        tempFence.updateMatrixWorld(true);
+        
+        const fenceBox = new THREE.Box3().setFromObject(tempFence);
+        const fenceLength = fenceBox.max.z - fenceBox.min.z; // Length along Z axis (depth)
+        
+        // Calculate perimeter distances with buffer
+        const perimeterX = chunkSize.x - (buffer * 2);
+        const perimeterZ = chunkSize.z - (buffer * 2);
+        
+        // Calculate how many fence segments we need for each side
+        const numFencesX = Math.max(1, Math.round(perimeterX / fenceLength));
+        const numFencesZ = Math.max(1, Math.round(perimeterZ / fenceLength));
+        
+        const halfChunkX = chunkSize.x / 2;
+        const halfChunkZ = chunkSize.z / 2;
+        const fenceY = this.position.y + chunkSize.y / 2;
+        
+        // North side (front)
+        for (let i = 0; i < numFencesX; i++) {
+            const fence = fenceModel.clone();
+            const xPos = this.position.x - halfChunkX + buffer + i * fenceLength + fenceLength / 2;
+            fence.position.set(xPos, fenceY, this.position.z - halfChunkZ + buffer);
+            fence.rotation.y = Math.PI / 2;
+            fence.scale.set(fenceScale, fenceScale, fenceScale);
+            fence.traverse((child) => {
+                if (child.isMesh) {
+                    child.castShadow = true;
+                    child.receiveShadow = true;
+                }
+            });
+            scene.add(fence);
+            this.fences.push(fence);
+        }
+        
+        // South side (back)
+        for (let i = 0; i < numFencesX; i++) {
+            const fence = fenceModel.clone();
+            const xPos = this.position.x - halfChunkX + buffer + i * fenceLength + fenceLength / 2;
+            fence.position.set(xPos, fenceY, this.position.z + halfChunkZ - buffer);
+            fence.rotation.y = -Math.PI / 2;
+            fence.scale.set(fenceScale, fenceScale, fenceScale);
+            fence.traverse((child) => {
+                if (child.isMesh) {
+                    child.castShadow = true;
+                    child.receiveShadow = true;
+                }
+            });
+            scene.add(fence);
+            this.fences.push(fence);
+        }
+        
+        // West side (left)
+        for (let i = 0; i < numFencesZ; i++) {
+            const fence = fenceModel.clone();
+            const zPos = this.position.z - halfChunkZ + buffer + i * fenceLength + fenceLength / 2;
+            fence.position.set(this.position.x - halfChunkX + buffer, fenceY, zPos);
+            fence.rotation.y = Math.PI;
+            fence.scale.set(fenceScale, fenceScale, fenceScale);
+            fence.traverse((child) => {
+                if (child.isMesh) {
+                    child.castShadow = true;
+                    child.receiveShadow = true;
+                }
+            });
+            scene.add(fence);
+            this.fences.push(fence);
+        }
+        
+        // East side (right)
+        for (let i = 0; i < numFencesZ; i++) {
+            const fence = fenceModel.clone();
+            const zPos = this.position.z - halfChunkZ + buffer + i * fenceLength + fenceLength / 2;
+            fence.position.set(this.position.x + halfChunkX - buffer, fenceY, zPos);
+            fence.rotation.y = 0;
+            fence.scale.set(fenceScale, fenceScale, fenceScale);
+            fence.traverse((child) => {
+                if (child.isMesh) {
+                    child.castShadow = true;
+                    child.receiveShadow = true;
+                }
+            });
+            scene.add(fence);
+            this.fences.push(fence);
+        }
     }
 
     async addContainers(scene, modelCache, hasYardCrane = false) {
