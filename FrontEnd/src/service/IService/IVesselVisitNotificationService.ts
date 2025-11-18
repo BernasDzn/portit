@@ -1,4 +1,4 @@
-import type { NotificationDecisionDto, VesselVisitNotificationDto, VesselVisitNotificationFilter, VesselVisitNotificationFilterPa } from "@/model/dto/VesselVisitNotificationDto";
+import type { NotificationDecisionDto, VesselVisitDistributionDto, VesselVisitNotificationDto, VesselVisitNotificationFilter, VesselVisitNotificationFilterPa } from "@/model/dto/VesselVisitNotificationDto";
 import type { Filter, Page } from "@/model/Page";
 import type { VesselVisitNotification, NotificationDecision } from "@/model/VesselVisitNotification";
 
@@ -16,4 +16,6 @@ export interface IVesselVisitNotificationService {
     updateVesselVisitNotification(notification: VesselVisitNotificationDto): Promise<VesselVisitNotification>;
     submitVesselVisitNotification(id: string): Promise<void>;
     deleteDraft(id: string): Promise<void>;
+
+    count(): Promise<VesselVisitDistributionDto>;
 }

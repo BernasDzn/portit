@@ -7,7 +7,7 @@ import type {
     VesselVisitNotification,
     NotificationDecision,
 } from "@/model/VesselVisitNotification";
-import type { NotificationDecisionDto, VesselVisitNotificationDto, VesselVisitNotificationFilter, VesselVisitNotificationFilterPa } from "@/model/dto/VesselVisitNotificationDto";
+import type { NotificationDecisionDto, VesselVisitDistributionDto, VesselVisitNotificationDto, VesselVisitNotificationFilter, VesselVisitNotificationFilterPa } from "@/model/dto/VesselVisitNotificationDto";
 
 @injectable()
 export class VesselVisitNotificationService implements IVesselVisitNotificationService {
@@ -15,6 +15,11 @@ export class VesselVisitNotificationService implements IVesselVisitNotificationS
         @inject(TYPES.api)
         private http: IHttpService
     ) { }
+
+    async count(): Promise<VesselVisitDistributionDto> {
+        
+        return (await this.http.get<VesselVisitDistributionDto>("/VesselVisitNotification/distribution")).data;
+    }
 
     async getVesselVisitNotifications(filter: Filter<VesselVisitNotificationFilterPa>): Promise<Page<VesselVisitNotification>> {
 

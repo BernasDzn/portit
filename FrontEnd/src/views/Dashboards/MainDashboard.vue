@@ -13,6 +13,7 @@ import type { IQualificationService } from '@/service/IService/IQualificationSer
 import type { IStaffService } from '@/service/IService/IStaffService';
 import type { IStorageAreaService } from '@/service/IService/IStorageAreaService';
 import type { IPhysicalResourceService } from '@/service/IService/IPhysicalResourceService';
+import RecentVVNS from '@/components/RecentVVNS.vue';
 
 const vesselService = container.get<IVesselService>(TYPES.vesselService);
 const dockService = container.get<IDockService>(TYPES.dockService);
@@ -108,6 +109,9 @@ const loading = ref(false);
         </div>
       </sl-card>
   </div>
+
+  <RecentVVNS></RecentVVNS>
+
   <Port3DHero :route="'visualization'" />
 </template>
 

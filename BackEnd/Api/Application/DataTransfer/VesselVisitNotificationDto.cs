@@ -41,3 +41,10 @@ public class VesselVisitNotificationStatusDto
     public required RepresentativeDto Submitter { get; set; }
     public NotificationDecisionDto[] Decisions { get; set; }
 }
+
+public class VesselVisitDistributionDto
+{
+    public int Pending { get; set; }
+    public int Accepted { get; set; }
+    public int Rejected { get; set; }
+}

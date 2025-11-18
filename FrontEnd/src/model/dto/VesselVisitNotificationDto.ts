@@ -81,3 +81,9 @@ export interface NotificationDecisionDto {
     assignedDockCode?: string;
     isFinal: boolean;
 }
+
+export interface VesselVisitDistributionDto {
+    pending: number;
+    accepted: number;
+    rejected: number;
+}
