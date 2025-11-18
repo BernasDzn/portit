@@ -301,6 +301,101 @@ class DockChunk extends PortChunk {
 
         scene.add(this.dockLabel);
     }
+
+    async addContainers(scene, modelCache, cranePositions = []) {
+        const dockHalfWidth = chunkSize.x / 4;
+        
+        const craneBuffer = 20;
+        
+        const borderBuffer = 5;
+        
+        // invalid zone
+        const minZ = this.position.z - chunkSize.z / 2 + borderBuffer;
+        const maxZ = this.position.z + chunkSize.z / 2 - borderBuffer;
+        
+        const containerModels = [];
+        for (let i = 1; i <= 4; i++) {
+            const modelPath = `/visualizer/models/lowpoly/container${i}.obj`;
+            if (!modelCache[modelPath]) {
+                modelCache[modelPath] = await loadModel(modelPath);
+                centerModel(modelCache[modelPath]);
+            }
+            containerModels.push(modelCache[modelPath]);
+        }
+        
+        const craneExclusionBoxes = cranePositions.map(cranePos => {
+            return new THREE.Box3(
+                new THREE.Vector3(cranePos.x - craneBuffer, cranePos.y - 50, cranePos.z - craneBuffer),
+                new THREE.Vector3(cranePos.x + craneBuffer, cranePos.y + 50, cranePos.z + craneBuffer)
+            );
+        });
+        
+        const containerSize = { x: 15, y: 8, z: 15 };
+        
+        const placedContainers = [];
+        
+        const targetContainers = Math.floor(Math.random() * 3) + 2;
+        const maxAttempts = 30;
+        
+        for (let i = 0; i < targetContainers && placedContainers.length < targetContainers; i++) {
+            let placed = false;
+            let attempts = 0;
+            
+            while (!placed && attempts < maxAttempts) {
+                attempts++;
+                
+                const xOffset = (Math.random() - 0.5) * dockHalfWidth;
+                const zPos = minZ + Math.random() * (maxZ - minZ);
+                const posX = this.position.x + xOffset;
+                const posY = this.position.y + chunkSize.y / 2;
+                
+                const approxBox = new THREE.Box3(
+                    new THREE.Vector3(posX - containerSize.x/2, posY - containerSize.y/2, zPos - containerSize.z/2),
+                    new THREE.Vector3(posX + containerSize.x/2, posY + containerSize.y/2, zPos + containerSize.z/2)
+                );
+                
+                let collidesWithCrane = false;
+                for (const craneBox of craneExclusionBoxes) {
+                    if (approxBox.intersectsBox(craneBox)) {
+                        collidesWithCrane = true;
+                        break;
+                    }
+                }
+                
+                if (collidesWithCrane) {
+                    continue;
+                }
+                
+                let hasCollision = false;
+                for (const existingBox of placedContainers) {
+                    if (approxBox.intersectsBox(existingBox)) {
+                        hasCollision = true;
+                        break;
+                    }
+                }
+                
+                if (!hasCollision) {
+                    const containerModel = containerModels[Math.floor(Math.random() * 4)];
+                    const container = containerModel.clone();
+                    
+                    container.position.set(posX, posY, zPos);
+                    container.rotation.y = (Math.random() - 0.5) * 0.3;
+                    container.scale.set(1.5, 1.5, 1.5);
+                    
+                    container.traverse((child) => {
+                        if (child.isMesh) {
+                            child.castShadow = true;
+                            child.receiveShadow = true;
+                        }
+                    });
+                    
+                    scene.add(container);
+                    placedContainers.push(approxBox);
+                    placed = true;
+                }
+            }
+        }
+    }
 }
 
 class YardChunk extends PortChunk {
@@ -335,6 +430,121 @@ class YardChunk extends PortChunk {
         );
 
         scene.add(this.yardLabel);
+    }
+
+    async addContainers(scene, modelCache, hasYardCrane = false) {
+        const stackHeight = Math.floor(Math.random() * 3) + 2;
+        const piles = hasYardCrane ? 1 : Math.round(Math.random()*3 + 1);
+        const pilesPerRow = Math.ceil(Math.sqrt(piles));
+        
+        const containerWidth = 10;
+        const containerHeight = 5;
+        
+        const containerModels = [];
+        for (let i = 1; i <= 4; i++) {
+            const modelPath = `/visualizer/models/lowpoly/container${i}.obj`;
+            if (!modelCache[modelPath]) {
+                modelCache[modelPath] = await loadModel(modelPath);
+                centerModel(modelCache[modelPath]);
+            }
+            containerModels.push(modelCache[modelPath]);
+        }
+        
+        const maxPileWidth = containerWidth * 4;
+        const spacingBetweenPiles = 15;
+        
+        const totalWidth = pilesPerRow * maxPileWidth + (pilesPerRow - 1) * spacingBetweenPiles;
+        const startX = this.position.x - totalWidth / 2;
+        const startZ = this.position.z - totalWidth / 2;
+        
+        let pileIndex = 0;
+        for (let pileRow = 0; pileRow < pilesPerRow && pileIndex < piles; pileRow++) {
+            for (let pileCol = 0; pileCol < pilesPerRow && pileIndex < piles; pileCol++) {
+                const pileX = startX + pileCol * (maxPileWidth + spacingBetweenPiles) + maxPileWidth / 2;
+                const pileZ = startZ + pileRow * (maxPileWidth + spacingBetweenPiles) + maxPileWidth / 2;
+                
+                const gridWidth = Math.floor(Math.random() * 4) + 1;
+                const gridDepth = Math.floor(Math.random() * 4) + 1;
+                
+                const grid = [];
+                for (let h = 0; h < stackHeight; h++) {
+                    grid[h] = [];
+                    for (let d = 0; d < gridDepth; d++) {
+                        grid[h][d] = [];
+                        for (let c = 0; c < gridWidth; c++) {
+                            grid[h][d][c] = false;
+                        }
+                    }
+                }
+                
+                // bottom to top
+                for (let height = 0; height < stackHeight; height++) {
+                    // first layer
+                    if (height === 0) {
+                        const positions = [];
+                        for (let d = 0; d < gridDepth; d++) {
+                            for (let c = 0; c < gridWidth; c++) {
+                                positions.push({ depth: d, col: c });
+                            }
+                        }
+                        for (let i = positions.length - 1; i > 0; i--) {
+                            const j = Math.floor(Math.random() * (i + 1));
+                            [positions[i], positions[j]] = [positions[j], positions[i]];
+                        }
+                        // 75 to 100% of positions
+                        const numToPlace = Math.floor(positions.length * (0.75 + Math.random() * 0.25));
+                        for (let i = 0; i < numToPlace; i++) {
+                            const pos = positions[i];
+                            grid[height][pos.depth][pos.col] = true;
+                        }
+                    } else {
+                        // only place if container below
+                        // layer 1=70%, layer 2=50%, layer 3=30%, layer 4=15%
+                        const stackProbability = Math.max(0.005, 0.9 - (height * 0.2));
+                        for (let depth = 0; depth < gridDepth; depth++) {
+                            for (let col = 0; col < gridWidth; col++) {
+                                // if container below
+                                if (grid[height - 1][depth][col]) {
+                                    if (Math.random() < stackProbability) {
+                                        grid[height][depth][col] = true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    // place containers
+                    for (let depth = 0; depth < gridDepth; depth++) {
+                        for (let col = 0; col < gridWidth; col++) {
+                            if (grid[height][depth][col]) {
+                                const containerModel = containerModels[Math.floor(Math.random() * 4)];
+                                const container = containerModel.clone();
+                                
+                                container.position.set(
+                                    pileX - (gridWidth - 1) * (containerHeight-1) / 2 + col * (containerHeight-1),
+                                    this.position.y + chunkSize.y / 2 + height * containerHeight,
+                                    pileZ - (gridDepth - 1) * containerWidth / 2 + depth * containerWidth
+                                );
+                                
+                                container.rotation.y = (Math.random() - 0.5) * 0.1;
+                                container.scale.set(1.5, 1.5, 1.5);
+                                
+                                container.traverse((child) => {
+                                    if (child.isMesh) {
+                                        child.castShadow = true;
+                                        child.receiveShadow = true;
+                                    }
+                                });
+                                
+                                scene.add(container);
+                            }
+                        }
+                    }
+                }
+                
+                pileIndex++;
+            }
+        }
     }
 }
 
@@ -465,22 +675,34 @@ export default class PortLayout {
             const { chunks, containerCranePositions, yardCranePositions } = generateChunkLayoutFromAPI(portChunks);
             this.chunkData = chunks;
 
-            // Initialize all chunks
-            await this.loadChunks(scene);
+            // Initialize all chunks (but don't add dock containers yet)
+            for (let chunk of this.chunkData) {
+                await chunk.init(scene);
+            }
             
             // Group cranes by chunk position
             const containerCranesByChunk = this.groupCranesByChunk(containerCranePositions);
             const yardCranesByChunk = this.groupCranesByChunk(yardCranePositions);
             
+            // Track actual crane positions in world space
+            const craneWorldPositions = {};
+            
             // Add container cranes with spacing
             for (const [chunkKey, cranes] of Object.entries(containerCranesByChunk)) {
-                await this.addCranesAtChunk(cranes, scene, 'container', 90);
+                const positions = await this.addCranesAtChunk(cranes, scene, 'container', 90);
+                craneWorldPositions[chunkKey] = positions;
             }
 
             // Add yard cranes with spacing
             for (const [chunkKey, cranes] of Object.entries(yardCranesByChunk)) {
                 await this.addCranesAtChunk(cranes, scene, 'yard', 0);
             }
+            
+            // Add containers to dock chunks, avoiding crane positions
+            await this.addDockContainers(scene, craneWorldPositions);
+            
+            // Add containers to yard chunks after cranes are placed
+            await this.addYardContainers(scene, yardCranePositions);
         } catch (error) {
             console.error('Failed to load port layout from API:', error);
         }
@@ -500,7 +722,7 @@ export default class PortLayout {
 
     async addCranesAtChunk(cranes, scene, type, baseRotation) {
         const numCranes = cranes.length;
-        if (numCranes === 0) return;
+        if (numCranes === 0) return [];
 
         const firstCrane = cranes[0];
         const basePosition = chunkIndexToPosition(firstCrane.x, firstCrane.y, false);
@@ -514,6 +736,8 @@ export default class PortLayout {
 
         // Calculate spacing along X axis within the chunk
         const spacing = chunkSize.x / (numCranes + 1);
+        
+        const positions = [];
 
         for (let i = 0; i < numCranes; i++) {
             const crane = cranes[i];
@@ -534,7 +758,11 @@ export default class PortLayout {
             } else if (type === 'yard') {
                 await this.addYardGantryCrane(crane.name, position, scene, 0, scaleMultiplier);
             }
+            
+            positions.push({ x: position.x, y: position.y, z: position.z });
         }
+        
+        return positions;
     }
 
     calculateWaterFacingRotationFromPosition(position) {
@@ -570,9 +798,34 @@ export default class PortLayout {
         return 90;
     }
 
-    async loadChunks(scene) {
+    async addDockContainers(scene, craneWorldPositions) {
+        // Add containers to dock chunks, passing crane positions for collision avoidance
         for (let chunk of this.chunkData) {
-            chunk.init(scene);
+            if (chunk instanceof DockChunk) {
+                // Get chunk coordinates
+                const chunkX = Math.round((chunk.position.x - worldOrigin.x) / chunkSize.x);
+                const chunkY = Math.round(-(chunk.position.z - worldOrigin.z) / chunkSize.z);
+                const chunkKey = `${chunkX}_${chunkY}`;
+                
+                // Get crane positions for this chunk (if any)
+                const cranePositions = craneWorldPositions[chunkKey] || [];
+                
+                await chunk.addContainers(scene, this.modelCache, cranePositions);
+            }
+        }
+    }
+    
+    async addYardContainers(scene, yardCranePositions) {
+        // Add containers to yard chunks, checking for crane presence
+        for (let chunk of this.chunkData) {
+            if (chunk instanceof YardChunk) {
+                // Check if this chunk has a crane
+                const chunkX = Math.round((chunk.position.x - worldOrigin.x) / chunkSize.x);
+                const chunkY = Math.round(-(chunk.position.z - worldOrigin.z) / chunkSize.z);
+                const hasCrane = yardCranePositions.some(crane => crane.x === chunkX && crane.y === chunkY);
+                
+                await chunk.addContainers(scene, this.modelCache, hasCrane);
+            }
         }
     }
 
