@@ -34,6 +34,7 @@ const router = useRouter();
 const fetchNotification = async (): Promise<VesselVisitNotification | null> => {
     const n = await notificationService.getVesselVisitNotificationById(notificationId);
     const decisions = await notificationService.getNotificationDecisions(notificationId);
+    decisions.sort((a, b) => new Date(a.decisionDate).getTime() - new Date(b.decisionDate).getTime());
     console.log(n);
     console.log(decisions);
     return { ...n, notificationDecisions: decisions };
@@ -184,9 +185,18 @@ const deleteNotification = async () => {
                                         aria-hidden="true">check_circle</span>
                                     <p>{{ t("notification.timeline.submitted") }}</p>
                                 </div>
-                                <div class="timeline-point">
-                                    <span class="timeline-icon material-icons"
-                                        :class="entity.element.status === 2 ? 'accepted' : 'nothing'"
+                                <div class="timeline-point" v-if="entity.element.status === 2 && entity.element.notificationDecisions[entity.element.notificationDecisions.length - 1].status === 1">
+                                    <span class="timeline-icon material-icons accepted"
+                                        aria-hidden="true">check_circle</span>
+                                    <p>{{ t("notification.timeline.completed") }}</p>
+                                </div>
+                                <div class="timeline-point" v-else-if="entity.element.status === 2 && entity.element.notificationDecisions[entity.element.notificationDecisions.length - 1].status === 2">
+                                    <span class="timeline-icon material-icons rejected"
+                                        aria-hidden="true">cancel</span>
+                                    <p>{{ t("notification.timeline.completed") }}</p>
+                                </div>
+                                <div class="timeline-point" v-else>
+                                    <span class="timeline-icon material-icons nothing"
                                         aria-hidden="true">check_circle</span>
                                     <p>{{ t("notification.timeline.completed") }}</p>
                                 </div>
@@ -212,11 +222,11 @@ const deleteNotification = async () => {
                             <template v-for="decision in entity.element.notificationDecisions" :key="decision.id">
                                 <div class="timeline-point">
                                     <p>{{ t("notification.timeline.inProgress") }}</p>
-                                    <span class="timeline-icon nothing material-icons" aria-hidden="true">circle</span>
+                                    <span class="timeline-icon nothing material-icons" aria-hidden="true">check_circle</span>
                                 </div>
                                 <div class="timeline-point">
                                     <p>{{ t("notification.timeline.submitted") }}</p>
-                                    <span class="timeline-icon nothing material-icons" aria-hidden="true">circle</span>
+                                    <span class="timeline-icon nothing material-icons" aria-hidden="true">check_circle</span>
                                 </div>
                                 <div class="timeline-point">
                                     <p>{{ decision.status == 1 ? t("notification.timeline.accepted") :
@@ -456,7 +466,7 @@ const deleteNotification = async () => {
 }
 
 .nothing {
-    color: var(--sl-color-neutral-400);
+    color: var(--sl-color-neutral-300);
 }
 
 .timeline-point p {
