@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { computed, onMounted, ref, watch } from 'vue'
-import type { Schedule } from '@/model/Schedule';
+import type { Schedule } from '@/model/values/Schedule';
 import type { VesselVisitNotification } from '@/model/VesselVisitNotification';
 import type { IVesselVisitNotificationService } from '@/service/IService/IVesselVisitNotificationService';
 import type { ISchedulingService } from '@/service/IService/ISchedulingService';
