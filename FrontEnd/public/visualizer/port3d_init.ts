@@ -32,7 +32,7 @@ export default class Port3D {
         bloom: {
             strength: 0.5,
             radius: 0.8,
-            threshold: 0.6
+            threshold: 0.75
         }
     }
 

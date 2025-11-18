@@ -307,18 +307,9 @@ export class GantryCrane {
 
     init(scene, scaleMultiplier = 1.0) {
         this.model.position.copy(this.position);
-        const baseScale = 6 * scaleMultiplier;
+        const baseScale = 3 * scaleMultiplier;
         this.model.scale.set(baseScale, baseScale, baseScale);
         this.model.rotation.y = this.rotation || 0;
-        
-        // Load PBR textures
-        const textureLoader = new THREE.TextureLoader();
-        const basePath = '/visualizer/models/gantryCrane/texture/';
-        
-        const baseColorMap = textureLoader.load(basePath + 'maquina portico_BaseColor.png');
-        const normalMap = textureLoader.load(basePath + 'maquina portico_Normal.png');
-        const roughnessMap = textureLoader.load(basePath + 'maquina portico_Roughness.png');
-        const metalnessMap = textureLoader.load(basePath + 'maquina portico_Metallic.png');
         
         this.model.traverse((child) => {
             if (child.isMesh) {
@@ -331,17 +322,6 @@ export class GantryCrane {
                     killFunction: () => { this.kill(); }
                 };
                 
-                // Apply PBR material
-                child.material = new THREE.MeshStandardMaterial({
-                    map: baseColorMap,
-                    normalMap: normalMap,
-                    roughnessMap: roughnessMap,
-                    metalnessMap: metalnessMap,
-                    metalness: 1.0,
-                    roughness: 1.0,
-                });
-                
-                child.material.needsUpdate = true;
                 child.castShadow = true;
                 child.receiveShadow = true;
             }

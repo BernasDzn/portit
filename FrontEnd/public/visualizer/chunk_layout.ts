@@ -89,6 +89,15 @@ function centerModel(model) {
             child.geometry.translate(-center.x, -center.y, -center.z);
         }
     });
+
+    // offset children so origin is at the bottom
+    const boxAfter = new THREE.Box3().setFromObject(model);
+    const min = boxAfter.min;
+    model.traverse((child) => {
+        if (child.isMesh) {
+            child.geometry.translate(0, -min.y, 0);
+        }
+    });
     
     return model;
 }
@@ -500,7 +509,7 @@ export default class PortLayout {
         // Calculate scale based on number of cranes (scale down if more than 1)
         let scaleMultiplier = 1.0;
         if (numCranes > 1) {
-            scaleMultiplier = Math.max(0.4, 1.0 / numCranes); // Min scale 0.4
+            scaleMultiplier = Math.max(0.6, 1.0 / numCranes); // Min scale 0.6
         }
 
         // Calculate spacing along X axis within the chunk
@@ -523,7 +532,6 @@ export default class PortLayout {
                 position.y -= 1; // Slightly lower container cranes
                 await this.addContainerCrane(crane.name, position, scene, 180, scaleMultiplier);
             } else if (type === 'yard') {
-                position.y += 18; // Slightly raise yard gantry cranes
                 await this.addYardGantryCrane(crane.name, position, scene, 0, scaleMultiplier);
             }
         }
@@ -703,7 +711,7 @@ export default class PortLayout {
         
         // Clone the cached model for this vessel instance
         const model = this.modelCache[modelPath].clone();
-        position.y += 10; // Slightly raise vessel above water
+        position.y -= 2; // Slightly lower vessel into water
         let vessel = new Vessel(name, model, position, this);
         vessel.init(scene);
 

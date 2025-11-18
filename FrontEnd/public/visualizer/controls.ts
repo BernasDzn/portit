@@ -1,8 +1,8 @@
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import * as THREE from "three";
 
-const minZoomDistance = 300; // Minimum distance for zooming
-const maxZoomDistance = 1500; // Maximum distance for zooming
+const minZoomDistance = 50; // Minimum distance for zooming
+const maxZoomDistance = 3000; // Maximum distance for zooming
 
 const zoomIncrement = 10;
 const moveDistance = 20; // Distance to move per key press
