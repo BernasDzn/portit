@@ -1,17 +1,14 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
-import QualificationCreate from './QualificationCreate.vue';
 import { useAlerts } from '@/composables/alerts';
-import AxiosHttpService from '@/service/AxiosHttpService';
-import { QualificationService } from '@/service/QualificationService';
 import { ref } from 'vue';
-import type { Qualification } from '@/model/Qualifications';
 import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
 import { useI18n } from 'vue-i18n';
 import { container } from '@/inversify.config';
 import type { IQualificationService } from '@/service/IService/IQualificationService';
 import TYPES from '@/inversify/types';
+import type { QualificationDto } from '@/model/dto/QualificationDto';
 
 const route = useRoute();
 const qualificationId = String(route.params.id || '');
@@ -61,8 +58,8 @@ const { t } = useI18n();
             :submit-function="updateQualification"
             :fetching-function="getById"
         >
-            <FormField :enabled="false" :required="true" class="field" :name="t('qualification.fields.idCode.title') + '*'" v-model="qualification.idCode" :placeholderText="t('qualification.fields.idCode.placeholder')" />
-            <FormField :required="true" class="field" :name="t('qualification.fields.qualificationName.title') + '*'" v-model="qualification.qualificationName" :placeholderText="t('qualification.fields.qualificationName.placeholder')"/>
+            <FormField input-id="qual-code" :enabled="false" :required="true" class="field" :name="t('qualification.fields.idCode.title') + '*'" v-model="qualification.idCode" :placeholderText="t('qualification.fields.idCode.placeholder')" />
+            <FormField input-id="qual-name" :required="true" class="field" :name="t('qualification.fields.qualificationName.title') + '*'" v-model="qualification.qualificationName" :placeholderText="t('qualification.fields.qualificationName.placeholder')"/>
         </EntityForm>
 
     </div>

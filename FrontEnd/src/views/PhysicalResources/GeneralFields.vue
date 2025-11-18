@@ -68,10 +68,6 @@ export default {
             pattern="^[0-9]+$"
         />
     </div>
-
-    <br />
-
-    <OperationalWindowPicker v-model="genericResource.operationalWindow" />
   </div>
 </template>
 
