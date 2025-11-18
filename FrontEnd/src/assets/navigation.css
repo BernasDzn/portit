@@ -45,7 +45,8 @@
     background-color: var(--primary);
     padding-top: 60px;
     z-index: 1;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
     transition: width 0.2s ease-in-out !important;
 }
 
@@ -295,4 +296,71 @@
 .breadcrumb-link {
   text-decoration: none;
   color: inherit;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-height: 900px) {
+  .sidebar-menu {
+    margin: 15px 0;
+  }
+  
+  .sidebar-menu-item {
+    margin-bottom: 0.4rem;
+  }
+  
+  .sidebar-menu-link {
+    padding: 0.6rem 1rem;
+  }
+}
+
+@media (max-height: 768px) {
+  .sidebar-menu {
+    margin: 15px 0;
+  }
+  
+  .sidebar-menu-item {
+    margin-bottom: 0.3rem;
+  }
+  
+  .sidebar-menu-link {
+    padding: 0.5rem 1rem;
+  }
+}
+
+@media (max-height: 650px) {
+  .sidebar-menu {
+    margin: 15px 0;
+    padding: 8px 10px;
+  }
+  
+  .sidebar-menu-item {
+    margin-bottom: 0.25rem;
+  }
+  
+  .sidebar-menu-link {
+    padding: 0.45rem 0.9rem;
+  }
+  
+  .icon {
+    font-size: 22px;
+    min-width: 22px;
+  }
+}
+
+/* Custom scrollbar for sidebar */
+.sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
 }
