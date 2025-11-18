@@ -14,7 +14,6 @@ const waterExtent = 4000; // Extend water to reach the skybox (skybox radius is 
 async function createWaterFromPlaneGeometry(object, scene) {
     return new Promise((resolve) => {
         object.geometry.computeBoundingBox();
-    
         const boundingBox = object.geometry.boundingBox;
     
         const width = boundingBox.max.x - boundingBox.min.x;
@@ -164,7 +163,7 @@ export default class Environment {
         this.sunSphere.update(this.sunAngle);
         this.sunLight.update(this.sunAngle);
         this.skydom.update(this.sunAngle);
-        //console.log(this.starField);
+        //this.starField.update(this.sunAngle, this.camera.position);
         
         if (this.sunLight && this.sunLight.object3d) {
             var phase = Math.sin(this.sunAngle) > Math.sin(0) ? 'day' : 
