@@ -62,7 +62,7 @@ export default class Port3D {
         
         // Enable shadows
         this.renderer.shadowMap.enabled = true;
-        this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        this.renderer.shadowMap.type = THREE.PCFShadowMap;
 
         document.body.appendChild(this.renderer.domElement);
 
