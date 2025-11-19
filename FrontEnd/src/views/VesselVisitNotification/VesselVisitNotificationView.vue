@@ -191,7 +191,7 @@ const deleteNotification = async () => {
                                             <div class="tooltip-title">{{ t('notification.timeline.accepted') }}</div>
                                             <div class="tooltip-line"><strong>Date:</strong> {{ new Date(entity.element.notificationDecisions[entity.element.notificationDecisions.length - 1].decisionDate).toUTCString() }}</div>
                                             <div class="tooltip-line"><strong>Officer:</strong> {{ entity.element.notificationDecisions[entity.element.notificationDecisions.length - 1].officerEmail || '-' }}</div>
-                                            <div class="tooltip-line"><strong>Dock:</strong> {{ entity.element.notificationDecisions[entity.element.notificationDecisions.length - 1].assignedDockCode || '-' }}</div>
+                                            <div class="tooltip-line"><strong>Dock:</strong> {{ entity.element.notificationDecisions[entity.element.notificationDecisions.length - 1].assignedDock.code || '-' }}</div>
                                             <div class="tooltip-line" v-if="entity.element.notificationDecisions[entity.element.notificationDecisions.length - 1].reason"><strong>{{ t('notification.decision.reason.title') }}:</strong> {{ entity.element.notificationDecisions[entity.element.notificationDecisions.length - 1].reason }}</div>
                                         </div>
                                         <span class="timeline-icon material-icons accepted" aria-hidden="true">check_circle</span>
@@ -465,6 +465,10 @@ const deleteNotification = async () => {
     width: 5rem;
 }
 
+.timeline-expanded>.timeline-point p {
+    z-index: -1;
+}
+
 .timeline-expanded::before {
     content: "";
     position: absolute;
@@ -533,6 +537,7 @@ const deleteNotification = async () => {
 }
 
 .tooltip-panel {
+    z-index: 1000;
     display: flex;
     flex-direction: column;
     gap: 0.25rem;

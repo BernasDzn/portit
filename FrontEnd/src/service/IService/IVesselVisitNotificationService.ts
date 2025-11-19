@@ -4,7 +4,7 @@ import type { VesselVisitNotification, NotificationDecision } from "@/model/Vess
 
 export interface IVesselVisitNotificationService {
 
-    getVesselVisitNotifications(filter: Filter<null>): Promise<Page<VesselVisitNotification>>;
+    getVesselVisitNotifications(filter?: Filter<null>): Promise<Page<VesselVisitNotification>>;
     getVesselVisitNotificationsForReview(filter: Filter<null>): Promise<Page<VesselVisitNotification>>;
     getVesselVisitNotificationsByRepresentative(filter?: Filter<VesselVisitNotificationFilter>): Promise<Page<VesselVisitNotification>>;
     getVesselVisitNotificationById(id: string): Promise<VesselVisitNotification>;
