@@ -31,7 +31,7 @@ const cargoTypes = [
 const notifications = useAlerts();
 const router = useRouter();
 
-const fetchNotification = async (): Promise<VesselVisitNotification | null> => {
+const fetchNotification = async (): Promise<any | null> => {
     const n = await notificationService.getVesselVisitNotificationById(notificationId);
     const decisions = await notificationService.getNotificationDecisions(notificationId);
     decisions.sort((a, b) => new Date(a.decisionDate).getTime() - new Date(b.decisionDate).getTime());
@@ -186,13 +186,29 @@ const deleteNotification = async () => {
                                     <p>{{ t("notification.timeline.submitted") }}</p>
                                 </div>
                                 <div class="timeline-point" v-if="entity.element.status === 2 && entity.element.notificationDecisions[entity.element.notificationDecisions.length - 1].status === 1">
-                                    <span class="timeline-icon material-icons accepted"
-                                        aria-hidden="true">check_circle</span>
+                                    <sl-tooltip hoist>
+                                        <div slot="content" class="tooltip-panel">
+                                            <div class="tooltip-title">{{ t('notification.timeline.accepted') }}</div>
+                                            <div class="tooltip-line"><strong>Date:</strong> {{ new Date(entity.element.notificationDecisions[entity.element.notificationDecisions.length - 1].decisionDate).toUTCString() }}</div>
+                                            <div class="tooltip-line"><strong>Officer:</strong> {{ entity.element.notificationDecisions[entity.element.notificationDecisions.length - 1].officerEmail || '-' }}</div>
+                                            <div class="tooltip-line"><strong>Dock:</strong> {{ entity.element.notificationDecisions[entity.element.notificationDecisions.length - 1].assignedDockCode || '-' }}</div>
+                                            <div class="tooltip-line" v-if="entity.element.notificationDecisions[entity.element.notificationDecisions.length - 1].reason"><strong>{{ t('notification.decision.reason.title') }}:</strong> {{ entity.element.notificationDecisions[entity.element.notificationDecisions.length - 1].reason }}</div>
+                                        </div>
+                                        <span class="timeline-icon material-icons accepted" aria-hidden="true">check_circle</span>
+                                    </sl-tooltip>
                                     <p>{{ t("notification.timeline.completed") }}</p>
                                 </div>
                                 <div class="timeline-point" v-else-if="entity.element.status === 2 && entity.element.notificationDecisions[entity.element.notificationDecisions.length - 1].status === 2">
-                                    <span class="timeline-icon material-icons rejected"
-                                        aria-hidden="true">cancel</span>
+                                    <sl-tooltip hoist>
+                                        <div slot="content" class="tooltip-panel">
+                                            <div class="tooltip-title">{{ t('notification.timeline.rejected') }}</div>
+                                            <div class="tooltip-line"><strong>Date:</strong> {{ new Date(entity.element.notificationDecisions[entity.element.notificationDecisions.length - 1].decisionDate).toUTCString() }}</div>
+                                            <div class="tooltip-line"><strong>Officer:</strong> {{ entity.element.notificationDecisions[entity.element.notificationDecisions.length - 1].officerEmail || '-' }}</div>
+                                            <div class="tooltip-line"><strong>{{ t('notification.decision.isFinal') }}:</strong> {{ entity.element.notificationDecisions[entity.element.notificationDecisions.length - 1].isFinal ? t('common.yes') : t('common.no') }}</div>
+                                            <div class="tooltip-line" v-if="entity.element.notificationDecisions[entity.element.notificationDecisions.length - 1].reason"><strong>{{ t('notification.decision.reason.title') }}:</strong> {{ entity.element.notificationDecisions[entity.element.notificationDecisions.length - 1].reason }}</div>
+                                        </div>
+                                        <span class="timeline-icon material-icons rejected" aria-hidden="true">cancel</span>
+                                    </sl-tooltip>
                                     <p>{{ t("notification.timeline.completed") }}</p>
                                 </div>
                                 <div class="timeline-point" v-else>
@@ -231,9 +247,18 @@ const deleteNotification = async () => {
                                 <div class="timeline-point">
                                     <p>{{ decision.status == 1 ? t("notification.timeline.accepted") :
                                         t("notification.timeline.rejected") }}</p>
-                                    <span
-                                        :class="decision.status == 1 ? ' timeline-icon accepted material-icons' : 'timeline-icon rejected material-icons'"
-                                        aria-hidden="true">{{ decision.status == 1 ? 'check_circle' : 'cancel' }}</span>
+                                    <sl-tooltip hoist>
+                                        <div slot="content" class="tooltip-panel">
+                                            <div class="tooltip-title">{{ decision.status == 1 ? t('notification.timeline.accepted') : t('notification.timeline.rejected') }}</div>
+                                            <div class="tooltip-line"><strong>Date:</strong> {{ new Date(decision.decisionDate).toUTCString() }}</div>
+                                            <div class="tooltip-line"><strong>Officer:</strong> {{ decision.officerEmail || '-' }}</div>
+                                            <div v-if="decision.status == 1" class="tooltip-line"><strong>Dock:</strong> {{ decision.assignedDock?.code || '-' }}</div>
+                                            <div class="tooltip-line" v-if="decision.reason"><strong>{{ t('notification.decision.reason.title') }}:</strong> {{ decision.reason }}</div>
+                                        </div>
+                                        <span
+                                            :class="decision.status == 1 ? ' timeline-icon accepted material-icons' : 'timeline-icon rejected material-icons'"
+                                            aria-hidden="true">{{ decision.status == 1 ? 'check_circle' : 'cancel' }}</span>
+                                    </sl-tooltip>
                                     <p>{{ new Date(decision.decisionDate).toUTCString() }}</p>
                                 </div>
                             </template>
@@ -496,5 +521,38 @@ const deleteNotification = async () => {
 
 .timeline-point:last-child {
     margin-bottom: 0;
+}
+
+
+:deep(sl-tooltip)::part(base) {
+    z-index: 10000;
+    background-color: var(--sl-color-neutral-900);
+    color: var(--sl-color-neutral-0);
+    border-radius: 8px;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+}
+
+.tooltip-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.5rem 0.75rem;
+    max-width: 320px;
+    color: var(--sl-color-neutral-0);
+}
+
+.tooltip-title {
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+}
+
+.tooltip-line {
+    font-size: 0.85rem;
+    line-height: 1.2rem;
+    white-space: normal;
+}
+
+.viewing-content {
+    --sl-z-index-tooltip: 10000;
 }
 </style>
