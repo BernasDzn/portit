@@ -12,20 +12,38 @@ public class PortLayoutController : ControllerBase
 	private readonly IStorageAreaService _storageAreaService;
 	private readonly IPhysicalResourceService _physicalResourceService;
 	private readonly ILogger<PortLayoutController> _logger;
+	private readonly IVesselVisitNotificationService _vvnService;
 
 	public PortLayoutController(
 		IDockService dockService,
 		IStorageAreaService storageAreaService,
 		IPhysicalResourceService physicalResourceService,
+		IVesselVisitNotificationService vvnService,
 		ILogger<PortLayoutController> logger)
 	{
 		_dockService = dockService;
 		_storageAreaService = storageAreaService;
 		_physicalResourceService = physicalResourceService;
+		_vvnService = vvnService;
 		_logger = logger;
 	}
 
-	[HttpGet(Name = "GetPortLayout")]
+	[HttpGet("/VesselPositions", Name = "GetVesselPositions")]
+	public async Task<ActionResult<IEnumerable<VesselPositionDto>>> GetVesselPositions()
+	{
+		try
+		{
+			var vesselPositions = await _vvnService.GetVesselPositionsAsync();
+			return Ok(vesselPositions);
+		}
+		catch (Exception e)
+		{
+			_logger.LogError("Error fetching vessel positions, {Message}", e.Message);
+			return StatusCode(500, "An error occurred while fetching vessel positions.");
+		}
+	}
+
+	[HttpGet("/PortLayout", Name = "GetPortLayout")]
 	public async Task<ActionResult<IEnumerable<PortChunk>>> GetPortLayout()
 	{
 		try

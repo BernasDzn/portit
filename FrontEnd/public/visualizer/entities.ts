@@ -30,7 +30,7 @@ export default class Vessel {
 
     init(scene) {
         this.model.position.copy(this.position);
-        this.model.scale.set(1,1,1);
+        this.model.scale.set(0.5,0.5,0.5);
 
         // Vessel metadata
         const vesselMeta = {
@@ -83,21 +83,21 @@ export default class Vessel {
         //     {x: 3, y: 2},
         // ]);
 
-        this.path = new PathFollower(
-            [
-                new THREE.Vector3(this.position.x + 50, this.position.y, this.position.z + 50),
-                new THREE.Vector3(this.position.x + 100, this.position.y, this.position.z + 30),
-                new THREE.Vector3(this.position.x + 190, this.position.y, this.position.z + 180),
-                new THREE.Vector3(this.position.x + 250, this.position.y, this.position.z + 100),
-                new THREE.Vector3(this.position.x + 300, this.position.y, this.position.z + 150),
-                new THREE.Vector3(this.position.x + 350, this.position.y, this.position.z + 50),
-            ],
-            this.facePoint,
-            scene,
-            this.model,
-            this.layout,
-            50
-        );
+        //this.path = new PathFollower(
+        //    [
+        //        new THREE.Vector3(this.position.x + 50, this.position.y, this.position.z + 50),
+        //        new THREE.Vector3(this.position.x + 100, this.position.y, this.position.z + 30),
+        //        new THREE.Vector3(this.position.x + 190, this.position.y, this.position.z + 180),
+        //        new THREE.Vector3(this.position.x + 250, this.position.y, this.position.z + 100),
+        //        new THREE.Vector3(this.position.x + 300, this.position.y, this.position.z + 150),
+        //        new THREE.Vector3(this.position.x + 350, this.position.y, this.position.z + 50),
+        //    ],
+        //    this.facePoint,
+        //    scene,
+        //    this.model,
+        //    this.layout,
+        //    50
+        //);
     }
 
     setPathVisible(visible) {
@@ -120,7 +120,7 @@ export default class Vessel {
         this.model.position.y = this.position.y + Math.sin(Date.now() * this.bouyanceSpeed) * this.bouyanceAmplitude;
         this.model.rotation.y = Math.sin(Date.now() * this.bouyanceSpeed) * (this.bouyanceAmplitude / 50) + Math.PI;
 
-        this.path.goOnAnAdventure();
+        //this.path.goOnAnAdventure();
         // update label position
         this.label.position.set(this.model.position.x, this.model.position.y + 10, this.model.position.z);
     }

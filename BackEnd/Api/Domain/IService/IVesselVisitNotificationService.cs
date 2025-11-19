@@ -22,4 +22,7 @@ public interface IVesselVisitNotificationService
     // Schedule operations
     Task<SchedulingResultDto> CollectSchedulingData(DateTime date, uint daysAhead, Code dockCode);
     Task<VesselVisitDistributionDto> GetVesselVisitNotificationDistribution();
+
+    // Vessel Positions
+    Task<IEnumerable<VesselPositionDto>> GetVesselPositionsAsync();
 }

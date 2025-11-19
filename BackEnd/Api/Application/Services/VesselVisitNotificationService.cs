@@ -11,6 +11,7 @@ using Api.Domain.ValueObjects;
 using Api.Infrastructure.Exceptions;
 using Api.Infrastructure.Utilities;
 using Microsoft.AspNetCore.Authorization;
+using Api.Domain;
 
 public class VesselVisitNotificationService : IVesselVisitNotificationService
 {
@@ -366,5 +367,32 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         VesselVisitDistributionDto distribution = await _notificationRepository.GetVesselVisitNotificationDistributionAsync();
         AppLogEvents.LogRetrieve(_logger, "vessel visit notification distribution", 1);
         return distribution;
+    }
+
+    public async Task<IEnumerable<VesselPositionDto>> GetVesselPositionsAsync()
+    {
+        var approovedNotifications = await _notificationRepository.GetVesselVisitNotificationsAsync();
+        var positions = approovedNotifications
+            .Where(n => n.Status == NotificationStatus.Decided 
+                    && n.NotificationDecisions.Any(
+                        d => d.Status == NotificationDecisionStatus.Approved
+                        )
+                    )
+            .Select(n => new VesselPositionDto(
+                n.Vessel.ImoIdentifier.Value,
+                n.GetLatestDecision()!.AssignedDock!.Code.Value,
+                n.ExpectedArrival,
+                n.ExpectedDeparture
+            ));
+        //remove duplicates
+        foreach (var pos in positions.ToList())
+        {
+            if (positions.Count(p => p.VesselId == pos.VesselId) > 1)
+            {
+                positions = positions.Where(p => p.VesselId != pos.VesselId || (p.VesselId == pos.VesselId && p.ArrivalTime == pos.ArrivalTime)).ToList();
+            }
+        }
+        AppLogEvents.LogRetrieve(_logger, "vessel positions", positions.Count());
+        return positions;
     }
 }
