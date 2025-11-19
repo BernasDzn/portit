@@ -32,7 +32,8 @@ test.describe('Vessels Update (PUT)', () => {
     });
 
     await page.goto(`/vessels/edit/${encodeURIComponent(baseVessel.imoNumber)}`);
-    await page.locator('#vessel-name').waitFor({ state: 'visible' });
+    await page.waitForLoadState('networkidle');
+    await page.waitForSelector('#vessel-name, input[name="name"]', { state: 'visible', timeout: 15000 });
 
     const nameInput = page.locator('#vessel-name, input[name="name"]').first();
     if (await nameInput.count() > 0) {
