@@ -25,7 +25,8 @@ export async function stubWhoAmI(page: Page, user: TestUser = defaultTestUser) {
 export async function interceptPostAndCapture(page: Page, urlPattern = '**/api/Staff') {
   const capturedRequest: { data: any } = { data: null };
 
-  await page.route(urlPattern, async (route, request) => {
+  await page.route(urlPattern, async (route) => {
+    const request = route.request();
     const raw = request.postData() ?? '';
     try {
       capturedRequest.data = raw ? JSON.parse(raw) : {};
@@ -53,8 +54,29 @@ export async function fillShoelace(elementLocator: Locator, text: string) {
   }, text);
 }
 
+export async function setShoelaceSelect(elementLocator: Locator, value: string) {
+  await elementLocator.waitFor({ state: 'attached' });
+  await elementLocator.evaluate((element: any, val: string) => {
+    element.value = val;
+    element.dispatchEvent(new CustomEvent('sl-change', { detail: { value: val }, bubbles: true, composed: true }));
+  }, value);
+}
+
 export async function submitForm(page: Page) {
-  await page.locator('form').evaluate((form: HTMLFormElement) => {
+  // Find all forms and submit only the visible one
+  const forms = await page.locator('form').all();
+  for (const form of forms) {
+    const isVisible = await form.isVisible();
+    if (isVisible) {
+      await form.evaluate((formEl: HTMLFormElement) => {
+        if ((formEl as any).requestSubmit) (formEl as any).requestSubmit();
+        else formEl.submit();
+      });
+      return;
+    }
+  }
+  // Fallback if no visible form found
+  await page.locator('form').first().evaluate((form: HTMLFormElement) => {
     if ((form as any).requestSubmit) (form as any).requestSubmit();
     else form.submit();
   });

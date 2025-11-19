@@ -353,4 +353,11 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         OperationalWindow qualifiedStaffAvailablity = OperationalWindow.Merge(staffOperationalWindows);
         return crane.OperationalWindow.Intercept(qualifiedStaffAvailablity);
     }
+
+    public async Task<VesselVisitDistributionDto> GetVesselVisitNotificationDistribution()
+    {
+        VesselVisitDistributionDto distribution = await _notificationRepository.GetVesselVisitNotificationDistributionAsync();
+        AppLogEvents.LogRetrieve(_logger, "vessel visit notification distribution", 1);
+        return distribution;
+    }
 }

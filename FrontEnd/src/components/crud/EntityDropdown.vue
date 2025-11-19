@@ -18,7 +18,9 @@ const props = defineProps({
     multiple: { type: Boolean, default: false },
     // Optional initial defaults applied once on mount (or after items load)
     // Use null so an absent prop doesn't force an empty selection.
-    defaultValues: { type: Array, default: null }
+    defaultValues: { type: Array, default: null },
+    // Optional explicit id for the inner select element (useful for tests)
+    inputId: { type: String, default: null }
 });
 
 const emit = defineEmits(['update:modelValue']);
@@ -129,7 +131,7 @@ onMounted(() => {
     }
 });
 
-const inputId = computed(() => `entity-dropdown-${props.name.replace(/\s+/g, '-').toLowerCase()}`);
+const inputId = computed(() => props.inputId ?? `entity-dropdown-${props.name.replace(/\s+/g, '-').toLowerCase()}`);
 
 function onChange(e) {
     

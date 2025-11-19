@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { stubWhoAmI } from '../test-utils.js';
-import type { QualificationDto } from '../../../src/model/dto/QualificationDto.ts';
-import type { Page } from '../../../src/model/Page.ts';
+import type { QualificationDto } from '../../../src/model/dto/QualificationDto.js';
+import type { Page } from '../../../src/model/Page.js';
 
 test.describe('Qualification Read (GET)', () => {
   
