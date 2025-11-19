@@ -9,3 +9,7 @@ json_to_interval_fact(JsonDict, interval(Day, StartTime, EndTime)) :-
     Day = JsonDict.day,
     time_string_minutes(JsonDict.startTime, StartTime),
     time_string_minutes(JsonDict.endTime, EndTime).
+
+json_to_crane_fact(JsonDict, crane(Name, Speed)) :-
+    Name = JsonDict.crane,
+    Speed = JsonDict.speed.
