@@ -39,8 +39,6 @@ public class PortLayoutController : ControllerBase
 
 			// Grid configuration
 			const int gridWidth = 10;
-            const int maxLandPadding = 3;
-            int currentLandPadding = 0;
 			
 			// First 2 rows: Warehouses and Yards (column by column)
             var storageAreasList = storageAreas.ToList();
@@ -50,34 +48,29 @@ public class PortLayoutController : ControllerBase
 			{
 				for (int row = 0; row < 2; row++)
 				{
-                    if (storageIndex < storageAreasList.Count)
-                    {
-                        var storage = storageAreasList[storageIndex];
-                        var chunkType = storage.Type == Domain.Entities.StorageAreaType.Warehouse
-                            ? ChunkType.Warehouse
-                            : ChunkType.Yard;
+					if (storageIndex < storageAreasList.Count)
+					{
+						var storage = storageAreasList[storageIndex];
+						var chunkType = storage.Type == Domain.Entities.StorageAreaType.Warehouse
+							? ChunkType.Warehouse
+							: ChunkType.Yard;
 
-                        chunks.Add(new PortChunk(
-                            storage.NameCode,
-                            chunkType,
-                            col,
-                            row
-                        ));
-                        storageIndex++;
-                    }
-                    else
-                    {
-                        if (currentLandPadding < maxLandPadding)
-                        {
-                            chunks.Add(new PortChunk(
-                                "Land",
-                                ChunkType.Land,
-                                col,
-                                row
-                            ));
-
-                            currentLandPadding++;
-                        }
+						chunks.Add(new PortChunk(
+							storage.NameCode,
+							chunkType,
+							col,
+							row
+						));
+						storageIndex++;
+					}
+					else
+					{
+						chunks.Add(new PortChunk(
+							$"Land_{col}_{row}",
+							ChunkType.Land,
+							col,
+							row
+						));
 					}
 				}
 			}
