@@ -41,6 +41,25 @@ export async function interceptPostAndCapture(page: Page, urlPattern = '**/api/S
   return capturedRequest;
 }
 
+export async function interceptPutAndCapture(page: Page, urlPattern = '**/api/Staff/**') {
+  const capturedRequest: { data: any } = { data: null };
+
+  await page.route(urlPattern, async (route) => {
+    const request = route.request();
+    const raw = request.postData() ?? '';
+    try {
+      capturedRequest.data = raw ? JSON.parse(raw) : {};
+    } catch (e) {
+      capturedRequest.data = {};
+    }
+
+    const responseBody = JSON.stringify(capturedRequest.data);
+    await route.fulfill({ status: 200, contentType: 'application/json', body: responseBody });
+  });
+
+  return capturedRequest;
+}
+
 export async function fillShoelace(elementLocator: Locator, text: string) {
   await elementLocator.waitFor({ state: 'attached' });
   await elementLocator.evaluate((element: any, value: string) => {
