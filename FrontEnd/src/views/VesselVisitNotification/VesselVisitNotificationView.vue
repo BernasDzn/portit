@@ -186,7 +186,7 @@ const deleteNotification = async () => {
                                     <p>{{ t("notification.timeline.submitted") }}</p>
                                 </div>
                                 <div class="timeline-point" v-if="entity.element.status === 2 && entity.element.notificationDecisions[entity.element.notificationDecisions.length - 1].status === 1">
-                                    <sl-tooltip hoist>
+                                    <sl-tooltip hoist placement="right">
                                         <div slot="content" class="tooltip-panel">
                                             <div class="tooltip-title">{{ t('notification.timeline.accepted') }}</div>
                                             <div class="tooltip-line"><strong>Date:</strong> {{ new Date(entity.element.notificationDecisions[entity.element.notificationDecisions.length - 1].decisionDate).toUTCString() }}</div>
@@ -199,7 +199,7 @@ const deleteNotification = async () => {
                                     <p>{{ t("notification.timeline.completed") }}</p>
                                 </div>
                                 <div class="timeline-point" v-else-if="entity.element.status === 2 && entity.element.notificationDecisions[entity.element.notificationDecisions.length - 1].status === 2">
-                                    <sl-tooltip hoist>
+                                    <sl-tooltip hoist placement="right">
                                         <div slot="content" class="tooltip-panel">
                                             <div class="tooltip-title">{{ t('notification.timeline.rejected') }}</div>
                                             <div class="tooltip-line"><strong>Date:</strong> {{ new Date(entity.element.notificationDecisions[entity.element.notificationDecisions.length - 1].decisionDate).toUTCString() }}</div>
@@ -529,7 +529,6 @@ const deleteNotification = async () => {
 
 
 :deep(sl-tooltip)::part(base) {
-    z-index: 10000;
     background-color: var(--sl-color-neutral-900);
     color: var(--sl-color-neutral-0);
     border-radius: 8px;
@@ -537,7 +536,6 @@ const deleteNotification = async () => {
 }
 
 .tooltip-panel {
-    z-index: 1000;
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
@@ -558,6 +556,5 @@ const deleteNotification = async () => {
 }
 
 .viewing-content {
-    --sl-z-index-tooltip: 10000;
 }
 </style>
