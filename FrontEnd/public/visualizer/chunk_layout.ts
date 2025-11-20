@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as THREE from "three";
 import { loadModel, loadModelRaw } from "./helpers/model_helper.ts";
 import { makeBillboard } from "./helpers/billboard_helper.ts";
@@ -5,7 +6,7 @@ import Vessel, { Crane, Seagull, GantryCrane } from "./entities.ts";
 import PickHelper from "./helpers/pick_helper.ts";
 import { hideInfoText, setInfoText } from "./helpers/info_helper.ts";
 import { TimedEvent } from "./time.ts";
-import { fetchPortLayout, ChunkType } from "./chunk_service.ts";
+import { fetchPortLayout, fetchVesselPositions, ChunkType } from "./chunk_service.ts";
 
 const worldBorder = 1000;
 
@@ -111,7 +112,6 @@ function makeAsphaltMaterial() {
     stone.wrapT = THREE.RepeatWrapping;
 
     stone.repeat.set(1, 0.01);
-
     const materials = [
         new THREE.MeshStandardMaterial({ map: stone }),  // right
         new THREE.MeshStandardMaterial({ map: stone }),  // left
@@ -784,14 +784,27 @@ export default class PortLayout {
 
     picker;
 
+    /** @type {any[]} */
     vesselList = []; // The vessels in the port
+
     /** @type {Array<Crane|GantryCrane>} */
     craneList = []; // The cranes in the port (both STS and gantry cranes)
+
+    /** @type {any[]} */
     seagullList = []; // The seagulls in the port
+
+    /** @type {any[]} */
     chunkData = []; // The chunks that make up the port layout
-    
+
+    /** @type {Record<string, any>} */
     // Model cache to avoid reloading the same models
     modelCache = {};
+
+    /**
+     * Lightweight schedule of vessel events fetched at startup.
+     * @type {Array<{vesselId:string,dockId:string,arrival:Date,departure:Date}>}
+     */
+    vesselSchedule = [];
 
     constructor(scene, camera) {
 
@@ -804,6 +817,7 @@ export default class PortLayout {
         // Load chunks dynamically from API
         this.loadChunksFromAPI(scene);
         this.loadTerrain(scene);
+        console.log('PortLayout initialized');
     }
 
     async loadChunksFromAPI(scene) {
@@ -842,11 +856,46 @@ export default class PortLayout {
             
             // Add containers to yard chunks after cranes are placed
             await this.addYardContainers(scene, yardCranePositions);
+
+            // Fetch vessel positions once and record a lightweight schedule
+            // Do NOT instantiate heavy vessel models here to avoid startup lag.
+            try {
+                const vesselPositions = await fetchVesselPositions();
+
+                // vesselSchedule stores entries for when vessels should appear/disappear.
+                // Format: { vesselId: string, dockId: string, arrival: Date, departure: Date }
+                this.vesselSchedule = [];
+
+                for (const vp of vesselPositions || []) {
+                    const arrivalRaw = vp.ArrivalTime ?? vp.arrivalTime;
+                    const departureRaw = vp.DepartureTime ?? vp.departureTime;
+                    const dockId = vp.DockId ?? vp.dockId ?? vp.dock;
+                    const vesselId = vp.VesselId ?? vp.vesselId ?? vp.vessel;
+
+                    if (!arrivalRaw || !departureRaw || !dockId || !vesselId) continue;
+
+                    const arrival = new Date(arrivalRaw);
+                    const departure = new Date(departureRaw);
+
+                    this.vesselSchedule.push({ vesselId: String(vesselId), dockId: String(dockId), arrival, departure });
+                }
+
+                // Log the parsed vessel schedule for debugging
+                console.log('Vessel schedule:', this.vesselSchedule);
+            } catch (err) {
+                console.error('Failed to fetch vessel positions for scheduling:', err);
+            }
+
+            // Note: vessel positions are fetched once at startup and used thereafter.
         } catch (error) {
             console.error('Failed to load port layout from API:', error);
         }
     }
 
+    /**
+     * Group cranes by their chunk coordinate key.
+     * @param {Array<any>} cranes
+     */
     groupCranesByChunk(cranes) {
         const grouped = {};
         for (const crane of cranes) {
@@ -859,6 +908,12 @@ export default class PortLayout {
         return grouped;
     }
 
+    /**
+     * @param {Array<any>} cranes
+     * @param {any} scene
+     * @param {string} type
+     * @param {number} baseRotation
+     */
     async addCranesAtChunk(cranes, scene, type, baseRotation) {
         const numCranes = cranes.length;
         if (numCranes === 0) return [];
@@ -904,6 +959,10 @@ export default class PortLayout {
         return positions;
     }
 
+    /**
+     * @param {{x:number,y:number,z:number}} position
+     * @returns {number}
+     */
     calculateWaterFacingRotationFromPosition(position) {
         // Find which chunk grid cell this position is closest to
         const centerX = position.x - worldOrigin.x;
@@ -937,6 +996,10 @@ export default class PortLayout {
         return 90;
     }
 
+    /**
+     * @param {any} scene
+     * @param {Record<string, Array<any>>} craneWorldPositions
+     */
     async addDockContainers(scene, craneWorldPositions) {
         // Add containers to dock chunks, passing crane positions for collision avoidance
         for (let chunk of this.chunkData) {
@@ -954,6 +1017,10 @@ export default class PortLayout {
         }
     }
     
+    /**
+     * @param {any} scene
+     * @param {Array<any>} yardCranePositions
+     */
     async addYardContainers(scene, yardCranePositions) {
         // Add containers to yard chunks, checking for crane presence
         for (let chunk of this.chunkData) {
@@ -971,9 +1038,9 @@ export default class PortLayout {
     togglePaths(visible) {
         this.showPath = visible;
 
-        this.vesselList.forEach((vessel) => {
-            vessel.setPathVisible(visible);
-        });
+        // this.vesselList.forEach((vessel) => {
+        //     vessel.setPathVisible(visible);
+        // });
 
         this.seagullList.forEach((seagull) => {
             seagull.setPathVisible(visible);
@@ -1096,21 +1163,16 @@ export default class PortLayout {
 
     async addVessel(name, position, scene) {
         const modelPath = "/visualizer/models/lowpoly/ship.obj";
-        
-        console.log("Loading vessel model from:", modelPath);
-        
         // Load model once and cache it
         if (!this.modelCache[modelPath]) {
             this.modelCache[modelPath] = await loadModel(modelPath);
             centerModel(this.modelCache[modelPath]);
         }
-        
         // Clone the cached model for this vessel instance
         const model = this.modelCache[modelPath].clone();
         position.y -= 2; // Slightly lower vessel into water
         let vessel = new Vessel(name, model, position, this);
         vessel.init(scene);
-
         this.vesselList.push(vessel);
     }
 
@@ -1196,6 +1258,98 @@ export default class PortLayout {
         if (index > -1) {
             this.vesselList[index].kill();
             this.vesselList.splice(index, 1);
+        }
+    }
+
+    /**
+     * Return scheduled vessel entries active at the given time.
+     * @param {Date} time
+     * @returns {Array<{vesselId:string,dockId:string,arrival:Date,departure:Date}>}
+     */
+    getActiveVesselsAt(time) {
+        if (!this.vesselSchedule || !Array.isArray(this.vesselSchedule)) return [];
+        const active = this.vesselSchedule.filter(entry => {
+            try {
+                return entry.arrival <= time && time <= entry.departure;
+            } catch (e) {
+                return false;
+            }
+        });
+        return active;
+    }
+
+    /**
+     * Ensure vessels visible at simulation time: add arriving vessels and remove departed ones.
+     * This method only instantiates vessels that are scheduled to be present at `simTime`.
+     * @param {Date} simTime
+     * @param {any} scene
+     */
+    async ensureVesselsVisibleAt(simTime, scene) {
+        // Determine which vessel ids should be active
+        const active = this.getActiveVesselsAt(simTime || new Date());
+        const activeIds = new Set(active.map(a => String(a.vesselId)));
+
+        // Remove vessels that are present but no longer active
+        // Also remove any duplicate vessels for the same vesselId
+        const seen = new Set();
+        const toRemove = [];
+        for (const v of this.vesselList) {
+            const id = String(v.name);
+            if (!activeIds.has(id)) {
+                toRemove.push(v);
+            } else if (seen.has(id)) {
+                // Duplicate vessel, remove
+                toRemove.push(v);
+            } else {
+                seen.add(id);
+            }
+        }
+        for (const v of toRemove) {
+            this.removeVessel(v);
+        }
+
+        // Add vessels that are active but not yet instantiated
+        for (const entry of active) {
+            const vesselId = String(entry.vesselId);
+            if (this.vesselList.some(v => String(v.name) === vesselId)) {
+                continue;
+            }
+
+            // Find the dock chunk for this schedule entry
+            const dockChunk = this.chunkData.find(c => (c instanceof DockChunk) && (String(c.dockName) === String(entry.dockId) || String(c.dockName) === entry.dockId));
+            if (!dockChunk) {
+                continue;
+            }
+
+            // Determine water-facing rotation and compute spawn position
+            const rotationDeg = this.calculateWaterFacingRotationFromPosition(dockChunk.position);
+            const vesselOffset = 20;
+            const pos = dockChunk.position.clone();
+            const spanRand = (Math.random() - 0.5) * (chunkSize.x / 4);
+            switch (rotationDeg) {
+                case 0:
+                    pos.z -= chunkSize.z / 2 + vesselOffset;
+                    pos.x += spanRand;
+                    break;
+                case 90:
+                    pos.x += chunkSize.x / 2 + vesselOffset;
+                    pos.z += spanRand;
+                    break;
+                case 180:
+                    pos.z += chunkSize.z / 2 + vesselOffset;
+                    pos.x += spanRand;
+                    break;
+                case 270:
+                    pos.x -= chunkSize.x / 2 + vesselOffset;
+                    pos.z += spanRand;
+                    break;
+                default:
+                    pos.z -= chunkSize.z / 2 + vesselOffset;
+                    pos.x += spanRand;
+            }
+            pos.y = layoutY + (chunkSize.y / 2) - 2;
+
+            await this.addVessel(vesselId, pos, scene);
         }
     }
 

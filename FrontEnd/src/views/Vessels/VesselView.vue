@@ -39,7 +39,7 @@ const fetchVessel = async (): Promise<Vessel | null> => {
                     </div>
                 </div>
                 <RouterLink :to="`/vessels/edit/${encodeURIComponent(entity.element.imoNumber)}`">
-                    <sl-button variant="default" size="large">
+                    <sl-button id="vessel-edit" variant="default" size="large">
                         <sl-icon slot="prefix" name="pencil"></sl-icon>
                         {{ t('vessel.tabs.edit') }}
                     </sl-button>

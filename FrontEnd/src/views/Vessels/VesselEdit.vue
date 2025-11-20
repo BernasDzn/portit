@@ -79,9 +79,10 @@ const submitVessel = (obj: any) =>
         <p class="subtitle">{{ t('vessel.subtitle.edit') }}</p>
         <EntityForm editing-id="imoNumber" :object="vessel" :submit-function="submitVessel">
             <div class="name-imo">
-                <FormField :required="true" class="field" :name="`${t('vessel.fields.name.title')}*`" v-model="vessel.name" :placeholderText="t('vessel.fields.name.placeholder')"/>
-                <FormField :enabled="false" class="field" :name="t('vessel.fields.imoNumber.title')" v-model="vessel.imoNumber" :placeholderText="t('vessel.fields.imoNumber.placeholder')" pattern="IMO [0-9]{7}"/>
+                <FormField inputId="vessel-name" :required="true" class="field" :name="`${t('vessel.fields.name.title')}*`" v-model="vessel.name" :placeholderText="t('vessel.fields.name.placeholder')"/>
+                <FormField inputId="vessel-imo" :enabled="false" class="field" :name="t('vessel.fields.imoNumber.title')" v-model="vessel.imoNumber" :placeholderText="t('vessel.fields.imoNumber.placeholder')" pattern="IMO [0-9]{7}"/>
                 <EntityDropdown
+                inputId="vessel-type"
                 class="field-dropdown"
                 :name="`${t('vessel.fields.vesselType.title')}*`"
                 v-model="vessel.type"
@@ -93,6 +94,7 @@ const submitVessel = (obj: any) =>
                 labelKey="name"
                 />
                 <EntityDropdown
+                inputId="vessel-owner"
                 class="field-dropdown"
                 :name="t('vessel.fields.owner.title') + '*'"
                 v-model="vessel.owner"
@@ -105,11 +107,11 @@ const submitVessel = (obj: any) =>
                 />
             </div>
             <div class="measurements">
-                <FormField :required="true" class="field" :name="`${t('physicalCharacteristics.length.title')} (m)*`" v-model.number="vessel.length"
+                <FormField inputId="vessel-length" :required="true" class="field" :name="`${t('physicalCharacteristics.length.title')} (m)*`" v-model.number="vessel.length"
                 :placeholderText="t('physicalCharacteristics.length.placeholder')" pattern="^\d+(\.\d{1,2})?$"/>
-                <FormField :required="true" class="field" :name="`${t('physicalCharacteristics.depth.title')} (m)*`" v-model.number="vessel.depth"
+                <FormField inputId="vessel-depth" :required="true" class="field" :name="`${t('physicalCharacteristics.depth.title')} (m)*`" v-model.number="vessel.depth"
                 :placeholderText="t('physicalCharacteristics.depth.placeholder')" pattern="^\d+(\.\d{1,2})?$"/>
-                <FormField :required="true" class="field" :name="`${t('physicalCharacteristics.draft.title')} (m)*`" v-model.number="vessel.draft"
+                <FormField inputId="vessel-draft" :required="true" class="field" :name="`${t('physicalCharacteristics.draft.title')} (m)*`" v-model.number="vessel.draft"
                 :placeholderText="t('physicalCharacteristics.draft.placeholder')" pattern="^\d+(\.\d{1,2})?$"/>
             </div>
         </EntityForm>

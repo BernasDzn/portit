@@ -505,8 +505,8 @@ public static class Bootstrap
                 6,
                 2025
             ),
-            new DateTime(2025, 11, 10, 8, 0, 0),
-            new DateTime(2025, 11, 15, 18, 0, 0),
+            new DateTime(2025, 12, 2, 8, 0, 0),
+            new DateTime(2025, 12, 3, 18, 0, 0),
             false,
             vessel2,
             vessel2.Owner.Representatives.First(),
@@ -615,8 +615,8 @@ public static class Bootstrap
                 7,
                 2025
             ),
-            new DateTime(2025, 11, 10, 9, 0, 0),
-            new DateTime(2025, 11, 14, 17, 0, 0),
+            new DateTime(2025, 12, 2, 9, 0, 0),
+            new DateTime(2025, 12, 3, 17, 0, 0),
             false,
             vessel3,
             vessel3.Owner.Representatives.First(),
@@ -675,8 +675,8 @@ public static class Bootstrap
                 8,
                 2025
             ),
-            new DateTime(2025, 11, 10, 10, 0, 0),
-            new DateTime(2025, 11, 13, 16, 0, 0),
+            new DateTime(2025, 12, 2, 10, 0, 0),
+            new DateTime(2025, 12, 3, 16, 0, 0),
             false,
             vessel4,
             vessel4.Owner.Representatives.First(),
@@ -702,8 +702,8 @@ public static class Bootstrap
                 9,
                 2025
             ),
-            new DateTime(2025, 11, 10, 11, 0, 0),
-            new DateTime(2025, 11, 12, 15, 0, 0),
+            new DateTime(2025, 12, 2, 11, 0, 0),
+            new DateTime(2025, 12, 3, 15, 0, 0),
             false,
             vessel1,
             vessel1.Owner.Representatives.First()

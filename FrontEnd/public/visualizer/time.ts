@@ -74,14 +74,27 @@ export default function initTime(app) {
     getCurrentTime();
     updateDateTable();
 
-    setTimeout(function tick() {
+    async function waitForSceneAndUpdateVessels() {
+        if (app.portLayout && app.scene) {
+            await app.portLayout.ensureVesselsVisibleAt(currentDate, app.scene);
+        } else {
+            // Retry after 100ms if scene is not ready
+            setTimeout(waitForSceneAndUpdateVessels, 100);
+            return;
+        }
+    }
 
+    setTimeout(async function tick() {
         if (app.paused) {
             setTimeout(tick, updateInterval);
             return;
         }
 
         updateTime(app);
+
+        // Wait for scene to be ready before updating vessels
+        waitForSceneAndUpdateVessels();
+
         setTimeout(tick, updateInterval);
     }, updateInterval);
 }

@@ -22,4 +22,19 @@ export async function fetchPortLayout() {
     }
 }
 
+export async function fetchVesselPositions() {
+    try {
+        const response = await fetch(`/api/VesselPositions`);
+        if (!response.ok) {
+            console.error('Failed to fetch vessel positions:', response.statusText);
+            return [];
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching vessel positions:', error);
+        return [];
+    }
+}
+
 export { ChunkType };
