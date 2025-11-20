@@ -1053,8 +1053,8 @@ export default class PortLayout {
     // Load terrain
     async loadTerrain(scene) {
 
-        const terrainX = -300 - 330;
-        const terrainZ = 300 + 140;
+        const terrainX = -625;
+        const terrainZ = 530;
 
         this.terrain = await loadModel("/visualizer/models/terrain.obj");
         // Add bump map
