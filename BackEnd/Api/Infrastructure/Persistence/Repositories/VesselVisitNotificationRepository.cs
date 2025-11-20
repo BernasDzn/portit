@@ -1,6 +1,7 @@
 namespace Api.Infrastructure.Persistence.Repositories;
 
 using System.Collections;
+using Api.Application.DataTransfer;
 using Api.Application.DataTransfer.Filters;
 using Api.Application.Exceptions;
 using Api.Domain.Entities;
@@ -224,6 +225,37 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
         catch
         {
             throw new PersistencyFailedException("Failed to retrieve vessel visit notifications for the specified day from the database.");
+        }
+    }
+
+    public async Task<VesselVisitDistributionDto> GetVesselVisitNotificationDistributionAsync()
+    {
+        try
+        {
+            var distribution = (await _context.VesselVisitNotifications
+                .GroupBy(vvn => vvn.Status)
+                .Select(g => new { Status = g.Key, Count = g.Count() })
+                .ToListAsync())
+                .ToDictionary(x => x.Status, x => x.Count);
+
+            int pendingCount = distribution.ContainsKey(NotificationStatus.ApprovalPending) ? distribution[NotificationStatus.ApprovalPending] : 0;
+            int acceptedCount = _context.VesselVisitNotifications
+                .Count(vvn => vvn.NotificationDecisions.Any(nd => nd.Status == NotificationDecisionStatus.Approved));
+            int rejectedCount = _context.VesselVisitNotifications
+                .Count(vvn => vvn.NotificationDecisions.Any(nd => nd.Status == NotificationDecisionStatus.Rejected));
+
+            var dto = new VesselVisitDistributionDto
+            {
+                Pending = pendingCount,
+                Accepted = acceptedCount,
+                Rejected = rejectedCount
+            };
+
+            return dto;
+        }
+        catch
+        {
+            throw new PersistencyFailedException("Failed to retrieve vessel visit notification distribution from the database.");
         }
     }
 }

@@ -1,3 +1,4 @@
+using Api.Application.DataTransfer;
 using Api.Application.DataTransfer.Filters;
 using Api.Domain.Entities;
 using Api.Domain.IRepository;
@@ -17,4 +18,5 @@ public interface IVesselVisitNotificationRepository : IGenericRepository<VesselV
     Task<Page<VesselVisitNotification>> FilterVesselVisitNotificationsAsync(VesselVisitNotificationFilter filter, uint userId);
     Task<List<VesselVisitNotification>> GetVesselVisitNotificationsOnDayAsync(DateTime day, uint daysAhead);
     Task<Page<VesselVisitNotification>> FilterVesselVisitNotificationsPaAsync(VesselVisitNotificationFilterPa filter);
+    Task<VesselVisitDistributionDto> GetVesselVisitNotificationDistributionAsync();
 } 

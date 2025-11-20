@@ -122,6 +122,7 @@ const isLastStep = () => currentStep.value === totalSteps;
                 <p> Expected Arrival*</p>
                 <DatePicker
                     v-model="vvn.expectedArrival"
+                    input-id="vvn-expectedArrival"
                 />
             </div>
 
@@ -129,6 +130,7 @@ const isLastStep = () => currentStep.value === totalSteps;
                 <p> Expected Departure*</p>
                 <DatePicker
                     v-model="vvn.expectedDeparture"
+                    input-id="vvn-expectedDeparture"
                 />
             </div>
         </div>
@@ -143,6 +145,7 @@ const isLastStep = () => currentStep.value === totalSteps;
           valueKey="imoNumber"
           labelKey="imoNumber"
           required
+          input-id="vvn-vesselImo"
         />
       </div>
 
@@ -150,18 +153,18 @@ const isLastStep = () => currentStep.value === totalSteps;
       <div v-if="currentStep === 2" class="step">
         <p class="section-title">Crew Details</p>
 
-        <FormField required name="Captain Name*" v-model="vvn.crewDetails.captain.value" placeholderText="Enter Captain Name" type="text" />
+        <FormField required name="Captain Name*" v-model="vvn.crewDetails.captain.value" placeholderText="Enter Captain Name" type="text" input-id="vvn-captainName" />
 
         <br>
 
-        <FormField required name="Total Crew Members*" v-model="vvn.crewDetails.totalCrewMembers" placeholderText="Enter Total Crew Members" type="text" pattern="^\d+$" />
+        <FormField required name="Total Crew Members*" v-model="vvn.crewDetails.totalCrewMembers" placeholderText="Enter Total Crew Members" type="text" pattern="^\d+$" input-id="vvn-totalCrewMembers" />
       </div>
 
       <!-- STEP 3 -->
       <div v-if="currentStep === 3" class="step">
         <p class="section-title">Cargo Requirements</p>
 
-        <FormField name="Is Cargo Hazardous?" v-model="vvn.isCargoHazardous" type="checkbox" />
+        <FormField name="Is Cargo Hazardous?" v-model="vvn.isCargoHazardous" type="checkbox" input-id="vvn-isCargoHazardous" />
         
         <div v-if="vvn.isCargoHazardous">
             <p>Safety officers</p>
@@ -170,7 +173,7 @@ const isLastStep = () => currentStep.value === totalSteps;
 
         <br>
 
-        <FormField name="Special Requirements" v-model="vvn.specialRequirements" placeholderText="Enter any special requirements" type="textarea" />
+        <FormField name="Special Requirements" v-model="vvn.specialRequirements" placeholderText="Enter any special requirements" type="textarea" input-id="vvn-specialRequirements" />
       </div>
 
       <!-- STEP 4 -->

@@ -48,17 +48,17 @@ const submitDock = (obj: any) =>
                 <div class="form">
                     <div class="general-info">
                         <p class="section-title">{{ t('dock.generalFields') }}</p>
-                        <FormField class="field" :name="t('dock.fields.code.title') + '*'" v-model="dock.code" :placeholderText="t('dock.fields.code.placeholder')" pattern="^[a-zA-Z0-9]+$" required/>
-                        <FormField class="field" :name="t('dock.fields.name.title') + '*'" v-model="dock.name" :placeholderText="t('dock.fields.name.placeholder')" required/>
-                        <FormField class="field" :name="t('dock.fields.location.title') + '*'" v-model="dock.location" :placeholderText="t('dock.fields.location.placeholder')" required/>
+                        <FormField class="field" inputId="dock-code" :name="t('dock.fields.code.title') + '*'" v-model="dock.code" :placeholderText="t('dock.fields.code.placeholder')" pattern="^[a-zA-Z0-9]+$" required/>
+                        <FormField class="field" inputId="dock-name" :name="t('dock.fields.name.title') + '*'" v-model="dock.name" :placeholderText="t('dock.fields.name.placeholder')" required/>
+                        <FormField class="field" inputId="dock-location" :name="t('dock.fields.location.title') + '*'" v-model="dock.location" :placeholderText="t('dock.fields.location.placeholder')" required/>
                     </div>
                     <span class="section-divider"></span>
                     
                     <div class="measurements">
                         <p class="section-title">{{ t('physicalCharacteristics.title') }}</p>
-                        <FormField class="field" :name="t('physicalCharacteristics.length.title') + '*'" v-model.number="dock.physicalCharacteristics.length" :placeholderText="t('physicalCharacteristics.length.placeholder')" pattern="^\d+(\.\d{1,2})?$" required/>
-                        <FormField class="field" :name="t('physicalCharacteristics.depth.title') + '*'" v-model.number="dock.physicalCharacteristics.depth" :placeholderText="t('physicalCharacteristics.depth.placeholder')" pattern="^\d+(\.\d{1,2})?$" required/>
-                        <FormField class="field" :name="t('physicalCharacteristics.draft.title') + '*'" v-model.number="dock.physicalCharacteristics.draft" :placeholderText="t('physicalCharacteristics.draft.placeholder')" pattern="^\d+(\.\d{1,2})?$" required/>
+                        <FormField class="field" inputId="dock-length" :name="t('physicalCharacteristics.length.title') + '*'" v-model.number="dock.physicalCharacteristics.length" :placeholderText="t('physicalCharacteristics.length.placeholder')" pattern="^\d+(\.\d{1,2})?$" required/>
+                        <FormField class="field" inputId="dock-depth" :name="t('physicalCharacteristics.depth.title') + '*'" v-model.number="dock.physicalCharacteristics.depth" :placeholderText="t('physicalCharacteristics.depth.placeholder')" pattern="^\d+(\.\d{1,2})?$" required/>
+                        <FormField class="field" inputId="dock-draft" :name="t('physicalCharacteristics.draft.title') + '*'" v-model.number="dock.physicalCharacteristics.draft" :placeholderText="t('physicalCharacteristics.draft.placeholder')" pattern="^\d+(\.\d{1,2})?$" required/>
                     </div>
 
                     <span class="section-divider"></span>
@@ -73,6 +73,7 @@ const submitDock = (obj: any) =>
                             :placeholderText="t('dock.fields.supportedVesselTypes.vesselTypes.placeholder')"
                             valueKey="name"
                             labelKey="name"
+                            inputId="dock-vessel-types"
                             required
                             multiple
                         />

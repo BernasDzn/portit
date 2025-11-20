@@ -77,4 +77,8 @@ const itemsToShow = computed(() => {
   overflow: hidden;
 }
 
+.sidebar{
+  z-index: 1;
+}
+
 </style>

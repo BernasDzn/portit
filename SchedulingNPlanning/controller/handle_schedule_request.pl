@@ -33,6 +33,7 @@ format_timetable([(Name, LoadingEnterTime, LoadingExitTime)|Rest], [Dict|Formatt
         loading_enter_time: LoadingEnterTime,
         loading_exit_time: LoadingExitTime
     },
+    !,
     format_timetable(Rest, FormattedRest).
 
 % Fall back, should only be called for non list inputs

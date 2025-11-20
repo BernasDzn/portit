@@ -12,20 +12,38 @@ public class PortLayoutController : ControllerBase
 	private readonly IStorageAreaService _storageAreaService;
 	private readonly IPhysicalResourceService _physicalResourceService;
 	private readonly ILogger<PortLayoutController> _logger;
+	private readonly IVesselVisitNotificationService _vvnService;
 
 	public PortLayoutController(
 		IDockService dockService,
 		IStorageAreaService storageAreaService,
 		IPhysicalResourceService physicalResourceService,
+		IVesselVisitNotificationService vvnService,
 		ILogger<PortLayoutController> logger)
 	{
 		_dockService = dockService;
 		_storageAreaService = storageAreaService;
 		_physicalResourceService = physicalResourceService;
+		_vvnService = vvnService;
 		_logger = logger;
 	}
 
-	[HttpGet(Name = "GetPortLayout")]
+	[HttpGet("/VesselPositions", Name = "GetVesselPositions")]
+	public async Task<ActionResult<IEnumerable<VesselPositionDto>>> GetVesselPositions()
+	{
+		try
+		{
+			var vesselPositions = await _vvnService.GetVesselPositionsAsync();
+			return Ok(vesselPositions);
+		}
+		catch (Exception e)
+		{
+			_logger.LogError("Error fetching vessel positions, {Message}", e.Message);
+			return StatusCode(500, "An error occurred while fetching vessel positions.");
+		}
+	}
+
+	[HttpGet("/PortLayout", Name = "GetPortLayout")]
 	public async Task<ActionResult<IEnumerable<PortChunk>>> GetPortLayout()
 	{
 		try
@@ -41,7 +59,7 @@ public class PortLayoutController : ControllerBase
 			const int gridWidth = 10;
 			
 			// First 2 rows: Warehouses and Yards (column by column)
-			var storageAreasList = storageAreas.ToList();
+            var storageAreasList = storageAreas.ToList();
 			int storageIndex = 0;
 
 			for (int col = 0; col < gridWidth; col++)
@@ -51,8 +69,8 @@ public class PortLayoutController : ControllerBase
 					if (storageIndex < storageAreasList.Count)
 					{
 						var storage = storageAreasList[storageIndex];
-						var chunkType = storage.Type == Domain.Entities.StorageAreaType.Warehouse 
-							? ChunkType.Warehouse 
+						var chunkType = storage.Type == Domain.Entities.StorageAreaType.Warehouse
+							? ChunkType.Warehouse
 							: ChunkType.Yard;
 
 						chunks.Add(new PortChunk(
@@ -62,10 +80,11 @@ public class PortLayoutController : ControllerBase
 							row
 						));
 						storageIndex++;
-					}else{
-						// Fill remaining spaces with Land chunks
+					}
+					else
+					{
 						chunks.Add(new PortChunk(
-							"Land",
+							$"Land_{col}_{row}",
 							ChunkType.Land,
 							col,
 							row

@@ -163,6 +163,7 @@ onMounted(async () => {
                 v-model="genericResource.code"
                 :placeholderText="t('physicalResource.fields.code.placeholder')"
                 pattern="^[a-zA-Z0-9]+$"
+                input-id="pr-code"
             />
 
             <span class="section-divider"></span>
@@ -173,6 +174,7 @@ onMounted(async () => {
                 :name="`${t('physicalResource.fields.description.title')}*`"
                 v-model="genericResource.description"
                 :placeholderText="t('physicalResource.fields.description.placeholder')"
+                input-id="pr-description"
             />
 
             <span class="section-divider"></span>
@@ -184,6 +186,7 @@ onMounted(async () => {
                 :items="['Available', 'Maintenance', 'Out of Service']"
                 :placeholderText="t('physicalResource.fields.status.placeholder')"
                 required
+                input-id="pr-status"
             />
 
             <span class="section-divider"></span>
@@ -196,6 +199,7 @@ onMounted(async () => {
                 fetch-on-mount
                 :placeholderText="t('staff.fields.qualifications.placeholder')"
                 multiple
+                input-id="pr-qualifications"
             />
 
             <span class="section-divider"></span>
@@ -207,6 +211,7 @@ onMounted(async () => {
                 v-model="genericResource.setupTime"
                 :placeholderText="t('physicalResource.fields.setupTime.placeholder')"
                 pattern="^[0-9]+$"
+                input-id="pr-setupTime"
             />
         </div>
 
@@ -233,6 +238,7 @@ onMounted(async () => {
           valueKey="code"
           labelKey="name"
           required
+          input-id="pr-servingDock"
         />
         <br />
         <FormField
@@ -241,6 +247,7 @@ onMounted(async () => {
           :name="`${t('physicalResource.fields.liftingCapacity.title')}*`"
           v-model="genericResource.liftingCapacity"
           pattern="^[0-9]+$"
+          input-id="pr-liftingCapacity"
         />
         <FormField
           required
@@ -248,6 +255,7 @@ onMounted(async () => {
           :name="`${t('physicalResource.fields.containersPerHour.title')}*`"
           v-model="genericResource.containersPerHour"
           pattern="^[0-9]+$"
+          input-id="pr-containersPerHour"
         />
       </div>
 
@@ -259,6 +267,7 @@ onMounted(async () => {
           :name="`${t('physicalResource.fields.liftingCapacity.title')}*`"
           v-model="genericResource.liftingCapacity"
           pattern="^[0-9]+$"
+          input-id="pr-liftingCapacity"
         />
         <FormField
           required
@@ -266,6 +275,7 @@ onMounted(async () => {
           :name="`${t('physicalResource.fields.containersPerHour.title')}*`"
           v-model="genericResource.containersPerHour"
           pattern="^[0-9]+$"
+          input-id="pr-containersPerHour"
         />
       </div>
 
@@ -277,6 +287,7 @@ onMounted(async () => {
           :name="`${t('physicalResource.fields.maxLoadCapacity.title')}*`"
           v-model="genericResource.maxLoadCapacity"
           pattern="^[0-9]+$"
+          input-id="pr-maxLoadCapacity"
         />
         <FormField
           required
@@ -284,6 +295,7 @@ onMounted(async () => {
           :name="`${t('physicalResource.fields.averageSpeed.title')}*`"
           v-model="genericResource.averageSpeed"
           pattern="^[0-9]+$"
+          input-id="pr-averageSpeed"
         />
         <FormField
           required
@@ -291,6 +303,7 @@ onMounted(async () => {
           :name="`${t('physicalResource.fields.containersPerTrip.title')}*`"
           v-model="genericResource.containersPerTrip"
           pattern="^[0-9]+$"
+          input-id="pr-containersPerTrip"
         />
       </div>
     </EntityForm>

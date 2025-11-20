@@ -361,4 +361,19 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
         }
     }
 
+    [HttpGet("distribution", Name = "GetVesselVisitNotificationDistribution")]
+    [Authorize(Policy = "VesselVisitNotification.View")]
+    public async Task<ActionResult<VesselVisitDistributionDto>> Count()
+    {
+        try
+        {
+            var distribution = await _notificationService.GetVesselVisitNotificationDistribution();
+            return Ok(distribution);
+        }
+        catch (System.Exception)
+        {
+            _logger.LogCritical("Error retrieving vessel visit notification distribution");
+            return StatusCode(500, "An error occurred while retrieving vessel visit notification distribution.");
+        }
+    }
 }

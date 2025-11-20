@@ -1,6 +1,7 @@
 :- consult('./vvn_service.pl').
+:- consult('./crane_service.pl').
 :- consult('../dml/vvn_mapper.pl').
-:- consult('../dml/operational_window_mapper.pl').
+:- consult('../dml/crane_mapper.pl').
 :- consult('../algorithms/optimal_scheduling.pl').
 :- consult('../algorithms/greedy_scheduling.pl').
 
@@ -21,10 +22,6 @@ date_weekday(DateString, Weekday) :-
 % This predicate will see what operations need to be scheduled for loading or unloading on a given date 
 % following the specified scheduling algorithm.
 schedule_daily_operations(TargetDate, DaysAhead, DockCode, Algorithm, ScheduleResult, Metrics) :-
-
-    % ok this is gonna caus eproblems with the operational window
-    % so lets just set days ahead to 1 for now
-    DaysAhead = 1,
 
     % Fetch data from database
     get_vvns_on_day(TargetDate, DaysAhead, DockCode, JsonData),
@@ -50,26 +47,25 @@ schedule_daily_operations1(JsonData, _, 'Missing resource (qualified staff or ST
 
 schedule_daily_operations1(JsonData, Algorithm, ScheduleResult, Metrics) :-
     % Parse JSON data to extract vessel facts
-    JsonList = JsonData.craneWorkloads,
-    extract_scheduling_data(JsonList, VesselFacts, IntervalFact),
+    extract_scheduling_data(JsonData, VesselFacts, CraneFacts),
     
     format(user_error, 'Extracted Vessel Facts: ~w~n', [VesselFacts]),
-    format(user_error, 'Extracted Interval Facts: ~w~n', [IntervalFact]),
+    format(user_error, 'Extracted Crane Facts: ~w~n', [CraneFacts]),
 
     % Cleanup any previous facts
-    retractall(vessel(_,_,_,_,_)),
-    retractall(interval(_,_,_)),
-    
+    retractall(vessel(_,_,_,_,_,_)),
+    retractall(crane(_,_)),
+
     flatten(VesselFacts, FlatVesselFacts),
-    flatten(IntervalFact, FlatIntervalFacts),
+    flatten(CraneFacts, FlatCraneFacts),
 
     % Assert new facts dynamically
+    assert_crane_facts(FlatCraneFacts),
     assert_vessel_facts(FlatVesselFacts),
-    assert_interval_facts(FlatIntervalFacts),
 
     % Run the appropriate algorithm based on selection
     run_scheduling_algorithm(Algorithm, ScheduleResult, TotalDelay, ComputationTime),
-    
+
     % Prepare metrics for comparison
     length(FlatVesselFacts, VesselCount),
     Metrics = #{
@@ -100,37 +96,37 @@ run_scheduling_algorithm(_, ScheduleResult, TotalDelay, ComputationTime) :-
     format(user_error, 'Unknown algorithm, defaulting to optimal~n', []),
     run_scheduling_algorithm('optimal', ScheduleResult, TotalDelay, ComputationTime).
 
-% get only the names of the vessels from the vessel facts
-get_vessel_names([], []).
-get_vessel_names([vessel(Name,_,_,_,_,_)|Rest], [Name|RestNames]) :-
-    get_vessel_names(Rest, RestNames).
-
 % Dynamically assert vessel facts into the knowledge base
 assert_vessel_facts([]).
-assert_vessel_facts([vessel(Name, ArrivalTime, DepartureTime, UnloadingTime, LoadingTime)|Rest]) :-
-    assertz(vessel(Name, ArrivalTime, DepartureTime, UnloadingTime, LoadingTime)),
+assert_vessel_facts([vessel(Name, ArrivalTime, DepartureTime, UnloadingTime, LoadingTime, Crane)|Rest]) :-
+
+    % Espeta todas as cranes logo associadas a cada vessel, depois podemos mudar dinamicamente esta lista
+    % Francisco muda isto !
+    findall(crane(CraneName, Speed), crane(CraneName, Speed), CraneFacts),
+
+    assertz(vessel(Name, ArrivalTime, DepartureTime, UnloadingTime, LoadingTime, CraneFacts)),
     assert_vessel_facts(Rest).
 
-assert_interval_facts([]).
-assert_interval_facts([interval(Day, StartTime, EndTime)|Rest]) :-
-    assertz(interval(Day, StartTime, EndTime)),
-    assert_interval_facts(Rest).
+assert_crane_facts([]).
+assert_crane_facts([crane(Name, Speed)|Rest]) :-
+    assertz(crane(Name, Speed)),
+    assert_crane_facts(Rest).
 
 % Extract scheduling data from JSON list into a list of vessel facts and scheduling facts
 extract_scheduling_data([], [], []).
-extract_scheduling_data([WorkloadJson|RestJson], [VesselFact | RestVesselFacts], [IntervalFact, RestIntervalFacts]) :-
+extract_scheduling_data(WorkloadJson, VesselFact, CraneFact) :-
+    format(user_error, 'Processing Workload JSON: ~w~n', [WorkloadJson]),
     extract_vessel_data(WorkloadJson.vesselTaskFacts, VesselFact),
-    extract_interval_data(WorkloadJson.operatingWindow.shifts, IntervalFact),
-    extract_scheduling_data(RestJson, RestVesselFacts, RestIntervalFacts).
+    extract_crane_data(WorkloadJson.craneWorkloads, CraneFact).
 
 extract_vessel_data([], []).
 extract_vessel_data([JsonData | RestJson], [VesselFact | RestVesselFacts]) :-
     json_to_vvn_fact(JsonData, VesselFact),
-    % format(user_error, 'Extracted Vessel Fact: ~w~n', [VesselFact]),
+    format(user_error, 'Extracted Vessel Fact: ~w~n', [VesselFact]),
     extract_vessel_data(RestJson, RestVesselFacts).
 
-extract_interval_data([], []).
-extract_interval_data([JsonData | RestJson], [IntervalFact | RestIntervalFacts]) :-
-    json_to_interval_fact(JsonData, IntervalFact),
-    % format(user_error, 'Extracted Interval Fact: ~w~n', [IntervalFact]),
-    extract_interval_data(RestJson, RestIntervalFacts).
+extract_crane_data([], []).
+extract_crane_data([JsonData | RestJson], [CraneFact | RestCraneFacts]) :-
+    json_to_crane_fact(JsonData, CraneFact),
+    format(user_error, 'Extracted Crane Fact: ~w~n', [CraneFact]),
+    extract_crane_data(RestJson, RestCraneFacts).

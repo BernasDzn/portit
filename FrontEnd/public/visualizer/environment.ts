@@ -95,8 +95,8 @@ export default class Environment {
         this.sunLight = new THREEx.DayNight.SunLight();
         
         this.sunLight.object3d.castShadow = true;
-        this.sunLight.object3d.shadow.mapSize.width = 4096;
-        this.sunLight.object3d.shadow.mapSize.height = 4096;
+        this.sunLight.object3d.shadow.mapSize.width = 16384;
+        this.sunLight.object3d.shadow.mapSize.height = 16384;
         this.sunLight.object3d.shadow.camera.near = 1;
         this.sunLight.object3d.shadow.camera.far = 100000; // sun distance is 90000
         this.sunLight.object3d.shadow.camera.left = -800;

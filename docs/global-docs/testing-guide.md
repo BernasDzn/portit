@@ -92,6 +92,11 @@ cd FrontEnd
 npm run test:integration
 ```
 
+#### Run Integration Tests with UI
+```bash
+npx playwright test --ui
+```
+
 #### Run All E2E Tests
 ```bash
 cd FrontEnd

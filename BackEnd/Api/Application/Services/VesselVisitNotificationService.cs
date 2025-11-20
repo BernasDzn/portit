@@ -11,6 +11,7 @@ using Api.Domain.ValueObjects;
 using Api.Infrastructure.Exceptions;
 using Api.Infrastructure.Utilities;
 using Microsoft.AspNetCore.Authorization;
+using Api.Domain;
 
 public class VesselVisitNotificationService : IVesselVisitNotificationService
 {
@@ -258,29 +259,37 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         // In the future, we might need to handle multiple docks
         var filteredNotifications = notifications.Where(n => n.GetLatestDecision()!.AssignedDock!.Code.Value == dockCode.Value);
 
-        IEnumerable<STSCrane> cranesServingDock = await _physicalResourceRepository.GetSTSCranesByDockCodeAsync(dock.Code.Value);
+        IEnumerable<STSCrane> cranesServingDock = (await
+            _physicalResourceRepository.GetSTSCranesByDockCodeAsync(dock.Code.Value))
+            .Where(c => c.Status == ResourceStatus.Available)
+            .ToList();
+
         // Select only available cranes
         cranesServingDock = cranesServingDock.Where(c => c.Status == ResourceStatus.Available);
 
         if (!cranesServingDock.Any())
             throw new EntityNotFoundException($"No STS cranes found serving dock with code {dock.Code.Value}.");
 
-        // Crane selection algorithm
-        // For now we will choose the fastest crane available
-        // We will change this to support multiple cranes in the future (é uma US troll face)
-        STSCrane selectedCrane = cranesServingDock.OrderBy(c => c.ContainersPerHour).First();
+        // Calculate crane data
+        List<CraneWorkloadDto> craneWorkloads = new List<CraneWorkloadDto>();
+        foreach (var crane in cranesServingDock)
+        {
+            OperationalWindow effectiveOperatingWindow = await CalculateEffectiveCraneOperatingWindow(crane, date, daysAhead);
+
+            CraneWorkloadDto craneWorkload = new CraneWorkloadDto
+            {
+                Crane = crane.Code.Value,
+                Speed = crane.ContainersPerHour,
+                operatingWindow = effectiveOperatingWindow
+            };
+
+            craneWorkloads.Add(craneWorkload);
+        }
 
         SchedulingResultDto result = new SchedulingResultDto
         {
-            CraneWorkloads = new List<CraneWorkloadDto>
-            {
-                new CraneWorkloadDto
-                {
-                    Crane = selectedCrane.Code.Value,
-                    operatingWindow = await CalculateEffectiveCraneOperatingWindow(selectedCrane, date, daysAhead),
-                    VesselTaskFacts = new List<VesselTaskFactDto>()
-                }
-            },
+            CraneWorkloads = craneWorkloads,
+            VesselTaskFacts = new List<VesselTaskFactDto>(),
             Comment = string.Empty
         };
 
@@ -295,7 +304,6 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         {
             foreach (var notification in filteredNotifications)
             {
-                var decision = notification.GetLatestDecision()!;
                 var vessel = notification.Vessel;
 
                 VesselTaskFactDto vesselTaskFact = new VesselTaskFactDto
@@ -303,17 +311,17 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
                     Vessel = vessel.ToDTO(),
                     ETA = CalculateBaseHour(date, notification.ExpectedArrival),
                     ETD = CalculateBaseHour(date, notification.ExpectedDeparture),
-                    LoadingTime = CalculateLoadUnloadingTime(notification.LoadCargoManifest ?? new List<CargoTransport>(), selectedCrane),
-                    UnloadingTime = CalculateLoadUnloadingTime(notification.UnloadCargoManifest ?? new List<CargoTransport>(), selectedCrane),
+                    LoadingCount = notification.LoadCargoManifest?.Count ?? 0 /*CalculateLoadUnloadingTime(notification.LoadCargoManifest ?? new List<CargoTransport>(), selectedCrane)*/,
+                    UnloadingCount = notification.LoadCargoManifest?.Count ?? 0 /*CalculateLoadUnloadingTime(notification.UnloadCargoManifest ?? new List<CargoTransport>(), selectedCrane)*/,
                 };
 
-                if (vesselTaskFact.LoadingTime > 0 && vesselTaskFact.UnloadingTime > 0)
-                    result.CraneWorkloads[0].VesselTaskFacts.Add(vesselTaskFact);
+                if (vesselTaskFact.LoadingCount > 0 && vesselTaskFact.UnloadingCount > 0)
+                    result.VesselTaskFacts.Add(vesselTaskFact);
             }
         }
         catch (System.Exception e)
         {
-            result.CraneWorkloads[0].VesselTaskFacts.Clear();
+            result.VesselTaskFacts.Clear();
             result.Comment = "Error calculating scheduling data. " + e.Message;
         }
 
@@ -352,5 +360,39 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
 
         OperationalWindow qualifiedStaffAvailablity = OperationalWindow.Merge(staffOperationalWindows);
         return crane.OperationalWindow.Intercept(qualifiedStaffAvailablity);
+    }
+
+    public async Task<VesselVisitDistributionDto> GetVesselVisitNotificationDistribution()
+    {
+        VesselVisitDistributionDto distribution = await _notificationRepository.GetVesselVisitNotificationDistributionAsync();
+        AppLogEvents.LogRetrieve(_logger, "vessel visit notification distribution", 1);
+        return distribution;
+    }
+
+    public async Task<IEnumerable<VesselPositionDto>> GetVesselPositionsAsync()
+    {
+        var approovedNotifications = await _notificationRepository.GetVesselVisitNotificationsAsync();
+        var positions = approovedNotifications
+            .Where(n => n.Status == NotificationStatus.Decided 
+                    && n.NotificationDecisions.Any(
+                        d => d.Status == NotificationDecisionStatus.Approved
+                        )
+                    )
+            .Select(n => new VesselPositionDto(
+                n.Vessel.ImoIdentifier.Value,
+                n.GetLatestDecision()!.AssignedDock!.Code.Value,
+                n.ExpectedArrival,
+                n.ExpectedDeparture
+            ));
+        //remove duplicates
+        foreach (var pos in positions.ToList())
+        {
+            if (positions.Count(p => p.VesselId == pos.VesselId) > 1)
+            {
+                positions = positions.Where(p => p.VesselId != pos.VesselId || (p.VesselId == pos.VesselId && p.ArrivalTime == pos.ArrivalTime)).ToList();
+            }
+        }
+        AppLogEvents.LogRetrieve(_logger, "vessel positions", positions.Count());
+        return positions;
     }
 }

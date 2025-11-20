@@ -36,6 +36,13 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
+  optimizeDeps: {
+    // Exclude three.js examples and docs from dependency scanning
+    entries: [
+      'index.html',
+      'public/visualizer/index.html'
+    ],
+  },
   server: {
     allowedHosts: true,
     // Proxy API calls to backend dev server to avoid browser TLS issues with self-signed certs

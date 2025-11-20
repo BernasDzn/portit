@@ -62,7 +62,7 @@ export default class Port3D {
         
         // Enable shadows
         this.renderer.shadowMap.enabled = true;
-        this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        this.renderer.shadowMap.type = THREE.PCFShadowMap;
 
         document.body.appendChild(this.renderer.domElement);
 
@@ -99,9 +99,9 @@ export default class Port3D {
         this.portLayout = new PortLayout(this.scene, this.camera);
         
         // Load vessel asynchronously
-        this.portLayout.addVessel("Vessel 1", new THREE.Vector3(0, -12, -40), this.scene).catch(err => {
-            console.error("Failed to load vessel:", err);
-        });
+        // this.portLayout.addVessel("Vessel 1", new THREE.Vector3(0, -12, -40), this.scene).catch(err => {
+        //     console.error("Failed to load vessel:", err);
+        // });
 
         for (let i = 0; i < 3; i++) 
             this.portLayout.addSeagull(this.scene);
