@@ -30,8 +30,8 @@ var builder = WebApplication.CreateBuilder(args);
 var isTestingEnvironment = builder.Environment.IsEnvironment("Testing");
 if (isTestingEnvironment)
 {
-    Console.WriteLine("⚠️  WARNING: Running in TESTING ENVIRONMENT - Authentication and Authorization are DISABLED!");
-    Console.WriteLine("⚠️  WARNING: Using IN-MEMORY DATABASE - All data will be lost on restart!");
+    Console.WriteLine("WARNING: Running in TESTING ENVIRONMENT - Authentication and Authorization are DISABLED!");
+    Console.WriteLine("WARNING: Using IN-MEMORY DATABASE - All data will be lost on restart!");
 }
 
 // Logging definitions

@@ -1,0 +1,86 @@
+@startuml sequence_diagram_filter
+skinparam handwritten true
+skinparam monochrome true
+skinparam packageStyle rect
+skinparam defaultFontName FG Virgil
+skinparam shadowing false
+
+actor User as Actor
+participant "UI Pages" as UI <<presentation>>
+participant "UI XptoFilterDto" as UiDto <<dto>>
+participant "UI XptoService" as UiService <<service>>
+participant API as API <<application>>
+participant XptoController as Controller <<controller>>
+participant XptoService as Service <<service>>
+participant XptoRepository as Repository <<repository>>
+participant XptoContext as Context <<context>>
+participant "Page<Xpto>" as Page <<entity>>
+database Database
+
+title Filter Xpto
+
+Actor --> UI: Types filter parameters
+Actor --> UI: Submits filter form
+activate UI
+
+    UI --> UiDto: new XptoFilterDto
+    activate UiDto
+        UiDto --> UI: filterDto
+    deactivate UiDto
+
+    UI --> UiService: filterXpto(filterDto)
+    activate UiService
+
+        UiService --> API: HTTP GET /api/xpto/filter?...
+        activate API
+
+            alt Check authorization diagram
+                API --> Controller: route
+            end
+            activate Controller
+
+                Controller --> Service: Request filter
+                activate Service
+
+                    Service --> Repository: FilterXpto(filter)
+                    activate Repository
+                    
+                        Repository --> Context: AsQueryable()
+                        activate Context
+                            Context --> Repository: queryableInstance
+                        deactivate Context
+
+                        loop each filter parameter
+                            Repository --> Repository: queryableInstance.Where(e.parameter = filter.parameter)
+                        end
+
+                        Repository --> Context: query()
+                        activate Context
+                            Context --> Database: SELECT
+                            Context --> Repository: result
+                        deactivate Context
+
+                        Repository --> Service: Page<xptoInstance>
+                    deactivate Repository
+
+                    Service --> Page: map to Page<xptoDto>
+                    activate Page
+                        Page --> Service: Page<xptoDto>
+                    deactivate Page
+
+                    Service --> Controller: Page<xptoDto>
+                deactivate Service
+
+                Controller --> API: Ok(Page<xptoDto>)
+            deactivate Controller
+
+            API --> UiService: HTTP Response
+        deactivate API
+
+        UiService --> UI: filtered results
+    deactivate UiService
+
+UI --> Actor: Show Xpto List
+deactivate UI
+
+@enduml

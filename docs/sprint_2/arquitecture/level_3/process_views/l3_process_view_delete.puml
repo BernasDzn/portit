@@ -1,0 +1,43 @@
+@startuml sequence_diagram_delete
+skinparam handwritten true
+skinparam monochrome true
+skinparam packageStyle rect
+skinparam defaultFontName FG Virgil
+skinparam shadowing false
+
+actor User as Actor
+participant "U I" as UI <<presentation>>
+participant BackEnd as BackEnd <<Container C4>>
+database Database
+
+title Delete Xpto
+
+Actor --> UI: Delete Xpto
+activate UI
+
+    UI --> BackEnd: HTTP DELETE /api/xpto/{id}
+
+    activate BackEnd
+        BackEnd --> Database: SELECT
+        activate Database
+            Database --> BackEnd: XptoInstance (where id = id)
+        deactivate Database
+
+        group if xptoInstance does not exist
+        BackEnd --> UI: HTTP Response
+        UI --> Actor: Error\n(xpto does not exist)
+        end
+
+        BackEnd --> Database: DELETE
+        activate Database
+            Database --> BackEnd: success/failure
+        deactivate Database
+
+        BackEnd --> UI: HTTP Response
+    
+    deactivate BackEnd
+        
+UI --> Actor
+deactivate UI
+            
+@enduml

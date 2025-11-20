@@ -1,0 +1,19 @@
+@startuml logicview_n3
+skinparam Linetype polyline
+
+
+circle " " as api
+
+rectangle "Master Data" as masterdata {
+	
+	[Backend] as backend
+
+	database "Backend\nDatabase" as database
+
+}
+
+api -- backend
+
+backend -(0- database : "Database\nApi"
+
+@enduml
