@@ -4,6 +4,12 @@
 
 :- dynamic vessel/6.
 
+% Helper: calculate sum of crane speeds
+get_crane_sum([], 0).
+get_crane_sum([crane(_, Speed) | RestCranes], Sum):-
+    get_crane_sum(RestCranes, Sum1),
+    Sum is (Sum1 + Speed).
+
 % ============================================================================
 % MAIN ENTRY POINT: GREEDY SCHEDULING ALGORITHM (Earliest Due Date)
 % ============================================================================
@@ -98,28 +104,27 @@ sequence_temporization_greedy(LV, SeqTriplets) :-
 % [(V, TInUnload, TEndLoad)|SeqTriplets] = output schedule with this vessel's times added
 sequence_temporization_greedy1(EndPrevSeq, [V|LV], [(V, TInUnload, TEndLoad)|SeqTriplets]) :-
     % Look up this vessel's data from the knowledge base
-    % vessel(Name, ArrivalTime, DepartureDeadline, UnloadTime, LoadTime, Crane)
-    vessel(V, TIn, _, TUnload, TLoad, _),
+    % vessel(Name, ArrivalTime, DepartureDeadline, UnloadContainerCount, LoadContainerCount, CraneList)
+    vessel(V, TIn, _, TUnloadContainers, TLoadContainers, Cranes),
+    
+    % Calculate actual time based on crane speeds
+    % Time = Containers / Speed
+    get_crane_sum(Cranes, CraneSpeed),
+    ( (TUnloadContainers > 0, CraneSpeed > 0) -> TUnload is (TUnloadContainers / CraneSpeed) ; TUnload = 0 ),
+    ( (TLoadContainers > 0, CraneSpeed > 0) -> TLoad is (TLoadContainers / CraneSpeed) ; TLoad = 0 ),
     
     % Decide when this vessel can start being serviced:
     % CASE 1: If the vessel hasn't arrived yet (TIn > EndPrevSeq)
     %         → it starts when it arrives (TInUnload = TIn)
-    %         Example: Dock free at hour 5, vessel arrives at hour 10 → starts at 10
-    % 
     % CASE 2: If the vessel is already waiting (TIn <= EndPrevSeq)
     %         → it starts right after previous vessel finishes (TInUnload = EndPrevSeq + 1)
-    %         Example: Dock free at hour 18, vessel arrived at hour 8 → starts at 19 (waited!)
     (TIn > EndPrevSeq -> TInUnload is TIn ; TInUnload is EndPrevSeq + 1),
     
     % Calculate when this vessel finishes all operations:
     % Finish time = Start + Unloading + Loading - 1
-    % We subtract 1 because hours are 0-indexed
-    % Example: Start at 10, unload 0h, load 8h → End at 10+0+8-1 = 17
-    %          (Operations happen during hours 10,11,12,13,14,15,16,17)
     TEndLoad is TInUnload + TUnload + TLoad - 1,
     
     % Recursively schedule the rest of the vessels
-    % Pass TEndLoad as the new "dock becomes free" time for the next vessel
     sequence_temporization_greedy1(TEndLoad, LV, SeqTriplets).
 
 % Base case: no more vessels to schedule

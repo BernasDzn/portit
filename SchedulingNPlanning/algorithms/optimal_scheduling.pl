@@ -30,15 +30,10 @@ get_crane_sum([crane(_, Speed) | RestCranes], Sum):-
     Sum is (Sum1 + Speed).
 
 calculate_load_unload_time(LoadCount, UnloadCount, CraneList, LoadTime, UnloadTime):-
-
-    % format(user_error, 'Calculating load/unload time with ~w cranes~n', [CraneList]),
     get_crane_sum(CraneList, Sum),
-
-    % LoadCount = 10,
-    % UnloadCount = 20.
-
-    ( LoadCount > 0 -> LoadTime = (Sum / LoadCount) ; LoadTime = 0 ),
-    ( UnloadCount > 0 -> UnloadTime = (Sum / UnloadCount) ; UnloadTime = 0 ).
+    % Time = Containers / Speed
+    ( (LoadCount > 0, Sum > 0) -> LoadTime is (LoadCount / Sum) ; LoadTime = 0 ),
+    ( (UnloadCount > 0, Sum > 0) -> UnloadTime is (UnloadCount / Sum) ; UnloadTime = 0 ).
 
 % Sequence temporization
 sequence_temporization(LV,SeqTriplets):-
