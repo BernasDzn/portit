@@ -321,7 +321,8 @@ var app = builder.Build();
 app.Logger.LogInformation("Starting application");
 app.Logger.LogInformation("Environment: {EnvironmentName}", app.Environment.EnvironmentName);
 
-if (configuration.GetValue<bool>("NukeDatabaseAndRunBootstrap"))
+// Always bootstrap in Testing environment, or when explicitly configured
+if (isTestingEnvironment || configuration.GetValue<bool>("NukeDatabaseAndRunBootstrap"))
 {
     using (var scope = app.Services.CreateScope())
     {
@@ -331,6 +332,11 @@ if (configuration.GetValue<bool>("NukeDatabaseAndRunBootstrap"))
         var roleManager = services.GetRequiredService<RoleManager<SystemUserRole>>();
     
         await Bootstrap.InitAsync(context, userManager, roleManager, nukeDatabase: true);
+        
+        if (isTestingEnvironment)
+        {
+            app.Logger.LogInformation("✓ Bootstrap completed for Testing environment");
+        }
     }
 }
 
