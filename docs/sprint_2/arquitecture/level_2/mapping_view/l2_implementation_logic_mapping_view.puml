@@ -1,0 +1,28 @@
+@startuml mapping_view_n2
+skinparam Linetype polyline
+
+title Level 2 - Implementation Logic Mapping View
+
+rectangle "Implementation View" {
+	package "PortTiT" {
+
+		package BackEnd {
+			
+		}
+	}
+}
+
+rectangle "logic View"{
+	circle " " as api
+
+	component "PorTiT" as masterdata_logic <<system C4>> {
+		
+		[Master Data] as backend <<container C4>>
+	}
+
+	api -- masterdata_logic
+}
+
+masterdata_logic ...> BackEnd : "<<manifests>>"
+
+@enduml
