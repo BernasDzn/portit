@@ -71,26 +71,28 @@ const submitStorageArea = (obj: any) =>
         <p class="subtitle">{{ t('storageArea.subtitle.create') }}</p>
         <EntityForm :object="storageArea" :submit-function="submitStorageArea">
             <div class="form-fields">
-                <FormField class="field" :name="t('storageArea.fields.nameCode.title')" v-model="storageArea.nameCode" :placeholderText="t('storageArea.fields.nameCode.placeholder')" required pattern="^[a-zA-Z0-9]*$"/>
-                <FormField class="field" :name="t('storageArea.fields.location.title')" v-model="storageArea.location" :placeholderText="t('storageArea.fields.location.placeholder')" required/>
+                <FormField input-id="storagearea-namecode" class="field" :name="t('storageArea.fields.nameCode.title')" v-model="storageArea.nameCode" :placeholderText="t('storageArea.fields.nameCode.placeholder')" required pattern="^[a-zA-Z0-9]*$"/>
+                <FormField input-id="storagearea-location" class="field" :name="t('storageArea.fields.location.title')" v-model="storageArea.location" :placeholderText="t('storageArea.fields.location.placeholder')" required/>
                 
                 <div class="field">
-                    <label>{{ t('storageArea.fields.type.title') }}</label>
+                    <label for="storagearea-type">{{ t('storageArea.fields.type.title') }}</label>
                     <sl-select 
+                        id="storagearea-type"
                         @sl-change="updateType($event.target.value)" 
                         :placeholder="t('storageArea.fields.type.placeholder')"
                         required
                     >
-                        <sl-option v-for="(typeName, typeKey) in StorageArea.sa_type" :key="typeKey" :value="typeKey">{{ t(`storageArea.fields.type.options.${typeName.toLowerCase()}`) }}</sl-option>
+                        <sl-option v-for="(typeName, typeKey) in StorageArea.sa_type" :key="typeKey" :id="`${typeKey}`" :value="typeKey">{{ t(`storageArea.fields.type.options.${typeName.toLowerCase()}`) }}</sl-option>
                     </sl-select>
                 </div>
 
-                <FormField class="field" :name="t('storageArea.fields.capacity.title')" v-model.number="storageArea.capacity" :placeholderText="t('storageArea.capacity.placeholder')" pattern="^[0-9]\d*$" required/>
-                <FormField class="field" :name="t('storageArea.fields.occupancy.placeholder')" v-model.number="storageArea.currentOccupancy" :placeholderText="t('storage-areas.currentOccupancy.placeholder')" pattern="^[0-9]\d*$" required/>
+                <FormField input-id="storagearea-capacity" class="field" :name="t('storageArea.fields.capacity.title')" v-model.number="storageArea.capacity" :placeholderText="t('storageArea.capacity.placeholder')" pattern="^[0-9]\d*$" required/>
+                <FormField input-id="storagearea-occupancy" class="field" :name="t('storageArea.fields.occupancy.placeholder')" v-model.number="storageArea.currentOccupancy" :placeholderText="t('storage-areas.currentOccupancy.placeholder')" pattern="^[0-9]\d*$" required/>
 
                 <div style="flex:100%; width: 100%;">
                     <p class="section-title">{{ t('dock.title') }}</p>
                     <EntityDropdown
+                        input-id="storagearea-docks"
                         class="field-dropdown"
                         :name="t('physicalResource.fields.servingDocks.title')"
                         :fetch-function="() => dockService.getDocks().then(page => (page.items || []).map(t => t.code))"

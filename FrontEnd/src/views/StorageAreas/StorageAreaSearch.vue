@@ -30,7 +30,7 @@ const fetchStorageAreas = async (filtering?: Filter<{ nameCode: string }>): Prom
       <h1 class="title">{{ t('storageArea.title') }}</h1>
       <p class="subtitle">{{ t('storageArea.subtitle.search') }}</p>
 
-      <ListingBox listingStyle="listing-grid" :fetch-function="fetchStorageAreas" search-filter="name" v-slot="{elements}">
+      <ListingBox listingStyle="listing-grid" :fetch-function="fetchStorageAreas" search-filter="nameCode" v-slot="{elements}">
         <li v-for="storageArea in elements" :key="storageArea.nameCode">
           <StorageAreaPrinter class="listing-box" :storage-area="storageArea" :link="`/storage-areas/view/${storageArea.nameCode}`" />
         </li>
