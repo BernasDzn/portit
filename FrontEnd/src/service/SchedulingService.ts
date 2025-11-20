@@ -48,6 +48,7 @@ export class SchedulingService implements ISchedulingService {
         doc.text('Ship name', 14, yPosition);
         doc.text('Arrival', 64, yPosition);
         doc.text('Departure', 114, yPosition);
+        doc.text('Cranes', 164, yPosition);
 
         doc.setFont('helvetica', 'normal');
 
@@ -57,6 +58,14 @@ export class SchedulingService implements ISchedulingService {
             doc.text(entry.name, 14, yPosition);
             doc.text(this.calculateDateOffset(date, entry.loading_enter_time).toLocaleString(), 64, yPosition);
             doc.text(this.calculateDateOffset(date, entry.loading_exit_time).toLocaleString(), 114, yPosition);
+            
+            if ((entry as any).cranes) {
+                const cranes = (entry as any).cranes;
+                const craneText = Array.isArray(cranes) ? cranes.join(', ') : String(cranes);
+                doc.text(craneText, 164, yPosition);
+            } else {
+                doc.text('-', 164, yPosition);
+            }
         }
 
         doc.setFontSize(10);
