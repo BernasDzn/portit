@@ -177,17 +177,27 @@ System tests verify the entire application stack working together.
 cd BackEnd/Api
 dotnet run --launch-profile http-testing
 ```
+2. **Frontend** running on local:
+```bash
+cd Frontend
+npm run local
+```
 
 ### Running System Tests
 
 System tests are E2E tests that connect to the real backend instead of mocking:
-
-1. Start the backend in Testing mode (see above)
-2. Run E2E tests without mocks:
+> **IMPORTANT NOTE**: the backend __MUST__ be re-run _after every sequence of "creation" test of an entity_ since the in memory db does not remove inserted data by tests.
 
 ```bash
 cd FrontEnd
 npm run test:e2e
+```
+
+For easier visualization of test workflow and **single test execution**, use the following commands:
+
+```bash
+cd FrontEnd
+npx playwright test --ui
 ```
 
 ### System Test Characteristics
@@ -222,11 +232,14 @@ npm run test:e2e -- --ui  # E2E with UI
 # Terminal 1: Backend
 cd BackEnd/Api && dotnet run --launch-profile http-testing
 
-# Terminal 2: Frontend  
-cd FrontEnd && npm run dev
+# Terminal 2: Frontend
+cd Frontend && npm run local
 
-# Terminal 3: E2E Tests (remove mocks first)
+# Terminal 3 ver1: E2E Tests no UI
 cd FrontEnd && npm run test:e2e
+
+# Terminal 3 ver2: E2E Tests with UI
+cd FrontEnd && npx playwright test --ui
 ```
 
 ---
