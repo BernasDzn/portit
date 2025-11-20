@@ -462,51 +462,60 @@ class YardChunk extends PortChunk {
         );
 
         scene.add(this.yardLabel);
-
-        // Add fences around the yard
-        await this.addFences(scene);
     }
 
     async addFences(scene) {
         const fenceModelPath = "/visualizer/models/lowpoly/fence.obj";
-        
-        // Load and cache the fence model
         if (!sharedModelCache[fenceModelPath]) {
             const model = await loadModel(fenceModelPath);
             centerModel(model);
             sharedModelCache[fenceModelPath] = model;
         }
-        
         const fenceModel = sharedModelCache[fenceModelPath];
-        
         const fenceScale = 2.0;
         const buffer = 1;
-        
-        // Create a test instance to measure actual dimensions after scaling
         const tempFence = fenceModel.clone();
         tempFence.scale.set(fenceScale, fenceScale, fenceScale);
         tempFence.updateMatrixWorld(true);
-        
         const fenceBox = new THREE.Box3().setFromObject(tempFence);
-        const fenceLength = fenceBox.max.z - fenceBox.min.z; // Length along Z axis (depth)
-        
-        // Calculate perimeter distances with buffer
+        const fenceLength = fenceBox.max.z - fenceBox.min.z;
         const perimeterX = chunkSize.x - (buffer * 2);
         const perimeterZ = chunkSize.z - (buffer * 2);
-        
-        // Calculate how many fence segments we need for each side
         const numFencesX = Math.max(1, Math.round(perimeterX / fenceLength));
         const numFencesZ = Math.max(1, Math.round(perimeterZ / fenceLength));
-        
         const halfChunkX = chunkSize.x / 2;
         const halfChunkZ = chunkSize.z / 2;
         const fenceY = this.position.y + chunkSize.y / 2;
-        
-        // North side (front)
+
+        // Determine chunk grid position
+        const chunkX = Math.round((this.position.x - worldOrigin.x) / chunkSize.x);
+        const chunkY = Math.round(-(this.position.z - worldOrigin.z) / chunkSize.z);
+
+        // Hif adjacent chunk is water or out of bounds
+        function isWaterOrOutOfBounds(x, y) {
+            if (x < 0 || x >= validChunkPositions.length || y < 0 || y >= validChunkPositions[0].length) {
+                return true;
+            }
+            return validChunkPositions[x][y] === 0;
+        }
+
+        function isGap(i, numFences) {
+            const mid = Math.floor(numFences / 2);
+            if (numFences % 2 === 0) {
+                return i === mid || i === mid - 1;
+            } else {
+                return i === mid;
+            }
+        }
+
+        // NORTH side (-Z)
         for (let i = 0; i < numFencesX; i++) {
+            const northInBounds = (chunkY - 1 >= 0);
+            const northIsNotWater = northInBounds && validChunkPositions[chunkX][chunkY - 1] !== 0;
+            if (northIsNotWater && isGap(i, numFencesX)) continue;
             const fence = fenceModel.clone();
             const xPos = this.position.x - halfChunkX + buffer + i * fenceLength + fenceLength / 2;
-            fence.position.set(xPos, fenceY, this.position.z - halfChunkZ + buffer);
+            fence.position.set(xPos, fenceY, this.position.z + halfChunkZ - buffer);
             fence.rotation.y = Math.PI / 2;
             fence.scale.set(fenceScale, fenceScale, fenceScale);
             fence.traverse((child) => {
@@ -518,12 +527,15 @@ class YardChunk extends PortChunk {
             scene.add(fence);
             this.fences.push(fence);
         }
-        
-        // South side (back)
+
+        // SOUTH side (+Z)
         for (let i = 0; i < numFencesX; i++) {
+            const southInBounds = (chunkY + 1 < validChunkPositions[0].length);
+            const southIsNotWater = southInBounds && validChunkPositions[chunkX][chunkY + 1] !== 0;
+            if (southIsNotWater && isGap(i, numFencesX)) continue;
             const fence = fenceModel.clone();
             const xPos = this.position.x - halfChunkX + buffer + i * fenceLength + fenceLength / 2;
-            fence.position.set(xPos, fenceY, this.position.z + halfChunkZ - buffer);
+            fence.position.set(xPos, fenceY, this.position.z - halfChunkZ + buffer);
             fence.rotation.y = -Math.PI / 2;
             fence.scale.set(fenceScale, fenceScale, fenceScale);
             fence.traverse((child) => {
@@ -535,9 +547,11 @@ class YardChunk extends PortChunk {
             scene.add(fence);
             this.fences.push(fence);
         }
-        
-        // West side (left)
+
+        // West side 
         for (let i = 0; i < numFencesZ; i++) {
+            const adjacentInBounds = (chunkX - 1 >= 0);
+            if (adjacentInBounds && validChunkPositions[chunkX - 1][chunkY] !== 0 && isGap(i, numFencesZ)) continue;
             const fence = fenceModel.clone();
             const zPos = this.position.z - halfChunkZ + buffer + i * fenceLength + fenceLength / 2;
             fence.position.set(this.position.x - halfChunkX + buffer, fenceY, zPos);
@@ -552,9 +566,11 @@ class YardChunk extends PortChunk {
             scene.add(fence);
             this.fences.push(fence);
         }
-        
-        // East side (right)
+
+        // East side 
         for (let i = 0; i < numFencesZ; i++) {
+            const adjacentInBounds = (chunkX + 1 < validChunkPositions.length);
+            if (adjacentInBounds && validChunkPositions[chunkX + 1][chunkY] !== 0 && isGap(i, numFencesZ)) continue;
             const fence = fenceModel.clone();
             const zPos = this.position.z - halfChunkZ + buffer + i * fenceLength + fenceLength / 2;
             fence.position.set(this.position.x + halfChunkX - buffer, fenceY, zPos);
@@ -828,9 +844,15 @@ export default class PortLayout {
             const { chunks, containerCranePositions, yardCranePositions } = generateChunkLayoutFromAPI(portChunks);
             this.chunkData = chunks;
 
-            // Initialize all chunks (but don't add dock containers yet)
             for (let chunk of this.chunkData) {
                 await chunk.init(scene);
+            }
+
+            // add fences to all yard chunks
+            for (let chunk of this.chunkData) {
+                if (chunk instanceof YardChunk) {
+                    await chunk.addFences(scene);
+                }
             }
             
             // Group cranes by chunk position
