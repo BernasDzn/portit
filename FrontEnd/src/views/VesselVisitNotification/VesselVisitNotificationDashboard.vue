@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import DashboardItem from '@/components/DashboardItem.vue';
+import Loading from '@/components/Loading.vue';
 import { useSession } from '@/composables/session';
 import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
