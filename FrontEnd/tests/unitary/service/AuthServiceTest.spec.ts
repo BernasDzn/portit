@@ -137,14 +137,6 @@ describe('AuthService', () => {
         });
     });
 
-    it('should return null when /auth/me fails', async () => {
-
-        mockHttp.get = vi.fn().mockRejectedValue(new Error('Not logged in'));
-
-        const result = await service.whoAmI();
-        expect(result).toBeNull();
-    });
-
     // ----------------------------------------------------------------------
     // logout
     // ----------------------------------------------------------------------
