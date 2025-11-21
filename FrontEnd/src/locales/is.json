@@ -1,8 +1,21 @@
-{
+﻿{
     "common": {
         "loading": "Hleður...",
         "noData": "Engin gögn tiltæk",
-        "statistics": "Tölfræði"
+        "statistics": "Tölfræði",
+        "yes": "Já",
+        "no": "Nei",
+        "weekDay": "Vikudagur",
+        "days": {
+            "sunday": "Sunnudagur",
+            "monday": "Mánudagur",
+            "tuesday": "Þriðjudagur",
+            "wednesday": "Miðvikudagur",
+            "thursday": "Fimmtudagur",
+            "friday": "Föstudagur",
+            "saturday": "Laugardagur"
+        },
+        "number": "Númer"
     },
     "buttons": {
         "save": "Vista",
@@ -14,9 +27,14 @@
         "select": "Velja",
         "activate": "Virkja",
         "deactivate": "Óvirkja",
+        "generate": "Mynda",
+        "close": "Loka",
+        "add": "Bæta við",
+        "review": "Yfirfara",
+        "seeMore": "Sjá meira",
         "filter": {
-            "title": "Sía",
-            "add": "Bæta við síu",
+            "title": "Síur",
+            "add": "Sía",
             "clear": "Hreinsa síur"
         },
         "pagination": {
@@ -33,13 +51,25 @@
         "confirm": "Henda",
         "cancel": "Halda áfram að breyta"
     },
+    "expirationWarning": {
+        "messageOneMinute": "Setan þín rennur út eftir 1 mínútu.",
+        "messageLessThanOneMinute": "Setan þín er við það að renna út."
+    },
     "dashboard": {
+        "welcome": "Velkomin aftur, [name]!",
         "sidebarTitle": "Mælaborð",
         "title": "PortIT Mælaborð",
         "subtitle": "Yfirlit yfir PortIT kerfið",
+        "SAOR": {
+            "subtitle": "Yfirlit yfir aðgerðir umboðsmanns skips",
+            "pendingNotifications": "Tilkynningar í bið",
+            "recent": "Nýlegar tilkynningar um heimsókn skipa",
+            "recentReview": "Tilkynningar sem þarf að yfirfara",
+            "noRecent": "Engar nýlegar tilkynningar"
+        },
         "3DModel": {
-            "title": "3D hafnar sýn",
-            "description": "Skoðaðu gagnvirkt 3D líkan af allri hafnaaðstöðu. Fylgstu með nýtingu kaja, stöðum skipa, geymslu svæðum og auðlindum í rauntíma.",
+            "title": "3D höfnarsýn",
+            "description": "Skoðaðu gagnvirkt 3D líkan af allri hafnaraðstöðu. Fylgstu með nýtingu kaja, stöðum skipa, geymslusvæðum og auðlindum í rauntíma.",
             "open": "Opna 3D líkan"
         }
     },
@@ -53,22 +83,22 @@
         },
         "auditLogs": {
             "title": "Endurskoðunarskrár",
-            "subtitle": "Skoða og fylgja eftir kerfisaðgerðum."
+            "subtitle": "Skoða og fylgjast með kerfisaðgerðum."
         }
     },
     "user": {
         "fields": {
             "email": {
                 "title": "Netfang",
-                "placeholder": "email@mail.com"
+                "placeholder": "notandi@daemi.is"
             },
             "role": {
                 "title": "Hlutverk",
                 "placeholder": "Veldu hlutverk notanda",
                 "options": {
                     "admin": "Stjórnandi",
-                    "saoRep": "SAO fulltrúi",
-                    "pao": "Starfsmaður hafnarvalds",
+                    "saoRep": "Fulltrúi SAO",
+                    "pao": "Starfsmaður hafnaryfirvalda",
                     "logisticsOperator": "Flutningaaðili"
                 }
             },
@@ -94,6 +124,10 @@
             "view": "Skoða og stjórna notendum"
         }
     },
+    "representative": {
+        "title": "Fulltrúi",
+        "select": "Veldu fulltrúa"
+    },
     "physicalCharacteristics": {
         "title": "Líkamleg einkenni (m)",
         "length": {
@@ -105,8 +139,8 @@
             "placeholder": "Dýpt í metrum"
         },
         "draft": {
-            "title": "Dýpt lestar",
-            "placeholder": "Dýpt í metrum"
+            "title": "Gangdýpt",
+            "placeholder": "Gangdýpt í metrum"
         }
     },
     "dock": {
@@ -124,7 +158,7 @@
                 "placeholder": "Staðsetning bryggju"
             },
             "supportedVesselTypes": {
-                "title": "Studdar skipategundir",
+                "title": "Stuðdar skipategundir",
                 "vesselTypes": {
                     "title": "Skipategundir",
                     "placeholder": "Veldu skipategundir"
@@ -183,7 +217,7 @@
         },
         "generalFields": "Almenn svæði",
         "tabs": {
-            "dashboard": "Skipategunda mælaborð",
+            "dashboard": "Mælaborð skipategunda",
             "view_dashboard": "Skoða skipategundir",
             "search": "Leita skipategunda",
             "create": "Búa til skipategund",
@@ -194,7 +228,7 @@
         "title": "Skipategundir",
         "subtitle": {
             "dashboard": "Yfirlit yfir tölfræði skipategunda",
-            "search": "Stjórna og skoða skipategundir",
+            "search": "Stjórna og skoða skráðar skipategundir",
             "create": "Skrá nýja skipategund",
             "edit": "Breyta skipategund"
         },
@@ -212,20 +246,23 @@
             },
             "owner": {
                 "title": "Eigandi",
-                "placeholder": "Eiganda stofnun"
+                "placeholder": "Eigandi stofnun"
             },
             "vesselType": {
                 "title": "Skipategund",
                 "placeholder": "Veldu skipategund"
+            },
+            "taxNumber": {
+                "title": "Skattanúmer"
             }
         },
         "infoTitle": "Upplýsingar um skip",
         "physicalCharacteristicsTitle": "Líkamleg einkenni",
         "tabs": {
-            "dashboard": "Skip mælaborð",
+            "dashboard": "Mælaborð skipa",
             "view_dashboard": "Skoða skip",
             "search": "Leita skipa",
-            "create": "Búa til skip",
+            "create": "Skrá skip",
             "view": "Skoða skip",
             "edit": "Breyta skipi"
         },
@@ -236,10 +273,16 @@
             "create": "Skrá nýtt skip",
             "edit": "Breyta skipi"
         },
-        "ownedBy": "Eiga",
+        "ownedBy": "Í eigu",
         "registeredVessels": "Skráð skip"
     },
     "staff": {
+        "deactivation": {
+            "title": "Óvirkja starfsmann",
+            "message": "Ertu viss um að þú viljir óvirkja þennan starfsmann? Þessi aðgerð er óafturkræf.",
+            "successMessage": "Starfsmaður hefur verið óvirkjaður.",
+            "errorMessage": "Villa kom upp við að óvirkja starfsmanninn. Reyndu aftur."
+        },
         "fields": {
             "mechanographicNumber": {
                 "title": "Mekanógraf tala",
@@ -247,7 +290,7 @@
             },
             "name": {
                 "title": "Nafn",
-                "placeholder": "Nafn starfsmaður"
+                "placeholder": "Nafn starfsmanns"
             },
             "email": {
                 "title": "Tölvupóstur",
@@ -258,25 +301,26 @@
                 "placeholder": "Símanúmer"
             },
             "qualifications": {
-                "title": "Hæfnir",
-                "placeholder": "Veldu hæfnir"
+                "title": "Hæfni",
+                "placeholder": "Veldu hæfni"
             },
             "status": {
                 "title": "Staða",
                 "options": {
-                    "available": "Tiltækt",
-                    "unavailable": "Ekki tiltækt",
+                    "available": "Tiltækur",
+                    "unavailable": "Ekki tiltækur",
                     "temporarilyReassigned": "Tímabundið endurúthlutað"
                 }
-            }
+            },
+            "operationalWindow": "Virkni gluggi"
         },
         "tabs": {
-            "dashboard": "Starfsfólks mælaborð",
-            "view_dashboard": "Skoða starfsfólk",
-            "search": "Leita starfsfólks",
-            "create": "Búa til starfsmaður",
-            "view": "Skoða starfsmaður",
-            "edit": "Breyta starfsmaður"
+            "dashboard": "Mælaborð starfsmanna",
+            "view_dashboard": "Skoða starfsmenn",
+            "search": "Leita starfsmanna",
+            "create": "Búa til starfsmann",
+            "view": "Skoða starfsmann",
+            "edit": "Breyta starfsmanni"
         },
         "infoTitle": "Upplýsingar um starfsmann",
         "title": "Starfsfólk",
@@ -290,21 +334,21 @@
     },
     "qualification": {
         "tabs": {
-            "dashboard": "Hæfnimælaborð",
-            "view_dashboard": "Skoða hæfnir",
-            "search": "Leita hæfnir",
+            "dashboard": "Mælaborð hæfni",
+            "view_dashboard": "Skoða hæfni",
+            "search": "Leita hæfni",
             "create": "Búa til hæfni",
             "view": "Skoða hæfni",
             "edit": "Breyta hæfni"
         },
         "infoTitle": "Upplýsingar um hæfni",
-        "title": "Hæfnir",
+        "title": "Hæfni",
         "subtitle": {
-            "search": "Stjórna og skoða allar skráðar hæfnir",
-            "dashboard": "Yfirlit yfir hæfnir",
+            "search": "Stjórna og skoða alla skráða hæfni",
+            "dashboard": "Yfirlit yfir hæfni",
             "create": "Skrá nýja hæfni",
             "edit": "Breyta hæfni",
-            "view": "Skoða smáatriði hæfni"
+            "view": "Skoða smáatriði um hæfni"
         },
         "fields": {
             "idCode": {
@@ -312,15 +356,15 @@
                 "placeholder": "Kóði hæfni"
             },
             "qualificationName": {
-                "title": "Nafn hæfni",
-                "placeholder": "Nafn hæfni"
+                "title": "Heiti hæfni",
+                "placeholder": "Heiti hæfni"
             }
         }
     },
     "physicalResource": {
         "tabs": {
-            "dashboard": "Fjármálablaðið",
-            "view_dashboard": "Skoða líkamleg auðlindir",
+            "dashboard": "Mælaborð auðlinda",
+            "view_dashboard": "Skoða líkamlegar auðlindir",
             "search": "Leita auðlinda",
             "create": "Búa til auðlind",
             "view": "Skoða auðlind",
@@ -330,7 +374,7 @@
         "title": "Líkamlegar auðlindir",
         "subtitle": {
             "search": "Stjórna og skoða allar skráðar auðlindir",
-            "dashboard": "Stýringarborð auðlinda",
+            "dashboard": "Stjórnborð auðlinda",
             "view_dashboard": "Skoða auðlindir",
             "create": "Skrá nýja auðlind",
             "view": "Skoða upplýsingar um auðlind",
@@ -341,7 +385,7 @@
         "fields": {
             "code": {
                 "title": "Kóði",
-                "placeholder": "Kóði auðlind"
+                "placeholder": "Kóði auðlindar"
             },
             "description": {
                 "title": "Lýsing",
@@ -349,16 +393,16 @@
             },
             "status": {
                 "title": "Staða",
-                "placeholder": "Veldu stöðu",
+                "placeholder": "Veldu stöðu auðlindar",
                 "options": {
-                    "available": "Tiltækt",
-                    "maintenance": "Viðhald",
-                    "outOfService": "Út úr þjónustu"
+                    "available": "Tiltæk",
+                    "maintenance": "Í viðhaldi",
+                    "outOfService": "Ekki í notkun"
                 }
             },
             "qualifications": {
-                "title": "Krafðar hæfnir",
-                "placeholder": "Krafðar hæfnir"
+                "title": "Krafðar hæfni",
+                "placeholder": "Hæfni nauðsynleg til að starfa með auðlind"
             },
             "setupTime": {
                 "title": "Uppsetningartími (mín)",
@@ -369,16 +413,16 @@
                 "placeholder": "Veldu þjónustubryggjur"
             },
             "liftingCapacity": {
-                "title": "Lyftikraftur (kg)",
-                "placeholder": "Lyftikraftur"
+                "title": "Lyftigeta (kg)",
+                "placeholder": "Lyftigeta"
             },
             "containersPerHour": {
                 "title": "Gámar á klst",
                 "placeholder": "Gámar á klst"
             },
             "maxLoadCapacity": {
-                "title": "Hámarks burður (kg)",
-                "placeholder": "Hámarks burður"
+                "title": "Hámarks burðargeta (kg)",
+                "placeholder": "Hámarks burðargeta"
             },
             "averageSpeed": {
                 "title": "Meðalhraði (km/klst)",
@@ -392,18 +436,22 @@
                 "title": "Tegund auðlindar",
                 "options": {
                     "stsCrane": "STS krani",
-                    "yardGantry": "Garður krani",
-                    "truck": "Trukkur"
+                    "yardGantry": "Gámakrani á plani",
+                    "truck": "Vörubíll"
                 }
             }
         },
-        "actions": {
-            "deactivate": "Óvirkja auðlind"
+        "actions": {"deactivate": "Óvirkja auðlind"},
+        "deactivation": {
+            "title": "Óvirkja líkamlega auðlind",
+            "message": "Ertu viss um að þú viljir óvirkja þessa líkamlegu auðlind? Aðgerðin er óafturkræf.",
+            "successMessage": "Auðlindin hefur verið óvirkjuð.",
+            "errorMessage": "Villa kom upp við að óvirkja auðlindina. Reyndu aftur."
         }
     },
     "storageArea": {
         "tabs": {
-            "dashboard": "Geymsla mælaborð",
+            "dashboard": "Mælaborð geymslusvæða",
             "view_dashboard": "Skoða geymslusvæði",
             "search": "Leita geymslusvæða",
             "create": "Búa til geymslusvæði",
@@ -413,18 +461,161 @@
         "infoTitle": "Upplýsingar um geymslusvæði",
         "title": "Geymslusvæði",
         "subtitle": {
-            "search": "Stjórna og skoða allar skráðar geymslusvæði",
-            "dashboard": "Stjórnborð geymslu svæða",
+            "search": "Stjórna og skoða öll skráð geymslusvæði",
+            "dashboard": "Stjórnborð geymslusvæða",
             "view_dashboard": "Skoða geymslusvæði",
             "create": "Skrá nýtt geymslusvæði",
             "view": "Skoða upplýsingar",
             "edit": "Breyta geymslusvæði"
         },
         "printer": {
-            "docks_serviced": "þjónustubryggjur",
+            "docks_serviced": "Þjónustubryggjur",
             "capacity_usage": "Nýting getu",
             "units": "einingar",
-            "available": "tiltækt"
+            "available": "tiltæk",
+            "no_registered_distances": "Engin skráð vegalengd",
+            "no_docks_serviced": "Engar þjónustubryggjur",
+            "all_docks_serviced": "Allar bryggjur þjónustaðar",
+            "serviced_docks_distance": "Vegalengd þjónustaðra bryggja",
+            "no_registered_docks": "Engar skráðar bryggjur"
+        },
+        "create": {"distance_meters": "Vegalengd (metrar)"},
+        "fields": {
+            "nameCode": {
+                "title": "Nafnkóði",
+                "placeholder": "Nafnkóði geymslusvæðis"
+            },
+            "location": {
+                "title": "Staðsetning",
+                "placeholder": "Staðsetning geymslusvæðis"
+            },
+            "type": {
+                "title": "Tegund",
+                "placeholder": "Veldu tegund geymslusvæðis",
+                "options": {"yard": "Plan", "warehouse": "Vöruhús"}
+            },
+            "capacity": {
+                "title": "Rými",
+                "placeholder": "Hámarks rými"
+            },
+            "occupancy": {
+                "title": "Nýting",
+                "placeholder": "Núverandi nýting"
+            }
         }
+    },
+    "search": {"languages": "Leita tungumála..."},
+    "scheduling": {
+        "title": "Biðja um dagsröðun",
+        "subtitle": "Notaðu sjálfvirka röðunaralgrím okkar til að greina fyrirfram skráðar verkefnir fyrir ákveðinn dag.",
+        "noVisits": "Engar skráðar heimsóknir skipa fyrir valinn dag.",
+        "visitsOnSelectedDay": "Heimsóknir skipa á völdum degi",
+        "viewVisits": "Mynda verkefnaröðun",
+        "generateTasksButton": "Mynda verkefnaröðun",
+        "aboutAlgorithmButton": "Um algrímið",
+        "fields": {
+            "algorithm": {
+                "title": "Röðunaralgrím",
+                "placeholder": "Veldu röðunaralgrím"
+            },
+            "relatedDocks": "Veldu tengda bryggju"
+        },
+        "generateTasksModal": {"title": "Viðbótar flutningar"},
+        "aboutAlgorithmModal": {
+            "title": "Um algrímið",
+            "content": "Núverandi algrím tekur til hliðsjónar tilkynningar um heimsóknir skipa skráðar fyrir valinn dag og bryggju. Það athugar aðgengi STS krana fyrir tilgreinda bryggju og ákvarðar lengd hvers verkefnis út frá hraða kranans. Það hunsar heimsóknir sem eru vegna viðhalds eða annarra aðgerða sem ekki tengjast lestun/losun."
+        }
+    },
+    "notification": {
+        "id": "Tilkynningar ID",
+        "hazardous": "Hættulegt",
+        "nonHazardous": "Ekki hættulegt",
+        "arrival": "Komið",
+        "departure": "Brottför",
+        "specialRequirements": "Sérstakar kröfur",
+        "none": "Engar",
+        "crew": "Áhöfn",
+        "captain": "Skipstjóri",
+        "unknown": "Óþekkt",
+        "from": "Frá",
+        "to": "Til",
+        "tabs": {
+            "dashboard": "Mælaborð tilkynninga",
+            "search": "Leita tilkynninga",
+            "edit": "Breyta tilkynningu",
+            "create": "Búa til tilkynningu",
+            "makeDraft": "Búa til drög að tilkynningu",
+            "myNotifications": "Mínar tilkynningar",
+            "review": "Yfirfara tilkynningar",
+            "general": "Almenn skrá",
+            "byDate": "Dagatalsskrá",
+            "submit": "Senda tilkynningu",
+            "delete": "Eyða tilkynningu"
+        },
+        "eventsOnDate": "Viðburðir á völdum degi",
+        "noEventsOnDate": "Engir viðburðir á völdum degi",
+        "title": "Tilkynningar um heimsókn skipa",
+        "subtitle": {
+            "dashboard": "Yfirlit yfir tilkynningar um heimsókn skipa",
+            "search": "Stjórna og skoða allar tilkynningar um heimsókn skipa",
+            "create": "Búa til nýja tilkynningu um heimsókn skips",
+            "edit": "Breyta tilkynningu um heimsókn skips",
+            "review": "Yfirfara tilkynningar í bið"
+        },
+        "errors": {"noNotificationId": "Engin tilkynningar auðkenni gefið"},
+        "infoTitle": "Upplýsingar um tilkynningu",
+        "cargoTitle": "Upplýsingar um farm",
+        "vesselTitle": "Upplýsingar um skip",
+        "manifestInfo": "Upplýsingar um farmsskýrslu",
+        "fields": {
+            "openLoadManifest": "Opna farmsskýrslu fyrir lestun",
+            "openUnloadManifest": "Opna farmsskýrslu fyrir losun",
+            "expectedArrival": "Áætluð koma",
+            "expectedDeparture": "Áætluð brottför",
+            "isCargoHazardous": "Hættulegur farmur",
+            "specialRequirements": "Sérstakar kröfur",
+            "captain": "Skipstjóri",
+            "totalCrewMembers": "Heildarfjöldi áhafnarmeðlima",
+            "safetyOfficers": "Öryggisfulltrúar",
+            "loadCargoManifest": "Farmsskýrsla lestunar",
+            "unloadCargoManifest": "Farmsskýrsla losunar",
+            "position": "Staðsetning",
+            "area": "Svæði",
+            "container": "Gámur",
+            "crewMembers": "Áhafnarmeðlimir",
+            "status": "Staða"
+        },
+        "timeline": {
+            "pending": "Í bið",
+            "inProgress": "Í vinnslu",
+            "completed": "Lokið",
+            "submitted": "Sent",
+            "accepted": "Samþykkt",
+            "rejected": "Hafnað"
+        },
+        "filters": {
+            "expectedArrivalFrom": "Áætluð koma frá",
+            "expectedArrivalTo": "Áætluð koma til",
+            "withReason": "Með ástæðu",
+            "withDockAssigned": "Með úthlutaðri bryggju"
+        },
+        "decision": {
+            "isFinal": "Lokaniðurstaða",
+            "assignedDock": {"title": "Úthlutað bryggja", "placeholder": "Veldu úthlutaða bryggju"},
+            "reason": {"title": "Ástæða", "placeholder": "Gefðu upp ástæðu"},
+            "status": "Staða ákvörðunar"
+        }
+    },
+    "operationalWindow": {
+        "title": "Virkni gluggi",
+        "printer": {
+            "addShift": "Bæta við vakt",
+            "shifts": "Vaktir:",
+            "noShifts": "Engar vaktir.",
+            "startTime": "Upphafstími",
+            "endTime": "Loktími",
+            "weekDays": "Vikudagar"
+        },
+        "errors": {"shiftOverlap": "Ógild vakt. Skörun eða loktími fyrir upphaf."}
     }
 }

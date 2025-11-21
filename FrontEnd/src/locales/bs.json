@@ -1,8 +1,21 @@
-{
+﻿{
     "common": {
         "loading": "Učitavanje...",
         "noData": "Nema dostupnih podataka",
-        "statistics": "Statistika"
+        "statistics": "Statistika",
+        "yes": "Da",
+        "no": "Ne",
+        "weekDay": "Dan u sedmici",
+        "days": {
+            "sunday": "Nedjelja",
+            "monday": "Ponedjeljak",
+            "tuesday": "Utorak",
+            "wednesday": "Srijeda",
+            "thursday": "Četvrtak",
+            "friday": "Petak",
+            "saturday": "Subota"
+        },
+        "number": "Broj"
     },
     "buttons": {
         "save": "Sačuvaj",
@@ -25,7 +38,12 @@
         },
         "login": "Prijava",
         "goBackToLogin": "Povratak na prijavu",
-        "logout": "Odjava"
+        "logout": "Odjava",
+        "generate": "Generiši",
+        "close": "Zatvori",
+        "add": "Dodaj",
+        "review": "Pregled",
+        "seeMore": "Pogledaj više"
     },
     "unsavedChanges": {
         "title": "Odbaci promjene?",
@@ -33,10 +51,24 @@
         "confirm": "Odbaci",
         "cancel": "Nastavi uređivanje"
     },
+    "expirationWarning": {
+        "title": "Sesija uskoro ističe",
+        "messageOneMinute": "Vaša sesija će isteći za 1 minut.",
+        "messageLessThanOneMinute": "Vaša sesija uskoro ističe.",
+        "extendSession": "Produži sesiju"
+    },
     "dashboard": {
+        "welcome": "Dobrodošli nazad, [name]!",
         "sidebarTitle": "Nadzorna ploča",
         "title": "PortIT nadzorna ploča",
         "subtitle": "Pregled PortIT sistema",
+        "SAOR": {
+            "subtitle": "Pregled operacija brodskog agenta",
+            "pendingNotifications": "Obavijesti na čekanju",
+            "recent": "Nedavne obavijesti o posjetama brodova",
+            "recentReview": "Obavijesti o posjetama brodova koje trebaju pregled",
+            "noRecent": "Nema nedavnih obavijesti"
+        },
         "3DModel": {
             "title": "3D prikaz luke",
             "description": "Pogledajte interaktivni 3D prikaz cijelog lučkog kompleksa. Pratite opterećenje dokova, pozicije brodova, skladišne zone i resurse u stvarnom vremenu.",
@@ -94,6 +126,10 @@
             "view": "Pregledajte i upravljajte postojećim korisnicima"
         }
     },
+    "representative": {
+        "title": "Predstavnik",
+        "select": "Odaberite predstavnika"
+    },
     "physicalCharacteristics": {
         "title": "Fizičke karakteristike (m)",
         "length": {
@@ -128,6 +164,9 @@
                 "vesselTypes": {
                     "title": "Tipovi plovila",
                     "placeholder": "Izaberite tipove plovila"
+                },
+                "taxNumber": {
+                    "title": "Porezni broj"
                 },
                 "vesselType": "Tip plovila"
             }
@@ -217,6 +256,9 @@
             "vesselType": {
                 "title": "Tip plovila",
                 "placeholder": "Izaberite tip plovila"
+            },
+            "taxNumber": {
+                "title": "Porezni broj"
             }
         },
         "infoTitle": "Informacije o plovilu",
@@ -240,6 +282,12 @@
         "registeredVessels": "Registrovana plovila"
     },
     "staff": {
+        "deactivation": {
+            "title": "Deaktiviraj člana osoblja",
+            "message": "Jeste li sigurni da želite deaktivirati ovog člana osoblja? Moći ćete ga kasnije ponovo aktivirati.",
+            "successMessage": "Član osoblja je uspješno deaktiviran.",
+            "errorMessage": "Došlo je do greške pri pokušaju deaktivacije člana osoblja. Pokušajte ponovo."
+        },
         "fields": {
             "mechanographicNumber": {
                 "title": "Mehanografski broj",
@@ -268,7 +316,8 @@
                     "unavailable": "Nedostupan",
                     "temporarilyReassigned": "Privremeno preraspoređen"
                 }
-            }
+            },
+            "operationalWindow": "Operativni prozor"
         },
         "tabs": {
             "dashboard": "Ploča osoblja",
@@ -318,6 +367,12 @@
         }
     },
     "physicalResource": {
+        "deactivation": {
+            "title": "Deaktiviraj fizički resurs",
+            "message": "Jeste li sigurni da želite deaktivirati ovaj fizički resurs? Moći ćete ga kasnije ponovo aktivirati.",
+            "successMessage": "Fizički resurs je uspješno deaktiviran.",
+            "errorMessage": "Došlo je do greške pri pokušaju deaktivacije fizičkog resursa. Pokušajte ponovo."
+        },
         "tabs": {
             "dashboard": "Ploča fizičkih resursa",
             "view_dashboard": "Pregled fizičkih resursa",
@@ -379,6 +434,22 @@
             "maxLoadCapacity": {
                 "title": "Maksimalna nosivost (kg)",
                 "placeholder": "Maksimalna nosivost"
+            },
+            "averageSpeed": {
+                "title": "Prosječna brzina (km/h)",
+                "placeholder": "Prosječna brzina"
+            },
+            "containersPerTrip": {
+                "title": "Kontejnera po turi",
+                "placeholder": "Kontejnera po turi"
+            },
+            "type": {
+                "title": "Vrsta resursa",
+                "options": {
+                    "stsCrane": "STS dizalica",
+                    "yardGantry": "Portalna dizalica u dvorištu",
+                    "truck": "Kamion"
+                }
             }
         },
         "actions": {
@@ -408,7 +479,169 @@
             "docks_serviced": "dokovi koje servisira",
             "capacity_usage": "iskorištenost kapaciteta",
             "units": "jedinice",
-            "available": "dostupno"
+            "available": "dostupno",
+            "no_registered_distances": "Nema registrovanih udaljenosti",
+            "no_docks_serviced": "Nema servisiranih dokova",
+            "all_docks_serviced": "Svi dokovi servisirani",
+            "serviced_docks_distance": "Udaljenost servisiranih dokova",
+            "no_registered_docks": "Nema registrovanih dokova"
+        },
+        "create": {
+            "distance_meters": "Udaljenost (metri)"
+        },
+        "fields": {
+            "nameCode": {
+                "title": "Kod naziva",
+                "placeholder": "Kod naziva područja skladišta"
+            },
+            "location": {
+                "title": "Lokacija",
+                "placeholder": "Lokacija područja skladišta"
+            },
+            "type": {
+                "title": "Tip",
+                "placeholder": "Odaberite tip područja skladišta",
+                "options": {
+                    "yard": "Dvorište",
+                    "warehouse": "Skladište"
+                }
+            },
+            "capacity": {
+                "title": "Kapacitet",
+                "placeholder": "Maksimalni kapacitet"
+            },
+            "occupancy": {
+                "title": "Popunjenost",
+                "placeholder": "Trenutna popunjenost"
+            }
+        }
+    },
+    "search": {
+        "languages": "Pretraži jezike..."
+    },
+    "scheduling": {
+        "title": "Zatraži dnevni raspored",
+        "subtitle": "Koristite naš automatizovani algoritam planiranja za analizu zakazanih zadataka za određeni dan.",
+        "noVisits": "Nema posjeta plovila zakazanih za odabrani datum.",
+        "visitsOnSelectedDay": "Posjete plovila na odabrani datum",
+        "viewVisits": "Generiši raspored zadataka",
+        "generateTasksButton": "Generiši raspored zadataka",
+        "aboutAlgorithmButton": "O algoritmu",
+        "fields": {
+            "algorithm": {
+                "title": "Algoritam zakazivanja",
+                "placeholder": "Odaberite algoritam zakazivanja"
+            },
+            "relatedDocks": "Odaberite povezani dok"
+        },
+        "generateTasksModal": {
+            "title": "Dodatna logistika"
+        },
+        "aboutAlgorithmModal": {
+            "title": "O algoritmu",
+            "content": "Trenutni algoritam uzima u obzir obavijesti o posjeti plovila zakazane za odabrani datum i dok.\nZatim provjerava dostupnost STS dizalica za navedeni dok i odlučuje o trajanju svakog zadatka na osnovu brzine dizalice.\nIgnoriše posjete koje su za održavanje ili druge aktivnosti koje ne uključuju utovar/istovar."
+        }
+    },
+    "notification": {
+        "id": "ID obavijesti",
+        "hazardous": "Opasno",
+        "nonHazardous": "Neopasno",
+        "arrival": "Dolazak",
+        "departure": "Odlazak",
+        "specialRequirements": "Posebni zahtjevi",
+        "none": "Nema",
+        "crew": "Posada",
+        "captain": "Kapetan",
+        "unknown": "Nepoznato",
+        "from": "Od",
+        "to": "Do",
+        "tabs": {
+            "dashboard": "Ploča obavijesti",
+            "search": "Pretraži obavijesti",
+            "edit": "Uredi obavijest",
+            "create": "Kreiraj obavijest",
+            "makeDraft": "Kreiraj nacrt obavijesti",
+            "myNotifications": "Moje obavijesti",
+            "review": "Pregledaj obavijesti",
+            "general": "Generički pregled",
+            "byDate": "Kalendarski pregled",
+            "submit": "Podnesi obavijest",
+            "delete": "Obriši obavijest"
+        },
+        "eventsOnDate": "Događaji na odabrani datum",
+        "noEventsOnDate": "Nema događaja na odabrani datum",
+        "title": "Obavijesti o posjeti plovila",
+        "subtitle": {
+            "dashboard": "Pregled obavijesti o posjetama plovila",
+            "search": "Upravljajte i pregledajte sve obavijesti o posjetama plovila",
+            "create": "Kreirajte novu obavijest o posjeti plovila",
+            "edit": "Uredite postojeću obavijest o posjeti plovila",
+            "review": "Pregledajte obavijesti o posjeti plovila na čekanju"
+        },
+        "errors": {
+            "noNotificationId": "Nije dostavljen ID obavijesti"
+        },
+        "infoTitle": "Informacije o obavijesti",
+        "cargoTitle": "Informacije o teretu",
+        "vesselTitle": "Informacije o plovilu",
+        "manifestInfo": "Informacije o manifestu",
+        "fields": {
+            "openLoadManifest": "Otvori manifest za utovar",
+            "openUnloadManifest": "Otvori manifest za istovar",
+            "expectedArrival": "Očekivani dolazak",
+            "expectedDeparture": "Očekivani odlazak",
+            "isCargoHazardous": "Teret opasan",
+            "specialRequirements": "Posebni zahtjevi",
+            "captain": "Kapetan",
+            "totalCrewMembers": "Ukupan broj članova posade",
+            "safetyOfficers": "Službenici za sigurnost",
+            "loadCargoManifest": "Manifest utovara tereta",
+            "unloadCargoManifest": "Manifest istovara tereta",
+            "position": "Pozicija",
+            "area": "Područje",
+            "container": "Kontejner",
+            "crewMembers": "Članovi posade",
+            "status": "Status"
+        },
+        "timeline": {
+            "pending": "Na čekanju",
+            "inProgress": "U toku",
+            "completed": "Završeno",
+            "submitted": "Podneseno",
+            "accepted": "Prihvaćeno",
+            "rejected": "Odbijeno"
+        },
+        "filters": {
+            "expectedArrivalFrom": "Očekivani dolazak od",
+            "expectedArrivalTo": "Očekivani dolazak do",
+            "withReason": "Sa razlogom",
+            "withDockAssigned": "Sa dodijeljenim dokom"
+        },
+        "decision": {
+            "isFinal": "Konačno",
+            "assignedDock": {
+                "title": "Dodijeljeni dok",
+                "placeholder": "Odaberite dodijeljeni dok"
+            },
+            "reason": {
+                "title": "Razlog",
+                "placeholder": "Unesite razlog odluke"
+            },
+            "status": "Status odluke"
+        }
+    },
+    "operationalWindow": {
+        "title": "Operativni prozor",
+        "printer": {
+            "addShift": "Dodaj smjenu",
+            "shifts": "Smjene:",
+            "noShifts": "Nema smjena.",
+            "startTime": "Vrijeme početka",
+            "endTime": "Vrijeme završetka",
+            "weekDays": "Dani u sedmici"
+        },
+        "errors": {
+            "shiftOverlap": "Nevažeća smjena. Preklapanje ili vrijeme završetka prije početka."
         }
     }
 }

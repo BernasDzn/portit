@@ -1,8 +1,21 @@
-{
+﻿{
     "common": {
-        "loading": "Ładowanie...",
-        "noData": "Brak dostępnych danych",
-        "statistics": "Statystyki"
+        "loading": "Åadowanie...",
+        "noData": "Brak dostÄ™pnych danych",
+        "statistics": "Statystyki",
+        "yes": "Tak",
+        "no": "Nie",
+        "weekDay": "Dzień tygodnia",
+        "days": {
+            "sunday": "Niedziela",
+            "monday": "Poniedziałek",
+            "tuesday": "Wtorek",
+            "wednesday": "Środa",
+            "thursday": "Czwartek",
+            "friday": "Piątek",
+            "saturday": "Sobota"
+        },
+        "number": "Numer"
     },
     "buttons": {
         "save": "Zapisz",
@@ -17,43 +30,56 @@
         "filter": {
             "title": "Filtry",
             "add": "Filtruj",
-            "clear": "Wyczyść filtry"
+            "clear": "WyczyÅ›Ä‡ filtry"
         },
         "pagination": {
             "previous": "Poprzedni",
-            "next": "Następny"
+            "next": "NastÄ™pny"
         },
-        "login": "Zaloguj się",
+        "login": "Zaloguj siÄ™",
         "goBackToLogin": "Powrót do logowania",
-        "logout": "Wyloguj"
+        "logout": "Wyloguj",
+        "generate": "Generuj",
+        "close": "Zamknij",
+        "add": "Dodaj",
+        "review": "Przejrzyj",
+        "seeMore": "Zobacz więcej"
     },
     "unsavedChanges": {
-        "title": "Odrzucić zmiany?",
-        "message": "Masz niezapisane zmiany. Czy na pewno chcesz opuścić tę stronę i odrzucić swoje zmiany?",
-        "confirm": "Odrzuć",
-        "cancel": "Kontynuuj edycję"
+        "title": "OdrzuciÄ‡ zmiany?",
+        "message": "Masz niezapisane zmiany. Czy na pewno chcesz opuÅ›ciÄ‡ tÄ™ stronÄ™ i odrzuciÄ‡ swoje zmiany?",
+        "confirm": "OdrzuÄ‡",
+        "cancel": "Kontynuuj edycjÄ™"
     },
     "dashboard": {
         "sidebarTitle": "Panel",
         "title": "PortIT Panel",
-        "subtitle": "Przegląd systemu PortIT",
+        "subtitle": "PrzeglÄ…d systemu PortIT",
         "3DModel": {
             "title": "Wizualizacja portu 3D",
-            "description": "Zobacz interaktywną reprezentację 3D całego obiektu portowego. Monitoruj zajętość nabrzeży, pozycje statków, obszary magazynowe i zasoby w czasie rzeczywistym.",
+            "description": "Zobacz interaktywnÄ… reprezentacjÄ™ 3D caÅ‚ego obiektu portowego. Monitoruj zajÄ™toÅ›Ä‡ nabrzeży, pozycje statków, obszary magazynowe i zasoby w czasie rzeczywistym.",
             "open": "Otwórz model 3D"
+        },
+        "welcome": "Witamy z powrotem, [name]!",
+        "SAOR": {
+            "subtitle": "Overview of the shipping agent\u0027s operations",
+            "pendingNotifications": "Oczekujące powiadomienia",
+            "recent": "Najnowsze powiadomienia o wizytach statków",
+            "recentReview": "Powiadomienia o wizytach statków wymagające przeglądu",
+            "noRecent": "Brak najnowszych powiadomień"
         }
     },
     "admin": {
         "sidebarTitle": "Admin",
         "title": "Panel administracyjny",
-        "subtitle": "Przegląd i zarządzanie administracyjne",
+        "subtitle": "PrzeglÄ…d i zarzÄ…dzanie administracyjne",
         "userManagement": {
-            "title": "Zarządzanie użytkownikami",
-            "subtitle": "Zarządzaj użytkownikami systemu, rolami i uprawnieniami."
+            "title": "ZarzÄ…dzanie użytkownikami",
+            "subtitle": "ZarzÄ…dzaj użytkownikami systemu, rolami i uprawnieniami."
         },
         "auditLogs": {
             "title": "Logi audytu",
-            "subtitle": "Przeglądaj i monitoruj logi aktywności systemu."
+            "subtitle": "PrzeglÄ…daj i monitoruj logi aktywnoÅ›ci systemu."
         }
     },
     "user": {
@@ -64,11 +90,11 @@
             },
             "role": {
                 "title": "Rola",
-                "placeholder": "Wybierz rolę użytkownika",
+                "placeholder": "Wybierz rolÄ™ użytkownika",
                 "options": {
                     "admin": "Administrator",
                     "saoRep": "Przedstawiciel SAO",
-                    "pao": "Urzędnik portu",
+                    "pao": "UrzÄ™dnik portu",
                     "logisticsOperator": "Operator logistyczny"
                 }
             },
@@ -86,23 +112,23 @@
             "view": "Zobacz użytkowników",
             "search": "Szukaj użytkowników"
         },
-        "infoTitle": "Szczegóły użytkownika",
+        "infoTitle": "SzczegóÅ‚y użytkownika",
         "title": "Użytkownicy",
         "subtitle": {
-            "dashboard": "Przegląd i zarządzanie użytkownikami",
+            "dashboard": "PrzeglÄ…d i zarzÄ…dzanie użytkownikami",
             "create": "Zarejestruj nowego użytkownika w systemie",
-            "view": "Zobacz i zarządzaj istniejącymi użytkownikami"
+            "view": "Zobacz i zarzÄ…dzaj istniejÄ…cymi użytkownikami"
         }
     },
     "physicalCharacteristics": {
-        "title": "Właściwości fizyczne (m)",
+        "title": "WÅ‚aÅ›ciwoÅ›ci fizyczne (m)",
         "length": {
-            "title": "Długość",
-            "placeholder": "Długość w metrach"
+            "title": "DÅ‚ugoÅ›Ä‡",
+            "placeholder": "DÅ‚ugoÅ›Ä‡ w metrach"
         },
         "depth": {
-            "title": "Głębokość",
-            "placeholder": "Głębokość w metrach"
+            "title": "GÅ‚Ä™bokoÅ›Ä‡",
+            "placeholder": "GÅ‚Ä™bokoÅ›Ä‡ w metrach"
         },
         "draft": {
             "title": "Zanurzenie",
@@ -124,7 +150,7 @@
                 "placeholder": "Lokalizacja nabrzeża"
             },
             "supportedVesselTypes": {
-                "title": "Obsługiwane typy statków",
+                "title": "ObsÅ‚ugiwane typy statków",
                 "vesselTypes": {
                     "title": "Typy statków",
                     "placeholder": "Wybierz typy statków"
@@ -144,10 +170,10 @@
         "infoTitle": "Informacje o nabrzeżu",
         "title": "Nabrzeża",
         "subtitle": {
-            "dashboard": "Przegląd statystyk i działań nabrzeża",
-            "search": "Zarządzaj i przeglądaj wszystkie zarejestrowane nabrzeża",
+            "dashboard": "PrzeglÄ…d statystyk i dziaÅ‚ań nabrzeża",
+            "search": "ZarzÄ…dzaj i przeglÄ…daj wszystkie zarejestrowane nabrzeża",
             "create": "Zarejestruj nowe nabrzeże w systemie",
-            "edit": "Edytuj istniejące nabrzeże w systemie"
+            "edit": "Edytuj istniejÄ…ce nabrzeże w systemie"
         },
         "registeredDocks": "Zarejestrowane nabrzeża"
     },
@@ -162,14 +188,14 @@
                 "placeholder": "Opis typu statku"
             },
             "capacity": {
-                "title": "Pojemność",
-                "placeholder": "Pojemność kontenerowa w TEU"
+                "title": "PojemnoÅ›Ä‡",
+                "placeholder": "PojemnoÅ›Ä‡ kontenerowa w TEU"
             },
             "containerCapacity": {
-                "title": "Pojemność kontenerów (TEU)",
+                "title": "PojemnoÅ›Ä‡ kontenerów (TEU)",
                 "maxNumberOfRows": {
-                    "title": "Maks. liczba rzędów",
-                    "placeholder": "Maks. rzędy w TEU"
+                    "title": "Maks. liczba rzÄ™dów",
+                    "placeholder": "Maks. rzÄ™dy w TEU"
                 },
                 "maxNumberOfBays": {
                     "title": "Maks. liczba zatok",
@@ -193,10 +219,10 @@
         "infoTitle": "Informacje o typie statku",
         "title": "Typy statków",
         "subtitle": {
-            "dashboard": "Przegląd statystyk i działań według typu statku",
-            "search": "Zarządzaj i przeglądaj wszystkie zarejestrowane typy statków",
+            "dashboard": "PrzeglÄ…d statystyk i dziaÅ‚ań wedÅ‚ug typu statku",
+            "search": "ZarzÄ…dzaj i przeglÄ…daj wszystkie zarejestrowane typy statków",
             "create": "Zarejestruj nowy typ statku w systemie",
-            "edit": "Edytuj istniejący typ statku w systemie"
+            "edit": "Edytuj istniejÄ…cy typ statku w systemie"
         },
         "registeredVesselTypes": "Zarejestrowane typy statków"
     },
@@ -211,16 +237,19 @@
                 "placeholder": "Numer IMO statku"
             },
             "owner": {
-                "title": "Właściciel",
-                "placeholder": "Organizacja właściciela"
+                "title": "WÅ‚aÅ›ciciel",
+                "placeholder": "Organizacja wÅ‚aÅ›ciciela"
             },
             "vesselType": {
                 "title": "Typ statku",
                 "placeholder": "Wybierz typ statku"
+            },
+            "taxNumber": {
+                "title": "Numer podatkowy"
             }
         },
         "infoTitle": "Informacje o statku",
-        "physicalCharacteristicsTitle": "Właściwości fizyczne",
+        "physicalCharacteristicsTitle": "WÅ‚aÅ›ciwoÅ›ci fizyczne",
         "tabs": {
             "dashboard": "Panel statków",
             "view_dashboard": "Zobacz statki",
@@ -231,12 +260,12 @@
         },
         "title": "Statki",
         "subtitle": {
-            "dashboard": "Przegląd statystyk i działań statków",
-            "search": "Zarządzaj i przeglądaj wszystkie zarejestrowane statki",
+            "dashboard": "PrzeglÄ…d statystyk i dziaÅ‚ań statków",
+            "search": "ZarzÄ…dzaj i przeglÄ…daj wszystkie zarejestrowane statki",
             "create": "Zarejestruj nowy statek w systemie",
-            "edit": "Edytuj istniejący statek w systemie"
+            "edit": "Edytuj istniejÄ…cy statek w systemie"
         },
-        "ownedBy": "Własność",
+        "ownedBy": "WÅ‚asnoÅ›Ä‡",
         "registeredVessels": "Zarejestrowane statki"
     },
     "staff": {
@@ -264,28 +293,35 @@
             "status": {
                 "title": "Status",
                 "options": {
-                    "available": "Dostępny",
-                    "unavailable": "Niedostępny",
+                    "available": "DostÄ™pny",
+                    "unavailable": "NiedostÄ™pny",
                     "temporarilyReassigned": "Tymczasowo przeniesiony"
                 }
-            }
+            },
+            "operationalWindow": "Operational Window"
         },
         "tabs": {
             "dashboard": "Panel personelu",
             "view_dashboard": "Zobacz personel",
             "search": "Szukaj personelu",
-            "create": "Utwórz członka personelu",
-            "view": "Zobacz członka personelu",
-            "edit": "Edytuj członka personelu"
+            "create": "Utwórz czÅ‚onka personelu",
+            "view": "Zobacz czÅ‚onka personelu",
+            "edit": "Edytuj czÅ‚onka personelu"
         },
-        "infoTitle": "Informacje o członku personelu",
+        "infoTitle": "Informacje o czÅ‚onku personelu",
         "title": "Personel",
         "subtitle": {
-            "search": "Zarządzaj i przeglądaj wszystkich zarejestrowanych pracowników",
-            "dashboard": "Przegląd statystyk i działań personelu",
-            "create": "Zarejestruj nowego członka personelu w systemie",
-            "view": "Zobacz szczegóły personelu",
-            "edit": "Edytuj istniejącego członka personelu w systemie"
+            "search": "ZarzÄ…dzaj i przeglÄ…daj wszystkich zarejestrowanych pracowników",
+            "dashboard": "PrzeglÄ…d statystyk i dziaÅ‚ań personelu",
+            "create": "Zarejestruj nowego czÅ‚onka personelu w systemie",
+            "view": "Zobacz szczegóÅ‚y personelu",
+            "edit": "Edytuj istniejÄ…cego czÅ‚onka personelu w systemie"
+        },
+        "deactivation": {
+            "title": "Deactivate Staff Member",
+            "message": "Are you sure you want to deactivate this staff member? You can activate them again later.",
+            "successMessage": "Staff member has been successfully deactivated.",
+            "errorMessage": "An error occurred while trying to deactivate the staff member. Please try again."
         }
     },
     "qualification": {
@@ -293,18 +329,18 @@
             "dashboard": "Panel kwalifikacji",
             "view_dashboard": "Zobacz kwalifikacje",
             "search": "Szukaj kwalifikacji",
-            "create": "Utwórz kwalifikację",
-            "view": "Zobacz kwalifikację",
-            "edit": "Edytuj kwalifikację"
+            "create": "Utwórz kwalifikacjÄ™",
+            "view": "Zobacz kwalifikacjÄ™",
+            "edit": "Edytuj kwalifikacjÄ™"
         },
         "infoTitle": "Informacje o kwalifikacji",
         "title": "Kwalifikacje",
         "subtitle": {
-            "search": "Zarządzaj i przeglądaj wszystkie zarejestrowane kwalifikacje",
-            "dashboard": "Przegląd statystyk i działań kwalifikacji",
-            "create": "Zarejestruj nową kwalifikację w systemie",
-            "edit": "Edytuj istniejącą kwalifikację w systemie",
-            "view": "Zobacz szczegóły kwalifikacji"
+            "search": "ZarzÄ…dzaj i przeglÄ…daj wszystkie zarejestrowane kwalifikacje",
+            "dashboard": "PrzeglÄ…d statystyk i dziaÅ‚ań kwalifikacji",
+            "create": "Zarejestruj nowÄ… kwalifikacjÄ™ w systemie",
+            "edit": "Edytuj istniejÄ…cÄ… kwalifikacjÄ™ w systemie",
+            "view": "Zobacz szczegóÅ‚y kwalifikacji"
         },
         "fields": {
             "idCode": {
@@ -329,15 +365,15 @@
         "infoTitle": "Informacje o zasobie fizycznym",
         "title": "Zasoby fizyczne",
         "subtitle": {
-            "search": "Zarządzaj i przeglądaj wszystkie zarejestrowane zasoby fizyczne",
+            "search": "ZarzÄ…dzaj i przeglÄ…daj wszystkie zarejestrowane zasoby fizyczne",
             "dashboard": "Panel kontrolny dla zasobów fizycznych",
             "view_dashboard": "Zobacz zasoby fizyczne",
             "create": "Zarejestruj nowy zasób fizyczny w systemie",
-            "view": "Zobacz szczegóły zasobu fizycznego",
-            "edit": "Edytuj istniejący zasób fizyczny w systemie"
+            "view": "Zobacz szczegóÅ‚y zasobu fizycznego",
+            "edit": "Edytuj istniejÄ…cy zasób fizyczny w systemie"
         },
         "generalFields": "Pola ogólne",
-        "specificFields": "Pola szczegółowe",
+        "specificFields": "Pola szczegóÅ‚owe",
         "fields": {
             "code": {
                 "title": "Kod",
@@ -351,38 +387,38 @@
                 "title": "Status",
                 "placeholder": "Wybierz status zasobu",
                 "options": {
-                    "available": "Dostępny",
+                    "available": "DostÄ™pny",
                     "maintenance": "Konserwacja",
-                    "outOfService": "Wyłączony"
+                    "outOfService": "WyÅ‚Ä…czony"
                 }
             },
             "qualifications": {
                 "title": "Wymagane kwalifikacje",
-                "placeholder": "Kwalifikacje wymagane do obsługi tego zasobu"
+                "placeholder": "Kwalifikacje wymagane do obsÅ‚ugi tego zasobu"
             },
             "setupTime": {
                 "title": "Czas konfiguracji (minuty)",
                 "placeholder": "Czas konfiguracji"
             },
             "servingDocks": {
-                "title": "Obsługiwane nabrzeża",
-                "placeholder": "Wybierz obsługiwane nabrzeża"
+                "title": "ObsÅ‚ugiwane nabrzeża",
+                "placeholder": "Wybierz obsÅ‚ugiwane nabrzeża"
             },
             "liftingCapacity": {
-                "title": "Udźwig (kgs)",
-                "placeholder": "Udźwig"
+                "title": "UdÅºwig (kgs)",
+                "placeholder": "UdÅºwig"
             },
             "containersPerHour": {
-                "title": "Kontenery na godzinę",
-                "placeholder": "Kontenery na godzinę"
+                "title": "Kontenery na godzinÄ™",
+                "placeholder": "Kontenery na godzinÄ™"
             },
             "maxLoadCapacity": {
-                "title": "Maksymalna ładowność (kg)",
-                "placeholder": "Maksymalna ładowność"
+                "title": "Maksymalna Å‚adownoÅ›Ä‡ (kg)",
+                "placeholder": "Maksymalna Å‚adownoÅ›Ä‡"
             },
             "averageSpeed": {
-                "title": "Średnia prędkość (km/h)",
-                "placeholder": "Średnia prędkość"
+                "title": "Åšrednia prÄ™dkoÅ›Ä‡ (km/h)",
+                "placeholder": "Åšrednia prÄ™dkoÅ›Ä‡"
             },
             "containersPerTrip": {
                 "title": "Kontenery na podróż",
@@ -391,40 +427,216 @@
             "type": {
                 "title": "Typ zasobu",
                 "options": {
-                    "stsCrane": "Dźwig STS",
+                    "stsCrane": "DÅºwig STS",
                     "yardGantry": "Suwnica placowa",
-                    "truck": "Ciężarówka"
+                    "truck": "CiÄ™żarówka"
                 }
             }
         },
         "actions": {
             "deactivate": "Dezaktywuj zasób fizyczny"
+        },
+        "deactivation": {
+            "title": "Deactivate Physical Resource",
+            "message": "Are you sure you want to deactivate this physical resource? You can activate it again later.",
+            "successMessage": "Physical Resource has been successfully deactivated.",
+            "errorMessage": "An error occurred while trying to deactivate the Physical Resource. Please try again."
         }
     },
-    "storageArea": {
+    "storageObszar": {
         "tabs": {
-            "dashboard": "Panel obszarów składowania",
-            "view_dashboard": "Zobacz obszary składowania",
-            "search": "Szukaj obszarów składowania",
-            "create": "Utwórz obszar składowania",
-            "view": "Zobacz obszar składowania",
-            "edit": "Edytuj obszar składowania"
+            "dashboard": "Panel obszarów skÅ‚adowania",
+            "view_dashboard": "Zobacz obszary skÅ‚adowania",
+            "search": "Szukaj obszarów skÅ‚adowania",
+            "create": "Utwórz obszar skÅ‚adowania",
+            "view": "Zobacz obszar skÅ‚adowania",
+            "edit": "Edytuj obszar skÅ‚adowania"
         },
-        "infoTitle": "Informacje o obszarze składowania",
-        "title": "Obszary składowania",
+        "infoTitle": "Informacje o obszarze skÅ‚adowania",
+        "title": "Obszary skÅ‚adowania",
         "subtitle": {
-            "search": "Zarządzaj i przeglądaj wszystkie zarejestrowane obszary składowania",
-            "dashboard": "Panel kontrolny dla wszystkich obszarów składowania",
-            "view_dashboard": "Zobacz obszary składowania",
-            "create": "Zarejestruj nowy obszar składowania w systemie",
-            "view": "Zobacz szczegóły obszaru składowania",
-            "edit": "Edytuj istniejący obszar składowania w systemie"
+            "search": "ZarzÄ…dzaj i przeglÄ…daj wszystkie zarejestrowane obszary skÅ‚adowania",
+            "dashboard": "Panel kontrolny dla wszystkich obszarów skÅ‚adowania",
+            "view_dashboard": "Zobacz obszary skÅ‚adowania",
+            "create": "Zarejestruj nowy obszar skÅ‚adowania w systemie",
+            "view": "Zobacz szczegóÅ‚y obszaru skÅ‚adowania",
+            "edit": "Edytuj istniejÄ…cy obszar skÅ‚adowania w systemie"
         },
         "printer": {
-            "docks_serviced": "obsługiwane nabrzeża",
-            "capacity_usage": "Wykorzystanie pojemności",
+            "docks_serviced": "obsÅ‚ugiwane nabrzeża",
+            "capacity_usage": "Wykorzystanie pojemnoÅ›ci",
             "units": "jednostki",
-            "available": "dostępne"
+            "available": "dostÄ™pne",
+            "no_registered_distances": "Brak zarejestrowanych odległości",
+            "no_docks_serviced": "Brak obsługiwanych nabrzeży",
+            "all_docks_serviced": "Wszystkie nabrzeża obsługiwane",
+            "serviced_docks_distance": "Odległość do obsługiwanych nabrzeży",
+            "no_registered_docks": "Brak zarejestrowanych nabrzeży"
+        },
+        "create": {
+            "distance_meters": "Odległość (metry)"
+        },
+        "fields": {
+            "nameCode": {
+                "title": "Kod nazwy",
+                "placeholder": "Kod nazwy obszaru magazynowego"
+            },
+            "location": {
+                "title": "Location",
+                "placeholder": "Lokalizacja obszaru magazynowego"
+            },
+            "type": {
+                "title": "Type",
+                "placeholder": "Select Storage Obszar type",
+                "options": {
+                    "yard": "Yard",
+                    "warehouse": "Warehouse"
+                }
+            },
+            "capacity": {
+                "title": "Capacity",
+                "placeholder": "Maximum capacity"
+            },
+            "occupancy": {
+                "title": "Occupancy",
+                "placeholder": "Current occupancy"
+            }
+        }
+    },
+    "search": {
+        "languages": "Wyszukaj języki..."
+    },
+    "expirationWarning": {
+        "messageOneMinute": "Twoja sesja wygaśnie za 1 minutę.",
+        "messageLessThanOneMinute": "Twoja sesja wkrótce wygaśnie."
+    },
+    "representative": {
+        "title": "Przedstawiciel",
+        "select": "Wybierz przedstawiciela"
+    },
+    "scheduling": {
+        "title": "Plan dzienny",
+        "subtitle": "Użyj naszej zautomatyzowanej algorytmu planowania, aby przeanalizować zadania zaplanowane na dany dzień.",
+        "noVisits": "Brak zaplanowanych wizyt statków dla wybranej daty.",
+        "visitsOnSelectedDay": "Wizyty statków w wybranym dniu",
+        "viewVisits": "Pokaż plan zadań",
+        "generateTasksButton": "Generuj plan zadań",
+        "aboutAlgorithmButton": "O algorytmie",
+        "fields": {
+            "algorithm": {
+                "title": "Algorytm planowania",
+                "placeholder": "Wybierz algorytm planowania"
+            },
+            "relatedDocks": "Wybierz powiązane nabrzeże"
+        },
+        "generateTasksModal": {
+            "title": "Dodatkowa logistyka"
+        },
+        "aboutAlgorithmModal": {
+            "title": "O algorytmie",
+            "content": "Obecny algorytm bierze pod uwagę powiadomienia o wizytach statków zaplanowane na wybraną datę i nabrzeże.\nSprawdza dostępność dźwigów STS dla wskazanego nabrzeża i decyduje o czasie trwania każdej operacji na podstawie szybkości dźwigu.\nIgnorowane są wizyty związane z konserwacją lub innymi działaniami niezwiązanymi z załadunkiem/rozładunkiem."
+        }
+    },
+    "notification": {
+        "id": "ID powiadomienia",
+        "hazardous": "Towar niebezpieczny",
+        "nonHazardous": "Towar niebezpieczny",
+        "arrival": "Przyjazd",
+        "departure": "Odjazd",
+        "specialRequirements": "Specjalne wymagania",
+        "none": "Brak",
+        "crew": "Załoga",
+        "captain": "Kapitan",
+        "unknown": "Nieznany",
+        "from": "Od",
+        "to": "Do",
+        "tabs": {
+            "dashboard": "Panel powiadomień",
+            "search": "Szukaj powiadomień",
+            "edit": "Edytuj powiadomienie",
+            "create": "Utwórz powiadomienie",
+            "makeDraft": "Utwórz wersję roboczą",
+            "myNotifications": "Moje powiadomienia",
+            "review": "Przeglądaj powiadomienia",
+            "general": "Lista ogólna",
+            "byDate": "Widok kalendarza",
+            "submit": "Wyślij powiadomienie",
+            "delete": "Usuń powiadomienie"
+        },
+        "eventsOnDate": "Wydarzenia w wybranym dniu",
+        "noEventsOnDate": "Brak wydarzeń w wybranym dniu",
+        "title": "Powiadomienia o wizytach statków",
+        "subtitle": {
+            "dashboard": "Przegląd powiadomień o wizytach statków",
+            "search": "Zarządzaj i przeglądaj wszystkie powiadomienia o wizytach statków",
+            "create": "Utwórz nowe powiadomienie o wizycie statku",
+            "edit": "Edytuj istniejące powiadomienie o wizycie statku",
+            "review": "Przejrzyj oczekujące powiadomienia"
+        },
+        "errors": {
+            "noNotificationId": "Nie podano ID powiadomienia"
+        },
+        "infoTitle": "Informacje o powiadomieniu",
+        "cargoTitle": "Informacje o ładunku",
+        "vesselTitle": "Informacje o statku",
+        "manifestInfo": "Informacje o manifeście",
+        "fields": {
+            "openLoadManifest": "Otwórz manifest załadunku",
+            "openUnloadManifest": "Otwórz manifest rozładunku",
+            "expectedArrival": "Przewidywany przyjazd",
+            "expectedDeparture": "Przewidywany odjazd",
+            "isCargoHazardous": "Towar niebezpieczny",
+            "specialRequirements": "Specjalne wymagania",
+            "captain": "Kapitan",
+            "totalCrewMembers": "Łączna liczba członków załogi",
+            "safetyOfficers": "Oficerowie bezpieczeństwa",
+            "loadCargoManifest": "Manifest załadunku",
+            "unloadCargoManifest": "Manifest rozładunku",
+            "position": "Pozycja",
+            "area": "Obszar",
+            "container": "Kontener",
+            "crewMembers": "Członkowie załogi",
+            "status": "Status"
+        },
+        "timeline": {
+            "pending": "Oczekujące",
+            "inProgress": "W toku",
+            "completed": "Zakończone",
+            "submitted": "Przesłane",
+            "accepted": "Zaakceptowane",
+            "rejected": "Odrzucone"
+        },
+        "filters": {
+            "expectedArrivalFrom": "Przewidywany przyjazd od",
+            "expectedArrivalTo": "Przewidywany przyjazd do",
+            "withReason": "Z powodem",
+            "withDockAssigned": "Z przypisanym nabrzeżem"
+        },
+        "decision": {
+            "isFinal": "Czy ostateczna",
+            "assignedDock": {
+                "title": "Przypisane nabrzeże",
+                "placeholder": "Wybierz przypisane nabrzeże"
+            },
+            "reason": {
+                "title": "Powód",
+                "placeholder": "Podaj powód decyzji"
+            },
+            "status": "Status decyzji"
+        }
+    },
+    "operationalWindow": {
+        "title": "Okno operacyjne",
+        "printer": {
+            "addShift": "Dodaj zmianę",
+            "shifts": "Zmiany:",
+            "noShifts": "Brak zmian.",
+            "startTime": "Czas rozpoczęcia",
+            "endTime": "Czas zakończenia",
+            "weekDays": "Dni tygodnia"
+        },
+        "errors": {
+            "shiftOverlap": "Nieprawidłowa zmiana. Nakładanie się lub czas zakończenia przed czasem rozpoczęcia."
         }
     }
 }

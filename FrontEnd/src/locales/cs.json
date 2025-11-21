@@ -1,8 +1,21 @@
-{
+﻿{
     "common": {
         "loading": "Načítání...",
         "noData": "Žádná dostupná data",
-        "statistics": "Statistiky"
+        "statistics": "Statistiky",
+        "yes": "Ano",
+        "no": "Ne",
+        "weekDay": "Den v týdnu",
+        "days": {
+            "sunday": "Neděle",
+            "monday": "Pondělí",
+            "tuesday": "Úterý",
+            "wednesday": "Středa",
+            "thursday": "Čtvrtek",
+            "friday": "Pátek",
+            "saturday": "Sobota"
+        },
+        "number": "Číslo"
     },
     "buttons": {
         "save": "Uložit",
@@ -14,6 +27,10 @@
         "select": "Vybrat",
         "activate": "Aktivovat",
         "deactivate": "Deaktivovat",
+        "generate": "Generovat",
+        "close": "Zavřít",
+        "add": "Přidat",
+        "review": "Zkontrolovat",
         "filter": {
             "title": "Filtry",
             "add": "Filtrovat",
@@ -25,7 +42,8 @@
         },
         "login": "Přihlásit se",
         "goBackToLogin": "Zpět na přihlášení",
-        "logout": "Odhlásit se"
+        "logout": "Odhlásit se",
+        "seeMore": "Zobrazit více"
     },
     "unsavedChanges": {
         "title": "Zrušit změny?",
@@ -33,10 +51,24 @@
         "confirm": "Zahodit",
         "cancel": "Pokračovat v úpravách"
     },
+    "expirationWarning": {
+        "title": "Relace brzy vyprší",
+        "messageOneMinute": "Vaše relace vyprší za 1 minutu.",
+        "messageLessThanOneMinute": "Vaše relace brzy vyprší.",
+        "extendSession": "Prodloužit relaci"
+    },
     "dashboard": {
+        "welcome": "Vítejte zpět, [name]!",
         "sidebarTitle": "Nástěnka",
         "title": "PortIT Nástěnka",
         "subtitle": "Přehled systému PortIT",
+        "SAOR": {
+            "subtitle": "Přehled činností zasílatelského agenta",
+            "pendingNotifications": "Čekající oznámení",
+            "recent": "Nedávná oznámení o návštěvách plavidel",
+            "recentReview": "Oznámení o návštěvách plavidel k revizi",
+            "noRecent": "Žádná nedávná oznámení"
+        },
         "3DModel": {
             "title": "3D vizualizace přístavu",
             "description": "Zobrazte interaktivní 3D reprezentaci celého přístavního komplexu. Sledujte obsazenost doků, pozice lodí, skladovací prostory a zdroje v reálném čase.",
@@ -53,7 +85,7 @@
         },
         "auditLogs": {
             "title": "Auditní záznamy",
-            "subtitle": "Zobrazit a sledovat systémové logy aktivit."
+            "subtitle": "Zobrazit a sledovat systémové záznamy aktivit."
         }
     },
     "user": {
@@ -93,6 +125,10 @@
             "create": "Zaregistrujte nového uživatele do systému",
             "view": "Zobrazit a spravovat existující uživatele"
         }
+    },
+    "representative": {
+        "title": "Zástupce",
+        "select": "Vyberte zástupce"
     },
     "physicalCharacteristics": {
         "title": "Fyzické charakteristiky (m)",
@@ -212,11 +248,14 @@
             },
             "owner": {
                 "title": "Vlastník",
-                "placeholder": "Organizace vlastník"
+                "placeholder": "Organizace vlastníka"
             },
             "vesselType": {
                 "title": "Typ lodi",
                 "placeholder": "Vyberte typ lodi"
+            },
+            "taxNumber": {
+                "title": "Daňové číslo"
             }
         },
         "infoTitle": "Informace o lodi",
@@ -266,9 +305,10 @@
                 "options": {
                     "available": "Dostupný",
                     "unavailable": "Nedostupný",
-                    "temporarilyReassigned": "Dočasně přeložen"
+                    "temporarilyReassigned": "Dočasně přeřazen"
                 }
-            }
+            },
+            "operationalWindow": "Provozní okno"
         },
         "tabs": {
             "dashboard": "Nástěnka zaměstnanců",
@@ -286,6 +326,12 @@
             "create": "Zaregistrujte nového zaměstnance v systému",
             "view": "Zobrazit detaily zaměstnance",
             "edit": "Upravit existujícího zaměstnance v systému"
+        },
+        "deactivation": {
+            "title": "Deaktivovat člena personálu",
+            "message": "Opravdu chcete deaktivovat tohoto člena personálu? Můžete jej znovu aktivovat později.",
+            "successMessage": "Člen personálu byl úspěšně deaktivován.",
+            "errorMessage": "Chyba při deaktivaci. Zkuste to znovu."
         }
     },
     "qualification": {
@@ -399,6 +445,12 @@
         },
         "actions": {
             "deactivate": "Deaktivovat fyzický zdroj"
+        },
+        "deactivation": {
+            "title": "Deaktivovat fyzický zdroj",
+            "message": "Opravdu chcete deaktivovat tento fyzický zdroj? Můžete jej znovu aktivovat později.",
+            "successMessage": "Fyzický zdroj byl úspěšně deaktivován.",
+            "errorMessage": "Chyba při deaktivaci. Zkuste to znovu."
         }
     },
     "storageArea": {
@@ -414,7 +466,7 @@
         "title": "Skladovací oblasti",
         "subtitle": {
             "search": "Spravujte a zobrazte všechny registrované skladovací oblasti",
-            "dashboard": "Ovládací panel pro všechny funkce skladovací oblasti",
+            "dashboard": "Ovládací panel pro všechny funkce skladovacích oblastí",
             "view_dashboard": "Zobrazit skladovací oblasti",
             "create": "Zaregistrujte novou skladovací oblast v systému",
             "view": "Zobrazit detaily skladovací oblasti",
@@ -424,7 +476,169 @@
             "docks_serviced": "obsluhované doky",
             "capacity_usage": "Využití kapacity",
             "units": "jednotky",
-            "available": "dostupné"
+            "available": "dostupné",
+            "no_registered_distances": "Žádné registrované vzdálenosti",
+            "no_docks_serviced": "Žádné obsluhované doky",
+            "all_docks_serviced": "Všechny doky obsluhovány",
+            "serviced_docks_distance": "Vzdálenost obsluhovaných doků",
+            "no_registered_docks": "Žádné registrované doky"
+        },
+        "create": {
+            "distance_meters": "Vzdálenost (metry)"
+        },
+        "fields": {
+            "nameCode": {
+                "title": "Kód názvu",
+                "placeholder": "Kód názvu skladovací oblasti"
+            },
+            "location": {
+                "title": "Umístění",
+                "placeholder": "Umístění skladovací oblasti"
+            },
+            "type": {
+                "title": "Typ",
+                "placeholder": "Vyberte typ skladovací oblasti",
+                "options": {
+                    "yard": "Dvůr",
+                    "warehouse": "Sklad"
+                }
+            },
+            "capacity": {
+                "title": "Kapacita",
+                "placeholder": "Maximální kapacita"
+            },
+            "occupancy": {
+                "title": "Obsazenost",
+                "placeholder": "Aktuální obsazenost"
+            }
+        }
+    },
+    "search": {
+        "languages": "Hledat jazyky..."
+    },
+    "scheduling": {
+        "title": "Vyžádat denní plán",
+        "subtitle": "Použijte náš automatický plánovací algoritmus k analýze naplánovaných úkolů pro vybraný den.",
+        "noVisits": "Žádné návštěvy plavidel naplánované na vybrané datum.",
+        "visitsOnSelectedDay": "Návštěvy plavidel ve vybraný den",
+        "viewVisits": "Generovat plán úkolů",
+        "generateTasksButton": "Generovat plán úkolů",
+        "aboutAlgorithmButton": "O algoritmu",
+        "fields": {
+            "algorithm": {
+                "title": "Plánovací algoritmus",
+                "placeholder": "Vyberte plánovací algoritmus"
+            },
+            "relatedDocks": "Vyberte související dok"
+        },
+        "generateTasksModal": {
+            "title": "Doplňková logistika"
+        },
+        "aboutAlgorithmModal": {
+            "title": "O algoritmu",
+            "content": "Aktuální algoritmus bere v úvahu oznámení o návštěvách plavidel naplánovaných pro vybraný den a dok. Poté kontroluje dostupnost STS jeřábů pro daný dok a určuje dobu trvání každého úkolu na základě rychlosti jeřábu. Ignoruje návštěvy určené pro údržbu nebo jiné ne-nakládací/vykládací aktivity."
+        }
+    },
+    "notification": {
+        "id": "ID oznámení",
+        "hazardous": "Nebezpečný",
+        "nonHazardous": "Nenebezpečný",
+        "arrival": "Příjezd",
+        "departure": "Odjezd",
+        "specialRequirements": "Speciální požadavky",
+        "none": "Žádné",
+        "crew": "Posádka",
+        "captain": "Kapitán",
+        "unknown": "Neznámé",
+        "from": "Od",
+        "to": "Do",
+        "tabs": {
+            "dashboard": "Nástěnka oznámení",
+            "search": "Hledat oznámení",
+            "edit": "Upravit oznámení",
+            "create": "Vytvořit oznámení",
+            "makeDraft": "Vytvořit koncept oznámení",
+            "myNotifications": "Má oznámení",
+            "review": "Revize oznámení",
+            "general": "Obecný výpis",
+            "byDate": "Kalendářní výpis",
+            "submit": "Odeslat oznámení",
+            "delete": "Smazat oznámení"
+        },
+        "eventsOnDate": "Události ve vybraný den",
+        "noEventsOnDate": "Žádné události ve vybraný den",
+        "title": "Oznámení o návštěvách plavidel",
+        "subtitle": {
+            "dashboard": "Přehled oznámení o návštěvách plavidel",
+            "search": "Spravujte a zobrazte všechna oznámení o návštěvách plavidel",
+            "create": "Vytvořit nové oznámení o návštěvě plavidla",
+            "edit": "Upravit existující oznámení o návštěvě plavidla",
+            "review": "Revize čekajících oznámení o návštěvě plavidla"
+        },
+        "errors": {
+            "noNotificationId": "Nebyl poskytnut ID oznámení"
+        },
+        "infoTitle": "Informace o oznámení",
+        "cargoTitle": "Informace o nákladu",
+        "vesselTitle": "Informace o plavidle",
+        "manifestInfo": "Informace o manifestu",
+        "fields": {
+            "openLoadManifest": "Otevřít nakládací manifest",
+            "openUnloadManifest": "Otevřít vykládací manifest",
+            "expectedArrival": "Očekávaný příjezd",
+            "expectedDeparture": "Očekávaný odjezd",
+            "isCargoHazardous": "Náklad nebezpečný",
+            "specialRequirements": "Speciální požadavky",
+            "captain": "Kapitán",
+            "totalCrewMembers": "Celkový počet členů posádky",
+            "safetyOfficers": "Bezpečnostní pracovníci",
+            "loadCargoManifest": "Nakládací manifest",
+            "unloadCargoManifest": "Vykládací manifest",
+            "position": "Pozice",
+            "area": "Oblast",
+            "container": "Kontejner",
+            "crewMembers": "Členové posádky",
+            "status": "Stav"
+        },
+        "timeline": {
+            "pending": "Čeká",
+            "inProgress": "Probíhá",
+            "completed": "Dokončeno",
+            "submitted": "Odesláno",
+            "accepted": "Přijato",
+            "rejected": "Zamítnuto"
+        },
+        "filters": {
+            "expectedArrivalFrom": "Očekávaný příjezd od",
+            "expectedArrivalTo": "Očekávaný příjezd do",
+            "withReason": "S odůvodněním",
+            "withDockAssigned": "S přiřazeným dokem"
+        },
+        "decision": {
+            "isFinal": "Konečné",
+            "assignedDock": {
+                "title": "Přiřazený dok",
+                "placeholder": "Vyberte přiřazený dok"
+            },
+            "reason": {
+                "title": "Důvod",
+                "placeholder": "Uveďte důvod rozhodnutí"
+            },
+            "status": "Stav rozhodnutí"
+        }
+    },
+    "operationalWindow": {
+        "title": "Provozní okno",
+        "printer": {
+            "addShift": "Přidat směnu",
+            "shifts": "Směny:",
+            "noShifts": "Žádné směny.",
+            "startTime": "Čas začátku",
+            "endTime": "Čas konce",
+            "weekDays": "Dny v týdnu"
+        },
+        "errors": {
+            "shiftOverlap": "Neplatná směna. Překrývá se nebo konec před začátkem."
         }
     }
 }

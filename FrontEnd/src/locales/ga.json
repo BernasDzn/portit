@@ -1,8 +1,21 @@
-{
+﻿{
     "common": {
         "loading": "Ag luchtú...",
         "noData": "Níl sonraí ar fáil",
-        "statistics": "Staitisticí"
+        "statistics": "Staitisticí",
+        "yes": "Tá",
+        "no": "Níl",
+        "weekDay": "Lá na seachtaine",
+        "days": {
+            "sunday": "Domhnach",
+            "monday": "Luan",
+            "tuesday": "Márta",
+            "wednesday": "Céadaoin",
+            "thursday": "Déardaoin",
+            "friday": "Aoine",
+            "saturday": "Satharn"
+        },
+        "number": "Uimhir"
     },
     "buttons": {
         "save": "Sábháil",
@@ -25,7 +38,12 @@
         },
         "login": "Logáil isteach",
         "goBackToLogin": "Fill ar ais chuig logáil isteach",
-        "logout": "Logáil amach"
+        "logout": "Logáil amach",
+        "generate": "Giniú",
+        "close": "Dún",
+        "add": "Cuir le",
+        "review": "Athbhreithniú",
+        "seeMore": "Féach Nios Mó"
     },
     "unsavedChanges": {
         "title": "Déan neamhaird ar na hathruithe?",
@@ -41,6 +59,14 @@
             "title": "Léiriú 3D ar an gcalafort",
             "description": "Amharc ar léiriú idirghníomhach 3D den chonair calafort go léir. Féach ar luchtú na dugaí, suíomhanna long, réigiúin stórála agus acmhainní i bhfíor-am.",
             "open": "Oscail an múnla 3D"
+        },
+        "welcome": "Fáilte ar ais, [name]!",
+        "SAOR": {
+            "subtitle": "Forbhreathnú ar oibríochtaí an ghníomhaí iompair",
+            "pendingNotifications": "Fógraí ar feitheamh",
+            "recent": "Fógraí cuairteanna loinge le déanaí",
+            "recentReview": "Fógraí cuairteanna loinge le haghaidh athbhreithnithe",
+            "noRecent": "Níl fógraí le déanaí"
         }
     },
     "admin": {
@@ -217,6 +243,9 @@
             "vesselType": {
                 "title": "Cineál long",
                 "placeholder": "Roghnaigh cineál long"
+            },
+            "taxNumber": {
+                "title": "Tax Number"
             }
         },
         "infoTitle": "Eolas an longa",
@@ -268,7 +297,8 @@
                     "unavailable": "Ní ar fáil",
                     "temporarilyReassigned": "Athshainithe go sealadach"
                 }
-            }
+            },
+            "operationalWindow": "Operational Window"
         },
         "tabs": {
             "dashboard": "Painéal foirne",
@@ -286,6 +316,12 @@
             "create": "Cláraigh fostaí nua sa chóras",
             "view": "Féach ar shonraí an fostaí",
             "edit": "Cuir in eagar fostaí atá ann"
+        },
+        "deactivation": {
+            "title": "Deactivate Staff Member",
+            "message": "Are you sure you want to deactivate this staff member? You can activate them again later.",
+            "successMessage": "Staff member has been successfully deactivated.",
+            "errorMessage": "An error occurred while trying to deactivate the staff member. Please try again."
         }
     },
     "qualification": {
@@ -379,10 +415,32 @@
             "maxLoadCapacity": {
                 "title": "Uasmhéid luchtaithe (kg)",
                 "placeholder": "Uasmhéid luchtaithe"
+            },
+            "averageSpeed": {
+                "title": "Average speed (km/h)",
+                "placeholder": "Average speed"
+            },
+            "containersPerTrip": {
+                "title": "Containers per trip",
+                "placeholder": "Containers per trip"
+            },
+            "type": {
+                "title": "Resource Type",
+                "options": {
+                    "stsCrane": "STS Crane",
+                    "yardGantry": "Yard Gantry Crane",
+                    "truck": "Truck"
+                }
             }
         },
         "actions": {
             "deactivate": "Díghníomhachtaigh acmhainn fiseolaíoch"
+        },
+        "deactivation": {
+            "title": "Deactivate Physical Resource",
+            "message": "Are you sure you want to deactivate this physical resource? You can activate it again later.",
+            "successMessage": "Physical Resource has been successfully deactivated.",
+            "errorMessage": "An error occurred while trying to deactivate the Physical Resource. Please try again."
         }
     },
     "storageArea": {
@@ -408,7 +466,177 @@
             "docks_serviced": "dugaí seirbhíse",
             "capacity_usage": "úsáid cumais",
             "units": "aonaid",
-            "available": "ar fáil"
+            "available": "ar fáil",
+            "no_registered_distances": "No registered distances",
+            "no_docks_serviced": "No docks serviced",
+            "all_docks_serviced": "All docks serviced",
+            "serviced_docks_distance": "Serviced docks distance",
+            "no_registered_docks": "No registered docks"
+        },
+        "create": {
+            "distance_meters": "Fad (méadar)"
+        },
+        "fields": {
+            "nameCode": {
+                "title": "Name Code",
+                "placeholder": "Códain ainm réimse stórála"
+            },
+            "location": {
+                "title": "Location",
+                "placeholder": "Suíomh réimse stórála"
+            },
+            "type": {
+                "title": "Type",
+                "placeholder": "Select Storage Area type",
+                "options": {
+                    "yard": "Yard",
+                    "warehouse": "Warehouse"
+                }
+            },
+            "capacity": {
+                "title": "Capacity",
+                "placeholder": "Maximum capacity"
+            },
+            "occupancy": {
+                "title": "Occupancy",
+                "placeholder": "Current occupancy"
+            }
+        }
+    },
+    "search": {
+        "languages": "Cuardaigh teangacha..."
+    },
+    "expirationWarning": {
+        "messageOneMinute": "Beidh do sheisiún éagtha i gceann 1 nóiméad.",
+        "messageLessThanOneMinute": "Tá do sheisiún ar tí éagtha."
+    },
+    "representative": {
+        "title": "Ionadaí",
+        "select": "Roghnaigh ionadaí"
+    },
+    "scheduling": {
+        "title": "Iarratas sceideal laethúil",
+        "subtitle": "Bain úsáid as ár halgartam sceidhlithe uathoibrithe chun na tascanna sceidilithe don lá a anailísiú.",
+        "noVisits": "Níl aon chuairteanna long sceidealta don dáta roghnaithe.",
+        "visitsOnSelectedDay": "Cuairteanna longa ar an dáta roghnaithe",
+        "viewVisits": "Gineadh sceideal tascanna",
+        "generateTasksButton": "Gineadh sceideal tascanna",
+        "aboutAlgorithmButton": "Maidir leis an algartam",
+        "fields": {
+            "algorithm": {
+                "title": "Scheduling Algorithm",
+                "placeholder": "Select scheduling algorithm"
+            },
+            "relatedDocks": "Select related dock"
+        },
+        "generateTasksModal": {
+            "title": "Additional logistics"
+        },
+        "aboutAlgorithmModal": {
+            "title": "Maidir leis an algartam",
+            "content": "Tugann an algartam reatha aird ar na fógraí cuairte longa atá sceidealta don dáta agus don dua sonraithe.\nSeiceálann sé infhaighteacht criún STS don dua roghnaithe agus socraíonn sé fad gach tasc bunaithe ar luas an chriún.\nDéanann sé dearmad freisin ar chuairteanna a bhaineann le cothabháil nó gníomhaíochtaí nach mbaineann le luchtú/díluchtú."
+        }
+    },
+    "notification": {
+        "id": "Aitheantas fógra",
+        "hazardous": "Contúirteach",
+        "nonHazardous": "Neamh-chontúirteach",
+        "arrival": "Teacht",
+        "departure": "Fágáil",
+        "specialRequirements": "Riachtanais speisialta",
+        "none": "Níl",
+        "crew": "Criú",
+        "captain": "Captaen",
+        "unknown": "Anaithnid",
+        "from": "Ó",
+        "to": "Go",
+        "tabs": {
+            "dashboard": "Painéal Fógraí",
+            "search": "Cuardaigh Fógraí",
+            "edit": "Cuir in eagar Fógra",
+            "create": "Cruthaigh Fógra",
+            "makeDraft": "Cruthaigh dréacht fógra",
+            "myNotifications": "Mo Fógraí",
+            "review": "Athbhreithniú Fógraí",
+            "general": "Liosta ginearálta",
+            "byDate": "Liosta féilire",
+            "submit": "Cuir an fógra isteach",
+            "delete": "Scrios Fógra"
+        },
+        "eventsOnDate": "Imeachtaí ar an dáta roghnaithe",
+        "noEventsOnDate": "Níl imeachtaí ar an dáta roghnaithe",
+        "title": "Fógraí cuairteanna longa",
+        "subtitle": {
+            "dashboard": "Forbhreathnú ar fógraí cuairteanna longa",
+            "search": "Bainistigh agus féach ar fhógraí cuairteanna longa",
+            "create": "Cruthaigh fógra nua cuairte longa",
+            "edit": "Cuir in eagar fógra cuairte longa atá ann",
+            "review": "Athbhreithniú ar fhógraí cuairte longa atá ar feitheamh"
+        },
+        "errors": {
+            "noNotificationId": "No notification id provided"
+        },
+        "infoTitle": "Notification Information",
+        "cargoTitle": "Cargo Information",
+        "vesselTitle": "Vessel Information",
+        "manifestInfo": "Manifest Information",
+        "fields": {
+            "openLoadManifest": "Oscail Manifest Luchtaithe",
+            "openUnloadManifest": "Oscail Manifest Díluchtaithe",
+            "expectedArrival": "Teacht Inmheánach",
+            "expectedDeparture": "Imeacht Inmheánach",
+            "isCargoHazardous": "Cargo Hazardous",
+            "specialRequirements": "Special Requirements",
+            "captain": "Captain",
+            "totalCrewMembers": "Total Crew Members",
+            "safetyOfficers": "Safety Officers",
+            "loadCargoManifest": "Load Cargo Manifest",
+            "unloadCargoManifest": "Unload Cargo Manifest",
+            "position": "Position",
+            "area": "Area",
+            "container": "Container",
+            "crewMembers": "Crew Members",
+            "status": "Status"
+        },
+        "timeline": {
+            "pending": "Pending",
+            "inProgress": "In Progress",
+            "completed": "Completed",
+            "submitted": "Submitted",
+            "accepted": "Accepted",
+            "rejected": "Rejected"
+        },
+        "filters": {
+            "expectedArrivalFrom": "Teacht Inmheánach From",
+            "expectedArrivalTo": "Teacht Inmheánach To",
+            "withReason": "With Reason",
+            "withDockAssigned": "With Dock Assigned"
+        },
+        "decision": {
+            "isFinal": "Is Final",
+            "assignedDock": {
+                "title": "Assigned Dock",
+                "placeholder": "Select assigned dock"
+            },
+            "reason": {
+                "title": "Reason",
+                "placeholder": "Provide reason for decision"
+            },
+            "status": "Decision Status"
+        }
+    },
+    "operationalWindow": {
+        "title": "Fuinneog oibríochtúil",
+        "printer": {
+            "addShift": "Cuir isteach athrú",
+            "shifts": "Athruithe:",
+            "noShifts": "Níl athruithe.",
+            "startTime": "Am tosaithe",
+            "endTime": "Am deiridh",
+            "weekDays": "Lá na seachtaine"
+        },
+        "errors": {
+            "shiftOverlap": "Athrú neamhbhailí. Trasnaíonn siad nó tá am deiridh sula dtosaíonn an t-athrú."
         }
     }
 }

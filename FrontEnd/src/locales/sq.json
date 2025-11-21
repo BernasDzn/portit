@@ -1,8 +1,21 @@
-{
+﻿{
     "common": {
         "loading": "Duke ngarkuar...",
         "noData": "Nuk ka të dhëna",
-        "statistics": "Statistikat"
+        "statistics": "Statistikat",
+        "yes": "Po",
+        "no": "Jo",
+        "weekDay": "Dita e javës",
+        "days": {
+            "sunday": "E diel",
+            "monday": "E hënë",
+            "tuesday": "E martë",
+            "wednesday": "E mërkurë",
+            "thursday": "E enjte",
+            "friday": "E premte",
+            "saturday": "E shtunë"
+        },
+        "number": "Numri"
     },
     "buttons": {
         "save": "Ruaj",
@@ -16,21 +29,26 @@
         "deactivate": "Çaktivizo",
         "filter": {
             "title": "Filtro",
-            "add": "Shto filter",
-            "clear": "Pastro filterat"
+            "add": "Shto filtër",
+            "clear": "Pastro filtrat"
         },
         "pagination": {
-            "previous": "Mëparshëm",
-            "next": "Tjetër"
+            "previous": "E mëparshme",
+            "next": "Tjetra"
         },
         "login": "Hyrje",
         "goBackToLogin": "Kthehu te hyrja",
-        "logout": "Dil"
+        "logout": "Dil",
+        "generate": "Gjenero",
+        "close": "Mbyll",
+        "add": "Shto",
+        "review": "Rishiko",
+        "seeMore": "Shiko më shumë"
     },
     "unsavedChanges": {
-        "title": "Hedh jashtë ndryshimet?",
-        "message": "Keni ndryshime të pacaktuara. Jeni i sigurt që dëshironi të lini këtë faqe dhe të hidhni ndryshimet?",
-        "confirm": "Hedh",
+        "title": "Të braktisen ndryshimet?",
+        "message": "Keni ndryshime të paruajtura. Jeni i sigurt që dëshironi të largoheni nga kjo faqe dhe t’i hidhni këto ndryshime?",
+        "confirm": "Braktis",
         "cancel": "Vazhdo redaktimin"
     },
     "dashboard": {
@@ -39,8 +57,16 @@
         "subtitle": "Përmbledhje e sistemit PortIT",
         "3DModel": {
             "title": "Vizualizimi 3D i portit",
-            "description": "Shikoni një përfaqësim 3D interaktiv të të gjithë objektit të portit. Monitoroni zënien e molave, pozicionet e anijeve, zonat e magazinimit dhe burimet në kohë reale.",
+            "description": "Shikoni një paraqitje 3D interaktive të të gjithë objektit të portit. Monitoroni zënien e molave, pozicionet e anijeve, zonat e magazinimit dhe burimet në kohë reale.",
             "open": "Hap modelin 3D"
+        },
+        "welcome": "Mirë se u ktheve, [name]!",
+        "SAOR": {
+            "subtitle": "Përmbledhje e operacioneve të agjentit detar",
+            "pendingNotifications": "Njoftime në pritje",
+            "recent": "Njoftime të fundit për vizitat e anijeve",
+            "recentReview": "Njoftime për vizitat e anijeve që duhen rishikuar",
+            "noRecent": "Nuk ka njoftime të fundit"
         }
     },
     "admin": {
@@ -52,8 +78,8 @@
             "subtitle": "Menaxhoni përdoruesit e sistemit, rolet dhe lejet."
         },
         "auditLogs": {
-            "title": "Logjet e auditimit",
-            "subtitle": "Shikoni dhe monitoroni logjet e aktivitetit të sistemit."
+            "title": "Regjistrat e auditimit",
+            "subtitle": "Shikoni dhe monitoroni regjistrat e aktiviteteve të sistemit."
         }
     },
     "user": {
@@ -69,7 +95,7 @@
                     "admin": "Administrator",
                     "saoRep": "Përfaqësues SAO",
                     "pao": "Zyrtar i Autoritetit Portual",
-                    "logisticsOperator": "Operator Logjistik"
+                    "logisticsOperator": "Operator logjistik"
                 }
             },
             "isActive": {
@@ -105,8 +131,8 @@
             "placeholder": "Thellësia në metra"
         },
         "draft": {
-            "title": "Kopa",
-            "placeholder": "Kopa në metra"
+            "title": "Zhytja",
+            "placeholder": "Zhytja në metra"
         }
     },
     "dock": {
@@ -149,7 +175,7 @@
             "create": "Regjistro një mol të ri në sistem",
             "edit": "Ndrysho molin ekzistues në sistem"
         },
-        "registeredDocks": "Molë të regjistruara"
+        "registeredDocks": "Mola të regjistruara"
     },
     "vesselType": {
         "fields": {
@@ -168,8 +194,8 @@
             "containerCapacity": {
                 "title": "Kapaciteti i kontejnerëve (TEU)",
                 "maxNumberOfRows": {
-                    "title": "Numri maksimal i rrjeshtave",
-                    "placeholder": "Maks. rrjeshtat në TEU"
+                    "title": "Numri maksimal i rreshtave",
+                    "placeholder": "Maks. rreshtat në TEU"
                 },
                 "maxNumberOfBays": {
                     "title": "Numri maksimal i fushave",
@@ -217,6 +243,9 @@
             "vesselType": {
                 "title": "Lloji i anijes",
                 "placeholder": "Zgjidh llojin e anijes"
+            },
+            "taxNumber": {
+                "title": "Numri i tatimit"
             }
         },
         "infoTitle": "Informacion mbi anijen",
@@ -266,9 +295,10 @@
                 "options": {
                     "available": "Në dispozicion",
                     "unavailable": "Nuk është në dispozicion",
-                    "temporarilyReassigned": "Përkohësisht riorganizuar"
+                    "temporarilyReassigned": "Përkohësisht ricaktuar"
                 }
-            }
+            },
+            "operationalWindow": "Dritarja Operacionale"
         },
         "tabs": {
             "dashboard": "Paneli i stafit",
@@ -286,6 +316,12 @@
             "create": "Regjistro një anëtar të ri të stafit në sistem",
             "view": "Shiko detajet e stafit",
             "edit": "Redakto anëtarin ekzistues të stafit në sistem"
+        },
+        "deactivation": {
+            "title": "Çaktivizo anëtarin e stafit",
+            "message": "Jeni i sigurt që doni të çaktivizoni këtë anëtar stafi? Mund ta aktivizoni përsëri më vonë.",
+            "successMessage": "Anëtari i stafit u çaktivizua me sukses.",
+            "errorMessage": "Ndodhi një gabim gjatë përpjekjes për të çaktivizuar anëtarin e stafit. Ju lutemi provoni përsëri."
         }
     },
     "qualification": {
@@ -365,8 +401,8 @@
                 "placeholder": "Koha e vendosjes"
             },
             "servingDocks": {
-                "title": "Mollët e shërbyera",
-                "placeholder": "Zgjidh mollët e shërbyera"
+                "title": "Molat e shërbyera",
+                "placeholder": "Zgjidh molat e shërbyera"
             },
             "liftingCapacity": {
                 "title": "Kapaciteti i ngritjes (kg)",
@@ -392,13 +428,19 @@
                 "title": "Lloji i burimit",
                 "options": {
                     "stsCrane": "Kran STS",
-                    "yardGantry": "Kran i oborrit",
+                    "yardGantry": "Vinç i oborrit",
                     "truck": "Kamion"
                 }
             }
         },
         "actions": {
             "deactivate": "Çaktivizo burimin fizik"
+        },
+        "deactivation": {
+            "title": "Çaktivizo burimin fizik",
+            "message": "Jeni i sigurt që doni të çaktivizoni këtë burim fizik? Mund ta aktivizoni përsëri më vonë.",
+            "successMessage": "Burimi fizik u çaktivizua me sukses.",
+            "errorMessage": "Ndodhi një gabim gjatë përpjekjes për të çaktivizuar burimin fizik. Ju lutemi provoni përsëri."
         }
     },
     "storageArea": {
@@ -421,10 +463,182 @@
             "edit": "Redakto zonën e magazinimit ekzistuese në sistem"
         },
         "printer": {
-            "docks_serviced": "mollët e shërbyera",
+            "docks_serviced": "mola të shërbyera",
             "capacity_usage": "Përdorimi i kapacitetit",
             "units": "njësi",
-            "available": "në dispozicion"
+            "available": "në dispozicion",
+            "no_registered_distances": "Nuk ka distanca të regjistruara",
+            "no_docks_serviced": "Nuk ka mola të shërbyera",
+            "all_docks_serviced": "Të gjitha molat e shërbyera",
+            "serviced_docks_distance": "Distanca e molave të shërbyera",
+            "no_registered_docks": "Nuk ka mola të regjistruara"
+        },
+        "create": {
+            "distance_meters": "Distanca (metra)"
+        },
+        "fields": {
+            "nameCode": {
+                "title": "Kodi i emërtimit",
+                "placeholder": "Kodi i emërtimit të zonës së magazinimit"
+            },
+            "location": {
+                "title": "Vendndodhja",
+                "placeholder": "Vendndodhja e zonës së magazinimit"
+            },
+            "type": {
+                "title": "Lloji",
+                "placeholder": "Zgjidh llojin e zonës së magazinimit",
+                "options": {
+                    "yard": "Oborr",
+                    "warehouse": "Magazinë"
+                }
+            },
+            "capacity": {
+                "title": "Kapaciteti",
+                "placeholder": "Kapaciteti maksimal"
+            },
+            "occupancy": {
+                "title": "Zënia",
+                "placeholder": "Zënia aktuale"
+            }
+        }
+    },
+    "search": {
+        "languages": "Kërko gjuhët..."
+    },
+    "expirationWarning": {
+        "title": "Seanca po skadon",
+        "messageOneMinute": "Seanca juaj do të skadojë për 1 minutë.",
+        "messageLessThanOneMinute": "Seanca juaj është drejt skadimit.",
+        "extendSession": "Zgjat seancën"
+    },
+    "representative": {
+        "title": "Përfaqësues",
+        "select": "Zgjidh një përfaqësues"
+    },
+    "scheduling": {
+        "title": "Kërko orarin ditor",
+        "subtitle": "Përdorni algoritmin tonë të planifikimit për të analizuar detyrat e planifikuara për një ditë të caktuar.",
+        "noVisits": "Nuk ka vizita anijesh të planifikuara për datën e zgjedhur.",
+        "visitsOnSelectedDay": "Vizitat e anijeve në datën e zgjedhur",
+        "viewVisits": "Gjenero orarin e detyrave",
+        "generateTasksButton": "Gjenero orarin e detyrave",
+        "aboutAlgorithmButton": "Rreth algoritmit",
+        "fields": {
+            "algorithm": {
+                "title": "Algoritmi i planifikimit",
+                "placeholder": "Zgjidh algoritmin e planifikimit"
+            },
+            "relatedDocks": "Zgjidh molin përkatës"
+        },
+        "generateTasksModal": {
+            "title": "Logjistika shtesë"
+        },
+        "aboutAlgorithmModal": {
+            "title": "Rreth algoritmit",
+            "content": "Algoritmi aktual merr në konsideratë njoftimet e vizitave të anijeve të planifikuara për datën dhe molin e zgjedhur. \nMë pas kontrollon disponueshmërinë e vinçave STS për molin e specifikuar dhe vendos kohëzgjatjen e çdo detyre bazuar në shpejtësinë e vinçit.\nGjithashtu injoron vizitat që janë për mirëmbajtje ose aktivitete të tjera jo-ngarkim/shkarkim."
+        }
+    },
+    "notification": {
+        "id": "ID e njoftimit",
+        "hazardous": "I rrezikshëm",
+        "nonHazardous": "Jo i rrezikshëm",
+        "arrival": "Mbërritje",
+        "departure": "Nisje",
+        "specialRequirements": "Kërkesa të veçanta",
+        "none": "Asnjë",
+        "crew": "Ekuipazh",
+        "captain": "Kapiteni",
+        "unknown": "E panjohur",
+        "from": "Nga",
+        "to": "Deri",
+        "tabs": {
+            "dashboard": "Paneli i njoftimeve",
+            "search": "Kërko njoftime",
+            "edit": "Redakto njoftimin",
+            "create": "Krijo njoftim",
+            "makeDraft": "Krijo njoftim draft",
+            "myNotifications": "Njoftimet e mia",
+            "review": "Rishiko njoftimet",
+            "general": "Listim i përgjithshëm",
+            "byDate": "Listim sipas kalendarit",
+            "submit": "Dorëzo njoftimin",
+            "delete": "Fshi njoftimin"
+        },
+        "eventsOnDate": "Ngjarje në datën e zgjedhur",
+        "noEventsOnDate": "Nuk ka ngjarje në datën e zgjedhur",
+        "title": "Njoftime për vizitat e anijeve",
+        "subtitle": {
+            "dashboard": "Përmbledhje e njoftimeve për vizitat e anijeve",
+            "search": "Menaxho dhe shiko të gjitha njoftimet për vizitat e anijeve",
+            "create": "Krijo një njoftim të ri për vizitë anijeje",
+            "edit": "Redakto një njoftim ekzistues për vizitë anijeje",
+            "review": "Rishiko njoftimet e pritjes"
+        },
+        "errors": {
+            "noNotificationId": "Nuk është dhënë ID e njoftimit"
+        },
+        "infoTitle": "Informacioni i njoftimit",
+        "cargoTitle": "Informacioni i ngarkesës",
+        "vesselTitle": "Informacioni i anijes",
+        "manifestInfo": "Informacioni i manifestit",
+        "fields": {
+            "openLoadManifest": "Hap manifestin e ngarkimit",
+            "openUnloadManifest": "Hap manifestin e shkarkimit",
+            "expectedArrival": "Mbërritje e pritshme",
+            "expectedDeparture": "Nisje e pritshme",
+            "isCargoHazardous": "Ngarkesë e rrezikshme",
+            "specialRequirements": "Kërkesa të veçanta",
+            "captain": "Kapiteni",
+            "totalCrewMembers": "Numri total i anëtarëve të ekuipazhit",
+            "safetyOfficers": "Oficerë sigurie",
+            "loadCargoManifest": "Ngarko manifestin e ngarkesës",
+            "unloadCargoManifest": "Shkarko manifestin e ngarkesës",
+            "position": "Pozicioni",
+            "area": "Zona",
+            "container": "Konteineri",
+            "crewMembers": "Anëtarë ekuipazhi",
+            "status": "Statusi"
+        },
+        "timeline": {
+            "pending": "Në pritje",
+            "inProgress": "Në progres",
+            "completed": "Përfunduar",
+            "submitted": "Dorëzuar",
+            "accepted": "Pranuar",
+            "rejected": "Refuzuar"
+        },
+        "filters": {
+            "expectedArrivalFrom": "Mbërritje e pritshme nga",
+            "expectedArrivalTo": "Mbërritje e pritshme deri",
+            "withReason": "Me arsye",
+            "withDockAssigned": "Me mol të caktuar"
+        },
+        "decision": {
+            "isFinal": "Përfundimtare",
+            "assignedDock": {
+                "title": "Moli i caktuar",
+                "placeholder": "Zgjidh molin e caktuar"
+            },
+            "reason": {
+                "title": "Arsyeja",
+                "placeholder": "Jepni arsyen për vendimin"
+            },
+            "status": "Statusi i vendimit"
+        }
+    },
+    "operationalWindow": {
+        "title": "Dritarja Operacionale",
+        "printer": {
+            "addShift": "Shto turn",
+            "shifts": "Turne:",
+            "noShifts": "Nuk ka turne.",
+            "startTime": "Ora e fillimit",
+            "endTime": "Ora e mbarimit",
+            "weekDays": "Ditët e javës"
+        },
+        "errors": {
+            "shiftOverlap": "Turn i pavlefshëm. Mbivendosje ose orë mbarimi para fillimit."
         }
     }
 }

@@ -1,8 +1,21 @@
-{
+﻿{
     "common": {
         "loading": "Indlæser...",
         "noData": "Ingen data tilgængelige",
-        "statistics": "Statistik"
+        "statistics": "Statistik",
+        "yes": "Ja",
+        "no": "Nej",
+        "weekDay": "Ugedag",
+        "days": {
+            "sunday": "Søndag",
+            "monday": "Mandag",
+            "tuesday": "Tirsdag",
+            "wednesday": "Onsdag",
+            "thursday": "Torsdag",
+            "friday": "Fredag",
+            "saturday": "Lørdag"
+        },
+        "number": "Nummer"
     },
     "buttons": {
         "save": "Gem",
@@ -14,6 +27,10 @@
         "select": "Vælg",
         "activate": "Aktivér",
         "deactivate": "Deaktivér",
+        "generate": "Generér",
+        "close": "Luk",
+        "add": "Tilføj",
+        "review": "Gennemse",
         "filter": {
             "title": "Filtre",
             "add": "Filtrer",
@@ -25,21 +42,36 @@
         },
         "login": "Log ind",
         "goBackToLogin": "Gå tilbage til login",
-        "logout": "Log ud"
+        "logout": "Log ud",
+        "seeMore": "Se mere"
     },
     "unsavedChanges": {
         "title": "Forkaste ændringer?",
-        "message": "Du har ikke gemte ændringer. Er du sikker på, at du vil forlade denne side og forkaste dine ændringer?",
+        "message": "Du har ugemte ændringer. Er du sikker på, at du vil forlade siden og forkaste ændringerne?",
         "confirm": "Forkast",
         "cancel": "Fortsæt redigering"
     },
+    "expirationWarning": {
+        "title": "Session udløber",
+        "messageOneMinute": "Din session udløber om 1 minut.",
+        "messageLessThanOneMinute": "Din session er ved at udløbe.",
+        "extendSession": "Forlæng session"
+    },
     "dashboard": {
+        "welcome": "Velkommen tilbage, [name]!",
         "sidebarTitle": "Dashboard",
         "title": "PortIT Dashboard",
         "subtitle": "Oversigt over PortIT-systemet",
+        "SAOR": {
+            "subtitle": "Oversigt over shipping-agentens drift",
+            "pendingNotifications": "Ventende notifikationer",
+            "recent": "Seneste notifikationer om skibsbesøg",
+            "recentReview": "Notifikationer om skibsbesøg til gennemgang",
+            "noRecent": "Ingen nye notifikationer"
+        },
         "3DModel": {
-            "title": "3D Havn Visualisering",
-            "description": "Se en interaktiv 3D-repræsentation af hele havneanlægget. Overvåg dokbelægning, fartøjspositioner, oplagsområder og ressourcer i realtid.",
+            "title": "3D havnvisualisering",
+            "description": "Se en interaktiv 3D-repræsentation af hele havnen. Overvåg dokbelægning, fartøjspositioner, oplagsområder og ressourcer i realtid.",
             "open": "Åbn 3D-model"
         }
     },
@@ -93,6 +125,10 @@
             "create": "Registrer en ny bruger i systemet",
             "view": "Vis og administrer eksisterende brugere"
         }
+    },
+    "representative": {
+        "title": "Repræsentant",
+        "select": "Vælg en repræsentant"
     },
     "physicalCharacteristics": {
         "title": "Fysiske egenskaber (m)",
@@ -172,8 +208,8 @@
                     "placeholder": "Maks rækker i TEU"
                 },
                 "maxNumberOfBays": {
-                    "title": "Maks antal bugser",
-                    "placeholder": "Maks bugser i TEU"
+                    "title": "Maks antal rum",
+                    "placeholder": "Maks rum i TEU"
                 },
                 "maxNumberOfTiers": {
                     "title": "Maks antal lag",
@@ -217,6 +253,9 @@
             "vesselType": {
                 "title": "Fartøjstype",
                 "placeholder": "Vælg fartøjstype"
+            },
+            "taxNumber": {
+                "title": "Skattenummer"
             }
         },
         "infoTitle": "Fartøjsinformation",
@@ -268,7 +307,8 @@
                     "unavailable": "Ikke tilgængelig",
                     "temporarilyReassigned": "Midlertidigt omplaceret"
                 }
-            }
+            },
+            "operationalWindow": "Operationsvindue"
         },
         "tabs": {
             "dashboard": "Medarbejder dashboard",
@@ -286,6 +326,12 @@
             "create": "Registrer en ny medarbejder i systemet",
             "view": "Vis medarbejderdetaljer",
             "edit": "Rediger en eksisterende medarbejder i systemet"
+        },
+        "deactivation": {
+            "title": "Deaktiver medarbejder",
+            "message": "Er du sikker på at du vil deaktivere denne medarbejder? Du kan aktivere medarbejderen igen senere.",
+            "successMessage": "Medarbejderen blev deaktiveret succesfuldt.",
+            "errorMessage": "Fejl under deaktivering. Prøv igen."
         }
     },
     "qualification": {
@@ -358,7 +404,7 @@
             },
             "qualifications": {
                 "title": "Påkrævede kvalifikationer",
-                "placeholder": "De kvalifikationer, der kræves for at betjene denne ressource"
+                "placeholder": "Kvalifikationer der kræves for at betjene denne ressource"
             },
             "setupTime": {
                 "title": "Opsætningstid (minutter)",
@@ -392,13 +438,19 @@
                 "title": "Ressourcetype",
                 "options": {
                     "stsCrane": "STS kran",
-                    "yardGantry": "Opslagsgård portalkran",
+                    "yardGantry": "Gård portalkran",
                     "truck": "Lastbil"
                 }
             }
         },
         "actions": {
             "deactivate": "Deaktivér fysisk ressource"
+        },
+        "deactivation": {
+            "title": "Deaktiver fysisk ressource",
+            "message": "Er du sikker på at du vil deaktivere denne ressource? Du kan aktivere den igen senere.",
+            "successMessage": "Fysisk ressource deaktiveret succesfuldt.",
+            "errorMessage": "Fejl under deaktivering. Prøv igen."
         }
     },
     "storageArea": {
@@ -414,17 +466,179 @@
         "title": "Lagerområder",
         "subtitle": {
             "search": "Administrer og vis alle registrerede lagerområder",
-            "dashboard": "Kontrolpanel for alle lagerområdefunktioner",
+            "dashboard": "Kontrolpanel for alle lagerområder",
             "view_dashboard": "Vis lagerområder",
             "create": "Registrer et nyt lagerområde i systemet",
             "view": "Vis lagerområdets detaljer",
             "edit": "Rediger et eksisterende lagerområde i systemet"
         },
         "printer": {
-            "docks_serviced": "betjente dokke",
+            "docks_serviced": "Betjente dokke",
             "capacity_usage": "Kapacitetsudnyttelse",
-            "units": "enheder",
-            "available": "tilgængelige"
+            "units": "Enheder",
+            "available": "Tilgængelige",
+            "no_registered_distances": "Ingen registrerede afstande",
+            "no_docks_serviced": "Ingen betjente dokke",
+            "all_docks_serviced": "Alle dokke betjenes",
+            "serviced_docks_distance": "Afstand til betjente dokke",
+            "no_registered_docks": "Ingen registrerede dokke"
+        },
+        "create": {
+            "distance_meters": "Afstand (meter)"
+        },
+        "fields": {
+            "nameCode": {
+                "title": "Navnekode",
+                "placeholder": "Lagerområdets navnekode"
+            },
+            "location": {
+                "title": "Placering",
+                "placeholder": "Lagerområdets placering"
+            },
+            "type": {
+                "title": "Type",
+                "placeholder": "Vælg lagerområdets type",
+                "options": {
+                    "yard": "Plads",
+                    "warehouse": "Lager"
+                }
+            },
+            "capacity": {
+                "title": "Kapacitet",
+                "placeholder": "Maksimal kapacitet"
+            },
+            "occupancy": {
+                "title": "Belægning",
+                "placeholder": "Nuværende belægning"
+            }
+        }
+    },
+    "search": {
+        "languages": "Søg sprog..."
+    },
+    "scheduling": {
+        "title": "Anmod om daglig tidsplan",
+        "subtitle": "Brug vores automatiske planlægningsalgoritme til at analysere opgaverne for en bestemt dag.",
+        "noVisits": "Ingen skibsbesøg planlagt for den valgte dato.",
+        "visitsOnSelectedDay": "Skibsbesøg på valgt dato",
+        "viewVisits": "Generer opgavetidsplan",
+        "generateTasksButton": "Generer opgavetidsplan",
+        "aboutAlgorithmButton": "Om algoritmen",
+        "fields": {
+            "algorithm": {
+                "title": "Planlægningsalgoritme",
+                "placeholder": "Vælg planlægningsalgoritme"
+            },
+            "relatedDocks": "Vælg relateret dok"
+        },
+        "generateTasksModal": {
+            "title": "Ekstra logistik"
+        },
+        "aboutAlgorithmModal": {
+            "title": "Om algoritmen",
+            "content": "Den nuværende algoritme tager højde for skibsbesøgsnotifikationerne planlagt til den valgte dato og dok. Den tjekker tilgængeligheden af STS-kraner og afgør varigheden af hver opgave baseret på kranens hastighed. Besøg der kun vedrører vedligehold eller andre ikke-lastning/pasning aktiviteter ignoreres."
+        }
+    },
+    "notification": {
+        "id": "Notifikations-ID",
+        "hazardous": "Farlig",
+        "nonHazardous": "Ikke-farlig",
+        "arrival": "Ankomst",
+        "departure": "Afgang",
+        "specialRequirements": "Særlige krav",
+        "none": "Ingen",
+        "crew": "Besætning",
+        "captain": "Kaptajn",
+        "unknown": "Ukendt",
+        "from": "Fra",
+        "to": "Til",
+        "tabs": {
+            "dashboard": "Notifikationer dashboard",
+            "search": "Søg notifikationer",
+            "edit": "Rediger notifikation",
+            "create": "Opret notifikation",
+            "makeDraft": "Opret kladdenotifikation",
+            "myNotifications": "Mine notifikationer",
+            "review": "Gennemgå notifikationer",
+            "general": "Generel visning",
+            "byDate": "Kalendervisning",
+            "submit": "Indsend notifikation",
+            "delete": "Slet notifikation"
+        },
+        "eventsOnDate": "Begivenheder på valgt dato",
+        "noEventsOnDate": "Ingen begivenheder på valgt dato",
+        "title": "Skibsbesøgsnotifikationer",
+        "subtitle": {
+            "dashboard": "Oversigt over skibsbesøgsnotifikationer",
+            "search": "Administrer og vis alle skibsbesøgsnotifikationer",
+            "create": "Opret en ny skibsbesøgsnotifikation",
+            "edit": "Rediger en eksisterende skibsbesøgsnotifikation",
+            "review": "Gennemgå ventende skibsbesøgsnotifikationer"
+        },
+        "errors": {
+            "noNotificationId": "Intet notifikations-ID angivet"
+        },
+        "infoTitle": "Notifikationsinformation",
+        "cargoTitle": "Lastinformation",
+        "vesselTitle": "Fartøjsinformation",
+        "manifestInfo": "Manifestinformation",
+        "fields": {
+            "openLoadManifest": "Åbn lastningsmanifest",
+            "openUnloadManifest": "Åbn losningsmanifest",
+            "expectedArrival": "Forventet ankomst",
+            "expectedDeparture": "Forventet afgang",
+            "isCargoHazardous": "Last farlig",
+            "specialRequirements": "Særlige krav",
+            "captain": "Kaptajn",
+            "totalCrewMembers": "Samlet antal besætningsmedlemmer",
+            "safetyOfficers": "Sikkerhedsofficerer",
+            "loadCargoManifest": "Lastningsmanifest",
+            "unloadCargoManifest": "Losningsmanifest",
+            "position": "Position",
+            "area": "Område",
+            "container": "Container",
+            "crewMembers": "Besætningsmedlemmer",
+            "status": "Status"
+        },
+        "timeline": {
+            "pending": "Afventer",
+            "inProgress": "I gang",
+            "completed": "Afsluttet",
+            "submitted": "Indsendt",
+            "accepted": "Accepteret",
+            "rejected": "Afvist"
+        },
+        "filters": {
+            "expectedArrivalFrom": "Forventet ankomst fra",
+            "expectedArrivalTo": "Forventet ankomst til",
+            "withReason": "Med begrundelse",
+            "withDockAssigned": "Med tildelt dok"
+        },
+        "decision": {
+            "isFinal": "Endelig",
+            "assignedDock": {
+                "title": "Tildelt dok",
+                "placeholder": "Vælg tildelt dok"
+            },
+            "reason": {
+                "title": "Begrundelse",
+                "placeholder": "Angiv begrundelse for beslutning"
+            },
+            "status": "Beslutningsstatus"
+        }
+    },
+    "operationalWindow": {
+        "title": "Operationsvindue",
+        "printer": {
+            "addShift": "Tilføj vagt",
+            "shifts": "Vagter:",
+            "noShifts": "Ingen vagter.",
+            "startTime": "Starttid",
+            "endTime": "Sluttid",
+            "weekDays": "Ugedage"
+        },
+        "errors": {
+            "shiftOverlap": "Ugyldig vagt. Overlapper eller sluttid før starttid."
         }
     }
 }

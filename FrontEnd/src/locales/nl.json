@@ -1,8 +1,21 @@
-{
+﻿{
     "common": {
         "loading": "Laden...",
         "noData": "Geen gegevens beschikbaar",
-        "statistics": "Statistieken"
+        "statistics": "Statistieken",
+        "yes": "Ja",
+        "no": "Nee",
+        "weekDay": "Weekdag",
+        "days": {
+            "sunday": "Zondag",
+            "monday": "Maandag",
+            "tuesday": "Dinsdag",
+            "wednesday": "Woensdag",
+            "thursday": "Donderdag",
+            "friday": "Vrijdag",
+            "saturday": "Zaterdag"
+        },
+        "number": "Nummer"
     },
     "buttons": {
         "save": "Opslaan",
@@ -14,9 +27,14 @@
         "select": "Selecteren",
         "activate": "Activeren",
         "deactivate": "Deactiveren",
+        "generate": "Genereren",
+        "close": "Sluiten",
+        "add": "Toevoegen",
+        "review": "Beoordelen",
+        "seeMore": "Meer zien",
         "filter": {
             "title": "Filters",
-            "add": "Filteren",
+            "add": "Filter toevoegen",
             "clear": "Filters wissen"
         },
         "pagination": {
@@ -29,46 +47,58 @@
     },
     "unsavedChanges": {
         "title": "Wijzigingen weggooien?",
-        "message": "Je hebt niet-opgeslagen wijzigingen. Weet je zeker dat je deze pagina wilt verlaten en de wijzigingen wilt weggooien?",
+        "message": "Je hebt niet-opgeslagen wijzigingen. Weet je zeker dat je wilt verlaten en alles wilt weggooien?",
         "confirm": "Weggooien",
-        "cancel": "Blijf bewerken"
+        "cancel": "Blijven bewerken"
+    },
+    "expirationWarning": {
+        "messageOneMinute": "Je sessie verloopt over 1 minuut.",
+        "messageLessThanOneMinute": "Je sessie staat op het punt te verlopen."
     },
     "dashboard": {
         "sidebarTitle": "Dashboard",
-        "title": "PortIT Dashboard",
+        "title": "PortIT-dashboard",
         "subtitle": "Overzicht van het PortIT-systeem",
+        "welcome": "Welkom terug, [name]!",
+        "SAOR": {
+            "subtitle": "Overzicht van expediteuractiviteiten",
+            "pendingNotifications": "Wachtende meldingen",
+            "recent": "Recente scheepsbezoekmeldingen",
+            "recentReview": "Meldingen die beoordeling vereisen",
+            "noRecent": "Geen recente meldingen"
+        },
         "3DModel": {
-            "title": "3D Havenvisualisatie",
-            "description": "Bekijk een interactieve 3D-weergave van de gehele havenfaciliteit. Houd kadebezetting, scheepsposities, opslaggebieden en middelen in realtime in de gaten.",
+            "title": "3D-havenvisualisatie",
+            "description": "Interactief 3D-model van de haven. Monitor kadebezetting, scheepsposities, opslagzones en middelen in realtime.",
             "open": "3D-model openen"
         }
     },
     "admin": {
         "sidebarTitle": "Beheer",
-        "title": "Admin Dashboard",
-        "subtitle": "Administratief overzicht en beheer",
+        "title": "Beheerdashboard",
+        "subtitle": "Administratief overzicht en controle",
         "userManagement": {
             "title": "Gebruikersbeheer",
-            "subtitle": "Beheer systeemgebruikers, rollen en machtigingen."
+            "subtitle": "Beheer gebruikers, rollen en rechten."
         },
         "auditLogs": {
-            "title": "Auditlogs",
-            "subtitle": "Bekijk en monitor systeemactiviteitlogs."
+            "title": "Activiteitslogs",
+            "subtitle": "Bekijk en volg systeemactiviteiten."
         }
     },
     "user": {
         "fields": {
             "email": {
                 "title": "E-mail",
-                "placeholder": "email@mail.com"
+                "placeholder": "gebruiker@voorbeeld.com"
             },
             "role": {
                 "title": "Rol",
-                "placeholder": "Selecteer gebruikersrol",
+                "placeholder": "Selecteer rol",
                 "options": {
                     "admin": "Beheerder",
-                    "saoRep": "SAO Vertegenwoordiger",
-                    "pao": "Havenautoriteit functionaris",
+                    "saoRep": "SAO-vertegenwoordiger",
+                    "pao": "Havenmedewerker",
                     "logisticsOperator": "Logistiek operator"
                 }
             },
@@ -86,27 +116,27 @@
             "view": "Gebruikers bekijken",
             "search": "Gebruikers zoeken"
         },
-        "infoTitle": "Gebruikersgegevens",
+        "infoTitle": "Gebruikersinfo",
         "title": "Gebruikers",
         "subtitle": {
-            "dashboard": "Gebruikersoverzicht en -beheer",
-            "create": "Registreer een nieuwe gebruiker in het systeem",
-            "view": "Bestaande gebruikers bekijken en beheren"
+            "dashboard": "Overzicht en beheer",
+            "create": "Nieuwe gebruiker registreren",
+            "view": "Bestaande gebruikers beheren"
         }
     },
     "physicalCharacteristics": {
         "title": "Fysieke kenmerken (m)",
         "length": {
             "title": "Lengte",
-            "placeholder": "Lengte in meters"
+            "placeholder": "Lengte (m)"
         },
         "depth": {
             "title": "Diepte",
-            "placeholder": "Diepte in meters"
+            "placeholder": "Diepte (m)"
         },
         "draft": {
             "title": "Diepgang",
-            "placeholder": "Diepgang in meters"
+            "placeholder": "Diepgang (m)"
         }
     },
     "dock": {
@@ -117,14 +147,14 @@
             },
             "name": {
                 "title": "Naam",
-                "placeholder": "Naam van de kade"
+                "placeholder": "Kadenaam"
             },
             "location": {
                 "title": "Locatie",
                 "placeholder": "Kadelocatie"
             },
             "supportedVesselTypes": {
-                "title": "Ondersteunde schipstypen",
+                "title": "Ondersteunde scheepstypen",
                 "vesselTypes": {
                     "title": "Scheepstypen",
                     "placeholder": "Selecteer scheepstypen"
@@ -135,7 +165,7 @@
         "tabs": {
             "dashboard": "Kadedashboard",
             "view_dashboard": "Kades bekijken",
-            "search": "Zoek kades",
+            "search": "Kades zoeken",
             "create": "Kade aanmaken",
             "view": "Kade bekijken",
             "edit": "Kade bewerken"
@@ -144,10 +174,10 @@
         "infoTitle": "Kade-informatie",
         "title": "Kades",
         "subtitle": {
-            "dashboard": "Overzicht van kade-statistieken en activiteiten",
-            "search": "Beheer en bekijk alle geregistreerde kades",
-            "create": "Registreer een nieuwe kade in het systeem",
-            "edit": "Bewerk een bestaande kade in het systeem"
+            "dashboard": "Statistieken & activiteiten",
+            "search": "Geregistreerde kades beheren",
+            "create": "Nieuwe kade registreren",
+            "edit": "Kade bewerken"
         },
         "registeredDocks": "Geregistreerde kades"
     },
@@ -155,50 +185,50 @@
         "fields": {
             "name": {
                 "title": "Naam",
-                "placeholder": "Naam van het scheepstype"
+                "placeholder": "Scheepstype naam"
             },
             "description": {
                 "title": "Beschrijving",
-                "placeholder": "Beschrijving van het scheepstype"
+                "placeholder": "Beschrijving"
             },
             "capacity": {
                 "title": "Capaciteit",
-                "placeholder": "Containercapaciteit in TEU"
+                "placeholder": "Containercapaciteit (TEU)"
             },
             "containerCapacity": {
                 "title": "Containercapaciteit (TEU)",
                 "maxNumberOfRows": {
-                    "title": "Max aantal rijen",
-                    "placeholder": "Max rijen in TEU"
+                    "title": "Max rijen",
+                    "placeholder": "Max rijen"
                 },
                 "maxNumberOfBays": {
-                    "title": "Max aantal bakken",
-                    "placeholder": "Max bakken in TEU"
+                    "title": "Max secties",
+                    "placeholder": "Max secties"
                 },
                 "maxNumberOfTiers": {
-                    "title": "Max aantal lagen",
-                    "placeholder": "Max lagen in TEU"
+                    "title": "Max lagen",
+                    "placeholder": "Max lagen"
                 }
             }
         },
         "generalFields": "Algemene velden",
         "tabs": {
-            "dashboard": "Scheepstype-dashboard",
-            "view_dashboard": "Bekijk scheepstypen",
-            "search": "Zoek scheepstypen",
-            "create": "Maak scheepstype",
-            "view": "Bekijk scheepstype",
-            "edit": "Bewerk scheepstype"
+            "dashboard": "Scheepstypen",
+            "view_dashboard": "Typen bekijken",
+            "search": "Typen zoeken",
+            "create": "Type aanmaken",
+            "view": "Type bekijken",
+            "edit": "Type bewerken"
         },
-        "infoTitle": "Informatie over scheepstype",
+        "infoTitle": "Type-informatie",
         "title": "Scheepstypen",
         "subtitle": {
-            "dashboard": "Overzicht van statistieken en activiteiten per scheepstype",
-            "search": "Beheer en bekijk alle geregistreerde scheepstypen",
-            "create": "Registreer een nieuw scheepstype in het systeem",
-            "edit": "Bewerk een bestaand scheepstype in het systeem"
+            "dashboard": "Statistieken & activiteiten",
+            "search": "Geregistreerde typen beheren",
+            "create": "Nieuw type registreren",
+            "edit": "Type bewerken"
         },
-        "registeredVesselTypes": "Geregistreerde scheepstypen"
+        "registeredVesselTypes": "Geregistreerde typen"
     },
     "vessel": {
         "fields": {
@@ -208,7 +238,7 @@
             },
             "imoNumber": {
                 "title": "IMO-nummer",
-                "placeholder": "IMO-nummer van het schip"
+                "placeholder": "IMO-nummer"
             },
             "owner": {
                 "title": "Eigenaar",
@@ -217,24 +247,27 @@
             "vesselType": {
                 "title": "Scheepstype",
                 "placeholder": "Selecteer scheepstype"
+            },
+            "taxNumber": {
+                "title": "Belastingnummer"
             }
         },
         "infoTitle": "Scheepsinformatie",
         "physicalCharacteristicsTitle": "Fysieke kenmerken",
         "tabs": {
             "dashboard": "Scheepsdashboard",
-            "view_dashboard": "Bekijk schepen",
-            "search": "Zoek schepen",
-            "create": "Maak schip",
-            "view": "Bekijk schip",
-            "edit": "Bewerk schip"
+            "view_dashboard": "Schepen bekijken",
+            "search": "Schepen zoeken",
+            "create": "Schip aanmaken",
+            "view": "Schip bekijken",
+            "edit": "Schip bewerken"
         },
         "title": "Schepen",
         "subtitle": {
-            "dashboard": "Overzicht van scheepsstatistieken en -activiteiten",
-            "search": "Beheer en bekijk alle geregistreerde schepen",
-            "create": "Registreer een nieuw schip in het systeem",
-            "edit": "Bewerk een bestaand schip in het systeem"
+            "dashboard": "Statistieken & activiteiten",
+            "search": "Geregistreerde schepen beheren",
+            "create": "Nieuw schip registreren",
+            "edit": "Schip bewerken"
         },
         "ownedBy": "Eigendom van",
         "registeredVessels": "Geregistreerde schepen"
@@ -266,75 +299,81 @@
                 "options": {
                     "available": "Beschikbaar",
                     "unavailable": "Niet beschikbaar",
-                    "temporarilyReassigned": "Tijdelijk toegewezen"
+                    "temporarilyReassigned": "Tijdelijk herplaatst"
                 }
-            }
+            },
+            "operationalWindow": "Operationeel venster"
         },
         "tabs": {
             "dashboard": "Personeelsdashboard",
-            "view_dashboard": "Bekijk personeelsleden",
-            "search": "Zoek personeel",
-            "create": "Maak personeelslid",
-            "view": "Bekijk personeelslid",
-            "edit": "Bewerk personeelslid"
+            "view_dashboard": "Personeel bekijken",
+            "search": "Personeel zoeken",
+            "create": "Personeelslid aanmaken",
+            "view": "Personeelslid bekijken",
+            "edit": "Personeelslid bewerken"
         },
-        "infoTitle": "Informatie personeelslid",
+        "infoTitle": "Personeelsinformatie",
         "title": "Personeel",
         "subtitle": {
-            "search": "Beheer en bekijk al het geregistreerde personeel",
-            "dashboard": "Overzicht van personeelsstatistieken en -activiteiten",
-            "create": "Registreer een nieuw personeelslid in het systeem",
-            "view": "Bekijk personeelsdetails",
-            "edit": "Bewerk een bestaand personeelslid in het systeem"
+            "search": "Geregistreerd personeel beheren",
+            "dashboard": "Statistieken & activiteiten",
+            "create": "Nieuw personeelslid registreren",
+            "view": "Details bekijken",
+            "edit": "Personeelslid bewerken"
+        },
+        "deactivation": {
+            "title": "Personeelslid deactiveren",
+            "message": "Weet je zeker dat je dit personeelslid wilt deactiveren? Dit kan niet ongedaan worden gemaakt.",
+            "successMessage": "Personeelslid gedeactiveerd.",
+            "errorMessage": "Fout bij deactiveren. Probeer opnieuw."
         }
     },
     "qualification": {
         "tabs": {
-            "dashboard": "Kwalificatiedashboard",
-            "view_dashboard": "Bekijk kwalificaties",
-            "search": "Zoek kwalificaties",
-            "create": "Maak kwalificatie",
-            "view": "Bekijk kwalificatie",
-            "edit": "Bewerk kwalificatie"
+            "dashboard": "Kwalificaties",
+            "view_dashboard": "Kwalificaties bekijken",
+            "search": "Kwalificaties zoeken",
+            "create": "Kwalificatie aanmaken",
+            "view": "Kwalificatie bekijken",
+            "edit": "Kwalificatie bewerken"
         },
-        "infoTitle": "Informatie kwalificatie",
+        "infoTitle": "Kwalificatie-informatie",
         "title": "Kwalificaties",
         "subtitle": {
-            "search": "Beheer en bekijk alle geregistreerde kwalificaties",
-            "dashboard": "Overzicht van kwalificatiestatistieken en -activiteiten",
-            "create": "Registreer een nieuwe kwalificatie in het systeem",
-            "edit": "Bewerk een bestaande kwalificatie in het systeem",
-            "view": "Bekijk kwalificatiedetails"
+            "search": "Geregistreerde kwalificaties beheren",
+            "dashboard": "Statistieken & activiteiten",
+            "create": "Nieuwe kwalificatie registreren",
+            "edit": "Kwalificatie bewerken"
         },
         "fields": {
             "idCode": {
-                "title": "Kwalificatiecode",
-                "placeholder": "Kwalificatiecode"
+                "title": "Code",
+                "placeholder": "Code"
             },
             "qualificationName": {
-                "title": "Naam kwalificatie",
-                "placeholder": "Naam kwalificatie"
+                "title": "Naam",
+                "placeholder": "Naam"
             }
         }
     },
     "physicalResource": {
         "tabs": {
-            "dashboard": "Fysieke resources-dashboard",
-            "view_dashboard": "Bekijk fysieke resources",
-            "search": "Zoek fysieke resources",
-            "create": "Maak fysieke resource",
-            "view": "Bekijk fysieke resource",
-            "edit": "Bewerk fysieke resource"
+            "dashboard": "Resource-dashboard",
+            "view_dashboard": "Resources bekijken",
+            "search": "Resources zoeken",
+            "create": "Resource aanmaken",
+            "view": "Resource bekijken",
+            "edit": "Resource bewerken"
         },
-        "infoTitle": "Informatie fysieke resource",
+        "infoTitle": "Resource-informatie",
         "title": "Fysieke resources",
         "subtitle": {
-            "search": "Beheer en bekijk alle geregistreerde fysieke resources",
-            "dashboard": "Bedieningspaneel voor fysieke resources",
-            "view_dashboard": "Bekijk fysieke resources",
-            "create": "Registreer een nieuwe fysieke resource in het systeem",
-            "view": "Bekijk fysieke resourcedetails",
-            "edit": "Bewerk een bestaande fysieke resource in het systeem"
+            "search": "Geregistreerde resources beheren",
+            "dashboard": "Bedieningspaneel",
+            "view_dashboard": "Resources bekijken",
+            "create": "Nieuwe resource registreren",
+            "view": "Details bekijken",
+            "edit": "Resource bewerken"
         },
         "generalFields": "Algemene velden",
         "specificFields": "Specifieke velden",
@@ -345,11 +384,11 @@
             },
             "description": {
                 "title": "Beschrijving",
-                "placeholder": "Resourcebeschrijving"
+                "placeholder": "Beschrijving"
             },
             "status": {
                 "title": "Status",
-                "placeholder": "Selecteer resourcestatus",
+                "placeholder": "Selecteer status",
                 "options": {
                     "available": "Beschikbaar",
                     "maintenance": "Onderhoud",
@@ -358,73 +397,245 @@
             },
             "qualifications": {
                 "title": "Vereiste kwalificaties",
-                "placeholder": "Kwalificaties vereist om deze resource te bedienen"
+                "placeholder": "Kwalificaties voor bediening"
             },
             "setupTime": {
-                "title": "Insteltijd (minuten)",
+                "title": "Insteltijd (min)",
                 "placeholder": "Insteltijd"
             },
             "servingDocks": {
                 "title": "Bediende kades",
-                "placeholder": "Selecteer bediende kades"
+                "placeholder": "Selecteer kades"
             },
             "liftingCapacity": {
-                "title": "Heftcapaciteit (kgs)",
-                "placeholder": "Heftcapaciteit"
+                "title": "Hefcapaciteit (kg)",
+                "placeholder": "Hefcapaciteit"
             },
             "containersPerHour": {
                 "title": "Containers per uur",
-                "placeholder": "Containers per uur"
+                "placeholder": "Per uur"
             },
             "maxLoadCapacity": {
-                "title": "Maximale laadcapaciteit (kg)",
-                "placeholder": "Maximale laadcapaciteit"
+                "title": "Max laadcapaciteit (kg)",
+                "placeholder": "Max capaciteit"
             },
             "averageSpeed": {
-                "title": "Gemiddelde snelheid (km/h)",
-                "placeholder": "Gemiddelde snelheid"
+                "title": "Gemiddelde snelheid (km/u)",
+                "placeholder": "Snelheid"
             },
             "containersPerTrip": {
                 "title": "Containers per rit",
-                "placeholder": "Containers per rit"
+                "placeholder": "Per rit"
             },
             "type": {
-                "title": "Resource type",
+                "title": "Resourcetype",
                 "options": {
-                    "stsCrane": "STS Kraan",
+                    "stsCrane": "STS-kraan",
                     "yardGantry": "Yard portaalkraan",
                     "truck": "Vrachtwagen"
                 }
             }
         },
         "actions": {
-            "deactivate": "Deactiveer fysieke resource"
+            "deactivate": "Resource deactiveren"
+        },
+        "deactivation": {
+            "title": "Resource deactiveren",
+            "message": "Weet je zeker dat je deze resource wilt deactiveren? Dit kan niet ongedaan worden gemaakt.",
+            "successMessage": "Resource gedeactiveerd.",
+            "errorMessage": "Fout bij deactiveren."
         }
     },
     "storageArea": {
         "tabs": {
-            "dashboard": "Dashboard opslaggebieden",
-            "view_dashboard": "Bekijk opslaggebieden",
-            "search": "Zoek opslaggebieden",
-            "create": "Maak opslaggebied",
-            "view": "Bekijk opslaggebied",
-            "edit": "Bewerk opslaggebied"
+            "dashboard": "Opslaggebieden",
+            "view_dashboard": "Opslag bekijken",
+            "search": "Opslag zoeken",
+            "create": "Opslaggebied aanmaken",
+            "view": "Opslaggebied bekijken",
+            "edit": "Opslaggebied bewerken"
         },
-        "infoTitle": "Informatie opslaggebied",
+        "infoTitle": "Opslaggebied-informatie",
         "title": "Opslaggebieden",
         "subtitle": {
-            "search": "Beheer en bekijk alle geregistreerde opslaggebieden",
-            "dashboard": "Bedieningspaneel voor alle opslaggebieden",
-            "view_dashboard": "Bekijk opslaggebieden",
-            "create": "Registreer een nieuw opslaggebied in het systeem",
-            "view": "Bekijk opslaggebied-details",
-            "edit": "Bewerk een bestaand opslaggebied in het systeem"
+            "search": "Geregistreerde opslag beheren",
+            "dashboard": "Bedieningspaneel",
+            "view_dashboard": "Opslaggebieden bekijken",
+            "create": "Nieuw opslaggebied registreren",
+            "view": "Details bekijken",
+            "edit": "Opslaggebied bewerken"
         },
         "printer": {
             "docks_serviced": "bediende kades",
             "capacity_usage": "Capaciteitsgebruik",
             "units": "eenheden",
-            "available": "beschikbaar"
+            "available": "beschikbaar",
+            "no_registered_distances": "Geen geregistreerde afstanden",
+            "no_docks_serviced": "Geen kades bediend",
+            "all_docks_serviced": "Alle kades bediend",
+            "serviced_docks_distance": "Afstand tot bediende kades",
+            "no_registered_docks": "Geen kades geregistreerd"
+        },
+        "create": {
+            "distance_meters": "Afstand (meters)"
+        },
+        "fields": {
+            "nameCode": {
+                "title": "Naamcode",
+                "placeholder": "Naamcode opslaggebied"
+            },
+            "location": {
+                "title": "Locatie",
+                "placeholder": "Locatie opslaggebied"
+            },
+            "type": {
+                "title": "Type",
+                "placeholder": "Selecteer type",
+                "options": {
+                    "yard": "Yard",
+                    "warehouse": "Magazijn"
+                }
+            },
+            "capacity": {
+                "title": "Capaciteit",
+                "placeholder": "Max capaciteit"
+            },
+            "occupancy": {
+                "title": "Bezetting",
+                "placeholder": "Huidige bezetting"
+            }
+        }
+    },
+    "search": {
+        "languages": "Taal zoeken..."
+    },
+    "representative": {
+        "title": "Vertegenwoordiger",
+        "select": "Selecteer een vertegenwoordiger"
+    },
+    "scheduling": {
+        "title": "Dagplanning",
+        "subtitle": "Gebruik de automatische planning om taken voor een datum te analyseren.",
+        "noVisits": "Geen scheepsbezoeken op de geselecteerde datum.",
+        "visitsOnSelectedDay": "Scheepsbezoeken op geselecteerde datum",
+        "viewVisits": "Taakplanning bekijken",
+        "generateTasksButton": "Taken genereren",
+        "aboutAlgorithmButton": "Over het algoritme",
+        "fields": {
+            "algorithm": {
+                "title": "Planningsalgoritme",
+                "placeholder": "Selecteer algoritme"
+            },
+            "relatedDocks": "Selecteer gerelateerde kade"
+        },
+        "generateTasksModal": {
+            "title": "Aanvullende logistiek"
+        },
+        "aboutAlgorithmModal": {
+            "title": "Over het algoritme",
+            "content": "Neemt meldingen voor datum en kade, controleert STS-kraan beschikbaarheid en bepaalt taakduur op basis van kraansnelheid; onderhoudsbezoeken genegeerd."
+        }
+    },
+    "notification": {
+        "id": "Meldings-ID",
+        "hazardous": "Gevaarlijke lading",
+        "nonHazardous": "Niet-gevaarlijke lading",
+        "arrival": "Aankomst",
+        "departure": "Vertrek",
+        "specialRequirements": "Speciale vereisten",
+        "none": "Geen",
+        "crew": "Bemanning",
+        "captain": "Kapitein",
+        "unknown": "Onbekend",
+        "from": "Van",
+        "to": "Tot",
+        "tabs": {
+            "dashboard": "Meldingen dashboard",
+            "search": "Meldingen zoeken",
+            "edit": "Melding bewerken",
+            "create": "Melding aanmaken",
+            "makeDraft": "Concept maken",
+            "myNotifications": "Mijn meldingen",
+            "review": "Meldingen beoordelen",
+            "general": "Algemene lijst",
+            "byDate": "Kalender",
+            "submit": "Melding indienen",
+            "delete": "Melding verwijderen"
+        },
+        "eventsOnDate": "Gebeurtenissen op datum",
+        "noEventsOnDate": "Geen gebeurtenissen",
+        "title": "Scheepsbezoekmeldingen",
+        "subtitle": {
+            "dashboard": "Overzicht meldingen",
+            "search": "Alle meldingen beheren",
+            "create": "Nieuwe melding maken",
+            "edit": "Melding bewerken",
+            "review": "Wachtende meldingen beoordelen"
+        },
+        "errors": {
+            "noNotificationId": "Geen meldings-ID opgegeven"
+        },
+        "infoTitle": "Meldingsinformatie",
+        "cargoTitle": "Ladinginformatie",
+        "vesselTitle": "Scheepsinformatie",
+        "manifestInfo": "Manifestinformatie",
+        "fields": {
+            "openLoadManifest": "Laadmanifest openen",
+            "openUnloadManifest": "Losmanifest openen",
+            "expectedArrival": "Verwachte aankomst",
+            "expectedDeparture": "Verwachte vertrek",
+            "isCargoHazardous": "Lading gevaarlijk",
+            "specialRequirements": "Speciale vereisten",
+            "captain": "Kapitein",
+            "totalCrewMembers": "Totaal bemanningsleden",
+            "safetyOfficers": "Veiligheidsfunctionarissen",
+            "loadCargoManifest": "Laadmanifest",
+            "unloadCargoManifest": "Losmanifest",
+            "position": "Positie",
+            "area": "Gebied",
+            "container": "Container",
+            "crewMembers": "Bemanningsleden",
+            "status": "Status"
+        },
+        "timeline": {
+            "pending": "In afwachting",
+            "inProgress": "Bezig",
+            "completed": "Voltooid",
+            "submitted": "Ingediend",
+            "accepted": "Geaccepteerd",
+            "rejected": "Afgewezen"
+        },
+        "filters": {
+            "expectedArrivalFrom": "Aankomst vanaf",
+            "expectedArrivalTo": "Aankomst tot",
+            "withReason": "Met reden",
+            "withDockAssigned": "Met toegewezen kade"
+        },
+        "decision": {
+            "isFinal": "Definitief",
+            "assignedDock": {
+                "title": "Toegewezen kade",
+                "placeholder": "Selecteer kade"
+            },
+            "reason": {
+                "title": "Reden",
+                "placeholder": "Geef reden"
+            },
+            "status": "Beslissingsstatus"
+        }
+    },
+    "operationalWindow": {
+        "title": "Operationeel venster",
+        "printer": {
+            "addShift": "Dienst toevoegen",
+            "shifts": "Diensten:",
+            "noShifts": "Geen diensten.",
+            "startTime": "Starttijd",
+            "endTime": "Eindtijd",
+            "weekDays": "Weekdagen"
+        },
+        "errors": {
+            "shiftOverlap": "Ongeldige dienst: overlap of eindtijd vóór start."
         }
     }
 }

@@ -1,430 +1,642 @@
-{
-    "common": {
-        "loading": "Betöltés...",
-        "noData": "Nincsenek elérhető adatok",
-        "statistics": "Statisztikák"
-    },
-    "buttons": {
-        "save": "Mentés",
-        "cancel": "Mégse",
-        "delete": "Törlés",
-        "edit": "Szerkesztés",
-        "create": "Létrehozás",
-        "search": "Keresés",
-        "select": "Kiválasztás",
-        "activate": "Aktiválás",
-        "deactivate": "Letiltás",
-        "filter": {
-            "title": "Szűrők",
-            "add": "Szűrés",
-            "clear": "Szűrők törlése"
-        },
-        "pagination": {
-            "previous": "Előző",
-            "next": "Következő"
-        },
-        "login": "Bejelentkezés",
-        "goBackToLogin": "Vissza a bejelentkezéshez",
-        "logout": "Kijelentkezés"
-    },
-    "unsavedChanges": {
-        "title": "Módosítások elvetése?",
-        "message": "Vannak mentetlen módosításai. Biztosan el akarja hagyni az oldalt és elvetni a módosításokat?",
-        "confirm": "Elvetés",
-        "cancel": "Folytatás szerkesztés"
-    },
-    "dashboard": {
-        "sidebarTitle": "Irányítópult",
-        "title": "PortIT Irányítópult",
-        "subtitle": "A PortIT rendszer áttekintése",
-        "3DModel": {
-            "title": "3D kikötő vizualizáció",
-            "description": "Interaktív 3D ábrázolás megtekintése az egész kikötő létesítményről. Valós időben figyelheti a mólók kihasználtságát, a hajók helyzetét, a tárolóterületeket és az erőforrásokat.",
-            "open": "3D modell megnyitása"
-        }
-    },
-    "admin": {
-        "sidebarTitle": "Admin",
-        "title": "Adminisztrációs panel",
-        "subtitle": "Adminisztratív áttekintés és kezelés",
-        "userManagement": {
-            "title": "Felhasználókezelés",
-            "subtitle": "Rendszerfelhasználók, szerepkörök és jogosultságok kezelése."
-        },
-        "auditLogs": {
-            "title": "Ellenőrzési naplók",
-            "subtitle": "A rendszer tevékenységi naplóinak megtekintése és nyomon követése."
-        }
-    },
-    "user": {
-        "fields": {
-            "email": {
-                "title": "Email",
-                "placeholder": "email@mail.com"
-            },
-            "role": {
-                "title": "Szerep",
-                "placeholder": "Felhasználói szerep kiválasztása",
-                "options": {
-                    "admin": "Rendszergazda",
-                    "saoRep": "SAO képviselő",
-                    "pao": "Kikötői hatósági tisztviselő",
-                    "logisticsOperator": "Logisztikai üzemeltető"
-                }
-            },
-            "isActive": {
-                "title": "Aktív",
-                "options": {
-                    "active": "Igen",
-                    "inactive": "Nem"
-                }
-            }
-        },
-        "tabs": {
-            "dashboard": "Felhasználói panel",
-            "create": "Felhasználó létrehozása",
-            "view": "Felhasználók megtekintése",
-            "search": "Felhasználók keresése"
-        },
-        "infoTitle": "Felhasználói adatok",
-        "title": "Felhasználók",
-        "subtitle": {
-            "dashboard": "Felhasználói áttekintés és kezelés",
-            "create": "Új felhasználó regisztrálása a rendszerbe",
-            "view": "Meglévő felhasználók megtekintése és kezelése"
-        }
-    },
-    "physicalCharacteristics": {
-        "title": "Fizikai jellemzők (m)",
-        "length": {
-            "title": "Hossz",
-            "placeholder": "Hossz méterben"
-        },
-        "depth": {
-            "title": "Mélység",
-            "placeholder": "Mélység méterben"
-        },
-        "draft": {
-            "title": "Merülés",
-            "placeholder": "Merülés méterben"
-        }
-    },
-    "dock": {
-        "fields": {
-            "code": {
-                "title": "Kód",
-                "placeholder": "Kikötő kód"
-            },
-            "name": {
-                "title": "Név",
-                "placeholder": "Kikötő neve"
-            },
-            "location": {
-                "title": "Helyszín",
-                "placeholder": "Kikötő helye"
-            },
-            "supportedVesselTypes": {
-                "title": "Támogatott hajótípusok",
-                "vesselTypes": {
-                    "title": "Hajótípusok",
-                    "placeholder": "Hajótípusok kiválasztása"
+﻿{
+    "common":  {
+                   "loading":  "Betöltés...",
+                   "noData":  "Nincs elérhető adat",
+                   "statistics":  "Statisztikák",
+                   "yes":  "Igen",
+                   "no":  "Nem",
+                   "weekDay":  "A hét napja",
+                   "days":  {
+                                "sunday":  "Vasárnap",
+                                "monday":  "Hétfő",
+                                "tuesday":  "Kedd",
+                                "wednesday":  "Szerda",
+                                "thursday":  "Csütörtök",
+                                "friday":  "Péntek",
+                                "saturday":  "Szombat"
+                            },
+                   "number":  "Szám"
+               },
+    "buttons":  {
+                    "save":  "Mentés",
+                    "cancel":  "Mégse",
+                    "delete":  "Törlés",
+                    "edit":  "Szerkesztés",
+                    "create":  "Létrehozás",
+                    "search":  "Keresés",
+                    "select":  "Kiválasztás",
+                    "activate":  "Aktiválás",
+                    "deactivate":  "Letiltás",
+                    "filter":  {
+                                   "title":  "Szűrők",
+                                   "add":  "Szűrő hozzáadása",
+                                   "clear":  "Szűrők törlése"
+                               },
+                    "pagination":  {
+                                       "previous":  "Előző",
+                                       "next":  "Következő"
+                                   },
+                    "login":  "Bejelentkezés",
+                    "goBackToLogin":  "Vissza a bejelentkezéshez",
+                    "logout":  "Kijelentkezés",
+                    "generate":  "Generálás",
+                    "close":  "Bezárás",
+                    "add":  "Hozzáadás",
+                    "review":  "Áttekintés",
+                    "seeMore":  "Továbbiak megtekintése"
                 },
-                "vesselType": "Hajótípus"
-            }
-        },
-        "tabs": {
-            "dashboard": "Kikötő panel",
-            "view_dashboard": "Kikötők megtekintése",
-            "search": "Kikötők keresése",
-            "create": "Kikötő létrehozása",
-            "view": "Kikötő megtekintése",
-            "edit": "Kikötő szerkesztése"
-        },
-        "generalFields": "Általános mezők",
-        "infoTitle": "Kikötő adatok",
-        "title": "Kikötők",
-        "subtitle": {
-            "dashboard": "Áttekintés a kikötő statisztikáiról és tevékenységeiről",
-            "search": "Az összes regisztrált kikötő kezelése és megtekintése",
-            "create": "Új kikötő regisztrálása a rendszerbe",
-            "edit": "Meglévő kikötő szerkesztése a rendszerben"
-        },
-        "registeredDocks": "Regisztrált kikötők"
-    },
-    "vesselType": {
-        "fields": {
-            "name": {
-                "title": "Név",
-                "placeholder": "Hajótípus neve"
-            },
-            "description": {
-                "title": "Leírás",
-                "placeholder": "Hajótípus leírása"
-            },
-            "capacity": {
-                "title": "Kapacitás",
-                "placeholder": "Konténerkapacitás TEU-ban"
-            },
-            "containerCapacity": {
-                "title": "Konténerkapacitás (TEU)",
-                "maxNumberOfRows": {
-                    "title": "Max. sorok száma",
-                    "placeholder": "Max. sorok TEU-ban"
-                },
-                "maxNumberOfBays": {
-                    "title": "Max. rekeszek száma",
-                    "placeholder": "Max. rekeszek TEU-ban"
-                },
-                "maxNumberOfTiers": {
-                    "title": "Max. szintek száma",
-                    "placeholder": "Max. szintek TEU-ban"
-                }
-            }
-        },
-        "generalFields": "Általános mezők",
-        "tabs": {
-            "dashboard": "Hajótípus panel",
-            "view_dashboard": "Hajótípusok megtekintése",
-            "search": "Hajótípusok keresése",
-            "create": "Hajótípus létrehozása",
-            "view": "Hajótípus megtekintése",
-            "edit": "Hajótípus szerkesztése"
-        },
-        "infoTitle": "Hajótípus információ",
-        "title": "Hajótípusok",
-        "subtitle": {
-            "dashboard": "Hajótípus statisztikák és tevékenységek áttekintése",
-            "search": "Az összes regisztrált hajótípus kezelése és megtekintése",
-            "create": "Új hajótípus regisztrálása a rendszerbe",
-            "edit": "Meglévő hajótípus szerkesztése a rendszerben"
-        },
-        "registeredVesselTypes": "Regisztrált hajótípusok"
-    },
-    "vessel": {
-        "fields": {
-            "name": {
-                "title": "Név",
-                "placeholder": "Hajó neve"
-            },
-            "imoNumber": {
-                "title": "IMO szám",
-                "placeholder": "Hajó IMO száma"
-            },
-            "owner": {
-                "title": "Tulajdonos",
-                "placeholder": "Tulajdonos szervezet"
-            },
-            "vesselType": {
-                "title": "Hajótípus",
-                "placeholder": "Válasszon hajótípust"
-            }
-        },
-        "infoTitle": "Hajó információ",
-        "physicalCharacteristicsTitle": "Fizikai jellemzők",
-        "tabs": {
-            "dashboard": "Hajó panel",
-            "view_dashboard": "Hajók megtekintése",
-            "search": "Hajók keresése",
-            "create": "Hajó létrehozása",
-            "view": "Hajó megtekintése",
-            "edit": "Hajó szerkesztése"
-        },
-        "title": "Hajók",
-        "subtitle": {
-            "dashboard": "Hajó statisztikák és tevékenységek áttekintése",
-            "search": "Az összes regisztrált hajó kezelése és megtekintése",
-            "create": "Új hajó regisztrálása a rendszerbe",
-            "edit": "Meglévő hajó szerkesztése a rendszerben"
-        },
-        "ownedBy": "Tulajdonos",
-        "registeredVessels": "Regisztrált hajók"
-    },
-    "staff": {
-        "fields": {
-            "mechanographicNumber": {
-                "title": "Mechanográf szám",
-                "placeholder": "Mechanográf szám"
-            },
-            "name": {
-                "title": "Név",
-                "placeholder": "Személyzet neve"
-            },
-            "email": {
-                "title": "Email",
-                "placeholder": "Email cím"
-            },
-            "phoneNumber": {
-                "title": "Telefonszám",
-                "placeholder": "Telefonszám"
-            },
-            "qualifications": {
-                "title": "Képesítések",
-                "placeholder": "Válasszon képesítéseket"
-            },
-            "status": {
-                "title": "Állapot",
-                "options": {
-                    "available": "Elérhető",
-                    "unavailable": "Nem elérhető",
-                    "temporarilyReassigned": "Ideiglenesen áthelyezve"
-                }
-            }
-        },
-        "tabs": {
-            "dashboard": "Személyzet panel",
-            "view_dashboard": "Személyzet megtekintése",
-            "search": "Személyzet keresése",
-            "create": "Személyzet létrehozása",
-            "view": "Személyzet megtekintése",
-            "edit": "Személyzet szerkesztése"
-        },
-        "infoTitle": "Személyzet információ",
-        "title": "Személyzet",
-        "subtitle": {
-            "search": "Az összes regisztrált személyzet kezelése és megtekintése",
-            "dashboard": "Személyzet statisztikák és tevékenységek áttekintése",
-            "create": "Új személyzet tag regisztrálása a rendszerbe",
-            "view": "Személyzet részleteinek megtekintése",
-            "edit": "Meglévő személyzet szerkesztése a rendszerben"
-        }
-    },
-    "qualification": {
-        "tabs": {
-            "dashboard": "Képesítések panel",
-            "view_dashboard": "Képesítések megtekintése",
-            "search": "Képesítések keresése",
-            "create": "Képesítés létrehozása",
-            "view": "Képesítés megtekintése",
-            "edit": "Képesítés szerkesztése"
-        },
-        "infoTitle": "Képesítés információ",
-        "title": "Képesítések",
-        "subtitle": {
-            "search": "Az összes regisztrált képesítés kezelése és megtekintése",
-            "dashboard": "Képesítés statisztikák és tevékenységek áttekintése",
-            "create": "Új képesítés regisztrálása a rendszerbe",
-            "edit": "Meglévő képesítés szerkesztése a rendszerben",
-            "view": "Képesítés részleteinek megtekintése"
-        },
-        "fields": {
-            "idCode": {
-                "title": "Képesítés kód",
-                "placeholder": "Képesítés kód"
-            },
-            "qualificationName": {
-                "title": "Képesítés neve",
-                "placeholder": "Képesítés neve"
-            }
-        }
-    },
-    "physicalResource": {
-        "tabs": {
-            "dashboard": "Fizikai források panel",
-            "view_dashboard": "Fizikai források megtekintése",
-            "search": "Fizikai források keresése",
-            "create": "Fizikai forrás létrehozása",
-            "view": "Fizikai forrás megtekintése",
-            "edit": "Fizikai forrás szerkesztése"
-        },
-        "infoTitle": "Fizikai forrás információ",
-        "title": "Fizikai források",
-        "subtitle": {
-            "search": "Az összes regisztrált fizikai forrás kezelése és megtekintése",
-            "dashboard": "Vezérlő panel a fizikai forrásokhoz",
-            "view_dashboard": "Fizikai források megtekintése",
-            "create": "Új fizikai forrás regisztrálása a rendszerbe",
-            "view": "Fizikai forrás részleteinek megtekintése",
-            "edit": "Meglévő fizikai forrás szerkesztése a rendszerben"
-        },
-        "generalFields": "Általános mezők",
-        "specificFields": "Speciális mezők",
-        "fields": {
-            "code": {
-                "title": "Kód",
-                "placeholder": "Forrás kód"
-            },
-            "description": {
-                "title": "Leírás",
-                "placeholder": "Forrás leírása"
-            },
-            "status": {
-                "title": "Állapot",
-                "placeholder": "Válassza ki a forrás állapotát",
-                "options": {
-                    "available": "Elérhető",
-                    "maintenance": "Karbantartás",
-                    "outOfService": "Kikapcsolva"
-                }
-            },
-            "qualifications": {
-                "title": "Szükséges képesítések",
-                "placeholder": "A forrás működtetéséhez szükséges képesítések"
-            },
-            "setupTime": {
-                "title": "Beállítási idő (percek)",
-                "placeholder": "Beállítási idő"
-            },
-            "servingDocks": {
-                "title": "Kiszolgált mólók",
-                "placeholder": "Válassza ki a kiszolgált mólókat"
-            },
-            "liftingCapacity": {
-                "title": "Emelőkapacitás (kgs)",
-                "placeholder": "Emelőkapacitás"
-            },
-            "containersPerHour": {
-                "title": "Konténerek óránként",
-                "placeholder": "Konténerek óránként"
-            },
-            "maxLoadCapacity": {
-                "title": "Maximális teherkapacitás (kg)",
-                "placeholder": "Maximális teherkapacitás"
-            },
-            "averageSpeed": {
-                "title": "Átlagsebesség (km/h)",
-                "placeholder": "Átlagsebesség"
-            },
-            "containersPerTrip": {
-                "title": "Konténerek utanként",
-                "placeholder": "Konténerek utanként"
-            },
-            "type": {
-                "title": "Forrástípus",
-                "options": {
-                    "stsCrane": "STS daru",
-                    "yardGantry": "Udvari portáldaru",
-                    "truck": "Teherautó"
-                }
-            }
-        },
-        "actions": {
-            "deactivate": "Deaktiválja a fizikai forrást"
-        }
-    },
-    "storageArea": {
-        "tabs": {
-            "dashboard": "Tárolási területek panel",
-            "view_dashboard": "Tárolási területek megtekintése",
-            "search": "Tárolási területek keresése",
-            "create": "Tárolási terület létrehozása",
-            "view": "Tárolási terület megtekintése",
-            "edit": "Tárolási terület szerkesztése"
-        },
-        "infoTitle": "Tárolási terület információ",
-        "title": "Tárolási területek",
-        "subtitle": {
-            "search": "Az összes regisztrált tárolási terület kezelése és megtekintése",
-            "dashboard": "Vezérlő panel minden tárolási területhez",
-            "view_dashboard": "Tárolási területek megtekintése",
-            "create": "Új tárolási terület regisztrálása a rendszerbe",
-            "view": "Tárolási terület részleteinek megtekintése",
-            "edit": "Meglévő tárolási terület szerkesztése a rendszerben"
-        },
-        "printer": {
-            "docks_serviced": "kiszolgált mólók",
-            "capacity_usage": "Kapacitás használat",
-            "units": "egységek",
-            "available": "elérhető"
-        }
-    }
+    "unsavedChanges":  {
+                           "title":  "Módosítások elvetése?",
+                           "message":  "Vannak mentetlen módosításai. Biztosan elhagyja az oldalt és elveti a módosításokat?",
+                           "confirm":  "Elvetés",
+                           "cancel":  "Szerkesztés folytatása"
+                       },
+    "dashboard":  {
+                      "sidebarTitle":  "Irányítópult",
+                      "title":  "PortIT irányítópult",
+                      "subtitle":  "A PortIT rendszer áttekintése",
+                      "3DModel":  {
+                                      "title":  "Kikötő 3D‑vizualizációja",
+                                      "description":  "Tekintse meg a kikötő létesítmény teljes, interaktív 3D ábrázolását. Valós időben követheti a mólók kihasználtságát, a hajók helyzetét, a tárolóterületeket és az erőforrásokat.",
+                                      "open":  "3D modell megnyitása"
+                                  },
+                      "welcome":  "Üdv újra, [name]!",
+                      "SAOR":  {
+                                   "subtitle":  "A hajóügynök műveleteinek áttekintése",
+                                   "pendingNotifications":  "Függő értesítések",
+                                   "recent":  "Legutóbbi hajólátogatási értesítések",
+                                   "recentReview":  "Áttekintést igénylő hajólátogatási értesítések",
+                                   "noRecent":  "Nincsenek legutóbbi értesítések"
+                               }
+                  },
+    "admin":  {
+                  "sidebarTitle":  "Admin",
+                  "title":  "Adminisztrációs panel",
+                  "subtitle":  "Adminisztratív áttekintés és kezelés",
+                  "userManagement":  {
+                                         "title":  "Felhasználókezelés",
+                                         "subtitle":  "Rendszerfelhasználók, szerepkörök és jogosultságok kezelése."
+                                     },
+                  "auditLogs":  {
+                                    "title":  "Ellenőrzési naplók",
+                                    "subtitle":  "A rendszer tevékenységi naplóinak megtekintése és nyomon követése."
+                                }
+              },
+    "user":  {
+                 "fields":  {
+                                "email":  {
+                                              "title":  "Email",
+                                              "placeholder":  "email@mail.com"
+                                          },
+                                "role":  {
+                                             "title":  "Szerep",
+                                             "placeholder":  "Felhasználói szerep kiválasztása",
+                                             "options":  {
+                                                             "admin":  "Rendszergazda",
+                                                             "saoRep":  "SAO képviselő",
+                                                             "pao":  "Kikötői hatóság tisztviselője",
+                                                             "logisticsOperator":  "Logisztikai üzemeltető"
+                                                         }
+                                         },
+                                "isActive":  {
+                                                "title":  "Aktív",
+                                                 "options":  {
+                                                                 "active":  "Igen",
+                                                                 "inactive":  "Nem"
+                                                             }
+                                             }
+                            },
+                 "tabs":  {
+                              "dashboard":  "Felhasználói panel",
+                              "create":  "Felhasználó létrehozása",
+                              "view":  "Felhasználók megtekintése",
+                              "search":  "Felhasználók keresése"
+                          },
+                 "infoTitle":  "Felhasználói adatok",
+                 "title":  "Felhasználók",
+                 "subtitle":  {
+                                  "dashboard":  "Felhasználói áttekintés és kezelés",
+                                  "create":  "Új felhasználó regisztrálása a rendszerbe",
+                                  "view":  "Meglévő felhasználók megtekintése és kezelése"
+                              }
+             },
+    "physicalCharacteristics":  {
+                                    "title":  "Fizikai jellemzÅ‘k (m)",
+                                    "length":  {
+                                                   "title":  "Hossz",
+                                                   "placeholder":  "Hossz méterben"
+                                               },
+                                    "depth":  {
+                                                  "title":  "Mélység",
+                                                  "placeholder":  "Mélység méterben"
+                                              },
+                                    "draft":  {
+                                                  "title":  "Merülés",
+                                                  "placeholder":  "Merülés méterben"
+                                              }
+                                },
+    "dock":  {
+                 "fields":  {
+                                "code":  {
+                                             "title":  "Kód",
+                                             "placeholder":  "Kikötő kód"
+                                         },
+                                "name":  {
+                                             "title":  "Név",
+                                             "placeholder":  "Kikötő neve"
+                                         },
+                                "location":  {
+                                                 "title":  "Helyszín",
+                                                 "placeholder":  "Kikötő helye"
+                                             },
+                                "supportedVesselTypes":  {
+                                                             "title":  "Támogatott hajótípusok",
+                                                             "vesselTypes":  {
+                                                                                 "title":  "Hajótípusok",
+                                                                                 "placeholder":  "Hajótípusok kiválasztása"
+                                                                             },
+                                                             "vesselType":  "Hajótípus"
+                                                         }
+                            },
+                 "tabs":  {
+                              "dashboard":  "Kikötő panel",
+                              "view_dashboard":  "Kikötők megtekintése",
+                              "search":  "Kikötők keresése",
+                              "create":  "Kikötő létrehozása",
+                              "view":  "Kikötő megtekintése",
+                              "edit":  "Kikötő szerkesztése"
+                          },
+                 "generalFields":  "Általános mezők",
+                 "infoTitle":  "Kikötő adatok",
+                 "title":  "Kikötők",
+                 "subtitle":  {
+                                  "dashboard":  "Áttekintés a kikötő statisztikáiról és tevékenységeiről",
+                                  "search":  "Az összes regisztrált kikötő kezelése és megtekintése",
+                                  "create":  "Új kikötő regisztrálása a rendszerbe",
+                                  "edit":  "Meglévő kikötő szerkesztése a rendszerben"
+                              },
+                 "registeredDocks":  "Regisztrált kikötők"
+             },
+    "vesselType":  {
+                       "fields":  {
+                                      "name":  {
+                                                   "title":  "Név",
+                                                   "placeholder":  "Hajótípus neve"
+                                               },
+                                      "description":  {
+                                                          "title":  "Leírás",
+                                                          "placeholder":  "Hajótípus leírása"
+                                                      },
+                                      "capacity":  {
+                                                       "title":  "Kapacitás",
+                                                       "placeholder":  "Konténerkapacitás TEU-ban"
+                                                   },
+                                      "containerCapacity":  {
+                                                                "title":  "Konténerkapacitás (TEU)",
+                                                                "maxNumberOfRows":  {
+                                                                                        "title":  "Max. sorok száma",
+                                                                                        "placeholder":  "Max. sorok TEU-ban"
+                                                                                    },
+                                                                "maxNumberOfBays":  {
+                                                                                        "title":  "Max. rekeszek száma",
+                                                                                        "placeholder":  "Max. rekeszek TEU-ban"
+                                                                                    },
+                                                                "maxNumberOfTiers":  {
+                                                                                         "title":  "Max. szintek száma",
+                                                                                         "placeholder":  "Max. szintek TEU-ban"
+                                                                                     }
+                                                            }
+                                  },
+                       "generalFields":  "Általános mezők",
+                       "tabs":  {
+                                    "dashboard":  "Hajótípus panel",
+                                    "view_dashboard":  "Hajótípusok megtekintése",
+                                    "search":  "Hajótípusok keresése",
+                                    "create":  "Hajótípus létrehozása",
+                                    "view":  "Hajótípus megtekintése",
+                                    "edit":  "Hajótípus szerkesztése"
+                                },
+                       "infoTitle":  "Hajótípus információ",
+                       "title":  "Hajótípusok",
+                       "subtitle":  {
+                                        "dashboard":  "Hajótípus statisztikák és tevékenységek áttekintése",
+                                        "search":  "Az összes regisztrált hajótípus kezelése és megtekintése",
+                                        "create":  "Új hajótípus regisztrálása a rendszerbe",
+                                        "edit":  "Meglévő hajótípus szerkesztése a rendszerben"
+                                    },
+                       "registeredVesselTypes":  "Regisztrált hajótípusok"
+                   },
+    "vessel":  {
+                   "fields":  {
+                                  "name":  {
+                                               "title":  "Név",
+                                               "placeholder":  "Hajó neve"
+                                           },
+                                  "imoNumber":  {
+                                                    "title":  "IMO szám",
+                                                    "placeholder":  "Hajó IMO száma"
+                                                },
+                                  "owner":  {
+                                                "title":  "Tulajdonos",
+                                                "placeholder":  "Tulajdonos szervezet"
+                                            },
+                                  "vesselType":  {
+                                                     "title":  "Hajótípus",
+                                                     "placeholder":  "Válasszon hajótípust"
+                                                 },
+                                  "taxNumber":  {
+                                                    "title":  "Adószám"
+                                                }
+                              },
+                   "infoTitle":  "Hajó információ",
+                   "physicalCharacteristicsTitle":  "Fizikai jellemzÅ‘k",
+                   "tabs":  {
+                                "dashboard":  "Hajó panel",
+                                "view_dashboard":  "Hajók megtekintése",
+                                "search":  "Hajók keresése",
+                                "create":  "Hajó létrehozása",
+                                "view":  "Hajó megtekintése",
+                                "edit":  "Hajó szerkesztése"
+                            },
+                   "title":  "Hajók",
+                   "subtitle":  {
+                                    "dashboard":  "Hajó statisztikák és tevékenységek áttekintése",
+                                    "search":  "Az összes regisztrált hajó kezelése és megtekintése",
+                                    "create":  "Új hajó regisztrálása a rendszerbe",
+                                    "edit":  "Meglévő hajó szerkesztése a rendszerben"
+                                },
+                   "ownedBy":  "Tulajdonosa",
+                   "registeredVessels":  "Regisztrált hajók"
+               },
+    "staff":  {
+                  "fields":  {
+                                 "mechanographicNumber":  {
+                                                              "title":  "Mechanográf szám",
+                                                              "placeholder":  "Mechanográf szám"
+                                                          },
+                                 "name":  {
+                                              "title":  "Név",
+                                              "placeholder":  "Személyzet neve"
+                                          },
+                                 "email":  {
+                                               "title":  "Email",
+                                               "placeholder":  "Email cím"
+                                           },
+                                 "phoneNumber":  {
+                                                     "title":  "Telefonszám",
+                                                     "placeholder":  "Telefonszám"
+                                                 },
+                                 "qualifications":  {
+                                                        "title":  "Képesítések",
+                                                        "placeholder":  "Válasszon képesítéseket"
+                                                    },
+                                 "status":  {
+                                                "title":  "Állapot",
+                                                "options":  {
+                                                                "available":  "Elérhető",
+                                                                "unavailable":  "Nem elérhető",
+                                                                "temporarilyReassigned":  "Ideiglenesen áthelyezve"
+                                                            }
+                                            },
+                                 "operationalWindow":  "Működési időablak"
+                             },
+                  "tabs":  {
+                               "dashboard":  "Személyzet panel",
+                               "view_dashboard":  "Személyzet megtekintése",
+                               "search":  "Személyzet keresése",
+                               "create":  "Személyzet létrehozása",
+                               "view":  "Személyzet megtekintése",
+                               "edit":  "Személyzet szerkesztése"
+                           },
+                  "infoTitle":  "Személyzet információ",
+                  "title":  "Személyzet",
+                  "subtitle":  {
+                                   "search":  "Az összes regisztrált személyzet kezelése és megtekintése",
+                                   "dashboard":  "Személyzet statisztikák és tevékenységek áttekintése",
+                                   "create":  "Új személyzeti tag regisztrálása a rendszerbe",
+                                   "view":  "Személyzet részleteinek megtekintése",
+                                   "edit":  "Meglévő személyzet szerkesztése a rendszerben"
+                               },
+                  "deactivation":  {
+                                       "title":  "Személyzeti tag letiltása",
+                                       "message":  "Biztosan letiltja ezt a személyzeti tagot? Ez a művelet nem vonható vissza.",
+                                       "successMessage":  "A személyzeti tag sikeresen le lett tiltva.",
+                                       "errorMessage":  "Hiba történt a személyzeti tag letiltása közben. Kérjük, próbálja újra."
+                                   }
+              },
+    "qualification":  {
+                          "tabs":  {
+                                       "dashboard":  "Képesítések panel",
+                                       "view_dashboard":  "Képesítések megtekintése",
+                                       "search":  "Képesítések keresése",
+                                       "create":  "Képesítés létrehozása",
+                                       "view":  "Képesítés megtekintése",
+                                       "edit":  "Képesítés szerkesztése"
+                                   },
+                          "infoTitle":  "Képesítés információ",
+                          "title":  "Képesítések",
+                          "subtitle":  {
+                                           "search":  "Az összes regisztrált képesítés kezelése és megtekintése",
+                                           "dashboard":  "Képesítés statisztikák és tevékenységek áttekintése",
+                                           "create":  "Új képesítés regisztrálása a rendszerbe",
+                                           "edit":  "Meglévő képesítés szerkesztése a rendszerben",
+                                           "view":  "Képesítés részleteinek megtekintése"
+                                       },
+                          "fields":  {
+                                         "idCode":  {
+                                                        "title":  "Képesítés kód",
+                                                        "placeholder":  "Képesítés kód"
+                                                    },
+                                         "qualificationName":  {
+                                                                   "title":  "Képesítés neve",
+                                                                   "placeholder":  "Képesítés neve"
+                                                               }
+                                     }
+                      },
+    "physicalResource":  {
+                             "tabs":  {
+                                          "dashboard":  "Fizikai erőforrások panel",
+                                          "view_dashboard":  "Fizikai erőforrások megtekintése",
+                                          "search":  "Fizikai erőforrások keresése",
+                                          "create":  "Fizikai erőforrás létrehozása",
+                                          "view":  "Fizikai erőforrás megtekintése",
+                                          "edit":  "Fizikai erőforrás szerkesztése"
+                                      },
+                             "infoTitle":  "Fizikai erőforrás információ",
+                             "title":  "Fizikai erőforrások",
+                             "subtitle":  {
+                                              "search":  "Az összes regisztrált fizikai erőforrás kezelése és megtekintése",
+                                              "dashboard":  "Vezérlőpanel a fizikai erőforrásokhoz",
+                                              "view_dashboard":  "Fizikai erőforrások megtekintése",
+                                              "create":  "Új fizikai erőforrás regisztrálása a rendszerbe",
+                                              "view":  "Fizikai erőforrás részleteinek megtekintése",
+                                              "edit":  "Meglévő fizikai erőforrás szerkesztése a rendszerben"
+                                          },
+                             "generalFields":  "Általános mezők",
+                             "specificFields":  "Speciális mezők",
+                             "fields":  {
+                                            "code":  {
+                                                         "title":  "Kód",
+                                                         "placeholder":  "Erőforrás kód"
+                                                     },
+                                            "description":  {
+                                                                "title":  "Leírás",
+                                                                "placeholder":  "Erőforrás leírása"
+                                                            },
+                                            "status":  {
+                                                           "title":  "Állapot",
+                                                           "placeholder":  "Válassza ki az erőforrás állapotát",
+                                                           "options":  {
+                                                                           "available":  "Elérhető",
+                                                                           "maintenance":  "Karbantartás",
+                                                                           "outOfService":  "Üzemen kívül"
+                                                                       }
+                                                       },
+                                            "qualifications":  {
+                                                                   "title":  "Szükséges képesítések",
+                                                                   "placeholder":  "Az erőforrás működtetéséhez szükséges képesítések"
+                                                               },
+                                            "setupTime":  {
+                                                              "title":  "Beállítási idő (perc)",
+                                                              "placeholder":  "Beállítási idő"
+                                                          },
+                                            "servingDocks":  {
+                                                                 "title":  "Kiszolgált mólók",
+                                                                 "placeholder":  "Válassza ki a kiszolgált mólókat"
+                                                             },
+                                            "liftingCapacity":  {
+                                                                    "title":  "Emelőkapacitás (kg)",
+                                                                    "placeholder":  "Emelőkapacitás"
+                                                                },
+                                            "containersPerHour":  {
+                                                                      "title":  "Konténerek óránként",
+                                                                      "placeholder":  "Konténerek óránként"
+                                                                  },
+                                            "maxLoadCapacity":  {
+                                                                    "title":  "Maximális teherkapacitás (kg)",
+                                                                    "placeholder":  "Maximális teherkapacitás"
+                                                                },
+                                            "averageSpeed":  {
+                                                                 "title":  "Átlagsebesség (km/h)",
+                                                                 "placeholder":  "Átlagsebesség"
+                                                             },
+                                            "containersPerTrip":  {
+                                                                      "title":  "Konténerek utaként",
+                                                                      "placeholder":  "Konténerek utaként"
+                                                                  },
+                                            "type":  {
+                                                         "title":  "Erőforrás típus",
+                                                         "options":  {
+                                                                         "stsCrane":  "STS daru",
+                                                                         "yardGantry":  "Udvari portáldaru",
+                                                                         "truck":  "Teherautó"
+                                                                     }
+                                                     }
+                                        },
+                             "actions":  {
+                                             "deactivate":  "Fizikai erőforrás letiltása"
+                                         },
+                             "deactivation":  {
+                                                  "title":  "Fizikai erőforrás letiltása",
+                                                  "message":  "Biztosan letiltja ezt a fizikai erőforrást? Ez a művelet nem vonható vissza.",
+                                                  "successMessage":  "A fizikai erőforrás sikeresen le lett tiltva.",
+                                                  "errorMessage":  "Hiba történt a fizikai erőforrás letiltása közben. Kérjük, próbálja újra."
+                                              }
+                         },
+    "storageArea":  {
+                        "tabs":  {
+                                     "dashboard":  "Tárolási területek panel",
+                                     "view_dashboard":  "Tárolási területek megtekintése",
+                                     "search":  "Tárolási területek keresése",
+                                     "create":  "Tárolási terület létrehozása",
+                                     "view":  "Tárolási terület megtekintése",
+                                     "edit":  "Tárolási terület szerkesztése"
+                                 },
+                        "infoTitle":  "Tárolási terület információ",
+                        "title":  "Tárolási területek",
+                        "subtitle":  {
+                                         "search":  "Az összes regisztrált tárolási terület kezelése és megtekintése",
+                                         "dashboard":  "Vezérlőpanel minden tárolási területhez",
+                                         "view_dashboard":  "Tárolási területek megtekintése",
+                                         "create":  "Új tárolási terület regisztrálása a rendszerbe",
+                                         "view":  "Tárolási terület részleteinek megtekintése",
+                                         "edit":  "Meglévő tárolási terület szerkesztése a rendszerben"
+                                     },
+                        "printer":  {
+                                        "docks_serviced":  "kiszolgált mólók",
+                                        "capacity_usage":  "Kapacitás használat",
+                                        "units":  "egységek",
+                                        "available":  "elérhető",
+                                        "no_registered_distances":  "Nincsenek rögzített távolságok",
+                                        "no_docks_serviced":  "Nincsenek kiszolgált mólók",
+                                        "all_docks_serviced":  "Minden móló kiszolgálva",
+                                        "serviced_docks_distance":  "Kiszolgált mólók távolsága",
+                                        "no_registered_docks":  "Nincsenek regisztrált mólók"
+                                    },
+                        "create":  {
+                                       "distance_meters":  "Távolság (méter)"
+                                   },
+                        "fields":  {
+                                       "nameCode":  {
+                                                        "title":  "Név kódja",
+                                                        "placeholder":  "Tárolási terület nevének kódja"
+                                                    },
+                                       "location":  {
+                                                        "title":  "Helyszín",
+                                                        "placeholder":  "Tárolási terület helyszíne"
+                                                    },
+                                       "type":  {
+                                                    "title":  "Típus",
+                                                    "placeholder":  "Válasszon tárolási terület típust",
+                                                    "options":  {
+                                                                    "yard":  "Udvar",
+                                                                    "warehouse":  "Raktár"
+                                                                }
+                                                },
+                                       "capacity":  {
+                                                        "title":  "Kapacitás",
+                                                        "placeholder":  "Maximális kapacitás"
+                                                    },
+                                       "occupancy":  {
+                                                         "title":  "Fogláltság",
+                                                         "placeholder":  "Jelenlegi foglaltság"
+                                                     }
+                                   }
+                    },
+    "search":  {
+                   "languages":  "Nyelvek keresése..."
+               },
+    "expirationWarning":  {
+                              "messageOneMinute":  "A munkamenet 1 percen belül lejár.",
+                              "messageLessThanOneMinute":  "A munkamenet hamarosan lejár."
+                          },
+    "representative":  {
+                           "title":  "Képviselő",
+                           "select":  "Válasszon képviselőt"
+                       },
+    "scheduling":  {
+                       "title":  "Napi ütemterv kérése",
+                       "subtitle":  "Automatizált ütemező algoritmusunk elemzi az adott napra tervezett feladatokat.",
+                       "noVisits":  "A kiválasztott dátumra nincs tervezett hajólátogatás.",
+                       "visitsOnSelectedDay":  "Hajólátogatások a kiválasztott napon",
+                       "viewVisits":  "Feladatütemterv generálása",
+                       "generateTasksButton":  "Feladatütemterv generálása",
+                       "aboutAlgorithmButton":  "Az algoritmusról",
+                       "fields":  {
+                                      "algorithm":  {
+                                                        "title":  "Ütemező algoritmus",
+                                                        "placeholder":  "Válasszon ütemező algoritmust"
+                                                    },
+                                      "relatedDocks":  "Válasszon kapcsolódó mólót"
+                                  },
+                       "generateTasksModal":  {
+                                                  "title":  "További logisztika"
+                                              },
+                       "aboutAlgorithmModal":  {
+                                                   "title":  "Az algoritmusról",
+                                                   "content":  "A jelenlegi algoritmus figyelembe veszi a kiválasztott dátumra és mólóra ütemezett hajólátogatási értesítéseket. \nEzt követően ellenőrzi az STS daruk elérhetőségét az adott mólón, és a daru sebessége alapján határozza meg az egyes feladatok időtartamát.\nFigyelmen kívül hagyja a karbantartási vagy egyéb, nem rakodási/lerakodási tevékenységeket."
+                                               }
+                   },
+    "notification":  {
+                         "id":  "Értesítés azonosító",
+                         "hazardous":  "Veszélyes",
+                         "nonHazardous":  "Nem veszélyes",
+                         "arrival":  "Érkezés",
+                         "departure":  "Indulás",
+                         "specialRequirements":  "Különleges követelmények",
+                         "none":  "Nincs",
+                         "crew":  "Személyzet",
+                         "captain":  "Kapitány",
+                         "unknown":  "Ismeretlen",
+                         "from":  "Ettől",
+                         "to":  "Eddig",
+                         "tabs":  {
+                                      "dashboard":  "Értesítések irányítópult",
+                                      "search":  "Értesítések keresése",
+                                      "edit":  "Értesítés szerkesztése",
+                                      "create":  "Értesítés létrehozása",
+                                      "makeDraft":  "Piszkozat értesítés létrehozása",
+                                      "myNotifications":  "Saját értesítéseim",
+                                      "review":  "Értesítések áttekintése",
+                                      "general":  "Általános lista",
+                                      "byDate":  "Naptár nézet",
+                                      "submit":  "Értesítés beküldése",
+                                      "delete":  "Értesítés törlése"
+                                  },
+                         "eventsOnDate":  "Események a kiválasztott napon",
+                         "noEventsOnDate":  "Nincs esemény a kiválasztott napon",
+                         "title":  "Hajólátogatási értesítések",
+                         "subtitle":  {
+                                          "dashboard":  "Hajólátogatási értesítések áttekintése",
+                                          "search":  "Minden hajólátogatási értesítés kezelése és megtekintése",
+                                          "create":  "Új hajólátogatási értesítés létrehozása",
+                                          "edit":  "Meglévő hajólátogatási értesítés szerkesztése",
+                                          "review":  "Függő hajólátogatási értesítések áttekintése"
+                                      },
+                         "errors":  {
+                                        "noNotificationId":  "Nem lett megadva értesítés-azonosító"
+                                    },
+                         "infoTitle":  "Értesítés információ",
+                         "cargoTitle":  "Rakomány információ",
+                         "vesselTitle":  "Hajó információ",
+                         "manifestInfo":  "Manifest információ",
+                         "fields":  {
+                                        "openLoadManifest":  "Rakodási manifest megnyitása",
+                                        "openUnloadManifest":  "Kirakodási manifest megnyitása",
+                                        "expectedArrival":  "Várható érkezés",
+                                        "expectedDeparture":  "Várható indulás",
+                                        "isCargoHazardous":  "Veszélyes rakomány",
+                                        "specialRequirements":  "Különleges követelmények",
+                                        "captain":  "Kapitány",
+                                        "totalCrewMembers":  "Személyzet létszáma",
+                                        "safetyOfficers":  "Biztonsági tisztek",
+                                        "loadCargoManifest":  "Rakodási manifest betöltése",
+                                        "unloadCargoManifest":  "Kirakodási manifest betöltése",
+                                        "position":  "Pozíció",
+                                        "area":  "Terület",
+                                        "container":  "Konténer",
+                                        "crewMembers":  "Személyzet tagjai",
+                                        "status":  "Állapot"
+                                    },
+                         "timeline":  {
+                                          "pending":  "Függőben",
+                                          "inProgress":  "Folyamatban",
+                                          "completed":  "Kész",
+                                          "submitted":  "Beküldve",
+                                          "accepted":  "Elfogadva",
+                                          "rejected":  "Elutasítva"
+                                      },
+                         "filters":  {
+                                         "expectedArrivalFrom":  "Várható érkezés ettől",
+                                         "expectedArrivalTo":  "Várható érkezés eddig",
+                                         "withReason":  "Indoklással",
+                                         "withDockAssigned":  "Kijelölt mólóval"
+                                     },
+                         "decision":  {
+                                          "isFinal":  "Végleges",
+                                          "assignedDock":  {
+                                                               "title":  "Kijelölt móló",
+                                                               "placeholder":  "Válasszon kijelölt mólót"
+                                                           },
+                                          "reason":  {
+                                                         "title":  "Ok",
+                                                         "placeholder":  "Adja meg a döntés indokát"
+                                                     },
+                                          "status":  "Döntés állapota"
+                                      }
+                     },
+    "operationalWindow":  {
+                              "title":  "Működési ablak",
+                              "printer":  {
+                                              "addShift":  "Műszak hozzáadása",
+                                              "shifts":  "Műszakok:",
+                                              "noShifts":  "Nincsenek műszakok.",
+                                              "startTime":  "Kezdési idő",
+                                              "endTime":  "Befejezési idő",
+                                              "weekDays":  "A hét napjai"
+                                          },
+                              "errors":  {
+                                             "shiftOverlap":  "Érvénytelen műszak. Átfedés vagy a befejezés korábbi, mint a kezdés."
+                                         }
+                          }
 }

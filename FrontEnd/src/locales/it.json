@@ -1,8 +1,21 @@
-{
+﻿{
     "common": {
         "loading": "Caricamento...",
         "noData": "Nessun dato disponibile",
-        "statistics": "Statistiche"
+        "statistics": "Statistiche",
+        "yes": "Sì",
+        "no": "No",
+        "weekDay": "Giorno della settimana",
+        "days": {
+            "sunday": "Domenica",
+            "monday": "Lunedì",
+            "tuesday": "Martedì",
+            "wednesday": "Mercoledì",
+            "thursday": "Giovedì",
+            "friday": "Venerdì",
+            "saturday": "Sabato"
+        },
+        "number": "Numero"
     },
     "buttons": {
         "save": "Salva",
@@ -25,7 +38,12 @@
         },
         "login": "Accedi",
         "goBackToLogin": "Torna al login",
-        "logout": "Esci"
+        "logout": "Esci",
+        "generate": "Genera",
+        "close": "Chiudi",
+        "add": "Aggiungi",
+        "review": "Rivedi",
+        "seeMore": "Vedi altro"
     },
     "unsavedChanges": {
         "title": "Scartare le modifiche?",
@@ -39,8 +57,16 @@
         "subtitle": "Panoramica del sistema PortIT",
         "3DModel": {
             "title": "Visualizzazione 3D del porto",
-            "description": "Visualizza una rappresentazione 3D interattiva dell'intera struttura portuale. Monitora l'occupazione dei moli, le posizioni delle navi, le aree di stoccaggio e le risorse in tempo reale.",
+            "description": "Visualizza una rappresentazione 3D interattiva dell\u0027intera struttura portuale. Monitora l\u0027occupazione dei moli, le posizioni delle navi, le aree di stoccaggio e le risorse in tempo reale.",
             "open": "Apri modello 3D"
+        },
+        "welcome": "Bentornato, [name]!",
+        "SAOR": {
+            "subtitle": "Overview of the shipping agent\u0027s operations",
+            "pendingNotifications": "Notifiche in attesa",
+            "recent": "Notifiche recenti di visite di navi",
+            "recentReview": "Notifiche di visite di navi in attesa di revisione",
+            "noRecent": "Nessuna notifica recente"
         }
     },
     "admin": {
@@ -217,6 +243,9 @@
             "vesselType": {
                 "title": "Tipo di nave",
                 "placeholder": "Seleziona tipo di nave"
+            },
+            "taxNumber": {
+                "title": "Numero fiscale"
             }
         },
         "infoTitle": "Informazioni nave",
@@ -268,7 +297,8 @@
                     "unavailable": "Non disponibile",
                     "temporarilyReassigned": "Riassegnato temporaneamente"
                 }
-            }
+            },
+            "operationalWindow": "Operational Window"
         },
         "tabs": {
             "dashboard": "Dashboard personale",
@@ -286,6 +316,12 @@
             "create": "Registra un nuovo membro del personale nel sistema",
             "view": "Visualizza dettagli del personale",
             "edit": "Modifica un membro del personale esistente nel sistema"
+        },
+        "deactivation": {
+            "title": "Deactivate Staff Member",
+            "message": "Are you sure you want to deactivate this staff member? You can activate them again later.",
+            "successMessage": "Staff member has been successfully deactivated.",
+            "errorMessage": "An error occurred while trying to deactivate the staff member. Please try again."
         }
     },
     "qualification": {
@@ -373,8 +409,8 @@
                 "placeholder": "Capacità di sollevamento"
             },
             "containersPerHour": {
-                "title": "Container all'ora",
-                "placeholder": "Container all'ora"
+                "title": "Container all\u0027ora",
+                "placeholder": "Container all\u0027ora"
             },
             "maxLoadCapacity": {
                 "title": "Capacità massima di carico (kg)",
@@ -399,6 +435,12 @@
         },
         "actions": {
             "deactivate": "Disattiva risorsa fisica"
+        },
+        "deactivation": {
+            "title": "Deactivate Physical Resource",
+            "message": "Are you sure you want to deactivate this physical resource? You can activate it again later.",
+            "successMessage": "Physical Resource has been successfully deactivated.",
+            "errorMessage": "An error occurred while trying to deactivate the Physical Resource. Please try again."
         }
     },
     "storageArea": {
@@ -417,14 +459,184 @@
             "dashboard": "Pannello di controllo per tutte le aree di stoccaggio",
             "view_dashboard": "Visualizza aree di stoccaggio",
             "create": "Registra una nuova area di stoccaggio nel sistema",
-            "view": "Visualizza dettagli dell'area di stoccaggio",
-            "edit": "Modifica un'area di stoccaggio esistente nel sistema"
+            "view": "Visualizza dettagli dell\u0027area di stoccaggio",
+            "edit": "Modifica un\u0027area di stoccaggio esistente nel sistema"
         },
         "printer": {
             "docks_serviced": "moli serviti",
             "capacity_usage": "Uso della capacità",
             "units": "unità",
-            "available": "disponibile"
+            "available": "disponibile",
+            "no_registered_distances": "Nessuna distanza registrata",
+            "no_docks_serviced": "Nessun molo servito",
+            "all_docks_serviced": "Tutti i moli serviti",
+            "serviced_docks_distance": "Distanza dai moli serviti",
+            "no_registered_docks": "Nessun molo registrato"
+        },
+        "create": {
+            "distance_meters": "Distanza (metri)"
+        },
+        "fields": {
+            "nameCode": {
+                "title": "Codice nome",
+                "placeholder": "Codice nome area d'immagazzinamento"
+            },
+            "location": {
+                "title": "Location",
+                "placeholder": "Posizione area di stoccaggio"
+            },
+            "type": {
+                "title": "Type",
+                "placeholder": "Select Storage Area type",
+                "options": {
+                    "yard": "Yard",
+                    "warehouse": "Warehouse"
+                }
+            },
+            "capacity": {
+                "title": "Capacity",
+                "placeholder": "Maximum capacity"
+            },
+            "occupancy": {
+                "title": "Occupancy",
+                "placeholder": "Current occupancy"
+            }
+        }
+    },
+    "search": {
+        "languages": "Cerca lingue..."
+    },
+    "expirationWarning": {
+        "messageOneMinute": "La tua sessione scadrà tra 1 minuto.",
+        "messageLessThanOneMinute": "La tua sessione sta per scadere."
+    },
+    "representative": {
+        "title": "Rappresentante",
+        "select": "Seleziona un rappresentante"
+    },
+    "scheduling": {
+        "title": "Pianificazione giornaliera",
+        "subtitle": "Usa il nostro algoritmo automatico di pianificazione per analizzare le attività programmate per un determinato giorno.",
+        "noVisits": "Nessuna visita di navi programmata per la data selezionata.",
+        "visitsOnSelectedDay": "Visite di navi nella data selezionata",
+        "viewVisits": "Mostra pianificazione attività",
+        "generateTasksButton": "Genera pianificazione attività",
+        "aboutAlgorithmButton": "Informazioni sull'algoritmo",
+        "fields": {
+            "algorithm": {
+                "title": "Algoritmo di pianificazione",
+                "placeholder": "Seleziona algoritmo di pianificazione"
+            },
+            "relatedDocks": "Seleziona molo correlato"
+        },
+        "generateTasksModal": {
+            "title": "Logistica aggiuntiva"
+        },
+        "aboutAlgorithmModal": {
+            "title": "Informazioni sull'algoritmo",
+            "content": "L'algoritmo attuale considera le notifiche di visita delle navi programmate per la data e il molo selezionati.\nControlla quindi la disponibilità delle gru STS per il molo specificato e determina la durata di ogni operazione in base alla velocità della gru.\nIgnora le visite destinate a manutenzione o ad altre attività non di carico/scarico."
+        }
+    },
+    "notification": {
+        "id": "ID notifica",
+        "hazardous": "Carico pericoloso",
+        "nonHazardous": "Carico non pericoloso",
+        "arrival": "Arrivo",
+        "departure": "Partenza",
+        "specialRequirements": "Requisiti speciali",
+        "none": "Nessuno",
+        "crew": "Equipaggio",
+        "captain": "Capitano",
+        "unknown": "Sconosciuto",
+        "from": "Da",
+        "to": "A",
+        "tabs": {
+            "dashboard": "Dashboard notifiche",
+            "search": "Cerca notifiche",
+            "edit": "Modifica notifica",
+            "create": "Crea notifica",
+            "makeDraft": "Crea bozza notifica",
+            "myNotifications": "Le mie notifiche",
+            "review": "Rivedi notifiche",
+            "general": "Elenco generico",
+            "byDate": "Vista calendario",
+            "submit": "Invia notifica",
+            "delete": "Elimina notifica"
+        },
+        "eventsOnDate": "Eventi nella data selezionata",
+        "noEventsOnDate": "Nessun evento nella data selezionata",
+        "title": "Notifiche visite nave",
+        "subtitle": {
+            "dashboard": "Panoramica notifiche visite nave",
+            "search": "Gestisci e visualizza tutte le notifiche di visite nave",
+            "create": "Crea una nuova notifica di visita nave",
+            "edit": "Modifica una notifica di visita nave esistente",
+            "review": "Rivedi notifiche in attesa"
+        },
+        "errors": {
+            "noNotificationId": "ID notifica non fornito"
+        },
+        "infoTitle": "Informazioni notifica",
+        "cargoTitle": "Informazioni carico",
+        "vesselTitle": "Informazioni nave",
+        "manifestInfo": "Informazioni manifesto",
+        "fields": {
+            "openLoadManifest": "Apri manifesto carico",
+            "openUnloadManifest": "Apri manifesto scarico",
+            "expectedArrival": "Arrivo previsto",
+            "expectedDeparture": "Partenza prevista",
+            "isCargoHazardous": "Carico pericoloso",
+            "specialRequirements": "Requisiti speciali",
+            "captain": "Capitano",
+            "totalCrewMembers": "Numero totale membri equipaggio",
+            "safetyOfficers": "Ufficiali sicurezza",
+            "loadCargoManifest": "Manifesto carico",
+            "unloadCargoManifest": "Manifesto scarico",
+            "position": "Posizione",
+            "area": "Area",
+            "container": "Container",
+            "crewMembers": "Membri equipaggio",
+            "status": "Stato"
+        },
+        "timeline": {
+            "pending": "In attesa",
+            "inProgress": "In corso",
+            "completed": "Completato",
+            "submitted": "Inviato",
+            "accepted": "Accettato",
+            "rejected": "Respinto"
+        },
+        "filters": {
+            "expectedArrivalFrom": "Arrivo previsto da",
+            "expectedArrivalTo": "Arrivo previsto a",
+            "withReason": "Con motivazione",
+            "withDockAssigned": "Con molo assegnato"
+        },
+        "decision": {
+            "isFinal": "È finale",
+            "assignedDock": {
+                "title": "Molo assegnato",
+                "placeholder": "Seleziona molo assegnato"
+            },
+            "reason": {
+                "title": "Motivo",
+                "placeholder": "Fornisci motivo della decisione"
+            },
+            "status": "Stato decisione"
+        }
+    },
+    "operationalWindow": {
+        "title": "Finestra operativa",
+        "printer": {
+            "addShift": "Aggiungi turno",
+            "shifts": "Turni:",
+            "noShifts": "Nessun turno.",
+            "startTime": "Ora di inizio",
+            "endTime": "Ora di fine",
+            "weekDays": "Giorni della settimana"
+        },
+        "errors": {
+            "shiftOverlap": "Turno non valido. Sovrapposizione o ora di fine precedente all'inizio."
         }
     }
-}
+} 

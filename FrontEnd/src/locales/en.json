@@ -113,7 +113,7 @@
                 }
             }
         },
-        "tabs":{
+        "tabs": {
             "dashboard": "User Dashboard",
             "create": "Create User",
             "view": "View Users",
@@ -125,7 +125,8 @@
             "dashboard": "User overview and management",
             "create": "Register a new user into the system",
             "view": "View and manage existing users"
-        }
+        },
+        "registeredUsers": "Registered Users"
     },
     "representative": {
         "title": "Representative",
@@ -282,7 +283,7 @@
     "staff": {
         "deactivation": {
             "title": "Deactivate Staff Member",
-            "message": "Are you sure you want to deactivate this staff member? This action cannot be undone.",
+            "message": "Are you sure you want to deactivate this staff member? You can activate them again later.",
             "successMessage": "Staff member has been successfully deactivated.",
             "errorMessage": "An error occurred while trying to deactivate the staff member. Please try again."
         },
@@ -333,7 +334,8 @@
             "create": "Register a new staff member into the system",
             "view": "View staff details",
             "edit": "Edit an existing staff member in the system"
-        }
+        },
+        "registeredStaffMembers": "Registered Staff Members"
     },
     "qualification": {
         "tabs": {
@@ -362,7 +364,8 @@
                 "title": "Qualification Name",
                 "placeholder": "Qualification name"
             }
-        }
+        },
+        "registeredQualifications": "Registered Qualifications"
     },
     "scheduling": {
         "title": "Request daily schedule",
@@ -390,7 +393,7 @@
     "physicalResource": {
         "deactivation": {
             "title": "Deactivate Physical Resource",
-            "message": "Are you sure you want to deactivate this physical resource? This action cannot be undone.",
+            "message": "Are you sure you want to deactivate this physical resource? You can activate it again later.",
             "successMessage": "Physical Resource has been successfully deactivated.",
             "errorMessage": "An error occurred while trying to deactivate the Physical Resource. Please try again."
         },
@@ -475,7 +478,8 @@
         },
         "actions": {
             "deactivate": "Deactivate Physical Resource"
-        }
+        },
+        "registeredPhysicalResources": "Registered Physical Resources"
     },
     "storageArea": {
         "tabs": {
@@ -510,7 +514,7 @@
             "serviced_docks_distance": "Serviced docks distance",
             "no_registered_docks": "No registered docks"
         },
-        "fields":{
+        "fields": {
             "nameCode": {
                 "title": "Name Code",
                 "placeholder": "Storage Area name code"
@@ -535,7 +539,8 @@
                 "title": "Occupancy",
                 "placeholder": "Current occupancy"
             }
-        }
+        },
+        "registeredStorageAreas": "Registered Storage Areas"
     },
     "notification": {
         "id": "Notification ID",
@@ -623,7 +628,8 @@
                 "placeholder": "Provide reason for decision"
             },
             "status": "Decision Status"
-        }
+        },
+        "registeredVesselVisitNotifications": "Registered Vessel Visit Notifications"
     },
     "operationalWindow": {
         "title": "Operational Window",

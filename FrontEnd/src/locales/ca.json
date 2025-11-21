@@ -1,75 +1,105 @@
-{
+﻿{
     "common": {
         "loading": "Carregant...",
         "noData": "No hi ha dades disponibles",
-        "statistics": "Estadístiques"
+        "statistics": "Estadístiques",
+        "yes": "Sí",
+        "no": "No",
+        "weekDay": "Dia de la setmana",
+        "days": {
+            "sunday": "Diumenge",
+            "monday": "Dilluns",
+            "tuesday": "Dimarts",
+            "wednesday": "Dimecres",
+            "thursday": "Dijous",
+            "friday": "Divendres",
+            "saturday": "Dissabte"
+        },
+        "number": "Nombre"
     },
     "buttons": {
-        "save": "Desar",
-        "cancel": "Cancel·lar",
-        "delete": "Eliminar",
-        "edit": "Editar",
-        "create": "Crear",
-        "search": "Cercar",
-    "select": "Seleccionar",
-    "activate": "Activar",
-    "deactivate": "Desactivar",
+        "save": "Desa",
+        "cancel": "Cancel·la",
+        "delete": "Elimina",
+        "edit": "Edita",
+        "create": "Crea",
+        "search": "Cerca",
+        "select": "Selecciona",
+        "activate": "Activa",
+        "deactivate": "Desactiva",
+        "generate": "Genera",
+        "close": "Tanca",
+        "add": "Afegeix",
+        "review": "Revisa",
+        "seeMore": "Mostra més",
         "filter": {
             "title": "Filtres",
-            "add": "Afegir filtre",
-            "clear": "Netejar filtres"
+            "add": "Afegeix filtre",
+            "clear": "Neteja filtres"
         },
         "pagination": {
             "previous": "Anterior",
             "next": "Següent"
         },
-        "login": "Iniciar sessió",
-        "goBackToLogin": "Tornar a iniciar sessió",
-        "logout": "Tancar sessió"
+        "login": "Inicia sessió",
+        "goBackToLogin": "Torna a iniciar sessió",
+        "logout": "Tanca sessió"
     },
     "unsavedChanges": {
         "title": "Descartar canvis?",
-        "message": "Tens canvis sense desar. Estàs segur que vols sortir d'aquesta pàgina i descartar els canvis?",
-        "confirm": "Descartar",
-        "cancel": "Continuar editant"
+        "message": "Tens canvis sense desar. Segur que vols sortir d'aquesta pàgina i descartar-los?",
+        "confirm": "Descarta",
+        "cancel": "Continua editant"
+    },
+    "expirationWarning": {
+        "messageOneMinute": "La sessió expirarà en 1 minut.",
+        "messageLessThanOneMinute": "La sessió està a punt d'expirar."
     },
     "dashboard": {
         "sidebarTitle": "Panell",
         "title": "Panell PortIT",
-        "subtitle": "Visió general del sistema PortIT",
+        "subtitle": "Panoràmica del sistema PortIT",
+        "welcome": "Benvingut novament, [name]!",
+        "SAOR": {
+            "subtitle": "Vista general de les operacions de l'agent navilier",
+            "pendingNotifications": "Notificacions pendents",
+            "recent": "Notificacions recents de visites de vaixells",
+            "recentReview": "Notificacions que requereixen revisió",
+            "noRecent": "Sense notificacions recents"
+        },
         "3DModel": {
-            "title": "Visualització 3D del Port",
-            "description": "Mostra una representació 3D interactiva de tota la infraestructura del port. Supervisa l'ocupació de les doces, les posicions dels vaixells, les àrees d'emmagatzematge i els recursos en temps real.",
-            "open": "Obrir model 3D"
+            "title": "Model 3D del Port",
+            "description": "Mostra un model 3D interactiu de tota la infraestructura del port: ocupació de molls, posicions de vaixells, àrees d'emmagatzematge i recursos en temps real.",
+            "open": "Obre model 3D"
         }
     },
     "admin": {
-        "sidebarTitle": "Admin",
+        "sidebarTitle": "Administració",
         "title": "Panell d'Administració",
-        "subtitle": "Visió administrativa i gestió",
+        "subtitle": "Supervisió i gestió",
         "userManagement": {
-            "title": "Gestió d'usuaris",
-            "subtitle": "Gestiona els usuaris, rols i permisos"
+            "title": "Gestió d'Usuaris",
+            "subtitle": "Administra usuaris, rols i permisos."
         },
         "auditLogs": {
-            "title": "Registres d'auditoria",
-            "subtitle": "Veure i controlar l'activitat del sistema"
+            "title": "Registres d'Auditoria",
+            "subtitle": "Visualitza i monitora activitats."
         }
     },
     "user": {
         "fields": {
             "email": {
-                "title": "Email",
-                "placeholder": "email@mail.com"
+                "title": "Correu",
+                "placeholder": "correu@exemple.com"
             },
             "role": {
                 "title": "Rol",
-                "placeholder": "Selecciona el rol de l'usuari",
+                "placeholder": "Selecciona el rol",
                 "options": {
                     "admin": "Administrador",
                     "saoRep": "Representant SAO",
-                    "pao": "Responsable Autoritat Portuària",
-                    "logisticsOperator": "Operador Logístic"
+                    "pao": "Funcionari de l'Autoritat Portuària",
+                    "logisticsOperator": "Operador logístic"
                 }
             },
             "isActive": {
@@ -80,22 +110,22 @@
                 }
             }
         },
-        "tabs":{
-            "dashboard": "Panell d'usuaris",
-            "create": "Crear usuari",
-            "view": "Veure usuaris",
-            "search": "Cercar usuaris"
+        "tabs": {
+            "dashboard": "Panell d'Usuaris",
+            "create": "Crea Usuari",
+            "view": "Veure Usuaris",
+            "search": "Cerca Usuaris"
         },
-        "infoTitle": "Detalls de l'usuari",
+        "infoTitle": "Informació de l'Usuari",
         "title": "Usuaris",
         "subtitle": {
-            "dashboard": "Visió general i gestió d'usuaris",
-            "create": "Registra un nou usuari al sistema",
-            "view": "Veure i gestionar usuaris existents"
+            "dashboard": "Panoràmica i gestió d'usuaris",
+            "create": "Registra un usuari nou",
+            "view": "Administra usuaris existents"
         }
     },
     "physicalCharacteristics": {
-        "title": "Característiques físiques (m)",
+        "title": "Característiques Físiques (m)",
         "length": {
             "title": "Llargada",
             "placeholder": "Llargada en metres"
@@ -113,18 +143,18 @@
         "fields": {
             "code": {
                 "title": "Codi",
-                "placeholder": "Codi de la doca"
+                "placeholder": "Codi del moll"
             },
             "name": {
                 "title": "Nom",
-                "placeholder": "Nom de la doca"
+                "placeholder": "Nom del moll"
             },
             "location": {
                 "title": "Ubicació",
-                "placeholder": "Ubicació de la doca"
+                "placeholder": "Ubicació del moll"
             },
             "supportedVesselTypes": {
-                "title": "Tipus de vaixell suportats",
+                "title": "Tipus de vaixells admesos",
                 "vesselTypes": {
                     "title": "Tipus de vaixell",
                     "placeholder": "Selecciona tipus de vaixell"
@@ -133,23 +163,23 @@
             }
         },
         "tabs": {
-            "dashboard": "Panell de doces",
-            "view_dashboard": "Veure doces",
-            "search": "Cercar doces",
-            "create": "Crear doca",
-            "view": "Veure doca",
-            "edit": "Editar doca"
+            "dashboard": "Panell de Molls",
+            "view_dashboard": "Veure Molls",
+            "search": "Cerca Molls",
+            "create": "Crea Moll",
+            "view": "Veure Moll",
+            "edit": "Edita Moll"
         },
-        "generalFields" : "Camps generals",
-        "infoTitle": "Informació de la doca",
-        "title": "Doces",
+        "generalFields": "Camps generals",
+        "infoTitle": "Informació del Moll",
+        "title": "Molls",
         "subtitle": {
-            "dashboard": "Visió general de les estadístiques i activitats de les doces",
-            "search": "Gestiona i visualitza totes les doces registrades",
-            "create": "Registra una nova doca al sistema",
-            "edit": "Edita una doca existent al sistema"
+            "dashboard": "Panoràmica d'estadístiques i activitat dels molls",
+            "search": "Administra i visualitza tots els molls registrats",
+            "create": "Registra un moll nou",
+            "edit": "Edita un moll existent"
         },
-        "registeredDocks": "Doces registrades"
+        "registeredDocks": "Molls registrats"
     },
     "vesselType": {
         "fields": {
@@ -159,7 +189,7 @@
             },
             "description": {
                 "title": "Descripció",
-                "placeholder": "Descripció del tipus de vaixell"
+                "placeholder": "Descripció del tipus"
             },
             "capacity": {
                 "title": "Capacitat",
@@ -168,37 +198,37 @@
             "containerCapacity": {
                 "title": "Capacitat de contenidors (TEU)",
                 "maxNumberOfRows": {
-                    "title": "Número màxim de files",
-                    "placeholder": "Máx. files en TEU"
+                    "title": "Nre. màxim de files",
+                    "placeholder": "Files màximes (TEU)"
                 },
                 "maxNumberOfBays": {
-                    "title": "Número màxim de bays",
-                    "placeholder": "Máx. bays en TEU"
+                    "title": "Nre. màxim de badies",
+                    "placeholder": "Badies màximes (TEU)"
                 },
                 "maxNumberOfTiers": {
-                    "title": "Número màxim de capes",
-                    "placeholder": "Máx. capes en TEU"
+                    "title": "Nre. màxim de nivells",
+                    "placeholder": "Nivells màxims (TEU)"
                 }
             }
         },
         "tabs": {
-            "dashboard": "Panell de tipus de vaixell",
-            "view_dashboard": "Veure tipus de vaixell",
-            "search": "Cercar tipus de vaixell",
-            "create": "Crear tipus de vaixell",
-            "view": "Veure tipus de vaixell",
-            "edit": "Editar tipus de vaixell"
+            "dashboard": "Panell de Tipus de Vaixell",
+            "view_dashboard": "Veure Tipus de Vaixell",
+            "search": "Cerca Tipus de Vaixell",
+            "create": "Crea Tipus de Vaixell",
+            "view": "Veure Tipus de Vaixell",
+            "edit": "Edita Tipus de Vaixell"
         },
-        "generalFields" : "Camps generals",
-        "infoTitle": "Informació del tipus de vaixell",
-        "title": "Tipus de vaixell",
+        "generalFields": "Camps generals",
+        "infoTitle": "Informació del Tipus de Vaixell",
+        "title": "Tipus de Vaixell",
         "subtitle": {
-            "dashboard": "Visió general de les estadístiques i activitats dels tipus de vaixell",
-            "search": "Gestiona i visualitza tots els tipus de vaixell registrats",
-            "create": "Registra un nou tipus de vaixell al sistema",
-            "edit": "Edita un tipus de vaixell existent al sistema"
+            "dashboard": "Panoràmica d'estadístiques dels tipus de vaixell",
+            "search": "Administra i visualitza tots els tipus registrats",
+            "create": "Registra un tipus nou",
+            "edit": "Edita un tipus existent"
         },
-        "registeredVesselTypes": "Tipus de vaixell registrats"
+        "registeredVesselTypes": "Tipus de Vaixell registrats"
     },
     "vessel": {
         "fields": {
@@ -211,30 +241,33 @@
                 "placeholder": "Número IMO del vaixell"
             },
             "owner": {
-                "title": "Organització propietària",
+                "title": "Propietari",
                 "placeholder": "Organització propietària"
             },
             "vesselType": {
                 "title": "Tipus de vaixell",
-                "placeholder": "Selecciona tipus de vaixell"
+                "placeholder": "Selecciona tipus"
+            },
+            "taxNumber": {
+                "title": "Número fiscal"
             }
         },
-        "infoTitle": "Informació del vaixell",
+        "infoTitle": "Informació del Vaixell",
         "physicalCharacteristicsTitle": "Característiques físiques",
         "tabs": {
-            "dashboard": "Panell de vaixells",
-            "view_dashboard": "Veure vaixells",
-            "search": "Cercar vaixells",
-            "create": "Crear vaixell",
-            "view": "Veure vaixell",
-            "edit": "Editar vaixell"
+            "dashboard": "Panell de Vaixells",
+            "view_dashboard": "Veure Vaixells",
+            "search": "Cerca Vaixells",
+            "create": "Crea Vaixell",
+            "view": "Veure Vaixell",
+            "edit": "Edita Vaixell"
         },
         "title": "Vaixells",
         "subtitle": {
-            "dashboard": "Visió general de les estadístiques i activitats dels vaixells",
-            "search": "Gestiona i visualitza tots els vaixells registrats",
-            "create": "Registra un nou vaixell al sistema",
-            "edit": "Edita un vaixell existent al sistema"
+            "dashboard": "Panoràmica d'estadístiques i activitat de vaixells",
+            "search": "Administra i visualitza vaixells registrats",
+            "create": "Registra un vaixell nou",
+            "edit": "Edita un vaixell existent"
         },
         "ownedBy": "Propietat de",
         "registeredVessels": "Vaixells registrats"
@@ -263,78 +296,85 @@
             },
             "status": {
                 "title": "Estat",
-                "options":{
+                "options": {
                     "available": "Disponible",
                     "unavailable": "No disponible",
                     "temporarilyReassigned": "Reassignat temporalment"
                 }
-            }
+            },
+            "operationalWindow": "Finestra operativa"
         },
         "tabs": {
-            "dashboard": "Panell de personal",
-            "view_dashboard": "Veure personal",
-            "search": "Cercar personal",
-            "create": "Crear personal",
-            "view": "Veure personal",
-            "edit": "Editar personal"
+            "dashboard": "Panell de Personal",
+            "view_dashboard": "Veure Personal",
+            "search": "Cerca Personal",
+            "create": "Crea Personal",
+            "view": "Veure Personal",
+            "edit": "Edita Personal"
         },
-        "infoTitle": "Informació del membre del personal",
+        "infoTitle": "Informació del Membre del Personal",
         "title": "Personal",
         "subtitle": {
-            "search": "Gestiona i visualitza tot el personal registrat",
-            "dashboard": "Visió general de les estadístiques i activitats del personal",
-            "create": "Registra un nou membre del personal al sistema",
-            "view": "Veure detalls del personal",
-            "edit": "Edita un membre del personal existent al sistema"
+            "search": "Administra i visualitza personal registrat",
+            "dashboard": "Panoràmica d'estadístiques del personal",
+            "create": "Registra un membre nou",
+            "view": "Mostra detalls del personal",
+            "edit": "Edita un membre existent"
+        },
+        "deactivation": {
+            "title": "Desactiva Membre del Personal",
+            "message": "Segur que vols desactivar aquest membre? L'acció és irreversible.",
+            "successMessage": "Membre desactivat correctament.",
+            "errorMessage": "Error en desactivar el membre. Torna-ho a provar."
         }
     },
     "qualification": {
         "tabs": {
-            "dashboard": "Panell de qualificacions",
-            "view_dashboard": "Veure qualificacions",
-            "search": "Cercar qualificacions",
-            "create": "Crear qualificació",
-            "view": "Veure qualificació",
-            "edit": "Editar qualificació"
+            "dashboard": "Panell de Qualificacions",
+            "view_dashboard": "Veure Qualificacions",
+            "search": "Cerca Qualificacions",
+            "create": "Crea Qualificació",
+            "view": "Veure Qualificació",
+            "edit": "Edita Qualificació"
         },
-        "infoTitle": "Informació de la qualificació",
+        "infoTitle": "Informació de la Qualificació",
         "title": "Qualificacions",
         "subtitle": {
-            "search": "Gestiona i visualitza totes les qualificacions registrades",
-            "dashboard": "Visió general de les estadístiques i activitats de les qualificacions",
-            "create": "Registra una nova qualificació al sistema",
-            "edit": "Edita una qualificació existent al sistema",
-            "view": "Veure detalls de la qualificació"
+            "search": "Administra i visualitza qualificacions registrades",
+            "dashboard": "Panoràmica d'estadístiques de qualificacions",
+            "create": "Registra una qualificació nova",
+            "edit": "Edita una qualificació existent",
+            "view": "Mostra detalls de la qualificació"
         },
         "fields": {
             "idCode": {
-                "title": "Codi de qualificació",
-                "placeholder": "Codi de la qualificació"
+                "title": "Codi de la Qualificació",
+                "placeholder": "Codi de la Qualificació"
             },
             "qualificationName": {
-                "title": "Nom de la qualificació",
-                "placeholder": "Nom de la qualificació"
+                "title": "Nom de la Qualificació",
+                "placeholder": "Nom de la Qualificació"
             }
         }
     },
     "physicalResource": {
         "tabs": {
-            "dashboard": "Panell de recursos físics",
-            "view_dashboard": "Veure recursos físics",
-            "search": "Cercar recursos físics",
-            "create": "Crear recurs físic",
-            "view": "Veure recurs físic",
-            "edit": "Editar recurs físic"
+            "dashboard": "Panell de Recursos Físics",
+            "view_dashboard": "Veure Recursos Físics",
+            "search": "Cerca Recursos Físics",
+            "create": "Crea Recurs Físic",
+            "view": "Veure Recurs Físic",
+            "edit": "Edita Recurs Físic"
         },
-        "infoTitle": "Informació del recurs físic",
-        "title": "Recursos físics",
+        "infoTitle": "Informació del Recurs Físic",
+        "title": "Recursos Físics",
         "subtitle": {
-            "search": "Gestiona i visualitza tots els recursos físics registrats",
-            "dashboard": "Panell de control per a recursos físics",
-            "view_dashboard": "Veure recursos físics",
-            "create": "Registra un nou recurs físic al sistema",
-            "view": "Veure detalls del recurs físic",
-            "edit": "Edita un recurs físic existent al sistema"
+            "search": "Administra i visualitza recursos físics registrats",
+            "dashboard": "Panell de control de recursos físics",
+            "view_dashboard": "Veure Recursos Físics",
+            "create": "Registra un recurs físic nou",
+            "view": "Mostra detalls del recurs físic",
+            "edit": "Edita un recurs físic existent"
         },
         "generalFields": "Camps generals",
         "specificFields": "Camps específics",
@@ -349,7 +389,7 @@
             },
             "status": {
                 "title": "Estat",
-                "placeholder": "Selecciona l'estat del recurs",
+                "placeholder": "Selecciona estat",
                 "options": {
                     "available": "Disponible",
                     "maintenance": "Manteniment",
@@ -358,18 +398,18 @@
             },
             "qualifications": {
                 "title": "Qualificacions necessàries",
-                "placeholder": "Les qualificacions necessàries per operar aquest recurs"
+                "placeholder": "Qualificacions requerides"
             },
             "servingDocks": {
-                "title": "Doces de servei",
-                "placeholder": "Selecciona doces de servei"
+                "title": "Molls servits",
+                "placeholder": "Selecciona molls"
             },
             "setupTime": {
                 "title": "Temps de configuració (minuts)",
                 "placeholder": "Temps de configuració"
             },
             "liftingCapacity": {
-                "title": "Capacitat d'elevació (kgs)",
+                "title": "Capacitat d'elevació (kg)",
                 "placeholder": "Capacitat d'elevació"
             },
             "containersPerHour": {
@@ -377,8 +417,8 @@
                 "placeholder": "Contenidors per hora"
             },
             "maxLoadCapacity": {
-                "title": "Capacitat màxima de càrrega (kgs)",
-                "placeholder": "Capacitat màxima de càrrega"
+                "title": "Capacitat màxima (kg)",
+                "placeholder": "Capacitat màxima"
             },
             "averageSpeed": {
                 "title": "Velocitat mitjana (km/h)",
@@ -398,53 +438,205 @@
             }
         },
         "actions": {
-            "deactivate": "Desactivar recurs físic"
+            "deactivate": "Desactiva recurs físic"
+        },
+        "deactivation": {
+            "title": "Desactiva Recurs Físic",
+            "message": "Segur que vols desactivar aquest recurs? Acció irreversible.",
+            "successMessage": "Recurs desactivat correctament.",
+            "errorMessage": "Error en desactivar el recurs. Torna-ho a provar."
         }
     },
-        "storageArea": {
+    "storageArea": {
         "tabs": {
-            "dashboard": "Panell de control per a Àrea d'Emmagatzematge",
+            "dashboard": "Panell d'Àrees d'Emmagatzematge",
             "view_dashboard": "Veure Àrees d'Emmagatzematge",
-            "search": "Cercar Àrees d'Emmagatzematge",
-            "create": "Crear Àrea d'Emmagatzematge",
+            "search": "Cerca Àrees d'Emmagatzematge",
+            "create": "Crea Àrea d'Emmagatzematge",
             "view": "Veure Àrea d'Emmagatzematge",
-            "edit": "Editar Àrea d'Emmagatzematge"
+            "edit": "Edita Àrea d'Emmagatzematge"
         },
         "infoTitle": "Informació de l'Àrea d'Emmagatzematge",
         "title": "Àrees d'Emmagatzematge",
         "subtitle": {
-            "search": "Gestiona i visualitza totes les àrees d'emmagatzematge registrades",
-            "dashboard": "Panell de control per a totes les funcions de l'àrea d'emmagatzematge",
+            "search": "Administra i visualitza àrees registrades",
+            "dashboard": "Panell de control de les àrees",
             "view_dashboard": "Veure Àrees d'Emmagatzematge",
-            "create": "Registrar una nova Àrea d'Emmagatzematge al sistema",
-            "view": "Veure detalls de l'àrea d'emmagatzematge",
-            "edit": "Editar una Àrea d'Emmagatzematge existent al sistema"
+            "create": "Registra una àrea nova",
+            "view": "Mostra detalls",
+            "edit": "Edita àrea"
         },
         "printer": {
-            "docks_serviced": "molls atesos",
-            "capacity_usage": "Ús de la Capacitat",
+            "docks_serviced": "molls servits",
+            "capacity_usage": "Ús de la capacitat",
             "units": "unitats",
-            "available": "disponibles",
-            "no_docks_serviced": "Cap moll atès"
+            "available": "disponible",
+            "no_docks_serviced": "Cap moll servit",
+            "no_registered_distances": "Sense distàncies registrades",
+            "all_docks_serviced": "Tots els molls servits",
+            "serviced_docks_distance": "Distància dels molls servits",
+            "no_registered_docks": "Sense molls registrats"
         },
         "fields": {
             "nameCode": {
                 "title": "Codi de Nom",
-                "placeholder": "Codi de nom de l'Àrea d'Emmagatzematge"
+                "placeholder": "Codi de l'àrea"
             },
             "location": {
                 "title": "Ubicació",
-                "placeholder": "Ubicació de l'Àrea d'Emmagatzematge"
+                "placeholder": "Ubicació de l'àrea"
             },
             "type": {
                 "title": "Tipus",
-                "placeholder": "Selecciona el tipus d'Àrea d'Emmagatzematge"
+                "placeholder": "Selecciona tipus d'àrea",
+                "options": {
+                    "yard": "Pati",
+                    "warehouse": "Magatzem"
+                }
             },
             "occupancy": {
                 "title": "Ocupació",
                 "placeholder": "Ocupació actual"
+            },
+            "capacity": {
+                "title": "Capacitat",
+                "placeholder": "Capacitat màxima"
             }
+        },
+        "create": {
+            "distance_meters": "Distància (metres)"
+        }
+    },
+    "search": {
+        "languages": "Cerca idiomes..."
+    },
+    "representative": {
+        "title": "Representant",
+        "select": "Selecciona un representant"
+    },
+    "scheduling": {
+        "title": "Sol·licita horari diari",
+        "subtitle": "Utilitza l'algoritme automatitzat per analitzar les tasques programades d'un dia concret.",
+        "noVisits": "No hi ha visites de vaixells programades per a la data seleccionada.",
+        "visitsOnSelectedDay": "Visites de vaixells en la data seleccionada",
+        "viewVisits": "Genera horari de tasques",
+        "generateTasksButton": "Genera horari de tasques",
+        "aboutAlgorithmButton": "Sobre l'algoritme",
+        "fields": {
+            "algorithm": {
+                "title": "Algoritme de planificació",
+                "placeholder": "Selecciona algoritme"
+            },
+            "relatedDocks": "Selecciona moll relacionat"
+        },
+        "generateTasksModal": {
+            "title": "Logística addicional"
+        },
+        "aboutAlgorithmModal": {
+            "title": "Sobre l'algoritme",
+            "content": "Considera les notificacions de visita de vaixell de la data i moll seleccionats, comprova la disponibilitat de grues STS i estima la durada segons la velocitat de la grua, ignorant manteniments."
+        }
+    },
+    "notification": {
+        "id": "ID Notificació",
+        "hazardous": "Perillós",
+        "nonHazardous": "No perillós",
+        "arrival": "Arribada",
+        "departure": "Sortida",
+        "specialRequirements": "Requisits especials",
+        "none": "Cap",
+        "crew": "Tripulació",
+        "captain": "Capità",
+        "unknown": "Desconegut",
+        "from": "Des de",
+        "to": "Fins a",
+        "tabs": {
+            "dashboard": "Panell de Notificacions",
+            "search": "Cerca Notificacions",
+            "edit": "Edita Notificació",
+            "create": "Crea Notificació",
+            "makeDraft": "Crea esborrany",
+            "myNotifications": "Les Meves Notificacions",
+            "review": "Revisa Notificacions",
+            "general": "Llista genèrica",
+            "byDate": "Llista per calendari",
+            "submit": "Envia Notificació",
+            "delete": "Elimina Notificació"
+        },
+        "eventsOnDate": "Esdeveniments en la data seleccionada",
+        "noEventsOnDate": "Sense esdeveniments en la data seleccionada",
+        "title": "Notificacions de Visita de Vaixell",
+        "subtitle": {
+            "dashboard": "Panoràmica de notificacions de visites de vaixells",
+            "search": "Administra i visualitza totes les notificacions",
+            "create": "Crea una notificació nova",
+            "edit": "Edita una notificació existent",
+            "review": "Revisa notificacions pendents"
+        },
+        "errors": {
+            "noNotificationId": "No s'ha proporcionat ID de notificació"
+        },
+        "infoTitle": "Informació de la notificació",
+        "cargoTitle": "Informació de la càrrega",
+        "vesselTitle": "Informació del vaixell",
+        "manifestInfo": "Informació del manifest",
+        "fields": {
+            "openLoadManifest": "Obre manifest de càrrega",
+            "openUnloadManifest": "Obre manifest de descàrrega",
+            "expectedArrival": "Arribada prevista",
+            "expectedDeparture": "Sortida prevista",
+            "isCargoHazardous": "Càrrega perillosa",
+            "specialRequirements": "Requisits especials",
+            "captain": "Capità",
+            "totalCrewMembers": "Total tripulants",
+            "safetyOfficers": "Responsables de seguretat",
+            "loadCargoManifest": "Manifest de càrrega",
+            "unloadCargoManifest": "Manifest de descàrrega",
+            "position": "Posició",
+            "area": "Àrea",
+            "container": "Contenidor",
+            "crewMembers": "Tripulants",
+            "status": "Estat"
+        },
+        "timeline": {
+            "pending": "Pendent",
+            "inProgress": "En curs",
+            "completed": "Completada",
+            "submitted": "Enviada",
+            "accepted": "Acceptada",
+            "rejected": "Rebutjada"
+        },
+        "filters": {
+            "expectedArrivalFrom": "Arribada prevista des de",
+            "expectedArrivalTo": "Arribada prevista fins a",
+            "withReason": "Amb motiu",
+            "withDockAssigned": "Amb moll assignat"
+        },
+        "decision": {
+            "isFinal": "És final",
+            "assignedDock": {
+                "title": "Moll assignat",
+                "placeholder": "Selecciona moll"
+            },
+            "reason": {
+                "title": "Motiu",
+                "placeholder": "Indica el motiu"
+            },
+            "status": "Estat de la decisió"
+        }
+    },
+    "operationalWindow": {
+        "title": "Finestra Operativa",
+        "printer": {
+            "addShift": "Afegeix torn",
+            "shifts": "Torns:",
+            "noShifts": "Sense torns.",
+            "startTime": "Hora d'inici",
+            "endTime": "Hora de fi",
+            "weekDays": "Dies de la setmana"
+        },
+        "errors": {
+            "shiftOverlap": "Torn invàlid. Superposició o hora final abans de l'inici."
         }
     }
-
 }

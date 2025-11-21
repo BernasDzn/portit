@@ -1,13 +1,26 @@
-{
+﻿{
     "common": {
         "loading": "Se încarcă...",
         "noData": "Nu există date disponibile",
-        "statistics": "Statistici"
+        "statistics": "Statistici",
+        "yes": "Da",
+        "no": "Nu",
+        "weekDay": "Ziua săptămânii",
+        "days": {
+            "sunday": "Duminică",
+            "monday": "Luni",
+            "tuesday": "Marți",
+            "wednesday": "Miercuri",
+            "thursday": "Joi",
+            "friday": "Vineri",
+            "saturday": "Sâmbătă"
+        },
+        "number": "Număr"
     },
     "buttons": {
         "save": "Salvează",
         "cancel": "Anulează",
-        "delete": "Șterge",
+        "delete": "È˜terge",
         "edit": "Editează",
         "create": "Creează",
         "search": "Caută",
@@ -25,7 +38,12 @@
         },
         "login": "Autentificare",
         "goBackToLogin": "Întoarce-te la autentificare",
-        "logout": "Deconectare"
+        "logout": "Deconectare",
+        "generate": "Generează",
+        "close": "Închide",
+        "add": "Adaugă",
+        "review": "Revizuiește",
+        "seeMore": "Vezi mai multe"
     },
     "unsavedChanges": {
         "title": "Renunți la modificări?",
@@ -41,6 +59,14 @@
             "title": "Vizualizare 3D port",
             "description": "Vizualizați o reprezentare 3D interactivă a întregii facilități portuare. Monitorizați ocuparea docurilor, pozițiile navelor, zonele de depozitare și resursele în timp real.",
             "open": "Deschide model 3D"
+        },
+        "welcome": "Bine ai revenit, [name]!",
+        "SAOR": {
+            "subtitle": "Overview of the shipping agent\u0027s operations",
+            "pendingNotifications": "Notificări în așteptare",
+            "recent": "Notificări recente despre vizitele navelor",
+            "recentReview": "Notificări de vizită a navelor care necesită revizuire",
+            "noRecent": "Nu există notificări recente"
         }
     },
     "admin": {
@@ -217,6 +243,9 @@
             "vesselType": {
                 "title": "Tip navă",
                 "placeholder": "Selectează tip navă"
+            },
+            "taxNumber": {
+                "title": "Număr fiscal"
             }
         },
         "infoTitle": "Informații navă",
@@ -268,7 +297,8 @@
                     "unavailable": "Indisponibil",
                     "temporarilyReassigned": "Realocat temporar"
                 }
-            }
+            },
+            "operationalWindow": "Operational Window"
         },
         "tabs": {
             "dashboard": "Tablou personal",
@@ -286,6 +316,12 @@
             "create": "Înregistrează un nou membru al personalului în sistem",
             "view": "Vizualizează detalii personale",
             "edit": "Editează un membru al personalului existent în sistem"
+        },
+        "deactivation": {
+            "title": "Deactivate Staff Member",
+            "message": "Are you sure you want to deactivate this staff member? You can activate them again later.",
+            "successMessage": "Staff member has been successfully deactivated.",
+            "errorMessage": "An error occurred while trying to deactivate the staff member. Please try again."
         }
     },
     "qualification": {
@@ -399,9 +435,15 @@
         },
         "actions": {
             "deactivate": "Dezactivează resursa fizică"
+        },
+        "deactivation": {
+            "title": "Deactivate Physical Resource",
+            "message": "Are you sure you want to deactivate this physical resource? You can activate it again later.",
+            "successMessage": "Physical Resource has been successfully deactivated.",
+            "errorMessage": "An error occurred while trying to deactivate the Physical Resource. Please try again."
         }
     },
-    "storageArea": {
+    "storageZonă": {
         "tabs": {
             "dashboard": "Tablou zone depozitare",
             "view_dashboard": "Vizualizează zone depozitare",
@@ -424,7 +466,177 @@
             "docks_serviced": "docuri deservite",
             "capacity_usage": "Utilizare capacitate",
             "units": "unități",
-            "available": "disponibil"
+            "available": "disponibil",
+            "no_registered_distances": "Nici o distanță înregistrată",
+            "no_docks_serviced": "Niciun doc deservit",
+            "all_docks_serviced": "Toate docurile deservite",
+            "serviced_docks_distance": "Distanța până la docurile deservite",
+            "no_registered_docks": "Niciun doc înregistrat"
+        },
+        "create": {
+            "distance_meters": "Distanță (metri)"
+        },
+        "fields": {
+            "nameCode": {
+                "title": "Cod nume",
+                "placeholder": "Cod nume zonă depozitare"
+            },
+            "location": {
+                "title": "Location",
+                "placeholder": "Locația zonei de depozitare"
+            },
+            "type": {
+                "title": "Type",
+                "placeholder": "Select Storage Zonă type",
+                "options": {
+                    "yard": "Yard",
+                    "warehouse": "Warehouse"
+                }
+            },
+            "capacity": {
+                "title": "Capacity",
+                "placeholder": "Maximum capacity"
+            },
+            "occupancy": {
+                "title": "Occupancy",
+                "placeholder": "Current occupancy"
+            }
+        }
+    },
+    "search": {
+        "languages": "Caută limbi..."
+    },
+    "expirationWarning": {
+        "messageOneMinute": "Sesiunea ta va expira în 1 minut.",
+        "messageLessThanOneMinute": "Sesiunea ta este pe cale să expire."
+    },
+    "representative": {
+        "title": "Reprezentant",
+        "select": "Selectați un reprezentant"
+    },
+    "scheduling": {
+        "title": "Planificare zilnică",
+        "subtitle": "Folosește algoritmul nostru automat de planificare pentru a analiza sarcinile programate pentru o anumită zi.",
+        "noVisits": "Nu există vizite de nave programate pentru data selectată.",
+        "visitsOnSelectedDay": "Vizite de nave în data selectată",
+        "viewVisits": "Afișează planul de sarcini",
+        "generateTasksButton": "Generează planul de sarcini",
+        "aboutAlgorithmButton": "Despre algoritm",
+        "fields": {
+            "algorithm": {
+                "title": "Algoritm de planificare",
+                "placeholder": "Selectează algoritmul de planificare"
+            },
+            "relatedDocks": "Selectează cheiul aferent"
+        },
+        "generateTasksModal": {
+            "title": "Logistică suplimentară"
+        },
+        "aboutAlgorithmModal": {
+            "title": "Despre algoritm",
+            "content": "Algoritmul actual ia în considerare notificările de vizită ale navelor programate pentru data și cheiul selectate.\nApoi verifică disponibilitatea macaralelor STS pentru cheiul specificat și stabilește durata fiecărei operațiuni în funcție de viteza macaralei.\nSunt ignorate vizitele pentru mentenanță sau alte activități care nu implică încărcare/descărcare."
+        }
+    },
+    "notification": {
+        "id": "ID notificare",
+        "hazardous": "Marfă periculoasă",
+        "nonHazardous": "Marfă nepericuloasă",
+        "arrival": "Sosire",
+        "departure": "Plecare",
+        "specialRequirements": "Cerințe speciale",
+        "none": "Niciuna",
+        "crew": "Echipaj",
+        "captain": "Căpitan",
+        "unknown": "Necunoscut",
+        "from": "De la",
+        "to": "La",
+        "tabs": {
+            "dashboard": "Tablou notificări",
+            "search": "Caută notificări",
+            "edit": "Editează notificare",
+            "create": "Creează notificare",
+            "makeDraft": "Creează ciornă notificare",
+            "myNotifications": "Notificările mele",
+            "review": "Revizuiește notificări",
+            "general": "Listă generală",
+            "byDate": "Vizualizare calendar",
+            "submit": "Trimite notificare",
+            "delete": "Șterge notificare"
+        },
+        "eventsOnDate": "Evenimente la data selectată",
+        "noEventsOnDate": "Nu există evenimente la data selectată",
+        "title": "Notificări vizite navă",
+        "subtitle": {
+            "dashboard": "Prezentare notificări vizite navă",
+            "search": "Gestionează și vizualizează toate notificările de vizită navă",
+            "create": "Creează o nouă notificare de vizită navă",
+            "edit": "Editează o notificare de vizită navă existentă",
+            "review": "Revizuiește notificările în așteptare"
+        },
+        "errors": {
+            "noNotificationId": "Nu a fost furnizat ID de notificare"
+        },
+        "infoTitle": "Informații notificare",
+        "cargoTitle": "Informații marfă",
+        "vesselTitle": "Informații navă",
+        "manifestInfo": "Informații manifest",
+        "fields": {
+            "openLoadManifest": "Deschide manifest încărcare",
+            "openUnloadManifest": "Deschide manifest descărcare",
+            "expectedArrival": "Sosire preconizată",
+            "expectedDeparture": "Plecare preconizată",
+            "isCargoHazardous": "Marfă periculoasă",
+            "specialRequirements": "Cerințe speciale",
+            "captain": "Căpitan",
+            "totalCrewMembers": "Număr total membri echipaj",
+            "safetyOfficers": "Ofițeri de securitate",
+            "loadCargoManifest": "Manifest de încărcare",
+            "unloadCargoManifest": "Manifest de descărcare",
+            "position": "Poziție",
+            "area": "Zonă",
+            "container": "Container",
+            "crewMembers": "Membri echipaj",
+            "status": "Stare"
+        },
+        "timeline": {
+            "pending": "În așteptare",
+            "inProgress": "În desfășurare",
+            "completed": "Finalizat",
+            "submitted": "Trimis",
+            "accepted": "Acceptat",
+            "rejected": "Respins"
+        },
+        "filters": {
+            "expectedArrivalFrom": "Sosire preconizată de la",
+            "expectedArrivalTo": "Sosire preconizată până la",
+            "withReason": "Cu motiv",
+            "withDockAssigned": "Cu chei alocat"
+        },
+        "decision": {
+            "isFinal": "Este finală",
+            "assignedDock": {
+                "title": "Chei alocat",
+                "placeholder": "Selectează cheiul alocat"
+            },
+            "reason": {
+                "title": "Motiv",
+                "placeholder": "Furnizează motivul deciziei"
+            },
+            "status": "Stare decizie"
+        }
+    },
+    "operationalWindow": {
+        "title": "Fereastră operațională",
+        "printer": {
+            "addShift": "Adaugă tură",
+            "shifts": "Ture:",
+            "noShifts": "Fără ture.",
+            "startTime": "Ora de început",
+            "endTime": "Ora de sfârșit",
+            "weekDays": "Zilele săptămânii"
+        },
+        "errors": {
+            "shiftOverlap": "Tură invalidă. Suprapunere sau ora de sfârșit înainte de ora de început."
         }
     }
 }

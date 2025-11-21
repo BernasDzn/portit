@@ -1,8 +1,21 @@
-{
+﻿{
     "common": {
         "loading": "Laster...",
         "noData": "Ingen data tilgjengelig",
-        "statistics": "Statistikk"
+        "statistics": "Statistikk",
+        "yes": "Ja",
+        "no": "Nei",
+        "weekDay": "Ukedag",
+        "days": {
+            "sunday": "Søndag",
+            "monday": "Mandag",
+            "tuesday": "Tirsdag",
+            "wednesday": "Onsdag",
+            "thursday": "Torsdag",
+            "friday": "Fredag",
+            "saturday": "Lørdag"
+        },
+        "number": "Nummer"
     },
     "buttons": {
         "save": "Lagre",
@@ -14,9 +27,14 @@
         "select": "Velg",
         "activate": "Aktiver",
         "deactivate": "Deaktiver",
+        "generate": "Generer",
+        "close": "Lukk",
+        "add": "Legg til",
+        "review": "Gjennomgå",
+        "seeMore": "Se mer",
         "filter": {
             "title": "Filtre",
-            "add": "Filtrer",
+            "add": "Legg til filter",
             "clear": "Fjern filtre"
         },
         "pagination": {
@@ -24,51 +42,63 @@
             "next": "Neste"
         },
         "login": "Logg inn",
-        "goBackToLogin": "Gå tilbake til innlogging",
+        "goBackToLogin": "Tilbake til innlogging",
         "logout": "Logg ut"
     },
     "unsavedChanges": {
         "title": "Forkast endringer?",
-        "message": "Du har ikke-lagte endringer. Er du sikker på at du vil forlate denne siden og forkaste endringene?",
+        "message": "Du har endringer som ikke er lagret. Er du sikker på at du vil forlate siden og forkaste dem?",
         "confirm": "Forkast",
         "cancel": "Fortsett redigering"
     },
+    "expirationWarning": {
+        "messageOneMinute": "Økten din utløper om 1 minutt.",
+        "messageLessThanOneMinute": "Økten din er i ferd med å utløpe."
+    },
     "dashboard": {
-        "sidebarTitle": "Dashboard",
-        "title": "PortIT Dashboard",
+        "sidebarTitle": "Dashbord",
+        "title": "PortIT-dashbord",
         "subtitle": "Oversikt over PortIT-systemet",
+        "welcome": "Velkommen tilbake, [name]!",
+        "SAOR": {
+            "subtitle": "Oversikt over speditørens operasjoner",
+            "pendingNotifications": "Ventende varsler",
+            "recent": "Nylige fartøysbesøksvarsler",
+            "recentReview": "Varsler som må gjennomgås",
+            "noRecent": "Ingen nylige varsler"
+        },
         "3DModel": {
-            "title": "3D Port-visualisering",
-            "description": "Se en interaktiv 3D-representasjon av hele havneanlegget. Overvåk kaiokkupasjon, fartøyposisjoner, lagringsområder og ressurser i sanntid.",
+            "title": "3D-havnevisualisering",
+            "description": "Interaktiv 3D-modell av havnen. Overvåk kai-okkupasjon, fartøyposisjoner, lagringsområder og ressurser i sanntid.",
             "open": "Åpne 3D-modell"
         }
     },
     "admin": {
-        "sidebarTitle": "Admin",
-        "title": "Admin Dashboard",
+        "sidebarTitle": "Administrasjon",
+        "title": "Administrasjonsdashbord",
         "subtitle": "Administrativ oversikt og styring",
         "userManagement": {
             "title": "Brukeradministrasjon",
-            "subtitle": "Administrer systembrukere, roller og tillatelser."
+            "subtitle": "Administrer brukere, roller og tillatelser."
         },
         "auditLogs": {
             "title": "Revisjonslogger",
-            "subtitle": "Vis og overvåk systemaktivitetslogger."
+            "subtitle": "Vis og overvåk systemaktivitet."
         }
     },
     "user": {
         "fields": {
             "email": {
                 "title": "E-post",
-                "placeholder": "email@mail.com"
+                "placeholder": "epost@eksempel.no"
             },
             "role": {
                 "title": "Rolle",
-                "placeholder": "Velg brukerrolle",
+                "placeholder": "Velg rolle",
                 "options": {
                     "admin": "Administrator",
                     "saoRep": "SAO-representant",
-                    "pao": "Havneansatt",
+                    "pao": "Havnemedarbeider",
                     "logisticsOperator": "Logistikkoperatør"
                 }
             },
@@ -81,21 +111,21 @@
             }
         },
         "tabs": {
-            "dashboard": "Brukerdashboard",
+            "dashboard": "Brukerdashbord",
             "create": "Opprett bruker",
             "view": "Vis brukere",
             "search": "Søk brukere"
         },
-        "infoTitle": "Brukerdetaljer",
+        "infoTitle": "Brukerinformasjon",
         "title": "Brukere",
         "subtitle": {
-            "dashboard": "Oversikt og administrasjon av brukere",
-            "create": "Registrer en ny bruker i systemet",
-            "view": "Vis og administrer eksisterende brukere"
+            "dashboard": "Oversikt og administrasjon",
+            "create": "Registrer ny bruker",
+            "view": "Administrer eksisterende brukere"
         }
     },
     "physicalCharacteristics": {
-        "title": "Fysiske karakteristika (m)",
+        "title": "Fysiske egenskaper (m)",
         "length": {
             "title": "Lengde",
             "placeholder": "Lengde i meter"
@@ -117,7 +147,7 @@
             },
             "name": {
                 "title": "Navn",
-                "placeholder": "Kainavn"
+                "placeholder": "Kaienavn"
             },
             "location": {
                 "title": "Lokasjon",
@@ -133,7 +163,7 @@
             }
         },
         "tabs": {
-            "dashboard": "Kaidashboard",
+            "dashboard": "Kaidashbord",
             "view_dashboard": "Vis kaier",
             "search": "Søk kaier",
             "create": "Opprett kai",
@@ -141,13 +171,13 @@
             "edit": "Rediger kai"
         },
         "generalFields": "Generelle felt",
-        "infoTitle": "Kaainformasjon",
+        "infoTitle": "Kaienformasjon",
         "title": "Kaier",
         "subtitle": {
-            "dashboard": "Oversikt over kai-statistikk og aktiviteter",
-            "search": "Administrer og vis alle registrerte kaier",
-            "create": "Registrer ny kai i systemet",
-            "edit": "Rediger eksisterende kai i systemet"
+            "dashboard": "Statistikk og aktivitet",
+            "search": "Administrer registrerte kaier",
+            "create": "Registrer ny kai",
+            "edit": "Rediger kai"
         },
         "registeredDocks": "Registrerte kaier"
     },
@@ -155,50 +185,50 @@
         "fields": {
             "name": {
                 "title": "Navn",
-                "placeholder": "Fartøytypens navn"
+                "placeholder": "Type navn"
             },
             "description": {
                 "title": "Beskrivelse",
-                "placeholder": "Beskrivelse av fartøytypen"
+                "placeholder": "Beskrivelse av typen"
             },
             "capacity": {
                 "title": "Kapasitet",
-                "placeholder": "Containerkapasitet i TEU"
+                "placeholder": "Containerkapasitet (TEU)"
             },
             "containerCapacity": {
                 "title": "Containerkapasitet (TEU)",
                 "maxNumberOfRows": {
                     "title": "Maks antall rader",
-                    "placeholder": "Maks rader i TEU"
+                    "placeholder": "Maks rader"
                 },
                 "maxNumberOfBays": {
                     "title": "Maks antall seksjoner",
-                    "placeholder": "Maks seksjoner i TEU"
+                    "placeholder": "Maks seksjoner"
                 },
                 "maxNumberOfTiers": {
                     "title": "Maks antall nivåer",
-                    "placeholder": "Maks nivåer i TEU"
+                    "placeholder": "Maks nivåer"
                 }
             }
         },
         "generalFields": "Generelle felt",
         "tabs": {
-            "dashboard": "Fartøytypers dashboard",
-            "view_dashboard": "Vis fartøytyper",
-            "search": "Søk fartøytyper",
-            "create": "Opprett fartøytype",
-            "view": "Vis fartøytype",
-            "edit": "Rediger fartøytype"
+            "dashboard": "Fartøytyper",
+            "view_dashboard": "Vis typer",
+            "search": "Søk typer",
+            "create": "Opprett type",
+            "view": "Vis type",
+            "edit": "Rediger type"
         },
-        "infoTitle": "Informasjon om fartøytype",
+        "infoTitle": "Typeinformasjon",
         "title": "Fartøytyper",
         "subtitle": {
-            "dashboard": "Oversikt over statistikk og aktiviteter per fartøytype",
-            "search": "Administrer og vis alle registrerte fartøytyper",
-            "create": "Registrer ny fartøytype i systemet",
-            "edit": "Rediger eksisterende fartøytype i systemet"
+            "dashboard": "Statistikk og aktiviteter",
+            "search": "Administrer registrerte typer",
+            "create": "Registrer ny type",
+            "edit": "Rediger type"
         },
-        "registeredVesselTypes": "Registrerte fartøytyper"
+        "registeredVesselTypes": "Registrerte typer"
     },
     "vessel": {
         "fields": {
@@ -208,7 +238,7 @@
             },
             "imoNumber": {
                 "title": "IMO-nummer",
-                "placeholder": "Fartøyets IMO-nummer"
+                "placeholder": "IMO-nummer"
             },
             "owner": {
                 "title": "Eier",
@@ -217,12 +247,15 @@
             "vesselType": {
                 "title": "Fartøytype",
                 "placeholder": "Velg fartøytype"
+            },
+            "taxNumber": {
+                "title": "Skattenummer"
             }
         },
         "infoTitle": "Fartøysinformasjon",
-        "physicalCharacteristicsTitle": "Fysiske karakteristika",
+        "physicalCharacteristicsTitle": "Fysiske egenskaper",
         "tabs": {
-            "dashboard": "Fartøydashboard",
+            "dashboard": "Fartøydashbord",
             "view_dashboard": "Vis fartøy",
             "search": "Søk fartøy",
             "create": "Opprett fartøy",
@@ -231,10 +264,10 @@
         },
         "title": "Fartøy",
         "subtitle": {
-            "dashboard": "Oversikt over fartøystatistikk og aktiviteter",
-            "search": "Administrer og vis alle registrerte fartøy",
-            "create": "Registrer nytt fartøy i systemet",
-            "edit": "Rediger eksisterende fartøy i systemet"
+            "dashboard": "Statistikk og aktiviteter",
+            "search": "Administrer registrerte fartøy",
+            "create": "Registrer nytt fartøy",
+            "edit": "Rediger fartøy"
         },
         "ownedBy": "Eid av",
         "registeredVessels": "Registrerte fartøy"
@@ -268,10 +301,11 @@
                     "unavailable": "Utilgjengelig",
                     "temporarilyReassigned": "Midlertidig omplassert"
                 }
-            }
+            },
+            "operationalWindow": "Driftsvindu"
         },
         "tabs": {
-            "dashboard": "Ansattdashboard",
+            "dashboard": "Ansattdashbord",
             "view_dashboard": "Vis ansatte",
             "search": "Søk ansatte",
             "create": "Opprett ansatt",
@@ -281,16 +315,22 @@
         "infoTitle": "Ansattinformasjon",
         "title": "Ansatte",
         "subtitle": {
-            "search": "Administrer og vis all registrert arbeidskraft",
-            "dashboard": "Oversikt over ansattstatistikk og aktiviteter",
-            "create": "Registrer ny ansatt i systemet",
-            "view": "Vis ansattdetaljer",
-            "edit": "Rediger eksisterende ansatt i systemet"
+            "search": "Administrer registrerte ansatte",
+            "dashboard": "Statistikk og aktiviteter",
+            "create": "Registrer ny ansatt",
+            "view": "Detaljer",
+            "edit": "Rediger ansatt"
+        },
+        "deactivation": {
+            "title": "Deaktiver ansatt",
+            "message": "Er du sikker på at du vil deaktivere denne ansatte? Dette kan ikke angres.",
+            "successMessage": "Ansatt deaktivert.",
+            "errorMessage": "Feil under deaktivering. Prøv igjen."
         }
     },
     "qualification": {
         "tabs": {
-            "dashboard": "Kvalifikasjonsdashboard",
+            "dashboard": "Kvalifikasjoner",
             "view_dashboard": "Vis kvalifikasjoner",
             "search": "Søk kvalifikasjoner",
             "create": "Opprett kvalifikasjon",
@@ -300,41 +340,40 @@
         "infoTitle": "Kvalifikasjonsinformasjon",
         "title": "Kvalifikasjoner",
         "subtitle": {
-            "search": "Administrer og vis alle registrerte kvalifikasjoner",
-            "dashboard": "Oversikt over kvalifikasjonsstatistikk og aktiviteter",
-            "create": "Registrer ny kvalifikasjon i systemet",
-            "edit": "Rediger eksisterende kvalifikasjon i systemet",
-            "view": "Vis kvalifikasjonsdetaljer"
+            "search": "Administrer registrerte kvalifikasjoner",
+            "dashboard": "Statistikk og aktiviteter",
+            "create": "Registrer ny kvalifikasjon",
+            "edit": "Rediger kvalifikasjon"
         },
         "fields": {
             "idCode": {
-                "title": "Kvalifikasjonskode",
-                "placeholder": "Kvalifikasjonskode"
+                "title": "Kode",
+                "placeholder": "Kode"
             },
             "qualificationName": {
-                "title": "Kvalifikasjonsnavn",
-                "placeholder": "Kvalifikasjonsnavn"
+                "title": "Navn",
+                "placeholder": "Navn"
             }
         }
     },
     "physicalResource": {
         "tabs": {
-            "dashboard": "Fysisk ressurs dashboard",
-            "view_dashboard": "Vis fysiske ressurser",
-            "search": "Søk fysiske ressurser",
-            "create": "Opprett fysisk ressurs",
-            "view": "Vis fysisk ressurs",
-            "edit": "Rediger fysisk ressurs"
+            "dashboard": "Ressursdashbord",
+            "view_dashboard": "Vis ressurser",
+            "search": "Søk ressurser",
+            "create": "Opprett ressurs",
+            "view": "Vis ressurs",
+            "edit": "Rediger ressurs"
         },
-        "infoTitle": "Informasjon om fysisk ressurs",
+        "infoTitle": "Ressursinformasjon",
         "title": "Fysiske ressurser",
         "subtitle": {
-            "search": "Administrer og vis alle registrerte fysiske ressurser",
-            "dashboard": "Kontrollpanel for alle fysiske ressurser",
-            "view_dashboard": "Vis fysiske ressurser",
-            "create": "Registrer ny fysisk ressurs i systemet",
-            "view": "Vis fysisk ressursdetaljer",
-            "edit": "Rediger eksisterende fysisk ressurs i systemet"
+            "search": "Administrer registrerte ressurser",
+            "dashboard": "Kontrollpanel",
+            "view_dashboard": "Vis ressurser",
+            "create": "Registrer ny ressurs",
+            "view": "Detaljer",
+            "edit": "Rediger ressurs"
         },
         "generalFields": "Generelle felt",
         "specificFields": "Spesifikke felt",
@@ -345,11 +384,11 @@
             },
             "description": {
                 "title": "Beskrivelse",
-                "placeholder": "Ressursbeskrivelse"
+                "placeholder": "Beskrivelse"
             },
             "status": {
                 "title": "Status",
-                "placeholder": "Velg ressursstatus",
+                "placeholder": "Velg status",
                 "options": {
                     "available": "Tilgjengelig",
                     "maintenance": "Vedlikehold",
@@ -358,15 +397,15 @@
             },
             "qualifications": {
                 "title": "Påkrevde kvalifikasjoner",
-                "placeholder": "Kvalifikasjoner som kreves for å operere denne ressursen"
+                "placeholder": "Kvalifikasjoner for drift"
             },
             "setupTime": {
-                "title": "Oppsettstid (minutter)",
+                "title": "Oppsettstid (min)",
                 "placeholder": "Oppsettstid"
             },
             "servingDocks": {
                 "title": "Betjente kaier",
-                "placeholder": "Velg betjente kaier"
+                "placeholder": "Velg kaier"
             },
             "liftingCapacity": {
                 "title": "Løftekapasitet (kg)",
@@ -374,57 +413,229 @@
             },
             "containersPerHour": {
                 "title": "Containere per time",
-                "placeholder": "Containere per time"
+                "placeholder": "Per time"
             },
             "maxLoadCapacity": {
                 "title": "Maks belastningskapasitet (kg)",
-                "placeholder": "Maks belastningskapasitet"
+                "placeholder": "Maks kapasitet"
             },
             "averageSpeed": {
                 "title": "Gjennomsnittshastighet (km/t)",
-                "placeholder": "Gjennomsnittshastighet"
+                "placeholder": "Hastighet"
             },
             "containersPerTrip": {
                 "title": "Containere per tur",
-                "placeholder": "Containere per tur"
+                "placeholder": "Per tur"
             },
             "type": {
                 "title": "Resurstype",
                 "options": {
-                    "stsCrane": "STS Kran",
-                    "yardGantry": "Gantry kran",
+                    "stsCrane": "STS-kran",
+                    "yardGantry": "Gantry-kran",
                     "truck": "Lastebil"
                 }
             }
         },
         "actions": {
-            "deactivate": "Deaktiver fysisk ressurs"
+            "deactivate": "Deaktiver ressurs"
+        },
+        "deactivation": {
+            "title": "Deaktiver ressurs",
+            "message": "Er du sikker på at du vil deaktivere ressursen? Dette kan ikke angres.",
+            "successMessage": "Ressurs deaktivert.",
+            "errorMessage": "Feil ved deaktivering."
         }
     },
     "storageArea": {
         "tabs": {
-            "dashboard": "Lagerområde dashboard",
-            "view_dashboard": "Vis lagerområder",
-            "search": "Søk lagerområder",
-            "create": "Opprett lagerområde",
-            "view": "Vis lagerområde",
-            "edit": "Rediger lagerområde"
+            "dashboard": "Lagerområder",
+            "view_dashboard": "Vis områder",
+            "search": "Søk områder",
+            "create": "Opprett område",
+            "view": "Vis område",
+            "edit": "Rediger område"
         },
         "infoTitle": "Lagerområdeinformasjon",
         "title": "Lagerområder",
         "subtitle": {
-            "search": "Administrer og vis alle registrerte lagerområder",
-            "dashboard": "Kontrollpanel for lagerområder",
-            "view_dashboard": "Vis lagerområder",
-            "create": "Registrer nytt lagerområde i systemet",
-            "view": "Vis lagerområdedetaljer",
-            "edit": "Rediger eksisterende lagerområde i systemet"
+            "search": "Administrer registrerte lagerområder",
+            "dashboard": "Kontrollpanel",
+            "view_dashboard": "Vis lagringsområder",
+            "create": "Registrer nytt område",
+            "view": "Detaljer",
+            "edit": "Rediger område"
         },
         "printer": {
             "docks_serviced": "betjente kaier",
             "capacity_usage": "Kapasitetsbruk",
             "units": "enheter",
-            "available": "tilgjengelig"
+            "available": "tilgjengelig",
+            "no_registered_distances": "Ingen registrerte avstander",
+            "no_docks_serviced": "Ingen kaier betjent",
+            "all_docks_serviced": "Alle kaier betjent",
+            "serviced_docks_distance": "Avstand til betjente kaier",
+            "no_registered_docks": "Ingen kaier registrert"
+        },
+        "create": {
+            "distance_meters": "Avstand (meter)"
+        },
+        "fields": {
+            "nameCode": {
+                "title": "Navnekode",
+                "placeholder": "Områdets navnekode"
+            },
+            "location": {
+                "title": "Lokasjon",
+                "placeholder": "Områdets lokasjon"
+            },
+            "type": {
+                "title": "Type",
+                "placeholder": "Velg type",
+                "options": {
+                    "yard": "Gård",
+                    "warehouse": "Lager"
+                }
+            },
+            "capacity": {
+                "title": "Kapasitet",
+                "placeholder": "Maks kapasitet"
+            },
+            "occupancy": {
+                "title": "Okkupasjon",
+                "placeholder": "Nåværende okkupasjon"
+            }
+        }
+    },
+    "search": {
+        "languages": "Søk språk..."
+    },
+    "representative": {
+        "title": "Representant",
+        "select": "Velg en representant"
+    },
+    "scheduling": {
+        "title": "Daglig planlegging",
+        "subtitle": "Bruk den automatiserte algoritmen for å analysere planlagte oppgaver",
+        "noVisits": "Ingen fartøysbesøk for valgt dato.",
+        "visitsOnSelectedDay": "Besøk på valgt dato",
+        "viewVisits": "Vis oppgaveplan",
+        "generateTasksButton": "Generer oppgaver",
+        "aboutAlgorithmButton": "Om algoritmen",
+        "fields": {
+            "algorithm": {
+                "title": "Planleggingsalgoritme",
+                "placeholder": "Velg algoritme"
+            },
+            "relatedDocks": "Velg tilknyttet kai"
+        },
+        "generateTasksModal": {
+            "title": "Tilleggslogistikk"
+        },
+        "aboutAlgorithmModal": {
+            "title": "Om algoritmen",
+            "content": "Tar hensyn til varsler for valgt dato og kai, sjekker STS-krantilgjengelighet og estimerer varighet basert på hastighet; vedlikeholdsbesøk ignoreres."
+        }
+    },
+    "notification": {
+        "id": "Varsel-ID",
+        "hazardous": "Farlig",
+        "nonHazardous": "Ikke farlig",
+        "arrival": "Ankomst",
+        "departure": "Avgang",
+        "specialRequirements": "Spesielle krav",
+        "none": "Ingen",
+        "crew": "Mannskap",
+        "captain": "Kaptein",
+        "unknown": "Ukjent",
+        "from": "Fra",
+        "to": "Til",
+        "tabs": {
+            "dashboard": "Varseldashbord",
+            "search": "Søk varsler",
+            "edit": "Rediger varsel",
+            "create": "Opprett varsel",
+            "makeDraft": "Opprett utkast",
+            "myNotifications": "Mine varsler",
+            "review": "Gjennomgå varsler",
+            "general": "Generell liste",
+            "byDate": "Kalenderliste",
+            "submit": "Send varsel",
+            "delete": "Slett varsel"
+        },
+        "eventsOnDate": "Hendelser på valgt dato",
+        "noEventsOnDate": "Ingen hendelser",
+        "title": "Fartøysbesøksvarsler",
+        "subtitle": {
+            "dashboard": "Oversikt over besøkvarsler",
+            "search": "Administrer alle besøkvarsler",
+            "create": "Opprett nytt besøkvarsel",
+            "edit": "Rediger besøkvarsel",
+            "review": "Gjennomgå ventende varsler"
+        },
+        "errors": {
+            "noNotificationId": "Ingen ID oppgitt"
+        },
+        "infoTitle": "Varselinformasjon",
+        "cargoTitle": "Lastinformasjon",
+        "vesselTitle": "Fartøysinformasjon",
+        "manifestInfo": "Manifestinformasjon",
+        "fields": {
+            "openLoadManifest": "Åpne lastemanifest",
+            "openUnloadManifest": "Åpne lossemanifest",
+            "expectedArrival": "Forventet ankomst",
+            "expectedDeparture": "Forventet avgang",
+            "isCargoHazardous": "Farlig last",
+            "specialRequirements": "Spesielle krav",
+            "captain": "Kaptein",
+            "totalCrewMembers": "Totalt mannskap",
+            "safetyOfficers": "Sikkerhetsoffiserer",
+            "loadCargoManifest": "Lastemanifest",
+            "unloadCargoManifest": "Lossemanifest",
+            "position": "Posisjon",
+            "area": "Område",
+            "container": "Container",
+            "crewMembers": "Mannskapsmedlemmer",
+            "status": "Status"
+        },
+        "timeline": {
+            "pending": "Venter",
+            "inProgress": "Pågår",
+            "completed": "Fullført",
+            "submitted": "Sendt",
+            "accepted": "Akseptert",
+            "rejected": "Avvist"
+        },
+        "filters": {
+            "expectedArrivalFrom": "Ankomst fra",
+            "expectedArrivalTo": "Ankomst til",
+            "withReason": "Med begrunnelse",
+            "withDockAssigned": "Med tildelt kai"
+        },
+        "decision": {
+            "isFinal": "Endelig",
+            "assignedDock": {
+                "title": "Tildelt kai",
+                "placeholder": "Velg kai"
+            },
+            "reason": {
+                "title": "Begrunnelse",
+                "placeholder": "Oppgi begrunnelse"
+            },
+            "status": "Beslutningsstatus"
+        }
+    },
+    "operationalWindow": {
+        "title": "Driftsvindu",
+        "printer": {
+            "addShift": "Legg til skift",
+            "shifts": "Skift:",
+            "noShifts": "Ingen skift.",
+            "startTime": "Starttid",
+            "endTime": "Sluttid",
+            "weekDays": "Ukedager"
+        },
+        "errors": {
+            "shiftOverlap": "Ugyldig skift: overlapp eller sluttid før start."
         }
     }
 }

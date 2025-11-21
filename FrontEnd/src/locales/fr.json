@@ -1,8 +1,21 @@
-{
+﻿{
     "common": {
         "loading": "Chargement...",
         "noData": "Aucune donnée disponible",
-        "statistics": "Statistiques"
+        "statistics": "Statistiques",
+        "yes": "Oui",
+        "no": "Non",
+        "weekDay": "Jour de la semaine",
+        "days": {
+            "sunday": "Dimanche",
+            "monday": "Lundi",
+            "tuesday": "Mardi",
+            "wednesday": "Mercredi",
+            "thursday": "Jeudi",
+            "friday": "Vendredi",
+            "saturday": "Samedi"
+        },
+        "number": "Numéro"
     },
     "buttons": {
         "save": "Enregistrer",
@@ -14,6 +27,10 @@
         "select": "Sélectionner",
         "activate": "Activer",
         "deactivate": "Désactiver",
+        "generate": "Générer",
+        "close": "Fermer",
+        "add": "Ajouter",
+        "review": "Examiner",
         "filter": {
             "title": "Filtres",
             "add": "Filtrer",
@@ -25,7 +42,11 @@
         },
         "login": "Se connecter",
         "goBackToLogin": "Retour à la connexion",
-        "logout": "Se déconnecter"
+        "logout": "Se déconnecter",
+        "seeMore": "Voir plus"
+    },
+    "search": {
+        "languages": "Rechercher des langues..."
     },
     "unsavedChanges": {
         "title": "Annuler les modifications ?",
@@ -33,27 +54,39 @@
         "confirm": "Annuler",
         "cancel": "Continuer la modification"
     },
+    "expirationWarning": {
+        "messageOneMinute": "Votre session expirera dans 1 minute.",
+        "messageLessThanOneMinute": "Votre session est sur le point d\u0027expirer."
+    },
     "dashboard": {
+        "welcome": "Bienvenue, [name]!",
         "sidebarTitle": "Tableau de bord",
         "title": "PortIT Tableau de bord",
-        "subtitle": "Vue d'ensemble du système PortIT",
+        "subtitle": "Vue d\u0027ensemble du système PortIT",
+        "SAOR": {
+            "subtitle": "Aperçu des opérations de l\u0027agent maritime",
+            "pendingNotifications": "Notifications en attente",
+            "recent": "Notifications récentes de visite de navires",
+            "recentReview": "Notifications de visite de navires nécessitant un examen",
+            "noRecent": "Aucune notification récente"
+        },
         "3DModel": {
             "title": "Visualisation 3D du port",
-            "description": "Voir une représentation 3D interactive de l'ensemble de l'installation portuaire. Surveillez l'occupation des quais, la position des navires, les zones de stockage et les ressources en temps réel.",
+            "description": "Voir une représentation 3D interactive de l\u0027ensemble de l\u0027installation portuaire. Surveillez l\u0027occupation des quais, la position des navires, les zones de stockage et les ressources en temps réel.",
             "open": "Ouvrir le modèle 3D"
         }
     },
     "admin": {
         "sidebarTitle": "Admin",
-        "title": "Tableau d'administration",
+        "title": "Tableau d\u0027administration",
         "subtitle": "Aperçu et gestion administrative",
         "userManagement": {
             "title": "Gestion des utilisateurs",
             "subtitle": "Gérer les utilisateurs du système, les rôles et les autorisations."
         },
         "auditLogs": {
-            "title": "Journaux d'audit",
-            "subtitle": "Voir et surveiller les journaux d'activités du système."
+            "title": "Journaux d\u0027audit",
+            "subtitle": "Voir et surveiller les journaux d\u0027activités du système."
         }
     },
     "user": {
@@ -68,7 +101,7 @@
                 "options": {
                     "admin": "Administrateur",
                     "saoRep": "Représentant SAO",
-                    "pao": "Officier de l'Autorité portuaire",
+                    "pao": "Officier de l\u0027Autorité portuaire",
                     "logisticsOperator": "Opérateur logistique"
                 }
             },
@@ -86,13 +119,17 @@
             "view": "Voir les utilisateurs",
             "search": "Rechercher des utilisateurs"
         },
-        "infoTitle": "Détails de l'utilisateur",
+        "infoTitle": "Détails de l\u0027utilisateur",
         "title": "Utilisateurs",
         "subtitle": {
             "dashboard": "Aperçu et gestion des utilisateurs",
             "create": "Enregistrer un nouvel utilisateur dans le système",
             "view": "Voir et gérer les utilisateurs existants"
         }
+    },
+    "representative": {
+        "title": "Représentant",
+        "select": "Sélectionner un représentant"
     },
     "physicalCharacteristics": {
         "title": "Caractéristiques physiques (m)",
@@ -105,8 +142,8 @@
             "placeholder": "Profondeur en mètres"
         },
         "draft": {
-            "title": "Tirant d'eau",
-            "placeholder": "Tirant d'eau en mètres"
+            "title": "Tirant d\u0027eau",
+            "placeholder": "Tirant d\u0027eau en mètres"
         }
     },
     "dock": {
@@ -217,6 +254,9 @@
             "vesselType": {
                 "title": "Type de navire",
                 "placeholder": "Sélectionner le type de navire"
+            },
+            "taxNumber": {
+                "title": "Numéro fiscal"
             }
         },
         "infoTitle": "Informations sur le navire",
@@ -240,6 +280,12 @@
         "registeredVessels": "Navires enregistrés"
     },
     "staff": {
+        "deactivation": {
+            "title": "Désactiver le membre du personnel",
+            "message": "Êtes-vous sûr de vouloir désactiver ce membre du personnel? Cette action ne peut pas être annulée.",
+            "successMessage": "Le membre du personnel a été désactivé avec succès.",
+            "errorMessage": "Une erreur s\u0027est produite lors de la tentative de désactivation du membre du personnel. Veuillez réessayer."
+        },
         "fields": {
             "mechanographicNumber": {
                 "title": "Numéro mécanographique",
@@ -268,7 +314,8 @@
                     "unavailable": "Indisponible",
                     "temporarilyReassigned": "Réaffecté temporairement"
                 }
-            }
+            },
+            "operationalWindow": "Fenêtre opérationnelle"
         },
         "tabs": {
             "dashboard": "Tableau du personnel",
@@ -361,8 +408,8 @@
                 "placeholder": "Les qualifications requises pour utiliser cette ressource"
             },
             "setupTime": {
-                "title": "Temps d'installation (minutes)",
-                "placeholder": "Temps d'installation"
+                "title": "Temps d\u0027installation (minutes)",
+                "placeholder": "Temps d\u0027installation"
             },
             "servingDocks": {
                 "title": "Quais desservis",
@@ -399,6 +446,35 @@
         },
         "actions": {
             "deactivate": "Désactiver la ressource physique"
+        },
+        "deactivation": {
+            "title": "Désactiver la ressource physique",
+            "message": "Êtes-vous sûr de vouloir désactiver cette ressource physique? Cette action ne peut pas être annulée.",
+            "successMessage": "La ressource physique a été désactivée avec succès.",
+            "errorMessage": "Une erreur s\u0027est produite lors de la tentative de désactivation de la ressource physique. Veuillez réessayer."
+        }
+    },
+    "scheduling": {
+        "title": "Demander le planning journalier",
+        "subtitle": "Utilisez notre algorithme de planification automatisé pour analyser les tâches programmées pour un jour donné.",
+        "noVisits": "Aucune visite de navire programmée pour la date sélectionnée.",
+        "visitsOnSelectedDay": "Visites de navires à la date sélectionnée",
+        "viewVisits": "Générer le planning des tâches",
+        "generateTasksButton": "Générer le planning des tâches",
+        "aboutAlgorithmButton": "À propos de l\u0027algorithme",
+        "fields": {
+            "algorithm": {
+                "title": "Algorithme de planification",
+                "placeholder": "Sélectionner l\u0027algorithme de planification"
+            },
+            "relatedDocks": "Sélectionner le quai associé"
+        },
+        "generateTasksModal": {
+            "title": "Logistique supplémentaire"
+        },
+        "aboutAlgorithmModal": {
+            "title": "À propos de l\u0027algorithme",
+            "content": "L\u0027algorithme actuel prend en compte les notifications de visite de navires programmées pour la date et le quai sélectionnés. \nIl vérifie ensuite la disponibilité des grues STS pour le quai spécifié et décide de la durée de chaque tâche en fonction de la vitesse de la grue.\nIl ignore également les visites destinées à la maintenance ou à d\u0027autres activités que le chargement/déchargement."
         }
     },
     "storageArea": {
@@ -420,11 +496,147 @@
             "view": "Voir les détails de la zone de stockage",
             "edit": "Modifier une zone de stockage existante dans le système"
         },
+        "create": {
+            "distance_meters": "Distance (mètres)"
+        },
         "printer": {
             "docks_serviced": "quais desservis",
             "capacity_usage": "Utilisation de la capacité",
             "units": "unités",
-            "available": "disponible"
+            "available": "disponible",
+            "no_registered_distances": "Aucune distance enregistrée",
+            "no_docks_serviced": "Aucun quai desservi",
+            "all_docks_serviced": "Tous les quais desservis",
+            "serviced_docks_distance": "Distance des quais desservis",
+            "no_registered_docks": "Aucun quai enregistré"
+        },
+        "fields": {
+            "nameCode": {
+                "title": "Code de nom",
+                "placeholder": "Code de nom de la zone de stockage"
+            },
+            "location": {
+                "title": "Emplacement",
+                "placeholder": "Emplacement de la zone de stockage"
+            },
+            "type": {
+                "title": "Type",
+                "placeholder": "Sélectionner le type de zone de stockage",
+                "options": {
+                    "yard": "Cour",
+                    "warehouse": "Entrepôt"
+                }
+            },
+            "capacity": {
+                "title": "Capacité",
+                "placeholder": "Capacité maximale"
+            },
+            "occupancy": {
+                "title": "Occupation",
+                "placeholder": "Occupation actuelle"
+            }
+        }
+    },
+    "notification": {
+        "id": "ID de notification",
+        "hazardous": "Dangereux",
+        "nonHazardous": "Non dangereux",
+        "arrival": "Arrivée",
+        "departure": "Départ",
+        "specialRequirements": "Exigences spéciales",
+        "none": "Aucun",
+        "crew": "Équipage",
+        "captain": "Capitaine",
+        "unknown": "Inconnu",
+        "from": "De",
+        "to": "À",
+        "tabs": {
+            "dashboard": "Tableau de notifications",
+            "search": "Rechercher des notifications",
+            "edit": "Modifier la notification",
+            "create": "Créer une notification",
+            "makeDraft": "Créer un brouillon de notification",
+            "myNotifications": "Mes notifications",
+            "review": "Examiner les notifications",
+            "general": "Liste générique",
+            "byDate": "Liste par calendrier",
+            "submit": "Soumettre la notification",
+            "delete": "Supprimer la notification"
+        },
+        "eventsOnDate": "Événements à la date sélectionnée",
+        "noEventsOnDate": "Aucun événement à la date sélectionnée",
+        "title": "Notifications de visite de navires",
+        "subtitle": {
+            "dashboard": "Aperçu des notifications de visite de navires",
+            "search": "Gérer et voir toutes les notifications de visite de navires",
+            "create": "Créer une nouvelle notification de visite de navires",
+            "edit": "Modifier une notification de visite de navires existante",
+            "review": "Examiner les notifications de visite de navires en attente"
+        },
+        "errors": {
+            "noNotificationId": "Aucun ID de notification fourni"
+        },
+        "infoTitle": "Informations de notification",
+        "cargoTitle": "Informations sur la cargaison",
+        "vesselTitle": "Informations sur le navire",
+        "manifestInfo": "Informations sur le manifeste",
+        "fields": {
+            "openLoadManifest": "Ouvrir le manifeste de chargement",
+            "openUnloadManifest": "Ouvrir le manifeste de déchargement",
+            "expectedArrival": "Arrivée prévue",
+            "expectedDeparture": "Départ prévu",
+            "isCargoHazardous": "Cargaison dangereuse",
+            "specialRequirements": "Exigences spéciales",
+            "captain": "Capitaine",
+            "totalCrewMembers": "Nombre total de membres d\u0027équipage",
+            "safetyOfficers": "Officiers de sécurité",
+            "loadCargoManifest": "Manifeste de chargement",
+            "unloadCargoManifest": "Manifeste de déchargement",
+            "position": "Position",
+            "area": "Zone",
+            "container": "Conteneur",
+            "crewMembers": "Membres d\u0027équipage",
+            "status": "Statut"
+        },
+        "timeline": {
+            "pending": "En attente",
+            "inProgress": "En cours",
+            "completed": "Terminé",
+            "submitted": "Soumis",
+            "accepted": "Accepté",
+            "rejected": "Rejeté"
+        },
+        "filters": {
+            "expectedArrivalFrom": "Arrivée prévue de",
+            "expectedArrivalTo": "Arrivée prévue jusqu\u0027à",
+            "withReason": "Avec raison",
+            "withDockAssigned": "Avec quai attribué"
+        },
+        "decision": {
+            "isFinal": "Est définitif",
+            "assignedDock": {
+                "title": "Quai attribué",
+                "placeholder": "Sélectionner le quai attribué"
+            },
+            "reason": {
+                "title": "Raison",
+                "placeholder": "Fournir la raison de la décision"
+            },
+            "status": "Statut de la décision"
+        }
+    },
+    "operationalWindow": {
+        "title": "Fenêtre opérationnelle",
+        "printer": {
+            "addShift": "Ajouter un quart",
+            "shifts": "Quarts:",
+            "noShifts": "Aucun quart.",
+            "startTime": "Heure de début",
+            "endTime": "Heure de fin",
+            "weekDays": "Jours de la semaine"
+        },
+        "errors": {
+            "shiftOverlap": "Quart invalide. Chevauchement ou heure de fin avant l\u0027heure de début."
         }
     }
 }

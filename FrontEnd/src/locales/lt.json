@@ -1,8 +1,21 @@
-{
+﻿{
     "common": {
         "loading": "Įkeliama...",
         "noData": "Duomenų nėra",
-        "statistics": "Statistika"
+        "statistics": "Statistika",
+        "yes": "Taip",
+        "no": "Ne",
+        "weekDay": "Savaitės diena",
+        "days": {
+            "sunday": "Sekmadienis",
+            "monday": "Pirmadienis",
+            "tuesday": "Antradienis",
+            "wednesday": "Trečiadienis",
+            "thursday": "Ketvirtadienis",
+            "friday": "Penktadienis",
+            "saturday": "Šeštadienis"
+        },
+        "number": "Numeris"
     },
     "buttons": {
         "save": "Išsaugoti",
@@ -25,7 +38,12 @@
         },
         "login": "Prisijungti",
         "goBackToLogin": "Grįžti prie prisijungimo",
-        "logout": "Atsijungti"
+        "logout": "Atsijungti",
+        "generate": "Generuoti",
+        "close": "Uždaryti",
+        "add": "Pridėti",
+        "review": "Peržiūrėti",
+        "seeMore": "Žiūrėti daugiau"
     },
     "unsavedChanges": {
         "title": "Atmesti pakeitimus?",
@@ -35,12 +53,20 @@
     },
     "dashboard": {
         "sidebarTitle": "Valdymo skydas",
-        "title": "PortIT Valdymo skydas",
+        "title": "PortIT valdymo skydas",
         "subtitle": "PortIT sistemos apžvalga",
         "3DModel": {
             "title": "3D uosto vizualizacija",
-            "description": "Peržiūrėkite interaktyvų 3D uosto modelį. Stebėkite prieplaukų užimtumą, laivų pozicijas, sandėlio zonas ir išteklius realiu laiku.",
+            "description": "Peržiūrėkite interaktyvų 3D uosto modelį. Stebėkite prieplaukų užimtumą, laivų pozicijas, sandėliavimo zonas ir išteklius realiu laiku.",
             "open": "Atidaryti 3D modelį"
+        },
+        "welcome": "Sveiki sugrįžę, [name]!",
+        "SAOR": {
+            "subtitle": "Siuntimo agento operacijų apžvalga",
+            "pendingNotifications": "Laukiantys pranešimai",
+            "recent": "Naujausi pranešimai apie laivo vizitus",
+            "recentReview": "Pranešimai apie laivo vizitus, kuriems reikia peržiūros",
+            "noRecent": "Nėra naujausių pranešimų"
         }
     },
     "admin": {
@@ -52,8 +78,8 @@
             "subtitle": "Valdykite sistemos vartotojus, roles ir leidimus."
         },
         "auditLogs": {
-            "title": "Auditavimo žurnalas",
-            "subtitle": "Sistemos veiksmų žurnalų peržiūra ir stebėjimas."
+            "title": "Auditavimo žurnalai",
+            "subtitle": "Peržiūrėti ir stebėti sistemos veiksmų žurnalus."
         }
     },
     "user": {
@@ -81,7 +107,7 @@
             }
         },
         "tabs": {
-            "dashboard": "Vartotojo skyrius",
+            "dashboard": "Vartotojo skydas",
             "create": "Sukurti vartotoją",
             "view": "Peržiūrėti vartotojus",
             "search": "Ieškoti vartotojų"
@@ -105,7 +131,7 @@
             "placeholder": "Gylis metrais"
         },
         "draft": {
-            "title": "Korpuso grimzlė",
+            "title": "Grimzlė",
             "placeholder": "Grimzlė metrais"
         }
     },
@@ -133,21 +159,21 @@
             }
         },
         "tabs": {
-            "dashboard": "Prieplaukos skydas",
+            "dashboard": "Prieplaukų skydas",
             "view_dashboard": "Peržiūrėti prieplaukas",
             "search": "Ieškoti prieplaukų",
             "create": "Sukurti prieplauką",
-            "view": "Peržiūrėti prieplauką",
+            "view": "Peržiūra prieplaukos",
             "edit": "Redaguoti prieplauką"
         },
         "generalFields": "Bendri laukai",
         "infoTitle": "Prieplaukos informacija",
         "title": "Prieplaukos",
         "subtitle": {
-            "dashboard": "Prieplaukos statistikos ir veiklos apžvalga",
-            "search": "Tvarkykite ir peržiūrėkite visas įregistruotas prieplaukas",
-            "create": "Užregistruokite naują prieplauką sistemoje",
-            "edit": "Redaguokite esamą prieplauką sistemoje"
+            "dashboard": "Prieplaukų statistikos ir veiklos apžvalga",
+            "search": "Tvarkykite ir peržiūrėkite visas užregistruotas prieplaukas",
+            "create": "Užregistruoti naują prieplauką sistemoje",
+            "edit": "Redaguoti esamą prieplauką sistemoje"
         },
         "registeredDocks": "Užregistruotos prieplaukos"
     },
@@ -187,16 +213,16 @@
             "view_dashboard": "Peržiūrėti laivų tipus",
             "search": "Ieškoti laivų tipų",
             "create": "Sukurti laivo tipą",
-            "view": "Peržiūrėti laivo tipą",
+            "view": "Peržiūra laivo tipo",
             "edit": "Redaguoti laivo tipą"
         },
         "infoTitle": "Laivo tipo informacija",
         "title": "Laivų tipai",
         "subtitle": {
             "dashboard": "Laivų tipų statistikos apžvalga",
-            "search": "Tvarkykite ir peržiūrėkite visus įregistruotus laivų tipus",
-            "create": "Užregistruokite naują laivo tipą sistemoje",
-            "edit": "Redaguokite esamą laivo tipą sistemoje"
+            "search": "Tvarkyti ir peržiūrėti visus registruotus laivų tipus",
+            "create": "Užregistruoti naują laivo tipą sistemoje",
+            "edit": "Redaguoti esamą laivo tipą sistemoje"
         },
         "registeredVesselTypes": "Užregistruoti laivų tipai"
     },
@@ -217,6 +243,9 @@
             "vesselType": {
                 "title": "Laivo tipas",
                 "placeholder": "Pasirinkite laivo tipą"
+            },
+            "taxNumber": {
+                "title": "Mokesčių numeris"
             }
         },
         "infoTitle": "Laivo informacija",
@@ -226,15 +255,15 @@
             "view_dashboard": "Peržiūrėti laivus",
             "search": "Ieškoti laivų",
             "create": "Sukurti laivą",
-            "view": "Peržiūrėti laivą",
+            "view": "Peržiūra laivo",
             "edit": "Redaguoti laivą"
         },
         "title": "Laivai",
         "subtitle": {
             "dashboard": "Laivų statistikos ir veiklos apžvalga",
-            "search": "Tvarkykite ir peržiūrėkite visus įregistruotus laivus",
-            "create": "Užregistruokite naują laivą sistemoje",
-            "edit": "Redaguokite esamą laivą sistemoje"
+            "search": "Tvarkyti ir peržiūrėti visus registruotus laivus",
+            "create": "Užregistruoti naują laivą sistemoje",
+            "edit": "Redaguoti esamą laivą sistemoje"
         },
         "ownedBy": "Savininkas",
         "registeredVessels": "Užregistruoti laivai"
@@ -266,26 +295,33 @@
                 "options": {
                     "available": "Pasiekiamas",
                     "unavailable": "Nepasiekiamas",
-                    "temporarilyReassigned": "Laikinai perkelta"
+                    "temporarilyReassigned": "Laikinai perkeltas"
                 }
-            }
+            },
+            "operationalWindow": "Darbo langas"
         },
         "tabs": {
             "dashboard": "Personalo skydas",
             "view_dashboard": "Peržiūrėti personalą",
             "search": "Ieškoti personalo",
             "create": "Sukurti darbuotoją",
-            "view": "Peržiūrėti darbuotoją",
+            "view": "Peržiūra darbuotojo",
             "edit": "Redaguoti darbuotoją"
         },
         "infoTitle": "Darbuotojo informacija",
         "title": "Personalas",
         "subtitle": {
-            "search": "Tvarkykite ir peržiūrėkite visą registruotą personalą",
-            "dashboard": "Personalo statistikos peržiūra",
-            "create": "Užregistruokite naują darbuotoją sistemoje",
+            "search": "Tvarkyti ir peržiūrėti visą registruotą personalą",
+            "dashboard": "Personalo statistikos apžvalga",
+            "create": "Užregistruoti naują darbuotoją sistemoje",
             "view": "Peržiūrėti darbuotojo detales",
-            "edit": "Redaguokite esamą darbuotoją sistemoje"
+            "edit": "Redaguoti esamą darbuotoją sistemoje"
+        },
+        "deactivation": {
+            "title": "Deaktyvuoti darbuotoją",
+            "message": "Ar tikrai norite deaktyvuoti šį darbuotoją? Vėliau galėsite jį vėl aktyvuoti.",
+            "successMessage": "Darbuotojas sėkmingai deaktyvuotas.",
+            "errorMessage": "Įvyko klaida bandant deaktyvuoti darbuotoją. Bandykite dar kartą."
         }
     },
     "qualification": {
@@ -294,16 +330,16 @@
             "view_dashboard": "Peržiūrėti kvalifikacijas",
             "search": "Ieškoti kvalifikacijų",
             "create": "Sukurti kvalifikaciją",
-            "view": "Peržiūrėti kvalifikaciją",
+            "view": "Peržiūra kvalifikacijos",
             "edit": "Redaguoti kvalifikaciją"
         },
         "infoTitle": "Kvalifikacijos informacija",
         "title": "Kvalifikacijos",
         "subtitle": {
-            "search": "Tvarkykite ir peržiūrėkite visus registruotus kvalifikacijas",
+            "search": "Tvarkyti ir peržiūrėti visas registruotas kvalifikacijas",
             "dashboard": "Kvalifikacijų statistikos apžvalga",
-            "create": "Užregistruokite naują kvalifikaciją sistemoje",
-            "edit": "Redaguokite esamą kvalifikaciją sistemoje",
+            "create": "Užregistruoti naują kvalifikaciją sistemoje",
+            "edit": "Redaguoti esamą kvalifikaciją sistemoje",
             "view": "Peržiūrėti kvalifikacijos detales"
         },
         "fields": {
@@ -322,34 +358,34 @@
             "dashboard": "Fizinių išteklių skydas",
             "view_dashboard": "Peržiūrėti fizinius išteklius",
             "search": "Ieškoti fizinių išteklių",
-            "create": "Sukurti fizinį išteklį",
-            "view": "Peržiūrėti fizinį išteklį",
-            "edit": "Redaguoti fizinį išteklį"
+            "create": "Sukurti fizinį išteklių",
+            "view": "Peržiūra fizinio ištekliaus",
+            "edit": "Redaguoti fizinį išteklių"
         },
         "infoTitle": "Fizinio ištekliaus informacija",
         "title": "Fiziniai ištekliai",
         "subtitle": {
-            "search": "Tvarkykite ir peržiūrėkite visus registruotus fizinius išteklius",
+            "search": "Tvarkyti ir peržiūrėti visus registruotus fizinius išteklius",
             "dashboard": "Fizinių išteklių valdymo skydas",
             "view_dashboard": "Peržiūrėti fizinius išteklius",
-            "create": "Užregistruokite naują fizinį išteklį sistemoje",
+            "create": "Užregistruoti naują fizinį išteklių sistemoje",
             "view": "Peržiūrėti fizinio ištekliaus detales",
-            "edit": "Redaguokite esamą fizinį išteklį sistemoje"
+            "edit": "Redaguoti esamą fizinį išteklių sistemoje"
         },
         "generalFields": "Bendri laukai",
         "specificFields": "Specifiniai laukai",
         "fields": {
             "code": {
                 "title": "Kodas",
-                "placeholder": "Išteklių kodas"
+                "placeholder": "Ištekliaus kodas"
             },
             "description": {
                 "title": "Aprašymas",
-                "placeholder": "Išteklių aprašymas"
+                "placeholder": "Ištekliaus aprašymas"
             },
             "status": {
                 "title": "Statusas",
-                "placeholder": "Pasirinkite išteklių statusą",
+                "placeholder": "Pasirinkite ištekliaus statusą",
                 "options": {
                     "available": "Pasiekiamas",
                     "maintenance": "Priežiūra",
@@ -358,7 +394,7 @@
             },
             "qualifications": {
                 "title": "Reikalingos kvalifikacijos",
-                "placeholder": "Kvalifikacijos reikalingos darbui su šiuo ištekliumi"
+                "placeholder": "Kvalifikacijos darbui su šiuo ištekliumi"
             },
             "setupTime": {
                 "title": "Diegimo laikas (min)",
@@ -398,7 +434,13 @@
             }
         },
         "actions": {
-            "deactivate": "Išjungti fizinį išteklių"
+            "deactivate": "Deaktyvuoti fizinį išteklių"
+        },
+        "deactivation": {
+            "title": "Deaktyvuoti fizinį išteklių",
+            "message": "Ar tikrai norite deaktyvuoti šį fizinį išteklių? Galėsite jį atstatyti vėliau pakartotinai aktyvuodami.",
+            "successMessage": "Fizinis išteklius sėkmingai deaktyvuotas.",
+            "errorMessage": "Įvyko klaida bandant deaktyvuoti fizinį išteklių. Bandykite dar kartą."
         }
     },
     "storageArea": {
@@ -407,24 +449,196 @@
             "view_dashboard": "Peržiūrėti sandėliavimo zonas",
             "search": "Ieškoti sandėliavimo zonų",
             "create": "Sukurti sandėliavimo zoną",
-            "view": "Peržiūrėti sandėliavimo zoną",
+            "view": "Peržiūra sandėliavimo zonos",
             "edit": "Redaguoti sandėliavimo zoną"
         },
         "infoTitle": "Sandėliavimo zonos informacija",
         "title": "Sandėliavimo zonos",
         "subtitle": {
-            "search": "Tvarkykite ir peržiūrėkite visas įregistruotas sandėliavimo zonas",
+            "search": "Tvarkyti ir peržiūrėti visas registruotas sandėliavimo zonas",
             "dashboard": "Sandėliavimo zonų valdymo skydas",
             "view_dashboard": "Peržiūrėti sandėliavimo zonas",
-            "create": "Užregistruokite naują sandėliavimo zoną sistemoje",
+            "create": "Užregistruoti naują sandėliavimo zoną sistemoje",
             "view": "Peržiūrėti sandėliavimo zonos detales",
-            "edit": "Redaguokite esamą sandėliavimo zoną sistemoje"
+            "edit": "Redaguoti esamą sandėliavimo zoną sistemoje"
         },
         "printer": {
             "docks_serviced": "aptarnaujamos prieplaukos",
-            "capacity_usage": "Naudojamas pajėgumas",
+            "capacity_usage": "Talpos naudojimas",
             "units": "vienetai",
-            "available": "galima"
+            "available": "galima",
+            "no_registered_distances": "Nėra registruotų atstumų",
+            "no_docks_serviced": "Nėra aptarnaujamų prieplaukų",
+            "all_docks_serviced": "Visos prieplaukos aptarnaujamos",
+            "serviced_docks_distance": "Aptarnaujamų prieplaukų atstumas",
+            "no_registered_docks": "Nėra registruotų prieplaukų"
+        },
+        "create": {
+            "distance_meters": "Atstumas (metrai)"
+        },
+        "fields": {
+            "nameCode": {
+                "title": "Pavadinimo kodas",
+                "placeholder": "Sandėliavimo zonos pavadinimo kodas"
+            },
+            "location": {
+                "title": "Vieta",
+                "placeholder": "Sandėliavimo zonos vieta"
+            },
+            "type": {
+                "title": "Tipas",
+                "placeholder": "Pasirinkite sandėliavimo zonos tipą",
+                "options": {
+                    "yard": "Atvira aikštelė",
+                    "warehouse": "Sandėlis"
+                }
+            },
+            "capacity": {
+                "title": "Talpa",
+                "placeholder": "Maksimali talpa"
+            },
+            "occupancy": {
+                "title": "Užimtumas",
+                "placeholder": "Dabartinis užimtumas"
+            }
+        }
+    },
+    "search": {
+        "languages": "Ieškoti kalbų..."
+    },
+    "expirationWarning": {
+        "title": "Sesija netrukus baigsis",
+        "messageOneMinute": "Jūsų sesija baigsis po 1 minutės.",
+        "messageLessThanOneMinute": "Jūsų sesija tuoj baigsis.",
+        "extendSession": "Pratęsti sesiją"
+    },
+    "representative": {
+        "title": "Atstovas",
+        "select": "Pasirinkite atstovą"
+    },
+    "scheduling": {
+        "title": "Užklausti dienos grafiką",
+        "subtitle": "Naudokite mūsų automatizuotą planavimo algoritmą suplanuotoms dienos užduotims analizuoti.",
+        "noVisits": "Nėra laivų vizitų, suplanuotų pasirinktai datai.",
+        "visitsOnSelectedDay": "Laivų vizitai pasirinkta data",
+        "viewVisits": "Generuoti užduočių grafiką",
+        "generateTasksButton": "Generuoti užduočių grafiką",
+        "aboutAlgorithmButton": "Apie algoritmą",
+        "fields": {
+            "algorithm": {
+                "title": "Planavimo algoritmas",
+                "placeholder": "Pasirinkite planavimo algoritmą"
+            },
+            "relatedDocks": "Pasirinkite susijusią prieplauką"
+        },
+        "generateTasksModal": {
+            "title": "Papildoma logistika"
+        },
+        "aboutAlgorithmModal": {
+            "title": "Apie algoritmą",
+            "content": "Dabartinis algoritmas atsižvelgia į pasirinktos datos ir prieplaukos suplanuotus laivo vizitų pranešimus.\nTada tikrina STS kranų prieinamumą ir nustato kiekvienos užduoties trukmę pagal krano greitį.\nTaip pat ignoruoja vizitus, susijusius su priežiūra ar kitomis ne pakrovimo / iškrovimo veiklomis."
+        }
+    },
+    "notification": {
+        "id": "Pranešimo ID",
+        "hazardous": "Pavojingas",
+        "nonHazardous": "Nepavojingas",
+        "arrival": "Atvykimas",
+        "departure": "Išvykimas",
+        "specialRequirements": "Specialūs reikalavimai",
+        "none": "Nėra",
+        "crew": "Įgula",
+        "captain": "Kapitonas",
+        "unknown": "Nežinoma",
+        "from": "Nuo",
+        "to": "Iki",
+        "tabs": {
+            "dashboard": "Pranešimų skydas",
+            "search": "Ieškoti pranešimų",
+            "edit": "Redaguoti pranešimą",
+            "create": "Sukurti pranešimą",
+            "makeDraft": "Sukurti juodraštį",
+            "myNotifications": "Mano pranešimai",
+            "review": "Peržiūrėti pranešimus",
+            "general": "Bendras sąrašas",
+            "byDate": "Kalendoriaus sąrašas",
+            "submit": "Pateikti pranešimą",
+            "delete": "Ištrinti pranešimą"
+        },
+        "eventsOnDate": "Įvykiai pasirinkta data",
+        "noEventsOnDate": "Nėra įvykių pasirinkta data",
+        "title": "Laivo vizito pranešimai",
+        "subtitle": {
+            "dashboard": "Laivo vizitų pranešimų apžvalga",
+            "search": "Tvarkyti ir peržiūrėti visus laivo vizitų pranešimus",
+            "create": "Sukurti naują laivo vizito pranešimą",
+            "edit": "Redaguoti esamą laivo vizito pranešimą",
+            "review": "Peržiūrėti laukiančius laivo vizitų pranešimus"
+        },
+        "errors": {
+            "noNotificationId": "Nenurodytas pranešimo identifikatorius"
+        },
+        "infoTitle": "Pranešimo informacija",
+        "cargoTitle": "Krovinio informacija",
+        "vesselTitle": "Laivo informacija",
+        "manifestInfo": "Manifesto informacija",
+        "fields": {
+            "openLoadManifest": "Atidaryti pakrovimo manifestą",
+            "openUnloadManifest": "Atidaryti iškrovimo manifestą",
+            "expectedArrival": "Numatomas atvykimas",
+            "expectedDeparture": "Numatomas išvykimas",
+            "isCargoHazardous": "Krovinys pavojingas",
+            "specialRequirements": "Specialūs reikalavimai",
+            "captain": "Kapitonas",
+            "totalCrewMembers": "Viso įgulos narių",
+            "safetyOfficers": "Saugos pareigūnai",
+            "loadCargoManifest": "Pakrovimo manifestas",
+            "unloadCargoManifest": "Iškrovimo manifestas",
+            "position": "Pozicija",
+            "area": "Zona",
+            "container": "Konteineris",
+            "crewMembers": "Įgulos nariai",
+            "status": "Statusas"
+        },
+        "timeline": {
+            "pending": "Laukia",
+            "inProgress": "Vykdoma",
+            "completed": "Užbaigta",
+            "submitted": "Pateikta",
+            "accepted": "Priimta",
+            "rejected": "Atmesta"
+        },
+        "filters": {
+            "expectedArrivalFrom": "Numatomas atvykimas nuo",
+            "expectedArrivalTo": "Numatomas atvykimas iki",
+            "withReason": "Su priežastimi",
+            "withDockAssigned": "Su priskirta prieplauka"
+        },
+        "decision": {
+            "isFinal": "Galutinė",
+            "assignedDock": {
+                "title": "Priskirta prieplauka",
+                "placeholder": "Pasirinkite priskirtą prieplauką"
+            },
+            "reason": {
+                "title": "Priežastis",
+                "placeholder": "Įveskite sprendimo priežastį"
+            },
+            "status": "Sprendimo statusas"
+        }
+    },
+    "operationalWindow": {
+        "title": "Darbo langas",
+        "printer": {
+            "addShift": "Pridėti pamainą",
+            "shifts": "Pamainos:",
+            "noShifts": "Nėra pamainų.",
+            "startTime": "Pradžios laikas",
+            "endTime": "Pabaigos laikas",
+            "weekDays": "Savaitės dienos"
+        },
+        "errors": {
+            "shiftOverlap": "Neteisinga pamaina. Persidengia arba pabaiga anksčiau pradžios."
         }
     }
 }

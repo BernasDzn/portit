@@ -1,74 +1,104 @@
-{
+﻿{
     "common": {
         "loading": "Učitavanje...",
         "noData": "Nema dostupnih podataka",
-        "statistics": "Statistika"
+        "statistics": "Statistika",
+        "yes": "Da",
+        "no": "Ne",
+        "weekDay": "Radni dan",
+        "days": {
+            "sunday": "Nedjelja",
+            "monday": "Ponedjeljak",
+            "tuesday": "Utorak",
+            "wednesday": "Srijeda",
+            "thursday": "Četvrtak",
+            "friday": "Petak",
+            "saturday": "Subota"
+        },
+        "number": "Broj"
     },
     "buttons": {
         "save": "Spremi",
         "cancel": "Odustani",
         "delete": "Izbriši",
         "edit": "Uredi",
-        "create": "Kreiraj",
+        "create": "Stvori",
         "search": "Pretraži",
         "select": "Odaberi",
         "activate": "Aktiviraj",
         "deactivate": "Deaktiviraj",
+        "generate": "Generiraj",
+        "close": "Zatvori",
+        "add": "Dodaj",
+        "review": "Pregled",
+        "seeMore": "Vidi više",
         "filter": {
-            "title": "Filtri",
-            "add": "Filtriraj",
+            "title": "Filteri",
+            "add": "Dodaj filter",
             "clear": "Očisti filtre"
         },
         "pagination": {
-            "previous": "Prethodni",
-            "next": "Sljedeći"
+            "previous": "Prethodna",
+            "next": "Sljedeća"
         },
         "login": "Prijava",
         "goBackToLogin": "Povratak na prijavu",
         "logout": "Odjava"
     },
     "unsavedChanges": {
-        "title": "Odbaci promjene?",
-        "message": "Imate nespremljene promjene. Jeste li sigurni da želite napustiti ovu stranicu i odbaciti promjene?",
+        "title": "Odbaciti promjene?",
+        "message": "Imate nespremljene promjene. Jeste li sigurni da želite napustiti stranicu i odbaciti ih?",
         "confirm": "Odbaci",
         "cancel": "Nastavi uređivanje"
     },
+    "expirationWarning": {
+        "messageOneMinute": "Vaša sesija će isteći za 1 minutu.",
+        "messageLessThanOneMinute": "Vaša sesija uskoro istječe."
+    },
     "dashboard": {
         "sidebarTitle": "Nadzorna ploča",
-        "title": "PortIT Nadzorna ploča",
-        "subtitle": "Pregled PortIT sustava",
+        "title": "PortIT nadzorna ploča",
+        "subtitle": "Pregled sustava PortIT",
+        "welcome": "Dobrodošli natrag, [name]!",
         "3DModel": {
             "title": "3D vizualizacija luke",
-            "description": "Pogledajte interaktivnu 3D reprezentaciju cijelog lučkog objekta. Pratite zauzetost pristana, pozicije brodova, skladišne površine i resurse u stvarnom vremenu.",
+            "description": "Interaktivni 3D model luke. Pratite zauzetost pristana, pozicije brodova, skladišna područja i resurse u stvarnom vremenu.",
             "open": "Otvori 3D model"
+        },
+        "SAOR": {
+            "subtitle": "Pregled rada brodarskog agenta",
+            "pendingNotifications": "Obavijesti na čekanju",
+            "recent": "Nedavne obavijesti o posjetu",
+            "recentReview": "Obavijesti koje treba pregledati",
+            "noRecent": "Nema nedavnih obavijesti"
         }
     },
     "admin": {
-        "sidebarTitle": "Admin",
-        "title": "Admin panel",
+        "sidebarTitle": "Administracija",
+        "title": "Adminsko sučelje",
         "subtitle": "Administrativni pregled i upravljanje",
         "userManagement": {
             "title": "Upravljanje korisnicima",
-            "subtitle": "Upravljajte korisnicima sustava, ulogama i dozvolama."
+            "subtitle": "Upravljajte korisnicima, ulogama i dozvolama."
         },
         "auditLogs": {
             "title": "Revizijski zapisi",
-            "subtitle": "Pregled i nadzor zapisa aktivnosti sustava."
+            "subtitle": "Pregled i nadzor aktivnosti sustava."
         }
     },
     "user": {
         "fields": {
             "email": {
                 "title": "Email",
-                "placeholder": "email@mail.com"
+                "placeholder": "korisnik@example.com"
             },
             "role": {
                 "title": "Uloga",
-                "placeholder": "Odaberite ulogu korisnika",
+                "placeholder": "Odaberite ulogu",
                 "options": {
                     "admin": "Administrator",
                     "saoRep": "SAO predstavnik",
-                    "pao": "Službenik lučke uprave",
+                    "pao": "Službenik luke",
                     "logisticsOperator": "Logistički operater"
                 }
             },
@@ -81,32 +111,32 @@
             }
         },
         "tabs": {
-            "dashboard": "Korisnički panel",
-            "create": "Kreiraj korisnika",
-            "view": "Pogledaj korisnike",
+            "dashboard": "Pregled korisnika",
+            "create": "Stvori korisnika",
+            "view": "Prikaži korisnike",
             "search": "Pretraži korisnike"
         },
-        "infoTitle": "Detalji korisnika",
+        "infoTitle": "Informacije o korisniku",
         "title": "Korisnici",
         "subtitle": {
-            "dashboard": "Pregled i upravljanje korisnicima",
-            "create": "Registriraj novog korisnika u sustavu",
-            "view": "Pregled i upravljanje postojećim korisnicima"
+            "dashboard": "Pregled i upravljanje",
+            "create": "Registriraj novog korisnika",
+            "view": "Upravljanje postojećima"
         }
     },
     "physicalCharacteristics": {
         "title": "Fizičke karakteristike (m)",
         "length": {
             "title": "Dužina",
-            "placeholder": "Dužina u metrima"
+            "placeholder": "Dužina (m)"
         },
         "depth": {
             "title": "Dubina",
-            "placeholder": "Dubina u metrima"
+            "placeholder": "Dubina (m)"
         },
         "draft": {
             "title": "Gaz",
-            "placeholder": "Gaz u metrima"
+            "placeholder": "Gaz (m)"
         }
     },
     "dock": {
@@ -127,27 +157,27 @@
                 "title": "Podržani tipovi plovila",
                 "vesselTypes": {
                     "title": "Tipovi plovila",
-                    "placeholder": "Odaberite tipove plovila"
+                    "placeholder": "Odaberite tipove"
                 },
                 "vesselType": "Tip plovila"
             }
         },
         "tabs": {
-            "dashboard": "Panel pristana",
-            "view_dashboard": "Pogledaj pristane",
+            "dashboard": "Pristaništa",
+            "view_dashboard": "Prikaži pristane",
             "search": "Pretraži pristane",
-            "create": "Kreiraj pristanište",
-            "view": "Pogledaj pristanište",
+            "create": "Stvori pristanište",
+            "view": "Prikaži pristanište",
             "edit": "Uredi pristanište"
         },
         "generalFields": "Opća polja",
         "infoTitle": "Informacije o pristaništu",
         "title": "Pristaništa",
         "subtitle": {
-            "dashboard": "Pregled statistika i aktivnosti pristaništa",
-            "search": "Upravljaj i pregledaj sva registrirana pristaništa",
-            "create": "Registriraj novo pristanište u sustavu",
-            "edit": "Uredi postojeće pristanište u sustavu"
+            "dashboard": "Statistike i aktivnosti",
+            "search": "Upravljanje registriranim pristanima",
+            "create": "Registriraj pristanište",
+            "edit": "Uredi pristanište"
         },
         "registeredDocks": "Registrirana pristaništa"
     },
@@ -155,50 +185,50 @@
         "fields": {
             "name": {
                 "title": "Naziv",
-                "placeholder": "Naziv tipa plovila"
+                "placeholder": "Naziv tipa"
             },
             "description": {
                 "title": "Opis",
-                "placeholder": "Opis tipa plovila"
+                "placeholder": "Opis"
             },
             "capacity": {
                 "title": "Kapacitet",
-                "placeholder": "Kapacitet kontejnera u TEU"
+                "placeholder": "Kapacitet (TEU)"
             },
             "containerCapacity": {
                 "title": "Kapacitet kontejnera (TEU)",
                 "maxNumberOfRows": {
-                    "title": "Maks. broj redova",
-                    "placeholder": "Maks. redovi u TEU"
+                    "title": "Maks. redova",
+                    "placeholder": "Maks. redovi"
                 },
                 "maxNumberOfBays": {
-                    "title": "Maks. broj polja",
-                    "placeholder": "Maks. polja u TEU"
+                    "title": "Maks. polja",
+                    "placeholder": "Maks. polja"
                 },
                 "maxNumberOfTiers": {
-                    "title": "Maks. broj razina",
-                    "placeholder": "Maks. razine u TEU"
+                    "title": "Maks. razina",
+                    "placeholder": "Maks. razine"
                 }
             }
         },
         "generalFields": "Opća polja",
         "tabs": {
-            "dashboard": "Panel tipova plovila",
-            "view_dashboard": "Pogledaj tipove plovila",
-            "search": "Pretraži tipove plovila",
-            "create": "Kreiraj tip plovila",
-            "view": "Pogledaj tip plovila",
-            "edit": "Uredi tip plovila"
+            "dashboard": "Tipovi",
+            "view_dashboard": "Prikaži tipove",
+            "search": "Pretraži tipove",
+            "create": "Stvori tip",
+            "view": "Prikaži tip",
+            "edit": "Uredi tip"
         },
-        "infoTitle": "Informacije o tipu plovila",
+        "infoTitle": "Informacije o tipu",
         "title": "Tipovi plovila",
         "subtitle": {
-            "dashboard": "Pregled statistika i aktivnosti po tipu plovila",
-            "search": "Upravljaj i pregledaj sve registrirane tipove plovila",
-            "create": "Registriraj novi tip plovila u sustavu",
-            "edit": "Uredi postojeći tip plovila u sustavu"
+            "dashboard": "Statistike i aktivnosti",
+            "search": "Upravljanje registriranim tipovima",
+            "create": "Registriraj tip",
+            "edit": "Uredi tip"
         },
-        "registeredVesselTypes": "Registrirani tipovi plovila"
+        "registeredVesselTypes": "Registrirani tipovi"
     },
     "vessel": {
         "fields": {
@@ -208,7 +238,7 @@
             },
             "imoNumber": {
                 "title": "IMO broj",
-                "placeholder": "IMO broj plovila"
+                "placeholder": "IMO broj"
             },
             "owner": {
                 "title": "Vlasnik",
@@ -216,25 +246,28 @@
             },
             "vesselType": {
                 "title": "Tip plovila",
-                "placeholder": "Odaberite tip plovila"
+                "placeholder": "Odaberite tip"
+            },
+            "taxNumber": {
+                "title": "Porezni broj"
             }
         },
         "infoTitle": "Informacije o plovilu",
         "physicalCharacteristicsTitle": "Fizičke karakteristike",
         "tabs": {
-            "dashboard": "Panel plovila",
-            "view_dashboard": "Pogledaj plovila",
+            "dashboard": "Plovila",
+            "view_dashboard": "Prikaži plovila",
             "search": "Pretraži plovila",
-            "create": "Kreiraj plovilo",
-            "view": "Pogledaj plovilo",
+            "create": "Stvori plovilo",
+            "view": "Prikaži plovilo",
             "edit": "Uredi plovilo"
         },
         "title": "Plovila",
         "subtitle": {
-            "dashboard": "Pregled statistika i aktivnosti plovila",
-            "search": "Upravljaj i pregledaj sva registrirana plovila",
-            "create": "Registriraj novo plovilo u sustav",
-            "edit": "Uredi postojeće plovilo u sustavu"
+            "dashboard": "Statistike i aktivnosti",
+            "search": "Upravljanje registriranim plovilima",
+            "create": "Registriraj plovilo",
+            "edit": "Uredi plovilo"
         },
         "ownedBy": "Vlasnik",
         "registeredVessels": "Registrirana plovila"
@@ -266,165 +299,343 @@
                 "options": {
                     "available": "Dostupno",
                     "unavailable": "Nedostupno",
-                    "temporarilyReassigned": "Privremeno prebačeno"
+                    "temporarilyReassigned": "Privremeno premješteno"
                 }
-            }
+            },
+            "operationalWindow": "Operativni prozor"
         },
         "tabs": {
-            "dashboard": "Panel osoblja",
-            "view_dashboard": "Pogledaj osoblje",
+            "dashboard": "Osoblje",
+            "view_dashboard": "Prikaži osoblje",
             "search": "Pretraži osoblje",
-            "create": "Kreiraj člana osoblja",
-            "view": "Pogledaj člana osoblja",
-            "edit": "Uredi člana osoblja"
+            "create": "Stvori člana",
+            "view": "Prikaži člana",
+            "edit": "Uredi člana"
         },
-        "infoTitle": "Informacije o članu osoblja",
+        "infoTitle": "Informacije o osoblju",
         "title": "Osoblje",
         "subtitle": {
-            "search": "Upravljajte i pregledajte sve registrirano osoblje",
-            "dashboard": "Pregled statistika i aktivnosti osoblja",
-            "create": "Registriraj novog člana osoblja u sustav",
-            "view": "Pogledaj detalje osoblja",
-            "edit": "Uredi postojećeg člana osoblja u sustavu"
+            "search": "Upravljanje registriranim osobljem",
+            "dashboard": "Statistike i aktivnosti",
+            "create": "Registriraj člana",
+            "view": "Detalji",
+            "edit": "Uredi člana"
+        },
+        "deactivation": {
+            "title": "Deaktiviraj osoblje",
+            "message": "Jeste li sigurni da želite deaktivirati ovog člana osoblja? Ovo se ne može poništiti.",
+            "successMessage": "Osoblje deaktivirano.",
+            "errorMessage": "Greška pri deaktivaciji. Pokušajte ponovno."
         }
     },
     "qualification": {
         "tabs": {
-            "dashboard": "Panel kvalifikacija",
-            "view_dashboard": "Pogledaj kvalifikacije",
+            "dashboard": "Kvalifikacije",
+            "view_dashboard": "Prikaži kvalifikacije",
             "search": "Pretraži kvalifikacije",
-            "create": "Kreiraj kvalifikaciju",
-            "view": "Pogledaj kvalifikaciju",
+            "create": "Stvori kvalifikaciju",
+            "view": "Prikaži kvalifikaciju",
             "edit": "Uredi kvalifikaciju"
         },
         "infoTitle": "Informacije o kvalifikaciji",
         "title": "Kvalifikacije",
         "subtitle": {
-            "search": "Upravljajte i pregledajte sve registrovane kvalifikacije",
-            "dashboard": "Pregled statistika i aktivnosti kvalifikacija",
-            "create": "Registriraj novu kvalifikaciju u sustav",
-            "edit": "Uredi postojeću kvalifikaciju u sustavu",
-            "view": "Pogledaj detalje kvalifikacije"
+            "search": "Upravljanje registriranim kvalifikacijama",
+            "dashboard": "Statistike i aktivnosti",
+            "create": "Registriraj kvalifikaciju",
+            "edit": "Uredi kvalifikaciju"
         },
         "fields": {
             "idCode": {
-                "title": "Šifra kvalifikacije",
-                "placeholder": "Šifra kvalifikacije"
+                "title": "Šifra",
+                "placeholder": "Šifra"
             },
             "qualificationName": {
-                "title": "Naziv kvalifikacije",
-                "placeholder": "Naziv kvalifikacije"
+                "title": "Naziv",
+                "placeholder": "Naziv"
             }
         }
     },
     "physicalResource": {
         "tabs": {
-            "dashboard": "Panel fizičkih resursa",
-            "view_dashboard": "Pogledaj fizičke resurse",
-            "search": "Pretraži fizičke resurse",
-            "create": "Kreiraj fizički resurs",
-            "view": "Pogledaj fizički resurs",
-            "edit": "Uredi fizički resurs"
+            "dashboard": "Resursi",
+            "view_dashboard": "Prikaži resurse",
+            "search": "Pretraži resurse",
+            "create": "Stvori resurs",
+            "view": "Prikaži resurs",
+            "edit": "Uredi resurs"
         },
-        "infoTitle": "Informacije o fizičkom resursu",
+        "infoTitle": "Informacije o resursu",
         "title": "Fizički resursi",
         "subtitle": {
-            "search": "Upravljajte i pregledajte sve registrirane fizičke resurse",
-            "dashboard": "Kontrolna ploča za fizičke resurse",
-            "view_dashboard": "Pogledaj fizičke resurse",
-            "create": "Registriraj novi fizički resurs u sustav",
-            "view": "Pogledaj detalje fizičkog resursa",
-            "edit": "Uredi postojeći fizički resurs u sustavu"
+            "search": "Upravljanje registriranim resursima",
+            "dashboard": "Kontrolna ploča",
+            "view_dashboard": "Prikaži resurse",
+            "create": "Registriraj resurs",
+            "view": "Detalji",
+            "edit": "Uredi resurs"
         },
         "generalFields": "Opća polja",
         "specificFields": "Specifična polja",
         "fields": {
             "code": {
-                "title": "Koda",
-                "placeholder": "Koda resursa"
+                "title": "Kod",
+                "placeholder": "Kod resursa"
             },
             "description": {
                 "title": "Opis",
-                "placeholder": "Opis resursa"
+                "placeholder": "Opis"
             },
             "status": {
                 "title": "Status",
-                "placeholder": "Odaberite status resursa",
+                "placeholder": "Odaberite status",
                 "options": {
                     "available": "Dostupno",
                     "maintenance": "Održavanje",
-                    "outOfService": "Ne radi"
+                    "outOfService": "Izvan pogona"
                 }
             },
             "qualifications": {
-                "title": "Zahtijevane kvalifikacije",
-                "placeholder": "Kvalifikacije potrebne za rad ovog resursa"
+                "title": "Potrebne kvalifikacije",
+                "placeholder": "Kvalifikacije za upravljanje"
             },
             "setupTime": {
-                "title": "Vrijeme postavljanja (minute)",
+                "title": "Vrijeme postavljanja (min)",
                 "placeholder": "Vrijeme postavljanja"
             },
             "servingDocks": {
-                "title": "Službeni molovi",
-                "placeholder": "Odaberite službene molove"
+                "title": "Molovi koje opslužuje",
+                "placeholder": "Odaberite molove"
             },
             "liftingCapacity": {
-                "title": "Nosivost (kgs)",
+                "title": "Nosivost (kg)",
                 "placeholder": "Nosivost"
             },
             "containersPerHour": {
-                "title": "Kontejneri na sat",
-                "placeholder": "Kontejneri na sat"
+                "title": "Kontejneri/sat",
+                "placeholder": "Kontejneri/sat"
             },
             "maxLoadCapacity": {
-                "title": "Maksimalni teret (kg)",
-                "placeholder": "Maksimalni teret"
+                "title": "Maks. teret (kg)",
+                "placeholder": "Maks. teret"
             },
             "averageSpeed": {
-                "title": "Prosječna brzina (km/h)",
-                "placeholder": "Prosječna brzina"
+                "title": "Prosj. brzina (km/h)",
+                "placeholder": "Brzina"
             },
             "containersPerTrip": {
-                "title": "Kontejneri po putovanju",
-                "placeholder": "Kontejneri po putovanju"
+                "title": "Kontejneri/putovanje",
+                "placeholder": "Kontejneri/putovanje"
             },
             "type": {
                 "title": "Tip resursa",
                 "options": {
                     "stsCrane": "STS dizalica",
-                    "yardGantry": "Dizalica na dvorištu",
+                    "yardGantry": "Dvorišna dizalica",
                     "truck": "Kamion"
                 }
             }
         },
         "actions": {
-            "deactivate": "Deaktiviraj fizički resurs"
+            "deactivate": "Deaktiviraj resurs"
+        },
+        "deactivation": {
+            "title": "Deaktiviraj resurs",
+            "message": "Jeste li sigurni da želite deaktivirati ovaj resurs? Ovo se ne može poništiti.",
+            "successMessage": "Resurs deaktiviran.",
+            "errorMessage": "Greška pri deaktivaciji."
         }
     },
     "storageArea": {
         "tabs": {
-            "dashboard": "Panel skladišnih područja",
-            "view_dashboard": "Pogledaj skladišna područja",
-            "search": "Pretraži skladišna područja",
-            "create": "Kreiraj skladišno područje",
-            "view": "Pogledaj skladišno područje",
-            "edit": "Uredi skladišno područje"
+            "dashboard": "Skladišna područja",
+            "view_dashboard": "Prikaži područja",
+            "search": "Pretraži područja",
+            "create": "Stvori područje",
+            "view": "Prikaži područje",
+            "edit": "Uredi područje"
         },
         "infoTitle": "Informacije o skladišnom području",
         "title": "Skladišna područja",
         "subtitle": {
-            "search": "Upravljajte i pregledajte sva registrirana skladišna područja",
-            "dashboard": "Kontrolna ploča za sva skladišna područja",
-            "view_dashboard": "Pogledaj skladišna područja",
-            "create": "Registriraj novo skladišno područje u sustav",
-            "view": "Pogledaj detalje skladišnog područja",
-            "edit": "Uredi postojeće skladišno područje u sustavu"
+            "search": "Upravljanje registriranim područjima",
+            "dashboard": "Kontrolna ploča",
+            "view_dashboard": "Prikaži područja",
+            "create": "Registriraj područje",
+            "view": "Detalji",
+            "edit": "Uredi područje"
         },
         "printer": {
-            "docks_serviced": "službeni molovi",
-            "capacity_usage": "Korištenje kapaciteta",
+            "docks_serviced": "opsluženi molovi",
+            "capacity_usage": "Iskorištenost kapaciteta",
             "units": "jedinice",
-            "available": "dostupno"
+            "available": "dostupno",
+            "no_registered_distances": "Nema registriranih udaljenosti",
+            "no_docks_serviced": "Nema opsluženih molova",
+            "all_docks_serviced": "Svi molovi opsluženi",
+            "serviced_docks_distance": "Udaljenost opsluženih molova",
+            "no_registered_docks": "Nema registriranih molova"
+        },
+        "create": {
+            "distance_meters": "Udaljenost (m)"
+        },
+        "fields": {
+            "nameCode": {
+                "title": "Nazivni kod",
+                "placeholder": "Nazivni kod područja"
+            },
+            "location": {
+                "title": "Lokacija",
+                "placeholder": "Lokacija područja"
+            },
+            "type": {
+                "title": "Tip",
+                "placeholder": "Odaberite tip",
+                "options": {
+                    "yard": "Dvorište",
+                    "warehouse": "Skladište"
+                }
+            },
+            "capacity": {
+                "title": "Kapacitet",
+                "placeholder": "Maksimalni kapacitet"
+            },
+            "occupancy": {
+                "title": "Zauzeće",
+                "placeholder": "Trenutno zauzeće"
+            }
+        }
+    },
+    "search": {
+        "languages": "Pretraži jezike..."
+    },
+    "representative": {
+        "title": "Predstavnik",
+        "select": "Odaberite predstavnika"
+    },
+    "scheduling": {
+        "title": "Dnevni raspored",
+        "subtitle": "Koristite automatizirani algoritam za analizu zadataka odabranog dana.",
+        "noVisits": "Nema posjeta brodova za odabrani datum.",
+        "visitsOnSelectedDay": "Posjete na odabrani datum",
+        "viewVisits": "Prikaži raspored zadataka",
+        "generateTasksButton": "Generiraj zadatke",
+        "aboutAlgorithmButton": "O algoritmu",
+        "fields": {
+            "algorithm": {
+                "title": "Algoritam raspoređivanja",
+                "placeholder": "Odaberite algoritam"
+            },
+            "relatedDocks": "Odaberite povezani pristanište"
+        },
+        "generateTasksModal": {
+            "title": "Dodatna logistika"
+        },
+        "aboutAlgorithmModal": {
+            "title": "O algoritmu",
+            "content": "Algoritam uzima u obzir obavijesti posjeta za datum i pristanište, provjerava dostupnost STS dizalica te procjenjuje trajanje po brzini; posjete održavanja se ignoriraju."
+        }
+    },
+    "notification": {
+        "id": "ID obavijesti",
+        "hazardous": "Opasno",
+        "nonHazardous": "Neopasno",
+        "arrival": "Dolazak",
+        "departure": "Odlazak",
+        "specialRequirements": "Posebni zahtjevi",
+        "none": "Nema",
+        "crew": "Posada",
+        "captain": "Kapetan",
+        "unknown": "Nepoznato",
+        "from": "Od",
+        "to": "Do",
+        "tabs": {
+            "dashboard": "Obavijesti",
+            "search": "Pretraži obavijesti",
+            "edit": "Uredi obavijest",
+            "create": "Stvori obavijest",
+            "makeDraft": "Stvori nacrt",
+            "myNotifications": "Moje obavijesti",
+            "review": "Pregled obavijesti",
+            "general": "Opći popis",
+            "byDate": "Kalendar",
+            "submit": "Pošalji obavijest",
+            "delete": "Izbriši obavijest"
+        },
+        "eventsOnDate": "Događaji na odabrani datum",
+        "noEventsOnDate": "Nema događaja",
+        "title": "Obavijesti o posjetu broda",
+        "subtitle": {
+            "dashboard": "Pregled obavijesti",
+            "search": "Upravljanje svim obavijestima",
+            "create": "Nova obavijest",
+            "edit": "Uredi obavijest",
+            "review": "Pregled obavijesti na čekanju"
+        },
+        "errors": {
+            "noNotificationId": "Nije naveden ID obavijesti"
+        },
+        "infoTitle": "Informacije o obavijesti",
+        "cargoTitle": "Informacije o teretu",
+        "vesselTitle": "Informacije o plovilu",
+        "manifestInfo": "Informacije o manifestu",
+        "fields": {
+            "openLoadManifest": "Otvori manifest utovara",
+            "openUnloadManifest": "Otvori manifest istovara",
+            "expectedArrival": "Očekivani dolazak",
+            "expectedDeparture": "Očekivani odlazak",
+            "isCargoHazardous": "Opasan teret",
+            "specialRequirements": "Posebni zahtjevi",
+            "captain": "Kapetan",
+            "totalCrewMembers": "Ukupno članova posade",
+            "safetyOfficers": "Sigurnosni službenici",
+            "loadCargoManifest": "Manifest utovara",
+            "unloadCargoManifest": "Manifest istovara",
+            "position": "Pozicija",
+            "area": "Područje",
+            "container": "Kontejner",
+            "crewMembers": "Članovi posade",
+            "status": "Status"
+        },
+        "timeline": {
+            "pending": "Na čekanju",
+            "inProgress": "U tijeku",
+            "completed": "Završeno",
+            "submitted": "Poslano",
+            "accepted": "Prihvaćeno",
+            "rejected": "Odbijeno"
+        },
+        "filters": {
+            "expectedArrivalFrom": "Dolazak od",
+            "expectedArrivalTo": "Dolazak do",
+            "withReason": "Sa razlogom",
+            "withDockAssigned": "Dodijeljeno pristanište"
+        },
+        "decision": {
+            "isFinal": "Završno",
+            "assignedDock": {
+                "title": "Dodijeljeno pristanište",
+                "placeholder": "Odaberite pristanište"
+            },
+            "reason": {
+                "title": "Razlog",
+                "placeholder": "Unesite razlog"
+            },
+            "status": "Status odluke"
+        }
+    },
+    "operationalWindow": {
+        "title": "Operativni prozor",
+        "printer": {
+            "addShift": "Dodaj smjenu",
+            "shifts": "Smjene:",
+            "noShifts": "Nema smjena.",
+            "startTime": "Početak",
+            "endTime": "Kraj",
+            "weekDays": "Radni dani"
+        },
+        "errors": {
+            "shiftOverlap": "Nevaljana smjena: preklapanje ili završetak prije početka."
         }
     }
 }
