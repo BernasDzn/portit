@@ -20,7 +20,7 @@ watch(() => props.modelValue, (val) => {
 // form for adding new officer
 const newOfficer = ref<Person>({
   name: '',
-  citizenId: '',
+  citizenID: '',
   nationality: '',
 });
 
@@ -28,7 +28,7 @@ const addOfficer = () => {
   if (!newOfficer.value.name) return; 
   officers.value.push({ ...newOfficer.value });
   emit('update:modelValue', officers.value);
-  newOfficer.value = { name: '', citizenId: '', nationality: '' };
+  newOfficer.value = { name: '', citizenID: '', nationality: '' };
 };
 
 const removeOfficer = (index: number) => {
@@ -44,8 +44,7 @@ const removeOfficer = (index: number) => {
     <div class="officer-list">
       <div class="officer-item" v-for="(officer, index) in officers" :key="index">
         <sl-card>
-            
-            <p> {{ officer.name }} ({{ officer.citizenId }})</p>
+            <p> {{ officer.name }} ({{ officer.citizenID }})</p>
             <p> Nationality: {{ officer.nationality }} </p>
 
             <sl-button variant="danger" size="small" @click="removeOfficer(index)">Remove</sl-button>
@@ -66,7 +65,7 @@ const removeOfficer = (index: number) => {
       />
       <sl-input
         placeholder="Citizenship ID"
-        v-model="newOfficer.citizenId"
+        v-model="newOfficer.citizenID"
         filled
       />
       <sl-button variant="primary" @click="addOfficer">Add Officer</sl-button>

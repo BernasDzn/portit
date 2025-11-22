@@ -79,8 +79,8 @@ export class VesselVisitNotificationService implements IVesselVisitNotificationS
         return res.data;
     }
 
-    async createVesselVisitNotification(notification: VesselVisitNotificationDto): Promise<VesselVisitNotification> {
-        const res = await this.http.post<VesselVisitNotification>("/VesselVisitNotification", notification);
+    async createVesselVisitNotification(notification: VesselVisitNotification): Promise<VesselVisitNotification> {
+        const res = await this.http.post<VesselVisitNotification>("/VesselVisitNotification", notification.toDto());
         return res.data;
     }
 
@@ -92,8 +92,9 @@ export class VesselVisitNotificationService implements IVesselVisitNotificationS
         return res.data;
     }
 
-    async updateVesselVisitNotification(notification: VesselVisitNotificationDto): Promise<VesselVisitNotification> {
-        const res = await this.http.put<VesselVisitNotification>(`/VesselVisitNotification/${notification.notificationId}`, notification);
+    async updateVesselVisitNotification(notification: VesselVisitNotification): Promise<VesselVisitNotification> {
+        console.log(notification.toDto());
+        const res = await this.http.put<VesselVisitNotification>(`/VesselVisitNotification/${notification.notificationId}`, notification.toDto());
         return res.data;
     }
 
