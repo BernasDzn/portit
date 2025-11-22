@@ -42,7 +42,7 @@ We have decided to include only 4 levels to our documentation. Not all levels ar
 
 ### Level 2
 #### Logic View
-![N2_Logic](./level_2/logic_views/svg/l2_logic_view/logicview_n4.svg)
+![N2_Logic](./level_2/logic_view/svg/logicview_n2.svg)
 #### Implementation View
 ![N2_Implementation](./level_2/implementation_view/svg/l2_implementation_view/logicview_n4.svg)
 ### Level 3
