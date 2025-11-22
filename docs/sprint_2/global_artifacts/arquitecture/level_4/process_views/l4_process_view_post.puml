@@ -6,10 +6,7 @@ skinparam defaultFontName FG Virgil
 skinparam shadowing false
 
 actor User as Actor
-participant "UI Pages" as UI <<presentation>>
-participant "UI XptoDto" as UiDto <<dto>>
-participant "UI XptoService" as UiService <<service>>
-participant "UI XptoModel" as UiModel <<model>>
+participant "U I" as UI <<presentation>>
 participant API as API <<application>>
 participant XptoController as Controller <<controller>>
 participant XptoService as Service <<service>>
@@ -20,92 +17,72 @@ database Database
 
 title Register Xpto
 
-Actor --> UI: Fill register form
 Actor --> UI: Register new Xpto
 activate UI
 
-    UI --> UiDto: new XptoDto(formData)
-    activate UiDto
-        UiDto --> UI: xptoDto
-    deactivate UiDto
+    UI --> API: HTTP POST /api/xpto
 
-    UI --> UiService: registerXpto(xptoDto)
-    activate UiService
+    activate API
 
-        UiService --> UiModel: new XptoModel(xptoDto)
-        activate UiModel
-            UiModel --> UiModel: Validate
-            UiModel --> UiService: xptoModel
-        deactivate UiModel
+        API --> Controller: route
+        activate Controller
 
-        UiService --> API: HTTP POST /api/xpto
-        activate API
+            Controller --> Service: Request registering
+            activate Service
 
-            alt Check authorization diagram
-                API --> Controller: route
-            end
-            activate Controller
+                Service --> Repository: GetXtpo(id)
+                activate Repository
+                    Repository --> Context: GetById(id)
+                    activate Context
+                    Context --> Database: SELECT
+                    Context --> Repository: xptoInstance?
+                    deactivate Context
+                    Repository --> Service: xptoInstance?
+                deactivate Repository
 
-                Controller --> Service: Request registering
-                activate Service
+                group if xptoInstance exists
+                    Service --> Controller: EntityAlreadyExistsException 
+                    activate Controller
+                        Controller --> API: Conflict()
+                        activate API
+                            API --> UI: HTTP Response
+                        deactivate API
+                        UI --> Actor: Error
+                    deactivate Controller
+                end
 
-                    Service --> Repository: GetXtpo(id)
-                    activate Repository
-                        Repository --> Context: GetById(id)
-                        activate Context
-                            Context --> Database: SELECT
-                            Context --> Repository: xptoInstance?
-                        deactivate Context
-                        Repository --> Service: xptoInstance?
-                    deactivate Repository
-
-                    group if xptoInstance exists
-                        Service --> Controller: EntityAlreadyExistsException 
-                        activate Controller
-                            Controller --> API: Conflict()
-                            activate API
-                                API --> UiService: HTTP Response
-                            deactivate API
-                            UiService --> UI: Error
-                        deactivate Controller
-                    end
-
-                    Service --> Repository: RegisterXpto(data)
-                    activate Repository
-
-                        Repository --> Model: new()
-                        activate Model
-                            Model --> Model: validate()
-                            Model --> Repository: XptoInstance
-                        deactivate Model
-
-                        Repository --> Context: Save(XptoInstance)
-                        activate Context
-                            Context --> Database: INSERT
-                            Context --> Repository: status
-                        deactivate Context
-
-                        Repository --> Service: xptoInstance
-                    deactivate Repository
-
-                    Service --> Model: toDto()
+                Service --> Repository: RegisterXpto(data)
+                activate Repository
+                
+                    Repository --> Model: new()
                     activate Model
-                        Model --> Service: xptoInstanceDto
+                        Model --> Model: validate()
+                        Model --> Repository: XptoInstance
                     deactivate Model
+                    Repository --> Context: Save(XptoInstance)
 
-                    Service --> Controller: xptoInstanceDto
-                deactivate Service
+                    activate Context
+                        Context --> Database: INSERT
+                        Context --> Repository: status
+                    deactivate Context
 
-                Controller --> API: CreatedAt(xptoResponseDto)
-            deactivate Controller
+                    Repository --> Service: xptoInstance
+                deactivate Repository
 
-            API --> UiService: HTTP Response
-        deactivate API
+                Service --> Model: toDto()
+                activate Model
+                    Model --> Service: xptoInstanceDto
+                deactivate Model
 
-        UiService --> UI: registration success
-    deactivate UiService
+                Service --> Controller: xptoInstanceDto
+            deactivate Service
 
+            Controller --> API: CreatedAt(xptoResponseDto)
+        deactivate Controller
+
+        API --> UI: HTTP Reponse
+    deactivate API
 UI --> Actor: Results
 deactivate UI
-
+            
 @enduml
