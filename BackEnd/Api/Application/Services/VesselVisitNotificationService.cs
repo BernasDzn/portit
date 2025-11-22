@@ -264,9 +264,6 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
             .Where(c => c.Status == ResourceStatus.Available)
             .ToList();
 
-        // Select only available cranes
-        cranesServingDock = cranesServingDock.Where(c => c.Status == ResourceStatus.Available);
-
         if (!cranesServingDock.Any())
             throw new EntityNotFoundException($"No STS cranes found serving dock with code {dock.Code.Value}.");
 
@@ -332,12 +329,6 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
     private uint CalculateBaseHour(DateTime pivot, DateTime target)
     {
         return (uint)(target - pivot).TotalHours;
-    }
-
-    private double CalculateLoadUnloadingTime(ICollection<CargoTransport> cargoManifest, STSCrane crane)
-    {
-        uint totalContainers = (uint)cargoManifest.Count;
-        return (double)totalContainers / (double)crane.ContainersPerHour;
     }
 
     private async Task<OperationalWindow> CalculateEffectiveCraneOperatingWindow(STSCrane crane, DateTime date, uint daysAhead)

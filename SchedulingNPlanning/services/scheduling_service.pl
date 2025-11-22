@@ -26,8 +26,10 @@ schedule_daily_operations1(JsonData, _, 'Missing resource (qualified staff or ST
 
 schedule_daily_operations1(JsonData, Algorithm, ScheduleResult, Metrics) :-
     extract_scheduling_data(JsonData, VesselFacts, CraneFacts),
-    retractall(vessel(_,_,_,_,_,_)), retractall(crane(_,_)),
-    flatten(VesselFacts, FlatVesselFacts), flatten(CraneFacts, FlatCraneFacts),
+    retractall(vessel(_,_,_,_,_,_)),
+    retractall(crane(_,_)),
+    flatten(VesselFacts, FlatVesselFacts),
+    flatten(CraneFacts, FlatCraneFacts),
     maplist(assertz, FlatCraneFacts),
     
     % Try single-crane first
@@ -84,7 +86,8 @@ run_algorithm(Algorithm, Result, Delay, Time) :-
 assert_single_crane([]).
 assert_single_crane([vessel(Name, Arrival, Departure, Unload, Load, _)|Rest]) :-
     findall(crane(CraneName, Speed), crane(CraneName, Speed), AllCranes),
-    sort_cranes_by_speed(AllCranes, [crane(FastestName, FastestSpeed)|_]),
+    % C# already filters and sends available cranes, so just take first (fastest)
+    AllCranes = [crane(FastestName, FastestSpeed)|_],
     format(user_error, 'Vessel ~w assigned crane: ~w (speed: ~w)~n', [Name, FastestName, FastestSpeed]),
     assertz(vessel(Name, Arrival, Departure, Unload, Load, [crane(FastestName, FastestSpeed)])),
     assert_single_crane(Rest).
@@ -158,14 +161,6 @@ take_n(Count, [Crane|RestCranes], [Crane|TakenRest]) :-
     Count1 is Count - 1, 
     take_n(Count1, RestCranes, TakenRest).
 take_n(Count, [], []) :- Count > 0.
-
-% Sort cranes by speed (fastest first)
-sort_cranes_by_speed(Cranes, SortedCranes) :-
-    predsort(compare_crane_speed, Cranes, AscendingCranes), 
-    reverse(AscendingCranes, SortedCranes).
-
-compare_crane_speed(Order, crane(_, Speed1), crane(_, Speed2)) :- 
-    compare(Order, Speed1, Speed2).
 
 % Extract data
 extract_scheduling_data([], [], []).
