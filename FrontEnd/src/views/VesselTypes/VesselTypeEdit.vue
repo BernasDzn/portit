@@ -5,7 +5,7 @@ import { useAlerts } from '@/composables/alerts';
 import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
 import type { VesselTypeDto } from '@/model/dto/VesselTypeDto';
-import type { VesselType } from '@/model/VesselType';
+import { VesselType } from '@/model/VesselType';
 import type { IVesselTypeService } from '@/service/IService/IVesselTypeService';
 import { ref, onMounted, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -44,15 +44,8 @@ onMounted(async () => {
     try {
         const data = await vesselTypeService.getVesselTypeByName(vesselTypeName);
         if (!data) return;
+        vesselType.value = data;
 
-        vesselType.value.name = data.name;
-        vesselType.value.description = data.description;
-        vesselType.value.physicalCharacteristics.length = data.physicalCharacteristics?.length;
-        vesselType.value.physicalCharacteristics.depth = data.physicalCharacteristics?.depth;
-        vesselType.value.physicalCharacteristics.draft = data.physicalCharacteristics?.draft;
-        vesselType.value.maxNumberOfRows = data.maxNumberOfRows;
-        vesselType.value.maxNumberOfBays = data.maxNumberOfBays;
-        vesselType.value.maxNumberOfTiers = data.maxNumberOfTiers;
     } catch (err) {
         console.error('Failed to load vessel type', err);
     }
@@ -68,7 +61,7 @@ const updateVesselType = async (obj: VesselType) => {
         return;
     }
 
-    vesselTypeService.updateVesselType(obj);
+    vesselTypeService.updateVesselType(new VesselType(obj));
 };
 
 </script>

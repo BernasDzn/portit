@@ -2,12 +2,12 @@ import { Dock } from "./Dock";
 import type { StorageAreaDto, DockRelationDto } from "./dto/StorageAreaDto";
 
 export class DockRelation {
-	private _dock: Dock;
+	private _dock: string;
 	private _distance?: number;
 	private _isServingDock: boolean;
 
 	constructor(params: {
-		dock: Dock;
+		dock: string;
 		distance?: number;
 		isServingDock: boolean;
 	}) {
@@ -18,13 +18,13 @@ export class DockRelation {
 		this._isServingDock = params.isServingDock;
 	}
 
-	get dock(): Dock { return this._dock; }
+	get dock(): string { return this._dock; }
 	get distance(): number | undefined { return this._distance; }
 	get isServingDock(): boolean { return this._isServingDock; }
 
 	toDto(): DockRelationDto {
 		return {
-			dockCode: this._dock.code,
+			dockCode: this._dock,
 			distance: this._distance,
 			isServingDock: this._isServingDock
 		};
@@ -52,6 +52,7 @@ export class StorageArea {
 		currentOccupancy: number;
 		dockServices?: DockRelation[];
 	}) {
+
 		if (!params.nameCode) throw new Error('Name code cannot be null or empty.');
 		if (!params.location) throw new Error('Location cannot be null or empty.');
 		if (params.currentOccupancy > params.capacity) {

@@ -32,13 +32,13 @@ export class StorageAreaService implements IStorageAreaService {
 		return res.data;
 	}
 
-	async createStorageArea(storageArea: StorageAreaDto): Promise<StorageArea> {
-		const res =  await this.http.post<StorageArea>('/StorageArea', storageArea);
+	async createStorageArea(storageArea: StorageArea): Promise<StorageArea> {
+		const res =  await this.http.post<StorageArea>('/StorageArea', storageArea.toDto());
 		return res.data;
 	}
 
-	async updateStorageArea(storageArea: StorageAreaDto): Promise<StorageArea> {
-		const res = await this.http.put<StorageArea>(`/StorageArea/${storageArea.nameCode}`, storageArea);
+	async updateStorageArea(storageArea: StorageArea): Promise<StorageArea> {
+		const res = await this.http.put<StorageArea>(`/StorageArea/${storageArea.nameCode}`, storageArea.toDto());
 		return res.data;
 	}
 

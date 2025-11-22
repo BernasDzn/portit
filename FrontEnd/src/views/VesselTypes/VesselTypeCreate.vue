@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import type { VesselType } from '@/model/VesselType';
+import { VesselType } from '@/model/VesselType';
 import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
 import { useI18n } from 'vue-i18n';
@@ -35,7 +35,7 @@ const {t} = useI18n();
 const vesselTypeService = container.get<IVesselTypeService>(TYPES.vesselTypeService);
 
 const submitVesselType = (obj: any) =>
-    vesselTypeService.createVesselType(obj);
+    vesselTypeService.createVesselType(new VesselType(obj));
 
 </script>
 

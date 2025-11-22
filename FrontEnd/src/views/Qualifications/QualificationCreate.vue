@@ -7,6 +7,7 @@ import { container } from '@/inversify.config';
 import type { IQualificationService } from '@/service/IService/IQualificationService';
 import TYPES from '@/inversify/types';
 import type { QualificationDto } from '@/model/dto/QualificationDto';
+import { Qualification } from '@/model/Qualifications';
 
 const qualificationService = container.get<IQualificationService>(TYPES.qualificationService);
 
@@ -17,8 +18,8 @@ const qualification = ref<QualificationDto>({
 
 const { t } = useI18n();
 
-const submitQualification = (obj: QualificationDto) => 
-    qualificationService.addQualification(obj);
+const submitQualification = (obj: any) => 
+    qualificationService.addQualification(new Qualification(obj));
 
 </script>
 

@@ -15,7 +15,8 @@ import { container } from '@/inversify.config';
 import type { IStorageAreaService } from '@/service/IService/IStorageAreaService';
 import TYPES from '@/inversify/types';
 import type { DockRelationDto, StorageAreaDto } from '@/model/dto/StorageAreaDto';
-import { StorageArea } from '@/model/StorageArea';
+import { DockRelation, StorageArea } from '@/model/StorageArea';
+import ObjectSelector from '@/components/crud/ObjectSelector.vue';
 
 const storageAreaService = container.get<IStorageAreaService>(TYPES.storageAreaService);
 const dockService = container.get<IDockService>(TYPES.dockService);
@@ -25,30 +26,40 @@ const storageAreaNameCode = String(route.params.name || '');
 
 const { t } = useI18n();
 
-const storageArea = ref<StorageAreaDto>({
+const storageArea = ref({
     nameCode: '',
     location: '',
     type: 0,
     capacity: 0,
     currentOccupancy: 0,
-    dockServices: [] as DockRelationDto[],
+    dockServices: [] as DockRelation[],
+});
+
+const storageAreaTypes = [
+    t('storageArea.fields.type.options.yard'),
+    t('storageArea.fields.type.options.warehouse')
+];
+
+const selectedTypeIndex = ref(null);
+
+watch(selectedTypeIndex, (idx) => {
+    storageArea.value.type = selectedTypeIndex.value !== null ? selectedTypeIndex.value.idx : 0;
 });
 
 const allDocks = ref<Array<Dock>>([]);
 
-function getDockLabel(rel: any) {
-    // If the server already included the nested dock object
-    if (rel && rel.dock) {
-        if (rel.dock.code) return rel.dock.code;
-        if (rel.dock.name) return rel.dock.name;
-    }
-}
+const selectedDocks = ref<Array<Dock>>([]);
+watch(selectedDocks, (newDocks) => {
+    const dockCodes = newDocks.map(dock => dock.code);
+    updateDockRelations(dockCodes);
+} );
 
 function updateDockRelations(dockCodes: string[]) {
     const selected = new Set(dockCodes || [])
 
     storageArea.value.dockServices = storageArea.value.dockServices.filter(rel => selected.has(rel.dockCode))
 
+    // Add new relations for any selected codes not already present
     dockCodes.forEach(dockCode => {
         const existingRelation = storageArea.value.dockServices.find(relation => relation.dockCode === dockCode);
         if (!existingRelation) {
@@ -58,24 +69,45 @@ function updateDockRelations(dockCodes: string[]) {
             }
         }
     });
-}
 
-function updateType(typeValue: string) {
-    storageArea.value.type = parseInt(typeValue);
+    // Map to DockRelation class
+    storageArea.value.dockServices = storageArea.value.dockServices.map(rel => (new DockRelation({
+        dock: rel.dockCode,
+        distance: rel.distance || 0,
+        isServingDock: true
+    })));
 }
 
 onMounted(async () => {
+
+    allDocks.value = (await dockService.getDocks()).items || [];
+
     if (!storageAreaNameCode) return;
-    dockService.getDocks().then(page => {
-        allDocks.value = page.items || [];
-    });
+    try {
+        
+        const area = await storageAreaService.getStorageAreaById(storageAreaNameCode)
+        storageArea.value.nameCode = area.nameCode;
+        storageArea.value.location = area.location;
+        storageArea.value.type = area.type;
+        storageArea.value.capacity = area.capacity;
+        storageArea.value.currentOccupancy = area.currentOccupancy;
+        storageArea.value.dockServices = area.dockServices.map(rel => new DockRelation({
+            dock: rel.dock,
+            distance: rel.distance,
+            isServingDock: rel.isServingDock
+        }));
+        selectedTypeIndex.value = { name: storageAreaTypes[area.type], idx: area.type };
+        updateDockRelations(storageArea.value.dockServices.map(rel => rel.dock.code));
+
+        console.log('Loaded storage area:', storageArea.value);
+
+    } catch (error) {
+        console.error('Failed to load storage area:', error);
+    }
 });
 
-const updateStorageArea = (obj: any) => {
-
-    console.log('Updating storage area:', obj);
-    storageAreaService.updateStorageArea(obj);
-}
+const updateStorageArea = (obj: any) => 
+    storageAreaService.updateStorageArea(new StorageArea(obj));
 
 </script>
 
@@ -95,49 +127,43 @@ const updateStorageArea = (obj: any) => {
 
         <h1 class="title">{{ t('storageArea.tabs.edit') }}</h1>
         <p class="subtitle">{{ t('storageArea.subtitle.edit') }}</p>
-        <EntityForm :object="storageArea" :editing-id="storageAreaNameCode" :submit-function="updateStorageArea" :fetchingFunction="() => storageAreaService.getStorageAreaById(storageAreaNameCode)">
+        <EntityForm :object="storageArea" :submit-function="updateStorageArea">
             <div class="form-fields">
                 <FormField input-id="storagearea-namecode" class="field" :name="t('storageArea.fields.nameCode.title')" v-model="storageArea.nameCode" :placeholderText="t('storageArea.fields.nameCode.placeholder')" required pattern="^[a-zA-Z0-9]*$"/>
                 <FormField input-id="storagearea-location" class="field" :name="t('storageArea.fields.location.title')" v-model="storageArea.location" :placeholderText="t('storageArea.fields.location.placeholder')" required/>
                 
-                <div class="field">
-                    <label for="storagearea-type">{{ t('storageArea.fields.type.title') }}</label>
-                    <sl-select 
-                        id="storagearea-type"
-                        :value="storageArea.type.toString()"
-                        @sl-change="updateType($event.target.value)" 
-                        :placeholder="t('storageArea.fields.type.placeholder')"
-                        required
-                    >
-                        <sl-option v-for="(typeName, typeKey) in StorageArea.sa_type" :key="typeKey" :id="`${typeKey}`" :value="typeKey">{{ t(`storageArea.fields.type.options.${typeName.toLowerCase()}`) }}</sl-option>
-                    </sl-select>
-                </div>
+                <ObjectSelector
+                    class="field-dropdown"
+                    :name="t('storageArea.fields.type.title') + '*'"
+                    v-model="selectedTypeIndex"
+                    :fetch-function="() => storageAreaTypes.map((name, idx) => ({ name, idx }))"
+                    :fetch-on-mount="true"
+                    :placeholderText="t('storageArea.fields.type.placeholder')"
+                    labelKey="name"
+                    required
+                />
 
                 <FormField input-id="storagearea-capacity" class="field" :name="t('storageArea.fields.capacity.title')" v-model.number="storageArea.capacity" :placeholderText="t('storageArea.capacity.placeholder')" pattern="^[0-9]\d*$" required/>
                 <FormField input-id="storagearea-occupancy" class="field" :name="t('storageArea.fields.occupancy.placeholder')" v-model.number="storageArea.currentOccupancy" :placeholderText="t('storageArea.currentOccupancy.placeholder')" pattern="^[0-9]\d*$" required/>
 
                 <div style="flex:100%; width: 100%;">
                     <p class="section-title">{{ t('dock.title') }}</p>
-                    <EntityDropdown
-                        input-id="storagearea-docks"
+                    <ObjectSelector
                         class="field-dropdown"
-                        :name="t('physicalResource.fields.servingDocks.title')"
-                        :fetch-function="() => dockService.getDocks().then(page => (page.items || []).map(t => t.code))"
-                        :fetch-on-mount="true"
+                        :name="t('physicalResource.fields.servingDocks.title') + '*'"
+                        :fetch-function="() => dockService.getDocks()"
                         :placeholderText="t('physicalResource.fields.servingDocks.placeholder')"
-                        :default-values="storageArea.dockServices.map(ds => getDockLabel(ds))"
-                        :required="false"
-                        :multiple="true"
-                        valueKey="code"
                         labelKey="name"
-                        @sl-change="updateDockRelations($event.target.value)"
+                        required
+                        multiple
+                        v-model="selectedDocks"
                     />
                     <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
-                        <sl-card class="card-header" style="width: fit-content;" v-for="dock_p in storageArea.dockServices" :key="dock_p.dockCode">
+                        <sl-card class="card-header" style="width: fit-content;" v-for="dock in storageArea.dockServices" :key="dock.dockCode" >
                             <div slot="header">
-                                {{ getDockLabel(dock_p) }} {{ t('storageArea.create.distance_meters') }}
+                                {{ dock.dockCode }} {{ t('storageArea.create.distance_meters') }}
                             </div>
-                            <FormField class="field" :name="`null`" v-model="dock_p.distance" :placeholderText="t('storageArea.create.distance_meters')" pattern="^[0-9]+(\.[0-9]{1,2})?$" required/>
+                            <FormField class="field" :name="`null`" v-model="dock.distance" :placeholderText="t('storageArea.create.distance_meters')" pattern="^[0-9]+(\.[0-9]{1,2})?$" required/>
                         </sl-card>
                     </div>
                 </div>

@@ -40,8 +40,8 @@ export class StaffService implements IStaffService {
 		return staff!;
 	}
 
-	async createStaff(staff: StaffDto): Promise<Staff> {
-		const res =  await this.http.post<Staff>('/Staff', staff);
+	async createStaff(staff: Staff): Promise<Staff> {
+		const res =  await this.http.post<Staff>('/Staff', staff.toDto());
 		return res.data;
 	}
 
@@ -49,8 +49,8 @@ export class StaffService implements IStaffService {
 		await this.http.delete<void>(`/Staff/${mechanographicNumber}`);
 	}
 
-	async updateStaff(staff: StaffDto): Promise<Staff> {
-		const res = await this.http.put<Staff>(`/Staff/${staff.mechanographicNumber}`, staff);
+	async updateStaff(staff: Staff): Promise<Staff> {
+		const res = await this.http.put<Staff>(`/Staff/${staff.mechanographicNumber}`, staff.toDto());
 		return res.data;
 	}
 

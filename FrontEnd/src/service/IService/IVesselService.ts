@@ -7,8 +7,8 @@ export interface IVesselService {
     getVesselByIMO(imo: string): Promise<Vessel>;
     getVesselByOwner(email: string): Promise<Vessel[]>;
 
-    createVessel(vessel: VesselDto): Promise<Vessel>;
-    updateVessel(vessel: VesselDto): Promise<Vessel>;
+    createVessel(vessel: Vessel): Promise<Vessel>;
+    updateVessel(vessel: Vessel): Promise<Vessel>;
 
     getNumberOfVessels(): Promise<number>;
 }
