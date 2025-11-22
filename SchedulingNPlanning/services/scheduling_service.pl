@@ -76,8 +76,8 @@ capture_assignments([(VesselName, Start, End)|Rest], [(VesselName, Start, End, C
 % Run algorithm with timing
 run_algorithm(Algorithm, Result, Delay, Time) :-
     get_time(StartTime),
-    ( Algorithm = 'optimal' -> obtain_seq_shortest_delay(Result, Delay)
-    ; Algorithm = 'greedy' -> obtain_seq_greedy(Result, Delay)
+    ( Algorithm == "optimal" -> obtain_seq_shortest_delay(Result, Delay)
+    ; Algorithm == "greedy" -> obtain_seq_greedy(Result, Delay)
     ; format(user_error, 'Unknown algorithm ~w, using optimal~n', [Algorithm]), obtain_seq_shortest_delay(Result, Delay) ),
     get_time(EndTime), 
     Time is EndTime - StartTime.
