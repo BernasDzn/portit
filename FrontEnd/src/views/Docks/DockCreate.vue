@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue';
 import type { IDockService } from '@/service/IService/IDockService';
-import type { Dock } from '@/model/Dock';
+import { Dock } from '@/model/Dock';
 import type { IVesselTypeService } from '@/service/IService/IVesselTypeService';
 import EntityForm from '@/components/crud/EntityForm.vue';
 import EntityDropdown from '@/components/crud/EntityDropdown.vue';
@@ -10,10 +10,11 @@ import {useI18n} from 'vue-i18n';
 import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
 import type { DockDto } from '@/model/dto/DockDto';
+import ObjectSelector from '@/components/crud/ObjectSelector.vue';
 
 const { t } = useI18n();
 
-const dock = ref<DockDto>({
+const dock = ref({
     code: '',
     name: '',
     location: '',
@@ -28,9 +29,10 @@ const dock = ref<DockDto>({
 const dockService = container.get<IDockService>(TYPES.dockService);
 const vesselTypeService = container.get<IVesselTypeService>(TYPES.vesselTypeService);
 
-const submitDock = (obj: any) => 
-    dockService.createDock(obj);
-
+const submitDock = (obj: any) => {
+    console.log('Submitting dock:', new Dock(obj));
+    dockService.createDock(new Dock(obj));
+}
 
 </script>
 
@@ -64,16 +66,26 @@ const submitDock = (obj: any) =>
                     <span class="section-divider"></span>
                     <div>
                         <p class="section-title">{{ t('dock.fields.supportedVesselTypes.title') }}</p>
-                        <EntityDropdown
+                        <!-- <EntityDropdown
                             class="field-dropdown"
                             :name="t('dock.fields.supportedVesselTypes.vesselTypes.title') + '*'"
                             v-model="dock.supportedVesselTypes"
                             :fetch-function="() => vesselTypeService.getVesselTypes()"
                             :fetch-on-mount="true"
                             :placeholderText="t('dock.fields.supportedVesselTypes.vesselTypes.placeholder')"
-                            valueKey="name"
                             labelKey="name"
                             inputId="dock-vessel-types"
+                            required
+                            multiple
+                        /> -->
+                        <ObjectSelector
+                            class="field-dropdown"
+                            :name="t('dock.fields.supportedVesselTypes.vesselTypes.title') + '*'"
+                            v-model="dock.supportedVesselTypes"
+                            :fetch-function="() => vesselTypeService.getVesselTypes()"
+                            :fetch-on-mount="true"
+                            :placeholderText="t('dock.fields.supportedVesselTypes.vesselTypes.placeholder')"
+                            labelKey="name"
                             required
                             multiple
                         />

@@ -6,8 +6,8 @@ export interface IDockService {
     getDocks(filtering?: Filter<Dock>): Promise<Page<Dock>>
     getDockByCode(code: string): Promise<Dock | undefined>;
 
-    createDock(dock: DockDto): Promise<Dock>;
-    updateDock(dock: DockDto): Promise<Dock>;
+    createDock(dock: Dock): Promise<Dock>;
+    updateDock(dock: Dock): Promise<Dock>;
     
     getNumberOfDocks(): Promise<number>;
 }
