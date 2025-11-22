@@ -22,12 +22,6 @@ const fetchVesselVisitNotifications = async (filter: Filter<null>): Promise<Page
         return await vesselVisitNotificationService.getVesselVisitNotificationsForReview(filter);
 };
 
-onMounted(async () => {
-    if (user.value.role !== 0) {
-        router.push('/unauthorized');
-    }
-});
-
 </script>
 
 <template>

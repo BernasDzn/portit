@@ -75,8 +75,3 @@ obtain_seq_shortest_delay1:-
 compare_shortest_delay(SeqTriplets,S):-
  shortest_delay(_,SLower),
     ((S<SLower,!,retract(shortest_delay(_,_)),asserta(shortest_delay(SeqTriplets,S)));true).
-
-allowed_interval(Day, Start, End) :-
-    interval(Day, IStart, IEnd),
-    Start >= IStart,
-    End   =< IEnd.

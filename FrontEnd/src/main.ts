@@ -50,6 +50,7 @@ const checkForAuthorization = async () => {
         // we have to call this again grrr
         startApp();
 
+        console.error('Error during authentication check:', error);
         router.push('/unauthorized');
     } finally {
         startApp();
