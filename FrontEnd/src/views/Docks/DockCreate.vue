@@ -66,24 +66,12 @@ const submitDock = (obj: any) => {
                     <span class="section-divider"></span>
                     <div>
                         <p class="section-title">{{ t('dock.fields.supportedVesselTypes.title') }}</p>
-                        <!-- <EntityDropdown
-                            class="field-dropdown"
-                            :name="t('dock.fields.supportedVesselTypes.vesselTypes.title') + '*'"
-                            v-model="dock.supportedVesselTypes"
-                            :fetch-function="() => vesselTypeService.getVesselTypes()"
-                            :fetch-on-mount="true"
-                            :placeholderText="t('dock.fields.supportedVesselTypes.vesselTypes.placeholder')"
-                            labelKey="name"
-                            inputId="dock-vessel-types"
-                            required
-                            multiple
-                        /> -->
+
                         <ObjectSelector
                             class="field-dropdown"
                             :name="t('dock.fields.supportedVesselTypes.vesselTypes.title') + '*'"
                             v-model="dock.supportedVesselTypes"
                             :fetch-function="() => vesselTypeService.getVesselTypes()"
-                            :fetch-on-mount="true"
                             :placeholderText="t('dock.fields.supportedVesselTypes.vesselTypes.placeholder')"
                             labelKey="name"
                             required

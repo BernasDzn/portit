@@ -5,9 +5,11 @@ import { onMounted, ref, watch } from 'vue';
 const props = defineProps({
     name: { type: String, required: true },
     placeholderText: { type: String, default: 'Select an option' },
+    
     // The model is always an object, want it other way? map it i dont give a fuck
     modelValue: { type: [Object], default: {} },
     enabled: { type: Boolean, default: true },
+    
     // Fetching is always done via function, want a static list? pass a function that returns it I dont give a fuck
     fetchFunction: { type: Function, default: null },
     fetchOnMount: { type: Boolean, default: false },
@@ -33,6 +35,7 @@ const makeKey = (opt: Object) => {
 };
 
 const applyModelValueToInternal = () => {
+    console.log('Applying modelValue to internalValue:', props.modelValue);
     if (props.multiple)
         internalValue.value = (props.modelValue as any[]).map((obj) => makeKey(obj));
     else
@@ -75,7 +78,7 @@ const onChange = (event: any) => {
     const value = event.target.value || event.currentTarget.value; // This comes from shoelace
 
     if (props.multiple) {
-        
+
         const selectedKeys: string[] = value;
         //console.log('Selected keys:', selectedKeys.);
         const selectedObjects = selectedKeys
@@ -92,8 +95,9 @@ const onChange = (event: any) => {
 
 // Sync internalValue when modelValue changes
 watch(() => props.modelValue, (newVal) => {
+    console.log('modelValue changed:', newVal);
     if (props.multiple)
-        internalValue.value = (newVal as any[]).map((obj) => makeKey(obj));
+        internalValue.value = newVal ? (newVal as any[]).map((obj) => makeKey(obj)) : [];
     else 
         internalValue.value = newVal ? makeKey(newVal) : null;
 }, { immediate: true });

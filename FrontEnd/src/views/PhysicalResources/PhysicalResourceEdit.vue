@@ -14,6 +14,8 @@ import { useAlerts } from '@/composables/alerts';
 import type { IPhysicalResourceService } from '@/service/IService/IPhysicalResourceService';
 import type { IDockService } from '@/service/IService/IDockService';
 import type { IQualificationService } from '@/service/IService/IQualificationService';
+import { STSCrane, Truck, YardCrane } from '@/model/PhysicalResource';
+import ObjectSelector from '@/components/crud/ObjectSelector.vue';
 
 const { t } = useI18n();
 const route = useRoute();
@@ -26,7 +28,7 @@ const qualificationService = container.get<IQualificationService>(TYPES.qualific
 const resourceCode = String(route.params.code || '');
 const type = ref(0);
 
-const genericResource = ref<any>({
+const genericResource = ref({
   code: '',
   description: '',
   status: '',
@@ -61,30 +63,30 @@ const update = () => {
     status: statusValues[obj.status],
     setupTimeInMinutes: obj.setupTime,
     operationalWindow: obj.operationalWindow,
-    qualificationsCodes: obj.qualifications,
+    qualifications: obj.qualifications,
   };
 
   switch (type.value) {
     case 0:
-      return resourceService.updateSTSCrane({
+      return resourceService.updateSTSCrane(new STSCrane({
         ...base,
         liftingCapacity: obj.liftingCapacity,
-        servingDockCode: obj.servingDock,
+        servingDock: obj.servingDock,
         containersPerHour: obj.containersPerHour,
-      });
+      }));
     case 1:
-      return resourceService.updateYardCrane({
+      return resourceService.updateYardCrane(new YardCrane({
         ...base,
         liftingCapacity: obj.liftingCapacity,
         containersPerHour: obj.containersPerHour,
-      });
+      }));
     case 2:
-      return resourceService.updateTruck({
+      return resourceService.updateTruck(new Truck({
         ...base,
         maxLoadCapacity: obj.maxLoadCapacity,
         averageSpeed: obj.averageSpeed,
         containersPerTrip: obj.containersPerTrip,
-      });
+      }));
   }
 };
 
@@ -98,19 +100,11 @@ const getById = async () => {
   const statusKey = Object.keys(statusValues);
   genericResource.value = {
     ...genericResource.value,
-    code: res.code,
-    description: res.description,
+    ...res,
     status: statusKey[res.status],
-    setupTime: res.setupTimeInMinutes,
-    operationalWindow: res.operationalWindow,
-    qualifications: res.qualifications?.map((q: any) => q.idCode) || [],
-    liftingCapacity: res.liftingCapacity || 0,
-    servingDock: res.servingDock?.code || null,
-    containersPerHour: res.containersPerHour || 0,
-    maxLoadCapacity: res.maxLoadCapacity || 0,
-    averageSpeed: res.averageSpeed || 0,
-    containersPerTrip: res.containersPerTrip || 0,
   };
+
+  console.log('Loaded resource:', genericResource.value);
 };
 
 onMounted(async () => {
@@ -146,7 +140,6 @@ onMounted(async () => {
     <p class="subtitle">{{ t('physicalResource.subtitle.edit') }}</p>
 
     <EntityForm
-      :editing-id="resourceCode"
       :object="genericResource"
       :submit-function="update"
       class="group"
@@ -191,15 +184,15 @@ onMounted(async () => {
 
             <span class="section-divider"></span>
 
-            <EntityDropdown
+            <ObjectSelector
                 class="field-dropdown"
-                :name="t('staff.fields.qualifications.title') + '*'"
+                :name="`${t('physicalResource.fields.qualifications.title')}*`"
                 v-model="genericResource.qualifications"
-                :fetch-function="() => qualificationService.getQualifications().then(page => (page.items || []).map(t => t.idCode))"
+                :fetch-function="() => qualificationService.getQualifications()"
                 fetch-on-mount
-                :placeholderText="t('staff.fields.qualifications.placeholder')"
+                labelKey="qualificationName"
+                required
                 multiple
-                input-id="pr-qualifications"
             />
 
             <span class="section-divider"></span>
@@ -228,17 +221,15 @@ onMounted(async () => {
 
       <!-- STS Crane -->
       <div v-if="type === 0">
-        <EntityDropdown
-          class="field-dropdown"
-          :name="`${t('physicalResource.fields.servingDocks.title')}*`"
-          v-model="genericResource.servingDock"
-          :fetch-function="() => dockService.getDocks()"
-          fetch-on-mount
-          :placeholderText="t('physicalResource.fields.servingDocks.placeholder')"
-          valueKey="code"
-          labelKey="name"
-          required
-          input-id="pr-servingDock"
+        <ObjectSelector
+            class="field-dropdown"
+            :name="`${t('physicalResource.fields.servingDocks.title')}*`"
+            v-model="genericResource.servingDock"
+            :fetch-function="() => dockService.getDocks()"
+            :fetch-on-mount="true"
+            :placeholderText="t('physicalResource.fields.servingDocks.placeholder')"
+            labelKey="name"
+            required
         />
         <br />
         <FormField

@@ -9,11 +9,11 @@ export interface IPhysicalResourceService {
     getNumberOfPhysicalResources(): Promise<number>;
     deactivatePhysicalResource(id: string): Promise<void>;
 
-    addSTSCrane(value: STSCraneDto): Promise<STSCrane>;
-    addYardCrane(value: YardCraneDto): Promise<YardCrane>;
-    addTruck(value: TruckDto): Promise<Truck>;
+    addSTSCrane(value: STSCrane): Promise<STSCrane>;
+    addYardCrane(value: YardCrane): Promise<YardCrane>;
+    addTruck(value: Truck): Promise<Truck>;
 
-    updateSTSCrane(value: STSCraneDto): Promise<STSCrane>;
-    updateYardCrane(value: YardCraneDto): Promise<YardCrane>;
-    updateTruck(value: TruckDto): Promise<Truck>;
+    updateSTSCrane(value: STSCrane): Promise<STSCrane>;
+    updateYardCrane(value: YardCrane): Promise<YardCrane>;
+    updateTruck(value: Truck): Promise<Truck>;
 }

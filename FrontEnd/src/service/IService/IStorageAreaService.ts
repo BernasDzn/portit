@@ -6,8 +6,8 @@ export interface IStorageAreaService {
 	getStorageAreas(filtering?: Filter<{ nameCode: string }>): Promise<Page<StorageArea>>;
 	getStorageAreaById(id: string): Promise<StorageArea | undefined>;
 	
-	createStorageArea(storageArea: StorageAreaDto): Promise<StorageArea>;
-	updateStorageArea(storageArea: StorageAreaDto): Promise<StorageArea>;
+	createStorageArea(storageArea: StorageArea): Promise<StorageArea>;
+	updateStorageArea(storageArea: StorageArea): Promise<StorageArea>;
 	
 	getNumberOfStorageAreas(): Promise<number>;
 }
