@@ -2,12 +2,12 @@ import { Dock } from "./Dock";
 import type { StorageAreaDto, DockRelationDto } from "./dto/StorageAreaDto";
 
 export class DockRelation {
-	private _dock: string;
+	private _dock: Dock;
 	private _distance?: number;
 	private _isServingDock: boolean;
 
 	constructor(params: {
-		dock: string;
+		dock: Dock;
 		distance?: number;
 		isServingDock: boolean;
 	}) {
@@ -18,13 +18,17 @@ export class DockRelation {
 		this._isServingDock = params.isServingDock;
 	}
 
-	get dock(): string { return this._dock; }
+	get dock(): Dock { return this._dock; }
 	get distance(): number | undefined { return this._distance; }
 	get isServingDock(): boolean { return this._isServingDock; }
+    
+    set distance(value: number | undefined) {
+        this._distance = value;
+    }    
 
 	toDto(): DockRelationDto {
 		return {
-			dockCode: this._dock,
+			dockCode: this._dock.code,
 			distance: this._distance,
 			isServingDock: this._isServingDock
 		};

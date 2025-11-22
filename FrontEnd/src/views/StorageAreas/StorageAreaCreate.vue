@@ -43,27 +43,22 @@ const allDocks = ref<Array<Dock>>([]);
 const selectedDocks = ref<Array<Dock>>([]);
 
 function updateDockRelations(dockCodes: string[]) {
-    const selected = new Set(dockCodes || [])
+    // Remove unselected docks
+    storageArea.value.dockServices = storageArea.value.dockServices.filter(rel => dockCodes.includes(rel.dock.code));
 
-    storageArea.value.dockServices = storageArea.value.dockServices.filter(rel => selected.has(rel.dockCode))
-
-    // Add new relations for any selected codes not already present
-    dockCodes.forEach(dockCode => {
-        const existingRelation = storageArea.value.dockServices.find(relation => relation.dockCode === dockCode);
-        if (!existingRelation) {
-            const dock = allDocks.value.find(d => d.code === dockCode);
+    // Add newly selected docks
+    dockCodes.forEach(code => {
+        if (!storageArea.value.dockServices.find(rel => rel.dock.code === code)) {
+            const dock = allDocks.value.find(d => d.code === code);
             if (dock) {
-                storageArea.value.dockServices.push({ dockCode: dock.code, isServingDock: true });
+                storageArea.value.dockServices.push(new DockRelation({
+                    dock: dock,
+                    distance: 0,
+                    isServingDock: true
+                }));
             }
         }
     });
-
-    // Map to DockRelation class
-    storageArea.value.dockServices = storageArea.value.dockServices.map(rel => (new DockRelation({
-        dock: rel.dockCode,
-        distance: rel.distance || 0,
-        isServingDock: true
-    })));
 }
 
 watch(selectedDocks, (newDocks) => {
@@ -126,9 +121,9 @@ const submitStorageArea = (obj: any) => {
                         v-model="selectedDocks"
                     />
                     <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
-                        <sl-card class="card-header" style="width: fit-content;" v-for="dock in storageArea.dockServices" :key="dock.dockCode" >
+                        <sl-card class="card-header" style="width: fit-content;" v-for="dock in storageArea.dockServices" :key="dock.dock.code" >
                             <div slot="header">
-                                {{ dock.dockCode }} {{ t('storageArea.create.distance_meters') }}
+                                {{ dock.dock.name }} {{ t('storageArea.create.distance_meters') }}
                             </div>
                             <FormField class="field" :name="`null`" v-model="dock.distance" :placeholderText="t('storageArea.create.distance_meters')" pattern="^[0-9]+(\.[0-9]{1,2})?$" required/>
                         </sl-card>
