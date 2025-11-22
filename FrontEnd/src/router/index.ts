@@ -7,7 +7,6 @@ import SchedulingRequest from '@/views/Scheduling/SchedulingRequest.vue'
 import HomeView from '../views/HomeView.vue'
 import Login from '@/views/Login.vue'
 import Unauthorized from '@/views/Unauthorized.vue'
-import VesselVisitNotificationCreate from '@/views/VesselVisitNotification/VesselVisitNotificationCreate.vue'
 
 // All other components are lazy-loaded when their route is accessed
 // This dramatically reduces initial bundle size and improves load time
@@ -272,6 +271,10 @@ const router = createRouter({
           component: () => import('@/views/VesselVisitNotification/VesselVisitNotificationReview.vue')
         },
         {
+          path : '/vessel-visit-notifications/edit/:id',
+          component: () => import('@/views/VesselVisitNotification/VesselVisitNotificationEdit.vue')
+        },
+        {
           path: '/admin/dashboard',
           name: 'Admin Dashboard',
           component: () => import('@/views/Admin/AdminDashboard.vue'),
@@ -341,9 +344,17 @@ const router = createRouter({
         {
             path: '/vessel-visit-notifications/create',
             name: 'Create Vessel Visit Notification',
-            component: VesselVisitNotificationCreate,
+            component: () => import('@/views/VesselVisitNotification/VesselVisitNotificationCreate.vue'),
             meta: {
                 icon: "add"
+            }
+        },
+        {
+            path: '/vessel-visit-notifications/update/:id',
+            name: 'Update Vessel Visit Notification',
+            component: () => import('@/views/VesselVisitNotification/VesselVisitNotificationEdit.vue'),
+            meta: {
+                icon: "edit"
             }
         }
       ]

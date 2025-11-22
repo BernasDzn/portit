@@ -149,7 +149,7 @@ const deleteNotification = async () => {
                     </div>
 
                     <div style="display: flex; gap: 0.5rem;" v-if="isMine">
-                        <RouterLink :to="`/notifications/edit/${encodeURIComponent(entity.element.notificationId)}`">
+                        <RouterLink :to="`/vessel-visit-notifications/edit/${encodeURIComponent(entity.element.notificationId)}`">
                             <sl-button variant="default" size="large">
                                 <sl-icon slot="prefix" name="pencil"></sl-icon>
                                 {{ t('notification.tabs.edit') }}

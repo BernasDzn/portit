@@ -560,6 +560,7 @@
             "search": "Search Notifications",
             "edit": "Edit Notification",
             "create": "Create Notification",
+            "update": "Update Notification",
             "makeDraft": "Create Draft Notification",
             "myNotifications": "My Notifications",
             "review": "Review Notifications",
@@ -575,6 +576,7 @@
             "dashboard": "Overview of vessel visit notifications",
             "search": "Manage and view all vessel visit notifications",
             "create": "Create a new vessel visit notification",
+            "update": "Update an existing vessel visit notification",
             "edit": "Edit an existing vessel visit notification",
             "review": "Review pending vessel visit notifications"
         },

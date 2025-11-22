@@ -17,7 +17,7 @@ get_crane_sum([crane(_, Speed) | RestCranes], Sum):-
 % Input:  (no input parameters - reads from vessel/6 facts in knowledge base)
 % Output: SeqTriplets = list of (VesselName, StartTime, EndTime) tuples
 %         STotalDelay = total delay in hours across all vessels
-obtain_seq_greedy(SeqTriplets, STotalDelay) :-    
+obtain_seq_greedy(SeqTriplets, STotalDelay):-    
     % Step 1: Get all vessel names from the knowledge base
     % findall collects all vessels V where vessel(V,...) is true
     % Result: LV = [zeus, poseidon, marenostrum, nautilus, floating]
@@ -42,7 +42,7 @@ obtain_seq_greedy(SeqTriplets, STotalDelay) :-
 % Vessels that need to leave sooner are scheduled first
 % Input:  Vessels = [zeus, poseidon, marenostrum, ...]
 % Output: SortedVessels = [nautilus, marenostrum, poseidon, ...] (sorted by deadline)
-sort_vessels_by_departure(Vessels, SortedVessels) :-
+sort_vessels_by_departure(Vessels, SortedVessels):-
     % Step 1: Create (DepartureTime, VesselName) pairs
     % Example: zeus with departure=63 becomes (63, zeus)
     map_vessels_with_departure(Vessels, VesselPairs),
@@ -65,7 +65,7 @@ map_vessels_with_departure([], []).
 % Recursive case: process one vessel at a time
 % Input:  [zeus | RestVessels]
 % Output: [(63, zeus) | RestPairs]
-map_vessels_with_departure([V|Rest], [(TDep, V)|RestPairs]) :-
+map_vessels_with_departure([V|Rest], [(TDep, V)|RestPairs]):-
     % Look up this vessel's departure time in the knowledge base
     % vessel(Name, Arrival, Departure, Unload, Load, Crane)
     %         V      _      TDep      _      _     _
@@ -83,7 +83,7 @@ extract_vessel_names([], []).
 % Recursive case: take the name, ignore the time
 % Input:  [(30, nautilus) | RestPairs]
 % Output: [nautilus | RestNames]
-extract_vessel_names([(_, V)|Rest], [V|RestNames]) :-
+extract_vessel_names([(_, V)|Rest], [V|RestNames]):-
     % The _ discards the time, V captures the name
     % Recursively extract names from remaining pairs
     extract_vessel_names(Rest, RestNames).
@@ -94,7 +94,7 @@ extract_vessel_names([(_, V)|Rest], [V|RestNames]) :-
 % This predicate takes a sorted list of vessels and generates actual start/end times
 % Input:  LV = [nautilus, marenostrum, poseidon, ...] (ordered list)
 % Output: SeqTriplets = [(nautilus,10,17), (marenostrum,18,34), ...]
-sequence_temporization_greedy(LV, SeqTriplets) :-
+sequence_temporization_greedy(LV, SeqTriplets):-
     % Start with EndPrevSeq = 0 (dock is free from time 0)
     sequence_temporization_greedy1(0, LV, SeqTriplets).
 
@@ -102,7 +102,7 @@ sequence_temporization_greedy(LV, SeqTriplets) :-
 % EndPrevSeq = time when the dock becomes free (previous vessel finished)
 % [V|LV] = current vessel V and remaining vessels LV
 % [(V, TInUnload, TEndLoad)|SeqTriplets] = output schedule with this vessel's times added
-sequence_temporization_greedy1(EndPrevSeq, [V|LV], [(V, TInUnload, TEndLoad)|SeqTriplets]) :-
+sequence_temporization_greedy1(EndPrevSeq, [V|LV], [(V, TInUnload, TEndLoad)|SeqTriplets]):-
     % Look up this vessel's data from the knowledge base
     % vessel(Name, ArrivalTime, DepartureDeadline, UnloadContainerCount, LoadContainerCount, CraneList)
     vessel(V, TIn, _, TUnloadContainers, TLoadContainers, Cranes),
@@ -145,7 +145,7 @@ sum_delays([], 0).
 % Recursive case: calculate delay for one vessel, add to rest
 % Input:  [(nautilus, 10, 17) | RestVessels]
 % Output: TotalDelay across all vessels
-sum_delays([(V, _, TEndLoad)|LV], S) :-
+sum_delays([(V, _, TEndLoad)|LV], S):-
     % Look up when this vessel wanted to depart from the knowledge base
     % vessel(Name, _, DesiredDeparture, _, _, _)
     vessel(V, _, TDep, _, _, _),
