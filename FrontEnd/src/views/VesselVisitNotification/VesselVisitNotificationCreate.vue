@@ -13,6 +13,8 @@ import type { VesselVisitNotificationDto } from '@/model/dto/VesselVisitNotifica
 import { useSession } from '@/composables/session';
 import DatePicker from '@/components/DatePicker.vue';
 import SafetyOfficerInput from '@/components/SafetyOfficerInput.vue';
+import { VesselVisitNotification } from '@/model/VesselVisitNotification';
+import ObjectSelector from '@/components/crud/ObjectSelector.vue';
 
 const { t } = useI18n();
 
@@ -20,7 +22,7 @@ const vvnService = container.get<IVesselVisitNotificationService>(TYPES.vesselVi
 const vesselService = container.get<IVesselService>(TYPES.vesselService);
 const session = useSession();
 
-const vvn = ref<VesselVisitNotificationDto>({
+const vvn = ref({
   notificationId: '',
   expectedArrival: '',
   expectedDeparture: '',
@@ -33,7 +35,7 @@ const vvn = ref<VesselVisitNotificationDto>({
   },
   loadCargoManifest: [],
   unloadCargoManifest: [],
-  vesselImoNumber: '',
+  vessel: null,
 });
 
 const getMyVessels = async () => {
@@ -41,8 +43,8 @@ const getMyVessels = async () => {
   return res;
 };
 
-const submitVVN = async (obj: VesselVisitNotificationDto) => {
-  await vvnService.createVesselVisitNotification(obj);
+const submitVVN = async (obj: any) => {
+  await vvnService.createVesselVisitNotification(new VesselVisitNotification(obj));
 };
 
 const openInfo = () => {
@@ -104,7 +106,7 @@ const isLastStep = () => currentStep.value === totalSteps;
     <p class="subtitle">{{ t('notification.subtitle.create') }}</p>
 
     <div class="steps-indicator">
-      <p>Step {{ currentStep }} of {{ totalSteps }}</p>
+      <p>{{ t("notification.step") }} {{ currentStep }} {{ t("notification.of") }} {{ totalSteps }}</p>
       <progress :value="currentStep" :max="totalSteps"></progress>
     </div>
 
@@ -115,11 +117,11 @@ const isLastStep = () => currentStep.value === totalSteps;
         >
       <!-- STEP 1 -->
       <div v-if="currentStep === 1" class="step">
-        <p class="section-title">Visit Information</p>
+        <p class="section-title">{{ t('notification.sections.vesselDetails') }}</p>
 
         <div style="display: flex; gap: 20px;">
             <div>
-                <p> Expected Arrival*</p>
+                <p> {{ t('notification.fields.expectedArrival') }}*</p>
                 <DatePicker
                     v-model="vvn.expectedArrival"
                     input-id="vvn-expectedArrival"
@@ -127,7 +129,7 @@ const isLastStep = () => currentStep.value === totalSteps;
             </div>
 
             <div>
-                <p> Expected Departure*</p>
+                <p> {{ t('notification.fields.expectedDeparture') }}*</p>
                 <DatePicker
                     v-model="vvn.expectedDeparture"
                     input-id="vvn-expectedDeparture"
@@ -136,7 +138,7 @@ const isLastStep = () => currentStep.value === totalSteps;
         </div>
         <br>
 
-        <EntityDropdown
+        <!-- <EntityDropdown
           name="Vessel IMO*"
           v-model="vvn.vesselImoNumber"
           :fetch-function="getMyVessels"
@@ -146,71 +148,80 @@ const isLastStep = () => currentStep.value === totalSteps;
           labelKey="imoNumber"
           required
           input-id="vvn-vesselImo"
+        /> -->
+        <ObjectSelector
+            class="field-dropdown"
+            :name="t('vessel.fields.imoNumber.title') + '*'"
+            :fetch-function="getMyVessels"
+            :placeholderText="t('physicalResource.fields.servingDocks.placeholder')"
+            labelKey="imoNumber"
+            required
+            v-model="vvn.vessel"
         />
       </div>
 
       <!-- STEP 2 -->
       <div v-if="currentStep === 2" class="step">
-        <p class="section-title">Crew Details</p>
+        <p class="section-title"> {{ t('notification.sections.crewDetails') }}</p>
 
-        <FormField required name="Captain Name*" v-model="vvn.crewDetails.captain.value" placeholderText="Enter Captain Name" type="text" input-id="vvn-captainName" />
+        <FormField required :name="t('notification.fields.captain')" v-model="vvn.crewDetails.captain.value" placeholderText="Enter Captain Name" type="text" input-id="vvn-captainName" />
 
         <br>
 
-        <FormField required name="Total Crew Members*" v-model="vvn.crewDetails.totalCrewMembers" placeholderText="Enter Total Crew Members" type="text" pattern="^\d+$" input-id="vvn-totalCrewMembers" />
+        <FormField required :name="t('notification.fields.totalCrewMembers')" v-model="vvn.crewDetails.totalCrewMembers" placeholderText="Enter Total Crew Members" type="text" pattern="^\d+$" input-id="vvn-totalCrewMembers" />
       </div>
 
       <!-- STEP 3 -->
       <div v-if="currentStep === 3" class="step">
-        <p class="section-title">Cargo Requirements</p>
+        <p class="section-title"> {{ t('notification.sections.cargoRequirements') }}</p>
 
-        <FormField name="Is Cargo Hazardous?" v-model="vvn.isCargoHazardous" type="checkbox" input-id="vvn-isCargoHazardous" />
+        <FormField :name="t('notification.fields.isCargoHazardousQ')" v-model="vvn.isCargoHazardous" type="checkbox" input-id="vvn-isCargoHazardous" />
         
         <div v-if="vvn.isCargoHazardous">
-            <p>Safety officers</p>
+            <p> {{ t('notification.fields.safetyOfficers') }}</p>
             <SafetyOfficerInput v-model="vvn.crewDetails.safetyOfficers" />
         </div>
 
         <br>
 
-        <FormField name="Special Requirements" v-model="vvn.specialRequirements" placeholderText="Enter any special requirements" type="textarea" input-id="vvn-specialRequirements" />
+        <FormField :name="t('notification.fields.specialRequirements')" v-model="vvn.specialRequirements" placeholderText="Enter any special requirements" type="textarea" input-id="vvn-specialRequirements" />
       </div>
 
       <!-- STEP 4 -->
       <div v-if="currentStep === 4" class="step">
-        <p class="section-title">Cargo Contents</p>
+        <p class="section-title"> {{ t('notification.sections.cargoContent') }}</p>
 
         <div class="cargo-manifests">
           <div>
-            <p>Cargo load manifest</p>
+            <p> {{ t('notification.fields.loadCargoManifest') }}</p>
             <CargoManifestReader v-model="vvn.loadCargoManifest" />
           </div>
 
           <div>
-            <p>Cargo unload manifest</p>
+            <p> {{ t('notification.fields.unloadCargoManifest') }}</p>
             <CargoManifestReader v-model="vvn.unloadCargoManifest" />
           </div>
 
         </div>
         <p class="info" @click="openInfo">
-          About cargo manifest files
+            {{ t('notification.fields.cargoManifestInfo') }}
         </p>
       </div>
 
       <div class="step-controls">
         <sl-button variant="default" @click="prevStep" :disabled="currentStep === 1">
-          Previous
+            {{ t('buttons.pagination.previous') }}
         </sl-button>
     
         <sl-button variant="default" @click="nextStep" :disabled="isLastStep()">
-          Next
+            {{ t('buttons.pagination.next') }}
         </sl-button>
       </div>
     </EntityForm>
 
     <sl-dialog label="About manifest files" class="dialog-overview"  style="--width: 50vw;">
         
-        Cargo manifest files (currently) must be in a european standard CSV format. Each row in the CSV file represents a cargo item with the following columns:
+        <!-- Cargo manifest files (currently) must be in a european standard CSV format. Each row in the CSV file represents a cargo item with the following columns:
         <ul>
             <li>Bay (number)</li>
             <li>Row (number)</li>
@@ -227,6 +238,24 @@ const isLastStep = () => currentStep.value === totalSteps;
                 <li>OTHER</li>
             </ol>
             <li>Description (text)</li>
+        </ul> -->
+        {{ t('notification.about.text') }}
+        <ul>
+            <li>{{ t('notification.about.bay') }}</li>
+            <li>{{ t('notification.about.row') }}</li>
+            <li>{{ t('notification.about.tier') }}</li>
+            <li>{{ t('notification.about.area') }}</li>
+            <li>{{ t('notification.about.containerNumber') }}</li>
+            <li>{{ t('notification.about.containerType') }}
+                <ol>
+                    <li>{{ t('notification.about.containerTypes.refrigeratedGoods') }}</li>
+                    <li>{{ t('notification.about.containerTypes.generalConsumerProducts') }}</li>
+                    <li>{{ t('notification.about.containerTypes.electronics') }}</li>
+                    <li>{{ t('notification.about.containerTypes.hazmat') }}</li>
+                    <li>{{ t('notification.about.containerTypes.oversizedIndustrialEquipment') }}</li>
+                    <li>{{ t('notification.about.containerTypes.other') }}</li>
+                </ol>
+            </li>
         </ul>
 
         <sl-button @click="downloadSample" slot="footer" variant="default">Download sample</sl-button>

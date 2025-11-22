@@ -2,10 +2,11 @@
 import FormField from '@/components/crud/FormField.vue'
 import EntityDropdown from '@/components/crud/EntityDropdown.vue'
 import OperationalWindowPicker from '@/components/OperationalWindowPicker.vue'
+import ObjectSelector from '@/components/crud/ObjectSelector.vue';
 
 export default {
   name: 'GeneralFields',
-  components: { FormField, EntityDropdown, OperationalWindowPicker },
+  components: { FormField, EntityDropdown, OperationalWindowPicker, ObjectSelector },
   props: {
     t: { type: Function, required: true },
     genericResource: { type: Object, required: true },
@@ -49,7 +50,7 @@ export default {
 
         <span class="section-divider"></span>
 
-        <EntityDropdown
+        <!-- <EntityDropdown
             class="field-dropdown"
             :name="`${t('physicalResource.fields.qualifications.title')}*`"
             v-model="genericResource.qualifications"
@@ -60,6 +61,17 @@ export default {
             multiple
             required
             input-id="pr-qualifications"
+        /> -->
+
+        <ObjectSelector
+            class="field-dropdown"
+            :name="`${t('physicalResource.fields.qualifications.title')}*`"
+            v-model="genericResource.qualifications"
+            :fetch-function="() => qualificationService.getQualifications()"
+            fetch-on-mount
+            labelKey="qualificationName"
+            required
+            multiple
         />
 
         <span class="section-divider"></span>

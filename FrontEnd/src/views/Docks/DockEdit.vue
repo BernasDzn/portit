@@ -3,7 +3,7 @@ import EntityDropdown from '@/components/crud/EntityDropdown.vue';
 import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
 import { useAlerts } from '@/composables/alerts';
-import type { Dock } from '@/model/Dock';
+import { Dock } from '@/model/Dock';
 import { ref, onMounted } from 'vue';
 import { useRoute, RouterLink } from 'vue-router';
 import {useI18n} from 'vue-i18n';
@@ -12,6 +12,7 @@ import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
 import type { IVesselTypeService } from '@/service/IService/IVesselTypeService';
 import type { DockDto } from '@/model/dto/DockDto';
+import ObjectSelector from '@/components/crud/ObjectSelector.vue';
 
 const {t} = useI18n();
 
@@ -23,7 +24,7 @@ const notifications = useAlerts();
 const route = useRoute();
 const dockCode = String(route.params.code || '');
 
-let dock = ref<DockDto>({
+let dock = ref({
     code: '',
     name: '',
     location: '',
@@ -40,21 +41,14 @@ onMounted(async () => {
     try {
         const data = await dockService.getDockByCode(dockCode);
         if (!data) return;
-        
-        dock.value.code = data.code;
-        dock.value.name = data.name;
-        dock.value.location = data.location;
-        dock.value.physicalCharacteristics.length = data.physicalCharacteristics?.length;
-        dock.value.physicalCharacteristics.depth = data.physicalCharacteristics?.depth;
-        dock.value.physicalCharacteristics.draft = data.physicalCharacteristics?.draft;
-        dock.value.supportedVesselTypes = (data.supportedVesselTypes ?? []).map((vt: any) =>vt.name);
+        dock.value = data;
         
     } catch (err) {
         console.error('Failed to load dock', err);
     }
 });
 
-const updateDock = async (obj: DockDto) => {
+const updateDock = async (obj: any) => {
     if (!dockCode) {
         notifications.enqueueNotification(
             'Cannot update docks at this time.',
@@ -63,7 +57,7 @@ const updateDock = async (obj: DockDto) => {
         return;
     }
 
-    return dockService.updateDock(obj);
+    return dockService.updateDock(new Dock(obj));
 };
 </script>
 
@@ -106,7 +100,7 @@ const updateDock = async (obj: DockDto) => {
                 <span class="section-divider"></span>
                 <div>
                 <p class="section-title">{{ t('dock.fields.supportedVesselTypes.title') }}</p>
-                <EntityDropdown
+                <!-- <EntityDropdown
                     class="field-dropdown"
                     :name="t('dock.fields.supportedVesselTypes.vesselTypes.title') + '*'"
                     v-model=dock.supportedVesselTypes
@@ -116,6 +110,17 @@ const updateDock = async (obj: DockDto) => {
                     valueKey="name"
                     labelKey="name"
                     inputId="dock-vessel-types"
+                    required
+                    multiple
+                /> -->
+                <ObjectSelector
+                    class="field-dropdown"
+                    :name="t('dock.fields.supportedVesselTypes.vesselTypes.title') + '*'"
+                    v-model="dock.supportedVesselTypes"
+                    :fetch-function="() => vesselTypeService.getVesselTypes()"
+                    :fetch-on-mount="true"
+                    :placeholderText="t('dock.fields.supportedVesselTypes.vesselTypes.placeholder')"
+                    labelKey="name"
                     required
                     multiple
                 />

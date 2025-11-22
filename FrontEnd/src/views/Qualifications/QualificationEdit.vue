@@ -9,6 +9,7 @@ import { container } from '@/inversify.config';
 import type { IQualificationService } from '@/service/IService/IQualificationService';
 import TYPES from '@/inversify/types';
 import type { QualificationDto } from '@/model/dto/QualificationDto';
+import { Qualification } from '@/model/Qualifications';
 
 const route = useRoute();
 const qualificationId = String(route.params.id || '');
@@ -31,7 +32,7 @@ const updateQualification = async (obj: QualificationDto) => {
         return;
     }
 
-    qualificationService.updateQualification(obj);
+    qualificationService.updateQualification(new Qualification(obj));
 };
 
 const getById = async (id: string) => 

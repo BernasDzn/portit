@@ -43,7 +43,9 @@
         "login": "Login",
         "goBackToLogin": "Go back to Login",
         "logout": "Logout",
-        "seeMore": "See More"
+        "seeMore": "See More",
+        "ok": "OK",
+        "downloadSample": "Download Sample"
     },
     "search": {
         "languages": "Search languages..."
@@ -555,6 +557,8 @@
         "unknown": "Unknown",
         "from": "From",
         "to": "To",
+        "step": "Step",
+        "of": "of",
         "tabs": {
             "dashboard": "Notifications Dashboard",
             "search": "Search Notifications",
@@ -603,7 +607,9 @@
             "area": "Area",
             "container": "Container",
             "crewMembers": "Crew Members",
-            "status": "Status"
+            "status": "Status",
+            "isCargoHazardousQ": "Is Cargo Hazardous?",
+            "cargoManifestInfo": "About cargo manifest files"
         },
         "timeline": {
             "pending": "Pending",
@@ -630,6 +636,31 @@
                 "placeholder": "Provide reason for decision"
             },
             "status": "Decision Status"
+        },
+        "sections": {
+            "vesselDetails": "Visit Information",
+            "crewDetails": "Crew Details",
+            "cargoRequirements": "Cargo Requirements",
+            "cargoContent": "Cargo Contents"
+        },
+        "about": {
+            "text": "Cargo manifest files (currently) must be in a european standard CSV format. Each row in the CSV file represents a cargo item with the following columns:",
+            "bay": "Bay (number)",
+            "row": "Row (number)",
+            "tier": "Tier (number)",
+            "area": "Area code (where to/from)",
+            "containerNumber": "Container number (text)",
+            "conatinerType": "Container type (number)",
+            "description": "Description (text)",
+            "containerTypes": {
+                "refrigeratedGoods": "Refrigerated Goods",
+                "generalConsumerProducts": "General Consumer Products",
+                "electronics": "Electronics",
+                "hazmat": "Hazardous Materials",
+                "oversizedIndustrialEquipment": "Oversized Industrial Equipment",
+                "other": "Other"
+            }
+        }
         },
         "registeredVesselVisitNotifications": "Registered Vessel Visit Notifications"
     },

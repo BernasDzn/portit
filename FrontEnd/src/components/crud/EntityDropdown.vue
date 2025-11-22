@@ -1,6 +1,10 @@
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue';
 
+// Olá, este componente está nojentamente vibe coded, por favor utilizar o
+// ObjectSelector.vue que foi escrito à mão, ninguem sabe o que isto faz e 
+// nem o AI percebe mais sequer, obrigado pela compreensão !
+
 const props = defineProps({
     name: { type: String, required: true },
     placeholderText: { type: String, default: 'Select an option' },
@@ -190,6 +194,4 @@ function onChange(e) {
     font-size: 0.9rem;
     color: var(--sl-color-primary-600, #555);
 }
-
-
 </style>

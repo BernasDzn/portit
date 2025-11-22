@@ -10,10 +10,10 @@ export interface IVesselVisitNotificationService {
     getVesselVisitNotificationById(id: string): Promise<VesselVisitNotification>;
     getNotificationDecisions(vesselVisitNotificationId: string): Promise<NotificationDecision[]>;
 
-    createVesselVisitNotification(notification: VesselVisitNotificationDto): Promise<VesselVisitNotification>;
+    createVesselVisitNotification(notification: VesselVisitNotification): Promise<VesselVisitNotification>;
     createNotificationDecision(vesselVisitNotificationId: string, decision: NotificationDecisionDto): Promise<NotificationDecision>;
     
-    updateVesselVisitNotification(notification: VesselVisitNotificationDto): Promise<VesselVisitNotification>;
+    updateVesselVisitNotification(notification: VesselVisitNotification): Promise<VesselVisitNotification>;
     submitVesselVisitNotification(id: string): Promise<void>;
     deleteDraft(id: string): Promise<void>;
 

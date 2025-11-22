@@ -1,4 +1,4 @@
-import type { VesselDto } from './dto/VesselDto';
+import type { VesselCreateDto } from './dto/VesselDto';
 import type { ShippingAgentOrganization } from './ShippingAgentOrganization';
 import type { PhysicalCharacteristics } from './values/PhysicalCharacteristics';
 import { VesselType } from './VesselType';
@@ -78,12 +78,12 @@ export class Vessel {
         }
     }
 
-    toDto(): VesselDto {
+    toDto(): VesselCreateDto {
         return {
             name: this._name,
             imoNumber: this._imoNumber,
             type: this._type.name,
-            owner: this._owner.taxNumber,
+            owner: this._owner.name,
             length: this._physicalCharacteristics.length,
             depth: this._physicalCharacteristics.depth,
             draft: this._physicalCharacteristics.draft,

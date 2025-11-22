@@ -15,7 +15,7 @@
 	<div class="email-group" style="display: flex; flex-wrap: wrap;">
 		<div style="display:flex; flex: 100%; justify-content: space-between;">
 			<span class="item-description">{{ t('storageArea.printer.capacity_usage') }}</span>
-			<span>{{ (storageArea.currentOccupancy / storageArea.capacity * 100).toPrecision(2) }} %</span>
+			<span>{{ ((storageArea.currentOccupancy / storageArea.capacity) * 100).toFixed(2) }}%</span>
 		</div>
 		<div style="width: 100%;">
 			<sl-range min="0" :value="storageArea.currentOccupancy" :max="storageArea.capacity" 

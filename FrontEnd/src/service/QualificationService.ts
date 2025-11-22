@@ -15,14 +15,14 @@ export class QualificationService implements IQualificationService {
 		private http: IHttpService
 	){}
 
-    async updateQualification(value: QualificationDto): Promise<Qualification> {
-        const res = await this.http.put<Qualification>(`/Qualification/${value.idCode}`, value);
+    async updateQualification(value: Qualification): Promise<Qualification> {
+        const res = await this.http.put<Qualification>(`/Qualification/${value.idCode}`, value.toDto());
         return res.data;
     }
 
-    async addQualification(value: QualificationDto): Promise<Qualification> {
+    async addQualification(value: Qualification): Promise<Qualification> {
         
-        const res = await this.http.post<Qualification>('/Qualification', value);
+        const res = await this.http.post<Qualification>('/Qualification', value.toDto());
         return res.data;
     }
 

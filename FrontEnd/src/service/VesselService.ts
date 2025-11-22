@@ -37,8 +37,8 @@ export class VesselService implements IVesselService {
 		return res.data;
 	}
 
-	async createVessel(vessel: VesselDto): Promise<Vessel> {
-		const res =  await this.http.post<Vessel>('/Vessel', vessel);
+	async createVessel(vessel: Vessel): Promise<Vessel> {
+		const res =  await this.http.post<Vessel>('/Vessel', vessel.toDto());
 		return res.data;
 	}
 
@@ -47,8 +47,8 @@ export class VesselService implements IVesselService {
 		return res.data;
 	}
 
-	async updateVessel(vessel: VesselDto): Promise<Vessel> {
-		const res = await this.http.put<Vessel>(`/Vessel/${vessel.imoNumber}`, vessel);
+	async updateVessel(vessel: Vessel): Promise<Vessel> {
+		const res = await this.http.put<Vessel>(`/Vessel/${vessel.imoNumber}`, vessel.toDto());
 		return res.data;
 	}
 

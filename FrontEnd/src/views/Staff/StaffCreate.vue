@@ -2,10 +2,12 @@
 import EntityDropdown from '@/components/crud/EntityDropdown.vue';
 import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
+import ObjectSelector from '@/components/crud/ObjectSelector.vue';
 import OperationalWindowPicker from '@/components/OperationalWindowPicker.vue';
 import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
 import type { StaffDto } from '@/model/dto/StaffDto';
+import { Staff } from '@/model/Staff';
 import type { IQualificationService } from '@/service/IService/IQualificationService';
 import type { IStaffService } from '@/service/IService/IStaffService';
 import { ref } from 'vue';
@@ -14,20 +16,20 @@ import { useI18n } from 'vue-i18n';
 const staffService = container.get<IStaffService>( TYPES.staffService );
 const qualificationService = container.get<IQualificationService>( TYPES.qualificationService );
 
-const staff = ref<StaffDto>({
+const staff = ref({
     mechanographicNumber: '',
     name: '',
     email: '',
     phoneNumber: '',
     status: 0,
     operationalWindow: { shifts: [] },
-    qualificationsCodes: [],
+    qualifications: [],
 });
 
 const { t } = useI18n();
 
 const submitStaff = (obj: any) => 
-    staffService.createStaff(obj);
+    staffService.createStaff(new Staff(obj));
 
 </script>
 
@@ -45,17 +47,16 @@ const submitStaff = (obj: any) =>
                 <FormField input-id="staff-name" :required="true" class="field" :name="t('staff.fields.name.title') + '*'" v-model="staff.name" :placeholderText="t('staff.fields.name.placeholder')"/>
                 <FormField input-id="staff-email" :required="true" class="field" :name="t('staff.fields.email.title') + '*'" v-model="staff.email" :placeholderText="t('staff.fields.email.placeholder')"/>
                 <FormField input-id="staff-phone" :required="true" class="field" :name="t('staff.fields.phoneNumber.title') + '*'" v-model="staff.phoneNumber" :placeholderText="t('staff.fields.phoneNumber.placeholder')"/>
-                <EntityDropdown
+
+                <ObjectSelector
                     class="field-dropdown"
                     :name="t('staff.fields.qualifications.title') + '*'"
-                    v-model="staff.qualificationsCodes"
-                    :fetch-function="() => qualificationService.getQualifications().then(page => (page.items || []).map(t => t.idCode))"
-                    :fetch-on-mount="true"
+                    v-model="staff.qualifications"
+                    :fetch-function="() => qualificationService.getQualifications()"
                     :placeholderText="t('staff.fields.qualifications.placeholder')"
-                    :required="false"
-                    :multiple="true"
-                    valueKey="name"
-                    labelKey="name"
+                    labelKey="qualificationName"
+                    required
+                    multiple
                 />
                 <div style="flex:100%; width: 100%;">
                    <OperationalWindowPicker

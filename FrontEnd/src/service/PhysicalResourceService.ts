@@ -44,34 +44,34 @@ export class PhysicalResourceService implements IPhysicalResourceService {
         return res.data;
     }
 
-    async addSTSCrane(value: STSCraneDto): Promise<STSCrane> {
+    async addSTSCrane(value: STSCrane): Promise<STSCrane> {
         // console.log('Adding STS Crane:', JSON.stringify(value));
-        const res = await this.http.post<PhysicalResource>(`/PhysicalResource/AddSTSCrane`, value);
+        const res = await this.http.post<PhysicalResource>(`/PhysicalResource/AddSTSCrane`, value.toDto());
         return res.data as STSCrane;
     }
 
-    async updateSTSCrane(value: STSCraneDto): Promise<STSCrane> {
-        const res = await this.http.put<PhysicalResource>(`/PhysicalResource/UpdateSTSCrane/${value.code}`, value);
+    async updateSTSCrane(value: STSCrane): Promise<STSCrane> {
+        const res = await this.http.put<PhysicalResource>(`/PhysicalResource/UpdateSTSCrane/${value.code}`, value.toDto());
         return res.data as STSCrane;
     }
 
-    async addYardCrane(value: YardCraneDto): Promise<YardCrane> {
-        const res = await this.http.post<PhysicalResource>(`/PhysicalResource/AddYardCrane`, value);
+    async addYardCrane(value: YardCrane): Promise<YardCrane> {
+        const res = await this.http.post<PhysicalResource>(`/PhysicalResource/AddYardCrane`, value.toDto());
         return res.data as YardCrane;
     }
 
-    async updateYardCrane(value: YardCraneDto): Promise<YardCrane> {
-        const res = await this.http.put<PhysicalResource>(`/PhysicalResource/UpdateYardCrane/${value.code}`, value);
+    async updateYardCrane(value: YardCrane): Promise<YardCrane> {
+        const res = await this.http.put<PhysicalResource>(`/PhysicalResource/UpdateYardCrane/${value.code}`, value.toDto());
         return res.data as YardCrane;
     }
 
-    async addTruck(value: TruckDto): Promise<Truck> {
-        const res = await this.http.post<PhysicalResource>(`/PhysicalResource/AddTruck`, value);
+    async addTruck(value: Truck): Promise<Truck> {
+        const res = await this.http.post<PhysicalResource>(`/PhysicalResource/AddTruck`, value.toDto());
         return res.data as Truck;
     }
 
-    async updateTruck(value: TruckDto): Promise<Truck> {
-        const res = await this.http.put<PhysicalResource>(`/PhysicalResource/UpdateTruck/${value.code}`, value);
+    async updateTruck(value: Truck): Promise<Truck> {
+        const res = await this.http.put<PhysicalResource>(`/PhysicalResource/UpdateTruck/${value.code}`, value.toDto());
         return res.data as Truck;
     }
 

@@ -2,10 +2,11 @@
 import EntityDropdown from '@/components/crud/EntityDropdown.vue';
 import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
+import ObjectSelector from '@/components/crud/ObjectSelector.vue';
 import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
 import type { VesselDto } from '@/model/dto/VesselDto';
-import type { Vessel } from '@/model/Vessel';
+import { Vessel } from '@/model/Vessel';
 import type { IShippingAgentOrganizationService } from '@/service/IService/IShippingAgentOrganizationService';
 import type { IVesselService } from '@/service/IService/IVesselService';
 import type { IVesselTypeService } from '@/service/IService/IVesselTypeService';
@@ -21,15 +22,17 @@ const saoService = container.get<IShippingAgentOrganizationService>(TYPES.shippi
 const route = useRoute();
 const vesselIMO = String(route.params.imo || '');
 
-let vessel = ref<VesselDto>({
+
+const vessel = ref({
     name: '',
     imoNumber: '',
-    type: '',
-    owner: '',
-    length: null!,
-    depth: null!,
-    draft: null!
-
+    type: null,
+    owner: null,
+    physicalCharacteristics: {
+        length: null,
+        depth: null,
+        draft: null
+    }
 });
 
 // Load vessel on mount
@@ -37,15 +40,7 @@ onMounted(async () => {
     try {
         const data: Vessel = await vesselService.getVesselByIMO(vesselIMO);
         if (!data) return;
-        console.log('Loaded vessel data:', data);
-
-        vessel.value.name = data.name;
-        vessel.value.imoNumber = data.imoNumber;
-        vessel.value.type = data.type?.name || '';
-        vessel.value.owner = data.owner?.name || '';
-        vessel.value.length = data.physicalCharacteristics.length;
-        vessel.value.depth = data.physicalCharacteristics.depth;
-        vessel.value.draft = data.physicalCharacteristics.draft;
+        vessel.value = data;
 
     } catch (err) {
         console.error('Failed to load vessel', err);
@@ -54,7 +49,7 @@ onMounted(async () => {
 
 // Return the promise so the parent EntityForm can attach .catch/.then handlers
 const submitVessel = (obj: any) =>
-    vesselService.updateVessel(obj);
+    vesselService.updateVessel(new Vessel(obj));
     
 </script>
 
@@ -81,37 +76,36 @@ const submitVessel = (obj: any) =>
             <div class="name-imo">
                 <FormField inputId="vessel-name" :required="true" class="field" :name="`${t('vessel.fields.name.title')}*`" v-model="vessel.name" :placeholderText="t('vessel.fields.name.placeholder')"/>
                 <FormField inputId="vessel-imo" :enabled="false" class="field" :name="t('vessel.fields.imoNumber.title')" v-model="vessel.imoNumber" :placeholderText="t('vessel.fields.imoNumber.placeholder')" pattern="IMO [0-9]{7}"/>
-                <EntityDropdown
-                inputId="vessel-type"
-                class="field-dropdown"
-                :name="`${t('vessel.fields.vesselType.title')}*`"
-                v-model="vessel.type"
-                :fetch-function="() => vesselTypeService.getVesselTypes().then(page => (page.items || []).map(t => t.name))"
-                :fetch-on-mount="true"
-                :placeholderText="t('vessel.fields.vesselType.placeholder')"
-                :required="true"
-                valueKey="name"
-                labelKey="name"
+
+                <ObjectSelector
+                    class="field-dropdown"
+                    :name="t('vessel.fields.vesselType.title') + '*'"
+                    v-model="vessel.type"
+                    :fetch-function="() => vesselTypeService.getVesselTypes()"
+                    :fetch-on-mount="true"
+                    :placeholderText="t('vessel.fields.vesselType.placeholder')"
+                    labelKey="name"
+                    required
                 />
-                <EntityDropdown
-                inputId="vessel-owner"
-                class="field-dropdown"
-                :name="t('vessel.fields.owner.title') + '*'"
-                v-model="vessel.owner"
-                :fetch-function="() => saoService.getShippingAgentOrganizations().then(page => (page.items || []).map(t => t.name))"
-                :fetch-on-mount="true"
-                :placeholderText="t('vessel.fields.owner.placeholder')"
-                :required="true"
-                valueKey="name"
-                labelKey="name"
+
+                <ObjectSelector
+                    class="field-dropdown"
+                    :name="t('vessel.fields.owner.title') + '*'"
+                    v-model="vessel.owner"
+                    :fetch-function="() => saoService.getShippingAgentOrganizations()"
+                    :fetch-on-mount="true"
+                    :placeholderText="t('vessel.fields.owner.placeholder')"
+                    labelKey="name"
+                    required
                 />
+
             </div>
             <div class="measurements">
-                <FormField inputId="vessel-length" :required="true" class="field" :name="`${t('physicalCharacteristics.length.title')} (m)*`" v-model.number="vessel.length"
+                <FormField inputId="vessel-length" :required="true" class="field" :name="`${t('physicalCharacteristics.length.title')} (m)*`" v-model.number="vessel.physicalCharacteristics.length"
                 :placeholderText="t('physicalCharacteristics.length.placeholder')" pattern="^\d+(\.\d{1,2})?$"/>
-                <FormField inputId="vessel-depth" :required="true" class="field" :name="`${t('physicalCharacteristics.depth.title')} (m)*`" v-model.number="vessel.depth"
+                <FormField inputId="vessel-depth" :required="true" class="field" :name="`${t('physicalCharacteristics.depth.title')} (m)*`" v-model.number="vessel.physicalCharacteristics.depth"
                 :placeholderText="t('physicalCharacteristics.depth.placeholder')" pattern="^\d+(\.\d{1,2})?$"/>
-                <FormField inputId="vessel-draft" :required="true" class="field" :name="`${t('physicalCharacteristics.draft.title')} (m)*`" v-model.number="vessel.draft"
+                <FormField inputId="vessel-draft" :required="true" class="field" :name="`${t('physicalCharacteristics.draft.title')} (m)*`" v-model.number="vessel.physicalCharacteristics.draft"
                 :placeholderText="t('physicalCharacteristics.draft.placeholder')" pattern="^\d+(\.\d{1,2})?$"/>
             </div>
         </EntityForm>

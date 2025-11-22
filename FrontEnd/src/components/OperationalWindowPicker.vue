@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { onMounted, reactive, ref } from 'vue';
-import type { OperationalWindow, Shift } from '@/model/OperationalWindow';
+import { onMounted, reactive, ref, watch } from 'vue';
 import WorkShiftPrinter from './printers/WorkShiftPrinter.vue';
 import { useAlerts } from '@/composables/alerts';
 import { useI18n } from 'vue-i18n';
+import type { OperationalWindow, Shift } from '@/model/values/OperationalWindow';
 
 const { t } = useI18n();
 
@@ -77,15 +77,22 @@ function updateSelectedDays() {
     selectedDays.value = Array.from(selectedDaysInput.selectedOptions).map(option => Number(option.value));
 }
 
-onMounted(() => {
-    for(let shift of props.modelValue.shifts){
-        if (!shiftsPerDay[shift.day]) {
-            shiftsPerDay[shift.day] = [];
+watch(
+    () => props.modelValue.shifts,
+    (newShifts) => {
+        for (const key in shiftsPerDay) {
+            delete shiftsPerDay[key];
         }
 
-        shiftsPerDay[shift.day]?.push(shift);
-    }
-})
+        newShifts.forEach(shift => {
+            if (!shiftsPerDay[shift.day]) {
+                shiftsPerDay[shift.day] = [];
+            }
+            shiftsPerDay[shift.day].push(shift);
+        });
+    },
+    { immediate: true }
+);
 
 </script>
 

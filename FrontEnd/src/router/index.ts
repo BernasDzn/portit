@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useSession } from '@/composables/session'
 import Activate from '@/views/Activate.vue'
-import SchedulingRequest from '@/views/Scheduling/SchedulingRequest.vue'
 
 // Only eagerly load critical components (layout and auth)
 import HomeView from '../views/HomeView.vue'
@@ -334,12 +333,12 @@ const router = createRouter({
             }
         },
         {
-            path: '/schedule',
-            name: 'Schedule',
-            component: () => SchedulingRequest,
-            meta: {
-                icon: "calendar_month"
-            }
+          path: '/schedule',
+          name: 'Schedule',
+          component: () => import('@/views/Scheduling/SchedulingRequest.vue'),
+          meta: {
+            icon: "calendar_month"
+          }
         },
         {
             path: '/vessel-visit-notifications/create',

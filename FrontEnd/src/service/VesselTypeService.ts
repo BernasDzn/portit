@@ -36,13 +36,13 @@ export class VesselTypeService implements IVesselTypeService {
         return res.data;
     }
 
-    async createVesselType(vesselType: VesselTypeDto): Promise<VesselType> {
-        const res = await this.http.post<VesselType>('/VesselType', vesselType);
+    async createVesselType(vesselType: VesselType): Promise<VesselType> {
+        const res = await this.http.post<VesselType>('/VesselType', vesselType.toDto());
         return res.data;
     }
 
-    async updateVesselType(vesselType: VesselTypeDto): Promise<VesselType> {
-        const res = await this.http.put<VesselType>(`/VesselType/${vesselType.name}`, vesselType);
+    async updateVesselType(vesselType: VesselType): Promise<VesselType> {
+        const res = await this.http.put<VesselType>(`/VesselType/${vesselType.name}`, vesselType.toDto());
         return res.data;
     }
 

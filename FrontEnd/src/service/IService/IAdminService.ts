@@ -1,7 +1,6 @@
 import type { Logs } from "@/model/values/Logs";
 import type { Filter, Page } from "@/model/Page";
 import type { SystemUser } from "@/model/SystemUser";
-import type { User } from "@/model/User";
 
 export interface IAdminService {
     changeUserRole(emailAddress: string, newRole: number): Promise<SystemUser>;
