@@ -21,6 +21,10 @@ export class DockRelation {
 	get dock(): Dock { return this._dock; }
 	get distance(): number | undefined { return this._distance; }
 	get isServingDock(): boolean { return this._isServingDock; }
+    
+    set distance(value: number | undefined) {
+        this._distance = value;
+    }    
 
 	toDto(): DockRelationDto {
 		return {
@@ -52,6 +56,7 @@ export class StorageArea {
 		currentOccupancy: number;
 		dockServices?: DockRelation[];
 	}) {
+
 		if (!params.nameCode) throw new Error('Name code cannot be null or empty.');
 		if (!params.location) throw new Error('Location cannot be null or empty.');
 		if (params.currentOccupancy > params.capacity) {

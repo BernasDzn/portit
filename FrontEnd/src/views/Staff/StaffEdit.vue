@@ -2,10 +2,12 @@
 import EntityDropdown from '@/components/crud/EntityDropdown.vue';
 import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
+import ObjectSelector from '@/components/crud/ObjectSelector.vue';
 import OperationalWindowPicker from '@/components/OperationalWindowPicker.vue';
 import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
 import type { StaffDto } from '@/model/dto/StaffDto';
+import { Staff } from '@/model/Staff';
 import type { IQualificationService } from '@/service/IService/IQualificationService';
 import type { IStaffService } from '@/service/IService/IStaffService';
 import { onMounted, ref } from 'vue';
@@ -19,14 +21,14 @@ const route = useRoute();
 const staffMecNumber = String(route.params.id || '');
 
 
-const staff = ref<StaffDto>({
+const staff = ref({
     mechanographicNumber: '',
     name: '',
     email: '',
     phoneNumber: '',
     status: 0,
     operationalWindow: { shifts: [] },
-    qualificationsCodes: [],
+    qualifications: [],
 });
 
 onMounted(async () => {
@@ -35,13 +37,7 @@ onMounted(async () => {
         const data = await staffService.getStaffByMechanographicNumber(staffMecNumber);
         if (!data) return;
 
-        staff.value.mechanographicNumber = data.mechanographicNumber;
-        staff.value.name = data.name;
-        staff.value.email = data.email;
-        staff.value.phoneNumber = data.phoneNumber;
-        staff.value.status = data.status;
-        staff.value.operationalWindow = data.operationalWindow;
-        staff.value.qualificationsCodes = data.qualifications?.map(q => q.idCode) || [];
+        staff.value = data;
     } catch (err) {
         console.error('Failed to load staff', err);
     }
@@ -50,7 +46,7 @@ onMounted(async () => {
 const { t } = useI18n();
 
 const editStaff = (obj: any) => 
-    staffService.updateStaff(obj);
+    staffService.updateStaff(new Staff(obj));
 
 </script>
 
@@ -70,25 +66,26 @@ const editStaff = (obj: any) =>
 
         <h1 class="title">{{ t('staff.tabs.edit') }}</h1>
         <p class="subtitle">{{ t('staff.subtitle.edit') }}</p>
-        <EntityForm editingId="true" :object="staff" :submit-function="editStaff">
+        <EntityForm :object="staff" :submit-function="editStaff">
             <div class="name-imo">
 
                 <FormField :required="true" class="field" :name="t('staff.fields.mechanographicNumber.title') + '*'" v-model="staff.mechanographicNumber" :placeholderText="t('staff.fields.mechanographicNumber.placeholder')" :enabled="false"/>
                 <FormField :required="true" class="field" :name="t('staff.fields.name.title') + '*'" v-model="staff.name" :placeholderText="t('staff.fields.name.placeholder')"/>
                 <FormField :required="true" class="field" :name="t('staff.fields.email.title') + '*'" v-model="staff.email" :placeholderText="t('staff.fields.email.placeholder')"/>
                 <FormField :required="true" class="field" :name="t('staff.fields.phoneNumber.title') + '*'" v-model="staff.phoneNumber" :placeholderText="t('staff.fields.phoneNumber.placeholder')"/>
-                <EntityDropdown
+
+                <ObjectSelector
                     class="field-dropdown"
                     :name="t('staff.fields.qualifications.title') + '*'"
-                    v-model="staff.qualificationsCodes"
-                    :fetch-function="() => qualificationService.getQualifications().then(page => (page.items || []).map(t => t.idCode))"
+                    v-model="staff.qualifications"
+                    :fetch-function="() => qualificationService.getQualifications()"
                     :fetch-on-mount="true"
                     :placeholderText="t('staff.fields.qualifications.placeholder')"
-                    :required="false"
-                    :multiple="true"
-                    valueKey="name"
-                    labelKey="name"
+                    labelKey="qualificationName"
+                    required
+                    multiple
                 />
+
                 <div style="flex:100%; width: 100%;">
                    <OperationalWindowPicker
                         v-model="staff.operationalWindow"

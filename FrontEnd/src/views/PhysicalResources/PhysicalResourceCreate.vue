@@ -13,6 +13,8 @@ import type { IDockService } from '@/service/IService/IDockService';
 import type { IQualificationService } from '@/service/IService/IQualificationService';
 
 import GeneralFields from './GeneralFields.vue';
+import { STSCrane, Truck, YardCrane } from '@/model/PhysicalResource';
+import ObjectSelector from '@/components/crud/ObjectSelector.vue';
 
 const { t } = useI18n();
 
@@ -56,25 +58,25 @@ function submitResource(obj: any, type: 'STS' | 'YardCrane' | 'Truck') {
 
     switch (type) {
     case 'STS':
-        return resourceService.addSTSCrane({
+        return resourceService.addSTSCrane(new STSCrane({
             ...base,
             liftingCapacity: obj.liftingCapacity,
-            servingDockCode: obj.servingDock,
+            servingDock: obj.servingDock,
             containersPerHour: obj.containersPerHour
-        });
+        }));
     case 'YardCrane':
-        return resourceService.addYardCrane({
+        return resourceService.addYardCrane(new YardCrane({
             ...base,
             liftingCapacity: obj.liftingCapacity,
             containersPerHour: obj.containersPerHour
-        });
+        }));
     case 'Truck':
-        return resourceService.addTruck({
+        return resourceService.addTruck(new Truck({
             ...base,
             maxLoadCapacity: obj.maxLoadCapacity,
             averageSpeed: obj.averageSpeed,
             containersPerTrip: obj.containersPerTrip
-        });
+        }));
     }
 }
 </script>
@@ -107,7 +109,7 @@ function submitResource(obj: any, type: 'STS' | 'YardCrane' | 'Truck') {
         <EntityForm :object="genericResource" :submit-function="(obj) => submitResource(obj, 'STS')" class="group">
 
           <p class="section-title">{{ t('physicalResource.specificFields') }}</p>
-          <EntityDropdown
+          <!-- <EntityDropdown
             class="field-dropdown"
             :name="`${t('physicalResource.fields.servingDocks.title')}*`"
             v-model="genericResource.servingDock"
@@ -118,7 +120,18 @@ function submitResource(obj: any, type: 'STS' | 'YardCrane' | 'Truck') {
             labelKey="name"
             required
             input-id="pr-servingDock-sts"
-          />
+          /> -->
+          
+          <ObjectSelector
+                class="field-dropdown"
+                :name="`${t('physicalResource.fields.servingDocks.title')}*`"
+                v-model="genericResource.servingDock"
+                :fetch-function="() => dockService.getDocks()"
+                :placeholderText="t('physicalResource.fields.servingDocks.placeholder')"
+                labelKey="name"
+                required
+            />
+
           <FormField :required="true" class="field" :name="t('physicalResource.fields.liftingCapacity.title')" v-model="genericResource.liftingCapacity" pattern="^[0-9]+$" input-id="pr-liftingCapacity-sts" />
           <FormField :required="true" class="field" :name="t('physicalResource.fields.containersPerHour.title')" v-model="genericResource.containersPerHour" pattern="^[0-9]+$" input-id="pr-containersPerHour-sts" />
         </EntityForm>

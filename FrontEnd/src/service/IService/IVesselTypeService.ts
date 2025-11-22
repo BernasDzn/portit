@@ -6,8 +6,8 @@ export interface IVesselTypeService {
     getVesselTypes(filtering?: Filter<VesselType>): Promise<Page<VesselType>>
     getVesselTypeByName(name: string): Promise<VesselType | undefined>;
     
-    createVesselType(vesselType: VesselTypeDto): Promise<VesselType>;
-    updateVesselType(vesselType: VesselTypeDto): Promise<VesselType>;
+    createVesselType(vesselType: VesselType): Promise<VesselType>;
+    updateVesselType(vesselType: VesselType): Promise<VesselType>;
 
     getNumberOfVesselTypes(): Promise<number>;
 }

@@ -1,4 +1,4 @@
-import type { User } from "@/model/User";
+import type { User } from "@/model/SystemUser";
 
 export interface AppJWTResponse {
     user: {

@@ -6,9 +6,9 @@ export interface IStaffService {
 	getStaffs(filtering?: Filter<Staff>): Promise<Page<Staff>>;
 	getStaffByMechanographicNumber(mechanographicNumber: string): Promise<Staff>;
 	
-	createStaff(staff: StaffDto): Promise<Staff>;
+	createStaff(staff: Staff): Promise<Staff>;
 	deactivateStaff(mechanographicNumber: string): Promise<void>;
-	updateStaff(staff: StaffDto): Promise<Staff>;
+	updateStaff(staff: Staff): Promise<Staff>;
 	
 	getNumberOfStaffs(): Promise<number>;
 }

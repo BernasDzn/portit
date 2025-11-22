@@ -69,7 +69,7 @@ export interface Container {
 
 export interface Person {
     name: string;
-    citizenId: string;
+    citizenID: string;
     nationality: string;
 }
 

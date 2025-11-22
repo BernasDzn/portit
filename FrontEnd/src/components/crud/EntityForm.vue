@@ -47,16 +47,23 @@ const buttonLoading = ref(false);
 const form = ref<HTMLFormElement | null>(null);
 
 const hasUnsaved = computed(() => {
-    console.log(props.object);
-    return Object.values(props.object).some(value => {
-        if (typeof value === 'object' && value !== null) 
-            return Object.values(value).some(v => {return (v !== null && v !== undefined && v !== '');});
-        else if (Array.isArray(value))
-            return value.length > 0;
-        else 
-            return (value !== null && value !== undefined && value !== '');
-        
-    });
+    const obj = props.object;
+
+    for (const k in obj) {
+        const value = obj[k];
+
+        if (Array.isArray(value)) {
+            if (value.length > 0) return true;
+        } else if (value && typeof value === 'object') {
+            for (const v of Object.values(value)) {
+                if (v != null && v !== '') return true;
+            }
+        } else {
+            if (value != null && value !== '') return true;
+        }
+    }
+
+    return false;
 });
 
 const submit = async () => {
@@ -119,27 +126,25 @@ function confirmCancel() {
     router.back();
 }
 
-onMounted(
-    async () => {
+onMounted(async () => {
 
-        if (props.editingId != null && props.fetchingFunction != null) {
-            try {
-                loading.value = true;
+    if (props.editingId != null && props.fetchingFunction != null) {
+        try {
+            loading.value = true;
 
-                const data = await props.fetchingFunction(props.editingId);
-                Object.assign(props.object, data);
+            const data = await props.fetchingFunction(props.editingId);
+            Object.assign(props.object, data);
 
-                loading.value = false;
+            loading.value = false;
 
-            } catch (err) {
-                notification.enqueueNotification(
-                    'Failed to load data for editing.',
-                    notification.notificationTypes.DANGER,
-                );
-            }
+        } catch (err) {
+            notification.enqueueNotification(
+                'Failed to load data for editing.',
+                notification.notificationTypes.DANGER,
+            );
         }
     }
-);
+});
 
 </script>
 
