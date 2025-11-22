@@ -393,6 +393,8 @@ router.beforeEach((to, from, next) => {
     return next();
   }
 
+  console.log(`Navigating to ${to.path} with role ${role}`);
+
   // (0=Administrator, 1=PortAuthorityOfficer, 2=SAORepresentative, 3=LogisticsOperator)
   // Map route prefixes to allowed numeric roles, this should probably be put in a config file
   // but we can keep it here for simplicity. Probably not very scalable but OK for this sprint?
@@ -415,6 +417,9 @@ router.beforeEach((to, from, next) => {
       // if the role is not allowed, redirect to unauthorized.
       // Prolly should make the unauthorized route configurable using a const???
       if (role < 0 || !entry.roles.includes(role)) {
+
+        console.log(`Access denied to ${to.path} for role ${role}`);
+
         if (to.path === '/unauthorized') return next();
         return next({ path: '/unauthorized' });
       }

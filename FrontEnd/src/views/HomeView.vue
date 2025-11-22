@@ -46,6 +46,7 @@ function scheduleExpirationCheck() {
 
 function handleExpiration() {
   session.clearSession();
+  console.warn('Session expired, redirecting to unauthorized page.');
   router.push('/unauthorized');
 }
 
