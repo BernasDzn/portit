@@ -6,7 +6,10 @@ skinparam defaultFontName FG Virgil
 skinparam shadowing false
 
 actor User as Actor
-participant "U I" as UI <<presentation>>
+participant "UI Pages" as UI <<presentation>>
+participant "UI XptoDto" as UiDto <<dto>>
+participant "UI XptoService" as UiService <<service>>
+participant "UI XptoModel" as UiModel <<model>>
 participant API as API <<application>>
 participant XptoController as Controller <<controller>>
 participant XptoService as Service <<service>>
@@ -18,67 +21,88 @@ database Database
 
 title Update Xpto
 
+Actor -> UI: Fill update form
 Actor --> UI: Update Xpto
 activate UI
 
-    UI --> API: HTTP PUT /api/xpto/{id}
+    UI --> UiDto: new XptoDto(formData)
+    activate UiDto
+        UiDto --> UI: dtoInstance
+    deactivate UiDto
 
-    activate API
+    UI --> UiService: updateXpto(dtoInstance)
+    activate UiService
 
-        API --> Controller: route
-        activate Controller
+        UiService --> UiModel: new XptoModel(dtoInstance)
+        activate UiModel
+            UiModel --> UiModel: Validate
+            UiModel --> UiService: xptoModel
+        deactivate UiModel
 
-            Controller --> Service: Request update
-            activate Service
+        UiService --> API: HTTP PUT /api/xpto/{id}
+        activate API
 
-                Service --> Repository: GetXpto(id)
-                activate Repository
-                
-                    Repository --> Context: Get(id)
+            alt Check authorization diagram
+                API --> Controller: route
+            end
+            activate Controller
 
-                    activate Context
-                        Context --> Database: SELECT
-                        Context --> Repository: xptoInstance?
-                    deactivate Context
+                Controller --> Service: Request update
+                activate Service
 
-                    Repository --> Service: xptoInstance?
-                deactivate Repository
+                    Service --> Repository: GetXpto(id)
+                    activate Repository
+                    
+                        Repository --> Context: Get(id)
+                        activate Context
+                            Context --> Database: SELECT
+                            Context --> Repository: xptoInstance?
+                        deactivate Context
 
-                group if not xptoInstance exists
-                    Service --> Controller: EntityNotFoundException 
-                    activate Controller
-                        Controller --> API: NotFound()
-                        activate API
-                            API --> UI: HTTP Response
-                        deactivate API
-                        UI --> Actor: Error
-                    deactivate Controller
-                end
+                        Repository --> Service: xptoInstance?
+                    deactivate Repository
 
-                Service --> Repository: Update(data)
-                activate Repository
-                
-                    Repository --> Model: Update(data)
-                    Repository --> Context: Save(XptoInstance)
+                    group if not xptoInstance exists
+                        Service --> Controller: EntityNotFoundException 
+                        activate Controller
+                            Controller --> API: NotFound()
+                            activate API
+                                API --> UiService: HTTP Response
+                            deactivate API
+                            UiService --> UI: Error
+                        deactivate Controller
+                    end
 
-                    activate Context
-                        Context --> Database: UPDATE
-                        Context --> Repository: status
-                    deactivate Context
+                    Service --> Repository: Update(data)
+                    activate Repository
+                    
+                        Repository --> Model: Update(data)
+                        activate Model
+                            Model --> Repository: updatedXpto
+                        deactivate Model
+                        
+                        Repository --> Context: Save(updatedXpto)
+                        activate Context
+                            Context --> Database: UPDATE
+                            Context --> Repository: status
+                        deactivate Context
 
-                    Repository --> Service: status
-                deactivate Repository
+                        Repository --> Service: status
+                    deactivate Repository
 
-                Service --> Controller: status
-            deactivate Service
+                    Service --> Controller: status
+                deactivate Service
 
-            Controller --> API: NoContent()
-        deactivate Controller
+                Controller --> API: NoContent()
+            deactivate Controller
 
-        API --> UI: HTTP Reponse
-    deactivate API
+            API --> UiService: HTTP Reponse
+        deactivate API
+
+        UiService --> UI: update success
+    deactivate UiService
 
 UI --> Actor: Success
 deactivate UI
-            
+
 @enduml

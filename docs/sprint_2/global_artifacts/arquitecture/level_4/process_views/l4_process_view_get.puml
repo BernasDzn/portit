@@ -6,13 +6,14 @@ skinparam defaultFontName FG Virgil
 skinparam shadowing false
 
 actor User as Actor
-participant "U I" as UI <<presentation>>
+participant "UI Pages" as UI <<presentation>>
+participant "UI XptoService" as UiService <<service>>
+participant "UI XptoModel" as UiModel <<model>>
 participant API as API <<application>>
 participant XptoController as Controller <<controller>>
 participant XptoService as Service <<service>>
 participant XptoRepository as Repository <<repository>>
 participant XptoContext as Context <<context>>
-participant XptoModel as Model <<entity>>
 database Database
 
 title Read Xpto
@@ -20,44 +21,52 @@ title Read Xpto
 Actor --> UI: Read Xpto
 activate UI
 
-    UI --> API: HTTP GET /api/xpto/{id}
+    UI --> UiService: getXpto(id)
+    activate UiService
 
-    activate API
+        UiService --> API: HTTP GET /api/xpto/{id}
 
-        API --> Controller: route
-        activate Controller
+        activate API
 
-            Controller --> Service: Request read
-            activate Service
+            alt Check authorization diagram
+                API --> Controller: route
+            end
+            activate Controller
 
-                Service --> Repository: GetXpto(id)
-                activate Repository
-                
-                    Repository --> Context: Get(id)
+                Controller --> Service: Request read
+                activate Service
 
-                    activate Context
-                        Context --> Database: SELECT
-                        Context --> Repository: result
-                    deactivate Context
+                    Service --> Repository: GetXpto(id)
+                    activate Repository
+                    
+                        Repository --> Context: Get(id)
+                        activate Context
+                            Context --> Database: SELECT
+                            Context --> Repository: result
+                        deactivate Context
 
-                    Repository --> Service: xptoInstance
-                deactivate Repository
+                        Repository --> Service: xptoInstance
+                    deactivate Repository
 
-                Service --> Model: toDto()
-                activate Model
-                    Model --> Service: xptoInstanceDto
-                deactivate Model
+                    Service --> Model: toDto()
+                    activate Model
+                        Model --> Service: xptoInstanceDto
+                    deactivate Model
 
-                Service --> Controller: xptoInstanceDto
-            deactivate Service
+                    Service --> Controller: xptoInstanceDto
+                deactivate Service
 
-            Controller --> API: Ok(xptoResponseDto)
-        deactivate Controller
+                Controller --> API: Ok(xptoResponseDto)
+            deactivate Controller
 
-        API --> UI: HTTP Reponse
-    deactivate API
+            API --> UiService: HTTP Response
+
+        deactivate API
+
+        UiService --> UI: xpto details
+    deactivate UiService
 
 UI --> Actor: Show Xpto details
 deactivate UI
-            
+
 @enduml
