@@ -19,6 +19,17 @@ describe('StaffService', () => {
     qualificationsCodes: ['Q001', 'Q002'],
   };
 
+  const mockStaffWithToDto: Staff = {
+    mechanographicNumber: 'STF000001',
+    name: 'John Doe',
+    email: 'john.doe@example.com',
+    phoneNumber: '900000000',
+    status: 1,
+    operationalWindow: {},
+    qualifications: [],
+    toDto: () => mockStaffDto,
+  } as Staff;
+
   const mockStaff: Staff = {
     mechanographicNumber: 'STF000001',
     name: 'John Doe',
@@ -126,7 +137,7 @@ describe('StaffService', () => {
         data: mockStaff,
       } as Response<Staff>);
 
-      const result = await staffService.createStaff(mockStaffDto);
+      const result = await staffService.createStaff(mockStaffWithToDto);
 
       expect(mockHttpService.post).toHaveBeenCalledWith('/Staff', mockStaffDto);
       expect(result).toEqual(mockStaff);
@@ -135,25 +146,25 @@ describe('StaffService', () => {
     it('should throw error when staff already exists (Conflict)', async () => {
       vi.mocked(mockHttpService.post).mockRejectedValue(new Error('Conflict: Staff already exists'));
 
-      await expect(staffService.createStaff(mockStaffDto)).rejects.toThrow('Conflict: Staff already exists');
+      await expect(staffService.createStaff(mockStaffWithToDto)).rejects.toThrow('Conflict: Staff already exists');
     });
 
     it('should throw error when validation fails (Bad Request)', async () => {
       vi.mocked(mockHttpService.post).mockRejectedValue(new Error('Bad Request: Invalid data'));
 
-      await expect(staffService.createStaff(mockStaffDto)).rejects.toThrow('Bad Request: Invalid data');
+      await expect(staffService.createStaff(mockStaffWithToDto)).rejects.toThrow('Bad Request: Invalid data');
     });
 
     it('should throw error when entity not found during creation', async () => {
       vi.mocked(mockHttpService.post).mockRejectedValue(new Error('Not Found: Related entity missing'));
 
-      await expect(staffService.createStaff(mockStaffDto)).rejects.toThrow('Not Found: Related entity missing');
+      await expect(staffService.createStaff(mockStaffWithToDto)).rejects.toThrow('Not Found: Related entity missing');
     });
 
     it('should throw error on internal server error', async () => {
       vi.mocked(mockHttpService.post).mockRejectedValue(new Error('Internal Server Error'));
 
-      await expect(staffService.createStaff(mockStaffDto)).rejects.toThrow('Internal Server Error');
+      await expect(staffService.createStaff(mockStaffWithToDto)).rejects.toThrow('Internal Server Error');
     });
   });
 
@@ -197,7 +208,7 @@ describe('StaffService', () => {
         data: mockStaff,
       } as Response<Staff>);
 
-      const result = await staffService.updateStaff(mockStaffDto);
+      const result = await staffService.updateStaff(mockStaffWithToDto);
 
       expect(mockHttpService.put).toHaveBeenCalledWith('/Staff/STF000001', mockStaffDto);
       expect(result).toEqual(mockStaff);
@@ -206,19 +217,19 @@ describe('StaffService', () => {
     it('should throw error when staff not found during update', async () => {
       vi.mocked(mockHttpService.put).mockRejectedValue(new Error('Not Found'));
 
-      await expect(staffService.updateStaff(mockStaffDto)).rejects.toThrow('Not Found');
+      await expect(staffService.updateStaff(mockStaffWithToDto)).rejects.toThrow('Not Found');
     });
 
     it('should throw error on validation error during update', async () => {
       vi.mocked(mockHttpService.put).mockRejectedValue(new Error('Bad Request: Invalid update data'));
 
-      await expect(staffService.updateStaff(mockStaffDto)).rejects.toThrow('Bad Request: Invalid update data');
+      await expect(staffService.updateStaff(mockStaffWithToDto)).rejects.toThrow('Bad Request: Invalid update data');
     });
 
     it('should throw error on internal server error during update', async () => {
       vi.mocked(mockHttpService.put).mockRejectedValue(new Error('Internal Server Error'));
 
-      await expect(staffService.updateStaff(mockStaffDto)).rejects.toThrow('Internal Server Error');
+      await expect(staffService.updateStaff(mockStaffWithToDto)).rejects.toThrow('Internal Server Error');
     });
   });
 

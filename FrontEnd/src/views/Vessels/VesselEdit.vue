@@ -3,6 +3,7 @@ import EntityDropdown from '@/components/crud/EntityDropdown.vue';
 import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
 import ObjectSelector from '@/components/crud/ObjectSelector.vue';
+import Loading from '@/components/Loading.vue';
 import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
 import type { VesselDto } from '@/model/dto/VesselDto';
@@ -37,6 +38,9 @@ const vessel = ref({
 
 // Load vessel on mount
 onMounted(async () => {
+
+    loading.value = true;
+
     try {
         const data: Vessel = await vesselService.getVesselByIMO(vesselIMO);
         if (!data) return;
@@ -44,8 +48,12 @@ onMounted(async () => {
 
     } catch (err) {
         console.error('Failed to load vessel', err);
+    } finally {
+        loading.value = false;
     }
 });
+
+const loading = ref(true);
 
 // Return the promise so the parent EntityForm can attach .catch/.then handlers
 const submitVessel = (obj: any) =>
@@ -72,7 +80,8 @@ const submitVessel = (obj: any) =>
 
         <h1 class="title">{{ t('vessel.tabs.edit') }}</h1>
         <p class="subtitle">{{ t('vessel.subtitle.edit') }}</p>
-        <EntityForm editing-id="imoNumber" :object="vessel" :submit-function="submitVessel">
+        <Loading v-if="loading" />
+        <EntityForm editing-id="imoNumber" :object="vessel" :submit-function="submitVessel" v-else>
             <div class="name-imo">
                 <FormField inputId="vessel-name" :required="true" class="field" :name="`${t('vessel.fields.name.title')}*`" v-model="vessel.name" :placeholderText="t('vessel.fields.name.placeholder')"/>
                 <FormField inputId="vessel-imo" :enabled="false" class="field" :name="t('vessel.fields.imoNumber.title')" v-model="vessel.imoNumber" :placeholderText="t('vessel.fields.imoNumber.placeholder')" pattern="IMO [0-9]{7}"/>
@@ -86,6 +95,7 @@ const submitVessel = (obj: any) =>
                     :placeholderText="t('vessel.fields.vesselType.placeholder')"
                     labelKey="name"
                     required
+                    input-id="vessel-type"
                 />
 
                 <ObjectSelector
@@ -97,6 +107,7 @@ const submitVessel = (obj: any) =>
                     :placeholderText="t('vessel.fields.owner.placeholder')"
                     labelKey="name"
                     required
+                    input-id="vessel-owner"
                 />
 
             </div>

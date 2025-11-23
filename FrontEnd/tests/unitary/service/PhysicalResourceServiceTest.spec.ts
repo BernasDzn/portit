@@ -76,6 +76,21 @@ describe('PhysicalResourceService', () => {
     containersPerTrip: 2,
   };
 
+  const mockSTSWithToDto: STSCrane = {
+    code: 'STS001',
+    toDto: () => mockSTSDto,
+  } as STSCrane;
+
+  const mockYardWithToDto: YardCrane = {
+    code: 'YRD001',
+    toDto: () => mockYardDto,
+  } as YardCrane;
+
+  const mockTruckWithToDto: Truck = {
+    code: 'TRK001',
+    toDto: () => mockTruckDto,
+  } as Truck;
+
   beforeEach(() => {
     mockHttp = {
       get: vi.fn(),
@@ -197,7 +212,7 @@ describe('PhysicalResourceService', () => {
         data: mockSTS
       });
 
-      const result = await service.addSTSCrane(mockSTSDto);
+      const result = await service.addSTSCrane(mockSTSWithToDto);
 
       expect(mockHttp.post).toHaveBeenCalledWith('/PhysicalResource/AddSTSCrane', mockSTSDto);
       expect(result).toEqual(mockSTS);
@@ -206,7 +221,7 @@ describe('PhysicalResourceService', () => {
     it('should throw on error', async () => {
       vi.mocked(mockHttp.post).mockRejectedValue(new Error('Bad request'));
 
-      await expect(service.addSTSCrane(mockSTSDto)).rejects.toThrow('Bad request');
+      await expect(service.addSTSCrane(mockSTSWithToDto)).rejects.toThrow('Bad request');
     });
   });
 
@@ -218,7 +233,7 @@ describe('PhysicalResourceService', () => {
         data: mockYard
       });
 
-      const result = await service.addYardCrane(mockYardDto);
+      const result = await service.addYardCrane(mockYardWithToDto);
 
       expect(mockHttp.post).toHaveBeenCalledWith('/PhysicalResource/AddYardCrane', mockYardDto);
       expect(result).toEqual(mockYard);
@@ -227,7 +242,7 @@ describe('PhysicalResourceService', () => {
     it('should throw on failure', async () => {
       vi.mocked(mockHttp.post).mockRejectedValue(new Error('Failure'));
 
-      await expect(service.addYardCrane(mockYardDto)).rejects.toThrow('Failure');
+      await expect(service.addYardCrane(mockYardWithToDto)).rejects.toThrow('Failure');
     });
   });
 
@@ -239,7 +254,7 @@ describe('PhysicalResourceService', () => {
         data: mockTruck
       });
 
-      const result = await service.addTruck(mockTruckDto);
+      const result = await service.addTruck(mockTruckWithToDto);
 
       expect(mockHttp.post).toHaveBeenCalledWith('/PhysicalResource/AddTruck', mockTruckDto);
       expect(result).toEqual(mockTruck);
@@ -248,7 +263,7 @@ describe('PhysicalResourceService', () => {
     it('should throw on error', async () => {
       vi.mocked(mockHttp.post).mockRejectedValue(new Error('Error'));
 
-      await expect(service.addTruck(mockTruckDto)).rejects.toThrow('Error');
+      await expect(service.addTruck(mockTruckWithToDto)).rejects.toThrow('Error');
     });
   });
 
@@ -263,7 +278,7 @@ describe('PhysicalResourceService', () => {
         data: mockSTS
       });
 
-      const result = await service.updateSTSCrane(mockSTSDto);
+      const result = await service.updateSTSCrane(mockSTSWithToDto);
 
       expect(mockHttp.put).toHaveBeenCalledWith(
         `/PhysicalResource/UpdateSTSCrane/${mockSTSDto.code}`,
@@ -275,7 +290,7 @@ describe('PhysicalResourceService', () => {
     it('should throw on error', async () => {
       vi.mocked(mockHttp.put).mockRejectedValue(new Error('Failed'));
 
-      await expect(service.updateSTSCrane(mockSTSDto)).rejects.toThrow('Failed');
+      await expect(service.updateSTSCrane(mockSTSWithToDto)).rejects.toThrow('Failed');
     });
   });
 
@@ -287,7 +302,7 @@ describe('PhysicalResourceService', () => {
         data: mockYard
       });
 
-      const result = await service.updateYardCrane(mockYardDto);
+      const result = await service.updateYardCrane(mockYardWithToDto);
 
       expect(mockHttp.put).toHaveBeenCalledWith(
         `/PhysicalResource/UpdateYardCrane/${mockYardDto.code}`,
@@ -299,7 +314,7 @@ describe('PhysicalResourceService', () => {
     it('should throw on error', async () => {
       vi.mocked(mockHttp.put).mockRejectedValue(new Error('Err'));
 
-      await expect(service.updateYardCrane(mockYardDto)).rejects.toThrow('Err');
+      await expect(service.updateYardCrane(mockYardWithToDto)).rejects.toThrow('Err');
     });
   });
 
@@ -311,7 +326,7 @@ describe('PhysicalResourceService', () => {
         data: mockTruck
       });
 
-      const result = await service.updateTruck(mockTruckDto);
+      const result = await service.updateTruck(mockTruckWithToDto);
 
       expect(mockHttp.put).toHaveBeenCalledWith(
         `/PhysicalResource/UpdateTruck/${mockTruckDto.code}`,
@@ -323,7 +338,7 @@ describe('PhysicalResourceService', () => {
     it('should throw on failure', async () => {
       vi.mocked(mockHttp.put).mockRejectedValue(new Error('Error updating'));
 
-      await expect(service.updateTruck(mockTruckDto))
+      await expect(service.updateTruck(mockTruckWithToDto))
         .rejects.toThrow('Error updating');
     });
   });

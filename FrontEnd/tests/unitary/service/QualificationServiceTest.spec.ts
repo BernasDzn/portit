@@ -14,6 +14,12 @@ describe('QualificationService', () => {
     qualificationName: 'First Aid',
   };
 
+  const mockQualificationWithToDto: Qualification = {
+    idCode: 'Q001',
+    qualificationName: 'First Aid',
+    toDto: () => mockQualificationDto,
+  } as Qualification;
+
   const mockQualification: Qualification = {
     idCode: 'Q001',
     qualificationName: 'First Aid',
@@ -122,7 +128,7 @@ describe('QualificationService', () => {
         data: mockQualification,
       } as Response<Qualification>);
 
-      const result = await qualificationService.addQualification(mockQualificationDto);
+      const result = await qualificationService.addQualification(mockQualificationWithToDto);
 
       expect(mockHttpService.post).toHaveBeenCalledWith('/Qualification', mockQualificationDto);
       expect(result).toEqual(mockQualification);
@@ -131,21 +137,21 @@ describe('QualificationService', () => {
     it('should throw error on conflict', async () => {
       vi.mocked(mockHttpService.post).mockRejectedValue(new Error('Conflict: Already exists'));
 
-      await expect(qualificationService.addQualification(mockQualificationDto))
+      await expect(qualificationService.addQualification(mockQualificationWithToDto))
         .rejects.toThrow('Conflict: Already exists');
     });
 
     it('should throw validation error', async () => {
       vi.mocked(mockHttpService.post).mockRejectedValue(new Error('Bad Request: Invalid data'));
 
-      await expect(qualificationService.addQualification(mockQualificationDto))
+      await expect(qualificationService.addQualification(mockQualificationWithToDto))
         .rejects.toThrow('Bad Request: Invalid data');
     });
 
     it('should throw internal server error', async () => {
       vi.mocked(mockHttpService.post).mockRejectedValue(new Error('Internal Server Error'));
 
-      await expect(qualificationService.addQualification(mockQualificationDto))
+      await expect(qualificationService.addQualification(mockQualificationWithToDto))
         .rejects.toThrow('Internal Server Error');
     });
   });
@@ -161,7 +167,7 @@ describe('QualificationService', () => {
         data: mockQualification,
       } as Response<Qualification>);
 
-      const result = await qualificationService.updateQualification(mockQualificationDto);
+      const result = await qualificationService.updateQualification(mockQualificationWithToDto);
 
       expect(mockHttpService.put).toHaveBeenCalledWith('/Qualification/Q001', mockQualificationDto);
       expect(result).toEqual(mockQualification);
@@ -170,21 +176,21 @@ describe('QualificationService', () => {
     it('should throw error when not found', async () => {
       vi.mocked(mockHttpService.put).mockRejectedValue(new Error('Not Found'));
 
-      await expect(qualificationService.updateQualification(mockQualificationDto))
+      await expect(qualificationService.updateQualification(mockQualificationWithToDto))
         .rejects.toThrow('Not Found');
     });
 
     it('should throw validation error', async () => {
       vi.mocked(mockHttpService.put).mockRejectedValue(new Error('Bad Request: Invalid update'));
 
-      await expect(qualificationService.updateQualification(mockQualificationDto))
+      await expect(qualificationService.updateQualification(mockQualificationWithToDto))
         .rejects.toThrow('Bad Request: Invalid update');
     });
 
     it('should throw internal server error', async () => {
       vi.mocked(mockHttpService.put).mockRejectedValue(new Error('Internal Server Error'));
 
-      await expect(qualificationService.updateQualification(mockQualificationDto))
+      await expect(qualificationService.updateQualification(mockQualificationWithToDto))
         .rejects.toThrow('Internal Server Error');
     });
   });

@@ -58,6 +58,7 @@ const submitVessel = (obj: any) =>
                     :placeholderText="t('vessel.fields.vesselType.placeholder')"
                     labelKey="name"
                     required
+                    input-id="vessel-type"
                 />
 
                 <ObjectSelector
@@ -68,6 +69,7 @@ const submitVessel = (obj: any) =>
                     :placeholderText="t('vessel.fields.owner.placeholder')"
                     labelKey="name"
                     required
+                    input-id="vessel-owner"
                 />
             </div>
             <div class="measurements">

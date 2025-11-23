@@ -24,6 +24,16 @@ describe('StorageAreaService', () => {
     ],
   };
 
+  const mockStorageAreaWithToDto: StorageArea = {
+    nameCode: 'WH001',
+    location: 'A1',
+    type: 1,
+    capacity: 1000,
+    currentOccupancy: 500,
+    dockServices: [],
+    toDto: () => mockStorageAreaDto,
+  } as StorageArea;
+
   const mockStorageArea: StorageArea = {
     nameCode: 'WH001',
     location: 'A1',
@@ -122,7 +132,7 @@ describe('StorageAreaService', () => {
         data: mockStorageArea,
       } as Response<StorageArea>);
 
-      const result = await storageAreaService.createStorageArea(mockStorageAreaDto);
+      const result = await storageAreaService.createStorageArea(mockStorageAreaWithToDto);
 
       expect(mockHttpService.post).toHaveBeenCalledWith('/StorageArea', mockStorageAreaDto);
       expect(result).toEqual(mockStorageArea);
@@ -131,7 +141,7 @@ describe('StorageAreaService', () => {
     it('should throw error when storage area already exists (Conflict)', async () => {
       vi.mocked(mockHttpService.post).mockRejectedValue(new Error('Conflict: Storage area already exists'));
 
-      await expect(storageAreaService.createStorageArea(mockStorageAreaDto)).rejects.toThrow(
+      await expect(storageAreaService.createStorageArea(mockStorageAreaWithToDto)).rejects.toThrow(
         'Conflict: Storage area already exists'
       );
     });
@@ -139,13 +149,13 @@ describe('StorageAreaService', () => {
     it('should throw error when validation fails (Bad Request)', async () => {
       vi.mocked(mockHttpService.post).mockRejectedValue(new Error('Bad Request: Invalid data'));
 
-      await expect(storageAreaService.createStorageArea(mockStorageAreaDto)).rejects.toThrow('Bad Request: Invalid data');
+      await expect(storageAreaService.createStorageArea(mockStorageAreaWithToDto)).rejects.toThrow('Bad Request: Invalid data');
     });
 
     it('should throw error when entity not found during creation', async () => {
       vi.mocked(mockHttpService.post).mockRejectedValue(new Error('Not Found: Related entity missing'));
 
-      await expect(storageAreaService.createStorageArea(mockStorageAreaDto)).rejects.toThrow(
+      await expect(storageAreaService.createStorageArea(mockStorageAreaWithToDto)).rejects.toThrow(
         'Not Found: Related entity missing'
       );
     });
@@ -153,7 +163,7 @@ describe('StorageAreaService', () => {
     it('should throw error on internal server error', async () => {
       vi.mocked(mockHttpService.post).mockRejectedValue(new Error('Internal Server Error'));
 
-      await expect(storageAreaService.createStorageArea(mockStorageAreaDto)).rejects.toThrow('Internal Server Error');
+      await expect(storageAreaService.createStorageArea(mockStorageAreaWithToDto)).rejects.toThrow('Internal Server Error');
     });
   });
 
@@ -165,7 +175,7 @@ describe('StorageAreaService', () => {
         data: mockStorageArea,
       } as Response<StorageArea>);
 
-      const result = await storageAreaService.updateStorageArea(mockStorageAreaDto);
+      const result = await storageAreaService.updateStorageArea(mockStorageAreaWithToDto);
 
       expect(mockHttpService.put).toHaveBeenCalledWith('/StorageArea/WH001', mockStorageAreaDto);
       expect(result).toEqual(mockStorageArea);
@@ -174,13 +184,13 @@ describe('StorageAreaService', () => {
     it('should throw error when storage area not found during update', async () => {
       vi.mocked(mockHttpService.put).mockRejectedValue(new Error('Not Found'));
 
-      await expect(storageAreaService.updateStorageArea(mockStorageAreaDto)).rejects.toThrow('Not Found');
+      await expect(storageAreaService.updateStorageArea(mockStorageAreaWithToDto)).rejects.toThrow('Not Found');
     });
 
     it('should throw error on validation error during update', async () => {
       vi.mocked(mockHttpService.put).mockRejectedValue(new Error('Bad Request: Invalid update data'));
 
-      await expect(storageAreaService.updateStorageArea(mockStorageAreaDto)).rejects.toThrow(
+      await expect(storageAreaService.updateStorageArea(mockStorageAreaWithToDto)).rejects.toThrow(
         'Bad Request: Invalid update data'
       );
     });
@@ -188,7 +198,7 @@ describe('StorageAreaService', () => {
     it('should throw error on internal server error during update', async () => {
       vi.mocked(mockHttpService.put).mockRejectedValue(new Error('Internal Server Error'));
 
-      await expect(storageAreaService.updateStorageArea(mockStorageAreaDto)).rejects.toThrow('Internal Server Error');
+      await expect(storageAreaService.updateStorageArea(mockStorageAreaWithToDto)).rejects.toThrow('Internal Server Error');
     });
   });
 
