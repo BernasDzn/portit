@@ -46,6 +46,6 @@ test('Ensure update storage area changes fields correctly', async ({ page }) => 
   await page.getByRole('button', { name: 'Edit Storage Area' }).click();
   await page.getByPlaceholder('storageArea.currentOccupancy.placeholder').click();
   await page.getByPlaceholder('storageArea.currentOccupancy.placeholder').fill('500');
-  await page.getByRole('button', { name: 'Create' }).click();
+  await page.getByRole('button', { name: 'Save' }).click();
   await expect(page.getByRole('main')).toContainText('500 / 1000');
 });
