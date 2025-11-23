@@ -21,7 +21,7 @@ const vvnList = ref<VesselVisitNotification[]>([]);
 
 const fetchVesselVisitNotifications = async (filtering?: any): Promise<Page<VesselVisitNotification>> => {
     // For now admins cant filter the notifications, they just get all of them
-    if (user.value.role === 0) {
+    if (user.value.role != 2) {
         return await fetchVVNsPa(filtering);
     } 
 

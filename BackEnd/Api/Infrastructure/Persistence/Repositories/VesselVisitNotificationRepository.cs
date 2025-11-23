@@ -61,19 +61,21 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
     {
         try
         {
+            var notification = await _context.VesselVisitNotifications
+                .Include(n => n.NotificationDecisions)
+                .FirstOrDefaultAsync(n => n.NotificationId.Value == notificationId);
 
-            IEnumerable<NotificationDecision> decisions = await _context.VesselVisitNotifications
-                .Where(n => n.NotificationId.Value == notificationId)
-                .SelectMany(n => n.NotificationDecisions)
-                .ToListAsync();
+            if (notification == null)
+                return Enumerable.Empty<NotificationDecision>();
 
-            return decisions;
+            return notification.NotificationDecisions;
         }
         catch
         {
             throw new PersistencyFailedException("Failed to retrieve notification decisions from the database.");
         }
     }
+
 
 
     public async Task<VesselVisitNotification> AddAsync(VesselVisitNotification vesselVisitNotification)
