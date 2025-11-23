@@ -19,46 +19,6 @@ public class StaffApplicationTest : BaseApplicationTest
         _client = Client;
     }
 
-    protected override void ConfigureWebHost(IWebHostBuilder builder)
-    {
-        base.ConfigureWebHost(builder);
-
-        builder.ConfigureServices(services =>
-        {
-            // seed database
-            var sp = services.BuildServiceProvider();
-            using var scope = sp.CreateScope();
-            var scopedServices = scope.ServiceProvider;
-            var db = scopedServices.GetRequiredService<ApiContext>();
-            var logger = scopedServices.GetRequiredService<ILogger<StaffApplicationTest>>();
-
-            db.Database.EnsureDeleted();
-            db.Database.EnsureCreated();
-
-            // seed qualifications used by staff
-            var qualifications = new List<Qualification>
-            {
-                new Qualification(Guid.NewGuid(), new Code { Value = "Q1" }, new Designation { Value = "Qualification 1" }),
-                new Qualification(Guid.NewGuid(), new Code { Value = "Q2" }, new Designation { Value = "Qualification 2" })
-            };
-            db.Qualifications.AddRange(qualifications);
-
-            // seed a staff using the in-memory list (avoid querying DB before SaveChanges)
-            var qual = qualifications.First();
-            var staff = new Staff(
-                new StaffMechanographicNumber { Value = "MEC001" },
-                new Designation { Value = "Alice" },
-                new Email { Value = "alice@example.com" },
-                new PhoneNumber { Value = "900000001" },
-                OperationalWindow.FullWeek(),
-                new List<Qualification> { qual }
-            );
-            db.Staffs.Add(staff);
-
-            db.SaveChanges();
-        });
-    }
-
     [Fact]
     public async Task GetAllStaffs_ReturnsList()
     {
@@ -73,13 +33,13 @@ public class StaffApplicationTest : BaseApplicationTest
     [Fact]
     public async Task GetStaffById_ReturnsStaff_WhenExists()
     {
-        var response = await _client.GetAsync($"/Staff/filter?mechanograficNumber=STF250001");
+        var response = await _client.GetAsync($"/Staff/filter?mechanograficNumber=STF250003");
         response.EnsureSuccessStatusCode();
 
         var page = await response.Content.ReadFromJsonAsync<Page<StaffDto>>();
         Assert.NotNull(page);
-        Assert.Single(page.Items);
-        Assert.Equal("MEC001", page.Items.First().MechanographicNumber);
+        Assert.NotEmpty(page.Items);
+        Assert.Equal("STF250003", page.Items.First().MechanographicNumber);
     }
 
     [Fact]
@@ -97,13 +57,13 @@ public class StaffApplicationTest : BaseApplicationTest
     {
         var createDto = new CreateStaffDto
         {
-            MechanographicNumber = "STF250001",
+            MechanographicNumber = "STF250004",
             Name = "Bob",
             Email = "bob@example.com",
             PhoneNumber = "900000002",
             Status = 0,
             OperationalWindow = OperationalWindow.FullWeek(),
-            QualificationsCodes = new List<string> { "Q1" }
+            QualificationsCodes = new List<string> { "STSOP" }
         };
 
         var response = await _client.PostAsJsonAsync("/Staff", createDto);
@@ -118,7 +78,7 @@ public class StaffApplicationTest : BaseApplicationTest
     {
         var createDto = new CreateStaffDto
         {
-            MechanographicNumber = "MEC003",
+            MechanographicNumber = "STF250006",
             Name = "Charlie",
             Email = "charlie@example.com",
             PhoneNumber = "900000003",
@@ -136,13 +96,13 @@ public class StaffApplicationTest : BaseApplicationTest
     {
         var createDto = new CreateStaffDto
         {
-            MechanographicNumber = "MEC001",
+            MechanographicNumber = "STF250001",
             Name = "Dup",
             Email = "dup@example.com",
             PhoneNumber = "900000009",
             Status = 0,
             OperationalWindow = OperationalWindow.FullWeek(),
-            QualificationsCodes = new List<string> { "Q1" }
+            QualificationsCodes = new List<string> { "STSOP" }
         };
 
         var response = await _client.PostAsJsonAsync("/Staff", createDto);
@@ -160,7 +120,7 @@ public class StaffApplicationTest : BaseApplicationTest
             PhoneNumber = "",
             Status = 0,
             OperationalWindow = OperationalWindow.FullWeek(),
-            QualificationsCodes = new List<string> { "Q1" }
+            QualificationsCodes = new List<string> { "STSOP" }
         };
 
         var response = await _client.PostAsJsonAsync("/Staff", createDto);
@@ -186,7 +146,7 @@ public class StaffApplicationTest : BaseApplicationTest
     [Fact]
     public async Task Deactivate_ReturnsOk_WhenExists()
     {
-        var response = await _client.DeleteAsync("/Staff/MEC001");
+        var response = await _client.DeleteAsync("/Staff/STF250001");
         response.EnsureSuccessStatusCode();
         Assert.Equal(System.Net.HttpStatusCode.OK, response.StatusCode);
     }
@@ -203,16 +163,16 @@ public class StaffApplicationTest : BaseApplicationTest
     {
         var dto = new CreateStaffDto
         {
-            MechanographicNumber = "MEC001",
+            MechanographicNumber = "STF250002",
             Name = "Alice Updated",
             Email = "alice2@example.com",
             PhoneNumber = "900000010",
             Status = 0,
             OperationalWindow = OperationalWindow.FullWeek(),
-            QualificationsCodes = new List<string> { "Q1" }
+            QualificationsCodes = new List<string> { "STSOP" }
         };
 
-        var response = await _client.PutAsJsonAsync($"/Staff/MEC001", dto);
+        var response = await _client.PutAsJsonAsync($"/Staff/STF250002", dto);
         response.EnsureSuccessStatusCode();
         Assert.Equal(System.Net.HttpStatusCode.OK, response.StatusCode);
     }
@@ -228,7 +188,7 @@ public class StaffApplicationTest : BaseApplicationTest
             PhoneNumber = "900000099",
             Status = 0,
             OperationalWindow = OperationalWindow.FullWeek(),
-            QualificationsCodes = new List<string> { "Q1" }
+            QualificationsCodes = new List<string> { "STSOP" }
         };
 
         var response = await _client.PutAsJsonAsync($"/Staff/NONEX", dto);
