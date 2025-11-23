@@ -59,10 +59,17 @@ The layout may optionally include:
 
 
 ## 4. Business Value
-> ...
+> A unified layout provides consistent navigation and branding throughout the application, reducing user confusion and improving overall user experience. Always-visible navigation elements enable efficient movement between features, while responsive design ensures accessibility across different devices. Multilingual support expands the user base and improves usability for diverse teams. Dynamic, role-based menus combined with consistent styling create a professional, cohesive interface that enhances user confidence and productivity while reinforcing organizational identity.
 
 ## 5. Definition of Ready
 > This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- Unified layout component is implemented and applied to all pages
+- Header bar with logo and system name is always visible
+- Primary navigation area (menu) is consistently accessible
+- Menu options dynamically render based on user role
+- Multilingual support is implemented with at least two languages (English and Portuguese)
+- Layout adapts responsively to different screen sizes (desktop-first approach)
+- UI follows a consistent design system/component library
+- The implementation checks all acceptance criteria

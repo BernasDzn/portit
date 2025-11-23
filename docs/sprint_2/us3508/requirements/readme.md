@@ -41,5 +41,9 @@
 > This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- Backup strategy specifies frequency, retention policy, and storage location
+- RPO and WRT values are defined, justified, and achievable
+- Backup and restore procedures are documented
+- Test recovery runs validate backup effectiveness
+- The implementation checks all acceptance criteria
 

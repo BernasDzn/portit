@@ -35,11 +35,16 @@
 
 
 ## 4. Business Value
-> ...
+> Distinctive visual styling and textures for different port elements enable rapid visual identification and categorization, reducing cognitive effort required to interpret 3D scenes. Clear visual differentiation between vessels, docks, storage areas, and equipment supports quick situational assessment and reduces the risk of misidentification during operational planning. Professional rendering with appropriate materials enhances system credibility and user engagement while maintaining performance standards.
 
 ## 5. Definition of Ready
 > This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- Each object category has distinct textures and materials
+- Procedural models use textures from backend JSON configuration
+- Textures include color map and at least one additional map (roughness/bump/normal)
+- Visual styling does not significantly degrade performance
+- Different port elements are easily distinguishable
+- The implementation checks all acceptance criteria
 

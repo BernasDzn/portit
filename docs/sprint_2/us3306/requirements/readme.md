@@ -35,11 +35,16 @@
 
 
 ## 4. Business Value
-> ...
+> Intuitive camera controls empower users to explore the 3D environment freely, enabling detailed inspection from any perspective. Responsive mouse-based navigation with orbiting and zooming capabilities allows users to focus on areas of interest, examine spatial relationships, and verify operational details without frustration. Smooth, predictable camera behavior enhances user confidence and reduces learning curve, making 3D visualization accessible to all authorized users.
 
 ## 5. Definition of Ready
 > This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- Right-click-and-drag enables camera orbiting around scene target
+- Mouse wheel enables dollying in/out within safe limits
+- Camera movements are responsive and smooth
+- No jitter or excessive sensitivity in controls
+- Camera boundaries prevent extreme positions
+- The implementation checks all acceptance criteria
 

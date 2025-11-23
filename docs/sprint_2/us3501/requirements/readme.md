@@ -37,11 +37,16 @@
 
 
 ## 4. Business Value
-> ...
+> Automated deployment with integrated testing ensures consistent, repeatable releases while reducing human error and deployment time. Systematic validation through automated test plans catches regressions early, preventing production issues and maintaining system quality. Archived logs and test results provide audit trails for compliance and troubleshooting, while configurable scheduling enables regular validation without manual intervention. This automation supports continuous improvement and reliable software delivery.
 
 ## 5. Definition of Ready
 > This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- Automated deployment pipeline is configured and functional
+- Test plan validation steps are integrated into pipeline
+- Deployment logs and test results are archived
+- Target environment (VM/container) is reproducible and isolated
+- Deployment schedule is configurable (nightly/weekly)
+- The implementation checks all acceptance criteria
 

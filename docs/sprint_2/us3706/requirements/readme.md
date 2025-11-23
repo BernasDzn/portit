@@ -34,11 +34,14 @@
 
 
 ## 4. Business Value
-> ...
+> Documenting HR policies and practices provides essential context for understanding how the organization manages its workforce throughout the employee lifecycle. This knowledge reveals HR maturity, highlights areas where system support could enhance efficiency, and identifies data requirements for HR-related functionality. Understanding recruitment, selection, and integration processes helps align system capabilities with organizational needs and ensures compliance with established HR procedures.
 
 ## 5. Definition of Ready
 > This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- HR management policies are identified
+- HR management processes (recruitment, selection, integration, etc.) are briefly described
+- Documentation is complete and accessible
+- The implementation checks all acceptance criteria
 

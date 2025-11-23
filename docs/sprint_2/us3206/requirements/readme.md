@@ -38,11 +38,17 @@
 
 
 ## 4. Business Value
-> ...
+> Secure activation links with identity verification ensure that only legitimate users gain system access, preventing unauthorized account takeover. By validating user identity through IAM authentication and matching it against invitation data, the system prevents activation link abuse. Expired link handling and proper error messaging maintain security while providing clear guidance to users, supporting both security compliance and positive user onboarding experiences.
 
 ## 5. Definition of Ready
 > This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- Activation links redirect to IAM authentication
+- System validates authenticated user matches invitation data
+- Successful validation completes activation (status update)
+- Mismatched user data prevents activation with error message
+- Expired or invalid links show appropriate error messages
+- Activated users gain role-based access immediately
+- The implementation checks all acceptance criteria
 

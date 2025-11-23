@@ -40,5 +40,9 @@
 > This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- SSH connection attempts are logged with time, remote IP, and user
+- Logging system captures all SSH authentication events
+- Alert system triggers on >5 attempts within 20 seconds
+- Alerts are sent to all logged-in users and admin email
+- The implementation checks all acceptance criteria
 

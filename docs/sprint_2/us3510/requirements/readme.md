@@ -47,5 +47,9 @@ All users should comply with the rules for password strength. The policy defines
 > This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- Password policy enforces 12+ characters with complexity requirements
+- 10-second delay is implemented after failed login attempts (except root)
+- Account lockout occurs after 5 failed attempts (except root)
+- Manual root intervention is required to unlock accounts
+- The implementation checks all acceptance criteria
 

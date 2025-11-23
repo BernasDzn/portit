@@ -34,11 +34,15 @@
 
 
 ## 4. Business Value
-> ...
+> Identifying circular economy practices aligned with ReSOLVE strategies reveals how the organization minimizes waste, extends resource lifecycles, and reduces environmental impact. This analysis uncovers opportunities for resource optimization, cost reduction through efficiency, and enhanced sustainability credentials. Understanding circular economy integration supports strategic environmental initiatives, can reveal revenue opportunities from circular business models, and demonstrates forward-thinking commitment to sustainable operations.
 
 ## 5. Definition of Ready
 > This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- Circular economy practices (existing or potential) are identified
+- Practices are mapped to ReSOLVE strategies (Regenerate, Share, Optimize, Loop, Virtualize, Exchange)
+- Environmental, operational, or economic benefits are indicated
+- Feasible actions are suggested if no practices exist
+- The implementation checks all acceptance criteria
 

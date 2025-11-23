@@ -43,11 +43,16 @@
 
 
 ## 4. Business Value
-> ...
+> Providing intuitive graphical interfaces for system operations eliminates the need for command-line expertise and reduces training time. Role-based form access ensures users can efficiently perform their authorized tasks while validated inputs prevent data integrity issues. Integration with REST APIs ensures consistency across the system, while filtering and searching capabilities enable users to quickly locate and manage information, significantly improving operational efficiency and user satisfaction.
 
 ## 5. Definition of Ready
 > This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- Forms/pages are implemented for prioritized functionalities (Vessel Visit Notifications, Storage Areas, Physical Resources, Docks, Vessels, Shipping Agent Organizations)
+- Required field validation is enforced before submission
+- Forms are accessible only through role-based menu rules
+- Data is fetched from and persisted to REST API endpoints
+- List views include filtering and searching capabilities
+- The implementation checks all acceptance criteria
 

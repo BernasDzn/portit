@@ -37,11 +37,16 @@
 
 
 ## 4. Business Value
-> ...
+> Integrating with an external Identity and Access Management provider eliminates the need for separate credential management, reducing security risks associated with password storage and simplifying user experience. Single sign-on capabilities improve productivity by reducing authentication friction, while centralized identity management ensures consistent security policies across systems and reduces administrative overhead for user account management.
 
 ## 5. Definition of Ready
 > This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- IAM integration is configured (OAuth2/OpenID Connect)
+- Unauthenticated users are redirected to IAM login page
+- Access tokens are received and stored after successful authentication
+- Logout functionality clears tokens and session data
+- Password storage is not handled by the application
+- The implementation checks all acceptance criteria
 

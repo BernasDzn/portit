@@ -35,11 +35,15 @@
 
 
 ## 4. Business Value
-> ...
+> Defining clear Minimum Business Continuity Objectives establishes measurable service level expectations and acceptable downtime thresholds that align technical capabilities with business requirements. Formal stakeholder approval ensures shared understanding of continuity commitments and resource requirements. MBCO definitions guide infrastructure investment decisions, disaster recovery planning, and SLA commitments. This clarity supports realistic business planning and manages stakeholder expectations during incidents.
 
 ## 5. Definition of Ready
 > This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- MBCO is defined in measurable terms (downtime, service capacity)
+- MBCO proposal aligns with identified risks and recovery capabilities
+- Proposal is reviewed and approved by project stakeholders
+- Documentation is complete and accessible
+- The implementation checks all acceptance criteria
 

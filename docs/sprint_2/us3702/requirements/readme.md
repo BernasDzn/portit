@@ -34,11 +34,15 @@
 
 
 ## 4. Business Value
-> ...
+> Identifying and understanding KPIs at different management levels reveals how the organization measures success, tracks progress toward objectives, and monitors operational efficiency. Clear documentation of KPI purpose, calculation, and relevance supports performance transparency and enables informed decision-making at all organizational levels. This understanding helps align technical solutions with measured outcomes and demonstrates how the system contributes to organizational goals and performance improvement.
 
 ## 5. Definition of Ready
 > This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- At least one KPI per management level is documented
+- Each KPI is justified for its management level
+- KPIs are categorized (monitoring objectives vs activities/processes)
+- Purpose, calculation logic, and relevance are included for each KPI
+- The implementation checks all acceptance criteria
 

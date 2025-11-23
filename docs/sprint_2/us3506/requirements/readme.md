@@ -35,11 +35,15 @@
 
 
 ## 4. Business Value
-> ...
+> Systematic risk identification and quantification enables proactive management of threats to system availability, security, and performance. Categorizing risks by likelihood and impact supports prioritized mitigation efforts and resource allocation decisions. Documented mitigation strategies and residual risk levels provide stakeholders with transparency about system vulnerabilities and management approaches. This risk-aware approach enhances operational resilience and supports informed decision-making about security investments.
 
 ## 5. Definition of Ready
 > This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- Risks are categorized (technical, operational, security-related)
+- Each risk has likelihood and impact ratings
+- Mitigation strategies are documented for each risk
+- Residual risk levels are identified
+- The implementation checks all acceptance criteria
 

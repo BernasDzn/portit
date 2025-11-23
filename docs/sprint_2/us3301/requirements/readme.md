@@ -36,11 +36,16 @@
 
 
 ## 4. Business Value
-> ...
+> Integrating 3D visualization capabilities transforms how users understand and interact with port operations by providing intuitive spatial representations of complex environments. Visual representation of the port layout enhances situational awareness, supports better decision-making, and enables users to quickly comprehend physical relationships between port facilities. This foundation enables future operational monitoring, planning, and training capabilities that leverage visual understanding.
 
 ## 5. Definition of Ready
 > This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- 3D engine (Three.js, WebGL, etc.) is integrated into the SPA
+- 3D module is accessible through SPA routing and layout
+- Integration does not break existing UI or authentication flow
+- 3D module source code is in the repository structure
+- Basic 3D scene renders successfully
+- The implementation checks all acceptance criteria
 

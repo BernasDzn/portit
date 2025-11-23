@@ -36,11 +36,15 @@
 
 
 ## 4. Business Value
-> ...
+> Alternative heuristic scheduling algorithms provide fast, good-quality solutions for large-scale or time-critical scenarios where optimal algorithms are too slow. By trading guaranteed optimality for computational efficiency, heuristics enable responsive scheduling even during peak operational periods or when planning involves many vessels and resources. Comparative metrics between optimal and heuristic solutions help operators choose appropriate algorithms based on operational urgency and solution quality requirements.
 
 ## 5. Definition of Ready
 > This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- Alternative heuristic algorithm is implemented and selectable in SPA
+- Algorithm reuses same data inputs and interfaces as optimal algorithm
+- Algorithm prioritizes computational efficiency over optimality
+- Results include comparison metrics (total delay, computation time)
+- The implementation checks all acceptance criteria
 

@@ -35,11 +35,14 @@
 
 
 ## 4. Business Value
-> ...
+> Documenting productivity practices reveals how the organization optimizes operations and creates competitive advantages through efficiency. Understanding these practices helps identify areas where technology can amplify productivity gains, uncovers best practices worth emulating, and highlights improvement opportunities. This knowledge supports cost reduction initiatives, informs system design decisions to align with productivity goals, and demonstrates how technical solutions contribute to operational excellence.
 
 ## 5. Definition of Ready
 > This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- Productivity practices are identified and documented
+- Each practice is linked to concrete effects
+- Recommendations are provided if no formal practices exist
+- The implementation checks all acceptance criteria
 

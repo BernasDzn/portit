@@ -35,11 +35,15 @@
 
 
 ## 4. Business Value
-> ...
+> A centralized public folder provides consistent access to shared resources like regulations, reports, and statistics for all authenticated users, ensuring everyone works from the same authoritative information. Controlled write access maintains content integrity while read access supports transparency and knowledge sharing. Audit trails track access patterns for compliance and security monitoring. This approach simplifies document distribution and eliminates version inconsistencies across user groups.
 
 ## 5. Definition of Ready
 > This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- Public folder is readable by all authenticated users
+- Write access is restricted to authorized administrators
+- Folder location and access permissions are documented
+- Access is audited for integrity and distribution control
+- The implementation checks all acceptance criteria
 

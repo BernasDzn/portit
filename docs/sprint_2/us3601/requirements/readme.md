@@ -36,11 +36,16 @@
 
 
 ## 4. Business Value
-> ...
+> Understanding and documenting personal data processing activities ensures compliance with data protection regulations like GDPR, protecting the organization from legal penalties and reputational damage. Clear identification of data types, processing purposes, and legal bases demonstrates accountability and supports transparent communication with data subjects. This foundation enables informed consent, proper data handling procedures, and audit readiness, while building trust with users and stakeholders about privacy protection.
 
 ## 5. Definition of Ready
 > This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- Project scope and functionalities are clearly explained
+- Personal data types processed are identified
+- Data processing methods are described
+- Legal basis for each data processing type is identified
+- Documentation is complete and accessible
+- The implementation checks all acceptance criteria
 
