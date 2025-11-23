@@ -42,7 +42,7 @@ test('Ensure cant create duplicate dock', async ({ page }) => {
   await page.getByPlaceholder('Dock location').click();
   await page.getByPlaceholder('Dock location').fill('location');
   await page.getByPlaceholder('Length in meters').click();
-  await page.getByPlaceholder('Length in meters').fill('500');
+  await page.getByPlaceholder('Length in meters').fill('1500');
   await page.getByPlaceholder('Depth in meters').click();
   await page.getByPlaceholder('Depth in meters').fill('30');
   await page.getByPlaceholder('Draft in meters').click();
