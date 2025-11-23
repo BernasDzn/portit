@@ -29,10 +29,8 @@ const dock = ref({
 const dockService = container.get<IDockService>(TYPES.dockService);
 const vesselTypeService = container.get<IVesselTypeService>(TYPES.vesselTypeService);
 
-const submitDock = (obj: any) => {
-    console.log('Submitting dock:', new Dock(obj));
+const submitDock = (obj: any) => 
     dockService.createDock(new Dock(obj));
-}
 
 </script>
 
