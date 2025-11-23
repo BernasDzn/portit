@@ -83,7 +83,7 @@ export class Vessel {
             name: this._name,
             imoNumber: this._imoNumber,
             type: this._type.name,
-            owner: this._owner.taxNumber,
+            owner: this._owner.name,
             length: this._physicalCharacteristics.length,
             depth: this._physicalCharacteristics.depth,
             draft: this._physicalCharacteristics.draft,
