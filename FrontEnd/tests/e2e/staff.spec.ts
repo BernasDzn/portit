@@ -33,6 +33,7 @@ test('Ensure staff member is updated correctly on update', async ({ page }) => {
   await page.getByRole('main').filter({ hasText: 'Staff Dashboard Search Staff' }).getByPlaceholder('Search...').fill('STAFFEDITTEST');
   await page.getByRole('link', { name: 'STAFFEDITTEST' }).first().click();
   await page.getByRole('button', { name: 'Edit Staff Member' }).click();
+  await page.waitForTimeout(1500);
   await page.getByPlaceholder('Staff name').click();
   await page.getByPlaceholder('Staff name').fill('STAFFEDITTEST EDITED');
   await page.getByRole('button', { name: 'Save' }).click();
@@ -51,6 +52,7 @@ test('Ensure staff member can be deactivated correctly', async ({ page }) => {
   await page.goto('http://localhost:5173/');
   await page.getByRole('link', { name: 'Staffs' }).click();
   await page.getByRole('link', { name: 'add Create Staff Member' }).click();
+  await page.waitForTimeout(1500);
   await page.getByPlaceholder('Staff name').click();
   await page.getByPlaceholder('Staff name').fill('STAFFDISABLE');
   await page.getByPlaceholder('Email address').click();
