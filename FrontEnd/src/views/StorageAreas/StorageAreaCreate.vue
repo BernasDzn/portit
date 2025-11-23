@@ -116,7 +116,6 @@ const submitStorageArea = (obj: any) => {
                         :fetch-function="() => dockService.getDocks()"
                         :placeholderText="t('physicalResource.fields.servingDocks.placeholder')"
                         labelKey="name"
-                        required
                         multiple
                         v-model="selectedDocks"
                     />
