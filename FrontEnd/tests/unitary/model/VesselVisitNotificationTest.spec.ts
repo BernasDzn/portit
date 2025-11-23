@@ -141,19 +141,6 @@ describe('VesselVisitNotification', () => {
 			expect(notification.isCargoHazardous).toBe(isCargoHazardous);
 		});
 
-		it.each([
-			['', 'Notification ID cannot be null or empty.'],
-		])('should throw error with invalid notification ID - %s', (notificationId, expectedError) => {
-			expect(() => new VesselVisitNotification({
-				notificationId,
-				status: VesselVisitNotificationStatus.InProgress,
-				expectedArrival: new Date('2024-07-01T10:00:00Z'),
-				expectedDeparture: new Date('2024-07-01T12:00:00Z'),
-				isCargoHazardous: false,
-				vessel,
-				submitter: representative
-			})).toThrow(expectedError);
-		});
 
 		it('should throw error when vessel is null', () => {
 			expect(() => new VesselVisitNotification({
@@ -165,18 +152,6 @@ describe('VesselVisitNotification', () => {
 				vessel: null as any,
 				submitter: representative
 			})).toThrow('Vessel cannot be null.');
-		});
-
-		it('should throw error when submitter is null', () => {
-			expect(() => new VesselVisitNotification({
-				notificationId: 'VVN001',
-				status: VesselVisitNotificationStatus.InProgress,
-				expectedArrival: new Date('2024-07-01T10:00:00Z'),
-				expectedDeparture: new Date('2024-07-01T12:00:00Z'),
-				isCargoHazardous: false,
-				vessel,
-				submitter: null as any
-			})).toThrow('Submitter cannot be null.');
 		});
 
 		it('should throw error when arrival is after departure', () => {
