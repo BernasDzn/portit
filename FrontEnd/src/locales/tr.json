@@ -43,6 +43,8 @@
         "close": "Kapat",
         "add": "Ekle",
         "review": "İncele",
+        "ok": "Tamam",
+        "downloadSample": "Örnek İndir",
         "seeMore": "Daha Fazla Göster"
     },
     "unsavedChanges": {
@@ -83,6 +85,7 @@
         }
     },
     "user": {
+        "registeredUsers": "Kayıtlı kullanıcılar",
         "fields": {
             "email": {
                 "title": "E-posta",
@@ -270,6 +273,7 @@
         "registeredVessels": "Kayıtlı Gemiler"
     },
     "staff": {
+        "registeredStaffMembers": "Kayıtlı personel üyeleri",
         "fields": {
             "mechanographicNumber": {
                 "title": "Mekanografik Numara",
@@ -326,6 +330,7 @@
         }
     },
     "qualification": {
+        "registeredQualifications": "Kayıtlı nitelikler",
         "tabs": {
             "dashboard": "Yeterlilik Paneli",
             "view_dashboard": "Yeterlilikleri Görüntüle",
@@ -355,6 +360,7 @@
         }
     },
     "physicalResource": {
+        "registeredPhysicalResources": "Kayıtlı fiziksel kaynaklar",
         "tabs": {
             "dashboard": "Kaynak Paneli",
             "view_dashboard": "Kaynakları Görüntüle",
@@ -444,6 +450,7 @@
         }
     },
     "storageArea": {
+        "registeredStorageAreas": "Kayıtlı depolama alanları",
         "tabs": {
             "dashboard": "Depolama Paneli",
             "view_dashboard": "Depolama Alanlarını Görüntüle",

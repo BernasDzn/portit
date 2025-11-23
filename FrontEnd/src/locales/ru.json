@@ -43,6 +43,8 @@
         "close": "Закрыть",
         "add": "Добавить",
         "review": "Просмотреть",
+        "ok": "Хорошо",
+        "downloadSample": "Скачать образец",
         "seeMore": "Показать больше"
     },
     "unsavedChanges": {
@@ -83,6 +85,7 @@
         }
     },
     "user": {
+        "registeredUsers": "Зарегистрированные пользователи",
         "fields": {
             "email": {
                 "title": "Эл. почта",
@@ -269,6 +272,7 @@
         "registeredVessels": "Зарегистрированные суда"
     },
     "staff": {
+        "registeredStaffMembers": "Зарегистрированные сотрудники",
         "fields": {
             "mechanographicNumber": {
                 "title": "Механографический номер",
@@ -325,6 +329,7 @@
         }
     },
     "qualification": {
+        "registeredQualifications": "Зарегистрированные квалификации",
         "tabs": {
             "dashboard": "Панель квалификаций",
             "view_dashboard": "Просмотреть квалификации",
@@ -354,6 +359,7 @@
         }
     },
     "physicalResource": {
+        "registeredPhysicalResources": "Зарегистрированные физические ресурсы",
         "tabs": {
             "dashboard": "Панель физических ресурсов",
             "view_dashboard": "Просмотр физических ресурсов",
@@ -444,6 +450,7 @@
         }
     },
     "storageArea": {
+        "registeredStorageAreas": "Зарегистрированные складские зоны",
         "tabs": {
             "dashboard": "Панель складских зон",
             "view_dashboard": "Просмотр складских зон",
@@ -540,6 +547,9 @@
         }
     },
     "notification": {
+        "registeredVesselVisitNotifications": "Зарегистрированные уведомления о посещении судна",
+        "step": "Шаг",
+        "of": "из",
         "id": "ID уведомления",
         "hazardous": "Опасный",
         "nonHazardous": "Неопасный",

@@ -43,6 +43,8 @@
                     "close":  "Zavrieť",
                     "add":  "Pridať",
                     "review":  "Preskúmať",
+                    "ok":  "OK",
+                    "downloadSample":  "Stiahnuť vzorku",
                     "seeMore":  "Zobraziť viac"
                 },
     "unsavedChanges":  {
@@ -83,6 +85,7 @@
                                 }
               },
     "user":  {
+                 "registeredUsers":  "Registrovaní používatelia",
                  "fields":  {
                                 "email":  {
                                               "title":  "E-mail",
@@ -269,6 +272,7 @@
                    "registeredVessels":  "Registrované plavidlá"
                },
     "staff":  {
+                  "registeredStaffMembers":  "Registrovaní členovia personálu",
                   "fields":  {
                                  "mechanographicNumber":  {
                                                               "title":  "Mechanografické číslo",
@@ -325,6 +329,7 @@
                                    }
               },
     "qualification":  {
+                          "registeredQualifications":  "Registrované kvalifikácie",
                           "tabs":  {
                                        "dashboard":  "Panel kvalifikácií",
                                        "view_dashboard":  "Zobraziť kvalifikácie",
@@ -354,6 +359,7 @@
                                      }
                       },
     "physicalResource":  {
+                             "registeredPhysicalResources":  "Registrované fyzické zdroje",
                              "tabs":  {
                                           "dashboard":  "Panel fyzických zdrojov",
                                           "view_dashboard":  "Zobraziť fyzické zdroje",
@@ -444,6 +450,7 @@
                                               }
                          },
     "storageArea":  {
+                        "registeredStorageAreas":  "Registrované skladovacie oblasti",
                         "tabs":  {
                                      "dashboard":  "Panel skladovacích oblastí",
                                      "view_dashboard":  "Zobraziť skladovacie oblasti",
@@ -538,6 +545,9 @@
                                                }
                    },
     "notification":  {
+                         "registeredVesselVisitNotifications":  "Registrované oznámenia o návštevách plavidiel",
+                         "step":  "Krok",
+                         "of":  "z",
                          "id":  "ID oznámenia",
                          "hazardous":  "Nebezpečný",
                          "nonHazardous":  "Nie je nebezpečný",

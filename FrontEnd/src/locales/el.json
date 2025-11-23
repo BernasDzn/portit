@@ -31,6 +31,8 @@
         "close": "Κλείσιμο",
         "add": "Προσθήκη",
         "review": "Αναθεώρηση",
+        "ok": "OK",
+        "downloadSample": "Λήψη δείγματος",
         "filter": {
             "title": "Φίλτρα",
             "add": "Φιλτράρισμα",
@@ -89,6 +91,7 @@
         }
     },
     "user": {
+        "registeredUsers": "Εγγεγραμμένοι χρήστες",
         "fields": {
             "email": {
                 "title": "Email",
@@ -279,6 +282,7 @@
         "registeredVesselTypes": "Καταχωρημένοι τύποι πλοίων"
     },
     "staff": {
+        "registeredStaffMembers": "Εγγεγραμμένα μέλη προσωπικού",
         "fields": {
             "mechanographicNumber": {
                 "title": "Μηχανογραφικό νούμερο",
@@ -335,6 +339,7 @@
         }
     },
     "qualification": {
+        "registeredQualifications": "Εγγεγραμμένα προσόντα",
         "tabs": {
             "dashboard": "Πίνακας προσόντων",
             "view_dashboard": "Προβολή προσόντων",
@@ -364,6 +369,7 @@
         }
     },
     "physicalResource": {
+        "registeredPhysicalResources": "Εγγεγραμμένοι φυσικοί πόροι",
         "tabs": {
             "dashboard": "Πίνακας φυσικού πόρου",
             "view_dashboard": "Προβολή φυσικών πόρων",
@@ -454,6 +460,7 @@
         }
     },
     "storageArea": {
+        "registeredStorageAreas": "Εγγεγραμμένοι χώροι αποθήκευσης",
         "tabs": {
             "dashboard": "Πίνακας αποθηκευτικών περιοχών",
             "view_dashboard": "Προβολή αποθηκευτικών περιοχών",
@@ -540,6 +547,9 @@
         }
     },
     "notification": {
+        "registeredVesselVisitNotifications": "Εγγεγραμμένες ειδοποιήσεις επίσκεψης πλοίου",
+        "step": "Βήμα",
+        "of": "από",
         "id": "Αναγνωριστικό ειδοποίησης",
         "hazardous": "Επικίνδυνο",
         "nonHazardous": "Μη επικίνδυνο",

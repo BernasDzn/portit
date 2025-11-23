@@ -43,6 +43,8 @@
                     "close":  "Zapri",
                     "add":  "Dodaj",
                     "review":  "Preglej",
+                    "ok":  "V redu",
+                    "downloadSample":  "Prenesi vzorec",
                     "seeMore":  "Poglej več"
                 },
     "unsavedChanges":  {
@@ -83,6 +85,7 @@
                                 }
               },
     "user":  {
+                 "registeredUsers":  "Registrirani uporabniki",
                  "fields":  {
                                 "email":  {
                                               "title":  "Elektronska pošta",
@@ -269,6 +272,7 @@
                    "registeredVessels":  "Registrirana plovila"
                },
     "staff":  {
+                  "registeredStaffMembers":  "Registrirani člani osebja",
                   "fields":  {
                                             "mechanographicNumber":  {
                                                                                  "title":  "Mehanografska številka",
@@ -325,7 +329,8 @@
                                    }
               },
     "qualification":  {
-                           "tabs":  {
+                          "registeredQualifications":  "Registrirane kvalifikacije",
+                          "tabs":  {
                                         "dashboard":  "Plošča kvalifikacij",
                                         "view_dashboard":  "Poglej kvalifikacije",
                                         "search":  "Išči kvalifikacije",
@@ -354,6 +359,7 @@
                                      }
                       },
     "physicalResource":  {
+                             "registeredPhysicalResources":  "Registrirani fizični viri",
                              "tabs":  {
                                           "dashboard":  "Plošča fizičnih virov",
                                           "view_dashboard":  "Poglej fizične vire",
@@ -444,6 +450,7 @@
                                               }
                          },
     "storageArea":  {
+                        "registeredStorageAreas":  "Registrirana skladiščna območja",
                         "tabs":  {
                                      "dashboard":  "Plošča skladiščnih območij",
                                      "view_dashboard":  "Poglej skladiščna območja",
@@ -538,6 +545,9 @@
                                                }
                    },
     "notification":  {
+                         "registeredVesselVisitNotifications":  "Registrirana obvestila o obisku plovil",
+                         "step":  "Korak",
+                         "of":  "od",
                          "id":  "ID obvestila",
                          "hazardous":  "Nevarno",
                          "nonHazardous":  "Ni nevarno",

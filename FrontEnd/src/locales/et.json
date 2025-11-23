@@ -43,6 +43,8 @@
         "close": "Sulge",
         "add": "Lisa",
         "review": "Vaata üle",
+        "ok": "OK",
+        "downloadSample": "Laadi näidis alla",
         "seeMore": "Vaata rohkem"
     },
     "unsavedChanges": {
@@ -89,6 +91,7 @@
         }
     },
     "user": {
+        "registeredUsers": "Registreeritud kasutajad",
         "fields": {
             "email": {
                 "title": "E-post",
@@ -335,6 +338,7 @@
         }
     },
     "qualification": {
+        "registeredQualifications": "Registreeritud kvalifikatsioonid",
         "tabs": {
             "dashboard": "Kvalifikatsioonide töölaud",
             "view_dashboard": "Vaata kvalifikatsioone",
@@ -454,6 +458,7 @@
         }
     },
     "storageArea": {
+        "registeredStorageAreas": "Registreeritud ladustusalad",
         "tabs": {
             "dashboard": "Ladustusalade töölaud",
             "view_dashboard": "Vaata ladustusalasid",
@@ -540,6 +545,9 @@
         }
     },
     "notification": {
+        "registeredVesselVisitNotifications": "Registreeritud laevakülastuse teavitused",
+        "step": "Samm",
+        "of": "/",
         "id": "Teavituse ID",
         "hazardous": "Ohtlik",
         "nonHazardous": "Mitteohtlik",

@@ -43,6 +43,8 @@
         "close": "Zamknij",
         "add": "Dodaj",
         "review": "Przejrzyj",
+        "ok": "OK",
+        "downloadSample": "Pobierz próbkę",
         "seeMore": "Zobacz więcej"
     },
     "unsavedChanges": {
@@ -83,6 +85,7 @@
         }
     },
     "user": {
+        "registeredUsers": "Zarejestrowani użytkownicy",
         "fields": {
             "email": {
                 "title": "Email",
@@ -269,6 +272,7 @@
         "registeredVessels": "Zarejestrowane statki"
     },
     "staff": {
+        "registeredStaffMembers": "Zarejestrowani członkowie personelu",
         "fields": {
             "mechanographicNumber": {
                 "title": "Numer mechanograficzny",
@@ -325,6 +329,7 @@
         }
     },
     "qualification": {
+        "registeredQualifications": "Zarejestrowane kwalifikacje",
         "tabs": {
             "dashboard": "Panel kwalifikacji",
             "view_dashboard": "Zobacz kwalifikacje",
@@ -354,6 +359,7 @@
         }
     },
     "physicalResource": {
+        "registeredPhysicalResources": "Zarejestrowane zasoby fizyczne",
         "tabs": {
             "dashboard": "Panel zasobów fizycznych",
             "view_dashboard": "Zobacz zasoby fizyczne",
@@ -538,6 +544,9 @@
         }
     },
     "notification": {
+        "registeredVesselVisitNotifications": "Zarejestrowane powiadomienia o wizytach statków",
+        "step": "Krok",
+        "of": "z",
         "id": "ID powiadomienia",
         "hazardous": "Towar niebezpieczny",
         "nonHazardous": "Towar niebezpieczny",
@@ -560,8 +569,9 @@
             "review": "Przeglądaj powiadomienia",
             "general": "Lista ogólna",
             "byDate": "Widok kalendarza",
-            "submit": "Wyślij powiadomienie",
-            "delete": "Usuń powiadomienie"
+            "submit": "Prześlij powiadomienie",
+            "delete": "Usuń powiadomienie",
+            "update": "Zaktualizuj powiadomienie"
         },
         "eventsOnDate": "Wydarzenia w wybranym dniu",
         "noEventsOnDate": "Brak wydarzeń w wybranym dniu",

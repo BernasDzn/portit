@@ -43,7 +43,9 @@
         "login": "Entrar",
         "goBackToLogin": "Voltar ao Login",
         "logout": "Sair",
-        "seeMore": "Ver Mais"
+        "seeMore": "Ver Mais",
+        "ok": "OK",
+        "downloadSample": "Descarregar Amostra"
     },
     "search": {
         "languages": "Pesquisar idiomas..."
@@ -125,7 +127,8 @@
             "dashboard": "Visão geral e gestão de utilizadores",
             "create": "Registar um novo utilizador no sistema",
             "view": "Ver e gerir utilizadores existentes"
-        }
+        },
+        "registeredUsers": "Utilizadores Registados"
     },
     "representative": {
         "title": "Representante",
@@ -333,7 +336,8 @@
             "create": "Registar um novo funcionário no sistema",
             "view": "Visualizar detalhes do funcionário",
             "edit": "Editar um funcionário existente no sistema"
-        }
+        },
+        "registeredStaffMembers": "Membros da Equipa Registados"
     },
     "qualification": {
         "tabs": {
@@ -362,7 +366,8 @@
                 "title": "Nome da Qualificação",
                 "placeholder": "Nome da qualificação"
             }
-        }
+        },
+        "registeredQualifications": "Qualificações Registadas"
     },
     "scheduling": {
         "title": "Solicitar cronograma diário",
@@ -475,7 +480,8 @@
         },
         "actions": {
             "deactivate": "Desativar Recurso Físico"
-        }
+        },
+        "registeredPhysicalResources": "Recursos Físicos Registados"
     },
     "storageArea": {
         "tabs": {
@@ -535,7 +541,8 @@
                 "title": "Ocupação",
                 "placeholder": "Ocupação atual"
             }
-        }
+        },
+        "registeredStorageAreas": "Áreas de Armazenamento Registadas"
     },
     "operationalWindow": {
         "title": "Janela Operacional",
@@ -564,6 +571,8 @@
         "unknown": "Desconhecido",
         "from": "De",
         "to": "Para",
+        "step": "Passo",
+        "of": "de",
         "tabs": {
             "dashboard": "Painel de Notificações",
             "search": "Pesquisar Notificações",
@@ -575,7 +584,8 @@
             "general": "Listagem genérica",
             "byDate": "Listagem por calendário",
             "submit": "Enviar Notificação",
-            "delete": "Excluir Notificação"
+            "delete": "Excluir Notificação",
+            "update": "Atualizar Notificação"
         },
         "eventsOnDate": "Eventos na data selecionada",
         "noEventsOnDate": "Sem eventos na data selecionada",
@@ -610,7 +620,9 @@
             "area": "Área",
             "container": "Contentor",
             "crewMembers": "Membros da Tripulação",
-            "status": "Estado"
+            "status": "Estado",
+            "isCargoHazardousQ": "A Carga é Perigosa?",
+            "cargoManifestInfo": "Sobre ficheiros de manifesto de carga"
         },
         "timeline": {
             "pending": "Pendente",
@@ -637,6 +649,31 @@
                 "placeholder": "Fornecer razão para decisão"
             },
             "status": "Estado da Decisão"
-        }
+        },
+        "sections": {
+            "vesselDetails": "Informação da Visita",
+            "crewDetails": "Detalhes da Tripulação",
+            "cargoRequirements": "Requisitos da Carga",
+            "cargoContent": "Conteúdo da Carga"
+        },
+        "about": {
+            "text": "Os ficheiros de manifesto de carga (atualmente) devem estar no formato CSV padrão europeu. Cada linha no ficheiro CSV representa um item de carga com as seguintes colunas:",
+            "bay": "Bay (número)",
+            "row": "Linha (número)",
+            "tier": "Camada (número)",
+            "area": "Código de área (para onde/de onde)",
+            "containerNumber": "Número do contentor (texto)",
+            "conatinerType": "Tipo de contentor (número)",
+            "description": "Descrição (texto)",
+            "containerTypes": {
+                "refrigeratedGoods": "Bens Refrigerados",
+                "generalConsumerProducts": "Produtos de Consumo Geral",
+                "electronics": "Eletrónicos",
+                "hazmat": "Materiais Perigosos",
+                "oversizedIndustrialEquipment": "Equipamento Industrial de Grandes Dimensões",
+                "other": "Outro"
+            }
+        },
+        "registeredVesselVisitNotifications": "Notificações de Visita de Navios Registadas"
     }
 }

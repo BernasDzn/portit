@@ -31,6 +31,8 @@
                     "close":  "Schließen",
                     "add":  "Hinzufügen",
                     "review":  "Überprüfen",
+                    "ok":  "OK",
+                    "downloadSample":  "Muster herunterladen",
                     "filter":  {
                                    "title":  "Filter",
                                    "add":  "Filtern",
@@ -90,6 +92,7 @@
                                 }
               },
     "user":  {
+                 "registeredUsers":  "Registrierte Benutzer",
                  "fields":  {
                                 "email":  {
                                               "title":  "E-Mail",
@@ -280,6 +283,7 @@
                    "registeredVessels":  "Registrierte Schiffe"
                },
     "staff":  {
+                  "registeredStaffMembers":  "Registrierte Mitarbeiter",
                   "deactivation":  {
                                        "title":  "Mitarbeiter deaktivieren",
                                        "message":  "Sind Sie sicher, dass Sie diesen Mitarbeiter deaktivieren möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
@@ -336,6 +340,7 @@
                                }
               },
     "qualification":  {
+                          "registeredQualifications":  "Registrierte Qualifikationen",
                           "tabs":  {
                                        "dashboard":  "Qualifikation Dashboard",
                                        "view_dashboard":  "Qualifikationen anzeigen",
@@ -365,6 +370,7 @@
                                      }
                       },
     "physicalResource":  {
+                             "registeredPhysicalResources":  "Registrierte physische Ressourcen",
                              "tabs":  {
                                           "dashboard":  "Physische Ressource Dashboard",
                                           "view_dashboard":  "Physische Ressourcen anzeigen",
@@ -478,6 +484,7 @@
                                                }
                    },
     "storageArea":  {
+                        "registeredStorageAreas":  "Registrierte Lagerbereiche",
                         "tabs":  {
                                      "dashboard":  "Lagerbereich Dashboard",
                                      "view_dashboard":  "Lagerbereiche anzeigen",
@@ -538,6 +545,9 @@
                                    }
                     },
     "notification":  {
+                         "registeredVesselVisitNotifications":  "Registrierte Schiffsbesuchsbenachrichtigungen",
+                         "step":  "Schritt",
+                         "of":  "von",
                          "id":  "Benachrichtigungs-ID",
                          "hazardous":  "Gefährlich",
                          "nonHazardous":  "Nicht gefährlich",
@@ -561,7 +571,8 @@
                                       "general":  "Allgemeine Auflistung",
                                       "byDate":  "Kalenderauflistung",
                                       "submit":  "Benachrichtigung absenden",
-                                      "delete":  "Benachrichtigung löschen"
+                                      "delete":  "Benachrichtigung löschen",
+                                      "update":  "Benachrichtigung aktualisieren"
                                   },
                          "eventsOnDate":  "Ereignisse am ausgewählten Datum",
                          "noEventsOnDate":  "Keine Ereignisse am ausgewählten Datum",
@@ -586,6 +597,8 @@
                                         "expectedArrival":  "Erwartete Ankunft",
                                         "expectedDeparture":  "Erwartete Abfahrt",
                                         "isCargoHazardous":  "Fracht gefährlich",
+                                        "isCargoHazardousQ":  "Ist die Fracht gefährlich?",
+                                        "cargoManifestInfo":  "Über Frachtmanifest-Dateien",
                                         "specialRequirements":  "Besondere Anforderungen",
                                         "captain":  "Kapitän",
                                         "totalCrewMembers":  "Gesamtzahl der Besatzungsmitglieder",
@@ -612,6 +625,28 @@
                                          "withReason":  "Mit Grund",
                                          "withDockAssigned":  "Mit zugewiesenem Dock"
                                      },
+                         "sections":  {
+                                         "vesselDetails":  "Schiffsdetails",
+                                         "crewDetails":  "Besatzungsdetails",
+                                         "cargoRequirements":  "Frachtanforderungen",
+                                         "cargoContent":  "Frachtinhalt"
+                                     },
+                         "about":  {
+                                       "title":  "Über Frachtmanifest-Dateien",
+                                       "intro":  "Frachtmanifest-Dateien sind CSV-Dateien mit Informationen über Container zum Laden oder Entladen. Siehe die Musterdokumentation und das Format unten.",
+                                       "required":  "Eine gültige Frachtmanifest-Datei muss die folgenden Spalten enthalten:",
+                                       "position":  "Position: Die Position des Containers auf dem Schiff (z. B. 1-2-3)",
+                                       "area":  "Bereich: Der Lagerbereich, in dem der Container platziert werden soll (z. B. YA1)",
+                                       "container":  "Container: Der Container-Code (z. B. CONT001)",
+                                       "type":  "Typ: Der Containertyp. Verfügbare Containertypen sind:",
+                                       "containerTypes":  {
+                                                             "dry":  "Trocken - Standard-Trockenfracht-Container",
+                                                             "reefer":  "Kühl - Temperaturgesteuerter Container",
+                                                             "openTop":  "Offener Deckel - Container ohne Deckel für hohe Fracht",
+                                                             "flatRack":  "Flachgestell - Container ohne Seitenwände für breite Fracht",
+                                                             "tank":  "Tank - Container für Flüssigkeiten"
+                                                         }
+                                   },
                          "decision":  {
                                           "isFinal":  "Ist endgültig",
                                           "assignedDock":  {

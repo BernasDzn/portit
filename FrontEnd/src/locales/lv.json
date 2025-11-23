@@ -43,6 +43,8 @@
         "close": "Aizvērt",
         "add": "Pievienot",
         "review": "Pārskatīt",
+        "ok": "Labi",
+        "downloadSample": "Lejupielādēt paraugu",
         "seeMore": "Skatīt vairāk"
     },
     "unsavedChanges": {
@@ -83,6 +85,7 @@
         }
     },
     "user": {
+        "registeredUsers": "Reģistrētie lietotāji",
         "fields": {
             "email": {
                 "title": "E-pasts",
@@ -269,6 +272,7 @@
         "registeredVessels": "Reģistrētie kuģi"
     },
     "staff": {
+        "registeredStaffMembers": "Reģistrētie darbinieki",
         "fields": {
             "mechanographicNumber": {
                 "title": "Mehanogrāfiskais numurs",
@@ -325,6 +329,7 @@
         }
     },
     "qualification": {
+        "registeredQualifications": "Reģistrētās kvalifikācijas",
         "tabs": {
             "dashboard": "Kvalifikāciju panelis",
             "view_dashboard": "Skatīt kvalifikācijas",
@@ -354,6 +359,7 @@
         }
     },
     "physicalResource": {
+        "registeredPhysicalResources": "Reģistrētie fiziskie resursi",
         "tabs": {
             "dashboard": "Fizisko resursu panelis",
             "view_dashboard": "Skatīt fiziskos resursus",
@@ -444,6 +450,7 @@
         }
     },
     "storageArea": {
+        "registeredStorageAreas": "Reģistrētās noliktavu zonas",
         "tabs": {
             "dashboard": "Noliktavu zonu panelis",
             "view_dashboard": "Skatīt noliktavu zonas",
@@ -540,6 +547,9 @@
         }
     },
     "notification": {
+        "registeredVesselVisitNotifications": "Reģistrētie kuģu apmeklējumu paziņojumi",
+        "step": "Solis",
+        "of": "no",
         "id": "Paziņojuma ID",
         "hazardous": "Bīstams",
         "nonHazardous": "Nebīstams",

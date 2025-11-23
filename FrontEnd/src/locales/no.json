@@ -31,6 +31,8 @@
         "close": "Lukk",
         "add": "Legg til",
         "review": "Gjennomgå",
+        "ok": "OK",
+        "downloadSample": "Last ned eksempel",
         "seeMore": "Se mer",
         "filter": {
             "title": "Filtre",
@@ -87,6 +89,7 @@
         }
     },
     "user": {
+        "registeredUsers": "Registrerte brukere",
         "fields": {
             "email": {
                 "title": "E-post",
@@ -273,6 +276,7 @@
         "registeredVessels": "Registrerte fartøy"
     },
     "staff": {
+        "registeredStaffMembers": "Registrerte medarbeidere",
         "fields": {
             "mechanographicNumber": {
                 "title": "Mekanografisk nummer",
@@ -329,6 +333,7 @@
         }
     },
     "qualification": {
+        "registeredQualifications": "Registrerte kvalifikasjoner",
         "tabs": {
             "dashboard": "Kvalifikasjoner",
             "view_dashboard": "Vis kvalifikasjoner",
@@ -357,6 +362,7 @@
         }
     },
     "physicalResource": {
+        "registeredPhysicalResources": "Registrerte fysiske ressurser",
         "tabs": {
             "dashboard": "Ressursdashbord",
             "view_dashboard": "Vis ressurser",
@@ -447,6 +453,7 @@
         }
     },
     "storageArea": {
+        "registeredStorageAreas": "Registrerte lagringsområder",
         "tabs": {
             "dashboard": "Lagerområder",
             "view_dashboard": "Vis områder",
@@ -537,6 +544,9 @@
         }
     },
     "notification": {
+        "registeredVesselVisitNotifications": "Registrerte fartøysbesøksvarsler",
+        "step": "Trinn",
+        "of": "av",
         "id": "Varsel-ID",
         "hazardous": "Farlig",
         "nonHazardous": "Ikke farlig",

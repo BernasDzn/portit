@@ -31,6 +31,8 @@
         "close": "Fermer",
         "add": "Ajouter",
         "review": "Examiner",
+        "ok": "OK",
+        "downloadSample": "Télécharger l'échantillon",
         "filter": {
             "title": "Filtres",
             "add": "Filtrer",
@@ -90,6 +92,7 @@
         }
     },
     "user": {
+        "registeredUsers": "Utilisateurs enregistrés",
         "fields": {
             "email": {
                 "title": "Email",
@@ -280,6 +283,7 @@
         "registeredVessels": "Navires enregistrés"
     },
     "staff": {
+        "registeredStaffMembers": "Membres du personnel enregistrés",
         "deactivation": {
             "title": "Désactiver le membre du personnel",
             "message": "Êtes-vous sûr de vouloir désactiver ce membre du personnel? Cette action ne peut pas être annulée.",
@@ -336,6 +340,7 @@
         }
     },
     "qualification": {
+        "registeredQualifications": "Qualifications enregistrées",
         "tabs": {
             "dashboard": "Tableau des qualifications",
             "view_dashboard": "Voir les qualifications",
@@ -365,6 +370,7 @@
         }
     },
     "physicalResource": {
+        "registeredPhysicalResources": "Ressources physiques enregistrées",
         "tabs": {
             "dashboard": "Tableau des ressources physiques",
             "view_dashboard": "Voir les ressources physiques",
@@ -478,6 +484,7 @@
         }
     },
     "storageArea": {
+        "registeredStorageAreas": "Zones de stockage enregistrées",
         "tabs": {
             "dashboard": "Tableau des zones de stockage",
             "view_dashboard": "Voir les zones de stockage",
@@ -538,6 +545,9 @@
         }
     },
     "notification": {
+        "registeredVesselVisitNotifications": "Notifications de visite de navires enregistrées",
+        "step": "Étape",
+        "of": "de",
         "id": "ID de notification",
         "hazardous": "Dangereux",
         "nonHazardous": "Non dangereux",
@@ -561,7 +571,8 @@
             "general": "Liste générique",
             "byDate": "Liste par calendrier",
             "submit": "Soumettre la notification",
-            "delete": "Supprimer la notification"
+            "delete": "Supprimer la notification",
+            "update": "Mettre à jour la notification"
         },
         "eventsOnDate": "Événements à la date sélectionnée",
         "noEventsOnDate": "Aucun événement à la date sélectionnée",
@@ -586,6 +597,8 @@
             "expectedArrival": "Arrivée prévue",
             "expectedDeparture": "Départ prévu",
             "isCargoHazardous": "Cargaison dangereuse",
+            "isCargoHazardousQ": "La cargaison est-elle dangereuse ?",
+            "cargoManifestInfo": "À propos des fichiers manifeste de cargaison",
             "specialRequirements": "Exigences spéciales",
             "captain": "Capitaine",
             "totalCrewMembers": "Nombre total de membres d\u0027équipage",
@@ -611,6 +624,28 @@
             "expectedArrivalTo": "Arrivée prévue jusqu\u0027à",
             "withReason": "Avec raison",
             "withDockAssigned": "Avec quai attribué"
+        },
+        "sections": {
+            "vesselDetails": "Détails du navire",
+            "crewDetails": "Détails de l'équipage",
+            "cargoRequirements": "Exigences de cargaison",
+            "cargoContent": "Contenu de la cargaison"
+        },
+        "about": {
+            "title": "À propos des fichiers manifeste de cargaison",
+            "intro": "Les fichiers manifeste de cargaison sont des fichiers CSV contenant des informations sur les conteneurs à charger ou décharger. Consultez la documentation et le format d'échantillon ci-dessous.",
+            "required": "Un fichier manifeste de cargaison valide doit contenir les colonnes suivantes :",
+            "position": "Position : La position du conteneur sur le navire (par ex., 1-2-3)",
+            "area": "Zone : La zone de stockage où le conteneur doit être placé (par ex., YA1)",
+            "container": "Conteneur : Le code du conteneur (par ex., CONT001)",
+            "type": "Type : Le type de conteneur. Les types de conteneurs disponibles sont :",
+            "containerTypes": {
+                "dry": "Sec - Conteneur de fret sec standard",
+                "reefer": "Réfrigéré - Conteneur à température contrôlée",
+                "openTop": "Toit ouvert - Conteneur sans toit pour cargaison de grande hauteur",
+                "flatRack": "Flat rack - Conteneur sans parois latérales pour cargaison large",
+                "tank": "Citerne - Conteneur pour liquides"
+            }
         },
         "decision": {
             "isFinal": "Est définitif",

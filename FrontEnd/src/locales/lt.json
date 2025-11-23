@@ -43,6 +43,8 @@
         "close": "Uždaryti",
         "add": "Pridėti",
         "review": "Peržiūrėti",
+        "ok": "Gerai",
+        "downloadSample": "Atsisiųsti pavyzdį",
         "seeMore": "Žiūrėti daugiau"
     },
     "unsavedChanges": {
@@ -83,6 +85,7 @@
         }
     },
     "user": {
+        "registeredUsers": "Registruoti vartotojai",
         "fields": {
             "email": {
                 "title": "Elektroninis paštas",
@@ -269,6 +272,7 @@
         "registeredVessels": "Užregistruoti laivai"
     },
     "staff": {
+        "registeredStaffMembers": "Registruoti darbuotojai",
         "fields": {
             "mechanographicNumber": {
                 "title": "Mechanografinis numeris",
@@ -325,6 +329,7 @@
         }
     },
     "qualification": {
+        "registeredQualifications": "Registruotos kvalifikacijos",
         "tabs": {
             "dashboard": "Kvalifikacijų skydas",
             "view_dashboard": "Peržiūrėti kvalifikacijas",
@@ -354,6 +359,7 @@
         }
     },
     "physicalResource": {
+        "registeredPhysicalResources": "Registruoti fiziniai ištekliai",
         "tabs": {
             "dashboard": "Fizinių išteklių skydas",
             "view_dashboard": "Peržiūrėti fizinius išteklius",
@@ -444,6 +450,7 @@
         }
     },
     "storageArea": {
+        "registeredStorageAreas": "Registruotos sandėliavimo zonos",
         "tabs": {
             "dashboard": "Sandėliavimo zonų skydas",
             "view_dashboard": "Peržiūrėti sandėliavimo zonas",
@@ -540,6 +547,9 @@
         }
     },
     "notification": {
+        "registeredVesselVisitNotifications": "Registruoti laivo apsilankymo pranešimai",
+        "step": "Žingsnis",
+        "of": "iš",
         "id": "Pranešimo ID",
         "hazardous": "Pavojingas",
         "nonHazardous": "Nepavojingas",

@@ -43,6 +43,8 @@
         "close": "Stäng",
         "add": "Lägg till",
         "review": "Granska",
+        "ok": "OK",
+        "downloadSample": "Ladda ner exempel",
         "seeMore": "Visa mer"
     },
     "unsavedChanges": {
@@ -83,6 +85,7 @@
         }
     },
     "user": {
+        "registeredUsers": "Registrerade användare",
         "fields": {
             "email": {
                 "title": "E‑post",
@@ -270,6 +273,7 @@
         "registeredVessels": "Registrerade fartyg"
     },
     "staff": {
+        "registeredStaffMembers": "Registrerade personalmeder",
         "fields": {
             "mechanographicNumber": {
                 "title": "Mekanografiskt nummer",

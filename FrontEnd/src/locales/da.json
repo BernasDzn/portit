@@ -31,6 +31,8 @@
         "close": "Luk",
         "add": "Tilføj",
         "review": "Gennemse",
+        "ok": "OK",
+        "downloadSample": "Download prøve",
         "filter": {
             "title": "Filtre",
             "add": "Filtrer",
@@ -89,6 +91,7 @@
         }
     },
     "user": {
+        "registeredUsers": "Registrerede brugere",
         "fields": {
             "email": {
                 "title": "Email",
@@ -279,6 +282,7 @@
         "registeredVessels": "Registrerede fartøjer"
     },
     "staff": {
+        "registeredStaffMembers": "Registrerede medarbejdere",
         "fields": {
             "mechanographicNumber": {
                 "title": "Mekanografisk nummer",

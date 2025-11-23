@@ -31,6 +31,8 @@
         "close": "Sluiten",
         "add": "Toevoegen",
         "review": "Beoordelen",
+        "ok": "OK",
+        "downloadSample": "Voorbeeld downloaden",
         "seeMore": "Meer zien",
         "filter": {
             "title": "Filters",
@@ -87,6 +89,7 @@
         }
     },
     "user": {
+        "registeredUsers": "Geregistreerde gebruikers",
         "fields": {
             "email": {
                 "title": "E-mail",
@@ -273,6 +276,7 @@
         "registeredVessels": "Geregistreerde schepen"
     },
     "staff": {
+        "registeredStaffMembers": "Geregistreerde personeelsleden",
         "fields": {
             "mechanographicNumber": {
                 "title": "Mechanografisch nummer",
@@ -329,6 +333,7 @@
         }
     },
     "qualification": {
+        "registeredQualifications": "Geregistreerde kwalificaties",
         "tabs": {
             "dashboard": "Kwalificaties",
             "view_dashboard": "Kwalificaties bekijken",
@@ -357,6 +362,7 @@
         }
     },
     "physicalResource": {
+        "registeredPhysicalResources": "Geregistreerde fysieke middelen",
         "tabs": {
             "dashboard": "Resource-dashboard",
             "view_dashboard": "Resources bekijken",
@@ -447,6 +453,7 @@
         }
     },
     "storageArea": {
+        "registeredStorageAreas": "Geregistreerde opslaggebieden",
         "tabs": {
             "dashboard": "Opslaggebieden",
             "view_dashboard": "Opslag bekijken",
@@ -537,6 +544,9 @@
         }
     },
     "notification": {
+        "registeredVesselVisitNotifications": "Geregistreerde scheepsbezoeken",
+        "step": "Stap",
+        "of": "van",
         "id": "Meldings-ID",
         "hazardous": "Gevaarlijke lading",
         "nonHazardous": "Niet-gevaarlijke lading",
@@ -560,7 +570,8 @@
             "general": "Algemene lijst",
             "byDate": "Kalender",
             "submit": "Melding indienen",
-            "delete": "Melding verwijderen"
+            "delete": "Melding verwijderen",
+            "update": "Melding bijwerken"
         },
         "eventsOnDate": "Gebeurtenissen op datum",
         "noEventsOnDate": "Geen gebeurtenissen",
@@ -585,6 +596,8 @@
             "expectedArrival": "Verwachte aankomst",
             "expectedDeparture": "Verwachte vertrek",
             "isCargoHazardous": "Lading gevaarlijk",
+            "isCargoHazardousQ": "Is de lading gevaarlijk?",
+            "cargoManifestInfo": "Over vrachtmanifest-bestanden",
             "specialRequirements": "Speciale vereisten",
             "captain": "Kapitein",
             "totalCrewMembers": "Totaal bemanningsleden",
@@ -610,6 +623,28 @@
             "expectedArrivalTo": "Aankomst tot",
             "withReason": "Met reden",
             "withDockAssigned": "Met toegewezen kade"
+        },
+        "sections": {
+            "vesselDetails": "Scheepsdetails",
+            "crewDetails": "Bemanning",
+            "cargoRequirements": "Vrachtvereisten",
+            "cargoContent": "Ladinginhoud"
+        },
+        "about": {
+            "title": "Over vrachtmanifest-bestanden",
+            "intro": "Vrachtmanifest-bestanden zijn CSV-bestanden met informatie over te laden/lossen containers. Zie hieronder de voorbeelddocumentatie en indeling.",
+            "required": "Een geldig vrachtmanifest moet de volgende kolommen bevatten:",
+            "position": "Positie: De positie van de container op het schip (bijv. 1-2-3)",
+            "area": "Gebied: Het opslaggebied waar de container moet worden geplaatst (bijv. YA1)",
+            "container": "Container: De containercode (bijv. CONT001)",
+            "type": "Type: Het containertype. Beschikbare containertypen zijn:",
+            "containerTypes": {
+                "dry": "Droog - Standaard droge vracht container",
+                "reefer": "Koel - Temperatuurgecontroleerde container",
+                "openTop": "Open bovenkant - Container zonder dak voor hoge lading",
+                "flatRack": "Flat rack - Container zonder zijwanden voor brede lading",
+                "tank": "Tank - Container voor vloeistoffen"
+            }
         },
         "decision": {
             "isFinal": "Definitief",

@@ -31,6 +31,8 @@
         "close": "Sulje",
         "add": "Lisää",
         "review": "Tarkista",
+        "ok": "OK",
+        "downloadSample": "Lataa näyte",
         "filter": {
             "title": "Suodattimet",
             "add": "Suodata",
@@ -89,6 +91,7 @@
         }
     },
     "user": {
+        "registeredUsers": "Rekisteröidyt käyttäjät",
         "fields": {
             "email": {
                 "title": "Sähköposti",
@@ -279,6 +282,7 @@
         "registeredVesselTypes": "Rekisteröidyt alustyypit"
     },
     "staff": {
+        "registeredStaffMembers": "Rekisteröidyt henkilöstön jäsenet",
         "fields": {
             "mechanographicNumber": {
                 "title": "Henkilönumero",
@@ -335,6 +339,7 @@
         }
     },
     "qualification": {
+        "registeredQualifications": "Rekisteröidyt pätevyydet",
         "tabs": {
             "dashboard": "Pätevyydet-kojetaulu",
             "view_dashboard": "Näytä pätevyydet",
@@ -364,6 +369,7 @@
         }
     },
     "physicalResource": {
+        "registeredPhysicalResources": "Rekisteröidyt fyysiset resurssit",
         "tabs": {
             "dashboard": "Fyysisen resurssin kojetaulu",
             "view_dashboard": "Näytä fyysiset resurssit",
@@ -454,6 +460,7 @@
         }
     },
     "storageArea": {
+        "registeredStorageAreas": "Rekisteröidyt varastointialueet",
         "tabs": {
             "dashboard": "Varastoalueiden kojetaulu",
             "view_dashboard": "Näytä varastoalueet",
@@ -540,6 +547,9 @@
         }
     },
     "notification": {
+        "registeredVesselVisitNotifications": "Rekisteröidyt laivavierailuilmoitukset",
+        "step": "Vaihe",
+        "of": "/",
         "id": "Ilmoituksen tunnus",
         "hazardous": "Vaarallinen",
         "nonHazardous": "Ei vaarallinen",
