@@ -66,7 +66,7 @@ const editStaff = (obj: any) =>
 
         <h1 class="title">{{ t('staff.tabs.edit') }}</h1>
         <p class="subtitle">{{ t('staff.subtitle.edit') }}</p>
-        <EntityForm :object="staff" :submit-function="editStaff">
+        <EntityForm :object="staff" :submit-function="editStaff" :editing-id="staffMecNumber">
             <div class="name-imo">
 
                 <FormField :required="true" class="field" :name="t('staff.fields.mechanographicNumber.title') + '*'" v-model="staff.mechanographicNumber" :placeholderText="t('staff.fields.mechanographicNumber.placeholder')" :enabled="false"/>
@@ -82,7 +82,6 @@ const editStaff = (obj: any) =>
                     :fetch-on-mount="true"
                     :placeholderText="t('staff.fields.qualifications.placeholder')"
                     labelKey="qualificationName"
-                    required
                     multiple
                 />
 

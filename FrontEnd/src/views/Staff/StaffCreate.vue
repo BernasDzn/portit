@@ -55,7 +55,6 @@ const submitStaff = (obj: any) =>
                     :fetch-function="() => qualificationService.getQualifications()"
                     :placeholderText="t('staff.fields.qualifications.placeholder')"
                     labelKey="qualificationName"
-                    required
                     multiple
                 />
                 <div style="flex:100%; width: 100%;">

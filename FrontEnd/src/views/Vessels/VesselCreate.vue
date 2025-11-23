@@ -50,6 +50,7 @@ const submitVessel = (obj: any) =>
                 <FormField inputId="vessel-imo" :required="true" class="field" :name="t('vessel.fields.imoNumber.title') + '*'" v-model="vessel.imoNumber" :placeholderText="t('vessel.fields.imoNumber.placeholder')" pattern="IMO [0-9]{7}"/>
 
                 <ObjectSelector
+                    id="vessel-owner"
                     class="field-dropdown"
                     :name="t('vessel.fields.vesselType.title') + '*'"
                     v-model="vessel.type"

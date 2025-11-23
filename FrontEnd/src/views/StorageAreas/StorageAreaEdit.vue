@@ -124,7 +124,7 @@ const updateStorageArea = (obj: any) =>
 
         <h1 class="title">{{ t('storageArea.tabs.edit') }}</h1>
         <p class="subtitle">{{ t('storageArea.subtitle.edit') }}</p>
-        <EntityForm :object="storageArea" :submit-function="updateStorageArea">
+        <EntityForm :object="storageArea" :submit-function="updateStorageArea" :editing-id="storageAreaNameCode"> 
             <div class="form-fields">
                 <FormField input-id="storagearea-namecode" class="field" :name="t('storageArea.fields.nameCode.title')" v-model="storageArea.nameCode" :placeholderText="t('storageArea.fields.nameCode.placeholder')" required pattern="^[a-zA-Z0-9]*$"/>
                 <FormField input-id="storagearea-location" class="field" :name="t('storageArea.fields.location.title')" v-model="storageArea.location" :placeholderText="t('storageArea.fields.location.placeholder')" required/>
@@ -151,7 +151,6 @@ const updateStorageArea = (obj: any) =>
                         :fetch-function="() => dockService.getDocks()"
                         :placeholderText="t('physicalResource.fields.servingDocks.placeholder')"
                         labelKey="name"
-                        required
                         multiple
                         v-model="selectedDocks"
                     />
