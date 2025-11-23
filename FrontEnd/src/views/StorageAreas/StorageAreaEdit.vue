@@ -17,6 +17,7 @@ import TYPES from '@/inversify/types';
 import type { DockRelationDto, StorageAreaDto } from '@/model/dto/StorageAreaDto';
 import { DockRelation, StorageArea } from '@/model/StorageArea';
 import ObjectSelector from '@/components/crud/ObjectSelector.vue';
+import Loading from '@/components/Loading.vue';
 
 const storageAreaService = container.get<IStorageAreaService>(TYPES.storageAreaService);
 const dockService = container.get<IDockService>(TYPES.dockService);
@@ -47,6 +48,7 @@ watch(selectedTypeIndex, (idx) => {
 });
 
 const allDocks = ref<Array<Dock>>([]);
+const loading = ref(true); 
 
 const selectedDocks = ref<Array<Dock>>([]);
 watch(selectedDocks, (newDocks) => {
@@ -77,6 +79,8 @@ onMounted(async () => {
 
     allDocks.value = (await dockService.getDocks()).items || [];
 
+    loading.value = true;
+
     if (!storageAreaNameCode) return;
     try {
         
@@ -100,6 +104,8 @@ onMounted(async () => {
 
     } catch (error) {
         console.error('Failed to load storage area:', error);
+    } finally {
+        loading.value = false;
     }
 });
 
@@ -124,7 +130,9 @@ const updateStorageArea = (obj: any) =>
 
         <h1 class="title">{{ t('storageArea.tabs.edit') }}</h1>
         <p class="subtitle">{{ t('storageArea.subtitle.edit') }}</p>
-        <EntityForm :object="storageArea" :submit-function="updateStorageArea" :editing-id="storageAreaNameCode"> 
+
+        <Loading v-if="loading" />
+        <EntityForm :object="storageArea" :submit-function="updateStorageArea" :editing-id="storageAreaNameCode" v-else>
             <div class="form-fields">
                 <FormField input-id="storagearea-namecode" class="field" :name="t('storageArea.fields.nameCode.title')" v-model="storageArea.nameCode" :placeholderText="t('storageArea.fields.nameCode.placeholder')" required pattern="^[a-zA-Z0-9]*$"/>
                 <FormField input-id="storagearea-location" class="field" :name="t('storageArea.fields.location.title')" v-model="storageArea.location" :placeholderText="t('storageArea.fields.location.placeholder')" required/>
