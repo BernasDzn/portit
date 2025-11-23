@@ -27,6 +27,8 @@
         "select": "Seleziona",
         "activate": "Attiva",
         "deactivate": "Disattiva",
+        "ok": "OK",
+        "downloadSample": "Scarica campione",
         "filter": {
             "title": "Filtri",
             "add": "Filtra",
@@ -83,6 +85,7 @@
         }
     },
     "user": {
+        "registeredUsers": "Utenti registrati",
         "fields": {
             "email": {
                 "title": "Email",
@@ -269,6 +272,7 @@
         "registeredVessels": "Navi registrate"
     },
     "staff": {
+        "registeredStaffMembers": "Membri dello staff registrati",
         "fields": {
             "mechanographicNumber": {
                 "title": "Numero mecanografico",
@@ -325,6 +329,7 @@
         }
     },
     "qualification": {
+        "registeredQualifications": "Qualifiche registrate",
         "tabs": {
             "dashboard": "Dashboard qualifiche",
             "view_dashboard": "Visualizza qualifiche",
@@ -354,6 +359,7 @@
         }
     },
     "physicalResource": {
+        "registeredPhysicalResources": "Risorse fisiche registrate",
         "tabs": {
             "dashboard": "Dashboard risorse fisiche",
             "view_dashboard": "Visualizza risorse fisiche",
@@ -444,6 +450,7 @@
         }
     },
     "storageArea": {
+        "registeredStorageAreas": "Aree di stoccaggio registrate",
         "tabs": {
             "dashboard": "Dashboard aree di stoccaggio",
             "view_dashboard": "Visualizza aree di stoccaggio",
@@ -538,6 +545,9 @@
         }
     },
     "notification": {
+        "registeredVesselVisitNotifications": "Notifiche di visita nave registrate",
+        "step": "Passo",
+        "of": "di",
         "id": "ID notifica",
         "hazardous": "Carico pericoloso",
         "nonHazardous": "Carico non pericoloso",
@@ -561,7 +571,8 @@
             "general": "Elenco generico",
             "byDate": "Vista calendario",
             "submit": "Invia notifica",
-            "delete": "Elimina notifica"
+            "delete": "Elimina notifica",
+            "update": "Aggiorna notifica"
         },
         "eventsOnDate": "Eventi nella data selezionata",
         "noEventsOnDate": "Nessun evento nella data selezionata",
@@ -586,6 +597,8 @@
             "expectedArrival": "Arrivo previsto",
             "expectedDeparture": "Partenza prevista",
             "isCargoHazardous": "Carico pericoloso",
+            "isCargoHazardousQ": "Il carico è pericoloso?",
+            "cargoManifestInfo": "Informazioni sui file manifest del carico",
             "specialRequirements": "Requisiti speciali",
             "captain": "Capitano",
             "totalCrewMembers": "Numero totale membri equipaggio",
@@ -611,6 +624,28 @@
             "expectedArrivalTo": "Arrivo previsto a",
             "withReason": "Con motivazione",
             "withDockAssigned": "Con molo assegnato"
+        },
+        "sections": {
+            "vesselDetails": "Dettagli nave",
+            "crewDetails": "Dettagli equipaggio",
+            "cargoRequirements": "Requisiti carico",
+            "cargoContent": "Contenuto carico"
+        },
+        "about": {
+            "title": "Informazioni sui file manifest del carico",
+            "intro": "I file manifest del carico sono file CSV contenenti informazioni sui container da caricare o scaricare. Consulta la documentazione di esempio e il formato di seguito.",
+            "required": "Un file manifest del carico valido deve contenere le seguenti colonne:",
+            "position": "Posizione: La posizione del container sulla nave (es. 1-2-3)",
+            "area": "Area: L'area di stoccaggio dove il container deve essere collocato (es. YA1)",
+            "container": "Container: Il codice del container (es. CONT001)",
+            "type": "Tipo: Il tipo di container. I tipi di container disponibili sono:",
+            "containerTypes": {
+                "dry": "Secco - Container standard per merci secche",
+                "reefer": "Refrigerato - Container a temperatura controllata",
+                "openTop": "A cielo aperto - Container senza tetto per carichi alti",
+                "flatRack": "Pianale - Container senza pareti laterali per carichi larghi",
+                "tank": "Cisterna - Container per liquidi"
+            }
         },
         "decision": {
             "isFinal": "È finale",

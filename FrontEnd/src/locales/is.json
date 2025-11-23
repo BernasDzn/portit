@@ -31,6 +31,8 @@
         "close": "Loka",
         "add": "Bæta við",
         "review": "Yfirfara",
+        "ok": "Í lagi",
+        "downloadSample": "Sækja sýnishorn",
         "seeMore": "Sjá meira",
         "filter": {
             "title": "Síur",
@@ -87,6 +89,7 @@
         }
     },
     "user": {
+        "registeredUsers": "Skráðir notendur",
         "fields": {
             "email": {
                 "title": "Netfang",
@@ -333,6 +336,7 @@
         }
     },
     "qualification": {
+        "registeredQualifications": "Skráðar hæfniskröfur",
         "tabs": {
             "dashboard": "Mælaborð hæfni",
             "view_dashboard": "Skoða hæfni",
@@ -362,6 +366,7 @@
         }
     },
     "physicalResource": {
+        "registeredPhysicalResources": "Skráð efnisleg úrræði",
         "tabs": {
             "dashboard": "Mælaborð auðlinda",
             "view_dashboard": "Skoða líkamlegar auðlindir",
@@ -450,6 +455,7 @@
         }
     },
     "storageArea": {
+        "registeredStorageAreas": "Skráð geymslusvæði",
         "tabs": {
             "dashboard": "Mælaborð geymslusvæða",
             "view_dashboard": "Skoða geymslusvæði",
@@ -527,6 +533,9 @@
         }
     },
     "notification": {
+        "registeredVesselVisitNotifications": "Skráðar tilkynningar um heimsókn skipa",
+        "step": "Skref",
+        "of": "af",
         "id": "Tilkynningar ID",
         "hazardous": "Hættulegt",
         "nonHazardous": "Ekki hættulegt",

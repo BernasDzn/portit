@@ -31,6 +31,8 @@
         "close": "Затвори",
         "add": "Добави",
         "review": "Преглед",
+        "ok": "OK",
+        "downloadSample": "Изтегли пример",
         "seeMore": "Виж още",
         "filter": {
             "title": "Филтри",
@@ -89,6 +91,7 @@
         }
     },
     "user": {
+        "registeredUsers": "Регистрирани потребители",
         "fields": {
             "email": {
                 "title": "Имейл",
@@ -279,6 +282,7 @@
         "registeredVessels": "Регистрирани кораби"
     },
     "staff": {
+        "registeredStaffMembers": "Регистрирани членове на персонала",
         "fields": {
             "mechanographicNumber": {
                 "title": "Механографски номер",
@@ -335,6 +339,7 @@
         }
     },
     "qualification": {
+        "registeredQualifications": "Регистрирани квалификации",
         "tabs": {
             "dashboard": "Табло квалификации",
             "view_dashboard": "Преглед на квалификации",
@@ -364,6 +369,7 @@
         }
     },
     "physicalResource": {
+        "registeredPhysicalResources": "Регистрирани физически ресурси",
         "tabs": {
             "dashboard": "Табло физически ресурси",
             "view_dashboard": "Преглед на физически ресурси",
@@ -454,6 +460,7 @@
         }
     },
     "storageArea": {
+        "registeredStorageAreas": "Регистрирани складови зони",
         "tabs": {
             "dashboard": "Табло складови зони",
             "view_dashboard": "Преглед на складови зони",
@@ -540,7 +547,10 @@
         }
     },
     "notification": {
-        "id": "ID на известие",
+        "registeredVesselVisitNotifications": "Регистрирани известия за посещения на кораби",
+        "step": "Стъпка",
+        "of": "от",
+        "id": "ID на известието",
         "hazardous": "Опасен",
         "nonHazardous": "Неопасен",
         "arrival": "Пристигане",

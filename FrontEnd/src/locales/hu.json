@@ -83,6 +83,7 @@
                                 }
               },
     "user":  {
+                 "registeredUsers":  "Regisztrált felhasználók",
                  "fields":  {
                                 "email":  {
                                               "title":  "Email",
@@ -269,6 +270,7 @@
                    "registeredVessels":  "Regisztrált hajók"
                },
     "staff":  {
+                  "registeredStaffMembers":  "Regisztrált személyzeti tagok",
                   "fields":  {
                                  "mechanographicNumber":  {
                                                               "title":  "Mechanográf szám",
@@ -325,6 +327,7 @@
                                    }
               },
     "qualification":  {
+                          "registeredQualifications":  "Regisztrált képesítések",
                           "tabs":  {
                                        "dashboard":  "Képesítések panel",
                                        "view_dashboard":  "Képesítések megtekintése",
@@ -354,6 +357,7 @@
                                      }
                       },
     "physicalResource":  {
+                             "registeredPhysicalResources":  "Regisztrált fizikai erőforrások",
                              "tabs":  {
                                           "dashboard":  "Fizikai erőforrások panel",
                                           "view_dashboard":  "Fizikai erőforrások megtekintése",
@@ -444,6 +448,7 @@
                                               }
                          },
     "storageArea":  {
+                        "registeredStorageAreas":  "Regisztrált tárolóterületek",
                         "tabs":  {
                                      "dashboard":  "Tárolási területek panel",
                                      "view_dashboard":  "Tárolási területek megtekintése",
@@ -538,6 +543,9 @@
                                                }
                    },
     "notification":  {
+                         "registeredVesselVisitNotifications":  "Regisztrált hajólátogatási értesítések",
+                         "step":  "Lépés",
+                         "of":  "/",
                          "id":  "Értesítés azonosító",
                          "hazardous":  "Veszélyes",
                          "nonHazardous":  "Nem veszélyes",

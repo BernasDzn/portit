@@ -31,6 +31,8 @@
         "close": "Zavřít",
         "add": "Přidat",
         "review": "Zkontrolovat",
+        "ok": "OK",
+        "downloadSample": "Stáhnout vzorek",
         "filter": {
             "title": "Filtry",
             "add": "Filtrovat",
@@ -89,6 +91,7 @@
         }
     },
     "user": {
+        "registeredUsers": "Registrovaní uživatelé",
         "fields": {
             "email": {
                 "title": "Email",
@@ -279,6 +282,7 @@
         "registeredVessels": "Registrované lodě"
     },
     "staff": {
+        "registeredStaffMembers": "Registrovaní členové personálu",
         "fields": {
             "mechanographicNumber": {
                 "title": "Mechanografické číslo",
@@ -335,6 +339,7 @@
         }
     },
     "qualification": {
+        "registeredQualifications": "Registrované kvalifikace",
         "tabs": {
             "dashboard": "Nástěnka kvalifikací",
             "view_dashboard": "Zobrazit kvalifikace",
@@ -364,6 +369,7 @@
         }
     },
     "physicalResource": {
+        "registeredPhysicalResources": "Registrované fyzické zdroje",
         "tabs": {
             "dashboard": "Nástěnka fyzických zdrojů",
             "view_dashboard": "Zobrazit fyzické zdroje",
@@ -454,6 +460,7 @@
         }
     },
     "storageArea": {
+        "registeredStorageAreas": "Registrované skladovací prostory",
         "tabs": {
             "dashboard": "Nástěnka skladovacích oblastí",
             "view_dashboard": "Zobrazit skladovací oblasti",
@@ -540,6 +547,9 @@
         }
     },
     "notification": {
+        "registeredVesselVisitNotifications": "Registrovaná oznámení o návštěvách plavidel",
+        "step": "Krok",
+        "of": "z",
         "id": "ID oznámení",
         "hazardous": "Nebezpečný",
         "nonHazardous": "Nenebezpečný",

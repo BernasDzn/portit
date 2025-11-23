@@ -43,6 +43,8 @@
         "close": "Închide",
         "add": "Adaugă",
         "review": "Revizuiește",
+        "ok": "OK",
+        "downloadSample": "Descarcă exemplu",
         "seeMore": "Vezi mai multe"
     },
     "unsavedChanges": {
@@ -83,6 +85,7 @@
         }
     },
     "user": {
+        "registeredUsers": "Utilizatori înregistrați",
         "fields": {
             "email": {
                 "title": "Email",
@@ -269,6 +272,7 @@
         "registeredVessels": "Nave înregistrate"
     },
     "staff": {
+        "registeredStaffMembers": "Membri ai personalului înregistrați",
         "fields": {
             "mechanographicNumber": {
                 "title": "Număr mecanografic",

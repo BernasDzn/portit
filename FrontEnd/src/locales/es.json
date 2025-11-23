@@ -31,6 +31,8 @@
                     "close":  "Cerrar",
                     "add":  "Agregar",
                     "review":  "Revisar",
+                    "ok":  "OK",
+                    "downloadSample":  "Descargar muestra",
                     "filter":  {
                                    "title":  "Filtros",
                                    "add":  "Filtrar",
@@ -90,6 +92,7 @@
                                 }
               },
     "user":  {
+                 "registeredUsers":  "Usuarios registrados",
                  "fields":  {
                                 "email":  {
                                               "title":  "Email",
@@ -280,6 +283,7 @@
                    "registeredVessels":  "Buques registrados"
                },
     "staff":  {
+                  "registeredStaffMembers":  "Miembros del personal registrados",
                   "deactivation":  {
                                        "title":  "Desactivar miembro del personal",
                                        "message":  "Â¿Está seguro de que desea desactivar a este miembro del personal? Esta acción no se puede deshacer.",
@@ -336,6 +340,7 @@
                                }
               },
     "qualification":  {
+                          "registeredQualifications":  "Cualificaciones registradas",
                           "tabs":  {
                                        "dashboard":  "Panel de cualificaciones",
                                        "view_dashboard":  "Ver cualificaciones",
@@ -365,6 +370,7 @@
                                      }
                       },
     "physicalResource":  {
+                             "registeredPhysicalResources":  "Recursos físicos registrados",
                              "tabs":  {
                                           "dashboard":  "Panel recursos físicos",
                                           "view_dashboard":  "Ver recursos físicos",
@@ -478,6 +484,7 @@
                                                }
                    },
     "storageArea":  {
+                        "registeredStorageAreas":  "Ãreas de almacenamiento registradas",
                         "tabs":  {
                                      "dashboard":  "Panel de áreas de almacenamiento",
                                      "view_dashboard":  "Ver áreas de almacenamiento",
@@ -538,6 +545,9 @@
                                    }
                     },
     "notification":  {
+                         "registeredVesselVisitNotifications":  "Notificaciones de visita de buques registradas",
+                         "step":  "Paso",
+                         "of":  "de",
                          "id":  "ID de notificación",
                          "hazardous":  "Peligroso",
                          "nonHazardous":  "No peligroso",
@@ -561,7 +571,8 @@
                                       "general":  "Listado genérico",
                                       "byDate":  "Listado de calendario",
                                       "submit":  "Enviar notificación",
-                                      "delete":  "Eliminar notificación"
+                                      "delete":  "Eliminar notificación",
+                                      "update":  "Actualizar notificación"
                                   },
                          "eventsOnDate":  "Eventos en la fecha seleccionada",
                          "noEventsOnDate":  "Sin eventos en la fecha seleccionada",
@@ -586,6 +597,8 @@
                                         "expectedArrival":  "Llegada prevista",
                                         "expectedDeparture":  "Salida prevista",
                                         "isCargoHazardous":  "Carga peligrosa",
+                                        "isCargoHazardousQ":  "¿Es la carga peligrosa?",
+                                        "cargoManifestInfo":  "Acerca de los archivos de manifiesto de carga",
                                         "specialRequirements":  "Requisitos especiales",
                                         "captain":  "Capitán",
                                         "totalCrewMembers":  "Total de miembros de la tripulación",
@@ -612,6 +625,28 @@
                                          "withReason":  "Con razón",
                                          "withDockAssigned":  "Con muelle asignado"
                                      },
+                         "sections":  {
+                                         "vesselDetails":  "Detalles del buque",
+                                         "crewDetails":  "Detalles de la tripulación",
+                                         "cargoRequirements":  "Requisitos de carga",
+                                         "cargoContent":  "Contenido de carga"
+                                     },
+                         "about":  {
+                                       "title":  "Acerca de los archivos de manifiesto de carga",
+                                       "intro":  "Los archivos de manifiesto de carga son archivos CSV que contienen información sobre contenedores para cargar o descargar. Consulte la documentación de muestra y el formato a continuación.",
+                                       "required":  "Un archivo de manifiesto de carga válido debe contener las siguientes columnas:",
+                                       "position":  "Posición: La posición del contenedor en el buque (p. ej., 1-2-3)",
+                                       "area":  "Ãrea: El área de almacenamiento donde se debe colocar el contenedor (p. ej., YA1)",
+                                       "container":  "Contenedor: El código del contenedor (p. ej., CONT001)",
+                                       "type":  "Tipo: El tipo de contenedor. Los tipos de contenedor disponibles son:",
+                                       "containerTypes":  {
+                                                             "dry":  "Seco - Contenedor de carga seca estándar",
+                                                             "reefer":  "Refrigerado - Contenedor con temperatura controlada",
+                                                             "openTop":  "Techo abierto - Contenedor sin techo para carga de gran altura",
+                                                             "flatRack":  "Plataforma plana - Contenedor sin paredes laterales para carga ancha",
+                                                             "tank":  "Tanque - Contenedor para líquidos"
+                                                         }
+                                   },
                          "decision":  {
                                           "isFinal":  "Es final",
                                           "assignedDock":  {

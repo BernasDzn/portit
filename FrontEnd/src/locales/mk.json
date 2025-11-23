@@ -31,6 +31,8 @@
         "close": "Затвори",
         "add": "Додај",
         "review": "Прегледај",
+        "ok": "Во ред",
+        "downloadSample": "Преземи примерок",
         "filter": {
             "title": "Филтри",
             "add": "Филтрирај",
@@ -87,6 +89,7 @@
         }
     },
     "user": {
+        "registeredUsers": "Регистрирани корисници",
         "fields": {
             "email": {
                 "title": "Е-пошта",
@@ -333,6 +336,7 @@
         }
     },
     "qualification": {
+        "registeredQualifications": "Регистрирани квалификации",
         "tabs": {
             "dashboard": "Панел за квалификации",
             "view_dashboard": "Преглед на квалификации",
@@ -362,6 +366,7 @@
         }
     },
     "physicalResource": {
+        "registeredPhysicalResources": "Регистрирани физички ресурси",
         "tabs": {
             "dashboard": "Панел на физички ресурси",
             "view_dashboard": "Преглед на физички ресурси",
@@ -452,6 +457,7 @@
         }
     },
     "storageArea": {
+        "registeredStorageAreas": "Регистрирани складишни области",
         "tabs": {
             "dashboard": "Панел на складишни области",
             "view_dashboard": "Преглед на складишни области",
@@ -538,6 +544,9 @@
         }
     },
     "notification": {
+        "registeredVesselVisitNotifications": "Регистрирани известувања за посета на бродови",
+        "step": "Чекор",
+        "of": "од",
         "id": "ID на известување",
         "hazardous": "Опасна",
         "nonHazardous": "Неопасна",

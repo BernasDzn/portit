@@ -31,6 +31,8 @@
         "close": "Закрити",
         "add": "Додати",
         "review": "Переглянути",
+        "ok": "Гаразд",
+        "downloadSample": "Завантажити зразок",
         "filter": {
             "title": "Фільтри",
             "add": "Фільтрувати",
@@ -274,6 +276,7 @@
         "registeredVessels": "Зареєстровані судна"
     },
     "staff": {
+        "registeredStaffMembers": "Зареєстровані співробітники",
         "fields": {
             "name": {
                 "title": "Ім’я",

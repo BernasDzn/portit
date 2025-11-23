@@ -31,6 +31,8 @@
         "close": "Zatvori",
         "add": "Dodaj",
         "review": "Pregledaj",
+        "ok": "U redu",
+        "downloadSample": "Preuzmi uzorak",
         "seeMore": "Vidi više",
         "filter": {
             "title": "Filteri",
@@ -89,6 +91,7 @@
         }
     },
     "user": {
+        "registeredUsers": "Registrovani korisnici",
         "fields": {
             "email": {
                 "title": "Email",
@@ -279,6 +282,7 @@
         "registeredVesselTypes": "Registrovani tipovi plovila"
     },
     "staff": {
+        "registeredStaffMembers": "Registrovani članovi osoblja",
         "fields": {
             "mechanographicNumber": {
                 "title": "Mehanografski broj",
@@ -335,6 +339,7 @@
         }
     },
     "qualification": {
+        "registeredQualifications": "Registrovane kvalifikacije",
         "tabs": {
             "dashboard": "Panel kvalifikacija",
             "view_dashboard": "Pogledaj kvalifikacije",
@@ -364,6 +369,7 @@
         }
     },
     "physicalResource": {
+        "registeredPhysicalResources": "Registrovani fizički resursi",
         "tabs": {
             "dashboard": "Panel fizičkih resursa",
             "view_dashboard": "Pogledaj fizičke resurse",
@@ -454,6 +460,7 @@
         }
     },
     "storageArea": {
+        "registeredStorageAreas": "Registrovana skladišna područja",
         "tabs": {
             "dashboard": "Panel skladišnih oblasti",
             "view_dashboard": "Pogledaj skladišne oblasti",
@@ -540,6 +547,9 @@
         }
     },
     "notification": {
+        "registeredVesselVisitNotifications": "Registrovana obaveštenja o posetama brodova",
+        "step": "Korak",
+        "of": "od",
         "id": "ID obaveštenja",
         "hazardous": "Opasan teret",
         "nonHazardous": "Neopasan teret",

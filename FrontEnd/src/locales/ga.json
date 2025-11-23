@@ -43,6 +43,8 @@
         "close": "Dún",
         "add": "Cuir le",
         "review": "Athbhreithniú",
+        "ok": "Ceart go leor",
+        "downloadSample": "Íoslódáil sampla",
         "seeMore": "Féach Nios Mó"
     },
     "unsavedChanges": {
@@ -83,6 +85,7 @@
         }
     },
     "user": {
+        "registeredUsers": "Úsáideoirí cláraithe",
         "fields": {
             "email": {
                 "title": "R-phost",
@@ -269,6 +272,7 @@
         "registeredVessels": "Longa cláraithe"
     },
     "staff": {
+        "registeredStaffMembers": "Baill foirne cláraithe",
         "fields": {
             "mechanographicNumber": {
                 "title": "Uimhir mheicnifeagrafach",
@@ -325,6 +329,7 @@
         }
     },
     "qualification": {
+        "registeredQualifications": "Cáilíochtaí cláraithe",
         "tabs": {
             "dashboard": "Painéal cáilíochtaí",
             "view_dashboard": "Féach ar cáilíochtaí",
@@ -354,6 +359,7 @@
         }
     },
     "physicalResource": {
+        "registeredPhysicalResources": "Acmhainní fisiciúla cláraithe",
         "tabs": {
             "dashboard": "Painéal acmhainní fisiciúla",
             "view_dashboard": "Féach ar acmhainní fisiciúla",
@@ -444,6 +450,7 @@
         }
     },
     "storageArea": {
+        "registeredStorageAreas": "Limistéir stórála cláraithe",
         "tabs": {
             "dashboard": "Painéal réimsí stórála",
             "view_dashboard": "Féach ar réimsí stórála",

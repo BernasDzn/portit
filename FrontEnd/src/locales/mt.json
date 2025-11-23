@@ -31,6 +31,8 @@
         "close": "Agħlaq",
         "add": "Żid",
         "review": "Irrevedi",
+        "ok": "Tajjeb",
+        "downloadSample": "Niżżel kampjun",
         "seeMore": "Ara aktar",
         "filter": {
             "title": "Filtri",
@@ -78,6 +80,7 @@
         "auditLogs": {"title": "Logijiet tal-Awditjar", "subtitle": "Ara u monitora l-attivitajiet tas-sistema."}
     },
     "user":  {
+                 "registeredUsers":  "Utenti rreġistrati",
                  "fields":  {
                                 "email":  {
                                               "title":  "Email",
@@ -255,6 +258,7 @@
                    "registeredVessels":  "Vapuri rreÄ¡istrati"
                },
     "staff":  {
+                  "registeredStaffMembers":  "Membri tal-istaff rreġistrati",
                   "fields":  {
                                  "mechanographicNumber":  {
                                                               "title":  "Numru Mekanografiku",
@@ -311,6 +315,7 @@
                                    }
               },
     "qualification":  {
+                          "registeredQualifications":  "Kwalifikazzjonijiet rreġistrati",
                           "tabs":  {
                                        "dashboard":  "Pannell tal-Kwalifikazzjonijiet",
                                        "view_dashboard":  "Ara Kwalifikazzjonijiet",
@@ -340,6 +345,7 @@
                                      }
                       },
     "physicalResource":  {
+                             "registeredPhysicalResources":  "Riżorsi fiżiċi rreġistrati",
                              "tabs":  {
                                           "dashboard":  "Pannell tar-Riżorsi Fiżiċi",
                                           "view_dashboard":  "Ara Riżorsi Fiżiċi",
@@ -428,6 +434,7 @@
                                               }
                          },
     "storageArea":  {
+                        "registeredStorageAreas":  "Żoni ta' ħażna rreġistrati",
                         "tabs":  {
                                      "dashboard":  "Pannell Żoni ta' Ħażna",
                                      "view_dashboard":  "Ara Żoni ta' Ħażna",

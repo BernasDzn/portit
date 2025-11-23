@@ -43,6 +43,8 @@
         "close": "Mbyll",
         "add": "Shto",
         "review": "Rishiko",
+        "ok": "Në rregull",
+        "downloadSample": "Shkarko shembullin",
         "seeMore": "Shiko më shumë"
     },
     "unsavedChanges": {
@@ -83,6 +85,7 @@
         }
     },
     "user": {
+        "registeredUsers": "Përdoruesit e regjistruar",
         "fields": {
             "email": {
                 "title": "Email",
@@ -269,6 +272,7 @@
         "registeredVessels": "Anije të regjistruara"
     },
     "staff": {
+        "registeredStaffMembers": "Anëtarët e stafit të regjistruar",
         "fields": {
             "mechanographicNumber": {
                 "title": "Numri mekanografik",
@@ -325,6 +329,7 @@
         }
     },
     "qualification": {
+        "registeredQualifications": "Kualifikimet e regjistruara",
         "tabs": {
             "dashboard": "Paneli i kualifikimeve",
             "view_dashboard": "Shiko kualifikimet",
@@ -354,6 +359,7 @@
         }
     },
     "physicalResource": {
+        "registeredPhysicalResources": "Burimet fizike të regjistruara",
         "tabs": {
             "dashboard": "Paneli i burimeve fizike",
             "view_dashboard": "Shiko burimet fizike",
@@ -444,6 +450,7 @@
         }
     },
     "storageArea": {
+        "registeredStorageAreas": "Zonat e magazinimit të regjistruara",
         "tabs": {
             "dashboard": "Paneli i zonave të magazinimit",
             "view_dashboard": "Shiko zonat e magazinimit",
@@ -540,6 +547,9 @@
         }
     },
     "notification": {
+        "registeredVesselVisitNotifications": "Njoftime të regjistruara për vizitat e anijeve",
+        "step": "Hapi",
+        "of": "nga",
         "id": "ID e njoftimit",
         "hazardous": "I rrezikshëm",
         "nonHazardous": "Jo i rrezikshëm",

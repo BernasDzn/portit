@@ -31,6 +31,8 @@
         "close": "Tanca",
         "add": "Afegeix",
         "review": "Revisa",
+        "ok": "D'acord",
+        "downloadSample": "Descarrega mostra",
         "seeMore": "Mostra més",
         "filter": {
             "title": "Filtres",
@@ -87,6 +89,7 @@
         }
     },
     "user": {
+        "registeredUsers": "Usuaris registrats",
         "fields": {
             "email": {
                 "title": "Correu",
@@ -273,6 +276,7 @@
         "registeredVessels": "Vaixells registrats"
     },
     "staff": {
+        "registeredStaffMembers": "Membres del personal registrats",
         "fields": {
             "mechanographicNumber": {
                 "title": "Número mecanogràfic",
@@ -329,6 +333,7 @@
         }
     },
     "qualification": {
+        "registeredQualifications": "Qualificacions registrades",
         "tabs": {
             "dashboard": "Panell de Qualificacions",
             "view_dashboard": "Veure Qualificacions",
@@ -358,6 +363,7 @@
         }
     },
     "physicalResource": {
+        "registeredPhysicalResources": "Recursos físics registrats",
         "tabs": {
             "dashboard": "Panell de Recursos Físics",
             "view_dashboard": "Veure Recursos Físics",
@@ -448,6 +454,7 @@
         }
     },
     "storageArea": {
+        "registeredStorageAreas": "Àrees d'emmagatzematge registrades",
         "tabs": {
             "dashboard": "Panell d'Àrees d'Emmagatzematge",
             "view_dashboard": "Veure Àrees d'Emmagatzematge",

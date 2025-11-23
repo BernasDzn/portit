@@ -31,6 +31,8 @@
         "close": "Zatvori",
         "add": "Dodaj",
         "review": "Pregled",
+        "ok": "U redu",
+        "downloadSample": "Preuzmi uzorak",
         "seeMore": "Vidi više",
         "filter": {
             "title": "Filteri",
@@ -87,6 +89,7 @@
         }
     },
     "user": {
+        "registeredUsers": "Registrirani korisnici",
         "fields": {
             "email": {
                 "title": "Email",
@@ -273,6 +276,7 @@
         "registeredVessels": "Registrirana plovila"
     },
     "staff": {
+        "registeredStaffMembers": "Registrirani članovi osoblja",
         "fields": {
             "mechanographicNumber": {
                 "title": "Mehanografski broj",
@@ -329,6 +333,7 @@
         }
     },
     "qualification": {
+        "registeredQualifications": "Registrirane kvalifikacije",
         "tabs": {
             "dashboard": "Kvalifikacije",
             "view_dashboard": "Prikaži kvalifikacije",
@@ -357,6 +362,7 @@
         }
     },
     "physicalResource": {
+        "registeredPhysicalResources": "Registrirani fizički resursi",
         "tabs": {
             "dashboard": "Resursi",
             "view_dashboard": "Prikaži resurse",
@@ -447,6 +453,7 @@
         }
     },
     "storageArea": {
+        "registeredStorageAreas": "Registrirana skladišna područja",
         "tabs": {
             "dashboard": "Skladišna područja",
             "view_dashboard": "Prikaži područja",
@@ -537,6 +544,9 @@
         }
     },
     "notification": {
+        "registeredVesselVisitNotifications": "Registrirane obavijesti o posjetu broda",
+        "step": "Korak",
+        "of": "od",
         "id": "ID obavijesti",
         "hazardous": "Opasno",
         "nonHazardous": "Neopasno",
