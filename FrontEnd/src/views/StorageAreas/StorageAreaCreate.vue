@@ -72,9 +72,9 @@ onMounted(() => {
     });
 });
 
-const submitStorageArea = (obj: any) => {
+const submitStorageArea = (obj: any) => 
     storageAreaService.createStorageArea(new StorageArea(obj));
-}
+
 
 </script>
 
