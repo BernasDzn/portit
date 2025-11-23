@@ -242,7 +242,7 @@ describe('ToDto', () => {
 		expect(dto.name).toBe('Ever Given');
 		expect(dto.imoNumber).toBe('IMO 9811000');
 		expect(dto.type).toBe(validVesselType.name);
-		expect(dto.owner).toBe(validOwner.taxNumber);
+		expect(dto.owner).toBe(validOwner.name);
 		expect(dto.length).toBe(200.0);
 		expect(dto.depth).toBe(40.0);
 		expect(dto.draft).toBe(10.0);
