@@ -17,6 +17,8 @@ const props = defineProps({
     
     required: { type: Boolean, default: false },
     multiple: { type: Boolean, default: false },
+
+    inputId: { type: String, default: '' },
 });
 
 const emit = defineEmits(['update:modelValue']);
@@ -110,6 +112,7 @@ watch(() => props.modelValue, (newVal) => {
 
         <div>
             <sl-select
+                :id="inputId"
                 class="entity-dropdown"
                 v-model="internalValue"
                 @sl-change="onChange"

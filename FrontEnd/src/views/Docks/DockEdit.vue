@@ -13,6 +13,7 @@ import TYPES from '@/inversify/types';
 import type { IVesselTypeService } from '@/service/IService/IVesselTypeService';
 import type { DockDto } from '@/model/dto/DockDto';
 import ObjectSelector from '@/components/crud/ObjectSelector.vue';
+import Loading from '@/components/Loading.vue';
 
 const {t} = useI18n();
 
@@ -36,7 +37,10 @@ let dock = ref({
     supportedVesselTypes: []
 });
 
+const loading = ref(true);
 onMounted(async () => {
+
+    loading.value = true;
 
     try {
         const data = await dockService.getDockByCode(dockCode);
@@ -45,6 +49,8 @@ onMounted(async () => {
         
     } catch (err) {
         console.error('Failed to load dock', err);
+    } finally {
+        loading.value = false;
     }
 });
 
@@ -80,7 +86,9 @@ const updateDock = async (obj: any) => {
 
         <h1 class="title">{{ t('dock.tabs.edit') }}</h1>
         <p class="subtitle">{{ t('dock.subtitle.edit') }}</p>
-        <EntityForm :object="dock" editing-id="dockCode" :submit-function="updateDock">
+
+        <Loading v-if="loading" />
+        <EntityForm :object="dock" editing-id="dockCode" :submit-function="updateDock" v-else>
             <div class="form">
                 <div class="general-info">
                     <p class="section-title">{{ t('dock.infoTitle') }}</p>

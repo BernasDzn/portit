@@ -123,12 +123,12 @@ test('Ensure can edit physical resource', async ({ page }) => {
   await page.getByRole('button', { name: 'Edit Physical Resource' }).click();
   await page.getByPlaceholder('Resource description').click();
   await page.getByPlaceholder('Resource description').fill('Truck 2 Edited');
-  await page.getByRole('button', { name: 'Save' }).click();
+  await page.getByRole('button', { name: 'Create' }).click();
   await expect(page.getByRole('heading')).toContainText('Truck 2 Edited');
   await page.getByRole('button', { name: 'Edit Physical Resource' }).click();
   await page.getByPlaceholder('Resource description').click();
   await page.getByPlaceholder('Resource description').fill('Truck 2');
-  await page.getByRole('button', { name: 'Save' }).click();
+  await page.getByRole('button', { name: 'Create' }).click();
   await expect(page.getByRole('heading')).toContainText('Truck 2');
 });
 

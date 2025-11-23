@@ -130,6 +130,7 @@ function submitResource(obj: any, type: 'STS' | 'YardCrane' | 'Truck') {
                 :placeholderText="t('physicalResource.fields.servingDocks.placeholder')"
                 labelKey="name"
                 required
+                input-id="pr-servingDock-sts"
             />
 
           <FormField :required="true" class="field" :name="t('physicalResource.fields.liftingCapacity.title')" v-model="genericResource.liftingCapacity" pattern="^[0-9]+$" input-id="pr-liftingCapacity-sts" />
