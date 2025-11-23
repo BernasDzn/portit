@@ -70,7 +70,6 @@ export default {
             :fetch-function="() => qualificationService.getQualifications()"
             fetch-on-mount
             labelKey="qualificationName"
-            required
             multiple
         />
 

@@ -6,7 +6,10 @@ skinparam defaultFontName FG Virgil
 skinparam shadowing false
 
 actor User as Actor
-participant "U I" as UI <<presentation>>
+participant "UI Pages" as UI <<presentation>>
+participant "UI XptoDto" as UiDto <<dto>>
+participant "UI XptoService" as UiService <<service>>
+participant "UI XptoModel" as UiModel <<model>>
 participant API as API <<application>>
 participant XptoController as Controller <<controller>>
 participant XptoService as Service <<service>>
@@ -18,64 +21,82 @@ database Database
 
 title Delete Xpto
 
-Actor --> UI: Delete Xpto
+Actor --> UI: Types information
+Actor --> UI: Submits form
 activate UI
 
-    UI --> API: HTTP DELETE /api/xpto/{id}
+    UI --> UiDto: new XptoDto
+    activate UiDto
+        UiDto --> UI: xptoDto
+    deactivate UiDto
 
-    activate API
+    UI --> UiService: deleteXpto()
+    activate UiService
+        UiService --> UiModel: new XptoModel(xptoDto)
+        UiModel --> UiModel: Validate
+        UiModel --> UiService: xptoInstance
 
-        API --> Controller: route
-        activate Controller
+        UiService --> API: HTTP DELETE /api/xpto/{id}
 
-            Controller --> Service: Request deletion
-            activate Service
+        activate API
 
-                Service --> Repository: GetXpto(id)
-                activate Repository
-                
-                    Repository --> Context: Get(id)
+            alt Check authorization diagram
+                API --> Controller: route
+            end
+            activate Controller
 
-                    activate Context
-                        Context --> Database: SELECT
-                        Context --> Repository: xptoInstance?
-                    deactivate Context
+                Controller --> Service: Request deletion
+                activate Service
 
-                    Repository --> Service: xptoInstance?
-                deactivate Repository
+                    Service --> Repository: GetXpto(id)
+                    activate Repository
+                    
+                        Repository --> Context: Get(id)
 
-                group if not xptoInstance exists
-                    Service --> Controller: EntityNotFoundException 
-                    activate Controller
-                        Controller --> API: NotFound()
-                        activate API
-                            API --> UI: HTTP Response
-                        deactivate API
-                        UI --> Actor: Error
-                    deactivate Controller
-                end
+                        activate Context
+                            Context --> Database: SELECT
+                            Context --> Repository: xptoInstance?
+                        deactivate Context
 
-                Service --> Repository: Delete(xptoInstance)
-                activate Repository
-                
-                    Repository --> Context: Delete(xptoInstance)
+                        Repository --> Service: xptoInstance?
+                    deactivate Repository
 
-                    activate Context
-                        Context --> Database: DELETE
-                        Context --> Repository: status
-                    deactivate Context
+                    group if not xptoInstance exists
+                        Service --> Controller: EntityNotFoundException 
+                        activate Controller
+                            Controller --> API: NotFound()
+                            activate API
+                                API --> UiService: HTTP Response
+                                UiService --> UI: deletion error
 
-                    Repository --> Service: status
-                deactivate Repository
+                            deactivate API
+                            UI --> Actor: Error
+                        deactivate Controller
+                    end
 
-                Service --> Controller: status
-            deactivate Service
+                    Service --> Repository: Delete(xptoInstance)
+                    activate Repository
+                    
+                        Repository --> Context: Delete(xptoInstance)
 
-            Controller --> API: NoContent()
-        deactivate Controller
+                        activate Context
+                            Context --> Database: DELETE
+                            Context --> Repository: status
+                        deactivate Context
 
-        API --> UI: HTTP Reponse
-    deactivate API
+                        Repository --> Service: status
+                    deactivate Repository
+
+                    Service --> Controller: status
+                deactivate Service
+
+                Controller --> API: NoContent()
+            deactivate Controller
+
+            API --> UiService: HTTP Reponse
+        deactivate API
+        UiService --> UI: deletion success
+    deactivate UiService
 
 UI --> Actor: Success
 deactivate UI

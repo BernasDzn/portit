@@ -6,72 +6,81 @@ skinparam defaultFontName FG Virgil
 skinparam shadowing false
 
 actor User as Actor
-participant "U I" as UI <<presentation>>
+participant "UI Pages" as UI <<presentation>>
+participant "UI XptoFilterDto" as UiDto <<dto>>
+participant "UI XptoService" as UiService <<service>>
 participant API as API <<application>>
 participant XptoController as Controller <<controller>>
 participant XptoService as Service <<service>>
 participant XptoRepository as Repository <<repository>>
 participant XptoContext as Context <<context>>
-participant XptoModel as Model <<entity>>
 participant "Page<Xpto>" as Page <<entity>>
 database Database
 
-title Read Xpto
+title Filter Xpto
 
-Actor --> UI: Read Xpto
+Actor --> UI: Types filter parameters
+Actor --> UI: Submits filter form
 activate UI
 
-    UI --> API: HTTP GET /api/xpto/filter
+    UI --> UiDto: new XptoFilterDto
+    activate UiDto
+        UiDto --> UI: filterDto
+    deactivate UiDto
 
-    activate API
+    UI --> UiService: filterXpto(filterDto)
+    activate UiService
 
-        API --> Controller: route
-        activate Controller
+        UiService --> API: HTTP GET /api/xpto/filter?...
+        activate API
 
-            Controller --> Service: Request filter
-            activate Service
+            alt Check authorization diagram
+                API --> Controller: route
+            end
+            activate Controller
 
-                Service --> Repository: FilterXpto(filter)
-                activate Repository
-                
-                    Repository --> Context: AsQueryable()
-                    activate Context
-                        Context --> Repository: queryableInstance
-                    deactivate Context
+                Controller --> Service: Request filter
+                activate Service
 
-                    loop each filter parameters
-                        Repository --> Repository: queryableInstance.Where(e.parameter = filter.parameter)
-                    end
+                    Service --> Repository: FilterXpto(filter)
+                    activate Repository
+                    
+                        Repository --> Context: AsQueryable()
+                        activate Context
+                            Context --> Repository: queryableInstance
+                        deactivate Context
 
-                    Repository --> Context: query()
+                        loop each filter parameter
+                            Repository --> Repository: queryableInstance.Where(e.parameter = filter.parameter)
+                        end
 
-                    activate Context
-                        Context --> Database: SELECT
-                        Context --> Repository: result
-                    deactivate Context
+                        Repository --> Context: query()
+                        activate Context
+                            Context --> Database: SELECT
+                            Context --> Repository: result
+                        deactivate Context
 
-                    Repository --> Service: Page<xptoInstance>
-                deactivate Repository
+                        Repository --> Service: Page<xptoInstance>
+                    deactivate Repository
 
-                Service --> Page: map to Page<xptoDto>
-                activate Page
-                    Page --> Service: Page<xptoDto>
-                deactivate Page
+                    Service --> Page: map to Page<xptoDto>
+                    activate Page
+                        Page --> Service: Page<xptoDto>
+                    deactivate Page
 
-                ' Service --> Model: toDto()
-                ' activate Model
-                '     Model --> Service: xptoInstanceDto
-                ' deactivate Model
+                    Service --> Controller: Page<xptoDto>
+                deactivate Service
 
-                Service --> Controller: Page<xptoDto>
-            deactivate Service
+                Controller --> API: Ok(Page<xptoDto>)
+            deactivate Controller
 
-            Controller --> API: Ok(Page<xptoDto>)
-        deactivate Controller
+            API --> UiService: HTTP Response
+        deactivate API
 
-        API --> UI: HTTP Reponse
-    deactivate API
+        UiService --> UI: filtered results
+    deactivate UiService
+
 UI --> Actor: Show Xpto List
 deactivate UI
-            
+
 @enduml
