@@ -16,6 +16,7 @@ import type { IDockService } from '@/service/IService/IDockService';
 import type { IQualificationService } from '@/service/IService/IQualificationService';
 import { STSCrane, Truck, YardCrane } from '@/model/PhysicalResource';
 import ObjectSelector from '@/components/crud/ObjectSelector.vue';
+import Loading from '@/components/Loading.vue';
 
 const { t } = useI18n();
 const route = useRoute();
@@ -26,6 +27,7 @@ const dockService = container.get<IDockService>(TYPES.dockService);
 const qualificationService = container.get<IQualificationService>(TYPES.qualificationService);
 
 const resourceCode = String(route.params.code || '');
+const loading = ref(false);
 const type = ref(0);
 
 const genericResource = ref({
@@ -109,11 +111,16 @@ const getById = async () => {
 
 onMounted(async () => {
   if (!resourceCode) return;
+
+  loading.value = true;
+
   try {
     await getById();
   } catch (err) {
     console.error('Failed to load physical resource', err);
     notifyError('Failed to load resource data.');
+  } finally {
+    loading.value = false;
   }
 });
 </script>
@@ -139,10 +146,12 @@ onMounted(async () => {
     <h1 class="title">{{ t('physicalResource.tabs.edit') }}</h1>
     <p class="subtitle">{{ t('physicalResource.subtitle.edit') }}</p>
 
+    <Loading v-if="loading" />
     <EntityForm
-      :object="genericResource"
-      :submit-function="update"
-      class="group"
+        v-else
+        :object="genericResource"
+        :submit-function="update"
+        class="group"
     >
       <!-- General Fields -->
       <p class="section-title">{{ t('physicalResource.generalFields') }}</p>
@@ -191,7 +200,6 @@ onMounted(async () => {
                 :fetch-function="() => qualificationService.getQualifications()"
                 fetch-on-mount
                 labelKey="qualificationName"
-                required
                 multiple
             />
 
@@ -229,6 +237,7 @@ onMounted(async () => {
             :fetch-on-mount="true"
             :placeholderText="t('physicalResource.fields.servingDocks.placeholder')"
             labelKey="name"
+            input-id="pr-servingDock-sts"
             required
         />
         <br />
