@@ -37,7 +37,7 @@
 > Monitoring and logging SSH login attempts enhances system security by providing visibility into access patterns and potential security threats. By tracking connection attempts with timestamps, IP addresses, and user information, administrators can detect suspicious activity and respond quickly to potential breaches. The alert mechanism for multiple failed attempts helps identify brute-force attacks in real-time, enabling rapid response to security incidents and protecting critical infrastructure from unauthorized access.
 
 ## 5. Definition of Ready
-> This US follows the defined [global definition of ready](../../global_artifacts/def_of_ready.md)
+> This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
 - The implementation checks all acceptance criteria.

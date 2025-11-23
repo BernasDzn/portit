@@ -44,7 +44,7 @@ All users should comply with the rules for password strength. The policy defines
 > Implementing strong authentication controls and password policies significantly reduces the risk of unauthorized access through brute-force, dictionary, and time-based attacks. By enforcing password complexity requirements, the system ensures that user credentials are resistant to common attack patterns. The delayed retry mechanism and account lockout policies make automated attacks impractical by introducing time costs and requiring administrative intervention. These security measures protect critical infrastructure, maintain system integrity, and ensure compliance with security best practices and regulatory requirements.
 
 ## 5. Definition of Ready
-> This US follows the defined [global definition of ready](../../global_artifacts/def_of_ready.md)
+> This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
 - The implementation checks all acceptance criteria.
