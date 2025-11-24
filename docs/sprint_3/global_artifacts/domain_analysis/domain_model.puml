@@ -1,0 +1,581 @@
+@startuml domain_model
+title Domain Model (DDD)
+hide circle
+
+rectangle "System"{
+	class "**User**" as user <<AggregateRoot>><<Entity>>
+	{
+	}
+
+	class "User\n**Name**" as user_name <<Value>>
+	{
+		+ name
+	}
+
+	class "User\n**Email**" as user_email <<Value>>
+	{
+		+ email
+	}
+
+	class "User\n**Phone Number**" as user_phone_number <<Value>>
+	{
+		+ phoneNumber
+	}
+
+	class "User\n**Role**" as user_role <<Enum>>
+	{
+		+ PORT_AUTHORITY_OFFICER
+		+ SHIPPING_AGENT_REPRESENTATIVE
+		+ LOGISTICS_OPERATOR
+		+ ADMINISTRATOR
+	}
+}
+
+rectangle "Vessel" {
+	class "**Vessel**" as vessel <<AggregateRoot>><<Entity>>
+	{
+	}
+
+	class "Vessel\n**IMO Number**" as IMO_number <<Value>>
+	{
+		+ IMO Number
+	}
+
+	class "Vessel\n**Name**" as vessel_name <<Value>>
+	{
+		+ Name
+	}
+
+	class "Vessel\n**Physical Characteristics**" as vessel_physical_char <<Value>>
+	{
+		+ Length
+		+ Depth
+		+ Draft
+	}
+}
+
+rectangle "Vessel Type"{
+	class "**Vessel Type**" as vessel_type <<AggregateRoot>><<Entity>>
+	{
+	}
+
+	class "Vessel Type\n**Name**" as vessel_type_name <<Value>>
+	{
+		+ Name
+	}
+
+	class "Vessel Type\n**Description**" as vessel_type_description <<Value>>
+	{
+		+ Description
+	}
+
+	class "Vessel Type\n**Max Number Of Rows**" as vessel_type_max_rows <<Value>>
+	{
+		+ maxNumberOfRows
+	}
+	class "Vessel Type\n**Max Number Of Bays**" as vessel_type_max_bays <<Value>>
+	{
+		+ maxNumberOfBays
+	}
+	class "Vessel Type\n**Max Number Of Tiers**" as vessel_type_max_tiers <<Value>>
+	{
+		+ maxNumberOfTiers
+	}
+
+	class "Vessel Type\n**Physical Characteristics**" as vessel_type_physical_char <<Value>>
+	{
+		+ Length
+		+ Depth
+		+ Draft
+	}
+
+}
+
+rectangle "Physical Resources" {
+
+	class "**Physical**\n**Resource**" as phys_res <<AggregateRoot>><<Entity>>
+	{
+	}
+
+	class "Physical\nResources\n**STSCrane**" as sts_crane <<Entity>>
+	{
+	}
+
+	class "Physical\nResources\n**YardCrane**" as yard_crane <<Entity>>
+	{
+	}
+
+	class "Physical\nResources\n**Truck**" as truck <<Entity>>
+	{
+	}
+
+	class "Physical\nResources\n**Active**" as phys_res_active <<Value>>
+	{
+		+ isActive
+	}
+
+	class "Physical\nResources\n**ContainersPerTrip**" as phys_res_cpt <<Value>>
+	{
+		+ containersPerTrip
+	}
+
+	class "Physical\nResources\n**AverageSpeed**" as phys_res_as <<Value>>
+	{
+		+ averageSpeed
+	}
+
+	class "Physical\nResources\n**ContainersPerHour**" as phys_res_cph <<Value>>
+	{
+		+ containersPerHour
+	}
+
+	class "Physical\nResources\n**LiftingCapacity**" as phys_res_lc <<Value>>
+	{
+		+ liftingCapacity
+	}
+
+	class "Physical\nResources\n**Description**" as phys_res_desc <<Value>>
+	{
+		+ description
+	}
+
+	class "Physical\nResources\n**Operational Capacity**" as phys_res_op_cap <<Value>>
+	{
+		+ operationalCapacity
+	}
+
+	class "Physical\nResources\n**Status**" as phys_res_status <<Value>>
+	{
+		+ status
+	}
+
+	class "Physical\nResources\n**Setup Time**" as phys_res_setup_time <<Value>>
+	{
+		+ setupTime
+	}
+
+	class "Physical\nResources\n**Operational Window**" as phys_res_op_window
+	{
+		+ startDay
+		+ startTime
+		+ endDay
+		+ endTime
+	}
+}
+
+rectangle "Qualifications" {
+	class "**Qualification**" as quali <<AggregateRoot>><<Entity>>
+	{
+	}
+
+	class "Qualification\n**Code**" as quali_code <<Value>>
+	{
+		+ code
+	}
+
+	class "Qualification\n**Name**" as quali_name <<Value>>
+	{
+		+ name
+	}
+}
+
+rectangle "Staff"{
+
+	class "**Staff**" as staff <<AggregateRoot>><<Entity>>
+	{
+	}
+
+	class "Staff\n**Name**" as staff_name <<Value>>
+	{
+		+ name
+	}
+	class "Staff\n**Email**" as staff_email <<Value>>
+	{
+		+ email
+	}
+	class "Staff\n**Phone Number**" as staff_phone_number <<Value>>
+	{
+		+ phoneNumber
+	}
+
+	class "Staff\n**Active**" as staff_active <<Value>>
+	{
+		+ isActive
+	}
+
+	class "Staff\n**Status**" as staff_status <<Enum>>
+	{
+		+ AVAILABLE
+		+ UNAVAILABLE
+		+ TEMPORARILY_REASSIGNED
+	}
+
+	class "Staff\n**Operational Window**" as staff_op_window
+	{
+		+ startDay
+		+ startTime
+		+ endDay
+		+ endTime
+	}
+
+	class "Staff\n**Mechanographic number**" as staff_number
+	{
+		+ mechanographicNumber
+	}
+}
+
+rectangle "Dock" {
+	class "**Dock**" as dock <<AggregateRoot>><<Entity>>
+	{
+	}
+
+	class "Dock\n**Name**" as dock_name <<Value>>
+	{
+		+ nameOrNumber
+	}
+
+	class "Dock\n**Location**" as dock_loc <<Value>>
+	{
+		+ location
+	}
+
+	class "Dock\n**Physical Characteristics**" as dock_physical_char <<Value>>
+	{
+		+ Length
+		+ Depth
+		+ Draft
+	}
+
+	class "Dock\n**Code**" as dock_code <<Value>>
+	{
+		+ code
+	}
+}
+
+rectangle "Storage Area"{
+
+	class "**Storage**\n**Area**" as storage_area <<AggregateRoot>><<Entity>>
+	{
+	}
+
+	class "Storage Area\n**Location**" as storage_area_loc <<Value>>
+	{
+		+ location
+	}
+
+	class "Storage Area\n**Name**" as storage_area_name <<Value>>
+	{
+		+ nameOrNumber
+	}
+
+	class "Storage Area\n**Capacity**" as storage_area_capacity <<Value>>
+	{
+		+ maxCapacity
+		+ currentCapacity
+	}
+
+	class "Storage Area\n**Serving Information**" as storage_area_comp_info <<Value>>
+	{
+		+ dock
+		+ isServing
+		+ distance
+	}
+
+	class "Storage Area\n**Type**" as storage_area_type <<Value>>
+	{
+		+ typeName
+	}
+}
+
+
+rectangle "Shipping Agent Organization"{
+	class "**Shipping Agent**\n**Organization**" as SAO <<AggregateRoot>><<Entity>>
+	{
+	}
+
+	class "Shipping Agent\nOrganization\n**Name**" as SAO_name <<Value>>
+	{
+		+ legalName
+		+ altNames
+	}
+
+	class "Shipping Agent\nOrganization\n**Address**" as SAO_address <<Value>>
+	{
+		+ address
+	}
+
+	class "Shipping Agent\nOrganization\n**Tax Number**" as SAO_tax_number <<Value>>
+	{
+		+ taxNumber
+	}
+
+	class "**SAO Representative**" as SAO_rep <<Entity>>
+	{
+		+ name
+		+ citizenID
+		+ nationality
+		+ email
+		+ phoneNumber
+		+ status
+	}
+}
+
+rectangle "Berthing information" {
+
+	class "**Vessel Visit**\n**Notification**" as vessel_visit_notif <<AggregateRoot>><<Entity>>
+	{
+	}
+
+	class "Vessel Visit\nNotification\n**Expected Time**" as exp_time <<Value>>
+	{
+		+ ETA
+		+ ETD
+	}
+
+	class "Vessel Visit\nNotification\n**Special Requirements**" as spec_rep <<Value>>
+	{
+		+ specialRequirements [?]
+	}
+
+	class "Vessel Visit\nNotification\n**Crew**" as crew <<Value>>
+	{
+		+ captain
+		+ totalCrewMembers
+	}
+
+	class "Vessel Visit\nNotification\n**Hazardous Cargo**" as cargo_details <<Value>>
+	{
+		+ isCargoHazardous
+	}
+
+	class "Vessel Visit\nNotification\n**Vessel Berth**" as vessel_berth <<Entity>>
+	{
+		+ dock
+		+ taskSchedule
+		+ status
+	}
+
+	class "Vessel Visit\nNotification\n**Notification Decision**" as notif_dec <<Value>>
+	{
+		+ status
+		+ timestamp
+		+ reason [?]
+		+ assignedDock [?]
+		+ officerID
+	}
+
+	note top of notif_dec: Nós podemos ter uma dock que apenas é preenchida quando a notificação é aceite, \nda mesma maneira que temos uma razão apenas quando é rejeitada. \nIsso porque é temporária, quando confirmado teremos outra class "Vessel Visit"
+
+	enum "Vessel Visit\nNotification\n**Notification status**" as notif_status <<Enum>>
+	{
+		APPROVED
+		REJECTED
+	}
+
+	enum "Vessel Visit\nNotification\n**Status**" as vvn_status <<Enum>>
+	{
+		IN_PROGRESS
+		DECISION_PENDING
+		DECIDED
+	}
+
+	class "Vessel Visit\nNotification\n**Load Cargo Manifest**" as c_manifest_lcm <<Value>>
+	{
+	}
+
+	class "Vessel Visit\nNotification\n**Unload Cargo Manifest**" as c_manifest_udm <<Value>>
+	{
+
+
+	}
+
+	class "Vessel Visit\nNotification\n**Cargo Load**" as c_manifest_cl <<Value>>
+	{
+		+ origin
+		+ numberOfRow
+		+ numberOfBay
+		+ numberOfTier
+	}
+
+	class "Vessel Visit\nNotification\n**Cargo Unload**" as c_manifest_cu <<Value>>
+	{
+		+ numberOfRow
+		+ numberOfBay
+		+ numberOfTier
+		+ destination
+	}
+
+	class "Vessel Visit\nNotification\n**Cargo Item**" as c_manifest_cargo_item <<Value>>
+	{
+		+ ISO
+		+ description
+		+ type
+	}
+
+
+	enum "Vessel Visit\nNotification\n**Cargo Type**" as cargo_type <<Enum>>
+	{
+		REEFERS
+		GCP
+		ELECTRONICS
+		HAZMAT
+		OIM
+		OTHER
+	}
+
+
+	class "Vessel Visit\nNotification\n**Operational Task**" as op_task <<Entity>>
+	{
+		+ taskType
+		+ resourceAllocated
+		+ staffAllocated
+		+ observations [?]
+	}
+
+	enum "Vessel Visit\nNotification\n**Task Types**" as task_types <<Enum>>
+	{
+		LOADING
+		UNLOADING
+		MOVING
+		OTHER
+	}
+
+	enum "Vessel Visit\nNotification\n**Operation Status**" as op_status <<Enum>>
+	{
+		SCHEDULED
+		FINISHED
+		FAILED
+		CANCELLED
+	}
+
+
+	class "Vessel Visit\nNotification\n**Safety Officer**" as safety_officer <<Value>>
+	{
+		+ citizenID
+		+ name
+		+ nationality
+	}
+
+}
+
+user -u-> "1" user_name
+user -u-> "1" user_email
+user -u-> "1" user_phone_number
+user -u-> "1" user_role
+user "1" --> "*" user : "(Admin)\nmanages"
+user "1" ---> "*" dock : "(Port Authority Officer)\nregisters/manages"
+user "1" ---> "*" storage_area : "(Port Authority Officer)\nregisters/manages"
+user "1" ---> "*" vessel_type : "(Port Authority Officer)\nregisters/manages"
+user "1" ---> "*" vessel_visit_notif : "(Port Authority Officer)\nreviews and approves or rejects"
+user "1" <--- "*" SAO_rep : "(Port Authority Officer)\nis registered/managed"
+user "1" ---> "*" vessel : "(Port Authority Officer)\nregisters/manages"
+user "1" ---> "*" notif_dec : "(Port Authority Officer)\nsubmits"
+user "1" ---> "*" SAO : "(Port Authority Officer)\nregisters"
+user "1" ---> "*" staff : "(Logistics Operator)\nregisters/manages"
+user "1" ---> "*" phys_res : "(Logistics Operator)\nregisters/manages"
+user "1" ---> "*" quali : "(Logistics Operator)\nregisters/manages"
+user "1" <--- "*" op_task : "(Port Authority Officer)\nis overseed by"
+user "1" <--- "*" op_task : "(Logistics Operator)\nis defined/scheduled by"
+
+
+op_task "1" -> "1" phys_res : "allocates"
+op_task "1" -> "*" staff : "mobilizes"
+op_task "1" -> "1" task_types : "has"
+vessel_berth "1" -> "1" op_status : "has"
+phys_res "1" --> "1" phys_res_op_window : "has"
+
+staff "1" --> "1" staff_op_window : "has"
+staff "*" --> "*" quali : "has"
+staff --> "1" staff_name
+staff --> "1" staff_email
+staff --> "1" staff_phone_number
+staff --> "1" staff_status
+staff --> "1" staff_active
+
+quali --> quali_name
+
+vessel_berth "1" --> "*" op_task : "encapsulates"
+vessel_berth "1" --> "1" dock : "happens on"
+
+phys_res "*" --> "*" quali : "requires"
+phys_res --> "1" phys_res_desc
+phys_res --> "1" phys_res_op_cap
+phys_res --> "1" phys_res_status
+phys_res --> "1" phys_res_setup_time
+phys_res --> "1" phys_res_active
+
+vessel_visit_notif --> "1" exp_time
+vessel_visit_notif --> "1" spec_rep
+vessel_visit_notif --> "1" crew
+vessel_visit_notif --> "1" cargo_details
+vessel_visit_notif -> "0..*" notif_dec
+vessel_visit_notif <-- vessel_berth : "responds to"
+vessel_visit_notif --> vessel
+vessel_visit_notif --> "1" vvn_status : "has"
+crew --> "*" safety_officer : "has a list of"
+
+notif_dec "1" -> "1" notif_status : "has"
+notif_dec "1" -> "0..1" dock : "has"
+
+SAO "1" --> "*" vessel : "owns"
+SAO "0..1" --> "1..*" SAO_rep
+SAO --> "1" SAO_name
+SAO --> "1" SAO_address
+SAO --> "1" SAO_tax_number
+
+SAO_rep "1" --> "*" vessel_visit_notif : "submits"
+
+vessel_visit_notif "1" --> "0..1" c_manifest_lcm : "details"
+vessel_visit_notif "1" --> "0..1" c_manifest_udm : "details"
+c_manifest_lcm "1" --> "*" c_manifest_cl
+c_manifest_udm "1" --> "*" c_manifest_cu
+c_manifest_cl "1" --> "1" c_manifest_cargo_item
+c_manifest_cu "1" --> "1" c_manifest_cargo_item
+c_manifest_cargo_item "1" -r-> "1" cargo_type : "has a"
+
+storage_area --> "1" storage_area_type
+storage_area "1" --> "*" dock : "serves"
+storage_area --> "1" storage_area_capacity
+storage_area --> "1" storage_area_comp_info
+storage_area --> "1" storage_area_name
+storage_area --> "1" storage_area_loc
+
+storage_area_comp_info --> "1" dock : "isServing"
+
+vessel "*" --> "1" vessel_type
+vessel --> "1" IMO_number
+vessel --> "1" vessel_name
+vessel --> "1" vessel_physical_char
+
+vessel_type --> "1" vessel_type_name
+vessel_type --> "1" vessel_type_description
+vessel_type --> "1" vessel_type_max_rows
+vessel_type --> "1" vessel_type_max_bays
+vessel_type --> "1" vessel_type_max_tiers
+vessel_type --> "1" vessel_type_physical_char
+
+dock "1" --> "1" dock_loc
+dock "1" --> "1" dock_name
+dock --> "1" dock_physical_char
+
+dock "1" --> "*" phys_res : "has"
+sts_crane --|> phys_res
+yard_crane --|> phys_res
+truck --|> phys_res
+sts_crane --> "1" phys_res_cph
+sts_crane --> "1" phys_res_lc
+yard_crane --> "1" phys_res_cph
+yard_crane --> "1" phys_res_lc
+truck --> "1" phys_res_cpt
+truck --> "1" phys_res_as
+sts_crane --> "1" dock
+
+yard_crane --> "1" storage_area
+
+
+staff --> "1" staff_number
+
+quali --> "1" quali_code
+dock --> "1" dock_code
+
+@enduml

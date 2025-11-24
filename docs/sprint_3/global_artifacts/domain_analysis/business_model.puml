@@ -1,0 +1,110 @@
+@startuml
+title Business Domain Model
+
+    abstract "System User" as user
+
+    entity "Port Authorities" as PA
+    entity "Shipping Agent\nOrganization (SAO)" as SAO
+    entity "SAO Representative" as SAOR
+    entity "Logistics Operators" as LO
+    entity "Administrator" as AD
+
+    class "Staff" as staff
+    abstract "Resource" as res
+    class "Dock" as docks
+    class "Ship-To-Shore cranes" as cranes
+    class "Yard gantry cranes" as yg_cranes
+    class "Trucks and terminal tractors" as trucks
+    class "Tasks" as tasks
+    class "Operational Window" as op_window
+    class "Qualification" as qualification
+
+    abstract "Storage areas" as storage
+    class "Container yards" as yards
+    class "Warehouses" as warehouse
+
+    class "Vessels" as vessels
+    class "Vessel types" as vessels_types
+
+    class "Vessel visit notification" as vessel_visit
+    class "Crew" as crew
+    class "Docking schedule" as docking_s
+    class "Cargo manifest" as cm
+
+    class "Cargo Type" as cargo_type
+    class "Container" as container
+
+user <|-- PA
+user <|-- SAOR
+user <|-- LO
+user <|-- AD
+
+AD --> user : "manages"
+
+SAO --> vessels : "owns"
+
+vessels --> vessels_types : "have"
+vessels_types -> docks : "dictate"
+
+PA --> SAO : "registers"
+PA --> SAOR : "registers"
+PA --> vessel_visit : "reviews and accepts or rejects"
+PA --> docks : "ensure proper allocation"
+PA --> storage : "regulates"
+PA -> vessels_types : "manages" 
+PA -> vessels : "keeps registry of"
+PA --> docking_s : "creates after approval"
+
+yards --|> storage
+warehouse --|> storage
+
+storage --> docks : "serves"
+note "storage areas may be constrained to\nserve only a few docks\nusually the closest ones" as N1
+storage .. N1
+N1 .. docks
+
+SAOR --> vessel_visit : "submits"
+SAOR --> SAO : "represents"
+
+vessel_visit --> vessels : "notify the berthing of"
+vessel_visit --> cm : "declare load manifest"
+vessel_visit --> cm : "declare unload manifest"
+vessel_visit --> crew : "informs of"
+vessel_visit --> docking_s : "results in"
+
+docking_s --> docks : "assigns"
+docking_s <-- tasks : "define"
+
+docks --> vessels : "accomodate"
+
+res <|-- cranes
+res <|-- yg_cranes
+res <|-- trucks
+
+res --> container : "moves"
+cranes --> docks : "exist at"
+
+staff --> res : "operates"
+staff --> qualification : "has"
+
+LO --> tasks : "sequences and allocates resources"
+LO ---> staff : "manages"
+LO --> docks : "coordinates operations at"
+LO -->  res : "manages"
+
+tasks --> res : "allocates"
+
+op_window --> res : "defines availability"
+op_window --> staff : "defines availability"
+
+qualification --> res : "required for"
+
+cargo_type --> container : "categorizes"
+
+container --> cm : "listed in"
+container --> vessels : "carried by"
+
+storage --> container : "stores"
+
+@enduml
+

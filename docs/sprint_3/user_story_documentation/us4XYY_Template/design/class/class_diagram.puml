@@ -1,0 +1,6 @@
+@startuml class_diagram
+!theme plain
+skinparam classAttributeIconSize 0
+title US3XYY - Class Diagram
+
+@enduml

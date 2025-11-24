@@ -1,0 +1,6 @@
+@startuml domain_model
+title US3XYY - Domain Model
+hide circle
+skinparam backgroundColor #F0F0F0
+
+@enduml
