@@ -31,9 +31,7 @@ export class VesselVisitNotification {
         vessel: Vessel;
         submitter: Representative;
     }) {
-        if (!params.notificationId) throw new Error('Notification ID cannot be null or empty.');
         if (!params.vessel) throw new Error('Vessel cannot be null.');
-        if (!params.submitter) throw new Error('Submitter cannot be null.');
         if (params.expectedArrival >= params.expectedDeparture) {
             throw new Error('Expected arrival must be before expected departure.');
         }
