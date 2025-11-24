@@ -37,11 +37,16 @@
 
 
 ## 4. Business Value
-> ...
+> Centralized role assignment capabilities enable administrators to efficiently manage user permissions and ensure proper access control aligned with organizational responsibilities. Email-based activation with secure links verifies user identity before granting access, while default deactivation status prevents unauthorized access from incomplete registrations. This workflow supports security best practices, maintains audit trails, and provides flexible user lifecycle management.
 
 ## 5. Definition of Ready
-> This US follows the defined [global definition of ready](../../global_artifacts/def_of_ready.md)
+> This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- Administrator interface allows role assignment and updates
+- Users are identified by IAM attributes (userId, email, name)
+- Activation links are generated and sent via email
+- New users default to "deactivated" status
+- Role assignments determine system access levels
+- The implementation checks all acceptance criteria
 

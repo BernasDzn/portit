@@ -34,11 +34,15 @@
 
 
 ## 4. Business Value
-> ...
+> Role-based menu filtering improves user experience by presenting only relevant options, reducing interface clutter and cognitive load. This feature enhances security by preventing users from discovering unauthorized functionality, supports compliance with access control requirements, and increases productivity by helping users navigate directly to their permitted features without confusion or error.
 
 ## 5. Definition of Ready
-> This US follows the defined [global definition of ready](../../global_artifacts/def_of_ready.md)
+> This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- Menu rendering logic filters options based on user role
+- Unauthorized routes are protected and redirect appropriately
+- Manual URL navigation to unauthorized pages is prevented
+- Role-based menu visibility is tested for all defined roles
+- The implementation checks all acceptance criteria
 

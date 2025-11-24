@@ -35,11 +35,15 @@
 
 
 ## 4. Business Value
-> ...
+> Configuration-based access control lists enable rapid response to security incidents and network changes without code deployments or system downtime. Simple text-based configuration reduces administrative complexity and allows security teams to adjust access policies quickly as network topology evolves. Dynamic reloading ensures changes take effect immediately, supporting agile security management. Configuration validation prevents accidental lockouts while maintaining security posture.
 
 ## 5. Definition of Ready
-> This US follows the defined [global definition of ready](../../global_artifacts/def_of_ready.md)
+> This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- Allowed endpoints are configurable via text/configuration file
+- File format is simple and well-documented
+- Changes take effect without system restart
+- Invalid configurations are detected and logged
+- The implementation checks all acceptance criteria
 

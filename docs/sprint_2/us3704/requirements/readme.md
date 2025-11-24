@@ -34,11 +34,14 @@
 
 
 ## 4. Business Value
-> ...
+> Understanding leadership styles and their organizational impact provides valuable context for team dynamics, communication patterns, and decision-making processes. This knowledge helps anticipate how management will interact with project outcomes, supports more effective stakeholder engagement, and enables better adaptation to organizational culture. Recognizing leadership influences on motivation and performance helps the team navigate organizational dynamics and optimize collaboration approaches.
 
 ## 5. Definition of Ready
-> This US follows the defined [global definition of ready](../../global_artifacts/def_of_ready.md)
+> This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- At least one leadership style is identified with justification
+- Implications on communication, motivation, decision-making, and performance are described
+- Analysis is complete and documented
+- The implementation checks all acceptance criteria
 

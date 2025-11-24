@@ -36,7 +36,7 @@ test('Ensure staff member is updated correctly on update', async ({ page }) => {
   await page.waitForTimeout(1500);
   await page.getByPlaceholder('Staff name').click();
   await page.getByPlaceholder('Staff name').fill('STAFFEDITTEST EDITED');
-  await page.getByRole('button', { name: 'Create' }).click();
+  await page.getByRole('button', { name: 'Save' }).click();
   await expect(page.getByRole('heading')).toContainText('STAFFEDITTEST EDITED');
 });
 

@@ -44,11 +44,19 @@
 
 
 ## 4. Business Value
-> ...
+> Automated daily scheduling minimizes vessel delays and improves port throughput by optimally allocating limited resources (docks, cranes, staff) across competing vessel operations. Reducing departure delays enhances customer satisfaction, improves port reputation, and can increase revenue through better resource utilization. The algorithm considers operational constraints and availability windows to produce feasible schedules that balance efficiency with practical operational requirements, enabling data-driven operational planning.
 
 ## 5. Definition of Ready
-> This US follows the defined [global definition of ready](../../global_artifacts/def_of_ready.md)
+> This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- Scheduling algorithm minimizes total vessel departure delays
+- Algorithm considers dock availability (one vessel per dock)
+- Crane assignment (one crane per operation) is included
+- Storage location assignment is implemented
+- Resource and staff availability within operational windows is respected
+- SPA interface allows target date specification
+- Results display in summary table with vessel, times, crane, and staff
+- Progress feedback and infeasibility warnings are provided
+- The implementation checks all acceptance criteria
 

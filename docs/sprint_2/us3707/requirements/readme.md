@@ -33,11 +33,14 @@
 
 
 ## 4. Business Value
-> ...
+> Identifying contributions to UN Sustainable Development Goals demonstrates organizational commitment to social and environmental responsibility, enhancing reputation and stakeholder trust. Understanding how operations align with global sustainability objectives supports strategic planning, reveals improvement opportunities, and can differentiate the organization competitively. This analysis helps communicate value beyond financial metrics and positions the organization as a responsible corporate citizen contributing to global challenges.
 
 ## 5. Definition of Ready
-> This US follows the defined [global definition of ready](../../global_artifacts/def_of_ready.md)
+> This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- At least two SDGs are identified with their designations
+- Organization's contributions (actual or potential) are justified
+- Relevance to organizational activities is explained
+- The implementation checks all acceptance criteria
 

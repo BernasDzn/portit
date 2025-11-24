@@ -36,11 +36,16 @@
 
 
 ## 4. Business Value
-> ...
+> Clear and timely feedback mechanisms significantly improve user confidence and reduce errors. By providing immediate validation messages, error notifications, and loading indicators, users understand system state and can respond appropriately to success or failure scenarios. This reduces support requests, minimizes user frustration, and ensures efficient task completion through transparent communication of system operations.
 
 ## 5. Definition of Ready
-> This US follows the defined [global definition of ready](../../global_artifacts/def_of_ready.md)
+> This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- Success notifications display after successful operations (save, update, delete)
+- Validation errors appear near affected input fields
+- Loading indicators are shown during asynchronous operations
+- API errors are caught and displayed in user-friendly format
+- Notification system is consistent across all features
+- The implementation checks all acceptance criteria
 

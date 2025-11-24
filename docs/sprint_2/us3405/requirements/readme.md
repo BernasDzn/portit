@@ -40,11 +40,17 @@
 
 
 ## 4. Business Value
-> ...
+> Multi-crane scheduling capability enables port operations to meet tight vessel departure schedules by intelligently allocating additional resources when single-crane solutions cannot eliminate delays. This flexibility prevents costly delays while minimizing operational costs by using multiple cranes only when necessary. Transparent comparison between single-crane and multi-crane strategies supports cost-benefit analysis, enabling operators to balance resource costs against delay penalties and make informed operational decisions.
 
 ## 5. Definition of Ready
-> This US follows the defined [global definition of ready](../../global_artifacts/def_of_ready.md)
+> This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- System attempts single-crane scheduling first
+- Multi-crane re-evaluation occurs when delays remain non-zero
+- Multi-crane strategy minimizes total departure delays
+- Additional crane usage is minimized
+- Output clearly indicates multi-crane allocation timing and location
+- Comparison metrics between single-crane and multi-crane strategies are available
+- The implementation checks all acceptance criteria
 

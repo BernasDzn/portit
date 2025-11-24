@@ -34,11 +34,16 @@
 
 
 ## 4. Business Value
-> ...
+> Automatic role loading after authentication streamlines user access by eliminating manual role selection steps and ensures users immediately see only their permitted features. This reduces onboarding friction, prevents unauthorized access attempts, and maintains consistent enforcement of role-based access control policies across the system, enhancing both security and user experience.
 
 ## 5. Definition of Ready
-> This US follows the defined [global definition of ready](../../global_artifacts/def_of_ready.md)
+> This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- Backend endpoint returns user's assigned role after IAM authentication
+- SPA calls this endpoint and stores role information
+- Menu options render based on retrieved role
+- Users without assigned roles or with inactive roles receive appropriate error message
+- Access is properly denied for unauthorized users
+- The implementation checks all acceptance criteria
 

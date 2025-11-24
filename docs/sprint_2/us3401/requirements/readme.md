@@ -37,11 +37,16 @@
 
 
 ## 4. Business Value
-> ...
+> A dedicated planning and scheduling module provides centralized computational intelligence for port operations optimization without data duplication. By consuming real-time data from existing services through APIs, the module ensures scheduling decisions reflect current system state while maintaining single sources of truth. This architecture supports scalable algorithm development, enables A/B testing of scheduling strategies, and provides consistent scheduling capabilities across different operational scenarios.
 
 ## 5. Definition of Ready
-> This US follows the defined [global definition of ready](../../global_artifacts/def_of_ready.md)
+> This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- Backend module exposes algorithms through REST API
+- Module consumes data from other backend services via APIs
+- No operational data persistence (computation-only module)
+- JSON payloads use consistent identifiers with other modules
+- API is documented (OpenAPI/Swagger) and accessible
+- The implementation checks all acceptance criteria
 

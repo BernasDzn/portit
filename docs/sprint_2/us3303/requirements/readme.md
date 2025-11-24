@@ -37,11 +37,17 @@
 
 
 ## 4. Business Value
-> ...
+> Visualizing vessels and operational resources in 3D context provides logistics operators and port authorities with real-time situational awareness of port operations. Seeing vessel positions at berths and resource locations enables quick assessment of operational status, supports coordination between teams, and facilitates identification of potential conflicts or optimization opportunities. This visual intelligence enhances decision-making speed and accuracy in dynamic operational environments.
 
 ## 5. Definition of Ready
-> This US follows the defined [global definition of ready](../../global_artifacts/def_of_ready.md)
+> This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- Vessels appear at their assigned berth positions
+- Resources (cranes, equipment) are displayed at assigned areas
+- Data is fetched from existing REST APIs
+- Only resources with assigned areas are displayed
+- Only approved vessel visit notifications are shown
+- Models are either procedurally created or imported
+- The implementation checks all acceptance criteria
 

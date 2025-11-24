@@ -34,11 +34,16 @@
 
 
 ## 4. Business Value
-> ...
+> Accurate 3D representation of port infrastructure based on real data enables operators and stakeholders to visualize the physical layout intuitively, improving spatial understanding and operational planning. By connecting visual models with actual facility data, users can make informed decisions about space utilization, facility planning, and operational workflows. This visual context reduces cognitive load compared to abstract data representations and supports more effective communication across teams.
 
 ## 5. Definition of Ready
-> This US follows the defined [global definition of ready](../../global_artifacts/def_of_ready.md)
+> This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- Port layout data is retrieved from backend as JSON
+- Docks, container yards, and warehouses are represented in 3D
+- Models are either procedurally created or imported
+- Positioning uses JSON-defined coordinates
+- Visual representation accurately reflects backend data
+- The implementation checks all acceptance criteria
 

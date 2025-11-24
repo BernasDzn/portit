@@ -34,11 +34,14 @@
 
 
 ## 4. Business Value
-> ...
+> Identifying motivational practices reveals how the organization fosters employee engagement, retention, and performance. Understanding these practices provides insights into organizational culture, helps anticipate change management challenges, and identifies factors that influence system adoption. This knowledge supports better alignment of technical solutions with human factors, enables recommendations for enhancing engagement, and helps ensure that new systems complement rather than conflict with existing motivational structures.
 
 ## 5. Definition of Ready
-> This US follows the defined [global definition of ready](../../global_artifacts/def_of_ready.md)
+> This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- Motivational practices are identified and categorized
+- Implications for performance, retention, culture, and effectiveness are discussed
+- Analysis is complete and documented
+- The implementation checks all acceptance criteria
 

@@ -41,11 +41,17 @@
 
 
 ## 4. Business Value
-> ...
+> Comprehensive role-based access control on both frontend and backend ensures robust security enforcement by preventing unauthorized operations at multiple layers. Backend validation with proper HTTP status codes and audit logging enables security monitoring and compliance tracking. Frontend route protection enhances user experience by preventing unauthorized access attempts before they reach the server, while detailed logging provides essential security intelligence for incident response and forensic analysis.
 
 ## 5. Definition of Ready
-> This US follows the defined [global definition of ready](../../global_artifacts/def_of_ready.md)
+> This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- Backend REST API routes enforce RBAC/ABAC
+- Unauthorized requests return proper HTTP status codes (403 Forbidden)
+- Unauthorized access attempts are logged
+- Frontend routes check authorization before rendering
+- Direct URL access to unauthorized pages is prevented
+- "Access Denied" page is displayed when appropriate
+- The implementation checks all acceptance criteria
 

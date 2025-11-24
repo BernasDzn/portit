@@ -40,13 +40,18 @@
 
 
 ## 4. Business Value
-> ...
+> Establishing a modern SPA framework foundation ensures the application is built on proven, well-supported technologies that accelerate development and maintainability. A modular architecture with clear separation of concerns enables parallel development, easier testing, and scalable feature additions. Adopting industry-standard frameworks and HTTP clients reduces technical debt, improves developer productivity through ecosystem support, and ensures the codebase remains maintainable as requirements evolve and team composition changes.
 
 ## 5. Definition of Ready
-> This US follows the defined [global definition of ready](../../global_artifacts/def_of_ready.md)
+> This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- ...
+- The SPA project is initialized with the chosen framework (Vue.js, React, or Angular)
+- Modular folder structure is established with clear separation of components, services, pages, and routing
+- HTTP client library (Axios/Fetch) is integrated and configured
+- Development environment is documented and reproducible
+- Basic routing mechanism is functional
+- The implementation checks all acceptance criteria
 
 ## 7. Team Decisions
 

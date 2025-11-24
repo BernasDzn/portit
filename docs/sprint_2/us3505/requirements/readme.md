@@ -35,11 +35,15 @@
 
 
 ## 4. Business Value
-> ...
+> Time-based access restrictions and multi-factor authentication after failed attempts create layered security defenses against unauthorized access. Limiting authentication to business hours reduces exposure to automated attacks during off-hours, while MFA requirements after failures prevent credential compromise. Automated email alerts enable rapid response to suspicious activity. These measures protect critical infrastructure while balancing security with operational usability during normal business operations.
 
 ## 5. Definition of Ready
-> This US follows the defined [global definition of ready](../../global_artifacts/def_of_ready.md)
+> This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- User authentication is restricted to 08:00-22:00 local time
+- Access attempts outside time window are denied
+- Google Authenticator MFA is required after failed authentication attempts
+- Email alerts are sent to admin after >3 consecutive failed attempts
+- The implementation checks all acceptance criteria
 

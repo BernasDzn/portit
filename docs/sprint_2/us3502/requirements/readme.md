@@ -36,11 +36,16 @@
 
 
 ## 4. Business Value
-> ...
+> Restricting system access to internal networks or VPN connections significantly reduces attack surface by preventing exposure to public internet threats. Network-level access control provides defense-in-depth alongside authentication, ensuring only authorized clients from trusted locations can reach the system. Logging unauthorized access attempts enables security monitoring and incident detection. This approach aligns with institutional security policies and compliance requirements for protecting sensitive operational systems.
 
 ## 5. Definition of Ready
-> This US follows the defined [global definition of ready](../../global_artifacts/def_of_ready.md)
+> This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- Network access is restricted via VPN or IP whitelisting
+- Configuration is implemented at host or proxy level
+- External IAM authentication is still enforced
+- Unauthorized external access attempts are logged and denied
+- Restrictions apply to development and staging environments
+- The implementation checks all acceptance criteria
 

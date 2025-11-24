@@ -103,6 +103,7 @@ test('Ensure can edit vessel type', async ({ page }) => {
   await page.getByRole('main').filter({ hasText: 'Vessel Type Dashboard Search' }).getByPlaceholder('Search...').fill('VTEDIT');
   await page.getByRole('link', { name: 'VTEDIT edit this vesseltype' }).click();
   await page.getByRole('button', { name: 'Edit Vessel Type' }).click();
+  await page.waitForTimeout(500);
   await page.getByPlaceholder('Vessel type description').click();
   await page.getByPlaceholder('Vessel type description').click();
   await page.getByPlaceholder('Vessel type description').fill('this vessel type was edited');

@@ -38,8 +38,12 @@
 > Implementing a robust backup strategy minimizes data loss and downtime, enhancing business resilience and continuity. By defining a Recovery Point Objective (RPO) that specifies frequent data backups and setting a Work Recovery Time (WRT) that allows for quick restoration, organizations can ensure critical operations resume swiftly after disruptions. Documented backup and restore procedures, alongside regular testing, validate the effectiveness of the strategy. This proactive approach not only protects against data loss but also builds stakeholder confidence and ensures compliance with regulatory requirements.
 
 ## 5. Definition of Ready
-> This US follows the defined [global definition of ready](../../global_artifacts/def_of_ready.md)
+> This US follows the defined [global definition of ready](../../../global_docs/def_of_ready.md)
 
 ## 6. Definition of Done
-- The implementation checks all acceptance criteria.
+- Backup strategy specifies frequency, retention policy, and storage location
+- RPO and WRT values are defined, justified, and achievable
+- Backup and restore procedures are documented
+- Test recovery runs validate backup effectiveness
+- The implementation checks all acceptance criteria
 
