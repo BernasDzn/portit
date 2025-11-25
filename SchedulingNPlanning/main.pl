@@ -1,9 +1,12 @@
 :- initialization(run).
 
+:- use_module('config.pl').
 :- consult('http-server.pl').
 
+:- dynamic api_url/1.
+:- dynamic frontend_url/1.
+
 run :-
-    URL = 'https://vs-gate.dei.isep.ipp.pt:10228/Staff',
 	PORT = 2228,
 	open_server(PORT),
 	writeln('Server started. Press Ctrl+C to stop.'),
@@ -18,5 +21,13 @@ dispatch([]) :-
 	thread_get_message(_).
 
 dispatch(['test'|_]) :-
+
+    % Set the testing endpoints
+    retractall(api_url(_)),
+    retractall(frontend_url(_)),
+
+    assertz(api_url('http://localhost:5195')),
+    assertz(frontend_url('http://localhost:5173')),
+
     % Let the server receive commands
     writeln('Running in test mode...').
