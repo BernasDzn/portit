@@ -1,21 +1,21 @@
 % Test file for comparing scheduling algorithms
-:- consult('./algorithms/resource_allocation_task_sequencing.pl').
+:- consult('./algorithms/optimal_scheduling.pl').
 :- consult('./algorithms/greedy_scheduling.pl').
 
 % Test data - same as in resource_allocation_task_sequencing.pl
 test_setup :-
     retractall(vessel(_,_,_,_,_,_)),
-    assertz(vessel(zeus, 6, 63, 10, 16, 'STS001')),
-    assertz(vessel(poseidon, 23, 50, 9, 7, 'STS001')),
-    assertz(vessel(marenostrum, 8, 40, 5, 12, 'STS001')),
-    assertz(vessel(nautilus, 10, 30, 0, 8, 'STS001')),
-    assertz(vessel(floating, 36, 70, 12, 0, 'STS001')),
-    assertz(vessel(apollo, 15, 55, 8, 10, 'STS001')),
-    assertz(vessel(hermes, 5, 45, 6, 9, 'STS001')),
-    assertz(vessel(athena, 12, 60, 7, 11, 'STS001')),
-    assertz(vessel(hera, 20, 80, 15, 5, 'STS001')),
-    assertz(vessel(artemis, 30, 90, 10, 10, 'STS001')).
-    % assertz(vessel(demeter, 25, 75, 9, 8, 'STS001')). this one lasted 6 minutes.
+    assertz(vessel(zeus, 6, 63, 10, 16, [crane('STS001',24)])),
+    assertz(vessel(poseidon, 23, 50, 9, 7, [crane('STS001',24)])),
+    assertz(vessel(marenostrum, 8, 40, 5, 12, [crane('STS001',24)])),
+    assertz(vessel(nautilus, 10, 30, 0, 8, [crane('STS001',24)])),
+    assertz(vessel(floating, 36, 70, 12, 0, [crane('STS001',24)])),
+    assertz(vessel(apollo, 15, 55, 8, 10, [crane('STS001',24)])),
+    assertz(vessel(hermes, 5, 45, 6, 9, [crane('STS001',24)])),
+    assertz(vessel(athena, 12, 60, 7, 11, [crane('STS001',24)])).
+    %assertz(vessel(hera, 20, 80, 15, 5, [crane('STS001',24)])),
+    %assertz(vessel(artemis, 30, 90, 10, 10, [crane('STS001',24)])).
+    % assertz(vessel(demeter, 25, 75, 9, 8, [crane('STS001',24)])). this one lasted 6 minutes.
 
 % Run optimal algorithm
 test_optimal :-
