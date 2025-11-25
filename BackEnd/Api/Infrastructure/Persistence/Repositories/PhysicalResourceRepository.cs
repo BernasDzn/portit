@@ -182,4 +182,21 @@ public class PhysicalResourceRepository : GenericRepository<PhysicalResource>, I
             throw new PersistencyFailedException("Failed to retrieve STS cranes by dock code from the database.");
         }
     }
+
+    public Task<IEnumerable<STSCrane>> GetSTSCranesByDockCodesAsync(IEnumerable<string> enumerable)
+    {
+        try
+        {
+            var cranes = _context.PhysicalResources
+                .OfType<STSCrane>()
+                .Where(c => enumerable.Contains(c.ServingDock.Code.Value) && c.Active)
+                .AsEnumerable();
+
+            return Task.FromResult(cranes);
+        }
+        catch (System.Exception)
+        {
+            throw;
+        }
+    }
 }

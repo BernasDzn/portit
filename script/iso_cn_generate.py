@@ -4,9 +4,6 @@ Generate valid ISO 6346 container numbers (format: ABCD1234560)
 - 4 letters: owner code (3 letters) + equipment category identifier (usually 'U')
 - 6 digits: serial number
 - 1 digit: check digit (ISO 6346 algorithm)
-
-Usage:
-    python gen_containers.py
 """
 
 import random

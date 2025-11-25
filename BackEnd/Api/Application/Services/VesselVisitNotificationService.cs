@@ -252,28 +252,31 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         return items.Select(n => n.ToDTO());
     }
 
-    public async Task<SchedulingResultDto> CollectSchedulingData(DateTime date, uint daysAhead, Code dockCode)
+    public async Task<SchedulingResultDto> CollectSchedulingData(DateTime date, uint daysAhead)
     {
-        var dock = await _dockRepository.GetDockByCodeAsync(dockCode.Value);
-        if (dock == null)
-            throw new EntityNotFoundException($"Dock with code {dockCode.Value} was not found.");
-
         List<VesselVisitNotification> notifications = await _notificationRepository.GetVesselVisitNotificationsOnDayAsync(date, daysAhead);
-        // Filter notifications to only those assigned to the specified dock
+
         // In the future, we might need to handle multiple docks
-        var filteredNotifications = notifications.Where(n => n.GetLatestDecision()!.AssignedDock!.Code.Value == dockCode.Value);
+        // var filteredNotifications = notifications.Where(n => n.GetLatestDecision()!.AssignedDock!.Code.Value == dockCode.Value);
 
-        IEnumerable<STSCrane> cranesServingDock = (await
-            _physicalResourceRepository.GetSTSCranesByDockCodeAsync(dock.Code.Value))
-            .Where(c => c.Status == ResourceStatus.Available)
-            .ToList();
+        // The future is now, we handle multiple docks
+        IEnumerable<Dock> relevantDocks = notifications.Select(n => n.GetLatestDecision()!.AssignedDock!).DistinctBy(d => d.Code.Value);
+        if (!relevantDocks.Any())
+        {
+            return new SchedulingResultDto
+            {
+                CraneWorkloads = new List<CraneWorkloadDto>(),
+                VesselTaskFacts = new List<VesselTaskFactDto>(),
+                Comment = "No docks assigned to the selected vessel visit notifications."
+            };
+        }
 
-        if (!cranesServingDock.Any())
-            throw new EntityNotFoundException($"No STS cranes found serving dock with code {dock.Code.Value}.");
+        // Select all cranes serving the relevant docks
+        List<CraneWorkloadDto> craneWorkloads = new List<CraneWorkloadDto>();
+        Dictionary<Dock, IEnumerable<STSCrane>> dockCranesMap = await MapCranesAsync(relevantDocks);
 
         // Calculate crane data
-        List<CraneWorkloadDto> craneWorkloads = new List<CraneWorkloadDto>();
-        foreach (var crane in cranesServingDock)
+        foreach (STSCrane crane in dockCranesMap.SelectMany(kv => kv.Value).ToList())
         {
             OperationalWindow effectiveOperatingWindow = await CalculateEffectiveCraneOperatingWindow(crane, date, daysAhead);
 
@@ -281,7 +284,8 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
             {
                 Crane = crane.Code.Value,
                 Speed = crane.ContainersPerHour,
-                operatingWindow = effectiveOperatingWindow
+                operatingWindow = effectiveOperatingWindow,
+                Dock = crane.ServingDock.Code.Value
             };
 
             craneWorkloads.Add(craneWorkload);
@@ -303,7 +307,7 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
 
         try
         {
-            foreach (var notification in filteredNotifications)
+            foreach (var notification in notifications)
             {
                 var vessel = notification.Vessel;
 
@@ -314,6 +318,7 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
                     ETD = CalculateBaseHour(date, notification.ExpectedDeparture),
                     LoadingCount = notification.LoadCargoManifest?.Count ?? 0 /*CalculateLoadUnloadingTime(notification.LoadCargoManifest ?? new List<CargoTransport>(), selectedCrane)*/,
                     UnloadingCount = notification.LoadCargoManifest?.Count ?? 0 /*CalculateLoadUnloadingTime(notification.UnloadCargoManifest ?? new List<CargoTransport>(), selectedCrane)*/,
+                    Dock = notification.GetLatestDecision()!.AssignedDock!.ToDTO()
                 };
 
                 if (vesselTaskFact.LoadingCount > 0 && vesselTaskFact.UnloadingCount > 0)
@@ -328,6 +333,23 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
 
         AppLogEvents.LogRetrieve(_logger, "scheduling data", result.CraneWorkloads.Count);
         return result;
+    }
+
+    private async Task<Dictionary<Dock, IEnumerable<STSCrane>>> MapCranesAsync(IEnumerable<Dock> relevantDocks)
+    {
+        IEnumerable<STSCrane> cranesServingDocks = await _physicalResourceRepository.GetSTSCranesByDockCodesAsync(
+            relevantDocks.Select(d => d.Code.Value)
+        );
+
+        // Do the mapping server side as to not waste queries getting them one by one
+        Dictionary<Dock, IEnumerable<STSCrane>> dockCranesMap = new Dictionary<Dock, IEnumerable<STSCrane>>();
+        foreach (Dock c in relevantDocks)
+        {
+            dockCranesMap[c] = cranesServingDocks
+                .Where(crane => crane.ServingDock.Code.Value == c.Code.Value);
+        }
+
+        return dockCranesMap;
     }
 
     private uint CalculateBaseHour(DateTime pivot, DateTime target)

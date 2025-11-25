@@ -43,11 +43,11 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
 
     [HttpGet("collectScheduleData", Name = "GetVesselVisitNotificationsOnDay")]
     [AllowAnonymous]
-    public async Task<ActionResult<SchedulingResultDto>> CollectSchedulingData([FromQuery] Code dockCode, DateTime day, uint daysAhead = 1)
+    public async Task<ActionResult<SchedulingResultDto>> CollectSchedulingData([FromQuery] DateTime day, uint daysAhead = 1)
     {
         try
         {
-            SchedulingResultDto resultDto = await _notificationService.CollectSchedulingData(day, daysAhead, dockCode);
+            SchedulingResultDto resultDto = await _notificationService.CollectSchedulingData(day, daysAhead);
             return Ok(resultDto);
         }
         catch (EntityNotFoundException e)
