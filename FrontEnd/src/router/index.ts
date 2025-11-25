@@ -341,6 +341,14 @@ const router = createRouter({
           }
         },
         {
+            path: '/schedule/results',
+            name: 'ScheduleResults',
+            component: () => import('@/views/Scheduling/ScheduleResults.vue'),
+            meta: {
+                hideFromSearch: true
+            }
+        },        
+        {
             path: '/vessel-visit-notifications/create',
             name: 'Create Vessel Visit Notification',
             component: () => import('@/views/VesselVisitNotification/VesselVisitNotificationCreate.vue'),

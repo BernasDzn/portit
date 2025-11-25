@@ -15,7 +15,6 @@ handle_schedule_request(Request) :-
     % Parse URL parameters: ?day=2025-11-09&dock=DCK002&days_ahead=2&alg=greedy
     http_parameters(Request, [
         day(Day, [string]),
-        dock(Dock, [string]),
         daysAhead(DaysAhead, [integer, default(0)]),
         alg(Algorithm, [string, default('optimal')]),
         compare(Compare, [boolean, default(false)])
@@ -23,9 +22,9 @@ handle_schedule_request(Request) :-
 
     % Handle comparison mode or single algorithm mode
     ( Compare = true ->
-        schedule_with_comparison(Day, DaysAhead, Dock, FormattedResult, Metrics)
+        schedule_with_comparison(Day, DaysAhead, FormattedResult, Metrics)
     ;
-        schedule_daily_operations(Day, DaysAhead, Dock, Algorithm, Result, Metrics),
+        schedule_daily_operations(Day, DaysAhead, Algorithm, Result, Metrics),
         format_timetable(Result, FormattedResult)
     ),
 

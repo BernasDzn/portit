@@ -267,6 +267,7 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
             {
                 CraneWorkloads = new List<CraneWorkloadDto>(),
                 VesselTaskFacts = new List<VesselTaskFactDto>(),
+                Docks = new List<DockDto>(),
                 Comment = "No docks assigned to the selected vessel visit notifications."
             };
         }
@@ -274,6 +275,17 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         // Select all cranes serving the relevant docks
         List<CraneWorkloadDto> craneWorkloads = new List<CraneWorkloadDto>();
         Dictionary<Dock, IEnumerable<STSCrane>> dockCranesMap = await MapCranesAsync(relevantDocks);
+
+        if (!dockCranesMap.Any() || dockCranesMap.Any(kv => !kv.Value.Any()))
+        {
+            return new SchedulingResultDto
+            {
+                CraneWorkloads = new List<CraneWorkloadDto>(),
+                VesselTaskFacts = new List<VesselTaskFactDto>(),
+                Docks = new List<DockDto>(),
+                Comment = "No cranes assigned to at least one of the selected docks."
+            };
+        }
 
         // Calculate crane data
         foreach (STSCrane crane in dockCranesMap.SelectMany(kv => kv.Value).ToList())
@@ -295,6 +307,7 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         {
             CraneWorkloads = craneWorkloads,
             VesselTaskFacts = new List<VesselTaskFactDto>(),
+            Docks = relevantDocks.Select(d => d.ToDTO()).ToList(),
             Comment = string.Empty
         };
 
@@ -318,7 +331,7 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
                     ETD = CalculateBaseHour(date, notification.ExpectedDeparture),
                     LoadingCount = notification.LoadCargoManifest?.Count ?? 0 /*CalculateLoadUnloadingTime(notification.LoadCargoManifest ?? new List<CargoTransport>(), selectedCrane)*/,
                     UnloadingCount = notification.LoadCargoManifest?.Count ?? 0 /*CalculateLoadUnloadingTime(notification.UnloadCargoManifest ?? new List<CargoTransport>(), selectedCrane)*/,
-                    Dock = notification.GetLatestDecision()!.AssignedDock!.ToDTO()
+                    Dock = notification.GetLatestDecision()!.AssignedDock!.Code.Value
                 };
 
                 if (vesselTaskFact.LoadingCount > 0 && vesselTaskFact.UnloadingCount > 0)

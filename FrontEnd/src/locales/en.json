@@ -390,6 +390,10 @@
         "aboutAlgorithmModal": {
             "title": "About the algorithm",
             "content": "The current algorithm takes into account the vessel visit notifications scheduled for the selected date and dock. \nIt then checks the availability of STS cranes for the specified dock and decides the duration of each task based on the speed of the crane.\nIt also ignores visits that are for maintenance or other non-loading/unloading activities."
+        },
+        "results": {
+            "title": "Scheduling Results",
+            "subtitle": "Generated task schedule for the selected date"
         }
     },
     "physicalResource": {

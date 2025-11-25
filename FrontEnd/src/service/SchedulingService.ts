@@ -21,7 +21,7 @@ export class SchedulingService implements ISchedulingService {
         return newDate;
     }    
 
-    async generateSchedulePDF(schedule: Schedule, date: Date, dock: string): Promise<Uint8Array> {
+    async generateSchedulePDF(schedule: Schedule, date: Date): Promise<Uint8Array> {
         
         const session = useSession();
 
@@ -31,7 +31,7 @@ export class SchedulingService implements ISchedulingService {
         doc.text(`Schedule report`, 14, 22);
 
         doc.setFontSize(12);
-        doc.text(`Concern: ${dock}, on day ${date.toDateString()}`, 14, 32);
+        doc.text(`Concern: All docks, on day ${date.toDateString()}`, 14, 32);
         
         // Add metrics if available
         if (schedule.metrics) {
@@ -75,9 +75,9 @@ export class SchedulingService implements ISchedulingService {
         return new Uint8Array(arrayBuffer);
     }
 
-    async scheduleForDay(day: Date, dock: string, alg: string, daysAhead: number = 2): Promise<Schedule> {
+    async scheduleForDay(day: Date, alg: string, daysAhead: number = 2): Promise<Schedule> {
         const dayString = day.toISOString().split('T')[0];
-        const url = `/prolog/schedule?day=${dayString}&dock=${dock}&alg=${alg}&daysAhead=${daysAhead}`;
+        const url = `/prolog/schedule?day=${dayString}&alg=${alg}&daysAhead=${daysAhead}`;
         const res = await this.http.getWithoutCredentials(url);
         
         const apiResponse = res as any;
