@@ -25,10 +25,21 @@ handle_schedule_request(Request) :-
         schedule_with_comparison(Day, DaysAhead, FormattedResult, Metrics)
     ;
         schedule_daily_operations(Day, DaysAhead, Algorithm, Result, Metrics),
-        format_timetable(Result, FormattedResult)
+        format_timetable_docks(Result, FormattedResult)
     ),
 
+    format(user_error, 'Scheduling result: ~w~n', [FormattedResult]),
+
     reply_json(#{data: FormattedResult, metrics: Metrics}).
+
+format_timetable_docks([], []).
+format_timetable_docks([DockResult|Rest], [Dict|FormattedRest]) :-
+    DockCode = DockResult.dock,
+    ScheduleList = DockResult.schedule,
+    format_timetable(ScheduleList, FormattedSchedule),
+    Dict = #{dock: DockCode, schedule: FormattedSchedule},
+    !,
+    format_timetable_docks(Rest, FormattedRest).
 
 % Format the list of tuples into a more readable structure with crane info
 format_timetable([], []).

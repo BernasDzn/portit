@@ -17,7 +17,7 @@ const schedule = JSON.parse(route.query.schedule as string);
 const date = new Date(route.query.date as string);
 
 const rows = schedule.data.map((item: any) => ({
-    name: item.name,
+    name: item.name.replace(/_\d+$/, ''),
     start: new Date(date.getTime() + item.loading_enter_time * 3600000).toLocaleString(),
     end: new Date(date.getTime() + item.loading_exit_time * 3600000).toLocaleString(),
     cranes: Array.isArray(item.cranes) ? item.cranes.join(', ') : item.cranes
