@@ -117,7 +117,11 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
 
         if (representative == null) throw new EntityNotFoundException($"Representative with email {userEmail} was not found.");
 
-        Crew? crew = null;
+        // Check representative can submit on behalf of the vessel owner
+        if (representative.RepresentedOrganization == null || !representative.RepresentedOrganization!.Id.Equals(vessel.Owner.Id))
+            throw new UnauthorizedAccessException("You are not authorized to submit a notification for this vessel.");
+
+        Crew ? crew = null;
         if (vesselVisitNotificationDto.CrewDetails != null)
         {
             crew = new Crew(

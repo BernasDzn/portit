@@ -518,7 +518,7 @@ public static class Bootstrap
                     sa1,
                     new Container(
                         Guid.NewGuid(),
-                        new ContainerNumber { Value = "TGHU7654324" },
+                        new ContainerNumber { Value = "FAIU8306753" },
                         CargoType.OVERSIZED_INDUSTRIAL_EQUIPMENT,
                         new Designation { Value = "industrial machinery" }
                     )
@@ -528,7 +528,7 @@ public static class Bootstrap
                     sa1,
                     new Container(
                         Guid.NewGuid(),
-                        new ContainerNumber { Value = "MAEU9999993" },
+                        new ContainerNumber { Value = "YIIU9751018" },
                         CargoType.OTHER,
                         new Designation { Value = "chemical products" }
                     )
@@ -541,7 +541,7 @@ public static class Bootstrap
                     sa1,
                     new Container(
                         Guid.NewGuid(),
-                        new ContainerNumber { Value = "MSKU1234562" },
+                        new ContainerNumber { Value = "UASU1440180" },
                         CargoType.GENERAL_CONSUMER_PRODUCTS,
                         new Designation { Value = "assorted goods" }
                     )
@@ -551,7 +551,7 @@ public static class Bootstrap
                     sa1,
                     new Container(
                         Guid.NewGuid(),
-                        new ContainerNumber { Value = "CMAU0000017" },
+                        new ContainerNumber { Value = "RJNU2933932" },
                         CargoType.ELECTRONICS,
                         new Designation { Value = "various electronic items" }
                     )
@@ -561,7 +561,7 @@ public static class Bootstrap
                     sa1,
                     new Container(
                         Guid.NewGuid(),
-                        new ContainerNumber { Value = "ABCD1234562" },
+                        new ContainerNumber { Value = "JPZU9498551" },
                         CargoType.ELECTRONICS,
                         new Designation { Value = "various electronic items" }
                     )
@@ -571,7 +571,7 @@ public static class Bootstrap
                     sa1,
                     new Container(
                         Guid.NewGuid(),
-                        new ContainerNumber { Value = "CMAU2468102" },
+                        new ContainerNumber { Value = "AQDU7507027" },
                         CargoType.GENERAL_CONSUMER_PRODUCTS,
                         new Designation { Value = "chilly yummy food" }
                     )
@@ -581,7 +581,7 @@ public static class Bootstrap
                     sa1,
                     new Container(
                         Guid.NewGuid(),
-                        new ContainerNumber { Value = "EFGH6543215" },
+                        new ContainerNumber { Value = "MJTU1627730" },
                         CargoType.OTHER,
                         new Designation { Value = "miscellaneous items" }
                     )
@@ -591,7 +591,7 @@ public static class Bootstrap
                     sa1,
                     new Container(
                         Guid.NewGuid(),
-                        new ContainerNumber { Value = "IJKL0987658" },
+                        new ContainerNumber { Value = "EZXU3860759" },
                         CargoType.GENERAL_CONSUMER_PRODUCTS,
                         new Designation { Value = "various goods" }
                     )
@@ -601,7 +601,7 @@ public static class Bootstrap
                     sa1,
                     new Container(
                         Guid.NewGuid(),
-                        new ContainerNumber { Value = "MNOP5678908" },
+                        new ContainerNumber { Value = "UJGU9145978" },
                         CargoType.ELECTRONICS,
                         new Designation { Value = "electronic devices" }
                     )
@@ -628,7 +628,7 @@ public static class Bootstrap
                     sa1,
                     new Container(
                         Guid.NewGuid(),
-                        new ContainerNumber { Value = "EFGH6543215" },
+                        new ContainerNumber { Value = "SNYU7069225" },
                         CargoType.OTHER,
                         new Designation { Value = "chemical products" }
                     )
@@ -638,7 +638,7 @@ public static class Bootstrap
                     sa1,
                     new Container(
                         Guid.NewGuid(),
-                        new ContainerNumber { Value = "IJKL0987658" },
+                        new ContainerNumber { Value = "AZLU7578124" },
                         CargoType.OVERSIZED_INDUSTRIAL_EQUIPMENT,
                         new Designation { Value = "industrial machinery" }
                     )
@@ -651,7 +651,7 @@ public static class Bootstrap
                     sa1,
                     new Container(
                         Guid.NewGuid(),
-                        new ContainerNumber { Value = "ZXCV1122339" },
+                        new ContainerNumber { Value = "SYWU6867626" },
                         CargoType.GENERAL_CONSUMER_PRODUCTS,
                         new Designation { Value = "assorted goods" }
                     )
@@ -661,7 +661,7 @@ public static class Bootstrap
                     sa1,
                     new Container(
                         Guid.NewGuid(),
-                        new ContainerNumber { Value = "QWER5566774" },
+                        new ContainerNumber { Value = "PMNU8482425" },
                         CargoType.ELECTRONICS,
                         new Designation { Value = "various electronic items" }
                     )
@@ -688,7 +688,7 @@ public static class Bootstrap
                     sa1,
                     new Container(
                         Guid.NewGuid(),
-                        new ContainerNumber { Value = "TYUI7788993" },
+                        new ContainerNumber { Value = "LRMU2612246" },
                         CargoType.OVERSIZED_INDUSTRIAL_EQUIPMENT,
                         new Designation { Value = "industrial machinery" }
                     )

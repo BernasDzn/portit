@@ -123,6 +123,11 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
             _logger.LogError($"Entity already exists: {e.Message}");
             return Conflict(e.Message);
         }
+        catch (UnauthorizedAccessException e)
+        {
+            _logger.LogError($"Unauthorized attempt to create notification: {e.Message}");
+            return Forbid();
+        }
         catch (EntityNotFoundException e)
         {
             _logger.LogError($"Entity not found: {e.Message}");
