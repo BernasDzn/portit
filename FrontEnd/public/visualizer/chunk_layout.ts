@@ -251,6 +251,8 @@ class LandChunk extends PortChunk {
     }
 }
 
+const modelCache = {};
+
 class BuoyChunk extends PortChunk {
 
     pointLight;
@@ -261,8 +263,13 @@ class BuoyChunk extends PortChunk {
     }
 
     async init(scene) {
-        const model = await loadModel("/visualizer/models/buoy.obj");
+        var modelPath = "/visualizer/models/buoy.obj";
 
+        if (!modelCache[modelPath]) {
+            modelCache[modelPath] = await loadModel(modelPath);
+            centerModel(modelCache[modelPath]);
+        }
+        const model = modelCache[modelPath].clone();
         // position and scale adjustments
         this.position.y -= 7;
         model.position.copy(this.position);
@@ -827,12 +834,14 @@ export default class PortLayout {
      */
     vesselSchedule = [];
 
-    constructor(scene, camera) {
 
-        this.picker = new PickHelper();
+    constructor(scene, camera, controls) {
 
-        window.addEventListener('click', (event) => {
-            this.pick(scene, camera);
+        this.picker = new PickHelper(controls);
+        // Use right-click (context menu) for picking; prevent default browser menu
+        window.addEventListener('contextmenu', (event) => {
+            event.preventDefault();
+            this.pick(scene, camera, event);
         });
 
         this.entitySpotlight = new EntitySpotlight(0xffffaa, 20000, 0, Math.PI / 5, 0.5, 1.8);
@@ -1417,10 +1426,11 @@ export default class PortLayout {
     }
 
     selectedObject;
-    pick(scene, camera) {
+    pick(scene, camera, event) {
+        const evt = event || window.event;
         const normalizedPosition = {
-            x: (event.clientX / window.innerWidth) * 2 - 1,
-            y: -(event.clientY / window.innerHeight) * 2 + 1
+            x: (evt.clientX / window.innerWidth) * 2 - 1,
+            y: -(evt.clientY / window.innerHeight) * 2 + 1
         };
 
         const craneMeshes = [];
