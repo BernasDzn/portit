@@ -115,6 +115,10 @@ export default class Port3D {
         this.animate();
     }
 
+    resetCamera() {
+        this.controls.reset();
+    }
+
     onWindowResize() {
         this.camera.aspect = window.innerWidth / window.innerHeight;
         this.camera.updateProjectionMatrix();
@@ -144,11 +148,11 @@ export default class Port3D {
 
     updatePostProcessing() {
         // Update bloom pass settings
-        const bloomPass = this.composer.passes.find(pass => pass instanceof UnrealBloomPass);
-        if (bloomPass) {
-            bloomPass.strength = this.portsProcessing.bloom.strength;
-            bloomPass.radius = this.portsProcessing.bloom.radius;
-            bloomPass.threshold = this.portsProcessing.bloom.threshold;
-        }
+        // const bloomPass = this.composer.passes.find(pass => pass instanceof UnrealBloomPass);
+        // if (bloomPass) {
+        //     bloomPass.strength = this.portsProcessing.bloom.strength;
+        //     bloomPass.radius = this.portsProcessing.bloom.radius;
+        //     bloomPass.threshold = this.portsProcessing.bloom.threshold;
+        // }
     }
 }

@@ -9,6 +9,9 @@ const moveDistance = 20; // Distance to move per key press
 
 export default class Controls {
 
+    originalRotation;
+    originalPosition;
+
     camera;
     controls;
 
@@ -37,10 +40,28 @@ export default class Controls {
         this.controls.zoomSpeed = zoomIncrement;
                   
         this.camera.position.set(493, 411, -766);
-        this.camera.rotation.set(-0.-2.6, 0.5, 2.8);
+        this.camera.rotation.set(-2.6, 0.5, 2.8);
+
+        this.originalRotation = this.camera.rotation.clone();
+        this.originalPosition = this.camera.position.clone();
+
+        // Add reset keybind
+        window.addEventListener('keydown', (event) => {
+            if (event.key === 'r' || event.key === 'R') {
+                this.reset();
+            }
+        });
     }
 
     update() {
         //this.controls.update();
+    }
+
+    reset() {
+        this.camera.rotation.copy(this.originalRotation);
+        this.camera.position.copy(this.originalPosition);
+
+        this.controls.target.set(0, 0, 0);
+        this.controls.update();
     }
 }
