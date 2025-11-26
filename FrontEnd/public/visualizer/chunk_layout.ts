@@ -7,6 +7,7 @@ import PickHelper from "./helpers/pick_helper.ts";
 import { hideInfoText, setInfoText } from "./helpers/info_helper.ts";
 import { TimedEvent } from "./time.ts";
 import { fetchPortLayout, fetchVesselPositions, ChunkType } from "./chunk_service.ts";
+import EntitySpotlight from "./helpers/entity_spotlight.ts";
 
 const worldBorder = 1000;
 
@@ -309,7 +310,10 @@ class DockChunk extends PortChunk {
         texture.wrapS = THREE.RepeatWrapping;
         texture.wrapT = THREE.RepeatWrapping;
 
-        let baseMesh = new THREE.MeshStandardMaterial({ map: texture });
+        let baseMesh = new THREE.MeshStandardMaterial({ 
+            map: texture,
+            color: 0x666666
+        });
 
         this.base = new THREE.Mesh(this.base, baseMesh);
         this.base.position.copy(this.position);
@@ -795,6 +799,7 @@ export default class PortLayout {
     lighthouse;
     lighthouseLight;
     lighthousePointLight;
+    entitySpotlight;
 
     showPaths = false;
 
@@ -829,6 +834,10 @@ export default class PortLayout {
         window.addEventListener('click', (event) => {
             this.pick(scene, camera);
         });
+
+        this.entitySpotlight = new EntitySpotlight(0xffffaa, 20000, 0, Math.PI / 5, 0.5, 1.8);
+        scene.add(this.entitySpotlight.spotlight);
+        scene.add(this.entitySpotlight.target);
 
         // Load chunks dynamically from API
         this.loadChunksFromAPI(scene);
@@ -1440,6 +1449,9 @@ export default class PortLayout {
 
         const picked = this.picker.pickFromList(normalizedPosition, scene, camera, objectlist);
         let pickedObject = picked ? picked.object : null;
+
+        this.entitySpotlight.pointToEntity(pickedObject);
+        console.log("Picked object:", pickedObject?.position);
 
         const highlightMesh = (obj, color) => {
             if (obj && obj.material) {

@@ -2,11 +2,9 @@ import * as THREE from "three";
 
 import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
-import { ShaderPass } from "three/addons/postprocessing/ShaderPass.js";
 import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
-import { RenderPixelatedPass } from 'three/addons/postprocessing/RenderPixelatedPass.js';
 
-import Environment from "/visualizer/environment.ts";
+import Environment from "./environment.ts";
 import PortLayout from "./chunk_layout.ts";
 import Controls from "./controls.ts";
 import setupGUI from "./hud.ts";
@@ -97,7 +95,7 @@ export default class Port3D {
 
         // Add port base
         this.portLayout = new PortLayout(this.scene, this.camera);
-        
+
         // Load vessel asynchronously
         // this.portLayout.addVessel("Vessel 1", new THREE.Vector3(0, -12, -40), this.scene).catch(err => {
         //     console.error("Failed to load vessel:", err);
