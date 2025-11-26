@@ -250,6 +250,8 @@ class LandChunk extends PortChunk {
     }
 }
 
+const modelCache = {};
+
 class BuoyChunk extends PortChunk {
 
     pointLight;
@@ -260,8 +262,13 @@ class BuoyChunk extends PortChunk {
     }
 
     async init(scene) {
-        const model = await loadModel("/visualizer/models/buoy.obj");
+        var modelPath = "/visualizer/models/buoy.obj";
 
+        if (!modelCache[modelPath]) {
+            modelCache[modelPath] = await loadModel(modelPath);
+            centerModel(modelCache[modelPath]);
+        }
+        const model = modelCache[modelPath].clone();
         // position and scale adjustments
         this.position.y -= 7;
         model.position.copy(this.position);
