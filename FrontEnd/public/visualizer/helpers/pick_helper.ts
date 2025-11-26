@@ -36,11 +36,16 @@ export default class PickHelper {
         const cameraY = this.clamp(camera.position.y, center.y-500, center.y+500);
         const cameraZ = this.clamp(camera.position.z, center.z+100, center.z+500);
 
-        camera.position.set(cameraX, cameraY, cameraZ);
-        camera.lookAt(center);
+        // camera.position.set(cameraX, cameraY, cameraZ);
+        // camera.lookAt(center);
 
-        this.controls.target.copy(center);
-        this.controls.update();
+        // this.controls.target.copy(center);
+        // this.controls.update();
+        this.controls.animateTo(
+            new THREE.Vector3(cameraX, cameraY, cameraZ),
+            camera.quaternion,
+            center
+        );
     }
 
 

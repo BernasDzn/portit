@@ -832,7 +832,7 @@ export default class PortLayout {
 
     constructor(scene, camera, controls) {
 
-        this.picker = new PickHelper(controls.controls);
+        this.picker = new PickHelper(controls);
         // Use right-click (context menu) for picking; prevent default browser menu
         window.addEventListener('contextmenu', (event) => {
             event.preventDefault();
