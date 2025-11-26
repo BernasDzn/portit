@@ -13,12 +13,13 @@ import TYPES from '@/inversify/types';
 import EntityDropdown from '@/components/crud/EntityDropdown.vue';
 import type { IDockService } from '@/service/IService/IDockService';
 import { useAlerts } from '@/composables/alerts';
+import { useRouter } from 'vue-router';
 
 const vvnService = container.get<IVesselVisitNotificationService>(TYPES.vesselVisitNotificationService);
 const scheduleService = container.get<ISchedulingService>(TYPES.schedulingService);
-const dockService = container.get<IDockService>(TYPES.dockService);
 
 const notifications = useAlerts();
+const router = useRouter();
 
 const { t } = useI18n();
 
@@ -30,7 +31,6 @@ const algorithmList = [
 const selectedDate = ref<Date | null>(new Date());
 const selectedAlgorithm = ref<string | null>(null);
 const vvnList = ref<VesselVisitNotification[]>([]);
-const dock = ref<string | null>(null);
 const daysAhead = ref<number>(1);
 const loading = ref(false);
 const generating = ref(false);
@@ -56,10 +56,10 @@ onMounted(async () => {
 
 const generateTasksForDate = async () => {
     
-    if (!selectedDate.value || !dock.value || !selectedAlgorithm.value) return;
+    if (!selectedDate.value || !selectedAlgorithm.value) return;
     generating.value = true;
 
-    const results: Schedule = await scheduleService.scheduleForDay(selectedDate.value, dock.value, selectedAlgorithm.value, daysAhead.value);
+    const results: Schedule = await scheduleService.scheduleForDay(selectedDate.value, selectedAlgorithm.value, daysAhead.value);
     console.log('Generated Schedule:', results);
 
     if (!Array.isArray(results.data)){
@@ -73,7 +73,7 @@ const generateTasksForDate = async () => {
     if (results.data.length > 0) {
         
         const algorithmLabel = algorithmList.find(a => a.value === selectedAlgorithm.value)?.label || selectedAlgorithm.value;
-        let message = `Successfully generated ${results.data.length} tasks for dock ${dock.value} using ${algorithmLabel}.`;
+        let message = `Successfully generated ${results.data.length} tasks using ${algorithmLabel}.`;
         
         // Add metrics to notification if available
         if (results.metrics) {
@@ -84,10 +84,17 @@ const generateTasksForDate = async () => {
         closeModal();
 
         // Generate and open schedule pdf
-        const pdfResponse = await scheduleService.generateSchedulePDF(results, selectedDate.value, dock.value);
-        const pdfBlob = new Blob([pdfResponse], { type: 'application/pdf' });
-        const pdfUrl = URL.createObjectURL(pdfBlob);
-        window.open(pdfUrl, '_blank');
+        // const pdfResponse = await scheduleService.generateSchedulePDF(results, selectedDate.value);
+        // const pdfBlob = new Blob([pdfResponse], { type: 'application/pdf' });
+        // const pdfUrl = URL.createObjectURL(pdfBlob);
+        // window.open(pdfUrl, '_blank');
+        router.push({
+            name: 'ScheduleResults',
+            query: {
+                schedule: JSON.stringify(results),
+                date: selectedDate.value.toISOString()
+            }
+        });
 
     } else {
         
@@ -170,20 +177,6 @@ const closeAboutModal = () => {
         <sl-dialog :label="t('scheduling.generateTasksModal.title')" class="dialog-overview" id="generate-tasks-modal">
 
             <div>
-                <EntityDropdown
-                    class="field-dropdown"
-                    :name="t('scheduling.fields.relatedDocks')"
-                    v-model="dock"
-                    :fetch-function="() => dockService.getDocks(null)"
-                    :fetch-on-mount="true"
-                    :placeholderText="t('physicalResource.fields.servingDocks.placeholder')"
-                    valueKey="code"
-                    labelKey="name"
-                    required
-                />
-
-                <br>
-
                 <!-- Select algorithm -->
                 <EntityDropdown
                     class="field-dropdown"
@@ -232,7 +225,7 @@ const closeAboutModal = () => {
                 {{ t('buttons.cancel') }}
             </sl-button>
             <sl-button 
-                :disabled="!dock || !selectedAlgorithm"
+                :disabled="!selectedAlgorithm || !selectedDate || generating"
                 :loading="generating"
                 slot="footer" 
                 variant="primary" 

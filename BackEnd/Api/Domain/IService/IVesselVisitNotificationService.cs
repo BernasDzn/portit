@@ -20,7 +20,7 @@ public interface IVesselVisitNotificationService
     Task DeleteNotificationDraft(string id, string userEmail);
     
     // Schedule operations
-    Task<SchedulingResultDto> CollectSchedulingData(DateTime date, uint daysAhead, Code dockCode);
+    Task<SchedulingResultDto> CollectSchedulingData(DateTime date, uint daysAhead);
     Task<VesselVisitDistributionDto> GetVesselVisitNotificationDistribution();
 
     // Vessel Positions

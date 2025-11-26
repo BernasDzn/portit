@@ -5,7 +5,10 @@
 :- consult('../algorithms/optimal_scheduling.pl').
 :- consult('../algorithms/greedy_scheduling.pl').
 :- use_module(library(lists)).
+
 :- dynamic current_schedule_day/1.
+% The global dock being scheduled
+:- dynamic dock/1.
 
 date_weekday(DateString, Weekday) :-
     split_string(DateString, "-", "", [YearStr, MonthStr, DayStr]),
@@ -13,8 +16,8 @@ date_weekday(DateString, Weekday) :-
     day_of_the_week(date(Year, Month, Day), TempWeekday),
     Weekday is TempWeekday mod 7.
 
-schedule_daily_operations(TargetDate, DaysAhead, DockCode, Algorithm, ScheduleResult, Metrics) :-
-    get_vvns_on_day(TargetDate, DaysAhead, DockCode, JsonData),
+schedule_daily_operations(TargetDate, DaysAhead, Algorithm, ScheduleResult, Metrics) :-
+    get_vvns_on_day(TargetDate, DaysAhead, JsonData),
     date_weekday(TargetDate, Weekday),
     assertz(current_schedule_day(Weekday)),
     schedule_daily_operations1(JsonData, Algorithm, ScheduleResult, Metrics),
@@ -24,12 +27,44 @@ schedule_daily_operations1(JsonData, _, 'Missing resource (qualified staff or ST
     _{ error: _ } :< JsonData, !,
     Metrics = #{algorithm: none, totalDelay: 0, computationTime: 0, vesselCount: 0}.
 
+% This is now a wrapper to the actual dispatch algorithm
+% We want to seperate algorithm execution from dock selection since it will be sequential
 schedule_daily_operations1(JsonData, Algorithm, ScheduleResult, Metrics) :-
-    extract_scheduling_data(JsonData, VesselFacts, CraneFacts),
+
+    % Get dock list
+    extract_dock_list(JsonData.docks, DockList),
+    format(user_error, 'Available docks: ~w~n', [DockList]),
+
+    dispatch_to_docks(DockList, JsonData, Algorithm, ScheduleResult, Metrics).
+    
+% Dispatch to docks sequentially
+% Dispatch to docks sequentially
+dispatch_to_docks([], _, _, [], []).
+dispatch_to_docks([DockHead|DockTail], JsonData, Algorithm, [ScheduleHead|ScheduleRest], [MetricsHead|MetricsRest]) :-
+    
+    format(user_error, '~n***** Scheduling for dock: ~w *****~n', [DockHead]),
+    assertz(dock(DockHead)),
+    dispatch_algorithm(JsonData, Algorithm, DockSchedule, DockMetrics),
+
+    ScheduleHead = #{dock: DockHead, schedule: DockSchedule},
+    MetricsHead = DockMetrics,
+
+    retractall(dock(_)),
+    dispatch_to_docks(DockTail, JsonData, Algorithm, ScheduleRest, MetricsRest).
+
+dispatch_algorithm(JsonData, Algorithm, ScheduleResult, Metrics) :-
+    
     retractall(vessel(_,_,_,_,_,_)),
     retractall(crane(_,_)),
+
+    extract_scheduling_data(JsonData, VesselFacts, CraneFacts, DockList),
+    
     flatten(VesselFacts, FlatVesselFacts),
     flatten(CraneFacts, FlatCraneFacts),
+
+    format(user_error, 'Vessel Facts: ~w~n', [FlatVesselFacts]),
+    format(user_error, 'Crane Facts: ~w~n', [FlatCraneFacts]),
+    
     maplist(assertz, FlatCraneFacts),
     
     % Try single-crane first
@@ -163,17 +198,36 @@ take_n(Count, [Crane|RestCranes], [Crane|TakenRest]) :-
 take_n(Count, [], []) :- Count > 0.
 
 % Extract data
-extract_scheduling_data([], [], []).
-extract_scheduling_data(JsonData, VesselFacts, CraneFacts) :-
-    extract_vessel_data(JsonData.vesselTaskFacts, VesselFacts),
-    extract_crane_data(JsonData.craneWorkloads, CraneFacts).
+extract_scheduling_data([], [], [], []).
+extract_scheduling_data(JsonData, VesselFacts, CraneFacts, DockList) :-
+    extract_crane_data(JsonData.craneWorkloads, CraneFacts),
+    extract_vessel_data(JsonData.vesselTaskFacts, VesselFacts).
 
 extract_vessel_data([], []).
-extract_vessel_data([JsonVessel|RestJson], [VesselFact|RestVessels]) :-
-    json_to_vvn_fact(JsonVessel, VesselFact), 
-    extract_vessel_data(RestJson, RestVessels).
+extract_vessel_data([JsonVessel|RestJson], Result) :-
+    dock(DockCode),
+    (
+        JsonVessel.dock \= DockCode ->
+        extract_vessel_data(RestJson, Result)
+        ; 
+        json_to_vvn_fact(JsonVessel, VesselFact), 
+        extract_vessel_data(RestJson, RestVessels),
+        Result = [VesselFact|RestVessels] 
+    ).
 
 extract_crane_data([], []).
-extract_crane_data([JsonCrane|RestJson], [CraneFact|RestCranes]) :-
-    json_to_crane_fact(JsonCrane, CraneFact), 
-    extract_crane_data(RestJson, RestCranes).
+extract_crane_data([JsonCrane|RestJson], Result) :-
+    dock(DockCode),
+    ( 
+        JsonCrane.dock \= DockCode ->
+        extract_crane_data(RestJson, Result)
+        ;
+        json_to_crane_fact(JsonCrane, CraneFact), 
+        extract_crane_data(RestJson, RestCranes),
+        Result = [CraneFact|RestCranes] 
+    ).
+
+extract_dock_list([], []).
+extract_dock_list([JsonDock|RestDocks], [DockHead|DockTail]) :-
+    DockHead = JsonDock.code,
+    extract_dock_list(RestDocks, DockTail).

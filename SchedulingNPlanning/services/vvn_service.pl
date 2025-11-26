@@ -11,10 +11,10 @@
 %     close(Stream),
 %     reply_json(JsonData).
 
-get_vvns_on_day(Date, DaysAhead, DockCode, JsonData) :-
+get_vvns_on_day(Date, DaysAhead, JsonData) :-
     api_url(BaseUrl),
-    format(atom(URL), "~w/VesselVisitNotification/collectScheduleData?Value=~w&daysAhead=~w&day=~w",
-           [BaseUrl, DockCode, DaysAhead, Date]),
+    format(atom(URL), "~w/VesselVisitNotification/collectScheduleData?daysAhead=~w&day=~w",
+           [BaseUrl, DaysAhead, Date]),
 
     format(user_error, 'Fetching VVN data from URL: ~w~n', [URL]),  % Debug
     
