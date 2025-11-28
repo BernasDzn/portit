@@ -844,6 +844,20 @@ export default class PortLayout {
             this.pick(scene, camera, event);
         });
 
+        window.addEventListener('keydown', (event) => {
+            if (event.key === 'i' || event.key === 'I') {
+                if (this.isInfoVisible) {
+                    hideInfoText();
+                    this.isInfoVisible = false;
+                } else if (this.selectedObject && this.selectedObject.meta) {
+                    setInfoText(this.selectedObject.meta);
+                    this.isInfoVisible = true;
+                } else if (this.selectedObject) {
+                    console.warn("No meta information available for selected object.");
+                }
+            }
+        });
+
         this.entitySpotlight = new EntitySpotlight(0xffffaa, 20000, 0, Math.PI / 5, 0.5, 1.8);
         scene.add(this.entitySpotlight.spotlight);
         scene.add(this.entitySpotlight.target);
@@ -1426,6 +1440,7 @@ export default class PortLayout {
     }
 
     selectedObject;
+    isInfoVisible = false;
     pick(scene, camera, event) {
         const evt = event || window.event;
         const normalizedPosition = {
@@ -1483,12 +1498,8 @@ export default class PortLayout {
             this.selectedObject = pickedObject;
             console.log("Picked object:", this.selectedObject);
 
-            try {
-                const userData = this.selectedObject.meta;
-                setInfoText(userData);
-            } catch (error) {
-                console.warn("No meta information available for selected object.");
-            }
+            hideInfoText();
+            this.isInfoVisible = false;
 
             if(pickedObject.userData && pickedObject.userData.vesselName) {
                 const clickedVessel = this.vesselList.find(vessel => vessel.name === pickedObject.userData.vesselName);
@@ -1518,6 +1529,7 @@ export default class PortLayout {
         } else {
             this.selectedObject = null;
             hideInfoText();
+            this.isInfoVisible = false;
         }
     }
 

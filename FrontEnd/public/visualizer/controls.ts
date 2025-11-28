@@ -34,9 +34,8 @@ export default class Controls {
         this.controls.maxPolarAngle = Math.PI / 2;
 
         this.controls.mouseButtons = {
-            LEFT: THREE.MOUSE.PAN,  // drag with LMB
-            MIDDLE: THREE.MOUSE.DOLLY,
-            RIGHT: THREE.MOUSE.ROTATE
+            MIDDLE: THREE.MOUSE.PAN,
+            LEFT: THREE.MOUSE.ROTATE
         };
 
         // Zoom speed control
@@ -85,26 +84,34 @@ export default class Controls {
         this.animationTime = 0;
     }
 
+    // Ease in/out cubic for smoother start and stop
+    easeInOutCubic(t) {
+        // clamp t
+        if (t <= 0) return 0;
+        if (t >= 1) return 1;
+        return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    }
+
     update() {
         const dt = this.clock.getDelta();
     
         if (this.isAnimating) {
             this.animationTime += dt;
-            const t = Math.min(this.animationTime / this.animationDuration, 1);
-    
-            // Lerp camera position
+            const rawT = Math.min(this.animationTime / this.animationDuration, 1);
+            const t = this.easeInOutCubic(rawT);
+
+            // Lerp camera position with eased t
             this.camera.position.lerpVectors(this.startPos, this.endPos, t);
-    
-            // Slerp camera rotation
+
+            // Slerp camera rotation with eased t
             this.camera.quaternion.slerp(this.endQuat, t);
-    
-            // Lerp OrbitControls target
+
+            // Lerp OrbitControls target with eased t
             this.controls.target.lerpVectors(this.startTarget, this.endTarget, t);
-    
+
             this.controls.update();
-    
-            if (t >= 1)
-                this.isAnimating = false;
+
+            if (rawT >= 1) this.isAnimating = false;
 
             return;
         }
