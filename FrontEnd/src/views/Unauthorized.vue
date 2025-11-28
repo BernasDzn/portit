@@ -8,7 +8,7 @@ import { RouterLink } from 'vue-router';
     <sl-card class="unauthorized-card">
       <div class="content">
         <sl-icon name="shield-exclamation" style="font-size: 3rem; color: var(--sl-color-danger-600);" />
-        <h1>403 — Unauthorized</h1>
+        <h1>401 — Unauthorized</h1>
         <p>You don't have permission to access this page.</p>
 
         <RouterLink to="/login">

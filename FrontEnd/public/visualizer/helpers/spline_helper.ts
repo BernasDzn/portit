@@ -14,14 +14,21 @@ export default class PathFollower {
     model;
     speed;
     clock;
+    layout;
+    callback;
 
-    constructor(pathPoints, facePoint, scene, model, layout, offsetHeight = 0, speed = 4) {
+    stopAfterLap = true;
+    loop;
+    
+    constructor(pathPoints, facePoint, scene, model, layout, offsetHeight = 0, speed = 4, callback = null, loop = false) {
         this.facePoint = facePoint;
         this.model = model;
         this.speed = speed;
+        this.layout = layout;
+        this.loop = loop;
 
         this.curve = new THREE.CatmullRomCurve3(pathPoints);
-        this.curve.closed = true;
+        this.curve.closed = loop;
 
         this.clock = new THREE.Clock();
 
@@ -44,10 +51,32 @@ export default class PathFollower {
         }
     }
 
+    setPath(points) {
+        if (!this.curve) return;
+        this.curve = new THREE.CatmullRomCurve3(points);
+        this.curve.closed = false;
+        // Rebuild visible line geometry
+        const linePoints = this.curve.getPoints(50);
+        const geometry = new THREE.BufferGeometry().setFromPoints(linePoints);
+        this.path.geometry = geometry;
+        this.currentPointIndex = 0;
+        this.clock = new THREE.Clock(); // Reset clock for new path
+        if (points.length > 1) {
+            this.facePoint(points[1], this.model);
+        }
+    }
+
     goOnAnAdventure() {
         if (!this.curve) return;
 
         if (this.currentPointIndex >= 100) {
+
+            if (this.stopAfterLap && !this.loop) {
+                if (this.callback) {
+                    this.callback();
+                }
+                return;
+            }
             this.currentPointIndex = 0;
         }
 

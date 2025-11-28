@@ -14,7 +14,7 @@ const props = defineProps<{
 
 <template>
   <!-- Use Shoelace sl-card as the visible wrapper so the component uses Shoelace properly -->
-  <sl-card class="port3d-card" aria-label="3D Port Visualization Card">
+  <div class="port3d-card" aria-label="3D Port Visualization Card">
     <div class="hero-content" role="region">
       <div class="hero-left">
         <h3 class="hero-title">
@@ -42,7 +42,7 @@ const props = defineProps<{
         </div>
       </div>
     </div>
-  </sl-card>
+  </div>
 </template>
 
 <style scoped>

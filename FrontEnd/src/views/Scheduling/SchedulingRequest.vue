@@ -125,8 +125,18 @@ const closeModal = () => {
 };
 
 const openAboutModal = () => {
-    const dialog = document.getElementById('about') as any;
-    dialog.show();
+
+    // Download PDF
+    const path = "/IARTI Complexity Report 3DJ G001.pdf";
+    const link = document.createElement('a');
+    link.href = path;
+    link.download = 'IARTI Complexity Report 3DJ G001.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    // const dialog = document.getElementById('about') as any;
+    // dialog.show();
 };
 
 const closeAboutModal = () => {

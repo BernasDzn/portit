@@ -28,6 +28,8 @@ import { StaffService } from "./service/StaffService";
 import { StorageAreaService } from "./service/StorageAreaService";
 import { VesselTypeService } from "./service/VesselTypeService";
 import { VesselVisitNotificationService } from "./service/VesselVisitNotificationService";
+import { PrivacyPolicyService } from "./service/PrivacyPoliceService";
+import type { IPrivacyPolicyService } from "./service/IService/IPrivacyPolicyService";
 
 const container = new Container();
 
@@ -35,6 +37,7 @@ container.bind<IHttpService>(TYPES.api).to(AxiosHttpService).inSingletonScope();
 container.bind<IAdminService>(TYPES.adminService).to(AdminService).inSingletonScope();
 container.bind<IAuthService>(TYPES.authService).to(AuthService).inSingletonScope();
 container.bind<IDockService>(TYPES.dockService).to(DockService).inSingletonScope();
+container.bind<IPrivacyPolicyService>(TYPES.privacyPolicyService).to(PrivacyPolicyService).inSingletonScope();
 container.bind<IPhysicalResourceService>(TYPES.physicalResourceService).to(PhysicalResourceService).inSingletonScope();
 container.bind<IQualificationService>(TYPES.qualificationService).to(QualificationService).inSingletonScope();
 container.bind<IRepresentativeService>(TYPES.representativeService).to(RepresentativeService).inSingletonScope();

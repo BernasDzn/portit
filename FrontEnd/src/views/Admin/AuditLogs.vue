@@ -2,10 +2,10 @@
 import DataTable from '@/components/crud/DataTable.vue';
 import { onMounted, ref, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import type { Logs } from '@/model/Logs';
 import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
 import type { IAdminService } from '@/service/IService/IAdminService';
+import type { Logs } from '@/model/values/Logs';
 
 const { t } = useI18n();
 

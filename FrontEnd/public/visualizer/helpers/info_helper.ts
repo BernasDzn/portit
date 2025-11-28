@@ -8,10 +8,10 @@ function setInfoText(userData) {
 
     if (infoTitleElement) infoTitleElement.textContent = userData.title || "Unknown Object";
     
-    let descriptionText = userData.description || "No description available.";
+    var descriptionText = userData.description || "No description available.";
     if (userData.details) {
         descriptionText += "\n\n--- Details ---";
-        for (let [key, value] of Object.entries(userData.details)) {
+        for (var [key, value] of Object.entries(userData.details)) {
             const displayKey = key.replace(/([A-Z])/g, ' $1').trim();
             const formattedKey = displayKey.charAt(0).toUpperCase() + displayKey.slice(1);
             
@@ -23,13 +23,13 @@ function setInfoText(userData) {
         }
     }
     
-    if (infoDescriptionElement) infoDescriptionElement.innerText = descriptionText;
+    if (infoDescriptionElement) infoDescriptionElement.innerHTML = descriptionText.replace(/\n/g, '<br>');
     
     if (killButtonElement) {
         if (userData.killable) {
             killButtonElement.style.display = 'inline-block';
             killButtonElement.onclick = () => {
-                alert(`${userData.title} has been killed!`);
+                alert(`${userData.title} was removed.`);
                 userData.killFunction();
                 hideInfoText();
             }

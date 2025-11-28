@@ -14,7 +14,7 @@ const { t } = useI18n();
 <template>
     <div>
         <h1 class="title">{{ t('admin.title') }}</h1>
-        <p class="subtitle">{{ t('admin.subtitle') }}</p>
+        <h class="subtitle">{{ t('admin.subtitle') }}</h>
         <sl-card class="dashboard-overview">
             <div class="dashboard-items">
                 <DashboardItem
@@ -28,6 +28,12 @@ const { t } = useI18n();
                     :description="t('admin.auditLogs.subtitle')"
                     icon="history"
                     to="/admin/audit-logs"
+                />
+                <DashboardItem
+                    :title="t('admin.pp.title')"
+                    :description="t('admin.pp.subtitle')"
+                    icon="privacy_tip"
+                    to="/admin/privacy-policy"
                 />
             </div>
         </sl-card>

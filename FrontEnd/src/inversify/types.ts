@@ -2,6 +2,7 @@ export const TYPES = {
     adminService: Symbol.for('AdminService'),
     authService: Symbol.for('AuthService'),
     dockService: Symbol.for('DockService'),
+    privacyPolicyService: Symbol.for('PrivacyPolicyService'),
     physicalResourceService: Symbol.for('PhysicalResourceService'),
     qualificationService: Symbol.for('QualificationService'),
     representativeService: Symbol.for('RepresentativeService'),
