@@ -383,6 +383,11 @@ const router = createRouter({
       ]
     },
     {
+      path: '/privacy-policy-print',
+      name: 'Privacy Policy Print',
+      component: () => import('@/views/PrivacyPolicyPrint.vue')
+    },
+    {
       path: '/login',
       name: 'login',
       meta: { hideFromSearch: true },

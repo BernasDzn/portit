@@ -51,6 +51,10 @@ const closeTermsOfService = () => {
     closeDialog('TOS');
 };
 
+const downloadPrivacyPolicy = () => {
+    window.open('/privacy-policy-print', '_blank');
+};
+
 </script>
 
 <template>
@@ -72,10 +76,9 @@ const closeTermsOfService = () => {
         
                 </p>
                 <div style="display: flex; gap: 10px">
-                    <sl-button variant="primary"
-                        @click="openPrivacyPolicy"
-                    >Read privacy policy</sl-button>
-                    <sl-button>Download privacy policy</sl-button>
+                    <sl-button variant="primary" @click="openPrivacyPolicy">
+                        Read privacy policy
+                    </sl-button>
                 </div>
             </sl-card>
         </div>
@@ -103,8 +106,9 @@ const closeTermsOfService = () => {
 
         
 
-    <sl-dialog label="Privacy Policy" class="dialog-overview">
-        <MarkdownRenderer :markdown="privacyPolicy" />
+    <sl-dialog label="Privacy Policy" class="dialog-overview" style="--width: 50vw;">
+        <sl-icon-button class="new-window" slot="header-actions" name="download" @click="downloadPrivacyPolicy"></sl-icon-button>
+        <MarkdownRenderer :markdown="privacyPolicy" style="height: 30rem;" />
         <sl-button @click="closePrivacyPolicy" slot="footer" variant="primary">Ok</sl-button>
     </sl-dialog>
 
