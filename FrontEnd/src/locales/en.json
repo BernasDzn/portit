@@ -89,6 +89,10 @@
         "auditLogs": {
             "title": "Audit Logs",
             "subtitle": "View and monitor system activity logs."
+        },
+        "pp": {
+            "title": "Privacy Policies",
+            "subtitle": "Define and manage port data collection policies."
         }
     },
     "user": {

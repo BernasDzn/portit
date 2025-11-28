@@ -1,7 +1,55 @@
 <script setup lang="ts">
+import MarkdownRenderer from '@/components/MarkdownRenderer.vue';
+import { useAlerts } from '@/composables/alerts';
+import { container } from '@/inversify.config';
+import TYPES from '@/inversify/types';
+import type { IPrivacyPolicyService } from '@/service/IService/IPrivacyPolicyService';
+import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
+const privacyPolicyService = container.get<IPrivacyPolicyService>(TYPES.privacyPolicyService);
+const privacyPolicy = ref<string>('');
+
+onMounted(async () => {
+    try {
+        const data = (await privacyPolicyService.getActivePrivacyPolicy());
+        privacyPolicy.value = data.content;
+    } catch (error) {
+        privacyPolicy.value = '<p>Failed to load privacy policy.</p>';
+    }
+});
+
 const { t } = useI18n();
+
+const openDialog = (dialogLabel: string) => {
+    const dialog = document.querySelector(`sl-dialog[label="${dialogLabel}"]`) as any;
+    if (dialog) {
+        dialog.show();
+    }
+};
+
+const openPrivacyPolicy = () => {
+    openDialog('Privacy Policy');
+};
+
+const openTermsOfService = () => {
+    openDialog('TOS');
+};
+
+const closeDialog = (dialogLabel: string) => {
+    const dialog = document.querySelector(`sl-dialog[label="${dialogLabel}"]`) as any;
+    if (dialog) {
+        dialog.hide();
+    }
+};
+
+const closePrivacyPolicy = () => {
+    closeDialog('Privacy Policy');
+};
+
+const closeTermsOfService = () => {
+    closeDialog('TOS');
+};
 
 </script>
 
@@ -23,7 +71,12 @@ const { t } = useI18n();
                     Escrever RGPD emoji mão a escrever
         
                 </p>
-                <sl-button>Download privacy policy</sl-button>
+                <div style="display: flex; gap: 10px">
+                    <sl-button variant="primary"
+                        @click="openPrivacyPolicy"
+                    >Read privacy policy</sl-button>
+                    <sl-button>Download privacy policy</sl-button>
+                </div>
             </sl-card>
         </div>
 
@@ -34,7 +87,9 @@ const { t } = useI18n();
                 <p>
                     Termos de serviço que não vamos escrever isto é só um template
                 </p>
-                <sl-button>Read terms of service</sl-button>
+                <sl-button
+                    @click="openTermsOfService"
+                >Read terms of service</sl-button>
             </sl-card>
             <sl-card class="column">
                 <h3>Cookie policy</h3>
@@ -45,6 +100,18 @@ const { t } = useI18n();
             </sl-card>
 
         </div>
+
+        
+
+    <sl-dialog label="Privacy Policy" class="dialog-overview">
+        <MarkdownRenderer :markdown="privacyPolicy" />
+        <sl-button @click="closePrivacyPolicy" slot="footer" variant="primary">Ok</sl-button>
+    </sl-dialog>
+
+    <sl-dialog label="TOS" class="dialog-overview">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        <sl-button @click="closeTermsOfService" slot="footer" variant="primary">Ok</sl-button>
+    </sl-dialog>
 
     </div>
 </template>
@@ -85,6 +152,7 @@ div {
 sl-card::part(base) {
     border-radius: 12px;
     padding: 1.5rem;
+    padding-bottom: 0;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
 }
 

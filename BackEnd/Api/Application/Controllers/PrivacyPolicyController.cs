@@ -6,7 +6,7 @@ using Api.Domain.IService;
 using Microsoft.AspNetCore.Mvc;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("[controller]")]
 public class PrivacyPolicyController : ControllerBase, IPrivacyPolicyController
 {
 	private readonly IPrivacyPolicyService _privacyPolicyService;
@@ -20,7 +20,7 @@ public class PrivacyPolicyController : ControllerBase, IPrivacyPolicyController
 		_logger = logger;
 	}
 
-	[HttpGet("active")]
+	[HttpGet("active", Name = "GetActivePrivacyPolicy")]
 	public async Task<ActionResult<PrivacyPolicyDto>> GetActive()
 	{
 		try
@@ -39,7 +39,7 @@ public class PrivacyPolicyController : ControllerBase, IPrivacyPolicyController
 		}
 	}
 
-	[HttpGet]
+	[HttpGet(Name = "GetAllPrivacyPolicies")]
 	public async Task<ActionResult<IEnumerable<PrivacyPolicyDto>>> GetAll()
 	{
 		try
@@ -54,7 +54,7 @@ public class PrivacyPolicyController : ControllerBase, IPrivacyPolicyController
 		}
 	}
 
-	[HttpGet("{id}")]
+	[HttpGet("{id}", Name = "GetPrivacyPolicyById")]
 	public async Task<ActionResult<PrivacyPolicyDto>> GetById(Guid id)
 	{
 		try
@@ -73,7 +73,7 @@ public class PrivacyPolicyController : ControllerBase, IPrivacyPolicyController
 		}
 	}
 
-	[HttpPost]
+	[HttpPost(Name = "CreatePrivacyPolicy")]
 	public async Task<ActionResult<PrivacyPolicyDto>> Create(CreatePrivacyPolicyDto createDto)
 	{
 		try
