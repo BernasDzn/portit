@@ -144,6 +144,7 @@ export class Crane {
     model;
     position;
     rotation;
+    meta;
 
     label;
     meshes = [];
@@ -165,12 +166,19 @@ export class Crane {
             if (child.isMesh) {
                 this.meshes.push(child);
                 child.userData.craneId = this.name;
-                child.meta = {
-                    title: 'Crane',
-                    description: `${this.name} - Container crane\nPosition: (${this.position.x.toFixed(2)}, ${this.position.y.toFixed(2)}, ${this.position.z.toFixed(2)})\nRotation: ${((this.rotation || 0) * 180 / Math.PI).toFixed(1)}°`,
+                
+                const baseMeta = {
+                    title: this.meta?.title || 'STS Crane',
+                    description: `${this.meta?.description || (this.name + ' - Container crane')}\nPosition: (${this.position.x.toFixed(2)}, ${this.position.y.toFixed(2)}, ${this.position.z.toFixed(2)})\nRotation: ${((this.rotation || 0) * 180 / Math.PI).toFixed(1)}°`,
                     killable: true,
                     killFunction: () => { this.kill(); }
                 };
+                
+                if (this.meta?.details) {
+                    baseMeta.details = this.meta.details;
+                }
+                
+                child.meta = baseMeta;
                 
                 if (child.material) {
                     child.material.depthTest = true;
@@ -294,6 +302,7 @@ export class GantryCrane {
     model;
     position;
     rotation;
+    meta;
 
     label;
     meshes = [];
@@ -315,12 +324,19 @@ export class GantryCrane {
             if (child.isMesh) {
                 this.meshes.push(child);
                 child.userData.craneId = this.name;
-                child.meta = {
-                    title: 'Yard Gantry Crane',
-                    description: `${this.name} - Yard gantry crane\nPosition: (${this.position.x.toFixed(2)}, ${this.position.y.toFixed(2)}, ${this.position.z.toFixed(2)})\nRotation: ${((this.rotation || 0) * 180 / Math.PI).toFixed(1)}°`,
+                
+                const baseMeta = {
+                    title: this.meta?.title || 'Yard Crane',
+                    description: `${this.meta?.description || (this.name + ' - Yard gantry crane')}\nPosition: (${this.position.x.toFixed(2)}, ${this.position.y.toFixed(2)}, ${this.position.z.toFixed(2)})\nRotation: ${((this.rotation || 0) * 180 / Math.PI).toFixed(1)}°`,
                     killable: true,
                     killFunction: () => { this.kill(); }
                 };
+                
+                if (this.meta?.details) {
+                    baseMeta.details = this.meta.details;
+                }
+                
+                child.meta = baseMeta;
                 
                 child.castShadow = true;
                 child.receiveShadow = true;
