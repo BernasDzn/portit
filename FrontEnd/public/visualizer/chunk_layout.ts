@@ -11,6 +11,13 @@ import EntitySpotlight from "./helpers/entity_spotlight.ts";
 
 const worldBorder = 1000;
 
+// Highlight animation tunables
+const HIGHLIGHT_UP_OFFSET = 6; // units to lift highlighted meshes
+const HIGHLIGHT_DURATION = 600; // ms for raise transition
+const HIGHLIGHT_REVERSE_DURATION = 600; // ms for reverse (unselect) transition
+const HIGHLIGHT_BLINK_SPEED = 0.004; // blink speed multiplier (lower = slower)
+const HIGHLIGHT_EMISSIVE_SCALE = 0.25; // scale down emissive intensity (0..1)
+
 // 5x5 world chunks
 const validChunkPositions = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -45,7 +52,7 @@ const chunkTypes = Object.freeze({
 });
 
 export function chunkIndexToPosition(x, y, centered = false) {
-    let position = new THREE.Vector3();
+    const position = new THREE.Vector3();
     position.x = chunkSize.x * x + worldOrigin.x;
     position.y = layoutY;
     position.z = -chunkSize.z * y + worldOrigin.z;
@@ -1491,21 +1498,470 @@ export default class PortLayout {
         this.entitySpotlight.pointToEntity(pickedObject);
         console.log("Picked object:", pickedObject?.position);
 
+        const prevSelected = this.selectedObject;
+        const isAncestor = (parent, node) => {
+            if (!parent || !node) return false;
+            let p = node.parent;
+            while (p) {
+                if (p === parent) return true;
+                p = p.parent;
+            }
+            return false;
+        };
+
+        const getChunkBaseFor = (obj) => {
+            if (!obj) return null;
+            const chunk = this.chunkData ? this.chunkData.find(c => c.base === obj || (c.base && obj && (isAncestor(c.base, obj) || isAncestor(obj, c.base)))) : null;
+            return chunk ? chunk.base : null;
+        };
+
+        const prevBase = getChunkBaseFor(prevSelected);
+        const pickedBase = getChunkBaseFor(pickedObject);
+
+        const sameLogicalSelection = !!(pickedObject && prevSelected && (
+            pickedObject === prevSelected ||
+            isAncestor(prevSelected, pickedObject) ||
+            isAncestor(pickedObject, prevSelected) ||
+            (prevBase && pickedBase && prevBase === pickedBase)
+        ));
+
+        if (sameLogicalSelection) {
+            console.log('Picked same logical object; keeping existing selection');
+            return;
+        }
+
+        // add outline + highlight and animation
         const highlightMesh = (obj, color) => {
-            if (obj && obj.material) {
-                if (Array.isArray(obj.material)) {
-                    obj.material.forEach((mat) => {
-                        mat.emissive = new THREE.Color(color);
+            if (!obj) return;
+
+            // if no color (0x000000) remove highlight
+            if (!color) {
+                // if animation going on, reverse
+                if (obj.userData && obj.userData._highlightAnim) {
+                    obj.userData._highlightAnim.requestReverse = true;
+                    return;
+                }
+
+                // if no animation and has outline, start fade out
+                if (obj.userData && obj.userData._outlineMesh) {
+                    this._highlightAnimations = this._highlightAnimations || [];
+                    const now = performance.now();
+                    const fadeAnim = {
+                        start: now,
+                        duration: HIGHLIGHT_REVERSE_DURATION,
+                        elapsed: 0,
+                        progress: 0,
+                        cancel: false,
+                        meshes: [],
+                        originals: [],
+                        baseObj: obj,
+                        outlineMesh: obj.userData._outlineMesh,
+                        upOffset: 0,
+                        color: null,
+                        reversing: true,
+                        reverseStart: now,
+                        reverseDuration: HIGHLIGHT_REVERSE_DURATION,
+                        onlyOutline: true
+                    };
+                    obj.userData._highlightAnim = fadeAnim;
+                    this._highlightAnimations.push(fadeAnim);
+                    return;
+                }
+
+                return;
+            }
+
+            // if already highlighted with animation, skip
+            if (color && obj.userData && obj.userData._highlightAnim) {
+                return;
+            }
+
+            // skip objects that are not meshes
+            if (!obj.isMesh) return;
+
+            // outline
+            const outlineGeom = obj.geometry && obj.geometry.clone ? obj.geometry.clone() : obj.geometry;
+            const outlineMat = new THREE.MeshBasicMaterial({
+                color: new THREE.Color(color),
+                side: THREE.BackSide,
+                depthTest: true,
+                depthWrite: false,
+                transparent: true,
+                opacity: 1
+            });
+
+            const outlineMesh = new THREE.Mesh(outlineGeom, outlineMat);
+            outlineMesh.scale.copy(new THREE.Vector3(1.05, 1.05, 1.05));
+            outlineMesh.position.set(0, 0, 0);
+            outlineMesh.rotation.set(0, 0, 0);
+            outlineMesh.renderOrder = 9999;
+
+            if (!obj.userData) obj.userData = {};
+            obj.userData._outlineMesh = outlineMesh;
+            obj.add(outlineMesh);
+
+            // highlight state
+            const originalMaterials = [];
+            const safeCloneMaterial = (m) => {
+                if (!m) return null;
+                try {
+                    return m.clone ? m.clone() : null;
+                } catch (err) {
+                    console.warn('Material clone failed', { material: m, err });
+                    return null;
+                }
+            };
+
+            const safeSetEmissive = (mat, color, intensity) => {
+                if (!mat) return;
+                try {
+                    if (mat.emissive && typeof mat.emissive.set === 'function' && color) {
+                        mat.emissive.set(new THREE.Color(color));
+                    }
+                    if ('emissiveIntensity' in mat) {
+                        mat.emissiveIntensity = intensity ?? mat.emissiveIntensity ?? 0;
+                    } else if (mat.uniforms && mat.uniforms.emissiveIntensity) {
+                        const u = mat.uniforms.emissiveIntensity;
+                        if (u && 'value' in u) u.value = intensity ?? u.value;
+                    }
+                } catch (e) {
+                    console.warn('Failed to set emissive on material', { mat, e });
+                }
+            };
+
+            const dumpMaterialInfo = (mesh, mat, reason) => {
+                try {
+                    if (!mesh || !mat) return;
+                    if (mesh.userData && mesh.userData._highlightDiagnosed) return;
+                    const id = mesh.name || mesh.uuid || '(unknown)';
+                    console.warn('Highlight diagnostic:', { mesh: id, reason, materialType: mat.type || 'unknown' });
+                    if (mat.uniforms) {
+                        const keys = Object.keys(mat.uniforms || {});
+                        console.warn('Material uniforms keys', { mesh: id, keys });
+                        for (const k of keys) {
+                            const u = mat.uniforms[k];
+                            if (!u || !('value' in u) || typeof u.value === 'undefined') {
+                                console.warn('Uniform missing value', { mesh: id, uniform: k, uniformObj: u });
+                            }
+                        }
+                    }
+                    if (mesh.userData) mesh.userData._highlightDiagnosed = true;
+                } catch (e) {
+                    console.warn('dumpMaterialInfo failed', e);
+                }
+            };
+
+            const updateMatEmissiveSafely = (mesh, mat, color, intensity) => {
+                if (!mat) return;
+                try {
+                    if (mat.uniforms) {
+                        for (const k of Object.keys(mat.uniforms)) {
+                            const u = mat.uniforms[k];
+                            if (!u || !('value' in u) || typeof u.value === 'undefined') {
+                                dumpMaterialInfo(mesh, mat, 'uniform-missing');
+                                if (mat.emissive && typeof mat.emissive.set === 'function') {
+                                    safeSetEmissive(mat, color, intensity);
+                                }
+                                return;
+                            }
+                        }
+                    }
+                    safeSetEmissive(mat, color, intensity);
+                } catch (e) {
+                    console.warn('updateMatEmissiveSafely failed', { mesh: mesh ? (mesh.name || mesh.uuid) : '(no mesh)', mat, e });
+                    dumpMaterialInfo(mesh, mat, 'update-failed');
+                }
+            };
+
+            const setHighlightMaterial = (mesh) => {
+                if (!mesh || !mesh.material) return;
+                // store original reference
+                originalMaterials.push({ mesh, material: mesh.material });
+
+                // check if we can set emissive on this material
+                const isSafeToEmissive = (m) => {
+                    if (!m) return false;
+                    // built-in materials have flags
+                    if (m.isMeshStandardMaterial || m.isMeshPhongMaterial || m.isMeshLambertMaterial || m.isMeshPhysicalMaterial) return true;
+                    // check type name as fallback
+                    if (m.type && (m.type.includes('Standard') || m.type.includes('Phong') || m.type.includes('Physical') || m.type.includes('Lambert'))) return true;
+                    // shader materials are not safe
+                    if (m.isShaderMaterial || m.type === 'ShaderMaterial' || m.isRawShaderMaterial) return false;
+                    // check for presence of emissive properties
+                    if (m.uniforms && !('emissive' in m) && !('emissiveIntensity' in m)) return false;
+                    return false;
+                };
+
+                if (Array.isArray(mesh.material)) {
+                    const newArr = [];
+                    for (let j = 0; j < mesh.material.length; j++) {
+                        const mm = mesh.material[j];
+                        if (!isSafeToEmissive(mm)) {
+                            // mark this particular material slot as skipped so we don't try to touch it later
+                            console.warn('Skipping highlight material modification for unsafe material slot', { mesh: mesh.name || mesh.uuid, slot: j, type: mm ? mm.type : '(null)' });
+                            newArr.push(mm); // leave original
+                            if (!mesh.userData) mesh.userData = {};
+                            mesh.userData._highlightSkipMaterial = true;
+                            continue;
+                        }
+                        const cloned = safeCloneMaterial(mm);
+                        if (!cloned) {
+                            newArr.push(mm);
+                            console.warn('Using original material for slot due to clone failure', { mesh: mesh.name || mesh.uuid, slot: j });
+                        } else {
+                            newArr.push(cloned);
+                        }
+                    }
+                    mesh.material = newArr;
+                    mesh.material.forEach((mat) => {
+                        if (!mat) return;
+                        if (!mat.emissive) {
+                            try { mat.emissive = new THREE.Color(0x000000); } catch (e) {}
+                        }
+                        safeSetEmissive(mat, color, 0);
                     });
                 } else {
-                    obj.material.emissive = new THREE.Color(color);
+                    const mm = mesh.material;
+                    if (!isSafeToEmissive(mm)) {
+                        console.warn('Skipping highlight material modification for unsafe material', { mesh: mesh.name || mesh.uuid, type: mm ? mm.type : '(null)' });
+                        if (!mesh.userData) mesh.userData = {};
+                        mesh.userData._highlightSkipMaterial = true;
+                        return;
+                    }
+                    const cloned = safeCloneMaterial(mm);
+                    if (!cloned) {
+                        console.warn('Material clone failed, leaving original material in place', { mesh: mesh.name || mesh.uuid });
+                        return;
+                    } else {
+                        mesh.material = cloned;
+                        if (!mesh.material.emissive) {
+                            try { mesh.material.emissive = new THREE.Color(0x000000); } catch (e) {}
+                        }
+                        safeSetEmissive(mesh.material, color, 0);
+                    }
                 }
+            };
+
+            // highlight base object
+            setHighlightMaterial(obj);
+
+            // if this is a chunk also highlight things above it
+            const relatedMeshes = [obj];
+            const chunk = this.chunkData ? this.chunkData.find(c => c.base === obj) : null;
+            if (chunk && typeof chunk.position !== 'undefined') {
+                const halfX = 50;
+                const halfZ = 50;
+                const center = chunk.position.clone();
+
+                const isAncestor = (parent, node) => {
+                    if (!parent || !node) return false;
+                    let p = node.parent;
+                    while (p) {
+                        if (p === parent) return true;
+                        p = p.parent;
+                    }
+                    return false;
+                };
+
+                scene.traverse((child) => {
+                    if (!child.isMesh) return;
+                    if (child === obj || child === outlineMesh) return;
+
+                    if (isAncestor(obj, child)) return;
+
+                    try { child.updateMatrixWorld(true); } catch (e) {}
+
+                    const bbox = new THREE.Box3().setFromObject(child);
+                    const wp = bbox.getCenter(new THREE.Vector3());
+                    const dx = wp.x - center.x;
+                    const dz = wp.z - center.z;
+                    if (Math.abs(dx) <= halfX && Math.abs(dz) <= halfZ) {
+                        relatedMeshes.push(child);
+                        setHighlightMaterial(child);
+                    }
+                });
+            }
+
+            // create an animation entry
+            this._highlightAnimations = this._highlightAnimations || [];
+
+            const upOffset = HIGHLIGHT_UP_OFFSET;
+            const duration = HIGHLIGHT_DURATION;
+            const start = performance.now();
+            const anim = {
+                start,
+                duration,
+                elapsed: 0,
+                progress: 0,
+                cancel: false,
+                meshes: relatedMeshes,
+                originals: originalMaterials,
+                baseObj: obj,
+                outlineMesh,
+                upOffset,
+                color
+            };
+
+            // attach reference to the object so we can cancel later
+            obj.userData._highlightAnim = anim;
+            const baseWorldPos = new THREE.Vector3();
+            try { obj.getWorldPosition(baseWorldPos); } catch (e) { baseWorldPos.set(0, 0, 0); }
+            anim.baseWorldY = baseWorldPos.y;
+            anim.meshOriginalWorlds = [];
+            anim.meshes.forEach((m) => {
+                if (!m.userData) m.userData = {};
+                try {
+                    const w = new THREE.Vector3();
+                    m.getWorldPosition(w);
+                    anim.meshOriginalWorlds.push(w);
+                } catch (e) {
+                    anim.meshOriginalWorlds.push(new THREE.Vector3());
+                }
+            });
+            this._highlightAnimations.push(anim);
+
+            if (!this._highlightLoopRunning) {
+                this._highlightLoopRunning = true;
+                const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+
+                const loop = (now) => {
+                    if (!this._highlightAnimations || this._highlightAnimations.length === 0) {
+                        this._highlightLoopRunning = false;
+                        return;
+                    }
+
+                    for (let i = this._highlightAnimations.length - 1; i >= 0; i--) {
+                        const a = this._highlightAnimations[i];
+                        if (a.cancel) {
+                            a.originals.forEach(({ mesh, material }) => {
+                                try { mesh.material = material; } catch (e) {}
+                            });
+                            a.meshes.forEach((m) => {
+                                if (m.userData && m.userData._highlightOriginalLocal) {
+                                    try { m.position.copy(m.userData._highlightOriginalLocal); } catch (e) {}
+                                    m.userData._highlightOriginalLocal = null;
+                                }
+                                if (m.userData) m.userData._highlightOriginalPos = null;
+                            });
+                            this._highlightAnimations.splice(i, 1);
+                            try { if (a.baseObj && a.baseObj.userData) a.baseObj.userData._highlightAnim = null; } catch (e) {}
+                            continue;
+                        }
+
+                        // start reverse 
+                        if (a.requestReverse && !a.reversing) {
+                            a.reversing = true;
+                            a.reverseStart = now;
+                            a.reverseDuration = HIGHLIGHT_REVERSE_DURATION;
+                            a.requestReverse = false;
+                        }
+
+                        // handle reversing
+                        if (a.reversing) {
+                            const rr = Math.min((now - a.reverseStart) / a.reverseDuration, 1);
+                            const revEased = easeOutCubic(rr);
+                            const deltaY = (1 - revEased) * a.upOffset; // world-space delta
+                            for (let mi = 0; mi < a.meshes.length; mi++) {
+                                const m = a.meshes[mi];
+                                const origWorld = (a.meshOriginalWorlds && a.meshOriginalWorlds[mi]) ? a.meshOriginalWorlds[mi] : null;
+                                if (!origWorld) continue;
+                                const targetWorld = origWorld.clone().add(new THREE.Vector3(0, deltaY, 0));
+                                try {
+                                    if (m.parent) {
+                                        m.position.copy(m.parent.worldToLocal(targetWorld.clone()));
+                                    } else {
+                                        m.position.copy(targetWorld);
+                                    }
+                                } catch (e) {}
+
+                                if (m.material) {
+                                    const revIntensity = (deltaY / a.upOffset) * HIGHLIGHT_EMISSIVE_SCALE;
+                                    if (Array.isArray(m.material)) {
+                                        m.material.forEach(mat => updateMatEmissiveSafely(m, mat, null, revIntensity));
+                                    } else {
+                                        updateMatEmissiveSafely(m, m.material, null, revIntensity);
+                                    }
+                                }
+                            }
+
+                            if (rr >= 1) {
+                                // restore materials
+                                a.originals.forEach(({ mesh, material }) => {
+                                    try { mesh.material = material; } catch (e) {}
+                                });
+                                // remove outline mesh if present on baseObj
+                                try { if (a.baseObj && a.baseObj.userData && a.baseObj.userData._outlineMesh) a.baseObj.remove(a.baseObj.userData._outlineMesh); } catch (e) {}
+                                if (a.baseObj && a.baseObj.userData) a.baseObj.userData._outlineMesh = null;
+                                // clear highlight animation marker so object can be re-selected
+                                try { if (a.baseObj && a.baseObj.userData) a.baseObj.userData._highlightAnim = null; } catch (e) {}
+                                // cleanup stored positions
+                                a.meshes.forEach((m) => {
+                                    if (m.userData) {
+                                        m.userData._highlightOriginalLocal = null;
+                                        m.userData._highlightOriginalPos = null;
+                                    }
+                                });
+                                this._highlightAnimations.splice(i, 1);
+                            }
+
+                            continue;
+                        }
+
+                        a.elapsed = now - a.start;
+                        const t = Math.min(a.elapsed / a.duration, 1);
+                        const eased = easeOutCubic(t);
+
+                        // move all meshes up by the same world-space delta so they match the base
+                        const deltaY = eased * a.upOffset;
+                        for (let mi = 0; mi < a.meshes.length; mi++) {
+                            const m = a.meshes[mi];
+                            const origWorld = (a.meshOriginalWorlds && a.meshOriginalWorlds[mi]) ? a.meshOriginalWorlds[mi] : null;
+                            if (!origWorld) continue;
+                            const targetWorld = origWorld.clone().add(new THREE.Vector3(0, deltaY, 0));
+                            try {
+                                if (m.parent) {
+                                    m.position.copy(m.parent.worldToLocal(targetWorld.clone()));
+                                } else {
+                                    m.position.copy(targetWorld);
+                                }
+                            } catch (e) {}
+
+                            // emissive blinking using a slow sine wave
+                            if (m.material) {
+                                const blink = (Math.sin(now * HIGHLIGHT_BLINK_SPEED) + 1) / 2;
+                                const baseIntensity = 0.5 * blink + 0.5 * eased;
+                                const intensity = baseIntensity * HIGHLIGHT_EMISSIVE_SCALE;
+                                if (Array.isArray(m.material)) {
+                                    m.material.forEach(mat => updateMatEmissiveSafely(m, mat, null, intensity));
+                                } else {
+                                    updateMatEmissiveSafely(m, m.material, null, intensity);
+                                }
+                            }
+                        }
+
+                        // when finished the raise transition, keep the highlight active but continue blinking
+                        if (t >= 1) {
+                            a.elapsed = a.duration;
+                        }
+                    }
+
+                    requestAnimationFrame(loop);
+                };
+
+                requestAnimationFrame(loop);
             }
         }
 
-        objectlist.forEach((obj) => {
-            highlightMesh(obj, 0x000000);
-        });
+        if (this._highlightAnimations && this._highlightAnimations.length) {
+            this._highlightAnimations.forEach(a => { a.requestReverse = true; });
+        } else {
+            for (const base of this.chunkData.map(c => c.base).filter(b => b)) {
+                if (base.userData && base.userData._outlineMesh && !(base.userData && base.userData._highlightAnim)) {
+                    try { base.remove(base.userData._outlineMesh); } catch (e) {}
+                    base.userData._outlineMesh = null;
+                }
+            }
+        }
 
         if (pickedObject) {
             this.selectedObject = pickedObject;
@@ -1519,25 +1975,25 @@ export default class PortLayout {
                 if (clickedVessel) {
                     clickedVessel.model.traverse((child) => {
                         if (child.isMesh) {
-                            highlightMesh(child, 0x444477);
+                            highlightMesh(child, 0xffffff);
                         }
                     });
                 }
             } else {
-                highlightMesh(this.selectedObject, 0x444477);
+                highlightMesh(this.selectedObject, 0xffffff);
             }
 
             if (pickedObject.userData && pickedObject.userData.craneId) {
                 const clickedCrane = this.craneList.find(crane => crane.name === pickedObject.userData.craneId);
                 if (clickedCrane) {
                     clickedCrane.meshes.forEach((mesh) => {
-                        highlightMesh(mesh, 0x444477);
+                        highlightMesh(mesh, 0xffffff);
                     });
                 } else {
-                    highlightMesh(this.selectedObject, 0x444477);
+                    highlightMesh(this.selectedObject, 0xffffff);
                 }
             } else {
-                highlightMesh(this.selectedObject, 0x444477);
+                highlightMesh(this.selectedObject, 0xffffff);
             }
         } else {
             this.selectedObject = null;
