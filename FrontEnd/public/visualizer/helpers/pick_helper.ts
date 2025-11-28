@@ -27,15 +27,32 @@ export default class PickHelper {
         }
     }
 
-    clamp = (val, min, max) => Math.min(Math.max(val, min), max);
+    clamp(val, min, max) {
+        const v = Number(val);
+        let a = Number(min);
+        let b = Number(max);
+
+        if (Number.isNaN(v)) return v;
+        if (Number.isNaN(a) || Number.isNaN(b)) return v;
+
+        if (a > b) {
+            const tmp = a;
+            a = b;
+            b = tmp;
+        }
+
+        if (v < a) return a;
+        if (v > b) return b;
+        return v;
+    }
     
     centerCameraOnObject(object, camera) {
         const box = new THREE.Box3().setFromObject(object);
         const center = box.getCenter(new THREE.Vector3());
 
         const cameraX = this.clamp(camera.position.x, center.x-500, center.x+500);
-        const cameraY = this.clamp(camera.position.y, center.y-500, center.y+500);
-        const cameraZ = this.clamp(camera.position.z, center.z+100, center.z+500);
+        const cameraY = this.clamp(camera.position.y, center.y+450, center.y+550);
+        const cameraZ = this.clamp(camera.position.z, center.z-500, center.z+500);
 
         // camera.position.set(cameraX, cameraY, cameraZ);
         // camera.lookAt(center);
