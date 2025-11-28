@@ -19,6 +19,7 @@ export default class PickHelper {
         this.raycaster.setFromCamera(this.mouse, camera);
 
         const intersectedObjects = this.raycaster.intersectObjects(scene.children);
+
         if (intersectedObjects.length > 0) {
             return intersectedObjects[0];
         } else {
@@ -56,6 +57,10 @@ export default class PickHelper {
         this.raycaster.setFromCamera(this.mouse, camera);
 
         const intersectedObjects = this.raycaster.intersectObjects(objects);
+
+        // print position
+        console.log("PickHelper pick at ", normalizedPosition, " found ", intersectedObjects.length, " objects.");
+
         if (intersectedObjects.length > 0) {
             this.centerCameraOnObject(intersectedObjects[0].object, camera);
             return intersectedObjects[0];

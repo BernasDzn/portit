@@ -2,35 +2,74 @@ import * as THREE from "three";
 import {loadModel, loadModelRaw} from "./helpers/model_helper.ts";
 import {makeBillboard} from "./helpers/billboard_helper.ts";
 import { chunkIndexToPosition } from "./chunk_layout.ts";
+import { findVesselPath } from "./helpers/path_find_helper.ts";
 import PathFollower from "./helpers/spline_helper.ts";
+
+function extrapolateForward(pos, distance) {
+    // const forward = new THREE.Vector3();
+    // model.getWorldDirection(forward); // vessel forward direction
+    // forward.normalize();
+
+    const forward = new THREE.Vector3(0, 0, -1);
+
+    return pos.add(forward.multiplyScalar(distance)); 
+}
 
 export default class Vessel {
     name;
     model;
     position;
+    scene;
 
-    bouyanceAmplitude = 0.8;
+    bouyanceAmplitude = 0.3;
     bouyanceSpeed = 0.002;
 
     label;
 
-    path;
+    path; arrivalPath;
     layout;
+
+    docked = false;
+    departed = false;
+    readyToDie = false;
     // path;
     // curve;
     // currentPointIndex = 0;
+
+    state = "unknown";
 
     constructor(name, model, position, layout) {
         this.name = name;
         this.model = model;
         this.position = position;
-        this.position.y += 10;
+        this.position.y += 5.5;
         this.layout = layout;
     }
 
+    onPathFinished() {
+        console.log(`${this.name} - onPathFinished called. departed=${this.departed}, docked=${this.docked}`);
+        if (this.departed) {
+            this.readyToDie = true;
+        } else {
+            console.log(`${this.name} has docked.`);
+            this.docked = true;
+            this.state = "Docked"; 
+        }
+    }
+
     init(scene) {
-        this.model.position.copy(this.position);
+
+        let distance = 500;
+        distance += (Math.random() - 0.5) * 50; // random offset
+
+        const startPosition = extrapolateForward(this.position.clone(), 500);
+
+        this.model.position.copy(startPosition);
         this.model.scale.set(0.5,0.5,0.5);
+
+        this.state = "Arriving";
+
+        this.scene = scene;
 
         // Vessel metadata
         const vesselMeta = {
@@ -98,6 +137,21 @@ export default class Vessel {
         //    this.layout,
         //    50
         //);
+
+        this.arrivalPath = [
+            startPosition,
+            this.position
+        ];
+        this.path = new PathFollower(
+            this.arrivalPath,
+            this.facePoint,
+            scene,
+            this.model,
+            this.layout,
+            50,
+            8.0,
+            this.onPathFinished
+        );
     }
 
     setPathVisible(visible) {
@@ -120,9 +174,34 @@ export default class Vessel {
         this.model.position.y = this.position.y + Math.sin(Date.now() * this.bouyanceSpeed) * this.bouyanceAmplitude;
         this.model.rotation.y = Math.sin(Date.now() * this.bouyanceSpeed) * (this.bouyanceAmplitude / 50) + Math.PI;
 
-        //this.path.goOnAnAdventure();
+        this.path.goOnAnAdventure();
         // update label position
         this.label.position.set(this.model.position.x, this.model.position.y + 10, this.model.position.z);
+    }
+
+    depart(){
+
+        // Set a new path that is the reverse of the arrival path
+        this.departed = true;
+        this.state = "Departing";
+        
+        const departurePath = [...this.arrivalPath].reverse();
+        // offset path on x
+        for (let i = 0; i < departurePath.length; i++) {
+            departurePath[i] = departurePath[i].clone();
+            departurePath[i].x += 20;
+        }
+
+        // add transition point from current position to path start
+        const transPoint = this.model.position.clone();
+        transPoint.x += 10;
+        transPoint.z += 10;
+        departurePath.unshift(transPoint);
+        // suffix current position to start of path
+        departurePath.unshift(this.model.position.clone());
+
+        console.log(`${this.name} departure path has ${departurePath.length} points`);
+        this.path.setPath(departurePath);
     }
 
     kill(){
@@ -262,7 +341,9 @@ export class Seagull {
             this.model,
             this.layout,
             0,
-            3.2
+            3.2,
+            null,
+            true
         );
 
         console.log(this.model)

@@ -26,13 +26,12 @@ const validChunkPositions = [
 ];
 
 const layoutY = -20;
-const chunkSize = {
+export const chunkSize = {
     x: worldBorder / validChunkPositions.length,
     y: 20,
     z: worldBorder / validChunkPositions[0].length
 }
-
-const worldOrigin = new THREE.Vector3(
+export const worldOrigin = new THREE.Vector3(
     -worldBorder / 2,
     0,
     worldBorder / 2
@@ -64,6 +63,9 @@ class PortChunk {
     base;
     position;
 
+    xIndex;
+    yIndex;
+
     constructor(x, y) {
 
         // Determine position based on chunk index
@@ -71,6 +73,9 @@ class PortChunk {
             console.warn(`Invalid chunk position at (${x}, ${y})`);
             return;
         }
+
+        this.xIndex = x;
+        this.yIndex = y;
 
         this.position = chunkIndexToPosition(x, y);
         this.position.y += chunkSize.y / 2;
@@ -129,7 +134,7 @@ function makeAsphaltMaterial() {
     return materials;
 }
 
-class WarehouseChunk extends PortChunk {
+export class WarehouseChunk extends PortChunk {
 
     warehouseModel;
     warehouseLabel;
@@ -221,7 +226,7 @@ class WarehouseChunk extends PortChunk {
     }
 }
 
-class LandChunk extends PortChunk {
+export class LandChunk extends PortChunk {
 
     x;
     y;
@@ -299,7 +304,7 @@ class BuoyChunk extends PortChunk {
     }
 }
 
-class DockChunk extends PortChunk {
+export class DockChunk extends PortChunk {
 
     dockLabel;
     dockName;
@@ -440,7 +445,7 @@ class DockChunk extends PortChunk {
     }
 }
 
-class YardChunk extends PortChunk {
+export class YardChunk extends PortChunk {
 
     yardName;
     yardLabel;
@@ -834,8 +839,11 @@ export default class PortLayout {
      */
     vesselSchedule = [];
 
+    port;
 
-    constructor(scene, camera, controls) {
+    constructor(scene, camera, controls, port) {
+
+        this.port = port;
 
         this.picker = new PickHelper(controls);
         // Use right-click (context menu) for picking; prevent default browser menu
@@ -1224,7 +1232,6 @@ export default class PortLayout {
         }
         // Clone the cached model for this vessel instance
         const model = this.modelCache[modelPath].clone();
-        position.y -= 2; // Slightly lower vessel into water
         let vessel = new Vessel(name, model, position, this);
         vessel.init(scene);
         this.vesselList.push(vessel);
@@ -1359,7 +1366,13 @@ export default class PortLayout {
             }
         }
         for (const v of toRemove) {
-            this.removeVessel(v);
+            if (!v.departed) {
+                v.depart();
+            }
+            if (v.readyToDie) {
+                console.log(`Removing vessel ${v.name}`);
+                this.removeVessel(v);
+            }
         }
 
         // Add vessels that are active but not yet instantiated
