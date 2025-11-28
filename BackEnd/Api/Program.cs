@@ -3,25 +3,20 @@ using Api.Application;
 using Api.Application.Services;
 using Api.Domain.Entities;
 using Api.Domain.IRepository;
+using Api.Domain.IService;
 using Api.Infrastructure.Persistence;
 using Api.Infrastructure.Persistence.Repositories;
 using Api.Infrastructure.Utilities;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using ZstdSharp.Unsafe;
-using NSwag;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
-using NSwag.Generation.Processors.Security;
 using Api.Infrastructure.Utilities.Email;
 using Prometheus;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
 using Api.Infrastructure.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -315,6 +310,8 @@ builder.Services.AddTransient<ISystemUserRepository, SystemUserRepository>();
 builder.Services.AddTransient<ISystemUserService, SystemUserService>();
 builder.Services.AddTransient<IEmailService, SmtpEmailService>();
 builder.Services.AddTransient<IAdminService, AdminService>();
+builder.Services.AddTransient<IPrivacyPolicyRepository, PrivacyPolicyRepository>();
+builder.Services.AddTransient<IPrivacyPolicyService, PrivacyPolicyService>();
 
 var app = builder.Build();
 
