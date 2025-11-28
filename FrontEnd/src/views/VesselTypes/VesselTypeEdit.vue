@@ -70,7 +70,7 @@ const updateVesselType = async (obj: VesselType) => {
     <div class="vessel-type-edit">
         <sl-breadcrumb>
             <sl-breadcrumb-item>
-                <RouterLink to="/vessel-types/dashboard" class="link">{{ t('vesselType.tabs.dashboard') }}</RouterLink>
+                <RouterLink to="/vessels/dashboard" class="link">{{ t('vessel.tabs.dashboard') }}</RouterLink>
             </sl-breadcrumb-item>
             <sl-breadcrumb-item>
                 <RouterLink to="/vessel-types/search" class="link">{{ t('vesselType.tabs.search') }}</RouterLink>

@@ -95,6 +95,29 @@ body {
     margin-top: 1rem;
 }
 
+.dashboard-statistics-inner {
+    display: flex;
+    gap: 1rem;
+}
+
+.stats-overview {
+    flex: 1;
+    text-align: center;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    background-color: #f5f6fa;
+}
+
+.stats-overview p {
+    margin: 0;
+    padding: 0.5rem;
+    color: #485ea9;
+}
+
+.stats-overview p:nth-child(1) {
+    font-size: 2rem;
+}
+
 .dashboard-statistic-item {
     width: 15rem;
     height: 15rem;

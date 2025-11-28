@@ -38,7 +38,7 @@ watch(locale, () => buildFilterDefinition());
 
     <sl-breadcrumb>
         <sl-breadcrumb-item>
-            <RouterLink to="../vessel-types/dashboard" class="breadcrumb-link">{{ t('vesselType.tabs.dashboard') }}</RouterLink>
+            <RouterLink to="../vessels/dashboard" class="breadcrumb-link">{{ t('vessel.tabs.dashboard') }}</RouterLink>
         </sl-breadcrumb-item>
         <sl-breadcrumb-item>{{ t('vesselType.tabs.search') }}</sl-breadcrumb-item>
     </sl-breadcrumb>

@@ -15,17 +15,18 @@ const sidebarItems = ref([
   { name: 'dashboard.sidebarTitle', route: '/', icon: "house", materialIcon: 'home', roles: [0, 1, 2, 3] },
   {},
   { name: 'vessel.title', route: '/vessels/dashboard', icon: "directions_boat", materialIcon: 'directions_boat', roles: [0, 1] },
-  { name: 'vesselType.title', route: '/vessel-types/dashboard', icon: "sailing", materialIcon: 'sailing', roles: [0, 1] },
+  //{ name: 'vesselType.title', route: '/vessel-types/dashboard', icon: "sailing", materialIcon: 'sailing', roles: [0, 1] },
   { name: 'dock.title', route: '/docks/dashboard', icon: "anchor", materialIcon: 'anchor', roles: [0, 1] },
   { name: 'notification.title', route: '/vessel-visit-notifications/dashboard', icon: "ballot", materialIcon: 'ballot', roles: [0, 2, 1] },
   {},
   { name: 'qualification.title', route: '/qualifications/dashboard', icon:"mortarboard", materialIcon: 'school', roles: [0, 3] },
-  { name: 'physicalResource.title', route: '/resources/dashboard', icon: "inventory", materialIcon: 'build', roles: [0, 3] },
   { name: 'staff.title', route: '/staff/dashboard', icon: "people", materialIcon: 'people', roles: [0, 3] },
+  { name: 'physicalResource.title', route: '/resources/dashboard', icon: "inventory", materialIcon: 'build', roles: [0, 3] },
   { name: 'storageArea.title', route: '/storage-areas/dashboard', icon: "warehouse", materialIcon: 'warehouse', roles: [0, 1] },
   { name: 'scheduling.title', route: '/schedule', icon: "calendar_month", materialIcon: 'calendar_month', roles: [0, 3] },
   {},
-  { name: "admin.sidebarTitle", route: '/admin/dashboard', icon: "admin_panel_settings", materialIcon: 'admin_panel_settings', roles: [0] }
+  { name: "admin.sidebarTitle", route: '/admin/dashboard', icon: "admin_panel_settings", materialIcon: 'admin_panel_settings', roles: [0] },
+  { name: 'about.title', route: '/about', icon: "info", materialIcon: 'info', roles: [0, 1, 2, 3] },
 ]);
 
 const isCurrentTab = (itemRoute: string) => {

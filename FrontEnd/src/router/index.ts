@@ -363,6 +363,14 @@ const router = createRouter({
             meta: {
                 icon: "edit"
             }
+        },
+        {
+          path: '/about',
+          name: 'about',
+          component: () => import('@/views/About/About.vue'),
+          meta: {
+            icon: "info"
+          }
         }
       ]
     },

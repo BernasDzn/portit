@@ -680,5 +680,8 @@
         "errors": {
             "shiftOverlap": "Invalid shift. Overlapping or end time before start time."
         }
+    },
+    "about": {
+        "title": "About"
     }
 }
