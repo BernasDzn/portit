@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Api.Application.Services;
 using Api.Application.DataTransfer;
+using Api.Domain.Entities;
 
 namespace Api.Application.Controllers;
 
@@ -48,6 +49,9 @@ public class PortLayoutController : ControllerBase
 	{
 		try
 		{
+			var userRole = User.Claims.FirstOrDefault(c => c.Type == "user_role")?.Value ?? "Guest";
+			bool showDetails = userRole == "PortAuthorityOfficer" || userRole == "Administrator" || userRole == "LogisticsOperator";
+
 			var chunks = new List<PortChunk>();
 
 			// Fetch all required data
@@ -69,15 +73,39 @@ public class PortLayoutController : ControllerBase
 					if (storageIndex < storageAreasList.Count)
 					{
 						var storage = storageAreasList[storageIndex];
-						var chunkType = storage.Type == Domain.Entities.StorageAreaType.Warehouse
+						var chunkType = storage.Type == StorageAreaType.Warehouse
 							? ChunkType.Warehouse
 							: ChunkType.Yard;
+
+						object? details = null;
+						if (showDetails)
+						{
+							// Format the storage area details
+							var dockServicesList = (storage.DockServices == null || storage.DockServices.Count == 0) && storage.Type == StorageAreaType.Yard
+								? "All docks"
+								: string.Join(", ", storage.DockServices.Select(ds => ds.Dock.Name));
+
+							details = new
+							{
+								NameCode = storage.NameCode,
+								Location = storage.Location,
+								Type = storage.Type.ToString(),
+								Capacity = storage.Capacity,
+								CurrentOccupancy = storage.CurrentOccupancy,
+								DockServices = dockServicesList
+							};
+						}
 
 						chunks.Add(new PortChunk(
 							storage.NameCode,
 							chunkType,
 							col,
-							row
+							row,
+							new { 
+								title = storage.NameCode, 
+								description = storage.Type.ToString(),
+								details = details
+							}
 						));
 						storageIndex++;
 					}
@@ -102,19 +130,40 @@ public class PortLayoutController : ControllerBase
 			{
 				if (dockIndex >= docksList.Count) break;
 
-				// Place 2 docks vertically at this column position
-				for (int row = 2; row < 4 && dockIndex < docksList.Count; row++)
+			// Place 2 docks vertically at this column position
+			for (int row = 2; row < 4 && dockIndex < docksList.Count; row++)
+			{
+				var dock = docksList[dockIndex];
+				
+				object? details = null;
+				if (showDetails)
 				{
-					var dock = docksList[dockIndex];
-					chunks.Add(new PortChunk(
-						dock.Code,
-						ChunkType.Dock,
-						baseCol,
-						row
-					));
-					dockIndex++;
+					var vesselTypeNames = string.Join(", ", dock.SupportedVesselTypes.Select(vt => vt.Name));
+					
+					details = new
+					{
+						Location = dock.Location,
+						Length = dock.PhysicalCharacteristics.Length,
+						Depth = dock.PhysicalCharacteristics.Depth,
+						Draft = dock.PhysicalCharacteristics.Draft,
+						SupportedVesselTypes = vesselTypeNames
+					};
 				}
+				
+				chunks.Add(new PortChunk(
+					dock.Code,
+					ChunkType.Dock,
+					baseCol,
+					row,
+					new { 
+						title = dock.Name, 
+						description = $"Dock {dock.Code}",
+						details = details
+					}
+				));
+				dockIndex++;
 			}
+		}
 
 			// Add physical resources (STSCranes and YardCranes) at their assigned locations
 			foreach (var resource in resources)
@@ -127,12 +176,31 @@ public class PortLayoutController : ControllerBase
 
 					if (dockChunk != null)
 					{
+						object? craneDetails = null;
+						if (showDetails)
+						{
+							var qualNames = string.Join(", ", stsCrane.Qualifications.Select(q => q.QualificationName));
+							
+							craneDetails = new
+							{
+								Code = stsCrane.Code,
+								Description = stsCrane.Description,
+								ServingDock = stsCrane.ServingDock.Name,
+								Qualifications = qualNames
+							};
+						}
+						
 						// Place crane at same position as its dock
 						chunks.Add(new PortChunk(
 							stsCrane.Code,
 							ChunkType.STSCrane,
 							dockChunk.X,
-							dockChunk.Y
+							dockChunk.Y,
+							new { 
+								title = stsCrane.Code, 
+								description = stsCrane.Description,
+								details = craneDetails
+							}
 						));
 					}
 				}
@@ -144,11 +212,29 @@ public class PortLayoutController : ControllerBase
 
 					if (yardChunk != null)
 					{
+						object? craneDetails = null;
+						if (showDetails)
+						{
+							var qualNames = string.Join(", ", yardCrane.Qualifications.Select(q => q.QualificationName));
+							
+							craneDetails = new
+							{
+								Code = yardCrane.Code,
+								Description = yardCrane.Description,
+								Qualifications = qualNames
+							};
+						}
+						
 						chunks.Add(new PortChunk(
 							yardCrane.Code,
 							ChunkType.YardCrane,
 							yardChunk.X,
-							yardChunk.Y
+							yardChunk.Y,
+							new { 
+								title = yardCrane.Code, 
+								description = yardCrane.Description,
+								details = craneDetails
+							}
 						));
 					}
 				}

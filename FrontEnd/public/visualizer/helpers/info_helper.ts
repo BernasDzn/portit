@@ -7,7 +7,24 @@ function setInfoText(userData) {
     const killButtonElement = document.getElementById('kill');
 
     if (infoTitleElement) infoTitleElement.textContent = userData.title || "Unknown Object";
-    if (infoDescriptionElement) infoDescriptionElement.textContent = userData.description || "No description available.";
+    
+    let descriptionText = userData.description || "No description available.";
+    if (userData.details) {
+        descriptionText += "\n\n--- Details ---";
+        for (let [key, value] of Object.entries(userData.details)) {
+            const displayKey = key.replace(/([A-Z])/g, ' $1').trim();
+            const formattedKey = displayKey.charAt(0).toUpperCase() + displayKey.slice(1);
+            
+            if (value === null || value === undefined) {
+                descriptionText += `\n${formattedKey}: N/A`;
+            } else {
+                descriptionText += `\n${formattedKey}: ${value}`;
+            }
+        }
+    }
+    
+    if (infoDescriptionElement) infoDescriptionElement.innerText = descriptionText;
+    
     if (killButtonElement) {
         if (userData.killable) {
             killButtonElement.style.display = 'inline-block';
