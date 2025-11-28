@@ -168,10 +168,16 @@ class WarehouseChunk extends PortChunk {
         this.base.castShadow = true;
         this.base.receiveShadow = true;
 
-        this.base.meta = this.meta || {
-            title: this.warehouseName,
-            description: `Warehouse: ${this.warehouseName}\nLocated at (${this.position.x.toFixed(2)}, ${this.position.z.toFixed(2)}).`,
+        const baseMeta = {
+            title: this.meta?.title || this.warehouseName,
+            description: `${this.meta?.description || ('Warehouse: ' + this.warehouseName)}\nLocated at (${this.position.x.toFixed(2)}, ${this.position.z.toFixed(2)}).`
         };
+        
+        if (this.meta?.details) {
+            baseMeta.details = this.meta.details;
+        }
+        
+        this.base.meta = baseMeta;
 
         scene.add(this.base);
 
@@ -240,10 +246,16 @@ class LandChunk extends PortChunk {
         this.base = new THREE.Mesh(this.base, baseMesh);
         this.base.position.copy(this.position);
 
-        this.base.meta = this.meta || {
-            title: "Land Chunk",
-            description: "This is a land chunk.\n Located at (" + this.position.x.toFixed(2) + ", " + this.position.z.toFixed(2) + ").",
+        const baseMeta = {
+            title: this.meta?.title || "Land Chunk",
+            description: `${this.meta?.description || 'Land chunk'}\nLocated at (${this.position.x.toFixed(2)}, ${this.position.z.toFixed(2)}).`
         };
+        
+        if (this.meta?.details) {
+            baseMeta.details = this.meta.details;
+        }
+        
+        this.base.meta = baseMeta;
 
         this.base.castShadow = true;
         this.base.receiveShadow = true;
@@ -325,10 +337,16 @@ class DockChunk extends PortChunk {
         this.base = new THREE.Mesh(this.base, baseMesh);
         this.base.position.copy(this.position);
 
-        this.base.meta = this.meta || {
-            title: this.dockName,
-            description: `Dock: ${this.dockName}\nLocated at (${this.position.x.toFixed(2)}, ${this.position.z.toFixed(2)}).`,
+        const baseMeta = {
+            title: this.meta?.title || this.dockName,
+            description: `${this.meta?.description || ('Dock: ' + this.dockName)}\nLocated at (${this.position.x.toFixed(2)}, ${this.position.z.toFixed(2)}).`
         };
+        
+        if (this.meta?.details) {
+            baseMeta.details = this.meta.details;
+        }
+        
+        this.base.meta = baseMeta;
 
         this.base.castShadow = true;
         this.base.receiveShadow = true;
@@ -460,10 +478,18 @@ class YardChunk extends PortChunk {
         this.base.position.copy(this.position);
         this.base.castShadow = true;
         this.base.receiveShadow = true;
-        this.base.meta = this.meta || {
-            title: "Yard Chunk",
-            description: "This is a yard chunk.\n Located at (" + this.position.x.toFixed(2) + ", " + this.position.z.toFixed(2) + ").",
+        
+        const baseMeta = {
+            title: this.meta?.title || this.yardName,
+            description: `${this.meta?.description || (this.yardName + ' - Yard')}\nLocated at (${this.position.x.toFixed(2)}, ${this.position.z.toFixed(2)}).`
         };
+        
+        if (this.meta?.details) {
+            baseMeta.details = this.meta.details;
+        }
+        
+        this.base.meta = baseMeta;
+        
         scene.add(this.base);
 
         this.yardLabel.position.set(
