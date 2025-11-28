@@ -55,18 +55,23 @@
 
         #clock {
             position: absolute;
-            top: 10px;
+            top: 30px;
             left: 120px;
             padding: 10px 16px;
+            border-radius: 8px;
+            border-width: 0.5px;
+            border-style: solid;
+            border-color: #ffffff1a;
 
-            background: #1216ffcc;
-            border: 2px solid #ffffff;
+            background: #56628a28;
 
-            font-family: 'Courier New', Courier, monospace;
+            font-family: 'Inter';
             font-size: 1.8vmin;
             color: #ffffff;
 
             z-index: 5;
+            box-shadow: 0 0 10px #00000088;
+            backdrop-filter: blur(30px);
         }
         #clock .label {
             font-size: 1.3vmin;
@@ -75,18 +80,40 @@
 
         #object-details {
             position: absolute;
-            top: 110px;
+            top: 140px;
             left: 120px;
+            border-radius: 8px;
+            border-width: 0.5px;
+            border-style: solid;
+            border-color: #ffffff1a;
 
-            background: #1216ffcc;
-            border: 2px solid #ffffff;
+            background: #56628a28;
 
-            font-family: 'Courier New', Courier, monospace;
+            font-family: 'Inter';
             font-size: 1.8vmin;
             color: #ffffff;
 
             z-index: 5;
             display:none;
+            box-shadow: 0 0 10px #00000088;
+            backdrop-filter: blur(30px);
+        }
+
+        button {
+            font-size: 1.5vmin;
+            padding: 5px 10px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #485EA9;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.15s ease;
+            float: right;
+        }
+
+        button:hover {
+            background-color: #9dabd8;
         }
 
         .contents-container {
@@ -113,15 +140,15 @@
         Port3D simulation
     </div>
 
-    <div id="object-details">
+    <div id="object-details" class="border-gradient border-gradient-purple">
         <div class="contents-container">
             <h3 id="container-title">Title</h3>
             <p id="container-description">Description</p>
-            <button id="kill">DIE BRUH DIE!!!</button>
+            <button id="kill">Remove</button>
         </div>
     </div>
 
-    <div id="clock">
+    <div id="clock" class="border-gradient border-gradient-purple">
         <div class="label">DATE</div>
         <div id="date">2024-01-01</div>
         <div class="label">TIME</div>
