@@ -424,7 +424,8 @@ router.beforeEach((to, from, next) => {
     { prefix: '/staff', roles: [0, 3] },
     { prefix: '/storage-areas', roles: [0, 1] },
     { prefix: '/admin', roles: [0] },
-    { prefix: '/schedule', roles: [0,3] }
+    { prefix: '/schedule', roles: [0,3] },
+    { prefix: '/about', roles: [0, 1, 2, 3] }
   ];
 
   for (const entry of routeRoleMap) {
