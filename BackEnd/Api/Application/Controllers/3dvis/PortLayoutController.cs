@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Api.Application.Services;
 using Api.Application.DataTransfer;
 using Api.Domain.Entities;
+using Api.Domain.ValueObjects;
 
 namespace Api.Application.Controllers;
 
@@ -183,8 +184,8 @@ public class PortLayoutController : ControllerBase
 							
 							craneDetails = new
 							{
-								Code = stsCrane.Code,
-								Description = stsCrane.Description,
+								ContainersPerHour = stsCrane.ContainersPerHour,
+								SetupTimeMinutes = stsCrane.SetupTimeInMinutes,
 								ServingDock = stsCrane.ServingDock.Name,
 								Qualifications = qualNames
 							};
@@ -219,8 +220,10 @@ public class PortLayoutController : ControllerBase
 							
 							craneDetails = new
 							{
-								Code = yardCrane.Code,
-								Description = yardCrane.Description,
+								ContainersPerHour = yardCrane.ContainersPerHour,
+								SetupTimeMinutes = yardCrane.SetupTimeInMinutes,
+								LiftingCapacity = yardCrane.LiftingCapacity,
+								Status = yardCrane.Status.ToString(),
 								Qualifications = qualNames
 							};
 						}
