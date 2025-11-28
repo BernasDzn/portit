@@ -325,6 +325,14 @@ const router = createRouter({
             }
         },
         {
+            path: '/admin/privacy-policy',
+            name: 'Privacy Policy',
+            component: () => import('@/views/Admin/PrivacyPolicy.vue'),
+            meta: {
+                icon: "privacy_tip"
+            }
+        },
+        {
             path: '/visualization',
             name: 'Port 3D',
             component: () => import('@/views/Visualizer.vue'),
