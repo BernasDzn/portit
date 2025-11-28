@@ -82,7 +82,7 @@ public class PortLayoutController : ControllerBase
 						if (showDetails)
 						{
 							// Format the storage area details
-							var dockServicesList = (storage.DockServices == null || storage.DockServices.Count == 0) && storage.Type == StorageAreaType.Yard
+							var dockServicesList = (storage.DockServices == null || storage.DockServices.Count == 0) && storage.Type == StorageAreaType.Warehouse
 								? "All docks"
 								: string.Join(", ", storage.DockServices.Select(ds => ds.Dock.Name));
 
