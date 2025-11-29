@@ -1534,40 +1534,11 @@ export default class PortLayout {
         const highlightMesh = (obj, color) => {
             if (!obj) return;
 
-            // if no color (0x000000) remove highlight
+            // if no color (0x000000) remove highlight: request reverse if animating
             if (!color) {
-                // if animation going on, reverse
                 if (obj.userData && obj.userData._highlightAnim) {
                     obj.userData._highlightAnim.requestReverse = true;
-                    return;
                 }
-
-                // if no animation and has outline, start fade out
-                if (obj.userData && obj.userData._outlineMesh) {
-                    this._highlightAnimations = this._highlightAnimations || [];
-                    const now = performance.now();
-                    const fadeAnim = {
-                        start: now,
-                        duration: HIGHLIGHT_REVERSE_DURATION,
-                        elapsed: 0,
-                        progress: 0,
-                        cancel: false,
-                        meshes: [],
-                        originals: [],
-                        baseObj: obj,
-                        outlineMesh: obj.userData._outlineMesh,
-                        upOffset: 0,
-                        color: null,
-                        reversing: true,
-                        reverseStart: now,
-                        reverseDuration: HIGHLIGHT_REVERSE_DURATION,
-                        onlyOutline: true
-                    };
-                    obj.userData._highlightAnim = fadeAnim;
-                    this._highlightAnimations.push(fadeAnim);
-                    return;
-                }
-
                 return;
             }
 
@@ -1579,26 +1550,7 @@ export default class PortLayout {
             // skip objects that are not meshes
             if (!obj.isMesh) return;
 
-            // outline
-            const outlineGeom = obj.geometry && obj.geometry.clone ? obj.geometry.clone() : obj.geometry;
-            const outlineMat = new THREE.MeshBasicMaterial({
-                color: new THREE.Color(color),
-                side: THREE.BackSide,
-                depthTest: true,
-                depthWrite: false,
-                transparent: true,
-                opacity: 1
-            });
-
-            const outlineMesh = new THREE.Mesh(outlineGeom, outlineMat);
-            outlineMesh.scale.copy(new THREE.Vector3(1.05, 1.05, 1.05));
-            outlineMesh.position.set(0, 0, 0);
-            outlineMesh.rotation.set(0, 0, 0);
-            outlineMesh.renderOrder = 9999;
-
-            if (!obj.userData) obj.userData = {};
-            obj.userData._outlineMesh = outlineMesh;
-            obj.add(outlineMesh);
+            // outline removed per user request: highlighting uses emissive+lift only
 
             // highlight state
             const originalMaterials = [];
@@ -1765,7 +1717,7 @@ export default class PortLayout {
 
                 scene.traverse((child) => {
                     if (!child.isMesh) return;
-                    if (child === obj || child === outlineMesh) return;
+                    if (child === obj) return;
 
                     if (isAncestor(obj, child)) return;
 
@@ -1797,7 +1749,7 @@ export default class PortLayout {
                 meshes: relatedMeshes,
                 originals: originalMaterials,
                 baseObj: obj,
-                outlineMesh,
+                // outlineMesh field removed
                 upOffset,
                 color
             };
@@ -1889,9 +1841,6 @@ export default class PortLayout {
                                 a.originals.forEach(({ mesh, material }) => {
                                     try { mesh.material = material; } catch (e) {}
                                 });
-                                // remove outline mesh if present on baseObj
-                                try { if (a.baseObj && a.baseObj.userData && a.baseObj.userData._outlineMesh) a.baseObj.remove(a.baseObj.userData._outlineMesh); } catch (e) {}
-                                if (a.baseObj && a.baseObj.userData) a.baseObj.userData._outlineMesh = null;
                                 // clear highlight animation marker so object can be re-selected
                                 try { if (a.baseObj && a.baseObj.userData) a.baseObj.userData._highlightAnim = null; } catch (e) {}
                                 // cleanup stored positions
@@ -1954,13 +1903,6 @@ export default class PortLayout {
 
         if (this._highlightAnimations && this._highlightAnimations.length) {
             this._highlightAnimations.forEach(a => { a.requestReverse = true; });
-        } else {
-            for (const base of this.chunkData.map(c => c.base).filter(b => b)) {
-                if (base.userData && base.userData._outlineMesh && !(base.userData && base.userData._highlightAnim)) {
-                    try { base.remove(base.userData._outlineMesh); } catch (e) {}
-                    base.userData._outlineMesh = null;
-                }
-            }
         }
 
         if (pickedObject) {
