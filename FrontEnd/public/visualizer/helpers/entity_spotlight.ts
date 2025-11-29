@@ -6,17 +6,22 @@ export default class EntitySpotlight {
 	target;
 	distanceFromEntity = 120;
 
+	_shadowsEnabledOnce = false;
+
 	constructor(color = 0xffffaa, intensity = 40000, distance = 0, angle = Math.PI / 5, penumbra = 0.5, decay = 2) {
 		this.spotlight = new THREE.SpotLight(color, intensity, distance, angle, penumbra, decay);
-		// Defer enabling shadows to avoid an expensive synchronous shadow map build
-		// on the first interaction which can freeze the UI for a second.
-		this.spotlight.castShadow = false;
-		this.spotlight.shadow.mapSize.width = 512; // smaller by default for lighter first load
+
+		this.spotlight.castShadow = true;
+		this.spotlight.shadow.mapSize.width = 512;
 		this.spotlight.shadow.mapSize.height = 512;
 		this.spotlight.shadow.bias = -0.0001;
-		this._shadowsEnabledOnce = false;
+		this._shadowsEnabledOnce = true;
 		this.target = this.spotlight.target;
-		this.turnOff();
+
+		this.spotlight.visible = true;
+
+		this.spotlight.position.set(0, this.distanceFromEntity + 400, 0);
+		this.target.position.set(0, this.distanceFromEntity + 800, 0);
 	}
 
 	pointToEntity(entity) {
@@ -38,11 +43,8 @@ export default class EntitySpotlight {
 		
 		this.spotlight.position.set(realPosition.x, realPosition.y + this.distanceFromEntity, realPosition.z);
 		this.target.position.set(realPosition.x, realPosition.y, realPosition.z);
-		// Turn on immediately but defer enabling expensive shadow rendering for
-		// a short time so the first click doesn't cause a blocking shadow map build.
 		this.turnOn();
 		if (!this._shadowsEnabledOnce) {
-			// Enable shadows after a short delay (two frames) to let the UI update
 			setTimeout(() => {
 				this.spotlight.castShadow = true;
 				this._shadowsEnabledOnce = true;
@@ -50,7 +52,11 @@ export default class EntitySpotlight {
 		}
 	}
 
-	turnOff() { this.spotlight.visible = false; }
+	turnOff() {
+		this.spotlight.visible = true;
+		this.spotlight.position.set(0, this.distanceFromEntity + 400, 0);
+		this.target.position.set(0, this.distanceFromEntity + 800, 0);
+	}
 
 	turnOn() { this.spotlight.visible = true; }
 
