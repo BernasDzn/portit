@@ -180,10 +180,16 @@ export class WarehouseChunk extends PortChunk {
         this.base.castShadow = true;
         this.base.receiveShadow = true;
 
-        this.base.meta = {
-            title: this.warehouseName,
-            description: `Warehouse: ${this.warehouseName}\nLocated at (${this.position.x.toFixed(2)}, ${this.position.z.toFixed(2)}).`,
+        const baseMeta = {
+            title: this.meta?.title || this.warehouseName,
+            description: `${this.meta?.description || ('Warehouse: ' + this.warehouseName)}\nLocated at (${this.position.x.toFixed(2)}, ${this.position.z.toFixed(2)}).`
         };
+        
+        if (this.meta?.details) {
+            baseMeta.details = this.meta.details;
+        }
+        
+        this.base.meta = baseMeta;
 
         scene.add(this.base);
 
@@ -252,10 +258,16 @@ export class LandChunk extends PortChunk {
         this.base = new THREE.Mesh(this.base, baseMesh);
         this.base.position.copy(this.position);
 
-        this.base.meta = {
-            title: "Land Chunk",
-            description: "This is a land chunk.\n Located at (" + this.position.x.toFixed(2) + ", " + this.position.z.toFixed(2) + ").",
+        const baseMeta = {
+            title: this.meta?.title || "Land Chunk",
+            description: `${this.meta?.description || 'Land chunk'}\nLocated at (${this.position.x.toFixed(2)}, ${this.position.z.toFixed(2)}).`
         };
+        
+        if (this.meta?.details) {
+            baseMeta.details = this.meta.details;
+        }
+        
+        this.base.meta = baseMeta;
 
         this.base.castShadow = true;
         this.base.receiveShadow = true;
@@ -337,10 +349,16 @@ export class DockChunk extends PortChunk {
         this.base = new THREE.Mesh(this.base, baseMesh);
         this.base.position.copy(this.position);
 
-        this.base.meta = {
-            title: this.dockName,
-            description: `Dock: ${this.dockName}\nLocated at (${this.position.x.toFixed(2)}, ${this.position.z.toFixed(2)}).`,
+        const baseMeta = {
+            title: this.meta?.title || this.dockName,
+            description: `${this.meta?.description || ('Dock: ' + this.dockName)}\nLocated at (${this.position.x.toFixed(2)}, ${this.position.z.toFixed(2)}).`
         };
+        
+        if (this.meta?.details) {
+            baseMeta.details = this.meta.details;
+        }
+        
+        this.base.meta = baseMeta;
 
         this.base.castShadow = true;
         this.base.receiveShadow = true;
@@ -472,10 +490,18 @@ export class YardChunk extends PortChunk {
         this.base.position.copy(this.position);
         this.base.castShadow = true;
         this.base.receiveShadow = true;
-        this.base.meta = {
-            title: "Yard Chunk",
-            description: "This is a yard chunk.\n Located at (" + this.position.x.toFixed(2) + ", " + this.position.z.toFixed(2) + ").",
+        
+        const baseMeta = {
+            title: this.meta?.title || this.yardName,
+            description: `${this.meta?.description || (this.yardName + ' - Yard')}\nLocated at (${this.position.x.toFixed(2)}, ${this.position.z.toFixed(2)}).`
         };
+        
+        if (this.meta?.details) {
+            baseMeta.details = this.meta.details;
+        }
+        
+        this.base.meta = baseMeta;
+        
         scene.add(this.base);
 
         this.yardLabel.position.set(
@@ -742,6 +768,7 @@ function generateChunkLayoutFromAPI(portChunks) {
 
             case ChunkType.Land:
                 chunk = new LandChunk(portChunk.x, portChunk.y);
+                if (portChunk.meta) chunk.meta = portChunk.meta;
                 // Set as occupied
                 validChunkPositions[portChunk.x][portChunk.y] = 1;
                 chunks.push(chunk);
@@ -749,6 +776,7 @@ function generateChunkLayoutFromAPI(portChunks) {
 
             case ChunkType.Warehouse:
                 chunk = new WarehouseChunk(portChunk.x, portChunk.y, portChunk.name);
+                if (portChunk.meta) chunk.meta = portChunk.meta;
                 // Set as occupied
                 validChunkPositions[portChunk.x][portChunk.y] = 1;
                 chunks.push(chunk);
@@ -756,6 +784,7 @@ function generateChunkLayoutFromAPI(portChunks) {
 
             case ChunkType.Yard:
                 chunk = new YardChunk(portChunk.x, portChunk.y, portChunk.name);
+                if (portChunk.meta) chunk.meta = portChunk.meta;
                 // Set as occupied
                 validChunkPositions[portChunk.x][portChunk.y] = 1;
                 chunks.push(chunk);
@@ -763,6 +792,7 @@ function generateChunkLayoutFromAPI(portChunks) {
 
             case ChunkType.Dock:
                 chunk = new DockChunk(portChunk.x, portChunk.y, portChunk.name);
+                if (portChunk.meta) chunk.meta = portChunk.meta;
                 // Set as occupied
                 validChunkPositions[portChunk.x][portChunk.y] = 1;
                 chunks.push(chunk);
@@ -773,7 +803,8 @@ function generateChunkLayoutFromAPI(portChunks) {
                     name: portChunk.name,
                     x: portChunk.x,
                     y: portChunk.y,
-                    type: portChunk.type
+                    type: portChunk.type,
+                    meta: portChunk.meta
                 });
                 break;
             case ChunkType.YardCrane:
@@ -781,7 +812,8 @@ function generateChunkLayoutFromAPI(portChunks) {
                     name: portChunk.name,
                     x: portChunk.x,
                     y: portChunk.y,
-                    type: portChunk.type
+                    type: portChunk.type,
+                    meta: portChunk.meta
                 });
                 break;
         }
@@ -1017,9 +1049,9 @@ export default class PortLayout {
 
             if (type === 'container') {
                 position.y -= 1; // Slightly lower container cranes
-                await this.addContainerCrane(crane.name, position, scene, 180, scaleMultiplier);
+                await this.addContainerCrane(crane.name, position, scene, 180, scaleMultiplier, crane.meta);
             } else if (type === 'yard') {
-                await this.addYardGantryCrane(crane.name, position, scene, 0, scaleMultiplier);
+                await this.addYardGantryCrane(crane.name, position, scene, 0, scaleMultiplier, crane.meta);
             }
             
             positions.push({ x: position.x, y: position.y, z: position.z });
@@ -1244,7 +1276,7 @@ export default class PortLayout {
         this.vesselList.push(vessel);
     }
 
-    async addContainerCrane(name, position, scene, rotation = 0, scaleMultiplier = 1.0) {
+    async addContainerCrane(name, position, scene, rotation = 0, scaleMultiplier = 1.0, meta = null) {
         const modelPath = "/visualizer/models/lowpoly/crane1.obj";
         
         // Load model once and cache it
@@ -1275,12 +1307,13 @@ export default class PortLayout {
         
         const rotationRadians = rotation * (Math.PI / 180);
         let crane = new Crane(name, model, position, rotationRadians);
+        if (meta) crane.meta = meta;
         crane.init(scene, scaleMultiplier);
 
         this.craneList.push(crane);
     }
 
-    async addYardGantryCrane(name, position, scene, rotation = 0, scaleMultiplier = 1.0) {
+    async addYardGantryCrane(name, position, scene, rotation = 0, scaleMultiplier = 1.0, meta = null) {
         const modelPath = "/visualizer/models/lowpoly/crane2.obj";
         
         // Load model once and cache it
@@ -1307,6 +1340,7 @@ export default class PortLayout {
         
         const rotationRadians = rotation * (Math.PI / 180);
         let crane = new GantryCrane(name, model, position, rotationRadians);
+        if (meta) crane.meta = meta;
         crane.init(scene, scaleMultiplier);
 
         this.craneList.push(crane);
