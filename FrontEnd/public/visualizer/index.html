@@ -195,6 +195,13 @@
             </tr>
         </table>
     </div>
+    <!-- Loading overlay -->
+    <div id="loading-overlay" style="position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:9999;backdrop-filter: blur(8px);-webkit-backdrop-filter: blur(8px);pointer-events:auto;background:rgba(0,0,0,0.35);transition:opacity 0.6s ease;">
+        <div id="loading-box" style="text-align:center;padding:30px 40px;border-radius:12px;background:rgba(86,98,138,0.18);box-shadow:0 8px 30px rgba(0,0,0,0.6);border:1px solid #ffffff1a;color:#fff;font-family: 'Inter', monospace;">
+            <div id="loading-title" style="font-size:2.4vmin;margin-bottom:10px;letter-spacing:2px">LOADING</div>
+            <div id="loading-msg" style="font-size:1.6vmin;opacity:0.9;max-width:40vmin;word-wrap:break-word">Initializing...</div>
+        </div>
+    </div>
     <script type="importmap">
         {
             "imports": {
@@ -211,6 +218,32 @@
     </script>
     <script type="module">
         import Port3D from "/visualizer/port3d_init.ts";
+
+        // Expose simple loading overlay API for the visualizer modules
+        window.showLoading = (msg = 'Starting...') => {
+            const ov = document.getElementById('loading-overlay');
+            const msgEl = document.getElementById('loading-msg');
+            const titleEl = document.getElementById('loading-title');
+            if (msgEl) msgEl.textContent = msg;
+            if (titleEl) titleEl.textContent = 'LOADING';
+            if (ov) {
+                ov.style.display = 'flex';
+                // force reflow then set opacity
+                ov.style.opacity = '1';
+            }
+        };
+
+        window.updateLoading = (msg = '') => {
+            const msgEl = document.getElementById('loading-msg');
+            if (msgEl) msgEl.textContent = msg;
+        };
+
+        window.hideLoading = (delay = 200) => {
+            const ov = document.getElementById('loading-overlay');
+            if (!ov) return;
+            ov.style.opacity = '0';
+            setTimeout(() => { ov.style.display = 'none'; }, Math.max(300, delay));
+        };
 
         let scene, camera, renderer, controls;
         let cube;

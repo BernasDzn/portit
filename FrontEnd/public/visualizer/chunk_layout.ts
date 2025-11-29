@@ -884,6 +884,9 @@ export default class PortLayout {
 
         this.port = port;
 
+        // Show initial loading overlay while we start loading resources
+        if (window && window.showLoading) window.showLoading('Loading port layout...');
+
         this.picker = new PickHelper(controls);
         // Use right-click (context menu) for picking; prevent default browser menu
         window.addEventListener('contextmenu', (event) => {
@@ -917,18 +920,25 @@ export default class PortLayout {
 
     async loadChunksFromAPI(scene) {
         try {
+            if (window && window.updateLoading) window.updateLoading('Fetching port layout from API...');
             const portChunks = await fetchPortLayout();
             console.log('Loaded port layout data:', portChunks);
 
+            if (window && window.updateLoading) window.updateLoading('Generating chunk layout...');
             const { chunks, containerCranePositions, yardCranePositions } = generateChunkLayoutFromAPI(portChunks);
             this.chunkData = chunks;
 
-            for (let chunk of this.chunkData) {
+            // Initialize chunks and report progress
+            for (let i = 0; i < this.chunkData.length; i++) {
+                const chunk = this.chunkData[i];
+                if (window && window.updateLoading) window.updateLoading(`Initializing chunks: ${i + 1}/${this.chunkData.length}`);
                 await chunk.init(scene);
             }
 
             // add fences to all yard chunks
-            for (let chunk of this.chunkData) {
+            if (window && window.updateLoading) window.updateLoading('Adding fences to yard chunks...');
+            for (let i = 0; i < this.chunkData.length; i++) {
+                const chunk = this.chunkData[i];
                 if (chunk instanceof YardChunk) {
                     await chunk.addFences(scene);
                 }
@@ -942,25 +952,30 @@ export default class PortLayout {
             const craneWorldPositions = {};
             
             // Add container cranes with spacing
+            if (window && window.updateLoading) window.updateLoading('Placing container cranes...');
             for (const [chunkKey, cranes] of Object.entries(containerCranesByChunk)) {
                 const positions = await this.addCranesAtChunk(cranes, scene, 'container', 90);
                 craneWorldPositions[chunkKey] = positions;
             }
 
             // Add yard cranes with spacing
+            if (window && window.updateLoading) window.updateLoading('Placing yard gantry cranes...');
             for (const [chunkKey, cranes] of Object.entries(yardCranesByChunk)) {
                 await this.addCranesAtChunk(cranes, scene, 'yard', 0);
             }
             
             // Add containers to dock chunks, avoiding crane positions
+            if (window && window.updateLoading) window.updateLoading('Adding containers to docks...');
             await this.addDockContainers(scene, craneWorldPositions);
             
             // Add containers to yard chunks after cranes are placed
+            if (window && window.updateLoading) window.updateLoading('Adding containers to yard chunks...');
             await this.addYardContainers(scene, yardCranePositions);
 
             // Fetch vessel positions once and record a lightweight schedule
             // Do NOT instantiate heavy vessel models here to avoid startup lag.
             try {
+                if (window && window.updateLoading) window.updateLoading('Fetching vessel schedule...');
                 const vesselPositions = await fetchVesselPositions();
 
                 // vesselSchedule stores entries for when vessels should appear/disappear.
@@ -983,13 +998,21 @@ export default class PortLayout {
 
                 // Log the parsed vessel schedule for debugging
                 console.log('Vessel schedule:', this.vesselSchedule);
+
+                if (window && window.updateLoading) window.updateLoading('Finalizing...');
+                // All loading work complete: fade out the loading overlay
+                if (window && window.hideLoading) window.hideLoading(300);
             } catch (err) {
                 console.error('Failed to fetch vessel positions for scheduling:', err);
+                if (window && window.updateLoading) window.updateLoading('Failed to fetch vessel schedule');
+                if (window && window.hideLoading) window.hideLoading(1200);
             }
 
             // Note: vessel positions are fetched once at startup and used thereafter.
         } catch (error) {
             console.error('Failed to load port layout from API:', error);
+            if (window && window.updateLoading) window.updateLoading('Failed to load port layout');
+            if (window && window.hideLoading) window.hideLoading(1200);
         }
     }
 
