@@ -99,13 +99,8 @@ export default class Vessel {
 
         // Make label billboard
         this.label = makeBillboard(this.name, 16, 0xffffff);
-
-        const labelOffset = new THREE.Vector3(0, 10, 0);
-        const vesselRoot = new THREE.Object3D();
-        vesselRoot.position.copy(this.position).add(labelOffset);
-        vesselRoot.add(this.label);
-
-        scene.add(vesselRoot);
+        this.label.position.copy(this.model.position).add(new THREE.Vector3(0, 10, 0));
+        scene.add(this.label);
 
         // this.setPath(scene, [
         //     new THREE.Vector3(this.position.x + 50, this.position.y, this.position.z + 50),
@@ -286,13 +281,10 @@ export class Crane {
         
         scene.add(this.model);
 
-        // Make label billboard
+        // Make label billboard and add directly to scene (use world coords)
         this.label = makeBillboard(this.name, 16, 0xffffff);
-        const labelOffset = new THREE.Vector3(0, 15, -15);
-        const craneRoot = new THREE.Object3D();
-        craneRoot.position.copy(this.position).add(labelOffset);
-        craneRoot.add(this.label);
-        scene.add(craneRoot);
+        this.label.position.copy(this.model.position).add(new THREE.Vector3(0, 15, -15));
+        scene.add(this.label);
     }
 
     update() {
@@ -431,13 +423,10 @@ export class GantryCrane {
         
         scene.add(this.model);
 
-        // Make label billboard
+        // Make label billboard and add directly to scene (use world coords)
         this.label = makeBillboard(this.name, 16, 0xffffff);
-        const labelOffset = new THREE.Vector3(0, 15, -15);
-        const craneRoot = new THREE.Object3D();
-        craneRoot.position.copy(this.position).add(labelOffset);
-        craneRoot.add(this.label);
-        scene.add(craneRoot);
+        this.label.position.copy(this.model.position).add(new THREE.Vector3(0, 15, -15));
+        scene.add(this.label);
     }
 
     update() {
