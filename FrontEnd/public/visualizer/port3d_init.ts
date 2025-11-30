@@ -108,7 +108,7 @@ export default class Port3D {
         initTime(this);
 
         // Setup GUI
-        //setupGUI(this);
+        setupGUI(this);
 
         this.animate();
     }
