@@ -47,11 +47,9 @@ export default class Vessel {
     }
 
     onPathFinished() {
-        console.log(`${this.name} - onPathFinished called. departed=${this.departed}, docked=${this.docked}`);
         if (this.departed) {
             this.readyToDie = true;
         } else {
-            console.log(`${this.name} has docked.`);
             this.docked = true;
             this.state = "Docked"; 
         }
@@ -145,7 +143,7 @@ export default class Vessel {
             this.layout,
             50,
             8.0,
-            this.onPathFinished
+            this.onPathFinished.bind(this)
         );
     }
 
@@ -172,6 +170,9 @@ export default class Vessel {
         this.path.goOnAnAdventure();
         // update label position
         this.label.position.set(this.model.position.x, this.model.position.y + 10, this.model.position.z);
+        if(this.readyToDie){
+            this.kill();
+        }
     }
 
     depart(){

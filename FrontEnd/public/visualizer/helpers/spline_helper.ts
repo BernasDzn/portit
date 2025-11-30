@@ -26,6 +26,7 @@ export default class PathFollower {
         this.speed = speed;
         this.layout = layout;
         this.loop = loop;
+        this.callback = callback;
 
         this.curve = new THREE.CatmullRomCurve3(pathPoints);
         this.curve.closed = loop;
