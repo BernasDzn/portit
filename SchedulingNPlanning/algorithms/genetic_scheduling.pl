@@ -1,27 +1,53 @@
-:- dynamic generations/1.
-:- dynamic population_size/1.
-:- dynamic prob_crossover/1.
-:- dynamic prob_mutation/1.
-:- dynamic time_limit/1.
-:- dynamic stability_limit/1.
-:- dynamic start_time/1.
-:- dynamic best_solution_tracker/2. % stores (Value, StabilityCount)
 
-% --- Base de conhecimento ---
-% vessel_visit(VesselName, ArrivalT, DepartureT, ProcessingT).
-% Note: ProcessingT = Sum of containers to load and unload / sum of crane speeds
+% - Initialization variables
+:- dynamic generations/1. % stores max number of generations
+:- dynamic population_size/1. % stores population size
+:- dynamic prob_crossover/1. % stores probability of crossover
+:- dynamic prob_mutation/1. % stores probability of mutation
+:- dynamic time_limit/1. % stores time limit in seconds
+:- dynamic stability_limit/1. % stores stability limit (generations without improvement)
 
-vessel_visit(zeus, 6, 10, 2).
-vessel_visit(poseidon, 23, 27, 3).
-vessel_visit(marenostrum, 8, 14, 3).
-vessel_visit(nautilus, 10, 13, 2).
-vessel_visit(floating, 36,  40, 5).
+% - Tracking variables
+:- dynamic start_time/1. % stores start time for timing
+:- dynamic best_solution_tracker/2. % stores the best found solution (BestDelay, NumberOfGenerationsWithoutImprovement)
 
-num_vessels(5).
+% - Dynamic declaration for vessel_visit/4
+:- dynamic vessel_visit/4.
+:- dynamic vessel/6.
+:- dynamic num_vessels/1.
 
+% --- Mapper: Transform vessel/6 to vessel_visit/4 ---
+% vessel/6 format: vessel(Name, ArrivalTime, DepartureTime, UnloadContainers, LoadContainers, CraneList)
+% vessel_visit/4 format: vessel_visit(VesselName, ArrivalT, DepartureT, ProcessingT)
+% ProcessingT = (UnloadContainers + LoadContainers) / sum of crane speeds
+
+% -- map_vessels_to_visits -- populate vessel_visit/4 from vessel/6 facts
+    map_vessels_to_visits :-
+        retractall(vessel_visit(_, _, _, _)),
+        forall(
+            vessel(Name, ArrivalTime, DepartureTime, UnloadContainers, LoadContainers, CraneList),
+            (
+                get_crane_sum(CraneList, CraneSpeed),
+                TotalContainers is UnloadContainers + LoadContainers,
+                (CraneSpeed > 0 -> ProcessingT is TotalContainers / CraneSpeed ; ProcessingT = 0),
+                assertz(vessel_visit(Name, ArrivalTime, DepartureTime, ProcessingT))
+            )
+        ),
+        findall(_, vessel_visit(_, _, _, _), Visits),
+        length(Visits, Count),
+        (retract(num_vessels(_)); true),
+        asserta(num_vessels(Count)).
+
+    get_crane_sum([], 0).
+    get_crane_sum([crane(_, Speed) | RestCranes], Sum):-
+        get_crane_sum(RestCranes, Sum1),
+        Sum is (Sum1 + Speed).
+%
 
 % -- initialize --parameters initialization
     initialize :-
+        % Transform vessel/6 facts to vessel_visit/4 facts
+        map_vessels_to_visits,
         write('Number of generations (Max): '), read(NG),
         (retract(generations(_)); true), asserta(generations(NG)),
         write('Population size: '), read(PS),
