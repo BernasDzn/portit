@@ -18,7 +18,8 @@ next_vessel_id(Id) :-
 json_to_vvn_fact(JsonDict, vessel(VesselName, ArrivalTime, DepartureTime, UnloadingTime, LoadingTime, Crane)) :-
     init_vessel_counter,
     next_vessel_id(Counter),
-    format(string(VesselName), "~w_~d", [JsonDict.vessel.name, Counter]),
+    % format(string(VesselName), "~w_~d", [JsonDict.vessel.name, Counter]),
+    VesselName = JsonDict.VvnId,
 
     ArrivalTime = JsonDict.eta,
     DepartureTime = JsonDict.etd,

@@ -6,6 +6,7 @@ namespace Api.Application.DataTransfer;
 public class VesselTaskFactDto
 {
     public VesselDto Vessel { get; set; }
+    public string VvnId { get; set; }
     public string Dock { get; set; }
     public double ETA { get; set; }
     public double ETD { get; set; }

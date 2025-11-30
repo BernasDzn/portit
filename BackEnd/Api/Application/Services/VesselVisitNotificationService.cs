@@ -327,6 +327,7 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
                 VesselTaskFactDto vesselTaskFact = new VesselTaskFactDto
                 {
                     Vessel = vessel.ToDTO(),
+                    VvnId = notification.NotificationId.Value,
                     ETA = CalculateBaseHour(date, notification.ExpectedArrival),
                     ETD = CalculateBaseHour(date, notification.ExpectedDeparture),
                     LoadingCount = notification.LoadCargoManifest?.Count ?? 0 /*CalculateLoadUnloadingTime(notification.LoadCargoManifest ?? new List<CargoTransport>(), selectedCrane)*/,
