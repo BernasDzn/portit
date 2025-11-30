@@ -24,6 +24,7 @@ const MetricSchema = new mongoose.Schema({
 });
 
 const OperationPlansSchema = new mongoose.Schema({
+    date: Date,
     dockPlanMap: [DockPlanSchema],
     metrics: [MetricSchema],
 });

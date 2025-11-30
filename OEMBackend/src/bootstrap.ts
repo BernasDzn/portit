@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { OperationPlans } from '../schemas/operationPlansSchema';
+import { OperationPlans } from './schemas/operationPlansSchema';
 
 export const bootstrap = async () => {
     await bootstrapOperationPlans();
@@ -8,6 +8,7 @@ export const bootstrap = async () => {
 const bootstrapOperationPlans = async () => {
     try {
         const samplePlan = new OperationPlans({
+            date: new Date("2024-01-15"),
             dockPlanMap: [{
                 dockId: "dock-1",
                 schedule: [{
@@ -27,6 +28,7 @@ const bootstrapOperationPlans = async () => {
         });
 
         const samplePlan2 = new OperationPlans({
+            date: new Date("2024-01-16"),
             dockPlanMap: [{
                 dockId: "dock-2",
                 schedule: [{
@@ -46,6 +48,7 @@ const bootstrapOperationPlans = async () => {
         });
 
         const samplePlan3 = new OperationPlans({
+            date: new Date("2024-01-17"),
             dockPlanMap: [{
                 dockId: "dock-3",
                 schedule: [{

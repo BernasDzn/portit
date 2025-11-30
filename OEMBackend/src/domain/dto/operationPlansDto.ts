@@ -2,8 +2,7 @@ export interface OperationPlanDto {
     id: string;
     dockPlanMap: DockPlanDto[];
     metrics: MetricDto[];
-    createdAt?: Date;
-    updatedAt?: Date;
+    date: Date;
 }
 
 export interface DockPlanDto {

@@ -6,6 +6,8 @@ export class OperationPlanMapper {
         return new OperationPlan({
             id: doc._id.toString(),
 
+            date: new Date(doc.date),
+
             dockPlanMap: (doc.dockPlanMap ?? []).map((dp: any) =>
                 new DockPlan({
                     dockId: dp.dockId,

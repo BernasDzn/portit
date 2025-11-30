@@ -4,6 +4,6 @@ import { getPlans } from '../controllers/operationPlanController';
 
 const router = Router();
 
-router.get('/', getPlans);
+router.get('/', [authMiddleware], getPlans);
 
 export default router;

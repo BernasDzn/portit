@@ -1,6 +1,6 @@
-import { OperationPlans } from "../../schemas/operationPlansSchema";
-import { OperationPlanMapper } from "../domain/mappers/OperationPlanMapper";
+import { OperationPlans } from "../schemas/operationPlansSchema";
 import { OperationPlan } from "../domain/operationPlans";
+import { OperationPlanMapper } from "../domain/mappers/operationPlanMapper";
 
 export class OperationPlanRepository {
 

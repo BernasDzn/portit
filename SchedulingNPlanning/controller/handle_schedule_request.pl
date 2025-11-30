@@ -30,7 +30,7 @@ handle_schedule_request(Request) :-
 
     format(user_error, 'Scheduling result: ~w~n', [FormattedResult]),
 
-    reply_json(#{data: FormattedResult, metrics: Metrics}).
+    reply_json(#{data: FormattedResult, metrics: Metrics, date: Day}).
 
 format_timetable_docks([], []).
 format_timetable_docks([DockResult|Rest], [Dict|FormattedRest]) :-

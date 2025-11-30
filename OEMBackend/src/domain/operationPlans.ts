@@ -82,6 +82,7 @@ export class Metric {
 
 export class OperationPlan {
     id: string;
+    date: Date;
     dockPlanMap: DockPlan[];
     metrics: Metric[];
 
@@ -89,10 +90,12 @@ export class OperationPlan {
         id: string;
         dockPlanMap: DockPlan[];
         metrics: Metric[];
+        date: Date;
     }) {
         this.id = params.id;
         this.dockPlanMap = params.dockPlanMap;
         this.metrics = params.metrics;
+        this.date = params.date;
     }
 
     toDto(): OperationPlanDto {
@@ -100,6 +103,7 @@ export class OperationPlan {
             id: this.id,
             dockPlanMap: this.dockPlanMap.map(dp => dp.toDto()),
             metrics: this.metrics.map(m => m.toDto()),
+            date: this.date,
         };
     }
 }
