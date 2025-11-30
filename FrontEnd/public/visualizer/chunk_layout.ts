@@ -1715,6 +1715,12 @@ export default class PortLayout {
                 if (!mesh || !mesh.material) return;
                 // store original reference
                 originalMaterials.push({ mesh, material: mesh.material });
+                // ensure we have a base/original material saved per-mesh and a reference count
+                if (!mesh.userData) mesh.userData = {};
+                if (!mesh.userData._highlightBaseMaterial) {
+                    mesh.userData._highlightBaseMaterial = mesh.material;
+                }
+                mesh.userData._highlightRefCount = (mesh.userData._highlightRefCount || 0) + 1;
 
                 // check if we can set emissive on this material
                 const isSafeToEmissive = (m) => {
@@ -1778,6 +1784,30 @@ export default class PortLayout {
                         safeSetEmissive(mesh.material, color, 0);
                     }
                 }
+            };
+
+            // helper to restore materials/cleanup for an animation when it's finished/cancelled
+            const restoreAnimMaterials = (a) => {
+                try {
+                    (a.meshes || []).forEach((m) => {
+                        if (!m) return;
+                        if (!m.userData) m.userData = {};
+                        m.userData._highlightRefCount = Math.max(0, (m.userData._highlightRefCount || 1) - 1);
+                        if (m.userData._highlightRefCount === 0) {
+                            try {
+                                if (m.userData._highlightBaseMaterial) m.material = m.userData._highlightBaseMaterial;
+                            } catch (e) {}
+                            m.userData._highlightBaseMaterial = null;
+                            m.userData._highlightSkipMaterial = null;
+                            m.userData._highlightOriginalLocal = null;
+                            m.userData._highlightOriginalPos = null;
+                            m.userData._highlightDiagnosed = null;
+                        }
+                    });
+                } catch (e) {
+                    console.warn('restoreAnimMaterials failed', e);
+                }
+                a.originals = [];
             };
 
             // highlight base object
@@ -1882,18 +1912,10 @@ export default class PortLayout {
                     for (let i = this._highlightAnimations.length - 1; i >= 0; i--) {
                         const a = this._highlightAnimations[i];
                         if (a.cancel) {
-                            a.originals.forEach(({ mesh, material }) => {
-                                try { mesh.material = material; } catch (e) {}
-                            });
-                            a.meshes.forEach((m) => {
-                                if (m.userData && m.userData._highlightOriginalLocal) {
-                                    try { m.position.copy(m.userData._highlightOriginalLocal); } catch (e) {}
-                                    m.userData._highlightOriginalLocal = null;
-                                }
-                                if (m.userData) m.userData._highlightOriginalPos = null;
-                            });
-                            this._highlightAnimations.splice(i, 1);
-                            try { if (a.baseObj && a.baseObj.userData) a.baseObj.userData._highlightAnim = null; } catch (e) {}
+                                // restore materials and cleanup only when no other highlights reference the mesh
+                                try { restoreAnimMaterials(a); } catch (e) {}
+                                this._highlightAnimations.splice(i, 1);
+                                try { if (a.baseObj && a.baseObj.userData) a.baseObj.userData._highlightAnim = null; } catch (e) {}
                             continue;
                         }
 
@@ -1938,10 +1960,8 @@ export default class PortLayout {
                             }
 
                             if (rr >= 1) {
-                                // restore materials
-                                a.originals.forEach(({ mesh, material }) => {
-                                    try { mesh.material = material; } catch (e) {}
-                                });
+                                // restore materials (respecting other concurrent highlights)
+                                try { restoreAnimMaterials(a); } catch (e) {}
                                 // clear highlight animation marker so object can be re-selected
                                 try { if (a.baseObj && a.baseObj.userData) a.baseObj.userData._highlightAnim = null; } catch (e) {}
                                 // cleanup stored positions
