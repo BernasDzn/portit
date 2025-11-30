@@ -7,6 +7,7 @@ interface Config {
 	nodeEnv: string;
     mongoUri: string;
     jwtSecret: string;
+    shouldBootstrap?: boolean;
 }
 
 const config: Config = {
@@ -14,6 +15,7 @@ const config: Config = {
 	nodeEnv: process.env.NODE_ENV || 'development',
     mongoUri: process.env.MONGO_URI || '',
     jwtSecret: process.env.JWT_SECRET || '',
+    shouldBootstrap: process.env.SHOULD_BOOTSTRAP === 'true',
 };
 
 export default config;

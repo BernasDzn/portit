@@ -5,13 +5,25 @@ import { errorHandler } from './middlewares/errorHandler';
 import { swaggerSpec } from './config/swagger';
 import mongoose from 'mongoose';
 import config from './config/config';
+import { bootstrap } from './bootstrap';
 
 const app = express();
 app.use(express.json());
 
 // Connect to database
 mongoose.connect(config.mongoUri, {})
-    .then(() => console.log('MongoDB connected'))
+    .then(async () => {
+        console.log('Connected to MongoDB');
+
+        if (config.shouldBootstrap){
+
+            await mongoose.connection.dropDatabase();
+            console.log('Database dropped for bootstrapping');
+
+            await bootstrap();
+            console.log('Database bootstrapped');
+        }
+    })
     .catch(err => console.error('MongoDB connection error:', err));
 
 // Swagger documentation

@@ -14,4 +14,13 @@ const OperationPlansSchema = new mongoose.Schema({
             vvnId: string;
         }>;
     }>,
+    metrics: Array<{
+        algorithm: 'optimal' | 'greedy' | 'genetic';
+        computationTime: number;
+        streategy: string;
+        totalDelay: number;
+        vesselCount: number;
+    }>,
 });
+
+export const OperationPlans = mongoose.model('OperationPlans', OperationPlansSchema);
