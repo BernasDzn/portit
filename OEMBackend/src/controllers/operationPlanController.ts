@@ -13,7 +13,6 @@ import { operationPlanService } from "../services/operationPlanService";
 export const getPlans = async (req: Request, res: Response, next: NextFunction) => {
     try {
         
-        console.log("Fetching operation plans...");
         const items = await operationPlanService.getAll();
         res.json(items);
 

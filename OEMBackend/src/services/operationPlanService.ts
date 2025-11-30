@@ -4,9 +4,7 @@ import { operationPlanRepository } from "../repository/operationPlanRepository";
 
 export class OperationPlanService {
     async getAll(): Promise<OperationPlanDto[]> {
-        console.log("OperationPlanService: Fetching all operation plans from repository...");
         let plans = await operationPlanRepository.findAll();
-        console.log(`OperationPlanService: Retrieved ${plans.length} plans.`);
         return plans.map(plan => plan.toDto());
     }
 
