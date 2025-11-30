@@ -32,6 +32,6 @@
     "moduleDetection": "force",
     "skipLibCheck": true,
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "schemas/operationPlansSchema.ts"],
   "exclude": ["node_modules"]
 }
