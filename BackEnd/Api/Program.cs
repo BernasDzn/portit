@@ -369,6 +369,7 @@ app.UseHttpMetrics();  // Collects HTTP request metrics (duration, count, etc.)
 
 app.MapControllers();
 app.MapMetrics();      // Exposes /metrics endpoint at http://localhost:2226/metrics
+app.MapHealthChecks("/health");
 
 app.Run();
 
