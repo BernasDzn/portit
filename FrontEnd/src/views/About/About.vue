@@ -112,11 +112,11 @@ const downloadPrivacyPolicy = () => {
             <b>Privacy Policy</b> &nbsp;
             <sl-badge variant="primary" pill>Last updated: {{ privacyPolicy?.updatedOn ? new Date(privacyPolicy.updatedOn).toLocaleDateString() : '' }}</sl-badge>
         </p>
-        <MarkdownRenderer :markdown="privacyPolicy?.content || ''" style="height: 30rem;" />
+        <MarkdownRenderer :markdown="privacyPolicy?.content || ''" style="height: 40vh;" />
         <sl-button @click="closePrivacyPolicy" slot="footer" variant="primary">Ok</sl-button>
     </sl-dialog>
 
-    <sl-dialog label="TOS" class="dialog-overview">
+    <sl-dialog label="TOS" class="dialog-overview" style="--width: 50vw;">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         <sl-button @click="closeTermsOfService" slot="footer" variant="primary">Ok</sl-button>
     </sl-dialog>
