@@ -1,8 +1,9 @@
 import { GUI } from 'three/examples/jsm/libs/lil-gui.module.min.js';
 
 export default function setupGUI(port3D) {
-    const gui = new GUI();
-    gui.domElement.classList.add('hud-gui');
+    // Use standard DOM APIs instead of jQuery (which isn't loaded in this app)
+    const container = document.getElementById('gui') || undefined;
+    const gui = new GUI({ container });
 
     const lightingFolder = gui.addFolder('Lighting');
     const ambientLight = port3D.environment.ambientLight;

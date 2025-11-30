@@ -120,6 +120,224 @@
             backdrop-filter: blur(30px);
         }
 
+        /* Style lil-gui root to match clock/object-details visual style (per docs) */
+        .lil-gui {
+            top: 140px;
+            margin-top: 20px;
+            right: 120px;
+            border-radius: 8px;
+            border: 0.5px solid #ffffff1a;
+            background: #56628a28;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.6vmin;
+            color: #ffffff;
+            z-index: 50;
+            box-shadow: 0 0 10px #00000088;
+            backdrop-filter: blur(30px);
+            max-width: 36vmin;
+            max-height: 60vh;
+            overflow: auto;
+            padding: 6px;
+        }
+
+        /* Inner root element */
+        .lil-gui .lil-gui__root {
+            background: transparent;
+            color: inherit;
+        }
+
+        /* Title / folder header — this affects the main dropdown header */
+        .lil-gui .lil-gui__title {
+            background: transparent;
+            color: inherit;
+            border: none;
+            padding: 6px 8px;
+        }
+
+        /* Icons, buttons and carets inside the title inherit color */
+        .lil-gui .lil-gui__title button,
+        .lil-gui .lil-gui__title svg,
+        .lil-gui .lil-gui__title .lil-gui__button {
+            background: transparent;
+            color: inherit;
+            fill: currentColor;
+            border: none;
+        }
+
+        /* Controller rows and folder rows: transparent by default */
+        .lil-gui .lil-gui__list .lil-gui__row,
+        .lil-gui .lil-gui__folder .lil-gui__list .lil-gui__row {
+            background: transparent;
+            color: inherit;
+        }
+
+        /* Hover state for rows — subtle translucent highlight */
+        .lil-gui .lil-gui__list .lil-gui__row:hover {
+            background: rgba(255,255,255,0.03);
+            color: inherit;
+        }
+
+        /* Names/values/controllers inherit foreground color */
+        .lil-gui .lil-gui__name,
+        .lil-gui .lil-gui__controller,
+        .lil-gui .lil-gui__value {
+            color: inherit;
+        }
+
+        /* Small vertical spacing for submenu rows and padding for nicer separation */
+        .lil-gui .lil-gui__list {
+            padding-top: 6px !important;
+            padding-bottom: 6px !important;
+        }
+
+        .lil-gui .lil-gui__list .lil-gui__row,
+        .lil-gui .lil-gui__folder .lil-gui__list .lil-gui__row {
+            margin: 4px 0 !important;
+            padding: 6px 8px !important;
+            border-radius: 6px !important;
+        }
+
+        /* Style number sliders to resemble the app's progress bar */
+        .lil-gui .controller.number .slider {
+            background: rgba(255,255,255,0.08) !important;
+            border-radius: 6px !important;
+            height: 10px !important;
+            padding-right: 8px !important;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.02);
+        }
+
+        .lil-gui .controller.number .slider .fill {
+            background: #485EA9 !important;
+            border-radius: 6px !important;
+            height: 100% !important;
+            box-shadow: 0 2px 6px rgba(72,94,169,0.25) !important;
+        }
+
+        /* Style number input fields to match the slider / progress bar aesthetic */
+        .lil-gui .controller.number input[type="number"],
+        .lil-gui .controller.number input[type="text"] {
+            background: rgba(255,255,255,0.04) !important;
+            border: none !important;
+            border-radius: 6px !important;
+            padding: 4px 8px !important;
+            min-width: 48px !important;
+            color: inherit !important;
+        }
+
+        /* Ensure option displays (select-like) use the same subtle background */
+        .lil-gui .controller.option .display,
+        .lil-gui .controller.option .display.active {
+            background: rgba(255,255,255,0.04) !important;
+            border-radius: 6px !important;
+            padding-left: 8px !important;
+        }
+
+        /* Stronger overrides to remove strokes/solid headers coming from lil-gui styles
+           These use !important to override inline or library styles. */
+        .lil-gui * {
+            box-shadow: none !important;
+            outline: none !important;
+        }
+
+        /* Remove separators/strokes on top/bottom of folders and lists */
+        .lil-gui .lil-gui__title,
+        .lil-gui .lil-gui__list,
+        .lil-gui .lil-gui__folder {
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+        }
+
+        /* The topmost closed-folder header sometimes uses an internal background; force transparent */
+        .lil-gui .lil-gui__title--closed,
+        .lil-gui .lil-gui__title.lil-gui__title--closed {
+            background: transparent !important;
+            color: inherit !important;
+        }
+
+        /* Ensure hover for folder titles and rows use our subtle highlight */
+        .lil-gui .lil-gui__title:hover,
+        .lil-gui .lil-gui__folder .lil-gui__title:hover,
+        .lil-gui .lil-gui__list .lil-gui__row:hover,
+        .lil-gui .lil-gui__folder .lil-gui__list .lil-gui__row:hover {
+            background: rgba(255,255,255,0.03) !important;
+            color: inherit !important;
+        }
+
+        /* Inputs / sliders / buttons inside lil-gui should keep the theme, not inject background */
+        .lil-gui .lil-gui__controller input,
+        .lil-gui .lil-gui__controller button,
+        .lil-gui .lil-gui__controller .lil-gui__value {
+            background: transparent !important;
+            color: inherit !important;
+        }
+
+        /* Override the CSS variables used by lil-gui to match our translucent theme.
+           Using variable overrides is the cleanest way to change title/background colors. */
+        .lil-gui {
+            --background-color: rgba(86,98,138,0.16) !important;
+            --title-background-color: transparent !important;
+            --title-text-color: inherit !important;
+            --widget-color: rgba(0,0,0,0.45) !important;
+            --hover-color: rgba(255,255,255,0.03) !important;
+            --focus-color: rgba(255,255,255,0.04) !important;
+            --text-color: #ffffff !important;
+            /* Width and name column adjustments so sliders have consistent length */
+            --width: 360px !important;
+            --name-width: 120px !important;
+        }
+
+        /* Boolean checkbox styling to match the app theme (rounded, subtle background, colored when checked) */
+        .lil-gui input[type="checkbox"] {
+            appearance: none !important;
+            -webkit-appearance: none !important;
+            width: 16px !important;
+            height: 16px !important;
+            border-radius: 4px !important;
+            display: inline-block !important;
+            vertical-align: middle !important;
+            border: 1px solid rgba(255,255,255,0.08) !important;
+            background: rgba(255,255,255,0.02) !important;
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.02) !important;
+            text-align: center !important;
+            line-height: 16px !important;
+            color: transparent !important;
+        }
+
+        .lil-gui input[type="checkbox"]:checked {
+            background: #485EA9 !important;
+            border-color: #485EA9 !important;
+            color: #fff !important;
+        }
+
+        .lil-gui input[type="checkbox"]:checked:before {
+            content: "\2713" !important;
+            display: block !important;
+            color: #fff !important;
+            font-size: 12px !important;
+        }
+
+        /* Remove the top/bottom border strokes the library applies to nested folder headers */
+        .lil-gui.root>.children>.lil-gui>.title,
+        .lil-gui.root>.children>.lil-gui.closed>.title,
+        .lil-gui .lil-gui .lil-gui>.title {
+            border: none !important;
+            background: transparent !important;
+        }
+
+        /* Prevent the adjacent-controller top border inserted after a lil-gui */
+        .lil-gui + .controller {
+            border-top: none !important;
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
+
+        /* Ensure the root title (topmost 'Controls') is transparent and inherits color */
+        .lil-gui.root > .title {
+            background: transparent !important;
+            color: inherit !important;
+        }
+
         button {
             font-size: 1.5vmin;
             padding: 5px 10px;
@@ -160,7 +378,6 @@
     <div id="title">
         Port3D simulation
     </div>
-
     <div id="object-details" class="border-gradient border-gradient-purple">
         <div class="contents-container">
             <h3 id="container-title">Title</h3>
