@@ -858,6 +858,8 @@ export default class PortLayout {
 
     /** @type {any[]} */
     vesselList = []; // The vessels in the port
+    /** @type {Set<string>} */
+    pendingVessels = new Set(); // vesselIds currently being created (to avoid duplicates)
 
     /** @type {Array<Crane|GantryCrane>} */
     craneList = []; // The cranes in the port (both STS and gantry cranes)
@@ -1460,7 +1462,8 @@ export default class PortLayout {
         // Add vessels that are active but not yet instantiated
         for (const entry of active) {
             const vesselId = String(entry.vesselId);
-            if (this.vesselList.some(v => String(v.name) === vesselId)) {
+            // Skip if already instantiated or currently being created
+            if (this.vesselList.some(v => String(v.name) === vesselId) || this.pendingVessels.has(vesselId)) {
                 continue;
             }
 
@@ -1498,7 +1501,15 @@ export default class PortLayout {
             }
             pos.y = layoutY + (chunkSize.y / 2) - 2;
 
-            await this.addVessel(vesselId, pos, scene);
+            // Mark as pending before starting async creation to avoid duplicates
+            this.pendingVessels.add(vesselId);
+            try {
+                await this.addVessel(vesselId, pos, scene);
+            } catch (e) {
+                console.error('Failed to add vessel', vesselId, e);
+            } finally {
+                this.pendingVessels.delete(vesselId);
+            }
         }
     }
 

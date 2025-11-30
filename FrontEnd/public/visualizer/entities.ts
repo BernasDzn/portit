@@ -56,14 +56,10 @@ export default class Vessel {
     }
 
     init(scene) {
-
-        let distance = 500;
-        distance += (Math.random() - 0.5) * 50; // random offset
-
-        const startPosition = extrapolateForward(this.position.clone(), 500);
+        const startPosition = extrapolateForward(this.position.clone(), 450);
 
         this.model.position.copy(startPosition);
-        this.model.scale.set(0.5,0.5,0.5);
+        this.model.scale.set(0.8,0.8,0.8);
 
         this.state = "Arriving";
 
