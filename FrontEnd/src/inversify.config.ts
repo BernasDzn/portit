@@ -1,25 +1,11 @@
 import { Container } from "inversify";
-import type { IHttpService } from "./service/IService/IHttpService";
 import AxiosHttpService from "./service/AxiosHttpService";
 import TYPES from "./inversify/types";
-import type { IQualificationService } from "./service/IService/IQualificationService";
 import { QualificationService } from "./service/QualificationService";
-import type { IPhysicalResourceService } from "./service/IService/IPhysicalResourceService";
 import { PhysicalResourceService } from "./service/PhysicalResourceService";
 import { DockService } from "./service/DockService";
-import type { IDockService } from "./service/IService/IDockService";
 import { AdminService } from "./service/AdminService";
-import type { IAdminService } from "./service/IService/IAdminService";
 import { AuthService } from "./service/AuthService";
-import type { IAuthService } from "./service/IService/IAuthService";
-import type { IRepresentativeService } from "./service/IService/IRepresentativeService";
-import type { ISchedulingService } from "./service/IService/ISchedulingService";
-import type { IShippingAgentOrganizationService } from "./service/IService/IShippingAgentOrganizationService";
-import type { IStaffService } from "./service/IService/IStaffService";
-import type { IStorageAreaService } from "./service/IService/IStorageAreaService";
-import type { IVesselService } from "./service/IService/IVesselService";
-import type { IVesselVisitNotificationService } from "./service/IService/IVesselVisitNotificationService";
-import type { IVesselTypeService } from "./service/IService/IVesselTypeService";
 import { VesselService } from "./service/VesselService";
 import { RepresentativeService } from "./service/RepresentativeService";
 import { SchedulingService } from "./service/SchedulingService";
@@ -29,7 +15,23 @@ import { StorageAreaService } from "./service/StorageAreaService";
 import { VesselTypeService } from "./service/VesselTypeService";
 import { VesselVisitNotificationService } from "./service/VesselVisitNotificationService";
 import { PrivacyPolicyService } from "./service/PrivacyPoliceService";
+import { OperationPlanService } from "./service/OperationPlanService";
+import type { IQualificationService } from "./service/IService/IQualificationService";
+import type { IHttpService } from "./service/IService/IHttpService";
+import type { IPhysicalResourceService } from "./service/IService/IPhysicalResourceService";
+import type { IAdminService } from "./service/IService/IAdminService";
+import type { IDockService } from "./service/IService/IDockService";
+import type { IAuthService } from "./service/IService/IAuthService";
+import type { IRepresentativeService } from "./service/IService/IRepresentativeService";
+import type { ISchedulingService } from "./service/IService/ISchedulingService";
+import type { IShippingAgentOrganizationService } from "./service/IService/IShippingAgentOrganizationService";
+import type { IStaffService } from "./service/IService/IStaffService";
+import type { IStorageAreaService } from "./service/IService/IStorageAreaService";
+import type { IVesselService } from "./service/IService/IVesselService";
+import type { IVesselVisitNotificationService } from "./service/IService/IVesselVisitNotificationService";
+import type { IVesselTypeService } from "./service/IService/IVesselTypeService";
 import type { IPrivacyPolicyService } from "./service/IService/IPrivacyPolicyService";
+import type { IOperationPlanService } from "./service/IService/IOperationPlanService";
 
 const container = new Container();
 
@@ -47,7 +49,7 @@ container.bind<IStaffService>(TYPES.staffService).to(StaffService).inSingletonSc
 container.bind<IStorageAreaService>(TYPES.storageAreaService).to(StorageAreaService).inSingletonScope();
 container.bind<IVesselService>(TYPES.vesselService).to(VesselService).inSingletonScope();
 container.bind<IVesselTypeService>(TYPES.vesselTypeService).to(VesselTypeService).inSingletonScope();
+container.bind<IOperationPlanService>(TYPES.operationPlanService).to(OperationPlanService).inSingletonScope();
 container.bind<IVesselVisitNotificationService>(TYPES.vesselVisitNotificationService).to(VesselVisitNotificationService).inSingletonScope();
-
 
 export { container };

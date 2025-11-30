@@ -148,6 +148,12 @@ const closeAboutModal = () => {
 
 <template>
     <div class="full-height">
+
+        <sl-breadcrumb>
+            <sl-breadcrumb-item><RouterLink to="/scheduling-dashboard" class="breadcrumb-link">{{ t('scheduling.tabs.dashboard') }}</RouterLink></sl-breadcrumb-item>
+            <sl-breadcrumb-item>{{ t('scheduling.tabs.schedule') }}</sl-breadcrumb-item>
+          </sl-breadcrumb>
+
         <h1 class="title">{{ t("scheduling.title") }}</h1>
         <p class="subtitle">{{ t("scheduling.subtitle") }}</p>
 

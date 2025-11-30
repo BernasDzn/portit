@@ -26,28 +26,28 @@ export class VesselTypeService implements IVesselTypeService {
             query.push(filtering.pageSize !== undefined ? `PageSize=${filtering.pageSize}` : '');
         }
 
-        const res = await this.http.get<Page<VesselType>>(`/VesselType/filter${query.length ? `?${query.join('')}` : ''}`);
+        const res = await this.http.get<Page<VesselType>>(`/api/VesselType/filter${query.length ? `?${query.join('')}` : ''}`);
 
         return res.data;
     }
 
     async getVesselTypeByName(name: string): Promise<VesselType | undefined> {
-        const res = await this.http.get<VesselType>(`/VesselType/${name}`);
+        const res = await this.http.get<VesselType>(`/api/VesselType/${name}`);
         return res.data;
     }
 
     async createVesselType(vesselType: VesselType): Promise<VesselType> {
-        const res = await this.http.post<VesselType>('/VesselType', vesselType.toDto());
+        const res = await this.http.post<VesselType>('/api/VesselType', vesselType.toDto());
         return res.data;
     }
 
     async updateVesselType(vesselType: VesselType): Promise<VesselType> {
-        const res = await this.http.put<VesselType>(`/VesselType/${vesselType.name}`, vesselType.toDto());
+        const res = await this.http.put<VesselType>(`/api/VesselType/${vesselType.name}`, vesselType.toDto());
         return res.data;
     }
 
     async getNumberOfVesselTypes(): Promise<number> {
-        const res = await this.http.get<number>(`/VesselType/count`);
+        const res = await this.http.get<number>(`/api/VesselType/count`);
         return res.data;
     }
 }

@@ -45,10 +45,6 @@ onMounted(async () => {
                     icon="add"
                     to="/vessels/create"
                 />
-            </div>
-        </sl-card>
-        <sl-card class="dashboard-overview" style="margin-top: 1rem;">
-            <div class="dashboard-items">
                 <DashboardItem
                     :title="t('vesselType.tabs.view_dashboard')"
                     :description="t('vesselType.subtitle.search')"

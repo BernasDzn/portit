@@ -22,32 +22,32 @@ export class StorageAreaService implements IStorageAreaService {
 			query.push(filtering.filter.nameCode ? `NameCode=${filtering.filter.nameCode}&` : '');
 		}
 
-		const res = await this.http.get<Page<StorageArea>>(`/StorageArea/filter${query.length ? `?${query.join('')}` : ''}`);
+		const res = await this.http.get<Page<StorageArea>>(`/api/StorageArea/filter${query.length ? `?${query.join('')}` : ''}`);
 
 		return res.data;
 	}
 
 	async getStorageAreaById(id: string): Promise<StorageArea> {
-		const res = await this.http.get<StorageArea>(`/StorageArea/${id}`);
+		const res = await this.http.get<StorageArea>(`/api/StorageArea/${id}`);
 		return res.data;
 	}
 
 	async createStorageArea(storageArea: StorageArea): Promise<StorageArea> {
-		const res =  await this.http.post<StorageArea>('/StorageArea', storageArea.toDto());
+		const res =  await this.http.post<StorageArea>('/api/StorageArea', storageArea.toDto());
 		return res.data;
 	}
 
 	async updateStorageArea(storageArea: StorageArea): Promise<StorageArea> {
-		const res = await this.http.put<StorageArea>(`/StorageArea/${storageArea.nameCode}`, storageArea.toDto());
+		const res = await this.http.put<StorageArea>(`/api/StorageArea/${storageArea.nameCode}`, storageArea.toDto());
 		return res.data;
 	}
 
 	async deleteStorageArea(id: string): Promise<void> {
-		await this.http.delete<void>(`/StorageArea/${id}`);
+		await this.http.delete<void>(`/api/StorageArea/${id}`);
 	}
 
 	async getNumberOfStorageAreas(): Promise<number> {
-		const res = await this.http.get<number>(`/StorageArea/count`);
+		const res = await this.http.get<number>(`/api/StorageArea/count`);
 		return res.data;
 	}
 

@@ -19,7 +19,7 @@ export class AuthService implements IAuthService {
 
     async getAppJWTToken(token: string): Promise<AppJWTResponse> {
 
-        let res = await this.http.post('/auth/login/google', JSON.stringify({ token: token }));
+        let res = await this.http.post('/api/auth/login/google', JSON.stringify({ token: token }));
         return res.data as AppJWTResponse;
     }
 
@@ -29,7 +29,7 @@ export class AuthService implements IAuthService {
         // returned by the Google client (response.credential). Send it as { idToken }.
         const body = { idToken: sub };
         await this.http.post(
-            `/SystemUser/activate-with-token?emailAddress=${encodeURIComponent(email)}&token=${encodeURIComponent(token)}`,
+            `/api/SystemUser/activate-with-token?emailAddress=${encodeURIComponent(email)}&token=${encodeURIComponent(token)}`,
             body
         );
     }
@@ -96,7 +96,7 @@ export class AuthService implements IAuthService {
 
     async whoAmI(): Promise<User> {
         try {
-            let res: any = await this.http.get('/auth/me');
+            let res: any = await this.http.get('/api/auth/me');
             if (res && res.data) {
                 return {
                     id: res.data.sub,
@@ -113,7 +113,7 @@ export class AuthService implements IAuthService {
     }
 
     async logout(): Promise<void> {
-        await this.http.post('/auth/logout', {});
+        await this.http.post('/api/auth/logout', {});
     }
    
 }

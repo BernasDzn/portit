@@ -18,7 +18,6 @@ export class AxiosHttpService implements IHttpService {
         
         this.axiosInstance = axios.create(
         { 
-            baseURL: "/api",
             withCredentials: true
         });
 

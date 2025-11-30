@@ -341,7 +341,15 @@ const router = createRouter({
             }
         },
         {
-          path: '/schedule',
+            path: '/scheduling-dashboard',
+            name: 'Scheduling Dashboard',
+            component: () => import('@/views/Scheduling/SchedulingDashboard.vue'),
+            meta: {
+                icon: "calendar_month"
+            }
+        },
+        {
+          path: '/scheduling/schedule',
           name: 'Schedule',
           component: () => import('@/views/Scheduling/SchedulingRequest.vue'),
           meta: {
@@ -349,7 +357,7 @@ const router = createRouter({
           }
         },
         {
-            path: '/schedule/results',
+            path: '/scheduling/results',
             name: 'ScheduleResults',
             component: () => import('@/views/Scheduling/ScheduleResults.vue'),
             meta: {
@@ -379,6 +387,14 @@ const router = createRouter({
           meta: {
             icon: "info"
           }
+        },
+        {
+            path: '/scheduling/plans-search',
+            name: 'Operation Plans Search',
+            component: () => import('@/views/Scheduling/OperationPlansSearch.vue'),
+            meta: {
+                icon: "search"
+            }
         }
       ]
     },
@@ -437,7 +453,7 @@ router.beforeEach((to, from, next) => {
     { prefix: '/staff', roles: [0, 3] },
     { prefix: '/storage-areas', roles: [0, 1] },
     { prefix: '/admin', roles: [0] },
-    { prefix: '/schedule', roles: [0,3] },
+    { prefix: '/scheduling', roles: [0,3] },
     { prefix: '/about', roles: [0, 1, 2, 3] }
   ];
 

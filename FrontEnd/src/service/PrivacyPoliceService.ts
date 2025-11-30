@@ -14,13 +14,13 @@ export class PrivacyPolicyService implements IPrivacyPolicyService {
 
     async getActivePrivacyPolicy(): Promise<PrivacyPolicy> {
         
-        const res = await this.http.get<PrivacyPolicy>(`/PrivacyPolicy/active`);
+        const res = await this.http.get<PrivacyPolicy>(`/api/PrivacyPolicy/active`);
         return res.data;
     }
 
     async updatePrivacyPolicy(content: PrivacyPolicy): Promise<PrivacyPolicy> {
      
-        const res = await this.http.post<PrivacyPolicy>(`/PrivacyPolicy`, content.toDto());
+        const res = await this.http.post<PrivacyPolicy>(`/api/PrivacyPolicy`, content.toDto());
         return res.data;
     }
 

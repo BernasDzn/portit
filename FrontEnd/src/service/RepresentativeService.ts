@@ -15,17 +15,17 @@ export class RepresentativeService implements IRepresentativeService {
     ) { }
 
     async getAll(): Promise<Page<Representative>> {
-        const response = await this.http.get<Page<Representative>>('/Representative');
+        const response = await this.http.get<Page<Representative>>('/api/Representative');
         return response.data;
     }
 
     async getByEmail(emailAddress: string): Promise<Representative> {
-        const response = await this.http.get<Representative>(`/Representative/email/${encodeURIComponent(emailAddress)}`);
+        const response = await this.http.get<Representative>(`/api/Representative/email/${encodeURIComponent(emailAddress)}`);
         return response.data;
     }
 
     async getByCitizenId(citizenId: string): Promise<Representative> {
-        const response = await this.http.get<Representative>(`/Representative/citizen/${encodeURIComponent(citizenId)}`);
+        const response = await this.http.get<Representative>(`/api/Representative/citizen/${encodeURIComponent(citizenId)}`);
         return response.data;
     }
 }

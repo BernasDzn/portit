@@ -28,55 +28,55 @@ export class PhysicalResourceService implements IPhysicalResourceService {
             query.push(filtering.pageSize !== undefined ? `PageSize=${filtering.pageSize}` : '');
         }
 
-        const res = await this.http.get<Page<PhysicalResource>>(`/PhysicalResource/filter${query.length ? `?${query.join('')}` : ''}`);
+        const res = await this.http.get<Page<PhysicalResource>>(`/api/PhysicalResource/filter${query.length ? `?${query.join('')}` : ''}`);
         return res.data;
     }
 
     async getPhysicalResourceById(id: string): Promise<PhysicalResource> {
         
-        const res = await this.http.get<PhysicalResource>(`/PhysicalResource/${id}`);
+        const res = await this.http.get<PhysicalResource>(`/api/PhysicalResource/${id}`);
         return res.data;
     }
 
     async deactivatePhysicalResource(id: string): Promise<void> {
         
-        const res = await this.http.delete<void>(`/PhysicalResource/${id}`);
+        const res = await this.http.delete<void>(`/api/PhysicalResource/${id}`);
         return res.data;
     }
 
     async addSTSCrane(value: STSCrane): Promise<STSCrane> {
         // console.log('Adding STS Crane:', JSON.stringify(value));
-        const res = await this.http.post<PhysicalResource>(`/PhysicalResource/AddSTSCrane`, value.toDto());
+        const res = await this.http.post<PhysicalResource>(`/api/PhysicalResource/AddSTSCrane`, value.toDto());
         return res.data as STSCrane;
     }
 
     async updateSTSCrane(value: STSCrane): Promise<STSCrane> {
-        const res = await this.http.put<PhysicalResource>(`/PhysicalResource/UpdateSTSCrane/${value.code}`, value.toDto());
+        const res = await this.http.put<PhysicalResource>(`/api/PhysicalResource/UpdateSTSCrane/${value.code}`, value.toDto());
         return res.data as STSCrane;
     }
 
     async addYardCrane(value: YardCrane): Promise<YardCrane> {
-        const res = await this.http.post<PhysicalResource>(`/PhysicalResource/AddYardCrane`, value.toDto());
+        const res = await this.http.post<PhysicalResource>(`/api/PhysicalResource/AddYardCrane`, value.toDto());
         return res.data as YardCrane;
     }
 
     async updateYardCrane(value: YardCrane): Promise<YardCrane> {
-        const res = await this.http.put<PhysicalResource>(`/PhysicalResource/UpdateYardCrane/${value.code}`, value.toDto());
+        const res = await this.http.put<PhysicalResource>(`/api/PhysicalResource/UpdateYardCrane/${value.code}`, value.toDto());
         return res.data as YardCrane;
     }
 
     async addTruck(value: Truck): Promise<Truck> {
-        const res = await this.http.post<PhysicalResource>(`/PhysicalResource/AddTruck`, value.toDto());
+        const res = await this.http.post<PhysicalResource>(`/api/PhysicalResource/AddTruck`, value.toDto());
         return res.data as Truck;
     }
 
     async updateTruck(value: Truck): Promise<Truck> {
-        const res = await this.http.put<PhysicalResource>(`/PhysicalResource/UpdateTruck/${value.code}`, value.toDto());
+        const res = await this.http.put<PhysicalResource>(`/api/PhysicalResource/UpdateTruck/${value.code}`, value.toDto());
         return res.data as Truck;
     }
 
     async getNumberOfPhysicalResources(): Promise<number> {
-        const res = await this.http.get<number>(`/PhysicalResource/count`);
+        const res = await this.http.get<number>(`/api/PhysicalResource/count`);
         return res.data;
     }
 }

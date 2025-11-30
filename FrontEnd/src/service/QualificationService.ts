@@ -16,13 +16,13 @@ export class QualificationService implements IQualificationService {
 	){}
 
     async updateQualification(value: Qualification): Promise<Qualification> {
-        const res = await this.http.put<Qualification>(`/Qualification/${value.idCode}`, value.toDto());
+        const res = await this.http.put<Qualification>(`/api/Qualification/${value.idCode}`, value.toDto());
         return res.data;
     }
 
     async addQualification(value: Qualification): Promise<Qualification> {
         
-        const res = await this.http.post<Qualification>('/Qualification', value.toDto());
+        const res = await this.http.post<Qualification>('/api/Qualification', value.toDto());
         return res.data;
     }
 
@@ -37,17 +37,17 @@ export class QualificationService implements IQualificationService {
             query.push(filtering.pageSize !== undefined ? `PageSize=${filtering.pageSize}` : '');
         }
 
-		const res = await this.http.get<Page<Qualification>>(`/Qualification/filter${query.length ? `?${query.join('')}` : ''}`);
+		const res = await this.http.get<Page<Qualification>>(`/api/Qualification/filter${query.length ? `?${query.join('')}` : ''}`);
         return res.data;
 	}
     
     async getQualificationById(id: string): Promise<Qualification> {
-        const res = await this.http.get<Qualification>(`/Qualification/${id}`);
+        const res = await this.http.get<Qualification>(`/api/Qualification/${id}`);
         return res.data;
     }
 
     async getNumberOfQualifications(): Promise<number> {
-        const res = await this.http.get<number>(`/Qualification/count`);
+        const res = await this.http.get<number>(`/api/Qualification/count`);
         return res.data;
     }
 }

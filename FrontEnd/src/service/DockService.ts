@@ -27,28 +27,28 @@ export class DockService implements IDockService {
             query.push(filtering.pageSize !== undefined ? `PageSize=${filtering.pageSize}` : '');
         }
 
-        const res = await this.http.get<Page<Dock>>(`/Dock/filter${query.length ? `?${query.join('')}` : ''}`);
+        const res = await this.http.get<Page<Dock>>(`/api/Dock/filter${query.length ? `?${query.join('')}` : ''}`);
 
         return res.data;
     }
 
     async getDockByCode(code: string): Promise<Dock | undefined> {
-        const res = await this.http.get<Dock>(`/Dock/${code}`);
+        const res = await this.http.get<Dock>(`/api/Dock/${code}`);
         return res.data;
     }
 
     async createDock(dock: Dock): Promise<Dock> {
-        const res = await this.http.post<Dock>('/Dock', dock.toDto());
+        const res = await this.http.post<Dock>('/api/Dock', dock.toDto());
         return res.data;
     }
 
     async updateDock(dock: Dock): Promise<Dock> {
-        const res = await this.http.put<Dock>(`/Dock/${dock.code}`, dock.toDto());
+        const res = await this.http.put<Dock>(`/api/Dock/${dock.code}`, dock.toDto());
         return res.data;
     }
 
     async getNumberOfDocks(): Promise<number> {
-        const res = await this.http.get<number>(`/Dock/count`);
+        const res = await this.http.get<number>(`/api/Dock/count`);
         return res.data;
     }
 }

@@ -32,28 +32,28 @@ export class VesselService implements IVesselService {
             query.push(filtering.pageSize !== undefined ? `PageSize=${filtering.pageSize}` : '');
         }
 
-		const res = await this.http.get<Page<Vessel>>(`/Vessel/filter${query.length ? `?${query.join('')}` : ''}`);
+		const res = await this.http.get<Page<Vessel>>(`/api/Vessel/filter${query.length ? `?${query.join('')}` : ''}`);
 
 		return res.data;
 	}
 
 	async createVessel(vessel: Vessel): Promise<Vessel> {
-		const res =  await this.http.post<Vessel>('/Vessel', vessel.toDto());
+		const res =  await this.http.post<Vessel>('/api/Vessel', vessel.toDto());
 		return res.data;
 	}
 
 	async getVesselByIMO(imo: string): Promise<Vessel> {
-		const res = await this.http.get<Vessel>(`/Vessel/${imo}`);
+		const res = await this.http.get<Vessel>(`/api/Vessel/${imo}`);
 		return res.data;
 	}
 
 	async updateVessel(vessel: Vessel): Promise<Vessel> {
-		const res = await this.http.put<Vessel>(`/Vessel/${vessel.imoNumber}`, vessel.toDto());
+		const res = await this.http.put<Vessel>(`/api/Vessel/${vessel.imoNumber}`, vessel.toDto());
 		return res.data;
 	}
 
 	async getNumberOfVessels(): Promise<number> {
-		const res = await this.http.get<number>(`/Vessel/count`);
+		const res = await this.http.get<number>(`/api/Vessel/count`);
 		return res.data;
 	}
     

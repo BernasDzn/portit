@@ -18,7 +18,7 @@ export class VesselVisitNotificationService implements IVesselVisitNotificationS
 
     async count(): Promise<VesselVisitDistributionDto> {
         
-        return (await this.http.get<VesselVisitDistributionDto>("/VesselVisitNotification/distribution")).data;
+        return (await this.http.get<VesselVisitDistributionDto>("/api/VesselVisitNotification/distribution")).data;
     }
 
     async getVesselVisitNotifications(filter: Filter<VesselVisitNotificationFilterPa>): Promise<Page<VesselVisitNotification>> {
@@ -29,7 +29,7 @@ export class VesselVisitNotificationService implements IVesselVisitNotificationS
             query.push(filter.pageSize !==undefined ? `PageSize=${filter.pageSize}` : "");
         }
 
-        const res = await this.http.get<Page<VesselVisitNotification>>(`/VesselVisitNotification/filterPa${query.length ? `?${query.join('')}` : ''}`);
+        const res = await this.http.get<Page<VesselVisitNotification>>(`/api/VesselVisitNotification/filterPa${query.length ? `?${query.join('')}` : ''}`);
         return res.data;
     }
 
@@ -41,7 +41,7 @@ export class VesselVisitNotificationService implements IVesselVisitNotificationS
             query.push(filter.pageSize !==undefined ? `PageSize=${filter.pageSize}` : "");
         }
 
-        const res = await this.http.get<Page<VesselVisitNotification>>(`/VesselVisitNotification/filterPa?OnlyPending=true`);
+        const res = await this.http.get<Page<VesselVisitNotification>>(`/api/VesselVisitNotification/filterPa?OnlyPending=true`);
         return res.data;
     }
 
@@ -61,7 +61,7 @@ export class VesselVisitNotificationService implements IVesselVisitNotificationS
         }
         console.log(query)
         try{
-            const res = await this.http.get<Page<VesselVisitNotification>>(`/VesselVisitNotification/filter${query.length ? `?${query.join('')}` : ''}`);
+            const res = await this.http.get<Page<VesselVisitNotification>>(`/api/VesselVisitNotification/filter${query.length ? `?${query.join('')}` : ''}`);
             return res.data;
         }
         catch{
@@ -70,23 +70,23 @@ export class VesselVisitNotificationService implements IVesselVisitNotificationS
     }
 
     async getVesselVisitNotificationById(id: string): Promise<VesselVisitNotification> {
-        const res = await this.http.get<VesselVisitNotification>(`/VesselVisitNotification/${id}`);
+        const res = await this.http.get<VesselVisitNotification>(`/api/VesselVisitNotification/${id}`);
         return res.data;
     }
 
     async getNotificationDecisions(vesselVisitNotificationId: string): Promise<NotificationDecision[]> {
-        const res = await this.http.get<NotificationDecision[]>(`/VesselVisitNotification/decisions?vesselVisitNotificationId=${vesselVisitNotificationId}`);
+        const res = await this.http.get<NotificationDecision[]>(`/api/VesselVisitNotification/decisions?vesselVisitNotificationId=${vesselVisitNotificationId}`);
         return res.data;
     }
 
     async createVesselVisitNotification(notification: VesselVisitNotification): Promise<VesselVisitNotification> {
-        const res = await this.http.post<VesselVisitNotification>("/VesselVisitNotification", notification.toDto());
+        const res = await this.http.post<VesselVisitNotification>("/api/VesselVisitNotification", notification.toDto());
         return res.data;
     }
 
     async createNotificationDecision(vesselVisitNotificationId: string, decision: NotificationDecisionDto): Promise<NotificationDecision> {
         const res = await this.http.post<NotificationDecision>(
-            `/VesselVisitNotification/decisions?vesselVisitNotificationId=${vesselVisitNotificationId}`,
+            `/api/VesselVisitNotification/decisions?vesselVisitNotificationId=${vesselVisitNotificationId}`,
             decision
         );
         return res.data;
@@ -94,15 +94,15 @@ export class VesselVisitNotificationService implements IVesselVisitNotificationS
 
     async updateVesselVisitNotification(notification: VesselVisitNotification): Promise<VesselVisitNotification> {
         console.log(notification.toDto());
-        const res = await this.http.put<VesselVisitNotification>(`/VesselVisitNotification/${notification.notificationId}`, notification.toDto());
+        const res = await this.http.put<VesselVisitNotification>(`/api/VesselVisitNotification/${notification.notificationId}`, notification.toDto());
         return res.data;
     }
 
     async submitVesselVisitNotification(id: string): Promise<void> {
-        await this.http.put<void>(`/VesselVisitNotification/submit/${id}`, {});
+        await this.http.put<void>(`/api/VesselVisitNotification/submit/${id}`, {});
     }
 
     async deleteDraft(id: string): Promise<void> {
-        await this.http.delete<void>(`/VesselVisitNotification?id=${id}`);
+        await this.http.delete<void>(`/api/VesselVisitNotification?id=${id}`);
     }
 }

@@ -62,12 +62,8 @@ const downloadPDF = async () => {
 <template>
     <div class="container">
         <sl-breadcrumb>
-            <sl-breadcrumb-item> 
-                <RouterLink to="/schedule" class="breadcrumb-link">{{ t('scheduling.title') }}</RouterLink>
-            </sl-breadcrumb-item>
-            <sl-breadcrumb-item>
-                {{ t('scheduling.results.title') }}
-            </sl-breadcrumb-item>
+            <sl-breadcrumb-item><RouterLink to="/scheduling-dashboard" class="breadcrumb-link">{{ t('scheduling.tabs.dashboard') }}</RouterLink></sl-breadcrumb-item>
+            <sl-breadcrumb-item>{{ t('scheduling.tabs.results') }}</sl-breadcrumb-item>
         </sl-breadcrumb>
 
         <h1 class="title">{{ t("scheduling.results.title") }}</h1>

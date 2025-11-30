@@ -15,7 +15,7 @@ export class ShippingAgentOrganizationService implements IShippingAgentOrganizat
     ) { }
 
     async getShippingAgentOrganizations(): Promise<Page<ShippingAgentOrganization>> {
-        const response = await this.http.get<ShippingAgentOrganization[]>('/ShippingAgentOrganization');
+        const response = await this.http.get<ShippingAgentOrganization[]>('/api/ShippingAgentOrganization');
         return {
             items: response.data,
             pageNumber: 1,

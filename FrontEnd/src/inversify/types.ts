@@ -4,6 +4,7 @@ export const TYPES = {
     dockService: Symbol.for('DockService'),
     privacyPolicyService: Symbol.for('PrivacyPolicyService'),
     physicalResourceService: Symbol.for('PhysicalResourceService'),
+    operationPlanService: Symbol.for('OperationPlanService'),
     qualificationService: Symbol.for('QualificationService'),
     representativeService: Symbol.for('RepresentativeService'),
     schedulingService: Symbol.for('SchedulingService'),

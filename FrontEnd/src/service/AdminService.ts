@@ -15,24 +15,24 @@ export class AdminService implements IAdminService {
 	){}
 
     getLogs(): Promise<Logs[]> {
-        return this.http.get<Logs[]>('/auditLogs').then(res => res.data);
+        return this.http.get<Logs[]>('/api/auditLogs').then(res => res.data);
     }
 
     async changeUserRole(emailAddress: string, newRole: number): Promise<SystemUser> {
-        const res = await this.http.put<SystemUser>(`/SystemUser/${encodeURIComponent(emailAddress)}/role?role=${encodeURIComponent(newRole)}`, { });
+        const res = await this.http.put<SystemUser>(`/api/SystemUser/${encodeURIComponent(emailAddress)}/role?role=${encodeURIComponent(newRole)}`, { });
         return res.data;
     }
 
     async activateUserAccount(emailAddress: string): Promise<void> {
-        await this.http.put<void>(`/SystemUser/${encodeURIComponent(emailAddress)}/activate`, { });
+        await this.http.put<void>(`/api/SystemUser/${encodeURIComponent(emailAddress)}/activate`, { });
     }
 
     async deactivateUserAccount(emailAddress: string): Promise<void> {
-        await this.http.put<void>(`/SystemUser/${encodeURIComponent(emailAddress)}/deactivate`, { });
+        await this.http.put<void>(`/api/SystemUser/${encodeURIComponent(emailAddress)}/deactivate`, { });
     }
 
     async createUser(emailAddress: string, role: number): Promise<SystemUser> {
-        const res = await this.http.post<SystemUser>('/SystemUser', {
+        const res = await this.http.post<SystemUser>('/api/SystemUser', {
                 "sub":"",
                 "isActive": false,
                 "role": role,
@@ -48,17 +48,17 @@ export class AdminService implements IAdminService {
     }
 
     async getAllUsers(): Promise<Array<SystemUser>> {
-        const res = await this.http.get<Array<SystemUser>>('/SystemUser');
+        const res = await this.http.get<Array<SystemUser>>('/api/SystemUser');
         return res.data;
     }
 
     async getByEmail(emailAddress: string): Promise<SystemUser> {
-        const res = await this.http.get<SystemUser>(`/SystemUser/${encodeURIComponent(emailAddress)}`);
+        const res = await this.http.get<SystemUser>(`/api/SystemUser/${encodeURIComponent(emailAddress)}`);
         return res.data;
     }
 
     async deleteUser(emailAddress: string): Promise<void> {
-        await this.http.delete<void>(`/SystemUser/${encodeURIComponent(emailAddress)}`);
+        await this.http.delete<void>(`/api/SystemUser/${encodeURIComponent(emailAddress)}`);
     }
 
     async filterSystemUsers(filter: Filter<SystemUser>): Promise<Page<SystemUser>> {
@@ -71,7 +71,7 @@ export class AdminService implements IAdminService {
             query.push(filter.pageNumber !== undefined ? `PageNumber=${encodeURIComponent(filter.pageNumber)}&` : '');
             query.push(filter.pageSize !== undefined ? `PageSize=${encodeURIComponent(filter.pageSize)}` : '');
         }
-        const res = await this.http.get<Page<SystemUser>>(`/SystemUser/filter${query.length ? `?${query.join('')}` : ''}`);
+        const res = await this.http.get<Page<SystemUser>>(`/api/SystemUser/filter${query.length ? `?${query.join('')}` : ''}`);
         return res.data;
     }
 }

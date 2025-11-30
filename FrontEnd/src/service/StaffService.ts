@@ -29,33 +29,33 @@ export class StaffService implements IStaffService {
 			query.push(filtering.pageSize !== undefined ? `PageSize=${filtering.pageSize}` : '');
 		}
 
-		const res = await this.http.get<Page<Staff>>(`/Staff/filter${query.length ? `?${query.join('')}` : ''}`);
+		const res = await this.http.get<Page<Staff>>(`/api/Staff/filter${query.length ? `?${query.join('')}` : ''}`);
 		
 		return res.data;
 	}
 
 	async getStaffByMechanographicNumber(mechanographicNumber: string): Promise<Staff> {
-		const res = await this.http.get<Page<Staff>>(`/Staff/filter?MechanographicNumber=${mechanographicNumber}`);
+		const res = await this.http.get<Page<Staff>>(`/api/Staff/filter?MechanographicNumber=${mechanographicNumber}`);
 		let staff = res.data.items[0];
 		return staff!;
 	}
 
 	async createStaff(staff: Staff): Promise<Staff> {
-		const res =  await this.http.post<Staff>('/Staff', staff.toDto());
+		const res =  await this.http.post<Staff>('/api/Staff', staff.toDto());
 		return res.data;
 	}
 
 	async deactivateStaff(mechanographicNumber: string): Promise<void> {
-		await this.http.delete<void>(`/Staff/${mechanographicNumber}`);
+		await this.http.delete<void>(`/api/Staff/${mechanographicNumber}`);
 	}
 
 	async updateStaff(staff: Staff): Promise<Staff> {
-		const res = await this.http.put<Staff>(`/Staff/${staff.mechanographicNumber}`, staff.toDto());
+		const res = await this.http.put<Staff>(`/api/Staff/${staff.mechanographicNumber}`, staff.toDto());
 		return res.data;
 	}
 
 	async getNumberOfStaffs(): Promise<number> {
-		const res = await this.http.get<number>(`/Staff/count`);
+		const res = await this.http.get<number>(`/api/Staff/count`);
 		return res.data;
 	}
     
