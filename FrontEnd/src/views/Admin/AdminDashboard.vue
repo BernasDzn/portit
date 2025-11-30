@@ -14,7 +14,7 @@ const { t } = useI18n();
 <template>
     <div>
         <h1 class="title">{{ t('admin.title') }}</h1>
-        <h class="subtitle">{{ t('admin.subtitle') }}</h>
+        <p class="subtitle">{{ t('admin.subtitle') }}</p>
         <sl-card class="dashboard-overview">
             <div class="dashboard-items">
                 <DashboardItem
