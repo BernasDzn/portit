@@ -3,9 +3,9 @@ import { verify, JwtPayload } from 'jsonwebtoken';
 import config from '../config/config';
 
 declare module 'express-serve-static-core' {
-  interface Request {
-    user?: string | JwtPayload;
-  }
+    interface Request {
+        user?: string | JwtPayload;
+    }
 }
 
 export const authMiddleware = (
@@ -13,22 +13,29 @@ export const authMiddleware = (
     res: Response,
     next: NextFunction
 ) => {
-    const authHeader = req.header('Authorization');
 
-    if (!authHeader) {
+    // Try reading token from cookie first
+    let token = req.cookies?.AuthToken;
+
+    // Fallback to Authorization header
+    if (!token) {
+        const authHeader = req.header('Authorization');
+        if (authHeader?.startsWith('Bearer ')) {
+            token = authHeader.slice(7);
+        } else {
+            token = authHeader || null;
+        }
+    }
+
+    if (!token) {
         return res.status(401).json({ message: 'Unauthorized' });
     }
 
-    const token = authHeader.startsWith('Bearer ') 
-        ? authHeader.slice(7) 
-        : authHeader;
-
     try {
         const decoded = verify(token, config.jwtSecret);
-        console.log('Decoded token:', decoded);
         req.user = decoded;
         next();
-    } catch (error) {
-        res.status(400).json({ message: 'Invalid token' });
+    } catch {
+        return res.status(400).json({ message: 'Invalid token' });
     }
-}
+};

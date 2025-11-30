@@ -7,8 +7,10 @@ import { swaggerSpec } from './config/swagger';
 import mongoose from 'mongoose';
 import config from './config/config';
 import { bootstrap } from './bootstrap';
+import cookieParser from 'cookie-parser';
 
 const app = express();
+app.use(cookieParser());
 app.use(express.json());
 
 // Connect to database
