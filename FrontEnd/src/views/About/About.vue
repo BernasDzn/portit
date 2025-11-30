@@ -1,21 +1,21 @@
 <script setup lang="ts">
 import MarkdownRenderer from '@/components/MarkdownRenderer.vue';
-import { useAlerts } from '@/composables/alerts';
 import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
+import type { PrivacyPolicy } from '@/model/PrivacyPolicy';
 import type { IPrivacyPolicyService } from '@/service/IService/IPrivacyPolicyService';
 import { onMounted, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 const privacyPolicyService = container.get<IPrivacyPolicyService>(TYPES.privacyPolicyService);
-const privacyPolicy = ref<string>('');
+const privacyPolicy = ref<PrivacyPolicy>();
 
 onMounted(async () => {
     try {
         const data = (await privacyPolicyService.getActivePrivacyPolicy());
-        privacyPolicy.value = data.content;
+        privacyPolicy.value = data;
     } catch (error) {
-        privacyPolicy.value = '<p>Failed to load privacy policy.</p>';
+        privacyPolicy.value = null;
     }
 });
 
@@ -106,9 +106,13 @@ const downloadPrivacyPolicy = () => {
 
         
 
-    <sl-dialog label="Privacy Policy" class="dialog-overview" style="--width: 50vw;">
+    <sl-dialog Label="Privacy Policy" class="dialog-overview" style="--width: 50vw;">
         <sl-icon-button class="new-window" slot="header-actions" name="download" @click="downloadPrivacyPolicy"></sl-icon-button>
-        <MarkdownRenderer :markdown="privacyPolicy" style="height: 30rem;" />
+        <p slot="label" style="display: flex;">
+            <b>Privacy Policy</b> &nbsp;
+            <sl-badge variant="primary" pill>Last updated: {{ privacyPolicy?.updatedOn ? new Date(privacyPolicy.updatedOn).toLocaleDateString() : '' }}</sl-badge>
+        </p>
+        <MarkdownRenderer :markdown="privacyPolicy?.content || ''" style="height: 30rem;" />
         <sl-button @click="closePrivacyPolicy" slot="footer" variant="primary">Ok</sl-button>
     </sl-dialog>
 
