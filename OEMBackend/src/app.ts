@@ -1,6 +1,7 @@
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
 import itemRoutes from './routes/itemRoutes';
+import planRoutes from './routes/operationPlanRoutes';
 import { errorHandler } from './middlewares/errorHandler';
 import { swaggerSpec } from './config/swagger';
 import mongoose from 'mongoose';
@@ -31,6 +32,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Routes
 app.use('/api/items', itemRoutes);
+app.use('/plans', planRoutes);
 
 // Global error handler (should be after routes)
 app.use(errorHandler);
