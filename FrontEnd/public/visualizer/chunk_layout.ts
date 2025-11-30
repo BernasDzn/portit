@@ -1617,7 +1617,7 @@ export default class PortLayout {
         }
 
         // add outline + highlight and animation
-        const highlightMesh = (obj, color) => {
+        const highlightMesh = (obj, color, noMove = false) => {
             if (!obj) return;
 
             // if no color (0x000000) remove highlight: request reverse if animating
@@ -1785,6 +1785,8 @@ export default class PortLayout {
 
             // if this is a chunk also highlight things above it
             const relatedMeshes = [obj];
+            // per-mesh no-move flags: true means this mesh should not be moved (only material change)
+            const relatedNoMove = [ !!noMove || !!(obj && obj.userData && (obj.userData.vesselName || obj.userData.craneId)) ];
             const chunk = this.chunkData ? this.chunkData.find(c => c.base === obj) : null;
             if (chunk && typeof chunk.position !== 'undefined') {
                 const halfX = 50;
@@ -1815,6 +1817,9 @@ export default class PortLayout {
                     const dz = wp.z - center.z;
                     if (Math.abs(dx) <= halfX && Math.abs(dz) <= halfZ) {
                         relatedMeshes.push(child);
+                        // when the original selection was a vessel/crane (noMove=true) we want children to also not move.
+                        // otherwise, chunk selection should move everything above it (noMove=false).
+                        relatedNoMove.push(!!noMove);
                         setHighlightMaterial(child);
                     }
                 });
@@ -1837,6 +1842,7 @@ export default class PortLayout {
                 baseObj: obj,
                 // outlineMesh field removed
                 upOffset,
+                noMove: relatedNoMove,
                 color
             };
 
@@ -1846,7 +1852,7 @@ export default class PortLayout {
             try { obj.getWorldPosition(baseWorldPos); } catch (e) { baseWorldPos.set(0, 0, 0); }
             anim.baseWorldY = baseWorldPos.y;
             anim.meshOriginalWorlds = [];
-            anim.meshes.forEach((m) => {
+            anim.meshes.forEach((m, mi) => {
                 if (!m.userData) m.userData = {};
                 try {
                     const w = new THREE.Vector3();
@@ -1854,6 +1860,11 @@ export default class PortLayout {
                     anim.meshOriginalWorlds.push(w);
                 } catch (e) {
                     anim.meshOriginalWorlds.push(new THREE.Vector3());
+                }
+                // ensure noMove array aligns with meshes
+                if (!anim.noMove || typeof anim.noMove[mi] === 'undefined') {
+                    anim.noMove = anim.noMove || [];
+                    anim.noMove[mi] = false;
                 }
             });
             this._highlightAnimations.push(anim);
@@ -1903,14 +1914,18 @@ export default class PortLayout {
                                 const m = a.meshes[mi];
                                 const origWorld = (a.meshOriginalWorlds && a.meshOriginalWorlds[mi]) ? a.meshOriginalWorlds[mi] : null;
                                 if (!origWorld) continue;
-                                const targetWorld = origWorld.clone().add(new THREE.Vector3(0, deltaY, 0));
-                                try {
-                                    if (m.parent) {
-                                        m.position.copy(m.parent.worldToLocal(targetWorld.clone()));
-                                    } else {
-                                        m.position.copy(targetWorld);
-                                    }
-                                } catch (e) {}
+                                // if this mesh was flagged as noMove for this highlight, skip changing its position
+                                const isNoMove = a.noMove && a.noMove[mi];
+                                if (!isNoMove) {
+                                    const targetWorld = origWorld.clone().add(new THREE.Vector3(0, deltaY, 0));
+                                    try {
+                                        if (m.parent) {
+                                            m.position.copy(m.parent.worldToLocal(targetWorld.clone()));
+                                        } else {
+                                            m.position.copy(targetWorld);
+                                        }
+                                    } catch (e) {}
+                                }
 
                                 if (m.material) {
                                     const revIntensity = (deltaY / a.upOffset) * HIGHLIGHT_EMISSIVE_SCALE;
@@ -1952,14 +1967,18 @@ export default class PortLayout {
                             const m = a.meshes[mi];
                             const origWorld = (a.meshOriginalWorlds && a.meshOriginalWorlds[mi]) ? a.meshOriginalWorlds[mi] : null;
                             if (!origWorld) continue;
-                            const targetWorld = origWorld.clone().add(new THREE.Vector3(0, deltaY, 0));
-                            try {
-                                if (m.parent) {
-                                    m.position.copy(m.parent.worldToLocal(targetWorld.clone()));
-                                } else {
-                                    m.position.copy(targetWorld);
-                                }
-                            } catch (e) {}
+                            // if this mesh was flagged as noMove for this highlight, skip changing its position
+                            const isNoMove = a.noMove && a.noMove[mi];
+                            if (!isNoMove) {
+                                const targetWorld = origWorld.clone().add(new THREE.Vector3(0, deltaY, 0));
+                                try {
+                                    if (m.parent) {
+                                        m.position.copy(m.parent.worldToLocal(targetWorld.clone()));
+                                    } else {
+                                        m.position.copy(targetWorld);
+                                    }
+                                } catch (e) {}
+                            }
 
                             // emissive blinking using a slow sine wave
                             if (m.material) {
@@ -1998,24 +2017,21 @@ export default class PortLayout {
             hideInfoText();
             this.isInfoVisible = false;
 
-            if(pickedObject.userData && pickedObject.userData.vesselName) {
+            // prioritize vessel selection, then crane, otherwise default to highlighting the selected object
+            if (pickedObject.userData && pickedObject.userData.vesselName) {
                 const clickedVessel = this.vesselList.find(vessel => vessel.name === pickedObject.userData.vesselName);
                 if (clickedVessel) {
                     clickedVessel.model.traverse((child) => {
                         if (child.isMesh) {
-                            highlightMesh(child, 0xffffff);
+                            highlightMesh(child, 0xffffff, true);
                         }
                     });
                 }
-            } else {
-                highlightMesh(this.selectedObject, 0xffffff);
-            }
-
-            if (pickedObject.userData && pickedObject.userData.craneId) {
+            } else if (pickedObject.userData && pickedObject.userData.craneId) {
                 const clickedCrane = this.craneList.find(crane => crane.name === pickedObject.userData.craneId);
                 if (clickedCrane) {
                     clickedCrane.meshes.forEach((mesh) => {
-                        highlightMesh(mesh, 0xffffff);
+                        highlightMesh(mesh, 0xffffff, true);
                     });
                 } else {
                     highlightMesh(this.selectedObject, 0xffffff);
