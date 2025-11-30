@@ -284,6 +284,9 @@ builder.Services.AddIdentityCore<SystemUser>(options =>
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+// Health checks (required for the /health endpoint)
+builder.Services.AddHealthChecks();
+
 builder.Services.AddTransient<IQualificationRepository, QualificationRepository>();
 builder.Services.AddTransient<IQualificationService, QualificationService>();
 builder.Services.AddTransient<IDockRepository, DockRepository>();
