@@ -617,6 +617,7 @@
         "vesselTitle": "Vessel Information",
         "manifestInfo": "Manifest Information",
         "fields": {
+            "selectVessel": "Select corresponding vessel",
             "openLoadManifest": "Open Load Manifest",
             "openUnloadManifest": "Open Unload Manifest",
             "expectedArrival": "Expected Arrival",

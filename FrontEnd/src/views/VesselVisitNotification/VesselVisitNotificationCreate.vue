@@ -153,7 +153,7 @@ const isLastStep = () => currentStep.value === totalSteps;
             class="field-dropdown"
             :name="t('vessel.fields.imoNumber.title') + '*'"
             :fetch-function="getMyVessels"
-            :placeholderText="t('physicalResource.fields.servingDocks.placeholder')"
+            :placeholderText="t('notification.fields.selectVessel')"
             labelKey="imoNumber"
             required
             v-model="vvn.vessel"
