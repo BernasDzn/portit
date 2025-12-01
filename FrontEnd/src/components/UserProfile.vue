@@ -41,6 +41,7 @@ const animateChevron = () => {
             :image="user?.avatar"
             label="User avatar"
             loading="lazy"
+            class="avatar"
         ></sl-avatar>
         <p>{{ user?.name || 'Guest' }}</p>
         <sl-icon class="icon" name="chevron-down"></sl-icon>
@@ -71,3 +72,9 @@ const animateChevron = () => {
     </div>
 </div>
 </template>
+
+<style scoped>
+.avatar {
+    z-index: -1;
+}
+</style>
