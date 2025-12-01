@@ -1004,13 +1004,21 @@ export default class PortLayout {
                     const departureRaw = vp.DepartureTime ?? vp.departureTime;
                     const dockId = vp.DockId ?? vp.dockId ?? vp.dock;
                     const vesselId = vp.VesselId ?? vp.vesselId ?? vp.vessel;
+                    const loadingTime = vp.loadingTime;
+                    const unloadingTime = vp.unloadingTime;
 
                     if (!arrivalRaw || !departureRaw || !dockId || !vesselId) continue;
 
                     const arrival = new Date(arrivalRaw);
                     const departure = new Date(departureRaw);
 
-                    this.vesselSchedule.push({ vesselId: String(vesselId), dockId: String(dockId), arrival, departure });
+                    const unloadingTimeMs = unloadingTime ? unloadingTime * 3600000 : 0;
+                    const loadingTimeMs = loadingTime ? loadingTime * 3600000 : 0;
+
+                    const unloadingEndDate = new Date(arrival.getTime() + unloadingTimeMs);
+                    const loadingEndDate = new Date(arrival.getTime() + unloadingTimeMs + loadingTimeMs);
+
+                    this.vesselSchedule.push({ vesselId: String(vesselId), dockId: String(dockId), arrival, departure, unloadingEndDate, loadingEndDate });
                 }
 
                 // Log the parsed vessel schedule for debugging
@@ -1305,7 +1313,7 @@ export default class PortLayout {
     }
 
 
-    async addVessel(name, position, scene) {
+    async addVessel(name, position, scene, dock, schedule) {
         const modelPath = "/visualizer/models/lowpoly/ship.obj";
         // Load model once and cache it
         if (!this.modelCache[modelPath]) {
@@ -1315,6 +1323,9 @@ export default class PortLayout {
         // Clone the cached model for this vessel instance
         const model = this.modelCache[modelPath].clone();
         let vessel = new Vessel(name, model, position, this);
+        vessel.assignedDock = dock;
+        vessel.schedule = schedule;
+
         vessel.init(scene);
         this.vesselList.push(vessel);
     }
@@ -1499,12 +1510,17 @@ export default class PortLayout {
                     pos.z -= chunkSize.z / 2 + vesselOffset;
                     pos.x += spanRand;
             }
-            pos.y = layoutY + (chunkSize.y / 2) - 2;
+            pos.y = layoutY + (chunkSize.y / 2) - 3.2;
+
+            // Offset for number of vessels at the same dock
+            const numAtDock = this.vesselList.filter(v => v.assignedDock === dockChunk).length;
+            const lateralOffset = 16;
+            pos.x += (numAtDock * lateralOffset);            
 
             // Mark as pending before starting async creation to avoid duplicates
             this.pendingVessels.add(vesselId);
             try {
-                await this.addVessel(vesselId, pos, scene);
+                await this.addVessel(vesselId, pos, scene, dockChunk, entry);
             } catch (e) {
                 console.error('Failed to add vessel', vesselId, e);
             } finally {

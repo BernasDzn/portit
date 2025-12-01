@@ -4,6 +4,8 @@ import {makeBillboard} from "./helpers/billboard_helper.ts";
 import { chunkIndexToPosition } from "./chunk_layout.ts";
 import { findVesselPath } from "./helpers/path_find_helper.ts";
 import PathFollower from "./helpers/spline_helper.ts";
+import { hideInfoText, setInfoText } from "./helpers/info_helper.ts";
+import {getInGameDate} from "./time.ts";
 
 function extrapolateForward(pos, distance) {
     // const forward = new THREE.Vector3();
@@ -51,7 +53,8 @@ export default class Vessel {
             this.readyToDie = true;
         } else {
             this.docked = true;
-            this.state = "Docked"; 
+            // this.state = "Operating"; 
+            this.setState("Unloading containers...");
         }
     }
 
@@ -67,8 +70,9 @@ export default class Vessel {
 
         // Vessel metadata
         const vesselMeta = {
-            title: 'Vessel',
+            title: this.name,
             description: `${this.name} is a vessel`,
+            state: this.state,
             killable: true,
             killFunction: () => { this.kill(); }
         };
@@ -138,7 +142,7 @@ export default class Vessel {
             this.model,
             this.layout,
             50,
-            8.0,
+            8.0 * 3,
             this.onPathFinished.bind(this)
         );
     }
@@ -169,6 +173,38 @@ export default class Vessel {
         if(this.readyToDie){
             this.kill();
         }
+
+        // Check for state changes
+        if (this.schedule && this.docked && !this.departed && this.state !== "Idle..."){
+
+            const currentTime = getInGameDate();
+            // console.log(this.schedule);
+            const unloadingEndDate = new Date(this.schedule.unloadingEndDate);
+            const loadingEndDate = new Date (this.schedule.loadingEndDate);
+
+            if (this.docked && !this.departed && currentTime >= unloadingEndDate && this.state !== "Loading containers...") {
+                this.setState("Loading containers...");
+            }
+
+            if (this.docked && !this.departed && currentTime >= loadingEndDate && this.state !== "Idle...") {
+                this.setState("Idle...");
+            }
+
+            //console.log(`Current time: ${currentTime}, unloading end: ${unloadingEndDate}, loading end: ${loadingEndDate}`);
+        }
+    }
+
+    setState(newState){
+        this.state = newState;
+        // Update state in metadata for all child meshes
+        this.model.traverse((child) => {
+            if (child.isMesh && child.meta) {
+                child.meta.state = this.state;
+            }
+        });
+
+        // Update text
+        setInfoText(this.model.children[0].meta, false);
     }
 
     depart(){
@@ -180,7 +216,8 @@ export default class Vessel {
 
         // Set a new path that is the reverse of the arrival path
         this.departed = true;
-        this.state = "Departing";
+        // this.state = "Departing";
+        this.setState("Departing");
         
         const departurePath = [...this.arrivalPath].reverse();
         // offset path on x

@@ -1,6 +1,7 @@
-function setInfoText(userData) {
+function setInfoText(userData, show=true) {
     
-    document.getElementById('object-details').style.display = 'block';
+    if (show)
+        document.getElementById('object-details').style.display = 'block';
 
     const infoTitleElement = document.getElementById('container-title');
     const infoDescriptionElement = document.getElementById('container-description');
@@ -21,6 +22,10 @@ function setInfoText(userData) {
                 descriptionText += `\n${formattedKey}: ${value}`;
             }
         }
+    }
+
+    if (userData.state) {
+        descriptionText += `\n\nState\n${userData.state}`;
     }
     
     if (infoDescriptionElement) infoDescriptionElement.innerHTML = descriptionText.replace(/\n/g, '<br>');

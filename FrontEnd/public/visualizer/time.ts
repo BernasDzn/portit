@@ -45,6 +45,10 @@ function updateTime(app) {
     });
 }
 
+export function getInGameDate() {
+    return currentDate;
+}
+
 export class TimedEvent {
     targetHour;
     callback;
