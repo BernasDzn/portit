@@ -11,6 +11,10 @@ export class OperationPlanService implements IOperationPlanService {
 		@inject(TYPES.api) 
 		private http: IHttpService
 	){}
+    async groupOperationPlansByDate(): Promise<{ date: string; count: number; }[]> {
+        const res = await this.http.get<{ date: string; count: number; }[]>(`/oem/plans/group`);
+        return res.data;
+    }
 
     async getAllOperationPlans(): Promise<any> {
         const res = await this.http.get<any>(`/oem/plans`);

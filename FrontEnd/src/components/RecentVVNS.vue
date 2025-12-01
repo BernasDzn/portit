@@ -15,6 +15,7 @@ import type { IVesselVisitNotificationService } from '@/service/IService/IVessel
 import type { VesselVisitDistributionDto } from '@/model/dto/VesselVisitNotificationDto';
 import { Pie } from 'vue-chartjs';
 import { ArcElement } from 'chart.js';
+import PlansByDay from './PlansByDay.vue';
 
 ChartJS.register(ArcElement);
 ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
@@ -152,12 +153,19 @@ const pieChartOptions = {
                 :options="chartOptions"
                 :data="chartData"
             />
-            <Pie v-else
-                id="distribution-pie-chart"
-                :data="pieChartData"
-                :options="pieChartOptions"
+            <div v-else>
+                <Pie 
+                    id="distribution-pie-chart"
+                    :data="pieChartData"
+                    :options="pieChartOptions"
+                />
+            </div>
+        </sl-card>
+        <sl-card class="chart-card" v-if="role != 2">
+            <PlansByDay 
+                :width="300"
+                :height="300"
             />
-            
         </sl-card>
     </div>
 </template>

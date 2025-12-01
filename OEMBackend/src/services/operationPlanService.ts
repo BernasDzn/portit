@@ -12,6 +12,13 @@ export class OperationPlanService {
         let plan = await operationPlanRepository.findById(id);
         return plan?.toDto();
     }
+
+    async groupByDate(): Promise<{
+        date: string;
+        count: number;
+    }[]> {
+        return await operationPlanRepository.groupBydate();
+    }
 }
 
 export const operationPlanService = new OperationPlanService();

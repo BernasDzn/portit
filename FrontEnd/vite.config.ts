@@ -49,19 +49,19 @@ export default defineConfig({
     // Proxy API calls to backend dev server to avoid browser TLS issues with self-signed certs
     
     proxy: {
-        '^/api': {
+        '/api': {
             target: proxyTarget,
             changeOrigin: true,
             secure: false,
             rewrite: (path) => path.replace(/^\/api/, ''),
         },
-        '^/prolog': {
+        '/prolog': {
             target: prologTarget,
             changeOrigin: true,
             secure: false,
             rewrite: (path) => path.replace(/^\/prolog/, ''),
         },
-        '^/oem': {
+        '/oem': {
             target: oemTarget,
             changeOrigin: true,
             secure: false,

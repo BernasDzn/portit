@@ -1,18 +1,11 @@
 <script setup lang="ts">
-import type { Staff } from '@/model/Staff'
-import type { Filter } from '@/model/Page'
-import type { Page } from '@/model/Page'
 import { useI18n } from 'vue-i18n';
 import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
 import type { IOperationPlanService } from '@/service/IService/IOperationPlanService';
-import { onMounted } from 'vue';
+import PlansByDay from '@/components/PlansByDay.vue';
 
 const oemService = container.get<IOperationPlanService>(TYPES.operationPlanService);
-onMounted(async () => {
-  const c = oemService.getAllOperationPlans();
-  console.log(c);
-});
 
 const { t, locale } = useI18n();
 
@@ -27,8 +20,10 @@ const { t, locale } = useI18n();
     </sl-breadcrumb>
 
     <header>
-      <h1 class="title">{{ t('scheduling.tabs.search') }}</h1>
-      <p class="subtitle">{{ t('scheduling.subtitles.search') }}</p>
+        <h1 class="title">{{ t('scheduling.tabs.search') }}</h1>
+        <p class="subtitle">{{ t('scheduling.subtitles.search') }}</p>
+
+        
 
     </header>
   </div>

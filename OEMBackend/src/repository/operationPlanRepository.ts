@@ -15,6 +15,30 @@ export class OperationPlanRepository {
         if (data) return OperationPlanMapper.fromSchema(data);
         return null;
     }
+
+    async groupBydate(): Promise<{
+        date: string;
+        count: number;
+    }[]> {
+        const data = await OperationPlans.aggregate([
+            {
+                $group: {
+                    _id: "$date",
+                    count: { $sum: 1 }
+                }
+            },
+            {
+                $project: {
+                    _id: 0,
+                    date: "$_id",
+                    count: 1
+                }
+            }
+        ]);
+
+        return data;
+    }
+
 }
 
 export const operationPlanRepository = new OperationPlanRepository();
