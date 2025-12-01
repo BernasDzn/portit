@@ -63,7 +63,7 @@ const mappedLogs = computed(() =>
                 <RouterLink to="/admin/audit-logs" class="view-all-link" @click="closeDropdown">View All</RouterLink>
             </div>
             <ul class="notification-menu">
-                <li v-for="log in mappedLogs" :key="log.requestId + log.timestamp" class="notification-item">
+                <li v-for="(log, index) in mappedLogs" :key="`${index}-${log.requestId}-${log.timestamp}-${log.message}`" class="notification-item">
                     <div class="log-entry">
                         <div class="log-content">
                             <div class="log-message">{{ log.message }}</div>
