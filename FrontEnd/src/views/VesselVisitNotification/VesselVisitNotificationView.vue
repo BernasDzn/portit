@@ -439,6 +439,7 @@ const deleteNotification = async () => {
     display: flex;
     flex-direction: column;
     padding: 1rem;
+    position: relative;
 }
 
 .dialog-overview {
@@ -502,14 +503,13 @@ const deleteNotification = async () => {
     color: var(--sl-color-neutral-500);
 }
 
-/* The vertical line */
-.timeline::before {
+.timeline .timeline-point:not(:last-child)::after {
     content: "";
     position: absolute;
-    left: 4.8rem;
-    top: 14rem;
+    left: 16px;
+    top: 32px;
+    height: calc(100% + 1.5rem);
     width: 2px;
-    height: calc(100% - 30rem);
     background-color: var(--sl-color-neutral-300);
     z-index: 0;
 }
