@@ -122,7 +122,7 @@ const loading = ref(false);
   gap: 1rem;
   width: 100%;
   margin: 0;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr) );
+  grid-template-columns: repeat(auto-fit, minmax(125px, 1fr) );
 }
 
 .stats-overview {
@@ -131,6 +131,9 @@ const loading = ref(false);
     border-radius: 0.5rem;
     padding: 1rem;
     background-color: #f5f6fa;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .stats-overview p {
