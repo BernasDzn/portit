@@ -142,8 +142,7 @@ export class SchedulingService implements ISchedulingService {
 
     async scheduleForDay(day: Date, alg: string, daysAhead: number = 2): Promise<Schedule> {
         const dayString = day.toISOString().split('T')[0];
-        const url = `/prolog/schedule?day=${dayString}&alg=${alg}&daysAhead=${daysAhead}`;
-        const res = await this.http.getWithoutCredentials(url);
+        const res = await this.http.getWithoutCredentials(`/oem/schedule/request?day=${dayString}&alg=${alg}&daysAhead=${daysAhead}`);
         
         const apiResponse = res as any;
         
@@ -151,7 +150,7 @@ export class SchedulingService implements ISchedulingService {
         
         return {
             status: actualData.status || 'success',
-            comment: '',
+            comment: actualData.comment || '',
             data: actualData.data || [],
             metrics: actualData.metrics
         } as Schedule;
