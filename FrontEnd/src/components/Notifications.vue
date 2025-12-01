@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, computed, watch } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
 import type { IAdminService } from '@/service/IService/IAdminService';
@@ -8,18 +8,22 @@ import type { Logs } from '@/model/values/Logs';
 const adminService = container.get<IAdminService>(TYPES.adminService);
 
 const logs = ref<Logs[]>([]);
-const moreInfo = ref(false);
+const dropdownRef = ref<any>(null);
 
-const toggleMoreInfo = () => {
-    moreInfo.value = !moreInfo.value;
+const closeDropdown = () => {
+    if (dropdownRef.value) {
+        dropdownRef.value.hide();
+    }
+};
+
+const onDropdownShow = () => {
+    void fetchLogs();
 };
 
 const fetchLogs = async () => {
     try {
         const logList: Logs[] = await adminService.getLogs();
-        logs.value = logList
-            .sort((a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime())
-            .slice(0, 10);
+        logs.value = logList.slice(0, 10);
     } catch (err) {
         console.error('Failed to load audit logs', err);
     }
@@ -27,12 +31,6 @@ const fetchLogs = async () => {
 
 onMounted(() => {
     void fetchLogs();
-});
-
-watch(moreInfo, (isOpen) => {
-    if (isOpen) {
-        void fetchLogs();
-    }
 });
 
 const levelMap: Record<string, string> = {
@@ -54,47 +52,39 @@ const mappedLogs = computed(() =>
 </script>
 
 <template>
-    <div>
-        <div @click="toggleMoreInfo" class="notifications-info">
+    <sl-dropdown ref="dropdownRef" placement="bottom" @sl-show="onDropdownShow">
+        <div slot="trigger" class="notifications-info">
             <sl-icon name="bell"></sl-icon>
         </div>
-
-        <div class="info-popup">
-            <sl-popup placement="bottom" :active="moreInfo">
-                <span slot="anchor"></span>
-                <div class="box">
-                    <div class="notification-header">
-                        <h3>Recent Audit Logs</h3>
-                        <RouterLink to="/admin/audit-logs" class="view-all-link">View All</RouterLink>
+        
+        <sl-menu class="dropdown-content">
+            <div class="notification-header">
+                <h3>Recent Audit Logs</h3>
+                <RouterLink to="/admin/audit-logs" class="view-all-link" @click="closeDropdown">View All</RouterLink>
+            </div>
+            <ul class="notification-menu">
+                <li v-for="log in mappedLogs" :key="log.requestId + log.timestamp" class="notification-item">
+                    <div class="log-entry">
+                        <div class="log-content">
+                            <div class="log-message">{{ log.message }}</div>
+                            <div class="log-timestamp">{{ log.timestamp }}</div>
+                        </div>
+                        <div class="log-type">
+                            <sl-badge :variant="log.level === 'INF' ? 'primary' : log.level === 'WRN' ? 'warning' : 'danger'">
+                                {{ log.requestType }}
+                            </sl-badge>
+                        </div>
                     </div>
-                    <ul class="notification-menu" scrollable>
-                        <li v-for="log in mappedLogs" :key="log.requestId + log.timestamp" class="notification-item">
-                            <div class="log-entry">
-                                <div class="log-content">
-                                    <div class="log-message">{{ log.message }}</div>
-                                    <div class="log-timestamp">{{ log.timestamp }}</div>
-                                </div>
-                                <div class="log-type">
-                                    <sl-badge :variant="log.level === 'INF' ? 'primary' : log.level === 'WRN' ? 'warning' : 'danger'">
-                                        {{ log.requestType }}
-                                    </sl-badge>
-                                </div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </sl-popup>
-        </div>
-    </div>
+                </li>
+            </ul>
+        </sl-menu>
+    </sl-dropdown>
 </template>
 
 <style scoped>
-.info-popup {
-    z-index: 1000;
-}
-
-.box {
-    z-index: 1000;
+.dropdown-content {
+    min-width: 400px;
+    max-width: 500px;
 }
 
 .notification-header {
