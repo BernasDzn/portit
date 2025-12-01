@@ -39,6 +39,16 @@ export class OperationPlanRepository {
         return data;
     }
 
+    async findByDateRange(startDate: string, endDate: string): Promise<OperationPlan[]> {
+        const data = await OperationPlans.find({
+            date: {
+                $gte: startDate,
+                $lte: endDate
+            }
+        });
+
+        return data.map(doc => OperationPlanMapper.fromSchema(doc));
+    }
 }
 
 export const operationPlanRepository = new OperationPlanRepository();

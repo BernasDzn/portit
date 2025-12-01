@@ -61,6 +61,44 @@ export const getPlanById = async (req: Request, res: Response, next: NextFunctio
 
 /**
  * @swagger
+ * /plans/range:
+ *   get:
+ *     tags: [OperationPlans]
+ *     parameters:
+ *       - in: query
+ *         name: startDate
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Start date for the range filter
+ *       - in: query
+ *         name: endDate
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: End date for the range filter
+ *     responses:
+ *       200:
+ *         description: Operation plans within the specified date range
+ */
+export const getPlansByDateRange = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { startDate, endDate } = req.query;
+
+        if (!startDate || !endDate) {
+            return res.status(400).json({ message: 'startDate and endDate query parameters are required' });
+        }
+
+        const items = await operationPlanService.findByDateRange(startDate as string, endDate as string);
+        res.json(items);
+
+    } catch (error) {
+        next(error);
+    }
+}
+
+/**
+ * @swagger
  * /plans/group:
  *   get:
  *     tags: [OperationPlans]

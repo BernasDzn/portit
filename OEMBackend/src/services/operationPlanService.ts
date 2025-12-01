@@ -13,6 +13,11 @@ export class OperationPlanService {
         return plan?.toDto();
     }
 
+    async findByDateRange(startDate: string, endDate: string): Promise<OperationPlanDto[]> {
+        let plans = await operationPlanRepository.findByDateRange(startDate, endDate);
+        return plans.map(plan => plan.toDto());
+    }
+
     async groupByDate(): Promise<{
         date: string;
         count: number;
