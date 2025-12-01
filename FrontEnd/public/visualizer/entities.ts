@@ -173,10 +173,10 @@ export default class Vessel {
 
     depart(){
 
-        // if (!this.docked || this.departed) {
-        //     console.log(`${this.name} cannot depart. docked=${this.docked}, departed=${this.departed}`);
-        //     return;
-        // }
+        if (!this.docked || this.departed) {
+            console.log(`${this.name} cannot depart. docked=${this.docked}, departed=${this.departed}`);
+            return;
+        }
 
         // Set a new path that is the reverse of the arrival path
         this.departed = true;

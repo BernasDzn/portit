@@ -404,17 +404,20 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
     {
         var approovedNotifications = await _notificationRepository.GetVesselVisitNotificationsAsync();
         var positions = approovedNotifications
-            .Where(n => n.Status == NotificationStatus.Decided 
+            .Where(n => n.Status == NotificationStatus.Decided
                     && n.NotificationDecisions.Any(
                         d => d.Status == NotificationDecisionStatus.Approved
                         )
                     )
-            .Select(n => new VesselPositionDto(
-                n.Vessel.ImoIdentifier.Value,
-                n.GetLatestDecision()!.AssignedDock!.Code.Value,
-                n.ExpectedArrival,
-                n.ExpectedDeparture
-            ));
+            .Select(n => new VesselPositionDto
+            {
+                VesselId = n.Vessel.ImoIdentifier.Value,
+                DockId = n.GetLatestDecision()!.AssignedDock!.Code.Value,
+                ArrivalTime = n.ExpectedArrival,
+                DepartureTime = n.ExpectedDeparture,
+                LoadingTime = n.LoadCargoManifest == null ? 0 : n.LoadCargoManifest.Count * 0.5f,
+                UnloadingTime = n.UnloadCargoManifest == null ? 0 : n.UnloadCargoManifest.Count * 0.5f
+            });
         //remove duplicates
         foreach (var pos in positions.ToList())
         {
