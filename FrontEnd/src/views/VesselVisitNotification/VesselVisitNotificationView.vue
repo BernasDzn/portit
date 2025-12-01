@@ -235,7 +235,9 @@ const deleteNotification = async () => {
 
                     <sl-dialog id="infoPopup" label="Status Overview" class="dialog-overview">
                         <div class="timeline-expanded">
-                            <template v-for="decision in entity.element.notificationDecisions" :key="decision.id">
+                            
+                            <template v-for="(decision, index) in entity.element.notificationDecisions" :key="decision.id">
+                                
                                 <div class="timeline-point">
                                     <p>{{ t("notification.timeline.inProgress") }}</p>
                                     <span class="timeline-icon nothing material-icons" aria-hidden="true">check_circle</span>
@@ -244,6 +246,8 @@ const deleteNotification = async () => {
                                     <p>{{ t("notification.timeline.submitted") }}</p>
                                     <span class="timeline-icon nothing material-icons" aria-hidden="true">check_circle</span>
                                 </div>
+                                
+                                
                                 <div class="timeline-point">
                                     <p>{{ decision.status == 1 ? t("notification.timeline.accepted") :
                                         t("notification.timeline.rejected") }}</p>
@@ -262,7 +266,19 @@ const deleteNotification = async () => {
                                     <p>{{ new Date(decision.decisionDate).toUTCString() }}</p>
                                 </div>
                             </template>
-
+                            
+                            
+                            <template v-if="entity.element.notificationDecisions.length > 0 && entity.element.notificationDecisions[entity.element.notificationDecisions.length - 1].status === 2 && !entity.element.notificationDecisions[entity.element.notificationDecisions.length - 1].isFinal && entity.element.status < 2">
+                                <div class="timeline-point">
+                                    <p>{{ t("notification.timeline.inProgress") }}</p>
+                                    <span class="timeline-icon nothing material-icons" aria-hidden="true">check_circle</span>
+                                </div>
+                                <div class="timeline-point" v-if="entity.element.status >= 1">
+                                    <p>{{ t("notification.timeline.submitted") }}</p>
+                                    <span class="timeline-icon nothing material-icons" aria-hidden="true">check_circle</span>
+                                </div>
+                            </template>
+                           
                             <div class="timeline-point" v-if="entity.element.status === 2">
                                 <p>{{ t("notification.timeline.completed") }}</p>
                                 <span class="timeline-icon accepted material-icons"
