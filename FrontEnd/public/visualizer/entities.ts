@@ -175,22 +175,19 @@ export default class Vessel {
         }
 
         // Check for state changes
-        if (this.schedule && this.docked && !this.departed && this.state !== "Idle..."){
-
+        if (this.schedule && this.docked && !this.departed) {
             const currentTime = getInGameDate();
-            // console.log(this.schedule);
             const unloadingEndDate = new Date(this.schedule.unloadingEndDate);
-            const loadingEndDate = new Date (this.schedule.loadingEndDate);
-
-            if (this.docked && !this.departed && currentTime >= unloadingEndDate && this.state !== "Loading containers...") {
+            const loadingEndDate = new Date(this.schedule.loadingEndDate);
+            
+            // Progress through states chronologically
+            if (currentTime < unloadingEndDate && this.state !== "Unloading containers...") {
+                this.setState("Unloading containers...");
+            } else if (currentTime >= unloadingEndDate && currentTime < loadingEndDate && this.state !== "Loading containers...") {
                 this.setState("Loading containers...");
-            }
-
-            if (this.docked && !this.departed && currentTime >= loadingEndDate && this.state !== "Idle...") {
+            } else if (currentTime >= loadingEndDate && this.state !== "Idle...") {
                 this.setState("Idle...");
             }
-
-            //console.log(`Current time: ${currentTime}, unloading end: ${unloadingEndDate}, loading end: ${loadingEndDate}`);
         }
     }
 
