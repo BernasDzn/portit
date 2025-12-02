@@ -1321,10 +1321,9 @@ export default class PortLayout {
             centerModel(this.modelCache[modelPath]);
         }
         // Clone the cached model for this vessel instance
-        const model = this.modelCache[modelPath].clone();
-        let vessel = new Vessel(name, model, position, this);
-        vessel.assignedDock = dock;
-        vessel.schedule = schedule;
+        const model = await loadModel(modelPath);
+        centerModel(model);
+        let vessel = new Vessel(name, model, position, this, schedule, dock);
 
         vessel.init(scene);
         this.vesselList.push(vessel);
@@ -1515,7 +1514,7 @@ export default class PortLayout {
             // Offset for number of vessels at the same dock
             const numAtDock = this.vesselList.filter(v => v.assignedDock === dockChunk).length;
             const lateralOffset = 16;
-            pos.x += (numAtDock * lateralOffset);            
+            pos.x += (numAtDock * lateralOffset);           
 
             // Mark as pending before starting async creation to avoid duplicates
             this.pendingVessels.add(vesselId);

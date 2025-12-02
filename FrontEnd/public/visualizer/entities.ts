@@ -22,6 +22,8 @@ export default class Vessel {
     model;
     position;
     scene;
+    schedule;
+    assignedDock;
 
     bouyanceAmplitude = 0.3;
     bouyanceSpeed = 0.002;
@@ -37,15 +39,22 @@ export default class Vessel {
     // path;
     // curve;
     // currentPointIndex = 0;
+    isArriving = true;
+    isUnloading = false;
+    isLoading = false;
+    isIdle = false;
+    isDeparting = false;
 
     state = "unknown";
 
-    constructor(name, model, position, layout) {
+    constructor(name, model, position, layout, schedule, assignedDock) {
         this.name = name;
         this.model = model;
         this.position = position;
         this.position.y += 5.5;
         this.layout = layout;
+        this.schedule = schedule;
+        this.assignedDock = assignedDock;
     }
 
     onPathFinished() {
@@ -53,8 +62,6 @@ export default class Vessel {
             this.readyToDie = true;
         } else {
             this.docked = true;
-            // this.state = "Operating"; 
-            this.setState("Unloading containers...");
         }
     }
 
@@ -64,10 +71,9 @@ export default class Vessel {
         this.model.position.copy(startPosition);
         this.model.scale.set(0.8,0.8,0.8);
 
-        this.state = "Arriving";
-
+        
         this.scene = scene;
-
+        
         // Vessel metadata
         const vesselMeta = {
             title: this.name,
@@ -76,7 +82,9 @@ export default class Vessel {
             killable: true,
             killFunction: () => { this.kill(); }
         };
-
+        
+        this.setState("Arriving");
+        
         // Enable shadows and add metadata to all child meshes
         this.model.traverse((child) => {
             if (child.isMesh) {
@@ -135,6 +143,7 @@ export default class Vessel {
             startPosition,
             this.position
         ];
+
         this.path = new PathFollower(
             this.arrivalPath,
             this.facePoint,
@@ -174,34 +183,70 @@ export default class Vessel {
             this.kill();
         }
 
-        // Check for state changes
+        // Check for state changes based on schedule
         if (this.schedule && this.docked && !this.departed) {
-            const currentTime = getInGameDate();
+            const currentTime = new Date(getInGameDate());
+            const arrivalDate = new Date(this.schedule.arrival);
+            const departureDate = new Date(this.schedule.departure);
             const unloadingEndDate = new Date(this.schedule.unloadingEndDate);
             const loadingEndDate = new Date(this.schedule.loadingEndDate);
             
-            // Progress through states chronologically
-            if (currentTime < unloadingEndDate && this.state !== "Unloading containers...") {
+            // Determine what state should be based on time (check in reverse chronological order)
+            if (currentTime <= arrivalDate && !this.isArriving) {
+                this.setState("Arriving");
+                this.isArriving = true;
+            } else if (currentTime > arrivalDate && currentTime <= unloadingEndDate && this.isUnloading != true) {
                 this.setState("Unloading containers...");
-            } else if (currentTime >= unloadingEndDate && currentTime < loadingEndDate && this.state !== "Loading containers...") {
+                this.isUnloading = true;
+                console.log(this.isUnloading)
+            } else if (currentTime > unloadingEndDate && currentTime <= loadingEndDate && this.isLoading != true) {
                 this.setState("Loading containers...");
-            } else if (currentTime >= loadingEndDate && this.state !== "Idle...") {
-                this.setState("Idle...");
-            }
+                this.isLoading = true;
+            }else if (currentTime > loadingEndDate && currentTime <= departureDate && this.isIdle != true) {
+                this.setState("Idle");
+                this.isIdle = true;
+            }else if (currentTime > departureDate && this.isDeparting != true) {
+                this.setState("Departing");
+                this.isDeparting = true;
+            }            
         }
     }
 
     setState(newState){
+        
         this.state = newState;
         // Update state in metadata for all child meshes
+        
         this.model.traverse((child) => {
             if (child.isMesh && child.meta) {
                 child.meta.state = this.state;
             }
         });
 
-        // Update text
-        setInfoText(this.model.children[0].meta, false);
+        //Set color based on state
+        switch(this.state){
+            case "Arriving":
+                this.paint(0x00ff00);
+                break;
+            case "Unloading containers...":
+                this.paint(0x00ffff);
+                break;
+            case "Loading containers...":
+                this.paint(0xff00ff);
+                break;
+            case "Idle":
+                this.paint(0xffff00);
+                break;
+            case "Departing":
+                this.paint(0xff0000);
+                break;
+        }
+
+        console.log(`${this.name} state changed to: ${this.state}`);
+
+        // Update text only if this vessel is currently selected
+        // Removed automatic update to prevent potential re-render issues
+        // setInfoText(this.model.children[0].meta, false);
     }
 
     depart(){
@@ -246,6 +291,19 @@ export default class Vessel {
         if (this.path && this.path.parent) {
             this.path.parent.remove(this.path);
         }
+    }
+
+    paint(colorHex){
+        const color = new THREE.Color(colorHex);
+
+        this.model.traverse((child) => {
+            if (child.isMesh && child.material) {
+                child.material.emissive = color;
+                child.material.emissiveIntensity = 0.04;
+                child.material.needsUpdate = true;
+            }
+        });
+
     }
 } 
 

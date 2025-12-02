@@ -55,6 +55,88 @@
             backdrop-filter: blur(30px);
         }
 
+        #vessel-status-legend {
+            position: absolute;
+            bottom: 20px;
+            left: 120px;
+
+            border-radius: 8px;
+            border-width: 0.5px;
+            border-style: solid;
+            border-color: #ffffff1a;
+
+            background: #56628a28;
+
+            font-family: 'Inter';
+            font-size: 1.3vmin;
+            color: #ffffff;
+
+            z-index: 5;
+            box-shadow: 0 0 10px #00000088;
+            backdrop-filter: blur(30px);
+            padding: 10px 15px;
+            min-width: 18vmin;
+            width: 18vmin;
+            transition: max-height 0.3s ease;
+        }
+
+        .legend-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .legend-title {
+            font-size: 1.5vmin;
+            font-weight: 600;
+            opacity: 0.9;
+        }
+
+        .legend-toggle {
+            font-size: 1.4vmin;
+            opacity: 0.7;
+            transition: transform 0.3s ease;
+            margin-left: 8px;
+        }
+
+        #vessel-status-legend.collapsed .legend-toggle {
+            transform: rotate(-90deg);
+        }
+
+        .legend-content {
+            overflow: hidden;
+            max-height: 500px;
+            transition: max-height 0.3s ease, margin-top 0.3s ease;
+            margin-top: 8px;
+        }
+
+        #vessel-status-legend.collapsed .legend-content {
+            max-height: 0;
+            margin-top: 0;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 6px 0;
+            gap: 8px;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+            display: inline-block;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .legend-label {
+            font-size: 1.3vmin;
+            opacity: 0.95;
+        }
+
         table {
             table-layout: fixed;
             margin: auto;
@@ -83,6 +165,7 @@
             border-width: 0.5px;
             border-style: solid;
             border-color: #ffffff1a;
+            min-width: 18vmin;
 
             background: #56628a28;
 
@@ -393,6 +476,35 @@
         <div id="time">0.0 s</div>
     </div>
 
+    <div id="vessel-status-legend">
+        <div class="legend-header" onclick="toggleVesselLegend()">
+            <div class="legend-title">Vessel Status</div>
+            <div class="legend-toggle">▼</div>
+        </div>
+        <div class="legend-content">
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: #00ff00;"></span>
+                <span class="legend-label">Arriving</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: #0088ff;"></span>
+                <span class="legend-label">Unloading</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: #aa00ff;"></span>
+                <span class="legend-label">Loading</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: #ffff00;"></span>
+                <span class="legend-label">Idle / Waiting</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: #ff0000;"></span>
+                <span class="legend-label">Departing</span>
+            </div>
+        </div>
+    </div>
+
     <div id="help">
         <table class="help">
             <tr>
@@ -496,6 +608,14 @@
         }
 
         let port3D;
+
+        // Toggle vessel status legend
+        window.toggleVesselLegend = () => {
+            const legend = document.getElementById('vessel-status-legend');
+            if (legend) {
+                legend.classList.toggle('collapsed');
+            }
+        };
 
         function initialize() {
 
