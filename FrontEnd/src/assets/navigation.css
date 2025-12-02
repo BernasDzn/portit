@@ -106,6 +106,7 @@
     margin: auto 70px auto 0;
     color: var(--text-primary);
     display: flex;
+    cursor: pointer;
 }
 
 .notifications-info .notification-icon:hover {

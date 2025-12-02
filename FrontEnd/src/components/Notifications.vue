@@ -113,7 +113,7 @@ const unreadCount = computed(() =>
     <sl-dropdown ref="dropdownRef" placement="bottom" @sl-show="onDropdownShow">
         <div slot="trigger" class="notifications-info">
             <sl-icon name="bell"></sl-icon>
-            <sl-badge v-if="unreadCount > 0" class="counter" variant="danger" pill>{{unreadCount}}</sl-badge>
+            <sl-badge v-if="unreadCount > 0" class="counter" variant="danger" pill pulse>{{unreadCount}}</sl-badge>
         </div>
 
         <sl-menu class="dropdown-content">
@@ -320,8 +320,17 @@ const unreadCount = computed(() =>
 .counter {
     position: relative;
     top: -10px;
-    right: -5px;
+    right: -1px;
     font-size: 0.65rem;
     width: 0;
 }
+
+.counter::part(base) {
+    width: auto;
+    min-width: 16px;
+    height: 16px;
+    padding: 10px;
+    border: none;
+}
+
 </style>
