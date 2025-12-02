@@ -19,7 +19,7 @@ public class SystemNotificationController : ControllerBase, ISystemNotificationC
     }
 
     [Authorize(Policy = "SystemNotification.Broadcast")]
-    [HttpPost("/broadcastNotification", Name = "BroadcastNotification")]
+    [HttpPost("broadcastNotification", Name = "BroadcastNotification")]
     public async Task<ActionResult> BroadcastNotification(BroadcastSystemNotificationDto notificationDto)
     {
         try
@@ -41,7 +41,7 @@ public class SystemNotificationController : ControllerBase, ISystemNotificationC
     }
 
     [Authorize(Policy = "SystemNotification.View")]
-    [HttpGet("/myNotifications", Name = "MyNotifications")]
+    [HttpGet("myNotifications", Name = "MyNotifications")]
     public async Task<ActionResult<IEnumerable<SystemNotificationDto>>> GetMyNotifications()
     {
         try
@@ -65,7 +65,7 @@ public class SystemNotificationController : ControllerBase, ISystemNotificationC
     }
 
     [Authorize(Policy = "SystemNotification.MarkAsRead")]
-    [HttpPut("/markAsRead", Name = "MarkAsRead")]
+    [HttpPut("markAsRead", Name = "MarkAsRead")]
     public async Task<ActionResult> MarkAsRead(string notificationId)
     {
         try
@@ -81,7 +81,7 @@ public class SystemNotificationController : ControllerBase, ISystemNotificationC
     }
 
     [Authorize(Policy = "SystemNotification.NotifyUser")]
-    [HttpPost("/notifyUser", Name = "NotifyUser")]
+    [HttpPost("notifyUser", Name = "NotifyUser")]
     public async Task<ActionResult<SystemNotificationDto>> NotifyUser(CreateSystemNotificationDto notificationDto)
     {
         try

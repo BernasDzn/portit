@@ -93,6 +93,10 @@
         "pp": {
             "title": "Privacy Policies",
             "subtitle": "Define and manage port data collection policies."
+        },
+        "notifications": {
+            "title": "Notify users",
+            "subtitle": "Send important announcements to any or all users."
         }
     },
     "user": {

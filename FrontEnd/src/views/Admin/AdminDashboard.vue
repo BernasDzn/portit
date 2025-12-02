@@ -35,6 +35,12 @@ const { t } = useI18n();
                     icon="privacy_tip"
                     to="/admin/privacy-policy"
                 />
+                <DashboardItem
+                    :title="t('admin.notifications.title')"
+                    :description="t('admin.notifications.subtitle')"
+                    icon="notifications"
+                    to="/admin/notifications"
+                />
             </div>
         </sl-card>
     </div>

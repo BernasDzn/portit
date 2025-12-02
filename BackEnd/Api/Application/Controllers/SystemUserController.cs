@@ -73,7 +73,7 @@ public class SystemUserController : ControllerBase, ISystemUserController
         }
         catch (System.Exception e)
         {
-            _logger.LogCritical("Error creating system user with email '{email}', {Message}", systemUserDto.Email, e.Message);
+            _logger.LogCritical("Error  creating system user with email '{email}', {Message}", systemUserDto.Email, e.Message);
             return StatusCode(500, "An error occurred while creating the system user.");
         }
     }

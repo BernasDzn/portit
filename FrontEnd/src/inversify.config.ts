@@ -10,6 +10,7 @@ import { VesselService } from "./service/VesselService";
 import { RepresentativeService } from "./service/RepresentativeService";
 import { SchedulingService } from "./service/SchedulingService";
 import { ShippingAgentOrganizationService } from "./service/ShippingAgentOrganizationService";
+import { SystemNotificationService } from "./service/SystemNotificationService";
 import { StaffService } from "./service/StaffService";
 import { StorageAreaService } from "./service/StorageAreaService";
 import { VesselTypeService } from "./service/VesselTypeService";
@@ -32,6 +33,7 @@ import type { IVesselVisitNotificationService } from "./service/IService/IVessel
 import type { IVesselTypeService } from "./service/IService/IVesselTypeService";
 import type { IPrivacyPolicyService } from "./service/IService/IPrivacyPolicyService";
 import type { IOperationPlanService } from "./service/IService/IOperationPlanService";
+import type { ISystemNotificationService } from "./service/IService/ISystemNotificationService";
 
 const container = new Container();
 
@@ -51,5 +53,6 @@ container.bind<IVesselService>(TYPES.vesselService).to(VesselService).inSingleto
 container.bind<IVesselTypeService>(TYPES.vesselTypeService).to(VesselTypeService).inSingletonScope();
 container.bind<IOperationPlanService>(TYPES.operationPlanService).to(OperationPlanService).inSingletonScope();
 container.bind<IVesselVisitNotificationService>(TYPES.vesselVisitNotificationService).to(VesselVisitNotificationService).inSingletonScope();
+container.bind<ISystemNotificationService>(TYPES.systemNotificationService).to(SystemNotificationService).inSingletonScope();
 
 export { container };

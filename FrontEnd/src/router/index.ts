@@ -381,6 +381,14 @@ const router = createRouter({
             }
         },
         {
+            path: 'admin/notifications',
+            name: 'System Notifications',
+            component: () => import('@/views/Admin/Notifications.vue'),
+            meta: {
+                icon: "notifications"
+            }
+        },
+        {
           path: '/about',
           name: 'about',
           component: () => import('@/views/About/About.vue'),

@@ -4,33 +4,65 @@ import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
 import type { IAdminService } from '@/service/IService/IAdminService';
 import type { Logs } from '@/model/values/Logs';
+import type { ISystemNotificationService } from '@/service/IService/ISystemNotificationService';
+import type { SystemNotification } from '@/model/SystemNotification';
 
 const adminService = container.get<IAdminService>(TYPES.adminService);
+const notificationService = container.get<ISystemNotificationService>(TYPES.systemNotificationService);
 
 const logs = ref<Logs[]>([]);
+const notifications = ref<SystemNotification[]>([]);
 const dropdownRef = ref<any>(null);
 
+const activeTab = ref<'notifications' | 'logs'>('notifications');
+
 const closeDropdown = () => {
-    if (dropdownRef.value) {
-        dropdownRef.value.hide();
-    }
+    dropdownRef.value?.hide();
 };
 
 const onDropdownShow = () => {
-    void fetchLogs();
+    if (activeTab.value === 'logs') fetchLogs();
+    else fetchNotifications();
 };
 
 const fetchLogs = async () => {
     try {
-        const logList: Logs[] = await adminService.getLogs();
+        const logList = await adminService.getLogs();
         logs.value = logList.slice(0, 10);
     } catch (err) {
         console.error('Failed to load audit logs', err);
     }
 };
 
-onMounted(() => {
-    void fetchLogs();
+const fetchNotifications = async () => {
+    try {
+        notifications.value = await notificationService.getSystemNotifications();
+    } catch (err) {
+        console.error('Failed to load notifications', err);
+    }
+};
+
+const markAllUnreadAsRead = async () => {
+    try {
+        const unreadIds = notifications.value
+            .filter(n => !n.isRead)
+            .map(n => n.id);
+
+        if (unreadIds.length > 0) {
+            for (const id of unreadIds) {
+                console.log('Marking notification as read:', id);
+                await notificationService.markAsRead(id);
+            }
+        }
+
+        await fetchNotifications();
+    } catch (err) {
+        console.error('Failed to mark notifications as read', err);
+    }
+};
+
+onMounted(async () => {
+    await fetchNotifications();
 });
 
 const levelMap: Record<string, string> = {
@@ -49,21 +81,117 @@ const mappedLogs = computed(() =>
     }))
 );
 
+const groupedNotifications = computed(() => {
+    const unread = notifications.value.filter(n => !n.isRead);
+    const read = notifications.value.filter(n => n.isRead);
+
+    // Return a merged list where a "separator" item is inserted
+    const list: any[] = [];
+
+    if (unread.length > 0) {
+        list.push(...unread);
+    }
+
+    if (read.length > 0) {
+        // Only show separator if we also have unread
+        if (unread.length > 0) {
+            list.push({ __separator: true });
+        }
+        list.push(...read);
+    }
+
+    return list;
+});
+
+const unreadCount = computed(() =>
+    notifications.value.filter(n => !n.isRead).length
+);
+
 </script>
 
 <template>
     <sl-dropdown ref="dropdownRef" placement="bottom" @sl-show="onDropdownShow">
         <div slot="trigger" class="notifications-info">
             <sl-icon name="bell"></sl-icon>
+            <sl-badge v-if="unreadCount > 0" class="counter" variant="danger" pill>{{unreadCount}}</sl-badge>
         </div>
-        
+
         <sl-menu class="dropdown-content">
+
             <div class="notification-header">
-                <h3>Recent Audit Logs</h3>
-                <RouterLink to="/admin/audit-logs" class="view-all-link" @click="closeDropdown">View All</RouterLink>
+                <div class="tabs">
+                    <button
+                        class="tab-btn"
+                        :class="{ active: activeTab === 'notifications' }"
+                        @click="activeTab = 'notifications'; fetchNotifications()"
+                    >
+                        Notifications
+                    </button>
+
+                    <button
+                        class="tab-btn"
+                        :class="{ active: activeTab === 'logs' }"
+                        @click="activeTab = 'logs'; fetchLogs()"
+                    >
+                        Logs
+                    </button>
+                </div>
+
+                <RouterLink
+                    v-if="activeTab === 'logs'"
+                    to="/admin/audit-logs"
+                    class="view-all-link"
+                    @click="closeDropdown"
+                >
+                    View All
+                </RouterLink>
+
+                <a
+                    v-else
+                    href="#"
+                    class="view-all-link"
+                    @click.prevent="markAllUnreadAsRead"
+                > 
+                    Mark all as read
+                </a>
             </div>
-            <ul class="notification-menu">
-                <li v-for="(log, index) in mappedLogs" :key="`${index}-${log.requestId}-${log.timestamp}-${log.message}`" class="notification-item">
+
+            <ul v-if="activeTab === 'notifications'" class="notification-menu">
+
+                <template v-for="n in groupedNotifications" :key="n.__separator ? 'sep' : n.id">
+
+                    <li v-if="n.__separator" class="separator-item">
+                        <div class="separator">Read</div>
+                    </li>
+
+                    <li
+                        v-else
+                        class="notification-item"
+                    >
+                        <div class="log-entry">
+                            <div class="log-content">
+                                <div class="log-message">{{ n.title }}</div>
+                                <!-- <div class="log-timestamp">{{ n.createdAt }}</div> -->
+                                 <sl-format-date class="log-timestamp" :date="new Date(n.createdAt)" month="long" day="numeric" year="numeric"></sl-format-date>
+                                <div class="log-message small">{{ n.message }}</div>
+                            </div>
+
+                            <sl-badge variant="danger" v-if="n.urgency !== 0">
+                                Urgent!
+                            </sl-badge>
+                        </div>
+                    </li>
+
+                </template>
+
+            </ul>
+
+            <ul v-else class="notification-menu">
+                <li
+                    v-for="(log, index) in mappedLogs"
+                    :key="`${index}-${log.requestId}-${log.timestamp}-${log.message}`"
+                    class="notification-item"
+                >
                     <div class="log-entry">
                         <div class="log-content">
                             <div class="log-message">{{ log.message }}</div>
@@ -77,6 +205,7 @@ const mappedLogs = computed(() =>
                     </div>
                 </li>
             </ul>
+
         </sl-menu>
     </sl-dropdown>
 </template>
@@ -87,18 +216,48 @@ const mappedLogs = computed(() =>
     max-width: 500px;
 }
 
+.separator-item {
+    padding: 0;
+    border-bottom: none;
+}
+
+.separator {
+    padding: 0.35rem 1rem;
+    background: #f0f0f0;
+    color: #555;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    border-top: 1px solid #e0e0e0;
+}
+
+/* Tabs */
+.tabs {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.tab-btn {
+    padding: 0.3rem 0.75rem;
+    background: transparent;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.tab-btn.active {
+    background: var(--accent-1);
+    color: white;
+    border-color: var(--accent-1);
+}
+
 .notification-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0.75rem 1rem;
     border-bottom: 1px solid #e0e0e0;
-}
-
-.notification-header h3 {
-    margin: 0;
-    font-size: 1rem;
-    font-weight: 600;
 }
 
 .view-all-link {
@@ -114,7 +273,7 @@ const mappedLogs = computed(() =>
 .log-entry {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     gap: 0.5rem;
 }
 
@@ -123,18 +282,16 @@ const mappedLogs = computed(() =>
     min-width: 0;
 }
 
-.log-type {
-    display: flex;
-    align-items: center;
-    flex-shrink: 0;
-}
-
 .log-message {
     font-size: 0.875rem;
     color: #333;
-    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.log-message.small {
+    font-size: 0.75rem;
+    color: #666;
 }
 
 .log-timestamp {
@@ -158,5 +315,13 @@ const mappedLogs = computed(() =>
 
 .notification-item:hover {
     background-color: #f5f5f5;
+}
+
+.counter {
+    position: relative;
+    top: -10px;
+    right: -5px;
+    font-size: 0.65rem;
+    width: 0;
 }
 </style>
