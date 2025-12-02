@@ -3,8 +3,8 @@
 :- use_module('config.pl').
 :- consult('http-server.pl').
 
-% :- dynamic api_url/1.
-% :- dynamic frontend_url/1.
+:- dynamic api_url/1.
+:- dynamic frontend_url/1.
 
 run :-
 	PORT = 2228,

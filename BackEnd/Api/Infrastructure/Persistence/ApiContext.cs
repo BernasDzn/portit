@@ -27,6 +27,7 @@ public class ApiContext : IdentityDbContext<SystemUser, SystemUserRole, Guid>
     public DbSet<VesselVisitNotification> VesselVisitNotifications { get; set; } = null!;
     public DbSet<Container> Containers { get; set; } = null!;
     public DbSet<PrivacyPolicy> PrivacyPolicies { get; set; } = null!;
+    public DbSet<SystemNotification> SystemNotifications { get; set; } = null!;
     // SystemUsers is inherited from IdentityDbContext, no need to redeclare
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

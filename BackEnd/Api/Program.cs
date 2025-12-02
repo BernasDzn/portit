@@ -109,7 +109,7 @@ if (!isTestingEnvironment)
         RoleClaimType = "user_role", // Map the role claim type used when creating tokens.
         ClockSkew = TimeSpan.FromMinutes(2) // Allows for a small time difference between server and client
     };
-    
+
     options.Events = new JwtBearerEvents
     {
         OnMessageReceived = context =>
@@ -174,9 +174,14 @@ if (!isTestingEnvironment)
     options.AddPolicy("Qualification.Manage", p => p.RequireRole("LogisticsOperator", "Administrator"));
     options.AddPolicy("Staff.Manage", p => p.RequireRole("LogisticsOperator", "Administrator"));
     options.AddPolicy("PhysicalResource.Manage", p => p.RequireRole("LogisticsOperator", "Administrator"));
-        // Admin-only fallback for the rest of the features
-        options.AddPolicy("AdminOnly", p => p.RequireRole("Administrator"));
-    });
+    // Admin-only fallback for the rest of the features
+    options.AddPolicy("AdminOnly", p => p.RequireRole("Administrator"));
+    options.AddPolicy("SystemNotification.Broadcast", p => p.RequireRole("Administrator"));
+    options.AddPolicy("SystemNotification.View", p => p.RequireRole("Administrator", "PortAuthorityOfficer", "SAORepresentative", "LogisticsOperator"));
+    options.AddPolicy("SystemNotification.MarkAsRead", p => p.RequireRole("Administrator", "PortAuthorityOfficer", "SAORepresentative", "LogisticsOperator"));
+    options.AddPolicy("SystemNotification.NotifyUser", p => p.RequireRole("Administrator"));
+});
+    
 }
 else
 {
@@ -315,6 +320,8 @@ builder.Services.AddTransient<IEmailService, SmtpEmailService>();
 builder.Services.AddTransient<IAdminService, AdminService>();
 builder.Services.AddTransient<IPrivacyPolicyRepository, PrivacyPolicyRepository>();
 builder.Services.AddTransient<IPrivacyPolicyService, PrivacyPolicyService>();
+builder.Services.AddTransient<ISystemNotificationRepository, SystemNotificationRepository>();
+builder.Services.AddTransient<ISystemNotificationService, SystemNotificationService>();
 
 var app = builder.Build();
 
