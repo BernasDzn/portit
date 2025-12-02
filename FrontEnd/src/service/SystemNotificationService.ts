@@ -3,7 +3,7 @@ import { TYPES } from '@/inversify/types';
 
 import type { IHttpService } from './IService/IHttpService';
 import type { ISystemNotificationService } from './IService/ISystemNotificationService';
-import type { SystemNotificationDto } from '@/model/dto/SystemNotificationDto';
+import type { SystemNotificationBroadcastDto, SystemNotificationDto } from '@/model/dto/SystemNotificationDto';
 import type { SystemNotification } from '@/model/SystemNotification';
 
 @injectable()
@@ -23,7 +23,7 @@ export class SystemNotificationService implements ISystemNotificationService {
         await this.http.post<SystemNotificationDto>('/api/SystemNotification/notifyUser', notification);
     }
 
-    async broadcastNotification(notification: SystemNotificationDto): Promise<void> {
+    async broadcastNotification(notification: SystemNotificationBroadcastDto): Promise<void> {
         await this.http.post<SystemNotificationDto>('/api/SystemNotification/broadcastNotification', notification);
     }
     async markAsRead(notificationId: string): Promise<void> {

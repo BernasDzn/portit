@@ -9,16 +9,19 @@ import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
 
 import type { ISystemNotificationService } from '@/service/IService/ISystemNotificationService';
-import type { SystemNotificationDto } from '@/model/dto/SystemNotificationDto';
+import type { SystemNotificationBroadcastDto, SystemNotificationDto } from '@/model/dto/SystemNotificationDto';
+import { label } from 'three/tsl';
 
 const { t } = useI18n();
 
-const notificationService =
-    container.get<ISystemNotificationService>(TYPES.systemNotificationService);
+const notificationService = container.get<ISystemNotificationService>(TYPES.systemNotificationService);
 
-// ------------------
-// FORM STATE
-// ------------------
+const broadcast = ref(false);
+
+const toggleBroadcast = (event: any) => {
+    broadcast.value = event.target.checked;
+};
+
 const form = ref<SystemNotificationDto>({
     urgency: 0,
     shouldSendEmail: false,
@@ -27,14 +30,11 @@ const form = ref<SystemNotificationDto>({
     targetUserEmail: ""
 });
 
-// Broadcast toggle
-const isBroadcast = ref(false);
-
-// Which submit function to call
 const submitFn = async (obj: any) => {
-    if (isBroadcast.value) {
-        // broadcast: remove target email
-        const payload = {
+
+    console.log("Submitting notification:", obj, "Broadcast:", broadcast.value);
+    if (broadcast.value) {
+        const payload: SystemNotificationBroadcastDto = {
             urgency: obj.urgency,
             shouldSendEmail: obj.shouldSendEmail,
             title: obj.title,
@@ -72,7 +72,7 @@ const submitFn = async (obj: any) => {
     >
         <div class="field" style="margin-bottom:1rem;">
             <label class="switch-label">
-                <sl-switch v-model="isBroadcast"></sl-switch>
+                <sl-switch :checked="broadcast" @sl-change="toggleBroadcast"></sl-switch>
                 <span class="switch-text">
                     {{ t('admin.notifications.broadcastToggle') }}
                 </span>
@@ -80,11 +80,12 @@ const submitFn = async (obj: any) => {
         </div>
 
         <FormField
-            v-if="!isBroadcast"
+            :enabled="!broadcast"
             input-id="notif-email"
             class="field"
             :required="true"
-            :name="t('admin.notifications.fields.email') + '*'"
+            :name="t('admin.notifications.fields.email.title') + '*'"
+            :placeholder-text="t('admin.notifications.fields.email.placeholder')"
             v-model="form.targetUserEmail"
             placeholder="user@example.com"
         />
@@ -93,7 +94,8 @@ const submitFn = async (obj: any) => {
             input-id="notif-title"
             class="field"
             :required="true"
-            :name="t('admin.notifications.fields.title') + '*'"
+            :name="t('admin.notifications.fields.title.title') + '*'"
+            :placeholder-text="t('admin.notifications.fields.title.placeholder')"
             v-model="form.title"
         />
 
@@ -102,25 +104,22 @@ const submitFn = async (obj: any) => {
             textarea
             class="field"
             :required="true"
-            :name="t('admin.notifications.fields.message') + '*'"
+            :name="t('admin.notifications.fields.message.title') + '*'"
+            :placeholder-text="t('admin.notifications.fields.message.placeholder')"
             v-model="form.message"
         />
 
         <div class="field">
-            <label class="form-label">{{ t('admin.notifications.fields.urgency') }}</label>
-            <sl-select v-model="form.urgency">
-                <sl-option :value="0">{{ t('admin.notifications.urgency.normal') }}</sl-option>
-                <sl-option :value="1">{{ t('admin.notifications.urgency.urgent') }}</sl-option>
-            </sl-select>
-        </div>
-
-        <div class="field">
-            <label class="switch-label">
-                <sl-switch v-model="form.shouldSendEmail"></sl-switch>
-                <span class="switch-text">
-                    {{ t('admin.notifications.fields.sendEmail') }}
-                </span>
-            </label>
+            <label class="form-label">{{ t('admin.notifications.fields.urgency.title') }}</label>
+            <sl-select
+                v-model="form.urgency"
+                @sl-change="(event) => form.urgency = Number(event.target.value)"
+                placeholder="Select urgency level"
+            >
+            <sl-option value="0">Normal</sl-option>
+            <sl-option value="1">Urgent</sl-option>
+          </sl-select>
+          
         </div>
     </EntityForm>
   </div>

@@ -95,8 +95,33 @@
             "subtitle": "Define and manage port data collection policies."
         },
         "notifications": {
+            "create": "Create Notification",
+            "subtitleCreate": "Send important announcements to any or all users.",
             "title": "Notify users",
-            "subtitle": "Send important announcements to any or all users."
+            "subtitle": "Send important announcements to any or all users.",
+            "broadcastToggle": "Broadcast to all users",
+            "fields": {
+                "title": {
+                    "title": "Title",
+                    "placeholder": "Notification title"
+                },
+                "message": {
+                    "title": "Message",
+                    "placeholder": "Notification message"
+                },
+                "email": {
+                    "title": "User email",
+                    "placeholder": "Specify user email to send to"
+                },
+                "urgency": {
+                    "title": "Urgency",
+                    "options": {
+                        "normal": "Normal",
+                        "urgent": "Urgent"
+                    }
+                }
+
+            }
         }
     },
     "user": {
