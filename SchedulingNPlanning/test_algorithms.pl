@@ -1,6 +1,7 @@
 % Test file for comparing scheduling algorithms
 :- consult('./algorithms/optimal_scheduling.pl').
 :- consult('./algorithms/greedy_scheduling.pl').
+:- consult('./algorithms/genetic_scheduling.pl').
 
 % Test data - same as in resource_allocation_task_sequencing.pl
 test_setup :-
@@ -37,6 +38,17 @@ test_greedy :-
     format('Total Delay: ~w hours~n', [Delay]),
     format('Computation Time: ~w seconds~n', [ComputationTime]).
 
+test_genetic :-
+    test_setup,
+    format('~n=== GENETIC ALGORITHM ===~n'),
+    get_time(Start),
+    generate(100, 10, 70, 10, 60, 10, SeqTriplets, Delay),
+    get_time(End),
+    ComputationTime is End - Start,
+    format('Schedule: ~w~n', [SeqTriplets]),
+    format('Total Delay: ~w hours~n', [Delay]),
+    format('Computation Time: ~w seconds~n', [ComputationTime]).
+
 % Run all tests
 test_all :-
     format('~n========================================~n'),
@@ -44,6 +56,7 @@ test_all :-
     format('========================================~n'),
     test_optimal,
     test_greedy,
+    test_genetic,
     format('~n========================================~n').
 
 % Compare both algorithms side by side
@@ -61,6 +74,12 @@ compare_algorithms :-
     obtain_seq_greedy(SeqGreedy, DelayGreedy),
     get_time(EndGreedy),
     TimeGreedy is EndGreedy - StartGreedy,
+
+    % Genetic
+    get_time(StartGenetic),
+    generate(100, 10, 70, 10, 60, 10, SeqGenetic, DelayGenetic),
+    get_time(EndGenetic),
+    TimeGenetic is EndGenetic - StartGenetic,
     
     format('~n========================================~n'),
     format('  ALGORITHM COMPARISON SUMMARY  ~n'),
@@ -71,4 +90,6 @@ compare_algorithms :-
     format('Optimal         | ~10w | ~3f ms~n', [DelayOptimal, TimeOptimalMs]),
     TimeGreedyMs is TimeGreedy * 1000,
     format('Greedy (EDD)    | ~10w | ~3f ms~n', [DelayGreedy, TimeGreedyMs]),
+    TimeGeneticMs is TimeGenetic * 1000,
+    format('Genetic         | ~10w | ~3f ms~n', [DelayGenetic, TimeGeneticMs]),
     format('========================================~n').
