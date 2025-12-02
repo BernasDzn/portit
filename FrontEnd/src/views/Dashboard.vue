@@ -6,6 +6,7 @@ import SAORDashboard from './Dashboards/SAORDashboard.vue';
 import MainDashboard from './Dashboards/MainDashboard.vue';
 
 import "@/assets/dashboard.css"
+import BroadcastHero from './Dashboards/BroadcastHero.vue';
 
 const role = computed(() => useSession().authenticatedUser?.role ?? -1);
 

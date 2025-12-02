@@ -7,6 +7,7 @@ import { useRouter } from 'vue-router';
 import { useSession } from '@/composables/session';
 import { useAlerts } from '@/composables/alerts';
 import { useI18n } from 'vue-i18n';
+import BroadcastHero from './Dashboards/BroadcastHero.vue';
 
 const session = useSession();
 const router = useRouter();
@@ -60,6 +61,8 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="app-layout">
+    <BroadcastHero />
+
     <Topbar />
     <div class="layout-content">
       <Sidebar />
