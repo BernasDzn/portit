@@ -44,9 +44,8 @@
         Sum is (Sum1 + Speed).
 %
 
-% -- initialize --parameters initialization
+% -- initialize -- initialize with or without data a priori
     initialize :-
-        % Transform vessel/6 facts to vessel_visit/4 facts
         map_vessels_to_visits,
         write('Number of generations (Max): '), read(NG),
         (retract(generations(_)); true), asserta(generations(NG)),
@@ -65,29 +64,59 @@
         (retract(time_limit(_)); true), asserta(time_limit(TL)),
         write('Stability limit (generations without improvement): '), read(SL),
         (retract(stability_limit(_)); true), asserta(stability_limit(SL)).
+
+    initialize(MaxGen, PopSize, ProbCross, ProbMut, TimeLim, StabilityLim) :-
+        map_vessels_to_visits,
+        (retract(generations(_)); true), asserta(generations(MaxGen)),
+        (retract(population_size(_)); true), asserta(population_size(PopSize)),
+        PC is ProbCross / 100,
+        (retract(prob_crossover(_)); true), asserta(prob_crossover(PC)),
+        PM is ProbMut / 100,
+        (retract(prob_mutation(_)); true), asserta(prob_mutation(PM)),
+        (retract(time_limit(_)); true), asserta(time_limit(TimeLim)),
+        (retract(stability_limit(_)); true), asserta(stability_limit(StabilityLim)).
 %
 
-% -- generate (algorithm entry point) --
-generate :-
-    initialize,
-    %
-    % start timing for time limit
-    get_time(Now),
-    (retract(start_time(_)); true), asserta(start_time(Now)),
-    %
-    % Initialize stability tracker: (Infinity, 0)
-    (retract(best_solution_tracker(_,_)); true), asserta(best_solution_tracker(100000, 0)),
-    %
-    generate_population(Pop),
-    write('Pop='),write(Pop),nl,
-    %   
-    evaluate_population(Pop, PopValue),
-    write('PopValue='),write(PopValue),nl,
-    %
-    order_population(PopValue, PopOrd),
-    %
-    generations(NumGenerations),
-    generate_generation(0, NumGenerations, PopOrd).
+% -- generate -- Entry point for genetic algorithm
+
+    generate(MaxGen, PopSize, ProbCross, ProbMut, TimeLim, StabilityLim, SeqTriplets, Delay) :-
+        initialize(MaxGen, PopSize, ProbCross, ProbMut, TimeLim, StabilityLim),
+        generate1(SeqTriplets, Delay).
+
+    generate(SeqTriplets, Delay) :-
+        initialize,
+        generate1(SeqTriplets, Delay).
+
+    generate :-
+        initialize,
+        generate1(SeqTriplets, Delay),
+        write('Best Solution: '), write(SeqTriplets), nl,
+        write('Best Cost (Delays): '), write(Delay), nl.
+
+    generate1(SeqTriplets, Delay) :-
+        %
+        % start timing for time limit
+        get_time(Now),
+        (retract(start_time(_)); true), asserta(start_time(Now)),
+        %
+        % Initialize stability tracker: (Infinity, 0)
+        (retract(best_solution_tracker(_,_)); true), asserta(best_solution_tracker(100000, 0)),
+        %
+        generate_population(Pop),
+        % write('Pop='),write(Pop),nl,
+        %   
+        evaluate_population(Pop, PopValue),
+        % write('PopValue='),write(PopValue),nl,
+        %
+        order_population(PopValue, PopOrd),
+        %
+        generations(NumGenerations),
+        generate_generation(0, NumGenerations, PopOrd, BestInd, BestVal),
+        %
+        % Convert the best individual to triplet format to comply with other algorithms
+        convert_to_triplets(BestInd, SeqTriplets),
+        Delay = BestVal.
+%
 
 % -- generate_population ---
     generate_population(Pop) :-
@@ -159,14 +188,14 @@ generate :-
 %
 
 % -- generate_generation
-    generate_generation(G, MaxG, [BestInd*BestVal|_]) :-
+    generate_generation(G, MaxG, [BestInd*BestVal|_], BestInd, BestVal) :-
         G >= MaxG, !,
         write('--- Max number of generations reached ---'), nl,
         write('Final Generation: '), write(G), nl,
         write('Best Solution: '), write(BestInd), nl,
         write('Best Cost (Delays): '), write(BestVal), nl.
 
-    generate_generation(N, MaxG, Pop) :-
+    generate_generation(N, MaxG, Pop, BestInd, BestVal) :-
         % Ensure new termination conditions are checked first
         check_termination(N, Pop, PassedChecks),
         PassedChecks = true,
@@ -186,10 +215,10 @@ generate :-
         update_stability(BestChildVal),
         
         N1 is N+1,
-        generate_generation(N1, MaxG, ShuffledPopCOMUTValOrd).
+        generate_generation(N1, MaxG, ShuffledPopCOMUTValOrd, BestInd, BestVal).
 
     % Helper to handle early termination printing
-    generate_generation(N, _, [BestInd*BestVal|_]) :-
+    generate_generation(N, _, [BestInd*BestVal|_], BestInd, BestVal) :-
         write('--- TERMINATION CONDITION MET ---'), nl,
         write('Generation: '), write(N), nl,
         write('Best Solution: '), write(BestInd), nl,
@@ -366,4 +395,29 @@ generate :-
         ;
             true
         ).
+%
+
+% -- convert_to_triplets -- Convert sequence to (VesselName, StartTime, EndTime) format
+    convert_to_triplets(Sequence, Triplets) :-
+        convert_to_triplets(Sequence, 0, Triplets).
+
+    convert_to_triplets([], _, []).
+    
+    convert_to_triplets([VesselName|Rest], EndPrevSeq, [(VesselName, TInUnload, TEndLoad)|RestTriplets]) :-
+        % Get vessel data to calculate proper times (matching greedy algorithm logic)
+        vessel(VesselName, TIn, _, TUnloadContainers, TLoadContainers, Cranes),
+        get_crane_sum(Cranes, CraneSpeed),
+        
+        % Calculate unload and load times separately
+        (TUnloadContainers > 0, CraneSpeed > 0 -> TUnload is TUnloadContainers / CraneSpeed ; TUnload = 0),
+        (TLoadContainers > 0, CraneSpeed > 0 -> TLoad is TLoadContainers / CraneSpeed ; TLoad = 0),
+        
+        % Start time logic (same as greedy algorithm)
+        (TIn > EndPrevSeq -> TInUnload is TIn ; TInUnload is EndPrevSeq + 1),
+        
+        % End time formula (corrected - removed the -1 bug)
+        TEndLoad is TInUnload + TUnload + TLoad,
+        
+        % Next vessel can start after this one finishes
+        convert_to_triplets(Rest, TEndLoad, RestTriplets).
 %
