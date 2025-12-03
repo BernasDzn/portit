@@ -1,5 +1,6 @@
 :- consult('../services/scheduling_service.pl').
 :- consult('../config.pl').
+:- use_module(library(http/http_cors)).
 
 % Api entrypoint to handle scheduling requests
 handle_schedule_request(Request) :-

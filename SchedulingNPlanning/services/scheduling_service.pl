@@ -124,9 +124,13 @@ assert_single_crane([]).
 assert_single_crane([vessel(Name, Arrival, Departure, Unload, Load, _)|Rest]) :-
     findall(crane(CraneName, Speed), crane(CraneName, Speed), AllCranes),
     % C# already filters and sends available cranes, so just take first (fastest)
-    AllCranes = [crane(FastestName, FastestSpeed)|_],
-    format(user_error, 'Vessel ~w assigned crane: ~w (speed: ~w)~n', [Name, FastestName, FastestSpeed]),
-    assertz(vessel(Name, Arrival, Departure, Unload, Load, [crane(FastestName, FastestSpeed)])),
+    ( AllCranes = [crane(FastestName, FastestSpeed)|_] ->
+        format(user_error, 'Vessel ~w assigned crane: ~w (speed: ~w)~n', [Name, FastestName, FastestSpeed]),
+        assertz(vessel(Name, Arrival, Departure, Unload, Load, [crane(FastestName, FastestSpeed)]))
+    ;
+        format(user_error, 'WARNING: No cranes available for vessel ~w at this dock! Skipping assignment.~n', [Name]),
+        assertz(vessel(Name, Arrival, Departure, Unload, Load, []))
+    ),
     assert_single_crane(Rest).
 
 % Find best crane assignment

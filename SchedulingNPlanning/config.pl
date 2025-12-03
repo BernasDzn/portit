@@ -1,5 +1,8 @@
 :- module(config, [api_url/1, frontend_url/1]).
 
+:- dynamic api_url/1.
+:- dynamic frontend_url/1.
+
 api_url("https://vs-gate.dei.isep.ipp.pt:10228").
 frontend_url("https://vs-gate.dei.isep.ipp.pt:40228").
 

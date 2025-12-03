@@ -94,9 +94,9 @@ obtain_seq_genetic(SeqTriplets, Delay) :-
 
     generate :-
         initialize,
-        generate1(SeqTriplets, Delay),
-        write('Best Solution: '), write(SeqTriplets), nl,
-        write('Best Cost (Delays): '), write(Delay), nl.
+        generate1(SeqTriplets, Delay).
+        % format(user_error, 'Best Solution: ~w~n', [SeqTriplets]),
+        % format(user_error, 'Best Cost (Delays): ~w~n', [Delay]).
 
     generate1(SeqTriplets, Delay) :-
         %
@@ -108,10 +108,10 @@ obtain_seq_genetic(SeqTriplets, Delay) :-
         (retract(best_solution_tracker(_,_)); true), asserta(best_solution_tracker(100000, 0)),
         %
         generate_population(Pop),
-        % write('Pop='),write(Pop),nl,
+        % format(user_error, 'Pop=~w~n', [Pop]),
         %   
         evaluate_population(Pop, PopValue),
-        % write('PopValue='),write(PopValue),nl,
+        % format(user_error, 'PopValue=~w~n', [PopValue]),
         %
         order_population(PopValue, PopOrd),
         %
@@ -196,18 +196,18 @@ obtain_seq_genetic(SeqTriplets, Delay) :-
 
 % -- generate_generation
     generate_generation(G, MaxG, [BestInd*BestVal|_], BestInd, BestVal) :-
-        G >= MaxG, !,
-        write('--- Max number of generations reached ---'), nl,
-        write('Final Generation: '), write(G), nl,
-        write('Best Solution: '), write(BestInd), nl,
-        write('Best Cost (Delays): '), write(BestVal), nl.
+        G >= MaxG, !.
+        % format(user_error, '--- Max number of generations reached ---~n', []),
+        % format(user_error, 'Final Generation: ~w~n', [G]),
+        % format(user_error, 'Best Solution: ~w~n', [BestInd]),
+        % format(user_error, 'Best Cost (Delays): ~w~n', [BestVal]).
 
     generate_generation(N, MaxG, Pop, BestInd, BestVal) :-
         % Ensure new termination conditions are checked first
         check_termination(N, Pop, PassedChecks),
         PassedChecks = true,
         
-        write('Generation '), write(N), write('...'), nl, write(Pop), nl,
+        % format(user_error, 'Generation ~w...~n~w~n', [N, Pop]),
         
         % Randomize population order before crossover to avoid fixed pairings
         % Suggested improvement from slide 28 of Support TP
@@ -225,30 +225,29 @@ obtain_seq_genetic(SeqTriplets, Delay) :-
         generate_generation(N1, MaxG, ShuffledPopCOMUTValOrd, BestInd, BestVal).
 
     % Helper to handle early termination printing
-    generate_generation(N, _, [BestInd*BestVal|_], BestInd, BestVal) :-
-        write('--- TERMINATION CONDITION MET ---'), nl,
-        write('Generation: '), write(N), nl,
-        write('Best Solution: '), write(BestInd), nl,
-        write('Best Cost (Delays): '), write(BestVal), nl.
+    generate_generation(N, _, [BestInd*BestVal|_], BestInd, BestVal).
+        % format(user_error, '--- TERMINATION CONDITION MET ---~n', []),
+        % format(user_error, 'Generation: ~w~n', [N]),
+        % format(user_error, 'Best Solution: ~w~n', [BestInd]),
+        % format(user_error, 'Best Cost (Delays): ~w~n', [BestVal]).
 %
 
 % -- check_termination -- (Time limit, Stability limit, and Optimal solution)
     check_termination(_, _, false) :-
         get_time(Now), start_time(Start), time_limit(Limit),
         Elapsed is Now - Start,
-        Elapsed > Limit, !,
-        write('--- Max time limit reached ---'), nl.
+        Elapsed > Limit, !.
+        % format(user_error, '--- Max time limit reached ---~n', []).
 
     check_termination(_, _, false) :-
         stability_limit(Limit),
         best_solution_tracker(_, Count),
-        Count >= Limit, !,
-        write('--- Population stabilized (No improvement for '), 
-        write(Limit), write(' generations) ---'), nl.
+        Count >= Limit, !.
+        % format(user_error, '--- Population stabilized (No improvement for ~w generations) ---~n', [Limit]).
 
     check_termination(_, [_*BestVal|_], false) :-
-        BestVal =:= 0, !,
-        write('--- Optimal solution found (Cost = 0) ---'), nl.
+        BestVal =:= 0, !.
+        % format(user_error, '--- Optimal solution found (Cost = 0) ---~n', []).
 
     check_termination(_, _, true).
 %

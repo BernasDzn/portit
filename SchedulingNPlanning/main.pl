@@ -3,8 +3,8 @@
 :- use_module('config.pl').
 :- consult('http-server.pl').
 
-:- dynamic api_url/1.
-:- dynamic frontend_url/1.
+% :- dynamic api_url/1.
+% :- dynamic frontend_url/1.
 
 run :-
 	PORT = 2228,
@@ -12,9 +12,9 @@ run :-
 	writeln('Server started. Press Ctrl+C to stop.'),
 
     current_prolog_flag(argv, Argv),
+    dispatch(Argv),
     (frontend_url(FEURL) -> writeln(FEURL) ; writeln('No frontend_url set')),
-    (api_url(APIURL) -> writeln(APIURL) ; writeln('No api_url set')),
-    dispatch(Argv).
+    (api_url(APIURL) -> writeln(APIURL) ; writeln('No api_url set')).
 
 dispatch([]) :-
     % Run in thread get message loop

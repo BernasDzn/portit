@@ -276,7 +276,7 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         List<CraneWorkloadDto> craneWorkloads = new List<CraneWorkloadDto>();
         Dictionary<Dock, IEnumerable<STSCrane>> dockCranesMap = await MapCranesAsync(relevantDocks);
 
-        if (!dockCranesMap.Any() || dockCranesMap.Any(kv => !kv.Value.Any()))
+        if (dockCranesMap.Count() == 0)
         {
             return new SchedulingResultDto
             {
