@@ -21,6 +21,11 @@
 % vessel_visit/4 format: vessel_visit(VesselName, ArrivalT, DepartureT, ProcessingT)
 % ProcessingT = (UnloadContainers + LoadContainers) / sum of crane speeds
 
+% To make it easier for the service to enter we'll consider:
+% 100 generations, 10 population size, 70% crossover, 10% mutation, 300 seconds time limit, 10 stability limit
+obtain_seq_genetic(SeqTriplets, Delay) :-
+    generate(100, 10, 70, 10, 300, 10, SeqTriplets, Delay).
+
 % -- map_vessels_to_visits -- populate vessel_visit/4 from vessel/6 facts
     map_vessels_to_visits :-
         retractall(vessel_visit(_, _, _, _)),
@@ -138,8 +143,10 @@
         random_permutation(VesselsList, Ind),
         \+ member(Ind, RestPop), !.
 
-    generate_unique_individual(VesselsList, RestPop, Ind) :-
-        generate_unique_individual(VesselsList, RestPop, Ind).
+    % Fallback: if we can't generate unique individuals (e.g., only 1 vessel),
+    % just generate a random permutation (allows duplicates)
+    generate_unique_individual(VesselsList, _, Ind) :-
+        random_permutation(VesselsList, Ind).
 %
 
 % -- evaluate_population ---

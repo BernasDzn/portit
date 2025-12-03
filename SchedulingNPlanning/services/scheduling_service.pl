@@ -4,6 +4,7 @@
 :- consult('../dml/crane_mapper.pl').
 :- consult('../algorithms/optimal_scheduling.pl').
 :- consult('../algorithms/greedy_scheduling.pl').
+:- consult('../algorithms/genetic_scheduling.pl').
 :- use_module(library(lists)).
 
 :- dynamic current_schedule_day/1.
@@ -113,6 +114,7 @@ run_algorithm(Algorithm, Result, Delay, Time) :-
     get_time(StartTime),
     ( Algorithm == "optimal" -> obtain_seq_shortest_delay(Result, Delay)
     ; Algorithm == "greedy" -> obtain_seq_greedy(Result, Delay)
+    ; Algorithm == "genetic" -> obtain_seq_genetic(Result, Delay)
     ; format(user_error, 'Unknown algorithm ~w, using optimal~n', [Algorithm]), obtain_seq_shortest_delay(Result, Delay) ),
     get_time(EndTime), 
     Time is EndTime - StartTime.
