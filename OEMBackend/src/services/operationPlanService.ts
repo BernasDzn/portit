@@ -1,6 +1,7 @@
 import { OperationPlanDto } from "../domain/dto/operationPlansDto";
 import { operationPlanRepository } from "../repository/operationPlanRepository";
 import config from "../config/config";
+import { OperationPlan } from "../domain/operationPlans";
 
 export class OperationPlanService {
     async getAll(): Promise<OperationPlanDto[]> {
@@ -48,6 +49,11 @@ export class OperationPlanService {
         const unplannedVvnIds = allVvnIds.filter(id => !plannedVvnIds.includes(id));
 
         return unplannedVvnIds;
+    }
+
+    async savePlan(planData: any): Promise<any> {
+        const plan = new OperationPlan(planData);
+        return await operationPlanRepository.savePlan(plan);
     }
 }
 

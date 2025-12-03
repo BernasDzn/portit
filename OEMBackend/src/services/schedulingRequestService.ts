@@ -4,6 +4,7 @@ import { OperationPlan } from "../domain/operationPlans";
 import { ScheduleQueueItem } from "../domain/scheduleQueue";
 import { operationPlanRepository } from "../repository/operationPlanRepository";
 import { workQueueRepository } from "../repository/workQueueRepository";
+import { operationPlanService } from "./operationPlanService";
 
 export class SchedulingRequestService {
     
@@ -43,12 +44,20 @@ export class SchedulingRequestService {
         }
 
         const scheduleData = await res.json();
-        // TODO: persist schedule
-
-        // Mark as complete
+        
+        // Save the schedule
+        try {
+            const savedPlan = await operationPlanService.savePlan(scheduleData);
+            console.log(`Saved operation plan ${savedPlan.id} for ${nextItem.data.day} by ${nextItem.issuer}`);
+        } catch (error) {
+            console.error(`Failed to save schedule:`, error);
+            await workQueueRepository.finishRequest(nextItem.id, 'failed');
+            return await this.getToWork();
+        }
+        
+        // Mark request as complete
         await workQueueRepository.finishRequest(nextItem.id, 'completed');
         return await this.getToWork();
     }
-}
 
-export const schedulingRequestService = new SchedulingRequestService();
+}export const schedulingRequestService = new SchedulingRequestService();
