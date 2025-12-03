@@ -10,16 +10,19 @@ using Api.Domain.IRepository;
 using Api.Domain.ValueObjects;
 using Api.Infrastructure.Exceptions;
 using Api.Infrastructure.Utilities;
+using Api.Infrastructure.Utilities.Email;
 
 public class SystemNotificationService : ISystemNotificationService
 {
     private readonly ISystemUserService _systemUserService;
     private readonly ISystemNotificationRepository _systemNotificationRepository;
     private readonly ILogger<SystemNotificationService> _logger;
+    private readonly IEmailService _emailService;
 
-    public SystemNotificationService(ISystemUserService systemUserService, ISystemNotificationRepository systemNotificationRepository, ILogger<SystemNotificationService> logger)
+    public SystemNotificationService(ISystemUserService systemUserService, IEmailService emailService, ISystemNotificationRepository systemNotificationRepository, ILogger<SystemNotificationService> logger)
     {
         _systemUserService = systemUserService;
+        _emailService = emailService;
         _systemNotificationRepository = systemNotificationRepository;
         _logger = logger;
     }
@@ -38,6 +41,10 @@ public class SystemNotificationService : ISystemNotificationService
             notificationDto.Message
         );
 
+        if (notificationDto.ShouldSendEmail)
+            await _emailService.SendEmailAsync(officerEmail, notificationDto.Title, notificationDto.Message);
+
+
         return (await _systemNotificationRepository.NotifyUser(notification)).ToDTO();
     }
 
@@ -55,6 +62,12 @@ public class SystemNotificationService : ISystemNotificationService
             .Where(u => u.Email != null)
             .Select(u => u.Email)!
             .ToList();
+
+        if (notificationDto.ShouldSendEmail)
+        {
+            foreach (var email in targetUsers)
+                await _emailService.SendEmailAsync(email, notificationDto.Title, notificationDto.Message);
+        }
 
         await _systemNotificationRepository.BroadcastNotification(notification, targetUsers);
     }

@@ -239,6 +239,9 @@ public class SystemUserService : ISystemUserService
         systemUser.Sub = sub;
 
         var updatedUser = await _systemUserRepository.Update(systemUser);
+
+        await _emailService.SendEmailAsync(emailAddress, "Welcome to PorTiT!", "Olá Portador! A sua conta foi ativada com sucesso. Bem-vindo ao PorTiT!");
+
         return updatedUser.ToDTO();
     }
 

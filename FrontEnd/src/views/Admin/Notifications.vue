@@ -22,6 +22,10 @@ const toggleBroadcast = (event: any) => {
     broadcast.value = event.target.checked;
 };
 
+const toggleSendEmail = (event: any) => {
+    form.value.shouldSendEmail = event.target.checked;
+};
+
 const form = ref<SystemNotificationDto>({
     urgency: 0,
     shouldSendEmail: false,
@@ -120,6 +124,15 @@ const submitFn = async (obj: any) => {
             <sl-option value="1">Urgent</sl-option>
           </sl-select>
           
+        </div>
+
+        <div class="field" style="margin-bottom:1rem;">
+            <label class="switch-label">
+                <sl-switch :checked="form.shouldSendEmail" @sl-change="toggleSendEmail"></sl-switch>
+                <span class="switch-text">
+                    {{ t('admin.notifications.sendEmailToggle') }}
+                </span>
+            </label>
         </div>
     </EntityForm>
   </div>
