@@ -8,13 +8,15 @@ using Api.Domain.IService;
 public class PrivacyPolicyService : IPrivacyPolicyService
 {
 	private readonly IPrivacyPolicyRepository _privacyPolicyRepository;
+	private readonly ISystemNotificationService _systemNotificationService;
 	private readonly ILogger<PrivacyPolicyService> _logger;
 
 	public PrivacyPolicyService(
-		IPrivacyPolicyRepository privacyPolicyRepository,
+		IPrivacyPolicyRepository privacyPolicyRepository,	ISystemNotificationService systemNotificationService,
 		ILogger<PrivacyPolicyService> logger)
 	{
 		_privacyPolicyRepository = privacyPolicyRepository;
+		_systemNotificationService = systemNotificationService;
 		_logger = logger;
 	}
 
@@ -61,6 +63,16 @@ public class PrivacyPolicyService : IPrivacyPolicyService
 		);
 
 		var createdPolicy = await _privacyPolicyRepository.AddAsync(newPrivacyPolicy);
+
+		await _systemNotificationService.BroadcastNotification(
+			new BroadcastSystemNotificationDto
+			{
+				Urgency = SystemNotificationUrgency.URGENT,
+				ShouldSendEmail = false,
+				Title = "New Privacy Policy Published",
+				Message = "A new privacy policy has been published. Please review it at your earliest convenience."
+			}
+		);
 		
 		AppLogEvents.LogCreate(_logger, "privacy policy", 1);
 		return createdPolicy.ToDTO();
