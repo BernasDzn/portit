@@ -7,4 +7,5 @@ export interface ISchedulingService {
     generateSchedulePDF(schedule: Schedule, date: Date): Promise<Uint8Array>
 
     getQueueState(): Promise<any[]>
+    getUnplannedVVNs(): Promise<string[]>
 }

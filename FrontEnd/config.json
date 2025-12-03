@@ -1,6 +1,6 @@
 {
     "remotePrologApi": "https://vs-gate.dei.isep.ipp.pt:30228",
     "remoteApi": "https://portit.me:10228",
-    "remoteOemApi": "http://localhost:3000",
+    "remoteOemApi": "http://localhost:4000",
     "localApiPort": 5195
 }
