@@ -742,5 +742,24 @@
     },
     "about": {
         "title": "About PorTiT"
+    },
+    "operationPlan": {
+        "title": "Operation Plan",
+        "docks": "Docks",
+        "totalSchedules": "Total Schedules",
+        "vesselCount": "Vessels",
+        "plansOnDate": "Operation plans on selected date",
+        "noPlansOnDate": "No operation plans on selected date",
+        "algorithm": {
+            "optimal": "Optimal",
+            "greedy": "Greedy",
+            "genetic": "Genetic"
+        },
+        "metrics": {
+            "title": "Metrics",
+            "strategy": "Strategy",
+            "totalDelay": "Total Delay",
+            "computationTime": "Computation Time"
+        }
     }
 }
