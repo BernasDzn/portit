@@ -7,10 +7,6 @@ import LanguageSwitcher from './LanguageSwitcher.vue';
 // @ts-ignore
 import confetti from 'canvas-confetti';
 
-import { useSession } from '@/composables/session';
-
-const user = useSession().authenticatedUser;
-
 function onLogoClick(_: MouseEvent) {
   try {
     const originX = 0.5;
@@ -53,7 +49,7 @@ function onLogoClick(_: MouseEvent) {
       <LanguageSwitcher />
 
       <!--Notifications-->
-      <Notifications v-if="user?.role === 0"/>
+      <Notifications/>
 
       <!-- Profile -->
       <UserProfile />

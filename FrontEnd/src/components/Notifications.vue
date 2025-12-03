@@ -6,6 +6,9 @@ import type { IAdminService } from '@/service/IService/IAdminService';
 import type { Logs } from '@/model/values/Logs';
 import type { ISystemNotificationService } from '@/service/IService/ISystemNotificationService';
 import type { SystemNotification } from '@/model/SystemNotification';
+import { useSession } from '@/composables/session';
+
+const user = useSession().authenticatedUser;
 
 const adminService = container.get<IAdminService>(TYPES.adminService);
 const notificationService = container.get<ISystemNotificationService>(TYPES.systemNotificationService);
@@ -132,6 +135,7 @@ const unreadCount = computed(() =>
                         class="tab-btn"
                         :class="{ active: activeTab === 'logs' }"
                         @click="activeTab = 'logs'; fetchLogs()"
+                        v-if="user?.role === 0"
                     >
                         Logs
                     </button>
