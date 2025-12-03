@@ -750,6 +750,13 @@
         "vesselCount": "Vessels",
         "plansOnDate": "Operation plans on selected date",
         "noPlansOnDate": "No operation plans on selected date",
+        "tabs": {
+            "unplannedVVNs": "Unplanned VVNs"
+        },
+        "unplannedVVNs": {
+            "description": "Vessel visit notifications that do not have an operation plan assigned yet",
+            "noUnplanned": "All vessel visit notifications have operation plans assigned"
+        },
         "algorithm": {
             "optimal": "Optimal",
             "greedy": "Greedy",
