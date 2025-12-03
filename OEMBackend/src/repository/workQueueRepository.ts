@@ -36,7 +36,7 @@ export class WorkQueueRepository {
     }
 
     async getQueueState(): Promise<ScheduleQueueItem[]> {
-        const queueEntries = await ScheduleQueue.find().sort({ priority: -1, requestedAt: 1 }).exec();
+        const queueEntries = await ScheduleQueue.find().sort({ priority: -1, requestedAt: -1 }).limit(10).exec();
         return queueEntries.map(entry => ScheduleQueueMapper.fromSchema(entry));
     }
 
