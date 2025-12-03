@@ -17,7 +17,7 @@ handle_schedule_request(Request) :-
     http_parameters(Request, [
         day(Day, [string]),
         daysAhead(DaysAhead, [integer, default(0)]),
-        alg(Algorithm, [string, default('optimal')]),
+        alg(Algorithm, [string, default('auto')]),
         compare(Compare, [boolean, default(false)])
     ]),
 

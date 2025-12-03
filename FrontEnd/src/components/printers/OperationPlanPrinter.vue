@@ -18,11 +18,15 @@ interface DockPlan {
 }
 
 interface Metric {
-    algorithm: 'optimal' | 'greedy' | 'genetic';
+    algorithm: 'optimal' | 'greedy' | 'genetic' | 'auto';
     computationTime: number;
     strategy: string;
     totalDelay: number;
     vesselCount: number;
+    selection?: {
+        auto: boolean;
+        reason: string;
+    };
 }
 
 interface OperationPlan {
@@ -88,6 +92,11 @@ const primaryMetric = computed(() => {
                 <sl-divider></sl-divider>
                 <div class="metrics-section" v-if="primaryMetric">
                     <p class="metrics-title">{{ t('operationPlan.metrics.title') }}</p>
+                    <sl-alert v-if="primaryMetric.selection?.auto" variant="primary" open class="auto-selection-info">
+                        <sl-icon slot="icon" name="robot"></sl-icon>
+                        <strong>{{ t('operationPlan.metrics.autoSelection') }}</strong><br/>
+                        {{ primaryMetric.selection.reason }}
+                    </sl-alert>
                     <div class="metrics-grid">
                         <div class="metric-item">
                             <span class="metric-label">{{ t('operationPlan.metrics.strategy') }}:</span>
@@ -181,5 +190,13 @@ const primaryMetric = computed(() => {
     border-radius: var(--sl-border-radius-medium);
     background-color: var(--sl-color-neutral-200);
     color: var(--sl-color-neutral-800);
+}
+
+.auto-selection-info {
+    margin-bottom: 10px;
+}
+
+.auto-selection-info::part(base) {
+    background-color: var(--sl-color-primary-50);
 }
 </style>
