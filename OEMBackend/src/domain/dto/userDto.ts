@@ -15,4 +15,5 @@ export interface UserDto {
     emailAddress: string;
     name: string;
     user_role: UserRole;
+    token?: string;
 }

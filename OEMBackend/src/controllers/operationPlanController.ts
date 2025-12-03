@@ -61,6 +61,30 @@ export const getPlanById = async (req: Request, res: Response, next: NextFunctio
 
 /**
  * @swagger
+ * /plans/notifications-without-plan:
+ *   get:
+ *     tags: [OperationPlans]
+ *     responses:
+ *       200:
+ *         description: List of VVN IDs without associated operation plans
+ *       404:
+ *         description: No notifications without associated operation plans found
+ */
+export const getNotificationWithoutPlan = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        let token = req.user?.token;
+        const items = await operationPlanService.getNotificationsWithoutPlan(token!);
+        if(items === null){
+            return res.status(404).json({ message: 'No notifications without associated operation plans found' });
+        }
+        res.json(items);
+    } catch (error) {
+        next(error);
+    }
+}
+
+/**
+ * @swagger
  * /plans/range:
  *   get:
  *     tags: [OperationPlans]

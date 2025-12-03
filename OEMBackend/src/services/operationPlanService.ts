@@ -1,6 +1,6 @@
 import { OperationPlanDto } from "../domain/dto/operationPlansDto";
-import { OperationPlan } from "../domain/operationPlans";
 import { operationPlanRepository } from "../repository/operationPlanRepository";
+import config from "../config/config";
 
 export class OperationPlanService {
     async getAll(): Promise<OperationPlanDto[]> {
@@ -23,6 +23,31 @@ export class OperationPlanService {
         count: number;
     }[]> {
         return await operationPlanRepository.groupBydate();
+    }
+
+    async getNotificationsWithoutPlan(token: string): Promise<string[]> {
+        const url = `${config.backendServer}/VesselVisitNotification/getAllIds`;
+        const res = await fetch(url,
+            {
+                credentials: "include",
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                }
+            }
+        );
+        if (!res.ok) {
+            throw new Error(`Failed to fetch all VVNs: ${res.statusText}`);
+        }
+
+        const data = await res.json();
+        const allVvnIds: string[] = data;
+
+        const plans = await this.getAll();
+        const plannedVvnIds = plans.map(plan => plan.id);
+
+        const unplannedVvnIds = allVvnIds.filter(id => !plannedVvnIds.includes(id));
+
+        return unplannedVvnIds;
     }
 }
 
