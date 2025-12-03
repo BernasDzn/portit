@@ -128,7 +128,7 @@
         "fields": {
             "email": {
                 "title": "Email",
-                "placeholder": "email@mail.com"
+                "placeholder": "email{'@'}mail.com"
             },
             "role": {
                 "title": "Role",
