@@ -107,6 +107,5 @@ __pycache__/
 *.pyc
 .venv/
 media/
-.env
 
 /FrontEnd/public/libs/*
