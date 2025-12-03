@@ -108,8 +108,8 @@ const downloadPrivacyPolicy = () => {
 
     <sl-dialog Label="Privacy Policy" class="dialog-overview" style="--width: 50vw;">
         <sl-icon-button class="new-window" slot="header-actions" name="download" @click="downloadPrivacyPolicy"></sl-icon-button>
-        <p slot="label" style="display: flex;">
-            <b>Privacy Policy</b> &nbsp;
+        <p slot="label" style="display: flex; align-items: center; gap: 8px; margin: 0;">
+            <b>Privacy Policy</b>
             <sl-badge variant="primary" pill>Last updated: {{ privacyPolicy?.updatedOn ? new Date(privacyPolicy.updatedOn).toLocaleDateString() : '' }}</sl-badge>
         </p>
         <MarkdownRenderer :markdown="privacyPolicy?.content || ''" style="height: 40vh;" />
@@ -160,23 +160,24 @@ div {
 sl-card::part(base) {
     border-radius: 12px;
     padding: 1.5rem;
-    padding-bottom: 0;
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
 }
 
 sl-card h3 {
     margin-top: 0;
+    margin-bottom: 0.5rem;
     font-size: 1.2rem;
     font-weight: 600;
 }
 
 sl-card p {
-    margin: 0.5rem 0 1rem;
+    margin: 0.5rem 0;
     line-height: 1.5;
 }
 
 sl-button {
     margin-top: 0.5rem;
+    margin-bottom: 0;
 }
 
 p:last-of-type {
@@ -190,5 +191,12 @@ p:last-of-type {
     }
 }
 
+sl-dialog::part(header) {
+    padding-bottom: 0;
+}
+
+sl-dialog::part(body) {
+    padding-top: 0;
+}
 
 </style>
