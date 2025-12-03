@@ -5,6 +5,7 @@
 :- consult('../algorithms/optimal_scheduling.pl').
 :- consult('../algorithms/greedy_scheduling.pl').
 :- consult('../algorithms/genetic_scheduling.pl').
+:- consult('../algorithms/auto_algorithm_selector.pl').
 :- use_module(library(lists)).
 
 :- dynamic current_schedule_day/1.
@@ -68,10 +69,22 @@ dispatch_algorithm(JsonData, Algorithm, ScheduleResult, Metrics) :-
     
     maplist(assertz, FlatCraneFacts),
     
+    % Handle automatic algorithm selection
+    ( Algorithm == "auto" ->
+        maplist(assertz, FlatVesselFacts),
+        select_algorithm(30, SelectedAlgorithm, SelectionReason),
+        retractall(vessel(_,_,_,_,_,_)),
+        ActualAlgorithm = SelectedAlgorithm,
+        AlgorithmSelectionInfo = #{auto: true, reason: SelectionReason}
+    ;
+        ActualAlgorithm = Algorithm,
+        AlgorithmSelectionInfo = #{auto: false, reason: "Manual selection"}
+    ),
+    
     % Try single-crane first
     format(user_error, '~n=== PHASE 1: Single-crane scheduling ===~n', []),
     assert_single_crane(FlatVesselFacts),
-    run_algorithm(Algorithm, SingleRaw, SingleDelay, SingleTime),
+    run_algorithm(ActualAlgorithm, SingleRaw, SingleDelay, SingleTime),
     format(user_error, 'Single-crane delay: ~w~n', [SingleDelay]),
     capture_assignments(SingleRaw, SingleResult),
     
@@ -80,7 +93,7 @@ dispatch_algorithm(JsonData, Algorithm, ScheduleResult, Metrics) :-
         format(user_error, '~n=== PHASE 2: Multi-crane permutations ===~n', []),
         retractall(vessel(_,_,_,_,_,_)),
         get_time(T1),
-        find_best_assignment(FlatVesselFacts, Algorithm, MultiRaw, MultiDelay),
+        find_best_assignment(FlatVesselFacts, ActualAlgorithm, MultiRaw, MultiDelay),
         get_time(T2), MultiTime is T2 - T1,
         capture_assignments(MultiRaw, MultiResult),
         ( MultiDelay < SingleDelay ->
@@ -96,8 +109,8 @@ dispatch_algorithm(JsonData, Algorithm, ScheduleResult, Metrics) :-
     ),
     
     length(FlatVesselFacts, VesselCount),
-    Metrics = #{algorithm: Algorithm, totalDelay: TotalDelay, computationTime: ComputationTime, 
-                vesselCount: VesselCount, strategy: Strategy},
+    Metrics = #{algorithm: ActualAlgorithm, totalDelay: TotalDelay, computationTime: ComputationTime, 
+                vesselCount: VesselCount, strategy: Strategy, selection: AlgorithmSelectionInfo},
     format(user_error, 'Final Schedule: ~w~n', [ScheduleResult]),
     format(user_error, 'Final Metrics: ~w~n', [Metrics]).
 

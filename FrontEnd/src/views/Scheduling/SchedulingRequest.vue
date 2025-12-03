@@ -24,13 +24,14 @@ const router = useRouter();
 const { t } = useI18n();
 
 const algorithmList = [
+    { label: "Auto (Recommended) - Selects best algorithm based on problem size", value: "auto" },
     { label: "Optimal Scheduling (Exhaustive)", value: "optimal" },
     { label: "Greedy Scheduling (Fast - EDD)", value: "greedy" },
     { label: "Genetic Scheduling (Generational)", value: "genetic" }
 ]
 
 const selectedDate = ref<Date | null>(new Date());
-const selectedAlgorithm = ref<string | null>(null);
+const selectedAlgorithm = ref<string | null>("auto");
 const vvnList = ref<VesselVisitNotification[]>([]);
 const daysAhead = ref<number>(1);
 const loading = ref(false);

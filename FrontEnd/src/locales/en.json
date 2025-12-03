@@ -760,13 +760,15 @@
         "algorithm": {
             "optimal": "Optimal",
             "greedy": "Greedy",
-            "genetic": "Genetic"
+            "genetic": "Genetic",
+            "auto": "Auto"
         },
         "metrics": {
             "title": "Metrics",
             "strategy": "Strategy",
             "totalDelay": "Total Delay",
-            "computationTime": "Computation Time"
+            "computationTime": "Computation Time",
+            "autoSelection": "Automatic Algorithm Selection"
         }
     }
 }
