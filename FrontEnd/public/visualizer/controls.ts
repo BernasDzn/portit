@@ -6,6 +6,7 @@ const maxZoomDistance = 3000; // Maximum distance for zooming
 
 const zoomIncrement = 10;
 const moveDistance = 20; // Distance to move per key press
+const waterLevel = -5;
 
 export default class Controls {
 
@@ -109,6 +110,10 @@ export default class Controls {
             // Lerp OrbitControls target with eased t
             this.controls.target.lerpVectors(this.startTarget, this.endTarget, t);
 
+            if (this.controls.target.y < waterLevel) {
+                this.controls.target.y = waterLevel;
+            }
+
             this.controls.update();
 
             if (rawT >= 1) this.isAnimating = false;
@@ -116,6 +121,26 @@ export default class Controls {
             return;
         }
     
+        if (this.controls.target.y < waterLevel) {
+            this.controls.target.y = waterLevel;
+        }
+
+        // Dynamic maxPolarAngle to prevent camera from dipping into water
+        const minCameraY = waterLevel + 5; // Buffer above water
+        const targetY = this.controls.target.y;
+        const distance = this.camera.position.distanceTo(this.controls.target);
+
+        // cos(phi) >= (minCameraY - targetY) / distance
+        const val = (minCameraY - targetY) / distance;
+        
+        if (val > 0 && val < 1) {
+            this.controls.maxPolarAngle = Math.acos(val);
+        } else if (val >= 1) {
+            this.controls.maxPolarAngle = 0;
+        } else {
+            this.controls.maxPolarAngle = Math.PI / 2;
+        }
+
         this.controls.update();
     }
     
