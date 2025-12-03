@@ -123,13 +123,13 @@ const unreadCount = computed(() =>
 
             <div class="notification-header">
                 <div class="tabs">
-                    <button
+                    <buttonz
                         class="tab-btn"
                         :class="{ active: activeTab === 'notifications' }"
                         @click="activeTab = 'notifications'; fetchNotifications()"
                     >
                         Notifications
-                    </button>
+                    </buttonz>
 
                     <button
                         class="tab-btn"

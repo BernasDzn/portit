@@ -39,11 +39,14 @@
 					<td :colspan="columns.length" class="dt-empty">{{ emptyText }}</td>
 				</tr>
 
-				<tr v-for="row in rows" :key="row[keyField]">
-					<td v-for="column in columns" :key="column">
-						{{ row[column] }}
-					</td>
-				</tr>
+                <tr v-for="row in rows" :key="row[keyField]">
+                    <td v-for="column in columns" :key="column">
+                        <slot :name="column" :value="row[column]" :row="row">
+                            {{ row[column] }}
+                        </slot>
+                    </td>
+                </tr>
+                
 
 			</tbody>
 		</table>

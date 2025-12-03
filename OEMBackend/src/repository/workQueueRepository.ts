@@ -1,0 +1,71 @@
+import { OperationPlans } from "../schemas/operationPlansSchema";
+import { OperationPlan } from "../domain/operationPlans";
+import { OperationPlanMapper } from "../domain/mappers/operationPlanMapper";
+import { WorkQueueItem } from "../domain/workQueueItem";
+import { ScheduleQueue } from "../schemas/scheduleQueue";
+import { ScheduleQueueItem } from "../domain/scheduleQueue";
+import { ScheduleQueueMapper } from "../domain/mappers/scheduleQueueMapper";
+
+export class WorkQueueRepository {
+
+    async enqueueRequest(day: string, alg: string, daysAhead: number = 2, priority: number = 0, issuer: string): Promise<number> {
+        const newRequest = new WorkQueueItem({
+            day,
+            alg,
+            daysAhead,
+        });
+
+        const workQueueEntry = new ScheduleQueue({
+            requestData: newRequest,
+            priority: priority,
+            requestedAt: new Date(),
+            status: 'pending',
+            estimatedStartTime: null,
+            estimatedEndTime: null,
+            issuer: issuer,
+        });
+
+        await workQueueEntry.save();
+
+        const numberOnQueue = await ScheduleQueue.countDocuments({
+            status: 'pending',
+            requestedAt: { $lt: workQueueEntry.requestedAt }
+        }).exec();
+
+        return numberOnQueue;
+    }
+
+    async getQueueState(): Promise<ScheduleQueueItem[]> {
+        const queueEntries = await ScheduleQueue.find().sort({ priority: -1, requestedAt: 1 }).exec();
+        return queueEntries.map(entry => ScheduleQueueMapper.fromSchema(entry));
+    }
+
+    async dequeueRequest(): Promise<ScheduleQueueItem | null> {
+
+        const nextEntry = await ScheduleQueue.findOneAndUpdate(
+            { status: 'pending' },
+            { status: 'in-progress' },
+            { sort: { priority: -1, requestedAt: 1 }, new: true }
+        ).exec();
+        
+        if (!nextEntry)
+            return null;
+
+        return ScheduleQueueMapper.fromSchema(nextEntry);
+    }
+
+    async finishRequest(id: string, status: string): Promise<void> {
+
+        const update: any = {
+            status: status,
+        };
+
+        await ScheduleQueue.findByIdAndUpdate(
+            id,
+            update,
+            { new: true }
+        ).exec();
+    }
+}
+
+export const workQueueRepository = new WorkQueueRepository();
