@@ -260,4 +260,19 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
             throw new PersistencyFailedException("Failed to retrieve vessel visit notification distribution from the database.");
         }
     }
+
+    public async Task<IEnumerable<string>> GetVesselVisitNotificationIdsAsync()
+    {
+        try
+        {
+            var ids = await _context.VesselVisitNotifications
+                .Select(vvn => vvn.NotificationId.Value)
+                .ToListAsync();
+            return ids;
+        }
+        catch
+        {
+            throw new PersistencyFailedException("Failed to retrieve vessel visit notification IDs from the database.");
+        }
+    }
 }

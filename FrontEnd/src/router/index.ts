@@ -389,6 +389,14 @@ const router = createRouter({
             }
         },
         {
+            path: '/scheduling/queue',
+            name: 'Scheduling Queue',
+            component: () => import('@/views/Scheduling/RequestQueue.vue'),
+            meta: {
+                icon: "queue"
+            }
+        },
+        {
           path: '/about',
           name: 'about',
           component: () => import('@/views/About/About.vue'),

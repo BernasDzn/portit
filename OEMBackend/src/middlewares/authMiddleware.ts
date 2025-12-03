@@ -43,7 +43,8 @@ export const authMiddleware = (
             id: (decoded as JwtPayload).id,
             emailAddress: (decoded as any).email_address,
             name: (decoded as any).name,
-            user_role: (decoded as any).user_role
+            user_role: (decoded as any).user_role,
+            token: token
         };
         console.log('Authenticated user:', req.user);
         next();

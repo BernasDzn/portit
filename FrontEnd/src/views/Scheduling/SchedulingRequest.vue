@@ -60,47 +60,63 @@ const generateTasksForDate = async () => {
     if (!selectedDate.value || !selectedAlgorithm.value) return;
     generating.value = true;
 
-    const results: Schedule = await scheduleService.scheduleForDay(selectedDate.value, selectedAlgorithm.value, daysAhead.value);
-    console.log('Generated Schedule:', results);
+    try {
+        
+        const results = await scheduleService.scheduleForDay(selectedDate.value, selectedAlgorithm.value, daysAhead.value);
+        console.log('Generated Schedule:', results);
 
-    if (!Array.isArray(results.data)){
-        notifications.enqueueNotification("An error occurred while generating the schedule. " + results.data, notifications.notificationTypes.DANGER);
+        notifications.enqueueNotification(`${results.message}`, notifications.notificationTypes.SUCCESS);
         generating.value = false;
-        return;
-    }
-
-    generating.value = false;
-
-    if (results.data.length > 0) {
-        
-        const algorithmLabel = algorithmList.find(a => a.value === selectedAlgorithm.value)?.label || selectedAlgorithm.value;
-        let message = `Successfully generated ${results.data.length} tasks using ${algorithmLabel}.`;
-        
-        // Add metrics to notification if available
-        if (results.metrics) {
-            message += ` Total delay: ${results.metrics.totalDelay}h, Computation time: ${(results.metrics.computationTime * 1000).toFixed(2)}ms`;
-        }
-        
-        notifications.enqueueNotification(message, notifications.notificationTypes.SUCCESS);
         closeModal();
 
-        // Generate and open schedule pdf
-        // const pdfResponse = await scheduleService.generateSchedulePDF(results, selectedDate.value);
-        // const pdfBlob = new Blob([pdfResponse], { type: 'application/pdf' });
-        // const pdfUrl = URL.createObjectURL(pdfBlob);
-        // window.open(pdfUrl, '_blank');
+        // Goto queue
         router.push({
-            name: 'ScheduleResults',
-            query: {
-                schedule: JSON.stringify(results),
-                date: selectedDate.value.toISOString()
-            }
+            name: 'Scheduling Queue'
         });
 
-    } else {
+    } catch (error) {
         
-        notifications.enqueueNotification("The requested schedule came back empty, nothing to do on that dock at this time.", notifications.notificationTypes.NEUTRAL);
+        notifications.enqueueNotification(`An error occurred while generating the schedule. ${error}`, notifications.notificationTypes.DANGER);
     }
+
+    // if (!Array.isArray(results.data)){
+    //     notifications.enqueueNotification("An error occurred while generating the schedule. " + results.data, notifications.notificationTypes.DANGER);
+    //     generating.value = false;
+    //     return;
+    // }
+
+    // generating.value = false;
+
+    // if (results.data.length > 0) {
+        
+    //     const algorithmLabel = algorithmList.find(a => a.value === selectedAlgorithm.value)?.label || selectedAlgorithm.value;
+    //     let message = `Successfully generated ${results.data.length} tasks using ${algorithmLabel}.`;
+        
+    //     // Add metrics to notification if available
+    //     if (results.metrics) {
+    //         message += ` Total delay: ${results.metrics.totalDelay}h, Computation time: ${(results.metrics.computationTime * 1000).toFixed(2)}ms`;
+    //     }
+        
+    //     notifications.enqueueNotification(message, notifications.notificationTypes.SUCCESS);
+    //     closeModal();
+
+    //     // Generate and open schedule pdf
+    //     // const pdfResponse = await scheduleService.generateSchedulePDF(results, selectedDate.value);
+    //     // const pdfBlob = new Blob([pdfResponse], { type: 'application/pdf' });
+    //     // const pdfUrl = URL.createObjectURL(pdfBlob);
+    //     // window.open(pdfUrl, '_blank');
+    //     router.push({
+    //         name: 'ScheduleResults',
+    //         query: {
+    //             schedule: JSON.stringify(results),
+    //             date: selectedDate.value.toISOString()
+    //         }
+    //     });
+
+    // } else {
+        
+    //     notifications.enqueueNotification("The requested schedule came back empty, nothing to do on that dock at this time.", notifications.notificationTypes.NEUTRAL);
+    // }
 };
 
 const events = ref<Array<{ title: string, start: string }>>([]);

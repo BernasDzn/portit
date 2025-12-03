@@ -13,6 +13,7 @@ interface Config {
         jwtAudience: string;
     };
     schedulingServer: string;
+    backendServer: string;
 }
 
 const config: Config = {
@@ -26,6 +27,7 @@ const config: Config = {
     },
     shouldBootstrap: process.env.SHOULD_BOOTSTRAP === 'true',
     schedulingServer: process.env.SCHEDULING_SERVER || 'http://localhost:2228',
+    backendServer: process.env.BACKEND_SERVER || 'http://localhost:2226',
 };
 
 export default config;

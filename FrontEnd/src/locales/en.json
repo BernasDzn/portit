@@ -437,14 +437,21 @@
             "search": "List Operation Plans",
             "create": "Create Scheduling",
             "view": "View Scheduling",
-            "edit": "Edit Scheduling"
+            "edit": "Edit Scheduling",
+            "queue": "Scheduling Queue"
         },
         "subtitles": {
             "dashboard": "Overview of scheduling of berth operations and incidents",
             "schedule": "Request a task schedule for a specific date",
             "search": "List all operation plans for a given date",
             "create": "Create a new scheduling into the system",
-            "edit": "Edit an existing scheduling in the system"
+            "edit": "Edit an existing scheduling in the system",
+            "queue": "View pending scheduling requests"
+        },
+        "queue": {
+            "title": "Scheduling Queue",
+            "subtitle": "Pending scheduling requests",
+            "onlyMine": "Show only my requests"
         }
     },
     "physicalResource": {

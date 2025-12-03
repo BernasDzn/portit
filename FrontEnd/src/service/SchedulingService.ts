@@ -16,6 +16,11 @@ export class SchedulingService implements ISchedulingService {
         private http: IHttpService
     ) {}
 
+    async getQueueState(): Promise<any[]> {
+        const res = await this.http.get<any[]>(`/oem/schedule/queueState`);
+        return res.data;
+    }
+
     calculateDateOffset(baseDate: Date, offsetHours: number): Date {
         const newDate = new Date(baseDate.getTime() + offsetHours * 60 * 60 * 1000);
         return newDate;
@@ -140,19 +145,10 @@ export class SchedulingService implements ISchedulingService {
         return text.substring(0, maxLength - 3) + '...';
     }
 
-    async scheduleForDay(day: Date, alg: string, daysAhead: number = 2): Promise<Schedule> {
+    async scheduleForDay(day: Date, alg: string, daysAhead: number = 2): Promise<any> {
         const dayString = day.toISOString().split('T')[0];
         const res = await this.http.getWithoutCredentials(`/oem/schedule/request?day=${dayString}&alg=${alg}&daysAhead=${daysAhead}`);
         
-        const apiResponse = res as any;
-        
-        const actualData = apiResponse.data || {};
-        
-        return {
-            status: actualData.status || 'success',
-            comment: actualData.comment || '',
-            data: actualData.data || [],
-            metrics: actualData.metrics
-        } as Schedule;
+        return res.data;
     }
 }

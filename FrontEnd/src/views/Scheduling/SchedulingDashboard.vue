@@ -18,6 +18,9 @@ const { t } = useI18n();
                 <DashboardItem :title="t('scheduling.tabs.search')" 
                     :description="t('scheduling.subtitles.search')"
                     icon="search" to="/scheduling/plans-search" />
+                <DashboardItem :title="t('scheduling.tabs.queue')" 
+                    :description="t('scheduling.subtitles.queue')"
+                    icon="queue" to="/scheduling/queue" />
             </div>
         </sl-card>
     </div>

@@ -44,7 +44,27 @@ export const scheduleRequest = async (req: Request, res: Response, next: NextFun
 
         // Hard cap at one this might cause issues later
         daysAhead = 1;
-        const data = await schedulingRequestService.scheduleRequest(day, alg, daysAhead);
+        const userEmail = req.user?.emailAddress || 'unknown';
+        const data = await schedulingRequestService.scheduleRequest(day, alg, daysAhead, userEmail);
+        res.json(data);
+    } catch (error) {
+        next(error);
+    }
+}
+
+/**
+ * @swagger
+ * /schedule/queueState:
+ *   get:
+ *     tags: [Scheduling]
+ *     description: Get the current state of the scheduling queue
+ *     responses:
+ *       200:
+ *         description: Current queue state
+ */
+export const getQueueState = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const data = await schedulingRequestService.getQueueState();
         res.json(data);
     } catch (error) {
         next(error);

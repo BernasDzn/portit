@@ -41,6 +41,21 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
         }
     }
 
+    [HttpGet("getAllIds", Name = "GetAllIds")]
+    public async Task<ActionResult<IEnumerable<string>>> GetAllIds()
+    {
+        try
+        {
+            IEnumerable<string> ids = await _notificationService.GetVesselVisitNotificationIds();
+            return Ok(ids);
+        }
+        catch (System.Exception e)
+        {
+            _logger.LogCritical("Error retrieving vessel visit notifications, {Message}", e.Message);
+            return StatusCode(500, "An error occurred while retrieving vessel visit notifications.");
+        }
+    }
+
     [HttpGet("collectScheduleData", Name = "GetVesselVisitNotificationsOnDay")]
     [AllowAnonymous]
     public async Task<ActionResult<SchedulingResultDto>> CollectSchedulingData([FromQuery] DateTime day, uint daysAhead = 1)

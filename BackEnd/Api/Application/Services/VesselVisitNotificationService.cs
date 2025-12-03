@@ -205,6 +205,13 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         return page.Map(vvn => vvn.ToStatusDTO());
     }
 
+    public async Task<IEnumerable<string>> GetVesselVisitNotificationIds()
+    {
+        IEnumerable<string> ids = await _notificationRepository.GetVesselVisitNotificationIdsAsync();
+        AppLogEvents.LogRetrieve(_logger, "vessel visit notification ids", ids.Count());
+        return ids;
+    }
+
     public async Task SubmitNotification(string vvnID, string userEmail)
     {
         var existingNotification =
