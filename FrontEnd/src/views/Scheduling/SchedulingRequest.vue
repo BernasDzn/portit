@@ -25,7 +25,8 @@ const { t } = useI18n();
 
 const algorithmList = [
     { label: "Optimal Scheduling (Exhaustive)", value: "optimal" },
-    { label: "Greedy Scheduling (Fast - EDD)", value: "greedy" }
+    { label: "Greedy Scheduling (Fast - EDD)", value: "greedy" },
+    { label: "Genetic Scheduling (Generational)", value: "genetic" }
 ]
 
 const selectedDate = ref<Date | null>(new Date());
