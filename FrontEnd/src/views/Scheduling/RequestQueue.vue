@@ -34,7 +34,8 @@ const statusVariants: Record<string, string> = {
     "pending": "primary",
     "in_progress": "warning",
     "completed": "success",
-    "failed": "danger"
+    "failed": "danger",
+    "unavailable": "danger",
 };
 
 // flatten nested objects for DataTable

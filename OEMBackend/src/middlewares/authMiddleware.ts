@@ -46,7 +46,6 @@ export const authMiddleware = (
             user_role: (decoded as any).user_role,
             token: token
         };
-        console.log('Authenticated user:', req.user);
         next();
     } catch {
         return res.status(400).json({ message: 'Invalid token' });

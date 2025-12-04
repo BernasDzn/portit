@@ -50,7 +50,7 @@ export class OperationPlanRepository {
         return data.map(doc => OperationPlanMapper.fromSchema(doc));
     }
 
-    async savePlan(operationPlan: any): Promise<any> {
+    async savePlan(operationPlan: OperationPlan): Promise<any> {
         const doc = new OperationPlans(operationPlan);
         return await doc.save();
     }

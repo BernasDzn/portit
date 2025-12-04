@@ -52,6 +52,7 @@ export class OperationPlanService {
     }
 
     async savePlan(planData: any): Promise<any> {
+        console.log("Saving operation plan...", planData);
         const plan = new OperationPlan(planData);
         return await operationPlanRepository.savePlan(plan);
     }

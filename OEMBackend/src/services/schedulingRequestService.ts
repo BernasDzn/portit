@@ -34,30 +34,42 @@ export class SchedulingRequestService {
         console.log(`Processing scheduling request ID ${nextItem.id} for day ${nextItem.data.day}`);
 
         const url = `${config.schedulingServer}/schedule?day=${nextItem.data.day}&alg=${nextItem.data.alg}&daysAhead=${nextItem.data.daysAhead}`;
-
-        const res = await fetch(url);
-        console.log(res);
-        if (!res.ok) {
-            // Set result as failed in the queue
-            await workQueueRepository.finishRequest(nextItem.id, 'failed');
-            return await this.getToWork(); 
-        }
-
-        const scheduleData = await res.json();
         
-        // Save the schedule
         try {
-            const savedPlan = await operationPlanService.savePlan(scheduleData);
-            console.log(`Saved operation plan ${savedPlan.id} for ${nextItem.data.day} by ${nextItem.issuer}`);
+    
+            const res = await fetch(url);
+            console.log(res);
+            if (!res.ok) {
+                // Set result as failed in the queue
+                await workQueueRepository.finishRequest(nextItem.id, 'failed');
+                return await this.getToWork(); 
+            }
+
+            const scheduleData = await res.json();
+        
+            // Save the schedule
+            try {
+                const savedPlan = await operationPlanService.savePlan(scheduleData);
+                console.log(`Saved operation plan ${savedPlan.id} for ${nextItem.data.day} by ${nextItem.issuer}`);
+            } catch (error) {
+                console.error(`Failed to save schedule:`, error);
+                await workQueueRepository.finishRequest(nextItem.id, 'failed');
+                return await this.getToWork();
+            }
+            
+            // Mark request as complete
+            await workQueueRepository.finishRequest(nextItem.id, 'completed');
+            return await this.getToWork();
+            
         } catch (error) {
-            console.error(`Failed to save schedule:`, error);
-            await workQueueRepository.finishRequest(nextItem.id, 'failed');
+
+            console.error("Error contacting scheduling server:", error);
+            // Set result as failed in the queue
+            await workQueueRepository.finishRequest(nextItem.id, 'unavailable');
+            
+        } finally {
             return await this.getToWork();
         }
-        
-        // Mark request as complete
-        await workQueueRepository.finishRequest(nextItem.id, 'completed');
-        return await this.getToWork();
     }
 
 }export const schedulingRequestService = new SchedulingRequestService();

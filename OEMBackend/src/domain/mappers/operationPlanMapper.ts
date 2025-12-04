@@ -8,15 +8,15 @@ export class OperationPlanMapper {
 
             date: new Date(doc.date),
 
-            dockPlanMap: (doc.dockPlanMap ?? []).map((dp: any) =>
+            data: (doc.dockPlanMap ?? []).map((dp: any) =>
                 new DockPlan({
-                    dockId: dp.dockId,
+                    dock: dp.dockId,
                     schedule: (dp.schedule ?? []).map((s: any) =>
                         new Schedule({
                             cranes: s.cranes ?? [],
-                            loadingEnterTime: new Date(s.loadingEnterTime),
-                            loadingLeaveTime: new Date(s.loadingLeaveTime),
-                            vvnId: s.vvnId
+                            loading_enter_time: new Date(s.loadingEnterTime),
+                            loading_leave_time: new Date(s.loadingLeaveTime),
+                            name: s.vvnId
                         })
                     )
                 })
