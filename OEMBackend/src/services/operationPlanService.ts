@@ -2,11 +2,12 @@ import { OperationPlanDto } from "../domain/dto/operationPlansDto";
 import { operationPlanRepository } from "../repository/operationPlanRepository";
 import config from "../config/config";
 import { OperationPlan } from "../domain/operationPlans";
+import {Pageable, Page, mapPageItems} from "../domain/page";
 
 export class OperationPlanService {
-    async getAll(): Promise<OperationPlanDto[]> {
-        let plans = await operationPlanRepository.findAll();
-        return plans.map(plan => plan.toDto());
+    async getAll(pageable: Pageable): Promise<Page<OperationPlanDto>> {
+        let plans = await operationPlanRepository.findAll(pageable);
+        return mapPageItems(plans, plan => plan.toDto());
     }
 
     async getById(id: string): Promise<OperationPlanDto | undefined> {
@@ -14,9 +15,9 @@ export class OperationPlanService {
         return plan?.toDto();
     }
 
-    async findByDateRange(startDate: string, endDate: string): Promise<OperationPlanDto[]> {
-        let plans = await operationPlanRepository.findByDateRange(startDate, endDate);
-        return plans.map(plan => plan.toDto());
+    async findByDateRange(startDate: string, endDate: string, pageable: Pageable): Promise<Page<OperationPlanDto>> {
+        let plans = await operationPlanRepository.findByDateRange(startDate, endDate, pageable);
+        return mapPageItems(plans, plan => plan.toDto());
     }
 
     async groupByDate(): Promise<{
@@ -43,9 +44,12 @@ export class OperationPlanService {
         const data = await res.json();
         const allVvnIds: string[] = data;
 
-        const plans = await this.getAll();
-        const plannedVvnIds = plans.map(plan => plan.id);
-
+        const plans = await this.getAll({
+            pageNumber: 1,
+            pageSize: Number.MAX_SAFE_INTEGER
+        });
+        
+        const plannedVvnIds = plans.items.map(plan => plan.id);
         const unplannedVvnIds = allVvnIds.filter(id => !plannedVvnIds.includes(id));
 
         return unplannedVvnIds;

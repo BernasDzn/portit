@@ -6,6 +6,21 @@ import { operationPlanService } from "../services/operationPlanService";
  * /plans:
  *   get:
  *     tags: [OperationPlans]
+ *     description: Retrieve all operation plans
+ *     parameters:
+ *       - in: query
+ *         name: pageNumber
+ *         required: false
+ *         schema:
+ *           type: integer
+ *         description: Page number for pagination
+ *       - in: query
+ *         name: pageSize
+ *         required: false
+ *         schema:
+ *           type: integer
+ *           default: 10
+ *         description: Page size for pagination
  *     responses:
  *       200:
  *         description: List of operation plans
@@ -13,7 +28,13 @@ import { operationPlanService } from "../services/operationPlanService";
 export const getPlans = async (req: Request, res: Response, next: NextFunction) => {
     try {
         
-        const items = await operationPlanService.getAll();
+        const pageNumber = req.query.pageNumber ? parseInt(req.query.pageNumber as string, 10) : 1;
+        const pageSize = req.query.pageSize ? parseInt(req.query.pageSize as string, 10) : 10;
+
+        const items = await operationPlanService.getAll({
+            pageNumber,
+            pageSize
+        });
         res.json(items);
 
     } catch (error) {
@@ -101,6 +122,19 @@ export const getNotificationWithoutPlan = async (req: Request, res: Response, ne
  *         schema:
  *           type: string
  *         description: End date for the range filter
+ *       - in: query
+ *         name: pageNumber
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Page number for pagination
+ *       - in: query
+ *         name: pageSize
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           default: 10
+ *         description: Page size for pagination
  *     responses:
  *       200:
  *         description: Operation plans within the specified date range
@@ -109,11 +143,17 @@ export const getPlansByDateRange = async (req: Request, res: Response, next: Nex
     try {
         const { startDate, endDate } = req.query;
 
+        const pageNumber = req.query.pageNumber ? parseInt(req.query.pageNumber as string, 10) : 1;
+        const pageSize = req.query.pageSize ? parseInt(req.query.pageSize as string, 10) : 10;
+
         if (!startDate || !endDate) {
             return res.status(400).json({ message: 'startDate and endDate query parameters are required' });
         }
 
-        const items = await operationPlanService.findByDateRange(startDate as string, endDate as string);
+        const items = await operationPlanService.findByDateRange(startDate as string, endDate as string, {
+            pageNumber,
+            pageSize
+        });
         res.json(items);
 
     } catch (error) {

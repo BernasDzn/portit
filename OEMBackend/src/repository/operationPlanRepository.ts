@@ -1,12 +1,26 @@
 import { OperationPlans } from "../schemas/operationPlansSchema";
 import { OperationPlan } from "../domain/operationPlans";
 import { OperationPlanMapper } from "../domain/mappers/operationPlanMapper";
+import { Pageable, Page } from "../domain/page";
 
 export class OperationPlanRepository {
 
-    async findAll(): Promise<OperationPlan[]> {
-        const data = await OperationPlans.find();
-        return data.map(doc => OperationPlanMapper.fromSchema(doc));
+    async findAll(pageable: Pageable): Promise<Page<OperationPlan>> {
+        // const data = await OperationPlans.find();
+        // return data.map(doc => OperationPlanMapper.fromSchema(doc));
+
+        const { pageNumber, pageSize } = pageable;
+        const skip = (pageNumber - 1) * pageSize;
+        const data = await OperationPlans.find()
+            .skip(skip)
+            .limit(pageSize);
+
+        return {
+            pageNumber,
+            pageSize,
+            pageCount: Math.ceil(await OperationPlans.countDocuments() / pageSize),
+            items: data.map(doc => OperationPlanMapper.fromSchema(doc))
+        };
     }
 
     async findById(id: string): Promise<OperationPlan | null> {
@@ -39,15 +53,35 @@ export class OperationPlanRepository {
         return data;
     }
 
-    async findByDateRange(startDate: string, endDate: string): Promise<OperationPlan[]> {
+    async findByDateRange(startDate: string, endDate: string, pageable: Pageable): Promise<Page<OperationPlan>> {
+        // const data = await OperationPlans.find({
+        //     date: {
+        //         $gte: startDate,
+        //         $lte: endDate
+        //     }
+        // });
+        // return data.map(doc => OperationPlanMapper.fromSchema(doc));
+
         const data = await OperationPlans.find({
             date: {
-                $gte: startDate,
-                $lte: endDate
+                $gte: new Date(startDate),
+                $lte: new Date(endDate)
             }
-        });
+        })
+        .skip((pageable.pageNumber - 1) * pageable.pageSize)
+        .limit(pageable.pageSize);
 
-        return data.map(doc => OperationPlanMapper.fromSchema(doc));
+        return {
+            pageNumber: pageable.pageNumber,
+            pageSize: pageable.pageSize,
+            pageCount: Math.ceil(await OperationPlans.countDocuments({
+                date: {
+                    $gte: new Date(startDate),
+                    $lte: new Date(endDate)
+                }
+            }) / pageable.pageSize),
+            items: data.map(doc => OperationPlanMapper.fromSchema(doc))
+        };
     }
 
     async savePlan(operationPlan: OperationPlan): Promise<any> {
