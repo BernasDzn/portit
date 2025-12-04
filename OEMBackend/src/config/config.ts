@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import raw from '../../config.json';
 
 dotenv.config();
 
@@ -16,18 +17,21 @@ interface Config {
     backendServer: string;
 }
 
+const runMode = (process.env.RUN_MODE || 'dev') as 'dev' | 'local';
+const modeConfig = raw[runMode];
+
 const config: Config = {
-	port: Number(process.env.PORT) || 3000,
+	port: Number(process.env.PORT) || raw.port,
 	nodeEnv: process.env.NODE_ENV || 'development',
-    mongoUri: process.env.MONGO_URI || '',
+    mongoUri: process.env.MONGO_URI || raw.mongoUri,
     jwt: {
-        jwtSecret: process.env.JWT_SECRET || '',
-        jwtIssuer: process.env.JWT_ISSUER || 'http://localhost:2226',
-        jwtAudience: process.env.JWT_AUDIENCE || 'http://localhost:5173',
+        jwtSecret: process.env.JWT_SECRET || raw.jwtSecret,
+        jwtIssuer: process.env.JWT_ISSUER || modeConfig.jwtIssuer,
+        jwtAudience: process.env.JWT_AUDIENCE || modeConfig.jwtAudience,
     },
     shouldBootstrap: process.env.SHOULD_BOOTSTRAP === 'true',
-    schedulingServer: process.env.SCHEDULING_SERVER || 'http://localhost:2228',
-    backendServer: process.env.BACKEND_SERVER || 'http://localhost:2226',
+    schedulingServer: process.env.SCHEDULING_SERVER || modeConfig.schedulingServer,
+    backendServer: process.env.BACKEND_SERVER || modeConfig.backendServer,
 };
 
 export default config;

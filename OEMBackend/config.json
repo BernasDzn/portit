@@ -1,0 +1,17 @@
+{
+  "dev": {
+    "jwtIssuer": "http://localhost:2226",
+    "jwtAudience": "http://localhost:5173",
+    "schedulingServer": "http://localhost:2228",
+    "backendServer": "http://localhost:2226"
+  },
+  "local": {
+    "jwtIssuer": "http://localhost:5195",
+    "jwtAudience": "http://localhost:5173",
+    "schedulingServer": "http://localhost:8080",
+    "backendServer": "http://localhost:5195"
+  },
+  "port": 4000,
+  "mongoUri": "mongodb://mongoadmin:65f819db1f726e61df5a8591@vsgate-s1.dei.isep.ipp.pt:10696/Portit_document_store?authSource=admin",
+  "jwtSecret": "Jz3QGC+jW0U99CHRq4rGru1PyLZYDFE3sr36hjKdxzkTIKjNFpA9W0u6bhvCXZpNOvkFFc1yb6Y6dMAcIP5OPQ=="
+}
