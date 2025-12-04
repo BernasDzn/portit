@@ -10,6 +10,8 @@ import VesselVisitNotificationPrinter from '@/components/printers/VesselVisitNot
 import CalendarEvents from '@/components/crud/CalendarEvents.vue';
 import { computed, onMounted, ref } from 'vue';
 import type { VesselVisitNotification } from '@/model/VesselVisitNotification';
+import type { Filter, Page } from '@/model/Page';
+import ListingBox from '@/components/crud/ListingBox.vue';
 
 const operationPlanService = container.get<IOperationPlanService>(TYPES.operationPlanService);
 const schedulingService = container.get<ISchedulingService>(TYPES.schedulingService);
@@ -17,22 +19,26 @@ const vvnService = container.get<IVesselVisitNotificationService>(TYPES.vesselVi
 
 const { t, locale } = useI18n();
 
-const operationPlans = ref<any[]>([]);
+const operationPlans = ref<Page<any>>({ items: [], 
+    pageCount: 0, pageNumber: 0, pageSize: 0
+});
 const selectedDate = ref(new Date());
 const events = ref<Array<{ title: string, start: string }>>([]);
 const unplannedVVNIds = ref<string[]>([]);
 const unplannedVVNs = ref<VesselVisitNotification[]>([]);
 const isLoadingUnplanned = ref(false);
 
-const fetchOperationPlans = async () => {
-    const plans = await operationPlanService.getAllOperationPlans();
+const fetchOperationPlans = async (filtering?: Filter<null>): Promise<Page<any>> => {
+    const plans = await operationPlanService.getAllOperationPlans(filtering);
     operationPlans.value = plans;
     
     // Create calendar events from operation plans
-    events.value = plans.map((plan: any) => ({
+    events.value = plans.items.map((plan: any) => ({
         title: `${t('operationPlan.title')} - ${plan.dockPlanMap?.length || 0} ${t('operationPlan.docks')}`,
         start: typeof plan.date === 'string' ? plan.date : new Date(plan.date).toISOString()
     }));
+
+    return plans;
 };
 
 const fetchUnplannedVVNs = async () => {
@@ -55,7 +61,7 @@ const fetchUnplannedVVNs = async () => {
 const plansOnDate = computed(() => {
     if (!selectedDate.value) return [];
     const selected = selectedDate.value;
-    return operationPlans.value.filter(plan => {
+    return operationPlans.value.items.filter(plan => {
         const planDate = new Date(plan.date);
         return planDate.getFullYear() === selected.getFullYear() &&
             planDate.getMonth() === selected.getMonth() &&
@@ -88,14 +94,18 @@ onMounted(async () => {
             <sl-tab slot="nav" panel="unplanned">{{ t('operationPlan.tabs.unplannedVVNs') }}</sl-tab>
 
             <sl-tab-panel name="general">
-                <div class="plans-grid">
-                    <ul class="plans-list" v-if="operationPlans.length > 0">
-                        <li v-for="(plan, index) in operationPlans" :key="index" class="link">
-                            <OperationPlanPrinter :operation-plan="plan" />
-                        </li>
-                    </ul>
-                    <p v-else class="no-data">{{ t('common.noData') }}</p>
-                </div>
+                <!-- <ul class="plans-list" v-if="operationPlans.items.length > 0">
+                    <li v-for="(plan, index) in operationPlans.items" :key="index" class="link">
+                        <OperationPlanPrinter :operation-plan="plan" />
+                    </li>
+                </ul>
+                <p v-else class="no-data">{{ t('common.noData') }}</p> -->
+                <ListingBox listing-style="listing-triples" :fetch-function="fetchOperationPlans" v-slot="{elements}">
+                    <li v-for="(plan, index) in operationPlans.items" :key="index" class="link">
+                        <!-- {{ qualification.idCode }} - {{ qualification.qualificationName }} -->
+                        <OperationPlanPrinter :operation-plan="plan" />
+                    </li>
+                </ListingBox>
             </sl-tab-panel>
 
             <sl-tab-panel name="byDate">

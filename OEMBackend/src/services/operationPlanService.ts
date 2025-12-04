@@ -29,6 +29,7 @@ export class OperationPlanService {
 
     async getNotificationsWithoutPlan(token: string): Promise<string[]> {
         const url = `${config.backendServer}/VesselVisitNotification/getAllIds`;
+        console.log("Fetching all VVN IDs from external service..." + url);
         const res = await fetch(url,
             {
                 credentials: "include",
@@ -40,6 +41,8 @@ export class OperationPlanService {
         if (!res.ok) {
             throw new Error(`Failed to fetch all VVNs: ${res.statusText}`);
         }
+
+        console.log("Fetched all VVN IDs from external service.");
 
         const data = await res.json();
         const allVvnIds: string[] = data;
