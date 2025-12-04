@@ -8,14 +8,14 @@ export class Schedule {
 
     constructor(params: {
         cranes: string[];
-        loadingEnterTime: Date;
-        loadingLeaveTime: Date;
-        vvnId: string;
+        loading_enter_time: Date;
+        loading_leave_time: Date;
+        name: string;
     }) {
         this.cranes = params.cranes;
-        this.loadingEnterTime = params.loadingEnterTime;
-        this.loadingLeaveTime = params.loadingLeaveTime;
-        this.vvnId = params.vvnId;
+        this.loadingEnterTime = params.loading_enter_time;
+        this.loadingLeaveTime = params.loading_leave_time;
+        this.vvnId = params.name;
     }
 
     toDto(): ScheduleDto {
@@ -29,20 +29,20 @@ export class Schedule {
 }
 
 export class DockPlan {
-    dockId: string;
+    dock: string;
     schedule: Schedule[];
 
     constructor(params: {
-        dockId: string;
+        dock: string;
         schedule: Schedule[];
     }) {
-        this.dockId = params.dockId;
+        this.dock = params.dock;
         this.schedule = params.schedule;
     }
 
     toDto(): DockPlanDto {
         return {
-            dockId: this.dockId,
+            dockId: this.dock,
             schedule: this.schedule.map(s => s.toDto()),
         };
     }
@@ -88,12 +88,13 @@ export class OperationPlan {
 
     constructor(params: {
         id: string;
-        dockPlanMap: DockPlan[];
+        data: DockPlan[];
         metrics: Metric[];
         date: Date;
     }) {
+
         this.id = params.id;
-        this.dockPlanMap = params.dockPlanMap;
+        this.dockPlanMap = params.data;
         this.metrics = params.metrics;
         this.date = params.date;
     }
