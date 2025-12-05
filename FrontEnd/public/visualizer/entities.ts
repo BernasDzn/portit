@@ -71,20 +71,33 @@ export default class Vessel {
         this.model.position.copy(startPosition);
         this.model.scale.set(0.8,0.8,0.8);
 
-        
+
         this.scene = scene;
+
+        const details = {};
+        if (this.schedule) {
+            details.ETA = new Date(this.schedule.arrival).toLocaleString();
+            details.ETD = new Date(this.schedule.departure).toLocaleString();
+            details.AssignedDock = this.schedule.dockId;
+
+            if(this.schedule.unloadingEndDate)
+                details.UnloadingEnd = new Date(this.schedule.unloadingEndDate).toLocaleString();
+            if(this.schedule.loadingEndDate)
+                details.LoadingEnd = new Date(this.schedule.loadingEndDate).toLocaleString();
+        }
         
         // Vessel metadata
         const vesselMeta = {
             title: this.name,
             description: `${this.name} is a vessel`,
+            details: details,
             state: this.state,
             killable: true,
             killFunction: () => { this.kill(); }
         };
         
         this.setState("Arriving");
-        
+
         // Enable shadows and add metadata to all child meshes
         this.model.traverse((child) => {
             if (child.isMesh) {
