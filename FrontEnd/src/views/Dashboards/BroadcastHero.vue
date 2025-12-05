@@ -42,34 +42,68 @@ onMounted(() => {
 <template>
   <div>
     <sl-dialog v-if="broadcasts.length" label="Urgent Notification" open backdrop class="urgent-dialog">
-
-      <div>
-        <div v-for="b in broadcasts" :key="b.id">
-          <h3 class="text-group">
-            <sl-icon name="exclamation-triangle" class="icon-urgent"></sl-icon>
-            <span>
-              {{ b.title }}
-            </span>
-          </h3>
-          <p>{{ b.message }}</p>
+      <div class="broadcast-container">
+        <div v-for="b in broadcasts" :key="b.id" class="broadcast-card">
+          <div class="broadcast-header">
+            <sl-icon name="exclamation-triangle-fill" class="icon-urgent"></sl-icon>
+            <h3 class="broadcast-title">{{ b.title }}</h3>
+          </div>
+          <p class="broadcast-message">{{ b.message }}</p>
         </div>
       </div>
-      <sl-button style="regular" variant="primary" @click="acknowledgeAll">I understand</sl-button>
+      <sl-button slot="footer" variant="primary" @click="acknowledgeAll">
+        <sl-icon slot="prefix" name="check-circle"></sl-icon>
+        I understand
+      </sl-button>
     </sl-dialog>
   </div>
 </template>
 
 <style scoped>
-.icon-urgent {
-  color: red;
-  font-size: 1.5rem;
-  margin-right: 0.8rem;
-  margin-top: auto;
-  margin-bottom: auto;
+.urgent-dialog::part(panel) {
+  max-width: 600px;
 }
 
-.text-group {
+.broadcast-container {
   display: flex;
-  margin-top: 0;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.broadcast-card {
+  padding: 1.25rem;
+  background: linear-gradient(135deg, #fff5f5 0%, #ffe5e5 100%);
+  border-left: 4px solid #dc2626;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.1);
+}
+
+.broadcast-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.icon-urgent {
+  color: #dc2626;
+  font-size: 1.75rem;
+  flex-shrink: 0;
+}
+
+.broadcast-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #991b1b;
+}
+
+.broadcast-message {
+  margin: 0;
+  line-height: 1.6;
+  color: #7f1d1d;
+  font-size: 0.95rem;
 }
 </style>
