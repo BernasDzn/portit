@@ -88,6 +88,8 @@ function handleClear() {
     border-radius: var(--sl-border-radius-medium);
     box-shadow: var(--sl-shadow-large);
     z-index: 10;
+    max-height: 400px;
+    overflow-y: auto;
 }
 
 .fade-enter-active,
