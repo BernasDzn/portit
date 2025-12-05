@@ -11,7 +11,9 @@ const broadcasts = ref<SystemNotification[]>([]);
 const fetchBroadcasts = async () => {
   try {
     const all = await notificationService.getSystemNotifications();
-    broadcasts.value = all.filter(n => n.urgency === 1 && !n.isRead);
+    broadcasts.value = all
+      .filter(n => n.urgency === 1 && !n.isRead)
+      .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
   } catch (err) {
     console.error('Failed to fetch urgent broadcasts', err);
   }
@@ -46,7 +48,10 @@ onMounted(() => {
         <div v-for="b in broadcasts" :key="b.id" class="broadcast-card">
           <div class="broadcast-header">
             <sl-icon name="exclamation-triangle-fill" class="icon-urgent"></sl-icon>
-            <h3 class="broadcast-title">{{ b.title }}</h3>
+            <div class="broadcast-title-group">
+              <h3 class="broadcast-title">{{ b.title }}</h3>
+              <span class="broadcast-date">{{ new Date(b.createdAt).toLocaleString() }}</span>
+            </div>
           </div>
           <p class="broadcast-message">{{ b.message }}</p>
         </div>
@@ -82,7 +87,7 @@ onMounted(() => {
 
 .broadcast-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.75rem;
   margin-bottom: 0.75rem;
 }
@@ -91,6 +96,13 @@ onMounted(() => {
   color: #dc2626;
   font-size: 1.75rem;
   flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.broadcast-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 .broadcast-title {
@@ -98,6 +110,12 @@ onMounted(() => {
   font-size: 1.25rem;
   font-weight: 600;
   color: #991b1b;
+}
+
+.broadcast-date {
+  font-size: 0.7rem;
+  color: #991b1b;
+  opacity: 0.7;
 }
 
 .broadcast-message {
