@@ -2,7 +2,7 @@
 import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
 
-import { ref, computed } from 'vue';
+import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 import { container } from '@/inversify.config';
@@ -10,16 +10,31 @@ import TYPES from '@/inversify/types';
 
 import type { ISystemNotificationService } from '@/service/IService/ISystemNotificationService';
 import type { SystemNotificationBroadcastDto, SystemNotificationDto } from '@/model/dto/SystemNotificationDto';
-import { label } from 'three/tsl';
+import type { IAdminService } from '@/service/IService/IAdminService';
+import { useSession } from '@/composables/session';
+import EntityDropdown from '@/components/crud/EntityDropdown.vue';
 
 const { t } = useI18n();
 
 const notificationService = container.get<ISystemNotificationService>(TYPES.systemNotificationService);
+const adminService = container.get<IAdminService>(TYPES.adminService);
+const user = useSession().authenticatedUser;
 
 const broadcast = ref(false);
 
 const toggleBroadcast = (event: any) => {
     broadcast.value = event.target.checked;
+};
+
+async function fetchUsers() {
+    try {
+        const allUsers = await adminService.getAllUsers();
+        return allUsers.filter(u => u.email !== user?.email).map(u => u.email);
+        
+    } catch (err) {
+        console.error('Failed to fetch users for notification dropdown', err);
+        return [];
+    }
 };
 
 const toggleSendEmail = (event: any) => {
@@ -83,15 +98,16 @@ const submitFn = async (obj: any) => {
             </label>
         </div>
 
-        <FormField
-            :enabled="!broadcast"
-            input-id="notif-email"
-            class="field"
-            :required="true"
-            :name="t('admin.notifications.fields.email.title') + '*'"
-            :placeholder-text="t('admin.notifications.fields.email.placeholder')"
-            v-model="form.targetUserEmail"
-            placeholder="user@example.com"
+        <EntityDropdown
+          v-if="!broadcast"
+          :name="t('admin.notifications.fields.email.title') + '*'"
+          v-model=form.targetUserEmail
+          :fetchFunction="fetchUsers"
+          :fetchOnMount="true"
+          valueKey="email"
+          labelKey="email"
+          :placeholderText="t('admin.notifications.fields.email.placeholder')"
+          required
         />
 
         <FormField

@@ -1,15 +1,13 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { ref } from 'vue';
 import type { IDockService } from '@/service/IService/IDockService';
 import { Dock } from '@/model/Dock';
 import type { IVesselTypeService } from '@/service/IService/IVesselTypeService';
 import EntityForm from '@/components/crud/EntityForm.vue';
-import EntityDropdown from '@/components/crud/EntityDropdown.vue';
 import FormField from '@/components/crud/FormField.vue';
 import {useI18n} from 'vue-i18n';
 import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
-import type { DockDto } from '@/model/dto/DockDto';
 import ObjectSelector from '@/components/crud/ObjectSelector.vue';
 
 const { t } = useI18n();
