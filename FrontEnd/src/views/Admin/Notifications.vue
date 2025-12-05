@@ -116,9 +116,10 @@ const submitFn = async (obj: any) => {
         <div class="field">
             <label class="form-label">{{ t('admin.notifications.fields.urgency.title') }}</label>
             <sl-select
-                v-model="form.urgency"
+                :value="form.urgency.toString()"
                 @sl-change="(event) => form.urgency = Number(event.target.value)"
                 placeholder="Select urgency level"
+                style="margin-top: 7px;"
             >
             <sl-option value="0">Normal</sl-option>
             <sl-option value="1">Urgent</sl-option>
