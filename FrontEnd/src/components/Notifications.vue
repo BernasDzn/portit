@@ -138,6 +138,11 @@ const closeDetailDialog = () => {
     selectedNotification.value = null;
 };
 
+const truncateText = (text: string, maxLength: number = 40) => {
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength) + '...';
+};
+
 </script>
 
 <template>
@@ -206,7 +211,7 @@ const closeDetailDialog = () => {
                             <div class="log-content">
                                 <div class="log-message">{{ n.title }}</div>
                                  <sl-format-date class="log-timestamp" :date="new Date(n.createdAt)" month="long" day="numeric" year="numeric"></sl-format-date>
-                                <div class="log-message small">{{ n.message }}</div>
+                                <div class="log-message small">{{ truncateText(n.message) }}</div>
                             </div>
 
                             <sl-badge variant="danger" v-if="n.urgency !== 0">
@@ -249,15 +254,7 @@ const closeDetailDialog = () => {
                     Urgent
                 </sl-badge>
             </div>
-            <sl-format-date 
-                class="detail-timestamp" 
-                :date="new Date(selectedNotification.createdAt)" 
-                month="long" 
-                day="numeric" 
-                year="numeric"
-                hour="numeric"
-                minute="numeric"
-            ></sl-format-date>
+            <sl-format-date class="detail-timestamp" :date="new Date(selectedNotification.createdAt)" month="long" day="numeric" year="numeric" hour="numeric" minute="numeric"></sl-format-date>
             <p class="detail-message">{{ selectedNotification.message }}</p>
         </div>
         <sl-button slot="footer" variant="primary" @click="closeDetailDialog">Close</sl-button>
@@ -334,13 +331,12 @@ const closeDetailDialog = () => {
 .log-content {
     flex: 1;
     min-width: 0;
+    overflow: hidden;
 }
 
 .log-message {
     font-size: 0.875rem;
     color: #333;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .log-message.small {
