@@ -6,6 +6,7 @@
 % Importa outros ficheiros Prolog
 :- consult('services/vvn_service.pl').
 :- consult('controller/handle_schedule_request.pl').
+:- consult('controller/handle_rebalance_request.pl').
 
 :- use_module(library(http/http_cors)).
 :- set_setting(http:cors, [*]).  % allow requests from any origin
@@ -16,6 +17,7 @@
 :- http_handler('/send_file_post', send_file_post, []).
 :- http_handler('/get_all_vvn', get_all_vvn, []).
 :- http_handler('/schedule', handle_schedule_request, []).
+:- http_handler('/rebalance', handle_rebalance_request, []).
 
 open_server(Port) :-
         write("Starting on port "), write(Port), nl,
