@@ -108,7 +108,7 @@ watch(() => props.modelValue, (newVal) => {
 
 <template>
     <div class="form-field">
-        <label class="label">{{ name }}</label>
+        <label v-if="name" :for="inputId">{{ name }}</label>
 
         <div>
             <sl-select

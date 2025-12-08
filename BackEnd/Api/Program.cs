@@ -158,6 +158,7 @@ if (!isTestingEnvironment)
     options.AddPolicy("Vessel.Manage", p => p.RequireRole("PortAuthorityOfficer", "Administrator"));
     options.AddPolicy("Vessel.View", p => p.RequireRole("SAORepresentative", "PortAuthorityOfficer", "Administrator"));
     options.AddPolicy("StorageArea.Manage", p => p.RequireRole("PortAuthorityOfficer", "Administrator"));
+    options.AddPolicy("StorageArea.View", p => p.RequireRole("PortAuthorityOfficer", "Administrator", "LogisticsOperator", "SAORepresentative"));
     options.AddPolicy("ShippingAgentOrg.Manage", p => p.RequireRole("PortAuthorityOfficer", "Administrator"));
     options.AddPolicy("Representative.Manage", p => p.RequireRole("SAORepresentative", "PortAuthorityOfficer", "Administrator"));
     options.AddPolicy("Dock.Manage", p => p.RequireRole("PortAuthorityOfficer", "Administrator"));
@@ -193,6 +194,7 @@ else
         options.AddPolicy("Vessel.Manage", policy => policy.RequireAssertion(_ => true));
         options.AddPolicy("Vessel.View", policy => policy.RequireAssertion(_ => true));
         options.AddPolicy("StorageArea.Manage", policy => policy.RequireAssertion(_ => true));
+        options.AddPolicy("StorageArea.View", policy => policy.RequireAssertion(_ => true));
         options.AddPolicy("ShippingAgentOrg.Manage", policy => policy.RequireAssertion(_ => true));
         options.AddPolicy("Representative.Manage", policy => policy.RequireAssertion(_ => true));
         options.AddPolicy("Dock.Manage", policy => policy.RequireAssertion(_ => true));

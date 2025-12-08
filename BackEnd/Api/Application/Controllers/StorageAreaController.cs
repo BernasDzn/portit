@@ -10,7 +10,6 @@ using Api.Application.DataTransfer.Filters;
 
 [ApiController]
 [Route("[controller]")]
-[Authorize(Policy = "StorageArea.Manage")]
 public class StorageAreaController : ControllerBase, IStorageAreaController
 {
     private readonly IStorageAreaService _storageAreaService;
@@ -23,6 +22,7 @@ public class StorageAreaController : ControllerBase, IStorageAreaController
     }
 
     [HttpGet(Name = "GetAllStorageAreas")]
+    [Authorize(Policy = "StorageArea.Manage")]
     public async Task<ActionResult<IEnumerable<StorageAreaDto>>> GetAll()
     {
         try
@@ -38,6 +38,7 @@ public class StorageAreaController : ControllerBase, IStorageAreaController
     }
 
     [HttpGet("{id}")]
+    [Authorize(Policy = "StorageArea.Manage")]
     public async Task<ActionResult<StorageAreaDto>> Get(string id)
     {
         try
@@ -58,6 +59,7 @@ public class StorageAreaController : ControllerBase, IStorageAreaController
     }
 
     [HttpPost(Name = "CreateStorageArea")]
+    [Authorize(Policy = "StorageArea.Manage")]
     public async Task<ActionResult<StorageAreaDto>> Create(CreateStorageAreaDto createStorageAreaDto)
     {
         try
@@ -89,6 +91,7 @@ public class StorageAreaController : ControllerBase, IStorageAreaController
     }
 
     [HttpPut("{id}")]
+    [Authorize(Policy = "StorageArea.Manage")]
     public async Task<ActionResult<StorageAreaDto>> Update(string id, [FromBody] CreateStorageAreaDto updateStorageAreaDto)
     {
         try
@@ -115,6 +118,7 @@ public class StorageAreaController : ControllerBase, IStorageAreaController
     }
 
     [HttpGet("filter")]
+    [Authorize(Policy = "StorageArea.View")]
     public async Task<ActionResult<IEnumerable<StorageAreaDto>>> Filter([FromQuery] StorageAreaFilter filter)
     {
         try
@@ -130,6 +134,7 @@ public class StorageAreaController : ControllerBase, IStorageAreaController
     }
 
     [HttpGet("count")]
+    [Authorize(Policy = "StorageArea.Manage")]
     public async Task<ActionResult<int>> Count()
     {
         try
