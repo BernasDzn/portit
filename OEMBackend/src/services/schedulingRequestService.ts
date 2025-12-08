@@ -23,6 +23,55 @@ export class SchedulingRequestService {
         return queueState;
     }
 
+    async acceptRequest(id: string, issuer: string): Promise<ScheduleQueueItem | null> {
+
+        const item = await workQueueRepository.getById(id);
+        if (!item){
+            throw new Error(`No scheduling request found with ID ${id}`);
+        }
+
+        if (item.status !== 'completed') {
+            throw new Error(`Scheduling request ID ${id} is not yet completed. Current status: ${item.status}`);
+        }
+
+        if (item.issuer !== issuer) {
+            throw new Error(`Scheduling request ID ${id} was not issued by you`);
+        }
+
+        const scheduleData = item.result;
+        if (!scheduleData) {
+            throw new Error(`No schedule data found for request ID ${id}`);
+        }
+        
+        const savedPlan = await new OperationPlanService().createPlans(scheduleData, item.issuer);
+        if (!savedPlan || savedPlan.length === 0) {
+            throw new Error(`Failed to save operation plans for request ID ${id}`);
+        }
+
+        console.log(`Operation Plans saved successfully for request ID ${id}`);
+        await workQueueRepository.finishRequest(id, 'accepted');
+        return item;
+    }
+
+    async rejectRequest(id: string, issuer: string): Promise<ScheduleQueueItem | null> {
+
+        const item = await workQueueRepository.getById(id);
+        if (!item){
+            throw new Error(`No scheduling request found with ID ${id}`);
+        }
+
+        if (item.status !== 'completed') {
+            throw new Error(`Scheduling request ID ${id} is not yet completed. Current status: ${item.status}`);
+        }
+
+        if (item.issuer !== issuer) {
+            throw new Error(`Scheduling request ID ${id} was not issued by you`);
+        }
+
+        await workQueueRepository.finishRequest(id, 'rejected');
+        return item;
+    }
+
     async getToWork(): Promise<OperationPlanDto | null> {
 
         const nextItem = await workQueueRepository.dequeueRequest();

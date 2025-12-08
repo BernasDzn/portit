@@ -8,13 +8,13 @@ const router = Router();
 
 router.get(
 	'/request',
-	//[authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)],
+	[authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)],
 	scheduleRequest
 );
 
 router.get(
 	'/queueState',
-	//[authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)],
+	[authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)],
 	getQueueState
 );
 

@@ -123,6 +123,7 @@ const rejectResult = (row: any) => {
                     
                     <span 
                         :class="(row.result ? '' : 'is-disabled')"
+                        style="color: green"
                         @click="() => {
                             acceptResult(row)
                         }"
@@ -132,6 +133,7 @@ const rejectResult = (row: any) => {
     
                     <span 
                         :class="(row.result ? '' : 'is-disabled')"
+                        style="color: red"
                         @click="() => {
                             rejectResult(row)
                         }"

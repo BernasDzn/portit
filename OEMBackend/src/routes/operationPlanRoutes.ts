@@ -9,19 +9,19 @@ const controller = new OperationPlanController();
 
 router.get(
 	'/',
-	//[authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)],
+	[authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)],
 	controller.getPlans.bind(controller)
 );
 
 router.get(
 	'/by-date',
-	//[authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)],
+	[authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)],
 	controller.getPlansByDate.bind(controller)
 );
 
 router.get(
 	'/:id',
-	//[authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)],
+	[authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)],
 	controller.getPlanById.bind(controller)
 );
 

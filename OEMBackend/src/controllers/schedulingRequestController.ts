@@ -70,3 +70,79 @@ export const getQueueState = async (req: Request, res: Response, next: NextFunct
         next(error);
     }
 }
+
+/**
+ * @swagger
+ * /schedule/acceptRequest:
+ *  post:
+ *    tags: [Scheduling]
+ *   description: Accept a completed scheduling request and save the operation plan
+ *  parameters:
+ *    - in: query
+ *     name: id
+ *    required: true
+ *    schema:
+ *     type: string
+ *   description: The ID of the scheduling request to accept
+ * responses:
+ *     200:
+ *      description: Scheduling request accepted and operation plan saved
+ *    400:
+ *     description: Bad request
+ *   404:
+ *   description: Scheduling request not found
+ *  500:
+ *   description: Internal server error
+ */
+ export const acceptRequest = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const id = req.query.id as string;
+        if (!id) {
+            return res.status(400).json({ message: 'Missing required query parameter: id' });
+        }
+
+        const userEmail = req.user?.emailAddress || 'unknown';
+        const data = await schedulingRequestService.acceptRequest(id, userEmail);
+        res.json(data);
+    } catch (error) {
+        next(error);
+    }
+}
+
+/**
+ * @swagger
+ * /schedule/rejectRequest:
+ * post:
+ *   tags: [Scheduling]
+ *  description: Reject a completed scheduling request
+ * parameters:
+ *   - in: query
+ *    name: id
+ *   required: true
+ *   schema:
+ *    type: string
+ *  description: The ID of the scheduling request to reject
+ * responses:
+ *    200:
+ *    description: Scheduling request rejected
+ *  400:
+ *  description: Bad request
+ *  404:
+ *  description: Scheduling request not found
+ * 500:
+ * description: Internal server error
+ */
+export const rejectRequest = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const id = req.query.id as string;
+        if (!id) {
+            return res.status(400).json({ message: 'Missing required query parameter: id' });
+        }
+
+        const userEmail = req.user?.emailAddress || 'unknown';
+        const data = await schedulingRequestService.rejectRequest(id, userEmail);
+        res.json(data);
+    } catch (error) {
+        next(error);
+    }
+}

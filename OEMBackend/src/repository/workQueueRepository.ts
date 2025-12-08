@@ -32,6 +32,13 @@ export class WorkQueueRepository {
         return numberOnQueue;
     }
 
+    async getById(id: string): Promise<ScheduleQueueItem | null> {
+        const entry = await ScheduleQueue.findById(id).exec();
+        if (!entry)
+            return null;
+        return ScheduleQueueMapper.fromSchema(entry);
+    }
+
     async getQueueState(): Promise<ScheduleQueueItem[]> {
         const queueEntries = await ScheduleQueue.find().sort({ priority: -1, requestedAt: -1 }).limit(10).exec();
         return queueEntries.map(entry => ScheduleQueueMapper.fromSchema(entry));
