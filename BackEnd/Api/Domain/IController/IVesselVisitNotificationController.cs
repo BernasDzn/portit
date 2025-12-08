@@ -15,6 +15,7 @@ public interface IVesselVisitNotificationController
     public Task<ActionResult> Update(string id, CreateVesselVisitNotificationDto vesselVisitNotificationDto);
     public Task<ActionResult<Page<VesselVisitNotificationStatusDto>>> Filter([FromQuery] VesselVisitNotificationFilter filter);
     public Task<ActionResult<Page<VesselVisitNotificationStatusDto>>> FilterPa([FromQuery] VesselVisitNotificationFilterPa filter);
+    public Task<ActionResult<IEnumerable<VesselVisitNotificationDto>>> GetAllOnDay([FromQuery] DateTime day);
     public Task<ActionResult<VesselVisitDistributionDto>> Count();
 
     // Draft operations
