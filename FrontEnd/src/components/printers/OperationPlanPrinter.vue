@@ -2,37 +2,12 @@
 import { computed } from 'vue';
 import { RouterLink } from 'vue-router';
 import { useI18n } from 'vue-i18n';
+import type { OperationPlanDto } from '@/model/dto/OperationPlanDto';
 
 const { t } = useI18n();
 
-interface Resource {
-    name: string;
-    type: string;
-}
-
-interface Operation {
-    type: 'Unload' | 'Load';
-    startTime: string;
-    endTime: string;
-    resources: Resource[];
-}
-
-interface OperationPlanMetadata {
-    createdBy: string;
-    createdAt: string;
-    algorithmUsed: string;
-}
-
-interface OperationPlan {
-    id: string;
-    relatedVVN: string;
-    dock: string;
-    operationSchedule: Operation[];
-    metadata: OperationPlanMetadata;
-}
-
 const props = defineProps<{
-    operationPlan: OperationPlan;
+    operationPlan: OperationPlanDto;
     link?: string;
     short?: boolean;
 }>();
@@ -64,7 +39,7 @@ const cranes = computed(() => {
 </script>
 
 <template>
-    <component :is="props.link ? RouterLink : 'div'" :to="props.link">
+    <component :is="props.link ? RouterLink : 'div'" :to="props.link" class="plan-link">
         <sl-card :class="'listing-item ' + (props.short ? 'short-card' :'')">
             <div class="operation-plan-display">
                 <div class="operation-plan-header">
@@ -219,5 +194,10 @@ const cranes = computed(() => {
     border-radius: var(--sl-border-radius-medium);
     background-color: var(--sl-color-neutral-200);
     color: var(--sl-color-neutral-800);
+}
+
+.plan-link {
+    text-decoration: none;
+    color: inherit;
 }
 </style>

@@ -12,6 +12,7 @@ import { computed, onMounted, ref } from 'vue';
 import type { Filter, Page } from '@/model/Page';
 import ListingBox from '@/components/crud/ListingBox.vue';
 import type { VesselVisitNotification } from '@/model/VesselVisitNotification';
+import type { OperationPlanDto } from '@/model/dto/OperationPlanDto';
 
 const operationPlanService = container.get<IOperationPlanService>(TYPES.operationPlanService);
 const schedulingService = container.get<ISchedulingService>(TYPES.schedulingService);
@@ -19,17 +20,17 @@ const vvnService = container.get<IVesselVisitNotificationService>(TYPES.vesselVi
 
 const { t, locale } = useI18n();
 
-const operationPlans = ref<Page<any>>({ items: [], 
+const operationPlans = ref<Page<OperationPlanDto>>({ items: [], 
     pageCount: 0, pageNumber: 0, pageSize: 0
 });
-const plansByDate = ref<{ date: string; plans: any[] }[]>([]);
+const plansByDate = ref<{ date: string; plans: OperationPlanDto[] }[]>([]);
 const selectedDate = ref(new Date());
 const events = ref<Array<{ title: string, start: string }>>([]);
 const unplannedVVNIds = ref<string[]>([]);
 const unplannedVVNs = ref<VesselVisitNotification[]>([]);
 const isLoadingUnplanned = ref(false);
 
-const fetchOperationPlans = async (filtering?: Filter<null>): Promise<Page<any>> => {
+const fetchOperationPlans = async (filtering?: Filter<null>): Promise<Page<OperationPlanDto>> => {
     const plans = await operationPlanService.getAllOperationPlans(filtering);
     operationPlans.value = plans;
     return plans;
@@ -97,7 +98,7 @@ onMounted(async () => {
             <sl-tab-panel name="general">
                 <ListingBox listing-style="listing-triples" :fetch-function="fetchOperationPlans" v-slot="{elements}">
                     <li v-for="(plan, index) in operationPlans.items" :key="index" class="link">
-                        <OperationPlanPrinter :operation-plan="plan" />
+                        <OperationPlanPrinter :operation-plan="plan" :link="``" />
                     </li>
                 </ListingBox>
             </sl-tab-panel>
@@ -111,6 +112,7 @@ onMounted(async () => {
                             <li v-for="(plan, index) in plansOnDate" :key="index">
                                 <OperationPlanPrinter class="listing-box" 
                                     :operation-plan="plan"
+                                    :link="`/operation-plans/view/${plan.id}`"
                                 />
                             </li>
                         </ul>
