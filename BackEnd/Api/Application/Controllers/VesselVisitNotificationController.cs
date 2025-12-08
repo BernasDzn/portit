@@ -397,25 +397,26 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
         }
     }
 
-    [HttpGet("onDay", Name = "GetVesselVisitNotificationsOnDay")]
+    [HttpGet("onMonth", Name = "GetVesselVisitNotificationsOnMonth")]
     [Authorize(Policy = "VesselVisitNotification.View")]
-    public Task<ActionResult<IEnumerable<VesselVisitNotificationDto>>> GetAllOnDay([FromQuery] DateTime day)
+    public async Task<ActionResult<IEnumerable<VesselVisitNotificationDto>>> GetAllOnMonth([FromQuery] DateTime month)
     {
         try
         {
-            var notificationsDto =  _notificationService.GetVesselVisitNotificationsOnDay(day, 1);
-            return Task.FromResult<ActionResult<IEnumerable<VesselVisitNotificationDto>>>(Ok(notificationsDto));
+            DateTime firstDayOfMonth = new DateTime(month.Year, month.Month, 1);
+            var notificationsDto = await _notificationService.GetVesselVisitNotificationsOnDay(firstDayOfMonth, (uint) DateTime.DaysInMonth(month.Year, month.Month));
+            return Ok(notificationsDto);
         }
         catch (System.Exception e)
         {
             if (e is ArgumentException || e is ArgumentNullException || e is InvalidOperationException)
             {
-                _logger.LogError($"Invalid arguments provided for retrieving vessel visit notifications on day: {e.Message}");
-                return Task.FromResult<ActionResult<IEnumerable<VesselVisitNotificationDto>>>(BadRequest(e.Message));
+                _logger.LogError($"Invalid arguments provided for retrieving vessel visit notifications on month {month}: {e.Message}");
+                return BadRequest(e.Message);
             }
 
-            _logger.LogCritical($"Error retrieving vessel visit notifications on day {day}: {e.Message}");
-            return Task.FromResult<ActionResult<IEnumerable<VesselVisitNotificationDto>>>(StatusCode(500, "An error occurred while retrieving vessel visit notifications on the specified day."));
+            _logger.LogCritical($"Error retrieving vessel visit notifications on month {month}: {e.Message}");
+            return StatusCode(500, "An error occurred while retrieving vessel visit notifications on month.");
         }
     }
 }

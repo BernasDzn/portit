@@ -47,90 +47,97 @@
       default: () => []
     }
   })
-  const emit = defineEmits(["update:modelValue"])
+  const emit = defineEmits(["update:modelValue", "month-change"])
   
-  const current = ref(props.modelValue ? new Date(props.modelValue) : new Date())
-  const selected = ref(props.modelValue || null)
-  const showCalendar = ref(true)
+    const current = ref(props.modelValue ? new Date(props.modelValue) : new Date())
+    const selected = ref(props.modelValue || null)
   
-  watch(
-    () => props.modelValue,
-    (val) => {
-      if (val) selected.value = new Date(val)
-    }
-  )
+    watch(
+        () => props.modelValue,
+        (val) => {
+            if (val) selected.value = new Date(val)
+        }
+    )
   
     watch(selected, (val, oldVal) => {
-    if (!oldVal || val.getTime() !== oldVal.getTime()) {
-        emit("update:modelValue", val);
-    }
+        if (!oldVal || val.getTime() !== oldVal.getTime()) {
+            emit("update:modelValue", val);
+        }
     });
-
-  
-  const year = computed(() => current.value.getFullYear())
-  const month = computed(() => current.value.getMonth())
-  
-  const weekDays = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
-  
-  const monthName = computed(() =>
-    current.value.toLocaleString("default", { month: "long" })
-  )
-  
-  const days = computed(() => {
-    const firstDay = new Date(year.value, month.value, 1).getDay()
-    const totalDays = new Date(year.value, month.value + 1, 0).getDate()
-    return [
-      ...Array(firstDay).fill(null),
-      ...Array.from({ length: totalDays }, (_, i) => i + 1)
-    ]
-  })
-  
-  function prevMonth() {
-    current.value = new Date(year.value, month.value - 1, 1)
-  }
-  
-  function nextMonth() {
-    current.value = new Date(year.value, month.value + 1, 1)
-  }
-  
-  function selectDate(day) {
-    if (!day) return
-    selected.value = new Date(year.value, month.value, day)
-  }
-  
-  function isSelected(day) {
-    if (!day || !selected.value) return false
-    return (
-      day === selected.value.getDate() &&
-      month.value === selected.value.getMonth() &&
-      year.value === selected.value.getFullYear()
+    
+    const year = computed(() => current.value.getFullYear())
+    const month = computed(() => current.value.getMonth())
+    
+    const weekDays = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]
+    
+    const monthName = computed(() =>
+        current.value.toLocaleString("default", { month: "long" })
     )
-  }
-  function hasEvent(day) {
-  if (!day) return false
-  const date = new Date(year.value, month.value, day)
-  return props.events.some((e) => isStartDay(date, e))
-}
+    
+    const days = computed(() => {
+        const firstDay = new Date(year.value, month.value, 1).getDay()
+        const totalDays = new Date(year.value, month.value + 1, 0).getDate()
+        return [
+        ...Array(firstDay).fill(null),
+        ...Array.from({ length: totalDays }, (_, i) => i + 1)
+        ]
+    })
+    
+    function prevMonth() {
+        current.value = new Date(year.value, month.value - 1, 1)
+    }
+    
+    function nextMonth() {
+        current.value = new Date(year.value, month.value + 1, 1)
+    }
+    
+    function selectDate(day) {
+        if (!day) return
+        selected.value = new Date(year.value, month.value, day)
+    }
+    
+    function isSelected(day) {
+        if (!day || !selected.value) return false
+        return (
+            day === selected.value.getDate() &&
+            month.value === selected.value.getMonth() &&
+            year.value === selected.value.getFullYear()
+        )
+    }
+    function hasEvent(day) {
+        if (!day) return false
+        const date = new Date(year.value, month.value, day)
+        return props.events.some((e) => isStartDay(date, e))
+    }
 
-function eventsForDay(day) {
-  if (!day) return []
-  const date = new Date(year.value, month.value, day)
-  return props.events.filter((e) => isStartDay(date, e))
-}
+    function eventsForDay(day) {
+        if (!day) return []
+        const date = new Date(year.value, month.value, day)
+        return props.events.filter((e) => isStartDay(date, e))
+    }
 
-// Check if the date is exactly the start day of the event
-function isStartDay(date, event) {
-  const start = new Date(event.start)
-  start.setHours(0, 0, 0, 0)
-  date.setHours(0, 0, 0, 0)
-  return date.getTime() === start.getTime()
-}
+    // Check if the date is exactly the start day of the event
+    function isStartDay(date, event) {
+        const start = new Date(event.start)
+        start.setHours(0, 0, 0, 0)
+        date.setHours(0, 0, 0, 0)
+        return date.getTime() === start.getTime()
+    }
+
+    watch(
+        () => [month.value, year.value],
+        ([newMonth, newYear], [oldMonth, oldYear]) => {
+            if (newMonth !== oldMonth || newYear !== oldYear) {
+                emit("month-change", new Date(newYear, newMonth, 1))
+            }
+        }
+    )
 
 </script>
   
 <style scoped>
 .calendar-with-events {
-    width: 320px; /* or whatever you like */
+    width: 320px;
     background: var(--sl-color-neutral-0);
     border-radius: var(--sl-border-radius-medium);
     padding: 0.75rem;
@@ -141,17 +148,17 @@ function isStartDay(date, event) {
 
 .header {
     display: flex;
-    justify-content: center; /* centers the title */
+    justify-content: center;
     align-items: center;
     font-weight: 600;
     margin-bottom: 0.5rem;
-    gap: 1rem; /* space between prev/next buttons and title */
+    gap: 1rem;
     position: relative;
 }
 
 .header span {
     flex: 1;
-    text-align: center; /* title itself centered */
+    text-align: center;
 }
 
 .header button {
@@ -159,15 +166,15 @@ function isStartDay(date, event) {
     cursor: pointer;
     padding: 0 0.5rem;
     font-size: 1.2rem;
-    position: absolute; /* so buttons don’t move title */
+    position: absolute;
 }
 
 .header button:first-child {
-    left: 0; /* prev button on left */
+    left: 0;
 }
 
 .header button:last-child {
-    right: 0; /* next button on right */
+    right: 0;
 }
 
 .grid {

@@ -16,6 +16,12 @@ export class VesselVisitNotificationService implements IVesselVisitNotificationS
         private http: IHttpService
     ) { }
 
+    async getNotificationsOnMonth(date: string): Promise<VesselVisitNotification[]> {
+        
+        const res = await this.http.get<VesselVisitNotification[]>(`/api/VesselVisitNotification/onMonth?month=${encodeURIComponent(date)}`);
+        return res.data;
+    }
+
     async count(): Promise<VesselVisitDistributionDto> {
         
         return (await this.http.get<VesselVisitDistributionDto>("/api/VesselVisitNotification/distribution")).data;

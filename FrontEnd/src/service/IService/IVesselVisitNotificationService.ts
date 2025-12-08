@@ -9,6 +9,7 @@ export interface IVesselVisitNotificationService {
     getVesselVisitNotificationsByRepresentative(filter?: Filter<VesselVisitNotificationFilter>): Promise<Page<VesselVisitNotification>>;
     getVesselVisitNotificationById(id: string): Promise<VesselVisitNotification>;
     getNotificationDecisions(vesselVisitNotificationId: string): Promise<NotificationDecision[]>;
+    getNotificationsOnMonth(date: string): Promise<VesselVisitNotification[]>;
 
     createVesselVisitNotification(notification: VesselVisitNotification): Promise<VesselVisitNotification>;
     createNotificationDecision(vesselVisitNotificationId: string, decision: NotificationDecisionDto): Promise<NotificationDecision>;
