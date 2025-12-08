@@ -442,7 +442,24 @@ public static class Bootstrap
             DateTime.UtcNow.AddDays(10),
             false,
             vessel2,
-            vessel2.Owner.Representatives.First()
+            vessel2.Owner.Representatives.First(),
+            null, null,
+            new List<CargoTransport>
+            {
+                new CargoTransport(
+                    new ContainerPosition { Row = "1", Bay = "1", Tier = "1" },
+                    sa1,
+                    new Container(Guid.NewGuid(), new ContainerNumber { Value = "CMAU2468103" }, CargoType.GENERAL_CONSUMER_PRODUCTS, new Designation { Value = "goods" })
+                )
+            },
+            new List<CargoTransport>
+            {
+                new CargoTransport(
+                    new ContainerPosition { Row = "2", Bay = "2", Tier = "2" },
+                    sa1,
+                    new Container(Guid.NewGuid(), new ContainerNumber { Value = "FAIU8306753" }, CargoType.ELECTRONICS, new Designation { Value = "electronics" })
+                )
+            }
         );
 
         HashSet<SafetyOfficer> safetyOfficers = new HashSet<SafetyOfficer>
@@ -465,7 +482,23 @@ public static class Bootstrap
             vessel3,
             vessel3.Owner.Representatives.First(),
             "Handles hazardous materials",
-            crewDetails
+            crewDetails,
+            new List<CargoTransport>
+            {
+                new CargoTransport(
+                    new ContainerPosition { Row = "3", Bay = "3", Tier = "3" },
+                    sa1,
+                    new Container(Guid.NewGuid(), new ContainerNumber { Value = "YIIU9751018" }, CargoType.OTHER, new Designation { Value = "hazmat" })
+                )
+            },
+            new List<CargoTransport>
+            {
+                new CargoTransport(
+                    new ContainerPosition { Row = "4", Bay = "4", Tier = "4" },
+                    sa1,
+                    new Container(Guid.NewGuid(), new ContainerNumber { Value = "UASU1440180" }, CargoType.GENERAL_CONSUMER_PRODUCTS, new Designation { Value = "cargo" })
+                )
+            }
         );
 
         Crew crewDetails2 = new Crew(new Designation { Value = "Pedro Gomes" }, 4, safetyOfficers);
@@ -477,25 +510,28 @@ public static class Bootstrap
                 (uint)DateTime.UtcNow.Year
             ),
             DateTime.UtcNow.AddDays(12),
-            DateTime.UtcNow.AddDays(15),
-            true,
+            DateTime.UtcNow.AddDays(14),
+            false,
             vessel4,
             vessel4.Owner.Representatives.First(),
-            "Handles hazardous materials",
-            crewDetails2
-        );
-
-        VesselVisitNotification vvn5 = new VesselVisitNotification(
-            new VesselVisitNotificationId(
-                new Designation { Value = "PORTO" },
-                5,
-                (uint)DateTime.UtcNow.Year
-            ),
-            DateTime.UtcNow.AddDays(20),
-            DateTime.UtcNow.AddDays(25),
-            false,
-            vessel1,
-            vessel1.Owner.Representatives.First()
+            null,
+            null,
+            new List<CargoTransport>
+            {
+                new CargoTransport(
+                    new ContainerPosition { Row = "5", Bay = "5", Tier = "5" },
+                    sa1,
+                    new Container(Guid.NewGuid(), new ContainerNumber { Value = "RJNU2933932" }, CargoType.REGRIGERATED_GOODS, new Designation { Value = "perishables" })
+                )
+            },
+            new List<CargoTransport>
+            {
+                new CargoTransport(
+                    new ContainerPosition { Row = "6", Bay = "6", Tier = "6" },
+                    sa1,
+                    new Container(Guid.NewGuid(), new ContainerNumber { Value = "JPZU9498551" }, CargoType.OVERSIZED_INDUSTRIAL_EQUIPMENT, new Designation { Value = "machinery" })
+                )
+            }
         );
 
         // 4 VVns for day 10/11/2024 for testing the scheduling
@@ -736,7 +772,7 @@ public static class Bootstrap
         vvn3.Submit();
         vvn4.Submit();
 
-        context.VesselVisitNotifications.AddRange(vvn1, vvn2, vvn3, vvn4, vvn5);
+        context.VesselVisitNotifications.AddRange(vvn1, vvn2, vvn3, vvn4);
         context.SaveChanges();
     }
 
