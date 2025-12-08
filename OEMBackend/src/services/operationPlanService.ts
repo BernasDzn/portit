@@ -21,6 +21,10 @@ export class OperationPlanService {
 		return await this.operationPlanRepository.getAll(pageable);
 	}
 
+	async getById(id: string): Promise<OperationPlanDto | null> {
+		return await this.operationPlanRepository.getById(id);
+	}
+
 	async getByDateGrouped(): Promise<{ date: string; plans: OperationPlanDto[] }[]> {
 		return await this.operationPlanRepository.getByDateGrouped();
 	}

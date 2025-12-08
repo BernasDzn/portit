@@ -19,4 +19,10 @@ router.get(
 	controller.getPlansByDate.bind(controller)
 );
 
+router.get(
+	'/:id',
+	//[authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)],
+	controller.getPlanById.bind(controller)
+);
+
 export default router;

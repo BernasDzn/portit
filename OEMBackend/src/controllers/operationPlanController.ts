@@ -71,6 +71,46 @@ export class OperationPlanController {
 
 	/**
 	 * @swagger
+	 * /operation-plans/{id}:
+	 *   get:
+	 *     tags: [Operation Plans]
+	 *     security:
+	 *       - bearerAuth: []
+	 *     parameters:
+	 *       - in: path
+	 *         name: id
+	 *         required: true
+	 *         schema:
+	 *           type: string
+	 *         description: Operation plan ID
+	 *     responses:
+	 *       200:
+	 *         description: Operation plan details
+	 *         content:
+	 *           application/json:
+	 *             schema:
+	 *               $ref: '#/components/schemas/OperationPlanDto'
+	 *       404:
+	 *         description: Operation plan not found
+	 *       401:
+	 *         description: Unauthorized
+	 */
+	async getPlanById(req: Request, res: Response, next: NextFunction): Promise<void> {
+		try {
+			const id = req.params.id as string;
+			const plan = await this.operationPlanService.getById(id);
+			if (!plan) {
+				res.status(404).json({ message: 'Operation plan not found' });
+				return;
+			}
+			res.json(plan);
+		} catch (error) {
+			next(error);
+		}
+	}
+
+	/**
+	 * @swagger
 	 * /operation-plans/by-date:
 	 *   get:
 	 *     tags: [Operation Plans]

@@ -29,6 +29,12 @@ export class OperationPlanRepository {
 		};
 	}
 
+	async getById(id: string): Promise<OperationPlanDto | null> {
+		const plan = await OperationPlanModel.findById(id);
+		if (!plan) return null;
+		return OperationPlanMapper.fromSchema(plan).toDto();
+	}
+
 	async getByDateGrouped(): Promise<{ date: string; plans: OperationPlanDto[] }[]> {
 		const allPlans = await OperationPlanModel.find();
 		const plansByDate = new Map<string, OperationPlanDto[]>();
