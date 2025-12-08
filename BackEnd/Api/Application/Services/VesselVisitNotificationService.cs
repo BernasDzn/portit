@@ -319,10 +319,18 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         };
 
         // TODO: Extend this logic when supporting multiple cranes
-        if (result.CraneWorkloads[0].operatingWindow.IsEmpty())
+        // if (result.CraneWorkloads[0].operatingWindow.IsEmpty())
+        // {
+        //     result.Comment = "No qualified staff available to operate the selected resource.";
+        //     return result;
+        // }
+        foreach (var kv in dockCranesMap)
         {
-            result.Comment = "No qualified staff available to operate the selected resource.";
-            return result;
+            if (!kv.Value.Any())
+            {
+                result.Comment = $"No cranes assigned to dock {kv.Key.Code.Value}.";
+                return result;
+            }
         }
 
         try

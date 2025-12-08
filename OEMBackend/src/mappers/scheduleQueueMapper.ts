@@ -1,5 +1,5 @@
-import { ScheduleQueueItem } from "../scheduleQueue";
-import { WorkQueueItem } from "../workQueueItem";
+import { ScheduleQueueItem } from "../domain/scheduleQueue";
+import { WorkQueueItem } from "../domain/workQueueItem";
 
 export class ScheduleQueueMapper {
 
@@ -13,6 +13,7 @@ export class ScheduleQueueMapper {
             }),
             priority: doc.priority ?? 0,
             requestedAt: new Date(doc.requestedAt),
+            result: doc.result ?? null,
             status: doc.status,
             issuer: doc.issuer,
             estimatedStartTime: doc.estimatedStartTime

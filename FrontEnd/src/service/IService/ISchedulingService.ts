@@ -8,4 +8,7 @@ export interface ISchedulingService {
 
     getQueueState(): Promise<any[]>
     getUnplannedVVNs(): Promise<string[]>
+
+    acceptSchedulingRequest(id: string): Promise<any>;
+    rejectSchedulingRequest(id: string): Promise<any>;
 }

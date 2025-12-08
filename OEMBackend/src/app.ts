@@ -7,7 +7,6 @@ import config from './config/config';
 import { bootstrap } from './bootstrap';
 import cookieParser from 'cookie-parser';
 
-import itemRoutes from './routes/itemRoutes';
 import planRoutes from './routes/operationPlanRoutes';
 import requestRoutes from './routes/scheduleRequestRoutes';
 
@@ -32,11 +31,10 @@ mongoose.connect(config.mongoUri, {})
     .catch(err => console.error('MongoDB connection error:', err));
 
 // Swagger documentation
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Routes
-app.use('/api/items', itemRoutes);
-app.use('/plans', planRoutes);
+app.use('/operation-plans', planRoutes);
 app.use('/schedule', requestRoutes);
 
 // Global error handler (should be after routes)

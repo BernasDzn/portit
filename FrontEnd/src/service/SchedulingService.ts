@@ -16,6 +16,18 @@ export class SchedulingService implements ISchedulingService {
         private http: IHttpService
     ) {}
 
+    acceptSchedulingRequest(id: string): Promise<any> {
+        
+        const res = this.http.post<any>(`/oem/schedule/acceptRequest?id=${id}`, {});
+        return res;
+    }
+
+    rejectSchedulingRequest(id: string): Promise<any> {
+        
+        const res = this.http.post<any>(`/oem/schedule/rejectRequest?id=${id}`, {});
+        return res;
+    }
+
     async getQueueState(): Promise<any[]> {
         const res = await this.http.get<any[]>(`/oem/schedule/queueState`);
         return res.data;

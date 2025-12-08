@@ -1,7 +1,22 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import type { CargoManifestItem, Container, Position } from '@/model/dto/VesselVisitNotificationDto';
 import { useAlerts } from '@/composables/alerts';
+import { container } from '@/inversify.config';
+import type { IStorageAreaService } from '@/service/IService/IStorageAreaService';
+import ObjectSelector from '@/components/crud/ObjectSelector.vue';
+import TYPES from '@/inversify/types';
+
+const storageAreaService = container.get<IStorageAreaService>(TYPES.storageAreaService);
+const fetchStorageAreas = async () => {
+    return storageAreaService.getStorageAreas({
+        pageNumber: 1,
+        pageSize: 1000,
+        filter: {
+            nameCode: ''
+        }
+    });
+};
 
 const props = defineProps({
   modelValue: {
@@ -13,6 +28,52 @@ const props = defineProps({
 const notifications = useAlerts();
 
 const emit = defineEmits(['update:modelValue']);
+
+const newItem = ref<CargoManifestItem>({
+    position: { bay: '', row: '', tier: '' },
+    storageAreaCode: '',
+    container: {
+        containerNumber: '',
+        cargoType: 0,
+        description: ''
+    }
+});
+
+const addContainer = () => {
+    if (
+        !newItem.value.container.containerNumber || !newItem.value.storageAreaCode || !newItem.value.container.cargoType ||
+        !newItem.value.position.bay || !newItem.value.position.row || !newItem.value.position.tier
+    ) {
+        notifications.enqueueNotification(
+            'Container fields cannot be empty. Please fill in all required fields.',
+            'warning'
+        );
+        return;
+    }
+
+    newItem.value.storageAreaCode = String(newItem.value.storageAreaCode.nameCode);
+    newItem.value.container.cargoType = Number(newItem.value.container.cargoType.cargoType);
+
+    const updated = [...props.modelValue, JSON.parse(JSON.stringify(newItem.value))];
+    emit('update:modelValue', updated);
+
+    // Reset form
+    newItem.value = {
+        position: { bay: '', row: '', tier: '' },
+        storageAreaCode: '',
+        container: {
+            containerNumber: '',
+            cargoType: 0,
+            description: ''
+        }
+    };
+};
+
+const removeContainer = (index: number) => {
+    const updated = [...props.modelValue];
+    updated.splice(index, 1);
+    emit('update:modelValue', updated);
+};
 
 const fileInput = ref<HTMLInputElement | null>(null);
 const isDragging = ref(false);
@@ -33,6 +94,11 @@ const handleFiles = (files: FileList) => {
     parseCSV(text);
   };
   reader.readAsText(file);
+};
+
+const pad2 = (value: string | number) => {
+  const num = String(value).replace(/\D/g, '');
+  return num.padStart(2, '0');
 };
 
 const types: Record<number, string> = {
@@ -93,8 +159,13 @@ const handleDragOver = (event: DragEvent) => {
 const handleDragLeave = () => isDragging.value = false;
 
 const shortenedList = computed(() => {
-  return props.modelValue.slice(0, 5);
+  return props.modelValue.slice(0, expand.value ? props.modelValue.length : 5);
 });
+
+const expand = ref(false);
+const toggleExpand = () => {
+  expand.value = !expand.value;
+};
 
 </script>
 
@@ -115,15 +186,98 @@ const shortenedList = computed(() => {
     <div v-if="props.modelValue.length" class="list">
       <p>Loaded Cargo Items:</p>
       <ul>
-        <li v-for="(item, index) in shortenedList" :key="index">
-          {{ item.container.containerNumber }}, {{ types[item.container.cargoType] }} ({{ item.position.bay }}/{{ item.position.row }}/{{ item.position.tier }})
-
-            <p v-if="index === 4 && props.modelValue.length > 5">
-                ...and {{ props.modelValue.length - 5 }} more items.
+        <li v-for="(item, index) in shortenedList" :key="index" class="list-item">
+            <span>
+              {{ item.container.containerNumber }},
+              {{ types[item.container.cargoType] }}
+              ({{ item.position.bay }}/{{ item.position.row }}/{{ item.position.tier }})
+            </span>
+          
+            <!-- <sl-button
+              size="small"
+              variant="danger"
+              @click="removeContainer(index)"
+            >
+              
+            </sl-button> -->
+            <sl-icon v-if="!(!expand && index === 4 && props.modelValue.length > 5)" name="trash" style="cursor: pointer; color: var(--sl-color-danger-600);" @click="removeContainer(index)"></sl-icon>
+          
+            <p v-if="!expand && index === 4 && props.modelValue.length > 5">
+              ...and {{ props.modelValue.length - 5 }} more items.
             </p>
-        </li>
+          </li>          
       </ul>
+
+        <sl-button size="small" variant="default" @click="toggleExpand" v-if="props.modelValue.length > 5">
+            {{ expand ? 'Show Less' : 'Show All' }}
+        </sl-button>
     </div>
+
+    <div class="manual-add">
+        <p><strong>Add Container</strong></p>
+      
+        <div class="grid-form">
+          <input v-model="newItem.container.containerNumber" placeholder="Container Number" />
+            
+            <ObjectSelector
+                class="field-dropdown"
+                v-model="newItem.storageAreaCode"
+                :fetch-function="fetchStorageAreas"
+                placeholderText="Select Storage Area..."
+                labelKey="nameCode"
+            />
+      
+          <input v-model="newItem.container.description" placeholder="Description" />
+      
+            <sl-input
+                label="Bay"
+                v-model="newItem.position.bay"
+                @blur="newItem.position.bay = pad2(newItem.position.bay)"
+                placeholder="Bay"
+            />
+
+            <sl-input
+                label="Row"
+                v-model="newItem.position.row"
+                @blur="newItem.position.row = pad2(newItem.position.row)"
+                placeholder="Row"
+            />
+
+            <sl-input
+                label="Tier"
+                v-model="newItem.position.tier"
+                @blur="newItem.position.tier = pad2(newItem.position.tier)"
+                placeholder="Tier"
+            />
+
+            
+            <ObjectSelector
+                class="field-dropdown"
+                name="Cargo Type"
+                v-model="newItem.container.cargoType"
+                :fetch-function="() => {
+                    return {
+                        pageNumber: 1,
+                        pageSize: 100,
+                        pageCount: 1,
+                        items: Object.entries(types).map(([key, value]) => ({
+                            cargoType: Number(key),
+                            nameCode: value
+                        })),
+                    }
+                }"
+                placeholderText="Select Storage Area..."
+                labelKey="nameCode"
+            />
+
+
+        </div>
+      
+        <sl-button variant="primary" @click="addContainer">
+          Add Container
+        </sl-button>
+      </div>
+      
   </sl-card>
 </template>
 
@@ -155,4 +309,30 @@ const shortenedList = computed(() => {
   margin-top: 1rem;
   font-size: 0.95rem;
 }
+.manual-add {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--sl-color-neutral-200);
+}
+
+.grid-form {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.grid-form input,
+.grid-form select {
+    padding: 0.4rem;
+    border: 1px solid var(--sl-color-neutral-300);
+    border-radius: 4px;
+}
+
+.list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}  
+
 </style>

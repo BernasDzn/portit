@@ -56,7 +56,7 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
         }
     }
 
-    [HttpGet("collectScheduleData", Name = "GetVesselVisitNotificationsOnDay")]
+    [HttpGet("collectScheduleData", Name = "CollectSchedulingData")]
     [AllowAnonymous]
     public async Task<ActionResult<SchedulingResultDto>> CollectSchedulingData([FromQuery] DateTime day, uint daysAhead = 1)
     {
@@ -77,7 +77,30 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
         }
     }
 
-    [HttpGet("{id}", Name = "GetVesselVisitNotificationById")]
+    [HttpGet("onMonth", Name = "GetVesselVisitNotificationsOnMonth", Order = 0)]
+    [Authorize(Policy = "VesselVisitNotification.View")]
+    public async Task<ActionResult<IEnumerable<VesselVisitNotificationDto>>> GetAllOnMonth([FromQuery] DateTime month)
+    {
+        try
+        {
+            DateTime firstDayOfMonth = new DateTime(month.Year, month.Month, 1);
+            var notificationsDto = await _notificationService.GetVesselVisitNotificationsOnDay(firstDayOfMonth, (uint) DateTime.DaysInMonth(month.Year, month.Month));
+            return Ok(notificationsDto);
+        }
+        catch (System.Exception e)
+        {
+            if (e is ArgumentException || e is ArgumentNullException || e is InvalidOperationException)
+            {
+                _logger.LogError($"Invalid arguments provided for retrieving vessel visit notifications on month {month}: {e.Message}");
+                return BadRequest(e.Message);
+            }
+
+            _logger.LogCritical($"Error retrieving vessel visit notifications on month {month}: {e.Message}");
+            return StatusCode(500, "An error occurred while retrieving vessel visit notifications on month.");
+        }
+    }
+
+    [HttpGet("{id}", Name = "GetVesselVisitNotificationById", Order = 1)]
     public async Task<ActionResult<VesselVisitNotificationDto>> GetById(string id)
     {
         try

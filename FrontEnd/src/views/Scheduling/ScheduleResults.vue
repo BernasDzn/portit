@@ -12,20 +12,39 @@ const route = useRoute();
 const { t } = useI18n();
 
 // results passed via router
-const schedule = JSON.parse(route.query.schedule as string);
-const date = new Date(route.query.date as string);
+const schedule = JSON.parse(route.query.request as string);
 
 // Process data grouped by dock
 const dockSchedules = computed(() => {
-    return schedule.data.map((dockData: any, index: number) => {
-        const rows = dockData.schedule.map((item: any) => ({
-            name: item.name.replace(/_\d+$/, ''),
-            start: new Date(date.getTime() + item.loading_enter_time * 3600000).toLocaleString(),
-            end: new Date(date.getTime() + item.loading_exit_time * 3600000).toLocaleString(),
-            cranes: Array.isArray(item.cranes) ? item.cranes.join(', ') : item.cranes
-        }));
 
-        const metrics = schedule.metrics[index] || {};
+    const date = schedule.date;
+
+    return schedule.data.map((dockData: any) => {
+        const rows = dockData.schedule.map((item: any) => {
+            // Convert hours to a Date
+            const startDate = new Date(date);
+            const endDate = new Date(date);
+
+            const startHours = Math.floor(item.loading_enter_time);
+            const startMinutes = Math.floor((item.loading_enter_time - startHours) * 60);
+
+            const endHours = Math.floor(item.loading_exit_time);
+            const endMinutes = Math.floor((item.loading_exit_time - endHours) * 60);
+
+            startDate.setHours(startHours, startMinutes, 0, 0);
+            endDate.setHours(endHours, endMinutes, 0, 0);
+
+            console.log("Processed item:", item.name, startDate, endDate);
+
+            return {
+                name: item.name,
+                start: startDate.toLocaleTimeString(),
+                end: endDate.toLocaleTimeString(),
+                cranes: Array.isArray(item.cranes) ? item.cranes.join(', ') : item.cranes
+            };
+        });
+
+        const metrics = schedule.metrics.find((m: any) => m.selection) || {};
 
         return {
             dock: dockData.dock,
@@ -52,6 +71,7 @@ const overallMetrics = computed(() => {
 });
 
 const downloadPDF = async () => {
+    const date = new Date(schedule.date);
     const pdf = await scheduleService.generateSchedulePDF(schedule, date);
     const blob = new Blob([pdf], { type: "application/pdf" });
     const url = URL.createObjectURL(blob);

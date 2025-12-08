@@ -32,7 +32,7 @@ const algorithmList = [
 
 const selectedDate = ref<Date | null>(new Date());
 const selectedAlgorithm = ref<string | null>("auto");
-const vvnList = ref<VesselVisitNotification[]>([]);
+const vvnList = ref([]);
 const daysAhead = ref<number>(1);
 const loading = ref(false);
 const generating = ref(false);
@@ -41,8 +41,17 @@ const fetchVVNs = async () => {
 
     loading.value = true;
 
-    const response = await vvnService.getVesselVisitNotifications();
-    vvnList.value = response.items;
+    const date = selectedDate.value ? selectedDate.value : new Date();
+    console.log("Fetching VVNs for date:", date);
+
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+
+    const dateString = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+
+    const response = await vvnService.getNotificationsOnMonth(dateString);
+    vvnList.value = response;
 
     events.value = vvnList.value.map(vvn => ({
         title: vvn.vessel.name,
@@ -55,6 +64,11 @@ const fetchVVNs = async () => {
 onMounted(async () => {
     await fetchVVNs();
 });
+
+const onMonthChange = async (newDate: Date) => {
+    selectedDate.value = newDate;
+    await fetchVVNs();
+};
 
 const generateTasksForDate = async () => {
     
@@ -179,7 +193,7 @@ const closeAboutModal = () => {
         <div v-else>
 
             <div class="calendar-events">
-                <CalendarEvents class="calendar" :events="events" v-model="selectedDate" />
+                <CalendarEvents class="calendar" :events="events" v-model="selectedDate" @month-change="onMonthChange" />
                 <div class="mt-4">
                     <h2 class="subtitle">{{ t('notification.eventsOnDate', { date: selectedDate.toDateString() }) }}</h2>
                     <ul v-if="vvnsOnDate.length !== 0">

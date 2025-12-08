@@ -45,7 +45,7 @@ sequence_temporization1(EndPrevSeq,[V|LV],[(V,TInUnload,TEndLoad)|SeqTriplets]):
     
     ( (TIn> EndPrevSeq,!, TInUnload is TIn); TInUnload is EndPrevSeq+1),
     
-    TEndLoad is TInUnload + TUnload+TLoad -1,
+    TEndLoad is TInUnload + TUnload + TLoad,
     sequence_temporization1(TEndLoad,LV,SeqTriplets).
 
 sequence_temporization1(_,[],[]).

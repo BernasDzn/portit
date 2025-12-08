@@ -1,10 +1,8 @@
 import config from "../config/config";
-import { OperationPlanDto } from "../domain/dto/operationPlansDto";
-import { OperationPlan } from "../domain/operationPlans";
 import { ScheduleQueueItem } from "../domain/scheduleQueue";
-import { operationPlanRepository } from "../repository/operationPlanRepository";
+import { OperationPlanDto } from "../dto/operationPlanDto";
 import { workQueueRepository } from "../repository/workQueueRepository";
-import { operationPlanService } from "./operationPlanService";
+import { OperationPlanService } from "./operationPlanService";
 
 export class SchedulingRequestService {
     
@@ -23,6 +21,55 @@ export class SchedulingRequestService {
     async getQueueState(): Promise<ScheduleQueueItem[]> {
         const queueState = await workQueueRepository.getQueueState();
         return queueState;
+    }
+
+    async acceptRequest(id: string, issuer: string): Promise<ScheduleQueueItem | null> {
+
+        const item = await workQueueRepository.getById(id);
+        if (!item){
+            throw new Error(`No scheduling request found with ID ${id}`);
+        }
+
+        if (item.status !== 'completed') {
+            throw new Error(`Scheduling is not completed. Current status: ${item.status}`);
+        }
+
+        if (item.issuer !== issuer) {
+            throw new Error(`Scheduling request was not issued by you`);
+        }
+
+        const scheduleData = item.result;
+        if (!scheduleData) {
+            throw new Error(`No schedule data found for request ID ${id}`);
+        }
+        
+        const savedPlan = await new OperationPlanService().createPlans(scheduleData, item.issuer);
+        if (!savedPlan || savedPlan.length === 0) {
+            throw new Error(`Failed to save operation plans for request ID ${id}`);
+        }
+
+        console.log(`Operation Plans saved successfully for request ID ${id}`);
+        await workQueueRepository.finishRequest(id, 'accepted');
+        return item;
+    }
+
+    async rejectRequest(id: string, issuer: string): Promise<ScheduleQueueItem | null> {
+
+        const item = await workQueueRepository.getById(id);
+        if (!item){
+            throw new Error(`No scheduling request found with ID ${id}`);
+        }
+
+        if (item.status !== 'completed') {
+            throw new Error(`Scheduling request ID ${id} is not yet completed. Current status: ${item.status}`);
+        }
+
+        if (item.issuer !== issuer) {
+            throw new Error(`Scheduling request ID ${id} was not issued by you`);
+        }
+
+        await workQueueRepository.finishRequest(id, 'rejected');
+        return item;
     }
 
     async getToWork(): Promise<OperationPlanDto | null> {
@@ -49,8 +96,9 @@ export class SchedulingRequestService {
         
             // Save the schedule
             try {
-                const savedPlan = await operationPlanService.savePlan(scheduleData);
-                console.log(`Saved operation plan ${savedPlan.id} for ${nextItem.data.day} by ${nextItem.issuer}`);
+                // const savedPlan = await new OperationPlanService().createPlans(scheduleData, nextItem.issuer);
+                // console.log(`Operation Plans saved successfully for request ID ${nextItem.id}`);
+
             } catch (error) {
                 console.error(`Failed to save schedule:`, error);
                 await workQueueRepository.finishRequest(nextItem.id, 'failed');
@@ -58,7 +106,7 @@ export class SchedulingRequestService {
             }
             
             // Mark request as complete
-            await workQueueRepository.finishRequest(nextItem.id, 'completed');
+            await workQueueRepository.finishRequest(nextItem.id, 'completed', scheduleData);
             return await this.getToWork();
             
         } catch (error) {
@@ -71,5 +119,6 @@ export class SchedulingRequestService {
             return await this.getToWork();
         }
     }
+}
 
-}export const schedulingRequestService = new SchedulingRequestService();
+export const schedulingRequestService = new SchedulingRequestService();

@@ -1,10 +1,7 @@
-import { OperationPlans } from "../schemas/operationPlansSchema";
-import { OperationPlan } from "../domain/operationPlans";
-import { OperationPlanMapper } from "../domain/mappers/operationPlanMapper";
 import { WorkQueueItem } from "../domain/workQueueItem";
 import { ScheduleQueue } from "../schemas/scheduleQueue";
 import { ScheduleQueueItem } from "../domain/scheduleQueue";
-import { ScheduleQueueMapper } from "../domain/mappers/scheduleQueueMapper";
+import { ScheduleQueueMapper } from "../mappers/scheduleQueueMapper";
 
 export class WorkQueueRepository {
 
@@ -35,6 +32,13 @@ export class WorkQueueRepository {
         return numberOnQueue;
     }
 
+    async getById(id: string): Promise<ScheduleQueueItem | null> {
+        const entry = await ScheduleQueue.findById(id).exec();
+        if (!entry)
+            return null;
+        return ScheduleQueueMapper.fromSchema(entry);
+    }
+
     async getQueueState(): Promise<ScheduleQueueItem[]> {
         const queueEntries = await ScheduleQueue.find().sort({ priority: -1, requestedAt: -1 }).limit(10).exec();
         return queueEntries.map(entry => ScheduleQueueMapper.fromSchema(entry));
@@ -54,10 +58,11 @@ export class WorkQueueRepository {
         return ScheduleQueueMapper.fromSchema(nextEntry);
     }
 
-    async finishRequest(id: string, status: string): Promise<void> {
+    async finishRequest(id: string, status: string, resul: any = null): Promise<void> {
 
         const update: any = {
             status: status,
+            result: resul,
         };
 
         await ScheduleQueue.findByIdAndUpdate(

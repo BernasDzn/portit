@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { verify, JwtPayload } from 'jsonwebtoken';
 import config from '../config/config';
-import { UserDto } from '../domain/dto/userDto';
+import { UserDto } from '../dto/userDto';
 
 declare module 'express-serve-static-core' {
     interface Request {
@@ -35,8 +35,8 @@ export const authMiddleware = (
     try {
         const decoded = verify(
             token, config.jwt.jwtSecret, {
-                issuer: config.jwt.jwtIssuer,
-                audience: config.jwt.jwtAudience
+                // issuer: config.jwt.jwtIssuer,
+                // audience: config.jwt.jwtAudience
             }
         );
         req.user = {
@@ -46,8 +46,13 @@ export const authMiddleware = (
             user_role: (decoded as any).user_role,
             token: token
         };
+
+        //console.log(`Authenticated user ${req.user.emailAddress} with role ${req.user.user_role}`);
+
         next();
-    } catch {
+    } catch (error) {
+
+        console.error('Token verification failed:', error);
         return res.status(400).json({ message: 'Invalid token' });
     }
 };
