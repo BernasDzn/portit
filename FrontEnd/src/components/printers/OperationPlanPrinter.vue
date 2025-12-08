@@ -77,7 +77,7 @@ const cranes = computed(() => {
                                 {{ t(`operationPlan.operationType.${operation.type}`) }}
                             </sl-badge>
                             <span class="operation-time">
-                                {{ new Date(operation.startTime).toLocaleString() }} - {{ new Date(operation.endTime).toLocaleString() }}
+                                {{ new Date(operation.startTime).toLocaleString() }} -> {{ new Date(operation.endTime).toLocaleString() }}
                             </span>
                         </div>
                     </div>
