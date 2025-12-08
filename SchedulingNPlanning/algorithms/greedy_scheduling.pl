@@ -121,8 +121,8 @@ sequence_temporization_greedy1(EndPrevSeq, [V|LV], [(V, TInUnload, TEndLoad)|Seq
     (TIn > EndPrevSeq -> TInUnload is TIn ; TInUnload is EndPrevSeq + 1),
     
     % Calculate when this vessel finishes all operations:
-    % Finish time = Start + Unloading + Loading - 1
-    TEndLoad is TInUnload + TUnload + TLoad - 1,
+    % Finish time = Start + Unloading + Loading
+    TEndLoad is TInUnload + TUnload + TLoad,
     
     % Recursively schedule the rest of the vessels
     sequence_temporization_greedy1(TEndLoad, LV, SeqTriplets).

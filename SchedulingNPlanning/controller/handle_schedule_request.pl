@@ -42,32 +42,70 @@ format_timetable_docks([DockResult|Rest], [Dict|FormattedRest]) :-
     !,
     format_timetable_docks(Rest, FormattedRest).
 
+% Helper to calculate unload and load times for a vessel
+calculate_vessel_times(Name, CraneList, UnloadTime, LoadTime) :-
+    vessel(Name, _, _, UnloadCount, LoadCount, CraneList),
+    % Get sum of crane speeds
+    findall(Speed, member(crane(_, Speed), CraneList), Speeds),
+    sum_list(Speeds, Sum),
+    % Calculate times
+    ( (UnloadCount > 0, Sum > 0) -> UnloadTime is (UnloadCount / Sum) ; UnloadTime = 0 ),
+    ( (LoadCount > 0, Sum > 0) -> LoadTime is (LoadCount / Sum) ; LoadTime = 0 ).
+
 % Format the list of tuples into a more readable structure with crane info
 format_timetable([], []).
 % Handle 4-tuple format (Name, StartTime, EndTime, Cranes) - new format with cranes included
-format_timetable([(Name, LoadingEnterTime, LoadingExitTime, Cranes)|Rest], [Dict|FormattedRest]) :-
+% StartTime = when unloading enters, EndTime = when loading exits
+format_timetable([(Name, UnloadingEnterTime, LoadingExitTime, Cranes)|Rest], [Dict|FormattedRest]) :-
+    % Calculate the intermediate times
+    ( vessel(Name, _, _, _, _, CraneList), CraneList \= [] ->
+        calculate_vessel_times(Name, CraneList, UnloadTime, LoadTime),
+        % Unloading happens first
+        UnloadingExitTime is UnloadingEnterTime + UnloadTime,
+        % Loading starts after unloading ends
+        LoadingEnterTime is UnloadingExitTime,
+        % We already know when loading exits from the algorithm
+        true
+    ;
+        % If no cranes, assume zero times
+        UnloadingExitTime = UnloadingEnterTime,
+        LoadingEnterTime = UnloadingEnterTime
+    ),
     Dict = #{
         name: Name,
+        cranes: Cranes,
+        unloading_enter_time: UnloadingEnterTime,
+        unloading_exit_time: UnloadingExitTime,
         loading_enter_time: LoadingEnterTime,
-        loading_exit_time: LoadingExitTime,
-        cranes: Cranes
+        loading_exit_time: LoadingExitTime
     },
     !,
     format_timetable(Rest, FormattedRest).
 % Handle 3-tuple format (Name, StartTime, EndTime) - legacy format, lookup cranes from facts
-format_timetable([(Name, LoadingEnterTime, LoadingExitTime)|Rest], [Dict|FormattedRest]) :-
+format_timetable([(Name, UnloadingEnterTime, LoadingExitTime)|Rest], [Dict|FormattedRest]) :-
     ( vessel(Name, _, _, _, _, CraneList), CraneList \= [] ->
         findall(CraneName, member(crane(CraneName, _), CraneList), Cranes),
+        calculate_vessel_times(Name, CraneList, UnloadTime, LoadTime),
+        % Unloading happens first
+        UnloadingExitTime is UnloadingEnterTime + UnloadTime,
+        % Loading starts after unloading ends
+        LoadingEnterTime is UnloadingExitTime,
         Dict = #{
             name: Name,
+            cranes: Cranes,
+            unloading_enter_time: UnloadingEnterTime,
+            unloading_exit_time: UnloadingExitTime,
             loading_enter_time: LoadingEnterTime,
-            loading_exit_time: LoadingExitTime,
-            cranes: Cranes
+            loading_exit_time: LoadingExitTime
         }
     ;
+        % Fallback for vessels without cranes
         Dict = #{
             name: Name,
-            loading_enter_time: LoadingEnterTime,
+            cranes: [],
+            unloading_enter_time: UnloadingEnterTime,
+            unloading_exit_time: UnloadingEnterTime,
+            loading_enter_time: UnloadingEnterTime,
             loading_exit_time: LoadingExitTime
         }
     ),
