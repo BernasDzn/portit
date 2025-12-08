@@ -745,11 +745,22 @@
     },
     "operationPlan": {
         "title": "Operation Plan",
+        "dock": "Dock",
         "docks": "Docks",
+        "operations": "Operations",
+        "cranes": "Cranes",
+        "schedule": "Schedule",
+        "metadata": "Metadata",
+        "createdBy": "Created By",
+        "createdAt": "Created At",
         "totalSchedules": "Total Schedules",
         "vesselCount": "Vessels",
         "plansOnDate": "Operation plans on selected date",
         "noPlansOnDate": "No operation plans on selected date",
+        "operationType": {
+            "Unload": "Unload",
+            "Load": "Load"
+        },
         "tabs": {
             "unplannedVVNs": "Unplanned VVNs"
         },

@@ -5,34 +5,30 @@ import { useI18n } from 'vue-i18n';
 
 const { t } = useI18n();
 
-interface Schedule {
-    cranes: string[];
-    loadingEnterTime: Date | string;
-    loadingLeaveTime: Date | string;
-    vvnId: string;
+interface Resource {
+    name: string;
+    type: string;
 }
 
-interface DockPlan {
-    dockId: string;
-    schedule: Schedule[];
+interface Operation {
+    type: 'Unload' | 'Load';
+    startTime: string;
+    endTime: string;
+    resources: Resource[];
 }
 
-interface Metric {
-    algorithm: 'optimal' | 'greedy' | 'genetic' | 'auto';
-    computationTime: number;
-    strategy: string;
-    totalDelay: number;
-    vesselCount: number;
-    selection?: {
-        auto: boolean;
-        reason: string;
-    };
+interface OperationPlanMetadata {
+    createdBy: string;
+    createdAt: string;
+    algorithmUsed: string;
 }
 
 interface OperationPlan {
-    date: Date | string;
-    dockPlanMap: DockPlan[];
-    metrics: Metric[];
+    id: string;
+    relatedVVN: string;
+    dock: string;
+    operationSchedule: Operation[];
+    metadata: OperationPlanMetadata;
 }
 
 const props = defineProps<{
@@ -41,21 +37,29 @@ const props = defineProps<{
     short?: boolean;
 }>();
 
-const formattedDate = computed(() => {
-    if (typeof props.operationPlan.date === 'string') {
-        return props.operationPlan.date.split('T')[0];
-    }
-    return new Date(props.operationPlan.date).toISOString().split('T')[0];
+const formattedCreatedDate = computed(() => {
+    const date = new Date(props.operationPlan.metadata.createdAt);
+    return date.toISOString().split('T')[0];
 });
 
-const totalSchedules = computed(() => {
-    return props.operationPlan.dockPlanMap.reduce((total, dock) => total + dock.schedule.length, 0);
+const operationTimes = computed(() => {
+    if (props.operationPlan.operationSchedule.length === 0) return { start: '', end: '' };
+    const start = new Date(props.operationPlan.operationSchedule[0].startTime);
+    const end = new Date(props.operationPlan.operationSchedule[props.operationPlan.operationSchedule.length - 1].endTime);
+    return {
+        start: start.toLocaleString(),
+        end: end.toLocaleString()
+    };
 });
 
-const primaryMetric = computed(() => {
-    return props.operationPlan.metrics && props.operationPlan.metrics.length > 0
-        ? props.operationPlan.metrics[0]
-        : null;
+const cranes = computed(() => {
+    const craneSet = new Set<string>();
+    props.operationPlan.operationSchedule.forEach(op => {
+        op.resources.forEach(res => {
+            if (res.type === 'Crane') craneSet.add(res.name);
+        });
+    });
+    return Array.from(craneSet);
 });
 </script>
 
@@ -65,24 +69,24 @@ const primaryMetric = computed(() => {
             <div class="operation-plan-display">
                 <div class="operation-plan-header">
                     <div class="operation-plan-title">
-                        <p>{{ t('operationPlan.title') }}</p>
-                        <sl-tag size="small" variant="primary" v-if="primaryMetric">
-                            {{ t(`operationPlan.algorithm.${primaryMetric.algorithm}`) }}
+                        <p>{{ t('operationPlan.title') }} - {{ props.operationPlan.relatedVVN }}</p>
+                        <sl-tag size="small" variant="primary">
+                            {{ props.operationPlan.metadata.algorithmUsed }}
                         </sl-tag>
                     </div>
                     <div v-if="!props.short" class="date item-description">
-                        {{ formattedDate }}
+                        {{ formattedCreatedDate }}
                     </div>
                 </div>
                 <div class="opposed">
                     <div>
                         <div v-if="props.short">
-                            <p class="subtitle short">{{ formattedDate }}</p>
+                            <p class="subtitle short">{{ formattedCreatedDate }}</p>
                         </div>
                         <p v-if="!props.short" class="item-description">
-                            {{ t('operationPlan.docks') }}: {{ props.operationPlan.dockPlanMap.length }}<br/>
-                            {{ t('operationPlan.totalSchedules') }}: {{ totalSchedules }}<br/>
-                            {{ t('operationPlan.vesselCount') }}: {{ primaryMetric?.vesselCount || t('common.unknown') }}
+                            {{ t('operationPlan.dock') }}: {{ props.operationPlan.dock }}<br/>
+                            {{ t('operationPlan.operations') }}: {{ props.operationPlan.operationSchedule.length }}<br/>
+                            {{ t('operationPlan.cranes') }}: {{ cranes.join(', ') || t('common.none') }}
                         </p>
                     </div>
                     <span v-if="!props.short" class="material-icons icon" aria-hidden="true">event_note</span>
@@ -90,25 +94,29 @@ const primaryMetric = computed(() => {
             </div>
             <div class="details" v-if="!props.short">
                 <sl-divider></sl-divider>
-                <div class="metrics-section" v-if="primaryMetric">
-                    <p class="metrics-title">{{ t('operationPlan.metrics.title') }}</p>
-                    <sl-alert v-if="primaryMetric.selection?.auto" variant="primary" open class="auto-selection-info">
-                        <sl-icon slot="icon" name="robot"></sl-icon>
-                        <strong>{{ t('operationPlan.metrics.autoSelection') }}</strong><br/>
-                        {{ primaryMetric.selection.reason }}
-                    </sl-alert>
-                    <div class="metrics-grid">
+                <div class="operations-section">
+                    <p class="metrics-title">{{ t('operationPlan.schedule') }}</p>
+                    <div class="operations-list">
+                        <div v-for="(operation, idx) in props.operationPlan.operationSchedule" :key="idx" class="operation-item">
+                            <sl-badge :variant="operation.type === 'Unload' ? 'warning' : 'success'">
+                                {{ t(`operationPlan.operationType.${operation.type}`) }}
+                            </sl-badge>
+                            <span class="operation-time">
+                                {{ new Date(operation.startTime).toLocaleString() }} - {{ new Date(operation.endTime).toLocaleString() }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="metadata-section">
+                    <p class="metrics-title">{{ t('operationPlan.metadata') }}</p>
+                    <div class="metadata-grid">
                         <div class="metric-item">
-                            <span class="metric-label">{{ t('operationPlan.metrics.strategy') }}:</span>
-                            <span class="metric-value">{{ primaryMetric.strategy }}</span>
+                            <span class="metric-label">{{ t('operationPlan.createdBy') }}:</span>
+                            <span class="metric-value">{{ props.operationPlan.metadata.createdBy }}</span>
                         </div>
                         <div class="metric-item">
-                            <span class="metric-label">{{ t('operationPlan.metrics.totalDelay') }}:</span>
-                            <span class="metric-value">{{ primaryMetric.totalDelay }}</span>
-                        </div>
-                        <div class="metric-item">
-                            <span class="metric-label">{{ t('operationPlan.metrics.computationTime') }}:</span>
-                            <span class="metric-value">{{ primaryMetric.computationTime }}ms</span>
+                            <span class="metric-label">{{ t('operationPlan.createdAt') }}:</span>
+                            <span class="metric-value">{{ new Date(props.operationPlan.metadata.createdAt).toLocaleString() }}</span>
                         </div>
                     </div>
                 </div>
@@ -150,10 +158,11 @@ const primaryMetric = computed(() => {
     align-items: center;
 }
 
-.metrics-section {
+.operations-section, .metadata-section {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    margin-bottom: 15px;
 }
 
 .metrics-title {
@@ -161,7 +170,27 @@ const primaryMetric = computed(() => {
     margin-bottom: 5px;
 }
 
-.metrics-grid {
+.operations-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.operation-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    background-color: var(--sl-color-neutral-50);
+    border-radius: var(--sl-border-radius-small);
+}
+
+.operation-time {
+    font-size: small;
+    color: var(--sl-color-neutral-700);
+}
+
+.metadata-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 10px;
@@ -190,13 +219,5 @@ const primaryMetric = computed(() => {
     border-radius: var(--sl-border-radius-medium);
     background-color: var(--sl-color-neutral-200);
     color: var(--sl-color-neutral-800);
-}
-
-.auto-selection-info {
-    margin-bottom: 10px;
-}
-
-.auto-selection-info::part(base) {
-    background-color: var(--sl-color-primary-50);
 }
 </style>

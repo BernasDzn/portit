@@ -1,10 +1,8 @@
 import config from "../config/config";
-import { OperationPlanDto } from "../domain/dto/operationPlansDto";
-import { OperationPlan } from "../domain/operationPlans";
 import { ScheduleQueueItem } from "../domain/scheduleQueue";
-import { operationPlanRepository } from "../repository/operationPlanRepository";
+import { OperationPlanDto } from "../dto/operationPlanDto";
 import { workQueueRepository } from "../repository/workQueueRepository";
-import { operationPlanService } from "./operationPlanService";
+import { OperationPlanService } from "./operationPlanService";
 
 export class SchedulingRequestService {
     
@@ -49,8 +47,8 @@ export class SchedulingRequestService {
         
             // Save the schedule
             try {
-                const savedPlan = await operationPlanService.savePlan(scheduleData);
-                console.log(`Saved operation plan ${savedPlan.id} for ${nextItem.data.day} by ${nextItem.issuer}`);
+                const savedPlan = await new OperationPlanService().createPlans(scheduleData, nextItem.issuer);
+                console.log(`Operation Plans saved successfully for request ID ${nextItem.id}`);
             } catch (error) {
                 console.error(`Failed to save schedule:`, error);
                 await workQueueRepository.finishRequest(nextItem.id, 'failed');
@@ -71,5 +69,6 @@ export class SchedulingRequestService {
             return await this.getToWork();
         }
     }
+}
 
-}export const schedulingRequestService = new SchedulingRequestService();
+export const schedulingRequestService = new SchedulingRequestService();

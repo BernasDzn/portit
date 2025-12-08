@@ -1,10 +1,7 @@
-import { OperationPlans } from "../schemas/operationPlansSchema";
-import { OperationPlan } from "../domain/operationPlans";
-import { OperationPlanMapper } from "../domain/mappers/operationPlanMapper";
 import { WorkQueueItem } from "../domain/workQueueItem";
 import { ScheduleQueue } from "../schemas/scheduleQueue";
 import { ScheduleQueueItem } from "../domain/scheduleQueue";
-import { ScheduleQueueMapper } from "../domain/mappers/scheduleQueueMapper";
+import { ScheduleQueueMapper } from "../mappers/scheduleQueueMapper";
 
 export class WorkQueueRepository {
 

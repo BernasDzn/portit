@@ -1,68 +1,126 @@
-import { OperationPlanDto } from "../domain/dto/operationPlansDto";
-import { operationPlanRepository } from "../repository/operationPlanRepository";
-import config from "../config/config";
-import { OperationPlan } from "../domain/operationPlans";
-import {Pageable, Page, mapPageItems} from "../domain/page";
+import { OperationPlan } from "../domain/operationPlan";
+import { Operation, OperationType } from "../domain/value/operation";
+import { OperationPlanMetadata } from "../domain/value/operationPlanMetadata";
+import { Resource, ResourceType } from "../domain/value/resource";
+import { OperationPlanDto } from "../dto/operationPlanDto";
+import { ScheduleDataMapper } from "../mappers/scheduleDataMapper";
+import { OperationPlanRepository } from "../repository/operationPlanRepository";
+import { LinkedList } from "../utils/linkedList";
+import { Page, Pageable } from "../utils/page";
+
 
 export class OperationPlanService {
-    async getAll(pageable: Pageable): Promise<Page<OperationPlanDto>> {
-        let plans = await operationPlanRepository.findAll(pageable);
-        return mapPageItems(plans, plan => plan.toDto());
-    }
 
-    async getById(id: string): Promise<OperationPlanDto | undefined> {
-        let plan = await operationPlanRepository.findById(id);
-        return plan?.toDto();
-    }
+	operationPlanRepository: OperationPlanRepository;
 
-    async findByDateRange(startDate: string, endDate: string, pageable: Pageable): Promise<Page<OperationPlanDto>> {
-        let plans = await operationPlanRepository.findByDateRange(startDate, endDate, pageable);
-        return mapPageItems(plans, plan => plan.toDto());
-    }
+	constructor() {
+		this.operationPlanRepository = new OperationPlanRepository();
+	}
 
-    async groupByDate(): Promise<{
-        date: string;
-        count: number;
-    }[]> {
-        return await operationPlanRepository.groupBydate();
-    }
+	async getAll(pageable: Pageable): Promise<Page<OperationPlanDto>> {
+		return await this.operationPlanRepository.getAll(pageable);
+	}
 
-    async getNotificationsWithoutPlan(token: string): Promise<string[]> {
-        const url = `${config.backendServer}/VesselVisitNotification/getAllIds`;
-        console.log("Fetching all VVN IDs from external service..." + url);
-        const res = await fetch(url,
-            {
-                credentials: "include",
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                }
-            }
-        );
-        if (!res.ok) {
-            throw new Error(`Failed to fetch all VVNs: ${res.statusText}`);
-        }
+	async getByDateGrouped(): Promise<{ date: string; plans: OperationPlanDto[] }[]> {
+		return await this.operationPlanRepository.getByDateGrouped();
+	}
 
-        console.log("Fetched all VVN IDs from external service.");
+	async createPlans(plansData: any, createdBy: string): Promise<OperationPlanDto[]> {
+		const savedPlans: OperationPlanDto[] = [];
+		const scheduleDataDto = ScheduleDataMapper.toDto(plansData);
+		
+		const baseDate = new Date(scheduleDataDto.date);
+		
+		for (const dockData of scheduleDataDto.data) {
+			const dockCode = dockData.dock;
+			
+			for (const vesselSchedule of dockData.schedule) {
+				const operationSchedule = new LinkedList<Operation>();
+				
+				const craneResources = vesselSchedule.cranes.map(craneName => 
+					new Resource({
+						name: craneName,
+						type: ResourceType.Crane
+					})
+				);
+				
+				const unloadStartTime = new Date(baseDate.getTime() + vesselSchedule.unloading_enter_time * 60 * 60 * 1000);
+				const unloadEndTime = new Date(baseDate.getTime() + vesselSchedule.unloading_exit_time * 60 * 60 * 1000);
+				
+				const unloadOperation = new Operation({
+					operationType: OperationType.Unload,
+					startTime: unloadStartTime,
+					endTime: unloadEndTime,
+					resources: craneResources
+				});
+				operationSchedule.insertAtEnd(unloadOperation);
+				
+				const loadStartTime = new Date(baseDate.getTime() + vesselSchedule.loading_enter_time * 60 * 60 * 1000);
+				const loadEndTime = new Date(baseDate.getTime() + vesselSchedule.loading_exit_time * 60 * 60 * 1000);
+				
+				const loadOperation = new Operation({
+					operationType: OperationType.Load,
+					startTime: loadStartTime,
+					endTime: loadEndTime,
+					resources: craneResources
+				});
+				operationSchedule.insertAtEnd(loadOperation);
+				
+				const dockIndex = scheduleDataDto.data.indexOf(dockData);
+				const metric = scheduleDataDto.metrics[dockIndex];
+				
+				const metadata = new OperationPlanMetadata({
+					createdBy: createdBy,
+					createdAt: new Date(),
+					algorithmUsed: metric?.algorithm || 'unknown'
+				});
+				
+				const operationPlan = new OperationPlan({
+					relatedVVN: vesselSchedule.name,
+					dock: dockCode,
+					operationSchedule: operationSchedule,
+					metadata: metadata
+				});
+				
+				const savedPlan = await this.operationPlanRepository.create(operationPlan);
+				savedPlans.push(savedPlan);
+			}
+		}
+		
+		return savedPlans;
+	}
 
-        const data = await res.json();
-        const allVvnIds: string[] = data;
+	async create(operationPlanDto: OperationPlanDto): Promise<OperationPlanDto> {
+		let operationSchedule = new LinkedList<Operation>();
+		for (const opDto of operationPlanDto.operationSchedule) {
+			const operation = new Operation({
+				operationType: OperationType[opDto.type as keyof typeof OperationType],
+				startTime: new Date(opDto.startTime),
+				endTime: new Date(opDto.endTime),
+				resources: opDto.resources.map(resDto => {
+					return new Resource({
+						name: resDto.name,
+						type: ResourceType[resDto.type as keyof typeof ResourceType]
+					});
+				})
+			});
+			operationSchedule.insertAtEnd(operation);
+		}
 
-        const plans = await this.getAll({
-            pageNumber: 1,
-            pageSize: Number.MAX_SAFE_INTEGER
-        });
-        
-        const plannedVvnIds = plans.items.map(plan => plan.id);
-        const unplannedVvnIds = allVvnIds.filter(id => !plannedVvnIds.includes(id));
+		let operationPlanMetadata = new OperationPlanMetadata({
+			createdBy: operationPlanDto.metadata.createdBy,
+			createdAt: new Date(operationPlanDto.metadata.createdAt),
+			algorithmUsed: operationPlanDto.metadata.algorithmUsed
+		});
 
-        return unplannedVvnIds;
-    }
+		const operationPlan = new OperationPlan({
+			dock: operationPlanDto.dock,
+			relatedVVN: operationPlanDto.relatedVVN,
+			operationSchedule: operationSchedule,
+			metadata: operationPlanMetadata
+		});
 
-    async savePlan(planData: any): Promise<any> {
-        console.log("Saving operation plan...", planData);
-        const plan = new OperationPlan(planData);
-        return await operationPlanRepository.savePlan(plan);
-    }
+		return await this.operationPlanRepository.create(operationPlan);
+	}
+
 }
-
-export const operationPlanService = new OperationPlanService();

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { verify, JwtPayload } from 'jsonwebtoken';
 import config from '../config/config';
-import { UserDto } from '../domain/dto/userDto';
+import { UserDto } from '../dto/userDto';
 
 declare module 'express-serve-static-core' {
     interface Request {

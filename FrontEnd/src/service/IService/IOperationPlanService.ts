@@ -5,6 +5,6 @@ export interface IOperationPlanService {
     getAllOperationPlans(filtering?: Filter<null>): Promise<Page<any>>; // TODO usar modelo!
     groupOperationPlansByDate(): Promise<{
         date: string;
-        count: number;
+        plans: any[];
     }[]>;
 }

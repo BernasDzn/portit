@@ -12,8 +12,8 @@ export class OperationPlanService implements IOperationPlanService {
 		@inject(TYPES.api) 
 		private http: IHttpService
 	){}
-    async groupOperationPlansByDate(): Promise<{ date: string; count: number; }[]> {
-        const res = await this.http.get<{ date: string; count: number; }[]>(`/oem/plans/group`);
+    async groupOperationPlansByDate(): Promise<{ date: string; plans: any[] }[]> {
+        const res = await this.http.get<{ date: string; plans: any[] }[]>(`/oem/operation-plans/by-date`);
         return res.data;
     }
 
@@ -21,11 +21,16 @@ export class OperationPlanService implements IOperationPlanService {
         let query: string[] = [];
         
         if (filtering) {
-            query.push(filtering.pageNumber !== undefined ? `pageNumber=${filtering.pageNumber}&` : '');
-            query.push(filtering.pageSize !== undefined ? `pageSize=${filtering.pageSize}` : '');
+            if (filtering.pageNumber !== undefined) {
+                query.push(`pageNumber=${filtering.pageNumber}`); 
+            }
+            if (filtering.pageSize !== undefined) {
+                query.push(`pageSize=${filtering.pageSize}`);
+            }
         }
         
-        const res = await this.http.get<Page<null>>(`/oem/plans${query.length ? `?${query.join('')}` : ''}`);
+        const queryString = query.length ? `?${query.join('&')}` : '';
+        const res = await this.http.get<Page<null>>(`/oem/operation-plans${queryString}`);
         return res.data;
     }
 }
