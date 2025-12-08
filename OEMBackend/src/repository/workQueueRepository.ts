@@ -51,10 +51,11 @@ export class WorkQueueRepository {
         return ScheduleQueueMapper.fromSchema(nextEntry);
     }
 
-    async finishRequest(id: string, status: string): Promise<void> {
+    async finishRequest(id: string, status: string, resul: any = null): Promise<void> {
 
         const update: any = {
             status: status,
+            result: resul,
         };
 
         await ScheduleQueue.findByIdAndUpdate(

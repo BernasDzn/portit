@@ -8,6 +8,7 @@
   "local": {
     "jwtIssuer": "http://localhost:5195",
     "jwtAudience": "http://localhost:5173",
+    "jwtSecret": "Jz3QGC+jW0U99CHRq4rGru1PyLZYDFE3sr36hjKdxzkTIKjNFpA9W0u6bhvCXZpNOvkFFc1yb6Y6dMAcIP5OPQ==",
     "schedulingServer": "http://localhost:2228",
     "backendServer": "http://localhost:5195"
   },

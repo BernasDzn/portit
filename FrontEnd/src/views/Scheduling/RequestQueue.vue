@@ -19,6 +19,7 @@ const onlyMine = ref(false);
 
 onMounted(async () => {
     queue.value = await scheduleService.getQueueState();
+    console.log("Queue data loaded:", queue.value);
 });
 
 const columns = [
@@ -28,6 +29,7 @@ const columns = [
     "issuer",
     "requestedAt",
     "status",
+    "operations"
 ];
 
 const statusVariants: Record<string, string> = {
@@ -46,11 +48,23 @@ const rows = computed(() =>
             day: item.data?.day,
             algorithm: item.data?.alg,
             priority: item.priority,
+            result: item.result,
             requestedAt: new Date(item.requestedAt).toLocaleString(),
             status: item.status,
             issuer: item.issuer,
         }))
 );
+
+const acceptResult = (row: any) => {
+    // Implement accept logic here
+    console.log("Accepting result for row:", row);
+};
+
+const rejectResult = (row: any) => {
+    // Implement reject logic here
+    console.log("Rejecting result for row:", row);
+};
+
 </script>
 
 <template>
@@ -88,7 +102,75 @@ const rows = computed(() =>
                     {{ value }}
                 </sl-badge>
             </template>
+
+            <template #operations="{ row }">
+
+                <div class="operations">
+    
+                    <RouterLink
+                        :to="{
+                            name: 'ScheduleResults',
+                            query: { request: JSON.stringify({
+                                date: row.day,
+                                ...row.result
+                            }) }
+                        }"
+                        :class="'is-info ' + (row.result ? '' : 'is-disabled')"
+                    >
+                        <sl-icon name="eye" label="View Request"></sl-icon>
+                    </RouterLink>
+    
+                    
+                    <span 
+                        :class="(row.result ? '' : 'is-disabled')"
+                        @click="() => {
+                            acceptResult(row)
+                        }"
+                    >
+                        <sl-icon name="check" label="Accept Result" class="button is-small is-success" style="margin-left: 5px"></sl-icon>
+                    </span>
+    
+                    <span 
+                        :class="(row.result ? '' : 'is-disabled')"
+                        @click="() => {
+                            rejectResult(row)
+                        }"
+                    >
+                        <sl-icon name="x" label="Reject Result" class="button is-small is-danger" style="margin-left: 5px"></sl-icon>
+                    </span>
+                </div>
+                
+            </template>
         </DataTable>
         
     </div>
 </template>
+
+<style scoped>
+
+.is-info {
+    display: inline-flex;
+    text-decoration: none;
+    align-items: center;
+    color: black;
+}
+
+.is-disabled {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.operations {
+
+    width: 100%;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.operations sl-icon {
+    cursor: pointer;
+}
+
+</style>

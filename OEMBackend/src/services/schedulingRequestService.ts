@@ -47,8 +47,9 @@ export class SchedulingRequestService {
         
             // Save the schedule
             try {
-                const savedPlan = await new OperationPlanService().createPlans(scheduleData, nextItem.issuer);
-                console.log(`Operation Plans saved successfully for request ID ${nextItem.id}`);
+                // const savedPlan = await new OperationPlanService().createPlans(scheduleData, nextItem.issuer);
+                // console.log(`Operation Plans saved successfully for request ID ${nextItem.id}`);
+
             } catch (error) {
                 console.error(`Failed to save schedule:`, error);
                 await workQueueRepository.finishRequest(nextItem.id, 'failed');
@@ -56,7 +57,7 @@ export class SchedulingRequestService {
             }
             
             // Mark request as complete
-            await workQueueRepository.finishRequest(nextItem.id, 'completed');
+            await workQueueRepository.finishRequest(nextItem.id, 'completed', scheduleData);
             return await this.getToWork();
             
         } catch (error) {

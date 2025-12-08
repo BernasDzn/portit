@@ -13,6 +13,7 @@ export class ScheduleQueueMapper {
             }),
             priority: doc.priority ?? 0,
             requestedAt: new Date(doc.requestedAt),
+            result: doc.result ?? null,
             status: doc.status,
             issuer: doc.issuer,
             estimatedStartTime: doc.estimatedStartTime

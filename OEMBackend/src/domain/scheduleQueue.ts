@@ -5,6 +5,7 @@ export class ScheduleQueueItem {
     public id: string;
     public data: WorkQueueItem;
     public priority: number;
+    public result?: any;
     public requestedAt: Date;
     public status: string;
     public issuer: string;
@@ -17,6 +18,7 @@ export class ScheduleQueueItem {
             data: WorkQueueItem; 
             priority: number; 
             requestedAt: Date; 
+            result?: any;
             status: string; 
             issuer: string; 
             estimatedStartTime?: Date | null; 
@@ -31,5 +33,6 @@ export class ScheduleQueueItem {
         this.issuer = params.issuer;
         this.estimatedStartTime = params.estimatedStartTime || null;
         this.estimatedEndTime = params.estimatedEndTime || null;
+        this.result = params.result;
     }
 }
