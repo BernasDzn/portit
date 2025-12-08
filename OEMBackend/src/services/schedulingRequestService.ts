@@ -31,11 +31,11 @@ export class SchedulingRequestService {
         }
 
         if (item.status !== 'completed') {
-            throw new Error(`Scheduling request ID ${id} is not yet completed. Current status: ${item.status}`);
+            throw new Error(`Scheduling is not completed. Current status: ${item.status}`);
         }
 
         if (item.issuer !== issuer) {
-            throw new Error(`Scheduling request ID ${id} was not issued by you`);
+            throw new Error(`Scheduling request was not issued by you`);
         }
 
         const scheduleData = item.result;

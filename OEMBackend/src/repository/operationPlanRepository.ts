@@ -39,24 +39,25 @@ export class OperationPlanRepository {
 		const allPlans = await OperationPlanModel.find();
 		const plansByDate = new Map<string, OperationPlanDto[]>();
 
-	for (const doc of allPlans) {
-		const plan = OperationPlanMapper.fromSchema(doc);
-		const planDto = plan.toDto();
-		
-		// Extract date from the first operation's start time
-		if (planDto.operationSchedule && planDto.operationSchedule.length > 0) {
-			const firstOperation = planDto.operationSchedule[0];
-			if (firstOperation && firstOperation.startTime) {
-				const startTime = new Date(firstOperation.startTime);
-				const dateKey = startTime.toISOString().split('T')[0] as string;
-				
-				if (!plansByDate.has(dateKey)) {
-					plansByDate.set(dateKey, []);
-				}
-				plansByDate.get(dateKey)!.push(planDto);
-			}
-		}
-	}		// Convert map to array and sort by date
+        for (const doc of allPlans) {
+            const plan = OperationPlanMapper.fromSchema(doc);
+            const planDto = plan.toDto();
+            
+            // Extract date from the first operation's start time
+            if (planDto.operationSchedule && planDto.operationSchedule.length > 0) {
+                const firstOperation = planDto.operationSchedule[0];
+                if (firstOperation && firstOperation.startTime) {
+                    const startTime = new Date(firstOperation.startTime);
+                    const dateKey = startTime.toISOString().split('T')[0] as string;
+                    
+                    if (!plansByDate.has(dateKey)) {
+                        plansByDate.set(dateKey, []);
+                    }
+                    plansByDate.get(dateKey)!.push(planDto);
+                }
+            }
+        }		
+        // Convert map to array and sort by date
 		return Array.from(plansByDate.entries())
 			.map(([date, plans]) => ({ date, plans }))
 			.sort((a, b) => a.date.localeCompare(b.date));

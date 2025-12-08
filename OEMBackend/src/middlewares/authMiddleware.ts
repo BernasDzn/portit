@@ -33,8 +33,6 @@ export const authMiddleware = (
     }
 
     try {
-        console.log('Verifying token:', token);
-        console.log('Using secret:', config.jwt.jwtSecret);
         const decoded = verify(
             token, config.jwt.jwtSecret, {
                 // issuer: config.jwt.jwtIssuer,

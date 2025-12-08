@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { inject, computed, ref, onMounted } from 'vue';
 import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
@@ -7,10 +7,14 @@ import type { ISchedulingService } from '@/service/IService/ISchedulingService';
 import { useI18n } from 'vue-i18n';
 import DataTable from '@/components/crud/DataTable.vue';
 import { useSession } from '@/composables/session';
+import { useAlerts } from '@/composables/alerts';
+import type LoadingVue from '@/components/Loading.vue';
 
 const scheduleService = container.get<ISchedulingService>(TYPES.schedulingService);
-const route = useRoute();
+const route = useRouter();
 const { t } = useI18n();
+
+const notifications = useAlerts();
 
 const email = useSession().authenticatedUser.email;
 const queue = ref<any[]>([]);
@@ -18,8 +22,10 @@ const queue = ref<any[]>([]);
 const onlyMine = ref(false);
 
 onMounted(async () => {
+
+    loading.value = true;
     queue.value = await scheduleService.getQueueState();
-    console.log("Queue data loaded:", queue.value);
+    loading.value = false;
 });
 
 const columns = [
@@ -29,15 +35,17 @@ const columns = [
     "issuer",
     "requestedAt",
     "status",
-    "operations"
+    "operations",
 ];
 
 const statusVariants: Record<string, string> = {
     "pending": "primary",
     "in_progress": "warning",
-    "completed": "success",
+    "completed": "primary",
     "failed": "danger",
     "unavailable": "danger",
+    "rejected": "danger",
+    "accepted": "success",
 };
 
 // flatten nested objects for DataTable
@@ -45,6 +53,7 @@ const rows = computed(() =>
     queue.value
         .filter(item => (onlyMine.value ? item.issuer === email : true))
         .map(item => ({
+            id: item.id,
             day: item.data?.day,
             algorithm: item.data?.alg,
             priority: item.priority,
@@ -55,15 +64,48 @@ const rows = computed(() =>
         }))
 );
 
-const acceptResult = (row: any) => {
-    // Implement accept logic here
-    console.log("Accepting result for row:", row);
+const acceptResult = async (row: any) => {
+    const id = row.id;
+    try {
+
+        await scheduleService.acceptSchedulingRequest(id);
+        notifications.enqueueNotification(
+            "Scheduling result accepted successfully.",
+            notifications.notificationTypes.SUCCESS
+        );
+        
+        route.go(0); 
+
+    } catch (error) {
+        notifications.enqueueNotification(
+            "Failed to accept the scheduling result. " + error.response?.data?.message || (error as Error).message,
+            notifications.notificationTypes.DANGER
+        );
+    }
 };
 
-const rejectResult = (row: any) => {
-    // Implement reject logic here
-    console.log("Rejecting result for row:", row);
+const rejectResult = async (row: any) => {
+    const id = row.id;
+
+    try {
+
+        await scheduleService.rejectSchedulingRequest(id);
+        notifications.enqueueNotification(
+            "Scheduling request rejected successfully.",
+            notifications.notificationTypes.SUCCESS
+        );
+        route.go(0); 
+
+    } catch (error) {
+        console.log(error.response.data.message);
+        notifications.enqueueNotification(
+            "Failed to reject the scheduling request. " + error.response.data.message,
+            notifications.notificationTypes.DANGER
+        );
+    }
 };
+
+const loading = ref(false);
 
 </script>
 
@@ -83,13 +125,24 @@ const rejectResult = (row: any) => {
         <h1 class="title">{{ t("scheduling.queue.title") }}</h1>
         <p class="subtitle">{{ t("scheduling.queue.subtitle") }}</p>
 
+        <sl-button style="margin-right: 20px;" variant="default" size="medium" circle @click="async () => {
+            loading = true;
+            queue = await scheduleService.getQueueState();
+            loading = false;
+        }">
+            <sl-icon name="arrow-counterclockwise"></sl-icon>
+        </sl-button>
+
         <label style="margin-right: 10px">{{ t("scheduling.queue.onlyMine") }}</label>
         <sl-switch :checked="onlyMine" @sl-change="() => {
             onlyMine = !onlyMine
         }"></sl-switch>
+
         <br><br>
 
+        <Loading v-if="loading" />
         <DataTable
+            v-else
             :columns="columns"
             :rows="rows"
             keyField="_id"
