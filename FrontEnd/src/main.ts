@@ -20,8 +20,7 @@ import { container } from './inversify.config';
 import type { IAuthService } from './service/IService/IAuthService';
 import TYPES from './inversify/types';
 
-import XGantt from "@xpyjs/gantt";
-import "@xpyjs/gantt/dist/style.css"
+import ganttastic from '@infectoone/vue-ganttastic';
 
 // Handle authentication on app load
 const checkForAuthorization = async () => {
@@ -63,7 +62,7 @@ const startApp = () => {
     
     app.use(router)
     app.use(i18n)  
-    app.use(XGantt);
+    app.use(ganttastic);
     app.mount('#app');
 }
 
