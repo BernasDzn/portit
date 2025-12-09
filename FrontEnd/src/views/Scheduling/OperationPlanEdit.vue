@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router';
 import { useAlerts } from '@/composables/alerts';
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
 import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
 import { useI18n } from 'vue-i18n';
@@ -10,33 +10,64 @@ import type { IQualificationService } from '@/service/IService/IQualificationSer
 import TYPES from '@/inversify/types';
 import type { QualificationDto } from '@/model/dto/QualificationDto';
 import { Qualification } from '@/model/Qualifications';
+import type { IOperationPlanService } from '@/service/IService/IOperationPlanService';
+import type { OperationPlanDto } from '@/model/dto/OperationPlanDto';
+import XGantt from "@xpyjs/gantt";
 
 const route = useRoute();
-const qualificationId = String(route.params.id || '');
+const planId = String(route.params.id || '');
 
 const notifications = useAlerts();
 
-const qualificationService = container.get<IQualificationService>(TYPES.qualificationService);
+const planService = container.get<IOperationPlanService>(TYPES.operationPlanService);
 
-const qualification = ref<QualificationDto>({
-    idCode: qualificationId,
-    qualificationName: ''
+const plan = ref<OperationPlanDto>({
+    id: '',
+    relatedVVN: '',
+    dock: '',
+	operationSchedule: [],
+	metadata: {
+		createdBy: '',
+		createdAt: '',
+		algorithmUsed: ''
+    }
 });
 
-const updateQualification = async (obj: QualificationDto) => {
-    if (!qualificationId) {
-        notifications.enqueueNotification(
-            'Cannot update qualifications at this time.',
-            notifications.notificationTypes.DANGER
-        );
-        return;
-    }
-
-    qualificationService.updateQualification(new Qualification(obj));
+const updatePlan = async () => {
 };
 
-const getById = async (id: string) => 
-    qualificationService.getQualificationById(id);
+const dataList = [
+    {
+        index: 1,
+        startDate: "2020-06-05",
+        endDate: "2020-08-20",
+        ttt: {
+            a: "aaa",
+            b: "bbb"
+        },
+        name: "mydata1",
+        children: [] // children is required. If no child, empty array is ok.
+    },
+    {
+        index: 2,
+        startDate: "2020-07-07",
+        endDate: "2020-09-11",
+        ttt: {},
+        name: "mydata2",
+        children: [
+            {
+                index: 3,
+                startDate: "2020-07-10",
+                endDate: "2020-08-15",
+                ttt: {
+                    a: "aaa"
+                },
+                name: "child1",
+                children: [] // children is required. If no child, empty array is ok.
+            }
+        ]
+    }
+];
 
 const { t } = useI18n();
 
@@ -45,23 +76,17 @@ const { t } = useI18n();
 <template>
     <div>
         <sl-breadcrumb>
-            <sl-breadcrumb-item><RouterLink to="/qualifications/dashboard" class="breadcrumb-link">{{ t('qualification.tabs.dashboard') }}</RouterLink></sl-breadcrumb-item>
-            <sl-breadcrumb-item><RouterLink to="/qualifications/search" class="breadcrumb-link">{{ t('qualification.tabs.search') }}</RouterLink></sl-breadcrumb-item>
-            <sl-breadcrumb-item>{{ t('qualification.tabs.edit') }}</sl-breadcrumb-item>
+            <sl-breadcrumb-item><RouterLink to="/scheduling-dashboard" class="breadcrumb-link">{{ t('scheduling.plans.tabs.dashboard') }}</RouterLink></sl-breadcrumb-item>
+            <sl-breadcrumb-item><RouterLink to="/scheduling/plans-search" class="breadcrumb-link">{{ t('scheduling.plans.tabs.search') }}</RouterLink></sl-breadcrumb-item>
+            <sl-breadcrumb-item>{{ t('scheduling.plans.tabs.edit') }}</sl-breadcrumb-item>
         </sl-breadcrumb>
         
-        <h1 class="title">{{ t('qualification.tabs.edit') }}</h1>
-        <p class="subtitle">{{ t('qualification.subtitle.edit') }}</p>
-
-        <EntityForm
-            :editing-id="qualificationId"
-            :object="qualification" 
-            :submit-function="updateQualification"
-            :fetching-function="getById"
-        >
-            <FormField input-id="qual-code" :enabled="false" :required="true" class="field" :name="t('qualification.fields.idCode.title') + '*'" v-model="qualification.idCode" :placeholderText="t('qualification.fields.idCode.placeholder')" />
-            <FormField input-id="qual-name" :required="true" class="field" :name="t('qualification.fields.qualificationName.title') + '*'" v-model="qualification.qualificationName" :placeholderText="t('qualification.fields.qualificationName.placeholder')"/>
-        </EntityForm>
+        <h1 class="title">{{ t('scheduling.plans.tabs.edit') }}</h1>
+        <p class="subtitle">{{ t('scheduling.plans.subtitle.edit') }}</p>
+        
+        <div style="height: 500px; border: 1px solid red;">
+            <XGantt data-id="index" :data="dataList" />
+        </div>          
 
     </div>
 </template>

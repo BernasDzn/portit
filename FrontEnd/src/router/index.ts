@@ -411,6 +411,11 @@ const router = createRouter({
             meta: {
                 icon: "search"
             }
+        },
+        {
+            path: '/scheduling/plans-edit/:id',
+            name: 'Edit Operation Plan',
+            component: () => import('@/views/Scheduling/OperationPlanEdit.vue'),
         }
       ]
     },

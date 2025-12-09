@@ -20,6 +20,9 @@ import { container } from './inversify.config';
 import type { IAuthService } from './service/IService/IAuthService';
 import TYPES from './inversify/types';
 
+import XGantt from "@xpyjs/gantt";
+import "@xpyjs/gantt/dist/style.css"
+
 // Handle authentication on app load
 const checkForAuthorization = async () => {
 
@@ -46,10 +49,6 @@ const checkForAuthorization = async () => {
         session.authenticatedUser = response;
 
     } catch (error) {
-
-        // we have to call this again grrr
-        startApp();
-
         console.error('Error during authentication check:', error);
         router.push('/unauthorized');
     } finally {
@@ -63,7 +62,8 @@ const startApp = () => {
     const app = createApp(App);
     
     app.use(router)
-    app.use(i18n)    
+    app.use(i18n)  
+    app.use(XGantt);
     app.mount('#app');
 }
 
