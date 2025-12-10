@@ -3,6 +3,7 @@ import { computed } from 'vue';
 import { RouterLink } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import type { OperationPlanDto } from '@/model/dto/OperationPlanDto';
+import { useTaskCategories } from '@/composables/taskcats';
 
 const { t } = useI18n();
 
@@ -16,6 +17,8 @@ const formattedCreatedDate = computed(() => {
     const date = new Date(props.operationPlan.metadata.createdAt);
     return date.toISOString().split('T')[0];
 });
+
+const taskCategories = useTaskCategories();
 
 const operationTimes = computed(() => {
     if (props.operationPlan.operationSchedule.length === 0) return { start: '', end: '' };
@@ -36,11 +39,6 @@ const cranes = computed(() => {
     });
     return Array.from(craneSet);
 });
-
-const categoryColorMap = {
-    'LOAD': 'success',
-    'UNLOAD': 'warning',
-};
 
 </script>
 
@@ -79,7 +77,7 @@ const categoryColorMap = {
                     <p class="metrics-title">{{ t('operationPlan.schedule') }}</p>
                     <div class="operations-list">
                         <div v-for="(operation, idx) in props.operationPlan.operationSchedule" :key="idx" class="operation-item">
-                            <sl-badge :variant="categoryColorMap[operation.type.category.value]">
+                            <sl-badge :variant="taskCategories.colorMapCategory(operation.type)">
                                 {{ operation.type.description }}
                             </sl-badge>
                             <span class="operation-time">

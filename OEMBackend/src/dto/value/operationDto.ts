@@ -6,4 +6,5 @@ export interface OperationDto {
 	startTime: string;
 	endTime: string;
 	resources: ResourceDto[];
+    payload: any;
 }

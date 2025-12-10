@@ -41,8 +41,8 @@ const getGanttItems = (plan: OperationPlanDto): GanttItem[] => {
         id: `${op.type}-${index}`,
         startTime: op.startTime,
         endTime: op.endTime,
-        name: `${op.type} Operation`,
-        group: op.type === 'Load' ? 'Loading Operations' : 'Unloading Operations'
+        name: `${op.type.category.value} Operation`,
+        group: op.type.category.value === 'Load' ? 'Loading Operations' : 'Unloading Operations'
     }));
 };
 

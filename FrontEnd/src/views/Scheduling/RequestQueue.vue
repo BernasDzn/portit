@@ -64,6 +64,12 @@ const rows = computed(() =>
         }))
 );
 
+const reload = async () => {
+    loading.value = true;
+    queue.value = await scheduleService.getQueueState();
+    loading.value = false;
+};
+
 const acceptResult = async (row: any) => {
     const id = row.id;
     try {
@@ -74,7 +80,7 @@ const acceptResult = async (row: any) => {
             notifications.notificationTypes.SUCCESS
         );
         
-        route.go(0); 
+        reload();
 
     } catch (error) {
         notifications.enqueueNotification(
@@ -94,7 +100,8 @@ const rejectResult = async (row: any) => {
             "Scheduling request rejected successfully.",
             notifications.notificationTypes.SUCCESS
         );
-        route.go(0); 
+
+        reload();
 
     } catch (error) {
         console.log(error.response.data.message);
@@ -125,11 +132,7 @@ const loading = ref(false);
         <h1 class="title">{{ t("scheduling.queue.title") }}</h1>
         <p class="subtitle">{{ t("scheduling.queue.subtitle") }}</p>
 
-        <sl-button style="margin-right: 20px;" variant="default" size="medium" circle @click="async () => {
-            loading = true;
-            queue = await scheduleService.getQueueState();
-            loading = false;
-        }">
+        <sl-button style="margin-right: 20px;" variant="default" size="medium" circle @click="reload">
             <sl-icon name="arrow-counterclockwise"></sl-icon>
         </sl-button>
 

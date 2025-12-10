@@ -41,8 +41,9 @@ export class OperationPlanService {
         const unloadCategory = await taskCategoryRepository.getCategoryByCode('UNLOAD');
         const loadCategory = await taskCategoryRepository.getCategoryByCode('LOAD');
 
-        const unloadCategoryId = new mongoose.Types.ObjectId(unloadCategory?.id);
-        const loadCategoryId = new mongoose.Types.ObjectId(loadCategory?.id);
+        if (!unloadCategory || !loadCategory) {
+            throw new Error('Required task categories UNLOAD or LOAD not found');
+        }
 		
 		for (const dockData of scheduleDataDto.data) {
 			const dockCode = dockData.dock;
@@ -64,7 +65,11 @@ export class OperationPlanService {
 					operationType: unloadCategory!,
 					startTime: unloadStartTime,
 					endTime: unloadEndTime,
-					resources: craneResources
+					resources: craneResources,
+                    payload: {
+                        containerId: null, // We still don't know, set it by hand if you really need it
+                        storageLocation: null // Depends, set it by hand if you really need it
+                    }
 				});
 				operationSchedule.insertAtEnd(unloadOperation);
 				
@@ -75,7 +80,11 @@ export class OperationPlanService {
 					operationType: loadCategory!,
 					startTime: loadStartTime,
 					endTime: loadEndTime,
-					resources: craneResources
+					resources: craneResources,
+                    payload: {
+                        containerId: null, // We still don't know, set it by hand if you really need it
+                        storageLocation: null // Depends, set it by hand if you really need it
+                    }
 				});
 				operationSchedule.insertAtEnd(loadOperation);
 				
@@ -115,7 +124,8 @@ export class OperationPlanService {
 						name: resDto.name,
 						type: ResourceType[resDto.type as keyof typeof ResourceType]
 					});
-				})
+				}),
+                payload: opDto.payload
 			});
 			operationSchedule.insertAtEnd(operation);
 		}

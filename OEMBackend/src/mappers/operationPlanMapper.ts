@@ -19,7 +19,8 @@ export class OperationPlanMapper {
 				resources: op.resources.map(res => ({
 					name: res.name,
 					type: ResourceType[res.type]
-				}))
+				})),
+                payload: op.payload
 			})),
 			metadata: {
 				createdBy: operationPlan.metadata.createdBy,
@@ -59,7 +60,8 @@ export class OperationPlanMapper {
                     operationType: TaskCategoryMapper.fromSchema(operationTypeDoc),
                     startTime: op.startTime,
                     endTime: op.endTime,
-                    resources
+                    resources,
+                    payload: op.payload
                 });
     
                 operationSchedule.insertAtEnd(operation);

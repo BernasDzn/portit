@@ -15,6 +15,8 @@ const OperationPlanMetadataSchema = new mongoose.Schema({
     }
 });
 
+// A reousrce used is not restricted to physical resources, we should do an enum perhaps later
+// But it could also be a staff that is allocated to perform the operation
 const ResourceSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -44,6 +46,13 @@ const OperationSchema = new mongoose.Schema({
         type: [ResourceSchema],
         required: true,
         default: []
+    },
+    // The payload of an operation can vary depending on the operation type
+    // It carries additional data needed to execute the operation
+    // For example a load operation can have a container ID as payload
+    payload: {
+        type: mongoose.Schema.Types.Mixed,
+        required: true
     }
 });
 
