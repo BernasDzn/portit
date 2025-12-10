@@ -98,7 +98,7 @@ onMounted(async () => {
             <sl-tab-panel name="general">
                 <ListingBox listing-style="listing-triples" :fetch-function="fetchOperationPlans" v-slot="{elements}">
                     <li v-for="(plan, index) in operationPlans.items" :key="index" class="link">
-                        <OperationPlanPrinter :operation-plan="plan" :link="`/scheduling/plans-edit/${plan.id}`" />
+                        <OperationPlanPrinter :operation-plan="plan" :link="`/scheduling/plans-view/${plan.id}`" />
                     </li>
                 </ListingBox>
             </sl-tab-panel>
@@ -112,7 +112,7 @@ onMounted(async () => {
                             <li v-for="(plan, index) in plansOnDate" :key="index">
                                 <OperationPlanPrinter class="listing-box" 
                                     :operation-plan="plan"
-                                    :link="`/scheduling/plans-edit/${plan.id}`"
+                                    :link="`/scheduling/plans-view/${plan.id}`"
                                 />
                             </li>
                         </ul>

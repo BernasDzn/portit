@@ -413,6 +413,11 @@ const router = createRouter({
             }
         },
         {
+            path: '/scheduling/plans-view/:id',
+            name: 'View Operation Plan',
+            component: () => import('@/views/Scheduling/OperationPlanView.vue'),
+        },
+        {
             path: '/scheduling/plans-edit/:id',
             name: 'Edit Operation Plan',
             component: () => import('@/views/Scheduling/OperationPlanEdit.vue'),
