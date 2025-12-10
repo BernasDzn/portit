@@ -145,4 +145,39 @@ export class OperationPlanController {
 		}
 	}
 
+	/**
+	 * @swagger
+	 * /plans/notifications-without-plan:
+	 *   get:
+	 *     tags: [Operation Plans]
+	 *     security:
+	 *       - bearerAuth: []
+	 *     responses:
+	 *       200:
+	 *         description: List of VVN IDs without associated operation plans
+	 *         content:
+	 *           application/json:
+	 *             schema:
+	 *               type: array
+	 *               items:
+	 *                 type: string
+	 *       204:
+	 *         description: No content
+	 *       401:
+	 *         description: Unauthorized
+	 */
+	async getNotificationWithoutPlan (req: Request, res: Response, next: NextFunction) {
+		try {
+			let token = req.user?.token;
+			const items = await this.operationPlanService.getNotificationsWithoutPlan(token!);
+			if(items === null){
+				res.status(204).send();
+				return;
+			}
+			res.json(items);
+		} catch (error) {
+			next(error);
+		}
+	}
+
 }

@@ -3,6 +3,7 @@ import { OperationPlanDto } from "../dto/operationPlanDto";
 import { OperationPlanMapper } from "../mappers/operationPlanMapper";
 import { OperationPlanModel } from "../schemas/operationPlanSchema";
 import { Page, Pageable } from "../utils/page";
+import config from "../config/config";
 
 
 export class OperationPlanRepository {
@@ -64,6 +65,30 @@ export class OperationPlanRepository {
 		return Array.from(plansByDate.entries())
 			.map(([date, plans]) => ({ date, plans }))
 			.sort((a, b) => a.date.localeCompare(b.date));
+	}
+
+	async getNotificationsWithoutPlan(token: string): Promise<string[]> {
+		const url = `${config.backendServer}/VesselVisitNotification/getAllIds`;
+		const res = await fetch(url, {
+			credentials: "include",
+			headers: {
+				"Authorization": `Bearer ${token}`
+			}
+		});
+		
+		if (!res.ok) {
+			throw new Error(`Failed to fetch all VVNs: ${res.statusText}`);
+		}
+
+		const data = await res.json();
+		const allVvnIds: string[] = data;
+
+		const allPlans = await OperationPlanModel.find();
+		const plannedVvnIds = allPlans.map(doc => doc.relatedVVN);
+
+		const unplannedVvnIds = allVvnIds.filter(id => !plannedVvnIds.includes(id));
+
+		return unplannedVvnIds;
 	}
 
 }
