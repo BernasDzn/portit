@@ -1,12 +1,15 @@
+import mongoose from "mongoose";
 import { OperationPlan } from "../domain/operationPlan";
-import { Operation, OperationType } from "../domain/value/operation";
+import { Operation } from "../domain/value/operation";
 import { OperationPlanMetadata } from "../domain/value/operationPlanMetadata";
 import { Resource, ResourceType } from "../domain/value/resource";
 import { OperationPlanDto } from "../dto/operationPlanDto";
 import { ScheduleDataMapper } from "../mappers/scheduleDataMapper";
 import { OperationPlanRepository } from "../repository/operationPlanRepository";
+import { taskCategoryRepository } from "../repository/taskCategoryRepository";
 import { LinkedList } from "../utils/linkedList";
 import { Page, Pageable } from "../utils/page";
+import { TaskCategory } from "../domain/taskCategory";
 
 
 export class OperationPlanService {
@@ -34,6 +37,12 @@ export class OperationPlanService {
 		const scheduleDataDto = ScheduleDataMapper.toDto(plansData);
 		
 		const baseDate = new Date(scheduleDataDto.date);
+
+        const unloadCategory = await taskCategoryRepository.getCategoryByCode('UNLOAD');
+        const loadCategory = await taskCategoryRepository.getCategoryByCode('LOAD');
+
+        const unloadCategoryId = new mongoose.Types.ObjectId(unloadCategory?.id);
+        const loadCategoryId = new mongoose.Types.ObjectId(loadCategory?.id);
 		
 		for (const dockData of scheduleDataDto.data) {
 			const dockCode = dockData.dock;
@@ -52,7 +61,7 @@ export class OperationPlanService {
 				const unloadEndTime = new Date(baseDate.getTime() + vesselSchedule.unloading_exit_time * 60 * 60 * 1000);
 				
 				const unloadOperation = new Operation({
-					operationType: OperationType.Unload,
+					operationType: unloadCategory!,
 					startTime: unloadStartTime,
 					endTime: unloadEndTime,
 					resources: craneResources
@@ -63,7 +72,7 @@ export class OperationPlanService {
 				const loadEndTime = new Date(baseDate.getTime() + vesselSchedule.loading_exit_time * 60 * 60 * 1000);
 				
 				const loadOperation = new Operation({
-					operationType: OperationType.Load,
+					operationType: loadCategory!,
 					startTime: loadStartTime,
 					endTime: loadEndTime,
 					resources: craneResources
@@ -98,7 +107,7 @@ export class OperationPlanService {
 		let operationSchedule = new LinkedList<Operation>();
 		for (const opDto of operationPlanDto.operationSchedule) {
 			const operation = new Operation({
-				operationType: OperationType[opDto.type as keyof typeof OperationType],
+				operationType: (await taskCategoryRepository.getCategoryByCode(opDto.type.category))!,
 				startTime: new Date(opDto.startTime),
 				endTime: new Date(opDto.endTime),
 				resources: opDto.resources.map(resDto => {

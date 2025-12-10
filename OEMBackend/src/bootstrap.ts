@@ -1,9 +1,33 @@
 import mongoose from 'mongoose';
-//import { OperationPlans } from './schemas/operationPlansSchema';
+import { TaskCategoryModel } from './schemas/taskCategories';
+import { TaskCategory } from './domain/taskCategory';
 
 export const bootstrap = async () => {
     await bootstrapOperationPlans();
-}
+    await bootstrapTaskCategories();
+};
+
+const bootstrapTaskCategories = async () => {
+    try {
+        const categories = [
+            { category: 'BERTH', description: 'Berthing' },
+            { category: 'LOAD', description: 'Loading' },
+            { category: 'UNLOAD', description: 'Unloading' },
+        ];
+
+        categories.map((c) => new TaskCategory({
+            id: undefined,
+            category: c.category,
+            description: c.description
+        }));
+
+        await TaskCategoryModel.insertMany(categories);
+ 
+        console.log('Bootstrapped task categories successfully.');
+    } catch (error) {
+        console.error("Error bootstrapping task categories:", error);
+    }
+};
 
 const bootstrapOperationPlans = async () => {
 //    try {

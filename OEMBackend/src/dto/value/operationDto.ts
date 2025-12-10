@@ -1,7 +1,8 @@
+import { TaskCategoryDto } from "../taskCategoryDto";
 import { ResourceDto } from "./resourceDto";
 
 export interface OperationDto {
-	type: string;
+	type: TaskCategoryDto;
 	startTime: string;
 	endTime: string;
 	resources: ResourceDto[];

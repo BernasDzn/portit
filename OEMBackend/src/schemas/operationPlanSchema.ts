@@ -28,8 +28,8 @@ const ResourceSchema = new mongoose.Schema({
 
 const OperationSchema = new mongoose.Schema({
     operationType: {
-        type: String,
-        enum: ['Unload', 'Load'],
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "TaskCategory",
         required: true
     },
     startTime: {

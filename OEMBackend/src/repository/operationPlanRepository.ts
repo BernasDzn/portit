@@ -11,7 +11,7 @@ export class OperationPlanRepository {
 		const newOperationPlan = OperationPlanMapper.toSchema(operationPlan);
 		const createdDoc = await OperationPlanModel.create(newOperationPlan);
 
-		return OperationPlanMapper.fromSchema(createdDoc).toDto();
+		return (await OperationPlanMapper.fromSchema(createdDoc)).toDto();
 	}
 
 	async getAll(pageable: Pageable): Promise<Page<OperationPlanDto>> {
@@ -25,14 +25,17 @@ export class OperationPlanRepository {
 			pageNumber,
 			pageSize,
 			pageCount: Math.ceil(await OperationPlanModel.countDocuments() / pageSize),
-			items: data.map(doc => OperationPlanMapper.fromSchema(doc).toDto())
+			items: await Promise.all(data.map(async (doc) => {
+                const plan = await OperationPlanMapper.fromSchema(doc);
+                return plan.toDto();
+            }))
 		};
 	}
 
 	async getById(id: string): Promise<OperationPlanDto | null> {
 		const plan = await OperationPlanModel.findById(id);
 		if (!plan) return null;
-		return OperationPlanMapper.fromSchema(plan).toDto();
+		return (await OperationPlanMapper.fromSchema(plan)).toDto();
 	}
 
 	async getByDateGrouped(): Promise<{ date: string; plans: OperationPlanDto[] }[]> {
@@ -41,7 +44,7 @@ export class OperationPlanRepository {
 
         for (const doc of allPlans) {
             const plan = OperationPlanMapper.fromSchema(doc);
-            const planDto = plan.toDto();
+            const planDto = (await plan).toDto();
             
             // Extract date from the first operation's start time
             if (planDto.operationSchedule && planDto.operationSchedule.length > 0) {

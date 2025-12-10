@@ -36,6 +36,12 @@ const cranes = computed(() => {
     });
     return Array.from(craneSet);
 });
+
+const categoryColorMap = {
+    'LOAD': 'success',
+    'UNLOAD': 'warning',
+};
+
 </script>
 
 <template>
@@ -73,8 +79,8 @@ const cranes = computed(() => {
                     <p class="metrics-title">{{ t('operationPlan.schedule') }}</p>
                     <div class="operations-list">
                         <div v-for="(operation, idx) in props.operationPlan.operationSchedule" :key="idx" class="operation-item">
-                            <sl-badge :variant="operation.type === 'Unload' ? 'warning' : 'success'">
-                                {{ t(`operationPlan.operationType.${operation.type}`) }}
+                            <sl-badge :variant="categoryColorMap[operation.type.category.value]">
+                                {{ operation.type.description }}
                             </sl-badge>
                             <span class="operation-time">
                                 {{ new Date(operation.startTime).toLocaleString() }} -> {{ new Date(operation.endTime).toLocaleString() }}

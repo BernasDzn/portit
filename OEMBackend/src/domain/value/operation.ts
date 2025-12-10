@@ -1,14 +1,15 @@
 import { OperationDto } from "../../dto/value/operationDto";
+import { TaskCategory } from "../taskCategory";
 import { Resource } from "./resource";
 
 export class Operation {
-	operationType: OperationType;
+	operationType: TaskCategory;
 	startTime: Date;
 	endTime: Date;
 	resources: Resource[];
 
 	constructor(params: {
-		operationType: OperationType;
+		operationType: TaskCategory;
 		startTime: Date;
 		endTime: Date;
 		resources: Resource[];
@@ -21,16 +22,11 @@ export class Operation {
 
 	toDto(): OperationDto {
 		return {
-			type: OperationType[this.operationType],
+			type: this.operationType.toDto(),
 			startTime: this.startTime.toISOString(),
 			endTime: this.endTime.toISOString(),
 			resources: this.resources.map(resource => resource.toDto()),
 		};
 	}
 
-}
-
-export enum OperationType{
-	Unload = "Unload",
-	Load = "Load"
 }

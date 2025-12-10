@@ -70,8 +70,8 @@ const formatDate = (dateString: string) => {
                 <div class="view-header">
                     <span class="material-icons icon" aria-hidden="true">calendar_month</span>
                     <div>
-                        <h2 class="title">{{ t('operationPlan.title') }} - {{ entity.element.id }}</h2>
-                        <p class="subtitle">{{ entity.element.relatedVVN }}</p>
+                        <h2 class="title">{{ t('operationPlan.title') }} - {{ entity.element.relatedVVN }}</h2>
+                        <p class="subtitle">{{ entity.element.id }}</p>
                     </div>
                 </div>
                 <div>
