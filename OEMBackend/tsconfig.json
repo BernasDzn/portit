@@ -3,13 +3,12 @@
   "compilerOptions": {
     "typeRoots": ["./node_modules/@types", "./src/types"],
     // File Layout
-    "rootDir": "./src",
     "outDir": "./dist",
 
     // Environment Settings
     "module": "commonjs",
     "target": "ES2020",
-    "types": [],
+    "types": ["jest", "node"],
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
@@ -32,6 +31,6 @@
     "moduleDetection": "force",
     "skipLibCheck": true,
   },
-  "include": ["src/**/*", "src/schemas/operationPlansSchema.ts"],
+  "include": ["src/**/*", "tests/**/*"],
   "exclude": ["node_modules"]
 }
