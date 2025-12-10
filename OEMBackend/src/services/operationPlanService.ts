@@ -10,6 +10,7 @@ import { taskCategoryRepository } from "../repository/taskCategoryRepository";
 import { LinkedList } from "../utils/linkedList";
 import { Page, Pageable } from "../utils/page";
 import { TaskCategory } from "../domain/taskCategory";
+import config from "../config/config";
 import { Payload } from "../domain/value/payload";
 
 
@@ -31,6 +32,10 @@ export class OperationPlanService {
 
 	async getByDateGrouped(): Promise<{ date: string; plans: OperationPlanDto[] }[]> {
 		return await this.operationPlanRepository.getByDateGrouped();
+	}
+
+	async getNotificationsWithoutPlan(token: string): Promise<string[]> {
+		return await this.operationPlanRepository.getNotificationsWithoutPlan(token);
 	}
 
 	async createPlans(plansData: any, createdBy: string): Promise<OperationPlanDto[]> {

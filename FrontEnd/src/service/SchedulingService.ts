@@ -165,7 +165,7 @@ export class SchedulingService implements ISchedulingService {
     }
 
     async getUnplannedVVNs(): Promise<string[]> {
-        const res = await this.http.get<string[]>(`/oem/plans/notifications-without-plan`);
+        const res = await this.http.get<string[]>(`/oem/operation-plans/notifications-without-plan`);
         return res.data;
     }
 }

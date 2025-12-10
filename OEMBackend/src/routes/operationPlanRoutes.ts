@@ -20,6 +20,12 @@ router.get(
 );
 
 router.get(
+	'/notifications-without-plan', 
+	[authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)], 
+	controller.getNotificationWithoutPlan.bind(controller)
+);
+
+router.get(
 	'/:id',
 	[authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)],
 	controller.getPlanById.bind(controller)
