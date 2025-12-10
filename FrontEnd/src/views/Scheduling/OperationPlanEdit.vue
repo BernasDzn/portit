@@ -1,20 +1,29 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router';
+import { useRoute, RouterLink } from 'vue-router';
 import { useAlerts } from '@/composables/alerts';
-import { ref } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
 import type { IOperationPlanService } from '@/service/IService/IOperationPlanService';
 import type { OperationPlanDto } from '@/model/dto/OperationPlanDto';
-import { GGanttChart, GGanttRow } from '@infectoone/vue-ganttastic';
-
-const route = useRoute();
-const planId = String(route.params.id || '');
+import GanttChart, { type GanttItem, type GanttRowConfig } from '@/components/GanttChart.vue';
+import EntityForm from '@/components/crud/EntityForm.vue';
+import EntityDropdown from '@/components/crud/EntityDropdown.vue';
+import type { IStaffService } from '@/service/IService/IStaffService';
+import type { IPhysicalResourceService } from '@/service/IService/IPhysicalResourceService';
+import type { Staff } from '@/model/Staff';
+import type { STSCrane } from '@/model/PhysicalResource';
 
 const notifications = useAlerts();
+const route = useRoute();
+const { t } = useI18n();
+
+const planId = String(route.params.id || '');
 
 const planService = container.get<IOperationPlanService>(TYPES.operationPlanService);
+const staffService = container.get<IStaffService>(TYPES.staffService);
+const physicalResourceService = container.get<IPhysicalResourceService>(TYPES.physicalResourceService);
 
 const plan = ref<OperationPlanDto>({
     id: '',
@@ -28,257 +37,181 @@ const plan = ref<OperationPlanDto>({
     }
 });
 
-const updatePlan = async () => {
-};
+const selectedStaff = ref<string[]>([]);
+const selectedSTSCranes = ref<string[]>([]);
+const allStaff = ref<Staff[]>([]);
+const allSTSCranes = ref<STSCrane[]>([]);
 
-const chartStart = ref('2025-12-01 00:00');
-const chartEnd = ref('2025-12-01 14:00');
+const ganttItems = computed<GanttItem[]>(() => {
+    return plan.value.operationSchedule.map((op, index) => ({
+        id: `${op.type}-${index}`,
+        startTime: op.startTime,
+        endTime: op.endTime,
+        name: op.type + ` Operation`,
+        group: op.type === 'Load' ? 'Loading Operations' : 'Unloading Operations'
+    }));
+});
 
-const rows = ref([
-    {
-        label: 'Loading',
-        bars: [
-            {   // L1
-                myStart: '2025-12-01 00:00',
-                myEnd:   '2025-12-01 01:00',
-                ganttBarConfig: {
-                    id: 'L1',
-                    label: 'Container L1',
-                    hasHandles: true,
-                    style: { background: '#3498db', borderRadius: '8px' }
-                }
-            },
-            {   // L2
-                myStart: '2025-12-01 01:00',
-                myEnd:   '2025-12-01 02:00',
-                ganttBarConfig: {
-                    id: 'L2',
-                    label: 'Container L2',
-                    hasHandles: true,
-                    style: { background: '#2980b9', borderRadius: '8px' }
-                }
-            },
-            {   // L3
-                myStart: '2025-12-01 02:00',
-                myEnd:   '2025-12-01 03:30',
-                ganttBarConfig: {
-                    id: 'L3',
-                    label: 'Container L3',
-                    hasHandles: true,
-                    style: { background: '#1f618d', borderRadius: '8px' }
-                }
-            },
-            {   // L4
-                myStart: '2025-12-01 03:30',
-                myEnd:   '2025-12-01 05:00',
-                ganttBarConfig: {
-                    id: 'L4',
-                    label: 'Container L4',
-                    hasHandles: true,
-                    style: { background: '#154360', borderRadius: '8px' }
-                }
-            },
-            {   // L5
-                myStart: '2025-12-01 05:00',
-                myEnd:   '2025-12-01 06:00',
-                ganttBarConfig: {
-                    id: 'L5',
-                    label: 'Container L5',
-                    hasHandles: true,
-                    style: { background: '#21618c', borderRadius: '8px' }
-                }
-            },
-            {   // L6
-                myStart: '2025-12-01 06:00',
-                myEnd:   '2025-12-01 07:30',
-                ganttBarConfig: {
-                    id: 'L6',
-                    label: 'Container L6',
-                    hasHandles: true,
-                    style: { background: '#5dade2', borderRadius: '8px' }
-                }
-            },
-            {   // L7
-                myStart: '2025-12-01 07:30',
-                myEnd:   '2025-12-01 09:00',
-                ganttBarConfig: {
-                    id: 'L7',
-                    label: 'Container L7',
-                    hasHandles: true,
-                    style: { background: '#85c1e9', borderRadius: '8px' }
-                }
-            },
-            {   // L8
-                myStart: '2025-12-01 09:00',
-                myEnd:   '2025-12-01 10:00',
-                ganttBarConfig: {
-                    id: 'L8',
-                    label: 'Container L8',
-                    hasHandles: true,
-                    style: { background: '#aed6f1', borderRadius: '8px' }
-                }
-            },
-            {   // L9
-                myStart: '2025-12-01 10:00',
-                myEnd:   '2025-12-01 11:30',
-                ganttBarConfig: {
-                    id: 'L9',
-                    label: 'Container L9',
-                    hasHandles: true,
-                    style: { background: '#d4e6f1', borderRadius: '8px' }
-                }
-            },
-            {   // L10
-                myStart: '2025-12-01 11:30',
-                myEnd:   '2025-12-01 13:00',
-                ganttBarConfig: {
-                    id: 'L10',
-                    label: 'Container L10',
-                    hasHandles: true,
-                    style: { background: '#ebf5fb', borderRadius: '8px' }
-                }
-            }
-        ]
-    },
-
-    {
-        label: 'Unloading',
-        bars: [
-            {   // U1
-                myStart: '2025-12-01 00:00',
-                myEnd:   '2025-12-01 01:30',
-                ganttBarConfig: {
-                    id: 'U1',
-                    label: 'Container U1',
-                    hasHandles: true,
-                    style: { background: '#e74c3c', borderRadius: '8px' }
-                }
-            },
-            {   // U2
-                myStart: '2025-12-01 01:30',
-                myEnd:   '2025-12-01 03:00',
-                ganttBarConfig: {
-                    id: 'U2',
-                    label: 'Container U2',
-                    hasHandles: true,
-                    style: { background: '#c0392b', borderRadius: '8px' }
-                }
-            },
-            {   // U3
-                myStart: '2025-12-01 03:00',
-                myEnd:   '2025-12-01 04:30',
-                ganttBarConfig: {
-                    id: 'U3',
-                    label: 'Container U3',
-                    hasHandles: true,
-                    style: { background: '#922b21', borderRadius: '8px' }
-                }
-            },
-            {   // U4
-                myStart: '2025-12-01 04:30',
-                myEnd:   '2025-12-01 06:00',
-                ganttBarConfig: {
-                    id: 'U4',
-                    label: 'Container U4',
-                    hasHandles: true,
-                    style: { background: '#641e16', borderRadius: '8px' }
-                }
-            },
-            {   // U5
-                myStart: '2025-12-01 06:00',
-                myEnd:   '2025-12-01 07:00',
-                ganttBarConfig: {
-                    id: 'U5',
-                    label: 'Container U5',
-                    hasHandles: true,
-                    style: { background: '#7b241c', borderRadius: '8px' }
-                }
-            },
-            {   // U6
-                myStart: '2025-12-01 07:00',
-                myEnd:   '2025-12-01 08:30',
-                ganttBarConfig: {
-                    id: 'U6',
-                    label: 'Container U6',
-                    hasHandles: true,
-                    style: { background: '#cd6155', borderRadius: '8px' }
-                }
-            },
-            {   // U7
-                myStart: '2025-12-01 08:30',
-                myEnd:   '2025-12-01 10:00',
-                ganttBarConfig: {
-                    id: 'U7',
-                    label: 'Container U7',
-                    hasHandles: true,
-                    style: { background: '#f1948a', borderRadius: '8px' }
-                }
-            },
-            {   // U8
-                myStart: '2025-12-01 10:00',
-                myEnd:   '2025-12-01 11:00',
-                ganttBarConfig: {
-                    id: 'U8',
-                    label: 'Container U8',
-                    hasHandles: true,
-                    style: { background: '#f5b7b1', borderRadius: '8px' }
-                }
-            },
-            {   // U9
-                myStart: '2025-12-01 11:00',
-                myEnd:   '2025-12-01 12:30',
-                ganttBarConfig: {
-                    id: 'U9',
-                    label: 'Container U9',
-                    hasHandles: true,
-                    style: { background: '#fadbd8', borderRadius: '8px' }
-                }
-            },
-            {   // U10
-                myStart: '2025-12-01 12:30',
-                myEnd:   '2025-12-01 14:00',
-                ganttBarConfig: {
-                    id: 'U10',
-                    label: 'Container U10',
-                    hasHandles: true,
-                    style: { background: '#f9ebea', borderRadius: '8px' }
-                }
-            }
-        ]
-    }
+const ganttRowConfigs = computed<GanttRowConfig[]>(() => [
+    { name: 'Unloading Operations', color: '#3498db' },
+    { name: 'Loading Operations', color: '#e74c3c' },
+    { name: 'Another row 1', color: '#2ecc71' },
+    { name: 'Another row test', color: '#95a5a6' }
 ]);
 
-const { t } = useI18n();
+const onItemUpdated = (updatedItem: GanttItem) => {
+    const [type, indexStr] = updatedItem.id.split('-');
+    const index = parseInt(indexStr);
+    
+    const opsOfType = plan.value.operationSchedule.filter(op => op.type === type);
+    const actualIndex = plan.value.operationSchedule.indexOf(opsOfType[index]);
+    
+    if (actualIndex !== -1) {
+        plan.value.operationSchedule[actualIndex].startTime = updatedItem.startTime;
+        plan.value.operationSchedule[actualIndex].endTime = updatedItem.endTime;
+    }
+
+    console.log('Updated operation schedule:', plan.value.operationSchedule);
+};
+
+onMounted(async () => {
+    try {
+        // Fetch plan
+        const fetchedPlan = await planService.getOperationPlanById(planId);
+        plan.value = fetchedPlan;
+
+        // Fetch all staff and STS cranes
+        const staffPage = await staffService.getStaffs();
+        allStaff.value = staffPage.items;
+
+        // Fetch STS cranes without filter first to see what we get
+        const resourcesPage = await physicalResourceService.getPhysicalResources();
+        console.log('All resources fetched:', resourcesPage);
+        
+        // Filter for STS Cranes (type 0) on the client side
+        allSTSCranes.value = resourcesPage.items.filter((r: any) => r.liftingCapacity !== undefined && r.status === 0);
+        console.log('Filtered STS Cranes:', allSTSCranes.value);
+
+        // Extract currently used resources from plan
+        const usedResources = new Set<string>();
+        plan.value.operationSchedule.forEach(op => {
+            op.resources.forEach(res => {
+                usedResources.add(res.name);
+            });
+        });
+
+        // Mark used resources as selected
+        selectedStaff.value = allStaff.value
+            .filter(s => usedResources.has(s.mechanographicNumber) || usedResources.has(s.name))
+            .map(s => s.mechanographicNumber);
+
+        selectedSTSCranes.value = allSTSCranes.value
+            .filter(c => usedResources.has(c.code) || usedResources.has(c.description))
+            .map(c => c.code);
+
+        console.log('Selected staff:', selectedStaff.value);
+        console.log('Selected STS cranes:', selectedSTSCranes.value);
+
+    } catch (error) {
+        console.error('Error loading resources:', error);
+        notifications.enqueueNotification('Failed to load operation plan', notifications.notificationTypes.DANGER);
+    }
+});
+
+const savePlan = async (obj: any) => {
+    return planService.updateOperationPlan(planId, {
+        ...obj,
+        operationSchedule: plan.value.operationSchedule
+    });
+};
 
 </script>
 
 <template>
     <div>
         <sl-breadcrumb>
-            <sl-breadcrumb-item><RouterLink to="/scheduling-dashboard" class="breadcrumb-link">{{ t('scheduling.plans.tabs.dashboard') }}</RouterLink></sl-breadcrumb-item>
-            <sl-breadcrumb-item><RouterLink to="/scheduling/plans-search" class="breadcrumb-link">{{ t('scheduling.plans.tabs.search') }}</RouterLink></sl-breadcrumb-item>
-            <sl-breadcrumb-item>{{ t('scheduling.plans.tabs.edit') }}</sl-breadcrumb-item>
+            <sl-breadcrumb-item><RouterLink to="/scheduling-dashboard" class="breadcrumb-link">{{ t('scheduling.tabs.dashboard') }}</RouterLink></sl-breadcrumb-item>
+            <sl-breadcrumb-item><RouterLink to="/scheduling/plans-search" class="breadcrumb-link">{{ t('scheduling.tabs.search') }}</RouterLink></sl-breadcrumb-item>
+            <sl-breadcrumb-item><RouterLink :to="`/scheduling/plans-view/${planId}`" class="breadcrumb-link">{{ planId }}</RouterLink></sl-breadcrumb-item>
+            <sl-breadcrumb-item>{{ t('operationPlan.tabs.edit') }}</sl-breadcrumb-item>
         </sl-breadcrumb>
         
-        <h1 class="title">{{ t('scheduling.plans.tabs.edit') }}</h1>
-        <p class="subtitle">{{ t('scheduling.plans.subtitle.edit') }}</p>
+        <h1 class="title">{{ t('operationPlan.tabs.edit') }}</h1>
+        <p class="subtitle">{{ t('operationPlan.subtitle.edit') }}</p>
         
-        <GGanttChart
-            :chart-start="chartStart"
-            :chart-end="chartEnd"
-            precision="hour"
-            bar-start="myStart"
-            bar-end="myEnd"
-            :row-height="50"
-            :grid="true"
-        >
-            <GGanttRow
-                v-for="row in rows"
-                :key="row.label"
-                :label="row.label"
-                :bars="row.bars"
-            />
-        </GGanttChart>
+        <EntityForm :object="plan" :submit-function="savePlan" :editing-id="planId">
+            <div class="form-fields">
+                <!-- Resource Selection -->
+                <div class="resources-section">
+                    <h3>{{ t('operationPlan.resources') }}</h3>
+                    <div class="resource-selectors">
+                        <EntityDropdown
+                            :name="t('operationPlan.cranes')"
+                            v-model="selectedSTSCranes"
+                            :items="allSTSCranes"
+                            valueKey="code"
+                            labelKey="code"
+                            :multiple="true"
+                            :placeholderText="'Select STS Cranes'"
+                            class="resource-dropdown"
+                        />
+                        <EntityDropdown
+                            :name="t('staff.title')"
+                            v-model="selectedStaff"
+                            :items="allStaff"
+                            valueKey="mechanographicNumber"
+                            labelKey="name"
+                            :multiple="true"
+                            :placeholderText="'Select Staff Members'"
+                            class="resource-dropdown"
+                        />
+                    </div>
+                </div>
 
+                <!-- Editable schedule via Gantt Chart -->
+                <div class="schedule-section">
+                    <h3>{{ t('operationPlan.schedule.title') }}</h3>
+                    <GanttChart
+                        :items="ganttItems"
+                        :row-configs="ganttRowConfigs"
+                        @item-updated="onItemUpdated"
+                    />
+                </div>
+            </div>
+        </EntityForm>
     </div>
 </template>
+
+<style scoped>
+.form-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.resources-section {
+    margin-top: 1rem;
+}
+
+.resources-section h3,
+.schedule-section h3 {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.resource-selectors {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.resource-dropdown {
+    flex: 1;
+    min-width: 300px;
+}
+
+.schedule-section {
+    margin-top: 2rem;
+}
+</style>

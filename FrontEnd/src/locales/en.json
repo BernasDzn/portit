@@ -749,8 +749,6 @@
         "docks": "Docks",
         "operations": "Operations",
         "cranes": "Cranes",
-        "schedule": "Schedule",
-        "metadata": "Metadata",
         "createdBy": "Created By",
         "createdAt": "Created At",
         "totalSchedules": "Total Schedules",
@@ -778,7 +776,12 @@
             "Load": "Load"
         },
         "tabs": {
-            "unplannedVVNs": "Unplanned VVNs"
+            "unplannedVVNs": "Unplanned VVNs",
+            "search": "Search Plans",
+            "edit": "Edit Plan"
+        },
+        "subtitle":{
+            "edit": "Modify operation plan details and schedule"
         },
         "unplannedVVNs": {
             "description": "Vessel visit notifications that do not have an operation plan assigned yet",
@@ -796,6 +799,31 @@
             "totalDelay": "Total Delay",
             "computationTime": "Computation Time",
             "autoSelection": "Automatic Algorithm Selection"
+        },
+        "infoTitle": "Operation Plan Information",
+        "fields": {
+            "id": {
+                "title": "Plan ID"
+            },
+            "relatedVVN": {
+                "title": "Related VVN"
+            },
+            "dock": {
+                "title": "Dock"
+            },
+            "operations": {
+                "title": "Operations"
+            }
+        },
+        "metadata": {
+            "title": "Metadata",
+            "createdBy": "Created By",
+            "createdAt": "Created At",
+            "algorithmUsed": "Algorithm Used"
+        },
+        "schedule": {
+            "title": "Operation Schedule",
+            "noOperations": "No operations scheduled"
         }
     }
 }
