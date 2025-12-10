@@ -33,23 +33,57 @@ const fetchPlan = async (): Promise<OperationPlanDto | undefined> => {
             console.error('Failed to fetch related VVN:', error);
         }
     }
+    console.log('Fetched plan:', plan);
     return plan;
 };
 
 const getGanttItems = (plan: OperationPlanDto): GanttItem[] => {
-    return plan.operationSchedule.map((op, index) => ({
-        id: `${op.type}-${index}`,
-        startTime: op.startTime,
-        endTime: op.endTime,
-        name: `${op.type.category.value} Operation`,
-        group: op.type.category.value === 'Load' ? 'Loading Operations' : 'Unloading Operations'
-    }));
+    const items: GanttItem[] = [];
+    
+    plan.operationSchedule.forEach((op, opIndex) => {
+        if (!op.startTime || !op.endTime || !op.resources || op.resources.length === 0) {
+            return;
+        }
+        
+        const opColor = op.type.category.value === 'LOAD' ? '#7BF1A8' : '#FFA2A2';
+        
+        // Create an item for each resource in this operation
+        op.resources.forEach((resource, resIndex) => {
+            items.push({
+                id: `op${opIndex}-res${resIndex}`,
+                startTime: op.startTime,
+                endTime: op.endTime,
+                name: `${op.type.category.value} Operation`,
+                group: resource.name || resource.type || 'Unassigned',
+                color: opColor
+            });
+        });
+    });
+    
+    return items;
 };
 
-const ganttRowConfigs: GanttRowConfig[] = [
-    { name: 'Unloading Operations', color: '#FFA2A2' },
-    { name: 'Loading Operations', color: '#7BF1A8' }
-];
+const getGanttRowConfigs = (plan: OperationPlanDto): GanttRowConfig[] => {
+    // Collect all unique resource names
+    const resourceNames = new Set<string>();
+    
+    plan.operationSchedule.forEach(op => {
+        op.resources.forEach(res => {
+            resourceNames.add(res.name || res.type || 'Unassigned');
+        });
+        if (op.resources.length === 0) {
+            resourceNames.add('Unassigned');
+        }
+    });
+    
+    // Create a row config for each resource with alternating colors
+    const colors = ['#3498db', '#e74c3c', '#2ecc71', '#f39c12', '#9b59b6', '#1abc9c'];
+    
+    return Array.from(resourceNames).map((name, index) => ({
+        name,
+        color: colors[index % colors.length]
+    }));
+};
 
 const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleString();
@@ -117,7 +151,7 @@ const formatDate = (dateString: string) => {
                         <GanttChart
                             v-if="entity.element.operationSchedule.length > 0"
                             :items="getGanttItems(entity.element)"
-                            :row-configs="ganttRowConfigs"
+                            :row-configs="getGanttRowConfigs(entity.element)"
                             :enable-drag="false"
                         />
                         <p v-else class="no-data">{{ t('operationPlan.schedule.noOperations') }}</p>

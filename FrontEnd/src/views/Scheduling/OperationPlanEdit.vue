@@ -25,17 +25,7 @@ const planService = container.get<IOperationPlanService>(TYPES.operationPlanServ
 const staffService = container.get<IStaffService>(TYPES.staffService);
 const physicalResourceService = container.get<IPhysicalResourceService>(TYPES.physicalResourceService);
 
-const plan = ref<OperationPlanDto>({
-    id: '',
-    relatedVVN: '',
-    dock: '',
-	operationSchedule: [],
-	metadata: {
-		createdBy: '',
-		createdAt: '',
-		algorithmUsed: ''
-    }
-});
+const plan = ref<OperationPlanDto | null>(null);
 
 const selectedStaff = ref<string[]>([]);
 const selectedSTSCranes = ref<string[]>([]);
@@ -43,35 +33,74 @@ const allStaff = ref<Staff[]>([]);
 const allSTSCranes = ref<STSCrane[]>([]);
 
 const ganttItems = computed<GanttItem[]>(() => {
-    return plan.value.operationSchedule.map((op, index) => ({
-        id: `${op.type}-${index}`,
-        startTime: op.startTime,
-        endTime: op.endTime,
-        name: op.type + ` Operation`,
-        group: op.type === 'Load' ? 'Loading Operations' : 'Unloading Operations'
+    if (!plan.value || !plan.value.operationSchedule) {
+        return [];
+    }
+    
+    const items: GanttItem[] = [];
+    
+    plan.value.operationSchedule.forEach((op, opIndex) => {
+        if (!op.startTime || !op.endTime || !op.resources || op.resources.length === 0) {
+            return;
+        }
+        
+        const opColor = op.type.category.value === 'LOAD' ? '#7BF1A8' : '#FFA2A2';
+        
+        // Create an item for each resource in this operation
+        op.resources.forEach((resource, resIndex) => {
+            items.push({
+                id: `op${opIndex}-res${resIndex}`,
+                startTime: op.startTime,
+                endTime: op.endTime,
+                name: `${op.type.category.value} Operation`,
+                group: resource.name || resource.type || 'Unassigned',
+                color: opColor
+            });
+        });
+    });
+    
+    return items;
+});
+
+const ganttRowConfigs = computed<GanttRowConfig[]>(() => {
+    if (!plan.value) return [];
+    
+    // Collect all unique resource names
+    const resourceNames = new Set<string>();
+    
+    plan.value.operationSchedule.forEach(op => {
+        op.resources.forEach(res => {
+            resourceNames.add(res.name || res.type || 'Unassigned');
+        });
+        if (op.resources.length === 0) {
+            resourceNames.add('Unassigned');
+        }
+    });
+    
+    // Create a row config for each resource with alternating colors
+    const colors = ['#3498db', '#e74c3c', '#2ecc71', '#f39c12', '#9b59b6', '#1abc9c'];
+    
+    return Array.from(resourceNames).map((name, index) => ({
+        name,
+        color: colors[index % colors.length]
     }));
 });
 
-const ganttRowConfigs = computed<GanttRowConfig[]>(() => [
-    { name: 'Unloading Operations', color: '#3498db' },
-    { name: 'Loading Operations', color: '#e74c3c' },
-    { name: 'Another row 1', color: '#2ecc71' },
-    { name: 'Another row test', color: '#95a5a6' }
-]);
-
 const onItemUpdated = (updatedItem: GanttItem) => {
-    const [type, indexStr] = updatedItem.id.split('-');
-    const index = parseInt(indexStr);
+    if (!plan.value) return;
     
-    const opsOfType = plan.value.operationSchedule.filter(op => op.type === type);
-    const actualIndex = plan.value.operationSchedule.indexOf(opsOfType[index]);
+    // Parse the item ID (format: op{opIndex}-res{resIndex})
+    const match = updatedItem.id.match(/^op(\d+)/);
+    if (!match) return;
     
-    if (actualIndex !== -1) {
-        plan.value.operationSchedule[actualIndex].startTime = updatedItem.startTime;
-        plan.value.operationSchedule[actualIndex].endTime = updatedItem.endTime;
+    const opIndex = parseInt(match[1]);
+    
+    if (opIndex >= 0 && opIndex < plan.value.operationSchedule.length) {
+        plan.value.operationSchedule[opIndex].startTime = updatedItem.startTime;
+        plan.value.operationSchedule[opIndex].endTime = updatedItem.endTime;
+        
+        console.log('Updated operation schedule:', plan.value.operationSchedule);
     }
-
-    console.log('Updated operation schedule:', plan.value.operationSchedule);
 };
 
 onMounted(async () => {
@@ -118,11 +147,8 @@ onMounted(async () => {
     }
 });
 
-const savePlan = async (obj: any) => {
-    return planService.updateOperationPlan(planId, {
-        ...obj,
-        operationSchedule: plan.value.operationSchedule
-    });
+const savePlan = async () => {
+    console.log('Saving plan:', plan.value);
 };
 
 </script>

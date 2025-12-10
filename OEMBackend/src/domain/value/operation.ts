@@ -1,7 +1,6 @@
 import { OperationDto } from "../../dto/value/operationDto";
 import { TaskCategory } from "../taskCategory";
-import EmptyPayload from "../taskPayloads/emptyPayload";
-import LoadPayload from "../taskPayloads/loadPayload";
+import { Payload } from "./payload";
 import { Resource } from "./resource";
 
 export class Operation {
@@ -9,20 +8,20 @@ export class Operation {
 	startTime: Date;
 	endTime: Date;
 	resources: Resource[];
-    payload: EmptyPayload | LoadPayload;
+    payload?: Payload | null;
 
 	constructor(params: {
 		operationType: TaskCategory;
 		startTime: Date;
 		endTime: Date;
 		resources: Resource[];
-        payload: EmptyPayload | LoadPayload;
+        payload?: Payload;
 	}) {
 		this.operationType = params.operationType;
 		this.startTime = params.startTime;
 		this.endTime = params.endTime;
 		this.resources = params.resources;
-        this.payload = params.payload;
+        this.payload = params.payload ?? null;
 	}
 
 	toDto(): OperationDto {
@@ -31,7 +30,7 @@ export class Operation {
 			startTime: this.startTime.toISOString(),
 			endTime: this.endTime.toISOString(),
 			resources: this.resources.map(resource => resource.toDto()),
-            payload: this.payload
+            payload: this.payload?.toDto() ?? null
 		};
 	}
 

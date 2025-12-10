@@ -26,14 +26,20 @@ interface Props {
     rowHeight?: number;
     enableGrid?: boolean;
     enableDrag?: boolean;
+    showCurrentTime?: boolean;
+    pushOnOverlap?: boolean;
+    noOverlap?: boolean;
     enableZoom?: boolean;
     enableScroll?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    rowHeight: 50,
-    enableGrid: true,
+    rowHeight: 40,
+    enableGrid: false,
     enableDrag: true,
+    showCurrentTime: false,
+    pushOnOverlap: true,
+    noOverlap: false,
     enableZoom: true,
     enableScroll: true
 });
@@ -43,7 +49,6 @@ const emit = defineEmits<{
     chartUpdate: [{ start: string; end: string; precision: string }];
 }>();
 
-const defaultColor = '#3498db';
 const chartStart = ref('');
 const chartEnd = ref('');
 const chartPrecision = ref<'hour' | 'day' | 'month'>('hour');
@@ -64,7 +69,7 @@ const getColorForRow = (rowName: string, index: number): string => {
     const config = (props.rowConfigs || getDefaultRowConfigs()).find(r => r.name === rowName);
     if (config?.color) return config.color;
     
-    return defaultColor;
+    return '#3498db';
 };
 
 const generateRows = () => {
@@ -124,11 +129,23 @@ const autoFitTimeRange = () => {
     const minTime = new Date(Math.min(...times.map(t => t.start.getTime())));
     const maxTime = new Date(Math.max(...times.map(t => t.end.getTime())));
 
-    minTime.setHours(minTime.getHours() - 1);
-    maxTime.setHours(maxTime.getHours() + 1);
+    // Calculate total span of operations
+    const totalSpanMs = maxTime.getTime() - minTime.getTime();
+    
+    // Add padding as 20% of total span (minimum 30 minutes, maximum 4 hours)
+    const paddingMs = Math.max(
+        30 * 60 * 1000,  // 30 minutes minimum
+        Math.min(
+            4 * 60 * 60 * 1000,  // 4 hours maximum
+            totalSpanMs * 0.2    // 20% of span
+        )
+    );
 
-    chartStart.value = minTime.toISOString().slice(0, 16).replace('T', ' ');
-    chartEnd.value = maxTime.toISOString().slice(0, 16).replace('T', ' ');
+    const paddedStart = new Date(minTime.getTime() - paddingMs);
+    const paddedEnd = new Date(maxTime.getTime() + paddingMs);
+
+    chartStart.value = paddedStart.toISOString().slice(0, 16).replace('T', ' ');
+    chartEnd.value = paddedEnd.toISOString().slice(0, 16).replace('T', ' ');
 };
 
 watch(() => props.items, (newItems, oldItems) => {
@@ -145,7 +162,6 @@ watch(() => props.items, (newItems, oldItems) => {
 }, { immediate: true });
 
 onMounted(() => {
-
     if (props.initialStart) {
         chartStart.value = props.initialStart;
     }
@@ -157,7 +173,6 @@ onMounted(() => {
     if (props.enableZoom || props.enableScroll) {
         setupChartInteractions();
     }
-    
 });
 
 onBeforeUnmount(() => {
@@ -275,10 +290,10 @@ const onBarDragEnd = (event: any) => {
             bar-end="myEnd"
             :row-height="rowHeight"
             :grid="enableGrid"
-            @bar-dragend="onBarDragEnd"
+            :current-time="showCurrentTime"
+            :push-on-overlap="pushOnOverlap"
+            :no-overlap="noOverlap"
             @dragend-bar="onBarDragEnd"
-            @bar-update="onBarDragEnd"
-            @update:bar="onBarDragEnd"
         >
             <GGanttRow
                 v-for="row in chartRows"
