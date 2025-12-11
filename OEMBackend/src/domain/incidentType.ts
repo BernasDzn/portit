@@ -1,35 +1,40 @@
-export class IncidentType {
-	id: string;
-	name: string
+import { Entity } from "../core/domain/entity";
+
+export interface IncidentTypeProps {
+	name: string;
 	parent?: IncidentType | undefined;
 	children?: IncidentType[] | undefined;
+}
 
-	generateID(){
-		// generates a unique ID with epoch time and randomness. 
-		// generating the same id twice is statistically improbable.
-		// Example: INC-8063FC586
+export class IncidentTypeID{
+	value: string;
+	
+	constructor() {
 		const timestamp = Date.now().toString(16).substring(4, 7).toUpperCase();
 		const random = Math.random().toString(16).substring(2, 8).toUpperCase();
-		return "INC-" + timestamp + random;
+		this.value = "INC-" + timestamp + random;
+	}
+}
+
+export default class IncidentType extends Entity<IncidentTypeProps> {
+	get id(): string { return this._id; }
+	get name(): string { return this.props.name; }
+	get parent(): IncidentType | undefined { return this.props.parent; }
+	get children(): IncidentType[] | undefined { return this.props.children; }
+
+	constructor(props: IncidentTypeProps) {
+		super(
+			new IncidentTypeID().value, 
+			props
+		);
 	}
 
 	addChild(child: IncidentType) {
-		if (!this.children) {
-			this.children = [];
+		if (!this.props.children) {
+			this.props.children = [];
 		}
-		this.children.push(child);
-		child.parent = this;
-	}
-
-	constructor(params: {
-		name: string;
-		parent?: IncidentType | undefined;
-		children?: IncidentType[] | undefined;
-	}) {
-		this.id = this.generateID();
-		this.name = params.name;
-		this.parent = params.parent;
-		this.children = params.children;
+		this.props.children.push(child);
+		child.props.parent = this;
 	}
 
 }
