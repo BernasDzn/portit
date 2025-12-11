@@ -335,8 +335,10 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
 
         try
         {
+            _logger.LogInformation("Collecting scheduling data for {Count} vessel visit notifications.", relevantDocks.Count());
             foreach (var notification in notifications)
             {
+            _logger.LogInformation("VVN: {id}", notification.NotificationId);
                 var vessel = notification.Vessel;
 
                 VesselTaskFactDto vesselTaskFact = new VesselTaskFactDto
@@ -350,8 +352,11 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
                     Dock = notification.GetLatestDecision()!.AssignedDock!.Code.Value
                 };
 
-                if (vesselTaskFact.LoadingCount > 0 && vesselTaskFact.UnloadingCount > 0)
+                if (vesselTaskFact.LoadingCount > 0 || vesselTaskFact.UnloadingCount > 0)
+                {
+                    _logger.LogInformation("VVN added with loading or unloading: {id}", notification.NotificationId);
                     result.VesselTaskFacts.Add(vesselTaskFact);
+                }
             }
         }
         catch (System.Exception e)
