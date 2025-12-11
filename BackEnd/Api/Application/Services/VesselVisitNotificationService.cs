@@ -346,7 +346,7 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
                     ETA = CalculateBaseHour(date, notification.ExpectedArrival),
                     ETD = CalculateBaseHour(date, notification.ExpectedDeparture),
                     LoadingCount = notification.LoadCargoManifest?.Count ?? 0 /*CalculateLoadUnloadingTime(notification.LoadCargoManifest ?? new List<CargoTransport>(), selectedCrane)*/,
-                    UnloadingCount = notification.LoadCargoManifest?.Count ?? 0 /*CalculateLoadUnloadingTime(notification.UnloadCargoManifest ?? new List<CargoTransport>(), selectedCrane)*/,
+                    UnloadingCount = notification.UnloadCargoManifest?.Count ?? 0 /*CalculateLoadUnloadingTime(notification.UnloadCargoManifest ?? new List<CargoTransport>(), selectedCrane)*/,
                     Dock = notification.GetLatestDecision()!.AssignedDock!.Code.Value
                 };
 
