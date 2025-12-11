@@ -28,18 +28,22 @@ rebalance_docks(JsonData, SortBy, Rebalanced, Metrics) :-
         format_result(Assignments, FinalLoads, Rebalanced)
     ).
 
-% Extract vessel data
+% Extract vessel data with type information
 extract_vessels_for_rebalancing([], []).
 extract_vessels_for_rebalancing([JsonVessel|Rest], [Vessel|RestVessels]) :-
-    get_dict(vessel, JsonVessel, VesselData), get_dict(name, VesselData, Name),
+    get_dict(vessel, JsonVessel, VesselData), 
+    get_dict(name, VesselData, Name),
+    get_dict(imoNumber, VesselData, Imo),
+    get_dict(type, VesselData, VesselType),
+    get_dict(name, VesselType, TypeName),
     get_dict(dock, JsonVessel, Dock), get_dict(eta, JsonVessel, Arrival),
     get_dict(unloadingCount, JsonVessel, Unload), get_dict(loadingCount, JsonVessel, Load),
-    Vessel = vessel{name: Name, dock: Dock, arrival: Arrival, unload: Unload, load: Load}, !,
+    Vessel = vessel{imo: Imo, name: Name, vesselType: TypeName, dock: Dock, arrival: Arrival, unload: Unload, load: Load}, !,
     extract_vessels_for_rebalancing(Rest, RestVessels).
 extract_vessels_for_rebalancing([_|Rest], RestVessels) :-
     extract_vessels_for_rebalancing(Rest, RestVessels).
 
-% Extract docks with cranes
+% Extract docks with cranes and supported vessel types
 extract_docks_with_cranes(JsonData, Docks) :-
     ( get_dict(docks, JsonData, DockList) -> true ; DockList = [] ),
     ( get_dict(craneWorkloads, JsonData, CraneList) -> true ; CraneList = [] ),
@@ -51,29 +55,49 @@ extract_docks_with_crane_counts([JsonDock|Rest], CraneList, Docks) :-
     findall(_, (member(Crane, CraneList), get_dict(dock, Crane, Code)), Cranes),
     length(Cranes, Count),
     ( Count > 0 ->
-        Docks = [dock{code: Code, cranes: Count}|RestDocks]
+        ( get_dict(supportedVesselTypes, JsonDock, SupportedTypes) -> true ; SupportedTypes = [] ),
+        extract_supported_vessel_type_names(SupportedTypes, TypeNames),
+        Docks = [dock{code: Code, cranes: Count, supportedTypes: TypeNames}|RestDocks]
     ;
         Docks = RestDocks
     ),
     extract_docks_with_crane_counts(Rest, CraneList, RestDocks).
 
+extract_supported_vessel_type_names([], []).
+extract_supported_vessel_type_names([Type|Rest], [Name|RestNames]) :-
+    get_dict(name, Type, Name),
+    extract_supported_vessel_type_names(Rest, RestNames).
+
 % Compare vessels by arrival time
 compare_by_arrival(Order, V1, V2) :- compare(Order, V1.arrival, V2.arrival).
 
-% Initialize dock loads to zero
+% Initialize dock loads to zero with supported types
 initialize_dock_loads([], []).
-initialize_dock_loads([Dock|Rest], [load{dock: Dock.code, cranes: Dock.cranes, total_load: 0, vessels: []}|RestLoads]) :-
+initialize_dock_loads([Dock|Rest], [load{dock: Dock.code, cranes: Dock.cranes, supportedTypes: Dock.supportedTypes, total_load: 0, vessels: []}|RestLoads]) :-
     initialize_dock_loads(Rest, RestLoads).
 
-% Assign vessels to least-loaded dock
+% Assign vessels to least-loaded compatible dock
 assign_vessels_to_docks([], Final, Final, []).
 assign_vessels_to_docks([Vessel|RestVessels], Current, Final, [Assignment|RestAssignments]) :-
-    find_min_load_dock(Current, MinDock),
+    find_min_load_compatible_dock(Current, Vessel.vesselType, MinDock),
     VesselLoad is (Vessel.unload + Vessel.load) / MinDock.cranes,
     NewLoad is MinDock.total_load + VesselLoad,
-    Assignment = assignment{vessel: Vessel.name, current_dock: Vessel.dock, proposed_dock: MinDock.dock, load_contribution: VesselLoad},
+    Assignment = assignment{imo: Vessel.imo, vessel: Vessel.name, current_dock: Vessel.dock, proposed_dock: MinDock.dock, load_contribution: VesselLoad},
     update_dock_load(Current, MinDock.dock, Vessel.name, NewLoad, Updated),
     assign_vessels_to_docks(RestVessels, Updated, Final, RestAssignments).
+
+% Find minimum load dock that supports the vessel type
+find_min_load_compatible_dock(Loads, VesselType, MinDock) :-
+    include(is_compatible_dock(VesselType), Loads, CompatibleLoads),
+    ( CompatibleLoads = [] ->
+        throw(error(no_compatible_dock, 'No docks support this vessel type'))
+    ;
+        find_min_load_dock(CompatibleLoads, MinDock)
+    ).
+
+% Check if a dock supports a vessel type
+is_compatible_dock(VesselType, Load) :-
+    member(VesselType, Load.supportedTypes).
 
 find_min_load_dock([Load], Load) :- !.
 find_min_load_dock([Load|Rest], Min) :-
@@ -84,7 +108,7 @@ update_dock_load([], _, _, _, []).
 update_dock_load([Load|Rest], Code, VesselName, NewLoad, [Updated|RestUpdated]) :-
     ( Load.dock = Code ->
         append(Load.vessels, [VesselName], NewVessels),
-        Updated = load{dock: Load.dock, cranes: Load.cranes, total_load: NewLoad, vessels: NewVessels}
+        Updated = load{dock: Load.dock, cranes: Load.cranes, supportedTypes: Load.supportedTypes, total_load: NewLoad, vessels: NewVessels}
     ;
         Updated = Load
     ),
@@ -129,9 +153,7 @@ format_result(Assignments, FinalLoads, Result) :-
 
 format_assignments([], []).
 format_assignments([Assignment|Rest], [Dict|RestFormatted]) :-
-    ( Assignment.current_dock \= Assignment.proposed_dock -> RequiresReassignment = true ; RequiresReassignment = false ),
-    Dict = #{vessel: Assignment.vessel, currentDock: Assignment.current_dock, proposedDock: Assignment.proposed_dock,
-          loadContribution: Assignment.load_contribution, requiresReassignment: RequiresReassignment},
+    Dict = #{imo: Assignment.imo, vessel: Assignment.vessel, currentDock: Assignment.current_dock, proposedDock: Assignment.proposed_dock},
     format_assignments(Rest, RestFormatted).
 
 format_dock_loads([], []).
