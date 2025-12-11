@@ -12,11 +12,11 @@ import type { VesselVisitNotification } from '@/model/VesselVisitNotification';
 import GanttChart, { type GanttItem, type GanttRowConfig } from '@/components/GanttChart.vue';
 import EntityView from '@/components/crud/EntityView.vue';
 import VesselVisitNotificationPrinter from '@/components/printers/VesselVisitNotificationPrinter.vue';
+import { useTaskCategories } from '@/composables/taskcats';
 
 const { t } = useI18n();
 const route = useRoute();
-const router = useRouter();
-const notifications = useAlerts();
+const taskCategory = useTaskCategories();
 
 const planService = container.get<IOperationPlanService>(TYPES.operationPlanService);
 const vvnService = container.get<IVesselVisitNotificationService>(TYPES.vesselVisitNotificationService);
@@ -24,32 +24,26 @@ const planId = String(route.params.id || '');
 
 const relatedVVN = ref<VesselVisitNotification | null>(null);
 
+const items = ref<GanttItem[]>([]);
+const configs = ref<GanttRowConfig[]>([]);
+
 const fetchPlan = async (): Promise<OperationPlanDto | undefined> => {
     const plan = await planService.getOperationPlanById(planId);
     if (plan) {
         try {
             relatedVVN.value = await vvnService.getVesselVisitNotificationById(plan.relatedVVN);
+
+            // Prepare Gantt items and configs
+            items.value = taskCategory.getGanttItems(plan);
+            configs.value = taskCategory.getGanttRowConfigs(plan);
+
         } catch (error) {
             console.error('Failed to fetch related VVN:', error);
         }
     }
+    console.log('Fetched plan:', plan);
     return plan;
 };
-
-const getGanttItems = (plan: OperationPlanDto): GanttItem[] => {
-    return plan.operationSchedule.map((op, index) => ({
-        id: `${op.type}-${index}`,
-        startTime: op.startTime,
-        endTime: op.endTime,
-        name: `${op.type.category.value} Operation`,
-        group: op.type.category.value === 'Load' ? 'Loading Operations' : 'Unloading Operations'
-    }));
-};
-
-const ganttRowConfigs: GanttRowConfig[] = [
-    { name: 'Unloading Operations', color: '#FFA2A2' },
-    { name: 'Loading Operations', color: '#7BF1A8' }
-];
 
 const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleString();
@@ -116,8 +110,8 @@ const formatDate = (dateString: string) => {
                     <div style="margin-top: 1rem;">
                         <GanttChart
                             v-if="entity.element.operationSchedule.length > 0"
-                            :items="getGanttItems(entity.element)"
-                            :row-configs="ganttRowConfigs"
+                            :items="items"
+                            :row-configs="configs"
                             :enable-drag="false"
                         />
                         <p v-else class="no-data">{{ t('operationPlan.schedule.noOperations') }}</p>

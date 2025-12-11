@@ -7,100 +7,74 @@ import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
 import type { IOperationPlanService } from '@/service/IService/IOperationPlanService';
 import type { OperationPlanDto } from '@/model/dto/OperationPlanDto';
-import GanttChart, { type GanttItem, type GanttRowConfig } from '@/components/GanttChart.vue';
+import GanttChart, { type GanttItem } from '@/components/GanttChart.vue';
 import EntityForm from '@/components/crud/EntityForm.vue';
 import EntityDropdown from '@/components/crud/EntityDropdown.vue';
 import type { IStaffService } from '@/service/IService/IStaffService';
 import type { IPhysicalResourceService } from '@/service/IService/IPhysicalResourceService';
 import type { Staff } from '@/model/Staff';
 import type { STSCrane } from '@/model/PhysicalResource';
+import { useTaskCategories } from '@/composables/taskcats';
+import type { GanttBarObject } from '@infectoone/vue-ganttastic';
+import type { IStorageAreaService } from '@/service/IService/IStorageAreaService';
+import ObjectSelector from '@/components/crud/ObjectSelector.vue';
 
 const notifications = useAlerts();
 const route = useRoute();
 const { t } = useI18n();
+const { getGanttItems, getGanttRowConfigs } = useTaskCategories();
 
 const planId = String(route.params.id || '');
 
 const planService = container.get<IOperationPlanService>(TYPES.operationPlanService);
 const staffService = container.get<IStaffService>(TYPES.staffService);
 const physicalResourceService = container.get<IPhysicalResourceService>(TYPES.physicalResourceService);
+const storageAreaService = container.get<IStorageAreaService>(TYPES.storageAreaService);
 
-const plan = ref<OperationPlanDto>({
-    id: '',
-    relatedVVN: '',
-    dock: '',
-	operationSchedule: [],
-	metadata: {
-		createdBy: '',
-		createdAt: '',
-		algorithmUsed: ''
-    }
-});
-
+const plan = ref<OperationPlanDto | null>(null);
 const selectedStaff = ref<string[]>([]);
 const selectedSTSCranes = ref<string[]>([]);
 const allStaff = ref<Staff[]>([]);
 const allSTSCranes = ref<STSCrane[]>([]);
 
-const ganttItems = computed<GanttItem[]>(() => {
-    return plan.value.operationSchedule.map((op, index) => ({
-        id: `${op.type}-${index}`,
-        startTime: op.startTime,
-        endTime: op.endTime,
-        name: op.type + ` Operation`,
-        group: op.type === 'Load' ? 'Loading Operations' : 'Unloading Operations'
-    }));
-});
-
-const ganttRowConfigs = computed<GanttRowConfig[]>(() => [
-    { name: 'Unloading Operations', color: '#3498db' },
-    { name: 'Loading Operations', color: '#e74c3c' },
-    { name: 'Another row 1', color: '#2ecc71' },
-    { name: 'Another row test', color: '#95a5a6' }
-]);
+const ganttItems = computed(() => plan.value ? getGanttItems(plan.value) : []);
+const ganttRowConfigs = computed(() => plan.value ? getGanttRowConfigs(plan.value) : []);
 
 const onItemUpdated = (updatedItem: GanttItem) => {
-    const [type, indexStr] = updatedItem.id.split('-');
-    const index = parseInt(indexStr);
+    if (!plan.value) return;
     
-    const opsOfType = plan.value.operationSchedule.filter(op => op.type === type);
-    const actualIndex = plan.value.operationSchedule.indexOf(opsOfType[index]);
+    const match = updatedItem.id.match(/^op(\d+)/);
+    if (!match) return;
     
-    if (actualIndex !== -1) {
-        plan.value.operationSchedule[actualIndex].startTime = updatedItem.startTime;
-        plan.value.operationSchedule[actualIndex].endTime = updatedItem.endTime;
+    const opIndex = parseInt(match[1]);
+    
+    if (opIndex >= 0 && opIndex < plan.value.operationSchedule.length) {
+        plan.value.operationSchedule[opIndex].startTime = updatedItem.startTime;
+        plan.value.operationSchedule[opIndex].endTime = updatedItem.endTime;
+        
+        console.log('Updated operation schedule:', plan.value.operationSchedule);
     }
-
-    console.log('Updated operation schedule:', plan.value.operationSchedule);
 };
 
 onMounted(async () => {
     try {
-        // Fetch plan
-        const fetchedPlan = await planService.getOperationPlanById(planId);
-        plan.value = fetchedPlan;
+        plan.value = await planService.getOperationPlanById(planId);
 
-        // Fetch all staff and STS cranes
-        const staffPage = await staffService.getStaffs();
+        const [staffPage, resourcesPage] = await Promise.all([
+            staffService.getStaffs(),
+            physicalResourceService.getPhysicalResources()
+        ]);
+
         allStaff.value = staffPage.items;
+        allSTSCranes.value = resourcesPage.items.filter((r: any) => 
+            r.liftingCapacity !== undefined && r.status === 0
+        );
 
-        // Fetch STS cranes without filter first to see what we get
-        const resourcesPage = await physicalResourceService.getPhysicalResources();
-        console.log('All resources fetched:', resourcesPage);
-        
-        // Filter for STS Cranes (type 0) on the client side
-        allSTSCranes.value = resourcesPage.items.filter((r: any) => r.liftingCapacity !== undefined && r.status === 0);
-        console.log('Filtered STS Cranes:', allSTSCranes.value);
-
-        // Extract currently used resources from plan
         const usedResources = new Set<string>();
         plan.value.operationSchedule.forEach(op => {
-            op.resources.forEach(res => {
-                usedResources.add(res.name);
-            });
+            op.resources.forEach(res => usedResources.add(res.name));
         });
 
-        // Mark used resources as selected
         selectedStaff.value = allStaff.value
             .filter(s => usedResources.has(s.mechanographicNumber) || usedResources.has(s.name))
             .map(s => s.mechanographicNumber);
@@ -109,20 +83,54 @@ onMounted(async () => {
             .filter(c => usedResources.has(c.code) || usedResources.has(c.description))
             .map(c => c.code);
 
-        console.log('Selected staff:', selectedStaff.value);
-        console.log('Selected STS cranes:', selectedSTSCranes.value);
-
     } catch (error) {
         console.error('Error loading resources:', error);
-        notifications.enqueueNotification('Failed to load operation plan', notifications.notificationTypes.DANGER);
+        notifications.enqueueNotification(
+            'Failed to load operation plan', 
+            notifications.notificationTypes.DANGER
+        );
     }
 });
 
-const savePlan = async (obj: any) => {
-    return planService.updateOperationPlan(planId, {
-        ...obj,
-        operationSchedule: plan.value.operationSchedule
-    });
+const savePlan = async () => {
+    console.log('Saving plan:', plan.value);
+};
+
+const editingOperation = ref<number | null>(null);
+const onOperationClick = (value: {
+    bar: GanttBarObject;
+    e: MouseEvent;
+    datetime?: string | Date | undefined;
+}) => {
+    
+    const index = value.bar.ganttBarConfig.id.split("-")[0].slice(2);
+
+    // Find operation on list
+    const operations = plan.value?.operationSchedule;
+    if (!operations) return;
+
+    const operation = operations[parseInt(index)];
+    if (!operation) return;
+
+    editingOperation.value = parseInt(index);
+
+    // Open drawer
+    const drawer = document.querySelector('sl-drawer') as any;
+    if (drawer) {
+        drawer.show();
+    }
+}
+
+const closeDrawer = () => {
+    const drawer = document.querySelector('sl-drawer') as any;
+    if (drawer) {
+        drawer.hide();
+    }
+    editingOperation.value = null;
+}
+
+const newRow = () => {
+
 };
 
 </script>
@@ -130,55 +138,102 @@ const savePlan = async (obj: any) => {
 <template>
     <div>
         <sl-breadcrumb>
-            <sl-breadcrumb-item><RouterLink to="/scheduling-dashboard" class="breadcrumb-link">{{ t('scheduling.tabs.dashboard') }}</RouterLink></sl-breadcrumb-item>
-            <sl-breadcrumb-item><RouterLink to="/scheduling/plans-search" class="breadcrumb-link">{{ t('scheduling.tabs.search') }}</RouterLink></sl-breadcrumb-item>
-            <sl-breadcrumb-item><RouterLink :to="`/scheduling/plans-view/${planId}`" class="breadcrumb-link">{{ planId }}</RouterLink></sl-breadcrumb-item>
+            <sl-breadcrumb-item>
+                <RouterLink to="/scheduling-dashboard" class="breadcrumb-link">
+                    {{ t('scheduling.tabs.dashboard') }}
+                </RouterLink>
+            </sl-breadcrumb-item>
+            <sl-breadcrumb-item>
+                <RouterLink to="/scheduling/plans-search" class="breadcrumb-link">
+                    {{ t('scheduling.tabs.search') }}
+                </RouterLink>
+            </sl-breadcrumb-item>
+            <sl-breadcrumb-item>
+                <RouterLink :to="`/scheduling/plans-view/${planId}`" class="breadcrumb-link">
+                    {{ planId }}
+                </RouterLink>
+            </sl-breadcrumb-item>
             <sl-breadcrumb-item>{{ t('operationPlan.tabs.edit') }}</sl-breadcrumb-item>
         </sl-breadcrumb>
         
         <h1 class="title">{{ t('operationPlan.tabs.edit') }}</h1>
         <p class="subtitle">{{ t('operationPlan.subtitle.edit') }}</p>
         
+        <h3>{{ t('operationPlan.schedule.title') }}</h3>
+
+        <div style="display: flex; gap: 1em">
+            <sl-button variant="default" type="submit" @click="newRow">
+                <sl-icon slot="prefix" name="plus-circle"></sl-icon>
+                Add operation
+            </sl-button>
+    
+            <sl-button variant="default" type="submit" @click="newRow">
+                <sl-icon slot="prefix" name="plus-circle"></sl-icon>
+                Add operation track
+            </sl-button>
+        </div>
+
         <EntityForm :object="plan" :submit-function="savePlan" :editing-id="planId">
             <div class="form-fields">
-                <!-- Resource Selection -->
-                <div class="resources-section">
-                    <h3>{{ t('operationPlan.resources') }}</h3>
-                    <div class="resource-selectors">
-                        <EntityDropdown
-                            :name="t('operationPlan.cranes')"
-                            v-model="selectedSTSCranes"
-                            :items="allSTSCranes"
-                            valueKey="code"
-                            labelKey="code"
-                            :multiple="true"
-                            :placeholderText="'Select STS Cranes'"
-                            class="resource-dropdown"
-                        />
-                        <EntityDropdown
-                            :name="t('staff.title')"
-                            v-model="selectedStaff"
-                            :items="allStaff"
-                            valueKey="mechanographicNumber"
-                            labelKey="name"
-                            :multiple="true"
-                            :placeholderText="'Select Staff Members'"
-                            class="resource-dropdown"
-                        />
-                    </div>
-                </div>
-
-                <!-- Editable schedule via Gantt Chart -->
                 <div class="schedule-section">
-                    <h3>{{ t('operationPlan.schedule.title') }}</h3>
                     <GanttChart
                         :items="ganttItems"
                         :row-configs="ganttRowConfigs"
                         @item-updated="onItemUpdated"
+                        @bar-click="onOperationClick"
                     />
                 </div>
             </div>
         </EntityForm>
+
+        <sl-drawer label="Drawer" class="drawer-overview">
+            <h3>
+                Operation Details
+            </h3>
+
+            <div v-if="plan && editingOperation && plan?.operationSchedule[editingOperation!]">
+                <p>
+                    Start date: 
+                    {{ new Date(plan?.operationSchedule[editingOperation!]?.startTime).toLocaleString().split(',')[1].split(":").slice(0,2).join(":") }}
+                </p>
+                <p>
+                    End date: 
+                    {{ new Date(plan?.operationSchedule[editingOperation!]?.endTime).toLocaleString().split(',')[1].split(":").slice(0,2).join(":") }}
+                </p>
+    
+                <p><strong>Category:</strong> {{ plan?.operationSchedule[editingOperation!]?.type.description }} operation</p>
+    
+                <sl-divider></sl-divider>
+                <h3>Resources</h3>
+    
+                <sl-divider></sl-divider>
+                <h3>Operation playload</h3>
+                <div v-if="plan?.operationSchedule[editingOperation!]?.type.category.value == 'LOAD' || plan?.operationSchedule[editingOperation!]?.type.category.value == 'UNLOAD'">
+                        
+                    <sl-input 
+                        name="containerId" 
+                        label="Container ID:"
+                    ></sl-input>
+    
+                    <p>Storage area</p>
+                    <ObjectSelector
+                        class="field-dropdown"
+                        :name="t('dock.fields.supportedVesselTypes.vesselTypes.title') + '*'"
+                        :fetch-function="() => storageAreaService.getStorageAreas()"
+                        :placeholderText="'Select a storage area'"
+                        labelKey="name"
+                    />
+    
+                </div>
+                <div v-else>
+                    <i>No payload specifiable for this operation category</i>
+                </div>
+            </div>
+
+
+            <sl-button @click="closeDrawer" variant="danger" slot="footer">Remove Operation</sl-button>
+            <sl-button @click="closeDrawer" slot="footer" variant="primary">Close</sl-button>
+          </sl-drawer>          
     </div>
 </template>
 

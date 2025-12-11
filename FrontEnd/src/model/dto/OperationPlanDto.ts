@@ -12,6 +12,7 @@ export interface OperationPlanDto {
 			name: string;
 			type: string;
 		}[];
+		payload?: any;
 	}[];
 	metadata: {
 		createdBy: string;

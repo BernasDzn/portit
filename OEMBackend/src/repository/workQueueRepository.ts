@@ -6,6 +6,7 @@ import { ScheduleQueueMapper } from "../mappers/scheduleQueueMapper";
 export class WorkQueueRepository {
 
     async enqueueRequest(day: string, alg: string, daysAhead: number = 2, priority: number = 0, issuer: string): Promise<number> {
+
         const newRequest = new WorkQueueItem({
             day,
             alg,
