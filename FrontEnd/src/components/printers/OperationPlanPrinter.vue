@@ -4,6 +4,7 @@ import { RouterLink } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import type { OperationPlanDto } from '@/model/dto/OperationPlanDto';
 import { useTaskCategories } from '@/composables/taskcats';
+import TextCutout from '../TextCutout.vue';
 
 const { t } = useI18n();
 
@@ -91,7 +92,7 @@ const cranes = computed(() => {
                     <div class="metadata-grid">
                         <div class="metric-item">
                             <span class="metric-label">{{ t('operationPlan.createdBy') }}:</span>
-                            <span class="metric-value">{{ props.operationPlan.metadata.createdBy }}</span>
+                            <span class="metric-value"><TextCutout :text="props.operationPlan.metadata.createdBy" :max-length="18"></TextCutout></span>
                         </div>
                         <div class="metric-item">
                             <span class="metric-label">{{ t('operationPlan.createdAt') }}:</span>

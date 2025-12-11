@@ -102,7 +102,8 @@ export const getQueueState = async (req: Request, res: Response, next: NextFunct
         }
 
         const userEmail = req.user?.emailAddress || 'unknown';
-        const data = await schedulingRequestService.acceptRequest(id, userEmail);
+        let token = req.user?.token;
+        const data = await schedulingRequestService.acceptRequest(id, userEmail, token!);
         res.json(data);
     } catch (error) {
         next(error);

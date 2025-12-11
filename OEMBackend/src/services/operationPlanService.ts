@@ -35,18 +35,11 @@ export class OperationPlanService {
 		return await this.operationPlanRepository.getNotificationsWithoutPlan(token);
 	}
 
-	async createPlans(plansData: any, createdBy: string): Promise<OperationPlanDto[]> {
+	async createPlans(plansData: any, createdBy: string, token: string): Promise<OperationPlanDto[]> {
 		const savedPlans: OperationPlanDto[] = [];
 		const scheduleDataDto = ScheduleDataMapper.toDto(plansData);
 		
 		const baseDate = new Date(scheduleDataDto.date);
-
-        const unloadCategory = await taskCategoryRepository.getCategoryByCode('UNLOAD');
-        const loadCategory = await taskCategoryRepository.getCategoryByCode('LOAD');
-
-        if (!unloadCategory || !loadCategory) {
-            throw new Error('Required task categories UNLOAD or LOAD not found');
-        }
 
 		const existingPlans = await this.operationPlanRepository.getByDateGrouped();
 		const plansOnDate = existingPlans.find(group => group.date === scheduleDataDto.date);
@@ -54,10 +47,13 @@ export class OperationPlanService {
 			await this.operationPlanRepository.deleteById(plan.id!);
 		}
 
+        console.log("Plans Data:", plansData);
+		
 		for (const dockData of scheduleDataDto.data) {
 			const dockCode = dockData.dock;
 			
 			for (const vesselSchedule of dockData.schedule) {
+                console.log("Processing vessel schedule:", vesselSchedule);
 				const operationSchedule = new LinkedList<Operation>();
 				
 				const craneResources = vesselSchedule.cranes.map(craneName => 
@@ -70,26 +66,16 @@ export class OperationPlanService {
 				const unloadStartTime = new Date(baseDate.getTime() + vesselSchedule.unloading_enter_time * 60 * 60 * 1000);
 				const unloadEndTime = new Date(baseDate.getTime() + vesselSchedule.unloading_exit_time * 60 * 60 * 1000);
 				
-				const unloadOperation = new Operation({
-					operationType: unloadCategory!,
-					startTime: unloadStartTime,
-					endTime: unloadEndTime,
-					resources: craneResources,
-					payload: new Payload({}) // Set each attribute if really needed
-				});
-				operationSchedule.insertAtEnd(unloadOperation);
+				const unloadOperations = await this.subdivideOperationIntoContainers(unloadStartTime, unloadEndTime, craneResources, true, token, vesselSchedule.name);
+                for (const unloadOperation of unloadOperations) 
+                    operationSchedule.insertAtEnd(unloadOperation);
 				
 				const loadStartTime = new Date(baseDate.getTime() + vesselSchedule.loading_enter_time * 60 * 60 * 1000);
 				const loadEndTime = new Date(baseDate.getTime() + vesselSchedule.loading_exit_time * 60 * 60 * 1000);
 				
-				const loadOperation = new Operation({
-					operationType: loadCategory!,
-					startTime: loadStartTime,
-					endTime: loadEndTime,
-					resources: craneResources,
-					payload: new Payload({})
-				});
-				operationSchedule.insertAtEnd(loadOperation);
+                const loadOperations = await this.subdivideOperationIntoContainers(loadStartTime, loadEndTime, craneResources, false, token, vesselSchedule.name);
+                for (const loadOperation of loadOperations) 
+                    operationSchedule.insertAtEnd(loadOperation);
 				
 				const dockIndex = scheduleDataDto.data.indexOf(dockData);
 				const metric = scheduleDataDto.metrics[dockIndex];
@@ -114,6 +100,37 @@ export class OperationPlanService {
 		
 		return savedPlans;
 	}
+
+    async subdivideOperationIntoContainers(startTime: Date, endTime: Date, resources: Resource[], isUnload: boolean, token: string, vvnId: string): Promise<Operation[]> {
+
+        // const loadOperation = new Operation({
+        // 	operationType: loadCategory!,
+        // 	startTime: loadStartTime,
+        // 	endTime: loadEndTime,
+        // 	resources: craneResources,
+        // 	payload: new Payload({})
+        // });
+        // operationSchedule.insertAtEnd(loadOperation);
+
+        const unloadCategory = await taskCategoryRepository.getCategoryByCode('UNLOAD');
+        const loadCategory = await taskCategoryRepository.getCategoryByCode('LOAD');
+
+        if (!unloadCategory || !loadCategory) {
+            throw new Error('Required task categories UNLOAD or LOAD not found');
+        }
+
+        // The number of track divisions is based on the number of resources
+        // 2 Resources means two containers can be handled in parallel
+        const laneCount: number = resources.length;
+
+        // The containers to subdivide the original task into
+        let containerList = await this.operationPlanRepository.getContainersOfNotification(vvnId, token);
+        console.log(containerList);
+
+        throw new Error("Subdivide operation into containers not implemented yet");
+
+        return [];
+    }
 
 	async create(operationPlanDto: OperationPlanDto): Promise<OperationPlanDto> {
 		let operationSchedule = new LinkedList<Operation>();

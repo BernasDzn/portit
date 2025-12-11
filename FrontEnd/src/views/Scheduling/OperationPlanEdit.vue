@@ -213,16 +213,16 @@ const newRow = () => {
                     <sl-input 
                         name="containerId" 
                         label="Container ID:"
+                        disabled
+                        :value="plan?.operationSchedule[editingOperation!]?.payload.containerId || 'Not specified'"
                     ></sl-input>
-    
-                    <p>Storage area</p>
-                    <ObjectSelector
-                        class="field-dropdown"
-                        :name="t('dock.fields.supportedVesselTypes.vesselTypes.title') + '*'"
-                        :fetch-function="() => storageAreaService.getStorageAreas()"
-                        :placeholderText="'Select a storage area'"
-                        labelKey="name"
-                    />
+                    <br>
+                    <sl-input 
+                        name="storageArea" 
+                        label="Storage area:"
+                        disabled
+                        :value="plan?.operationSchedule[editingOperation!]?.payload.storageArea || 'Not specified'"
+                    ></sl-input>
     
                 </div>
                 <div v-else>
