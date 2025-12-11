@@ -32,7 +32,7 @@ obtain_seq_genetic(SeqTriplets, Delay) :-
         forall(
             vessel(Name, ArrivalTime, DepartureTime, UnloadContainers, LoadContainers, CraneList),
             (
-                get_crane_sum(CraneList, CraneSpeed),
+                get_crane_sum_genetic(CraneList, CraneSpeed),
                 TotalContainers is UnloadContainers + LoadContainers,
                 (CraneSpeed > 0 -> ProcessingT is TotalContainers / CraneSpeed ; ProcessingT = 0),
                 assertz(vessel_visit(Name, ArrivalTime, DepartureTime, ProcessingT))
@@ -43,9 +43,9 @@ obtain_seq_genetic(SeqTriplets, Delay) :-
         (retract(num_vessels(_)); true),
         asserta(num_vessels(Count)).
 
-    get_crane_sum([], 0).
-    get_crane_sum([crane(_, Speed) | RestCranes], Sum):-
-        get_crane_sum(RestCranes, Sum1),
+    get_crane_sum_genetic([], 0).
+    get_crane_sum_genetic([crane(_, Speed) | RestCranes], Sum):-
+        get_crane_sum_genetic(RestCranes, Sum1),
         Sum is (Sum1 + Speed).
 %
 
@@ -412,7 +412,7 @@ obtain_seq_genetic(SeqTriplets, Delay) :-
     convert_to_triplets([VesselName|Rest], EndPrevSeq, [(VesselName, TInUnload, TEndLoad)|RestTriplets]) :-
         % Get vessel data to calculate proper times (matching greedy algorithm logic)
         vessel(VesselName, TIn, _, TUnloadContainers, TLoadContainers, Cranes),
-        get_crane_sum(Cranes, CraneSpeed),
+        get_crane_sum_genetic(Cranes, CraneSpeed),
         
         % Calculate unload and load times separately
         (TUnloadContainers > 0, CraneSpeed > 0 -> TUnload is TUnloadContainers / CraneSpeed ; TUnload = 0),

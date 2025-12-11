@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, watch, onBeforeUnmount } from 'vue';
-import { GGanttChart, GGanttRow } from '@infectoone/vue-ganttastic';
+import { GGanttChart, GGanttRow, type GanttBarObject } from '@infectoone/vue-ganttastic';
 
 export interface GanttItem {
     id: string;
@@ -31,6 +31,11 @@ interface Props {
     noOverlap?: boolean;
     enableZoom?: boolean;
     enableScroll?: boolean;
+    onBarClick?: (value: {
+        bar: GanttBarObject;
+        e: MouseEvent;
+        datetime?: string | Date | undefined;
+    }) => void;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -41,7 +46,8 @@ const props = withDefaults(defineProps<Props>(), {
     pushOnOverlap: true,
     noOverlap: false,
     enableZoom: true,
-    enableScroll: true
+    enableScroll: true,
+    onBarClick: () => {}
 });
 
 const emit = defineEmits<{
@@ -252,7 +258,6 @@ const updatePrecision = (duration: number) => {
         chartPrecision.value = 'month';
     }
 };
-
 const onBarDragEnd = (event: any) => {
     const originalItem = event.bar.ganttBarConfig.originalItem as GanttItem;
     
@@ -294,6 +299,7 @@ const onBarDragEnd = (event: any) => {
             :push-on-overlap="pushOnOverlap"
             :no-overlap="noOverlap"
             @dragend-bar="onBarDragEnd"
+            @click-bar="props.onBarClick"
         >
             <GGanttRow
                 v-for="row in chartRows"

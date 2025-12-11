@@ -155,3 +155,5 @@ export class OperationPlanService {
 	}
 
 }
+
+export const operationPlanService = new OperationPlanService();

@@ -24,13 +24,13 @@
 % crane('STS002', 2).
 % crane('STS003', 30).
 
-get_crane_sum([], 0).
-get_crane_sum([crane(_, Speed) | RestCranes], Sum):-
-    get_crane_sum(RestCranes, Sum1),
+get_crane_sum_optimal([], 0).
+get_crane_sum_optimal([crane(_, Speed) | RestCranes], Sum):-
+    get_crane_sum_optimal(RestCranes, Sum1),
     Sum is (Sum1 + Speed).
 
-calculate_load_unload_time(LoadCount, UnloadCount, CraneList, LoadTime, UnloadTime):-
-    get_crane_sum(CraneList, Sum),
+calculate_load_unload_time_optimal(LoadCount, UnloadCount, CraneList, LoadTime, UnloadTime):-
+    get_crane_sum_optimal(CraneList, Sum),
     % Time = Containers / Speed
     ( (LoadCount > 0, Sum > 0) -> LoadTime is (LoadCount / Sum) ; LoadTime = 0 ),
     ( (UnloadCount > 0, Sum > 0) -> UnloadTime is (UnloadCount / Sum) ; UnloadTime = 0 ).
@@ -41,9 +41,10 @@ sequence_temporization(LV,SeqTriplets):-
 
 sequence_temporization1(EndPrevSeq,[V|LV],[(V,TInUnload,TEndLoad)|SeqTriplets]):-
     vessel(V,TIn,_,TUnloadC,TLoadC, Cranes),
-    calculate_load_unload_time(TUnloadC,TLoadC, Cranes,TUnload, TLoad),
+    calculate_load_unload_time_optimal(TUnloadC,TLoadC, Cranes,TUnload, TLoad),
     
-    ( (TIn> EndPrevSeq,!, TInUnload is TIn); TInUnload is EndPrevSeq+1),
+    ( (TIn> EndPrevSeq,!, TInUnload is TIn); TInUnload is EndPrevSeq + 1),
+    (format(user_error,'~nVessel: ~w TInUnload: ~w TUnload: ~w TLoad: ~w~n',[V,TInUnload,TUnload,TLoad]), true),
     
     TEndLoad is TInUnload + TUnload + TLoad,
     sequence_temporization1(TEndLoad,LV,SeqTriplets).
@@ -51,12 +52,12 @@ sequence_temporization1(EndPrevSeq,[V|LV],[(V,TInUnload,TEndLoad)|SeqTriplets]):
 sequence_temporization1(_,[],[]).
 
 % Find the sum of delays
-sum_delays([],0).
+sum_delays_optimal([],0).
 
-sum_delays([(V,_,TEndLoad)|LV],S):-
+sum_delays_optimal([(V,_,TEndLoad)|LV],S):-
     vessel(V,_,TDep,_,_,_),TPossibleDep is TEndLoad+1,
     ( (TPossibleDep>TDep,!,SV is TPossibleDep-TDep);SV is 0),
-    sum_delays(LV,SLV),
+    sum_delays_optimal(LV,SLV),
     S is SV+SLV.
 
 % Obtain the sequence with the shortest delay
@@ -68,7 +69,7 @@ obtain_seq_shortest_delay1:-
     findall(V,vessel(V,_,_,_,_,_),LV),
     permutation(LV,SeqV),
     sequence_temporization(SeqV,SeqTriplets),
-    sum_delays(SeqTriplets,S),
+    sum_delays_optimal(SeqTriplets,S),
     compare_shortest_delay(SeqTriplets,S),
     fail.
 
