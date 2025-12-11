@@ -5,6 +5,7 @@ import { OperationPlanMetadata } from "../domain/value/operationPlanMetadata";
 import { Resource, ResourceType } from "../domain/value/resource";
 import { TaskCategoryMapper } from "./taskCategoryMapper";
 import { TaskCategoryRepository } from "../repository/taskCategoryRepository";
+import { Payload } from "../domain/value/payload";
 
 export class OperationPlanMapper {
 
@@ -20,7 +21,10 @@ export class OperationPlanMapper {
 					name: res.name,
 					type: ResourceType[res.type]
 				})),
-                payload: op.payload
+				payload: op.payload ? {
+					containerId: op.payload.containerId,
+					storageLocation: op.payload.storageLocation
+				} : null
 			})),
 			metadata: {
 				createdBy: operationPlan.metadata.createdBy,
@@ -55,19 +59,24 @@ export class OperationPlanMapper {
                 });
     
                 const operationTypeDoc = await TaskCategoryRepository.getCategoryById(op.operationType);
+                
+                const payload = op.payload ? new Payload({
+                    containerId: op.payload.containerId,
+                    storageLocation: op.payload.storageLocation
+                }) : new Payload({});
     
                 const operation = new Operation({
                     operationType: TaskCategoryMapper.fromSchema(operationTypeDoc),
                     startTime: op.startTime,
                     endTime: op.endTime,
                     resources,
-                    payload: op.payload
+                    payload
                 });
     
                 operationSchedule.insertAtEnd(operation);
             }
         }
-    
+        
         return new OperationPlan({
             id: doc._id.toString(),
             relatedVVN: doc.relatedVVN,

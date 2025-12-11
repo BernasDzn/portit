@@ -11,6 +11,7 @@ import { LinkedList } from "../utils/linkedList";
 import { Page, Pageable } from "../utils/page";
 import { TaskCategory } from "../domain/taskCategory";
 import config from "../config/config";
+import { Payload } from "../domain/value/payload";
 
 
 export class OperationPlanService {
@@ -71,10 +72,7 @@ export class OperationPlanService {
 					startTime: unloadStartTime,
 					endTime: unloadEndTime,
 					resources: craneResources,
-                    payload: {
-                        containerId: null, // We still don't know, set it by hand if you really need it
-                        storageLocation: null // Depends, set it by hand if you really need it
-                    }
+					payload: new Payload({}) // Set each attribute if really needed
 				});
 				operationSchedule.insertAtEnd(unloadOperation);
 				
@@ -86,10 +84,7 @@ export class OperationPlanService {
 					startTime: loadStartTime,
 					endTime: loadEndTime,
 					resources: craneResources,
-                    payload: {
-                        containerId: null, // We still don't know, set it by hand if you really need it
-                        storageLocation: null // Depends, set it by hand if you really need it
-                    }
+					payload: new Payload({})
 				});
 				operationSchedule.insertAtEnd(loadOperation);
 				
@@ -120,6 +115,11 @@ export class OperationPlanService {
 	async create(operationPlanDto: OperationPlanDto): Promise<OperationPlanDto> {
 		let operationSchedule = new LinkedList<Operation>();
 		for (const opDto of operationPlanDto.operationSchedule) {
+			const payload = opDto.payload ? new Payload({
+				containerId: opDto.payload.containerId,
+				storageLocation: opDto.payload.storageLocation
+			}) : new Payload({});
+			
 			const operation = new Operation({
 				operationType: (await taskCategoryRepository.getCategoryByCode(opDto.type.category))!,
 				startTime: new Date(opDto.startTime),
@@ -130,7 +130,7 @@ export class OperationPlanService {
 						type: ResourceType[resDto.type as keyof typeof ResourceType]
 					});
 				}),
-                payload: opDto.payload
+				payload
 			});
 			operationSchedule.insertAtEnd(operation);
 		}

@@ -28,6 +28,17 @@ const ResourceSchema = new mongoose.Schema({
     }
 });
 
+const PayloadSchema = new mongoose.Schema({
+    containerId: {
+        type: String,
+        required: false
+    },
+    storageLocation: {
+        type: String,
+        required: false
+    }
+});
+
 const OperationSchema = new mongoose.Schema({
     operationType: {
         type: mongoose.Schema.Types.ObjectId,
@@ -47,12 +58,9 @@ const OperationSchema = new mongoose.Schema({
         required: true,
         default: []
     },
-    // The payload of an operation can vary depending on the operation type
-    // It carries additional data needed to execute the operation
-    // For example a load operation can have a container ID as payload
     payload: {
-        type: mongoose.Schema.Types.Mixed,
-        required: true
+        type: PayloadSchema,
+        required: false
     }
 });
 
