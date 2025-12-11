@@ -12,11 +12,11 @@ import type { VesselVisitNotification } from '@/model/VesselVisitNotification';
 import GanttChart, { type GanttItem, type GanttRowConfig } from '@/components/GanttChart.vue';
 import EntityView from '@/components/crud/EntityView.vue';
 import VesselVisitNotificationPrinter from '@/components/printers/VesselVisitNotificationPrinter.vue';
+import { useTaskCategories } from '@/composables/taskcats';
 
 const { t } = useI18n();
 const route = useRoute();
-const router = useRouter();
-const notifications = useAlerts();
+const taskCategory = useTaskCategories();
 
 const planService = container.get<IOperationPlanService>(TYPES.operationPlanService);
 const vvnService = container.get<IVesselVisitNotificationService>(TYPES.vesselVisitNotificationService);
@@ -24,65 +24,25 @@ const planId = String(route.params.id || '');
 
 const relatedVVN = ref<VesselVisitNotification | null>(null);
 
+const items = ref<GanttItem[]>([]);
+const configs = ref<GanttRowConfig[]>([]);
+
 const fetchPlan = async (): Promise<OperationPlanDto | undefined> => {
     const plan = await planService.getOperationPlanById(planId);
     if (plan) {
         try {
             relatedVVN.value = await vvnService.getVesselVisitNotificationById(plan.relatedVVN);
+
+            // Prepare Gantt items and configs
+            items.value = taskCategory.getGanttItems(plan);
+            configs.value = taskCategory.getGanttRowConfigs(plan);
+
         } catch (error) {
             console.error('Failed to fetch related VVN:', error);
         }
     }
     console.log('Fetched plan:', plan);
     return plan;
-};
-
-const getGanttItems = (plan: OperationPlanDto): GanttItem[] => {
-    const items: GanttItem[] = [];
-    
-    plan.operationSchedule.forEach((op, opIndex) => {
-        if (!op.startTime || !op.endTime || !op.resources || op.resources.length === 0) {
-            return;
-        }
-        
-        const opColor = op.type.category.value === 'LOAD' ? '#7BF1A8' : '#FFA2A2';
-        
-        // Create an item for each resource in this operation
-        op.resources.forEach((resource, resIndex) => {
-            items.push({
-                id: `op${opIndex}-res${resIndex}`,
-                startTime: op.startTime,
-                endTime: op.endTime,
-                name: `${op.type.category.value} Operation`,
-                group: resource.name || resource.type || 'Unassigned',
-                color: opColor
-            });
-        });
-    });
-    
-    return items;
-};
-
-const getGanttRowConfigs = (plan: OperationPlanDto): GanttRowConfig[] => {
-    // Collect all unique resource names
-    const resourceNames = new Set<string>();
-    
-    plan.operationSchedule.forEach(op => {
-        op.resources.forEach(res => {
-            resourceNames.add(res.name || res.type || 'Unassigned');
-        });
-        if (op.resources.length === 0) {
-            resourceNames.add('Unassigned');
-        }
-    });
-    
-    // Create a row config for each resource with alternating colors
-    const colors = ['#3498db', '#e74c3c', '#2ecc71', '#f39c12', '#9b59b6', '#1abc9c'];
-    
-    return Array.from(resourceNames).map((name, index) => ({
-        name,
-        color: colors[index % colors.length]
-    }));
 };
 
 const formatDate = (dateString: string) => {
@@ -150,8 +110,8 @@ const formatDate = (dateString: string) => {
                     <div style="margin-top: 1rem;">
                         <GanttChart
                             v-if="entity.element.operationSchedule.length > 0"
-                            :items="getGanttItems(entity.element)"
-                            :row-configs="getGanttRowConfigs(entity.element)"
+                            :items="items"
+                            :row-configs="configs"
                             :enable-drag="false"
                         />
                         <p v-else class="no-data">{{ t('operationPlan.schedule.noOperations') }}</p>

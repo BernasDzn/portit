@@ -1,34 +1,33 @@
 import { Router } from 'express';
 import { authMiddleware } from '../middlewares/authMiddleware';
-import { OperationPlanController } from '../controllers/operationPlanController'
 import { authzMiddleware } from '../middlewares/authzMiddleware';
 import { UserRole } from '../domain/user';
+import { getNotificationWithoutPlan, getPlanById, getPlans, getPlansByDate } from '../controllers/operationPlanController';
 
 const router = Router();
-const controller = new OperationPlanController();
 
 router.get(
 	'/',
 	[authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)],
-	controller.getPlans.bind(controller)
+	getPlans
 );
 
 router.get(
 	'/by-date',
 	[authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)],
-	controller.getPlansByDate.bind(controller)
+	getPlansByDate
 );
 
 router.get(
 	'/notifications-without-plan', 
 	[authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)], 
-	controller.getNotificationWithoutPlan.bind(controller)
+	getNotificationWithoutPlan
 );
 
 router.get(
 	'/:id',
 	[authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)],
-	controller.getPlanById.bind(controller)
+	getPlanById
 );
 
 export default router;

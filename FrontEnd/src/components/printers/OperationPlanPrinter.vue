@@ -74,7 +74,7 @@ const cranes = computed(() => {
             <div class="details" v-if="!props.short">
                 <sl-divider></sl-divider>
                 <div class="operations-section">
-                    <p class="metrics-title">{{ t('operationPlan.schedule') }}</p>
+                    <p class="metrics-title">{{ t('operationPlan.schedule.title') }}</p>
                     <div class="operations-list">
                         <div v-for="(operation, idx) in props.operationPlan.operationSchedule" :key="idx" class="operation-item">
                             <sl-badge :variant="taskCategories.colorMapCategory(operation.type)">
@@ -87,7 +87,7 @@ const cranes = computed(() => {
                     </div>
                 </div>
                 <div class="metadata-section">
-                    <p class="metrics-title">{{ t('operationPlan.metadata') }}</p>
+                    <p class="metrics-title">{{ t('operationPlan.metadata.title') }}</p>
                     <div class="metadata-grid">
                         <div class="metric-item">
                             <span class="metric-label">{{ t('operationPlan.createdBy') }}:</span>

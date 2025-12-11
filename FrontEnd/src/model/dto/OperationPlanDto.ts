@@ -12,10 +12,7 @@ export interface OperationPlanDto {
 			name: string;
 			type: string;
 		}[];
-		payload?: {
-			containerId?: string;
-			storageLocation?: string;
-		};
+		payload?: any;
 	}[];
 	metadata: {
 		createdBy: string;
