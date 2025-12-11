@@ -6,6 +6,17 @@ import { ScheduleQueueMapper } from "../mappers/scheduleQueueMapper";
 export class WorkQueueRepository {
 
     async enqueueRequest(day: string, alg: string, daysAhead: number = 2, priority: number = 0, issuer: string): Promise<number> {
+        
+        const existingRequest = await ScheduleQueue.findOne({
+            'requestData.day': day,
+            status: { $in: ['pending', 'in-progress', 'completed'] }
+        }).exec();
+
+        if (existingRequest) {
+            await ScheduleQueue.findByIdAndDelete(existingRequest._id).exec();
+            console.log(`Deleted existing ${existingRequest.status} request for ${day}`);
+        }
+
         const newRequest = new WorkQueueItem({
             day,
             alg,
