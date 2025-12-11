@@ -41,7 +41,7 @@ sequence_temporization(LV,SeqTriplets):-
 
 sequence_temporization1(EndPrevSeq,[V|LV],[(V,TInUnload,TEndLoad)|SeqTriplets]):-
     vessel(V,TIn,_,TUnloadC,TLoadC, Cranes),
-    calculate_load_unload_time_optimal(TUnloadC,TLoadC, Cranes,TUnload, TLoad),
+    calculate_load_unload_time_optimal(TLoadC,TUnloadC, Cranes,TLoad, TUnload),
     
     ( (TIn> EndPrevSeq,!, TInUnload is TIn); TInUnload is EndPrevSeq + 1),
     (format(user_error,'~nVessel: ~w TInUnload: ~w TUnload: ~w TLoad: ~w~n',[V,TInUnload,TUnload,TLoad]), true),
