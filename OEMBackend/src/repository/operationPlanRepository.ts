@@ -91,4 +91,8 @@ export class OperationPlanRepository {
 		return unplannedVvnIds;
 	}
 
+	async deleteById(id: string): Promise<void> {
+		await OperationPlanModel.findByIdAndDelete(id);
+	}
+
 }

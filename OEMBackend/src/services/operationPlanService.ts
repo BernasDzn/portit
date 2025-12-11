@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import { OperationPlan } from "../domain/operationPlan";
 import { Operation } from "../domain/value/operation";
 import { OperationPlanMetadata } from "../domain/value/operationPlanMetadata";
@@ -9,8 +8,6 @@ import { OperationPlanRepository } from "../repository/operationPlanRepository";
 import { taskCategoryRepository } from "../repository/taskCategoryRepository";
 import { LinkedList } from "../utils/linkedList";
 import { Page, Pageable } from "../utils/page";
-import { TaskCategory } from "../domain/taskCategory";
-import config from "../config/config";
 import { Payload } from "../domain/value/payload";
 
 
@@ -50,7 +47,13 @@ export class OperationPlanService {
         if (!unloadCategory || !loadCategory) {
             throw new Error('Required task categories UNLOAD or LOAD not found');
         }
-		
+
+		const existingPlans = await this.operationPlanRepository.getByDateGrouped();
+		const plansOnDate = existingPlans.find(group => group.date === scheduleDataDto.date);
+		for (const plan of plansOnDate?.plans || []) {
+			await this.operationPlanRepository.deleteById(plan.id!);
+		}
+
 		for (const dockData of scheduleDataDto.data) {
 			const dockCode = dockData.dock;
 			
