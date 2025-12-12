@@ -3,8 +3,8 @@ import type { OperationPlanDto } from "@/model/dto/OperationPlanDto";
 import type TaskCategoryDto from "@/model/dto/TaskCategoryDto";
 
 const categoryColorMap = {
-    'LOAD': 'success',
-    'UNLOAD': 'warning',
+    'LOAD': '#27ae60',
+    'UNLOAD': '#c0392b',
 };
 
 function colorMapCategory(cat: TaskCategoryDto) {

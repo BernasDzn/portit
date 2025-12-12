@@ -8,7 +8,7 @@ import { useI18n } from 'vue-i18n';
 import DataTable from '@/components/crud/DataTable.vue';
 import { useSession } from '@/composables/session';
 import { useAlerts } from '@/composables/alerts';
-import type LoadingVue from '@/components/Loading.vue';
+import Loading from '@/components/Loading.vue';
 
 const scheduleService = container.get<ISchedulingService>(TYPES.schedulingService);
 const route = useRouter();
@@ -39,7 +39,7 @@ const columns = [
 ];
 
 const statusVariants: Record<string, string> = {
-    "pending": "primary",
+    "pending": "warning",
     "in_progress": "warning",
     "completed": "primary",
     "failed": "danger",
@@ -74,6 +74,8 @@ const acceptResult = async (row: any) => {
     const id = row.id;
     try {
 
+        loading.value = true;
+
         await scheduleService.acceptSchedulingRequest(id);
         notifications.enqueueNotification(
             "Scheduling result accepted successfully.",
@@ -87,6 +89,8 @@ const acceptResult = async (row: any) => {
             "Failed to accept the scheduling result. " + error.response?.data?.message || (error as Error).message,
             notifications.notificationTypes.DANGER
         );
+
+        loading.value = false;
     }
 };
 
@@ -94,6 +98,8 @@ const rejectResult = async (row: any) => {
     const id = row.id;
 
     try {
+
+        loading.value = true;
 
         await scheduleService.rejectSchedulingRequest(id);
         notifications.enqueueNotification(
@@ -109,6 +115,8 @@ const rejectResult = async (row: any) => {
             "Failed to reject the scheduling request. " + error.response.data.message,
             notifications.notificationTypes.DANGER
         );
+
+        loading.value = false;
     }
 };
 

@@ -9,6 +9,7 @@ import { taskCategoryRepository } from "../repository/taskCategoryRepository";
 import { LinkedList } from "../utils/linkedList";
 import { Page, Pageable } from "../utils/page";
 import { Payload } from "../domain/value/payload";
+import { ContainerDto } from "../dto/container";
 
 
 export class OperationPlanService {
@@ -125,11 +126,67 @@ export class OperationPlanService {
 
         // The containers to subdivide the original task into
         let containerList = await this.operationPlanRepository.getContainersOfNotification(vvnId, token);
+        if (containerList.length == 0) return [];
+
+        const operationsPerLane = Math.ceil(containerList.length / laneCount);
+
         console.log(containerList);
 
-        throw new Error("Subdivide operation into containers not implemented yet");
+        // Tier is the z index of the container in the stack
+        // Lower tier means it is lower in the stack, for that we can seperate 
+        // operations by z, because we only want to proceed to higher/lower tiers (depending if unload/load)
+        // once the lower/higher tiers are done
+        let containerMap = new Map<number, ContainerDto[]>();
+        for (const container of containerList) {
+            const tier = container.position.tier;
+            if (!containerMap.has(tier)) {
+                containerMap.set(tier, []);
+            }
+            containerMap.get(tier)!.push(container);
+        }
 
-        return [];
+        let order = Array.from(containerMap.keys()).sort((a, b) => !isUnload ? a - b : b - a);
+
+        let operationSchedule: Operation[] = [];
+        let currentTime = new Date(startTime.getTime());
+
+        const singleOperationDuration = (endTime.getTime() - startTime.getTime()) / containerList.length;
+
+        for (const tier of order) {
+            const containersInTier = containerMap.get(tier)!;
+            // Create operations
+            for (let i = 0; i < containersInTier.length; i++) {
+
+                const container = containersInTier[i];
+                const laneIndex = i % laneCount;
+                
+                // Calculate time for this specific operation
+                const operationStartTime = new Date(currentTime.getTime());
+                const operationEndTime = new Date(operationStartTime.getTime() + singleOperationDuration);
+                
+                console.log(`Container assigned to lane ${laneIndex} at tier ${tier}`);
+                console.log(`Operation Start: ${operationStartTime}, Operation End: ${operationEndTime}`);        
+
+                const operation = new Operation({
+                    operationType: isUnload ? unloadCategory : loadCategory,
+                    startTime: operationStartTime,
+                    endTime: operationEndTime,
+                    resources: resources,
+                    payload: new Payload({
+                        containerId: container?.containerNumber || '',
+                        storageLocation: container?.area || ''
+                    })
+                });
+        
+                operationSchedule.push(operation);
+                
+                // Advance time for next operation
+                currentTime = new Date(operationEndTime.getTime());
+            }
+        }
+
+        console.log("Generated Operations:", operationSchedule);
+        return operationSchedule;
     }
 
 	async create(operationPlanDto: OperationPlanDto): Promise<OperationPlanDto> {

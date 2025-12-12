@@ -61,6 +61,8 @@ const chartPrecision = ref<'hour' | 'day' | 'month'>('hour');
 const chartRows = ref<Array<{ label: string; bars: any[] }>>([]);
 
 let chartContainer: Element | null = null;
+let isDragging = false;
+let dragStartTime = 0;
 
 const defaultGroupBy = (item: GanttItem): string => {
     return item.group || 'Default';
@@ -258,7 +260,9 @@ const updatePrecision = (duration: number) => {
         chartPrecision.value = 'month';
     }
 };
+
 const onBarDragEnd = (event: any) => {
+    isDragging = true;
     const originalItem = event.bar.ganttBarConfig.originalItem as GanttItem;
     
     console.log('Bar drag end event:', event);
@@ -266,6 +270,7 @@ const onBarDragEnd = (event: any) => {
     
     if (!originalItem) {
         console.warn('No original item found in bar config');
+        isDragging = false;
         return;
     }
 
@@ -282,6 +287,23 @@ const onBarDragEnd = (event: any) => {
     }
 
     emit('itemUpdated', updatedItem);
+    
+    // Reset drag flag after a short delay to prevent click from firing
+    setTimeout(() => {
+        isDragging = false;
+    }, 100);
+};
+
+const handleBarClick = (value: {
+    bar: GanttBarObject;
+    e: MouseEvent;
+    datetime?: string | Date | undefined;
+}) => {
+    if (isDragging) {
+        return;
+    }
+    
+    props.onBarClick(value);
 };
 </script>
 
@@ -299,7 +321,7 @@ const onBarDragEnd = (event: any) => {
             :push-on-overlap="pushOnOverlap"
             :no-overlap="noOverlap"
             @dragend-bar="onBarDragEnd"
-            @click-bar="props.onBarClick"
+            @click-bar="handleBarClick"
         >
             <GGanttRow
                 v-for="row in chartRows"

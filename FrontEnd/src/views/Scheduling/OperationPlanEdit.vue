@@ -162,10 +162,6 @@ const newRow = () => {
         <h3>{{ t('operationPlan.schedule.title') }}</h3>
 
         <div style="display: flex; gap: 1em">
-            <sl-button variant="default" type="submit" @click="newRow">
-                <sl-icon slot="prefix" name="plus-circle"></sl-icon>
-                Add operation
-            </sl-button>
     
             <sl-button variant="default" type="submit" @click="newRow">
                 <sl-icon slot="prefix" name="plus-circle"></sl-icon>
@@ -221,7 +217,7 @@ const newRow = () => {
                         name="storageArea" 
                         label="Storage area:"
                         disabled
-                        :value="plan?.operationSchedule[editingOperation!]?.payload.storageArea || 'Not specified'"
+                        :value="plan?.operationSchedule[editingOperation!]?.payload.storageLocation || 'Not specified'"
                     ></sl-input>
     
                 </div>
@@ -231,7 +227,6 @@ const newRow = () => {
             </div>
 
 
-            <sl-button @click="closeDrawer" variant="danger" slot="footer">Remove Operation</sl-button>
             <sl-button @click="closeDrawer" slot="footer" variant="primary">Close</sl-button>
           </sl-drawer>          
     </div>
