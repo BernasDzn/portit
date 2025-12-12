@@ -4,6 +4,7 @@ import { RouterLink } from 'vue-router';
 import { useI18n } from 'vue-i18n';
 import type { OperationPlanDto } from '@/model/dto/OperationPlanDto';
 import { useTaskCategories } from '@/composables/taskcats';
+import TextCutout from '../TextCutout.vue';
 
 const { t } = useI18n();
 
@@ -74,24 +75,33 @@ const cranes = computed(() => {
             <div class="details" v-if="!props.short">
                 <sl-divider></sl-divider>
                 <div class="operations-section">
-                    <p class="metrics-title">{{ t('operationPlan.schedule') }}</p>
+                    <p class="metrics-title">{{ t('operationPlan.schedule.title') }}</p>
                     <div class="operations-list">
-                        <div v-for="(operation, idx) in props.operationPlan.operationSchedule" :key="idx" class="operation-item">
+                        <!-- <div v-for="(operation, idx) in props.operationPlan.operationSchedule" :key="idx" class="operation-item">
                             <sl-badge :variant="taskCategories.colorMapCategory(operation.type)">
                                 {{ operation.type.description }}
                             </sl-badge>
                             <span class="operation-time">
                                 {{ new Date(operation.startTime).toLocaleString() }} -> {{ new Date(operation.endTime).toLocaleString() }}
                             </span>
+                        </div> -->
+                        <div class="operation-item">
+                            <sl-badge variant="warning">
+                                Unloading operations: {{ props.operationPlan.operationSchedule.filter(op => op.type.category.value === "UNLOAD").length }}
+                            </sl-badge>
+    
+                            <sl-badge variant="success">
+                                Loading operations: {{ props.operationPlan.operationSchedule.filter(op => op.type.category.value === "LOAD").length }}
+                            </sl-badge>
                         </div>
                     </div>
                 </div>
                 <div class="metadata-section">
-                    <p class="metrics-title">{{ t('operationPlan.metadata') }}</p>
+                    <p class="metrics-title">{{ t('operationPlan.metadata.title') }}</p>
                     <div class="metadata-grid">
                         <div class="metric-item">
                             <span class="metric-label">{{ t('operationPlan.createdBy') }}:</span>
-                            <span class="metric-value">{{ props.operationPlan.metadata.createdBy }}</span>
+                            <span class="metric-value"><TextCutout :text="props.operationPlan.metadata.createdBy" :max-length="18"></TextCutout></span>
                         </div>
                         <div class="metric-item">
                             <span class="metric-label">{{ t('operationPlan.createdAt') }}:</span>

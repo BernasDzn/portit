@@ -5,9 +5,9 @@
 :- dynamic vessel/6.
 
 % Helper: calculate sum of crane speeds
-get_crane_sum([], 0).
-get_crane_sum([crane(_, Speed) | RestCranes], Sum):-
-    get_crane_sum(RestCranes, Sum1),
+get_crane_sum_greedy([], 0).
+get_crane_sum_greedy([crane(_, Speed) | RestCranes], Sum):-
+    get_crane_sum_greedy(RestCranes, Sum1),
     Sum is (Sum1 + Speed).
 
 % ============================================================================
@@ -109,7 +109,7 @@ sequence_temporization_greedy1(EndPrevSeq, [V|LV], [(V, TInUnload, TEndLoad)|Seq
     
     % Calculate actual time based on crane speeds
     % Time = Containers / Speed
-    get_crane_sum(Cranes, CraneSpeed),
+    get_crane_sum_greedy(Cranes, CraneSpeed),
     ( (TUnloadContainers > 0, CraneSpeed > 0) -> TUnload is (TUnloadContainers / CraneSpeed) ; TUnload = 0 ),
     ( (TLoadContainers > 0, CraneSpeed > 0) -> TLoad is (TLoadContainers / CraneSpeed) ; TLoad = 0 ),
     

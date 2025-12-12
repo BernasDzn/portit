@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted, watch, onBeforeUnmount } from 'vue';
-import { GGanttChart, GGanttRow } from '@infectoone/vue-ganttastic';
+import { GGanttChart, GGanttRow, type GanttBarObject } from '@infectoone/vue-ganttastic';
 
 export interface GanttItem {
     id: string;
@@ -31,6 +31,11 @@ interface Props {
     noOverlap?: boolean;
     enableZoom?: boolean;
     enableScroll?: boolean;
+    onBarClick?: (value: {
+        bar: GanttBarObject;
+        e: MouseEvent;
+        datetime?: string | Date | undefined;
+    }) => void;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -41,7 +46,8 @@ const props = withDefaults(defineProps<Props>(), {
     pushOnOverlap: true,
     noOverlap: false,
     enableZoom: true,
-    enableScroll: true
+    enableScroll: true,
+    onBarClick: () => {}
 });
 
 const emit = defineEmits<{
@@ -55,6 +61,8 @@ const chartPrecision = ref<'hour' | 'day' | 'month'>('hour');
 const chartRows = ref<Array<{ label: string; bars: any[] }>>([]);
 
 let chartContainer: Element | null = null;
+let isDragging = false;
+let dragStartTime = 0;
 
 const defaultGroupBy = (item: GanttItem): string => {
     return item.group || 'Default';
@@ -254,6 +262,7 @@ const updatePrecision = (duration: number) => {
 };
 
 const onBarDragEnd = (event: any) => {
+    isDragging = true;
     const originalItem = event.bar.ganttBarConfig.originalItem as GanttItem;
     
     console.log('Bar drag end event:', event);
@@ -261,6 +270,7 @@ const onBarDragEnd = (event: any) => {
     
     if (!originalItem) {
         console.warn('No original item found in bar config');
+        isDragging = false;
         return;
     }
 
@@ -277,6 +287,23 @@ const onBarDragEnd = (event: any) => {
     }
 
     emit('itemUpdated', updatedItem);
+    
+    // Reset drag flag after a short delay to prevent click from firing
+    setTimeout(() => {
+        isDragging = false;
+    }, 100);
+};
+
+const handleBarClick = (value: {
+    bar: GanttBarObject;
+    e: MouseEvent;
+    datetime?: string | Date | undefined;
+}) => {
+    if (isDragging) {
+        return;
+    }
+    
+    props.onBarClick(value);
 };
 </script>
 
@@ -294,6 +321,7 @@ const onBarDragEnd = (event: any) => {
             :push-on-overlap="pushOnOverlap"
             :no-overlap="noOverlap"
             @dragend-bar="onBarDragEnd"
+            @click-bar="handleBarClick"
         >
             <GGanttRow
                 v-for="row in chartRows"

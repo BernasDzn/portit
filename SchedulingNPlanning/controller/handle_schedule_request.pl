@@ -25,9 +25,13 @@ handle_schedule_request(Request) :-
     ( Compare = true ->
         schedule_with_comparison(Day, DaysAhead, FormattedResult, Metrics)
     ;
-        schedule_daily_operations(Day, DaysAhead, Algorithm, Result, Metrics),
-        format_timetable_docks(Result, FormattedResult)
+        schedule_daily_operations(Day, DaysAhead, Algorithm, FormattedResult, Metrics)
     ),
+
+    % Clean up facts after formatting is complete
+    retractall(dock(_)),
+    retractall(vessel(_,_,_,_,_,_)),
+    retractall(crane(_,_)),
 
     format(user_error, 'Scheduling result: ~w~n', [FormattedResult]),
 
@@ -43,10 +47,10 @@ format_timetable_docks([DockResult|Rest], [Dict|FormattedRest]) :-
     format_timetable_docks(Rest, FormattedRest).
 
 % Helper to calculate unload and load times for a vessel
-calculate_vessel_times(Name, CraneList, UnloadTime, LoadTime) :-
-    vessel(Name, _, _, UnloadCount, LoadCount, CraneList),
-    % Get sum of crane speeds
-    findall(Speed, member(crane(_, Speed), CraneList), Speeds),
+calculate_vessel_times(Name, CraneNames, UnloadTime, LoadTime) :-
+    vessel(Name, _, _, UnloadCount, LoadCount, _),
+    % Look up the actual crane facts from the crane names
+    findall(Speed, (member(CraneName, CraneNames), crane(CraneName, Speed)), Speeds),
     sum_list(Speeds, Sum),
     % Calculate times
     ( (UnloadCount > 0, Sum > 0) -> UnloadTime is (UnloadCount / Sum) ; UnloadTime = 0 ),
@@ -57,15 +61,15 @@ format_timetable([], []).
 % Handle 4-tuple format (Name, StartTime, EndTime, Cranes) - new format with cranes included
 % StartTime = when unloading enters, EndTime = when loading exits
 format_timetable([(Name, UnloadingEnterTime, LoadingExitTime, Cranes)|Rest], [Dict|FormattedRest]) :-
-    % Calculate the intermediate times
-    ( vessel(Name, _, _, _, _, CraneList), CraneList \= [] ->
-        calculate_vessel_times(Name, CraneList, UnloadTime, LoadTime),
+    is_list(Cranes), % Ensure it's actually a 4-tuple
+    !,
+    % Calculate the intermediate times using the Cranes from the tuple
+    ( Cranes \= [] ->
+        calculate_vessel_times(Name, Cranes, UnloadTime, LoadTime),
         % Unloading happens first
         UnloadingExitTime is UnloadingEnterTime + UnloadTime,
         % Loading starts after unloading ends
-        LoadingEnterTime is UnloadingExitTime,
-        % We already know when loading exits from the algorithm
-        true
+        LoadingEnterTime is UnloadingExitTime
     ;
         % If no cranes, assume zero times
         UnloadingExitTime = UnloadingEnterTime,
@@ -79,13 +83,13 @@ format_timetable([(Name, UnloadingEnterTime, LoadingExitTime, Cranes)|Rest], [Di
         loading_enter_time: LoadingEnterTime,
         loading_exit_time: LoadingExitTime
     },
-    !,
     format_timetable(Rest, FormattedRest).
 % Handle 3-tuple format (Name, StartTime, EndTime) - legacy format, lookup cranes from facts
 format_timetable([(Name, UnloadingEnterTime, LoadingExitTime)|Rest], [Dict|FormattedRest]) :-
+    number(LoadingExitTime),  % Ensure it's actually a 3-tuple, not a 4-tuple mismatched
     ( vessel(Name, _, _, _, _, CraneList), CraneList \= [] ->
         findall(CraneName, member(crane(CraneName, _), CraneList), Cranes),
-        calculate_vessel_times(Name, CraneList, UnloadTime, LoadTime),
+        calculate_vessel_times(Name, Cranes, UnloadTime, LoadTime),
         % Unloading happens first
         UnloadingExitTime is UnloadingEnterTime + UnloadTime,
         % Loading starts after unloading ends

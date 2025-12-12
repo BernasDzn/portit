@@ -32,4 +32,5 @@ dispatch(['test'|_]) :-
     assertz(frontend_url('http://localhost:5173')),
 
     % Let the server receive commands
-    writeln('Running in test mode...').
+    writeln('Running in test mode...'),
+    thread_get_message(_).

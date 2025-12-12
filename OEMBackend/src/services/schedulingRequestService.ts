@@ -23,7 +23,7 @@ export class SchedulingRequestService {
         return queueState;
     }
 
-    async acceptRequest(id: string, issuer: string): Promise<ScheduleQueueItem | null> {
+    async acceptRequest(id: string, issuer: string, token: string): Promise<ScheduleQueueItem | null> {
 
         const item = await workQueueRepository.getById(id);
         if (!item){
@@ -43,7 +43,7 @@ export class SchedulingRequestService {
             throw new Error(`No schedule data found for request ID ${id}`);
         }
         
-        const savedPlan = await new OperationPlanService().createPlans(scheduleData, item.issuer);
+        const savedPlan = await new OperationPlanService().createPlans(scheduleData, item.issuer, token);
         if (!savedPlan || savedPlan.length === 0) {
             throw new Error(`Failed to save operation plans for request ID ${id}`);
         }

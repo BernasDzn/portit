@@ -45,13 +45,15 @@ dispatch_to_docks([], _, _, [], []).
 dispatch_to_docks([DockHead|DockTail], JsonData, Algorithm, [ScheduleHead|ScheduleRest], [MetricsHead|MetricsRest]) :-
     
     format(user_error, '~n***** Scheduling for dock: ~w *****~n', [DockHead]),
+    retractall(dock(_)),  % Remove previous dock before setting new one
     assertz(dock(DockHead)),
     dispatch_algorithm(JsonData, Algorithm, DockSchedule, DockMetrics),
 
-    ScheduleHead = #{dock: DockHead, schedule: DockSchedule},
+    % Format immediately while facts are available
+    format_timetable(DockSchedule, FormattedSchedule),
+    ScheduleHead = #{dock: DockHead, schedule: FormattedSchedule},
     MetricsHead = DockMetrics,
 
-    retractall(dock(_)),
     dispatch_to_docks(DockTail, JsonData, Algorithm, ScheduleRest, MetricsRest).
 
 dispatch_algorithm(JsonData, Algorithm, ScheduleResult, Metrics) :-

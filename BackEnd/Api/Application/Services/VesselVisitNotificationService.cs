@@ -341,9 +341,17 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
 
         try
         {
+            _logger.LogInformation("Collecting scheduling data for {Count} vessel visit notifications.", docksFromVessels.Count());
             foreach (var notification in notifications)
             {
+            _logger.LogInformation("VVN: {id}", notification.NotificationId);
                 var vessel = notification.Vessel;
+
+                var loadCount = notification.LoadCargoManifest?.Count ?? 0;
+                var unloadCount = notification.UnloadCargoManifest?.Count ?? 0;
+                
+                _logger.LogInformation("VVN {id}: LoadCount={load}, UnloadCount={unload}", 
+                    notification.NotificationId.Value, loadCount, unloadCount);
 
                 VesselTaskFactDto vesselTaskFact = new VesselTaskFactDto
                 {
@@ -351,8 +359,8 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
                     VvnId = notification.NotificationId.Value,
                     ETA = CalculateBaseHour(date, notification.ExpectedArrival),
                     ETD = CalculateBaseHour(date, notification.ExpectedDeparture),
-                    LoadingCount = notification.LoadCargoManifest?.Count ?? 0 /*CalculateLoadUnloadingTime(notification.LoadCargoManifest ?? new List<CargoTransport>(), selectedCrane)*/,
-                    UnloadingCount = notification.UnloadCargoManifest?.Count ?? 0 /*CalculateLoadUnloadingTime(notification.UnloadCargoManifest ?? new List<CargoTransport>(), selectedCrane)*/,
+                    LoadingCount = loadCount,
+                    UnloadingCount = unloadCount,
                     Dock = notification.GetLatestDecision()!.AssignedDock!.Code.Value
                 };
 

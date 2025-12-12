@@ -4,6 +4,7 @@ import { OperationPlanMapper } from "../mappers/operationPlanMapper";
 import { OperationPlanModel } from "../schemas/operationPlanSchema";
 import { Page, Pageable } from "../utils/page";
 import config from "../config/config";
+import { ContainerDto } from "../dto/container";
 
 
 export class OperationPlanRepository {
@@ -19,6 +20,7 @@ export class OperationPlanRepository {
 		const { pageNumber, pageSize } = pageable;
 		const skip = (pageNumber - 1) * pageSize;
 		const data = await OperationPlanModel.find()
+            .sort({ 'updatedAt': -1 })
 			.skip(skip)
 			.limit(pageSize);
 
@@ -91,4 +93,35 @@ export class OperationPlanRepository {
 		return unplannedVvnIds;
 	}
 
+	async deleteById(id: string): Promise<void> {
+		await OperationPlanModel.findByIdAndDelete(id);
+	}
+
+    async getContainersOfNotification(vvnId: string, token: string): Promise<ContainerDto[]> {
+
+        const url = `${config.backendServer}/VesselVisitNotification/${vvnId}`;
+        const res = await fetch(url, {
+            credentials: "include",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        if (!res.ok) {
+            throw new Error(`Failed to fetch VVN ${vvnId}: ${res.statusText}`);
+        }
+
+        const data = await res.json();
+        let loadCargoManifest = data.loadCargoManifest || [];
+        let unloadCargoManifest = data.unloadCargoManifest || [];
+
+        return [...loadCargoManifest, ...unloadCargoManifest].map((containerData: any) => {
+                return {
+                    position: containerData.position,
+                    area: containerData.area.nameCode,
+                    containerNumber: containerData.container.containerNumber,
+                } as ContainerDto;
+            }
+        );
+    }
 }
