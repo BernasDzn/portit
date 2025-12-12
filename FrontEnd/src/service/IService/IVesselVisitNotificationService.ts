@@ -19,4 +19,7 @@ export interface IVesselVisitNotificationService {
     deleteDraft(id: string): Promise<void>;
 
     count(): Promise<VesselVisitDistributionDto>;
+
+    rebalanceDocks(date: Date, daysAhead: number): Promise<any>;
+    applyRebalancing(assignments: any[]): Promise<void>;
 }

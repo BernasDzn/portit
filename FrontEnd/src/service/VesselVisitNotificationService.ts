@@ -111,4 +111,14 @@ export class VesselVisitNotificationService implements IVesselVisitNotificationS
     async deleteDraft(id: string): Promise<void> {
         await this.http.delete<void>(`/api/VesselVisitNotification?id=${id}`);
     }
+
+    async rebalanceDocks(date: Date, daysAhead: number): Promise<any> {
+        const dateStr = date.toISOString().split('T')[0];
+        const res = await this.http.get<any>(`/api/VesselVisitNotification/rebalanceDocks?date=${dateStr}&daysAhead=${daysAhead}`);
+        return res.data;
+    }
+
+    async applyRebalancing(assignments: any[]): Promise<void> {
+        await this.http.post('/api/VesselVisitNotification/applyRebalancing', assignments);
+    }
 }

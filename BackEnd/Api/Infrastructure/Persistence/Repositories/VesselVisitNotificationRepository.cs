@@ -218,8 +218,8 @@ public class VesselVisitNotificationRepository : GenericRepository<VesselVisitNo
         try
         {
             List<VesselVisitNotification> notifications = _context.VesselVisitNotifications
-                .Where(vvn => vvn.NotificationDecisions.Any(nd => nd.AssignedDock != null)) // Needs to be accepted and have a dock assigned
-                .Where(vvn => vvn.ExpectedArrival > day && vvn.ExpectedArrival < day.AddDays(daysAhead)) // Within the specified day range
+                .Where(vvn => vvn.NotificationDecisions.Any(nd => nd.AssignedDock != null))
+                .Where(vvn => vvn.ExpectedArrival >= day && vvn.ExpectedArrival <= day.AddDays(daysAhead))
                 .ToList();
 
             return Task.FromResult(notifications);

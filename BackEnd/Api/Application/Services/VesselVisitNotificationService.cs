@@ -25,6 +25,7 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
     private readonly IPhysicalResourceRepository _physicalResourceRepository;
     private readonly IStaffRepository _staffRepository;
     private readonly ILogger<VesselVisitNotificationService> _logger;
+    private readonly IConfiguration _configuration;
 
     public VesselVisitNotificationService(
         IVesselVisitNotificationRepository notificationRepository,
@@ -36,7 +37,8 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         IDockRepository dockRepository,
         IPhysicalResourceRepository physicalResourceRepository,
         IStaffRepository staffRepository,
-        ILogger<VesselVisitNotificationService> logger
+        ILogger<VesselVisitNotificationService> logger,
+        IConfiguration configuration
     )
     {
         _notificationRepository = notificationRepository;
@@ -49,6 +51,7 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         _physicalResourceRepository = physicalResourceRepository;
         _staffRepository = staffRepository;
         _logger = logger;
+        _configuration = configuration;
     }
 
     public async Task<IEnumerable<VesselVisitNotificationDto>> GetVesselVisitNotifications()
@@ -263,25 +266,28 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
     {
         List<VesselVisitNotification> notifications = await _notificationRepository.GetVesselVisitNotificationsOnDayAsync(date, daysAhead);
 
-        // In the future, we might need to handle multiple docks
-        // var filteredNotifications = notifications.Where(n => n.GetLatestDecision()!.AssignedDock!.Code.Value == dockCode.Value);
-
-        // The future is now, we handle multiple docks
-        IEnumerable<Dock> relevantDocks = notifications.Select(n => n.GetLatestDecision()!.AssignedDock!).DistinctBy(d => d.Code.Value);
-        if (!relevantDocks.Any())
+        IEnumerable<Dock> docksFromVessels = notifications
+            .Select(n => n.GetLatestDecision())
+            .Where(d => d != null && d.AssignedDock != null)
+            .Select(d => d!.AssignedDock!)
+            .DistinctBy(d => d.Code.Value);
+        
+        _logger.LogInformation($"CollectSchedulingData: Using {docksFromVessels.Count()} docks");
+        
+        if (!docksFromVessels.Any())
         {
             return new SchedulingResultDto
             {
                 CraneWorkloads = new List<CraneWorkloadDto>(),
                 VesselTaskFacts = new List<VesselTaskFactDto>(),
                 Docks = new List<DockDto>(),
-                Comment = "No docks assigned to the selected vessel visit notifications."
+                Comment = "No docks available in the system."
             };
         }
 
         // Select all cranes serving the relevant docks
         List<CraneWorkloadDto> craneWorkloads = new List<CraneWorkloadDto>();
-        Dictionary<Dock, IEnumerable<STSCrane>> dockCranesMap = await MapCranesAsync(relevantDocks);
+        Dictionary<Dock, IEnumerable<STSCrane>> dockCranesMap = await MapCranesAsync(docksFromVessels);
 
         if (dockCranesMap.Count() == 0)
         {
@@ -314,7 +320,7 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         {
             CraneWorkloads = craneWorkloads,
             VesselTaskFacts = new List<VesselTaskFactDto>(),
-            Docks = relevantDocks.Select(d => d.ToDTO()).ToList(),
+            Docks = docksFromVessels.Select(d => d.ToDTO()).ToList(),
             Comment = string.Empty
         };
 
@@ -346,13 +352,15 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
                     ETA = CalculateBaseHour(date, notification.ExpectedArrival),
                     ETD = CalculateBaseHour(date, notification.ExpectedDeparture),
                     LoadingCount = notification.LoadCargoManifest?.Count ?? 0 /*CalculateLoadUnloadingTime(notification.LoadCargoManifest ?? new List<CargoTransport>(), selectedCrane)*/,
-                    UnloadingCount = notification.LoadCargoManifest?.Count ?? 0 /*CalculateLoadUnloadingTime(notification.UnloadCargoManifest ?? new List<CargoTransport>(), selectedCrane)*/,
+                    UnloadingCount = notification.UnloadCargoManifest?.Count ?? 0 /*CalculateLoadUnloadingTime(notification.UnloadCargoManifest ?? new List<CargoTransport>(), selectedCrane)*/,
                     Dock = notification.GetLatestDecision()!.AssignedDock!.Code.Value
                 };
 
-                if (vesselTaskFact.LoadingCount > 0 && vesselTaskFact.UnloadingCount > 0)
+                if (vesselTaskFact.LoadingCount > 0 || vesselTaskFact.UnloadingCount > 0)
                     result.VesselTaskFacts.Add(vesselTaskFact);
             }
+
+            _logger.LogInformation($"CollectSchedulingData: Created {result.VesselTaskFacts.Count} vessel task facts");
         }
         catch (System.Exception e)
         {
@@ -443,5 +451,124 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
         }
         AppLogEvents.LogRetrieve(_logger, "vessel positions", positions.Count());
         return positions;
+    }
+
+    public async Task<DockRebalancingResponseDto> RebalanceDocks(DateTime date, uint daysAhead)
+    {
+        try
+        {
+            using var httpClient = new HttpClient();
+            var url = $"{_configuration["prolog_service_url"]}/rebalance?date={date:yyyy-MM-dd}&daysAhead={daysAhead}";
+            
+            var response = await httpClient.GetAsync(url);
+            response.EnsureSuccessStatusCode();
+
+            var jsonString = await response.Content.ReadAsStringAsync();
+
+            var root = System.Text.Json.JsonDocument.Parse(jsonString).RootElement;
+
+            if (root.TryGetProperty("data", out var dataElement) && 
+                dataElement.TryGetProperty("error", out var errorElement))
+            {
+                var errorMsg = errorElement.GetString() ?? "Unknown error from rebalancing service";
+                _logger.LogWarning($"Rebalancing service returned error: {errorMsg}");
+                throw new Exception(errorMsg);
+            }
+
+            var assignments = new List<DockRebalancingDto>();
+            var metricsDto = new RebalancingMetricsDto();
+            
+            if (root.TryGetProperty("data", out var dataElement2) && 
+                dataElement2.TryGetProperty("assignments", out var assignmentsElement))
+            {
+                foreach (var assignment in assignmentsElement.EnumerateArray())
+                {
+                    assignments.Add(new DockRebalancingDto
+                    {
+                        VvnId = assignment.GetProperty("vvnId").GetString() ?? "",
+                        Imo = assignment.GetProperty("imo").GetString() ?? "",
+                        CurrentDock = assignment.GetProperty("currentDock").GetString() ?? "",
+                        ProposedDock = assignment.GetProperty("proposedDock").GetString() ?? ""
+                    });
+                }
+            }
+
+            if (root.TryGetProperty("metrics", out var metricsElement))
+            {
+                metricsDto.Reassignments = metricsElement.GetProperty("reassignments").GetInt32();
+                metricsDto.AvgLoad = metricsElement.GetProperty("avgLoad").GetDouble();
+                metricsDto.LoadRange = metricsElement.GetProperty("loadRange").GetDouble();
+                metricsDto.MinLoad = metricsElement.GetProperty("minLoad").GetDouble();
+                metricsDto.MaxLoad = metricsElement.GetProperty("maxLoad").GetDouble();
+                metricsDto.StdDev = metricsElement.GetProperty("stdDev").GetDouble();
+                metricsDto.VesselCount = metricsElement.GetProperty("vesselCount").GetInt32();
+                metricsDto.DockCount = metricsElement.GetProperty("dockCount").GetInt32();
+                metricsDto.ComputationTime = metricsElement.GetProperty("computationTime").GetDouble();
+            }
+
+            var reassignments = assignments.Count(a => a.CurrentDock != a.ProposedDock);
+            _logger.LogInformation($"Dock rebalancing completed for day {date:yyyy-MM-dd}: {assignments.Count} vessels, {reassignments} reassignments needed");
+            AppLogEvents.LogRetrieve(_logger, "dock rebalancing", 1);
+
+            return new DockRebalancingResponseDto
+            {
+                Assignments = assignments.ToArray(),
+                Metrics = metricsDto
+            };
+        }
+        catch (HttpRequestException ex)
+        {
+            _logger.LogError($"Error calling Prolog rebalancing service: {ex.Message}");
+            throw new Exception($"Failed to communicate with scheduling service: {ex.Message}", ex);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Error during dock rebalancing: {ex.Message}");
+            throw new Exception($"Dock rebalancing failed: {ex.Message}", ex);
+        }
+    }
+
+    public async Task ApplyDockRebalancing(DockRebalancingDto[] assignments)
+    {
+
+        try
+        {
+            var reassignments = assignments.Where(a => a.CurrentDock != a.ProposedDock).ToList();
+            if (reassignments.Count == 0)
+                return;
+
+            foreach (var assignment in reassignments)
+            {
+                _logger.LogInformation($"Processing reassignment: VVN={assignment.VvnId}, IMO={assignment.Imo}, {assignment.CurrentDock} -> {assignment.ProposedDock}");
+                
+                var vvn = await _notificationRepository.GetVesselVisitNotificationByNotificationIdAsync(assignment.VvnId);
+                
+                if (vvn == null)
+                    throw new EntityNotFoundException($"Vessel Visit Notification with id {assignment.VvnId} was not found.");
+
+                var newDock = await _dockRepository.GetDockByCodeAsync(assignment.ProposedDock);
+                
+                if (newDock == null)
+                    throw new EntityNotFoundException($"Dock with code {assignment.ProposedDock} was not found.");
+
+                var latestDecision = vvn.GetLatestDecision();
+                if (latestDecision != null)
+                {
+                    latestDecision.UpdateAssignedDock(newDock);
+                    await _notificationRepository.UpdateAsync(vvn);
+                    _logger.LogInformation($"Successfully reassigned vessel {assignment.Imo} from {assignment.CurrentDock} to {assignment.ProposedDock}");
+                }
+                else
+                    throw new EntityNotFoundException($"No decision found for VVN: {vvn.NotificationId.Value}");
+                
+            }
+            _logger.LogInformation($"Successfully applied {reassignments.Count} dock reassignments");
+            AppLogEvents.LogUpdate(_logger, "dock assignments", reassignments.Count);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError($"Error applying dock rebalancing: {ex.Message}");
+            throw new Exception($"Failed to apply dock rebalancing: {ex.Message}", ex);
+        }
     }
 }

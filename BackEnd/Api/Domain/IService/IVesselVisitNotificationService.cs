@@ -23,6 +23,10 @@ public interface IVesselVisitNotificationService
     // Schedule operations
     Task<SchedulingResultDto> CollectSchedulingData(DateTime date, uint daysAhead);
     Task<VesselVisitDistributionDto> GetVesselVisitNotificationDistribution();
+    
+    // Dock rebalancing
+    Task<DockRebalancingResponseDto> RebalanceDocks(DateTime date, uint daysAhead);
+    Task ApplyDockRebalancing(DockRebalancingDto[] assignments);
 
     // Vessel Positions
     Task<IEnumerable<VesselPositionDto>> GetVesselPositionsAsync();

@@ -37,6 +37,9 @@ const daysAhead = ref<number>(1);
 const loading = ref(false);
 const generating = ref(false);
 
+const showRebalancingModal = ref(false);
+const rebalancingResult = ref<any>(null);
+
 const fetchVVNs = async () => {
 
     loading.value = true;
@@ -76,13 +79,32 @@ const generateTasksForDate = async () => {
     generating.value = true;
 
     try {
+        const rebalancing = await vvnService.rebalanceDocks(selectedDate.value, daysAhead.value);
         
-        const results = await scheduleService.scheduleForDay(selectedDate.value, selectedAlgorithm.value, daysAhead.value);
+        if (rebalancing.metrics && rebalancing.metrics.reassignments > 0) {
+            rebalancingResult.value = rebalancing;
+            showRebalancingModal.value = true;
+            generating.value = false;
+            closeModal();
+        } else {
+            await proceedWithScheduling();
+        }
+
+    } catch (error) {
+        generating.value = false;
+        notifications.enqueueNotification(`An error occurred while preparing schedule. ${error}`, notifications.notificationTypes.DANGER);
+    }
+};
+
+const proceedWithScheduling = async () => {
+    generating.value = true;
+    try {
+        const results = await scheduleService.scheduleForDay(selectedDate.value!, selectedAlgorithm.value!, daysAhead.value);
         console.log('Generated Schedule:', results);
 
         notifications.enqueueNotification(`${results.message}`, notifications.notificationTypes.SUCCESS);
         generating.value = false;
-        closeModal();
+        showRebalancingModal.value = false;
 
         // Goto queue
         router.push({
@@ -90,48 +112,40 @@ const generateTasksForDate = async () => {
         });
 
     } catch (error) {
-        
+        generating.value = false;
         notifications.enqueueNotification(`An error occurred while generating the schedule. ${error}`, notifications.notificationTypes.DANGER);
     }
+};
 
-    // if (!Array.isArray(results.data)){
-    //     notifications.enqueueNotification("An error occurred while generating the schedule. " + results.data, notifications.notificationTypes.DANGER);
-    //     generating.value = false;
-    //     return;
-    // }
-
-    // generating.value = false;
-
-    // if (results.data.length > 0) {
+const applyRebalancingAndSchedule = async () => {
+    if (!rebalancingResult.value) return;
+    
+    generating.value = true;
+    try {
+        await vvnService.applyRebalancing(rebalancingResult.value.assignments);
         
-    //     const algorithmLabel = algorithmList.find(a => a.value === selectedAlgorithm.value)?.label || selectedAlgorithm.value;
-    //     let message = `Successfully generated ${results.data.length} tasks using ${algorithmLabel}.`;
+        notifications.enqueueNotification(
+            `Applied dock rebalancing: ${rebalancingResult.value.metrics.reassignments} vessel(s) reassigned`,
+            notifications.notificationTypes.SUCCESS
+        );
         
-    //     // Add metrics to notification if available
-    //     if (results.metrics) {
-    //         message += ` Total delay: ${results.metrics.totalDelay}h, Computation time: ${(results.metrics.computationTime * 1000).toFixed(2)}ms`;
-    //     }
+        await proceedWithScheduling();
         
-    //     notifications.enqueueNotification(message, notifications.notificationTypes.SUCCESS);
-    //     closeModal();
+    } catch (error: any) {
+        generating.value = false;
+        notifications.enqueueNotification(
+            `Error applying rebalancing: ${error.message}`,
+            notifications.notificationTypes.DANGER
+        );
+    }
+};
 
-    //     // Generate and open schedule pdf
-    //     // const pdfResponse = await scheduleService.generateSchedulePDF(results, selectedDate.value);
-    //     // const pdfBlob = new Blob([pdfResponse], { type: 'application/pdf' });
-    //     // const pdfUrl = URL.createObjectURL(pdfBlob);
-    //     // window.open(pdfUrl, '_blank');
-    //     router.push({
-    //         name: 'ScheduleResults',
-    //         query: {
-    //             schedule: JSON.stringify(results),
-    //             date: selectedDate.value.toISOString()
-    //         }
-    //     });
-
-    // } else {
-        
-    //     notifications.enqueueNotification("The requested schedule came back empty, nothing to do on that dock at this time.", notifications.notificationTypes.NEUTRAL);
-    // }
+const skipRebalancingAndSchedule = async () => {
+    notifications.enqueueNotification(
+        'Skipped dock rebalancing - proceeding with current dock assignments',
+        notifications.notificationTypes.NEUTRAL
+    );
+    await proceedWithScheduling();
 };
 
 const events = ref<Array<{ title: string, start: string }>>([]);
@@ -291,6 +305,65 @@ const closeAboutModal = () => {
                 {{ t('buttons.close') }}
             </sl-button>
         </sl-dialog>
+
+        <!-- Rebalancing Preview Modal -->
+        <sl-dialog 
+            :open="showRebalancingModal" 
+            label="Dock Rebalancing Required"
+            class="rebalancing-dialog"
+            @sl-after-hide="showRebalancingModal = false"
+        >
+            <div v-if="rebalancingResult" class="rebalancing-content">
+                <sl-alert variant="warning" open>
+                    <sl-icon slot="icon" name="exclamation-triangle"></sl-icon>
+                    <strong>Before scheduling, the system recommends rebalancing dock assignments to optimize load distribution.</strong>
+                </sl-alert>
+
+                <div class="metrics-summary">
+                    <div class="metric">
+                        <span class="metric-label">Vessels to Reassign:</span>
+                        <sl-badge variant="warning">{{ rebalancingResult.metrics.reassignments }}</sl-badge>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Average Load:</span>
+                        <span class="metric-value">{{ rebalancingResult.metrics.avgLoad.toFixed(2) }}h</span>
+                    </div>
+                    <div class="metric">
+                        <span class="metric-label">Load Range:</span>
+                        <span class="metric-value">{{ rebalancingResult.metrics.loadRange.toFixed(2) }}h</span>
+                    </div>
+                </div>
+
+                <h4>Proposed Reassignments:</h4>
+                <table class="reassignments-table">
+                    <thead>
+                        <tr>
+                            <th>Vessel IMO</th>
+                            <th>Current Dock</th>
+                            <th>→</th>
+                            <th>Proposed Dock</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="assignment in rebalancingResult.assignments.filter((a: any) => a.currentDock !== a.proposedDock)" :key="assignment.imo">
+                            <td>{{ assignment.imo }}</td>
+                            <td><sl-badge variant="danger">{{ assignment.currentDock }}</sl-badge></td>
+                            <td><sl-icon name="arrow-right"></sl-icon></td>
+                            <td><sl-badge variant="success">{{ assignment.proposedDock }}</sl-badge></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div slot="footer" class="modal-actions">
+                <sl-button variant="default" @click="skipRebalancingAndSchedule" :disabled="generating">
+                    Skip & Continue with Current Assignments
+                </sl-button>
+                <sl-button variant="primary" @click="applyRebalancingAndSchedule" :loading="generating" :disabled="generating">
+                    Apply Rebalancing & Generate Schedule
+                </sl-button>
+            </div>
+        </sl-dialog>
     </div>
 </template>
 
@@ -351,5 +424,69 @@ const closeAboutModal = () => {
     margin-bottom: 1rem;
 }
 
+/* Rebalancing Modal Styles */
+.rebalancing-dialog {
+    --width: 800px;
+}
+
+.rebalancing-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.metrics-summary {
+    display: flex;
+    gap: 2rem;
+    padding: 1rem;
+    background: var(--sl-color-neutral-50);
+    border-radius: 8px;
+}
+
+.metric {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.metric-label {
+    font-weight: 500;
+    color: var(--sl-color-neutral-700);
+}
+
+.metric-value {
+    font-weight: 600;
+    color: var(--sl-color-neutral-900);
+}
+
+.reassignments-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+}
+
+.reassignments-table th,
+.reassignments-table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid var(--sl-color-neutral-200);
+}
+
+.reassignments-table thead th {
+    font-weight: 600;
+    background: var(--sl-color-neutral-50);
+    border-bottom: 2px solid var(--sl-color-neutral-300);
+    color: var(--sl-color-neutral-700);
+}
+
+.reassignments-table tbody tr:hover {
+    background: var(--sl-color-neutral-50);
+}
+
+.modal-actions {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: flex-end;
+}
 
 </style>

@@ -35,6 +35,11 @@ public class NotificationDecision : IDTOAble<NotificationDecisionDto>
         isFinal = true;
     }
 
+    public void UpdateAssignedDock(Dock? dock)
+    {
+        AssignedDock = dock;
+    }
+
     public NotificationDecisionDto ToDTO()
     {
         return new NotificationDecisionDto

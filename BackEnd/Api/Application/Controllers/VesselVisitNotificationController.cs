@@ -419,4 +419,48 @@ public class VesselVisitNotificationController : ControllerBase, IVesselVisitNot
             return StatusCode(500, "An error occurred while retrieving vessel visit notification distribution.");
         }
     }
+
+    [HttpGet("rebalanceDocks", Name = "RebalanceDocks")]
+    [Authorize(Policy = "VesselVisitNotification.View")]
+    public async Task<ActionResult<DockRebalancingResponseDto>> RebalanceDocks([FromQuery] DateTime date, uint daysAhead = 0)
+    {
+        try
+        {
+            _logger.LogInformation($"Rebalancing docks for date {date:yyyy-MM-dd}");
+            DockRebalancingResponseDto result = await _notificationService.RebalanceDocks(date, daysAhead);
+            return Ok(result);
+        }
+        catch (EntityNotFoundException e)
+        {
+            _logger.LogError($"Error during dock rebalancing: {e.Message}");
+            return NotFound(e.Message);
+        }
+        catch (System.Exception e)
+        {
+            _logger.LogCritical("Error rebalancing docks for vessel visit notifications, {Message}", e.Message);
+            return StatusCode(500, $"An error occurred while rebalancing docks: {e.Message}");
+        }
+    }
+
+    [HttpPost("applyRebalancing", Name = "ApplyRebalancing")]
+    [Authorize(Policy = "VesselVisitNotification.Edit")]
+    public async Task<ActionResult> ApplyDockRebalancing([FromBody] DockRebalancingDto[] assignments)
+    {
+        try
+        {
+            _logger.LogInformation($"Applying dock rebalancing for {assignments.Length} vessels");
+            await _notificationService.ApplyDockRebalancing(assignments);
+            return Ok(new { message = $"Successfully reassigned {assignments.Count(a => a.CurrentDock != a.ProposedDock)} vessels to new docks" });
+        }
+        catch (EntityNotFoundException e)
+        {
+            _logger.LogError($"Error applying dock rebalancing: {e.Message}");
+            return NotFound(e.Message);
+        }
+        catch (System.Exception e)
+        {
+            _logger.LogCritical("Error applying dock rebalancing, {Message}", e.Message);
+            return StatusCode(500, $"An error occurred while applying dock rebalancing: {e.Message}");
+        }
+    }
 }
