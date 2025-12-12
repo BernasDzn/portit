@@ -1,14 +1,13 @@
+import { errorHandler } from './api/middlewares/errorHandler';
+import { swaggerSpec } from './config/swagger';
+import { bootstrap } from './bootstrap';
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
-import { errorHandler } from './middlewares/errorHandler';
-import { swaggerSpec } from './config/swagger';
 import mongoose from 'mongoose';
 import config from './config/config';
-import { bootstrap } from './bootstrap';
 import cookieParser from 'cookie-parser';
 
-import planRoutes from './routes/operationPlanRoutes';
-import requestRoutes from './routes/scheduleRequestRoutes';
+import routes from './api';
 
 const app = express();
 app.use(cookieParser());
@@ -34,8 +33,7 @@ mongoose.connect(config.mongoUri, {})
 app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Routes
-app.use('/operation-plans', planRoutes);
-app.use('/schedule', requestRoutes);
+app.use(routes());
 
 // Global error handler (should be after routes)
 app.use(errorHandler);

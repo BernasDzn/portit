@@ -1,3 +1,4 @@
+import { Service } from "typedi";
 import { OperationPlan } from "../domain/operationPlan";
 import { Operation } from "../domain/value/operation";
 import { OperationPlanMetadata } from "../domain/value/operationPlanMetadata";
@@ -12,6 +13,7 @@ import { Payload } from "../domain/value/payload";
 import { ContainerDto } from "../dto/container";
 
 
+@Service("operationPlanService")
 export class OperationPlanService {
 
 	operationPlanRepository: OperationPlanRepository;
