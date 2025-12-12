@@ -125,7 +125,7 @@ export class OperationPlanService {
         const laneCount: number = resources.length;
 
         // The containers to subdivide the original task into
-        let containerList = await this.operationPlanRepository.getContainersOfNotification(vvnId, token);
+        let containerList = await this.operationPlanRepository.getContainersOfNotification(vvnId, token, isUnload);
         if (containerList.length == 0) return [];
 
         const operationsPerLane = Math.ceil(containerList.length / laneCount);

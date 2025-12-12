@@ -6,18 +6,19 @@ import { useI18n } from 'vue-i18n';
 import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
 import type { IOperationPlanService } from '@/service/IService/IOperationPlanService';
-import type { OperationPlanDto } from '@/model/dto/OperationPlanDto';
-import GanttChart, { type GanttItem } from '@/components/GanttChart.vue';
-import EntityForm from '@/components/crud/EntityForm.vue';
-import EntityDropdown from '@/components/crud/EntityDropdown.vue';
 import type { IStaffService } from '@/service/IService/IStaffService';
 import type { IPhysicalResourceService } from '@/service/IService/IPhysicalResourceService';
+import type { OperationPlanDto } from '@/model/dto/OperationPlanDto';
 import type { Staff } from '@/model/Staff';
 import type { STSCrane } from '@/model/PhysicalResource';
 import { useTaskCategories } from '@/composables/taskcats';
+import GanttChart, { type GanttItem } from '@/components/GanttChart.vue';
+import EntityForm from '@/components/crud/EntityForm.vue';
+import Loading from '@/components/Loading.vue';
 import type { GanttBarObject } from '@infectoone/vue-ganttastic';
-import type { IStorageAreaService } from '@/service/IService/IStorageAreaService';
-import ObjectSelector from '@/components/crud/ObjectSelector.vue';
+import { useOperationValidation } from '@/composables/opwarnings';
+import OperationWarnings from './PlanTools/OperationWarnings.vue';
+import OperationDetailsDrawer from './PlanTools/OperationDetailsDrawer.vue';
 
 const notifications = useAlerts();
 const route = useRoute();
@@ -25,39 +26,25 @@ const { t } = useI18n();
 const { getGanttItems, getGanttRowConfigs } = useTaskCategories();
 
 const planId = String(route.params.id || '');
-
 const planService = container.get<IOperationPlanService>(TYPES.operationPlanService);
 const staffService = container.get<IStaffService>(TYPES.staffService);
 const physicalResourceService = container.get<IPhysicalResourceService>(TYPES.physicalResourceService);
-const storageAreaService = container.get<IStorageAreaService>(TYPES.storageAreaService);
 
 const plan = ref<OperationPlanDto | null>(null);
-const selectedStaff = ref<string[]>([]);
-const selectedSTSCranes = ref<string[]>([]);
 const allStaff = ref<Staff[]>([]);
 const allSTSCranes = ref<STSCrane[]>([]);
+const loading = ref(false);
+const editingOperation = ref<number | null>(null);
 
 const ganttItems = computed(() => plan.value ? getGanttItems(plan.value) : []);
 const ganttRowConfigs = computed(() => plan.value ? getGanttRowConfigs(plan.value) : []);
 
-const onItemUpdated = (updatedItem: GanttItem) => {
-    if (!plan.value) return;
-    
-    const match = updatedItem.id.match(/^op(\d+)/);
-    if (!match) return;
-    
-    const opIndex = parseInt(match[1]);
-    
-    if (opIndex >= 0 && opIndex < plan.value.operationSchedule.length) {
-        plan.value.operationSchedule[opIndex].startTime = updatedItem.startTime;
-        plan.value.operationSchedule[opIndex].endTime = updatedItem.endTime;
-        
-        console.log('Updated operation schedule:', plan.value.operationSchedule);
-    }
-};
+const { warnings } = useOperationValidation(plan, allSTSCranes);
 
 onMounted(async () => {
     try {
+        loading.value = true;
+
         plan.value = await planService.getOperationPlanById(planId);
 
         const [staffPage, resourcesPage] = await Promise.all([
@@ -70,69 +57,66 @@ onMounted(async () => {
             r.liftingCapacity !== undefined && r.status === 0
         );
 
-        const usedResources = new Set<string>();
-        plan.value.operationSchedule.forEach(op => {
-            op.resources.forEach(res => usedResources.add(res.name));
-        });
-
-        selectedStaff.value = allStaff.value
-            .filter(s => usedResources.has(s.mechanographicNumber) || usedResources.has(s.name))
-            .map(s => s.mechanographicNumber);
-
-        selectedSTSCranes.value = allSTSCranes.value
-            .filter(c => usedResources.has(c.code) || usedResources.has(c.description))
-            .map(c => c.code);
-
     } catch (error) {
         console.error('Error loading resources:', error);
         notifications.enqueueNotification(
             'Failed to load operation plan', 
             notifications.notificationTypes.DANGER
         );
+    } finally {
+        loading.value = false;
     }
 });
 
-const savePlan = async () => {
-    console.log('Saving plan:', plan.value);
+const onItemUpdated = (updatedItem: GanttItem) => {
+    if (!plan.value) return;
+    
+    const match = updatedItem.id.match(/^op(\d+)/);
+    if (!match) return;
+    
+    const opIndex = parseInt(match[1]);
+    
+    if (opIndex >= 0 && opIndex < plan.value.operationSchedule.length) {
+        // Update with new array to trigger reactivity
+        plan.value.operationSchedule = plan.value.operationSchedule.map((op, idx) => {
+            if (idx === opIndex) {
+                return {
+                    ...op,
+                    startTime: updatedItem.startTime,
+                    endTime: updatedItem.endTime
+                };
+            }
+            return op;
+        });
+    }
 };
 
-const editingOperation = ref<number | null>(null);
 const onOperationClick = (value: {
     bar: GanttBarObject;
     e: MouseEvent;
     datetime?: string | Date | undefined;
 }) => {
-    
     const index = value.bar.ganttBarConfig.id.split("-")[0].slice(2);
-
-    // Find operation on list
     const operations = plan.value?.operationSchedule;
-    if (!operations) return;
-
-    const operation = operations[parseInt(index)];
-    if (!operation) return;
+    
+    if (!operations || !operations[parseInt(index)]) return;
 
     editingOperation.value = parseInt(index);
-
-    // Open drawer
+    
     const drawer = document.querySelector('sl-drawer') as any;
-    if (drawer) {
-        drawer.show();
-    }
-}
+    drawer?.show();
+};
 
 const closeDrawer = () => {
     const drawer = document.querySelector('sl-drawer') as any;
-    if (drawer) {
-        drawer.hide();
-    }
+    drawer?.hide();
     editingOperation.value = null;
-}
-
-const newRow = () => {
-
 };
 
+const savePlan = async () => {
+    console.log('Saving plan:', plan.value);
+    // TODO: Implement save logic
+};
 </script>
 
 <template>
@@ -159,17 +143,15 @@ const newRow = () => {
         <h1 class="title">{{ t('operationPlan.tabs.edit') }}</h1>
         <p class="subtitle">{{ t('operationPlan.subtitle.edit') }}</p>
         
-        <h3>{{ t('operationPlan.schedule.title') }}</h3>
-
-        <div style="display: flex; gap: 1em">
-    
-            <sl-button variant="default" type="submit" @click="newRow">
-                <sl-icon slot="prefix" name="plus-circle"></sl-icon>
-                Add operation track
-            </sl-button>
-        </div>
-
-        <EntityForm :object="plan" :submit-function="savePlan" :editing-id="planId">
+        <Loading v-if="loading" />
+        <EntityForm 
+            v-else 
+            :object="plan" 
+            :submit-function="savePlan" 
+            :editing-id="planId"
+        >
+            <h3 class="section-title">{{ t('operationPlan.schedule.title') }}</h3>
+            
             <div class="form-fields">
                 <div class="schedule-section">
                     <GanttChart
@@ -179,56 +161,16 @@ const newRow = () => {
                         @bar-click="onOperationClick"
                     />
                 </div>
+                
+                <OperationWarnings :warnings="warnings" />
             </div>
         </EntityForm>
 
-        <sl-drawer label="Drawer" class="drawer-overview">
-            <h3>
-                Operation Details
-            </h3>
-
-            <div v-if="plan && editingOperation && plan?.operationSchedule[editingOperation!]">
-                <p>
-                    Start date: 
-                    {{ new Date(plan?.operationSchedule[editingOperation!]?.startTime).toLocaleString().split(',')[1].split(":").slice(0,2).join(":") }}
-                </p>
-                <p>
-                    End date: 
-                    {{ new Date(plan?.operationSchedule[editingOperation!]?.endTime).toLocaleString().split(',')[1].split(":").slice(0,2).join(":") }}
-                </p>
-    
-                <p><strong>Category:</strong> {{ plan?.operationSchedule[editingOperation!]?.type.description }} operation</p>
-    
-                <sl-divider></sl-divider>
-                <h3>Resources</h3>
-    
-                <sl-divider></sl-divider>
-                <h3>Operation playload</h3>
-                <div v-if="plan?.operationSchedule[editingOperation!]?.type.category.value == 'LOAD' || plan?.operationSchedule[editingOperation!]?.type.category.value == 'UNLOAD'">
-                        
-                    <sl-input 
-                        name="containerId" 
-                        label="Container ID:"
-                        disabled
-                        :value="plan?.operationSchedule[editingOperation!]?.payload.containerId || 'Not specified'"
-                    ></sl-input>
-                    <br>
-                    <sl-input 
-                        name="storageArea" 
-                        label="Storage area:"
-                        disabled
-                        :value="plan?.operationSchedule[editingOperation!]?.payload.storageLocation || 'Not specified'"
-                    ></sl-input>
-    
-                </div>
-                <div v-else>
-                    <i>No payload specifiable for this operation category</i>
-                </div>
-            </div>
-
-
-            <sl-button @click="closeDrawer" slot="footer" variant="primary">Close</sl-button>
-          </sl-drawer>          
+        <OperationDetailsDrawer
+            :plan="plan" 
+            :operation-index="editingOperation"
+            @close="closeDrawer"
+        />
     </div>
 </template>
 
@@ -239,26 +181,10 @@ const newRow = () => {
     gap: 1rem;
 }
 
-.resources-section {
-    margin-top: 1rem;
-}
-
-.resources-section h3,
-.schedule-section h3 {
-    margin-bottom: 1rem;
+.section-title {
+    margin-bottom: 0;
     font-size: 1.2rem;
     font-weight: 600;
-}
-
-.resource-selectors {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-}
-
-.resource-dropdown {
-    flex: 1;
-    min-width: 300px;
 }
 
 .schedule-section {

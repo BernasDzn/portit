@@ -97,7 +97,7 @@ export class OperationPlanRepository {
 		await OperationPlanModel.findByIdAndDelete(id);
 	}
 
-    async getContainersOfNotification(vvnId: string, token: string): Promise<ContainerDto[]> {
+    async getContainersOfNotification(vvnId: string, token: string, isUnload: boolean): Promise<ContainerDto[]> {
 
         const url = `${config.backendServer}/VesselVisitNotification/${vvnId}`;
         const res = await fetch(url, {
@@ -115,7 +115,7 @@ export class OperationPlanRepository {
         let loadCargoManifest = data.loadCargoManifest || [];
         let unloadCargoManifest = data.unloadCargoManifest || [];
 
-        return [...loadCargoManifest, ...unloadCargoManifest].map((containerData: any) => {
+        return (isUnload ? [...unloadCargoManifest] : [...loadCargoManifest]).map((containerData: any) => {
                 return {
                     position: containerData.position,
                     area: containerData.area.nameCode,
