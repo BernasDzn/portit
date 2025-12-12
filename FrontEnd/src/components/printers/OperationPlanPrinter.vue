@@ -77,13 +77,22 @@ const cranes = computed(() => {
                 <div class="operations-section">
                     <p class="metrics-title">{{ t('operationPlan.schedule.title') }}</p>
                     <div class="operations-list">
-                        <div v-for="(operation, idx) in props.operationPlan.operationSchedule" :key="idx" class="operation-item">
+                        <!-- <div v-for="(operation, idx) in props.operationPlan.operationSchedule" :key="idx" class="operation-item">
                             <sl-badge :variant="taskCategories.colorMapCategory(operation.type)">
                                 {{ operation.type.description }}
                             </sl-badge>
                             <span class="operation-time">
                                 {{ new Date(operation.startTime).toLocaleString() }} -> {{ new Date(operation.endTime).toLocaleString() }}
                             </span>
+                        </div> -->
+                        <div class="operation-item">
+                            <sl-badge variant="warning">
+                                Unloading operations: {{ props.operationPlan.operationSchedule.filter(op => op.type.category.value === "UNLOAD").length }}
+                            </sl-badge>
+    
+                            <sl-badge variant="success">
+                                Loading operations: {{ props.operationPlan.operationSchedule.filter(op => op.type.category.value === "LOAD").length }}
+                            </sl-badge>
                         </div>
                     </div>
                 </div>

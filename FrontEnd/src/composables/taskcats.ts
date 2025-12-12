@@ -3,12 +3,17 @@ import type { OperationPlanDto } from "@/model/dto/OperationPlanDto";
 import type TaskCategoryDto from "@/model/dto/TaskCategoryDto";
 
 const categoryColorMap = {
+    'LOAD': 'success',
+    'UNLOAD': 'warning',
+};
+
+const operationColorMap = {
     'LOAD': '#27ae60',
     'UNLOAD': '#c0392b',
 };
 
-function colorMapCategory(cat: TaskCategoryDto) {
-    return categoryColorMap[cat.category.value] || 'primary';
+function colorMapCategory(cat: string) {
+    return categoryColorMap[cat] || 'primary';
 }
 
 const getGanttItems = (plan: OperationPlanDto): GanttItem[] => {
@@ -23,7 +28,7 @@ const getGanttItems = (plan: OperationPlanDto): GanttItem[] => {
             return;
         }
         
-        const opColor = colorMapCategory(op.type);
+        const opColor = operationColorMap[op.type.category.value];
         
         // Create an item for each resource in this operation
         op.resources.forEach((resource, resIndex) => {
