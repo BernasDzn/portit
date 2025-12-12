@@ -77,7 +77,6 @@ const onItemUpdated = (updatedItem: GanttItem) => {
     const opIndex = parseInt(match[1]);
     
     if (opIndex >= 0 && opIndex < plan.value.operationSchedule.length) {
-        // Update with new array to trigger reactivity
         plan.value.operationSchedule = plan.value.operationSchedule.map((op, idx) => {
             if (idx === opIndex) {
                 return {
@@ -150,7 +149,7 @@ const savePlan = async () => {
             :submit-function="savePlan" 
             :editing-id="planId"
         >
-            <h3 class="section-title">{{ t('operationPlan.schedule.title') }}</h3>
+            <h3>{{ t('operationPlan.schedule.title') }}</h3>
             
             <div class="form-fields">
                 <div class="schedule-section">
@@ -179,12 +178,6 @@ const savePlan = async () => {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-}
-
-.section-title {
-    margin-bottom: 0;
-    font-size: 1.2rem;
-    font-weight: 600;
 }
 
 .schedule-section {
