@@ -36,9 +36,10 @@ extract_vessels_for_rebalancing([JsonVessel|Rest], [Vessel|RestVessels]) :-
     get_dict(imoNumber, VesselData, Imo),
     get_dict(type, VesselData, VesselType),
     get_dict(name, VesselType, TypeName),
+    get_dict(vvnId, JsonVessel, VvnId),
     get_dict(dock, JsonVessel, Dock), get_dict(eta, JsonVessel, Arrival),
     get_dict(unloadingCount, JsonVessel, Unload), get_dict(loadingCount, JsonVessel, Load),
-    Vessel = vessel{imo: Imo, name: Name, vesselType: TypeName, dock: Dock, arrival: Arrival, unload: Unload, load: Load}, !,
+    Vessel = vessel{vvnId: VvnId, imo: Imo, name: Name, vesselType: TypeName, dock: Dock, arrival: Arrival, unload: Unload, load: Load}, !,
     extract_vessels_for_rebalancing(Rest, RestVessels).
 extract_vessels_for_rebalancing([_|Rest], RestVessels) :-
     extract_vessels_for_rebalancing(Rest, RestVessels).
@@ -82,7 +83,7 @@ assign_vessels_to_docks([Vessel|RestVessels], Current, Final, [Assignment|RestAs
     find_min_load_compatible_dock(Current, Vessel.vesselType, MinDock),
     VesselLoad is (Vessel.unload + Vessel.load) / MinDock.cranes,
     NewLoad is MinDock.total_load + VesselLoad,
-    Assignment = assignment{imo: Vessel.imo, vessel: Vessel.name, current_dock: Vessel.dock, proposed_dock: MinDock.dock, load_contribution: VesselLoad},
+    Assignment = assignment{vvnId: Vessel.vvnId, imo: Vessel.imo, vessel: Vessel.name, current_dock: Vessel.dock, proposed_dock: MinDock.dock, load_contribution: VesselLoad},
     update_dock_load(Current, MinDock.dock, Vessel.name, NewLoad, Updated),
     assign_vessels_to_docks(RestVessels, Updated, Final, RestAssignments).
 
@@ -153,7 +154,7 @@ format_result(Assignments, FinalLoads, Result) :-
 
 format_assignments([], []).
 format_assignments([Assignment|Rest], [Dict|RestFormatted]) :-
-    Dict = #{imo: Assignment.imo, vessel: Assignment.vessel, currentDock: Assignment.current_dock, proposedDock: Assignment.proposed_dock},
+    Dict = #{vvnId: Assignment.vvnId, imo: Assignment.imo, vessel: Assignment.vessel, currentDock: Assignment.current_dock, proposedDock: Assignment.proposed_dock},
     format_assignments(Rest, RestFormatted).
 
 format_dock_loads([], []).
