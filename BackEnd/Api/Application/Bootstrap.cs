@@ -35,6 +35,8 @@ public static class Bootstrap
         BootstrapStaff(context);
         // Bootstrap Vessel Visit Notifications
         BootstrapVVN(context);
+        // Bootstrap Privacy Policy
+        BootstrapPrivacyPolicy(context);
     }
 
     private static async Task BootstrapRolesAsync(RoleManager<SystemUserRole> roleManager)
@@ -199,9 +201,9 @@ public static class Bootstrap
 
         // Add Bootstrap data
         context.Docks.AddRange(
-            new Dock(Guid.NewGuid(),new Code{Value = "DCK001"}, new Designation { Value = "Dock A" }, new Designation { Value = "North Harbor" }, new PhysicalCharacteristics { Length = 500, Depth = 35, Draft = 20 }, new HashSet<VesselType> { vt4, vt1 }),
-            new Dock(Guid.NewGuid(),new Code{Value = "DCK002"}, new Designation { Value = "Dock B" }, new Designation { Value = "East Harbor" }, new PhysicalCharacteristics { Length = 700, Depth = 35, Draft = 20 }, new HashSet<VesselType> { vt5 }),
-            new Dock(Guid.NewGuid(),new Code{Value = "DCK003"}, new Designation { Value = "Dock C" }, new Designation { Value = "South Harbor" }, new PhysicalCharacteristics { Length = 700, Depth = 40, Draft = 25 }, new HashSet<VesselType> { vt2, vt3 })
+            new Dock(Guid.NewGuid(), new Code { Value = "DCK001" }, new Designation { Value = "Dock A" }, new Designation { Value = "North Harbor" }, new PhysicalCharacteristics { Length = 500, Depth = 35, Draft = 20 }, new HashSet<VesselType> { vt4, vt1 }),
+            new Dock(Guid.NewGuid(), new Code { Value = "DCK002" }, new Designation { Value = "Dock B" }, new Designation { Value = "East Harbor" }, new PhysicalCharacteristics { Length = 700, Depth = 35, Draft = 20 }, new HashSet<VesselType> { vt5 }),
+            new Dock(Guid.NewGuid(), new Code { Value = "DCK003" }, new Designation { Value = "Dock C" }, new Designation { Value = "South Harbor" }, new PhysicalCharacteristics { Length = 700, Depth = 40, Draft = 25 }, new HashSet<VesselType> { vt2, vt3 })
         );
 
         context.SaveChanges();
@@ -773,6 +775,61 @@ public static class Bootstrap
         vvn4.Submit();
 
         context.VesselVisitNotifications.AddRange(vvn1, vvn2, vvn3, vvn4);
+        context.SaveChanges();
+    }
+
+    private static void BootstrapPrivacyPolicy(ApiContext context)
+    {
+        if (context.PrivacyPolicies.Any())
+            return;
+
+        var defaultContent = @"<h3>Rights of Non-User Data Subjects</h3>
+
+In the course of delivering port services and managing vessel operations, we process personal data relating to individuals who do not directly use our systems (""non-users"").
+This includes, for example, crew members, captains, staff, security officers, and other personnel involved in port calls or operational activities.
+We are committed to handling such data in accordance with the General Data Protection Regulation (GDPR). As a data subject, you are entitled to exercise the following rights:
+
+    Right of Access: You may request confirmation of whether we process your personal data and obtain a copy of that data.
+
+    Right to Rectification: You may request that inaccurate or incomplete information about you be corrected.
+
+    Right to Erasure: You may request deletion of your personal data where applicable and where no overriding legal basis exists for its retention.
+
+    Right to Restrict Processing: You may request that the processing of your data be limited in certain circumstances.
+
+    Right to Object: You may object to processing carried out on the basis of legitimate interests or public interest.
+
+    Right to Data Portability: You may request that your data be provided to you in a structured, commonly used, and machine-readable format, where technically feasible.
+
+<h4>Submitting a GDPR Request</h4>
+
+If your personal data has been provided to us as part of a vessel call, port operation, or compliance requirement, you may exercise your rights at any time by contacting:
+
+Email: [Insert dedicated privacy or data protection email]
+
+Postal Address: [Insert organization/port authority address]
+Subject Line: ""GDPR Data Subject Request - Non-User""
+
+To help us identify your data, please include:
+
+    - Your full name
+    - Your role or relationship port (e.g., crew member, captain, port staff)
+    - The vessel name, company name, or port call reference (if applicable)
+    - The specific rights you wish to exercise
+    - Any additional information that may assist us in locating your personal data (e.g., port call date, documentation submitted)
+
+<h4>Verification Procedures</h4>
+To protect the confidentiality and security of personal data, we may request additional information to confirm your identity before responding to your request.
+
+<h4>Response Timeframe</h4>
+We aim to respond to all valid GDPR requests within one month. If the request is particularly complex or numerous, we may require additional time; if so, we will inform you accordingly.
+
+
+<h4>Right to Lodge a Complaint</h4>
+If you believe your rights have not been upheld, you may lodge a complaint with the relevant Data Protection Authority in your jurisdiction.";
+
+        var policy = new PrivacyPolicy(Guid.NewGuid(), defaultContent, DateTime.UtcNow, true);
+        context.PrivacyPolicies.Add(policy);
         context.SaveChanges();
     }
 
