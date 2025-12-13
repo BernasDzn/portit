@@ -1,6 +1,6 @@
-import { OperationPlan } from "../../src/domain/operationPlan";
-import { OperationPlanMetadata } from "../../src/domain/value/operationPlanMetadata";
-import { LinkedList } from "../../src/utils/linkedList";
+import LinkedList from '../../../src/utils/linkedList';
+import OperationPlan from '../../../src/domain/operationPlan';
+import OperationPlanMetadata from '../../../src/domain/value/operationPlanMetadata';
 
 describe ('Operation Plan Domain Tests', () => {
 
