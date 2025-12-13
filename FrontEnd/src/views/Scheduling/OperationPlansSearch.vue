@@ -14,6 +14,7 @@ import ListingBox from '@/components/crud/ListingBox.vue';
 import type { VesselVisitNotification } from '@/model/VesselVisitNotification';
 import type { OperationPlanDto, OperationPlanFilter } from '@/model/dto/OperationPlanDto';
 import { useAlerts } from '@/composables/alerts';
+import { useRouter } from 'vue-router';
 
 const operationPlanService = container.get<IOperationPlanService>(TYPES.operationPlanService);
 const schedulingService = container.get<ISchedulingService>(TYPES.schedulingService);
@@ -21,6 +22,7 @@ const vvnService = container.get<IVesselVisitNotificationService>(TYPES.vesselVi
 const notifications = useAlerts();
 
 const { t, locale } = useI18n();
+const router = useRouter();
 
 const operationPlans = ref<Page<OperationPlanDto>>({ items: [], 
     pageCount: 0, pageNumber: 0, pageSize: 0
@@ -152,7 +154,7 @@ const confirmRegeneration = async () => {
         closeRegenerationModal();
         
         // Refresh unplanned VVNs to remove any that might have been queued
-        await fetchUnplannedVVNs();
+        router.push({ name: 'Scheduling Queue' });
     } catch (error: any) {
         notifications.enqueueNotification(
             `Error queueing regeneration: ${error.message || error}`,
