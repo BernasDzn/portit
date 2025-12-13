@@ -19,6 +19,7 @@ import type { GanttBarObject } from '@infectoone/vue-ganttastic';
 import { useOperationValidation } from '@/composables/opwarnings';
 import OperationWarnings from './PlanTools/OperationWarnings.vue';
 import OperationDetailsDrawer from './PlanTools/OperationDetailsDrawer.vue';
+import OperationPlanToolbar from './PlanTools/OperationPlanToolbar.vue';
 
 const notifications = useAlerts();
 const route = useRoute();
@@ -46,6 +47,8 @@ onMounted(async () => {
         loading.value = true;
 
         plan.value = await planService.getOperationPlanById(planId);
+        
+        originalSchedule.value = JSON.parse(JSON.stringify(plan.value));
 
         const [staffPage, resourcesPage] = await Promise.all([
             staffService.getStaffs(),
@@ -164,6 +167,93 @@ const savePlan = async () => {
     console.log('Saving plan:', plan.value);
     // TODO: Implement save logic
 };
+
+// Operations
+const originalSchedule = ref<OperationPlanDto | null>(null);
+const ganttKey = ref(0);
+
+const handleShiftOperations = (minutes: number) => {
+    if (!plan.value) return;
+
+    const updatedSchedule = plan.value.operationSchedule.map(op => {
+        const startTime = new Date(op.startTime);
+        const endTime = new Date(op.endTime);
+        
+        startTime.setMinutes(startTime.getMinutes() + minutes);
+        endTime.setMinutes(endTime.getMinutes() + minutes);
+        
+        return {
+            ...op,
+            startTime: startTime.toISOString(),
+            endTime: endTime.toISOString()
+        };
+    });
+    
+    plan.value.operationSchedule = updatedSchedule;
+    
+    notifications.enqueueNotification(
+        `All operations shifted ${Math.abs(minutes)} minutes ${minutes > 0 ? 'forward' : 'backward'}`,
+        notifications.notificationTypes.SUCCESS
+    );
+
+    ganttKey.value += 1; // Force Gantt chart to re-render
+};
+
+const handleOptimizeSchedule = () => {
+    if (!plan.value || plan.value.operationSchedule.length === 0) return;
+    
+    // Sort operations by start time and remove gaps
+    const sorted = [...plan.value.operationSchedule].sort(
+        (a, b) => new Date(a.startTime).getTime() - new Date(b.startTime).getTime()
+    );
+    
+    // Pack operations
+    let currentTime = new Date(sorted[0].startTime).getTime();
+    const optimized = sorted.map(op => {
+        const duration = new Date(op.endTime).getTime() - new Date(op.startTime).getTime();
+        const newStart = new Date(currentTime);
+        const newEnd = new Date(currentTime + duration);
+        
+        currentTime = newEnd.getTime();
+        
+        return {
+            ...op,
+            startTime: newStart.toISOString(),
+            endTime: newEnd.toISOString()
+        };
+    });
+    
+    plan.value = {
+        ...plan.value,
+        operationSchedule: optimized
+    };
+    
+    ganttKey.value++; // Force re-render
+    
+    notifications.enqueueNotification(
+        'Schedule optimized',
+        notifications.notificationTypes.PRIMARY
+    );
+};
+
+const handleResetSchedule = () => {
+    if (!originalSchedule.value) return;
+    
+    const cloned = JSON.parse(JSON.stringify(originalSchedule.value));
+    const updatedSchedule = cloned.operationSchedule.map((op: any) => ({
+        ...op
+    }));
+
+    plan.value.operationSchedule = updatedSchedule;
+    
+    notifications.enqueueNotification(
+        'Schedule reset to original',
+        notifications.notificationTypes.PRIMARY
+    );
+
+    ganttKey.value += 1; // Force Gantt chart to re-render
+};
+
 </script>
 
 <template>
@@ -197,13 +287,22 @@ const savePlan = async () => {
             :submit-function="savePlan" 
             :editing-id="planId"
         >
-            
+            <h3>Allocated resources</h3>
 
             <h3>{{ t('operationPlan.schedule.title') }}</h3>
             
             <div class="form-fields">
                 <div class="schedule-section">
+
+                    <OperationPlanToolbar
+                        @shift-operations="handleShiftOperations"
+                        @optimize-schedule="handleOptimizeSchedule"
+                        @reset-schedule="handleResetSchedule"
+                    />
+                
+
                     <GanttChart
+                        :key="ganttKey"
                         :items="ganttItems"
                         :row-configs="ganttRowConfigs"
                         @item-updated="onItemUpdated"
@@ -228,9 +327,12 @@ const savePlan = async () => {
 
 <style scoped>
 .form-fields {
+    
     display: flex;
     flex-direction: column;
     gap: 1rem;
+
+    margin-top: -50px;
 }
 
 .schedule-section {
