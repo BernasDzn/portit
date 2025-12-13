@@ -20,6 +20,7 @@ import { useOperationValidation } from '@/composables/opwarnings';
 import OperationWarnings from './PlanTools/OperationWarnings.vue';
 import OperationDetailsDrawer from './PlanTools/OperationDetailsDrawer.vue';
 import OperationPlanToolbar from './PlanTools/OperationPlanToolbar.vue';
+import AllocatedResources from './PlanTools/AllocatedResources.vue';
 
 const notifications = useAlerts();
 const route = useRoute();
@@ -287,7 +288,13 @@ const handleResetSchedule = () => {
             :submit-function="savePlan" 
             :editing-id="planId"
         >
-            <h3>Allocated resources</h3>
+            <sl-details summary="Allocated resources panel">
+                <AllocatedResources
+                    :plan="plan"
+                    :all-s-t-s-cranes="(allSTSCranes as STSCrane[])"
+                    :all-staff="(allStaff as Staff[])"
+                />
+          </sl-details>
 
             <h3>{{ t('operationPlan.schedule.title') }}</h3>
             
