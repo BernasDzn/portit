@@ -1,0 +1,47 @@
+@startuml l1_scenario_view
+left to right direction
+skinparam packageStyle rectangle
+title "Sprint 3 - Use Case Diagram"
+
+actor "Port Authority\nOfficer" as PortAuthorityOfficer
+actor "Logistics Operator" as LogisticsOperator
+actor "SAO Representative" as SAORepresentative
+actor "Port Operations Supervisor" as PortOperationsSupervisor
+
+package "Port Management" <<Subsystem>> {
+	usecase "Manage Vessel Types" as UC_manage_vtypes
+	usecase "Manage Vessels" as UC_manage_vessels
+	usecase "Manage Storage Areas" as UC_manage_storage_areas
+	usecase "Manage Shipping\nAgent Origanization" as UC_manage_SAOs
+	usecase "Manage SAO\nRepresentative" as UC_manage_sao_reps
+	usecase "Aprove/Reject\nVessel Visit Notifications" as UC_review_vvn
+	usecase "CRUD Vessel\nVisit Notification" as UC_crud_vvn
+	usecase "Manage staff members" as UC_manage_staffs
+	usecase "Manage physical\nResources" as UC_manage_phy_res
+	usecase "Manage Qualifications" as UC_manage_qualifs
+	usecase "Manage Operation Plans" as UC_manage_op_plans
+	usecase "Manage Vessel Visit Executions" as UC_manage_vve
+	usecase "Manage catalog of\nIncident Types" as UC_manage_incident_types
+	usecase "Record and manage incidents\nthat affect port operations" as UC_manage_incidents
+	usecase "Manage the catalog of\nComplementary Task Categories" as UC_manage_ctc
+	usecase "Record and manage Complementary Tasks\nperformed during vessel visits" as UC_manage_ct
+}
+
+PortAuthorityOfficer ---> UC_manage_vtypes
+PortAuthorityOfficer ---> UC_manage_vessels
+PortAuthorityOfficer ---> UC_manage_storage_areas
+PortAuthorityOfficer ---> UC_manage_sao_reps
+PortAuthorityOfficer ---> UC_manage_SAOs
+PortAuthorityOfficer ---> UC_review_vvn
+PortAuthorityOfficer ---> UC_manage_incident_types
+LogisticsOperator --> UC_manage_phy_res
+LogisticsOperator --> UC_manage_qualifs
+LogisticsOperator --> UC_manage_staffs
+LogisticsOperator --> UC_manage_op_plans
+LogisticsOperator --> UC_manage_vve
+LogisticsOperator --> UC_manage_incidents
+LogisticsOperator --> UC_manage_ct
+SAORepresentative ---> UC_crud_vvn
+PortOperationsSupervisor ---> UC_manage_ctc
+
+@enduml
