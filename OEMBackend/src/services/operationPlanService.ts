@@ -11,6 +11,7 @@ import { taskCategoryRepository } from "../repository/taskCategoryRepository";
 import { Page, Pageable } from "../utils/page";
 import { Payload } from "../domain/value/payload";
 import { ContainerDto } from "../dto/container";
+import { PlanFilter } from "../dto/filters/planFilter";
 
 
 @Service("operationPlanService")
@@ -22,7 +23,7 @@ export class OperationPlanService {
 		this.operationPlanRepository = new OperationPlanRepository();
 	}
 
-	async getAll(pageable: Pageable): Promise<Page<OperationPlanDto>> {
+	async getAll(pageable: PlanFilter): Promise<Page<OperationPlanDto>> {
 		return await this.operationPlanRepository.getAll(pageable);
 	}
 

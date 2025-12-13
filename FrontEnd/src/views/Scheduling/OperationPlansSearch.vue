@@ -12,7 +12,7 @@ import { computed, onMounted, ref } from 'vue';
 import type { Filter, Page } from '@/model/Page';
 import ListingBox from '@/components/crud/ListingBox.vue';
 import type { VesselVisitNotification } from '@/model/VesselVisitNotification';
-import type { OperationPlanDto } from '@/model/dto/OperationPlanDto';
+import type { OperationPlanDto, OperationPlanFilter } from '@/model/dto/OperationPlanDto';
 
 const operationPlanService = container.get<IOperationPlanService>(TYPES.operationPlanService);
 const schedulingService = container.get<ISchedulingService>(TYPES.schedulingService);
@@ -30,7 +30,7 @@ const unplannedVVNIds = ref<string[]>([]);
 const unplannedVVNs = ref<VesselVisitNotification[]>([]);
 const isLoadingUnplanned = ref(false);
 
-const fetchOperationPlans = async (filtering?: Filter<null>): Promise<Page<OperationPlanDto>> => {
+const fetchOperationPlans = async (filtering?: Filter<OperationPlanFilter>): Promise<Page<OperationPlanDto>> => {
     const plans = await operationPlanService.getAllOperationPlans(filtering);
     operationPlans.value = plans;
     return plans;
@@ -76,6 +76,17 @@ onMounted(async () => {
     await fetchUnplannedVVNs();
 });
 
+const filterDefinition = ref({
+    startDate: {
+        type: 'date',
+        label: t('operationPlan.filters.startDate')
+    },
+    endDate: {
+        type: 'date',
+        label: t('operationPlan.filters.endDate')
+    }
+});
+
 </script>
 
 <template>
@@ -96,7 +107,7 @@ onMounted(async () => {
             <sl-tab slot="nav" panel="unplanned">{{ t('operationPlan.tabs.unplannedVVNs') }}</sl-tab>
 
             <sl-tab-panel name="general">
-                <ListingBox listing-style="listing-triples" :fetch-function="fetchOperationPlans" v-slot="{elements}">
+                <ListingBox listing-style="listing-triples" :fetch-function="fetchOperationPlans" v-slot="{elements}" :filter-definition="filterDefinition">
                     <li v-for="(plan, index) in operationPlans.items" :key="index" class="link">
                         <OperationPlanPrinter :operation-plan="plan" :link="`/scheduling/plans-view/${plan.id}`" />
                     </li>

@@ -815,6 +815,10 @@
                 "title": "Operations"
             }
         },
+        "filters": {
+            "startDate": "Start Date From",
+            "endDate": "End Date To"
+        },
         "metadata": {
             "title": "Metadata",
             "createdBy": "Created By",

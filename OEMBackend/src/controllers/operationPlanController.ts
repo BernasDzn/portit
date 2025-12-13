@@ -2,6 +2,7 @@ import { Inject, Service } from "typedi";
 import { BaseController } from "../core/infra/baseController";
 import { OperationPlanService } from "../services/operationPlanService";
 import { NextFunction, Request, Response } from "express";
+import { PlanFilter } from "../dto/filters/planFilter";
 
 @Service()
 export default class OperationPlanController extends BaseController {
@@ -33,6 +34,16 @@ export default class OperationPlanController extends BaseController {
      *           type: integer
      *           default: 10
      *         description: Items per page
+     *       - in: query
+     *         name: startDate
+     *         schema:
+     *           type: string
+     *         description: Filter plans starting from this date (YYYY-MM-DD)
+     *       - in: query
+     *         name: endDate
+     *         schema:
+     *           type: string
+     *         description: Filter plans up to this date (YYYY-MM-DD)
      *     responses:
      *       200:
      *         description: List of operation plans
@@ -41,7 +52,15 @@ export default class OperationPlanController extends BaseController {
         try{
             const pageNumber = parseInt(req.query.pageNumber as string) || 1;
             const pageSize = parseInt(req.query.pageSize as string) || 10;
-            const plans = await this.operationPlanService.getAll({pageNumber,pageSize});
+
+            const pageFilter: PlanFilter = {
+                startDate: req.query.startDate as string,
+                endDate: req.query.endDate as string,
+                pageNumber: pageNumber,
+                pageSize: pageSize
+            };
+
+            const plans = await this.operationPlanService.getAll(pageFilter);
             this.ok(res, plans);
         }catch(e){
             this.fail(res, "Error retrieving operation plans");

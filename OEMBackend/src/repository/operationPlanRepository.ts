@@ -5,6 +5,7 @@ import { OperationPlanModel } from "../schemas/operationPlanSchema";
 import { Page, Pageable } from "../utils/page";
 import config from "../config/config";
 import { ContainerDto } from "../dto/container";
+import { PlanFilter } from "../dto/filters/planFilter";
 
 
 export class OperationPlanRepository {
@@ -16,10 +17,16 @@ export class OperationPlanRepository {
 		return plan.toDto();
 	}
 
-	async getAll(pageable: Pageable): Promise<Page<OperationPlanDto>> {
+	async getAll(pageable: PlanFilter): Promise<Page<OperationPlanDto>> {
 		const { pageNumber, pageSize } = pageable;
 		const skip = (pageNumber - 1) * pageSize;
+
+        const startDate = pageable.startDate ? new Date(pageable.startDate) : null;
+        const endDate = pageable.endDate ? new Date(pageable.endDate) : null;
+
 		const data = await OperationPlanModel.find()
+            .where(startDate ? { 'operationSchedule.0.startTime': { $gte: startDate } } : {})
+            .where(endDate ? { 'operationSchedule.0.startTime': { $lte: endDate } } : {})
             .sort({ 'updatedAt': -1 })
 			.skip(skip)
 			.limit(pageSize);
