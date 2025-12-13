@@ -15,6 +15,7 @@ import type { VesselVisitNotification } from '@/model/VesselVisitNotification';
 import type { OperationPlanDto, OperationPlanFilter } from '@/model/dto/OperationPlanDto';
 import { useAlerts } from '@/composables/alerts';
 import { useRouter } from 'vue-router';
+import EntityDropdown from '@/components/crud/EntityDropdown.vue';
 
 const operationPlanService = container.get<IOperationPlanService>(TYPES.operationPlanService);
 const schedulingService = container.get<ISchedulingService>(TYPES.schedulingService);
@@ -124,11 +125,13 @@ const unplannedByDate = computed(() => {
 const openRegenerationModal = (date: string) => {
     selectedDayForRegeneration.value = date;
     selectedAlgorithm.value = 'auto';
-    showRegenerationModal.value = true;
+    const dialog = document.getElementById('regeneration-modal') as any;
+    dialog.show();
 };
 
 const closeRegenerationModal = () => {
-    showRegenerationModal.value = false;
+    const dialog = document.getElementById('regeneration-modal') as any;
+    dialog.hide();
     selectedDayForRegeneration.value = null;
     selectedAlgorithm.value = 'auto';
 };
@@ -248,9 +251,8 @@ const confirmRegeneration = async () => {
         </sl-tab-group>
 
         <sl-dialog 
+            id="regeneration-modal"
             :label="`Regenerate Plans for ${selectedDayForRegeneration}`"
-            :open="showRegenerationModal"
-            @sl-hide="closeRegenerationModal"
             class="regeneration-dialog"
         >
             <div class="modal-content">
@@ -261,29 +263,21 @@ const confirmRegeneration = async () => {
                 </sl-alert>
 
                 <div class="algorithm-selection">
-                    <label for="algorithm-select">Select Scheduling Algorithm:</label>
-                    <sl-select 
-                        id="algorithm-select"
-                        :value="selectedAlgorithm"
-                        @sl-change="(e: any) => selectedAlgorithm = e.target.value"
+                    <EntityDropdown
+                        :name="t('scheduling.fields.algorithm.title') || 'Select Scheduling Algorithm'"
+                        v-model="selectedAlgorithm"
+                        :items="algorithmList"
+                        valueKey="value"
+                        labelKey="label"
+                        :placeholderText="t('scheduling.fields.algorithm.placeholder') || 'Choose an algorithm'"
                         :disabled="isRegenerating"
-                    >
-                        <sl-option 
-                            v-for="alg in algorithmList" 
-                            :key="alg.value" 
-                            :value="alg.value"
-                        >
-                            {{ alg.label }}
-                        </sl-option>
-                    </sl-select>
+                        required
+                    />
                 </div>
 
                 <div class="regeneration-info">
                     <p><strong>Selected Day:</strong> {{ selectedDayForRegeneration }}</p>
                     <p><strong>Algorithm:</strong> {{ algorithmList.find(a => a.value === selectedAlgorithm)?.label }}</p>
-                    <p class="metadata-info">
-                        The system will record metadata including creation date, your user account, and the selected algorithm.
-                    </p>
                 </div>
             </div>
 
