@@ -185,7 +185,16 @@ const confirmRegeneration = async () => {
         <sl-tab-group>
             <sl-tab slot="nav" panel="general">{{ t('notification.tabs.general') }}</sl-tab>
             <sl-tab slot="nav" panel="byDate">{{ t('notification.tabs.byDate') }}</sl-tab>
-            <sl-tab slot="nav" panel="unplanned">{{ t('operationPlan.tabs.unplannedVVNs') }}</sl-tab>
+            <sl-tab slot="nav" panel="unplanned">
+                {{ t('operationPlan.tabs.unplannedVVNs') }}
+                <sl-badge 
+                    v-if="unplannedVVNs.length > 0" 
+                    variant="danger" pill
+                    style="margin-left: 0.5rem;"
+                    >
+                    {{ unplannedVVNs.length }}
+                </sl-badge>
+            </sl-tab>
 
             <sl-tab-panel name="general">
                 <ListingBox listing-style="listing-triples" :fetch-function="fetchOperationPlans" v-slot="{elements}" :filter-definition="filterDefinition">
@@ -223,8 +232,9 @@ const confirmRegeneration = async () => {
                         <div v-if="unplannedByDate.length > 0">
                             <div v-for="group in unplannedByDate" :key="group.date" class="date-group">
                                 <div class="date-group-header">
-                                    <h3 class="date-title">{{ new Date(group.date).toDateString() }}</h3>
-                                    <sl-badge variant="danger" pill pulse>{{ group.vvns.length }} missing plan(s)</sl-badge>
+                                    <div class="date-with-badge">
+                                        <h3 class="date-title">{{ new Date(group.date).toDateString() }}</h3>
+                                    </div>
                                     <sl-button 
                                         variant="primary" 
                                         size="medium"
@@ -426,10 +436,17 @@ const confirmRegeneration = async () => {
 .date-group-header {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 1rem;
     margin-bottom: 1.5rem;
     padding-bottom: 1rem;
     border-bottom: 2px solid var(--sl-color-neutral-200);
+}
+
+.date-with-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
 }
 
 .date-title {
