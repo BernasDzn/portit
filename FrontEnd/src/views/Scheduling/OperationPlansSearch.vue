@@ -13,10 +13,12 @@ import type { Filter, Page } from '@/model/Page';
 import ListingBox from '@/components/crud/ListingBox.vue';
 import type { VesselVisitNotification } from '@/model/VesselVisitNotification';
 import type { OperationPlanDto, OperationPlanFilter } from '@/model/dto/OperationPlanDto';
+import { useAlerts } from '@/composables/alerts';
 
 const operationPlanService = container.get<IOperationPlanService>(TYPES.operationPlanService);
 const schedulingService = container.get<ISchedulingService>(TYPES.schedulingService);
 const vvnService = container.get<IVesselVisitNotificationService>(TYPES.vesselVisitNotificationService);
+const notifications = useAlerts();
 
 const { t, locale } = useI18n();
 
@@ -29,6 +31,19 @@ const events = ref<Array<{ title: string, start: string }>>([]);
 const unplannedVVNIds = ref<string[]>([]);
 const unplannedVVNs = ref<VesselVisitNotification[]>([]);
 const isLoadingUnplanned = ref(false);
+
+// Regeneration state
+const showRegenerationModal = ref(false);
+const selectedDayForRegeneration = ref<string | null>(null);
+const selectedAlgorithm = ref<string>('auto');
+const isRegenerating = ref(false);
+
+const algorithmList = [
+    { label: "Auto (Recommended) - Selects best algorithm based on problem size", value: "auto" },
+    { label: "Optimal Scheduling (Exhaustive)", value: "optimal" },
+    { label: "Greedy Scheduling (Fast - EDD)", value: "greedy" },
+    { label: "Genetic Scheduling (Generational)", value: "genetic" }
+];
 
 const fetchOperationPlans = async (filtering?: Filter<OperationPlanFilter>): Promise<Page<OperationPlanDto>> => {
     const plans = await operationPlanService.getAllOperationPlans(filtering);
@@ -87,6 +102,67 @@ const filterDefinition = ref({
     }
 });
 
+// Group unplanned VVNs by date
+const unplannedByDate = computed(() => {
+    const grouped: Record<string, any[]> = {};
+    
+    unplannedVVNs.value.forEach(vvn => {
+        const arrivalDate = new Date(vvn.expectedArrival).toISOString().split('T')[0];
+        if (!grouped[arrivalDate]) {
+            grouped[arrivalDate] = [];
+        }
+        grouped[arrivalDate].push(vvn);
+    });
+    
+    return Object.entries(grouped)
+        .map(([date, vvns]) => ({ date, vvns }))
+        .sort((a, b) => a.date.localeCompare(b.date));
+});
+
+const openRegenerationModal = (date: string) => {
+    selectedDayForRegeneration.value = date;
+    selectedAlgorithm.value = 'auto';
+    showRegenerationModal.value = true;
+};
+
+const closeRegenerationModal = () => {
+    showRegenerationModal.value = false;
+    selectedDayForRegeneration.value = null;
+    selectedAlgorithm.value = 'auto';
+};
+
+const confirmRegeneration = async () => {
+    if (!selectedDayForRegeneration.value || !selectedAlgorithm.value) return;
+    
+    isRegenerating.value = true;
+    
+    try {
+        const dayDate = new Date(selectedDayForRegeneration.value);
+        const result = await schedulingService.scheduleForDay(
+            dayDate,
+            selectedAlgorithm.value,
+            1
+        );
+        
+        notifications.enqueueNotification(
+            result.message || `Regeneration request queued for ${selectedDayForRegeneration.value}`,
+            notifications.notificationTypes.SUCCESS
+        );
+        
+        closeRegenerationModal();
+        
+        // Refresh unplanned VVNs to remove any that might have been queued
+        await fetchUnplannedVVNs();
+    } catch (error: any) {
+        notifications.enqueueNotification(
+            `Error queueing regeneration: ${error.message || error}`,
+            notifications.notificationTypes.DANGER
+        );
+    } finally {
+        isRegenerating.value = false;
+    }
+};
+
 </script>
 
 <template>
@@ -139,19 +215,95 @@ const filterDefinition = ref({
                         <p>{{ t('common.loading') }}</p>
                     </div>
                     <div v-else>
-                        <ul class="vvn-list" v-if="unplannedVVNs.length > 0">
-                            <li v-for="vvn in unplannedVVNs" :key="vvn.notificationId">
-                                <VesselVisitNotificationPrinter 
-                                    :notification="vvn"
-                                    :link="`/vessel-visit-notifications/view/${vvn.notificationId}`"
-                                />
-                            </li>
-                        </ul>
+                        <div v-if="unplannedByDate.length > 0">
+                            <div v-for="group in unplannedByDate" :key="group.date" class="date-group">
+                                <div class="date-group-header">
+                                    <h3 class="date-title">{{ new Date(group.date).toDateString() }}</h3>
+                                    <sl-badge variant="danger" pill pulse>{{ group.vvns.length }} missing plan(s)</sl-badge>
+                                    <sl-button 
+                                        variant="primary" 
+                                        size="medium"
+                                        @click="openRegenerationModal(group.date)"
+                                    >
+                                        <sl-icon slot="prefix" name="arrow-clockwise"></sl-icon>
+                                        Regenerate Plans for This Day
+                                    </sl-button>
+                                </div>
+                                <ul class="vvn-list">
+                                    <li v-for="vvn in group.vvns" :key="vvn.notificationId">
+                                        <VesselVisitNotificationPrinter 
+                                            :notification="vvn"
+                                            :link="`/vessel-visit-notifications/view/${vvn.notificationId}`"
+                                        />
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                         <p v-else class="no-data">{{ t('operationPlan.unplannedVVNs.noUnplanned') }}</p>
                     </div>
                 </div>
             </sl-tab-panel>
         </sl-tab-group>
+
+        <sl-dialog 
+            :label="`Regenerate Plans for ${selectedDayForRegeneration}`"
+            :open="showRegenerationModal"
+            @sl-hide="closeRegenerationModal"
+            class="regeneration-dialog"
+        >
+            <div class="modal-content">
+                <sl-alert variant="warning" open>
+                    <sl-icon slot="icon" name="exclamation-triangle"></sl-icon>
+                    <strong>Warning:</strong> Regenerating plans will <strong>overwrite any existing operation plans</strong> for this day. 
+                    This action cannot be undone.
+                </sl-alert>
+
+                <div class="algorithm-selection">
+                    <label for="algorithm-select">Select Scheduling Algorithm:</label>
+                    <sl-select 
+                        id="algorithm-select"
+                        :value="selectedAlgorithm"
+                        @sl-change="(e: any) => selectedAlgorithm = e.target.value"
+                        :disabled="isRegenerating"
+                    >
+                        <sl-option 
+                            v-for="alg in algorithmList" 
+                            :key="alg.value" 
+                            :value="alg.value"
+                        >
+                            {{ alg.label }}
+                        </sl-option>
+                    </sl-select>
+                </div>
+
+                <div class="regeneration-info">
+                    <p><strong>Selected Day:</strong> {{ selectedDayForRegeneration }}</p>
+                    <p><strong>Algorithm:</strong> {{ algorithmList.find(a => a.value === selectedAlgorithm)?.label }}</p>
+                    <p class="metadata-info">
+                        The system will record metadata including creation date, your user account, and the selected algorithm.
+                    </p>
+                </div>
+            </div>
+
+            <div slot="footer">
+                <sl-button 
+                    variant="default" 
+                    @click="closeRegenerationModal"
+                    :disabled="isRegenerating"
+                    style="margin-right: 1rem;  "
+                >
+                    Cancel
+                </sl-button>
+                <sl-button 
+                    variant="danger" 
+                    @click="confirmRegeneration"
+                    :loading="isRegenerating"
+                >
+                    <sl-icon slot="prefix" name="arrow-clockwise"></sl-icon>
+                    Confirm Regeneration
+                </sl-button>
+            </div>
+        </sl-dialog>
 
     </header>
   </div>
@@ -265,5 +417,70 @@ const filterDefinition = ref({
 .vvn-list a {
     text-decoration: none;
     color: inherit;
+}
+
+.date-group {
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    border: 1px solid var(--sl-color-neutral-200);
+    border-radius: var(--sl-border-radius-medium);
+    background-color: var(--sl-color-neutral-50);
+}
+
+.date-group-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--sl-color-neutral-200);
+}
+
+.date-title {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--sl-color-neutral-900);
+    flex: 1;
+}
+
+.regeneration-dialog::part(panel) {
+    max-width: 600px;
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.algorithm-selection {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.algorithm-selection label {
+    font-weight: 600;
+    color: var(--sl-color-neutral-700);
+}
+
+.regeneration-info {
+    padding: 1rem;
+    background-color: var(--sl-color-neutral-100);
+    border-radius: var(--sl-border-radius-medium);
+}
+
+.regeneration-info p {
+    margin: 0.5rem 0;
+}
+
+.metadata-info {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--sl-color-neutral-200);
+    font-size: 0.9rem;
+    color: var(--sl-color-neutral-600);
+    font-style: italic;
 }
 </style>

@@ -35,5 +35,11 @@ export default (app: Router) => {
 		[authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)],
 		(req: Request, res: Response, next: NextFunction) => getCtrl().getPlanById(req, res, next)
 	);
+
+	route.post(
+		'/regenerate',
+		[authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)],
+		(req: Request, res: Response, next: NextFunction) => getCtrl().regeneratePlansForDay(req, res, next)
+	);
 	
 }
