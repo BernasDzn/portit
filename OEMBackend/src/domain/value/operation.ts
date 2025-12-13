@@ -3,7 +3,7 @@ import { TaskCategory } from "../taskCategory";
 import { Payload } from "./payload";
 import { Resource } from "./resource";
 
-export class Operation {
+export default class Operation {
 	operationType: TaskCategory;
 	startTime: Date;
 	endTime: Date;

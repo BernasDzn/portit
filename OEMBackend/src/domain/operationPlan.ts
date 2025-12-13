@@ -1,35 +1,32 @@
-import { LinkedList } from '../utils/linkedList';
-
+import { Entity } from '../core/domain/entity';
 import { OperationPlanDto } from '../dto/operationPlanDto';
-
-import { Operation } from './value/operation';
-import { OperationPlanMetadata } from './value/operationPlanMetadata';
+import LinkedList from '../utils/linkedList';
+import Operation from './value/operation';
+import OperationPlanMetadata from './value/operationPlanMetadata';
 import mongoose from 'mongoose';
 
-export class OperationPlan {
-	id: string;
+export interface OperationPlanProps {
 	relatedVVN: string;
 	dock: string;
 	operationSchedule: LinkedList<Operation>;
 	metadata: OperationPlanMetadata;
-	
+}
 
-	constructor(params: {
-		id?: string;
-		relatedVVN: string;
-		dock: string;
-		operationSchedule: LinkedList<Operation>;
-		metadata: OperationPlanMetadata;
+export default class OperationPlan extends Entity<OperationPlanProps> {
+	get id(): string { return this._id; }
+	get relatedVVN(): string { return this.props.relatedVVN; }
+	get dock(): string { return this.props.dock; }
+	get operationSchedule(): LinkedList<Operation> { return this.props.operationSchedule; }
+	get metadata(): OperationPlanMetadata { return this.props.metadata; }
 
-	}) {
-		this.id = params.id || new mongoose.Types.ObjectId().toString();
-		this.relatedVVN = params.relatedVVN;
-		this.dock = params.dock;
-		this.operationSchedule = params.operationSchedule;
-		this.metadata = params.metadata;
-	};
+	constructor(props: OperationPlanProps, id?: any) {
+		super(
+			id || new mongoose.Types.ObjectId().toString(), 
+			props
+		);
+	}
 
-	toDto(): OperationPlanDto {
+	public toDto() : OperationPlanDto {
 		return {
 			id: this.id,
 			relatedVVN: this.relatedVVN,
@@ -38,4 +35,5 @@ export class OperationPlan {
 			metadata: this.metadata.toDto()
 		};
 	}
+
 }

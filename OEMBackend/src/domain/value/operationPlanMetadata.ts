@@ -1,6 +1,6 @@
 import { OperationPlanMetadataDto } from "../../dto/value/operationPlanMetadataDto";
 
-export class OperationPlanMetadata {
+export default class OperationPlanMetadata {
 	createdBy: string;
 	createdAt: Date;
 	algorithmUsed: string;

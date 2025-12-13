@@ -1,4 +1,4 @@
-import { OperationPlan } from "../domain/operationPlan";
+import OperationPlan from "../domain/operationPlan";
 import { OperationPlanDto } from "../dto/operationPlanDto";
 import { OperationPlanMapper } from "../mappers/operationPlanMapper";
 import { OperationPlanModel } from "../schemas/operationPlanSchema";
@@ -12,8 +12,8 @@ export class OperationPlanRepository {
 	async create(operationPlan: OperationPlan): Promise<OperationPlanDto> {
 		const newOperationPlan = OperationPlanMapper.toSchema(operationPlan);
 		const createdDoc = await OperationPlanModel.create(newOperationPlan);
-
-		return (await OperationPlanMapper.fromSchema(createdDoc)).toDto();
+		const plan = await OperationPlanMapper.fromSchema(createdDoc);
+		return plan.toDto();
 	}
 
 	async getAll(pageable: Pageable): Promise<Page<OperationPlanDto>> {
@@ -36,9 +36,10 @@ export class OperationPlanRepository {
 	}
 
 	async getById(id: string): Promise<OperationPlanDto | null> {
-		const plan = await OperationPlanModel.findById(id);
-		if (!plan) return null;
-		return (await OperationPlanMapper.fromSchema(plan)).toDto();
+		const doc = await OperationPlanModel.findById(id);
+		if (!doc) return null;
+		const plan = await OperationPlanMapper.fromSchema(doc);
+		return plan.toDto();
 	}
 
 	async getByDateGrouped(): Promise<{ date: string; plans: OperationPlanDto[] }[]> {
@@ -46,8 +47,8 @@ export class OperationPlanRepository {
 		const plansByDate = new Map<string, OperationPlanDto[]>();
 
         for (const doc of allPlans) {
-            const plan = OperationPlanMapper.fromSchema(doc);
-            const planDto = (await plan).toDto();
+            const plan = await OperationPlanMapper.fromSchema(doc);
+            const planDto = plan.toDto();
             
             // Extract date from the first operation's start time
             if (planDto.operationSchedule && planDto.operationSchedule.length > 0) {

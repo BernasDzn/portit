@@ -1,7 +1,7 @@
-import { OperationPlan } from "../domain/operationPlan";
-import { LinkedList } from "../utils/linkedList";
-import { Operation } from "../domain/value/operation";
-import { OperationPlanMetadata } from "../domain/value/operationPlanMetadata";
+import OperationPlan from "../domain/operationPlan";
+import LinkedList from "../utils/linkedList";
+import Operation from "../domain/value/operation";
+import OperationPlanMetadata from "../domain/value/operationPlanMetadata";
 import { Resource, ResourceType } from "../domain/value/resource";
 import { TaskCategoryMapper } from "./taskCategoryMapper";
 import { TaskCategoryRepository } from "../repository/taskCategoryRepository";
@@ -77,12 +77,16 @@ export class OperationPlanMapper {
             }
         }
         
-        return new OperationPlan({
-            id: doc._id.toString(),
-            relatedVVN: doc.relatedVVN,
-            dock: doc.dock,
-            operationSchedule,
-            metadata,
-        });
+        const operationPlan = new OperationPlan(
+            {
+                relatedVVN: doc.relatedVVN,
+                dock: doc.dock,
+                operationSchedule,
+                metadata
+            }, 
+            doc._id.toString()
+        );
+
+        return operationPlan;
     }    
 }
