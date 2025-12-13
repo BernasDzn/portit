@@ -41,6 +41,11 @@ const selectedDayForRegeneration = ref<string | null>(null);
 const selectedAlgorithm = ref<string>('auto');
 const isRegenerating = ref(false);
 
+// Regenerate all state
+const showRegenerateAllModal = ref(false);
+const selectedAlgorithmAll = ref<string>('auto');
+const isRegeneratingAll = ref(false);
+
 const algorithmList = [
     { label: "Auto (Recommended) - Selects best algorithm based on problem size", value: "auto" },
     { label: "Optimal Scheduling (Exhaustive)", value: "optimal" },
@@ -168,6 +173,70 @@ const confirmRegeneration = async () => {
     }
 };
 
+const openRegenerateAllModal = () => {
+    selectedAlgorithmAll.value = 'auto';
+    const dialog = document.getElementById('regenerate-all-modal') as any;
+    dialog.show();
+};
+
+const closeRegenerateAllModal = () => {
+    const dialog = document.getElementById('regenerate-all-modal') as any;
+    dialog.hide();
+    selectedAlgorithmAll.value = 'auto';
+};
+
+const confirmRegenerateAll = () => {
+    if (!selectedAlgorithmAll.value || unplannedByDate.value.length === 0) return;
+    
+    // Hide first modal and show warning modal
+    closeRegenerateAllModal();
+    const warningDialog = document.getElementById('regenerate-danger-modal') as any;
+    warningDialog.show();
+};
+
+const executeRegenerateAll = async () => {
+    isRegeneratingAll.value = true;
+    
+    try {
+        // Queue a request for each unique date
+        const requests = unplannedByDate.value.map(async (group) => {
+            const dayDate = new Date(group.date);
+            return schedulingService.scheduleForDay(
+                dayDate,
+                selectedAlgorithmAll.value,
+                1
+            );
+        });
+        
+        await Promise.all(requests);
+        
+        notifications.enqueueNotification(
+            `Successfully queued regeneration for ${unplannedByDate.value.length} day(s)`,
+            notifications.notificationTypes.SUCCESS
+        );
+        
+        const warningDialog = document.getElementById('regenerate-danger-modal') as any;
+        warningDialog.hide();
+        selectedAlgorithmAll.value = 'auto';
+        
+        // Navigate to queue to see all requests
+        router.push({ name: 'Scheduling Queue' });
+    } catch (error: any) {
+        notifications.enqueueNotification(
+            `Error queueing regeneration: ${error.message || error}`,
+            notifications.notificationTypes.DANGER
+        );
+    } finally {
+        isRegeneratingAll.value = false;
+    }
+};
+
+const cancelRegenerateWarning = () => {
+    const warningDialog = document.getElementById('regenerate-danger-modal') as any;
+    warningDialog.hide();
+    selectedAlgorithmAll.value = 'auto';
+};
+
 </script>
 
 <template>
@@ -230,6 +299,20 @@ const confirmRegeneration = async () => {
                     </div>
                     <div v-else>
                         <div v-if="unplannedByDate.length > 0">
+                            <div class="regenerate-all-header">
+                                <p class="info-message">
+                                    <sl-icon name="info-circle" style="margin-right: 0.5rem;"></sl-icon>
+                                    Found {{ unplannedVVNs.length }} VVN(s) without plans across {{ unplannedByDate.length }} day(s)
+                                </p>
+                                <sl-button 
+                                    variant="warning" 
+                                    size="medium"
+                                    @click="openRegenerateAllModal"
+                                >
+                                    <sl-icon slot="prefix" name="lightning-charge"></sl-icon>
+                                    Regenerate All Missing Plans
+                                </sl-button>
+                            </div>
                             <div v-for="group in unplannedByDate" :key="group.date" class="date-group">
                                 <div class="date-group-header">
                                     <div class="date-with-badge">
@@ -266,7 +349,7 @@ const confirmRegeneration = async () => {
             class="regeneration-dialog"
         >
             <div class="modal-content">
-                <sl-alert variant="warning" open>
+                <sl-alert variant="danger" open>
                     <sl-icon slot="icon" name="exclamation-triangle"></sl-icon>
                     <strong>Warning:</strong> Regenerating plans will <strong>overwrite any existing operation plans</strong> for this day. 
                     This action cannot be undone.
@@ -311,8 +394,106 @@ const confirmRegeneration = async () => {
             </div>
         </sl-dialog>
 
-    </header>
-  </div>
+        <!-- Regenerate All Modal -->
+        <sl-dialog 
+            id="regenerate-all-modal"
+            label="Regenerate All Missing Plans"
+            class="regeneration-dialog"
+        >
+            <div class="modal-content">
+                <div class="affected-days">
+                    <h4>Affected Days:</h4>
+                    <ul class="days-list">
+                        <li v-for="group in unplannedByDate" :key="group.date">
+                            <sl-icon name="calendar-date" style="margin-right: 0.5rem;"></sl-icon>
+                            {{ new Date(group.date).toDateString() }}
+                            <sl-badge variant="warning" pill style="margin-left: 0.5rem;">{{ group.vvns.length }} VVN(s)</sl-badge>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="algorithm-selection">
+                    <EntityDropdown
+                        :name="t('scheduling.fields.algorithm.title') || 'Select Scheduling Algorithm'"
+                        v-model="selectedAlgorithmAll"
+                        :items="algorithmList"
+                        valueKey="value"
+                        labelKey="label"
+                        :placeholderText="t('scheduling.fields.algorithm.placeholder') || 'Choose an algorithm'"
+                        :disabled="isRegeneratingAll"
+                        required
+                    />
+                </div>
+
+                <div class="regeneration-info">
+                    <p><strong>Algorithm:</strong> {{ algorithmList.find(a => a.value === selectedAlgorithmAll)?.label }}</p>
+                    <p class="metadata-info">
+                        Each regeneration request will be queued separately. You can review and accept/reject them individually from the Scheduling Queue.
+                    </p>
+                </div>
+            </div>
+
+            <div slot="footer">
+                <sl-button 
+                    variant="default" 
+                    @click="closeRegenerateAllModal"
+                    style="margin-right: 1rem;"
+                >
+                    Cancel
+                </sl-button>
+                <sl-button 
+                    variant="primary" 
+                    @click="confirmRegenerateAll"
+                    :disabled="!selectedAlgorithmAll"
+                >
+                    <sl-icon slot="prefix" name="arrow-right"></sl-icon>
+                    Continue
+                </sl-button>
+            </div>
+            </sl-dialog>
+
+            <!-- Warning Modal for Regenerate All -->
+            <sl-dialog id="regenerate-danger-modal" label="Confirm Regeneration" style="--width: 600px;">
+                <div style="padding: 1rem;">
+                    <div style="background-color: var(--sl-color-danger-50); padding: 1.5rem; border-radius: var(--sl-border-radius-medium); border-left: 4px solid var(--sl-color-danger-600); margin-bottom: 1.5rem;">
+                        <div style="display: flex; align-items: start; gap: 1rem;">
+                            <sl-icon name="exclamation-triangle" style="font-size: 2rem; color: var(--sl-color-danger-600); flex-shrink: 0;"></sl-icon>
+                            <div>
+                                <h3 style="margin: 0 0 0.5rem 0; color: var(--sl-color-danger-900); font-size: 1.1rem;">This action is irreversible</h3>
+                                <p style="margin: 0; color: var(--sl-color-danger-800); line-height: 1.6;">
+                                    Regenerating operation plans will <strong>permanently overwrite</strong> any existing plans for the selected days.
+                                    This action cannot be undone.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background-color: var(--sl-color-neutral-50); padding: 1rem; border-radius: var(--sl-border-radius-medium); margin-bottom: 1rem;">
+                        <p style="margin: 0 0 0.5rem 0; font-weight: 600;">You are about to regenerate plans for:</p>
+                        <ul style="margin: 0.5rem 0 0 1.5rem; color: var(--sl-color-neutral-700);">
+                            <li><strong>{{ unplannedByDate.length }}</strong> days</li>
+                            <li><strong>{{ unplannedVVNs.length }}</strong> Vessel Visit Notifications</li>
+                            <li>Using <strong>{{ algorithmList.find(a => a.value === selectedAlgorithmAll)?.label }}</strong> algorithm</li>
+                        </ul>
+                    </div>
+
+                    <p style="margin: 1rem 0 0 0; font-size: 0.9rem; color: var(--sl-color-neutral-600);">
+                        Do you want to proceed with this operation?
+                    </p>
+                </div>
+
+                <div slot="footer" style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+                    <sl-button variant="default" @click="cancelRegenerateWarning" :disabled="isRegeneratingAll">
+                        Cancel
+                    </sl-button>
+                    <sl-button variant="danger" @click="executeRegenerateAll" :loading="isRegeneratingAll">
+                        <sl-icon slot="prefix" name="exclamation-octagon"></sl-icon>
+                        Yes, Regenerate All
+                    </sl-button>
+                </div>
+            </sl-dialog>
+        </header>
+    </div>
 </template>
 
 <style scoped> 
@@ -381,6 +562,26 @@ const confirmRegeneration = async () => {
 .unplanned-section {
     margin-top: 1rem;
     padding: 1rem;
+}
+
+.regenerate-all-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1.25rem;
+    background: linear-gradient(135deg, var(--sl-color-warning-50) 0%, var(--sl-color-warning-100) 100%);
+    border: 2px solid var(--sl-color-warning-300);
+    border-radius: var(--sl-border-radius-large);
+}
+
+.info-message {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    font-weight: 500;
+    color: var(--sl-color-warning-800);
 }
 
 .loading-state {
@@ -458,7 +659,8 @@ const confirmRegeneration = async () => {
 }
 
 .regeneration-dialog::part(panel) {
-    max-width: 600px;
+    max-width: 800px;
+    max-height: 90vh;
 }
 
 .modal-content {
@@ -486,6 +688,40 @@ const confirmRegeneration = async () => {
 
 .regeneration-info p {
     margin: 0.5rem 0;
+}
+
+.affected-days {
+    background-color: var(--sl-color-neutral-50);
+    padding: 1rem;
+    border-radius: var(--sl-border-radius-medium);
+    border: 1px solid var(--sl-color-neutral-200);
+}
+
+.affected-days h4 {
+    margin: 0 0 0.75rem 0;
+    color: var(--sl-color-neutral-700);
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.days-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.days-list li {
+    display: flex;
+    align-items: center;
+    padding: 0.65rem 1rem;
+    background-color: var(--sl-color-neutral-0);
+    border-radius: var(--sl-border-radius-medium);
+    font-size: 0.875rem;
+    border: 1px solid var(--sl-color-neutral-200);
+    white-space: nowrap;
 }
 
 .metadata-info {
