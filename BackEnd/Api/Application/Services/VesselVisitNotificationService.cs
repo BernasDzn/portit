@@ -579,4 +579,17 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
             throw new Exception($"Failed to apply dock rebalancing: {ex.Message}", ex);
         }
     }
+
+    public async Task<IEnumerable<string>> GetAllAcceptedVVNIds()
+    {
+        IEnumerable<VesselVisitNotification> notifications = await _notificationRepository.GetVesselVisitNotificationsAsync();
+        AppLogEvents.LogRetrieve(_logger, "vessel visit notifications", notifications.Count());
+        return notifications
+            .Where(n => n.Status == NotificationStatus.Decided
+                    && n.NotificationDecisions.Any(
+                        d => d.Status == NotificationDecisionStatus.Approved
+                        )
+                    )
+            .Select(n => n.NotificationId.Value);
+    }
 }

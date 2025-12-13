@@ -78,7 +78,7 @@ export class OperationPlanRepository {
 	}
 
 	async getNotificationsWithoutPlan(token: string): Promise<string[]> {
-		const url = `${config.backendServer}/VesselVisitNotification/getAllIds`;
+		const url = `${config.backendServer}/VesselVisitNotification/getAllAcceptedVVNs`;
 		const res = await fetch(url, {
 			credentials: "include",
 			headers: {
