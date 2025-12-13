@@ -112,6 +112,54 @@ const closeDrawer = () => {
     editingOperation.value = null;
 };
 
+const addStaff = (operationIndex: number, staffSelected: Staff) => {
+    if (!plan.value) return;
+    
+    const staff = allStaff.value.find(s => s.email === staffSelected.email);
+    if (!staff) return;
+
+    // Check if already assigned
+    const alreadyAssigned = plan.value.operationSchedule[operationIndex].resources.some(
+        r => r.name === staff.email && r.type === 'Staff'
+    );
+    if (alreadyAssigned) {
+
+        notifications.enqueueNotification(
+            `Staff member ${staff.name} is already assigned to this operation.`,
+            notifications.notificationTypes.WARNING
+        );
+        return;
+    }
+
+    // Add staff as a resource
+    const updatedSchedule = [...plan.value.operationSchedule];
+    updatedSchedule[operationIndex] = {
+        ...updatedSchedule[operationIndex],
+        resources: [
+            ...updatedSchedule[operationIndex].resources,
+            {
+                name: staff.email,
+                type: 'Staff'
+            }
+        ]
+    };
+    
+    plan.value.operationSchedule = updatedSchedule;
+}
+
+const removeStaff = (operationIndex: number, staffSelected: string) => {
+    if (!plan.value) return;
+
+    const updatedSchedule = [...plan.value.operationSchedule];
+    updatedSchedule[operationIndex] = {
+        ...updatedSchedule[operationIndex],
+        resources: updatedSchedule[operationIndex].resources.filter(
+            r => r.name !== staffSelected || r.type !== 'Staff'
+        )
+    };
+    plan.value.operationSchedule = updatedSchedule;
+};
+
 const savePlan = async () => {
     console.log('Saving plan:', plan.value);
     // TODO: Implement save logic
@@ -149,6 +197,8 @@ const savePlan = async () => {
             :submit-function="savePlan" 
             :editing-id="planId"
         >
+            
+
             <h3>{{ t('operationPlan.schedule.title') }}</h3>
             
             <div class="form-fields">
@@ -169,6 +219,9 @@ const savePlan = async () => {
             :plan="plan" 
             :operation-index="editingOperation"
             @close="closeDrawer"
+            :available-staff="allStaff"
+            @add-staff="addStaff"
+            @remove-staff="removeStaff"
         />
     </div>
 </template>

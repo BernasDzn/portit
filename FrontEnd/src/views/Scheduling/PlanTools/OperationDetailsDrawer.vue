@@ -1,15 +1,20 @@
 <script setup lang="ts">
+import { computed, ref } from 'vue';
 import type { OperationPlanDto } from '@/model/dto/OperationPlanDto';
-import { computed } from 'vue';
+import type { Staff } from '@/model/Staff';
+import ObjectSelector from '@/components/crud/ObjectSelector.vue';
 
 interface Props {
     plan: OperationPlanDto | null;
     operationIndex: number | null;
+    availableStaff: any[];
 }
 
 const props = defineProps<Props>();
 const emit = defineEmits<{
     close: [];
+    addStaff: [operationIndex: number, staffSelected: Staff];
+    removeStaff: [operationIndex: number, staffSelected: string];
 }>();
 
 const formatTime = (dateString: string): string => {
@@ -31,6 +36,35 @@ const isLoadOrUnload = computed(() => {
     const category = operation.value.type.category.value;
     return category === 'LOAD' || category === 'UNLOAD';
 });
+
+const assignedStaffIds = computed(() => {
+    if (!operation.value) return new Set<string>();
+    return new Set(
+        operation.value.resources
+            .filter(r => r.type === 'Staff')
+            .map(r => r.name)
+    );
+});
+
+const selectedStaff = ref<Staff>(null);
+
+const handleAddStaff = () => {
+    if (selectedStaff.value && props.operationIndex !== null) {
+        emit('addStaff', props.operationIndex, selectedStaff.value as Staff);
+        selectedStaff.value = null;
+    }
+};
+
+const handleRemoveResource = (staffSelected: string) => {
+    if (props.operationIndex !== null) {
+        emit('removeStaff', props.operationIndex, staffSelected);
+    }
+};
+
+const getStaffName = (staffId: string): string => {
+    const staff = props.availableStaff.find(s => s.email === staffId);
+    return staff ? staff.name : staffId;
+};
 </script>
 
 <template>
@@ -55,14 +89,53 @@ const isLoadOrUnload = computed(() => {
             <sl-divider></sl-divider>
             <h3>Resources</h3>
 
-            <div class="resources-grid">
-                <sl-input 
+            <div class="resources-list">
+                <div 
                     v-for="resource in operation.resources"
                     :key="resource.name"
-                    :name="`resource-${resource.name}`" 
-                    disabled
-                    :value="`${resource.name} (${resource.type})`"
-                ></sl-input>
+                    class="resource-item"
+                >
+                    <sl-input 
+                        :name="`resource-${resource.name}`" 
+                        disabled
+                        :value="resource.type === 'Staff' ? getStaffName(resource.name) : resource.name"
+                    >
+                        <span slot="prefix">{{ resource.type }}</span>
+                    </sl-input>
+                    <sl-button
+                        v-if="resource.type === 'Staff'"
+                        variant="danger"
+                        size="small"
+                        @click="handleRemoveResource(resource.name)"
+                    >
+                        <sl-icon name="trash"></sl-icon>
+                    </sl-button>
+                </div>
+            </div>
+
+            <div class="add-staff-section">
+                <h4>Add Staff Member</h4>
+                <p v-if="props.availableStaff.length === 0" class="no-staff-message">
+                    <em>All available staff members have been assigned</em>
+                </p>
+                <div v-else class="add-staff-controls">
+                    <ObjectSelector
+                        class="field-dropdown"
+                        :name="'Select a staff member'"
+                        v-model="selectedStaff"
+                        :fetch-function="async () => props.availableStaff"
+                        :placeholderText="'Select staff member'"
+                        labelKey="name"
+                    />
+                    <sl-button
+                        variant="primary"
+                        @click="handleAddStaff"
+                        :disabled="!selectedStaff"
+                    >
+                        <sl-icon slot="prefix" name="plus"></sl-icon>
+                        Add
+                    </sl-button>
+                </div>
             </div>
 
             <sl-divider></sl-divider>
@@ -95,11 +168,51 @@ const isLoadOrUnload = computed(() => {
 </template>
 
 <style scoped>
-.resources-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    margin-bottom: 1rem;
+.resources-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.resource-item {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.resource-item sl-input {
+    flex: 1;
+}
+
+.add-staff-section {
+    margin: 1.5rem 0;
+    padding: 1rem;
+    background: var(--sl-color-neutral-50);
+    border-radius: 4px;
+}
+
+.add-staff-section h4 {
+    margin: 0 0 1rem 0;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.add-staff-controls {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-end;
+}
+
+.add-staff-controls sl-select {
+    flex: 1;
+}
+
+.no-staff-message {
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+    color: var(--sl-color-neutral-600);
+    font-size: 0.9rem;
 }
 
 sl-input {
