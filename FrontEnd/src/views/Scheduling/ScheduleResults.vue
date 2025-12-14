@@ -1,18 +1,23 @@
 <script setup lang="ts">
-import { useRoute } from 'vue-router';
-import { inject, computed } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import { inject, computed, ref } from 'vue';
 import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
 import type { ISchedulingService } from '@/service/IService/ISchedulingService';
 import { useI18n } from 'vue-i18n';
 import DataTable from '@/components/crud/DataTable.vue';
+import { useAlerts } from '@/composables/alerts';
 
 const scheduleService = container.get<ISchedulingService>(TYPES.schedulingService);
 const route = useRoute();
+const router = useRouter();
 const { t } = useI18n();
+const notifications = useAlerts();
 
 // results passed via router
 const schedule = JSON.parse(route.query.request as string);
+const requestId = route.query.requestId as string;
+const loading = ref(false);
 
 // Process data grouped by dock
 const dockSchedules = computed(() => {
@@ -70,6 +75,62 @@ const overallMetrics = computed(() => {
     };
 });
 
+const acceptResult = async () => {
+    if (!requestId) {
+        notifications.enqueueNotification(
+            "No request ID found. Cannot accept this result.",
+            notifications.notificationTypes.DANGER
+        );
+        return;
+    }
+
+    try {
+        loading.value = true;
+        await scheduleService.acceptSchedulingRequest(requestId);
+        notifications.enqueueNotification(
+            "Scheduling result accepted successfully.",
+            notifications.notificationTypes.SUCCESS
+        );
+        
+        // Redirect to queue or dashboard
+        router.push({ name: 'Scheduling Queue' });
+    } catch (error: any) {
+        notifications.enqueueNotification(
+            "Failed to accept the scheduling result. " + (error.response?.data?.message || error.message),
+            notifications.notificationTypes.DANGER
+        );
+        loading.value = false;
+    }
+};
+
+const rejectResult = async () => {
+    if (!requestId) {
+        notifications.enqueueNotification(
+            "No request ID found. Cannot reject this result.",
+            notifications.notificationTypes.DANGER
+        );
+        return;
+    }
+
+    try {
+        loading.value = true;
+        await scheduleService.rejectSchedulingRequest(requestId);
+        notifications.enqueueNotification(
+            "Scheduling request rejected successfully.",
+            notifications.notificationTypes.SUCCESS
+        );
+        
+        // Redirect to queue or dashboard
+        router.push({ name: 'Scheduling Queue' });
+    } catch (error: any) {
+        notifications.enqueueNotification(
+            "Failed to reject the scheduling request. " + (error.response?.data?.message || error.message),
+            notifications.notificationTypes.DANGER
+        );
+        loading.value = false;
+    }
+};
+
 const downloadPDF = async () => {
     const date = new Date(schedule.date);
     const pdf = await scheduleService.generateSchedulePDF(schedule, date);
@@ -123,8 +184,48 @@ const downloadPDF = async () => {
         </div>
 
         <br>
-        <sl-button variant="primary" @click="downloadPDF">
-            Download as PDF
-        </sl-button>
+        <div class="action-buttons">
+            <sl-button variant="primary" @click="downloadPDF">
+                <sl-icon slot="prefix" name="download"></sl-icon>
+                Download as PDF
+            </sl-button>
+            
+            <div class="right-buttons">
+                <sl-button 
+                    variant="success" 
+                    @click="acceptResult"
+                    :loading="loading"
+                    :disabled="!requestId"
+                >
+                    <sl-icon slot="prefix" name="check-circle"></sl-icon>
+                    Accept Result
+                </sl-button>
+                
+                <sl-button 
+                    variant="danger" 
+                    @click="rejectResult"
+                    :loading="loading"
+                    :disabled="!requestId"
+                >
+                    <sl-icon slot="prefix" name="x-circle"></sl-icon>
+                    Reject Result
+                </sl-button>
+            </div>
+        </div>
     </div>
 </template>
+
+<style scoped>
+.action-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.right-buttons {
+    display: flex;
+    gap: 1rem;
+}
+</style>

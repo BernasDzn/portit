@@ -231,6 +231,14 @@ export class OperationPlanService {
 		return await this.operationPlanRepository.create(operationPlan);
 	}
 
+	async regeneratePlansForDay(day: string, algorithm: string, daysAhead: number, createdBy: string): Promise<any> {
+		// Use the existing scheduling request queue system
+		const { SchedulingRequestService } = await import('./schedulingRequestService');
+		const schedulingService = new SchedulingRequestService();
+		
+		return await schedulingService.scheduleRequest(day, algorithm, daysAhead, createdBy);
+	}
+
 }
 
 export const operationPlanService = new OperationPlanService();

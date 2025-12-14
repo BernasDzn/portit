@@ -10,6 +10,7 @@ public interface IVesselVisitNotificationService
     Task<IEnumerable<VesselVisitNotificationDto>> GetVesselVisitNotifications();
     Task<IEnumerable<VesselVisitNotificationDto>> GetVesselVisitNotificationsOnDay(DateTime day, uint daysAhead);
     Task<VesselVisitNotificationDto> GetById(string vvnID);
+    Task<IEnumerable<string>> GetAllAcceptedVVNIds();
     Task<VesselVisitNotificationDto> Add(CreateVesselVisitNotificationDto vesselVisitNotificationDto, string userEmail);
     Task<VesselVisitNotificationDto> Update(string vvnID, CreateVesselVisitNotificationDto vvnDTO, string userEmail);
     Task<Page<VesselVisitNotificationStatusDto>> FilterNotifications(VesselVisitNotificationFilter filter, string userEmail);

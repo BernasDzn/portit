@@ -151,4 +151,63 @@ export default class OperationPlanController extends BaseController {
         }
     }
 
+    /**
+     * @openapi
+     * /operation-plans/regenerate:
+     *   post:
+     *     tags: [Operation Plans]
+     *     summary: Regenerate operation plans for a specific day
+     *     security:
+     *       - bearerAuth: []
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             properties:
+     *               day:
+     *                 type: string
+     *                 format: date
+     *                 description: Day to regenerate plans for (YYYY-MM-DD)
+     *               algorithm:
+     *                 type: string
+     *                 description: Scheduling algorithm to use
+     *               daysAhead:
+     *                 type: integer
+     *                 description: Number of days ahead to consider
+     *             required:
+     *               - day
+     *               - algorithm
+     *     responses:
+     *       200:
+     *         description: Plans regenerated successfully
+     *       400:
+     *         description: Missing required parameters
+     */
+    public async regeneratePlansForDay(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const { day, algorithm, daysAhead } = req.body;
+            
+            if (!day || !algorithm) {
+                this.clientError(res, 'Missing required parameters: day and algorithm');
+                return;
+            }
+
+            const userEmail = req.user?.emailAddress || 'unknown';
+            
+            const result = await this.operationPlanService.regeneratePlansForDay(
+                day, 
+                algorithm, 
+                daysAhead || 1, 
+                userEmail
+            );
+            
+            this.ok(res, result);
+        } catch (e: any) {
+            this.fail(res, `Error regenerating plans: ${e.message}`);
+            return next(e);
+        }
+    }
+
 }

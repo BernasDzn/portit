@@ -174,10 +174,13 @@ const loading = ref(false);
                     <RouterLink
                         :to="{
                             name: 'ScheduleResults',
-                            query: { request: JSON.stringify({
-                                date: row.day,
-                                ...row.result
-                            }) }
+                            query: { 
+                                request: JSON.stringify({
+                                    date: row.day,
+                                    ...row.result
+                                }),
+                                requestId: row.id
+                            }
                         }"
                         :class="'is-info ' + (row.result ? '' : 'is-disabled')"
                     >

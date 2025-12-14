@@ -9,6 +9,9 @@ namespace Api.Application.Controllers;
 public interface IVesselVisitNotificationController
 {
     public Task<ActionResult<IEnumerable<VesselVisitNotificationDto>>> GetAll();
+    public Task<ActionResult<VesselVisitNotificationDto>> GetById(string id);
+    public Task<ActionResult<IEnumerable<string>>> GetAllIds();
+    public Task<ActionResult<IEnumerable<string>>> GetAllAcceptedVVNs();
     public Task<ActionResult<IEnumerable<NotificationDecisionDto>>> GetDecisions([FromQuery] string vesselVisitNotificationId);
     public Task<ActionResult<VesselVisitNotificationDto>> Create([FromBody] CreateVesselVisitNotificationDto vesselVisitNotificationDto);
     public Task<ActionResult<NotificationDecisionDto>> CreateDecision([FromQuery] string vesselVisitNotificationId, [FromBody] CreateNotificationDecisionDto notificationDecisionDto);
