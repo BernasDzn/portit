@@ -65,6 +65,12 @@ public class AuthController : ControllerBase
             user = await _systemUserService.GetBySub(result.ExternalId ?? string.Empty);
             if (user.IsActive != null && !user.IsActive.Value)
                 return Unauthorized("User inactive.");
+            
+            if (user.Email != result.Email)
+            {
+                user.Email = result.Email!;
+                await _systemUserService.UpdateSystemUser(user.Sub!, user);
+            }
         }
         catch (EntityNotFoundException)
         {
