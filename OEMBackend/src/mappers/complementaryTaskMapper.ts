@@ -12,11 +12,11 @@ export class ComplementaryTaskMapper {
 			categoryId: dto.categoryId,
 			responsibleTeam: dto.responsibleTeam,
 			startTimestamp: dto.startTimestamp,
-			endTimestamp: dto.endTimestamp,
+			...(dto.endTimestamp !== undefined && { endTimestamp: dto.endTimestamp }),
 			status: dto.status,
 			vesselVisitEventId: dto.vesselVisitEventId,
 			impact: dto.impact,
-			description: dto.description
+			...(dto.description !== undefined && { description: dto.description })
 		}, dto.id);
 	}
 }
