@@ -6,7 +6,9 @@ import EntityView from '@/components/crud/EntityView.vue';
 import type { IIncidentTypeService } from '@/service/IService/IIncidentTypeService';
 import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const route = useRoute();
 const router = useRouter();
 
@@ -28,7 +30,7 @@ const doDelete = async () => {
         router.push('/incident-types/search');
     } catch (error) {
         console.error('Failed to delete incident type', error);
-        alert('Failed to delete incident type');
+        alert(t('incidentType.failedToDelete'));
     } finally {
         (deleteDialog.value as any)?.hide?.();
     }
@@ -49,10 +51,10 @@ const getSeverityVariant = (severity: string): string => {
     <div>
         <sl-breadcrumb>
             <sl-breadcrumb-item>
-                <RouterLink to="/incident-types/dashboard" class="breadcrumb-link">Incident Types Dashboard</RouterLink>
+                <RouterLink to="/incident-types/dashboard" class="breadcrumb-link">{{ t('incidentType.tabs.dashboard') }}</RouterLink>
             </sl-breadcrumb-item>
             <sl-breadcrumb-item>
-                <RouterLink to="/incident-types/search" class="breadcrumb-link">Search Incident Types</RouterLink>
+                <RouterLink to="/incident-types/search" class="breadcrumb-link">{{ t('incidentType.tabs.search') }}</RouterLink>
             </sl-breadcrumb-item>
             <sl-breadcrumb-item>{{ incidentTypeId }}</sl-breadcrumb-item>
         </sl-breadcrumb>
@@ -66,7 +68,7 @@ const getSeverityVariant = (severity: string): string => {
                             <h2 class="title">{{ entity.element.name }}</h2>
                             <p class="subtitle">
                                 <sl-badge :variant="getSeverityVariant(entity.element.severity)">
-                                    {{ entity.element.severity }}
+                                    {{ t(`incidentType.severity.${entity.element.severity}`) }}
                                 </sl-badge>
                             </p>
                         </div>
@@ -75,50 +77,50 @@ const getSeverityVariant = (severity: string): string => {
                         <RouterLink :to="`/incident-types/edit/${entity.element.id}`">
                             <sl-button variant="default" size="large">
                                 <sl-icon slot="prefix" name="pencil"></sl-icon>
-                                Edit
+                                {{ t('buttons.edit') }}
                             </sl-button>
                         </RouterLink>
                         <sl-button variant="danger" size="large" @click="confirmDelete">
                             <sl-icon slot="prefix" name="trash"></sl-icon>
-                            Delete
+                            {{ t('buttons.delete') }}
                         </sl-button>
                     </div>
                 </div>
                 <div class="viewing-content">
                     <sl-card class="info-card" style="flex: 100%;">
-                        <p>Incident Type Information</p>
+                        <p>{{ t('incidentType.incidentTypeInformation') }}</p>
                         <div class="info-grid">
                             <div class="info-block">
-                                <span class="label">Name</span>
+                                <span class="label">{{ t('incidentType.fields.name.title') }}</span>
                                 <p>{{ entity.element.name }}</p>
                             </div>
                             <div class="info-block">
-                                <span class="label">Severity</span>
+                                <span class="label">{{ t('incidentType.fields.severity.title') }}</span>
                                 <p>
                                     <sl-badge :variant="getSeverityVariant(entity.element.severity)">
-                                        {{ entity.element.severity }}
+                                        {{ t(`incidentType.severity.${entity.element.severity}`) }}
                                     </sl-badge>
                                 </p>
                             </div>
                             <div class="info-block" style="flex: 100%;">
-                                <span class="label">Description</span>
+                                <span class="label">{{ t('incidentType.fields.description.title') }}</span>
                                 <p>{{ entity.element.description }}</p>
                             </div>
                         </div>
                     </sl-card>
 
                     <sl-card class="info-card" style="flex: 100%;" v-if="entity.element.subtypeOfId">
-                        <p>Parent Type</p>
+                        <p>{{ t('incidentType.parentType') }}</p>
                         <div class="info-grid">
                             <div class="info-block">
-                                <span class="label">Subtype Of</span>
+                                <span class="label">{{ t('incidentType.fields.subtypeOf.title') }}</span>
                                 <p>{{ entity.element.subtypeOfId }}</p>
                             </div>
                         </div>
                     </sl-card>
 
                     <sl-card class="info-card" style="flex: 100%;" v-if="entity.element.subtypesIds && entity.element.subtypesIds.length > 0">
-                        <p>Subtypes ({{ entity.element.subtypesIds.length }})</p>
+                        <p>{{ t('incidentType.fields.subtypes.title') }} ({{ entity.element.subtypesIds.length }})</p>
                         <div class="info-grid">
                             <div class="info-block" v-for="subtypeId in entity.element.subtypesIds" :key="subtypeId">
                                 <p>{{ subtypeId }}</p>
@@ -129,10 +131,10 @@ const getSeverityVariant = (severity: string): string => {
             </div>
         </EntityView>
 
-        <sl-dialog ref="deleteDialog" label="Confirm delete">
-            <div>Are you sure you want to delete this incident type?</div>
-            <sl-button slot="footer" variant="text" @click="(deleteDialog as any).hide()">Cancel</sl-button>
-            <sl-button slot="footer" variant="danger" @click="doDelete">Delete</sl-button>
+        <sl-dialog ref="deleteDialog" :label="t('incidentType.confirmDelete')">
+            <div>{{ t('incidentType.confirmDeleteMessage') }}</div>
+            <sl-button slot="footer" variant="text" @click="(deleteDialog as any).hide()">{{ t('buttons.cancel') }}</sl-button>
+            <sl-button slot="footer" variant="danger" @click="doDelete">{{ t('buttons.delete') }}</sl-button>
         </sl-dialog>
     </div>
 </template>

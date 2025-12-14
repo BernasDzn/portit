@@ -759,7 +759,8 @@
             "dashboard": "Painel de Tipos de Incidente",
             "view_dashboard": "Ver Tipos de Incidente",
             "search": "Pesquisar Tipos de Incidente",
-            "create": "Criar Tipo de Incidente"
+            "create": "Criar Tipo de Incidente",
+            "edit": "Editar Tipo de Incidente"
         },
         "generalFields": "Campos gerais",
         "classification": "Classificação",
@@ -767,8 +768,14 @@
         "subtitle": {
             "dashboard": "Visão geral das estatísticas e atividades dos tipos de incidente",
             "search": "Gerir e visualizar todos os tipos de incidente registados",
-            "create": "Registar um novo tipo de incidente no sistema"
+            "create": "Registar um novo tipo de incidente no sistema",
+            "edit": "Modificar um tipo de incidente existente no sistema"
         },
-        "registeredIncidentTypes": "Tipos de Incidente Registados"
+        "registeredIncidentTypes": "Tipos de Incidente Registados",
+        "incidentTypeInformation": "Informação do Tipo de Incidente",
+        "parentType": "Tipo Pai",
+        "confirmDelete": "Confirmar exclusão",
+        "confirmDeleteMessage": "Tem a certeza que deseja excluir este tipo de incidente?",
+        "failedToDelete": "Falha ao excluir tipo de incidente"
     }
 }

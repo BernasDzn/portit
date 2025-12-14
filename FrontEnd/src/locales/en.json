@@ -900,7 +900,8 @@
             "dashboard": "Incident Types Dashboard",
             "view_dashboard": "View Incident Types",
             "search": "Search Incident Types",
-            "create": "Create Incident Type"
+            "create": "Create Incident Type",
+            "edit": "Edit Incident Type"
         },
         "generalFields": "General fields",
         "classification": "Classification",
@@ -908,8 +909,14 @@
         "subtitle": {
             "dashboard": "Overview of incident type statistics and activities",
             "search": "Manage and view all registered incident types",
-            "create": "Register a new incident type into the system"
+            "create": "Register a new incident type into the system",
+            "edit": "Modify an existing incident type in the system"
         },
-        "registeredIncidentTypes": "Registered Incident Types"
+        "registeredIncidentTypes": "Registered Incident Types",
+        "incidentTypeInformation": "Incident Type Information",
+        "parentType": "Parent Type",
+        "confirmDelete": "Confirm delete",
+        "confirmDeleteMessage": "Are you sure you want to delete this incident type?",
+        "failedToDelete": "Failed to delete incident type"
     }
 }

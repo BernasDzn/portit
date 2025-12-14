@@ -10,7 +10,9 @@ import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
 import ObjectSelector from '@/components/crud/ObjectSelector.vue';
 import Loading from '@/components/Loading.vue';
+import { useI18n } from 'vue-i18n';
 
+const { t } = useI18n();
 const incidentTypeService = container.get<IIncidentTypeService>(TYPES.incidentTypeService);
 const notifications = useAlerts();
 
@@ -74,9 +76,9 @@ const updateIncidentType = async (obj: any) => {
 };
 
 const severityOptions = [
-    { id: 'Minor', name: 'Minor' },
-    { id: 'Major', name: 'Major' },
-    { id: 'Critical', name: 'Critical' }
+    { id: 'Minor', name: t('incidentType.severity.Minor') },
+    { id: 'Major', name: t('incidentType.severity.Major') },
+    { id: 'Critical', name: t('incidentType.severity.Critical') }
 ];
 
 const fetchIncidentTypes = async () => {
@@ -98,53 +100,53 @@ const fetchIncidentTypes = async () => {
     <div class="incident-type-edit">
         <sl-breadcrumb>
             <sl-breadcrumb-item>
-                <RouterLink to="/incident-types/dashboard" class="link">Incident Types Dashboard</RouterLink>
+                <RouterLink to="/incident-types/dashboard" class="link">{{ t('incidentType.tabs.dashboard') }}</RouterLink>
             </sl-breadcrumb-item>
             <sl-breadcrumb-item>
-                <RouterLink to="/incident-types/search" class="link">Search Incident Types</RouterLink>
+                <RouterLink to="/incident-types/search" class="link">{{ t('incidentType.tabs.search') }}</RouterLink>
             </sl-breadcrumb-item>
             <sl-breadcrumb-item>
                 <RouterLink :to="incidentType.id ? `/incident-types/view/${incidentType.id}` : '/incident-types/search'" class="link">
-                    {{ incidentType.name || 'Incident Type' }}
+                    {{ incidentType.name || t('incidentType.title') }}
                 </RouterLink>
             </sl-breadcrumb-item>
-            <sl-breadcrumb-item>Edit</sl-breadcrumb-item>
+            <sl-breadcrumb-item>{{ t('buttons.edit') }}</sl-breadcrumb-item>
         </sl-breadcrumb>
 
-        <h1 class="title">Edit Incident Type</h1>
-        <p class="subtitle">Modify an existing incident type in the system</p>
+        <h1 class="title">{{ t('incidentType.tabs.edit') }}</h1>
+        <p class="subtitle">{{ t('incidentType.subtitle.edit') }}</p>
 
         <Loading v-if="loading" />
         <EntityForm :object="incidentType" editing-id="incidentTypeId" :submit-function="updateIncidentType" v-else>
             <div class="form">
                 <div class="general-info">
-                    <p class="section-title">General fields</p>
+                    <p class="section-title">{{ t('incidentType.generalFields') }}</p>
                     <FormField class="field" inputId="incident-type-name"
-                        name="Name*" v-model="incidentType.name"
-                        placeholderText="Incident type name" required />
+                        :name="t('incidentType.fields.name.title') + '*'" v-model="incidentType.name"
+                        :placeholderText="t('incidentType.fields.name.placeholder')" required />
                     <FormField class="field" inputId="incident-type-description" :type="'textarea'"
-                        name="Description*" v-model="incidentType.description"
-                        placeholderText="Detailed description of the incident type" required />
+                        :name="t('incidentType.fields.description.title') + '*'" v-model="incidentType.description"
+                        :placeholderText="t('incidentType.fields.description.placeholder')" required />
                 </div>
 
                 <span class="section-divider"></span>
 
                 <div class="classification">
-                    <p class="section-title">Classification</p>
+                    <p class="section-title">{{ t('incidentType.classification') }}</p>
                     <div class="fields-dropdown">
-                        <ObjectSelector class="field-dropdown" name="Severity*"
+                        <ObjectSelector class="field-dropdown" :name="t('incidentType.fields.severity.title') + '*'"
                             v-model="incidentType.severity"
                             :fetch-function="async () => ({ items: severityOptions, totalItems: 3, currentPage: 1, totalPages: 1 })"
-                            placeholderText="Select severity level" labelKey="name"
+                            :placeholderText="t('incidentType.fields.severity.placeholder')" labelKey="name"
                             valueKey="id" required />
 
                         <FormField class="field" inputId="incident-type-subtype-of"
-                            name="Subtype Of" v-model="incidentType.subtypeOf"
+                            :name="t('incidentType.fields.subtypeOf.title')" v-model="incidentType.subtypeOf"
                             :enabled="false" />
 
-                        <ObjectSelector class="field-dropdown" name="Subtypes"
+                        <ObjectSelector class="field-dropdown" :name="t('incidentType.fields.subtypes.title')"
                             v-model="incidentType.subtypes" :fetch-function="fetchIncidentTypes"
-                            placeholderText="Select child types (optional)" labelKey="name"
+                            :placeholderText="t('incidentType.fields.subtypes.placeholder')" labelKey="name"
                             valueKey="id" multiple />
                     </div>
                 </div>
