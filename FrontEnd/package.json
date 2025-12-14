@@ -10,6 +10,7 @@
     "dev": "vite --host",
     "local": "vite --host",
     "deploy": "vite --host --port 2229",
+    "prebuild": "node -e \"require('fs').copyFileSync('config.json', 'public/config.json')\"",
     "build": "vite build",
     "start": "serve -s dist -l 2229",
     "preview": "vite preview",
