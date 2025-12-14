@@ -5,6 +5,7 @@ import { api } from './api';
 import { useSession } from '@/composables/session';
 import TYPES from '@/inversify/types';
 import { inject, injectable } from 'inversify';
+import { getApiBaseSync } from '@/config';
 
 const session = useSession();
 
@@ -18,6 +19,7 @@ export class AxiosHttpService implements IHttpService {
         
         this.axiosInstance = axios.create(
         { 
+            baseURL: getApiBaseSync(),
             withCredentials: true
         });
 

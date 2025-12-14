@@ -50,10 +50,26 @@ export async function getApiBase(): Promise<string> {
   return '/api'
 }
 
+// Synchronous version for initializing axios baseURL
+// In production, returns the remote API from config (not /api which won't work)
+export function getApiBaseSync(): string {
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL as string
+  }
+  
+  if (import.meta.env.PROD) {
+    // In production, use remote API directly (config.json values)
+    return REMOTE_API
+  }
+  
+  return '/api'
+}
+
 export default {
   REMOTE_API,
   LOCAL_API_PORT,
   DEFAULT_LOCAL_API,
   getConfig,
   getApiBase,
+  getApiBaseSync,
 }
