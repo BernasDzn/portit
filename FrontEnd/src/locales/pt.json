@@ -726,5 +726,49 @@
             "proceedQuestion": "Deseja prosseguir com esta operação?",
             "yesRegenerateAll": "Sim, Regenerar Tudo"
         }
+    },
+    "incidentType": {
+        "fields": {
+            "name": {
+                "title": "Nome",
+                "placeholder": "Nome do tipo de incidente"
+            },
+            "description": {
+                "title": "Descrição",
+                "placeholder": "Descrição detalhada do tipo de incidente"
+            },
+            "severity": {
+                "title": "Severidade",
+                "placeholder": "Selecione o nível de severidade"
+            },
+            "subtypeOf": {
+                "title": "Subtipo De",
+                "placeholder": "Selecione o tipo pai"
+            },
+            "subtypes": {
+                "title": "Subtipos",
+                "placeholder": "Selecione os tipos filhos"
+            }
+        },
+        "severity": {
+            "Minor": "Menor",
+            "Major": "Maior",
+            "Critical": "Crítico"
+        },
+        "tabs": {
+            "dashboard": "Painel de Tipos de Incidente",
+            "view_dashboard": "Ver Tipos de Incidente",
+            "search": "Pesquisar Tipos de Incidente",
+            "create": "Criar Tipo de Incidente"
+        },
+        "generalFields": "Campos gerais",
+        "classification": "Classificação",
+        "title": "Tipos de Incidente",
+        "subtitle": {
+            "dashboard": "Visão geral das estatísticas e atividades dos tipos de incidente",
+            "search": "Gerir e visualizar todos os tipos de incidente registados",
+            "create": "Registar um novo tipo de incidente no sistema"
+        },
+        "registeredIncidentTypes": "Tipos de Incidente Registados"
     }
 }

@@ -34,9 +34,9 @@ const submitIncidentType = (obj: any) => {
 };
 
 const severityOptions = [
-    { id: 'Minor', name: 'Minor' },
-    { id: 'Major', name: 'Major' },
-    { id: 'Critical', name: 'Critical' }
+    { id: 'Minor', name: t('incidentType.severity.Minor') },
+    { id: 'Major', name: t('incidentType.severity.Major') },
+    { id: 'Critical', name: t('incidentType.severity.Critical') }
 ];
 
 const fetchIncidentTypes = async () => {
@@ -55,44 +55,44 @@ const fetchIncidentTypes = async () => {
     <div>
         <sl-breadcrumb>
             <sl-breadcrumb-item>
-                <RouterLink to="/incident-types/dashboard" class="breadcrumb-link">Incident Types Dashboard</RouterLink>
+                <RouterLink to="/incident-types/dashboard" class="breadcrumb-link">{{ t('incidentType.tabs.dashboard') }}</RouterLink>
             </sl-breadcrumb-item>
-            <sl-breadcrumb-item>Create Incident Type</sl-breadcrumb-item>
+            <sl-breadcrumb-item>{{ t('incidentType.tabs.create') }}</sl-breadcrumb-item>
         </sl-breadcrumb>
-        <h1 class="title">Create Incident Type</h1>
-        <p class="subtitle">Register a new incident type into the system</p>
+        <h1 class="title">{{ t('incidentType.tabs.create') }}</h1>
+        <p class="subtitle">{{ t('incidentType.subtitle.create') }}</p>
 
         <EntityForm :object="incidentType" :submit-function="submitIncidentType">
             <div class="form">
                 <div class="general-info">
-                    <p class="section-title">General fields</p>
+                    <p class="section-title">{{ t('incidentType.generalFields') }}</p>
                     <FormField class="field" inputId="incident-type-name"
-                        name="Name*" v-model="incidentType.name"
-                        placeholderText="Incident type name" required />
+                        :name="t('incidentType.fields.name.title') + '*'" v-model="incidentType.name"
+                        :placeholderText="t('incidentType.fields.name.placeholder')" required />
                     <FormField class="field" inputId="incident-type-description" :type="'textarea'"
-                        name="Description*" v-model="incidentType.description"
-                        placeholderText="Detailed description of the incident type" required />
+                        :name="t('incidentType.fields.description.title') + '*'" v-model="incidentType.description"
+                        :placeholderText="t('incidentType.fields.description.placeholder')" required />
                 </div>
 
                 <span class="section-divider"></span>
 
                 <div class="classification">
-                    <p class="section-title">Classification</p>
+                    <p class="section-title">{{ t('incidentType.classification') }}</p>
                     <div class="fields-dropdown">
-                        <ObjectSelector class="field-dropdown" name="Severity*"
+                        <ObjectSelector class="field-dropdown" :name="t('incidentType.fields.severity.title') + '*'"
                             v-model="incidentType.severity"
                             :fetch-function="async () => ({ items: severityOptions, totalItems: 3, currentPage: 1, totalPages: 1 })"
-                            placeholderText="Select severity level" labelKey="name"
+                            :placeholderText="t('incidentType.fields.severity.placeholder')" labelKey="name"
                             valueKey="id" required />
 
-                        <ObjectSelector class="field-dropdown" name="Subtype Of"
+                        <ObjectSelector class="field-dropdown" :name="t('incidentType.fields.subtypeOf.title')"
                             v-model="incidentType.subtypeOf" :fetch-function="fetchIncidentTypes"
-                            placeholderText="Select parent type (optional)" labelKey="name"
+                            :placeholderText="t('incidentType.fields.subtypeOf.placeholder')" labelKey="name"
                             valueKey="id" />
 
-                        <ObjectSelector class="field-dropdown" name="Subtypes"
+                        <ObjectSelector class="field-dropdown" :name="t('incidentType.fields.subtypes.title')"
                             v-model="incidentType.subtypes" :fetch-function="fetchIncidentTypes"
-                            placeholderText="Select child types (optional)" labelKey="name"
+                            :placeholderText="t('incidentType.fields.subtypes.placeholder')" labelKey="name"
                             valueKey="id" multiple />
                     </div>
                 </div>

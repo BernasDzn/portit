@@ -867,5 +867,49 @@
             "title": "Operation Schedule",
             "noOperations": "No operations scheduled"
         }
+    },
+    "incidentType": {
+        "fields": {
+            "name": {
+                "title": "Name",
+                "placeholder": "Incident type name"
+            },
+            "description": {
+                "title": "Description",
+                "placeholder": "Detailed description of the incident type"
+            },
+            "severity": {
+                "title": "Severity",
+                "placeholder": "Select severity level"
+            },
+            "subtypeOf": {
+                "title": "Subtype Of",
+                "placeholder": "Select parent type"
+            },
+            "subtypes": {
+                "title": "Subtypes",
+                "placeholder": "Select child types"
+            }
+        },
+        "severity": {
+            "Minor": "Minor",
+            "Major": "Major",
+            "Critical": "Critical"
+        },
+        "tabs": {
+            "dashboard": "Incident Types Dashboard",
+            "view_dashboard": "View Incident Types",
+            "search": "Search Incident Types",
+            "create": "Create Incident Type"
+        },
+        "generalFields": "General fields",
+        "classification": "Classification",
+        "title": "Incident Types",
+        "subtitle": {
+            "dashboard": "Overview of incident type statistics and activities",
+            "search": "Manage and view all registered incident types",
+            "create": "Register a new incident type into the system"
+        },
+        "registeredIncidentTypes": "Registered Incident Types"
     }
 }

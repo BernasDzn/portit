@@ -25,19 +25,19 @@ onMounted(async () => {
 
 <template>
     <div>
-        <h1 class="title">Incident Types Dashboard</h1>
-        <p class="subtitle">Overview of incident type statistics and activities</p>
+        <h1 class="title">{{ t('incidentType.tabs.dashboard') }}</h1>
+        <p class="subtitle">{{ t('incidentType.subtitle.dashboard') }}</p>
         <sl-card class="dashboard-overview">
             <div class="dashboard-items">
                 <DashboardItem
-                    title="View Incident Types"
-                    description="Manage and view all registered incident types"
+                    :title="t('incidentType.tabs.view_dashboard')"
+                    :description="t('incidentType.subtitle.search')"
                     icon="search"
                     to="/incident-types/search"
                 />
                 <DashboardItem
-                    title="Create Incident Type"
-                    description="Register a new incident type into the system"
+                    :title="t('incidentType.tabs.create')"
+                    :description="t('incidentType.subtitle.create')"
                     icon="add"
                     to="/incident-types/create"
                 />
@@ -46,7 +46,7 @@ onMounted(async () => {
         <sl-card class="dashboard-statistics">
             <div class="stats-overview" v-if="!loading">
                 <p>{{numberOfIncidentTypes}}</p>
-                <p>Registered Incident Types</p>
+                <p>{{ t('incidentType.registeredIncidentTypes') }}</p>
             </div>
             <Loading v-if="loading"/>
         </sl-card>

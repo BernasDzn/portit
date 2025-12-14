@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import type { IncidentType } from '@/model/IncidentType';
 import { RouterLink } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
 
 const props = withDefaults(defineProps<{
     incidentType: IncidentType;
@@ -30,14 +33,14 @@ const getSeverityVariant = (severity: string): string => {
                         {{ incidentType.description }}
                     </p>
                     <sl-badge :variant="getSeverityVariant(incidentType.severity)" style="margin-top: 8px;">
-                        {{ incidentType.severity }}
+                        {{ t(`incidentType.severity.${incidentType.severity}`) }}
                     </sl-badge>
                 </div>
                 <span class="material-icons icon" aria-hidden="true">warning</span>
             </div>
             <div class="details" v-if="props.showDetails && incidentType.subtypesIds && incidentType.subtypesIds.length > 0">
                 <sl-divider></sl-divider>
-                <p>Subtypes: {{ incidentType.subtypesIds.length }}</p>
+                <p>{{ t('incidentType.fields.subtypes.title') }}: {{ incidentType.subtypesIds.length }}</p>
             </div>
         </sl-card>
     </component>

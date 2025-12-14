@@ -29,11 +29,11 @@ async function buildFilterDefinition() {
     filterDefinition.value = {
         severity: {
             type: 'select',
-            label: 'Severity',
+            label: t('incidentType.fields.severity.title') as string,
             options: [
-                { value: 'Minor', text: 'Minor' },
-                { value: 'Major', text: 'Major' },
-                { value: 'Critical', text: 'Critical' }
+                { value: 'Minor', text: t('incidentType.severity.Minor') },
+                { value: 'Major', text: t('incidentType.severity.Major') },
+                { value: 'Critical', text: t('incidentType.severity.Critical') }
             ]
         }
     };
@@ -47,13 +47,13 @@ watch(locale, () => buildFilterDefinition());
 <template>
 <div>
     <sl-breadcrumb>
-        <sl-breadcrumb-item><RouterLink to="/incident-types/dashboard" class="breadcrumb-link">Incident Types Dashboard</RouterLink></sl-breadcrumb-item>
-        <sl-breadcrumb-item>Search Incident Types</sl-breadcrumb-item>
+        <sl-breadcrumb-item><RouterLink to="/incident-types/dashboard" class="breadcrumb-link">{{ t('incidentType.tabs.dashboard') }}</RouterLink></sl-breadcrumb-item>
+        <sl-breadcrumb-item>{{ t('incidentType.tabs.search') }}</sl-breadcrumb-item>
     </sl-breadcrumb>
 
     <header>
-        <h1 class="title">Incident Types</h1>
-        <p class="subtitle">Manage and view all registered incident types</p>
+        <h1 class="title">{{ t('incidentType.title') }}</h1>
+        <p class="subtitle">{{ t('incidentType.subtitle.search') }}</p>
 
         <ListingBox :fetch-function="fetchIncidentTypes" search-filter="name" v-slot="{elements}" :filter-definition="filterDefinition">
             <li v-for="incidentType in elements" :key="incidentType.id">
