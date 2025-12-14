@@ -452,6 +452,19 @@
             "title": "Scheduling Queue",
             "subtitle": "Pending scheduling requests",
             "onlyMine": "Show only my requests"
+        },
+        "rebalancing": {
+            "title": "Dock Rebalancing Required",
+            "warningMessage": "Before scheduling, the system recommends rebalancing dock assignments to optimize load distribution.",
+            "vesselsToReassign": "Vessels to Reassign",
+            "averageLoad": "Average Load",
+            "loadRange": "Load Range",
+            "proposedReassignments": "Proposed Reassignments",
+            "vesselImo": "Vessel IMO",
+            "currentDock": "Current Dock",
+            "proposedDock": "Proposed Dock",
+            "skipButton": "Skip & Continue with Current Assignments",
+            "applyButton": "Apply Rebalancing & Generate Schedule"
         }
     },
     "physicalResource": {

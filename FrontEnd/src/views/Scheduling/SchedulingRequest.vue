@@ -309,39 +309,39 @@ const closeAboutModal = () => {
         <!-- Rebalancing Preview Modal -->
         <sl-dialog 
             :open="showRebalancingModal" 
-            label="Dock Rebalancing Required"
+            :label="t('scheduling.rebalancing.title')"
             class="rebalancing-dialog"
             @sl-after-hide="showRebalancingModal = false"
         >
             <div v-if="rebalancingResult" class="rebalancing-content">
                 <sl-alert variant="warning" open>
                     <sl-icon slot="icon" name="exclamation-triangle"></sl-icon>
-                    <strong>Before scheduling, the system recommends rebalancing dock assignments to optimize load distribution.</strong>
+                    <strong>{{ t('scheduling.rebalancing.warningMessage') }}</strong>
                 </sl-alert>
 
                 <div class="metrics-summary">
                     <div class="metric">
-                        <span class="metric-label">Vessels to Reassign:</span>
+                        <span class="metric-label">{{ t('scheduling.rebalancing.vesselsToReassign') }}:</span>
                         <sl-badge variant="warning">{{ rebalancingResult.metrics.reassignments }}</sl-badge>
                     </div>
                     <div class="metric">
-                        <span class="metric-label">Average Load:</span>
+                        <span class="metric-label">{{ t('scheduling.rebalancing.averageLoad') }}:</span>
                         <span class="metric-value">{{ rebalancingResult.metrics.avgLoad.toFixed(2) }}h</span>
                     </div>
                     <div class="metric">
-                        <span class="metric-label">Load Range:</span>
+                        <span class="metric-label">{{ t('scheduling.rebalancing.loadRange') }}:</span>
                         <span class="metric-value">{{ rebalancingResult.metrics.loadRange.toFixed(2) }}h</span>
                     </div>
                 </div>
 
-                <h4>Proposed Reassignments:</h4>
+                <h4>{{ t('scheduling.rebalancing.proposedReassignments') }}</h4>
                 <table class="reassignments-table">
                     <thead>
                         <tr>
-                            <th>Vessel IMO</th>
-                            <th>Current Dock</th>
+                            <th>{{ t('scheduling.rebalancing.vesselImo') }}</th>
+                            <th>{{ t('scheduling.rebalancing.currentDock') }}</th>
                             <th>→</th>
-                            <th>Proposed Dock</th>
+                            <th>{{ t('scheduling.rebalancing.proposedDock') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -357,10 +357,10 @@ const closeAboutModal = () => {
 
             <div slot="footer" class="modal-actions">
                 <sl-button variant="default" @click="skipRebalancingAndSchedule" :disabled="generating">
-                    Skip & Continue with Current Assignments
+                    {{ t('scheduling.rebalancing.skipButton') }}
                 </sl-button>
                 <sl-button variant="primary" @click="applyRebalancingAndSchedule" :loading="generating" :disabled="generating">
-                    Apply Rebalancing & Generate Schedule
+                    {{ t('scheduling.rebalancing.applyButton') }}
                 </sl-button>
             </div>
         </sl-dialog>
