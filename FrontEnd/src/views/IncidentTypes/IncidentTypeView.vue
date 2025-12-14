@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import type { IncidentType } from '@/model/IncidentType';
 import EntityView from '@/components/crud/EntityView.vue';
+import IncidentTypePrinter from '@/components/printers/IncidentTypePrinter.vue';
 import type { IIncidentTypeService } from '@/service/IService/IIncidentTypeService';
 import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
@@ -13,12 +14,39 @@ const route = useRoute();
 const router = useRouter();
 
 const incidentTypeService = container.get<IIncidentTypeService>(TYPES.incidentTypeService);
-const incidentTypeId = route.params.id as string;
+const incidentTypeId = computed(() => route.params.id as string);
 const deleteDialog = ref<HTMLElement | null>(null);
 
+const parent = ref<IncidentType | null>(null);
+const subtypes = ref<IncidentType[]>([]);
+
+// btw this should probably be moved to either a composable, service layer or domain class to keep it clean
 const fetchIncidentType = async (): Promise<IncidentType | undefined> => {
-    return await incidentTypeService.getIncidentTypeById(incidentTypeId);
+    const incidentType = await incidentTypeService.getIncidentTypeById(incidentTypeId.value);
+
+    // Fetch subtypes and save them in the ref var
+    subtypes.value = [];
+    if (incidentType?.subtypesIds?.length) {
+        const fetched = await Promise.all(
+            incidentType.subtypesIds.map((id) => incidentTypeService.getIncidentTypeById(id))
+        );
+        subtypes.value = fetched.filter((item): item is IncidentType => Boolean(item));
+    }
+    
+    // Fetch parent type and save it in the ref var
+    parent.value = null;
+    if (incidentType?.subtypeOfId) {
+        const parentType = await incidentTypeService.getIncidentTypeById(incidentType.subtypeOfId);
+        if (parentType) {
+            parent.value = parentType;
+        }
+    } else {
+        parent.value = null;
+    }
+
+    return incidentType;
 };
+    
 
 const confirmDelete = () => {
     (deleteDialog.value as any)?.show?.();
@@ -26,7 +54,7 @@ const confirmDelete = () => {
 
 const doDelete = async () => {
     try {
-        await incidentTypeService.deleteIncidentType(incidentTypeId);
+        await incidentTypeService.deleteIncidentType(incidentTypeId.value);
         router.push('/incident-types/search');
     } catch (error) {
         console.error('Failed to delete incident type', error);
@@ -112,18 +140,25 @@ const getSeverityVariant = (severity: string): string => {
                     <sl-card class="info-card" style="flex: 100%;" v-if="entity.element.subtypeOfId">
                         <p>{{ t('incidentType.parentType') }}</p>
                         <div class="info-grid">
-                            <div class="info-block">
-                                <span class="label">{{ t('incidentType.fields.subtypeOf.title') }}</span>
-                                <p>{{ entity.element.subtypeOfId }}</p>
+                            <div class="info-block" :key="parent?.id">
+                                <IncidentTypePrinter
+                                    class="listing-box"
+                                    :incident-type="parent as IncidentType"
+                                    :link="'/incident-types/view/' + parent.id"
+                                />
                             </div>
                         </div>
                     </sl-card>
 
-                    <sl-card class="info-card" style="flex: 100%;" v-if="entity.element.subtypesIds && entity.element.subtypesIds.length > 0">
-                        <p>{{ t('incidentType.fields.subtypes.title') }} ({{ entity.element.subtypesIds.length }})</p>
+                    <sl-card class="info-card" style="flex: 100%;" v-if="subtypes.length > 0">
+                        <p>{{ t('incidentType.fields.subtypes.title') }} ({{ subtypes.length }})</p>
                         <div class="info-grid">
-                            <div class="info-block" v-for="subtypeId in entity.element.subtypesIds" :key="subtypeId">
-                                <p>{{ subtypeId }}</p>
+                            <div class="info-block" v-for="subtype in subtypes" :key="subtype.id">
+                                <IncidentTypePrinter
+                                    class="listing-box"
+                                    :incident-type="subtype as IncidentType"
+                                    :link="'/incident-types/view/' + subtype.id"
+                                />
                             </div>
                         </div>
                     </sl-card>
