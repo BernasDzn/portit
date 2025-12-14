@@ -15,6 +15,7 @@ const emit = defineEmits<{
     close: [];
     addStaff: [operationIndex: number, staffSelected: Staff];
     removeStaff: [operationIndex: number, staffSelected: string];
+    updateResourceTime: [operationIndex: number, resourceIndex: number, startTime: string, endTime: string];
 }>();
 
 const formatTime = (dateString: string): string => {
@@ -24,6 +25,11 @@ const formatTime = (dateString: string): string => {
         .split(':')
         .slice(0, 2)
         .join(':');
+};
+
+const formatDateTime = (dateString: string): string => {
+    const date = new Date(dateString);
+    return date.toISOString().slice(0, 16); // Format for datetime-local input
 };
 
 const operation = computed(() => {
@@ -47,6 +53,9 @@ const assignedStaffIds = computed(() => {
 });
 
 const selectedStaff = ref<Staff>(null);
+const editingResourceIndex = ref<number | null>(null);
+const editStartTime = ref<string>('');
+const editEndTime = ref<string>('');
 
 const handleAddStaff = () => {
     if (selectedStaff.value && props.operationIndex !== null) {
@@ -65,6 +74,16 @@ const getStaffName = (staffId: string): string => {
     const staff = props.availableStaff.find(s => s.email === staffId);
     return staff ? staff.name : staffId;
 };
+
+const getResourceDisplayTime = (resource: any): string => {
+    const start = resource.startTime || operation.value?.startTime;
+    const end = resource.endTime || operation.value?.endTime;
+    
+    if (!start || !end) return 'N/A';
+    
+    const timeStr = `${formatTime(start)} - ${formatTime(end)}`;    
+    return timeStr;
+};
 </script>
 
 <template>
@@ -73,12 +92,8 @@ const getStaffName = (staffId: string): string => {
 
         <div v-if="operation">
             <p>
-                <strong>Start time:</strong> 
-                {{ formatTime(operation.startTime) }}
-            </p>
-            <p>
-                <strong>End time:</strong> 
-                {{ formatTime(operation.endTime) }}
+                <strong>Operation window:</strong> 
+                {{ formatTime(operation.startTime) }} - {{ formatTime(operation.endTime) }}
             </p>
 
             <p>
@@ -91,25 +106,35 @@ const getStaffName = (staffId: string): string => {
 
             <div class="resources-list">
                 <div 
-                    v-for="resource in operation.resources"
-                    :key="resource.name"
+                    v-for="(resource, resIndex) in operation.resources"
+                    :key="`${resource.name}-${resIndex}`"
                     class="resource-item"
                 >
-                    <sl-input 
-                        :name="`resource-${resource.name}`" 
-                        disabled
-                        :value="resource.type === 'Staff' ? getStaffName(resource.name) : resource.name"
-                    >
-                        <span slot="prefix">{{ resource.type }}</span>
-                    </sl-input>
-                    <sl-button
-                        v-if="resource.type === 'Staff'"
-                        variant="danger"
-                        size="small"
-                        @click="handleRemoveResource(resource.name)"
-                    >
-                        <sl-icon name="trash"></sl-icon>
-                    </sl-button>
+                    <div class="resource-card">
+                        <div class="resource-header">
+                            <sl-badge variant="neutral">{{ resource.type }}</sl-badge>
+                            <span class="resource-name">
+                                {{ resource.type === 'Staff' ? getStaffName(resource.name) : resource.name }}
+                            </span>
+                        </div>
+                        
+                        <div class="resource-times">
+                            <div class="time-display">
+                                <sl-icon name="clock"></sl-icon>
+                                {{ getResourceDisplayTime(resource) }}
+                            </div>
+                            <div class="resource-actions">
+                                <sl-button
+                                    v-if="resource.type === 'Staff'"
+                                    size="small"
+                                    variant="danger"
+                                    @click="handleRemoveResource(resource.name)"
+                                >
+                                    <sl-icon name="trash"></sl-icon>
+                                </sl-button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -171,18 +196,77 @@ const getStaffName = (staffId: string): string => {
 .resources-list {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 1rem;
     margin-bottom: 1.5rem;
 }
 
-.resource-item {
+.resource-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1rem;
+    background: #fafafa;
+}
+
+.resource-header {
     display: flex;
-    gap: 0.5rem;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.resource-name {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.resource-times {
+    display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 
-.resource-item sl-input {
-    flex: 1;
+.time-display {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+.resource-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.edit-times {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.time-input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.time-input-group label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #555;
+}
+
+.time-input-group input {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.edit-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
 }
 
 .add-staff-section {
@@ -204,7 +288,7 @@ const getStaffName = (staffId: string): string => {
     align-items: flex-end;
 }
 
-.add-staff-controls sl-select {
+.add-staff-controls .field-dropdown {
     flex: 1;
 }
 
@@ -213,10 +297,6 @@ const getStaffName = (staffId: string): string => {
     margin-bottom: 0;
     color: var(--sl-color-neutral-600);
     font-size: 0.9rem;
-}
-
-sl-input {
-    margin-bottom: 0.5rem;
 }
 
 h3 {

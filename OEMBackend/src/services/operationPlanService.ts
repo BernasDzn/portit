@@ -64,8 +64,6 @@ export class OperationPlanService {
 					new Resource({
 						name: craneName,
 						type: ResourceType.Crane,
-                        startTime: new Date(baseDate.getTime() + vesselSchedule.unloading_enter_time * 60 * 60 * 1000),
-                        endTime: new Date(baseDate.getTime() + vesselSchedule.loading_exit_time * 60 * 60 * 1000)
 					})
 				);
 				

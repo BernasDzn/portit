@@ -1,6 +1,5 @@
 import type { GanttItem, GanttRowConfig } from "@/components/GanttChart.vue";
 import type { OperationPlanDto } from "@/model/dto/OperationPlanDto";
-import type TaskCategoryDto from "@/model/dto/TaskCategoryDto";
 
 const categoryColorMap = {
     'LOAD': 'success',
@@ -20,53 +19,62 @@ const getGanttItems = (plan: OperationPlanDto): GanttItem[] => {
     const items: GanttItem[] = [];
     
     console.log('Generating Gantt items from operation plan:', plan);
-//    plan.operationSchedule.forEach((op, opIndex) => {
+    
     for (let i = 0; i < plan.operationSchedule.length; i++) {
         let op = plan.operationSchedule[i];
-
+        
         if (!op.startTime || !op.endTime || !op.resources || op.resources.length === 0) {
-            return;
+            continue; // Use continue instead of return to skip this operation
         }
         
-        const opColor = operationColorMap[op.type.category.value];
+        const opColor = operationColorMap[op.type.category.value] || '#3498db';
         
         // Create an item for each resource in this operation
         op.resources.forEach((resource, resIndex) => {
+            // Use resource-specific times if they exist, otherwise fall back to operation times
+            const startTime = resource.startTime || op.startTime;
+            const endTime = resource.endTime || op.endTime;
+            
             items.push({
                 id: `op${i}-res${resIndex}`,
-                startTime: op.startTime,
-                endTime: op.endTime,
+                startTime: startTime,
+                endTime: endTime,
                 name: `Op. #${i + 1}`,
                 group: resource.name || 'Unassigned',
                 color: opColor
             });
         });
     }
-
-    console.log();
+    
+    console.log('Generated Gantt items:', items);
     
     return items;
 };
 
 const getGanttRowConfigs = (plan: OperationPlanDto): GanttRowConfig[] => {
-    // Collect all unique resource names
-    const resourceNames = new Set<string>();
+    // Collect all unique resource names in the order they appear
+    const resourceNames = new Map<string, number>(); // name -> first appearance index
     
-    plan.operationSchedule.forEach(op => {
+    plan.operationSchedule.forEach((op, opIndex) => {
         op.resources.forEach(res => {
-            resourceNames.add(res.name || 'Unassigned');
+            const name = res.name || 'Unassigned';
+            if (!resourceNames.has(name)) {
+                resourceNames.set(name, opIndex);
+            }
         });
         if (op.resources.length === 0) {
-            resourceNames.add('Unassigned');
+            if (!resourceNames.has('Unassigned')) {
+                resourceNames.set('Unassigned', opIndex);
+            }
         }
     });
     
-    // Create a row config for each resource with alternating colors
+    // Create a row config for each resource with consistent colors
     const colors = ['#3498db', '#e74c3c', '#2ecc71', '#f39c12', '#9b59b6', '#1abc9c'];
-
-    console.log(resourceNames);
     
-    return Array.from(resourceNames).map((name, index) => ({
+    console.log('Resource names for rows:', Array.from(resourceNames.keys()));
+    
+    return Array.from(resourceNames.keys()).map((name, index) => ({
         name,
         color: colors[index % colors.length]
     }));
