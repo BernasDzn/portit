@@ -6,8 +6,8 @@ export class IncidentTypeMapper {
 		return {
 			id: incidentType.id,
 			name: incidentType.name,
-			parent: incidentType.parent ? incidentType.parent.id : null,
-			children: incidentType.children ? incidentType.children.map(child => child.id) : []
+			subtypeOf: incidentType.subtypeOf ? incidentType.subtypeOf.id : null,
+			subtypes: incidentType.subtypes ? incidentType.subtypes.map(subtype => subtype.id) : []
 		};
 	}
 

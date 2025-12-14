@@ -31,8 +31,8 @@ export default (app: Router) => {
 	);
 
 	route.delete(
-		'/:id/children/:childId',
-		(req, res, next) => getCtrl().removeChild(req, res, next)
+		'/:id/subtypes/:subtypeId',
+		(req, res, next) => getCtrl().removeSubtype(req, res, next)
 	);
 
 	route.delete(
