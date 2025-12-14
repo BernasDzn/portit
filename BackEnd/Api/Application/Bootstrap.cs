@@ -783,50 +783,79 @@ public static class Bootstrap
         if (context.PrivacyPolicies.Any())
             return;
 
-        var defaultContent = @"<h3>Rights of Non-User Data Subjects</h3>
+        var defaultContent = @"## Rights of Non-User Data Subjects
 
-In the course of delivering port services and managing vessel operations, we process personal data relating to individuals who do not directly use our systems (""non-users"").
-This includes, for example, crew members, captains, staff, security officers, and other personnel involved in port calls or operational activities.
-We are committed to handling such data in accordance with the General Data Protection Regulation (GDPR). As a data subject, you are entitled to exercise the following rights:
+In the course of delivering port services and managing vessel operations, we process personal data relating to individuals who do not directly use our systems (“**non-users**”).
 
-    Right of Access: You may request confirmation of whether we process your personal data and obtain a copy of that data.
+This may include, for example, crew members, captains, port staff, security officers, and other personnel involved in port calls or operational activities.
 
-    Right to Rectification: You may request that inaccurate or incomplete information about you be corrected.
+We are committed to handling such data in accordance with the **General Data Protection Regulation (GDPR)**. As a data subject, you are entitled to exercise the following rights:
 
-    Right to Erasure: You may request deletion of your personal data where applicable and where no overriding legal basis exists for its retention.
+### Your GDPR Rights
 
-    Right to Restrict Processing: You may request that the processing of your data be limited in certain circumstances.
+- **Right of Access**  
+  Request confirmation as to whether we process your personal data and obtain a copy of that data.
 
-    Right to Object: You may object to processing carried out on the basis of legitimate interests or public interest.
+- **Right to Rectification**  
+  Request correction of inaccurate or incomplete personal data.
 
-    Right to Data Portability: You may request that your data be provided to you in a structured, commonly used, and machine-readable format, where technically feasible.
+- **Right to Erasure**  
+  Request deletion of your personal data where applicable and where no overriding legal basis for retention exists.
 
-<h4>Submitting a GDPR Request</h4>
+- **Right to Restrict Processing**  
+  Request that the processing of your personal data be limited in certain circumstances.
 
-If your personal data has been provided to us as part of a vessel call, port operation, or compliance requirement, you may exercise your rights at any time by contacting:
+- **Right to Object**  
+  Object to processing carried out on the basis of legitimate interests or public interest.
 
-Email: [Insert dedicated privacy or data protection email]
+- **Right to Data Portability**  
+  Request that your personal data be provided in a structured, commonly used, and machine-readable format, where technically feasible.
 
-Postal Address: [Insert organization/port authority address]
-Subject Line: ""GDPR Data Subject Request - Non-User""
+---
 
-To help us identify your data, please include:
+## Submitting a GDPR Request
 
-    - Your full name
-    - Your role or relationship port (e.g., crew member, captain, port staff)
-    - The vessel name, company name, or port call reference (if applicable)
-    - The specific rights you wish to exercise
-    - Any additional information that may assist us in locating your personal data (e.g., port call date, documentation submitted)
+If your personal data has been provided to us as part of a vessel call, port operation, or compliance requirement, you may exercise your rights at any time by contacting us:
 
-<h4>Verification Procedures</h4>
-To protect the confidentiality and security of personal data, we may request additional information to confirm your identity before responding to your request.
+**Email:**  
+`[Insert dedicated privacy or data protection email]`
 
-<h4>Response Timeframe</h4>
-We aim to respond to all valid GDPR requests within one month. If the request is particularly complex or numerous, we may require additional time; if so, we will inform you accordingly.
+**Postal Address:**  
+`[Insert organization / port authority address]`
 
+**Subject Line:**  
+**GDPR Data Subject Request - Non-User**
 
-<h4>Right to Lodge a Complaint</h4>
-If you believe your rights have not been upheld, you may lodge a complaint with the relevant Data Protection Authority in your jurisdiction.";
+### Information to Include
+
+To help us identify your personal data, please provide:
+
+- Your full name  
+- Your role or relationship to the port (e.g., crew member, captain, port staff)  
+- Vessel name, company name, or port call reference (if applicable)  
+- The specific GDPR right(s) you wish to exercise  
+- Any additional information that may assist us in locating your data  
+  (e.g., port call date, documentation submitted)
+
+---
+
+## Verification Procedures
+
+To protect the confidentiality and security of personal data, we may request additional information to verify your identity before responding to your request.
+
+---
+
+## Response Timeframe
+
+We aim to respond to all valid GDPR requests **within one month**.
+
+If a request is particularly complex or involves multiple requests, additional time may be required. In such cases, we will inform you accordingly.
+
+---
+
+## Right to Lodge a Complaint
+
+If you believe your data protection rights have not been upheld, you have the right to lodge a complaint with the relevant **Data Protection Authority** in your jurisdiction.";
 
         var policy = new PrivacyPolicy(Guid.NewGuid(), defaultContent, DateTime.UtcNow, true);
         context.PrivacyPolicies.Add(policy);
