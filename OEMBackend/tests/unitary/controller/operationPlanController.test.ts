@@ -144,7 +144,7 @@ describe('getPlanById', () => {
 
 		expect(mockService.getById).toHaveBeenCalledWith('999');
 		expect(mockResponse.status).toHaveBeenCalledWith(404);
-		expect(mockResponse.json).toHaveBeenCalledWith({ message: 'Operation plan not found' });
+		expect(mockResponse.json).toHaveBeenCalledWith('Operation plan not found');
 	});
 
 	it('should return 500 when getById fails due to an internal error', async () => {

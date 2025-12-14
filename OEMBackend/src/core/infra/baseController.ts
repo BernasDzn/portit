@@ -32,8 +32,12 @@ export abstract class BaseController {
      * @param res response object
      * @returns {express.Response}
      */
-    public created (res: express.Response) {
-        return res.sendStatus(201);
+    public created (res: express.Response, dto?: any) {
+        if (!!dto) {
+            return res.status(201).json(dto);
+        } else {
+            return res.sendStatus(201);
+        }
     }
 
     /**
@@ -43,7 +47,11 @@ export abstract class BaseController {
      * @returns {express.Response}
      */
     public clientError (res: express.Response, message?: string) {
-        return BaseController.jsonResponse(res, 400, message ? message : 'Bad request');
+        if(!!message){
+            return res.status(400).json(message);
+        }else{
+            return res.sendStatus(400);
+        }
     }
 
     /**
@@ -53,7 +61,11 @@ export abstract class BaseController {
      * @returns {express.Response}
      */
     public unauthorized (res: express.Response, message?: string) {
-        return BaseController.jsonResponse(res, 401, message ? message : 'Unauthorized');
+        if(!!message){
+            return res.status(401).json(message);
+        }else{
+            return res.sendStatus(401);
+        }
     }
 
     /**
@@ -63,7 +75,11 @@ export abstract class BaseController {
      * @returns {express.Response}
      */
     public paymentRequired (res: express.Response, message?: string) {
-        return BaseController.jsonResponse(res, 402, message ? message : 'Payment required');
+        if(!!message){
+            return BaseController.jsonResponse(res, 402, message);
+        }else{
+            return res.sendStatus(402);
+        }
     }
 
     /**
@@ -73,7 +89,11 @@ export abstract class BaseController {
      * @returns {express.Response}
      */
     public forbidden (res: express.Response, message?: string) {
-        return BaseController.jsonResponse(res, 403, message ? message : 'Forbidden');
+        if(!!message){
+            return res.status(403).json(message);
+        }else{
+            return res.sendStatus(403);
+        }
     }
 
     /**
@@ -83,7 +103,11 @@ export abstract class BaseController {
      * @returns {express.Response}
      */
     public notFound (res: express.Response, message?: string) {
-        return BaseController.jsonResponse(res, 404, message ? message : 'Not found');
+        if(!!message){
+            return res.status(404).json(message);
+        }else{
+            return res.sendStatus(404);
+        }
     }
 
     /**
@@ -93,7 +117,11 @@ export abstract class BaseController {
      * @returns {express.Response}
      */
     public conflict (res: express.Response, message?: string) {
-        return BaseController.jsonResponse(res, 409, message ? message : 'Conflict');
+        if(!!message){
+            return res.status(409).json(message);
+        }else{
+            return res.sendStatus(409);
+        }
     }
 
     /**
@@ -103,16 +131,11 @@ export abstract class BaseController {
      * @returns {express.Response}
      */
     public tooMany (res: express.Response, message?: string) {
-        return BaseController.jsonResponse(res, 429, message ? message : 'Too many requests');
-    }
-
-    /**
-     * returns a 400 bad request response with TODO message
-     * @param res response object
-     * @returns {express.Response}
-     */
-    public todo (res: express.Response) {
-        return BaseController.jsonResponse(res, 400, 'TODO');
+        if(!!message){
+            return res.status(429).json(message);
+        }else{
+            return res.sendStatus(429);
+        }
     }
 
     /**
@@ -126,6 +149,15 @@ export abstract class BaseController {
         return res.status(500).json({
             message: error.toString()
         })
+    }
+
+    /**
+     * returns a 400 bad request response with TODO message
+     * @param res response object
+     * @returns {express.Response}
+     */
+    public todo (res: express.Response) {
+        return BaseController.jsonResponse(res, 400, 'TODO');
     }
 
 }
