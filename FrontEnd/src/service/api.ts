@@ -1,7 +1,7 @@
 import axios from 'axios'
-import { getApiBase } from '@/config.ts'
+import { getApiBaseSync } from '@/config.ts'
 
-const BACKEND = getApiBase()
+const BACKEND = getApiBaseSync()
 
 export const api = axios.create({
   baseURL: BACKEND,

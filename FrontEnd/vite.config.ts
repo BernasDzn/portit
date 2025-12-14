@@ -37,6 +37,7 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
+  publicDir: 'public',
   optimizeDeps: {
     // Exclude three.js examples and docs from dependency scanning
     entries: [
