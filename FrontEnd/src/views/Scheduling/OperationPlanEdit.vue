@@ -41,14 +41,13 @@ const editingOperation = ref<number | null>(null);
 const ganttItems = computed(() => plan.value ? getGanttItems(plan.value) : []);
 const ganttRowConfigs = computed(() => plan.value ? getGanttRowConfigs(plan.value) : []);
 
-const { warnings } = useOperationValidation(plan, allSTSCranes);
+const { warnings, graveWarnings } = useOperationValidation(plan, allSTSCranes, allStaff);
 
 onMounted(async () => {
     try {
         loading.value = true;
 
         plan.value = await planService.getOperationPlanById(planId);
-        
         originalSchedule.value = JSON.parse(JSON.stringify(plan.value));
 
         const [staffPage, resourcesPage] = await Promise.all([
@@ -61,6 +60,8 @@ onMounted(async () => {
             r.liftingCapacity !== undefined && r.status === 0
         );
 
+        console.log('Loaded plan:', plan.value);
+
     } catch (error) {
         console.error('Error loading resources:', error);
         notifications.enqueueNotification(
@@ -72,26 +73,57 @@ onMounted(async () => {
     }
 });
 
+
 const onItemUpdated = (updatedItem: GanttItem) => {
     if (!plan.value) return;
     
-    const match = updatedItem.id.match(/^op(\d+)/);
-    if (!match) return;
+    console.log('Item updated:', updatedItem);
+    
+    // Parse the ID: format is "op{opIndex}-res{resIndex}"
+    const match = updatedItem.id.match(/^op(\d+)-res(\d+)$/);
+    if (!match) {
+        console.warn('Invalid item ID format:', updatedItem.id);
+        return;
+    }
     
     const opIndex = parseInt(match[1]);
+    const resIndex = parseInt(match[2]);
     
-    if (opIndex >= 0 && opIndex < plan.value.operationSchedule.length) {
-        plan.value.operationSchedule = plan.value.operationSchedule.map((op, idx) => {
-            if (idx === opIndex) {
-                return {
-                    ...op,
-                    startTime: updatedItem.startTime,
-                    endTime: updatedItem.endTime
-                };
-            }
-            return op;
-        });
+    console.log(`Updating operation ${opIndex}, resource ${resIndex}`);
+    
+    if (opIndex < 0 || opIndex >= plan.value.operationSchedule.length) {
+        console.warn('Operation index out of bounds:', opIndex);
+        return;
     }
+    
+    const operation = plan.value.operationSchedule[opIndex];
+    
+    if (resIndex < 0 || resIndex >= operation.resources.length) {
+        console.warn('Resource index out of bounds:', resIndex);
+        return;
+    }
+    
+    // Update the specific resource's times
+    plan.value.operationSchedule = plan.value.operationSchedule.map((op, idx) => {
+        if (idx === opIndex) {
+            return {
+                ...op,
+                resources: op.resources.map((res, rIdx) => {
+                    if (rIdx === resIndex) {
+                        return {
+                            ...res,
+                            startTime: updatedItem.startTime,
+                            endTime: updatedItem.endTime
+                        };
+                    }
+                    return res;
+                })
+            };
+        }
+        return op;
+    });
+    
+    console.log('Updated operation schedule:', plan.value.operationSchedule[opIndex]);
 };
 
 const onOperationClick = (value: {
@@ -116,18 +148,21 @@ const closeDrawer = () => {
     editingOperation.value = null;
 };
 
+
 const addStaff = (operationIndex: number, staffSelected: Staff) => {
     if (!plan.value) return;
     
     const staff = allStaff.value.find(s => s.email === staffSelected.email);
     if (!staff) return;
 
+    const operation = plan.value.operationSchedule[operationIndex];
+
     // Check if already assigned
-    const alreadyAssigned = plan.value.operationSchedule[operationIndex].resources.some(
+    const alreadyAssigned = operation.resources.some(
         r => r.name === staff.email && r.type === 'Staff'
     );
+    
     if (alreadyAssigned) {
-
         notifications.enqueueNotification(
             `Staff member ${staff.name} is already assigned to this operation.`,
             notifications.notificationTypes.WARNING
@@ -135,7 +170,8 @@ const addStaff = (operationIndex: number, staffSelected: Staff) => {
         return;
     }
 
-    // Add staff as a resource
+    // Add staff as a resource with the operation's default times
+    // User can adjust these times later via the drawer or by dragging in the Gantt chart
     const updatedSchedule = [...plan.value.operationSchedule];
     updatedSchedule[operationIndex] = {
         ...updatedSchedule[operationIndex],
@@ -143,13 +179,21 @@ const addStaff = (operationIndex: number, staffSelected: Staff) => {
             ...updatedSchedule[operationIndex].resources,
             {
                 name: staff.email,
-                type: 'Staff'
+                type: 'Staff',
+                // Initialize with operation times - user can customize later
+                startTime: operation.startTime,
+                endTime: operation.endTime
             }
         ]
     };
     
     plan.value.operationSchedule = updatedSchedule;
-}
+    
+    notifications.enqueueNotification(
+        `Staff member ${staff.name} added to operation`,
+        notifications.notificationTypes.SUCCESS
+    );
+};
 
 const removeStaff = (operationIndex: number, staffSelected: string) => {
     if (!plan.value) return;
@@ -165,8 +209,16 @@ const removeStaff = (operationIndex: number, staffSelected: string) => {
 };
 
 const savePlan = async () => {
-    console.log('Saving plan:', plan.value);
-    // TODO: Implement save logic
+    
+    if (graveWarnings.value.length > 0) {
+        notifications.enqueueNotification(
+            'Cannot save plan due to grave warnings. Please resolve them first.',
+            notifications.notificationTypes.DANGER
+        );
+        return;
+    }
+
+    if (!plan.value) return;
 };
 
 // Operations
@@ -255,6 +307,44 @@ const handleResetSchedule = () => {
     ganttKey.value += 1; // Force Gantt chart to re-render
 };
 
+
+const updateResourceTime = (operationIndex: number, resourceIndex: number, startTime: string, endTime: string) => {
+    if (!plan.value) return;
+    
+    const updatedSchedule = [...plan.value.operationSchedule];
+    const operation = updatedSchedule[operationIndex];
+    
+    if (!operation || !operation.resources[resourceIndex]) {
+        console.warn('Invalid operation or resource index');
+        return;
+    }
+    
+    // Update the resource times
+    updatedSchedule[operationIndex] = {
+        ...operation,
+        resources: operation.resources.map((res, idx) => {
+            if (idx === resourceIndex) {
+                return {
+                    ...res,
+                    startTime,
+                    endTime
+                };
+            }
+            return res;
+        })
+    };
+    
+    plan.value.operationSchedule = updatedSchedule;
+    
+    notifications.enqueueNotification(
+        'Resource schedule updated',
+        notifications.notificationTypes.SUCCESS
+    );
+    
+    // Force Gantt re-render to show updated times
+    ganttKey.value += 1;
+};
+
 </script>
 
 <template>
@@ -317,7 +407,7 @@ const handleResetSchedule = () => {
                     />
                 </div>
                 
-                <OperationWarnings :warnings="warnings" />
+                <OperationWarnings :warnings="warnings" :graveWarnings="graveWarnings" />
             </div>
         </EntityForm>
 
@@ -328,6 +418,7 @@ const handleResetSchedule = () => {
             :available-staff="allStaff"
             @add-staff="addStaff"
             @remove-staff="removeStaff"
+            @update-resource-time="updateResourceTime"
         />
     </div>
 </template>

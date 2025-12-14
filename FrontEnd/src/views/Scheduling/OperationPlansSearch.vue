@@ -16,6 +16,7 @@ import type { OperationPlanDto, OperationPlanFilter } from '@/model/dto/Operatio
 import { useAlerts } from '@/composables/alerts';
 import { useRouter } from 'vue-router';
 import EntityDropdown from '@/components/crud/EntityDropdown.vue';
+import Loading from '@/components/Loading.vue';
 
 const operationPlanService = container.get<IOperationPlanService>(TYPES.operationPlanService);
 const schedulingService = container.get<ISchedulingService>(TYPES.schedulingService);
@@ -293,10 +294,7 @@ const cancelRegenerateWarning = () => {
 
             <sl-tab-panel name="unplanned">
                 <div class="unplanned-section">
-                    <div v-if="isLoadingUnplanned" class="loading-state">
-                        <sl-spinner></sl-spinner>
-                        <p>{{ t('common.loading') }}</p>
-                    </div>
+                    <Loading v-if="isLoadingUnplanned" />
                     <div v-else>
                         <div v-if="unplannedByDate.length > 0">
                             <div class="regenerate-all-header">
@@ -580,15 +578,6 @@ const cancelRegenerateWarning = () => {
     margin: 0;
     font-weight: 500;
     color: var(--sl-color-warning-800);
-}
-
-.loading-state {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    padding: 3rem;
 }
 
 .unplanned-header {

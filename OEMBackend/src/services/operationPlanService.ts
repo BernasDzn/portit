@@ -63,7 +63,7 @@ export class OperationPlanService {
 				const craneResources = vesselSchedule.cranes.map(craneName => 
 					new Resource({
 						name: craneName,
-						type: ResourceType.Crane
+						type: ResourceType.Crane,
 					})
 				);
 				

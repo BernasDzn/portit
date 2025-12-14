@@ -32,8 +32,8 @@ const openPrivacyPolicy = () => {
     openDialog('Privacy Policy');
 };
 
-const openTermsOfService = () => {
-    openDialog('TOS');
+const openLicense = () => {
+    openDialog('License');
 };
 
 const closeDialog = (dialogLabel: string) => {
@@ -47,8 +47,8 @@ const closePrivacyPolicy = () => {
     closeDialog('Privacy Policy');
 };
 
-const closeTermsOfService = () => {
-    closeDialog('TOS');
+const closeLicense = () => {
+    closeDialog('License');
 };
 
 const downloadPrivacyPolicy = () => {
@@ -66,34 +66,24 @@ const downloadPrivacyPolicy = () => {
             <sl-card class="column">
                 <h3>Software license agreement</h3>
                 <p>
-                    Licensas para software educativo quais são???    
+                    This project is provided under an academic-use software license for educational purposes only.
                 </p>
+                <sl-button variant="primary" @click="openLicense">
+                    Read license agreement
+                </sl-button>
             </sl-card>
             <sl-card class="column">
                 <h3>Privacy policy</h3>
                 <p>
-                    Escrever RGPD emoji mão a escrever
-        
+                    This privacy policy explains how personal data is handled in accordance with the GDPR.
                 </p>
-                <div style="display: flex; gap: 10px">
-                    <sl-button variant="primary" @click="openPrivacyPolicy">
-                        Read privacy policy
-                    </sl-button>
-                </div>
+                <sl-button variant="primary" @click="openPrivacyPolicy">
+                    Read privacy policy
+                </sl-button>
             </sl-card>
         </div>
 
         <div class="columns">
-    
-            <sl-card class="column">
-                <h3>Terms of service</h3>
-                <p>
-                    Termos de serviço que não vamos escrever isto é só um template
-                </p>
-                <sl-button
-                    @click="openTermsOfService"
-                >Read terms of service</sl-button>
-            </sl-card>
             <sl-card class="column">
                 <h3>Cookie policy</h3>
                 <p>
@@ -116,9 +106,25 @@ const downloadPrivacyPolicy = () => {
         <sl-button @click="closePrivacyPolicy" slot="footer" variant="primary">{{ t('buttons.ok') }}</sl-button>
     </sl-dialog>
 
-    <sl-dialog label="TOS" class="dialog-overview" style="--width: 50vw;">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        <sl-button @click="closeTermsOfService" slot="footer" variant="primary">Ok</sl-button>
+    <sl-dialog label="License" class="dialog-overview" style="--width: 50vw;">
+        <p>
+            <p>
+                This website and its source code were created as part of a university project related to port management
+            </p>
+            <p>
+                The software is intended solely for educational and demonstration purposes.
+                No warranty is provided, and the authors are not responsible for any misuse or incorrect interpretation
+                of the information presented.
+            </p>
+            <p>
+                This project uses open-source libraries and frameworks.
+                Their respective licenses apply and are acknowledged.
+            </p>
+            <p>
+                All rights are reserved unless otherwise stated.
+            </p>                    
+        </p>
+        <sl-button @click="closeLicense" slot="footer" variant="primary">Ok</sl-button>
     </sl-dialog>
 
     </div>

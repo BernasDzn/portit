@@ -5,7 +5,7 @@ import { api } from './api';
 import { useSession } from '@/composables/session';
 import TYPES from '@/inversify/types';
 import { inject, injectable } from 'inversify';
-import devConfig from '../../config.json';
+import { getApiBase } from '@/config';
 
 const session = useSession();
 
@@ -28,20 +28,6 @@ export class AxiosHttpService implements IHttpService {
             // Add auth token to headers if available
             if (session.authToken) {
                 config.headers.Authorization = `Bearer ${session.authToken}`;
-            }
-
-            // In production, rewrite URLs to point to the correct backend
-            if (import.meta.env.PROD && config.url) {
-                if (config.url.startsWith('/api/')) {
-                    // Strip /api and use main backend
-                    config.url = devConfig.remoteApi + config.url.substring(4);
-                } else if (config.url.startsWith('/oem/')) {
-                    // Strip /oem and use OEM backend
-                    config.url = devConfig.remoteOemApi + config.url.substring(4);
-                } else if (config.url.startsWith('/prolog/')) {
-                    // Strip /prolog and use Prolog backend
-                    config.url = devConfig.remotePrologApi + config.url.substring(7);
-                }
             }
 
             return config;

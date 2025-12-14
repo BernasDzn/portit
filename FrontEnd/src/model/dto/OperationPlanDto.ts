@@ -10,7 +10,9 @@ export interface OperationPlanDto {
 		endTime: string;
 		resources: {
 			name: string;
-			type: string;
+			type: 'Staff' | 'Crane';
+            startTime?: string;
+            endTime?: string;
 		}[];
 		payload?: any;
 	}[];
