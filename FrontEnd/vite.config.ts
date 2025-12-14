@@ -7,6 +7,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vite.dev/config/
 const isLocal = process.env.npm_lifecycle_event === 'local'
+const isDeploy = process.env.npm_lifecycle_event === 'deploy'
 
 // Load centralized config.json so we don't duplicate the remote host/port
 const cfgPath = new URL('./config.json', import.meta.url)
@@ -30,8 +31,9 @@ export default defineConfig({
         }
       }
     }),
-    vueDevTools(),
-  ],
+    // Only enable devtools in local/dev mode, not in deploy
+    !isDeploy && vueDevTools(),
+  ].filter(Boolean),
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
