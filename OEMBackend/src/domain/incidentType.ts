@@ -3,8 +3,8 @@ import { IncidentTypeDto } from "../dto/incidentTypeDto";
 
 export interface IncidentTypeProps {
 	name: string;
-	parent?: IncidentType | undefined;
-	children?: IncidentType[] | undefined;
+	subtypeOf?: IncidentType | undefined;
+	subtypes?: IncidentType[] | undefined;
 }
 
 export class IncidentTypeID{
@@ -20,8 +20,8 @@ export class IncidentTypeID{
 export default class IncidentType extends Entity<IncidentTypeProps> {
 	get id(): string { return this._id; }
 	get name(): string { return this.props.name; }
-	get parent(): IncidentType | undefined { return this.props.parent; }
-	get children(): IncidentType[] | undefined { return this.props.children; }
+	get subtypeOf(): IncidentType | undefined { return this.props.subtypeOf; }
+	get subtypes(): IncidentType[] | undefined { return this.props.subtypes; }
 
 	constructor(props: IncidentTypeProps, id?: string) {
 		super(
@@ -30,12 +30,12 @@ export default class IncidentType extends Entity<IncidentTypeProps> {
 		);
 	}
 
-	addChild(child: IncidentType) {
-		if (!this.props.children) {
-			this.props.children = [];
+	addSubtype(subtype: IncidentType) {
+		if (!this.props.subtypes) {
+			this.props.subtypes = [];
 		}
-		this.props.children.push(child);
-		child.props.parent = this;
+		this.props.subtypes.push(subtype);
+		subtype.props.subtypeOf = this;
 	}
 
 	toDto() : IncidentTypeDto {
