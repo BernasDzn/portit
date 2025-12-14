@@ -688,5 +688,36 @@
             }
         },
         "registeredVesselVisitNotifications": "Notificações de Visita de Navios Registadas"
+    },
+    "operationPlan": {
+        "title": "Plano de Operação",
+        "tabs": {
+            "unplannedVVNs": "VVNs Não Planeadas"
+        },
+        "unplannedVVNs": {
+            "description": "Notificações de visita de navios que ainda não têm um plano de operação atribuído",
+            "noUnplanned": "Todas as notificações de visita de navios têm planos de operação atribuídos",
+            "foundMessage": "Encontradas {vvnCount} VVN(s) sem planos em {dayCount} dia(s)",
+            "regenerateAll": "Regenerar Todos os Planos em Falta",
+            "regenerateDay": "Regenerar Planos para Este Dia",
+            "regenerateModalTitle": "Regenerar Planos para {date}",
+            "warning": "Aviso",
+            "warningMessage": "Regenerar planos irá sobrescrever quaisquer planos de operação existentes para este dia. Esta ação não pode ser desfeita.",
+            "selectedDay": "Dia Selecionado",
+            "confirmRegeneration": "Confirmar Regeneração",
+            "affectedDays": "Dias Afetados",
+            "queueInfo": "Cada pedido de regeneração será colocado em fila separadamente. Pode rever e aceitar/rejeitar individualmente a partir da Fila de Agendamento.",
+            "continue": "Continuar",
+            "confirmRegenerationTitle": "Confirmar Regeneração",
+            "irreversibleAction": "Esta ação é irreversível",
+            "overwriteWarning": "Regenerar planos de operação irá sobrescrever permanentemente quaisquer planos existentes para os dias selecionados. Esta ação não pode ser desfeita.",
+            "aboutToRegenerate": "Está prestes a regenerar planos para",
+            "days": "dias",
+            "vesselVisitNotifications": "Notificações de Visita de Navios",
+            "using": "Usando",
+            "algorithm": "algoritmo",
+            "proceedQuestion": "Deseja prosseguir com esta operação?",
+            "yesRegenerateAll": "Sim, Regenerar Tudo"
+        }
     }
 }

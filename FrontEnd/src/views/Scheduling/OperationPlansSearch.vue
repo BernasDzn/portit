@@ -302,7 +302,7 @@ const cancelRegenerateWarning = () => {
                             <div class="regenerate-all-header">
                                 <p class="info-message">
                                     <sl-icon name="info-circle" style="margin-right: 0.5rem;"></sl-icon>
-                                    Found {{ unplannedVVNs.length }} VVN(s) without plans across {{ unplannedByDate.length }} day(s)
+                                    {{ t('operationPlan.unplannedVVNs.foundMessage', { vvnCount: unplannedVVNs.length, dayCount: unplannedByDate.length }) }}
                                 </p>
                                 <sl-button 
                                     variant="warning" 
@@ -310,7 +310,7 @@ const cancelRegenerateWarning = () => {
                                     @click="openRegenerateAllModal"
                                 >
                                     <sl-icon slot="prefix" name="lightning-charge"></sl-icon>
-                                    Regenerate All Missing Plans
+                                    {{ t('operationPlan.unplannedVVNs.regenerateAll') }}
                                 </sl-button>
                             </div>
                             <div v-for="group in unplannedByDate" :key="group.date" class="date-group">
@@ -324,7 +324,7 @@ const cancelRegenerateWarning = () => {
                                         @click="openRegenerationModal(group.date)"
                                     >
                                         <sl-icon slot="prefix" name="arrow-clockwise"></sl-icon>
-                                        Regenerate Plans for This Day
+                                        {{ t('operationPlan.unplannedVVNs.regenerateDay') }}
                                     </sl-button>
                                 </div>
                                 <ul class="vvn-list">
@@ -345,14 +345,13 @@ const cancelRegenerateWarning = () => {
 
         <sl-dialog 
             id="regeneration-modal"
-            :label="`Regenerate Plans for ${selectedDayForRegeneration}`"
+            :label="t('operationPlan.unplannedVVNs.regenerateModalTitle', { date: selectedDayForRegeneration })"
             class="regeneration-dialog"
         >
             <div class="modal-content">
                 <sl-alert variant="danger" open>
                     <sl-icon slot="icon" name="exclamation-triangle"></sl-icon>
-                    <strong>Warning:</strong> Regenerating plans will <strong>overwrite any existing operation plans</strong> for this day. 
-                    This action cannot be undone.
+                    <strong>{{ t('operationPlan.unplannedVVNs.warning') }}:</strong> {{ t('operationPlan.unplannedVVNs.warningMessage') }}
                 </sl-alert>
 
                 <div class="algorithm-selection">
@@ -369,8 +368,8 @@ const cancelRegenerateWarning = () => {
                 </div>
 
                 <div class="regeneration-info">
-                    <p><strong>Selected Day:</strong> {{ selectedDayForRegeneration }}</p>
-                    <p><strong>Algorithm:</strong> {{ algorithmList.find(a => a.value === selectedAlgorithm)?.label }}</p>
+                    <p><strong>{{ t('operationPlan.unplannedVVNs.selectedDay') }}:</strong> {{ selectedDayForRegeneration }}</p>
+                    <p><strong>{{ t('scheduling.fields.algorithm.title') }}:</strong> {{ algorithmList.find(a => a.value === selectedAlgorithm)?.label }}</p>
                 </div>
             </div>
 
@@ -381,7 +380,7 @@ const cancelRegenerateWarning = () => {
                     :disabled="isRegenerating"
                     style="margin-right: 1rem;  "
                 >
-                    Cancel
+                    {{ t('buttons.cancel') }}
                 </sl-button>
                 <sl-button 
                     variant="danger" 
@@ -389,7 +388,7 @@ const cancelRegenerateWarning = () => {
                     :loading="isRegenerating"
                 >
                     <sl-icon slot="prefix" name="arrow-clockwise"></sl-icon>
-                    Confirm Regeneration
+                    {{ t('operationPlan.unplannedVVNs.confirmRegeneration') }}
                 </sl-button>
             </div>
         </sl-dialog>
@@ -397,12 +396,12 @@ const cancelRegenerateWarning = () => {
         <!-- Regenerate All Modal -->
         <sl-dialog 
             id="regenerate-all-modal"
-            label="Regenerate All Missing Plans"
+            :label="t('operationPlan.unplannedVVNs.regenerateAll')"
             class="regeneration-dialog"
         >
             <div class="modal-content">
                 <div class="affected-days">
-                    <h4>Affected Days:</h4>
+                    <h4>{{ t('operationPlan.unplannedVVNs.affectedDays') }}:</h4>
                     <ul class="days-list">
                         <li v-for="group in unplannedByDate" :key="group.date">
                             <sl-icon name="calendar-date" style="margin-right: 0.5rem;"></sl-icon>
@@ -426,9 +425,9 @@ const cancelRegenerateWarning = () => {
                 </div>
 
                 <div class="regeneration-info">
-                    <p><strong>Algorithm:</strong> {{ algorithmList.find(a => a.value === selectedAlgorithmAll)?.label }}</p>
+                    <p><strong>{{ t('scheduling.fields.algorithm.title') }}:</strong> {{ algorithmList.find(a => a.value === selectedAlgorithmAll)?.label }}</p>
                     <p class="metadata-info">
-                        Each regeneration request will be queued separately. You can review and accept/reject them individually from the Scheduling Queue.
+                        {{ t('operationPlan.unplannedVVNs.queueInfo') }}
                     </p>
                 </div>
             </div>
@@ -439,7 +438,7 @@ const cancelRegenerateWarning = () => {
                     @click="closeRegenerateAllModal"
                     style="margin-right: 1rem;"
                 >
-                    Cancel
+                    {{ t('buttons.cancel') }}
                 </sl-button>
                 <sl-button 
                     variant="primary" 
@@ -447,48 +446,47 @@ const cancelRegenerateWarning = () => {
                     :disabled="!selectedAlgorithmAll"
                 >
                     <sl-icon slot="prefix" name="arrow-right"></sl-icon>
-                    Continue
+                    {{ t('operationPlan.unplannedVVNs.continue') }}
                 </sl-button>
             </div>
             </sl-dialog>
 
             <!-- Warning Modal for Regenerate All -->
-            <sl-dialog id="regenerate-danger-modal" label="Confirm Regeneration" style="--width: 600px;">
+            <sl-dialog id="regenerate-danger-modal" :label="t('operationPlan.unplannedVVNs.confirmRegenerationTitle')" style="--width: 600px;">
                 <div style="padding: 1rem;">
                     <div style="background-color: var(--sl-color-danger-50); padding: 1.5rem; border-radius: var(--sl-border-radius-medium); border-left: 4px solid var(--sl-color-danger-600); margin-bottom: 1.5rem;">
                         <div style="display: flex; align-items: start; gap: 1rem;">
                             <sl-icon name="exclamation-triangle" style="font-size: 2rem; color: var(--sl-color-danger-600); flex-shrink: 0;"></sl-icon>
                             <div>
-                                <h3 style="margin: 0 0 0.5rem 0; color: var(--sl-color-danger-900); font-size: 1.1rem;">This action is irreversible</h3>
+                                <h3 style="margin: 0 0 0.5rem 0; color: var(--sl-color-danger-900); font-size: 1.1rem;">{{ t('operationPlan.unplannedVVNs.irreversibleAction') }}</h3>
                                 <p style="margin: 0; color: var(--sl-color-danger-800); line-height: 1.6;">
-                                    Regenerating operation plans will <strong>permanently overwrite</strong> any existing plans for the selected days.
-                                    This action cannot be undone.
+                                    {{ t('operationPlan.unplannedVVNs.overwriteWarning') }}
                                 </p>
                             </div>
                         </div>
                     </div>
 
                     <div style="background-color: var(--sl-color-neutral-50); padding: 1rem; border-radius: var(--sl-border-radius-medium); margin-bottom: 1rem;">
-                        <p style="margin: 0 0 0.5rem 0; font-weight: 600;">You are about to regenerate plans for:</p>
+                        <p style="margin: 0 0 0.5rem 0; font-weight: 600;">{{ t('operationPlan.unplannedVVNs.aboutToRegenerate') }}:</p>
                         <ul style="margin: 0.5rem 0 0 1.5rem; color: var(--sl-color-neutral-700);">
-                            <li><strong>{{ unplannedByDate.length }}</strong> days</li>
-                            <li><strong>{{ unplannedVVNs.length }}</strong> Vessel Visit Notifications</li>
-                            <li>Using <strong>{{ algorithmList.find(a => a.value === selectedAlgorithmAll)?.label }}</strong> algorithm</li>
+                            <li><strong>{{ unplannedByDate.length }}</strong> {{ t('operationPlan.unplannedVVNs.days') }}</li>
+                            <li><strong>{{ unplannedVVNs.length }}</strong> {{ t('operationPlan.unplannedVVNs.vesselVisitNotifications') }}</li>
+                            <li>{{ t('operationPlan.unplannedVVNs.using') }} <strong>{{ algorithmList.find(a => a.value === selectedAlgorithmAll)?.label }}</strong> {{ t('operationPlan.unplannedVVNs.algorithm') }}</li>
                         </ul>
                     </div>
 
                     <p style="margin: 1rem 0 0 0; font-size: 0.9rem; color: var(--sl-color-neutral-600);">
-                        Do you want to proceed with this operation?
+                        {{ t('operationPlan.unplannedVVNs.proceedQuestion') }}
                     </p>
                 </div>
 
                 <div slot="footer" style="display: flex; justify-content: flex-end; gap: 0.75rem;">
                     <sl-button variant="default" @click="cancelRegenerateWarning" :disabled="isRegeneratingAll">
-                        Cancel
+                        {{ t('buttons.cancel') }}
                     </sl-button>
                     <sl-button variant="danger" @click="executeRegenerateAll" :loading="isRegeneratingAll">
                         <sl-icon slot="prefix" name="exclamation-octagon"></sl-icon>
-                        Yes, Regenerate All
+                        {{ t('operationPlan.unplannedVVNs.yesRegenerateAll') }}
                     </sl-button>
                 </div>
             </sl-dialog>
