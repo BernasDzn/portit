@@ -2,7 +2,10 @@ import { TaskCategory } from "../domain/taskCategory";
 
 export class TaskCategoryMapper {
 
-    static fromSchema(doc: any): TaskCategory {
+    static fromSchema(doc: any): TaskCategory | null {
+        if (!doc) {
+            return null;
+        }
         return new TaskCategory({
             id: doc._id ? doc._id.toString() : undefined,
             category: doc.category,

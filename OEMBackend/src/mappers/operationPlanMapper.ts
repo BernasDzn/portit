@@ -59,6 +59,13 @@ export class OperationPlanMapper {
                 });
     
                 const operationTypeDoc = await TaskCategoryRepository.getCategoryById(op.operationType);
+                const operationType = TaskCategoryMapper.fromSchema(operationTypeDoc);
+                
+                // Skip operations with missing task categories
+                if (!operationType) {
+                    console.warn(`Skipping operation with missing task category: ${op.operationType}`);
+                    continue;
+                }
                 
                 const payload = op.payload ? new Payload({
                     containerId: op.payload.containerId,
@@ -66,7 +73,7 @@ export class OperationPlanMapper {
                 }) : new Payload({});
     
                 const operation = new Operation({
-                    operationType: TaskCategoryMapper.fromSchema(operationTypeDoc),
+                    operationType,
                     startTime: op.startTime,
                     endTime: op.endTime,
                     resources,
