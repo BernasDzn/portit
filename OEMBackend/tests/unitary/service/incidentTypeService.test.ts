@@ -16,12 +16,13 @@ beforeEach(() => {
 	// Create mock repository
 	mockRepo = {
 		create: jest.fn(),
-		getById: jest.fn(),
-		getAll: jest.fn(),
-		update: jest.fn(),
-		removeChild: jest.fn(),
-		deleteById: jest.fn()
-	} as jest.Mocked<IncidentTypeRepository>;
+        getById: jest.fn(),
+        getAll: jest.fn(),
+        update: jest.fn(),
+        removeSubtype: jest.fn(),
+        deleteById: jest.fn(),
+        mapToDto: jest.fn()
+	} as unknown as jest.Mocked<IncidentTypeRepository>;
 
 	// Create service and inject mock repository
 	service = new IncidentTypeService();
@@ -90,15 +91,15 @@ describe('IncidentTypeService', () => {
 			const mockDto: IncidentTypeDto = {
 				id: "INC-PARENT",
 				name: "Parent Type",
-				childrenIds: ["INC-CHILD1", "INC-CHILD2"]
+				subtypesIds: ["INC-CHILD1", "INC-CHILD2"]
 			};
 
 			mockRepo.getById.mockResolvedValue(mockDto);
 
 			const result = await service.getIncidentTypeById("INC-PARENT");
 
-			expect(result?.childrenIds).toHaveLength(2);
-			expect(result?.childrenIds).toContain("INC-CHILD1");
+			expect(result?.subtypesIds).toHaveLength(2);
+			expect(result?.subtypesIds).toContain("INC-CHILD1");
 		});
 	});
 
@@ -133,12 +134,12 @@ describe('IncidentTypeService', () => {
 				{ 
 					id: "INC-PARENT", 
 					name: "Parent", 
-					childrenIds: ["INC-CHILD1"] 
+					subtypesIds: ["INC-CHILD1"] 
 				},
 				{ 
 					id: "INC-CHILD1", 
 					name: "Child 1", 
-					parentId: "INC-PARENT" 
+					subtypeOfId: "INC-PARENT" 
 				}
 			];
 
@@ -147,8 +148,8 @@ describe('IncidentTypeService', () => {
 			const result = await service.getAllIncidentTypes();
 
 			expect(result).toHaveLength(2);
-			expect(result[0]?.childrenIds).toBeDefined();
-			expect(result[1]?.parentId).toBeDefined();
+			expect(result[0]?.subtypesIds).toBeDefined();
+			expect(result[1]?.subtypeOfId).toBeDefined();
 		});
 	});
 
@@ -171,7 +172,7 @@ describe('IncidentTypeService', () => {
 			const mockDto: IncidentTypeDto = {
 				id: "INC-PARENT",
 				name: "Parent",
-				childrenIds: ["INC-CHILD1", "INC-CHILD2"]
+				subtypesIds: ["INC-CHILD1", "INC-CHILD2"]
 			};
 
 			mockRepo.update.mockResolvedValue(mockDto);
@@ -187,14 +188,14 @@ describe('IncidentTypeService', () => {
 				undefined, 
 				["INC-CHILD1", "INC-CHILD2"]
 			);
-			expect(result?.childrenIds).toHaveLength(2);
+			expect(result?.subtypesIds).toHaveLength(2);
 		});
 
 		it('should update both name and children', async () => {
 			const mockDto: IncidentTypeDto = {
 				id: "INC-TEST",
 				name: "New Name",
-				childrenIds: ["INC-CHILD"]
+				subtypesIds: ["INC-CHILD"]
 			};
 
 			mockRepo.update.mockResolvedValue(mockDto);
@@ -203,7 +204,7 @@ describe('IncidentTypeService', () => {
 
 			expect(mockRepo.update).toHaveBeenCalledWith("INC-TEST", "New Name", ["INC-CHILD"]);
 			expect(result?.name).toBe("New Name");
-			expect(result?.childrenIds).toContain("INC-CHILD");
+			expect(result?.subtypesIds).toContain("INC-CHILD");
 		});
 
 		it('should return null when incident type not found', async () => {
@@ -220,21 +221,21 @@ describe('IncidentTypeService', () => {
 			const mockDto: IncidentTypeDto = {
 				id: "INC-PARENT",
 				name: "Parent",
-				childrenIds: ["INC-CHILD2"]
+				subtypesIds: ["INC-CHILD2"]
 			};
 
-			mockRepo.removeChild.mockResolvedValue(mockDto);
+			mockRepo.removeSubtype.mockResolvedValue(mockDto);
 
-			const result = await service.removeChild("INC-PARENT", "INC-CHILD1");
+			const result = await service.removeSubtype("INC-PARENT", "INC-CHILD1");
 
-			expect(mockRepo.removeChild).toHaveBeenCalledWith("INC-PARENT", "INC-CHILD1");
-			expect(result?.childrenIds).not.toContain("INC-CHILD1");
+			expect(mockRepo.removeSubtype).toHaveBeenCalledWith("INC-PARENT", "INC-CHILD1");
+			expect(result?.subtypesIds).not.toContain("INC-CHILD1");
 		});
 
 		it('should return null when parent not found', async () => {
-			mockRepo.removeChild.mockResolvedValue(null);
+			mockRepo.removeSubtype.mockResolvedValue(null);
 
-			const result = await service.removeChild("INC-NOTFOUND", "INC-CHILD");
+			const result = await service.removeSubtype("INC-NOTFOUND", "INC-CHILD");
 
 			expect(result).toBeNull();
 		});
@@ -243,14 +244,14 @@ describe('IncidentTypeService', () => {
 			const mockDto: IncidentTypeDto = {
 				id: "INC-PARENT",
 				name: "Parent",
-				childrenIds: []
+				subtypesIds: []
 			};
 
-			mockRepo.removeChild.mockResolvedValue(mockDto);
+			mockRepo.removeSubtype.mockResolvedValue(mockDto);
 
-			const result = await service.removeChild("INC-PARENT", "INC-LASTCHILD");
+			const result = await service.removeSubtype("INC-PARENT", "INC-LASTCHILD");
 
-			expect(result?.childrenIds).toHaveLength(0);
+			expect(result?.subtypesIds).toHaveLength(0);
 		});
 	});
 

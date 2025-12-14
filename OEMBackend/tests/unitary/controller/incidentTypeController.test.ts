@@ -31,10 +31,10 @@ describe('IncidentTypeController', () => {
 		it('should create a new incident type successfully', async () => {
 			const mockIncidentType = {
 				id: 'INC-TEST123',
-				name: 'Fire Incident'
+				name: 'Test Incident'
 			};
 
-			mockRequest.body = { name: 'Fire Incident' };
+			mockRequest.body = { name: 'Test Incident' };
 			mockService.createIncidentType = jest.fn().mockResolvedValue(mockIncidentType);
 
 			await controller.createIncidentType(
@@ -43,7 +43,7 @@ describe('IncidentTypeController', () => {
 				mockNext
 			);
 
-			expect(mockService.createIncidentType).toHaveBeenCalledWith('Fire Incident');
+			expect(mockService.createIncidentType).toHaveBeenCalledWith('Test Incident', undefined, undefined);
 			expect(mockResponse.status).toHaveBeenCalledWith(201);
 			expect(mockResponse.json).toHaveBeenCalledWith(mockIncidentType);
 		});
@@ -187,11 +187,11 @@ describe('IncidentTypeController', () => {
 			const mockUpdatedType = {
 				id: 'INC-PARENT',
 				name: 'Parent',
-				childrenIds: ['INC-CHILD1', 'INC-CHILD2']
+				subtypesIds: ['INC-CHILD1', 'INC-CHILD2']
 			};
 
 			mockRequest.params = { id: 'INC-PARENT' };
-			mockRequest.body = { childrenIds: ['INC-CHILD1', 'INC-CHILD2'] };
+			mockRequest.body = { subtypesIds: ['INC-CHILD1', 'INC-CHILD2'] };
 			mockService.updateIncidentType = jest.fn().mockResolvedValue(mockUpdatedType);
 
 			await controller.updateIncidentType(
@@ -212,11 +212,11 @@ describe('IncidentTypeController', () => {
 			const mockUpdatedType = {
 				id: 'INC-TEST',
 				name: 'New Name',
-				childrenIds: ['INC-CHILD']
+				subtypesIds: ['INC-CHILD']
 			};
 
 			mockRequest.params = { id: 'INC-TEST' };
-			mockRequest.body = { name: 'New Name', childrenIds: ['INC-CHILD'] };
+			mockRequest.body = { name: 'New Name', subtypesIds: ['INC-CHILD'] };
 			mockService.updateIncidentType = jest.fn().mockResolvedValue(mockUpdatedType);
 
 			await controller.updateIncidentType(
@@ -264,28 +264,28 @@ describe('IncidentTypeController', () => {
 			const mockUpdatedType = {
 				id: 'INC-PARENT',
 				name: 'Parent',
-				childrenIds: ['INC-CHILD2']
+				subtypesIds: ['INC-CHILD2']
 			};
 
-			mockRequest.params = { id: 'INC-PARENT', childId: 'INC-CHILD1' };
-			mockService.removeChild = jest.fn().mockResolvedValue(mockUpdatedType);
+			mockRequest.params = { id: 'INC-PARENT', subtypeId: 'INC-CHILD1' };
+			mockService.removeSubtype = jest.fn().mockResolvedValue(mockUpdatedType);
 
-			await controller.removeChild(
+			await controller.removeSubtype(
 				mockRequest as Request,
 				mockResponse as Response,
 				mockNext
 			);
 
-			expect(mockService.removeChild).toHaveBeenCalledWith('INC-PARENT', 'INC-CHILD1');
+			expect(mockService.removeSubtype).toHaveBeenCalledWith('INC-PARENT', 'INC-CHILD1');
 			expect(mockResponse.status).toHaveBeenCalledWith(200);
 			expect(mockResponse.json).toHaveBeenCalledWith(mockUpdatedType);
 		});
 
 		it('should return 404 when incident type not found', async () => {
 			mockRequest.params = { id: 'INC-NOTFOUND', childId: 'INC-CHILD' };
-			mockService.removeChild = jest.fn().mockResolvedValue(null);
+			mockService.removeSubtype = jest.fn().mockResolvedValue(null);
 
-			await controller.removeChild(
+			await controller.removeSubtype(
 				mockRequest as Request,
 				mockResponse as Response,
 				mockNext
@@ -297,9 +297,9 @@ describe('IncidentTypeController', () => {
 		it('should handle errors during child removal', async () => {
 			const error = new Error('Removal error');
 			mockRequest.params = { id: 'INC-PARENT', childId: 'INC-CHILD' };
-			mockService.removeChild = jest.fn().mockRejectedValue(error);
+			mockService.removeSubtype = jest.fn().mockRejectedValue(error);
 
-			await controller.removeChild(
+			await controller.removeSubtype(
 				mockRequest as Request,
 				mockResponse as Response,
 				mockNext
