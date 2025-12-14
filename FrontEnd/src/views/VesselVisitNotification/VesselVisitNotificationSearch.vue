@@ -124,12 +124,12 @@ const events = ref<Array<{ title: string, start: string }>>([]);
               
                 <sl-tab-panel name="general">
                     <ListingBox listingStyle="listing-grid" :fetch-function="fetchVesselVisitNotifications"
-                    search-filter="notificationNumber" v-slot="{ elements }" :filter-definition="user.role === 2 ? filterDefinition:null">
-                    <li v-for="notification in elements" :key="notification.notificationId" class="link">
-                        <VesselVisitNotificationPrinter class="listing-box" :notification="notification"
-                            :link="`/vessel-visit-notifications/view/${notification.notificationId}`" />
-                    </li>
-                </ListingBox>
+                        v-slot="{ elements }" :filter-definition="user.role === 2 ? filterDefinition:null">
+                        <li v-for="notification in elements" :key="notification.notificationId" class="link">
+                            <VesselVisitNotificationPrinter class="listing-box" :notification="notification"
+                                :link="`/vessel-visit-notifications/view/${notification.notificationId}`" />
+                        </li>
+                    </ListingBox>
                 </sl-tab-panel>
                 <sl-tab-panel name="custom">
 
