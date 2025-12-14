@@ -9,7 +9,7 @@ import { container } from '@/inversify.config';
 import type { IIncidentTypeService } from '@/service/IService/IIncidentTypeService';
 import TYPES from '@/inversify/types';
 
-const { t, locale } = useI18n();
+const { t } = useI18n();
 
 const incidentTypeService = container.get<IIncidentTypeService>(TYPES.incidentTypeService);
 
@@ -17,30 +17,11 @@ const fetchIncidentTypes = async (filtering?: Filter<any>): Promise<Page<Inciden
     const incidentTypes = await incidentTypeService.getAllIncidentTypes();
     return {
         items: incidentTypes,
-        pageNumber: 1,
         pageSize: incidentTypes.length,
+        pageNumber: 1,
         pageCount: 1,
     };
 }
-
-const filterDefinition = ref({});
-
-async function buildFilterDefinition() {
-    filterDefinition.value = {
-        severity: {
-            type: 'select',
-            label: t('incidentType.fields.severity.title') as string,
-            options: [
-                { value: 'Minor', text: t('incidentType.severity.Minor') },
-                { value: 'Major', text: t('incidentType.severity.Major') },
-                { value: 'Critical', text: t('incidentType.severity.Critical') }
-            ]
-        }
-    };
-}
-
-onMounted(async () => buildFilterDefinition());
-watch(locale, () => buildFilterDefinition());
 
 </script>
 
@@ -55,9 +36,9 @@ watch(locale, () => buildFilterDefinition());
         <h1 class="title">{{ t('incidentType.title') }}</h1>
         <p class="subtitle">{{ t('incidentType.subtitle.search') }}</p>
 
-        <ListingBox :fetch-function="fetchIncidentTypes" search-filter="name" v-slot="{elements}" :filter-definition="filterDefinition">
+        <ListingBox :fetch-function="fetchIncidentTypes" v-slot="{elements}">
             <li v-for="incidentType in elements" :key="incidentType.id">
-                <IncidentTypePrinter class="listing-box" :incident-type="incidentType" :link="`/incident-types/edit/${incidentType.id}`"/>
+                <IncidentTypePrinter class="listing-box" :incident-type="incidentType" :link="`/incident-types/view/${incidentType.id}`"/>
             </li>
         </ListingBox>
     </header>

@@ -413,11 +413,27 @@ const router = createRouter({
             }
         },
         {
+            path: '/incident-types/view/:id',
+            name: 'View Incident Type',
+            component: () => import('@/views/IncidentTypes/IncidentTypeView.vue'),
+            meta: {
+                icon: "eye"
+            }
+        },
+        {
             path: '/incident-types/create',
             name: 'Create Incident Type',
             component: () => import('@/views/IncidentTypes/IncidentTypeCreate.vue'),
             meta: {
                 icon: "add"
+            }
+        },
+        {
+            path: '/incident-types/edit/:id',
+            name: 'Edit Incident Type',
+            component: () => import('@/views/IncidentTypes/IncidentTypeEdit.vue'),
+            meta: {
+                icon: "pencil"
             }
         },
         {
