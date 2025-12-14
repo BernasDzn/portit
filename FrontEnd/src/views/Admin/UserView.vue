@@ -132,10 +132,10 @@ const doDelete = async () => {
       </div>
     </sl-card>
 
-    <sl-dialog ref="deleteDialog" label="Confirm delete">
-      <div>Are you sure you want to delete this user?</div>
-      <sl-button slot="footer" variant="text" @click="(deleteDialog as any).hide()">Cancel</sl-button>
-      <sl-button slot="footer" variant="danger" @click="doDelete">Delete</sl-button>
+    <sl-dialog ref="deleteDialog" :label="t('user.confirmDelete')">
+      <div>{{ t('user.confirmDeleteMessage') }}</div>
+      <sl-button slot="footer" variant="text" @click="(deleteDialog as any).hide()">{{ t('buttons.cancel') }}</sl-button>
+      <sl-button slot="footer" variant="danger" @click="doDelete">{{ t('buttons.delete') }}</sl-button>
     </sl-dialog>
   </div>
 </template>

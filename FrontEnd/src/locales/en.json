@@ -162,7 +162,9 @@
             "create": "Register a new user into the system",
             "view": "View and manage existing users"
         },
-        "registeredUsers": "Registered Users"
+        "registeredUsers": "Registered Users",
+        "confirmDelete": "Confirm delete",
+        "confirmDeleteMessage": "Are you sure you want to delete this user?"
     },
     "representative": {
         "title": "Representative",

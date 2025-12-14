@@ -128,7 +128,9 @@
             "create": "Registar um novo utilizador no sistema",
             "view": "Ver e gerir utilizadores existentes"
         },
-        "registeredUsers": "Utilizadores Registados"
+        "registeredUsers": "Utilizadores Registados",
+        "confirmDelete": "Confirmar exclusão",
+        "confirmDeleteMessage": "Tem a certeza que deseja excluir este utilizador?"
     },
     "representative": {
         "title": "Representante",
