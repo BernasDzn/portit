@@ -8,6 +8,7 @@ export const TYPES = {
     qualificationService: Symbol.for('QualificationService'),
     representativeService: Symbol.for('RepresentativeService'),
     schedulingService: Symbol.for('SchedulingService'),
+    incidentTypeService: Symbol.for('IncidentTypeService'),
     shippingAgentOrganizationService: Symbol.for('ShippingAgentOrganizationService'),
     staffService: Symbol.for('StaffService'),
     storageAreaService: Symbol.for('StorageAreaService'),

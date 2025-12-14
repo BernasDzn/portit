@@ -397,6 +397,30 @@ const router = createRouter({
             }
         },
         {
+            path: '/incident-types/dashboard',
+            name: 'Incident Types Dashboard',
+            component: () => import('@/views/IncidentTypes/IncidentTypeDashboard.vue'),
+            meta: {
+                icon: "dashboard"
+            }
+        },
+        {
+            path: '/incident-types/search',
+            name: 'Search Incident Types',
+            component: () => import('@/views/IncidentTypes/IncidentTypeSearch.vue'),
+            meta: {
+                icon: "search"
+            }
+        },
+        {
+            path: '/incident-types/create',
+            name: 'Create Incident Type',
+            component: () => import('@/views/IncidentTypes/IncidentTypeCreate.vue'),
+            meta: {
+                icon: "add"
+            }
+        },
+        {
           path: '/about',
           name: 'about',
           component: () => import('@/views/About/About.vue'),
