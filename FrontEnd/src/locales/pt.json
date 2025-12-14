@@ -390,6 +390,19 @@
         "aboutAlgorithmModal": {
             "title": "Sobre o algoritmo",
             "content": "O algoritmo atual leva em consideração as notificações de visita de navios agendadas para a data e doca selecionadas. \nEle então verifica a disponibilidade de guindastes STS para a doca especificada e decide a duração de cada tarefa com base na velocidade do guindaste.\nTambém ignora visitas que são para manutenção ou outras atividades que não sejam de carga/descarga."
+        },
+        "rebalancing": {
+            "title": "Reequilíbrio de Docas Necessário",
+            "warningMessage": "Antes do agendamento, o sistema recomenda reequilibrar as atribuições de docas para otimizar a distribuição de carga.",
+            "vesselsToReassign": "Navios para Reatribuir",
+            "averageLoad": "Carga Média",
+            "loadRange": "Intervalo de Carga",
+            "proposedReassignments": "Reatribuições Propostas",
+            "vesselImo": "IMO do Navio",
+            "currentDock": "Doca Atual",
+            "proposedDock": "Doca Proposta",
+            "skipButton": "Ignorar e Continuar com as Atribuições Atuais",
+            "applyButton": "Aplicar Reequilíbrio e Gerar Cronograma"
         }
     },
     "physicalResource": {
