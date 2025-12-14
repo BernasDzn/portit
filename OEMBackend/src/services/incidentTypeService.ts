@@ -1,6 +1,6 @@
 import { Service } from "typedi";
 import { IncidentTypeRepository } from "../repository/incidentTypeRepository";
-import IncidentType from "../domain/incidentType";
+import IncidentType, { Severity } from "../domain/incidentType";
 import { IncidentTypeDto } from "../dto/incidentTypeDto";
 
 @Service("incidentTypeService")
@@ -77,8 +77,8 @@ export class IncidentTypeService {
 		return false;
 	}
 
-	async createIncidentType(name: string, subtypeOfId?: string, subtypesIds?: string[]): Promise<IncidentTypeDto> {
-		const incidentType = new IncidentType({ name });
+	async createIncidentType(name: string, severity: Severity, description: string, subtypeOfId?: string, subtypesIds?: string[]): Promise<IncidentTypeDto> {
+		const incidentType = new IncidentType({ name, description, severity });
 		
 		await this.validateHierarchy(incidentType.id, subtypeOfId, subtypesIds);
 		
@@ -93,13 +93,13 @@ export class IncidentTypeService {
 		return await this.incidentTypeRepository.getAll();
 	}
 
-	async updateIncidentType(id: string, name?: string, subtypesIds?: string[]): Promise<IncidentTypeDto | null> {
+	async updateIncidentType(id: string, name?: string, description?: string, severity?: Severity, subtypesIds?: string[]): Promise<IncidentTypeDto | null> {
 
 		if (subtypesIds) {
 			await this.validateHierarchy(id, undefined, subtypesIds);
 		}
 		
-		return await this.incidentTypeRepository.update(id, name, subtypesIds);
+		return await this.incidentTypeRepository.update(id, name, description, severity, subtypesIds);
 	}
 
 	async removeSubtype(id: string, subtypeId: string): Promise<IncidentTypeDto | null> {

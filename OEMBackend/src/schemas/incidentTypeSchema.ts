@@ -10,6 +10,15 @@ const IncidentTypeSchema = new mongoose.Schema({
 		type: String,
 		required: true
 	},
+	description: {
+		type: String,
+		required: true
+	},
+	severity: {
+		type: String,
+		enum: ['Minor', 'Major', 'Critical'],
+		required: true
+	},
 	subtypeOf: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "IncidentType",

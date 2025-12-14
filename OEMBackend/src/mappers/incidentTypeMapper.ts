@@ -6,6 +6,8 @@ export class IncidentTypeMapper {
 		return {
 			id: incidentType.id,
 			name: incidentType.name,
+			description: incidentType.description,
+			severity: incidentType.severity,
 			subtypeOf: incidentType.subtypeOf ? incidentType.subtypeOf.id : null,
 			subtypes: incidentType.subtypes ? incidentType.subtypes.map(subtype => subtype.id) : []
 		};
@@ -14,7 +16,9 @@ export class IncidentTypeMapper {
 	static fromSchema(schema: any): IncidentType {
 		const incidentType = new IncidentType(
 			{
-				name: schema.name
+				name: schema.name,
+				description: schema.description,
+				severity: schema.severity
 			},
 			schema.id
 		);

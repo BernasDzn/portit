@@ -1,4 +1,4 @@
-import IncidentType from "../domain/incidentType";
+import IncidentType, { Severity } from "../domain/incidentType";
 import { IncidentTypeDto } from "../dto/incidentTypeDto";
 import { IncidentTypeMapper } from "../mappers/incidentTypeMapper";
 import { IncidentTypeModel } from "../schemas/incidentTypeSchema";
@@ -55,12 +55,18 @@ export class IncidentTypeRepository {
 		return docs.map(doc => this.mapToDto(doc));
 	}
 
-	async update(id: string, name?: string, subtypesIds?: string[]): Promise<IncidentTypeDto | null> {
+	async update(id: string, name?: string, description?: string, severity?: Severity, subtypesIds?: string[]): Promise<IncidentTypeDto | null> {
 		const doc = await IncidentTypeModel.findOne({ id });
 		if (!doc) return null;
 
 		if (name) {
 			doc.name = name;
+		}
+		if (description !== undefined) {
+			doc.description = description;
+		}
+		if (severity) {
+			doc.severity = severity;
 		}
 
 		if (subtypesIds && subtypesIds.length > 0) {

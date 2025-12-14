@@ -44,8 +44,8 @@ export default class IncidentTypeController extends BaseController {
 	 */
 	public async createIncidentType(req: any, res: any, next: any): Promise<void> {
 		try {
-			const { name, subtypeOfId, subtypesIds } = req.body;
-			const incidentType = await this.incidentTypeService.createIncidentType(name, subtypeOfId, subtypesIds);
+			const { name, description, severity, subtypeOfId, subtypesIds } = req.body;
+			const incidentType = await this.incidentTypeService.createIncidentType(name, severity, description, subtypeOfId, subtypesIds);
 			this.created(res, incidentType);
 		} catch (error) {
 			next(error);
@@ -141,8 +141,8 @@ export default class IncidentTypeController extends BaseController {
 	public async updateIncidentType(req: any, res: any, next: any): Promise<void> {
 		try {
 			const { id } = req.params;
-			const { name, subtypesIds } = req.body;
-			const incidentType = await this.incidentTypeService.updateIncidentType(id, name, subtypesIds);
+			const { name, description, severity, subtypesIds } = req.body;
+			const incidentType = await this.incidentTypeService.updateIncidentType(id, name, description, severity, subtypesIds);
 			if (incidentType) {
 				this.ok(res, incidentType);
 			} else {
