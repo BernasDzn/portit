@@ -28,6 +28,14 @@ export default class IncidentTypeController extends BaseController {
 	 *             properties:
 	 *               name:
 	 *                 type: string
+	 *               subtypeOfId:
+	 *                 type: string
+	 *                 description: ID of parent type (optional)
+	 *               subtypesIds:
+	 *                 type: array
+	 *                 items:
+	 *                   type: string
+	 *                 description: Array of subtype IDs (optional)
 	 *             required:
 	 *               - name
 	 *     responses:
@@ -36,8 +44,8 @@ export default class IncidentTypeController extends BaseController {
 	 */
 	public async createIncidentType(req: any, res: any, next: any): Promise<void> {
 		try {
-			const { name } = req.body;
-			const incidentType = await this.incidentTypeService.createIncidentType(name);
+			const { name, subtypeOfId, subtypesIds } = req.body;
+			const incidentType = await this.incidentTypeService.createIncidentType(name, subtypeOfId, subtypesIds);
 			this.created(res, incidentType);
 		} catch (error) {
 			next(error);
@@ -103,7 +111,7 @@ export default class IncidentTypeController extends BaseController {
 	 * /incident-types/{id}:
 	 *   patch:
 	 *     tags: [Incident Types]
-	 *     summary: Update incident type name and/or add children
+	 *     summary: Update incident type name and/or add subtypes
 	 *     security:
 	 *       - bearerAuth: []
 	 *     parameters:
@@ -122,7 +130,7 @@ export default class IncidentTypeController extends BaseController {
 	 *             properties:
 	 *               name:
 	 *                 type: string
-	 *               childrenIds:
+	 *               subtypesIds:
 	 *                 type: array
 	 *                 items:
 	 *                   type: string
@@ -133,8 +141,8 @@ export default class IncidentTypeController extends BaseController {
 	public async updateIncidentType(req: any, res: any, next: any): Promise<void> {
 		try {
 			const { id } = req.params;
-			const { name, childrenIds } = req.body;
-			const incidentType = await this.incidentTypeService.updateIncidentType(id, name, childrenIds);
+			const { name, subtypesIds } = req.body;
+			const incidentType = await this.incidentTypeService.updateIncidentType(id, name, subtypesIds);
 			if (incidentType) {
 				this.ok(res, incidentType);
 			} else {
@@ -147,10 +155,10 @@ export default class IncidentTypeController extends BaseController {
 
 	/**
 	 * @openapi
-	 * /incident-types/{id}/children/{childId}:
+	 * /incident-types/{id}/subtypes/{subtypeId}:
 	 *   delete:
 	 *     tags: [Incident Types]
-	 *     summary: Remove a child from incident type
+	 *     summary: Remove a subtype from incident type
 	 *     security:
 	 *       - bearerAuth: []
 	 *     parameters:
@@ -161,19 +169,19 @@ export default class IncidentTypeController extends BaseController {
 	 *           type: string
 	 *         description: Parent incident type ID
 	 *       - in: path
-	 *         name: childId
+	 *         name: subtypeId
 	 *         required: true
 	 *         schema:
 	 *           type: string
-	 *         description: Child incident type ID to remove
+	 *         description: Subtype incident type ID to remove
 	 *     responses:
 	 *       200:
-	 *         description: Child removed successfully
+	 *         description: Subtype removed successfully
 	 */
-	public async removeChild(req: any, res: any, next: any): Promise<void> {
+	public async removeSubtype(req: any, res: any, next: any): Promise<void> {
 		try {
-			const { id, childId } = req.params;
-			const incidentType = await this.incidentTypeService.removeChild(id, childId);
+			const { id, subtypeId } = req.params;
+			const incidentType = await this.incidentTypeService.removeSubtype(id, subtypeId);
 			if (incidentType) {
 				this.ok(res, incidentType);
 			} else {

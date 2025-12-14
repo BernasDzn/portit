@@ -10,12 +10,12 @@ const IncidentTypeSchema = new mongoose.Schema({
 		type: String,
 		required: true
 	},
-	parent: {
+	subtypeOf: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "IncidentType",
 		required: false
 	},
-	children: [{
+	subtypes: [{
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "IncidentType",
 		required: false

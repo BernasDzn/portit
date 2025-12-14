@@ -146,7 +146,7 @@ export default class OperationPlanController extends BaseController {
             }
             this.ok(res, items);
         }catch(e){
-            this.fail(res, "Error retrieving notifications without plan");
+            //this.fail(res, "Error retrieving notifications without plan");
             return next(e);
         }
     }

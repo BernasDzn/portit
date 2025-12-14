@@ -5,55 +5,57 @@ import { IncidentTypeModel } from "../schemas/incidentTypeSchema";
 
 export class IncidentTypeRepository {
 
-	async create(incidentType : IncidentType) : Promise<IncidentTypeDto> {
+	async create(incidentType: IncidentType, subtypeOfId?: string, subtypesIds?: string[]): Promise<IncidentTypeDto> {
 		const newIncidentType = IncidentTypeMapper.toSchema(incidentType);
-		const createdIncidentType = await IncidentTypeModel.create(newIncidentType);
-		const type = IncidentTypeMapper.fromSchema(createdIncidentType);
-		return type.toDto();
+		
+		if (subtypeOfId) {
+			const parentDoc = await IncidentTypeModel.findOne({ id: subtypeOfId });
+			if (parentDoc) {
+				newIncidentType.subtypeOf = parentDoc._id;
+			}
+		}
+		
+		const createdIncidentType = new IncidentTypeModel(newIncidentType);
+		await createdIncidentType.save();
+		
+		if (subtypesIds && subtypesIds.length > 0) {
+			for (const subtypeId of subtypesIds) {
+				const subtypeDoc = await IncidentTypeModel.findOne({ id: subtypeId });
+				if (subtypeDoc) {
+					subtypeDoc.subtypeOf = createdIncidentType._id;
+					await subtypeDoc.save();
+					createdIncidentType.subtypes.push(subtypeDoc._id);
+				}
+			}
+			await createdIncidentType.save();
+		}
+		
+		if (subtypeOfId) {
+			const parentDoc = await IncidentTypeModel.findOne({ id: subtypeOfId });
+			if (parentDoc && !parentDoc.subtypes.includes(createdIncidentType._id)) {
+				parentDoc.subtypes.push(createdIncidentType._id);
+				await parentDoc.save();
+			}
+		}
+		
+		const finalDoc = await IncidentTypeModel.findOne({ id: incidentType.id }).populate('subtypeOf').populate('subtypes');
+		if (!finalDoc) throw new Error('Failed to create incident type');
+		
+		return this.mapToDto(finalDoc);
 	}
 
-	async getById(id: string) : Promise<IncidentTypeDto | null> {
-		const doc = await IncidentTypeModel.findOne({ id }).populate('parent').populate('children');
+	async getById(id: string): Promise<IncidentTypeDto | null> {
+		const doc = await IncidentTypeModel.findOne({ id }).populate('subtypeOf').populate('subtypes');
 		if (!doc) return null;
-		const type = IncidentTypeMapper.fromSchema(doc);
-		const dto = type.toDto();
-		
-		// Add parent and children IDs from the database document
-		if (doc.parent && typeof doc.parent !== 'string') {
-			dto.parentId = (doc.parent as any).id;
-		}
-		if (doc.children && doc.children.length > 0) {
-			dto.childrenIds = doc.children.map((child: any) => 
-				typeof child === 'string' ? child : child.id
-			);
-		}
-		
-		return dto;
+		return this.mapToDto(doc);
 	}
 
-	async getAll() : Promise<IncidentTypeDto[]> {
-		const docs = await IncidentTypeModel.find().populate('parent').populate('children');
-		return docs.map(doc => {
-			const type = IncidentTypeMapper.fromSchema(doc);
-			const dto = type.toDto();
-			
-			// Add parent ID from the database document
-			if (doc.parent && typeof doc.parent !== 'string') {
-				dto.parentId = (doc.parent as any).id;
-			}
-			
-			// Add children IDs from the database document
-			if (doc.children && doc.children.length > 0) {
-				dto.childrenIds = doc.children.map((child: any) => 
-					typeof child === 'string' ? child : child.id
-				);
-			}
-			
-			return dto;
-		});
+	async getAll(): Promise<IncidentTypeDto[]> {
+		const docs = await IncidentTypeModel.find().populate('subtypeOf').populate('subtypes');
+		return docs.map(doc => this.mapToDto(doc));
 	}
 
-	async update(id: string, name?: string, childrenIds?: string[]): Promise<IncidentTypeDto | null> {
+	async update(id: string, name?: string, subtypesIds?: string[]): Promise<IncidentTypeDto | null> {
 		const doc = await IncidentTypeModel.findOne({ id });
 		if (!doc) return null;
 
@@ -61,94 +63,81 @@ export class IncidentTypeRepository {
 			doc.name = name;
 		}
 
-		if (childrenIds && childrenIds.length > 0) {
-			for (const childId of childrenIds) {
-				const childDoc = await IncidentTypeModel.findOne({ id: childId });
-				if (childDoc && !doc.children.includes(childDoc._id)) {
-					doc.children.push(childDoc._id);
-					childDoc.parent = doc._id;
-					await childDoc.save();
+		if (subtypesIds && subtypesIds.length > 0) {
+			for (const subtypeId of subtypesIds) {
+				const subtypeDoc = await IncidentTypeModel.findOne({ id: subtypeId });
+				if (subtypeDoc && !doc.subtypes.includes(subtypeDoc._id)) {
+					doc.subtypes.push(subtypeDoc._id);
+					subtypeDoc.subtypeOf = doc._id;
+					await subtypeDoc.save();
 				}
 			}
 		}
 
 		await doc.save();
 		
-		// Reload with populated references
-		const updatedDoc = await IncidentTypeModel.findOne({ id }).populate('parent').populate('children');
+		const updatedDoc = await IncidentTypeModel.findOne({ id }).populate('subtypeOf').populate('subtypes');
 		if (!updatedDoc) return null;
 		
-		const type = IncidentTypeMapper.fromSchema(updatedDoc);
-		const dto = type.toDto();
-		
-		// Add parent and children IDs from the database document
-		if (updatedDoc.parent && typeof updatedDoc.parent !== 'string') {
-			dto.parentId = (updatedDoc.parent as any).id;
-		}
-		if (updatedDoc.children && updatedDoc.children.length > 0) {
-			dto.childrenIds = updatedDoc.children.map((child: any) => 
-				typeof child === 'string' ? child : child.id
-			);
-		}
-		
-		return dto;
+		return this.mapToDto(updatedDoc);
 	}
 
-	async removeChild(id: string, childId: string): Promise<IncidentTypeDto | null> {
+	async removeSubtype(id: string, subtypeId: string): Promise<IncidentTypeDto | null> {
 		const doc = await IncidentTypeModel.findOne({ id });
 		if (!doc) return null;
 
-		const childDoc = await IncidentTypeModel.findOne({ id: childId });
-		if (!childDoc) return null;
+		const subtypeDoc = await IncidentTypeModel.findOne({ id: subtypeId });
+		if (!subtypeDoc) return null;
 
-		doc.children = doc.children.filter((childObjId: any) => !childObjId.equals(childDoc._id));
-		childDoc.parent = null;
+		doc.subtypes = doc.subtypes.filter((subtypeObjId: any) => !subtypeObjId.equals(subtypeDoc._id));
+		subtypeDoc.subtypeOf = null;
 
 		await doc.save();
-		await childDoc.save();
+		await subtypeDoc.save();
 
-		// Reload with populated references
-		const updatedDoc = await IncidentTypeModel.findOne({ id }).populate('parent').populate('children');
+		const updatedDoc = await IncidentTypeModel.findOne({ id }).populate('subtypeOf').populate('subtypes');
 		if (!updatedDoc) return null;
 		
-		const type = IncidentTypeMapper.fromSchema(updatedDoc);
-		const dto = type.toDto();
-		
-		// Add parent and children IDs from the database document
-		if (updatedDoc.parent && typeof updatedDoc.parent !== 'string') {
-			dto.parentId = (updatedDoc.parent as any).id;
-		}
-		if (updatedDoc.children && updatedDoc.children.length > 0) {
-			dto.childrenIds = updatedDoc.children.map((child: any) => 
-				typeof child === 'string' ? child : child.id
-			);
-		}
-		
-		return dto;
+		return this.mapToDto(updatedDoc);
 	}
 
 	async deleteById(id: string): Promise<boolean> {
 		const doc = await IncidentTypeModel.findOne({ id });
 		if (!doc) return false;
 
-		// Remove references from parent if this is a child
-		if (doc.parent) {
+		if (doc.subtypeOf) {
 			await IncidentTypeModel.updateOne(
-				{ _id: doc.parent },
-				{ $pull: { children: doc._id } }
+				{ _id: doc.subtypeOf },
+				{ $pull: { subtypes: doc._id } }
 			);
 		}
 
-		// Set parent to null for all children
-		if (doc.children && doc.children.length > 0) {
+		if (doc.subtypes && doc.subtypes.length > 0) {
 			await IncidentTypeModel.updateMany(
-				{ _id: { $in: doc.children } },
-				{ $set: { parent: null } }
+				{ _id: { $in: doc.subtypes } },
+				{ $set: { subtypeOf: null } }
 			);
 		}
 
 		await IncidentTypeModel.deleteOne({ id });
 		return true;
+	}
+
+	private mapToDto(doc: any): IncidentTypeDto {
+		const type = IncidentTypeMapper.fromSchema(doc);
+		const dto = type.toDto();
+		
+		if (doc.subtypeOf && typeof doc.subtypeOf !== 'string') {
+			dto.subtypeOfId = (doc.subtypeOf as any).id;
+		}
+		
+		if (doc.subtypes && doc.subtypes.length > 0) {
+			dto.subtypesIds = doc.subtypes.map((subtype: any) => 
+				typeof subtype === 'string' ? subtype : subtype.id
+			);
+		}
+		
+		return dto;
 	}
 
 }
