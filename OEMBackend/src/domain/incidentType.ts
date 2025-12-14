@@ -1,4 +1,5 @@
 import { Entity } from "../core/domain/entity";
+import { IncidentTypeDto } from "../dto/incidentTypeDto";
 
 export interface IncidentTypeProps {
 	name: string;
@@ -22,9 +23,9 @@ export default class IncidentType extends Entity<IncidentTypeProps> {
 	get parent(): IncidentType | undefined { return this.props.parent; }
 	get children(): IncidentType[] | undefined { return this.props.children; }
 
-	constructor(props: IncidentTypeProps) {
+	constructor(props: IncidentTypeProps, id?: string) {
 		super(
-			new IncidentTypeID().value, 
+			id || new IncidentTypeID().value, 
 			props
 		);
 	}
@@ -35,6 +36,13 @@ export default class IncidentType extends Entity<IncidentTypeProps> {
 		}
 		this.props.children.push(child);
 		child.props.parent = this;
+	}
+
+	toDto() : IncidentTypeDto {
+		return {
+			id: this.id,
+			name: this.name
+		};
 	}
 
 }

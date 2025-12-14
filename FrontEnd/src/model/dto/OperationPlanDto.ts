@@ -20,3 +20,8 @@ export interface OperationPlanDto {
 		algorithmUsed: string;
 	};
 }
+
+export interface OperationPlanFilter {
+    startDate?: string;
+    endDate?: string;
+};

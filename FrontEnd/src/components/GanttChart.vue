@@ -39,11 +39,11 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    rowHeight: 40,
+    rowHeight: 45,
     enableGrid: false,
     enableDrag: true,
     showCurrentTime: false,
-    pushOnOverlap: true,
+    pushOnOverlap: false,
     noOverlap: false,
     enableZoom: true,
     enableScroll: true,

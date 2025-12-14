@@ -1,4 +1,4 @@
-export class LinkedList<T> {
+export default class LinkedList<T> {
 	private head: Node<T> | null = null;
 
 	public insertInBegin(data: T): Node<T> {

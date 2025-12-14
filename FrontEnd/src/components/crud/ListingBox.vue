@@ -157,7 +157,7 @@ onBeforeUnmount(() => {
         <ErrorHandler v-if="error" :error-object="error" />
         <sl-card v-else class="listing-box">
             <div class="listing-filters">
-                <sl-input v-if="searchFilter" class="listing-search" :placeholder="t('buttons.search').concat('...')" size="large" clearable v-model="searchTerm">
+                <sl-input v-if="searchFilter || filterDefinition" class="listing-search" :placeholder="t('buttons.search').concat('...')" size="large" clearable v-model="searchTerm" :disabled="filterDefinition && !searchFilter">
                     <span slot="prefix" class="material-icons material-icons--prefix">search</span>
                 </sl-input>
                 <sl-button v-if="filterDefinition" class="filter-button" variant="default" size="large" @click="() => showFiltermenu = !showFiltermenu">

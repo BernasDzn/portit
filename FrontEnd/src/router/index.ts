@@ -405,6 +405,14 @@ const router = createRouter({
           }
         },
         {
+          path: '/my-data',
+          name: 'My Data & Privacy',
+          component: () => import('@/views/DataRightsView.vue'),
+          meta: {
+            icon: "shield_lock"
+          }
+        },
+        {
             path: '/scheduling/plans-search',
             name: 'Operation Plans Search',
             component: () => import('@/views/Scheduling/OperationPlansSearch.vue'),
@@ -480,7 +488,8 @@ router.beforeEach((to, from, next) => {
     { prefix: '/storage-areas', roles: [0, 1] },
     { prefix: '/admin', roles: [0] },
     { prefix: '/scheduling', roles: [0,3] },
-    { prefix: '/about', roles: [0, 1, 2, 3] }
+    { prefix: '/about', roles: [0, 1, 2, 3] },
+    { prefix: '/my-data', roles: [0, 1, 2, 3] }
   ];
 
   for (const entry of routeRoleMap) {

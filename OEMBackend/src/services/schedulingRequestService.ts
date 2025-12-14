@@ -1,9 +1,11 @@
+import { Service } from "typedi";
 import config from "../config/config";
 import { ScheduleQueueItem } from "../domain/scheduleQueue";
 import { OperationPlanDto } from "../dto/operationPlanDto";
 import { workQueueRepository } from "../repository/workQueueRepository";
 import { OperationPlanService } from "./operationPlanService";
 
+@Service()
 export class SchedulingRequestService {
     
     async scheduleRequest(day: string, alg: string, daysAhead: number = 2, issuer: string): Promise<any> {

@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
 import Logout from './Logout.vue';
 import { useSession } from '@/composables/session';
 import type { User } from '@/model/SystemUser';
 
 const session = useSession();
+const router = useRouter();
 
 const user = computed<User | null>(() => session.authenticatedUser ?? null);
 
@@ -30,6 +32,11 @@ const animateChevron = () => {
         icon.style.transform = 'rotate(0deg)';
         icon.style.transition = 'transform 0.2s ease';
     }
+};
+
+const navigateToDataRights = () => {
+    moreInfo.value = false;
+    router.push({ name: 'My Data & Privacy' });
 };
 
 </script>
@@ -63,6 +70,16 @@ const animateChevron = () => {
                 </div>
 
                 <p class="subtitle">{{ user?.email || '' }}</p>
+                <div class="profile-links">
+                    <sl-button 
+                        variant="text" 
+                        size="small"
+                        @click="navigateToDataRights"
+                    >
+                        <sl-icon slot="prefix" name="shield-lock"></sl-icon>
+                        My Data & Privacy
+                    </sl-button>
+                </div>
                 <div class="logout-box">
                     <Logout />
                 </div>
@@ -71,3 +88,23 @@ const animateChevron = () => {
     </div>
 </div>
 </template>
+<style scoped>
+.profile-links {
+    margin: 10px 0;
+    border-top: 1px solid var(--sl-color-neutral-200);
+    padding-top: 10px;
+}
+
+.data-rights-link {
+    display: block;
+    text-decoration: none;
+}
+
+.data-rights-link sl-button {
+    width: 100%;
+}
+
+.data-rights-link sl-button::part(base) {
+    justify-content: flex-start;
+}
+</style>

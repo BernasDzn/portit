@@ -36,7 +36,7 @@ const getGanttItems = (plan: OperationPlanDto): GanttItem[] => {
                 id: `op${i}-res${resIndex}`,
                 startTime: op.startTime,
                 endTime: op.endTime,
-                name: `${op.type.category.value} Operation`,
+                name: `Op. #${i + 1}`,
                 group: resource.name || 'Unassigned',
                 color: opColor
             });

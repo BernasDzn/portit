@@ -5,6 +5,10 @@
     // File Layout
     "outDir": "./dist",
 
+    //enable decorators
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+
     // Environment Settings
     "module": "commonjs",
     "target": "ES2020",

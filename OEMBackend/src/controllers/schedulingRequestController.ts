@@ -1,150 +1,152 @@
 import { Request, Response, NextFunction } from 'express';
-import { schedulingRequestService } from '../services/schedulingRequestService';
+import { SchedulingRequestService, schedulingRequestService } from '../services/schedulingRequestService';
+import { BaseController } from '../core/infra/baseController';
+import { Inject, Service } from 'typedi';
 
-/**
- * @swagger
- * /schedule/request:
- *   get:
- *     tags: [Scheduling]
- *     parameters:
- *       - in: query
- *         name: day
- *         required: true
- *         schema:
- *           type: string
- *         description: The day to schedule
- *       - in: query
- *         name: alg
- *         required: true
- *         schema:
- *           type: string
- *         description: The algorithm to use for scheduling
- *       - in: query
- *         name: daysAhead
- *         required: false
- *         schema:
- *           type: integer
- *           default: 2
- *         description: Number of days ahead to schedule
- *     responses:
- *       200:
- *         description: Scheduled operation plan
- */
-export const scheduleRequest = async (req: Request, res: Response, next: NextFunction) => {
+@Service()
+export default class SchedulingRequestController extends BaseController{
 
-    try {
-    
-        const day = req.query.day as string;
-        const alg = req.query.alg as string;
-        let daysAhead = parseInt(req.query.daysAhead as string) || 2;
+    constructor(
+        @Inject() private schedulingRequestService : SchedulingRequestService
+    ) {
+        super();
+    }
 
-        if (!day || !alg) {
-            return res.status(400).json({ message: 'Missing required query parameters: day and alg' });
+    /**
+     * @openapi
+     * /schedule/request:
+     *   get:
+     *     tags: [Scheduling]
+     *     summary: Request scheduling
+     *     security:
+     *       - bearerAuth: []
+     *     parameters:
+     *       - in: query
+     *         name: day
+     *         required: true
+     *         schema:
+     *           type: string
+     *           format: date
+     *         description: Day to schedule
+     *     responses:
+     *       200:
+     *         description: Scheduling request created
+     */
+    public async scheduleRequest(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const day = req.query.day as string;
+            const alg = req.query.alg as string;
+            let daysAhead = parseInt(req.query.daysAhead as string) || 2;
+
+            if (!day || !alg) {
+                this.clientError(res, 'Missing required query parameters: day and alg');
+                return;
+            }
+
+            // Hard cap at one this might cause issues later
+            daysAhead = 1;
+            const userEmail = req.user?.emailAddress || 'unknown';
+            const data = await this.schedulingRequestService.scheduleRequest(day, alg, daysAhead, userEmail);
+            this.ok(res, data);
+        } catch (error) {
+            next(error);
         }
-
-        // Hard cap at one this might cause issues later
-        daysAhead = 1;
-        const userEmail = req.user?.emailAddress || 'unknown';
-        const data = await schedulingRequestService.scheduleRequest(day, alg, daysAhead, userEmail);
-        res.json(data);
-    } catch (error) {
-        next(error);
     }
-}
 
-/**
- * @swagger
- * /schedule/queueState:
- *   get:
- *     tags: [Scheduling]
- *     description: Get the current state of the scheduling queue
- *     responses:
- *       200:
- *         description: Current queue state
- */
-export const getQueueState = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const data = await schedulingRequestService.getQueueState();
-        res.json(data);
-    } catch (error) {
-        next(error);
-    }
-}
-
-/**
- * @swagger
- * /schedule/acceptRequest:
- *   post:
- *     tags: [Scheduling]
- *     description: Accept a completed scheduling request and save the operation plan
- *     parameters:
- *       - in: query
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: The ID of the scheduling request to accept
- *     responses:
- *       200:
- *         description: Scheduling request accepted and operation plan saved
- *       400:
- *         description: Bad request
- *       404:
- *         description: Scheduling request not found
- *       500:
- *         description: Internal server error
- */
- export const acceptRequest = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const id = req.query.id as string;
-        if (!id) {
-            return res.status(400).json({ message: 'Missing required query parameter: id' });
+    /**
+     * @openapi
+     * /schedule/queueState:
+     *   get:
+     *     tags: [Scheduling]
+     *     summary: Get queue state
+     *     security:
+     *       - bearerAuth: []
+     *     responses:
+     *       200:
+     *         description: Current scheduling queue state
+     */
+    public async getQueueState(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const data = await this.schedulingRequestService.getQueueState();
+            this.ok(res, data);
+        } catch (error) {
+            next(error);
         }
-
-        const userEmail = req.user?.emailAddress || 'unknown';
-        let token = req.user?.token;
-        const data = await schedulingRequestService.acceptRequest(id, userEmail, token!);
-        res.json(data);
-    } catch (error) {
-        next(error);
     }
-}
 
+    /**
+     * @openapi
+     * /schedule/acceptRequest:
+     *   post:
+     *     tags: [Scheduling]
+     *     summary: Accept scheduling request
+     *     security:
+     *       - bearerAuth: []
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             properties:
+     *               requestId:
+     *                 type: string
+     *     responses:
+     *       200:
+     *         description: Request accepted
+     */
+    public async acceptRequest(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const id = req.query.id as string;
+            if (!id) {
+                this.clientError(res, 'Missing required query parameter: id');
+                return;
+            }
 
-/**
- * @swagger
- * /schedule/rejectRequest:
- *   post:
- *     tags: [Scheduling]
- *     description: Reject a completed scheduling request
- *     parameters:
- *       - in: query
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: The ID of the scheduling request to reject
- *     responses:
- *       200:
- *         description: Scheduling request rejected
- *       400:
- *         description: Bad request
- *       404:
- *         description: Scheduling request not found
- *       500:
- *         description: Internal server error
- */
-export const rejectRequest = async (req: Request, res: Response, next: NextFunction) => {
-    try {
-        const id = req.query.id as string;
-        if (!id) {
-            return res.status(400).json({ message: 'Missing required query parameter: id' });
+            const userEmail = req.user?.emailAddress || 'unknown';
+            let token = req.user?.token;
+            const data = await this.schedulingRequestService.acceptRequest(id, userEmail, token!);
+            this.ok(res, data);
+        } catch (error) {
+            next(error);
         }
-
-        const userEmail = req.user?.emailAddress || 'unknown';
-        const data = await schedulingRequestService.rejectRequest(id, userEmail);
-        res.json(data);
-    } catch (error) {
-        next(error);
     }
+
+    /**
+     * @openapi
+     * /schedule/rejectRequest:
+     *   post:
+     *     tags: [Scheduling]
+     *     summary: Reject scheduling request
+     *     security:
+     *       - bearerAuth: []
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             properties:
+     *               requestId:
+     *                 type: string
+     *     responses:
+     *       200:
+     *         description: Request rejected
+     */
+    public async rejectRequest(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const id = req.query.id as string;
+            if (!id) {
+                this.clientError(res, 'Missing required query parameter: id');
+                return;
+            }
+
+            const userEmail = req.user?.emailAddress || 'unknown';
+            const data = await this.schedulingRequestService.rejectRequest(id, userEmail);
+            this.ok(res, data);
+        } catch (error) {
+            next(error);
+        }
+    }
+
 }

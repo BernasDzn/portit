@@ -1,17 +1,20 @@
-import { OperationPlan } from "../domain/operationPlan";
-import { Operation } from "../domain/value/operation";
-import { OperationPlanMetadata } from "../domain/value/operationPlanMetadata";
+import OperationPlan from "../domain/operationPlan";
+import Operation from "../domain/value/operation";
+import OperationPlanMetadata from "../domain/value/operationPlanMetadata";
+import LinkedList from "../utils/linkedList";
+import { Service } from "typedi";
 import { Resource, ResourceType } from "../domain/value/resource";
 import { OperationPlanDto } from "../dto/operationPlanDto";
 import { ScheduleDataMapper } from "../mappers/scheduleDataMapper";
 import { OperationPlanRepository } from "../repository/operationPlanRepository";
 import { taskCategoryRepository } from "../repository/taskCategoryRepository";
-import { LinkedList } from "../utils/linkedList";
 import { Page, Pageable } from "../utils/page";
 import { Payload } from "../domain/value/payload";
 import { ContainerDto } from "../dto/container";
+import { PlanFilter } from "../dto/filters/planFilter";
 
 
+@Service("operationPlanService")
 export class OperationPlanService {
 
 	operationPlanRepository: OperationPlanRepository;
@@ -20,7 +23,7 @@ export class OperationPlanService {
 		this.operationPlanRepository = new OperationPlanRepository();
 	}
 
-	async getAll(pageable: Pageable): Promise<Page<OperationPlanDto>> {
+	async getAll(pageable: PlanFilter): Promise<Page<OperationPlanDto>> {
 		return await this.operationPlanRepository.getAll(pageable);
 	}
 
@@ -125,7 +128,7 @@ export class OperationPlanService {
         const laneCount: number = resources.length;
 
         // The containers to subdivide the original task into
-        let containerList = await this.operationPlanRepository.getContainersOfNotification(vvnId, token);
+        let containerList = await this.operationPlanRepository.getContainersOfNotification(vvnId, token, isUnload);
         if (containerList.length == 0) return [];
 
         const operationsPerLane = Math.ceil(containerList.length / laneCount);
@@ -226,6 +229,14 @@ export class OperationPlanService {
 		});
 
 		return await this.operationPlanRepository.create(operationPlan);
+	}
+
+	async regeneratePlansForDay(day: string, algorithm: string, daysAhead: number, createdBy: string): Promise<any> {
+		// Use the existing scheduling request queue system
+		const { SchedulingRequestService } = await import('./schedulingRequestService');
+		const schedulingService = new SchedulingRequestService();
+		
+		return await schedulingService.scheduleRequest(day, algorithm, daysAhead, createdBy);
 	}
 
 }

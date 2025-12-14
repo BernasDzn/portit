@@ -9,6 +9,7 @@ using Api.Application.Exceptions;
 using Api.Infrastructure.Exceptions;
 using System.Linq;
 using System.Collections.Generic;
+using System.Security.Claims;
 using Api.Application.DataTransfer.Filters;
 using Api.Infrastructure.Utilities;
 
@@ -227,6 +228,70 @@ public class SystemUserController : ControllerBase, ISystemUserController
         {
             _logger.LogCritical("Error filtering system users, {Message}", e.Message);
             return StatusCode(500, "An error occurred while filtering the users.");
+        }
+    }
+
+    [HttpGet("myData", Name = "GetMyData")]
+    [Authorize]
+    public async Task<ActionResult<SystemUserDto>> GetMyData()
+    {
+        try
+        {
+            // Try multiple claim types for email (our JWT uses email_address)
+            var userEmail = User.Claims.FirstOrDefault(c => c.Type == "email_address")?.Value;
+            
+            if (string.IsNullOrEmpty(userEmail))
+            {
+                _logger.LogWarning("Authenticated user email claim not found. Available claims: {Claims}", 
+                    string.Join(", ", User.Claims.Select(c => $"{c.Type}={c.Value}")));
+                return Unauthorized("User email claim not found.");
+            }
+
+            var systemUserDto = await _systemUserService.GetByEmailAddress(userEmail);
+            return Ok(systemUserDto);
+        }
+        catch (EntityNotFoundException)
+        {
+            _logger.LogWarning("System user not found for authenticated email.");
+            return NotFound("System user not found.");
+        }
+        catch (System.Exception e)
+        {
+            _logger.LogCritical("Error retrieving data for authenticated user, {Message}", e.Message);
+            return StatusCode(500, "An error occurred while retrieving user data.");
+        }
+    }
+
+    [HttpDelete("myData", Name = "DeleteMyData")]
+    [Authorize]
+    public async Task<ActionResult> DeleteMyData()
+    {
+        try
+        {
+            // Get authenticated user's email
+            var userEmail = User.Claims.FirstOrDefault(c => c.Type == "email_address")?.Value;
+            
+            if (string.IsNullOrEmpty(userEmail))
+            {
+                _logger.LogWarning("Authenticated user email claim not found for data deletion.");
+                return Unauthorized("User email claim not found.");
+            }
+
+            _logger.LogInformation("User '{Email}' requested account deletion", userEmail);
+            
+            await _systemUserService.DeleteSystemUser(userEmail);
+            
+            return NoContent();
+        }
+        catch (EntityNotFoundException)
+        {
+            _logger.LogWarning("System user not found for authenticated email during data deletion.");
+            return NotFound("System user not found.");
+        }
+        catch (System.Exception e)
+        {
+            _logger.LogCritical("Error deleting data for authenticated user, {Message}", e.Message);
+            return StatusCode(500, "An error occurred while deleting user data.");
         }
     }
 }

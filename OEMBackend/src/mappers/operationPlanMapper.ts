@@ -1,7 +1,7 @@
-import { OperationPlan } from "../domain/operationPlan";
-import { LinkedList } from "../utils/linkedList";
-import { Operation } from "../domain/value/operation";
-import { OperationPlanMetadata } from "../domain/value/operationPlanMetadata";
+import OperationPlan from "../domain/operationPlan";
+import LinkedList from "../utils/linkedList";
+import Operation from "../domain/value/operation";
+import OperationPlanMetadata from "../domain/value/operationPlanMetadata";
 import { Resource, ResourceType } from "../domain/value/resource";
 import { TaskCategoryMapper } from "./taskCategoryMapper";
 import { TaskCategoryRepository } from "../repository/taskCategoryRepository";
@@ -59,6 +59,13 @@ export class OperationPlanMapper {
                 });
     
                 const operationTypeDoc = await TaskCategoryRepository.getCategoryById(op.operationType);
+                const operationType = TaskCategoryMapper.fromSchema(operationTypeDoc);
+                
+                // Skip operations with missing task categories
+                if (!operationType) {
+                    console.warn(`Skipping operation with missing task category: ${op.operationType}`);
+                    continue;
+                }
                 
                 const payload = op.payload ? new Payload({
                     containerId: op.payload.containerId,
@@ -66,7 +73,7 @@ export class OperationPlanMapper {
                 }) : new Payload({});
     
                 const operation = new Operation({
-                    operationType: TaskCategoryMapper.fromSchema(operationTypeDoc),
+                    operationType,
                     startTime: op.startTime,
                     endTime: op.endTime,
                     resources,
@@ -77,12 +84,16 @@ export class OperationPlanMapper {
             }
         }
         
-        return new OperationPlan({
-            id: doc._id.toString(),
-            relatedVVN: doc.relatedVVN,
-            dock: doc.dock,
-            operationSchedule,
-            metadata,
-        });
+        const operationPlan = new OperationPlan(
+            {
+                relatedVVN: doc.relatedVVN,
+                dock: doc.dock,
+                operationSchedule,
+                metadata
+            }, 
+            doc._id.toString()
+        );
+
+        return operationPlan;
     }    
 }

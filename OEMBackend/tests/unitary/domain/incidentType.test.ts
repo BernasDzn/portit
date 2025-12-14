@@ -1,4 +1,4 @@
-import IncidentType from "../../src/domain/incidentType";
+import IncidentType from "../../../src/domain/incidentType";
 
 describe('Incident Type Domain Tests', () => {
 
