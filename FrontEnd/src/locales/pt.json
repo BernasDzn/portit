@@ -689,6 +689,13 @@
         },
         "registeredVesselVisitNotifications": "Notificações de Visita de Navios Registadas"
     },
+    "about": {
+        "title": "Sobre PorTiT",
+        "privacy": {
+            "title": "Política de Privacidade",
+            "lastUpdated": "Última atualização: {date}"
+        }
+    },
     "operationPlan": {
         "title": "Plano de Operação",
         "tabs": {

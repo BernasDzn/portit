@@ -109,11 +109,11 @@ const downloadPrivacyPolicy = () => {
     <sl-dialog Label="Privacy Policy" class="dialog-overview" style="--width: 50vw;">
         <sl-icon-button class="new-window" slot="header-actions" name="download" @click="downloadPrivacyPolicy"></sl-icon-button>
         <p slot="label" style="display: flex; align-items: center; gap: 8px; margin: 0;">
-            <b>Privacy Policy</b>
-            <sl-badge variant="primary" pill>Last updated: {{ privacyPolicy?.updatedOn ? new Date(privacyPolicy.updatedOn).toLocaleDateString() : '' }}</sl-badge>
+            <b>{{ t('about.privacy.title') }}</b>
+            <sl-badge variant="primary" pill>{{ t('about.privacy.lastUpdated', { date: privacyPolicy?.updatedOn ? new Date(privacyPolicy.updatedOn).toLocaleDateString() : '' }) }}</sl-badge>
         </p>
         <MarkdownRenderer :markdown="privacyPolicy?.content || ''" style="height: 40vh;" />
-        <sl-button @click="closePrivacyPolicy" slot="footer" variant="primary">Ok</sl-button>
+        <sl-button @click="closePrivacyPolicy" slot="footer" variant="primary">{{ t('buttons.ok') }}</sl-button>
     </sl-dialog>
 
     <sl-dialog label="TOS" class="dialog-overview" style="--width: 50vw;">

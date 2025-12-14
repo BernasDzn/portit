@@ -754,7 +754,11 @@
         }
     },
     "about": {
-        "title": "About PorTiT"
+        "title": "About PorTiT",
+        "privacy": {
+            "title": "Privacy Policy",
+            "lastUpdated": "Last updated: {date}"
+        }
     },
     "operationPlan": {
         "title": "Operation Plan",
