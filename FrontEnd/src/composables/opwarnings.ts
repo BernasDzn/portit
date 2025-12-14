@@ -4,7 +4,8 @@ import type { STSCrane } from '@/model/PhysicalResource';
 
 export function useOperationValidation(
     plan: Ref<OperationPlanDto | null>,
-    allSTSCranes: Ref
+    allSTSCranes: Ref,
+    allStaff: Ref,
 ) {
 
     const isTimeInShift = (
@@ -68,21 +69,102 @@ export function useOperationValidation(
         const operations = plan.value.operationSchedule;
 
         for (let i = 0; i < operations.length; i++) {
-            const opAStart = new Date(operations[i].startTime).getTime();
-            const opAEnd = new Date(operations[i].endTime).getTime();
-
+            const opA = operations[i];
+            
             for (let j = i + 1; j < operations.length; j++) {
-                const opBStart = new Date(operations[j].startTime).getTime();
-                const opBEnd = new Date(operations[j].endTime).getTime();
-
-                // Check for overlap: A starts before B ends AND B starts before A ends
-                if (opAStart < opBEnd && opBStart < opAEnd) {
-                    return true;
+                const opB = operations[j];
+                
+                for (let resA of opA.resources) {
+                    const resAStart = new Date(resA.startTime || opA.startTime).getTime();
+                    const resAEnd = new Date(resA.endTime || opA.endTime).getTime();
+                    
+                    for (let resB of opB.resources) {
+                        // Only check if it's the same resource
+                        if (resA.name === resB.name && resA.type === resB.type) {
+                            const resBStart = new Date(resB.startTime || opB.startTime).getTime();
+                            const resBEnd = new Date(resB.endTime || opB.endTime).getTime();
+                            
+                            // Check for time overlap
+                            if (resAStart < resBEnd && resBStart < resAEnd) {
+                                console.warn(
+                                    `Resource conflict: ${resA.type} "${resA.name}" is scheduled in both ` +
+                                    `operation #${i + 1} and operation #${j + 1} at overlapping times`
+                                );
+                                return true;
+                            }
+                        }
+                    }
                 }
             }
         }
 
         return false;
+    };
+
+    const getStaffOperationalWindowWarnings = (): string[] => {
+        if (!plan.value) return [];
+
+        const warns: string[] = [];
+
+        plan.value.operationSchedule.forEach((operation, opIndex) => {
+            const operationStart = new Date(operation.startTime);
+            const operationEnd = new Date(operation.endTime);
+            
+            operation.resources.forEach((resource) => {
+                // Only check staff resources
+                if (resource.type !== 'Staff') return;
+                
+                const staff = allStaff.value.find(s => s.email === resource.name);
+                if (!staff) {
+                    console.warn(`Staff not found: ${resource.name}`);
+                    return;
+                }
+
+                // Check if staff has operational window
+                if (!staff.operationalWindow?.shifts || staff.operationalWindow.shifts.length === 0) {
+                    console.warn(`No operational window for staff: ${resource.name}`);
+                    return;
+                }
+
+                const shifts = staff.operationalWindow.shifts;
+                
+                // Use resource-specific times if available, otherwise use operation times
+                const checkStartTime = resource.startTime || operation.startTime;
+                const checkEndTime = resource.endTime || operation.endTime;
+
+                console.log(`Checking staff ${resource.name} for operation #${opIndex + 1}:`, {
+                    checkStartTime,
+                    checkEndTime,
+                    shifts
+                });
+                
+                const startInShift = shifts.some(shift => 
+                    isTimeInShift(checkStartTime, shift)
+                );
+                const endInShift = shifts.some(shift => 
+                    isTimeInShift(checkEndTime, shift)
+                );
+                
+                if (!startInShift || !endInShift) {
+                    const startDate = new Date(checkStartTime);
+                    const endDate = new Date(checkEndTime);
+                    const opTime = `${startDate.toLocaleTimeString([], { 
+                        hour: '2-digit', 
+                        minute: '2-digit' 
+                    })} - ${endDate.toLocaleTimeString([], { 
+                        hour: '2-digit', 
+                        minute: '2-digit' 
+                    })}`;
+                    
+                    const staffName = staff.name || resource.name;
+                    warns.push(
+                        `Operation #${opIndex + 1} (${opTime}) assigns staff "${staffName}" outside their working hours`
+                    );
+                }
+            });
+        });
+
+        return warns;
     };
 
     const warnings = computed(() => {
@@ -97,11 +179,23 @@ export function useOperationValidation(
             warns.push('Some operations have overlapping schedules.');
         }
 
+        // Check for operations outside staff operational windows
+        warns.push(...getStaffOperationalWindowWarnings());
+
+        return warns;
+    });
+
+    const graveWarnings = computed(() => {
+        const warns: string[] = [];
+        
+        if (!plan.value) return warns;
+        
         return warns;
     });
 
     return {
         warnings,
+        graveWarnings,
         isTimeInShift,
         getOperationalWindowWarnings,
         hasOverlappingOperations

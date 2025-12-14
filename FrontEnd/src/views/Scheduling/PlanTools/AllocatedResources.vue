@@ -200,13 +200,6 @@ const getStaffOperationCount = (staffEmail: string): number => {
     transition: all 0.2s ease;
 }
 
-.resource-card:hover {
-    background: var(--sl-color-neutral-100);
-    border-color: var(--sl-color-primary-300);
-    transform: translateY(-1px);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-}
-
 .resource-info {
     display: flex;
     flex-direction: column;

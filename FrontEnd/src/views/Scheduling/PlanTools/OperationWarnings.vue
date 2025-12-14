@@ -1,23 +1,38 @@
 <script setup lang="ts">
 interface Props {
     warnings: string[];
+    graveWarnings: string[];
 }
 
 defineProps<Props>();
 </script>
 
 <template>
-    <div v-if="warnings.length > 0" class="warnings-container">
-        <sl-alert 
-            v-for="(warning, index) in warnings"
-            :key="index" 
-            variant="warning" 
-            open
-        >
-            <sl-icon slot="icon" name="exclamation-triangle"></sl-icon>
-            <strong>Warning:</strong>
-            {{ warning }}
-        </sl-alert>
+    <div>
+        <div v-if="graveWarnings.length > 0" class="warnings-container">
+            <sl-alert 
+                v-for="(warning, index) in graveWarnings"
+                :key="index" 
+                variant="danger" 
+                open
+            >
+                <sl-icon slot="icon" name="exclamation-triangle"></sl-icon>
+                <strong>Grave warning:</strong>
+                {{ warning }}
+            </sl-alert>
+        </div>
+        <div v-if="warnings.length > 0" class="warnings-container">
+            <sl-alert 
+                v-for="(warning, index) in warnings"
+                :key="index" 
+                variant="warning" 
+                open
+            >
+                <sl-icon slot="icon" name="exclamation-triangle"></sl-icon>
+                <strong>Warning:</strong>
+                {{ warning }}
+            </sl-alert>
+        </div>
     </div>
 </template>
 

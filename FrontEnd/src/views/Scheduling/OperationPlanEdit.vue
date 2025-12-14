@@ -41,7 +41,7 @@ const editingOperation = ref<number | null>(null);
 const ganttItems = computed(() => plan.value ? getGanttItems(plan.value) : []);
 const ganttRowConfigs = computed(() => plan.value ? getGanttRowConfigs(plan.value) : []);
 
-const { warnings } = useOperationValidation(plan, allSTSCranes);
+const { warnings, graveWarnings } = useOperationValidation(plan, allSTSCranes, allStaff);
 
 onMounted(async () => {
     try {
@@ -209,8 +209,16 @@ const removeStaff = (operationIndex: number, staffSelected: string) => {
 };
 
 const savePlan = async () => {
-    console.log('Saving plan:', plan.value);
-    // TODO: Implement save logic
+    
+    if (graveWarnings.value.length > 0) {
+        notifications.enqueueNotification(
+            'Cannot save plan due to grave warnings. Please resolve them first.',
+            notifications.notificationTypes.DANGER
+        );
+        return;
+    }
+
+    if (!plan.value) return;
 };
 
 // Operations
@@ -399,7 +407,7 @@ const updateResourceTime = (operationIndex: number, resourceIndex: number, start
                     />
                 </div>
                 
-                <OperationWarnings :warnings="warnings" />
+                <OperationWarnings :warnings="warnings" :graveWarnings="graveWarnings" />
             </div>
         </EntityForm>
 
@@ -412,10 +420,6 @@ const updateResourceTime = (operationIndex: number, resourceIndex: number, start
             @remove-staff="removeStaff"
             @update-resource-time="updateResourceTime"
         />
-
-        {{ 
-            plan.operationSchedule
-        }}
     </div>
 </template>
 
