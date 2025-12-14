@@ -167,6 +167,7 @@ const cranes = computed(() => {
 
 .operation-item {
     display: flex;
+    width: fit-content;
     align-items: center;
     gap: 10px;
     padding: 8px;
