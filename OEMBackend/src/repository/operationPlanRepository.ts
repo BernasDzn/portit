@@ -78,7 +78,8 @@ export class OperationPlanRepository {
 	}
 
 	async getNotificationsWithoutPlan(token: string): Promise<string[]> {
-		const url = `${config.backendServer}/VesselVisitNotification/getAllAcceptedVVNs`;
+		const baseUrl = config.backendServer.replace('localhost', '127.0.0.1');
+		const url = `${baseUrl}/VesselVisitNotification/getAllAcceptedVVNs`;
 		const res = await fetch(url, {
 			credentials: "include",
 			headers: {
