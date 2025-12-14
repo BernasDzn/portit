@@ -19,7 +19,9 @@ export class OperationPlanMapper {
 				endTime: op.endTime,
 				resources: op.resources.map(res => ({
 					name: res.name,
-					type: ResourceType[res.type]
+					type: ResourceType[res.type],
+                    startTime: res.startTime,
+                    endTime: res.endTime
 				})),
 				payload: op.payload ? {
 					containerId: op.payload.containerId,
@@ -54,7 +56,9 @@ export class OperationPlanMapper {
                 const resources = op.resources.map((res: any) => {
                     return new Resource({
                         name: res.name,
-                        type: ResourceType[res.type as keyof typeof ResourceType]
+                        type: ResourceType[res.type as keyof typeof ResourceType],
+                        startTime: res.startTime,
+                        endTime: res.endTime
                     });
                 });
     

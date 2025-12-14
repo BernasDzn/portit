@@ -25,6 +25,16 @@ const ResourceSchema = new mongoose.Schema({
     type: {
         type: String,
         required: true
+    },
+    // The time this resource will start being used for the operation
+    startTime: {
+        type: Date,
+        required: false
+    },
+    // The time this resource will stop being used for the operation
+    endTime: {
+        type: Date,
+        required: false
     }
 });
 

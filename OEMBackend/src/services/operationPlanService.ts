@@ -63,7 +63,9 @@ export class OperationPlanService {
 				const craneResources = vesselSchedule.cranes.map(craneName => 
 					new Resource({
 						name: craneName,
-						type: ResourceType.Crane
+						type: ResourceType.Crane,
+                        startTime: new Date(baseDate.getTime() + vesselSchedule.unloading_enter_time * 60 * 60 * 1000),
+                        endTime: new Date(baseDate.getTime() + vesselSchedule.loading_exit_time * 60 * 60 * 1000)
 					})
 				);
 				

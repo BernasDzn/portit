@@ -16,6 +16,7 @@ import type { OperationPlanDto, OperationPlanFilter } from '@/model/dto/Operatio
 import { useAlerts } from '@/composables/alerts';
 import { useRouter } from 'vue-router';
 import EntityDropdown from '@/components/crud/EntityDropdown.vue';
+import Loading from '@/components/Loading.vue';
 
 const operationPlanService = container.get<IOperationPlanService>(TYPES.operationPlanService);
 const schedulingService = container.get<ISchedulingService>(TYPES.schedulingService);
@@ -293,10 +294,7 @@ const cancelRegenerateWarning = () => {
 
             <sl-tab-panel name="unplanned">
                 <div class="unplanned-section">
-                    <div v-if="isLoadingUnplanned" class="loading-state">
-                        <sl-spinner></sl-spinner>
-                        <p>{{ t('common.loading') }}</p>
-                    </div>
+                    <Loading v-if="isLoadingUnplanned" />
                     <div v-else>
                         <div v-if="unplannedByDate.length > 0">
                             <div class="regenerate-all-header">
@@ -310,7 +308,7 @@ const cancelRegenerateWarning = () => {
                                     @click="openRegenerateAllModal"
                                 >
                                     <sl-icon slot="prefix" name="lightning-charge"></sl-icon>
-                                    Regenerate All Missing Plans
+                                    Generate All Missing Plans
                                 </sl-button>
                             </div>
                             <div v-for="group in unplannedByDate" :key="group.date" class="date-group">
@@ -324,7 +322,7 @@ const cancelRegenerateWarning = () => {
                                         @click="openRegenerationModal(group.date)"
                                     >
                                         <sl-icon slot="prefix" name="arrow-clockwise"></sl-icon>
-                                        Regenerate Plans for This Day
+                                        Generate Plans for This Day
                                     </sl-button>
                                 </div>
                                 <ul class="vvn-list">
@@ -345,13 +343,13 @@ const cancelRegenerateWarning = () => {
 
         <sl-dialog 
             id="regeneration-modal"
-            :label="`Regenerate Plans for ${selectedDayForRegeneration}`"
+            :label="`Generate Plans for ${selectedDayForRegeneration}`"
             class="regeneration-dialog"
         >
             <div class="modal-content">
                 <sl-alert variant="danger" open>
                     <sl-icon slot="icon" name="exclamation-triangle"></sl-icon>
-                    <strong>Warning:</strong> Regenerating plans will <strong>overwrite any existing operation plans</strong> for this day. 
+                    <strong>Warning:</strong> Generating plans will <strong>overwrite any existing operation plans</strong> for this day. 
                     This action cannot be undone.
                 </sl-alert>
 
@@ -389,7 +387,7 @@ const cancelRegenerateWarning = () => {
                     :loading="isRegenerating"
                 >
                     <sl-icon slot="prefix" name="arrow-clockwise"></sl-icon>
-                    Confirm Regeneration
+                    Confirm Generation
                 </sl-button>
             </div>
         </sl-dialog>
@@ -397,7 +395,7 @@ const cancelRegenerateWarning = () => {
         <!-- Regenerate All Modal -->
         <sl-dialog 
             id="regenerate-all-modal"
-            label="Regenerate All Missing Plans"
+            label="Generate All Missing Plans"
             class="regeneration-dialog"
         >
             <div class="modal-content">
@@ -428,7 +426,7 @@ const cancelRegenerateWarning = () => {
                 <div class="regeneration-info">
                     <p><strong>Algorithm:</strong> {{ algorithmList.find(a => a.value === selectedAlgorithmAll)?.label }}</p>
                     <p class="metadata-info">
-                        Each regeneration request will be queued separately. You can review and accept/reject them individually from the Scheduling Queue.
+                        Each generation request will be queued separately. You can review and accept/reject them individually from the Scheduling Queue.
                     </p>
                 </div>
             </div>
@@ -453,7 +451,7 @@ const cancelRegenerateWarning = () => {
             </sl-dialog>
 
             <!-- Warning Modal for Regenerate All -->
-            <sl-dialog id="regenerate-danger-modal" label="Confirm Regeneration" style="--width: 600px;">
+            <sl-dialog id="regenerate-danger-modal" label="Confirm generation" style="--width: 600px;">
                 <div style="padding: 1rem;">
                     <div style="background-color: var(--sl-color-danger-50); padding: 1.5rem; border-radius: var(--sl-border-radius-medium); border-left: 4px solid var(--sl-color-danger-600); margin-bottom: 1.5rem;">
                         <div style="display: flex; align-items: start; gap: 1rem;">
@@ -461,7 +459,7 @@ const cancelRegenerateWarning = () => {
                             <div>
                                 <h3 style="margin: 0 0 0.5rem 0; color: var(--sl-color-danger-900); font-size: 1.1rem;">This action is irreversible</h3>
                                 <p style="margin: 0; color: var(--sl-color-danger-800); line-height: 1.6;">
-                                    Regenerating operation plans will <strong>permanently overwrite</strong> any existing plans for the selected days.
+                                    Generating operation plans will <strong>permanently overwrite</strong> any existing plans for the selected days.
                                     This action cannot be undone.
                                 </p>
                             </div>
@@ -469,7 +467,7 @@ const cancelRegenerateWarning = () => {
                     </div>
 
                     <div style="background-color: var(--sl-color-neutral-50); padding: 1rem; border-radius: var(--sl-border-radius-medium); margin-bottom: 1rem;">
-                        <p style="margin: 0 0 0.5rem 0; font-weight: 600;">You are about to regenerate plans for:</p>
+                        <p style="margin: 0 0 0.5rem 0; font-weight: 600;">You are about to generate plans for:</p>
                         <ul style="margin: 0.5rem 0 0 1.5rem; color: var(--sl-color-neutral-700);">
                             <li><strong>{{ unplannedByDate.length }}</strong> days</li>
                             <li><strong>{{ unplannedVVNs.length }}</strong> Vessel Visit Notifications</li>
@@ -488,7 +486,7 @@ const cancelRegenerateWarning = () => {
                     </sl-button>
                     <sl-button variant="danger" @click="executeRegenerateAll" :loading="isRegeneratingAll">
                         <sl-icon slot="prefix" name="exclamation-octagon"></sl-icon>
-                        Yes, Regenerate All
+                        Yes, Generate All
                     </sl-button>
                 </div>
             </sl-dialog>
@@ -582,15 +580,6 @@ const cancelRegenerateWarning = () => {
     margin: 0;
     font-weight: 500;
     color: var(--sl-color-warning-800);
-}
-
-.loading-state {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    padding: 3rem;
 }
 
 .unplanned-header {

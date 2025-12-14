@@ -20,6 +20,8 @@ interface Config {
 const runMode = (process.env.RUN_MODE || 'dev') as 'dev' | 'local';
 const modeConfig = raw[runMode];
 
+console.log(`Running in ${runMode} mode`);
+
 const config: Config = {
 	port: Number(process.env.PORT) || raw.port,
 	nodeEnv: process.env.NODE_ENV || 'development',

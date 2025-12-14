@@ -329,6 +329,10 @@ const handleResetSchedule = () => {
             @add-staff="addStaff"
             @remove-staff="removeStaff"
         />
+
+        {{ 
+            JSON.stringify(plan.operationSchedule, null, '\t')
+        }}
     </div>
 </template>
 
