@@ -1,5 +1,11 @@
 export type Severity = 'Minor' | 'Major' | 'Critical';
 
+export interface IncidentTypeFilter {
+    name?: string;
+    severity?: Severity;
+    parentId?: string;
+}
+
 export interface IncidentTypeDto {
     id: string;
     name: string;

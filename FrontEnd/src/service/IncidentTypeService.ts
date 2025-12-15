@@ -2,7 +2,8 @@ import { inject, injectable } from 'inversify';
 import { TYPES } from '@/inversify/types';
 import type { IHttpService } from './IService/IHttpService';
 import type { IIncidentTypeService } from './IService/IIncidentTypeService';
-import { IncidentType, type IncidentTypeDto } from '@/model/IncidentType';
+import { IncidentType, type IncidentTypeDto, type IncidentTypeFilter } from '@/model/IncidentType';
+import type { Filter, Page } from '@/model/Page';
 
 @injectable()
 export class IncidentTypeService implements IIncidentTypeService {
@@ -12,25 +13,33 @@ export class IncidentTypeService implements IIncidentTypeService {
         private http: IHttpService
     ) { }
 
-    async getAllIncidentTypes(): Promise<IncidentType[]> {
-        const res = await this.http.get<IncidentTypeDto[]>('/oem/incident-types');
-        const data = Array.isArray(res.data) ? res.data : [];
-        return data.map(dto => IncidentType.fromDto(dto));
+    async getAllIncidentTypes(filtering?: Filter<IncidentTypeFilter>): Promise<Page<IncidentTypeDto>> {
+        let query: string[] = [];
+        if (filtering) {
+            query.push(filtering.filter.name ? `name=${filtering.filter.name}&` : '');
+            query.push(filtering.filter.severity ? `severity=${filtering.filter.severity}&` : '');
+            query.push(filtering.filter.parentId ? `parentId=${filtering.filter.parentId}&` : '');
+            query.push(filtering.pageNumber !== undefined ? `pageNumber=${filtering.pageNumber}&` : '');
+            query.push(filtering.pageSize !== undefined ? `pageSize=${filtering.pageSize}` : '');
+        }
+        
+        const res = await this.http.get<Page<IncidentTypeDto>>(`/oem/incident-types${query.length ? `?${query.join('')}` : ''}`);
+        return res.data;
     }
 
-    async getIncidentTypeById(id: string): Promise<IncidentType | undefined> {
+    async getIncidentTypeById(id: string): Promise<IncidentTypeDto | undefined> {
         const res = await this.http.get<IncidentTypeDto>(`/oem/incident-types/${id}`);
         return res.data ? IncidentType.fromDto(res.data) : undefined;
     }
 
-    async createIncidentType(incidentType: IncidentType): Promise<IncidentType> {
+    async createIncidentType(incidentType: IncidentType): Promise<IncidentTypeDto> {
         const res = await this.http.post<IncidentTypeDto>('/oem/incident-types', incidentType.toDto());
-        return IncidentType.fromDto(res.data);
+        return res.data;
     }
 
-    async updateIncidentType(id: string, incidentType: IncidentType): Promise<IncidentType> {
+    async updateIncidentType(id: string, incidentType: IncidentType): Promise<IncidentTypeDto> {
         const res = await this.http.patch<IncidentTypeDto>(`/oem/incident-types/${id}`, incidentType.toDto());
-        return IncidentType.fromDto(res.data);
+        return res.data;
     }
 
     async deleteIncidentType(id: string): Promise<void> {

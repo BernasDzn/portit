@@ -6,21 +6,29 @@ import { ref, onMounted } from 'vue';
 import type { IIncidentTypeService } from '@/service/IService/IIncidentTypeService';
 import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
+import type { Filter, Page } from '@/model/Page';
+import type { IncidentTypeDto } from '@/model/IncidentType';
 
 const { t } = useI18n();
 
 const incidentTypeService = container.get<IIncidentTypeService>(TYPES.incidentTypeService);
 const numberOfIncidentTypes = ref(0);
 const loading = ref(true);
+
+const fetchIncidentTypes = async (filtering?: Filter<IncidentTypeDto>): Promise<Page<IncidentTypeDto>> => {
+    return await incidentTypeService.getAllIncidentTypes(filtering);
+}
+
 onMounted(async () => {
     try {
-        const types = await incidentTypeService.getAllIncidentTypes();
-        numberOfIncidentTypes.value = types.length;
+        const types = await fetchIncidentTypes();
+        numberOfIncidentTypes.value = types.items.length;
         loading.value = false;
     } catch (err) {
         console.error('Failed to load incident types', err);
     }
 });
+
 </script>
 
 <template>

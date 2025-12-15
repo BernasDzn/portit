@@ -2,7 +2,7 @@
 import IncidentTypePrinter from '@/components/printers/IncidentTypePrinter.vue';
 import ListingBox from '@/components/crud/ListingBox.vue';
 import type { Filter, Page } from '@/model/Page';
-import type { IncidentType } from '@/model/IncidentType';
+import type { IncidentType, IncidentTypeDto } from '@/model/IncidentType';
 import { ref, watch, onMounted } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { container } from '@/inversify.config';
@@ -13,14 +13,8 @@ const { t } = useI18n();
 
 const incidentTypeService = container.get<IIncidentTypeService>(TYPES.incidentTypeService);
 
-const fetchIncidentTypes = async (filtering?: Filter<any>): Promise<Page<IncidentType>> => {
-    const incidentTypes = await incidentTypeService.getAllIncidentTypes();
-    return {
-        items: incidentTypes,
-        pageSize: incidentTypes.length,
-        pageNumber: 1,
-        pageCount: 1,
-    };
+const fetchIncidentTypes = async (filtering?: Filter<IncidentTypeDto>): Promise<Page<IncidentTypeDto>> => {
+    return await incidentTypeService.getAllIncidentTypes(filtering);
 }
 
 </script>

@@ -1,9 +1,10 @@
-import type { IncidentType } from '@/model/IncidentType';
+import type { IncidentType, IncidentTypeDto, IncidentTypeFilter } from '@/model/IncidentType';
+import type { Filter, Page } from '@/model/Page';
 
 export interface IIncidentTypeService {
-    getAllIncidentTypes(): Promise<IncidentType[]>;
-    getIncidentTypeById(id: string): Promise<IncidentType | undefined>;
-    createIncidentType(incidentType: IncidentType): Promise<IncidentType>;
-    updateIncidentType(id: string, incidentType: IncidentType): Promise<IncidentType>;
+    getAllIncidentTypes(filtering?: Filter<IncidentTypeFilter>): Promise<Page<IncidentTypeDto>>;
+    getIncidentTypeById(id: string): Promise<IncidentTypeDto | undefined>;
+    createIncidentType(incidentType: IncidentType): Promise<IncidentTypeDto>;
+    updateIncidentType(id: string, incidentType: IncidentType): Promise<IncidentTypeDto>;
     deleteIncidentType(id: string): Promise<void>;
 }
