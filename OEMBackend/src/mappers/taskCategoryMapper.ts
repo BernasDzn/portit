@@ -1,6 +1,13 @@
 import { TaskCategory } from "../domain/taskCategory";
 
 export class TaskCategoryMapper {
+    static toSchema(taskCategory: TaskCategory) {
+        return {
+            name: taskCategory.name,
+            category: taskCategory.category,
+            description: taskCategory.description,
+        };
+    }
 
     static fromSchema(doc: any): TaskCategory | null {
         if (!doc) {

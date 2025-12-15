@@ -2,7 +2,7 @@ import OperationPlan from "../domain/operationPlan";
 import { OperationPlanDto } from "../dto/operationPlanDto";
 import { OperationPlanMapper } from "../mappers/operationPlanMapper";
 import { OperationPlanModel } from "../schemas/operationPlanSchema";
-import { Page, Pageable } from "../utils/page";
+import { Page } from "../utils/page";
 import config from "../config/config";
 import { ContainerDto } from "../dto/container";
 import { PlanFilter } from "../dto/filters/planFilter";
