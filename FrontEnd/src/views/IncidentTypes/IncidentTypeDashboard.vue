@@ -15,7 +15,7 @@ const incidentTypeService = container.get<IIncidentTypeService>(TYPES.incidentTy
 const numberOfIncidentTypes = ref(0);
 const loading = ref(true);
 
-const fetchIncidentTypes = async (): Promise<number> => {
+const fetchIncidentTypes = async (): Promise<{count: number}> => {
     return await incidentTypeService.count();
 }
 
