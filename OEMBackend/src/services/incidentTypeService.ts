@@ -111,4 +111,7 @@ export class IncidentTypeService {
 		return await this.incidentTypeRepository.deleteById(id);
 	}
 
+	async count(): Promise<number> {
+		return await this.incidentTypeRepository.count();
+	}
 }

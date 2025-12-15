@@ -46,4 +46,9 @@ export class IncidentTypeService implements IIncidentTypeService {
     async deleteIncidentType(id: string): Promise<void> {
         await this.http.delete(`/oem/incident-types/${id}`);
     }
+
+    async count(): Promise<number> {
+        const res = await this.http.get<number>('/oem/incident-types/count');
+        return res.data;
+    }
 }

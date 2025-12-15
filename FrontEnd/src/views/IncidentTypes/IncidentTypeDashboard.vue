@@ -15,17 +15,14 @@ const incidentTypeService = container.get<IIncidentTypeService>(TYPES.incidentTy
 const numberOfIncidentTypes = ref(0);
 const loading = ref(true);
 
-const fetchIncidentTypes = async (): Promise<Page<IncidentTypeDto>> => {
-    const filtering: Filter<IncidentTypeDto> = {
-        filter: {}, pageSize: 1000
-    };
-    return await incidentTypeService.getAllIncidentTypes(filtering);
+const fetchIncidentTypes = async (): Promise<number> => {
+    return await incidentTypeService.count();
 }
 
 onMounted(async () => {
     try {
         const types = await fetchIncidentTypes();
-        numberOfIncidentTypes.value = types.items.length;
+        numberOfIncidentTypes.value = types.count;
         loading.value = false;
     } catch (err) {
         console.error('Failed to load incident types', err);

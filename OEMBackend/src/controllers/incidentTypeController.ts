@@ -94,9 +94,9 @@ export default class IncidentTypeController extends BaseController {
 	 *     summary: Get all incident types
 	 *     security:
 	 *       - bearerAuth: []
-     *     parameters:
-     *       - in: query
-     *         name: pageNumber
+	 *     parameters:
+	 *       - in: query
+	 *         name: pageNumber
 	 *         schema:
 	 *           type: integer
 	 *           default: 1
@@ -111,14 +111,14 @@ export default class IncidentTypeController extends BaseController {
 	 */
 	public async getAllIncidentTypes(req: any, res: any, next: any): Promise<void> {
 		try {
-            
-            const pageNumber = parseInt(req.query.pageNumber) || 1;
-            const pageSize = parseInt(req.query.pageSize) || 10;
 
-            const filter: Pageable = {
-                pageNumber,
-                pageSize
-            };
+			const pageNumber = parseInt(req.query.pageNumber) || 1;
+			const pageSize = parseInt(req.query.pageSize) || 10;
+
+			const filter: Pageable = {
+				pageNumber,
+				pageSize
+			};
 
 			const incidentTypes = await this.incidentTypeService.getAllIncidentTypes(filter);
 			this.ok(res, incidentTypes);
@@ -246,4 +246,24 @@ export default class IncidentTypeController extends BaseController {
 		}
 	}
 
+	/**
+	 * @openapi
+	 * /incident-types/count:
+	 *   get:
+	 *    tags: [Incident Types]
+	 *    summary: Get the total count of incident types
+	 *    security:
+	 *      - bearerAuth: []
+	 *    responses:
+	 *      200:
+	 *        description: Total count of incident types retrieved successfully
+	 */
+	public async count(req: any, res: any, next: any): Promise<void> {
+		try {
+			const count = await this.incidentTypeService.count();
+			this.ok(res, { count });
+		} catch (error) {
+			next(error);
+		}
+	}
 }
