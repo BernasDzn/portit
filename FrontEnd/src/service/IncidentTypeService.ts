@@ -4,6 +4,7 @@ import type { IHttpService } from './IService/IHttpService';
 import type { IIncidentTypeService } from './IService/IIncidentTypeService';
 import { IncidentType, type IncidentTypeDto, type IncidentTypeFilter } from '@/model/IncidentType';
 import type { Filter, Page } from '@/model/Page';
+import type { IncidentTypeCreateDto } from '@/model/dto/IncidentTypeDto';
 
 @injectable()
 export class IncidentTypeService implements IIncidentTypeService {
@@ -32,8 +33,8 @@ export class IncidentTypeService implements IIncidentTypeService {
         return res.data ? IncidentType.fromDto(res.data) : undefined;
     }
 
-    async createIncidentType(incidentType: IncidentType): Promise<IncidentTypeDto> {
-        const res = await this.http.post<IncidentTypeDto>('/oem/incident-types', incidentType.toDto());
+    async createIncidentType(incidentType: IncidentTypeCreateDto): Promise<IncidentTypeDto> {
+        const res = await this.http.post<IncidentTypeDto>('/oem/incident-types', incidentType);
         return res.data;
     }
 

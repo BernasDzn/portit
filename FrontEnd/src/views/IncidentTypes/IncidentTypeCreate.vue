@@ -9,6 +9,7 @@ import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
 import ObjectSelector from '@/components/crud/ObjectSelector.vue';
 import type { Filter, Page } from '@/model/Page';
+import type { IncidentTypeCreateDto } from '@/model/dto/IncidentTypeDto';
 
 const { t } = useI18n();
 
@@ -22,16 +23,16 @@ const incidentType = ref({
 
 const incidentTypeService = container.get<IIncidentTypeService>(TYPES.incidentTypeService);
 
-const submitIncidentType = (obj: any) => {
-    const it = new IncidentType({
-        name: obj.name,
-        description: obj.description,
-        severity: obj.severity.id,
-        subtypeOfId: obj.subtypeOf,
-        subtypesIds: obj.subtypes
-    }
-    );
-    return incidentTypeService.createIncidentType(it);
+const submitIncidentType = () => {
+    let dto : IncidentTypeCreateDto = {
+        name: incidentType.value.name,
+        description: incidentType.value.description,
+        severity: incidentType.value.severity.id,
+        subtypeOfId: incidentType.value.subtypeOf?.id || null,
+        subtypesIds: incidentType.value.subtypes
+    };
+    console.log(dto);
+    return incidentTypeService.createIncidentType(dto);
 };
 
 const severityOptions = [
