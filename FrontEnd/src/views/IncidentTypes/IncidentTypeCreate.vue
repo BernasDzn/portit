@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import type { IIncidentTypeService } from '@/service/IService/IIncidentTypeService';
-import { IncidentType } from '@/model/IncidentType';
+import { IncidentType, type IncidentTypeDto } from '@/model/IncidentType';
 import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
 import { useI18n } from 'vue-i18n';
 import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
 import ObjectSelector from '@/components/crud/ObjectSelector.vue';
+import type { Filter, Page } from '@/model/Page';
 
 const { t } = useI18n();
 
@@ -39,15 +40,9 @@ const severityOptions = [
     { id: 'Critical', name: t('incidentType.severity.Critical') }
 ];
 
-const fetchIncidentTypes = async () => {
-    const types = await incidentTypeService.getAllIncidentTypes();
-    return {
-        items: types,
-        totalItems: types.length,
-        currentPage: 1,
-        totalPages: 1
-    };
-};
+const fetchIncidentTypes = async (filtering?: Filter<IncidentTypeDto>): Promise<Page<IncidentTypeDto>> => {
+    return await incidentTypeService.getAllIncidentTypes(filtering);
+}
 
 </script>
 

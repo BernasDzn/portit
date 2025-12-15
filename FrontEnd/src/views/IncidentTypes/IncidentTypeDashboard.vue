@@ -15,7 +15,10 @@ const incidentTypeService = container.get<IIncidentTypeService>(TYPES.incidentTy
 const numberOfIncidentTypes = ref(0);
 const loading = ref(true);
 
-const fetchIncidentTypes = async (filtering?: Filter<IncidentTypeDto>): Promise<Page<IncidentTypeDto>> => {
+const fetchIncidentTypes = async (): Promise<Page<IncidentTypeDto>> => {
+    const filtering: Filter<IncidentTypeDto> = {
+        filter: {}, pageSize: 1000
+    };
     return await incidentTypeService.getAllIncidentTypes(filtering);
 }
 
