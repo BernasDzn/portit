@@ -7,4 +7,5 @@ export interface IIncidentTypeService {
     createIncidentType(incidentType: IncidentType): Promise<IncidentTypeDto>;
     updateIncidentType(id: string, incidentType: IncidentType): Promise<IncidentTypeDto>;
     deleteIncidentType(id: string): Promise<void>;
+    count(): Promise<number>;
 }

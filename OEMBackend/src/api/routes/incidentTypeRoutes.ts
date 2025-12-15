@@ -16,13 +16,18 @@ export default (app: Router) => {
 	);
 
 	route.get(
-		'/:id',
-		(req, res, next) => getCtrl().getIncidentTypeById(req, res, next)
+		'/',
+		(req, res, next) => getCtrl().getAllIncidentTypes(req, res, next)
 	);
 
 	route.get(
-		'/',
-		(req, res, next) => getCtrl().getAllIncidentTypes(req, res, next)
+		'/count',
+		(req, res, next) => getCtrl().count(req, res, next)
+	);
+
+	route.get(
+		'/:id',
+		(req, res, next) => getCtrl().getIncidentTypeById(req, res, next)
 	);
 
 	route.patch(

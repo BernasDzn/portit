@@ -161,4 +161,8 @@ export class IncidentTypeRepository {
 		return dto;
 	}
 
+	async count(): Promise<number> {
+		return await IncidentTypeModel.countDocuments();
+	}
+
 }
