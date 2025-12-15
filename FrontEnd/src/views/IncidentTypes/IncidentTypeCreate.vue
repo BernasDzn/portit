@@ -18,7 +18,7 @@ const incidentType = ref({
     description: '',
     severity: null,
     subtypeOf: null,
-    subtypes: [] as string[]
+    subtypes: [] as IncidentType[]
 });
 
 const incidentTypeService = container.get<IIncidentTypeService>(TYPES.incidentTypeService);
@@ -29,7 +29,7 @@ const submitIncidentType = () => {
         description: incidentType.value.description,
         severity: incidentType.value.severity.id,
         subtypeOfId: incidentType.value.subtypeOf?.id || null,
-        subtypesIds: incidentType.value.subtypes
+        subtypesIds: incidentType.value.subtypes.map(subtype => subtype.id)
     };
     console.log(dto);
     return incidentTypeService.createIncidentType(dto);
@@ -41,8 +41,8 @@ const severityOptions = [
     { id: 'Critical', name: t('incidentType.severity.Critical') }
 ];
 
-const fetchIncidentTypes = async (filtering?: Filter<IncidentTypeDto>): Promise<Page<IncidentTypeDto>> => {
-    return await incidentTypeService.getAllIncidentTypes(filtering);
+const fetchIncidentTypes = async (): Promise<Page<IncidentTypeDto>> => {
+    return await incidentTypeService.getAllIncidentTypes();
 }
 
 </script>

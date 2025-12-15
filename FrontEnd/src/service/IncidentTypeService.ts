@@ -22,6 +22,8 @@ export class IncidentTypeService implements IIncidentTypeService {
             query.push(filtering.filter.parentId ? `parentId=${filtering.filter.parentId}&` : '');
             query.push(filtering.pageNumber !== undefined ? `pageNumber=${filtering.pageNumber}&` : '');
             query.push(filtering.pageSize !== undefined ? `pageSize=${filtering.pageSize}` : '');
+        }else{
+            query.push(`pageSize=1000`);
         }
         
         const res = await this.http.get<Page<IncidentTypeDto>>(`/oem/incident-types${query.length ? `?${query.join('')}` : ''}`);
