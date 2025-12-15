@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import type { IIncidentTypeService } from '@/service/IService/IIncidentTypeService';
-import { IncidentType } from '@/model/IncidentType';
+import { IncidentType, type IncidentTypeDto } from '@/model/IncidentType';
 import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
 import { useI18n } from 'vue-i18n';
 import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
 import ObjectSelector from '@/components/crud/ObjectSelector.vue';
+import type { Filter, Page } from '@/model/Page';
+import type { IncidentTypeCreateDto } from '@/model/dto/IncidentTypeDto';
 
 const { t } = useI18n();
 
@@ -21,16 +23,16 @@ const incidentType = ref({
 
 const incidentTypeService = container.get<IIncidentTypeService>(TYPES.incidentTypeService);
 
-const submitIncidentType = (obj: any) => {
-    const it = new IncidentType({
-        name: obj.name,
-        description: obj.description,
-        severity: obj.severity.id,
-        subtypeOfId: obj.subtypeOf,
-        subtypesIds: obj.subtypes
-    }
-    );
-    return incidentTypeService.createIncidentType(it);
+const submitIncidentType = () => {
+    let dto : IncidentTypeCreateDto = {
+        name: incidentType.value.name,
+        description: incidentType.value.description,
+        severity: incidentType.value.severity.id,
+        subtypeOfId: incidentType.value.subtypeOf?.id || null,
+        subtypesIds: incidentType.value.subtypes
+    };
+    console.log(dto);
+    return incidentTypeService.createIncidentType(dto);
 };
 
 const severityOptions = [
@@ -39,15 +41,9 @@ const severityOptions = [
     { id: 'Critical', name: t('incidentType.severity.Critical') }
 ];
 
-const fetchIncidentTypes = async () => {
-    const types = await incidentTypeService.getAllIncidentTypes();
-    return {
-        items: types,
-        totalItems: types.length,
-        currentPage: 1,
-        totalPages: 1
-    };
-};
+const fetchIncidentTypes = async (filtering?: Filter<IncidentTypeDto>): Promise<Page<IncidentTypeDto>> => {
+    return await incidentTypeService.getAllIncidentTypes(filtering);
+}
 
 </script>
 

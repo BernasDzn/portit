@@ -2,7 +2,7 @@
 import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
 import { useAlerts } from '@/composables/alerts';
-import { IncidentType } from '@/model/IncidentType';
+import { IncidentType, type IncidentTypeDto } from '@/model/IncidentType';
 import { ref, onMounted } from 'vue';
 import { useRoute, RouterLink } from 'vue-router';
 import type { IIncidentTypeService } from '@/service/IService/IIncidentTypeService';
@@ -11,6 +11,7 @@ import TYPES from '@/inversify/types';
 import ObjectSelector from '@/components/crud/ObjectSelector.vue';
 import Loading from '@/components/Loading.vue';
 import { useI18n } from 'vue-i18n';
+import type { Filter, Page } from '@/model/Page';
 
 const { t } = useI18n();
 const incidentTypeService = container.get<IIncidentTypeService>(TYPES.incidentTypeService);
@@ -29,6 +30,11 @@ let incidentType = ref({
 });
 
 const loading = ref(true);
+
+const fetchIncidentTypes = async (filtering?: Filter<IncidentTypeDto>): Promise<Page<IncidentTypeDto>> => {
+    return await incidentTypeService.getAllIncidentTypes(filtering);
+}
+
 onMounted(async () => {
     loading.value = true;
 
@@ -81,19 +87,6 @@ const severityOptions = [
     { id: 'Critical', name: t('incidentType.severity.Critical') }
 ];
 
-const fetchIncidentTypes = async () => {
-    const types = await incidentTypeService.getAllIncidentTypes();
-    const filteredTypes = types.filter(t => 
-        t.id !== incidentTypeId && 
-        t.id !== incidentType.value.subtypeOf
-    );
-    return {
-        items: filteredTypes,
-        totalItems: filteredTypes.length,
-        currentPage: 1,
-        totalPages: 1
-    };
-};
 </script>
 
 <template>
