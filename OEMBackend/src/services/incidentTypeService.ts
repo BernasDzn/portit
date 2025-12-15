@@ -2,6 +2,7 @@ import { Service } from "typedi";
 import { IncidentTypeRepository } from "../repository/incidentTypeRepository";
 import IncidentType, { Severity } from "../domain/incidentType";
 import { IncidentTypeDto } from "../dto/incidentTypeDto";
+import { Page, Pageable } from "../utils/page";
 
 @Service("incidentTypeService")
 export class IncidentTypeService {
@@ -89,8 +90,8 @@ export class IncidentTypeService {
 		return await this.incidentTypeRepository.getById(id);
 	}
 
-	async getAllIncidentTypes(): Promise<IncidentTypeDto[]> {
-		return await this.incidentTypeRepository.getAll();
+	async getAllIncidentTypes(pageable: Pageable): Promise<Page<IncidentTypeDto>> {
+		return await this.incidentTypeRepository.getAll(pageable);
 	}
 
 	async updateIncidentType(id: string, name?: string, description?: string, severity?: Severity, subtypesIds?: string[]): Promise<IncidentTypeDto | null> {

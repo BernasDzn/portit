@@ -2,6 +2,7 @@ import IncidentType, { Severity } from "../domain/incidentType";
 import { IncidentTypeDto } from "../dto/incidentTypeDto";
 import { IncidentTypeMapper } from "../mappers/incidentTypeMapper";
 import { IncidentTypeModel } from "../schemas/incidentTypeSchema";
+import { Page, Pageable } from "../utils/page";
 
 export class IncidentTypeRepository {
 
@@ -50,9 +51,23 @@ export class IncidentTypeRepository {
 		return this.mapToDto(doc);
 	}
 
-	async getAll(): Promise<IncidentTypeDto[]> {
-		const docs = await IncidentTypeModel.find().populate('subtypeOf').populate('subtypes');
-		return docs.map(doc => this.mapToDto(doc));
+	async getAll(pageable: Pageable): Promise<Page<IncidentTypeDto>> {
+		//const docs = await IncidentTypeModel.find().populate('subtypeOf').populate('subtypes');
+        const {pageNumber, pageSize} = pageable;
+        const skip = (pageNumber - 1) * pageSize;
+
+        const data = await IncidentTypeModel.find()
+            .skip(skip)
+            .limit(pageSize)
+            .populate('subtypeOf')
+            .populate('subtypes');
+
+		return {
+            pageNumber,
+            pageSize,
+            pageCount: Math.ceil(await IncidentTypeModel.countDocuments() / pageSize),
+            items: data.map((doc) => this.mapToDto(doc))
+        };
 	}
 
 	async update(id: string, name?: string, description?: string, severity?: Severity, subtypesIds?: string[]): Promise<IncidentTypeDto | null> {

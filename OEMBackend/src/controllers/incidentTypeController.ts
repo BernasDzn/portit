@@ -1,6 +1,7 @@
 import { Inject, Service } from "typedi";
 import { BaseController } from "../core/infra/baseController";
 import { IncidentTypeService } from "../services/incidentTypeService";
+import { Pageable } from "../utils/page";
 
 @Service()
 export default class IncidentTypeController extends BaseController {
@@ -93,13 +94,33 @@ export default class IncidentTypeController extends BaseController {
 	 *     summary: Get all incident types
 	 *     security:
 	 *       - bearerAuth: []
+     *     parameters:
+     *       - in: query
+     *         name: pageNumber
+	 *         schema:
+	 *           type: integer
+	 *           default: 1
+	 *       - in: query
+	 *         name: pageSize
+	 *         schema:
+	 *           type: integer
+	 *           default: 10
 	 *     responses:
 	 *       200:
 	 *         description: List of incident types retrieved successfully
 	 */
 	public async getAllIncidentTypes(req: any, res: any, next: any): Promise<void> {
 		try {
-			const incidentTypes = await this.incidentTypeService.getAllIncidentTypes();
+            
+            const pageNumber = parseInt(req.query.pageNumber) || 1;
+            const pageSize = parseInt(req.query.pageSize) || 10;
+
+            const filter: Pageable = {
+                pageNumber,
+                pageSize
+            };
+
+			const incidentTypes = await this.incidentTypeService.getAllIncidentTypes(filter);
 			this.ok(res, incidentTypes);
 		} catch (error) {
 			next(error);

@@ -69,7 +69,7 @@ const getSeverityVariant = (severity: string): string => {
 
 .icon {
     font-size: 2.5rem;
-    color: var(--sl-color-neutral-500);
+    color: var(--sl-color-primary-600);
 }
 
 .item-description {
