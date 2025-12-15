@@ -91,7 +91,7 @@ const getSeverityVariant = (severity: string): string => {
             <div>
                 <div class="opposed">
                     <div class="view-header">
-                        <span class="material-icons icon" aria-hidden="true">warning</span>
+                        <span class="material-icons icon" aria-hidden="true">nearby_error</span>
                         <div>
                             <h2 class="title">{{ entity.element.name }}</h2>
                             <p class="subtitle">

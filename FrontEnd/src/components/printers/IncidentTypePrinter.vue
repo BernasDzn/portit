@@ -36,7 +36,7 @@ const getSeverityVariant = (severity: string): string => {
                         {{ t(`incidentType.severity.${incidentType.severity}`) }}
                     </sl-badge>
                 </div>
-                <span class="material-icons icon" aria-hidden="true">warning</span>
+                <span class="material-icons icon" aria-hidden="true">nearby_error</span>
             </div>
             <div class="details" v-if="props.showDetails && incidentType.subtypesIds && incidentType.subtypesIds.length > 0">
                 <sl-divider></sl-divider>

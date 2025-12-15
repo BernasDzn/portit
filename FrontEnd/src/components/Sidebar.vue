@@ -24,7 +24,7 @@ const sidebarItems = ref([
   { name: 'physicalResource.title', route: '/resources/dashboard', icon: "inventory", materialIcon: 'build', roles: [0, 3] },
   { name: 'storageArea.title', route: '/storage-areas/dashboard', icon: "warehouse", materialIcon: 'warehouse', roles: [0, 1] },
   { name: 'scheduling.title', route: '/scheduling-dashboard', icon: "calendar_month", materialIcon: 'calendar_month', roles: [0, 3] },
-  { name: 'incidentType.title', route: '/incident-types/dashboard', icon: "warning", materialIcon: 'warning', roles: [0, 1, 3] },
+  { name: 'incidentType.title', route: '/incident-types/dashboard', icon: "nearby_error", materialIcon: 'nearby_error', roles: [0, 1, 3] },
   {},
   { name: "admin.sidebarTitle", route: '/admin/dashboard', icon: "admin_panel_settings", materialIcon: 'admin_panel_settings', roles: [0] },
   { name: 'about.title', route: '/about', icon: "info", materialIcon: 'info', roles: [0, 1, 2, 3] },
