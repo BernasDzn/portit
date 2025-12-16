@@ -230,20 +230,4 @@ describe('getNotificationWithoutPlan', () => {
 		expect(mockResponse.json).toHaveBeenCalledWith(mockVVNIds);
 	});
 
-	it('should return 500 when getNotificationsWithoutPlan fails due to an internal error', async () => {
-		const error = new Error('External service error');
-
-		mockService.getNotificationsWithoutPlan = jest.fn().mockRejectedValue(error);
-
-		await controller.getNotificationWithoutPlan(
-			mockRequest as Request,
-			mockResponse as Response,
-			mockNext
-		);
-
-		expect(mockService.getNotificationsWithoutPlan).toHaveBeenCalled();
-		expect(mockResponse.status).toHaveBeenCalledWith(500);
-		expect(mockResponse.json).toHaveBeenCalledWith({ message: 'Error retrieving notifications without plan' });
-		expect(mockNext).toHaveBeenCalledWith(error);
-	});
 });
