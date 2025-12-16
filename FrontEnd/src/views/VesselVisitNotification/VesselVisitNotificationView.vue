@@ -361,11 +361,11 @@ const deleteNotification = async () => {
                         <sl-tag variant="neutral">{{ cargoTypes[item.container.cargoType] }}</sl-tag>
                     </div>
                     <div class="manifest-direction">
-                        <p>{{ t("notification.from") }}: ({{ item.position.bay }}, {{ item.position.row }}, {{
+                        <p>{{ t("notification.from") }}: {{ item.area.nameCode }}</p>
+                        <span class="material-icons" aria-hidden="true">arrow_right_alt</span>
+                        <p>{{ t("notification.to") }}: ({{ item.position.bay }}, {{ item.position.row }}, {{
                             item.position.tier }})
                         </p>
-                        <span class="material-icons" aria-hidden="true">arrow_right_alt</span>
-                        <p>{{ t("notification.to") }}: {{ item.area.nameCode }}</p>
                     </div>
                 </sl-card>
 
@@ -384,11 +384,11 @@ const deleteNotification = async () => {
                         <sl-tag variant="neutral">{{ cargoTypes[item.container.cargoType] }}</sl-tag>
                     </div>
                     <div class="manifest-direction">
-                        <p>{{ t("notification.from") }}: {{ item.area.nameCode }}</p>
-                        <span class="material-icons" aria-hidden="true">arrow_right_alt</span>
-                        <p>{{ t("notification.to") }}: ({{ item.position.bay }}, {{ item.position.row }}, {{
+                        <p>{{ t("notification.from") }}: ({{ item.position.bay }}, {{ item.position.row }}, {{
                             item.position.tier }})
                         </p>
+                        <span class="material-icons" aria-hidden="true">arrow_right_alt</span>
+                        <p>{{ t("notification.to") }}: {{ item.area.nameCode }}</p>
                     </div>
                 </sl-card>
 
