@@ -11,14 +11,15 @@ import { TaskCategoryRepository } from "./taskCategoryRepository";
 
 export class OperationPlanRepository {
 
-	async create(operationPlan: OperationPlan): Promise<OperationPlanDto> {
+	async create(operationPlan: OperationPlan): Promise<OperationPlan> {
 		const newOperationPlan = OperationPlanMapper.toSchema(operationPlan);
 		const createdDoc = await OperationPlanModel.create(newOperationPlan);
-		const plan = await OperationPlanMapper.fromSchema(createdDoc, new TaskCategoryRepository());
-		return plan.toDto();
+		
+        const plan = await OperationPlanMapper.fromSchema(createdDoc, new TaskCategoryRepository());
+        return plan;
 	}
 
-	async getAll(pageable: PlanFilter): Promise<Page<OperationPlanDto>> {
+	async getAll(pageable: PlanFilter): Promise<Page<OperationPlan>> {
 		const { pageNumber, pageSize } = pageable;
 		const skip = (pageNumber - 1) * pageSize;
 
@@ -38,17 +39,24 @@ export class OperationPlanRepository {
 			pageCount: Math.ceil(await OperationPlanModel.countDocuments() / pageSize),
 			items: await Promise.all(data.map(async (doc) => {
                 const plan = await OperationPlanMapper.fromSchema(doc, new TaskCategoryRepository());
-                return plan.toDto();
+                return plan;
             }))
 		};
 	}
 
-	async getById(id: string): Promise<OperationPlanDto | null> {
+	async getById(id: string): Promise<OperationPlan | null> {
 		const doc = await OperationPlanModel.findById(id);
 		if (!doc) return null;
 		const plan = await OperationPlanMapper.fromSchema(doc, new TaskCategoryRepository());
-		return plan.toDto();
+		return plan;
 	}
+
+    async getByVVN(vvnId: string): Promise<OperationPlan | null> {
+        const doc = await OperationPlanModel.findOne({ relatedVVN: vvnId });
+        if (!doc) return null;
+        const plan = await OperationPlanMapper.fromSchema(doc, new TaskCategoryRepository());
+        return plan;
+    }
 
 	async getByDateGrouped(): Promise<{ date: string; plans: OperationPlanDto[] }[]> {
 		const allPlans = await OperationPlanModel.find();

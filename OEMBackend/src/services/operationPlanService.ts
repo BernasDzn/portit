@@ -24,11 +24,17 @@ export class OperationPlanService {
 	}
 
 	async getAll(pageable: PlanFilter): Promise<Page<OperationPlanDto>> {
-		return await this.operationPlanRepository.getAll(pageable);
+		const plansPage = await this.operationPlanRepository.getAll(pageable);
+        return {
+            pageNumber: plansPage.pageNumber,
+            pageSize: plansPage.pageSize,
+            pageCount: plansPage.pageCount,
+            items: plansPage.items.map(plan => plan.toDto())
+        };
 	}
 
 	async getById(id: string): Promise<OperationPlanDto | null> {
-		return await this.operationPlanRepository.getById(id);
+		return (await this.operationPlanRepository.getById(id))?.toDto() || null;
 	}
 
 	async getByDateGrouped(): Promise<{ date: string; plans: OperationPlanDto[] }[]> {
@@ -98,7 +104,7 @@ export class OperationPlanService {
 				});
 				
 				const savedPlan = await this.operationPlanRepository.create(operationPlan);
-				savedPlans.push(savedPlan);
+				savedPlans.push(savedPlan.toDto());
 			}
 		}
 		
@@ -228,7 +234,7 @@ export class OperationPlanService {
 			metadata: operationPlanMetadata
 		});
 
-		return await this.operationPlanRepository.create(operationPlan);
+		return (await this.operationPlanRepository.create(operationPlan)).toDto();
 	}
 
 	async regeneratePlansForDay(day: string, algorithm: string, daysAhead: number, createdBy: string): Promise<any> {
