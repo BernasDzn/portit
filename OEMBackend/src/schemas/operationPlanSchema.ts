@@ -49,7 +49,7 @@ const PayloadSchema = new mongoose.Schema({
     }
 });
 
-const OperationSchema = new mongoose.Schema({
+export const OperationSchema = new mongoose.Schema({
     operationType: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "TaskCategory",
