@@ -18,7 +18,7 @@ beforeEach(() => {
 	operationSchedule.insertInBegin(
 		new Operation({
 			operationType: new TaskCategory(
-				{ id: "TK1", category: "op_type_1", description: "Loading" },
+				{ id: "TK1", category: "op_type_1", description: "Loading", name: "Loading" },
 			),
 			startTime: new Date("2024-10-01T08:00:00Z"),
 			endTime: new Date("2024-10-01T10:00:00Z"),
@@ -58,131 +58,129 @@ beforeEach(() => {
 	service.operationPlanRepository = mockRepo;
 });
 
-describe('OperationPlanService', () => {
-	describe('getAll', () => {
-		it('should return paginated operation plans', async () => {
-			const mockPlans: Page<OperationPlanDto> = {
-				pageNumber: 1,
-				pageSize: 10,
-				pageCount: 1,
-				items: [mockOperationPlan.toDto()]
-			};
+describe('getAll', () => {
+	it('should return paginated operation plans', async () => {
+		const mockPlans: Page<OperationPlanDto> = {
+			pageNumber: 1,
+			pageSize: 10,
+			pageCount: 1,
+			items: [mockOperationPlan.toDto()]
+		};
 
-			mockRepo.getAll.mockResolvedValue(mockPlans);
+		mockRepo.getAll.mockResolvedValue(mockPlans);
 
-			const result = await service.getAll({ pageNumber: 1, pageSize: 10 });
+		const result = await service.getAll({ pageNumber: 1, pageSize: 10 });
 
-			expect(mockRepo.getAll).toHaveBeenCalledWith({ pageNumber: 1, pageSize: 10 });
-			expect(result).toEqual(mockPlans);
-		});
-
-		it('should handle empty results', async () => {
-			const emptyPage: Page<OperationPlanDto> = {
-				pageNumber: 1,
-				pageSize: 10,
-				pageCount: 0,
-				items: []
-			};
-
-			mockRepo.getAll.mockResolvedValue(emptyPage);
-
-			const result = await service.getAll({ pageNumber: 1, pageSize: 10 });
-
-			expect(result.items).toHaveLength(0);
-			expect(result.pageCount).toBe(0);
-		});
-
-		it('should handle different page sizes', async () => {
-			const mockPlans: Page<OperationPlanDto> = {
-				pageNumber: 2,
-				pageSize: 5,
-				pageCount: 3,
-				items: [mockOperationPlan.toDto()]
-			};
-
-			mockRepo.getAll.mockResolvedValue(mockPlans);
-
-			const result = await service.getAll({ pageNumber: 2, pageSize: 5 });
-
-			expect(mockRepo.getAll).toHaveBeenCalledWith({ pageNumber: 2, pageSize: 5 });
-			expect(result.pageNumber).toBe(2);
-			expect(result.pageSize).toBe(5);
-		});
+		expect(mockRepo.getAll).toHaveBeenCalledWith({ pageNumber: 1, pageSize: 10 });
+		expect(result).toEqual(mockPlans);
 	});
 
-	describe('getById', () => {
-		it('should return operation plan when found', async () => {
-			const planDto = mockOperationPlan.toDto();
-			mockRepo.getById.mockResolvedValue(planDto);
+	it('should handle empty results', async () => {
+		const emptyPage: Page<OperationPlanDto> = {
+			pageNumber: 1,
+			pageSize: 10,
+			pageCount: 0,
+			items: []
+		};
 
-			const result = await service.getById('plan-test');
+		mockRepo.getAll.mockResolvedValue(emptyPage);
 
-			expect(mockRepo.getById).toHaveBeenCalledWith('plan-test');
-			expect(result).toEqual(planDto);
-		});
+		const result = await service.getAll({ pageNumber: 1, pageSize: 10 });
 
-		it('should return null when operation plan not found', async () => {
-			mockRepo.getById.mockResolvedValue(null);
-
-			const result = await service.getById('non-existent-id');
-
-			expect(mockRepo.getById).toHaveBeenCalledWith('non-existent-id');
-			expect(result).toBeNull();
-		});
+		expect(result.items).toHaveLength(0);
+		expect(result.pageCount).toBe(0);
 	});
 
-	describe('getByDateGrouped', () => {
-		it('should return operation plans grouped by date', async () => {
-			const groupedPlans = [
-				{
-					date: '2024-10-01',
-					plans: [mockOperationPlan.toDto()]
-				},
-				{
-					date: '2024-10-02',
-					plans: [mockOperationPlan.toDto()]
-				}
-			];
+	it('should handle different page sizes', async () => {
+		const mockPlans: Page<OperationPlanDto> = {
+			pageNumber: 2,
+			pageSize: 5,
+			pageCount: 3,
+			items: [mockOperationPlan.toDto()]
+		};
 
-			mockRepo.getByDateGrouped.mockResolvedValue(groupedPlans);
+		mockRepo.getAll.mockResolvedValue(mockPlans);
 
-			const result = await service.getByDateGrouped();
+		const result = await service.getAll({ pageNumber: 2, pageSize: 5 });
 
-			expect(mockRepo.getByDateGrouped).toHaveBeenCalled();
-			expect(result).toEqual(groupedPlans);
-			expect(result).toHaveLength(2);
-		});
+		expect(mockRepo.getAll).toHaveBeenCalledWith({ pageNumber: 2, pageSize: 5 });
+		expect(result.pageNumber).toBe(2);
+		expect(result.pageSize).toBe(5);
+	});
+});
 
-		it('should return empty array when no plans exist', async () => {
-			mockRepo.getByDateGrouped.mockResolvedValue([]);
+describe('getById', () => {
+	it('should return operation plan when found', async () => {
+		const planDto = mockOperationPlan.toDto();
+		mockRepo.getById.mockResolvedValue(planDto);
 
-			const result = await service.getByDateGrouped();
+		const result = await service.getById('plan-test');
 
-			expect(result).toEqual([]);
-		});
+		expect(mockRepo.getById).toHaveBeenCalledWith('plan-test');
+		expect(result).toEqual(planDto);
 	});
 
-	describe('getNotificationsWithoutPlan', () => {
-		it('should return list of VVN IDs without plans', async () => {
-			const unplannedVvns = ['VVN003', 'VVN004', 'VVN005'];
-			const mockToken = 'mock-jwt-token';
+	it('should return null when operation plan not found', async () => {
+		mockRepo.getById.mockResolvedValue(null);
 
-			mockRepo.getNotificationsWithoutPlan.mockResolvedValue(unplannedVvns);
+		const result = await service.getById('non-existent-id');
 
-			const result = await service.getNotificationsWithoutPlan(mockToken);
+		expect(mockRepo.getById).toHaveBeenCalledWith('non-existent-id');
+		expect(result).toBeNull();
+	});
+});
 
-			expect(mockRepo.getNotificationsWithoutPlan).toHaveBeenCalledWith(mockToken);
-			expect(result).toEqual(unplannedVvns);
-			expect(result).toHaveLength(3);
-		});
+describe('getByDateGrouped', () => {
+	it('should return operation plans grouped by date', async () => {
+		const groupedPlans = [
+			{
+				date: '2024-10-01',
+				plans: [mockOperationPlan.toDto()]
+			},
+			{
+				date: '2024-10-02',
+				plans: [mockOperationPlan.toDto()]
+			}
+		];
 
-		it('should return empty array when all notifications have plans', async () => {
-			const mockToken = 'mock-jwt-token';
-			mockRepo.getNotificationsWithoutPlan.mockResolvedValue([]);
+		mockRepo.getByDateGrouped.mockResolvedValue(groupedPlans);
 
-			const result = await service.getNotificationsWithoutPlan(mockToken);
+		const result = await service.getByDateGrouped();
 
-			expect(result).toEqual([]);
-		});
+		expect(mockRepo.getByDateGrouped).toHaveBeenCalled();
+		expect(result).toEqual(groupedPlans);
+		expect(result).toHaveLength(2);
+	});
+
+	it('should return empty array when no plans exist', async () => {
+		mockRepo.getByDateGrouped.mockResolvedValue([]);
+
+		const result = await service.getByDateGrouped();
+
+		expect(result).toEqual([]);
+	});
+});
+
+describe('getNotificationsWithoutPlan', () => {
+	it('should return list of VVN IDs without plans', async () => {
+		const unplannedVvns = ['VVN003', 'VVN004', 'VVN005'];
+		const mockToken = 'mock-jwt-token';
+
+		mockRepo.getNotificationsWithoutPlan.mockResolvedValue(unplannedVvns);
+
+		const result = await service.getNotificationsWithoutPlan(mockToken);
+
+		expect(mockRepo.getNotificationsWithoutPlan).toHaveBeenCalledWith(mockToken);
+		expect(result).toEqual(unplannedVvns);
+		expect(result).toHaveLength(3);
+	});
+
+	it('should return empty array when all notifications have plans', async () => {
+		const mockToken = 'mock-jwt-token';
+		mockRepo.getNotificationsWithoutPlan.mockResolvedValue([]);
+
+		const result = await service.getNotificationsWithoutPlan(mockToken);
+
+		expect(result).toEqual([]);
 	});
 });
