@@ -160,6 +160,7 @@ public class VesselVisitNotification : IDTOAble<VesselVisitNotificationDto>
             Status = Status,
             ExpectedArrival = ExpectedArrival,
             ExpectedDeparture = ExpectedDeparture,
+            IsCargoHazardous = IsCargoHazardous,
             Vessel = Vessel.ToDTO(),
             Submitter = Submitter.ToDTO(),
             Decisions = NotificationDecisions.Select(nd => nd.ToDTO()).ToArray()

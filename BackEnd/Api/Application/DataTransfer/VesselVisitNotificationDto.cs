@@ -37,6 +37,7 @@ public class VesselVisitNotificationStatusDto
     public required NotificationStatus Status { get; set; }
     public required DateTime ExpectedArrival { get; set; }
     public required DateTime ExpectedDeparture { get; set; }
+    public required bool IsCargoHazardous { get; set; }
     public required VesselDto Vessel { get; set; }
     public required RepresentativeDto Submitter { get; set; }
     public NotificationDecisionDto[] Decisions { get; set; }
