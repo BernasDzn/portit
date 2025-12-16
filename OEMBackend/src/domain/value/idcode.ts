@@ -9,8 +9,8 @@ export class IdCode {
     }
 
     private isValid(value: string): boolean {
-        // Only letters, undescopres and digits, length between 3 and 10
-        const idCodeRegex = /^[A-Za-z0-9_]{3,10}$/;
+        // Only letters, undescopres and digits, length between 2 and 10
+        const idCodeRegex = /^[A-Za-z0-9_]{2,10}$/;
         return idCodeRegex.test(value);
     }
 

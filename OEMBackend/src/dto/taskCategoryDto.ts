@@ -4,3 +4,9 @@ export interface TaskCategoryDto {
     category: string;
     description: string;
 }
+
+export interface CreateTaskCategoryDto {
+    name: string;
+    category: string;
+    description: string;
+}

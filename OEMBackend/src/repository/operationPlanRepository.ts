@@ -6,6 +6,7 @@ import { Page } from "../utils/page";
 import config from "../config/config";
 import { ContainerDto } from "../dto/container";
 import { PlanFilter } from "../dto/filters/planFilter";
+import { TaskCategoryRepository } from "./taskCategoryRepository";
 
 
 export class OperationPlanRepository {
@@ -13,7 +14,7 @@ export class OperationPlanRepository {
 	async create(operationPlan: OperationPlan): Promise<OperationPlanDto> {
 		const newOperationPlan = OperationPlanMapper.toSchema(operationPlan);
 		const createdDoc = await OperationPlanModel.create(newOperationPlan);
-		const plan = await OperationPlanMapper.fromSchema(createdDoc);
+		const plan = await OperationPlanMapper.fromSchema(createdDoc, new TaskCategoryRepository());
 		return plan.toDto();
 	}
 
@@ -36,7 +37,7 @@ export class OperationPlanRepository {
 			pageSize,
 			pageCount: Math.ceil(await OperationPlanModel.countDocuments() / pageSize),
 			items: await Promise.all(data.map(async (doc) => {
-                const plan = await OperationPlanMapper.fromSchema(doc);
+                const plan = await OperationPlanMapper.fromSchema(doc, new TaskCategoryRepository());
                 return plan.toDto();
             }))
 		};
@@ -45,7 +46,7 @@ export class OperationPlanRepository {
 	async getById(id: string): Promise<OperationPlanDto | null> {
 		const doc = await OperationPlanModel.findById(id);
 		if (!doc) return null;
-		const plan = await OperationPlanMapper.fromSchema(doc);
+		const plan = await OperationPlanMapper.fromSchema(doc, new TaskCategoryRepository());
 		return plan.toDto();
 	}
 
@@ -54,7 +55,7 @@ export class OperationPlanRepository {
 		const plansByDate = new Map<string, OperationPlanDto[]>();
 
         for (const doc of allPlans) {
-            const plan = await OperationPlanMapper.fromSchema(doc);
+            const plan = await OperationPlanMapper.fromSchema(doc, new TaskCategoryRepository());
             const planDto = plan.toDto();
             
             // Extract date from the first operation's start time

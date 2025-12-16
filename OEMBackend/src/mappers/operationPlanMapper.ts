@@ -36,7 +36,7 @@ export class OperationPlanMapper {
 		};
 	}
 
-    static async fromSchema(doc: any): Promise<OperationPlan> {
+    static async fromSchema(doc: any, taskCategoryRepo: TaskCategoryRepository): Promise<OperationPlan> {
         if (!doc.metadata) {
             throw new Error('Operation plan document is missing metadata');
         }
@@ -62,7 +62,7 @@ export class OperationPlanMapper {
                     });
                 });
     
-                const operationTypeDoc = await TaskCategoryRepository.getCategoryById(op.operationType);
+                const operationTypeDoc = await taskCategoryRepo.getCategoryById(op.operationType);
                 const operationType = TaskCategoryMapper.fromSchema(operationTypeDoc);
                 
                 // Skip operations with missing task categories

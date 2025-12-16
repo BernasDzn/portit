@@ -1,12 +1,32 @@
 import { TaskCategory } from "../domain/taskCategory";
 import { TaskCategoryFilter } from "../dto/filters/taskCategoryFilter";
+import { TaskCategoryDto } from "../dto/taskCategoryDto";
 import { TaskCategoryMapper } from "../mappers/taskCategoryMapper";
 import { TaskCategoryModel } from "../schemas/taskCategories";
 import { Page } from "../utils/page";
 
 export class TaskCategoryRepository {
 
-    static async getCategoryById(operationType: any): Promise<TaskCategory | null> {
+    async createCategory(category: TaskCategory): Promise<TaskCategory> {
+        const createdCategory = new TaskCategoryModel(TaskCategoryMapper.toSchema(category));
+        const savedCategory = await createdCategory.save();
+        return TaskCategoryMapper.fromSchema(savedCategory)!;
+    }
+
+    async updateCategory(category: TaskCategory): Promise<TaskCategory | null> {
+        const updatedCategory = await TaskCategoryModel.findByIdAndUpdate(
+            category.id,
+            TaskCategoryMapper.toSchema(category),
+            { new: true }
+        ).exec();
+
+        if (!updatedCategory)
+            return null;
+
+        return TaskCategoryMapper.fromSchema(updatedCategory);
+    }
+
+    async getCategoryById(operationType: any): Promise<TaskCategory | null> {
         
         const entry = await TaskCategoryModel.findById(operationType).exec();
         if (!entry)
@@ -22,7 +42,7 @@ export class TaskCategoryRepository {
         return TaskCategoryMapper.fromSchema(entry);
     }
 
-    async getAllCategories(pageable: TaskCategoryFilter): Promise<Page<TaskCategory>> {
+    async getAllCategories(pageable: TaskCategoryFilter): Promise<Page<TaskCategoryDto>> {
 
         const { pageNumber, pageSize } = pageable;
 		const skip = (pageNumber - 1) * pageSize;
@@ -40,7 +60,7 @@ export class TaskCategoryRepository {
             pageSize,
             pageCount: Math.ceil(await TaskCategoryModel.countDocuments() / pageSize),
             items: await Promise.all(data.map(async (doc) => {
-                return TaskCategoryMapper.fromSchema(doc)!;
+                return (TaskCategoryMapper.fromSchema(doc)!).toDto();
             }))
         };
     }

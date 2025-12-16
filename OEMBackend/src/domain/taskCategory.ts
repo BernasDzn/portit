@@ -10,8 +10,8 @@ export class TaskCategory {
     constructor(params: { id: string | undefined, category: string; description: string; name: string }) {
         this.id = params.id ?? undefined;
         this.category = new IdCode(params.category);
-        this.description = params.description;
         this.name = params.name;
+        this.description = params.description;
     }
 
     toDto(): TaskCategoryDto {
