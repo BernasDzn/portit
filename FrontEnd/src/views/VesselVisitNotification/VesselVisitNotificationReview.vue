@@ -224,17 +224,6 @@ const closeUnloadManifest = () => {
             <sl-drawer id="loadManifestDrawer" label="Drawer" class="drawer-overview">
                 <h2>{{ t("notification.fields.loadCargoManifest") }}</h2>
                 <sl-card class="manifest-item" v-for="item in entity.element.loadCargoManifest" :key="item.containerId">
-                    <p>{{ item.container.description }} ({{ item.container.container }})</p>
-                    <p>To: {{ item.area.nameCode }}</p>
-                </sl-card>
-
-                <sl-button @click="closeLoadManifest" slot="footer" variant="primary">Close</sl-button>
-            </sl-drawer>
-
-            <sl-drawer id="unloadManifestDrawer" label="Drawer" class="drawer-overview" style="--size: 35vw;">
-                <h2>{{ t("notification.fields.unloadCargoManifest") }}</h2>
-                <sl-card class="manifest-item" v-for="item in entity.element.unloadCargoManifest"
-                    :key="item.containerId">
                     <div class="opposed">
                         <div>
                             <p class="title">{{ item.container.description }}</p>
@@ -248,6 +237,28 @@ const closeUnloadManifest = () => {
                         <p>{{ t("notification.to") }}: ({{ item.position.bay }}, {{ item.position.row }}, {{
                             item.position.tier }})
                         </p>
+                    </div>
+                </sl-card>
+
+                <sl-button @click="closeLoadManifest" slot="footer" variant="primary">Close</sl-button>
+            </sl-drawer>
+
+            <sl-drawer id="unloadManifestDrawer" label="Drawer" class="drawer-overview" style="--size: 35vw;">
+                <h2>{{ t("notification.fields.unloadCargoManifest") }}</h2>
+                <sl-card class="manifest-item" v-for="item in entity.element.unloadCargoManifest" :key="item.containerId">
+                    <div class="opposed">
+                        <div>
+                            <p class="title">{{ item.container.description }}</p>
+                            <p class="subtitle">{{ item.container.containerNumber }}</p>
+                        </div>
+                        <sl-tag variant="neutral">{{ cargoTypes[item.container.cargoType] }}</sl-tag>
+                    </div>
+                    <div class="manifest-direction">
+                        <p>{{ t("notification.from") }}: ({{ item.position.bay }}, {{ item.position.row }}, {{
+                            item.position.tier }})
+                        </p>
+                        <span class="material-icons" aria-hidden="true">arrow_right_alt</span>
+                        <p>{{ t("notification.to") }}: {{ item.area.nameCode }}</p>
                     </div>
                 </sl-card>
 
