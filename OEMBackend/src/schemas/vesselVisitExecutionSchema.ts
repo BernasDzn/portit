@@ -15,7 +15,7 @@ const OperationWithStatusSchema = new mongoose.Schema({
     }
 });
 
-const OperationPlanSchema = new mongoose.Schema({
+const VesselVisitExecutionSchema = new mongoose.Schema({
     dock: {
         type: String,
         required: true
@@ -47,4 +47,4 @@ const OperationPlanSchema = new mongoose.Schema({
     timestamps: true
 });
 
-export const VesselVisitExecutionModel = mongoose.model('VesselVisitExecution', OperationPlanSchema);
+export const VesselVisitExecutionModel = mongoose.model('VesselVisitExecution', VesselVisitExecutionSchema);

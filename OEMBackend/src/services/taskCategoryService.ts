@@ -15,6 +15,12 @@ export class TaskCategoryService {
 	}
 
 	async createCategory(category: CreateTaskCategoryDto): Promise<TaskCategoryDto> {
+
+        const existingCategory = await this.taskCategoryRepository.getCategoryByCode(category.category);
+        if (existingCategory) {
+            throw new Error(`Task Category with code ${category.category} already exists.`);
+        }
+
         return (await this.taskCategoryRepository.createCategory(new TaskCategory(
             {
                 id: undefined,
@@ -26,6 +32,12 @@ export class TaskCategoryService {
     }
 
     async updateCategory(id: string, category: CreateTaskCategoryDto): Promise<TaskCategoryDto | null> {
+
+        const existingCategory = await this.taskCategoryRepository.getCategoryByCode(category.category);
+        if (!existingCategory || existingCategory.id !== id) {
+            throw new Error(`Task Category with code ${category.category} does not exist.`);
+        }
+
         const updatedCategory = await this.taskCategoryRepository.updateCategory(new TaskCategory(
             {
                 id: id,
@@ -37,13 +49,6 @@ export class TaskCategoryService {
         if (!updatedCategory)
             return null;
         return updatedCategory.toDto();
-    }
-
-    async getCategoryById(categoryId: string): Promise<TaskCategoryDto | null> {
-        const category = await this.taskCategoryRepository.getCategoryById(categoryId);
-        if (!category)
-            return null;
-        return category.toDto();
     }
 
     async getCategoryByCode(categoryCode: string): Promise<TaskCategoryDto | null> {

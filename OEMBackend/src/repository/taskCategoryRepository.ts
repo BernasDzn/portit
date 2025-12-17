@@ -26,14 +26,6 @@ export class TaskCategoryRepository {
         return TaskCategoryMapper.fromSchema(updatedCategory);
     }
 
-    async getCategoryById(operationType: any): Promise<TaskCategory | null> {
-        
-        const entry = await TaskCategoryModel.findById(operationType).exec();
-        if (!entry)
-            return null;
-        return TaskCategoryMapper.fromSchema(entry);
-    }
-
     async getCategoryByCode(categoryCode: string): Promise<TaskCategory | null> {
         
         const entry = await TaskCategoryModel.findOne({ category: categoryCode }).exec();

@@ -7,8 +7,9 @@ import config from "../config/config";
 import { ContainerDto } from "../dto/container";
 import { PlanFilter } from "../dto/filters/planFilter";
 import { TaskCategoryRepository } from "./taskCategoryRepository";
+import { Service } from "typedi";
 
-
+@Service("operationPlanRepository")
 export class OperationPlanRepository {
 
 	async create(operationPlan: OperationPlan): Promise<OperationPlan> {

@@ -14,25 +14,25 @@ export default (app: Router) => {
 
 	route.get(
 		'/',
-		[authMiddleware, authzMiddleware(UserRole.Administrator)],
+		[authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)],
 		(req: Request, res: Response, next: NextFunction) => getCtrl().getAllCategories(req, res, next)
 	);
 
 	route.get(
 		'/code/:code',
-		[authMiddleware, authzMiddleware(UserRole.Administrator)],
+		[authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)],
 		(req: Request, res: Response, next: NextFunction) => getCtrl().getCategoryByCode(req, res, next)
 	);
 
 	route.post(
 		'/',
-		[authMiddleware, authzMiddleware(UserRole.Administrator)],
+		[authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)],
 		(req: Request, res: Response, next: NextFunction) => getCtrl().createCategory(req, res, next)
 	);
 	
 	route.put(
 		'/:id',
-		[authMiddleware, authzMiddleware(UserRole.Administrator)],
+		[authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)],
 		(req: Request, res: Response, next: NextFunction) => getCtrl().updateCategory(req, res, next)
 	);
 
