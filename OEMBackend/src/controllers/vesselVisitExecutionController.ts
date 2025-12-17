@@ -52,10 +52,150 @@ export class VesselVisitExecutionController {
                 return;
             }
 
-            const execution = await this.vesselVisitExecutionService.createVesselVisitExecution(relatedVVN);
+            const creatorUser = req.user?.emailAddress;
+            if (!creatorUser) {
+                res.status(400).json({ message: 'Creator user information is missing.' });
+                return;
+            }
+
+            const execution = await this.vesselVisitExecutionService.createVesselVisitExecution(relatedVVN, creatorUser);
             res.status(201).json(execution);
         } catch (error) {
             next(error);
         }
     }
+
+    /**
+     * @swagger
+     * /vessel-visit-executions/{relatedVVN}/close:
+     *   put:
+     *     summary: Close an existing Vessel Visit Execution for the given Vessel Visit Number (VVN)
+     *     tags:
+     *       - Vessel Visit Executions
+     *     parameters:
+     *       - in: path
+     *         name: relatedVVN
+     *         required: true
+     *         schema:
+     *           type: string
+     *         description: The related Vessel Visit Number
+     *     responses:
+     *       200:
+     *         description: Vessel Visit Execution closed successfully
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 id:
+     *                   type: string
+     *                   description: The ID of the closed Vessel Visit Execution
+     *       400:
+     *         description: Invalid Vessel Visit Number
+     *       500:
+     *         description: Server error
+     */
+    async closeVesselVisitExecution(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const { relatedVVN } = req.params;
+            if (!relatedVVN) {
+                res.status(400).json({ message: 'relatedVVN parameter is required.' });
+                return;
+            }
+
+            const execution = await this.vesselVisitExecutionService.closeVesselVisitExecution(relatedVVN);
+            res.status(200).json(execution);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    /**
+     * @swagger
+     * /vessel-visit-executions/{vveId}/operations/start:
+     *   post:
+     *     summary: Start a new operation for a Vessel Visit Execution
+     *     tags:
+     *       - Vessel Visit Executions
+     *     parameters:
+     *       - in: path
+     *         name: vveId
+     *         required: true
+     *         schema:
+     *           type: string
+     *         description: Vessel Visit Execution ID
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             $ref: '#/components/schemas/OperationDto'
+     *     responses:
+     *       200:
+     *         description: Operation started successfully
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/VesselVisitExecutionDto'
+     *       400:
+     *         description: Invalid input data
+     *       404:
+     *         description: Vessel Visit Execution not found
+     *       500:
+     *         description: Server error
+     */
+    async startOperation(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const { vveId } = req.params;
+            const operation = req.body;
+
+            if (!vveId) {
+                res.status(400).json({ message: 'vveId parameter is required.' });
+                return;
+            }
+
+            if (!operation) {
+                res.status(400).json({ message: 'Operation data is required in the request body.' });
+                return;
+            }
+
+            const execution = await this.vesselVisitExecutionService.startOperation(vveId, operation);
+            res.status(200).json(execution);
+        } catch (error) {
+            next(error);
+        }
+    }
 }
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     OperationDto:
+ *       type: object
+ *       required:
+ *         - type
+ *         - startTime
+ *         - endTime
+ *         - resources
+ *       properties:
+ *         type:
+ *           type: string
+ *           description: Operation type identifier
+ *         startTime:
+ *           type: string
+ *           format: date-time
+ *           description: Operation start time (ISO-8601)
+ *         endTime:
+ *           type: string
+ *           format: date-time
+ *           description: Operation end time (ISO-8601)
+ *         resources:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/ResourceDto'
+ *         payload:
+ *           $ref: '#/components/schemas/PayloadDto'
+ *           nullable: true
+ */
+export const vesselVisitExecutionController = new VesselVisitExecutionController();

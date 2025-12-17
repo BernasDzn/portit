@@ -1,5 +1,4 @@
 import { TaskCategoryDto } from "../taskCategoryDto";
-import { PayloadDto } from "./payloadDto";
 import { ResourceDto } from "./resourceDto";
 
 export interface OperationDto {
@@ -7,5 +6,14 @@ export interface OperationDto {
 	startTime: string;
 	endTime: string;
 	resources: ResourceDto[];
-    payload?: PayloadDto | null;
+    payload?: any;
 }
+
+export interface OperationStartDto {
+    id: string;
+    type: string;
+    startTime: string;
+    endTime: string;
+    resources: ResourceDto[];
+    payload?: any;
+};

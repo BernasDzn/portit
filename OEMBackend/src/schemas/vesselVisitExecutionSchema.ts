@@ -13,10 +13,12 @@ const OperationWithStatusSchema = new mongoose.Schema({
         enum: ['Pending', 'InProgress', 'Completed', 'Failed'],
         default: 'Pending'
     }
+}, {
+    _id: false
 });
 
 const VesselVisitExecutionSchema = new mongoose.Schema({
-    dock: {
+    code: {
         type: String,
         required: true
     },
@@ -42,6 +44,10 @@ const VesselVisitExecutionSchema = new mongoose.Schema({
         required: true,
         enum: ['Open', 'Closed'],
         default: 'Open'
+    },
+    createdBy: {
+        type: String,
+        required: true
     }
 }, {
     timestamps: true

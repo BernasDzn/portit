@@ -1,7 +1,5 @@
 export default interface TaskCategoryDto {
     id: string;
-    category: {
-        value: string;
-    };
+    category: string;
     description: string;
 }

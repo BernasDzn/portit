@@ -18,4 +18,16 @@ export default (app: Router) => {
 		[authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)],
 		(req: Request, res: Response, next: NextFunction) => getCtrl().openVesselVisitExecution(req, res, next)
 	);
+
+    route.put(
+        '/:relatedVVN/close',
+        [authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)],
+        (req: Request, res: Response, next: NextFunction) => getCtrl().closeVesselVisitExecution(req, res, next)
+    );
+
+    route.put(
+        '/:relatedVVN/operations/:operationId/open',
+        [authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)],
+        (req: Request, res: Response, next: NextFunction) => getCtrl().openVesselVisitExecution(req, res, next)
+    )
 }

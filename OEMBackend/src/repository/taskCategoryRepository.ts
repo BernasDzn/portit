@@ -34,6 +34,14 @@ export class TaskCategoryRepository {
         return TaskCategoryMapper.fromSchema(entry);
     }
 
+    async getCategoryById(id: string): Promise<TaskCategory | null> {
+
+        const entry = await TaskCategoryModel.findById(id).exec();
+        if (!entry)
+            return null;
+        return TaskCategoryMapper.fromSchema(entry);
+    }
+
     async getAllCategories(pageable: TaskCategoryFilter): Promise<Page<TaskCategoryDto>> {
 
         const { pageNumber, pageSize } = pageable;

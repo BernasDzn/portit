@@ -23,10 +23,7 @@ export class OperationPlanMapper {
                     startTime: res.startTime,
                     endTime: res.endTime
 				})),
-				payload: op.payload ? {
-					containerId: op.payload.containerId,
-					storageLocation: op.payload.storageLocation
-				} : null
+				payload: op.payload
 			})),
 			metadata: {
 				createdBy: operationPlan.metadata.createdBy,
@@ -62,8 +59,7 @@ export class OperationPlanMapper {
                     });
                 });
     
-                const operationTypeDoc = await taskCategoryRepo.getCategoryById(op.operationType);
-                const operationType = TaskCategoryMapper.fromSchema(operationTypeDoc);
+                const operationType = await taskCategoryRepo.getCategoryById(op.operationType);
                 
                 // Skip operations with missing task categories
                 if (!operationType) {
@@ -71,10 +67,7 @@ export class OperationPlanMapper {
                     continue;
                 }
                 
-                const payload = op.payload ? new Payload({
-                    containerId: op.payload.containerId,
-                    storageLocation: op.payload.storageLocation
-                }) : new Payload({});
+                const payload = op.payload;
     
                 const operation = new Operation({
                     operationType,

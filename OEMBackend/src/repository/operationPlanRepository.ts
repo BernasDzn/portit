@@ -9,7 +9,7 @@ import { PlanFilter } from "../dto/filters/planFilter";
 import { TaskCategoryRepository } from "./taskCategoryRepository";
 import { Service } from "typedi";
 
-@Service("operationPlanRepository")
+@Service()
 export class OperationPlanRepository {
 
 	async create(operationPlan: OperationPlan): Promise<OperationPlan> {

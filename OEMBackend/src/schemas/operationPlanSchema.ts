@@ -38,7 +38,8 @@ const ResourceSchema = new mongoose.Schema({
     }
 });
 
-const PayloadSchema = new mongoose.Schema({
+// The payload can vary depending on the operation type
+const LoadPayloadSchema = new mongoose.Schema({
     containerId: {
         type: String,
         required: false
@@ -47,6 +48,13 @@ const PayloadSchema = new mongoose.Schema({
         type: String,
         required: false
     }
+});
+
+const BerthingPayloadSchema = new mongoose.Schema({
+    dock: {
+        type: String,
+        required: false
+    },
 });
 
 export const OperationSchema = new mongoose.Schema({
@@ -69,7 +77,7 @@ export const OperationSchema = new mongoose.Schema({
         default: []
     },
     payload: {
-        type: PayloadSchema,
+        type: mongoose.Schema.Types.Mixed,
         required: false
     }
 });

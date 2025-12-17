@@ -87,11 +87,11 @@ const cranes = computed(() => {
                         </div> -->
                         <div class="operation-item">
                             <sl-badge variant="warning">
-                                Unloading operations: {{ props.operationPlan.operationSchedule.filter(op => op.type.category.value === "UNLOAD").length }}
+                                Unloading operations: {{ props.operationPlan.operationSchedule.filter(op => op.type.category === "UNLOAD").length }}
                             </sl-badge>
     
                             <sl-badge variant="success">
-                                Loading operations: {{ props.operationPlan.operationSchedule.filter(op => op.type.category.value === "LOAD").length }}
+                                Loading operations: {{ props.operationPlan.operationSchedule.filter(op => op.type.category === "LOAD").length }}
                             </sl-badge>
                         </div>
                     </div>

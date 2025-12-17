@@ -1,6 +1,6 @@
-import { PayloadDto } from "../../dto/value/payloadDto";
+export class Payload {} // Payloads can be extended
 
-export class Payload {
+export class LoadPayload extends Payload {
     containerId: string | null;
     storageLocation: string | null;
 
@@ -8,11 +8,12 @@ export class Payload {
         containerId?: string;
         storageLocation?: string;
     }) {
+        super();
         this.containerId = params.containerId ?? null;
         this.storageLocation = params.storageLocation ?? null;
     }
 
-    toDto() : PayloadDto {
+    toDto() : any {
         return {
             containerId: this.containerId ?? "",
             storageLocation: this.storageLocation ?? ""
@@ -20,3 +21,4 @@ export class Payload {
     }
 
 }
+

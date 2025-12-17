@@ -16,10 +16,11 @@ export type VesselVisitExecutionStatusDto = 'Open' | 'Closed';
 
 export interface VesselVisitExecutionDto {
   id: string;
-  dock: string;
+  code: string;
   relatedVVN: string;
   operationsExecuted: OperationWithStatusDto[];
   dateOpen?: Date;
   dateClosed?: Date;
   status: VesselVisitExecutionStatusDto;
+  createdBy: string;
 }

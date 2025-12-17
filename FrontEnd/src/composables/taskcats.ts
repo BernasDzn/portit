@@ -27,7 +27,7 @@ const getGanttItems = (plan: OperationPlanDto): GanttItem[] => {
             continue; // Use continue instead of return to skip this operation
         }
         
-        const opColor = operationColorMap[op.type.category.value] || '#3498db';
+        const opColor = operationColorMap[op.type.category] || '#3498db';
         
         // Create an item for each resource in this operation
         op.resources.forEach((resource, resIndex) => {

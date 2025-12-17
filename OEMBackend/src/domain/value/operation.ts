@@ -4,6 +4,7 @@ import { Payload } from "./payload";
 import { Resource } from "./resource";
 
 export default class Operation {
+    id?: string;
 	operationType: TaskCategory;
 	startTime: Date;
 	endTime: Date;
@@ -11,12 +12,16 @@ export default class Operation {
     payload?: Payload | null;
 
 	constructor(params: {
+        id?: string;
 		operationType: TaskCategory;
 		startTime: Date;
 		endTime: Date;
 		resources: Resource[];
         payload?: Payload;
 	}) {
+        if (params.id) {
+            this.id = params.id;
+        }
 		this.operationType = params.operationType;
 		this.startTime = params.startTime;
 		this.endTime = params.endTime;
@@ -30,7 +35,7 @@ export default class Operation {
 			startTime: this.startTime.toISOString(),
 			endTime: this.endTime.toISOString(),
 			resources: this.resources.map(resource => resource.toDto()),
-            payload: this.payload?.toDto() ?? null
+            payload: this.payload ?? null
 		};
 	}
 

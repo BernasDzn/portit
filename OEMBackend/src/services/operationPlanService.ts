@@ -9,9 +9,10 @@ import { ScheduleDataMapper } from "../mappers/scheduleDataMapper";
 import { OperationPlanRepository } from "../repository/operationPlanRepository";
 import { taskCategoryRepository } from "../repository/taskCategoryRepository";
 import { Page, Pageable } from "../utils/page";
-import { Payload } from "../domain/value/payload";
+import { LoadPayload, Payload } from "../domain/value/payload";
 import { ContainerDto } from "../dto/container";
 import { PlanFilter } from "../dto/filters/planFilter";
+import { PayloadValidator } from "./validators/operationPayloadValidator";
 
 
 @Service("operationPlanService")
@@ -181,7 +182,7 @@ export class OperationPlanService {
                     startTime: operationStartTime,
                     endTime: operationEndTime,
                     resources: resources,
-                    payload: new Payload({
+                    payload: new LoadPayload({
                         containerId: container?.containerNumber || '',
                         storageLocation: container?.area || ''
                     })
@@ -201,10 +202,8 @@ export class OperationPlanService {
 	async create(operationPlanDto: OperationPlanDto): Promise<OperationPlanDto> {
 		let operationSchedule = new LinkedList<Operation>();
 		for (const opDto of operationPlanDto.operationSchedule) {
-			const payload = opDto.payload ? new Payload({
-				containerId: opDto.payload.containerId,
-				storageLocation: opDto.payload.storageLocation
-			}) : new Payload({});
+			const payload = opDto.payload;
+            new PayloadValidator(payload, opDto.type.category).validatePayloadForType();
 			
 			const operation = new Operation({
 				operationType: (await taskCategoryRepository.getCategoryByCode(opDto.type.category))!,

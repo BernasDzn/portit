@@ -17,12 +17,14 @@ interface OperationWithStatusProps {
 }
 
 interface VesselVisitExecutionProps {
-  dock: string;
-  relatedVVN: string;
-  operationsExecuted: OperationWithStatus[];
-  dateOpen?: Date;
-  dateClosed?: Date;
-  status: VesselVisitExecutionStatus;
+
+    code: string;
+    relatedVVN: string;
+    operationsExecuted: OperationWithStatus[];
+    dateOpen?: Date;
+    dateClosed?: Date;
+    status: VesselVisitExecutionStatus;
+    createdBy: string;
 }
 
 export class OperationWithStatus extends Entity<OperationWithStatusProps> {
@@ -48,12 +50,17 @@ export class OperationWithStatus extends Entity<OperationWithStatusProps> {
 
 export default class VesselVisitExecution extends Entity<VesselVisitExecutionProps> {
   get id(): string { return this._id; }
-  get dock(): string { return this.props.dock; }
   get relatedVVN(): string { return this.props.relatedVVN; }
   get operationsExecuted(): OperationWithStatus[] { return this.props.operationsExecuted; }
   get dateOpen(): Date | undefined { return this.props.dateOpen; }
   get dateClosed(): Date | undefined { return this.props.dateClosed; }
   get status() { return this.props.status; }
+  get createdBy(): string { return this.props.createdBy; }
+  get code(): string { return this.props.code; }
+
+  set status(newStatus: VesselVisitExecutionStatus) {
+    this.props.status = newStatus;
+  }
 
   constructor(props: VesselVisitExecutionProps, id?: any) {
     super(
@@ -67,14 +74,15 @@ export default class VesselVisitExecution extends Entity<VesselVisitExecutionPro
   }
 
   public toDto(): VesselVisitExecutionDto {
-    return {
-      id: this.id,
-      dock: this.dock,
-      relatedVVN: this.relatedVVN,
-      operationsExecuted: this.operationsExecuted.map(op => op.toDto()),
-      dateOpen: this.dateOpen,
-      dateClosed: this.dateClosed,
-      status: this.status
-    };
+        return {
+            id: this.id,
+            code: this.code,
+            relatedVVN: this.relatedVVN,
+            operationsExecuted: this.operationsExecuted.map(op => op.toDto()),
+            dateOpen: this.dateOpen,
+            dateClosed: this.dateClosed,
+            status: this.status,
+            createdBy: this.createdBy
+        };
   }
 }

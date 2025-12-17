@@ -9,7 +9,8 @@ export class VesselVisitExecutionMapper {
 
   static toSchema(vve: VesselVisitExecution): any {
     return {
-      dock: vve.dock,
+      code: vve.code,
+      createdBy: vve.createdBy,
       relatedVVN: vve.relatedVVN,
       status: vve.status,
       dateOpen: vve.dateOpen,
@@ -27,11 +28,6 @@ export class VesselVisitExecutionMapper {
             endTime: res.endTime
           })),
           payload: opWS.operation.payload
-            ? {
-                containerId: opWS.operation.payload.containerId,
-                storageLocation: opWS.operation.payload.storageLocation
-              }
-            : null
         }
       }))
     };
@@ -70,12 +66,7 @@ export class VesselVisitExecutionMapper {
           continue;
         }
 
-        const payload = opWS.operation.payload
-          ? new Payload({
-              containerId: opWS.operation.payload.containerId,
-              storageLocation: opWS.operation.payload.storageLocation
-            })
-          : new Payload({});
+        const payload = opWS.operation.payload;
 
         const operation = new Operation({
           operationType,
@@ -99,7 +90,8 @@ export class VesselVisitExecutionMapper {
 
     const vesselVisitExecution = new VesselVisitExecution(
       {
-        dock: doc.dock,
+        code: doc.code,
+        createdBy: doc.createdBy,
         relatedVVN: doc.relatedVVN,
         operationsExecuted,
         dateOpen: doc.dateOpen,
