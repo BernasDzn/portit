@@ -119,6 +119,11 @@ export class VesselVisitExecutionService {
             if (!operationType) {
                 throw new Error(`Operation type with code ${operation.type} not found.`);
             }
+
+            // You cannot create a load or unload operation 
+            if (operationType.category.getValue() === 'LOAD' || operationType.category.getValue() === 'UNLOAD') {
+                throw new Error(`Operation type ${operation.type} cannot be started manually.`);
+            }
     
             new PayloadValidator(operation.payload, operationType.category.getValue()).validatePayloadForType();
     
@@ -144,12 +149,6 @@ export class VesselVisitExecutionService {
                 payload: operation.payload
             });
     
-            console.log('Created operation:', {
-                id: actualOperation.id,
-                operationTypeId: actualOperation.operationType.id,
-                resources: actualOperation.resources
-            });
-    
             console.log('Operation:', {
                 id: actualOperation.id,
                 operationType: actualOperation.operationType,
@@ -163,11 +162,35 @@ export class VesselVisitExecutionService {
             }));
 
         } else {
+ 
             if (operationWS.status !== 'Pending') {
                 throw new Error(`Operation with id ${operation.id} cannot be started because it is in status ${operationWS.status}.`);
             }
-            
+ 
+            // If it exists, update the existing operation
+            // Only update start date, resources, and payload, other fields remain the same
             operationWS.props.status = 'InProgress';
+            operationWS.operation.startTime = new Date(operation.startTime);
+            operationWS.operation.resources = operation.resources.map((res, index) => {
+                
+                const resource = new Resource({
+                    name: res.name,
+                    type: ResourceType.Staff,
+                    startTime: new Date(res.startTime),
+                    endTime: new Date(res.endTime)
+                });
+                
+                console.log(`Updated Resource ${index}:`, resource);
+                return resource;
+            });
+
+            const operationType = await this.taskCategoryRepository.getCategoryByCode(operation.type);
+            if (!operationType) {
+                throw new Error(`Operation type with code ${operation.type} not found.`);
+            }
+
+            new PayloadValidator(operation.payload, operationType?.category.getValue()).validatePayloadForType();
+            operationWS.operation.payload = operation.payload;
         }
     
         const updated = await this.vesselVisitExecutionRepository.updateVesselVisitExecution(vve);
