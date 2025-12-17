@@ -26,8 +26,8 @@ export default (app: Router) => {
     );
 
     route.put(
-        '/:relatedVVN/operations/:operationId/open',
+        '/:relatedVVN/operations/start',
         [authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)],
-        (req: Request, res: Response, next: NextFunction) => getCtrl().openVesselVisitExecution(req, res, next)
+        (req: Request, res: Response, next: NextFunction) => getCtrl().startOperation(req, res, next)
     )
 }

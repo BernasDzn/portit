@@ -14,6 +14,12 @@ export interface OperationStartDto {
     type: string;
     startTime: string;
     endTime: string;
-    resources: ResourceDto[];
+    resources: ResourceStartDto[];
     payload?: any;
 };
+
+export interface ResourceStartDto {
+    name: string;
+    startTime: string;
+    endTime: string;
+}

@@ -35,13 +35,12 @@ export class VesselVisitExecutionRepository {
     }
 
     async updateVesselVisitExecution(vve: VesselVisitExecution): Promise<VesselVisitExecution> {
-        
         const updatedVVE = await VesselVisitExecutionMapper.toSchema(vve);
         const updatedDoc = await VesselVisitExecutionModel.findByIdAndUpdate(vve.id, updatedVVE, { new: true }).exec();
         if (!updatedDoc) {
             throw new Error(`Vessel Visit Execution with id ${vve.id} not found for update.`);
         }
-
+        
         return VesselVisitExecutionMapper.fromSchema(updatedDoc, this.taskCategoryRepository);
     }
 

@@ -26,7 +26,7 @@ export class Resource {
 	toDto(): ResourceDto {
 		return {
 			name: this.name,
-			type: ResourceType[this.type],
+			type: this.type,
             startTime: this.startTime?.toISOString(),
             endTime: this.endTime?.toISOString(),
 		};

@@ -1,10 +1,39 @@
 import mongoose from "mongoose";
-import { OperationSchema } from "./operationPlanSchema";
+
+const ExecutionOperationSchema = new mongoose.Schema({
+    operationType: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "TaskCategory",
+        required: false // :(
+    },
+    startTime: {
+        type: Date,
+        required: true
+    },
+    endTime: {
+        type: Date,
+        required: true
+    },
+    resources: {
+        type: [{
+            name: { type: String, required: true },
+            type: { type: String, required: true },
+            startTime: { type: Date, required: false },
+            endTime: { type: Date, required: false }
+        }],
+        required: true,
+        default: []
+    },
+    payload: {
+        type: mongoose.Schema.Types.Mixed,
+        required: false
+    }
+});
 
 const OperationWithStatusSchema = new mongoose.Schema({
 
     operation: {
-        type: OperationSchema,
+        type: ExecutionOperationSchema,
         required: true        
     },
     status: {

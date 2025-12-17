@@ -112,14 +112,14 @@ export class VesselVisitExecutionController {
 
     /**
      * @swagger
-     * /vessel-visit-executions/{vveId}/operations/start:
-     *   post:
+     * /vessel-visit-executions/{relatedVVN}/operations/start:
+     *   put:
      *     summary: Start a new operation for a Vessel Visit Execution
      *     tags:
      *       - Vessel Visit Executions
      *     parameters:
      *       - in: path
-     *         name: vveId
+     *         name: relatedVVN
      *         required: true
      *         schema:
      *           type: string
@@ -146,11 +146,11 @@ export class VesselVisitExecutionController {
      */
     async startOperation(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
-            const { vveId } = req.params;
+            const { relatedVVN } = req.params;
             const operation = req.body;
 
-            if (!vveId) {
-                res.status(400).json({ message: 'vveId parameter is required.' });
+            if (!relatedVVN) {
+                res.status(400).json({ message: 'relatedVVN parameter is required.' });
                 return;
             }
 
@@ -159,7 +159,7 @@ export class VesselVisitExecutionController {
                 return;
             }
 
-            const execution = await this.vesselVisitExecutionService.startOperation(vveId, operation);
+            const execution = await this.vesselVisitExecutionService.startOperation(relatedVVN, operation);
             res.status(200).json(execution);
         } catch (error) {
             next(error);
@@ -174,14 +174,18 @@ export class VesselVisitExecutionController {
  *     OperationDto:
  *       type: object
  *       required:
+ *         - id
  *         - type
  *         - startTime
  *         - endTime
  *         - resources
  *       properties:
+ *         id:
+ *           type: string
+ *           description: Operation identifier
  *         type:
  *           type: string
- *           description: Operation type identifier
+ *           description: Operation type code/identifier
  *         startTime:
  *           type: string
  *           format: date-time
@@ -193,9 +197,28 @@ export class VesselVisitExecutionController {
  *         resources:
  *           type: array
  *           items:
- *             $ref: '#/components/schemas/ResourceDto'
+ *             $ref: '#/components/schemas/ResourceStartDto'
  *         payload:
- *           $ref: '#/components/schemas/PayloadDto'
+ *           type: object
  *           nullable: true
+ *           description: Additional operation-specific data
+ *     ResourceStartDto:
+ *       type: object
+ *       required:
+ *         - name
+ *         - startTime
+ *         - endTime
+ *       properties:
+ *         name:
+ *           type: string
+ *           description: Resource name/identifier
+ *         startTime:
+ *           type: string
+ *           format: date-time
+ *           description: Resource allocation start time (ISO-8601)
+ *         endTime:
+ *           type: string
+ *           format: date-time
+ *           description: Resource allocation end time (ISO-8601)
  */
 export const vesselVisitExecutionController = new VesselVisitExecutionController();

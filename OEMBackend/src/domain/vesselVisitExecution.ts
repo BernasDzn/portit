@@ -39,6 +39,10 @@ export class OperationWithStatus extends Entity<OperationWithStatusProps> {
     );
   }
 
+  set status(newStatus: OperationStatus) {
+    this.props.status = newStatus;
+  }
+
   public toDto() {
     return {
       id: this.id,

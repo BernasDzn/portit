@@ -8,6 +8,8 @@ import Operation from "../domain/value/operation";
 import { OperationStartDto } from "../dto/value/operationDto";
 import { TaskCategoryRepository } from "../repository/taskCategoryRepository";
 import { Resource, ResourceType } from "../domain/value/resource";
+import { PayloadValidator } from "./validators/operationPayloadValidator";
+import mongoose from "mongoose";
 
 @Service("vesselVisitExecutionService")
 export class VesselVisitExecutionService {
@@ -38,12 +40,18 @@ export class VesselVisitExecutionService {
         const vve: VesselVisitExecution = new VesselVisitExecution({
             code: `VVE-PORTO-${(await this.vesselVisitExecutionRepository.count()) + 1}`,
             relatedVVN: plan.relatedVVN,
-            operationsExecuted: plan.operationSchedule.toArray().map(op => new OperationWithStatus(
+            operationsExecuted: plan.operationSchedule.toArray().map(op => {
+                // console.log('Plan operation:', {
+                //     id: op.id,
+                //     operationType: op.operationType,
+                //     operationTypeId: op.operationType?.id
+                // });
+                return new OperationWithStatus(
                 {
                     operation: op,
                     status: 'Pending'
                 }
-            )),
+            )}),
             status: 'Open',
             dateOpen: new Date(),
             dateClosed: undefined,
@@ -78,49 +86,90 @@ export class VesselVisitExecutionService {
         return updated.toDto();
     }
 
-    async startOperation(vveId: string, operation: OperationStartDto): Promise<VesselVisitExecutionDto | null> {    
+    /**
+{
+  "type": "LOAD",
+  "startTime": "2025-12-17T16:59:10.341Z",
+  "endTime": "2025-12-17T16:59:10.341Z",
+  "resources": [
+    {
+      "name": "John Doe",
+      "startTime": "2025-12-17T16:59:10.341Z",
+      "endTime": "2025-12-17T17:59:10.341Z"
+    }
+  ],
+  "payload": {
+    "containerId": "AAAAA",
+    "storageLocation": "aaa"
+  }
+}
+     */
 
-        const vve = await this.vesselVisitExecutionRepository.getById(vveId);
+    async startOperation(vveId: string, operation: OperationStartDto): Promise<VesselVisitExecutionDto> {    
+        
+        const vve = await this.vesselVisitExecutionRepository.getByVVN(vveId);
         if (!vve) {
             throw new Error(`Vessel Visit Execution with id ${vveId} not found.`);
         }
-
+    
         const operationWS = vve.operationsExecuted.find(opWS => opWS.operation.id === operation.id);
+        
         if (!operationWS) {
-            
             const operationType = await this.taskCategoryRepository.getCategoryByCode(operation.type);
             if (!operationType) {
                 throw new Error(`Operation type with code ${operation.type} not found.`);
             }
-
+    
+            new PayloadValidator(operation.payload, operationType.category.getValue()).validatePayloadForType();
+    
+            const mappedResources = operation.resources.map((res, index) => {
+                
+                const resource = new Resource({
+                    name: res.name,
+                    type: ResourceType.Staff,
+                    startTime: new Date(res.startTime),
+                    endTime: new Date(res.endTime)
+                });
+                
+                console.log(`Created Resource ${index}:`, resource);
+                return resource;
+            });
+    
             const actualOperation = new Operation({
-                operationType: operationType!,
+                id: new mongoose.Types.ObjectId().toString(),
+                operationType: operationType,
                 startTime: new Date(operation.startTime),
                 endTime: new Date(operation.endTime),
-                resources: operation.resources.map(res => ({
-                    name: res.name,
-                    type: res.type as ResourceType,
-                    startTime: res.startTime,
-                    endTime: res.endTime
-                } as Resource)),
+                resources: mappedResources,
                 payload: operation.payload
             });
+    
+            console.log('Created operation:', {
+                id: actualOperation.id,
+                operationTypeId: actualOperation.operationType.id,
+                resources: actualOperation.resources
+            });
+    
+            console.log('Operation:', {
+                id: actualOperation.id,
+                operationType: actualOperation.operationType,
+                operationTypeId: actualOperation.operationType?.id,
+                operationTypeFullObject: JSON.stringify(actualOperation.operationType)
+            });
+            
+            vve.operationsExecuted.push(new OperationWithStatus({
+                operation: actualOperation,
+                status: 'InProgress'
+            }));
 
-            // If not existing, make new
-            vve.operationsExecuted.push(new OperationWithStatus(
-                {
-                    operation: actualOperation,
-                    status: 'InProgress'
-                }
-            ));
         } else {
-            // Update existing
+            if (operationWS.status !== 'Pending') {
+                throw new Error(`Operation with id ${operation.id} cannot be started because it is in status ${operationWS.status}.`);
+            }
+            
             operationWS.props.status = 'InProgress';
-            vve.props.operationsExecuted = vve.operationsExecuted.map(opWS => 
-                opWS.operation.id === operation.id ? operationWS : opWS
-            );
         }
-
+    
         const updated = await this.vesselVisitExecutionRepository.updateVesselVisitExecution(vve);
         return updated.toDto();
     }

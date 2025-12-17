@@ -4,10 +4,12 @@ import { Resource, ResourceType } from "../domain/value/resource";
 import { Payload } from "../domain/value/payload";
 import { TaskCategoryMapper } from "./taskCategoryMapper";
 import { TaskCategoryRepository } from "../repository/taskCategoryRepository";
+import mongoose from "mongoose"; 
 
 export class VesselVisitExecutionMapper {
 
   static toSchema(vve: VesselVisitExecution): any {
+
     return {
       code: vve.code,
       createdBy: vve.createdBy,
@@ -18,16 +20,19 @@ export class VesselVisitExecutionMapper {
       operationsExecuted: vve.operationsExecuted.map(opWS => ({
         status: opWS.status,
         operation: {
-          operationType: opWS.operation.operationType.id,
-          startTime: opWS.operation.startTime,
-          endTime: opWS.operation.endTime,
-          resources: opWS.operation.resources.map(res => ({
-            name: res.name,
-            type: ResourceType[res.type],
-            startTime: res.startTime,
-            endTime: res.endTime
-          })),
-          payload: opWS.operation.payload
+            id: opWS.operation.id,    
+            operationType: opWS.operation.operationType?.id 
+              ? new mongoose.Types.ObjectId(opWS.operation.operationType.id)
+              : undefined,
+            startTime: opWS.operation.startTime,
+            endTime: opWS.operation.endTime,
+            resources: opWS.operation.resources.map(res => ({
+                name: res.name,
+                type: res.type,
+                startTime: res.startTime,
+                endTime: res.endTime
+            })),
+            payload: opWS.operation.payload
         }
       }))
     };
@@ -52,11 +57,9 @@ export class VesselVisitExecutionMapper {
           });
         });
 
-        const operationTypeDoc = await taskCategoryRepo.getCategoryById(
+        const operationType = await taskCategoryRepo.getCategoryById(
           opWS.operation.operationType
         );
-
-        const operationType = TaskCategoryMapper.fromSchema(operationTypeDoc);
 
         // Skip invalid operations
         if (!operationType) {
@@ -69,11 +72,12 @@ export class VesselVisitExecutionMapper {
         const payload = opWS.operation.payload;
 
         const operation = new Operation({
-          operationType,
-          startTime: opWS.operation.startTime,
-          endTime: opWS.operation.endTime,
-          resources,
-          payload
+            id: opWS.operation._id.toString(),
+            operationType,
+            startTime: opWS.operation.startTime,
+            endTime: opWS.operation.endTime,
+            resources,
+            payload
         });
 
         const operationWithStatus = new OperationWithStatus(
