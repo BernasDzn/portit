@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import type { IncidentType } from '@/model/IncidentType';
+import type { IncidentType, IncidentTypeDto } from '@/model/IncidentType';
 import EntityView from '@/components/crud/EntityView.vue';
 import IncidentTypePrinter from '@/components/printers/IncidentTypePrinter.vue';
 import type { IIncidentTypeService } from '@/service/IService/IIncidentTypeService';
@@ -17,11 +17,11 @@ const incidentTypeService = container.get<IIncidentTypeService>(TYPES.incidentTy
 const incidentTypeId = computed(() => route.params.id as string);
 const deleteDialog = ref<HTMLElement | null>(null);
 
-const parent = ref<IncidentType | null>(null);
-const subtypes = ref<IncidentType[]>([]);
+const parent = ref<IncidentTypeDto | null>(null);
+const subtypes = ref<IncidentTypeDto[]>([]);
 
 // btw this should probably be moved to either a composable, service layer or domain class to keep it clean
-const fetchIncidentType = async (): Promise<IncidentType | undefined> => {
+const fetchIncidentType = async (): Promise<IncidentTypeDto | undefined> => {
     const incidentType = await incidentTypeService.getIncidentTypeById(incidentTypeId.value);
 
     // Fetch subtypes and save them in the ref var

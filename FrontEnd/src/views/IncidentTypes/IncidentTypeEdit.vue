@@ -26,7 +26,7 @@ let incidentType = ref({
     description: '',
     severity: null as any,
     subtypeOf: null as string | null,
-    subtypes: [] as string[]
+    subtypes: [] as IncidentTypeDto[]
 });
 
 const loading = ref(true);
@@ -42,13 +42,27 @@ onMounted(async () => {
         const data = await incidentTypeService.getIncidentTypeById(incidentTypeId);
         if (!data) return;
         
+        // Fetch all incident types to get the options that will be in the selector
+        const allTypes = await incidentTypeService.getAllIncidentTypes();
+        
+        // Find the subtypes from the fetched options by matching IDs
+        const subtypes: IncidentTypeDto[] = [];
+        if (data.subtypesIds && data.subtypesIds.length > 0) {
+            for (const subtypeId of data.subtypesIds) {
+                const matchedSubtype = allTypes.items.find(it => it.id === subtypeId);
+                if (matchedSubtype) {
+                    subtypes.push(matchedSubtype);
+                }
+            }
+        }
+        
         incidentType.value = {
             id: data.id,
             name: data.name,
             description: data.description,
             severity: { id: data.severity, name: data.severity },
             subtypeOf: data.subtypeOfId || null,
-            subtypes: data.subtypesIds || []
+            subtypes: subtypes
         };
         
     } catch (err) {
@@ -58,24 +72,21 @@ onMounted(async () => {
     }
 });
 
-const updateIncidentType = async (obj: any) => {
-    if (!incidentTypeId) {
-        notifications.enqueueNotification(
-            'Cannot update incident type at this time.',
-            notifications.notificationTypes.DANGER
-        );
-        return;
-    }
+const notifyError = (msg: string) => {
+  notifications.enqueueNotification(msg, notifications.notificationTypes.DANGER);
+};
 
-    const severityValue = obj.severity?.id || obj.severity;
+const updateIncidentType = async () => {
+    if (!incidentTypeId) return notifyError('Cannot update incident type at this time.');
+
+    const severityValue = incidentType.value.severity?.id || incidentType.value.severity;
     
     const it = new IncidentType({
-        id: obj.id,
-        name: obj.name,
-        description: obj.description,
+        name: incidentType.value.name,
+        description: incidentType.value.description,
         severity: severityValue,
-        subtypeOfId: obj.subtypeOf,
-        subtypesIds: obj.subtypes
+        subtypeOfId: incidentType.value.subtypeOf,
+        subtypesIds: incidentType.value.subtypes.map(subtype => subtype.id)
     });
 
     return incidentTypeService.updateIncidentType(incidentTypeId, it);
@@ -100,7 +111,7 @@ const severityOptions = [
             </sl-breadcrumb-item>
             <sl-breadcrumb-item>
                 <RouterLink :to="incidentType.id ? `/incident-types/view/${incidentType.id}` : '/incident-types/search'" class="link">
-                    {{ incidentType.name || t('incidentType.title') }}
+                    {{ incidentType.id || t('incidentType.title') }}
                 </RouterLink>
             </sl-breadcrumb-item>
             <sl-breadcrumb-item>{{ t('buttons.edit') }}</sl-breadcrumb-item>
@@ -140,7 +151,7 @@ const severityOptions = [
                         <ObjectSelector class="field-dropdown" :name="t('incidentType.fields.subtypes.title')"
                             v-model="incidentType.subtypes" :fetch-function="fetchIncidentTypes"
                             :placeholderText="t('incidentType.fields.subtypes.placeholder')" labelKey="name"
-                            valueKey="id" multiple />
+                            valueKey="id" multiple :fetch-on-mount="true" />
                     </div>
                 </div>
             </div>

@@ -94,7 +94,11 @@ export class IncidentTypeValidator {
 	): Promise<void> {
 		for (const subtypeId of subtypesIds) {
 
-			if (await this.isDescendantOf(subtypeId, typeId)) {
+			// Check if subtypeId is a descendant, but allow if it's a DIRECT child (existing relationship)
+			const existingSubtype = await this.incidentTypeRepository.getById(subtypeId);
+			const isDirectChild = existingSubtype?.subtypeOfId === typeId;
+			
+			if (!isDirectChild && await this.isDescendantOf(subtypeId, typeId)) {
 				throw new Error(
 					`Type ${subtypeId} is already a descendant of ${typeId}. Subtypes cannot skip layers.`
 				);
@@ -106,7 +110,7 @@ export class IncidentTypeValidator {
 				);
 			}
 
-			const existingSubtype = await this.incidentTypeRepository.getById(subtypeId);
+			// Only throw error if the subtype has a DIFFERENT parent
 			if (existingSubtype?.subtypeOfId && existingSubtype.subtypeOfId !== typeId) {
 				throw new Error(
 					`Type ${subtypeId} already has a parent (${existingSubtype.subtypeOfId}). A type can only have one parent.`

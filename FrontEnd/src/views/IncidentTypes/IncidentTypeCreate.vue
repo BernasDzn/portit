@@ -10,8 +10,10 @@ import TYPES from '@/inversify/types';
 import ObjectSelector from '@/components/crud/ObjectSelector.vue';
 import type { Filter, Page } from '@/model/Page';
 import type { IncidentTypeCreateDto } from '@/model/dto/IncidentTypeDto';
+import { useAlerts } from '@/composables/alerts';
 
 const { t } = useI18n();
+const notifications = useAlerts();
 
 const incidentType = ref({
     name: '',
@@ -23,16 +25,28 @@ const incidentType = ref({
 
 const incidentTypeService = container.get<IIncidentTypeService>(TYPES.incidentTypeService);
 
-const submitIncidentType = () => {
-    let dto : IncidentTypeCreateDto = {
-        name: incidentType.value.name,
-        description: incidentType.value.description,
-        severity: incidentType.value.severity.id,
-        subtypeOfId: incidentType.value.subtypeOf?.id || null,
-        subtypesIds: incidentType.value.subtypes.map(subtype => subtype.id)
-    };
-    console.log(dto);
-    return incidentTypeService.createIncidentType(dto);
+const submitIncidentType = async () => {
+    try {
+        let dto : IncidentTypeCreateDto = {
+            name: incidentType.value.name,
+            description: incidentType.value.description,
+            severity: incidentType.value.severity.id,
+            subtypeOfId: incidentType.value.subtypeOf?.id || null,
+            subtypesIds: incidentType.value.subtypes.map(subtype => subtype.id)
+        };
+        console.log(dto);
+        return await incidentTypeService.createIncidentType(dto);
+    } catch (error: any) {
+        let message = error?.response?.data?.message || error?.response?.data || error?.message || 'Failed to create incident type';
+        if (typeof message === 'object' && message !== null) {
+            message = message.errors?.[0]?.error || JSON.stringify(message);
+        }
+        notifications.enqueueNotification(
+            String(message),
+            notifications.notificationTypes.DANGER
+        );
+        throw error;
+    }
 };
 
 const severityOptions = [
