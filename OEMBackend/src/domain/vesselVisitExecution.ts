@@ -6,8 +6,7 @@ import { VesselVisitExecutionDto } from "../dto/vesselVisitExecutionDto";
 export type OperationStatus =
   | 'Pending'
   | 'InProgress'
-  | 'Completed'
-  | 'Failed';
+  | 'Completed';
 
 export type VesselVisitExecutionStatus = 'Open' | 'Closed';
 

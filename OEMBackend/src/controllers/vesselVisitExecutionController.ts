@@ -165,6 +165,78 @@ export class VesselVisitExecutionController {
             next(error);
         }
     }
+
+    /**
+     * @swagger
+     * /vessel-visit-executions/{relatedVVN}/operations/{operationId}/complete:
+     *   put:
+     *     summary: Complete an existing operation for a Vessel Visit Execution
+     *     tags:
+     *       - Vessel Visit Executions
+     *     parameters:
+     *       - in: path
+     *         name: relatedVVN
+     *         required: true
+     *         schema:
+     *           type: string
+     *         description: Vessel Visit Execution ID
+     *       - in: path
+     *         name: operationId
+     *         required: true
+     *         schema:
+     *           type: string
+     *         description: Operation ID to be completed
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             properties:
+     *               endTime:
+     *                 type: string
+     *                 format: date-time
+     *                 description: Operation end time (ISO-8601)
+     *     responses:
+     *       200:
+     *         description: Operation completed successfully
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/VesselVisitExecutionDto'
+     *       400:
+     *         description: Invalid input data
+     *       404:
+     *         description: Vessel Visit Execution or Operation not found
+     *       500:
+     *         description: Server error
+     */
+    async completeOperation(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const { relatedVVN, operationId } = req.params;
+            const { endTime } = req.body;
+
+            if (!relatedVVN) {
+                res.status(400).json({ message: 'relatedVVN parameter is required.' });
+                return;
+            }
+
+            if (!operationId) {
+                res.status(400).json({ message: 'operationId parameter is required.' });
+                return;
+            }
+
+            if (!endTime) {
+                res.status(400).json({ message: 'endTime is required in the request body.' });
+                return;
+            }
+
+            const execution = await this.vesselVisitExecutionService.completeOperation(relatedVVN, operationId, new Date(endTime));
+            res.status(200).json(execution);
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 
 /**

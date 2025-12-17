@@ -30,4 +30,10 @@ export default (app: Router) => {
         [authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)],
         (req: Request, res: Response, next: NextFunction) => getCtrl().startOperation(req, res, next)
     )
+
+    route.put(
+        '/:relatedVVN/operations/:operationId/complete',
+        [authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)],
+        (req: Request, res: Response, next: NextFunction) => getCtrl().completeOperation(req, res, next)
+    )
 }

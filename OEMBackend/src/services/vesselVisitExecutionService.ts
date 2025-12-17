@@ -196,4 +196,26 @@ export class VesselVisitExecutionService {
         const updated = await this.vesselVisitExecutionRepository.updateVesselVisitExecution(vve);
         return updated.toDto();
     }
+
+    async completeOperation(vveId: string, operationId: string, endTime: Date): Promise<VesselVisitExecutionDto> {
+        const vve = await this.vesselVisitExecutionRepository.getByVVN(vveId);
+        if (!vve) {
+            throw new Error(`Vessel Visit Execution with id ${vveId} not found.`);
+        }
+
+        const operationWS = vve.operationsExecuted.find(opWS => opWS.operation.id === operationId);
+        if (!operationWS) {
+            throw new Error(`Operation with id ${operationId} not found in Vessel Visit Execution ${vveId}.`);
+        }
+
+        if (operationWS.status !== 'InProgress') {
+            throw new Error(`Operation with id ${operationId} cannot be completed because it is in status ${operationWS.status}.`);
+        }
+
+        operationWS.props.status = 'Completed';
+        operationWS.operation.endTime = endTime;
+
+        const updated = await this.vesselVisitExecutionRepository.updateVesselVisitExecution(vve);
+        return updated.toDto();
+    }
 }
