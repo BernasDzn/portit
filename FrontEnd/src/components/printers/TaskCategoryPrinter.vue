@@ -1,10 +1,6 @@
 <script setup lang="ts">
-import type { IncidentType } from '@/model/IncidentType';
 import { RouterLink } from 'vue-router';
-import { useI18n } from 'vue-i18n';
 import type { TaskCategory } from '@/model/TaskCategory';
-
-const { t } = useI18n();
 
 const props = withDefaults(defineProps<{
     taskCategory: TaskCategory;

@@ -7,8 +7,6 @@ import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
 import Loading from '@/components/Loading.vue';
 import { useI18n } from 'vue-i18n';
-import type { Filter, Page } from '@/model/Page';
-import type { TaskCategoryFilter } from '@/model/dto/TaskCategoryDto';
 import type TaskCategoryDto from '@/model/dto/TaskCategoryDto';
 import type { ITaskCategoryService } from '@/service/IService/ITaskCategoryService';
 import { TaskCategory } from '@/model/TaskCategory';

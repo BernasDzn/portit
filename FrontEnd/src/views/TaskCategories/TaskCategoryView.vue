@@ -59,12 +59,12 @@ const fetchTaskCategory = async (): Promise<TaskCategoryDto | undefined> => {
                         <p>{{ t('taskCategory.taskCategoryInformation') }}</p>
                         <div class="info-grid">
                             <div class="info-block">
-                                <span class="label">{{ t('taskCategory.fields.name.title') }}</span>
-                                <p>{{ entity.element.name }}</p>
-                            </div>
-                            <div class="info-block">
                                 <span class="label">{{ t('taskCategory.fields.category.title') }}</span>
                                 <p>{{ entity.element.category }}</p>
+                            </div>
+                            <div class="info-block">
+                                <span class="label">{{ t('taskCategory.fields.name.title') }}</span>
+                                <p>{{ entity.element.name }}</p>
                             </div>
                             <div class="info-block" style="flex: 100%;">
                                 <span class="label">{{ t('taskCategory.fields.description.title') }}</span>
