@@ -10,27 +10,28 @@ export default (app: Router) => {
 
 	const getCtrl = () => Container.get(IncidentTypeController);
 
-	route.post(
-		'/',
-		(req, res, next) => getCtrl().createIncidentType(req, res, next)
-	);
-
-	route.get(
-		'/',
-		(req, res, next) => getCtrl().getAllIncidentTypes(req, res, next)
-	);
-
 	route.get(
 		'/count',
 		(req, res, next) => getCtrl().count(req, res, next)
 	);
 
 	route.get(
-		'/:id',
-		(req, res, next) => getCtrl().getIncidentTypeById(req, res, next)
+		'/',
+		(req, res, next) => getCtrl().getPaged(req, res, next)
 	);
 
-	route.patch(
+	route.get(
+		'/:id',
+		(req, res, next) => getCtrl().getById(req, res, next)
+	);
+
+	route.post(
+		'/',
+		(req, res, next) => getCtrl().createIncidentType(req, res, next)
+	);
+
+
+	route.put(
 		'/:id',
 		(req, res, next) => getCtrl().updateIncidentType(req, res, next)
 	);

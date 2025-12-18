@@ -14,73 +14,20 @@ export default class IncidentTypeController extends BaseController {
 
 	/**
 	 * @openapi
-	 * /incident-types:
-	 *   post:
-	 *     tags: [Incident Types]
-	 *     summary: Create a new incident type
-	 *     security:
-	 *       - bearerAuth: []
-	 *     requestBody:
-	 *       required: true
-	 *       content:
-	 *         application/json:
-	 *           schema:
-	 *             type: object
-	 *             properties:
-	 *               name:
-	 *                 type: string
-	 *               subtypeOfId:
-	 *                 type: string
-	 *                 description: ID of parent type (optional)
-	 *               subtypesIds:
-	 *                 type: array
-	 *                 items:
-	 *                   type: string
-	 *                 description: Array of subtype IDs (optional)
-	 *             required:
-	 *               - name
-	 *     responses:
-	 *       201:
-	 *         description: Incident type created successfully
-	 */
-	public async createIncidentType(req: any, res: any, next: any): Promise<void> {
-		try {
-			const { name, description, severity, subtypeOfId, subtypesIds } = req.body;
-			const incidentType = await this.incidentTypeService.createIncidentType(name, severity, description, subtypeOfId, subtypesIds);
-			this.created(res, incidentType);
-		} catch (error) {
-			next(error);
-		}
-	}
-
-	/**
-	 * @openapi
-	 * /incident-types/{id}:
+	 * /incident-types/count:
 	 *   get:
-	 *     tags: [Incident Types]
-	 *     summary: Get an incident type by ID
-	 *     security:
-	 *       - bearerAuth: []
-	 *     parameters:
-	 *       - in: path
-	 *         name: id
-	 *         required: true
-	 *         schema:
-	 *           type: string
-	 *         description: Incident type ID
-	 *     responses:
-	 *       200:
-	 *         description: Incident type retrieved successfully
+	 *    tags: [Incident Types]
+	 *    summary: Get the total count of incident types
+	 *    security:
+	 *      - bearerAuth: []
+	 *    responses:
+	 *      200:
+	 *        description: Total count of incident types retrieved successfully
 	 */
-	public async getIncidentTypeById(req: any, res: any, next: any): Promise<void> {
+	public async count(req: any, res: any, next: any): Promise<void> {
 		try {
-			const { id } = req.params;
-			const incidentType = await this.incidentTypeService.getIncidentTypeById(id);
-			if (incidentType) {
-				this.ok(res, incidentType);
-			} else {
-				this.notFound(res, 'Incident type not found');
-			}
+			const count = await this.incidentTypeService.count();
+			this.ok(res, { count });
 		} catch (error) {
 			next(error);
 		}
@@ -109,9 +56,8 @@ export default class IncidentTypeController extends BaseController {
 	 *       200:
 	 *         description: List of incident types retrieved successfully
 	 */
-	public async getAllIncidentTypes(req: any, res: any, next: any): Promise<void> {
+	public async getPaged(req: any, res: any, next: any): Promise<void> {
 		try {
-
 			const pageNumber = parseInt(req.query.pageNumber) || 1;
 			const pageSize = parseInt(req.query.pageSize) || 10;
 
@@ -120,12 +66,82 @@ export default class IncidentTypeController extends BaseController {
 				pageSize
 			};
 
-			const incidentTypes = await this.incidentTypeService.getAllIncidentTypes(filter);
-			this.ok(res, incidentTypes);
+			const incidentTypesPage = await this.incidentTypeService.getPaged(filter);
+			this.ok(res, incidentTypesPage);
 		} catch (error) {
 			next(error);
 		}
 	}
+
+	/**
+	 * @openapi
+	 * /incident-types/{id}:
+	 *   get:
+	 *     tags: [Incident Types]
+	 *     summary: Get an incident type by ID
+	 *     security:
+	 *       - bearerAuth: []
+	 *     parameters:
+	 *       - in: path
+	 *         name: id
+	 *         required: true
+	 *         schema:
+	 *           type: string
+	 *         description: Incident type ID
+	 *     responses:
+	 *       200:
+	 *         description: Incident type retrieved successfully
+	 */
+	public async getById(req: any, res: any, next: any): Promise<void> {
+		try {
+			const { id } = req.params;
+			const incidentType = await this.incidentTypeService.getById(id);
+			this.ok(res, incidentType);
+		} catch (error) {
+			next(error);
+		}
+	}
+
+	/**
+	 * @openapi
+	 * /incident-types:
+	 *   post:
+	 *     tags:
+	 *       - Incident Types
+	 *     summary: Create a new incident type
+	 *     security:
+	 *       - bearerAuth: []
+	 *     requestBody:
+	 *       required: true
+	 *       content:
+	 *         application/json:
+	 *           schema:
+	 *             type: object
+	 *             properties:
+	 *               name:
+	 *                 type: string
+	 *               description:
+	 *                 type: string
+	 *               severity:
+	 *                 type: string
+	 *               subtypeOfId:
+	 *                 type: string
+	 *                 description: ID of parent type (optional)
+	 *             required:
+	 *               - name
+	 *     responses:
+	 *       201:
+	 *         description: Incident type created successfully
+	 */
+	public async createIncidentType(req: any, res: any, next: any): Promise<void> {
+		try {
+			const incidentType = await this.incidentTypeService.create(req.body);
+			this.created(res, incidentType);
+		} catch (error) {
+			next(error);
+		}
+	}
+
 
 	/**
 	 * @openapi
@@ -162,8 +178,7 @@ export default class IncidentTypeController extends BaseController {
 	public async updateIncidentType(req: any, res: any, next: any): Promise<void> {
 		try {
 			const { id } = req.params;
-			const { name, description, severity, subtypesIds } = req.body;
-			const incidentType = await this.incidentTypeService.updateIncidentType(id, name, description, severity, subtypesIds);
+			const incidentType = await this.incidentTypeService.update(id, req.body);
 			if (incidentType) {
 				this.ok(res, incidentType);
 			} else {
@@ -174,24 +189,4 @@ export default class IncidentTypeController extends BaseController {
 		}
 	}
 
-	/**
-	 * @openapi
-	 * /incident-types/count:
-	 *   get:
-	 *    tags: [Incident Types]
-	 *    summary: Get the total count of incident types
-	 *    security:
-	 *      - bearerAuth: []
-	 *    responses:
-	 *      200:
-	 *        description: Total count of incident types retrieved successfully
-	 */
-	public async count(req: any, res: any, next: any): Promise<void> {
-		try {
-			const count = await this.incidentTypeService.count();
-			this.ok(res, { count });
-		} catch (error) {
-			next(error);
-		}
-	}
 }
