@@ -32,9 +32,16 @@ obtain_seq_genetic(SeqTriplets, Delay) :-
         forall(
             vessel(Name, ArrivalTime, DepartureTime, UnloadContainers, LoadContainers, CraneList),
             (
-                get_crane_sum_genetic(CraneList, CraneSpeed),
-                TotalContainers is UnloadContainers + LoadContainers,
-                (CraneSpeed > 0 -> ProcessingT is TotalContainers / CraneSpeed ; ProcessingT = 0),
+                % Check if vessel has NO operations
+                ( (UnloadContainers =:= 0, LoadContainers =:= 0) ->
+                    % No operations: processing time is full scheduled duration
+                    ProcessingT is DepartureTime - ArrivalTime
+                ;
+                    % Has operations: calculate based on crane speeds
+                    get_crane_sum_genetic(CraneList, CraneSpeed),
+                    TotalContainers is UnloadContainers + LoadContainers,
+                    (CraneSpeed > 0 -> ProcessingT is TotalContainers / CraneSpeed ; ProcessingT = 0)
+                ),
                 assertz(vessel_visit(Name, ArrivalTime, DepartureTime, ProcessingT))
             )
         ),
@@ -411,18 +418,29 @@ obtain_seq_genetic(SeqTriplets, Delay) :-
     
     convert_to_triplets([VesselName|Rest], EndPrevSeq, [(VesselName, TInUnload, TEndLoad)|RestTriplets]) :-
         % Get vessel data to calculate proper times (matching greedy algorithm logic)
-        vessel(VesselName, TIn, _, TUnloadContainers, TLoadContainers, Cranes),
-        get_crane_sum_genetic(Cranes, CraneSpeed),
+        vessel(VesselName, TIn, TDep, TUnloadContainers, TLoadContainers, Cranes),
         
-        % Calculate unload and load times separately
-        (TUnloadContainers > 0, CraneSpeed > 0 -> TUnload is TUnloadContainers / CraneSpeed ; TUnload = 0),
-        (TLoadContainers > 0, CraneSpeed > 0 -> TLoad is TLoadContainers / CraneSpeed ; TLoad = 0),
-        
-        % Start time logic (same as greedy algorithm)
-        (TIn > EndPrevSeq -> TInUnload is TIn ; TInUnload is EndPrevSeq + 1),
-        
-        % End time formula (corrected - removed the -1 bug)
-        TEndLoad is TInUnload + TUnload + TLoad,
+        % Check if vessel has NO operations
+        ( (TUnloadContainers =:= 0, TLoadContainers =:= 0) ->
+            % No operations: vessel occupies its full scheduled time frame
+            TUnload = 0,
+            TLoad = 0,
+            TInUnload = TIn,
+            TEndLoad is TDep - 1  % End at departure time - 1 (vessel departs at TDep)
+        ;
+            % Has operations: calculate based on crane speeds
+            get_crane_sum_genetic(Cranes, CraneSpeed),
+            
+            % Calculate unload and load times separately
+            (TUnloadContainers > 0, CraneSpeed > 0 -> TUnload is TUnloadContainers / CraneSpeed ; TUnload = 0),
+            (TLoadContainers > 0, CraneSpeed > 0 -> TLoad is TLoadContainers / CraneSpeed ; TLoad = 0),
+            
+            % Start time logic (same as greedy algorithm)
+            (TIn > EndPrevSeq -> TInUnload is TIn ; TInUnload is EndPrevSeq + 1),
+            
+            % End time formula (corrected - removed the -1 bug)
+            TEndLoad is TInUnload + TUnload + TLoad
+        ),
         
         % Next vessel can start after this one finishes
         convert_to_triplets(Rest, TEndLoad, RestTriplets).

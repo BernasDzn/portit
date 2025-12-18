@@ -40,13 +40,23 @@ sequence_temporization(LV,SeqTriplets):-
 	sequence_temporization1(0,LV,SeqTriplets).
 
 sequence_temporization1(EndPrevSeq,[V|LV],[(V,TInUnload,TEndLoad)|SeqTriplets]):-
-    vessel(V,TIn,_,TUnloadC,TLoadC, Cranes),
-    calculate_load_unload_time_optimal(TLoadC,TUnloadC, Cranes,TLoad, TUnload),
+    vessel(V,TIn,TDep,TUnloadC,TLoadC, Cranes),
     
-    ( (TIn> EndPrevSeq,!, TInUnload is TIn); TInUnload is EndPrevSeq + 1),
+    % Check if vessel has NO operations (both load and unload are 0)
+    ( (TUnloadC =:= 0, TLoadC =:= 0) ->
+        % No operations: vessel occupies its full scheduled time frame
+        TUnload = 0,
+        TLoad = 0,
+        TInUnload = TIn,
+        TEndLoad is TDep - 1  % End at departure time - 1 (vessel departs at TDep)
+    ;
+        % Has operations: calculate time based on crane speeds
+        calculate_load_unload_time_optimal(TLoadC,TUnloadC, Cranes,TLoad, TUnload),
+        ( (TIn> EndPrevSeq,!, TInUnload is TIn); TInUnload is EndPrevSeq + 1),
+        TEndLoad is TInUnload + TUnload + TLoad
+    ),
+    
     (format(user_error,'~nVessel: ~w TInUnload: ~w TUnload: ~w TLoad: ~w~n',[V,TInUnload,TUnload,TLoad]), true),
-    
-    TEndLoad is TInUnload + TUnload + TLoad,
     sequence_temporization1(TEndLoad,LV,SeqTriplets).
 
 sequence_temporization1(_,[],[]).

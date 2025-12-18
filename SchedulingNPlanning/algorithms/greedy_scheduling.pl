@@ -105,24 +105,34 @@ sequence_temporization_greedy(LV, SeqTriplets):-
 sequence_temporization_greedy1(EndPrevSeq, [V|LV], [(V, TInUnload, TEndLoad)|SeqTriplets]):-
     % Look up this vessel's data from the knowledge base
     % vessel(Name, ArrivalTime, DepartureDeadline, UnloadContainerCount, LoadContainerCount, CraneList)
-    vessel(V, TIn, _, TUnloadContainers, TLoadContainers, Cranes),
+    vessel(V, TIn, TDep, TUnloadContainers, TLoadContainers, Cranes),
     
-    % Calculate actual time based on crane speeds
-    % Time = Containers / Speed
-    get_crane_sum_greedy(Cranes, CraneSpeed),
-    ( (TUnloadContainers > 0, CraneSpeed > 0) -> TUnload is (TUnloadContainers / CraneSpeed) ; TUnload = 0 ),
-    ( (TLoadContainers > 0, CraneSpeed > 0) -> TLoad is (TLoadContainers / CraneSpeed) ; TLoad = 0 ),
-    
-    % Decide when this vessel can start being serviced:
-    % CASE 1: If the vessel hasn't arrived yet (TIn > EndPrevSeq)
-    %         → it starts when it arrives (TInUnload = TIn)
-    % CASE 2: If the vessel is already waiting (TIn <= EndPrevSeq)
-    %         → it starts right after previous vessel finishes (TInUnload = EndPrevSeq + 1)
-    (TIn > EndPrevSeq -> TInUnload is TIn ; TInUnload is EndPrevSeq + 1),
-    
-    % Calculate when this vessel finishes all operations:
-    % Finish time = Start + Unloading + Loading
-    TEndLoad is TInUnload + TUnload + TLoad,
+    % Check if vessel has NO operations (both load and unload are 0)
+    ( (TUnloadContainers =:= 0, TLoadContainers =:= 0) ->
+        % No operations: vessel occupies its full scheduled time frame
+        TUnload = 0,
+        TLoad = 0,
+        % Vessel occupies from arrival to departure
+        TInUnload = TIn,
+        TEndLoad is TDep - 1  % End at departure time - 1 (vessel departs at TDep)
+    ;
+        % Has operations: calculate time based on crane speeds
+        % Time = Containers / Speed
+        get_crane_sum_greedy(Cranes, CraneSpeed),
+        ( (TUnloadContainers > 0, CraneSpeed > 0) -> TUnload is (TUnloadContainers / CraneSpeed) ; TUnload = 0 ),
+        ( (TLoadContainers > 0, CraneSpeed > 0) -> TLoad is (TLoadContainers / CraneSpeed) ; TLoad = 0 ),
+        
+        % Decide when this vessel can start being serviced:
+        % CASE 1: If the vessel hasn't arrived yet (TIn > EndPrevSeq)
+        %         → it starts when it arrives (TInUnload = TIn)
+        % CASE 2: If the vessel is already waiting (TIn <= EndPrevSeq)
+        %         → it starts right after previous vessel finishes (TInUnload = EndPrevSeq + 1)
+        (TIn > EndPrevSeq -> TInUnload is TIn ; TInUnload is EndPrevSeq + 1),
+        
+        % Calculate when this vessel finishes all operations:
+        % Finish time = Start + Unloading + Loading
+        TEndLoad is TInUnload + TUnload + TLoad
+    ),
     
     % Recursively schedule the rest of the vessels
     sequence_temporization_greedy1(TEndLoad, LV, SeqTriplets).

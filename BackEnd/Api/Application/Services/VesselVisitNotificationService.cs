@@ -364,8 +364,7 @@ public class VesselVisitNotificationService : IVesselVisitNotificationService
                     Dock = notification.GetLatestDecision()!.AssignedDock!.Code.Value
                 };
 
-                if (vesselTaskFact.LoadingCount > 0 || vesselTaskFact.UnloadingCount > 0)
-                    result.VesselTaskFacts.Add(vesselTaskFact);
+                result.VesselTaskFacts.Add(vesselTaskFact);
             }
 
             _logger.LogInformation($"CollectSchedulingData: Created {result.VesselTaskFacts.Count} vessel task facts");
