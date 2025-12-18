@@ -34,13 +34,13 @@ export class TaskCategoryService {
     async updateCategory(id: string, category: CreateTaskCategoryDto): Promise<TaskCategoryDto | null> {
 
         const existingCategory = await this.taskCategoryRepository.getCategoryByCode(category.category);
-        if (!existingCategory || existingCategory.id !== id) {
+        if (!existingCategory || existingCategory.category.getValue() !== id) {
             throw new Error(`Task Category with code ${category.category} does not exist.`);
         }
 
         const updatedCategory = await this.taskCategoryRepository.updateCategory(new TaskCategory(
             {
-                id: id,
+                id: existingCategory.id,
                 category: category.category,
                 description: category.description,
                 name: category.name
