@@ -457,6 +457,19 @@ const router = createRouter({
           component: () => import('@/views/TaskCategories/TaskCategoryView.vue')
         },
         {
+          path: '/task-categories/create',
+          name: 'Create Task Category',
+          component: () => import('@/views/TaskCategories/TaskCategoryCreate.vue'),
+          meta: {
+            icon: "add"
+          }
+        },
+        {
+          path: '/task-categories/edit/:id',
+          name: 'Edit Task Category',
+          component: () => import('@/views/TaskCategories/TaskCategoryEdit.vue'),
+        },
+        {
           path: '/about',
           name: 'about',
           component: () => import('@/views/About/About.vue'),
