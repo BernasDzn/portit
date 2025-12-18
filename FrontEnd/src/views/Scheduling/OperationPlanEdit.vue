@@ -423,18 +423,18 @@ const updateResourceTime = (operationIndex: number, resourceIndex: number, start
                         />
                     
 
-                        <GanttChart
-                            :key="ganttKey"
-                            :items="ganttItems"
-                            :row-configs="ganttRowConfigs"
-                            @item-updated="onItemUpdated"
-                            @bar-click="onOperationClick"
-                        />
-                    </div>
-                    
-                    <OperationWarnings :warnings="warnings" :graveWarnings="graveWarnings" />
+                    <GanttChart
+                        :key="ganttKey"
+                        :items="ganttItems"
+                        :row-configs="ganttRowConfigs"
+                        @item-updated="onItemUpdated"
+                        @bar-click="onOperationClick"
+                    />
                 </div>
-            </EntityForm>
+                
+                <OperationWarnings :warnings="warnings" :graveWarnings="graveWarnings" />
+            </div>
+        </EntityForm>
 
             <OperationDetailsDrawer
                 :plan="plan" 
