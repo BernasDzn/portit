@@ -13,6 +13,7 @@ import GanttChart, { type GanttItem, type GanttRowConfig } from '@/components/Ga
 import EntityView from '@/components/crud/EntityView.vue';
 import VesselVisitNotificationPrinter from '@/components/printers/VesselVisitNotificationPrinter.vue';
 import { useTaskCategories } from '@/composables/taskcats';
+import type { IVesselVisitExecutionService } from '@/service/IService/IVesselExecutionService';
 
 const { t } = useI18n();
 const route = useRoute();
@@ -20,12 +21,18 @@ const taskCategory = useTaskCategories();
 
 const planService = container.get<IOperationPlanService>(TYPES.operationPlanService);
 const vvnService = container.get<IVesselVisitNotificationService>(TYPES.vesselVisitNotificationService);
+const vveService = container.get<IVesselVisitExecutionService>(TYPES.vesselVisitExecutionService);
 const planId = String(route.params.id || '');
 
 const relatedVVN = ref<VesselVisitNotification | null>(null);
 
+const notifications = useAlerts();
+
 const items = ref<GanttItem[]>([]);
 const configs = ref<GanttRowConfig[]>([]);
+
+const loading = ref(false);
+const hasStarted = ref(false);
 
 const fetchPlan = async (): Promise<OperationPlanDto | undefined> => {
     const plan = await planService.getOperationPlanById(planId);
@@ -41,6 +48,18 @@ const fetchPlan = async (): Promise<OperationPlanDto | undefined> => {
             console.error('Failed to fetch related VVN:', error);
         }
     }
+
+    try {
+        const vve = await vveService.getVesselVisitExecutionByVVN(plan.relatedVVN);
+        if (vve && vve.dateOpen) {
+            hasStarted.value = true;
+        }
+        
+    } catch (error) {
+     
+        hasStarted.value = false;
+    }
+
     console.log('Fetched plan:', plan);
     return plan;
 };
@@ -48,6 +67,32 @@ const fetchPlan = async (): Promise<OperationPlanDto | undefined> => {
 const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleString();
 };
+
+const vvnId = computed(() => relatedVVN.value?.notificationId || '');
+const openVVE = async () => {
+    try {
+        loading.value = true;
+        await vveService.openVesselVisitExecution(vvnId.value);
+
+        notifications.enqueueNotification(
+            "Vessel Visit Execution opened successfully.",
+            notifications.notificationTypes.SUCCESS
+        );
+        
+        hasStarted.value = true;
+
+    } catch (error) {
+
+        notifications.enqueueNotification(
+            "Failed to open Vessel Visit Execution. " + (error.response?.data?.message || ''),
+            notifications.notificationTypes.DANGER
+        );
+
+    } finally {
+        loading.value = false;
+    }
+};
+
 </script>
 
 <template>
@@ -70,11 +115,15 @@ const formatDate = (dateString: string) => {
                 </div>
                 <div>
                     <RouterLink :to="`/scheduling/plans-edit/${encodeURIComponent(entity.element.id)}`">
-                        <sl-button slot="footer" variant="default" size="large">
+                        <sl-button slot="footer" variant="default" size="large" :disabled="hasStarted || loading" :loading="loading">
                             <sl-icon slot="prefix" name="pencil"></sl-icon>
                             {{ t('operationPlan.tabs.edit') }}
                         </sl-button>
                     </RouterLink>
+                    <sl-button style="margin-left: 20px" slot="footer" variant="primary" size="large" :disabled="hasStarted || loading" @click="openVVE" :loading="loading">
+                        <sl-icon slot="prefix" name="play-circle"></sl-icon>
+                        {{ t('operationPlan.tabs.open') }}
+                    </sl-button>
                 </div>
             </div>
             <div class="viewing-content">

@@ -797,7 +797,8 @@
         "tabs": {
             "unplannedVVNs": "Unplanned VVNs",
             "search": "Search Plans",
-            "edit": "Edit Plan"
+            "edit": "Edit Plan",
+            "open": "Start Execution"
         },
         "subtitle":{
             "edit": "Modify operation plan details and schedule"
