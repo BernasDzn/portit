@@ -70,7 +70,7 @@ export class IncidentTypeValidator {
 
 			visited.add(currentId);
 			const current = await this.incidentTypeRepository.getById(currentId);
-			currentId = current?.subtypeOfId;
+			currentId = current?.subtypeOf?.id;
 		}
 	}
 
@@ -96,7 +96,7 @@ export class IncidentTypeValidator {
 
 			// Check if subtypeId is a descendant, but allow if it's a DIRECT child (existing relationship)
 			const existingSubtype = await this.incidentTypeRepository.getById(subtypeId);
-			const isDirectChild = existingSubtype?.subtypeOfId === typeId;
+			const isDirectChild = existingSubtype?.subtypeOf?.id === typeId;
 			
 			if (!isDirectChild && await this.isDescendantOf(subtypeId, typeId)) {
 				throw new Error(
@@ -111,9 +111,9 @@ export class IncidentTypeValidator {
 			}
 
 			// Only throw error if the subtype has a DIFFERENT parent
-			if (existingSubtype?.subtypeOfId && existingSubtype.subtypeOfId !== typeId) {
+			if (existingSubtype?.subtypeOf?.id && existingSubtype.subtypeOf?.id !== typeId) {
 				throw new Error(
-					`Type ${subtypeId} already has a parent (${existingSubtype.subtypeOfId}). A type can only have one parent.`
+					`Type ${subtypeId} already has a parent (${existingSubtype.subtypeOf?.id}). A type can only have one parent.`
 				);
 			}
 		}
@@ -128,15 +128,15 @@ export class IncidentTypeValidator {
 
 		while (currentId) {
 			const current = await this.incidentTypeRepository.getById(currentId);
-			if (!current?.subtypeOfId) {
+			if (!current?.subtypeOf?.id) {
 				return false;
 			}
 
-			if (current.subtypeOfId === ancestorId) {
+			if (current.subtypeOf?.id === ancestorId) {
 				return true;
 			}
 
-			currentId = current.subtypeOfId;
+			currentId = current.subtypeOf?.id;
 		}
 
 		return false;

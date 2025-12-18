@@ -34,15 +34,4 @@ export default (app: Router) => {
 		'/:id',
 		(req, res, next) => getCtrl().updateIncidentType(req, res, next)
 	);
-
-	route.delete(
-		'/:id/subtypes/:subtypeId',
-		(req, res, next) => getCtrl().removeSubtype(req, res, next)
-	);
-
-	route.delete(
-		'/:id',
-		(req, res, next) => getCtrl().deleteIncidentType(req, res, next)
-	);
-
 }
