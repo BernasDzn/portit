@@ -43,7 +43,7 @@ const fetchPlan = async (): Promise<OperationPlanDto | undefined> => {
 
             // Prepare Gantt items and configs
             items.value = taskCategory.getGanttItems(plan);
-            configs.value = taskCategory.getGanttRowConfigs(plan);
+            configs.value = taskCategory.getGanttRowConfigs(plan, [], []);
             hasOperations.value = plan.operationSchedule.length > 0;
 
         } catch (error) {
