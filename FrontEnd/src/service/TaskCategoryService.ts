@@ -5,6 +5,8 @@ import type { Page } from '@/model/Page';
 import type TaskCategoryDto from '@/model/dto/TaskCategoryDto';
 import type { ITaskCategoryService } from './IService/ITaskCategoryService';
 import { TaskCategory } from '@/model/TaskCategory';
+import type { Filter } from 'mongodb';
+import type { TaskCategoryFilter } from '@/model/dto/TaskCategoryDto';
 
 @injectable()
 export class TaskCategoryService implements ITaskCategoryService {
@@ -14,8 +16,17 @@ export class TaskCategoryService implements ITaskCategoryService {
         private http: IHttpService
     ) { }
 
-    async getAllTaskCategories(): Promise<Page<TaskCategoryDto>> {        
-        const res = await this.http.get<Page<TaskCategoryDto>>(`/oem/task-categories`);
+    async getAllTaskCategories(filtering?: Filter<TaskCategoryFilter>): Promise<Page<TaskCategoryDto>> {    
+
+        let query: string[] = [];
+
+		if (filtering) {
+			query.push(filtering.filter.name ? `Name=${filtering.name}&` : '');
+			query.push(filtering.pageNumber !== undefined ? `PageNumber=${filtering.pageNumber}&` : '');
+			query.push(filtering.pageSize !== undefined ? `PageSize=${filtering.pageSize}` : '');
+		}
+    
+        const res = await this.http.get<Page<TaskCategoryDto>>(`/oem/task-categories?${query.length ? `${query.join('')}` : ''}`);
         return res.data;
     }
 
