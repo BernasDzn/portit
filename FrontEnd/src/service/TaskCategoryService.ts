@@ -40,8 +40,8 @@ export class TaskCategoryService implements ITaskCategoryService {
         return res.data;
     }
 
-    async updateTaskCategory(id: string, taskCategory: TaskCategory): Promise<TaskCategoryDto> {
-        const res = await this.http.patch<TaskCategoryDto>(`/oem/task-categories/${id}`, taskCategory.toDto());
+    async updateTaskCategory(taskCategory: TaskCategoryDto): Promise<TaskCategoryDto> {
+        const res = await this.http.put<TaskCategoryDto>(`/oem/task-categories/${taskCategory.category}`, taskCategory);
         return res.data;
     }
 }

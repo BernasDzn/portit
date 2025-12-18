@@ -7,5 +7,5 @@ export interface ITaskCategoryService {
     getAllTaskCategories(filtering?: Filter<TaskCategoryFilter>): Promise<Page<TaskCategoryDto>>;
     getTaskCategoryByCode(code: string): Promise<TaskCategoryDto | undefined>;
     createTaskCategory(taskCategory: TaskCategoryDto): Promise<TaskCategoryDto>;
-    updateTaskCategory(id: string, taskCategory: TaskCategoryDto): Promise<TaskCategoryDto>;
+    updateTaskCategory(taskCategory: TaskCategoryDto): Promise<TaskCategoryDto>;
 }
