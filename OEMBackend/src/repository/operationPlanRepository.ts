@@ -65,7 +65,7 @@ export class OperationPlanRepository {
 
 		for (const doc of allPlans) {
 			const plan = await OperationPlanMapper.fromSchema(doc, new TaskCategoryRepository());
-			const dateKey = new Date(plan.date).toISOString().split('T')[0] as string;
+			const dateKey = new Date(plan.date).toISOString().split("T")[0] as string;
 			if (!grouped[dateKey]) {
 				grouped[dateKey] = [];
 			}

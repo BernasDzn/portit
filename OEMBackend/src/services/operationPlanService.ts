@@ -53,7 +53,7 @@ export class OperationPlanService {
 		const baseDate = new Date(scheduleDataDto.date);
 
 		const existingPlans = await this.getByDateGrouped();
-		const plansOnDate = existingPlans.find(group => group.date === scheduleDataDto.date);
+		const plansOnDate = existingPlans.find(group => group.date === scheduleDataDto.date.split("T")[0]);
 		for (const plan of plansOnDate?.plans || []) {
 			await this.operationPlanRepository.deleteById(plan.id!);
 		}
