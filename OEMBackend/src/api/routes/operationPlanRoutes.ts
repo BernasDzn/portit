@@ -41,5 +41,11 @@ export default (app: Router) => {
 		[authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)],
 		(req: Request, res: Response, next: NextFunction) => getCtrl().regeneratePlansForDay(req, res, next)
 	);
+
+	route.patch(
+		'/:id',
+		[authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)],
+		(req: Request, res: Response, next: NextFunction) => getCtrl().updateOperationPlan(req, res, next)
+	);
 	
 }

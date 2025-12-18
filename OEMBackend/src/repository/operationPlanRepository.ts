@@ -112,6 +112,23 @@ export class OperationPlanRepository {
 		return unplannedVvnIds;
 	}
 
+	async update(id: string, operationPlan: OperationPlan): Promise<OperationPlan> {
+		const updatedData = OperationPlanMapper.toSchema(operationPlan);
+		
+		const updatedDoc = await OperationPlanModel.findByIdAndUpdate(
+			id,
+			{ $set: updatedData },
+			{ new: true, runValidators: true }
+		);
+		
+		if (!updatedDoc) {
+			throw new Error(`Operation plan with id ${id} not found`);
+		}
+		
+		const plan = await OperationPlanMapper.fromSchema(updatedDoc, new TaskCategoryRepository());
+		return plan;
+	}
+
 	async deleteById(id: string): Promise<void> {
 		await OperationPlanModel.findByIdAndDelete(id);
 	}

@@ -210,4 +210,123 @@ export default class OperationPlanController extends BaseController {
         }
     }
 
+    /**
+     * @openapi
+     * /operation-plans/{id}:
+     *   patch:
+     *     tags: [Operation Plans]
+     *     summary: Update an existing operation plan
+     *     security:
+     *       - bearerAuth: []
+     *     parameters:
+     *       - in: path
+     *         name: id
+     *         required: true
+     *         schema:
+     *           type: string
+     *         description: Operation plan ID
+     *     requestBody:
+     *       required: true
+     *       content:
+     *         application/json:
+     *           schema:
+     *             type: object
+     *             properties:
+     *               relatedVVN:
+     *                 type: string
+     *                 description: Related Vessel Visit Notification ID
+     *               dock:
+     *                 type: string
+     *                 description: Dock code
+     *               operationSchedule:
+     *                 type: array
+     *                 items:
+     *                   type: object
+     *                   properties:
+     *                     type:
+     *                       type: object
+     *                       properties:
+     *                         id:
+     *                           type: string
+     *                         name:
+     *                           type: string
+     *                         category:
+     *                           type: string
+     *                         description:
+     *                           type: string
+     *                     startTime:
+     *                       type: string
+     *                       format: date-time
+     *                     endTime:
+     *                       type: string
+     *                       format: date-time
+     *                     resources:
+     *                       type: array
+     *                       items:
+     *                         type: object
+     *                         properties:
+     *                           name:
+     *                             type: string
+     *                           type:
+     *                             type: string
+     *                             enum: [Crane, Staff, Truck]
+     *                           startTime:
+     *                             type: string
+     *                             format: date-time
+     *                           endTime:
+     *                             type: string
+     *                             format: date-time
+     *                     payload:
+     *                       type: object
+     *                       description: Operation-specific payload data
+     *               metadata:
+     *                 type: object
+     *                 properties:
+     *                   createdBy:
+     *                     type: string
+     *                   createdAt:
+     *                     type: string
+     *                     format: date-time
+     *                   algorithmUsed:
+     *                     type: string
+     *     responses:
+     *       200:
+     *         description: Operation plan updated successfully
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 id:
+     *                   type: string
+     *                 relatedVVN:
+     *                   type: string
+     *                 dock:
+     *                   type: string
+     *                 operationSchedule:
+     *                   type: array
+     *                 metadata:
+     *                   type: object
+     *       400:
+     *         description: Invalid request data
+     *       404:
+     *         description: Operation plan not found
+     */
+    public async updateOperationPlan(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const id = req.params.id as string;
+            const planData = req.body;
+
+            const updatedPlan = await this.operationPlanService.updateOperationPlan(id, planData);
+            if (!updatedPlan) {
+                this.notFound(res, 'Operation plan not found for update');
+                return;
+            }
+            this.ok(res, updatedPlan);
+        } catch (e) {
+            this.fail(res, "Error updating operation plan");
+            return next(e);
+        }
+    }
+
 }

@@ -13,6 +13,7 @@ export class OperationPlanService implements IOperationPlanService {
 		@inject(TYPES.api) 
 		private http: IHttpService
 	){}
+
     async groupOperationPlansByDate(): Promise<{ date: string; plans: OperationPlanDto[] }[]> {
         const res = await this.http.get<{ date: string; plans: OperationPlanDto[] }[]>(`/oem/operation-plans/by-date`);
         return res.data;
@@ -48,6 +49,11 @@ export class OperationPlanService implements IOperationPlanService {
         const queryString = query.length ? `?${query.join('&')}` : '';
         console.log('Fetching operation plans with query:', queryString);
         const res = await this.http.get<Page<OperationPlanDto>>(`/oem/operation-plans${queryString}`);
+        return res.data;
+    }
+
+    async updateOperationPlan(id: string, updates: Partial<OperationPlanDto>): Promise<OperationPlanDto> {
+        const res = await this.http.patch<OperationPlanDto>(`/oem/operation-plans/${id}`, updates);
         return res.data;
     }
 }
