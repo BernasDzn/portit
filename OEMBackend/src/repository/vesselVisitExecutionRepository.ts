@@ -47,6 +47,22 @@ export class VesselVisitExecutionRepository {
     async count(): Promise<number> {
         return await VesselVisitExecutionModel.countDocuments().exec();
     }
+
+    async getAllVesselVisitExecutions(page: number, limit: number): Promise<Page<VesselVisitExecution>> {
+        const skip = (page - 1) * limit;
+        const docs = await VesselVisitExecutionModel.find().skip(skip).limit(limit).exec();
+        const totalItems = await this.count();
+        const vesselVisitExecutions = await Promise.all(
+            docs.map(doc => VesselVisitExecutionMapper.fromSchema(doc, this.taskCategoryRepository))
+        );
+
+        return {
+            items: vesselVisitExecutions,
+            pageSize: totalItems,
+            pageNumber: page,
+            pageCount: Math.ceil(totalItems / limit)
+        };
+    }
 }
 
 export const vesselVisitExecutionRepository = new VesselVisitExecutionRepository();

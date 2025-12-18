@@ -10,6 +10,7 @@ import { TaskCategoryRepository } from "../repository/taskCategoryRepository";
 import { Resource, ResourceType } from "../domain/value/resource";
 import { PayloadValidator } from "./validators/operationPayloadValidator";
 import mongoose from "mongoose";
+import { Page } from "../utils/page";
 
 @Service("vesselVisitExecutionService")
 export class VesselVisitExecutionService {
@@ -217,5 +218,23 @@ export class VesselVisitExecutionService {
 
         const updated = await this.vesselVisitExecutionRepository.updateVesselVisitExecution(vve);
         return updated.toDto();
+    }
+
+    async getVesselVisitExecutionByVVN(relatedVVN: string): Promise<VesselVisitExecutionDto> {
+        const vve = await this.vesselVisitExecutionRepository.getByVVN(relatedVVN);
+        if (!vve) {
+            throw new Error(`Vessel Visit Execution with VVN ${relatedVVN} not found.`);
+        }
+        return vve.toDto();
+    }
+
+    async getAllVesselVisitExecutions(page: number, limit: number): Promise<Page<VesselVisitExecutionDto>> {
+        const vvePage = await this.vesselVisitExecutionRepository.getAllVesselVisitExecutions(page, limit);
+        return {
+            items: vvePage.items.map(vve => vve.toDto()),
+            pageSize: vvePage.pageSize,
+            pageNumber: vvePage.pageNumber,
+            pageCount: vvePage.pageCount
+        };
     }
 }

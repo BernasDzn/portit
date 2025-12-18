@@ -21,32 +21,33 @@ export class IncidentTypeService {
 		
 		await this.incidentTypeValidator.validateHierarchy(incidentType.id, subtypeOfId, subtypesIds);
 		
-		return await this.incidentTypeRepository.create(incidentType, subtypeOfId, subtypesIds);
+		return (await this.incidentTypeRepository.create(incidentType, subtypeOfId, subtypesIds)).toDto();
 	}
 
 	async getIncidentTypeById(id: string): Promise<IncidentTypeDto | null> {
-		return await this.incidentTypeRepository.getById(id);
+        const doc = await this.incidentTypeRepository.getById(id);
+        return doc!.toDto();
 	}
 
 	async getAllIncidentTypes(pageable: Pageable): Promise<Page<IncidentTypeDto>> {
-		return await this.incidentTypeRepository.getAll(pageable);
+		const page = await this.incidentTypeRepository.getAll(pageable);
+        
+        return {
+            items: page.items.map(item => item.toDto()),
+            pageCount: page.pageCount,
+            pageNumber: page.pageNumber,
+            pageSize: page.pageSize
+        };
 	}
 
-	async updateIncidentType(id: string, name?: string, description?: string, severity?: Severity, subtypesIds?: string[]): Promise<IncidentTypeDto | null> {
+	async updateIncidentType(id: string, name?: string, description?: string, severity?: Severity, subtypesIds?: string[]): Promise<IncidentTypeDto> {
 
 		if (subtypesIds) {
 			await this.incidentTypeValidator.validateHierarchy(id, undefined, subtypesIds);
 		}
 		
-		return await this.incidentTypeRepository.update(id, name, description, severity, subtypesIds);
-	}
-
-	async removeSubtype(id: string, subtypeId: string): Promise<IncidentTypeDto | null> {
-		return await this.incidentTypeRepository.removeSubtype(id, subtypeId);
-	}
-
-	async deleteIncidentType(id: string): Promise<boolean> {
-		return await this.incidentTypeRepository.deleteById(id);
+		const doc = (await this.incidentTypeRepository.update(id, name, description, severity, subtypesIds))?.toDto();
+        return doc!;
 	}
 
 	async count(): Promise<number> {

@@ -36,4 +36,16 @@ export default (app: Router) => {
         [authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)],
         (req: Request, res: Response, next: NextFunction) => getCtrl().completeOperation(req, res, next)
     )
+
+    route.get(
+        '/:relatedVVN',
+        [authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)],
+        (req: Request, res: Response, next: NextFunction) => getCtrl().getVesselVisitExecution(req, res, next)
+    );
+
+    route.get(
+        '/',
+        [authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)],
+        (req: Request, res: Response, next: NextFunction) => getCtrl().getAllVesselVisitExecutions(req, res, next)
+    );
 }

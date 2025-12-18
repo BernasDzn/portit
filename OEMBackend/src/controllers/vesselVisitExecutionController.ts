@@ -237,6 +237,107 @@ export class VesselVisitExecutionController {
             next(error);
         }
     }
+
+    /**
+     * @swagger
+     * /vessel-visit-executions/{relatedVVN}:
+     *   get:
+     *     summary: Get Vessel Visit Execution details by Vessel Visit Number (VVN)
+     *     tags:
+     *       - Vessel Visit Executions
+     *     parameters:
+     *       - in: path
+     *         name: relatedVVN
+     *         required: true
+     *         schema:
+     *           type: string
+     *         description: The related Vessel Visit Number
+     *     responses:
+     *       200:
+     *         description: Vessel Visit Execution details retrieved successfully
+     *         content:
+     *           application/json:
+     *             schema:
+     *               $ref: '#/components/schemas/VesselVisitExecutionDto'
+     *       400:
+     *         description: Invalid Vessel Visit Number
+     *       404:
+     *         description: Vessel Visit Execution not found
+     *       500:
+     *         description: Server error
+     */
+    async getVesselVisitExecution(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const { relatedVVN } = req.params;
+            if (!relatedVVN) {
+                res.status(400).json({ message: 'relatedVVN parameter is required.' });
+                return;
+            }
+
+            const execution = await this.vesselVisitExecutionService.getVesselVisitExecutionByVVN(relatedVVN);
+            if (!execution) {
+                res.status(404).json({ message: `Vessel Visit Execution with VVN ${relatedVVN} not found.` });
+                return;
+            }
+
+            res.status(200).json(execution);
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    /**
+     * @swagger
+     * /vessel-visit-executions:
+     *   get:
+     *     summary: Get all Vessel Visit Executions with pagination
+     *     tags:
+     *       - Vessel Visit Executions
+     *     parameters:
+     *       - in: query
+     *         name: page
+     *         schema:
+     *           type: integer
+     *           default: 1
+     *         description: Page number for pagination
+     *       - in: query
+     *         name: limit
+     *         schema:
+     *           type: integer
+     *           default: 10
+     *         description: Number of items per page
+     *     responses:
+     *       200:
+     *         description: List of Vessel Visit Executions retrieved successfully
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 items:
+     *                   type: array
+     *                   items:
+     *                     $ref: '#/components/schemas/VesselVisitExecutionDto'
+     *                 pageSize:
+     *                   type: integer
+     *                   description: Total number of items
+     *                 pageNumber:
+     *                   type: integer
+     *                   description: Current page number
+     *       500:
+     *         description: Server error
+     */
+    async getAllVesselVisitExecutions(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const page = parseInt(req.query.page as string) || 1;
+            const limit = parseInt(req.query.limit as string) || 10;
+
+            const executionsPage = await this.vesselVisitExecutionService.getAllVesselVisitExecutions(page, limit);
+            res.status(200).json(executionsPage);
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 
 /**

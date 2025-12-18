@@ -1,12 +1,11 @@
 import IncidentType, { Severity } from "../domain/incidentType";
-import { IncidentTypeDto } from "../dto/incidentTypeDto";
 import { IncidentTypeMapper } from "../mappers/incidentTypeMapper";
 import { IncidentTypeModel } from "../schemas/incidentTypeSchema";
 import { Page, Pageable } from "../utils/page";
 
 export class IncidentTypeRepository {
 
-	async create(incidentType: IncidentType, subtypeOfId?: string, subtypesIds?: string[]): Promise<IncidentTypeDto> {
+	async create(incidentType: IncidentType, subtypeOfId?: string, subtypesIds?: string[]): Promise<IncidentType> {
 		const newIncidentType = IncidentTypeMapper.toSchema(incidentType);
 		
 		if (subtypeOfId) {
@@ -42,16 +41,16 @@ export class IncidentTypeRepository {
 		const finalDoc = await IncidentTypeModel.findOne({ id: incidentType.id }).populate('subtypeOf').populate('subtypes');
 		if (!finalDoc) throw new Error('Failed to create incident type');
 		
-		return this.mapToDto(finalDoc);
+		return IncidentTypeMapper.fromSchema(finalDoc);
 	}
 
-	async getById(id: string): Promise<IncidentTypeDto | null> {
+	async getById(id: string): Promise<IncidentType | null> {
 		const doc = await IncidentTypeModel.findOne({ id }).populate('subtypeOf').populate('subtypes');
 		if (!doc) return null;
-		return this.mapToDto(doc);
+		return IncidentTypeMapper.fromSchema(doc);
 	}
 
-	async getAll(pageable: Pageable): Promise<Page<IncidentTypeDto>> {
+	async getAll(pageable: Pageable): Promise<Page<IncidentType>> {
 		//const docs = await IncidentTypeModel.find().populate('subtypeOf').populate('subtypes');
         const {pageNumber, pageSize} = pageable;
         const skip = (pageNumber - 1) * pageSize;
@@ -66,11 +65,11 @@ export class IncidentTypeRepository {
             pageNumber,
             pageSize,
             pageCount: Math.ceil(await IncidentTypeModel.countDocuments() / pageSize),
-            items: data.map((doc) => this.mapToDto(doc))
+            items: data.map(doc => IncidentTypeMapper.fromSchema(doc))
         };
 	}
 
-	async update(id: string, name?: string, description?: string, severity?: Severity, subtypesIds?: string[]): Promise<IncidentTypeDto | null> {
+	async update(id: string, name?: string, description?: string, severity?: Severity, subtypesIds?: string[]): Promise<IncidentType | null> {
 		const doc = await IncidentTypeModel.findOne({ id });
 		if (!doc) return null;
 
@@ -100,10 +99,10 @@ export class IncidentTypeRepository {
 		const updatedDoc = await IncidentTypeModel.findOne({ id }).populate('subtypeOf').populate('subtypes');
 		if (!updatedDoc) return null;
 		
-		return this.mapToDto(updatedDoc);
+		return IncidentTypeMapper.fromSchema(updatedDoc);
 	}
 
-	async removeSubtype(id: string, subtypeId: string): Promise<IncidentTypeDto | null> {
+	async removeSubtype(id: string, subtypeId: string): Promise<IncidentType | null> {
 		const doc = await IncidentTypeModel.findOne({ id });
 		if (!doc) return null;
 
@@ -119,46 +118,7 @@ export class IncidentTypeRepository {
 		const updatedDoc = await IncidentTypeModel.findOne({ id }).populate('subtypeOf').populate('subtypes');
 		if (!updatedDoc) return null;
 		
-		return this.mapToDto(updatedDoc);
-	}
-
-	async deleteById(id: string): Promise<boolean> {
-		const doc = await IncidentTypeModel.findOne({ id });
-		if (!doc) return false;
-
-		if (doc.subtypeOf) {
-			await IncidentTypeModel.updateOne(
-				{ _id: doc.subtypeOf },
-				{ $pull: { subtypes: doc._id } }
-			);
-		}
-
-		if (doc.subtypes && doc.subtypes.length > 0) {
-			await IncidentTypeModel.updateMany(
-				{ _id: { $in: doc.subtypes } },
-				{ $set: { subtypeOf: null } }
-			);
-		}
-
-		await IncidentTypeModel.deleteOne({ id });
-		return true;
-	}
-
-	private mapToDto(doc: any): IncidentTypeDto {
-		const type = IncidentTypeMapper.fromSchema(doc);
-		const dto = type.toDto();
-		
-		if (doc.subtypeOf && typeof doc.subtypeOf !== 'string') {
-			dto.subtypeOfId = (doc.subtypeOf as any).id;
-		}
-		
-		if (doc.subtypes && doc.subtypes.length > 0) {
-			dto.subtypesIds = doc.subtypes.map((subtype: any) => 
-				typeof subtype === 'string' ? subtype : subtype.id
-			);
-		}
-		
-		return dto;
+		return IncidentTypeMapper.fromSchema(updatedDoc);
 	}
 
 	async count(): Promise<number> {
