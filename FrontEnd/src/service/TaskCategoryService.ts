@@ -21,9 +21,9 @@ export class TaskCategoryService implements ITaskCategoryService {
         let query: string[] = [];
 
 		if (filtering) {
-			query.push(filtering.filter.name ? `Name=${filtering.name}&` : '');
-			query.push(filtering.pageNumber !== undefined ? `PageNumber=${filtering.pageNumber}&` : '');
-			query.push(filtering.pageSize !== undefined ? `PageSize=${filtering.pageSize}` : '');
+			query.push(filtering.filter.name ? `name=${filtering.name}&` : '');
+			query.push(filtering.pageNumber !== undefined ? `pageNumber=${filtering.pageNumber}&` : '');
+			query.push(filtering.pageSize !== undefined ? `pageSize=${filtering.pageSize}` : '');
 		}
     
         const res = await this.http.get<Page<TaskCategoryDto>>(`/oem/task-categories?${query.length ? `${query.join('')}` : ''}`);
