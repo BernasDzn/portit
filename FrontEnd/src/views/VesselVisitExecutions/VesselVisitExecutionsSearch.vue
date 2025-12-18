@@ -10,6 +10,7 @@ import TYPES from '@/inversify/types';
 import type { IVesselVisitExecutionService } from '@/service/IService/IVesselExecutionService';
 import type { VesselVisitExecutionFilter } from '@/model/dto/VesselVisitExecutionDto';
 import type { VesselVisitExecution } from '@/model/VesselVisitExecution';
+import VesselVisitExecutionPrinter from '@/components/printers/VesselVisitExecutionPrinter.vue';
 
 const {t} = useI18n();
 
@@ -41,7 +42,7 @@ const fetchVesselExecutions = async (filtering?: Filter<VesselVisitExecutionFilt
 
         <ListingBox listing-style="listing-triples" :fetch-function="fetchVesselExecutions" v-slot="{elements}">
             <li v-for="vt in elements" :key="vt.id">
-                <VesselVisitExecutionPrinter :vessel-visit-execution="vt" />
+                <VesselVisitExecutionPrinter class="listing-box" :execution="vt" :link="`/vessel-visit-executions/${vt.id}`"/>
             </li>
         </ListingBox>
     </header>
