@@ -40,7 +40,9 @@ const editingOperation = ref<number | null>(null);
 const hasOperations = ref(false);
 
 const ganttItems = computed(() => plan.value ? getGanttItems(plan.value) : []);
-const ganttRowConfigs = computed(() => plan.value ? getGanttRowConfigs(plan.value) : []);
+const ganttRowConfigs = computed(() => 
+    plan.value ? getGanttRowConfigs(plan.value, allSTSCranes.value, allStaff.value) : []
+);
 
 const { warnings, graveWarnings } = useOperationValidation(plan, allSTSCranes, allStaff);
 

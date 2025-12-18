@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, watch, onBeforeUnmount } from 'vue';
+import { ref, onMounted, watch, onBeforeUnmount, computed } from 'vue';
 import { GGanttChart, GGanttRow, type GanttBarObject } from '@infectoone/vue-ganttastic';
 
 export interface GanttItem {
@@ -14,6 +14,13 @@ export interface GanttItem {
 export interface GanttRowConfig {
     name: string;
     color?: string;
+    operationalWindow?: {
+        shifts: Array<{
+            day: number;
+            startTime: string;
+            endTime: string;
+        }>;
+    };
 }
 
 interface Props {
@@ -31,6 +38,7 @@ interface Props {
     noOverlap?: boolean;
     enableZoom?: boolean;
     enableScroll?: boolean;
+    showOperationalWindows?: boolean;
     onBarClick?: (value: {
         bar: GanttBarObject;
         e: MouseEvent;
@@ -47,6 +55,7 @@ const props = withDefaults(defineProps<Props>(), {
     noOverlap: false,
     enableZoom: true,
     enableScroll: true,
+    showOperationalWindows: true,
     onBarClick: () => {}
 });
 
@@ -62,7 +71,6 @@ const chartRows = ref<Array<{ label: string; bars: any[] }>>([]);
 
 let chartContainer: Element | null = null;
 let isDragging = false;
-let dragStartTime = 0;
 
 const defaultGroupBy = (item: GanttItem): string => {
     return item.group || 'Default';
@@ -78,6 +86,53 @@ const getColorForRow = (rowName: string, index: number): string => {
     if (config?.color) return config.color;
     
     return '#3498db';
+};
+
+// Generate operational window blocks for visualization
+const getOperationalWindowBlocks = (rowConfig: GanttRowConfig) => {
+    if (!props.showOperationalWindows || !rowConfig.operationalWindow?.shifts) {
+        return [];
+    }
+
+    const blocks: Array<{ start: string; end: string }> = [];
+    const chartStartTime = new Date(chartStart.value.replace(' ', 'T'));
+    const chartEndTime = new Date(chartEnd.value.replace(' ', 'T'));
+    
+    // For each day in the chart range
+    const currentDate = new Date(chartStartTime);
+    
+    while (currentDate <= chartEndTime) {
+        const dayOfWeek = currentDate.getDay();
+        
+        // Find shifts for this day
+        const dayShifts = rowConfig.operationalWindow.shifts.filter(s => s.day === dayOfWeek);
+        
+        dayShifts.forEach(shift => {
+            // Parse shift times (format: "HH:MM:SS")
+            const [startHour, startMin, startSec] = shift.startTime.split(':').map(Number);
+            const [endHour, endMin, endSec] = shift.endTime.split(':').map(Number);
+            
+            const shiftStart = new Date(currentDate);
+            shiftStart.setHours(startHour, startMin, startSec || 0, 0);
+            
+            const shiftEnd = new Date(currentDate);
+            shiftEnd.setHours(endHour, endMin, endSec || 0, 0);
+            
+            // Only add if within chart range
+            if (shiftEnd >= chartStartTime && shiftStart <= chartEndTime) {
+                blocks.push({
+                    start: shiftStart.toISOString().slice(0, 16).replace('T', ' '),
+                    end: shiftEnd.toISOString().slice(0, 16).replace('T', ' ')
+                });
+            }
+        });
+        
+        // Move to next day
+        currentDate.setDate(currentDate.getDate() + 1);
+        currentDate.setHours(0, 0, 0, 0);
+    }
+    
+    return blocks;
 };
 
 const generateRows = () => {
@@ -101,7 +156,29 @@ const generateRows = () => {
 
     const result = rowConfigs.map((config, rowIndex) => {
         const items = grouped.get(config.name) || [];
-        const bars = items.map((item, index) => ({
+        
+        // Add operational window bars as background elements
+        const operationalBlocks = getOperationalWindowBlocks(config);
+        const windowBars = operationalBlocks.map((block, idx) => ({
+            myStart: block.start,
+            myEnd: block.end,
+            ganttBarConfig: {
+                id: `${config.name}-window-${idx}`,
+                label: '',
+                hasHandles: false,
+                immobile: true,
+                style: {
+                    background: 'rgba(76, 175, 80, 0.15)',
+                    border: '1px dashed rgba(76, 175, 80, 0.4)',
+                    borderRadius: '4px',
+                    zIndex: 0,
+                    pointerEvents: 'none'
+                }
+            }
+        }));
+        
+        // Add actual operation bars
+        const operationBars = items.map((item) => ({
             myStart: new Date(item.startTime).toISOString().slice(0, 16).replace('T', ' '),
             myEnd: new Date(item.endTime).toISOString().slice(0, 16).replace('T', ' '),
             ganttBarConfig: {
@@ -111,7 +188,8 @@ const generateRows = () => {
                 immobile: !props.enableDrag,
                 style: {
                     background: item.color || getColorForRow(config.name, rowIndex),
-                    borderRadius: '8px'
+                    borderRadius: '8px',
+                    zIndex: 10
                 },
                 originalItem: item
             }
@@ -119,7 +197,7 @@ const generateRows = () => {
 
         return {
             label: config.name,
-            bars
+            bars: [...windowBars, ...operationBars] // Windows first (background), then operations
         };
     });
 
@@ -137,15 +215,13 @@ const autoFitTimeRange = () => {
     const minTime = new Date(Math.min(...times.map(t => t.start.getTime())));
     const maxTime = new Date(Math.max(...times.map(t => t.end.getTime())));
 
-    // Calculate total span of operations
     const totalSpanMs = maxTime.getTime() - minTime.getTime();
     
-    // Add padding as 20% of total span (minimum 30 minutes, maximum 4 hours)
     const paddingMs = Math.max(
-        30 * 60 * 1000,  // 30 minutes minimum
+        30 * 60 * 1000,
         Math.min(
-            4 * 60 * 60 * 1000,  // 4 hours maximum
-            totalSpanMs * 0.2    // 20% of span
+            4 * 60 * 60 * 1000,
+            totalSpanMs * 0.2
         )
     );
 
@@ -156,17 +232,17 @@ const autoFitTimeRange = () => {
     chartEnd.value = paddedEnd.toISOString().slice(0, 16).replace('T', ' ');
 };
 
+watch(() => [props.items, props.rowConfigs, chartStart.value, chartEnd.value], () => {
+    generateRows();
+}, { deep: true });
+
 watch(() => props.items, (newItems, oldItems) => {
-    // Only regenerate if items array structure changed (added/removed items)
-    // or if there was no previous data
     if (!oldItems || newItems.length !== oldItems.length || 
         newItems.some((item, i) => item.id !== oldItems[i]?.id)) {
         if (newItems && newItems.length > 0 && !props.initialStart && !props.initialEnd) {
             autoFitTimeRange();
         }
-        generateRows();
     }
-    // Skip updates when just times changed - that's from our own drag events
 }, { immediate: true });
 
 onMounted(() => {
@@ -265,11 +341,7 @@ const onBarDragEnd = (event: any) => {
     isDragging = true;
     const originalItem = event.bar.ganttBarConfig.originalItem as GanttItem;
     
-    console.log('Bar drag end event:', event);
-    console.log('Original item:', originalItem);
-    
     if (!originalItem) {
-        console.warn('No original item found in bar config');
         isDragging = false;
         return;
     }
@@ -280,15 +352,12 @@ const onBarDragEnd = (event: any) => {
         endTime: new Date(event.bar.myEnd.replace(' ', 'T')).toISOString()
     };
 
-    console.log('Emitting updated item:', updatedItem);
-
     if (props.onUpdate) {
         props.onUpdate(updatedItem);
     }
 
     emit('itemUpdated', updatedItem);
     
-    // Reset drag flag after a short delay to prevent click from firing
     setTimeout(() => {
         isDragging = false;
     }, 100);
@@ -300,6 +369,11 @@ const handleBarClick = (value: {
     datetime?: string | Date | undefined;
 }) => {
     if (isDragging) {
+        return;
+    }
+    
+    // Don't trigger clicks on operational window bars
+    if (value.bar.ganttBarConfig.id.includes('-window-')) {
         return;
     }
     
