@@ -22,6 +22,7 @@ const sidebarItems = ref([
   { name: 'vessel.title', route: '/vessels/dashboard', icon: "directions_boat", materialIcon: 'directions_boat', roles: [0, 1] },
   {},
   { name: 'incidentType.title', route: '/incident-types/dashboard', icon: "nearby_error", materialIcon: 'nearby_error', roles: [0, 1, 3] },
+  { name: 'taskCategory.title', route: '/task-categories/dashboard', icon: "category", materialIcon: 'category', roles: [0, 1, 3] },
   { name: 'scheduling.title', route: '/scheduling-dashboard', icon: "calendar_month", materialIcon: 'calendar_month', roles: [0, 3] },
   { name: 'notification.title', route: '/vessel-visit-notifications/dashboard', icon: "ballot", materialIcon: 'ballot', roles: [0, 2, 1] },
   {},
