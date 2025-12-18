@@ -46,7 +46,7 @@ const fetchTaskCategory = async (): Promise<TaskCategoryDto | undefined> => {
                         </div>
                     </div>
                     <div style="display: flex; gap: 0.5rem;">
-                        <RouterLink :to="`/task-categories/edit/${entity.element.id}`">
+                        <RouterLink :to="`/task-categories/edit/${entity.element.category}`">
                             <sl-button variant="default" size="large">
                                 <sl-icon slot="prefix" name="pencil"></sl-icon>
                                 {{ t('buttons.edit') }}
