@@ -316,7 +316,7 @@ export class OperationPlanService {
 			metadata
 		}, id);
 		
-		return (await this.operationPlanRepository.update(id, updatedPlan)).toDto();
+		return (await this.operationPlanRepository.update(id, updatedPlan))!.toDto();
 	}
 
 }

@@ -1,0 +1,37 @@
+import type { OperationStatus, VesselVisitExecutionStatus } from '../VesselVisitExecution';
+import type TaskCategoryDto from './TaskCategoryDto';
+
+export interface ResourceDto {
+    name: string;
+    type: string;
+    startTime?: string;
+    endTime?: string;
+}
+
+export interface OperationDto {
+    type: TaskCategoryDto;
+    startTime: string;
+    endTime: string;
+    resources: ResourceDto[];
+    payload?: Object;
+}
+
+export interface OperationWithStatusDto {
+    id: string;
+    operation: OperationDto;
+    status: OperationStatus;
+}
+
+export interface VesselVisitExecutionDto {
+    id: string;
+    code: string;
+    relatedVVN: string;
+    operationsExecuted: OperationWithStatusDto[];
+    dateOpen?: string;
+    dateClosed?: string;
+    status: VesselVisitExecutionStatus;
+    createdBy: string;
+}
+
+export interface VesselVisitExecutionFilter {
+}

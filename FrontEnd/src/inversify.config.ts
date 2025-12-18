@@ -36,6 +36,8 @@ import type { IPrivacyPolicyService } from "./service/IService/IPrivacyPolicySer
 import type { IOperationPlanService } from "./service/IService/IOperationPlanService";
 import type { ISystemNotificationService } from "./service/IService/ISystemNotificationService";
 import type { IIncidentTypeService } from "./service/IService/IIncidentTypeService";
+import type { IVesselVisitExecutionService } from "./service/IService/IVesselExecutionService";
+import { VesselVisitExecutionService } from "./service/VesselExecutionService";
 
 const container = new Container();
 
@@ -57,5 +59,6 @@ container.bind<IOperationPlanService>(TYPES.operationPlanService).to(OperationPl
 container.bind<IVesselVisitNotificationService>(TYPES.vesselVisitNotificationService).to(VesselVisitNotificationService).inSingletonScope();
 container.bind<ISystemNotificationService>(TYPES.systemNotificationService).to(SystemNotificationService).inSingletonScope();
 container.bind<IIncidentTypeService>(TYPES.incidentTypeService).to(IncidentTypeService).inSingletonScope();
+container.bind<IVesselVisitExecutionService>(TYPES.vesselVisitExecutionService).to(VesselVisitExecutionService).inSingletonScope();
 
 export { container };
