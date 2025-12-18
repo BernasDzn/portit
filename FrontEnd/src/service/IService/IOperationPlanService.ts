@@ -9,4 +9,5 @@ export interface IOperationPlanService {
         date: string;
         plans: OperationPlanDto[];
     }[]>;
+    updateOperationPlan(id: string, updates: Partial<OperationPlanDto>): Promise<OperationPlanDto>;
 }

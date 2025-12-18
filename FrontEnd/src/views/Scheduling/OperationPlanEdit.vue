@@ -219,6 +219,26 @@ const savePlan = async () => {
     }
 
     if (!plan.value) return;
+
+    try {
+        loading.value = true;
+        const updatedPlan = await planService.updateOperationPlan(planId, plan.value);
+        
+        if (updatedPlan) {
+            plan.value = updatedPlan;
+        } else {
+            throw new Error('Update operation plan returned null');
+        }
+        
+    } catch (error) {
+        console.error('Error saving operation plan:', error);
+        notifications.enqueueNotification(
+            'Failed to save operation plan',
+            notifications.notificationTypes.DANGER
+        );
+    } finally {
+        loading.value = false;
+    }
 };
 
 // Operations

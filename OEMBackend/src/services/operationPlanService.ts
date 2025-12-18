@@ -244,6 +244,81 @@ export class OperationPlanService {
 		return await schedulingService.scheduleRequest(day, algorithm, daysAhead, createdBy);
 	}
 
+	async updateOperationPlan(id: string, updates: Partial<OperationPlanDto>): Promise<OperationPlanDto | null> {
+		const existingPlan = await this.operationPlanRepository.getById(id);
+		
+		if (!existingPlan) throw new Error('Trying to update non-existing operation plan');
+		
+		// Reconstruct the operation schedule if provided
+		let operationSchedule: LinkedList<Operation> | undefined;
+		if (updates.operationSchedule) {
+			operationSchedule = new LinkedList<Operation>();
+			
+			for (const opDto of updates.operationSchedule) {
+				// Fetch the task category for the operation type
+				if (!opDto.type.id) {
+					throw new Error('Operation type id is required');
+				}
+				
+				const taskCategory = await taskCategoryRepository.getCategoryById(opDto.type.id);
+				if (!taskCategory) {
+					throw new Error(`Task category with id ${opDto.type.id} not found`);
+				}
+				
+				// Reconstruct resources
+				const resources = opDto.resources.map(resDto => 
+					new Resource({
+						name: resDto.name,
+						type: ResourceType[resDto.type as keyof typeof ResourceType],
+						startTime: resDto.startTime ? new Date(resDto.startTime) : undefined,
+						endTime: resDto.endTime ? new Date(resDto.endTime) : undefined
+					})
+				);
+				
+				// Validate payload if present
+				let payload: Payload | undefined;
+				if (opDto.payload) {
+					const validator = new PayloadValidator(opDto.payload, taskCategory.category.getValue());
+					validator.validatePayloadForType();
+					payload = opDto.payload as Payload;
+				}
+				
+				// Create operation
+				const operation = new Operation({
+					operationType: taskCategory,
+					startTime: new Date(opDto.startTime),
+					endTime: new Date(opDto.endTime),
+					resources,
+					payload
+				});
+				
+				operationSchedule.insertAtEnd(operation);
+			}
+		}
+		
+		// Update the metadata if provided, otherwise keep existing
+		let metadata: OperationPlanMetadata;
+		if (updates.metadata) {
+			metadata = new OperationPlanMetadata({
+				createdBy: updates.metadata.createdBy || existingPlan.metadata.createdBy,
+				createdAt: updates.metadata.createdAt ? new Date(updates.metadata.createdAt) : existingPlan.metadata.createdAt,
+				algorithmUsed: updates.metadata.algorithmUsed || existingPlan.metadata.algorithmUsed
+			});
+		} else {
+			metadata = existingPlan.metadata;
+		}
+		
+		// Create updated operation plan
+		const updatedPlan = new OperationPlan({
+			relatedVVN: updates.relatedVVN || existingPlan.relatedVVN,
+			dock: updates.dock || existingPlan.dock,
+			operationSchedule: operationSchedule || existingPlan.operationSchedule,
+			metadata
+		}, id);
+		
+		return (await this.operationPlanRepository.update(id, updatedPlan)).toDto();
+	}
+
 }
 
 export const operationPlanService = new OperationPlanService();
