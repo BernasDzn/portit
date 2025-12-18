@@ -33,6 +33,7 @@ const configs = ref<GanttRowConfig[]>([]);
 
 const loading = ref(false);
 const hasStarted = ref(false);
+const hasOperations = ref(false);
 
 const fetchPlan = async (): Promise<OperationPlanDto | undefined> => {
     const plan = await planService.getOperationPlanById(planId);
@@ -43,6 +44,7 @@ const fetchPlan = async (): Promise<OperationPlanDto | undefined> => {
             // Prepare Gantt items and configs
             items.value = taskCategory.getGanttItems(plan);
             configs.value = taskCategory.getGanttRowConfigs(plan);
+            hasOperations.value = plan.operationSchedule.length > 0;
 
         } catch (error) {
             console.error('Failed to fetch related VVN:', error);
@@ -115,7 +117,7 @@ const openVVE = async () => {
                 </div>
                 <div>
                     <RouterLink :to="`/scheduling/plans-edit/${encodeURIComponent(entity.element.id)}`">
-                        <sl-button slot="footer" variant="default" size="large" :disabled="hasStarted || loading" :loading="loading">
+                        <sl-button slot="footer" variant="default" size="large" :disabled="hasStarted || loading || !hasOperations" :loading="loading">
                             <sl-icon slot="prefix" name="pencil"></sl-icon>
                             {{ t('operationPlan.tabs.edit') }}
                         </sl-button>

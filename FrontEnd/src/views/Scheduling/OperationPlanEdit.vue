@@ -37,6 +37,7 @@ const allStaff = ref<Staff[]>([]);
 const allSTSCranes = ref<STSCrane[]>([]);
 const loading = ref(false);
 const editingOperation = ref<number | null>(null);
+const hasOperations = ref(false);
 
 const ganttItems = computed(() => plan.value ? getGanttItems(plan.value) : []);
 const ganttRowConfigs = computed(() => plan.value ? getGanttRowConfigs(plan.value) : []);
@@ -59,6 +60,8 @@ onMounted(async () => {
         allSTSCranes.value = resourcesPage.items.filter((r: any) => 
             r.liftingCapacity !== undefined && r.status === 0
         );
+
+        hasOperations.value = plan.value.operationSchedule.length > 0;
 
         console.log('Loaded plan:', plan.value);
 
@@ -392,54 +395,60 @@ const updateResourceTime = (operationIndex: number, resourceIndex: number, start
         <p class="subtitle">{{ t('operationPlan.subtitle.edit') }}</p>
         
         <Loading v-if="loading" />
-        <EntityForm 
-            v-else 
-            :object="plan" 
-            :submit-function="savePlan" 
-            :editing-id="planId"
-        >
-            <sl-details summary="Allocated resources panel">
-                <AllocatedResources
-                    :plan="plan"
-                    :all-s-t-s-cranes="(allSTSCranes as STSCrane[])"
-                    :all-staff="(allStaff as Staff[])"
-                />
-          </sl-details>
-
-            <h3>{{ t('operationPlan.schedule.title') }}</h3>
-            
-            <div class="form-fields">
-                <div class="schedule-section">
-
-                    <OperationPlanToolbar
-                        @shift-operations="handleShiftOperations"
-                        @optimize-schedule="handleOptimizeSchedule"
-                        @reset-schedule="handleResetSchedule"
+        <div v-else-if="hasOperations">
+            <EntityForm 
+                :object="plan" 
+                :submit-function="savePlan" 
+                :editing-id="planId"
+            >
+                <sl-details summary="Allocated resources panel">
+                    <AllocatedResources
+                        :plan="plan"
+                        :all-s-t-s-cranes="(allSTSCranes as STSCrane[])"
+                        :all-staff="(allStaff as Staff[])"
                     />
+            </sl-details>
+
+                <h3>{{ t('operationPlan.schedule.title') }}</h3>
                 
+                <div class="form-fields">
+                    <div class="schedule-section">
 
-                    <GanttChart
-                        :key="ganttKey"
-                        :items="ganttItems"
-                        :row-configs="ganttRowConfigs"
-                        @item-updated="onItemUpdated"
-                        @bar-click="onOperationClick"
-                    />
+                        <OperationPlanToolbar
+                            @shift-operations="handleShiftOperations"
+                            @optimize-schedule="handleOptimizeSchedule"
+                            @reset-schedule="handleResetSchedule"
+                        />
+                    
+
+                        <GanttChart
+                            :key="ganttKey"
+                            :items="ganttItems"
+                            :row-configs="ganttRowConfigs"
+                            @item-updated="onItemUpdated"
+                            @bar-click="onOperationClick"
+                        />
+                    </div>
+                    
+                    <OperationWarnings :warnings="warnings" :graveWarnings="graveWarnings" />
                 </div>
-                
-                <OperationWarnings :warnings="warnings" :graveWarnings="graveWarnings" />
-            </div>
-        </EntityForm>
+            </EntityForm>
 
-        <OperationDetailsDrawer
-            :plan="plan" 
-            :operation-index="editingOperation"
-            @close="closeDrawer"
-            :available-staff="allStaff"
-            @add-staff="addStaff"
-            @remove-staff="removeStaff"
-            @update-resource-time="updateResourceTime"
-        />
+            <OperationDetailsDrawer
+                :plan="plan" 
+                :operation-index="editingOperation"
+                @close="closeDrawer"
+                :available-staff="allStaff"
+                @add-staff="addStaff"
+                @remove-staff="removeStaff"
+                @update-resource-time="updateResourceTime"
+            />
+        </div>
+        <div v-else>
+            <sl-alert variant="warning" open>
+                {{ t('operationPlan.messages.noOperations') }}
+            </sl-alert>
+        </div>
     </div>
 </template>
 
