@@ -61,30 +61,17 @@ export class OperationPlanRepository {
 
 	async getByDateGrouped(): Promise<{ date: string; plans: OperationPlanDto[] }[]> {
 		const allPlans = await OperationPlanModel.find();
-		const plansByDate = new Map<string, OperationPlanDto[]>();
+		const grouped: { [key: string]: OperationPlanDto[] } = {};
 
-        for (const doc of allPlans) {
-            const plan = await OperationPlanMapper.fromSchema(doc, new TaskCategoryRepository());
-            const planDto = plan.toDto();
-            
-            // Extract date from the first operation's start time
-            if (planDto.operationSchedule && planDto.operationSchedule.length > 0) {
-                const firstOperation = planDto.operationSchedule[0];
-                if (firstOperation && firstOperation.startTime) {
-                    const startTime = new Date(firstOperation.startTime);
-                    const dateKey = startTime.toISOString().split('T')[0] as string;
-                    
-                    if (!plansByDate.has(dateKey)) {
-                        plansByDate.set(dateKey, []);
-                    }
-                    plansByDate.get(dateKey)!.push(planDto);
-                }
-            }
-        }		
-        // Convert map to array and sort by date
-		return Array.from(plansByDate.entries())
-			.map(([date, plans]) => ({ date, plans }))
-			.sort((a, b) => a.date.localeCompare(b.date));
+		for (const doc of allPlans) {
+			const plan = await OperationPlanMapper.fromSchema(doc, new TaskCategoryRepository());
+			const dateKey = new Date(plan.date).toISOString().split('T')[0] as string;
+			if (!grouped[dateKey]) {
+				grouped[dateKey] = [];
+			}
+			grouped[dateKey].push(plan.toDto());
+		}
+		return Object.entries(grouped).map(([date, plans]) => ({ date, plans })).sort((a, b) => a.date.localeCompare(b.date));
 	}
 
 	async getNotificationsWithoutPlan(token: string): Promise<string[]> {
@@ -128,8 +115,9 @@ export class OperationPlanRepository {
 		return plan;
 	}
 
-	async deleteById(id: string): Promise<void> {
-		await OperationPlanModel.findByIdAndDelete(id);
+	async deleteById(id: string): Promise<boolean> {
+		const result = await OperationPlanModel.findByIdAndDelete(id);
+		return result !== null;
 	}
 
     async getContainersOfNotification(vvnId: string, token: string, isUnload: boolean): Promise<ContainerDto[]> {

@@ -55,7 +55,7 @@ const cranes = computed(() => {
                         </sl-tag>
                     </div>
                     <div v-if="!props.short" class="date item-description">
-                        {{ formattedCreatedDate }}
+                        {{ props.operationPlan.date.split("T")[0] }}
                     </div>
                 </div>
                 <div class="opposed">

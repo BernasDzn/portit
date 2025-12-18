@@ -2,6 +2,7 @@ import type TaskCategoryDto from "./TaskCategoryDto";
 
 export interface OperationPlanDto {
 	id: string;
+	date: string;
 	relatedVVN: string;
 	dock: string;
 	operationSchedule: {

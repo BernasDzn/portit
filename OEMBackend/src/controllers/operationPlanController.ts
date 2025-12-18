@@ -232,6 +232,9 @@ export default class OperationPlanController extends BaseController {
      *           schema:
      *             type: object
      *             properties:
+     *               date:
+     *                 type: string
+     *                 description: Date of the operation plan (YYYY-MM-DD)
      *               relatedVVN:
      *                 type: string
      *                 description: Related Vessel Visit Notification ID

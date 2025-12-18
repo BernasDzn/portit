@@ -52,7 +52,7 @@ export class OperationPlanService {
 		
 		const baseDate = new Date(scheduleDataDto.date);
 
-		const existingPlans = await this.operationPlanRepository.getByDateGrouped();
+		const existingPlans = await this.getByDateGrouped();
 		const plansOnDate = existingPlans.find(group => group.date === scheduleDataDto.date);
 		for (const plan of plansOnDate?.plans || []) {
 			await this.operationPlanRepository.deleteById(plan.id!);
@@ -98,6 +98,7 @@ export class OperationPlanService {
 				});
 				
 				const operationPlan = new OperationPlan({
+					date: scheduleDataDto.date,
 					relatedVVN: vesselSchedule.name,
 					dock: dockCode,
 					operationSchedule: operationSchedule,
@@ -227,6 +228,7 @@ export class OperationPlanService {
 		});
 
 		const operationPlan = new OperationPlan({
+			date: operationPlanDto.date,
 			dock: operationPlanDto.dock,
 			relatedVVN: operationPlanDto.relatedVVN,
 			operationSchedule: operationSchedule,
@@ -310,6 +312,7 @@ export class OperationPlanService {
 		
 		// Create updated operation plan
 		const updatedPlan = new OperationPlan({
+			date: updates.date || existingPlan.date,
 			relatedVVN: updates.relatedVVN || existingPlan.relatedVVN,
 			dock: updates.dock || existingPlan.dock,
 			operationSchedule: operationSchedule || existingPlan.operationSchedule,

@@ -1,3 +1,4 @@
+/// <reference types="jest" />
 import { OperationPlanDto } from "../../../src/dto/operationPlanDto";
 import { OperationPlanRepository } from "../../../src/repository/operationPlanRepository";
 import { OperationPlanService } from "../../../src/services/operationPlanService";
@@ -26,21 +27,21 @@ beforeEach(() => {
 		})
 	);
 
-	let operationPlanMetadata = new OperationPlanMetadata({
+	const operationPlanMetadata = new OperationPlanMetadata({
 		createdBy: "tester",
 		createdAt: new Date("2024-09-01T12:00:00Z"),
 		algorithmUsed: "optimal"
 	});
 
-	mockOperationPlan = new OperationPlan(
-		{
-			relatedVVN: "VVN001",
-			dock: "Dock1",
-			operationSchedule: operationSchedule,
-			metadata: operationPlanMetadata
-		},
-		"plan-test"
-	);
+	const planProps = {
+		date: "2024-10-01",
+		relatedVVN: "VVN001",
+		dock: "Dock1",
+		operationSchedule: operationSchedule,
+		metadata: operationPlanMetadata
+	};
+
+	mockOperationPlan = new OperationPlan(planProps, "plan-test");
 
 	// Create mock repository
 	mockRepo = {
