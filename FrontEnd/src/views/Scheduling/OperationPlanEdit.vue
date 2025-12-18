@@ -108,21 +108,94 @@ const onItemUpdated = (updatedItem: GanttItem) => {
         return;
     }
     
+    const resource = operation.resources[resIndex];
+    
+    // Only validate time constraints for staff resources
+    if (resource.type === 'Staff') {
+        const newStart = new Date(updatedItem.startTime);
+        const newEnd = new Date(updatedItem.endTime);
+        const opStart = new Date(operation.startTime);
+        const opEnd = new Date(operation.endTime);
+        
+        if (newStart < opStart || newEnd > opEnd) {
+            console.warn('Staff resource times exceed operation boundaries');
+            notifications.enqueueNotification(
+                'Staff allocation must be within operation time frame',
+                notifications.notificationTypes.WARNING
+            );
+            // Force gantt re-render to revert the change
+            ganttKey.value += 1;
+            return;
+        }
+    }
+    
     // Update the specific resource's times
     plan.value.operationSchedule = plan.value.operationSchedule.map((op, idx) => {
         if (idx === opIndex) {
-            return {
-                ...op,
-                resources: op.resources.map((res, rIdx) => {
-                    if (rIdx === resIndex) {
+            const updatedResources = op.resources.map((res, rIdx) => {
+                if (rIdx === resIndex) {
+                    return {
+                        ...res,
+                        startTime: updatedItem.startTime,
+                        endTime: updatedItem.endTime
+                    };
+                }
+                return res;
+            });
+            
+            // If this was a crane operation (non-staff), update operation times
+            // and shift all staff resources proportionally
+            if (resource.type !== 'Staff') {
+                const oldOpStart = new Date(op.startTime).getTime();
+                const oldOpEnd = new Date(op.endTime).getTime();
+                const newOpStart = new Date(updatedItem.startTime).getTime();
+                const newOpEnd = new Date(updatedItem.endTime).getTime();
+                
+                // Calculate the shift amounts
+                const startShift = newOpStart - oldOpStart;
+                const endShift = newOpEnd - oldOpEnd;
+                
+                // Update all staff resources to stay within the new operation boundaries
+                const adjustedResources = updatedResources.map(r => {
+                    if (r.type === 'Staff') {
+                        const staffStart = new Date(r.startTime).getTime();
+                        const staffEnd = new Date(r.endTime).getTime();
+                        
+                        // Shift the staff times by the same amount as the operation
+                        let newStaffStart = new Date(staffStart + startShift);
+                        let newStaffEnd = new Date(staffEnd + endShift);
+                        
+                        // Ensure staff times are within new operation boundaries
+                        const opStartDate = new Date(updatedItem.startTime);
+                        const opEndDate = new Date(updatedItem.endTime);
+                        
+                        if (newStaffStart < opStartDate) {
+                            newStaffStart = opStartDate;
+                        }
+                        if (newStaffEnd > opEndDate) {
+                            newStaffEnd = opEndDate;
+                        }
+                        
                         return {
-                            ...res,
-                            startTime: updatedItem.startTime,
-                            endTime: updatedItem.endTime
+                            ...r,
+                            startTime: newStaffStart.toISOString(),
+                            endTime: newStaffEnd.toISOString()
                         };
                     }
-                    return res;
-                })
+                    return r;
+                });
+                
+                return {
+                    ...op,
+                    startTime: updatedItem.startTime,
+                    endTime: updatedItem.endTime,
+                    resources: adjustedResources
+                };
+            }
+            
+            return {
+                ...op,
+                resources: updatedResources
             };
         }
         return op;

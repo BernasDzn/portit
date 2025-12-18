@@ -9,6 +9,8 @@ export interface GanttItem {
     name: string;
     group?: string;
     color?: string;
+    minTime?: string;  // Minimum allowed start time (constraint)
+    maxTime?: string;  // Maximum allowed end time (constraint)
 }
 
 export interface GanttRowConfig {
@@ -346,10 +348,48 @@ const onBarDragEnd = (event: any) => {
         return;
     }
 
+    let newStartTime = new Date(event.bar.myStart.replace(' ', 'T'));
+    let newEndTime = new Date(event.bar.myEnd.replace(' ', 'T'));
+    
+    // Apply constraints if defined
+    if (originalItem.minTime || originalItem.maxTime) {
+        const minTime = originalItem.minTime ? new Date(originalItem.minTime) : null;
+        const maxTime = originalItem.maxTime ? new Date(originalItem.maxTime) : null;
+        
+        // Constrain start time
+        if (minTime && newStartTime < minTime) {
+            const duration = newEndTime.getTime() - newStartTime.getTime();
+            newStartTime = new Date(minTime);
+            newEndTime = new Date(newStartTime.getTime() + duration);
+        }
+        
+        // Constrain end time
+        if (maxTime && newEndTime > maxTime) {
+            const duration = newEndTime.getTime() - newStartTime.getTime();
+            newEndTime = new Date(maxTime);
+            newStartTime = new Date(newEndTime.getTime() - duration);
+        }
+        
+        // Double-check start time after end adjustment
+        if (minTime && newStartTime < minTime) {
+            newStartTime = new Date(minTime);
+        }
+        
+        // Ensure end is after start
+        if (newEndTime <= newStartTime) {
+            newEndTime = new Date(newStartTime.getTime() + 60000); // Minimum 1 minute
+        }
+        
+        // Final validation: ensure we're within bounds
+        if (maxTime && newEndTime > maxTime) {
+            newEndTime = new Date(maxTime);
+        }
+    }
+
     const updatedItem: GanttItem = {
         ...originalItem,
-        startTime: new Date(event.bar.myStart.replace(' ', 'T')).toISOString(),
-        endTime: new Date(event.bar.myEnd.replace(' ', 'T')).toISOString()
+        startTime: newStartTime.toISOString(),
+        endTime: newEndTime.toISOString()
     };
 
     if (props.onUpdate) {

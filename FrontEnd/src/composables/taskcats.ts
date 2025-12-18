@@ -33,13 +33,21 @@ const getGanttItems = (plan: OperationPlanDto): GanttItem[] => {
             const startTime = resource.startTime || op.startTime;
             const endTime = resource.endTime || op.endTime;
             
+            // Only apply time constraints to staff resources
+            const isStaff = resource.type === 'Staff';
+            
             items.push({
                 id: `op${i}-res${resIndex}`,
                 startTime: startTime,
                 endTime: endTime,
                 name: `Op. #${i + 1}`,
                 group: resource.name || 'Unassigned',
-                color: opColor
+                color: opColor,
+                // Only constrain staff members to operation time boundaries
+                ...(isStaff && {
+                    minTime: op.startTime,
+                    maxTime: op.endTime
+                })
             });
         });
     }
