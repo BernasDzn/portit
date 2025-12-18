@@ -1,5 +1,5 @@
 import type TaskCategoryDto from '@/model/dto/TaskCategoryDto';
-import type { Filter, Page } from '@/model/Page';
+import type { Page } from '@/model/Page';
 
 export interface ITaskCategoryService {
     getAllTaskCategories(): Promise<Page<TaskCategoryDto>>;
