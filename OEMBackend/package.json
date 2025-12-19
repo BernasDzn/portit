@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --exec ts-node src/server.ts RUN_MODE=dev",
-    "local": "nodemon --exec ts-node src/server.ts RUN_MODE=local",
+    "docgen": "npx tsoa routes && npx tsoa spec",
+    "dev": "npm run docgen && nodemon --exec ts-node src/server.ts RUN_MODE=dev",
+    "local": "npm run docgen && nodemon --exec ts-node src/server.ts RUN_MODE=local",
     "build": "tsc",
     "start": "node dist/src/server.js",
     "test": "jest"
@@ -16,7 +17,7 @@
   "type": "commonjs",
   "devDependencies": {
     "@types/cookie-parser": "^1.4.10",
-    "@types/express": "^5.0.5",
+    "@types/express": "^5.0.6",
     "@types/jest": "^30.0.0",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^24.10.1",
@@ -24,7 +25,7 @@
     "@types/swagger-ui-express": "^4.1.8",
     "dotenv": "^17.2.3",
     "eslint": "^9.39.1",
-    "express": "^5.1.0",
+    "express": "^5.2.1",
     "install": "^0.13.0",
     "jest": "^30.2.0",
     "nodemon": "^3.1.11",
@@ -43,6 +44,7 @@
     "reflect-metadata": "^0.2.2",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
+    "tsoa": "^6.6.0",
     "typedi": "^0.10.0"
   }
 }

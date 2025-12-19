@@ -1,10 +1,25 @@
-import 'reflect-metadata';
-import app from './app';
-import config from './config/config';
+import mongoose from "mongoose";
+import config from "./config/config";
+import { createApp } from "./app";
+import { bootstrap } from "./bootstrap";
 
-const server = app.listen(config.port, function() {
-  const address = server.address();
-  const actualPort = typeof address === 'string' ? address : address?.port || config.port;
-  console.log(`Server running on http://localhost:${actualPort}`);
-  console.log(`Swagger docs available at http://localhost:${actualPort}/swagger`);
-});
+const app = createApp();
+
+mongoose.connect(config.mongoUri)
+	.then(async () => {
+		console.log("Connected to MongoDB");
+
+		if (config.shouldBootstrap) {
+			await mongoose.connection.dropDatabase();
+			console.log("Database dropped for bootstrapping");
+
+			await bootstrap();
+			console.log("Database bootstrapped");
+		}
+
+		app.listen(config.port, () => {
+			console.log(`Server running on http://localhost:${config.port}`);
+			console.log(`Swagger docs available at http://localhost:${config.port}/swagger`);
+		});
+	})
+	.catch(err => console.error("MongoDB connection error:", err));

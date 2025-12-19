@@ -27,14 +27,14 @@ interface VesselVisitExecutionProps {
 }
 
 export class OperationWithStatus extends Entity<OperationWithStatusProps> {
-  get id(): string { return this._id; }
+  get id(): string { return this._id.toString(); }
   get operation(): Operation { return this.props.operation; }
   get status() { return this.props.status; }
 
   constructor(props: OperationWithStatusProps, id?: any) {
     super(
-      id || new mongoose.Types.ObjectId().toString(),
-      props
+      props,
+      id || new mongoose.Types.ObjectId()
     );
   }
 
@@ -52,7 +52,7 @@ export class OperationWithStatus extends Entity<OperationWithStatusProps> {
 }
 
 export default class VesselVisitExecution extends Entity<VesselVisitExecutionProps> {
-  get id(): string { return this._id; }
+  get id(): string { return this._id.toString(); }
   get relatedVVN(): string { return this.props.relatedVVN; }
   get operationsExecuted(): OperationWithStatus[] { return this.props.operationsExecuted; }
   get dateOpen(): Date | undefined { return this.props.dateOpen; }
@@ -67,12 +67,12 @@ export default class VesselVisitExecution extends Entity<VesselVisitExecutionPro
 
   constructor(props: VesselVisitExecutionProps, id?: any) {
     super(
-      id || new mongoose.Types.ObjectId().toString(),
       {
         ...props,
         operationsExecuted: props.operationsExecuted ?? [],
         status: props.status ?? 'Open'
-      }
+      },
+      id || new mongoose.Types.ObjectId()
     );
   }
 

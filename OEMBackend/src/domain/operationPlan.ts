@@ -13,7 +13,7 @@ export interface OperationPlanProps {
 }
 
 export default class OperationPlan extends Entity<OperationPlanProps> {
-	get id(): string { return this._id; }
+	get id(): string { return this._id.toString(); }
 	get relatedVVN(): string { return this.props.relatedVVN; }
 	get dock(): string { return this.props.dock; }
 	get operationSchedule(): LinkedList<Operation> { return this.props.operationSchedule; }
@@ -21,8 +21,8 @@ export default class OperationPlan extends Entity<OperationPlanProps> {
 
 	constructor(props: OperationPlanProps, id?: any) {
 		super(
-			id || new mongoose.Types.ObjectId().toString(), 
-			props
+			props,
+			id || new mongoose.Types.ObjectId().toString() 
 		);
 	}
 
