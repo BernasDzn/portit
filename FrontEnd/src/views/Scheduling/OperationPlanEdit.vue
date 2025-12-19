@@ -37,9 +37,12 @@ const allStaff = ref<Staff[]>([]);
 const allSTSCranes = ref<STSCrane[]>([]);
 const loading = ref(false);
 const editingOperation = ref<number | null>(null);
+const hasOperations = ref(false);
 
 const ganttItems = computed(() => plan.value ? getGanttItems(plan.value) : []);
-const ganttRowConfigs = computed(() => plan.value ? getGanttRowConfigs(plan.value) : []);
+const ganttRowConfigs = computed(() => 
+    plan.value ? getGanttRowConfigs(plan.value, allSTSCranes.value, allStaff.value) : []
+);
 
 const { warnings, graveWarnings } = useOperationValidation(plan, allSTSCranes, allStaff);
 
@@ -59,6 +62,8 @@ onMounted(async () => {
         allSTSCranes.value = resourcesPage.items.filter((r: any) => 
             r.liftingCapacity !== undefined && r.status === 0
         );
+
+        hasOperations.value = plan.value.operationSchedule.length > 0;
 
         console.log('Loaded plan:', plan.value);
 
@@ -103,21 +108,94 @@ const onItemUpdated = (updatedItem: GanttItem) => {
         return;
     }
     
+    const resource = operation.resources[resIndex];
+    
+    // Only validate time constraints for staff resources
+    if (resource.type === 'Staff') {
+        const newStart = new Date(updatedItem.startTime);
+        const newEnd = new Date(updatedItem.endTime);
+        const opStart = new Date(operation.startTime);
+        const opEnd = new Date(operation.endTime);
+        
+        if (newStart < opStart || newEnd > opEnd) {
+            console.warn('Staff resource times exceed operation boundaries');
+            notifications.enqueueNotification(
+                'Staff allocation must be within operation time frame',
+                notifications.notificationTypes.WARNING
+            );
+            // Force gantt re-render to revert the change
+            ganttKey.value += 1;
+            return;
+        }
+    }
+    
     // Update the specific resource's times
     plan.value.operationSchedule = plan.value.operationSchedule.map((op, idx) => {
         if (idx === opIndex) {
-            return {
-                ...op,
-                resources: op.resources.map((res, rIdx) => {
-                    if (rIdx === resIndex) {
+            const updatedResources = op.resources.map((res, rIdx) => {
+                if (rIdx === resIndex) {
+                    return {
+                        ...res,
+                        startTime: updatedItem.startTime,
+                        endTime: updatedItem.endTime
+                    };
+                }
+                return res;
+            });
+            
+            // If this was a crane operation (non-staff), update operation times
+            // and shift all staff resources proportionally
+            if (resource.type !== 'Staff') {
+                const oldOpStart = new Date(op.startTime).getTime();
+                const oldOpEnd = new Date(op.endTime).getTime();
+                const newOpStart = new Date(updatedItem.startTime).getTime();
+                const newOpEnd = new Date(updatedItem.endTime).getTime();
+                
+                // Calculate the shift amounts
+                const startShift = newOpStart - oldOpStart;
+                const endShift = newOpEnd - oldOpEnd;
+                
+                // Update all staff resources to stay within the new operation boundaries
+                const adjustedResources = updatedResources.map(r => {
+                    if (r.type === 'Staff') {
+                        const staffStart = new Date(r.startTime).getTime();
+                        const staffEnd = new Date(r.endTime).getTime();
+                        
+                        // Shift the staff times by the same amount as the operation
+                        let newStaffStart = new Date(staffStart + startShift);
+                        let newStaffEnd = new Date(staffEnd + endShift);
+                        
+                        // Ensure staff times are within new operation boundaries
+                        const opStartDate = new Date(updatedItem.startTime);
+                        const opEndDate = new Date(updatedItem.endTime);
+                        
+                        if (newStaffStart < opStartDate) {
+                            newStaffStart = opStartDate;
+                        }
+                        if (newStaffEnd > opEndDate) {
+                            newStaffEnd = opEndDate;
+                        }
+                        
                         return {
-                            ...res,
-                            startTime: updatedItem.startTime,
-                            endTime: updatedItem.endTime
+                            ...r,
+                            startTime: newStaffStart.toISOString(),
+                            endTime: newStaffEnd.toISOString()
                         };
                     }
-                    return res;
-                })
+                    return r;
+                });
+                
+                return {
+                    ...op,
+                    startTime: updatedItem.startTime,
+                    endTime: updatedItem.endTime,
+                    resources: adjustedResources
+                };
+            }
+            
+            return {
+                ...op,
+                resources: updatedResources
             };
         }
         return op;
@@ -392,31 +470,31 @@ const updateResourceTime = (operationIndex: number, resourceIndex: number, start
         <p class="subtitle">{{ t('operationPlan.subtitle.edit') }}</p>
         
         <Loading v-if="loading" />
-        <EntityForm 
-            v-else 
-            :object="plan" 
-            :submit-function="savePlan" 
-            :editing-id="planId"
-        >
-            <sl-details summary="Allocated resources panel">
-                <AllocatedResources
-                    :plan="plan"
-                    :all-s-t-s-cranes="(allSTSCranes as STSCrane[])"
-                    :all-staff="(allStaff as Staff[])"
-                />
-          </sl-details>
-
-            <h3>{{ t('operationPlan.schedule.title') }}</h3>
-            
-            <div class="form-fields">
-                <div class="schedule-section">
-
-                    <OperationPlanToolbar
-                        @shift-operations="handleShiftOperations"
-                        @optimize-schedule="handleOptimizeSchedule"
-                        @reset-schedule="handleResetSchedule"
+        <div v-else-if="hasOperations">
+            <EntityForm 
+                :object="plan" 
+                :submit-function="savePlan" 
+                :editing-id="planId"
+            >
+                <sl-details summary="Allocated resources panel">
+                    <AllocatedResources
+                        :plan="plan"
+                        :all-s-t-s-cranes="(allSTSCranes as STSCrane[])"
+                        :all-staff="(allStaff as Staff[])"
                     />
+            </sl-details>
+
+                <h3>{{ t('operationPlan.schedule.title') }}</h3>
                 
+                <div class="form-fields">
+                    <div class="schedule-section">
+
+                        <OperationPlanToolbar
+                            @shift-operations="handleShiftOperations"
+                            @optimize-schedule="handleOptimizeSchedule"
+                            @reset-schedule="handleResetSchedule"
+                        />
+                    
 
                     <GanttChart
                         :key="ganttKey"
@@ -431,15 +509,21 @@ const updateResourceTime = (operationIndex: number, resourceIndex: number, start
             </div>
         </EntityForm>
 
-        <OperationDetailsDrawer
-            :plan="plan" 
-            :operation-index="editingOperation"
-            @close="closeDrawer"
-            :available-staff="allStaff"
-            @add-staff="addStaff"
-            @remove-staff="removeStaff"
-            @update-resource-time="updateResourceTime"
-        />
+            <OperationDetailsDrawer
+                :plan="plan" 
+                :operation-index="editingOperation"
+                @close="closeDrawer"
+                :available-staff="allStaff"
+                @add-staff="addStaff"
+                @remove-staff="removeStaff"
+                @update-resource-time="updateResourceTime"
+            />
+        </div>
+        <div v-else>
+            <sl-alert variant="warning" open>
+                {{ t('operationPlan.messages.noOperations') }}
+            </sl-alert>
+        </div>
     </div>
 </template>
 

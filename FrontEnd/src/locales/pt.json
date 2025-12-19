@@ -779,5 +779,38 @@
         "confirmDelete": "Confirmar exclusão",
         "confirmDeleteMessage": "Tem a certeza que deseja excluir este tipo de incidente?",
         "failedToDelete": "Falha ao excluir tipo de incidente"
+    },
+    "taskCategory": {
+        "fields": {
+            "name": {
+                "title": "Nome",
+                "placeholder": "Nome da categoria de tarefa"
+            },
+            "category": {
+                "title": "Categoria",
+                "placeholder": "Código da categoria"
+            },
+            "description": {
+                "title": "Descrição",
+                "placeholder": "Descrição da categoria de tarefa"
+            }
+        },
+        "tabs": {
+            "dashboard": "Painel de Categorias de Tarefa",
+            "search": "Pesquisar Categorias de Tarefa",
+            "create": "Criar Categoria de Tarefa",
+            "edit": "Editar Categoria de Tarefa",
+            "view_dashboard": "Ver Categorias de Tarefa"
+        },
+        "generalFields": "Campos gerais",
+        "title": "Categorias de Tarefa",
+        "subtitle": {
+            "dashboard": "Visão geral das estatísticas e atividades das categorias de tarefa",
+            "search": "Gerir e visualizar todas as categorias de tarefa registadas",
+            "create": "Registar uma nova categoria de tarefa no sistema",
+            "edit": "Modificar uma categoria de tarefa existente no sistema"
+        },
+        "taskCategoryInformation": "Informação da Categoria de Tarefa",
+        "registeredTaskCategories": "Categorias de Tarefa Registadas"
     }
 }

@@ -86,8 +86,21 @@ const submit = async () => {
     } catch (error) {
 
         let message = (error as any)?.response?.data;
-        if (typeof message === 'object' && message !== null) {
-            message = message.errors[0].error;
+        if (message && typeof message === 'object') {
+            // Handle common error shapes from different backends
+            if (Array.isArray(message.errors)) {
+                message = message.errors[0].error;
+            } else if (message.error) {
+                message = message.error;
+            } else if (message.message) {
+                message = message.message;
+            } else {
+                try {
+                    message = JSON.stringify(message);
+                } catch (e) {
+                    message = String(message);
+                }
+            }
         }
 
         if ((error as any)?.response?.status === 400) {

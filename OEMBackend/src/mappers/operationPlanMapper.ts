@@ -12,6 +12,7 @@ export class OperationPlanMapper {
 	static toSchema(operationPlan: OperationPlan): any {
 		return {
 			dock: operationPlan.dock,
+            date : operationPlan.date,
 			relatedVVN: operationPlan.relatedVVN,
 			operationSchedule: operationPlan.operationSchedule.toArray().map(op => ({
 				operationType: op.operationType.id,
@@ -83,6 +84,7 @@ export class OperationPlanMapper {
         
         const operationPlan = new OperationPlan(
             {
+                date: doc.date,
                 relatedVVN: doc.relatedVVN,
                 dock: doc.dock,
                 operationSchedule,
@@ -92,5 +94,5 @@ export class OperationPlanMapper {
         );
 
         return operationPlan;
-    }    
+    }
 }

@@ -437,6 +437,39 @@ const router = createRouter({
             }
         },
         {
+          path: '/task-categories/dashboard',
+          name: 'Task Categories Dashboard',
+          component: () => import('@/views/TaskCategories/TaskCategoryDashboard.vue'),  
+          meta: { 
+            icon: "category"
+          }
+        },
+        {
+          path: '/task-categories/search',
+          name: 'Search Task Categories',
+          component: () => import('@/views/TaskCategories/TaskCategorySearch.vue'),
+          meta: { 
+            icon: "search"
+          }
+        },
+        {path: '/task-categories/view/:id',
+          name: 'View Task Category',
+          component: () => import('@/views/TaskCategories/TaskCategoryView.vue')
+        },
+        {
+          path: '/task-categories/create',
+          name: 'Create Task Category',
+          component: () => import('@/views/TaskCategories/TaskCategoryCreate.vue'),
+          meta: {
+            icon: "add"
+          }
+        },
+        {
+          path: '/task-categories/edit/:id',
+          name: 'Edit Task Category',
+          component: () => import('@/views/TaskCategories/TaskCategoryEdit.vue'),
+        },
+        {
           path: '/about',
           name: 'about',
           component: () => import('@/views/About/About.vue'),
@@ -469,6 +502,22 @@ const router = createRouter({
             path: '/scheduling/plans-edit/:id',
             name: 'Edit Operation Plan',
             component: () => import('@/views/Scheduling/OperationPlanEdit.vue'),
+        },
+        {
+            path: '/vessel-visit-executions/dashboard',
+            name: 'Vessel Visit Executions Dashboard',
+            component: () => import('@/views/VesselVisitExecutions/VesselVisitExecutionsDashboard.vue'),
+            meta: {
+                icon: "dashboard"
+            }
+        },
+        {
+            path: '/vessel-visit-executions/search',
+            name: 'Vessel Visit Executions Search',
+            component: () => import('@/views/VesselVisitExecutions/VesselVisitExecutionsSearch.vue'),
+            meta: {
+                icon: "search"
+            }
         }
       ]
     },
@@ -529,7 +578,10 @@ router.beforeEach((to, from, next) => {
     { prefix: '/admin', roles: [0] },
     { prefix: '/scheduling', roles: [0,3] },
     { prefix: '/about', roles: [0, 1, 2, 3] },
-    { prefix: '/my-data', roles: [0, 1, 2, 3] }
+    { prefix: '/my-data', roles: [0, 1, 2, 3] },
+    { prefix: '/incident-types', roles: [0,3] },
+    { prefix: '/scheduling/plans', roles: [0,3] },
+    { prefix: '/vessel-visit-executions', roles: [0,3] }
   ];
 
   for (const entry of routeRoleMap) {

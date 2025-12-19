@@ -18,6 +18,7 @@ export const TYPES = {
     axiosInstance: Symbol.for('AxiosInstance'),
     systemNotificationService: Symbol.for('SystemNotificationService'),
     taskCategoryService: Symbol.for('TaskCategoryService'),
+    vesselVisitExecutionService: Symbol.for('VesselVisitExecutionService'),
     api: Symbol.for('Api'),
 };
 

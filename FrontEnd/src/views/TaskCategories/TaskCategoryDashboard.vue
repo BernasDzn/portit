@@ -1,0 +1,50 @@
+<script setup lang="ts">
+import DashboardItem from '@/components/DashboardItem.vue';
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n();
+
+</script>
+
+<template>
+    <div>
+        <h1 class="title">{{ t('taskCategory.tabs.dashboard') }}</h1>
+        <p class="subtitle">{{ t('taskCategory.subtitle.dashboard') }}</p>
+        <sl-card class="dashboard-overview">
+            <div class="dashboard-items">
+                <DashboardItem
+                    :title="t('taskCategory.tabs.view_dashboard')"
+                    :description="t('taskCategory.subtitle.search')"
+                    icon="search"
+                    to="/task-categories/search"
+                />
+                <DashboardItem
+                    :title="t('taskCategory.tabs.create')"
+                    :description="t('taskCategory.subtitle.create')"
+                    icon="add"
+                    to="/task-categories/create"
+                />
+            </div>
+        </sl-card>
+    </div>
+</template>
+
+<style scoped>
+    .stats-overview {
+        text-align: center;
+        margin-bottom: 1rem;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        background-color: #f5f6fa;
+    }
+
+    .stats-overview p {
+        margin: 0;
+        padding: 0.5rem;
+        color: #485ea9;
+    }
+
+    .stats-overview p:nth-child(1) {
+        font-size: 2rem;
+    }
+</style>
