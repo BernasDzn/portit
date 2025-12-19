@@ -41,12 +41,12 @@ const submitTaskCategory = (obj:any) => {
             <div class="form">
                 <div class="general-info">
                     <p class="section-title">{{ t('taskCategory.generalFields') }}</p>
-                    <FormField class="field" inputId="task-category-name"
-                        :name="t('taskCategory.fields.name.title') + '*'" v-model="taskCategory.name"
-                        :placeholderText="t('taskCategory.fields.name.placeholder')" required />
                     <FormField class="field" inputId="task-category-category"
                         :name="t('taskCategory.fields.category.title') + '*'" v-model="taskCategory.category"
                         :placeholderText="t('taskCategory.fields.category.placeholder')" required />
+                    <FormField class="field" inputId="task-category-name"
+                        :name="t('taskCategory.fields.name.title') + '*'" v-model="taskCategory.name"
+                        :placeholderText="t('taskCategory.fields.name.placeholder')" required />
                     <FormField class="field" inputId="task-category-description" :type="'textarea'"
                         :name="t('taskCategory.fields.description.title') + '*'" v-model="taskCategory.description"
                         :placeholderText="t('taskCategory.fields.description.placeholder')" required />
