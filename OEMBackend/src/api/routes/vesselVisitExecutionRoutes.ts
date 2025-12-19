@@ -13,6 +13,12 @@ export default (app: Router) => {
 
 	const getCtrl = () => Container.get(VesselVisitExecutionController);
 
+    route.get(
+        '/count',
+        [authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)],
+        (req: Request, res: Response, next: NextFunction) => getCtrl().countVesselVisitExecutions(req, res, next)
+    );
+
 	route.post(
 		'/:relatedVVN/open',
 		[authMiddleware, authzMiddleware(UserRole.Administrator, UserRole.LogisticsOperator)],

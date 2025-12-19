@@ -83,6 +83,10 @@ export const OperationSchema = new mongoose.Schema({
 });
 
 const OperationPlanSchema = new mongoose.Schema({
+    date: {
+        type: Date,
+        required: true
+    },
     dock: {
         type: String,
         required: true

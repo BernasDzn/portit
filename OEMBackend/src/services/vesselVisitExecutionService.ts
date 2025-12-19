@@ -237,4 +237,8 @@ export class VesselVisitExecutionService {
             pageCount: vvePage.pageCount
         };
     }
+
+    async count(): Promise<number> {
+        return this.vesselVisitExecutionRepository.count();
+    }
 }

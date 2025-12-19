@@ -6,6 +6,7 @@ import OperationPlanMetadata from './value/operationPlanMetadata';
 import mongoose from 'mongoose';
 
 export interface OperationPlanProps {
+	date: string;
 	relatedVVN: string;
 	dock: string;
 	operationSchedule: LinkedList<Operation>;
@@ -14,6 +15,7 @@ export interface OperationPlanProps {
 
 export default class OperationPlan extends Entity<OperationPlanProps> {
 	get id(): string { return this._id; }
+	get date(): string { return this.props.date; }
 	get relatedVVN(): string { return this.props.relatedVVN; }
 	get dock(): string { return this.props.dock; }
 	get operationSchedule(): LinkedList<Operation> { return this.props.operationSchedule; }
@@ -29,6 +31,7 @@ export default class OperationPlan extends Entity<OperationPlanProps> {
 	public toDto() : OperationPlanDto {
 		return {
 			id: this.id,
+			date: this.date,
 			relatedVVN: this.relatedVVN,
 			dock: this.dock,
 			operationSchedule: this.operationSchedule.toArray().map(op => op.toDto()),

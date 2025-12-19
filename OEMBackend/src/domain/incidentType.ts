@@ -1,5 +1,5 @@
 import { Entity } from "../core/domain/entity";
-import { IncidentTypeDto } from "../dto/incidentTypeDto";
+import { IncidentTypeID } from "./value/incidentTypeId";
 
 export type Severity = 'Minor' | 'Major' | 'Critical';
 
@@ -7,18 +7,8 @@ export interface IncidentTypeProps {
 	name: string;
 	description: string;
 	severity: Severity;
-	subtypeOf?: IncidentType | undefined;
-	subtypes?: IncidentType[] | undefined;
-}
-
-export class IncidentTypeID{
-	value: string;
-	
-	constructor() {
-		const timestamp = Date.now().toString(16).substring(4, 7).toUpperCase();
-		const random = Math.random().toString(16).substring(2, 8).toUpperCase();
-		this.value = "INC-" + timestamp + random;
-	}
+	subtypeOf: IncidentType | undefined;
+	subtypes: IncidentType[] | undefined;
 }
 
 export default class IncidentType extends Entity<IncidentTypeProps> {
@@ -34,6 +24,13 @@ export default class IncidentType extends Entity<IncidentTypeProps> {
 			id || new IncidentTypeID().value, 
 			props
 		);
+		this.validate();
+	}
+ 
+	validate(){
+		if(this.props.subtypeOf && this.props.subtypeOf.id === this.id){
+			throw new Error("An Incident Type cannot be a subtype of itself. Incident Type id: " + this.id);
+		}
 	}
 
 	addSubtype(subtype: IncidentType) {
@@ -44,13 +41,7 @@ export default class IncidentType extends Entity<IncidentTypeProps> {
 		subtype.props.subtypeOf = this;
 	}
 
-	toDto() : IncidentTypeDto {
-		return {
-			id: this.id,
-			name: this.name,
-			description: this.description,
-			severity: this.severity
-		};
+	hasParent(): boolean {
+		return this.props.subtypeOf !== undefined;
 	}
-
 }

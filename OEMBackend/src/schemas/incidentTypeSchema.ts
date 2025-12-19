@@ -16,7 +16,6 @@ const IncidentTypeSchema = new mongoose.Schema({
 	},
 	severity: {
 		type: String,
-		enum: ['Minor', 'Major', 'Critical'],
 		required: true
 	},
 	subtypeOf: {

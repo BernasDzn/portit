@@ -18,6 +18,8 @@ import { VesselVisitNotificationService } from "./service/VesselVisitNotificatio
 import { PrivacyPolicyService } from "./service/PrivacyPoliceService";
 import { OperationPlanService } from "./service/OperationPlanService";
 import { IncidentTypeService } from "./service/IncidentTypeService";
+import { TaskCategoryService } from "./service/TaskCategoryService";
+import { VesselVisitExecutionService } from "./service/VesselExecutionService";
 import type { IQualificationService } from "./service/IService/IQualificationService";
 import type { IHttpService } from "./service/IService/IHttpService";
 import type { IPhysicalResourceService } from "./service/IService/IPhysicalResourceService";
@@ -37,7 +39,7 @@ import type { IOperationPlanService } from "./service/IService/IOperationPlanSer
 import type { ISystemNotificationService } from "./service/IService/ISystemNotificationService";
 import type { IIncidentTypeService } from "./service/IService/IIncidentTypeService";
 import type { ITaskCategoryService } from "./service/IService/ITaskCategoryService";
-import { TaskCategoryService } from "./service/TaskCategoryService";
+import type { IVesselVisitExecutionService } from "./service/IService/IVesselExecutionService";
 
 const container = new Container();
 
@@ -60,5 +62,6 @@ container.bind<IVesselVisitNotificationService>(TYPES.vesselVisitNotificationSer
 container.bind<ISystemNotificationService>(TYPES.systemNotificationService).to(SystemNotificationService).inSingletonScope();
 container.bind<IIncidentTypeService>(TYPES.incidentTypeService).to(IncidentTypeService).inSingletonScope();
 container.bind<ITaskCategoryService>(TYPES.taskCategoryService).to(TaskCategoryService).inSingletonScope();
+container.bind<IVesselVisitExecutionService>(TYPES.vesselVisitExecutionService).to(VesselVisitExecutionService).inSingletonScope();
 
 export { container };

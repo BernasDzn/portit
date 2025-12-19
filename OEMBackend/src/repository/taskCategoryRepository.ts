@@ -20,7 +20,7 @@ export class TaskCategoryRepository {
             { new: true }
         ).exec();
 
-        if (!updatedCategory)
+        if (!updatedCategory) 
             return null;
 
         return TaskCategoryMapper.fromSchema(updatedCategory);

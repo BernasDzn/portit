@@ -6,6 +6,7 @@ describe ('Operation Plan Domain Tests', () => {
 
 	it('should create operation plan with correct properties', () => {
 		const operationPlan = new OperationPlan({
+			date: '2024-10-15',
 			relatedVVN: 'VVN123',
 			dock: 'DockA',
 			operationSchedule: new LinkedList(),

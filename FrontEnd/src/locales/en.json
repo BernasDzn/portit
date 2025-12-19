@@ -797,7 +797,8 @@
         "tabs": {
             "unplannedVVNs": "Unplanned VVNs",
             "search": "Search Plans",
-            "edit": "Edit Plan"
+            "edit": "Edit Plan",
+            "open": "Start Execution"
         },
         "subtitle":{
             "edit": "Modify operation plan details and schedule"
@@ -953,5 +954,31 @@
         },
         "taskCategoryInformation": "Task Category Information",
         "registeredTaskCategories": "Registered Task Categories"
+    },
+    "execution": {
+        "title": "Vessel Visit Executions",
+        "subtitle": {
+            "search": "Manage and view all vessel visit executions",
+            "dashboard": "Overview of vessel visit execution statistics and activities"
+        },
+        "tabs": {
+            "dashboard": "Executions Dashboard",
+            "search": "Search Executions",
+            "view_dashboard": "View Executions"
+        },
+        "fields": {
+            "relatedVVN": "Related VVN",
+            "dateOpen": "Date Opened",
+            "dateClose": "Date Closed",
+            "createdBy": "Created By",
+            "status": "Status",
+            "operations": "Operations executed"
+        },
+        "status": {
+            "pending": "Pending",
+            "inProgress": "In Progress",
+            "completed": "Completed"
+        },
+        "registeredvesselVisitExecutions": "Registered Vessel Visit Executions"
     }
 }

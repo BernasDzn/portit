@@ -502,6 +502,22 @@ const router = createRouter({
             path: '/scheduling/plans-edit/:id',
             name: 'Edit Operation Plan',
             component: () => import('@/views/Scheduling/OperationPlanEdit.vue'),
+        },
+        {
+            path: '/vessel-visit-executions/dashboard',
+            name: 'Vessel Visit Executions Dashboard',
+            component: () => import('@/views/VesselVisitExecutions/VesselVisitExecutionsDashboard.vue'),
+            meta: {
+                icon: "dashboard"
+            }
+        },
+        {
+            path: '/vessel-visit-executions/search',
+            name: 'Vessel Visit Executions Search',
+            component: () => import('@/views/VesselVisitExecutions/VesselVisitExecutionsSearch.vue'),
+            meta: {
+                icon: "search"
+            }
         }
       ]
     },
@@ -562,7 +578,10 @@ router.beforeEach((to, from, next) => {
     { prefix: '/admin', roles: [0] },
     { prefix: '/scheduling', roles: [0,3] },
     { prefix: '/about', roles: [0, 1, 2, 3] },
-    { prefix: '/my-data', roles: [0, 1, 2, 3] }
+    { prefix: '/my-data', roles: [0, 1, 2, 3] },
+    { prefix: '/incident-types', roles: [0,3] },
+    { prefix: '/scheduling/plans', roles: [0,3] },
+    { prefix: '/vessel-visit-executions', roles: [0,3] }
   ];
 
   for (const entry of routeRoleMap) {

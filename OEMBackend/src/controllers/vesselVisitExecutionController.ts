@@ -338,6 +338,36 @@ export class VesselVisitExecutionController {
             next(error);
         }
     }
+
+    /**
+     * @swagger
+     * /vessel-visit-executions/count:
+     *   get:
+     *     summary: Get the total count of Vessel Visit Executions
+     *     tags:
+     *       - Vessel Visit Executions
+     *     responses:
+     *       200:
+     *         description: Total count of Vessel Visit Executions retrieved successfully
+     *         content:
+     *           application/json:
+     *             schema:
+     *               type: object
+     *               properties:
+     *                 count:
+     *                   type: integer
+     *                   description: Total number of Vessel Visit Executions
+     *       500:
+     *         description: Server error
+     */
+    async countVesselVisitExecutions(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const count = await this.vesselVisitExecutionService.count();
+            res.status(200).json({ count });
+        } catch (error) {
+            next(error);
+        }
+    }
 }
 
 /**

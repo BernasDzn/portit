@@ -25,6 +25,7 @@ const sidebarItems = ref([
   { name: 'taskCategory.title', route: '/task-categories/dashboard', icon: "category", materialIcon: 'category', roles: [0, 1, 3] },
   { name: 'scheduling.title', route: '/scheduling-dashboard', icon: "calendar_month", materialIcon: 'calendar_month', roles: [0, 3] },
   { name: 'notification.title', route: '/vessel-visit-notifications/dashboard', icon: "ballot", materialIcon: 'ballot', roles: [0, 2, 1] },
+  { name: 'execution.title', route: '/vessel-visit-executions/dashboard', icon: "assignment_turned_in", materialIcon: 'assignment_turned_in', roles: [0, 3] },
   {},
   { name: "admin.sidebarTitle", route: '/admin/dashboard', icon: "admin_panel_settings", materialIcon: 'admin_panel_settings', roles: [0] },
   {},
