@@ -1,6 +1,7 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import { RegisterRoutes } from "./api/routes/routes";
+import { authMiddleware } from './api/middlewares/authMiddleware';
 import { errorHandler } from "./api/middlewares/errorHandler";
 import swaggerUi from "swagger-ui-express";
 import swaggerDoc from "./api/swagger/swagger.json";
@@ -15,8 +16,10 @@ export function createApp() {
 	// Swagger
 	app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
-	// Routes
-	RegisterRoutes(app);
+	// Routes (mounted behind authentication)
+	const apiRouter = express.Router();
+	RegisterRoutes(apiRouter);
+	app.use('/', authMiddleware, apiRouter);
 
 	// Error handler (after routes)
 	app.use(errorHandler);
