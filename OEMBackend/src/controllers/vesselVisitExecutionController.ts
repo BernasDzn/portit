@@ -50,6 +50,12 @@ export class VesselVisitExecutionController extends Controller {
         return execution;
     }
 
+    @Get("count")
+    public async countVesselVisitExecutions() {
+        const count = await this.vesselVisitExecutionService.count();
+        return { count };
+    }
+
     @Get()
     public async getAllVesselVisitExecutions(
         @Query() page: number = 1,
@@ -57,36 +63,6 @@ export class VesselVisitExecutionController extends Controller {
     ) {
         const executionsPage = await this.vesselVisitExecutionService.getAllVesselVisitExecutions(page, limit);
         return executionsPage;
-    }
-
-    /**
-     * @swagger
-     * /vessel-visit-executions/count:
-     *   get:
-     *     summary: Get the total count of Vessel Visit Executions
-     *     tags:
-     *       - Vessel Visit Executions
-     *     responses:
-     *       200:
-     *         description: Total count of Vessel Visit Executions retrieved successfully
-     *         content:
-     *           application/json:
-     *             schema:
-     *               type: object
-     *               properties:
-     *                 count:
-     *                   type: integer
-     *                   description: Total number of Vessel Visit Executions
-     *       500:
-     *         description: Server error
-     */
-    async countVesselVisitExecutions(req: Request, res: Response, next: NextFunction): Promise<void> {
-        try {
-            const count = await this.vesselVisitExecutionService.count();
-            res.status(200).json({ count });
-        } catch (error) {
-            next(error);
-        }
     }
 }
 

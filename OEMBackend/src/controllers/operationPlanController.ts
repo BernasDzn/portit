@@ -26,15 +26,7 @@ export class OperationPlanController extends Controller {
         return plans;
     }
 
-    @Get("{id}")
-    public async getPlanById(@Path() id: string) {
-        const plan = await this.operationPlanService.getById(id);
-        if (!plan) {
-            this.setStatus(404);
-            return { message: 'Operation plan not found' };
-        }
-        return plan;
-    }
+
 
     @Get("by-date")
     public async getPlansByDate() {
@@ -86,4 +78,13 @@ export class OperationPlanController extends Controller {
         return updatedPlan;
     }
 
+    @Get("{id}")
+    public async getPlanById(@Path() id: string) {
+        const plan = await this.operationPlanService.getById(id);
+        if (!plan) {
+            this.setStatus(404);
+            return { message: 'Operation plan not found' };
+        }
+        return plan;
+    }
 }

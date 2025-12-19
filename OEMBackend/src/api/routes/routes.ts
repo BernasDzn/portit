@@ -161,6 +161,7 @@ const models: TsoaRoute.Models = {
         "dataType": "refObject",
         "properties": {
             "id": {"dataType":"string","required":true},
+            "date": {"dataType":"string","required":true},
             "relatedVVN": {"dataType":"string","required":true},
             "dock": {"dataType":"string","required":true},
             "operationSchedule": {"dataType":"array","array":{"dataType":"refObject","ref":"OperationDto"},"required":true},
@@ -374,6 +375,35 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'getVesselVisitExecution',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        const argsVesselVisitExecutionController_countVesselVisitExecutions: Record<string, TsoaRoute.ParameterSchema> = {
+        };
+        app.get('/vessel-visit-executions/count',
+            ...(fetchMiddlewares<RequestHandler>(VesselVisitExecutionController)),
+            ...(fetchMiddlewares<RequestHandler>(VesselVisitExecutionController.prototype.countVesselVisitExecutions)),
+
+            async function VesselVisitExecutionController_countVesselVisitExecutions(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsVesselVisitExecutionController_countVesselVisitExecutions, request, response });
+
+                const controller = new VesselVisitExecutionController();
+
+              await templateService.apiHandler({
+                methodName: 'countVesselVisitExecutions',
                 controller,
                 response,
                 next,
@@ -693,36 +723,6 @@ export function RegisterRoutes(app: Router) {
             }
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-        const argsOperationPlanController_getPlanById: Record<string, TsoaRoute.ParameterSchema> = {
-                id: {"in":"path","name":"id","required":true,"dataType":"string"},
-        };
-        app.get('/operation-plans/:id',
-            ...(fetchMiddlewares<RequestHandler>(OperationPlanController)),
-            ...(fetchMiddlewares<RequestHandler>(OperationPlanController.prototype.getPlanById)),
-
-            async function OperationPlanController_getPlanById(request: ExRequest, response: ExResponse, next: any) {
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = templateService.getValidatedArgs({ args: argsOperationPlanController_getPlanById, request, response });
-
-                const controller = new OperationPlanController();
-
-              await templateService.apiHandler({
-                methodName: 'getPlanById',
-                controller,
-                response,
-                next,
-                validatedArgs,
-                successStatus: undefined,
-              });
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         const argsOperationPlanController_getPlansByDate: Record<string, TsoaRoute.ParameterSchema> = {
         };
         app.get('/operation-plans/by-date',
@@ -831,6 +831,36 @@ export function RegisterRoutes(app: Router) {
 
               await templateService.apiHandler({
                 methodName: 'updateOperationPlan',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+              });
+            } catch (err) {
+                return next(err);
+            }
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        const argsOperationPlanController_getPlanById: Record<string, TsoaRoute.ParameterSchema> = {
+                id: {"in":"path","name":"id","required":true,"dataType":"string"},
+        };
+        app.get('/operation-plans/:id',
+            ...(fetchMiddlewares<RequestHandler>(OperationPlanController)),
+            ...(fetchMiddlewares<RequestHandler>(OperationPlanController.prototype.getPlanById)),
+
+            async function OperationPlanController_getPlanById(request: ExRequest, response: ExResponse, next: any) {
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = templateService.getValidatedArgs({ args: argsOperationPlanController_getPlanById, request, response });
+
+                const controller = new OperationPlanController();
+
+              await templateService.apiHandler({
+                methodName: 'getPlanById',
                 controller,
                 response,
                 next,
