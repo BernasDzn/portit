@@ -7,7 +7,7 @@
 % :- dynamic frontend_url/1.
 
 run :-
-	PORT = 2228,
+	PORT = 6000,
 	open_server(PORT),
 	writeln('Server started. Press Ctrl+C to stop.'),
 

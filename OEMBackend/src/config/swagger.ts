@@ -11,7 +11,7 @@ const swaggerOptions: swaggerJSDoc.Options = {
     },
     servers: [
       {
-        url: 'http://localhost:4000',
+        url: 'https://vs-gate.dei.isep.ipp.pt:30228',
         description: 'Development server',
       },
     ],
