@@ -1,6 +1,6 @@
 {
-  "name": "frontend",
-  "version": "0.0.0",
+  "name": "portit",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
   "engines": {
@@ -19,7 +19,43 @@
     "test:integration": "vitest run tests/integration",
     "test:e2e": "playwright test",
     "build-only": "vite build",
-    "type-check": "vue-tsc --build"
+    "type-check": "vue-tsc --build",
+    "electron:dev": "cross-env ELECTRON=true vite",
+    "electron:build": "npm run prebuild && cross-env ELECTRON=true vite build && electron-builder",
+    "electron:build:win": "npm run electron:build -- --win",
+    "electron:build:mac": "npm run electron:build -- --mac",
+    "electron:build:linux": "npm run electron:build -- --linux"
+  },
+  "main": "dist-electron/main.js",
+  "build": {
+    "appId": "com.portit.app",
+    "productName": "PorTiT",
+    "directories": {
+      "output": "release/${version}"
+    },
+    "files": [
+      "dist/**/*",
+      "dist-electron/**/*"
+    ],
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "public/big_favicon.ico",
+      "signAndEditExecutable": false
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "icon": "public/big_favicon.ico"
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "icon": "public/big_favicon.ico"
+    }
   },
   "dependencies": {
     "@fontsource/material-icons": "^5.2.7",
@@ -50,10 +86,15 @@
     "@vitejs/plugin-vue": "^6.0.1",
     "@vue/test-utils": "^2.4.6",
     "@vue/tsconfig": "^0.8.1",
+    "cross-env": "^10.1.0",
+    "electron": "^39.2.7",
+    "electron-builder": "^26.0.12",
     "jsdom": "^27.0.1",
     "npm-run-all2": "^8.0.4",
     "typescript": "~5.9.0",
     "vite": "^7.1.11",
+    "vite-plugin-electron": "^0.29.0",
+    "vite-plugin-electron-renderer": "^0.14.6",
     "vite-plugin-vue-devtools": "^8.0.3",
     "vitest": "^3.2.4",
     "vue-tsc": "^3.1.1"

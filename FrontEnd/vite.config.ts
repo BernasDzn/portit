@@ -1,9 +1,11 @@
 import { fileURLToPath, URL } from 'node:url'
 import fs from 'node:fs'
+import path from 'node:path'
 
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
+import electron from 'vite-plugin-electron/simple'
 
 // https://vite.dev/config/
 const isLocal = process.env.npm_lifecycle_event === 'local'
@@ -33,6 +35,16 @@ export default defineConfig({
     }),
     // Only enable devtools in local/dev mode, not in deploy
     !isDeploy && vueDevTools(),
+    // Electron plugin for desktop app
+    process.env.ELECTRON && electron({
+      main: {
+        entry: 'electron/main.ts',
+      },
+      preload: {
+        input: 'electron/preload.ts',
+      },
+      renderer: {},
+    }),
   ].filter(Boolean),
   resolve: {
     alias: {
