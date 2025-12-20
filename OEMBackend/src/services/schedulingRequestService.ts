@@ -82,7 +82,12 @@ export class SchedulingRequestService {
 
         console.log(`Processing scheduling request ID ${nextItem.id} for day ${nextItem.data.day}`);
 
-        const url = `${config.schedulingServer}/schedule?day=${nextItem.data.day}&alg=${nextItem.data.alg}&daysAhead=${nextItem.data.daysAhead}`;
+        // Clean and validate the base URL
+        const baseUrl = config.schedulingServer.trim();
+        console.log(`DEBUG: Base URL: "${baseUrl}" (length: ${baseUrl.length}, charCodes: ${[...baseUrl].map(c => c.charCodeAt(0)).join(',')})`);
+        
+        const url = `${baseUrl}/schedule?day=${nextItem.data.day}&alg=${nextItem.data.alg}&daysAhead=${nextItem.data.daysAhead}`;
+        console.log(`DEBUG: Full URL: "${url}"`);
         
         try {
     
