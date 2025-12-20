@@ -1,5 +1,6 @@
-import { Route, Tags, Controller, Get, Post, Query } from "tsoa";
+import { Route, Tags, Controller, Get, Post, Query, Request } from "tsoa";
 import { SchedulingRequestService } from '../services/schedulingRequestService';
+import { Request as ExpressRequest } from 'express';
 
 @Route("schedule")
 @Tags("Scheduling")
@@ -32,15 +33,22 @@ export class SchedulingRequestController extends Controller {
     }
 
     @Post("acceptRequest")
-    public async acceptRequest(@Query() id: string) {
+    public async acceptRequest(@Query() id: string, @Request() request: ExpressRequest) {
         if (!id) {
             this.setStatus(400);
             return { message: 'Missing required query parameter: id' };
         }
 
         const userEmail = 'system'; // Note: requires auth context
-        const token = undefined; // Note: requires auth context
-        const data = await this.schedulingRequestService.acceptRequest(id, userEmail, token!);
+        const authHeader = request.headers.authorization;
+        const token = authHeader?.startsWith('Bearer ') ? authHeader.substring(7) : undefined;
+        
+        if (!token) {
+            this.setStatus(401);
+            return { message: 'Authorization token required' };
+        }
+        
+        const data = await this.schedulingRequestService.acceptRequest(id, userEmail, token);
         return data;
     }
 

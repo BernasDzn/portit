@@ -122,7 +122,8 @@ export class OperationPlanRepository {
 
     async getContainersOfNotification(vvnId: string, token: string, isUnload: boolean): Promise<ContainerDto[]> {
 
-        const url = `${config.backendServer}/VesselVisitNotification/${vvnId}`;
+        const baseUrl = config.backendServer.replace('localhost', '127.0.0.1');
+        const url = `${baseUrl}/VesselVisitNotification/${vvnId}`;
         console.log(`Fetching containers for VVN ${vvnId} from ${url}`);
         const res = await fetch(url, {
             credentials: "include",
