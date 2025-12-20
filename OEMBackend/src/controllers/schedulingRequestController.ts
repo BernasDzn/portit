@@ -13,7 +13,8 @@ export class SchedulingRequestController extends Controller {
     public async scheduleRequest(
         @Query() day: string,
         @Query() alg: string,
-        @Query() daysAhead: number = 2
+        @Query() daysAhead: number = 2,
+        @Request() request: ExpressRequest
     ) {
         if (!day || !alg) {
             this.setStatus(400);
@@ -22,7 +23,14 @@ export class SchedulingRequestController extends Controller {
 
         // Hard cap at one this might cause issues later
         daysAhead = 1;
-        const userEmail = 'system'; // Note: requires auth context
+        const authHeader = request.headers.authorization;
+        const token = authHeader?.startsWith('Bearer ') ? authHeader.substring(7) : undefined;
+        if (!token) {
+            this.setStatus(401);
+            return { message: 'Authorization token required' };
+        }
+        const decoded = jwt.decode(token) as any;
+        const userEmail = decoded?.email_address || 'unknown';
         const data = await this.schedulingRequestService.scheduleRequest(day, alg, daysAhead, userEmail);
         return data;
     }
