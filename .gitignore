@@ -109,3 +109,7 @@ __pycache__/
 media/
 
 /FrontEnd/public/libs/*
+
+# Routes and APIs generated files
+OEMBackend/src/api/routes/*
+OEMBackend/src/api/swagger/*
