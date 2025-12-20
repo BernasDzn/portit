@@ -1,5 +1,7 @@
-import { Route, Tags, Controller, Get, Post, Put, Path, Body, Query } from "tsoa";
+import { Route, Tags, Controller, Get, Post, Put, Path, Body, Query, Request } from "tsoa";
 import { VesselVisitExecutionService } from "../services/vesselVisitExecutionService";
+import { Request as ExpressRequest } from 'express';
+import jwt from 'jsonwebtoken';
 
 @Route("vessel-visit-executions")
 @Tags("Vessel Visit Executions")
@@ -8,9 +10,15 @@ export class VesselVisitExecutionController extends Controller {
     private vesselVisitExecutionService = new VesselVisitExecutionService();
 
     @Post("{relatedVVN}/open")
-    public async openVesselVisitExecution(@Path() relatedVVN: string) {
-        // Note: creatorUser requires auth context
-        const creatorUser = 'system';
+    public async openVesselVisitExecution(@Path() relatedVVN: string, @Request() request: ExpressRequest) {
+        const authHeader = request.headers.authorization;
+        const token = authHeader?.startsWith('Bearer ') ? authHeader.substring(7) : undefined;
+        if (!token) {
+            this.setStatus(401);
+            return { message: 'Authorization token required' };
+        }
+        const decoded = jwt.decode(token) as any;
+        const creatorUser = decoded?.email_address || 'unknown';
 
         const execution = await this.vesselVisitExecutionService.createVesselVisitExecution(relatedVVN, creatorUser);
         this.setStatus(201);

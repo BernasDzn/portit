@@ -1,6 +1,8 @@
-import { Route, Tags, Controller, Get, Post, Patch, Path, Body, Query } from "tsoa";
+import { Route, Tags, Controller, Get, Post, Patch, Path, Body, Query, Request } from "tsoa";
 import { OperationPlanService } from "../services/operationPlanService";
 import { PlanFilter } from "../dto/filters/planFilter";
+import { Request as ExpressRequest } from 'express';
+import jwt from 'jsonwebtoken';
 
 @Route("operation-plans")
 @Tags("Operation Plans")
@@ -35,10 +37,16 @@ export class OperationPlanController extends Controller {
     }
 
     @Get("notifications-without-plan")
-    public async getNotificationWithoutPlan() {
-        // Note: This method requires user token which is not available in TSOA context
-        // You may need to handle auth differently or pass token as parameter
-        const items = await this.operationPlanService.getNotificationsWithoutPlan(undefined as any);
+    public async getNotificationWithoutPlan(@Request() request: ExpressRequest) {
+        const authHeader = request.headers.authorization;
+        const token = authHeader?.startsWith('Bearer ') ? authHeader.substring(7) : undefined;
+        
+        if (!token) {
+            this.setStatus(401);
+            return { message: 'Authorization token required' };
+        }
+        
+        const items = await this.operationPlanService.getNotificationsWithoutPlan(token);
         if (items === null) {
             this.setStatus(404);
             return { message: 'Not found' };
@@ -48,15 +56,23 @@ export class OperationPlanController extends Controller {
 
     @Post("regenerate")
     public async regeneratePlansForDay(
-        @Body() body: { day: string; algorithm: string; daysAhead?: number }
+        @Body() body: { day: string; algorithm: string; daysAhead?: number }, 
+        @Request() request: ExpressRequest
     ) {
         if (!body.day || !body.algorithm) {
             this.setStatus(400);
             return { message: 'Missing required parameters: day and algorithm' };
         }
 
-        // Note: userEmail requires auth context
-        const userEmail = 'system';
+        const authHeader = request.headers.authorization;
+        const token = authHeader?.startsWith('Bearer ') ? authHeader.substring(7) : undefined;
+        if (!token) {
+            this.setStatus(401);
+            return { message: 'Authorization token required' };
+        }
+
+        const decoded = jwt.decode(token) as any;
+        const userEmail = decoded?.email_address || 'unknown';
         
         const result = await this.operationPlanService.regeneratePlansForDay(
             body.day, 

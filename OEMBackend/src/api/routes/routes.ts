@@ -663,6 +663,7 @@ export function RegisterRoutes(app: Router) {
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         const argsSchedulingRequestController_rejectRequest: Record<string, TsoaRoute.ParameterSchema> = {
                 id: {"in":"query","name":"id","required":true,"dataType":"string"},
+                request: {"in":"request","name":"request","required":true,"dataType":"object"},
         };
         app.post('/schedule/rejectRequest',
             ...(fetchMiddlewares<RequestHandler>(SchedulingRequestController)),
@@ -754,6 +755,7 @@ export function RegisterRoutes(app: Router) {
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         const argsOperationPlanController_getNotificationWithoutPlan: Record<string, TsoaRoute.ParameterSchema> = {
+                request: {"in":"request","name":"request","required":true,"dataType":"object"},
         };
         app.get('/operation-plans/notifications-without-plan',
             ...(fetchMiddlewares<RequestHandler>(OperationPlanController)),
@@ -784,6 +786,7 @@ export function RegisterRoutes(app: Router) {
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         const argsOperationPlanController_regeneratePlansForDay: Record<string, TsoaRoute.ParameterSchema> = {
                 body: {"in":"body","name":"body","required":true,"dataType":"nestedObjectLiteral","nestedProperties":{"daysAhead":{"dataType":"double"},"algorithm":{"dataType":"string","required":true},"day":{"dataType":"string","required":true}}},
+                request: {"in":"request","name":"request","required":true,"dataType":"object"},
         };
         app.post('/operation-plans/regenerate',
             ...(fetchMiddlewares<RequestHandler>(OperationPlanController)),

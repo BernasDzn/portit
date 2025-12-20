@@ -1,6 +1,7 @@
 import { Route, Tags, Controller, Get, Post, Query, Request } from "tsoa";
 import { SchedulingRequestService } from '../services/schedulingRequestService';
 import { Request as ExpressRequest } from 'express';
+import jwt from 'jsonwebtoken';
 
 @Route("schedule")
 @Tags("Scheduling")
@@ -39,7 +40,6 @@ export class SchedulingRequestController extends Controller {
             return { message: 'Missing required query parameter: id' };
         }
 
-        const userEmail = 'system'; // Note: requires auth context
         const authHeader = request.headers.authorization;
         const token = authHeader?.startsWith('Bearer ') ? authHeader.substring(7) : undefined;
         
@@ -47,19 +47,32 @@ export class SchedulingRequestController extends Controller {
             this.setStatus(401);
             return { message: 'Authorization token required' };
         }
+
+        const decoded = jwt.decode(token) as any;
+        const userEmail = decoded?.email_address || 'unknown';
         
         const data = await this.schedulingRequestService.acceptRequest(id, userEmail, token);
         return data;
     }
 
     @Post("rejectRequest")
-    public async rejectRequest(@Query() id: string) {
+    public async rejectRequest(@Query() id: string, @Request() request: ExpressRequest) {
         if (!id) {
             this.setStatus(400);
             return { message: 'Missing required query parameter: id' };
         }
 
-        const userEmail = 'system'; // Note: requires auth context
+        const authHeader = request.headers.authorization;
+        const token = authHeader?.startsWith('Bearer ') ? authHeader.substring(7) : undefined;
+        
+        if (!token) {
+            this.setStatus(401);
+            return { message: 'Authorization token required' };
+        }
+
+        const decoded = jwt.decode(token) as any;
+        const userEmail = decoded?.email_address || 'unknown';
+
         const data = await this.schedulingRequestService.rejectRequest(id, userEmail);
         return data;
     }
