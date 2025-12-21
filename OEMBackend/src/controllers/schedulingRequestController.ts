@@ -23,14 +23,15 @@ export class SchedulingRequestController extends Controller {
 
         // Hard cap at one this might cause issues later
         daysAhead = 1;
-        const authHeader = request.headers.authorization;
-        const token = authHeader?.startsWith('Bearer ') ? authHeader.substring(7) : undefined;
+
+        let token: string | undefined = request.user?.token;
+        let userEmail: string = request.user?.emailAddress || 'unknown';
+
         if (!token) {
             this.setStatus(401);
             return { message: 'Authorization token required' };
         }
-        const decoded = jwt.decode(token) as any;
-        const userEmail = decoded?.email_address || 'unknown';
+
         const data = await this.schedulingRequestService.scheduleRequest(day, alg, daysAhead, userEmail);
         return data;
     }
@@ -48,17 +49,24 @@ export class SchedulingRequestController extends Controller {
             return { message: 'Missing required query parameter: id' };
         }
 
-        const authHeader = request.headers.authorization;
-        const token = authHeader?.startsWith('Bearer ') ? authHeader.substring(7) : undefined;
-        
+        // Use middleware user when available, otherwise read Authorization header
+        let token: string | undefined = (request as any).user?.token;
+        let userEmail: string = (request as any).user?.emailAddress || 'unknown';
+
+        if (!token) {
+            const authHeader = request.headers.authorization;
+            token = authHeader?.startsWith('Bearer ') ? authHeader.substring(7) : authHeader || undefined;
+            if (token) {
+                const decoded = jwt.decode(token) as any;
+                userEmail = decoded?.email_address || decoded?.emailAddress || userEmail;
+            }
+        }
+
         if (!token) {
             this.setStatus(401);
             return { message: 'Authorization token required' };
         }
 
-        const decoded = jwt.decode(token) as any;
-        const userEmail = decoded?.email_address || 'unknown';
-        
         const data = await this.schedulingRequestService.acceptRequest(id, userEmail, token);
         return data;
     }
@@ -70,16 +78,23 @@ export class SchedulingRequestController extends Controller {
             return { message: 'Missing required query parameter: id' };
         }
 
-        const authHeader = request.headers.authorization;
-        const token = authHeader?.startsWith('Bearer ') ? authHeader.substring(7) : undefined;
-        
+        // Use middleware user when available, otherwise read Authorization header
+        let token: string | undefined = (request as any).user?.token;
+        let userEmail: string = (request as any).user?.emailAddress || 'unknown';
+
+        if (!token) {
+            const authHeader = request.headers.authorization;
+            token = authHeader?.startsWith('Bearer ') ? authHeader.substring(7) : authHeader || undefined;
+            if (token) {
+                const decoded = jwt.decode(token) as any;
+                userEmail = decoded?.email_address || decoded?.emailAddress || userEmail;
+            }
+        }
+
         if (!token) {
             this.setStatus(401);
             return { message: 'Authorization token required' };
         }
-
-        const decoded = jwt.decode(token) as any;
-        const userEmail = decoded?.email_address || 'unknown';
 
         const data = await this.schedulingRequestService.rejectRequest(id, userEmail);
         return data;
