@@ -1,16 +1,15 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import type { IIncidentTypeService } from '@/service/IService/IIncidentTypeService';
-import { IncidentType, type IncidentTypeDto } from '@/model/IncidentType';
 import EntityForm from '@/components/crud/EntityForm.vue';
 import FormField from '@/components/crud/FormField.vue';
 import { useI18n } from 'vue-i18n';
 import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
 import ObjectSelector from '@/components/crud/ObjectSelector.vue';
-import type { Filter, Page } from '@/model/Page';
-import type { IncidentTypeCreateDto } from '@/model/dto/IncidentTypeDto';
+import type { Page } from '@/model/Page';
 import { useAlerts } from '@/composables/alerts';
+import type { IncidentTypeDto, PartialIncidentTypeDto } from '@/model/dto/IncidentTypeDto';
 
 const { t } = useI18n();
 const notifications = useAlerts();
@@ -19,20 +18,18 @@ const incidentType = ref({
     name: '',
     description: '',
     severity: null,
-    subtypeOf: null,
-    subtypes: [] as IncidentType[]
+    subtypeOf: null
 });
 
 const incidentTypeService = container.get<IIncidentTypeService>(TYPES.incidentTypeService);
 
 const submitIncidentType = async () => {
     try {
-        let dto : IncidentTypeCreateDto = {
+        let dto : PartialIncidentTypeDto = {
             name: incidentType.value.name,
             description: incidentType.value.description,
             severity: incidentType.value.severity.id,
-            subtypeOfId: incidentType.value.subtypeOf?.id || null,
-            subtypesIds: incidentType.value.subtypes.map(subtype => subtype.id)
+            subtypeOf: incidentType.value.subtypeOf?.bid || null
         };
         console.log(dto);
         return await incidentTypeService.createIncidentType(dto);
@@ -99,11 +96,6 @@ const fetchIncidentTypes = async (): Promise<Page<IncidentTypeDto>> => {
                             v-model="incidentType.subtypeOf" :fetch-function="fetchIncidentTypes"
                             :placeholderText="t('incidentType.fields.subtypeOf.placeholder')" labelKey="name"
                             valueKey="id" />
-
-                        <ObjectSelector class="field-dropdown" :name="t('incidentType.fields.subtypes.title')"
-                            v-model="incidentType.subtypes" :fetch-function="fetchIncidentTypes"
-                            :placeholderText="t('incidentType.fields.subtypes.placeholder')" labelKey="name"
-                            valueKey="id" multiple />
                     </div>
                 </div>
             </div>

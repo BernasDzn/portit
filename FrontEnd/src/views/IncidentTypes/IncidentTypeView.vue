@@ -75,7 +75,7 @@ const getSeverityVariant = (severity: string): string => {
             <div>
                 <div class="opposed">
                     <div class="view-header">
-                        <span class="material-icons icon" aria-hidden="true">nearby_error</span>
+                        <span class="material-icons icon" aria-hidden="true">new_releases</span>
                         <div>
                             <h2 class="title">{{ entity.element.name }}</h2>
                             <p class="subtitle">
@@ -86,7 +86,7 @@ const getSeverityVariant = (severity: string): string => {
                         </div>
                     </div>
                     <div style="display: flex; gap: 0.5rem;">
-                        <RouterLink :to="`/incident-types/edit/${entity.element.id}`">
+                        <RouterLink :to="`/incident-types/edit/${entity.element.bid}`">
                             <sl-button variant="default" size="large">
                                 <sl-icon slot="prefix" name="pencil"></sl-icon>
                                 {{ t('buttons.edit') }}
