@@ -11,8 +11,14 @@ export class VesselVisitExecutionController extends Controller {
 
     @Post("{relatedVVN}/open")
     public async openVesselVisitExecution(@Path() relatedVVN: string, @Request() request: ExpressRequest) {
+        // Check for token in Authorization header first, then in cookies
         const authHeader = request.headers.authorization;
-        const token = authHeader?.startsWith('Bearer ') ? authHeader.substring(7) : undefined;
+        let token = authHeader?.startsWith('Bearer ') ? authHeader.substring(7) : undefined;
+        
+        if (!token && request.cookies?.AuthToken) {
+            token = request.cookies.AuthToken;
+        }
+        
         if (!token) {
             this.setStatus(401);
             return { message: 'Authorization token required' };
@@ -47,17 +53,6 @@ export class VesselVisitExecutionController extends Controller {
         return execution;
     }
 
-    @Get("{relatedVVN}")
-    public async getVesselVisitExecution(@Path() relatedVVN: string) {
-        const execution = await this.vesselVisitExecutionService.getVesselVisitExecutionByVVN(relatedVVN);
-        if (!execution) {
-            this.setStatus(404);
-            return { message: `Vessel Visit Execution with VVN ${relatedVVN} not found.` };
-        }
-
-        return execution;
-    }
-
     @Get("count")
     public async countVesselVisitExecutions() {
         const count = await this.vesselVisitExecutionService.count();
@@ -71,6 +66,17 @@ export class VesselVisitExecutionController extends Controller {
     ) {
         const executionsPage = await this.vesselVisitExecutionService.getAllVesselVisitExecutions(page, limit);
         return executionsPage;
+    }
+
+    @Get("{relatedVVN}")
+    public async getVesselVisitExecution(@Path() relatedVVN: string) {
+        const execution = await this.vesselVisitExecutionService.getVesselVisitExecutionByVVN(relatedVVN);
+        if (!execution) {
+            this.setStatus(404);
+            return { message: `Vessel Visit Execution with VVN ${relatedVVN} not found.` };
+        }
+
+        return execution;
     }
 }
 

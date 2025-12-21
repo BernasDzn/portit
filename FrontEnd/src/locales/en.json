@@ -964,21 +964,26 @@
         "tabs": {
             "dashboard": "Executions Dashboard",
             "search": "Search Executions",
-            "view_dashboard": "View Executions"
+            "view_dashboard": "View Executions",
+            "view": "View Execution"
         },
         "fields": {
-            "relatedVVN": "Related VVN",
-            "dateOpen": "Date Opened",
-            "dateClose": "Date Closed",
-            "createdBy": "Created By",
+            "code": "Code",
+            "relatedVVN": "Related To",
             "status": "Status",
-            "operations": "Operations executed"
+            "createdBy": "Created By",
+            "dateOpen": "Date Open",
+            "dateClosed": "Date Closed",
+            "relatedVesselVisit": "Related Vessel Visit"
         },
-        "status": {
-            "pending": "Pending",
-            "inProgress": "In Progress",
-            "completed": "Completed"
-        },
-        "registeredvesselVisitExecutions": "Registered Vessel Visit Executions"
+        "infoTitle": "Execution Information",
+        "operationsTitle": "Operations",
+        "noOperations": "No operations available",
+        "startOperation": "Start Operation",
+        "completeOperation": "Complete Operation",
+        "addOperation": "Add Operation",
+        "addOperationDescription": "Add a new operation to the timeline",
+        "confirmStartOperation": "Are you sure you want to start this operation?",
+        "confirmCompleteOperation": "Are you sure you want to complete this operation?"
     }
 }

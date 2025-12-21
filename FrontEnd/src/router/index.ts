@@ -414,7 +414,6 @@ const router = createRouter({
         },
         {
             path: '/incident-types/view/:id',
-            name: 'View Incident Type',
             component: () => import('@/views/IncidentTypes/IncidentTypeView.vue'),
             meta: {
                 icon: "eye"
@@ -430,11 +429,7 @@ const router = createRouter({
         },
         {
             path: '/incident-types/edit/:id',
-            name: 'Edit Incident Type',
-            component: () => import('@/views/IncidentTypes/IncidentTypeEdit.vue'),
-            meta: {
-                icon: "pencil"
-            }
+            component: () => import('@/views/IncidentTypes/IncidentTypeEdit.vue')
         },
         {
           path: '/task-categories/dashboard',
@@ -453,7 +448,6 @@ const router = createRouter({
           }
         },
         {path: '/task-categories/view/:id',
-          name: 'View Task Category',
           component: () => import('@/views/TaskCategories/TaskCategoryView.vue')
         },
         {
@@ -466,8 +460,7 @@ const router = createRouter({
         },
         {
           path: '/task-categories/edit/:id',
-          name: 'Edit Task Category',
-          component: () => import('@/views/TaskCategories/TaskCategoryEdit.vue'),
+          component: () => import('@/views/TaskCategories/TaskCategoryEdit.vue')
         },
         {
           path: '/about',
@@ -495,12 +488,10 @@ const router = createRouter({
         },
         {
             path: '/scheduling/plans-view/:id',
-            name: 'View Operation Plan',
             component: () => import('@/views/Scheduling/OperationPlanView.vue'),
         },
         {
             path: '/scheduling/plans-edit/:id',
-            name: 'Edit Operation Plan',
             component: () => import('@/views/Scheduling/OperationPlanEdit.vue'),
         },
         {
@@ -518,6 +509,10 @@ const router = createRouter({
             meta: {
                 icon: "search"
             }
+        },
+        {
+            path: '/vessel-visit-executions/:id',
+            component: () => import('@/views/VesselVisitExecutions/VesselVisitExecutionsView.vue'),
         }
       ]
     },

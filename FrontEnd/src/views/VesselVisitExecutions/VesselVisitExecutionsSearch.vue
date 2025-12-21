@@ -42,7 +42,7 @@ const fetchVesselExecutions = async (filtering?: Filter<VesselVisitExecutionFilt
 
         <ListingBox listing-style="listing-triples" :fetch-function="fetchVesselExecutions" v-slot="{elements}">
             <li v-for="vt in elements" :key="vt.id">
-                <VesselVisitExecutionPrinter class="listing-box" :execution="vt" :link="`/vessel-visit-executions/${vt.id}`"/>
+                <VesselVisitExecutionPrinter class="listing-box" :execution="vt" :link="`/vessel-visit-executions/${vt.relatedVVN}`"/>
             </li>
         </ListingBox>
     </header>
