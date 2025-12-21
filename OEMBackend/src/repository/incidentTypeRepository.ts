@@ -3,6 +3,7 @@ import { IncidentTypeMapper } from "../mappers/incidentTypeMapper";
 import { IncidentTypeModel } from "../schemas/incidentTypeSchema";
 import { Page, Pageable } from "../utils/page";
 import IncidentType from "../domain/incidentType";
+import { IncidentTypeFilter } from "../dto/filters/incidentTypeFilter";
 
 export class IncidentTypeRepository {
 
@@ -18,20 +19,23 @@ export class IncidentTypeRepository {
 
 	/**
 	 * Fetches a paged list of IncidentTypes from the db
-	 * @param pageable the pagination info, including the page number and size
+	 * @param filter the filter to be used, including the page number and size
 	 * @returns a page of IncidentTypes
 	 */
-	async getPaged(pageable: Pageable): Promise<Page<IncidentType>> {
+	async getPaged(filter: IncidentTypeFilter): Promise<Page<IncidentType>> {
+
 		const data = await IncidentTypeModel.find()
-			.skip((pageable.pageNumber - 1) * pageable.pageSize)
-			.limit(pageable.pageSize)
+			.where(filter.name ? { name: { $regex: filter.name, $options: 'i' } } : {})
+			.where(filter.severity ? { severity: filter.severity } : {})
+			.skip((filter.pageNumber - 1) * filter.pageSize)
+			.limit(filter.pageSize)
 			.populate('subtypeOf')
 			.populate('subtypes');
 		
 		return {
-			pageNumber: pageable.pageNumber,
-			pageSize: pageable.pageSize,
-			pageCount: Math.ceil(await this.count() / pageable.pageSize),
+			pageNumber: filter.pageNumber,
+			pageSize: filter.pageSize,
+			pageCount: Math.ceil(await this.count() / filter.pageSize),
 			items: data.map(item => this.mapper.fromSchema(item))
 		};
 	}

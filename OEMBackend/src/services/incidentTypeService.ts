@@ -1,11 +1,12 @@
 import { Service } from "typedi";
-import { Page, Pageable } from "../utils/page";
+import { Page } from "../utils/page";
 import { IncidentTypeRepository } from "../repository/incidentTypeRepository";
 import IncidentType, { Severity } from "../domain/incidentType";
 import { IncidentTypeDto, PartialIncidentTypeDto } from "../dto/incidentTypeDto";
 import { PageMapper } from "../mappers/pageMapper";
 import { IncidentTypeMapper } from "../mappers/incidentTypeMapper";
 import { NotFoundError } from "../core/infra/extraErrors";
+import { IncidentTypeFilter } from "../dto/filters/incidentTypeFilter";
 
 @Service("incidentTypeService")
 export class IncidentTypeService {
@@ -30,8 +31,8 @@ export class IncidentTypeService {
 	 * @param pageable Pagination information
 	 * @returns Paged list of Incident Types
 	 */
-	async getPaged(pageable: Pageable): Promise<Page<IncidentTypeDto>> {
-		let domainDataPage = await this.incidentTypeRepository.getPaged(pageable);
+	async getPaged(filter : IncidentTypeFilter): Promise<Page<IncidentTypeDto>> {
+		let domainDataPage = await this.incidentTypeRepository.getPaged(filter);
 		return PageMapper.itemsToDto<IncidentType, IncidentTypeDto>(domainDataPage, this.mapper);
 	}
 

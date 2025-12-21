@@ -3,6 +3,7 @@ import { Pageable } from "../utils/page";
 import { IncidentTypeService } from "../services/incidentTypeService";
 import { PartialIncidentTypeDto } from "../dto/incidentTypeDto";
 import { NotFoundError } from "../core/infra/extraErrors";
+import { IncidentTypeFilter } from "../dto/filters/incidentTypeFilter";
 
 @Route("incident-types")
 @Tags("Incident Types")
@@ -12,18 +13,26 @@ export class IncidentTypeController extends Controller {
 
 	@Get("count")
 	public async count(): Promise<{ count : number }> {
-	const count = await this.incidentTypeService.count();
-	return { count }; 
-	// we could just return count directly but it's not a good practice... (enforce json res)
+		const count = await this.incidentTypeService.count();
+		return { count }; 
+		// we could just return count directly but it's not a good practice... (enforce json res)
 	}
 
 	@Get()
 	public async getPaged(
+		@Query() name?: string,
+		@Query() severity?: string,
 		@Query() pageNumber: number = 1,
 		@Query() pageSize: number = 10
 	) {
-		const pagination: Pageable = { pageNumber, pageSize };
-		const incidentTypesPage = await this.incidentTypeService.getPaged(pagination);
+		const filter: IncidentTypeFilter = {
+			name,
+			severity,
+			pageNumber,
+			pageSize
+		};
+
+		const incidentTypesPage = await this.incidentTypeService.getPaged(filter);
 		return incidentTypesPage;
 	}
 
