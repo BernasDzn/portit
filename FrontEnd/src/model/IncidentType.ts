@@ -1,7 +1,9 @@
+import type { IncidentTypeDto } from "./dto/IncidentTypeDto";
+
 export type Severity = 'Minor' | 'Major' | 'Critical';
 
 export class IncidentType{
-	id : string;
+	bid : string;
     name : string;
     description : string;
     severity : Severity;
@@ -16,7 +18,7 @@ export class IncidentType{
         subtypeOf?: IncidentType,
         subtypes?: IncidentType[]
     ){
-        this.id = id;
+        this.bid = id;
         this.name = name;
         this.description = description;
         this.severity = severity;
@@ -25,8 +27,8 @@ export class IncidentType{
     }
  
 	validate(){
-		if(this.subtypeOf && this.subtypeOf.id === this.id){
-			throw new Error("An Incident Type cannot be a subtype of itself. Incident Type id: " + this.id);
+		if(this.subtypeOf && this.subtypeOf.bid === this.bid){
+			throw new Error("An Incident Type cannot be a subtype of itself. Incident Type id: " + this.bid);
 		}
 	}
 
@@ -41,4 +43,16 @@ export class IncidentType{
 	hasParent(): boolean {
 		return this.subtypeOf !== undefined;
 	}
+
+    toDto(): IncidentTypeDto {
+        return {
+            id: this.bid,
+            name: this.name,
+            description: this.description,
+            severity: this.severity,
+            subtypeOf: this.subtypeOf ? this.subtypeOf.bid : undefined,
+            subtypes: this.subtypes ? this.subtypes.map(subtype => subtype.bid) : undefined
+        };
+    }
+
 }

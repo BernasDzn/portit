@@ -1,12 +1,12 @@
 export interface IncidentTypeFilter {
-	id?: string;
+	bid?: string;
 	name?: string;
 	severity?: string;
 	subtypeOfId?: string;
 }
 
 export interface IncidentTypeDto {
-	id: string;
+	bid: string;
 	name: string;
 	description: string;
 	severity: string;
@@ -14,10 +14,10 @@ export interface IncidentTypeDto {
 	subtypes: string[] | undefined;
 }
 
-export interface IncidentTypeCreateDto {
+// create and update must use this dto to send data to backend
+export interface PartialIncidentTypeDto {
 	name: string;
 	description: string;
 	severity: string;
 	subtypeOf?: string;
-	subtypes?: string[];
 }
