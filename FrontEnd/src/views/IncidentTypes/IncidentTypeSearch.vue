@@ -2,11 +2,11 @@
 import IncidentTypePrinter from '@/components/printers/IncidentTypePrinter.vue';
 import ListingBox from '@/components/crud/ListingBox.vue';
 import type { Filter, Page } from '@/model/Page';
-import type { IncidentTypeDto } from '@/model/IncidentType';
 import { useI18n } from 'vue-i18n';
 import { container } from '@/inversify.config';
 import type { IIncidentTypeService } from '@/service/IService/IIncidentTypeService';
 import TYPES from '@/inversify/types';
+import type { IncidentTypeDto } from '@/model/dto/IncidentTypeDto';
 
 const { t } = useI18n();
 
@@ -30,8 +30,8 @@ const fetchIncidentTypes = async (filtering?: Filter<IncidentTypeDto>): Promise<
         <p class="subtitle">{{ t('incidentType.subtitle.search') }}</p>
 
         <ListingBox :fetch-function="fetchIncidentTypes" v-slot="{elements}">
-            <li v-for="incidentType in elements" :key="incidentType.id">
-                <IncidentTypePrinter class="listing-box" :incident-type="incidentType" :link="`/incident-types/view/${incidentType.id}`"/>
+            <li v-for="incidentType in elements" :key="incidentType.bid">
+                <IncidentTypePrinter class="listing-box" :incident-type="incidentType" :link="`/incident-types/view/${incidentType.bid}`"/>
             </li>
         </ListingBox>
     </header>

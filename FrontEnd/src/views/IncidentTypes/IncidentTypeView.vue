@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import type { IncidentType, IncidentTypeDto } from '@/model/IncidentType';
+import type { IncidentType } from '@/model/IncidentType';
 import EntityView from '@/components/crud/EntityView.vue';
 import IncidentTypePrinter from '@/components/printers/IncidentTypePrinter.vue';
 import type { IIncidentTypeService } from '@/service/IService/IIncidentTypeService';
 import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
 import { useI18n } from 'vue-i18n';
+import type { IncidentTypeDto } from '@/model/dto/IncidentTypeDto';
 
 const { t } = useI18n();
 const route = useRoute();
@@ -26,17 +27,17 @@ const fetchIncidentType = async (): Promise<IncidentTypeDto | undefined> => {
 
     // Fetch subtypes and save them in the ref var
     subtypes.value = [];
-    if (incidentType?.subtypesIds?.length) {
+    if (incidentType?.subtypes?.length) {
         const fetched = await Promise.all(
-            incidentType.subtypesIds.map((id) => incidentTypeService.getIncidentTypeById(id))
+            incidentType.subtypes.map((bid) => incidentTypeService.getIncidentTypeById(bid))
         );
-        subtypes.value = fetched.filter((item): item is IncidentType => Boolean(item));
+        subtypes.value = fetched.filter((item): item is IncidentTypeDto => Boolean(item));
     }
     
     // Fetch parent type and save it in the ref var
     parent.value = null;
-    if (incidentType?.subtypeOfId) {
-        const parentType = await incidentTypeService.getIncidentTypeById(incidentType.subtypeOfId);
+    if (incidentType?.subtypeOf) {
+        const parentType = await incidentTypeService.getIncidentTypeById(incidentType.subtypeOf);
         if (parentType) {
             parent.value = parentType;
         }
@@ -45,23 +46,6 @@ const fetchIncidentType = async (): Promise<IncidentTypeDto | undefined> => {
     }
 
     return incidentType;
-};
-    
-
-const confirmDelete = () => {
-    (deleteDialog.value as any)?.show?.();
-};
-
-const doDelete = async () => {
-    try {
-        await incidentTypeService.deleteIncidentType(incidentTypeId.value);
-        router.push('/incident-types/search');
-    } catch (error) {
-        console.error('Failed to delete incident type', error);
-        alert(t('incidentType.failedToDelete'));
-    } finally {
-        (deleteDialog.value as any)?.hide?.();
-    }
 };
 
 const getSeverityVariant = (severity: string): string => {
@@ -108,10 +92,6 @@ const getSeverityVariant = (severity: string): string => {
                                 {{ t('buttons.edit') }}
                             </sl-button>
                         </RouterLink>
-                        <sl-button variant="danger" size="large" @click="confirmDelete">
-                            <sl-icon slot="prefix" name="trash"></sl-icon>
-                            {{ t('buttons.delete') }}
-                        </sl-button>
                     </div>
                 </div>
                 <div class="viewing-content">
@@ -140,11 +120,11 @@ const getSeverityVariant = (severity: string): string => {
                     <sl-card class="info-card" style="flex: 100%;" v-if="entity.element.subtypeOfId">
                         <p>{{ t('incidentType.parentType') }}</p>
                         <div class="info-grid">
-                            <div class="info-block" :key="parent?.id">
+                            <div class="info-block" :key="parent?.bid">
                                 <IncidentTypePrinter
                                     class="listing-box"
-                                    :incident-type="parent as IncidentType"
-                                    :link="'/incident-types/view/' + parent.id"
+                                    :incident-type="parent"
+                                    :link="'/incident-types/view/' + parent.bid"
                                 />
                             </div>
                         </div>
@@ -153,11 +133,11 @@ const getSeverityVariant = (severity: string): string => {
                     <sl-card class="info-card" style="flex: 100%;" v-if="subtypes.length > 0">
                         <p>{{ t('incidentType.fields.subtypes.title') }} ({{ subtypes.length }})</p>
                         <div class="info-grid">
-                            <div class="info-block" v-for="subtype in subtypes" :key="subtype.id">
+                            <div class="info-block" v-for="subtype in subtypes" :key="subtype.bid">
                                 <IncidentTypePrinter
                                     class="listing-box"
-                                    :incident-type="subtype as IncidentType"
-                                    :link="'/incident-types/view/' + subtype.id"
+                                    :incident-type="subtype"
+                                    :link="'/incident-types/view/' + subtype.bid"
                                 />
                             </div>
                         </div>
@@ -165,12 +145,6 @@ const getSeverityVariant = (severity: string): string => {
                 </div>
             </div>
         </EntityView>
-
-        <sl-dialog ref="deleteDialog" :label="t('incidentType.confirmDelete')">
-            <div>{{ t('incidentType.confirmDeleteMessage') }}</div>
-            <sl-button slot="footer" variant="text" @click="(deleteDialog as any).hide()">{{ t('buttons.cancel') }}</sl-button>
-            <sl-button slot="footer" variant="danger" @click="doDelete">{{ t('buttons.delete') }}</sl-button>
-        </sl-dialog>
     </div>
 </template>
 

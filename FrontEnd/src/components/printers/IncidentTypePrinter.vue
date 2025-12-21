@@ -1,12 +1,12 @@
 <script setup lang="ts">
-import type { IncidentType } from '@/model/IncidentType';
 import { RouterLink } from 'vue-router';
 import { useI18n } from 'vue-i18n';
+import type { IncidentTypeDto } from '@/model/dto/IncidentTypeDto';
 
 const { t } = useI18n();
 
 const props = withDefaults(defineProps<{
-    incidentType: IncidentType;
+    incidentType: IncidentTypeDto;
     link?: string;
     showDetails?: boolean;
 }>(), {
@@ -38,9 +38,9 @@ const getSeverityVariant = (severity: string): string => {
                 </div>
                 <span class="material-icons icon" aria-hidden="true">nearby_error</span>
             </div>
-            <div class="details" v-if="props.showDetails && incidentType.subtypesIds && incidentType.subtypesIds.length > 0">
+            <div class="details" v-if="props.showDetails && incidentType.subtypes && incidentType.subtypes.length > 0">
                 <sl-divider></sl-divider>
-                <p>{{ t('incidentType.fields.subtypes.title') }}: {{ incidentType.subtypesIds.length }}</p>
+                <p>{{ t('incidentType.fields.subtypes.title') }}: {{ incidentType.subtypes.length }}</p>
             </div>
         </sl-card>
     </component>
