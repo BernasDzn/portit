@@ -20,7 +20,7 @@ const localPort = cfg.localApiPort
 // Allow explicit override via VITE_API_URL (set in npm script for local runs)
 const proxyTarget = process.env.VITE_API_URL ?? (isLocal ? `http://localhost:${localPort}` : remoteApi);
 const prologTarget = (isLocal ? `http://localhost:4000` : cfg.remotePrologApi);
-const oemTarget = (isLocal ? `https://vs-gate.dei.isep.ipp.pt:30228` : cfg.remoteOemApi);
+const oemTarget = (isLocal ? `http://localhost:2228` : cfg.remoteOemApi);
 
 export default defineConfig({
   plugins: [
