@@ -1,0 +1,92 @@
+@startuml l4_process_view_get
+skinparam handwritten true
+skinparam monochrome true
+skinparam packageStyle rect
+skinparam defaultFontName FG Virgil
+skinparam shadowing false
+
+actor User as Actor
+participant "(Frontend)\nX View" as View <<presentation>>
+participant "(Frontend)\nX Service" as UiXService <<service>>
+participant "(Frontend)\nHTTPService" as UiHttp <<service>>
+participant "API" as API <<application>>
+participant "(OEMBackend)\nXController" as Controller <<controller>>
+participant "(OEMBackend)\nXService" as Service <<service>>
+participant "(OEMBackend)\nXRepository" as Repository <<repository>>
+participant "(OEMBackend)\nX Mapper" as Mapper <<mapper>>
+participant "(OEMBackend)\nX" as Domain <<domain>>
+participant "(OEMBackend)\nXDto" as Dto <<data transfer>>
+participant "(OEMBackend)\nODM Context" as Context <<context>>
+database MongoDB
+
+title OEMBackend - Read process view for generic "X" entity 
+
+Actor --> View: Open X details page
+activate View
+
+    View --> UiXService: getX(id)
+    activate UiXService
+
+        UiXService --> UiHttp: GET /api/x/{id}
+        activate UiHttp
+
+            UiHttp --> API: HTTP GET /api/x/{id}
+            activate API
+
+                API --> Controller: route -> XController.getById(id)
+                activate Controller
+
+                    Controller --> Service: getById(id)
+                    activate Service
+
+                        Service --> Repository: getById(id)
+                        activate Repository
+                            Repository --> Context: findOne({ id })
+                            activate Context
+                                Context --> MongoDB: findOne
+								activate MongoDB
+									MongoDB --> Context: document
+								deactivate MongoDB
+                                Context --> Repository: document
+                            deactivate Context
+							Repository --> Mapper: fromSchema(document)
+							activate Mapper
+								Mapper --> Domain: new X(data)
+								activate Domain
+									Domain --> Mapper: X instance
+								deactivate Domain
+
+								Mapper --> Repository: X instance
+							deactivate Mapper
+
+                            Repository --> Service: X instance
+                        deactivate Repository
+
+						Service --> Mapper: toDto(X instance)
+						activate Mapper
+							Mapper --> Dto : X instance
+							activate Dto
+								Dto --> Mapper: X DTO
+							deactivate Dto
+							Mapper --> Service: X DTO
+						deactivate Mapper
+                        Service --> Controller: X DTO
+                    deactivate Service
+
+                    Controller --> API: 200 OK + body
+                deactivate Controller
+
+            API --> UiHttp: HTTP Response (200)
+            deactivate API
+
+        UiHttp --> UiXService: HTTP response (200)
+        deactivate UiHttp
+
+        UiXService --> View: X data
+    deactivate UiXService
+
+    View --> Actor: Render details
+deactivate View
+
+@enduml
+```
