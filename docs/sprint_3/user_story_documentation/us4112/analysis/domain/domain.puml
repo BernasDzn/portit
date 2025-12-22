@@ -1,0 +1,26 @@
+@startuml domain_model
+title US4112 - Domain Model
+hide circle
+skinparam backgroundColor #F0F0F0
+
+rectangle "Incident Type" {
+
+	entity "Incident Type" as IncidentType <<aggregate root>> {
+		bid,
+		name,
+		description
+	}
+
+	entity "Severity" as Severity <<enumerator>> {
+		MINOR,
+		MAJOR,
+		CRITICAL
+	}
+
+	IncidentType --> Severity
+	IncidentType --> "0..1" IncidentType : subtype of
+	IncidentType --> "0..*" IncidentType : subtypes
+
+}
+
+@enduml
