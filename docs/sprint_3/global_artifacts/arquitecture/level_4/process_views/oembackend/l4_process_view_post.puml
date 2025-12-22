@@ -1,0 +1,104 @@
+@startuml l4_process_view_post
+skinparam handwritten true
+skinparam monochrome true
+skinparam packageStyle rect
+skinparam defaultFontName FG Virgil
+skinparam shadowing false
+
+actor User as Actor
+participant "(Frontend)\nX View" as View <<presentation>>
+participant "(Frontend)\nX Service" as UiXService <<service>>
+participant "(Frontend)\nHTTPService" as UiHttp <<service>>
+participant "API" as API <<application>>
+participant "(OEMBackend)\nXController" as Controller <<controller>>
+participant "(OEMBackend)\nXService" as Service <<service>>
+participant "(OEMBackend)\nXRepository" as Repository <<repository>>
+participant "(OEMBackend)\nX Mapper" as Mapper <<mapper>>
+participant "(OEMBackend)\nX" as Domain <<domain>>
+participant "(OEMBackend)\nXDto" as Dto <<data transfer>>
+participant "(OEMBackend)\nODM Context" as Context <<context>>
+database MongoDB
+
+title OEMBackend - Create process view for generic "X" entity (POST)
+
+Actor --> View: Submit data
+activate View
+
+    View --> UiXService: createX(data)
+    activate UiXService
+
+        UiXService --> UiHttp: POST /api/x {data}
+        activate UiHttp
+
+            UiHttp --> API: HTTP POST /api/x
+            activate API
+
+                API --> Controller: route -> XController.createX(data)
+                activate Controller
+
+                    Controller --> Service: create(data)
+                    activate Service
+
+                        Service --> Domain: new X(data)
+                        activate Domain
+alt valid data
+                            Domain --> Service: X instance
+else invalid data
+							Domain --> Service: Validation Error
+                        deactivate Domain
+end
+
+                        Service --> Repository: save(newX)
+                        activate Repository
+                            Repository --> Mapper: toPersistence(newX)
+                            activate Mapper
+                                Mapper --> Repository: persistenceDoc
+                            deactivate Mapper
+
+                            Repository --> Context: save(persistenceDoc)
+                            activate Context
+                                Context --> MongoDB: insertOne
+                                Context --> Repository: createdDocument
+                            deactivate Context
+
+                            Repository --> Mapper: fromSchema(createdDocument)
+                            activate Mapper
+                                Mapper --> Domain: new X(data)
+								activate Domain
+									Domain --> Mapper: createdX instance
+								deactivate Domain
+
+								Mapper --> Repository: created X instance
+                            deactivate Mapper
+
+                            Repository --> Service: created X instance
+                        deactivate Repository
+
+                        Service --> Mapper: toDto(created X instance)
+                        activate Mapper
+							 Mapper --> Dto : created X instance
+							activate Dto
+								Dto --> Mapper: X DTO
+							deactivate Dto
+                            Mapper --> Service: X DTO
+                        deactivate Mapper
+
+                        Service --> Controller: X DTO
+                    deactivate Service
+
+                    Controller --> API: 201 Created + body
+                deactivate Controller
+
+            API --> UiHttp: HTTP Response 201
+            deactivate API
+
+        UiHttp --> UiXService: HTTP response (201)
+        deactivate UiHttp
+
+        UiXService --> View: created X data
+    deactivate UiXService
+
+    View --> Actor: Show created X details / redirect
+deactivate View
+
+@enduml
