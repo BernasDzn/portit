@@ -976,6 +976,11 @@
             "dateClosed": "Date Closed",
             "relatedVesselVisit": "Related Vessel Visit"
         },
+        "status": {
+            "pending": "Pending",
+            "completed": "Completed",
+            "inProgress": "In Progress"
+        },
         "infoTitle": "Execution Information",
         "operationsTitle": "Operations",
         "noOperations": "No operations available",
