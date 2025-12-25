@@ -95,7 +95,7 @@ defineExpose({ open });
                 {{ t('buttons.cancel') }}
             </sl-button>
             <sl-button variant="primary" @click="handleSubmit">
-                {{ t('execution.berthOperation.start') }}
+                {{ t('buttons.save') }}
             </sl-button>
         </div>
     </sl-dialog>

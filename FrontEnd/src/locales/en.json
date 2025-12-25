@@ -977,7 +977,9 @@
             "createdBy": "Created By",
             "dateOpen": "Date Open",
             "dateClosed": "Date Closed",
-            "relatedVesselVisit": "Related Vessel Visit"
+            "relatedVesselVisit": "Related Vessel Visit",
+            "dock": "Berth Dock",
+            "berthTime": "Berth Time"
         },
         "filters": {
             "startDate": "Start Date",
@@ -1004,6 +1006,14 @@
         "addOperation": "Add Operation",
         "addOperationDescription": "Add a new operation to the timeline",
         "confirmStartOperation": "Are you sure you want to start this operation?",
-        "confirmCompleteOperation": "Are you sure you want to complete this operation?"
+        "confirmCompleteOperation": "Are you sure you want to complete this operation?",
+        "berthOperation":{
+            "button": "Edit berth data",
+            "title": "Berth Operation",
+            "description": "Edit the berth dock and time for this vessel visit execution.",
+            "dock": "Berth Dock",
+            "dockPlaceholder": "Select berth dock",
+            "berthTime": "Berth Time"
+        }
     }
 }
