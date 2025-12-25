@@ -45,16 +45,38 @@ export class VesselVisitExecutionService implements IVesselVisitExecutionService
         return res.data;
     }
 
-    async getAllVesselVisitExecutions(filter?: Filter<VesselVisitExecutionFilter>): Promise<Page<VesselVisitExecution>> {
+    async getAllVesselVisitExecutions(filtering?: Filter<VesselVisitExecutionFilter>): Promise<Page<VesselVisitExecution>> {
         const query: string[] = [];
 
-        if (filter) {
-            query.push(filter.pageNumber !== undefined ? `PageNumber=${filter.pageNumber}&` : "");
-            query.push(filter.pageSize !==undefined ? `PageSize=${filter.pageSize}` : "");
+        if (filtering) {
+
+            if (filtering.filter) {
+                if (filtering.filter.startDate) {
+                    query.push(`startDate=${encodeURIComponent(filtering.filter.startDate)}`);
+                }
+                if (filtering.filter.endDate) {
+                    query.push(`endDate=${encodeURIComponent(filtering.filter.endDate)}`);
+                }
+                if (filtering.filter.relatedVVN) {
+                    query.push(`relatedVVN=${encodeURIComponent(filtering.filter.relatedVVN)}`);
+                }
+                if (filtering.filter.status) {
+                    query.push(`status=${encodeURIComponent(filtering.filter.status)}`);
+                }
+            }
+
+            if (filtering.pageNumber !== undefined) {
+                query.push(`pageNumber=${filtering.pageNumber}`);
+            }
+            if (filtering.pageSize !== undefined) {
+                query.push(`pageSize=${filtering.pageSize}`);
+            }
         }
 
+        const queryString = query.length ? `?${query.join("&")}` : "";
+        console.log("Fetching VVEs with query:", queryString);
         const res = await this.http.get<Page<VesselVisitExecution>>(
-            `/oem/vessel-visit-executions${query.length ? `?${query.join('')}` : ''}`
+            `/oem/vessel-visit-executions${queryString}`
         );
         return res.data;
     }

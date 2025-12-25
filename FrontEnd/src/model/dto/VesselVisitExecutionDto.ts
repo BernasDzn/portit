@@ -34,4 +34,8 @@ export interface VesselVisitExecutionDto {
 }
 
 export interface VesselVisitExecutionFilter {
+    startDate?: string;
+    endDate?: string;
+    relatedVVN?: string;
+    status?: string;
 }

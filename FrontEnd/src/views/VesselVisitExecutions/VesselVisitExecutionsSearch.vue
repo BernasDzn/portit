@@ -11,14 +11,45 @@ import type { IVesselVisitExecutionService } from '@/service/IService/IVesselExe
 import type { VesselVisitExecutionFilter } from '@/model/dto/VesselVisitExecutionDto';
 import type { VesselVisitExecution } from '@/model/VesselVisitExecution';
 import VesselVisitExecutionPrinter from '@/components/printers/VesselVisitExecutionPrinter.vue';
+import VesselVisitExecutionTable from '@/components/printers/VesselVisitExecutionTable.vue';
+import { ref, watch, onMounted } from 'vue';
 
-const {t} = useI18n();
+const {t, locale} = useI18n();
 
 const vveService = container.get<IVesselVisitExecutionService>(TYPES.vesselVisitExecutionService);
 
 const fetchVesselExecutions = async (filtering?: Filter<VesselVisitExecutionFilter>): Promise<Page<VesselVisitExecution>> => {
     return await vveService.getAllVesselVisitExecutions(filtering);
 }
+
+const filterDefinition = ref({});
+function buildFilterDefinition() {
+    filterDefinition.value = {
+        startDate: {
+            type: 'date',
+            label: t('execution.filters.startDate') as string
+        },
+        endDate: {
+            type: 'date',
+            label: t('execution.filters.endDate') as string
+        },
+        relatedVVN: {
+            type: 'text',
+            label: t('execution.filters.relatedVVN') as string
+        },
+        status: {
+            type: 'select',
+            label: t('execution.filters.status') as string,
+            options: [
+                { value: 'Open', text: 'Open' },
+                { value: 'Closed', text: 'Closed' }
+            ]
+        }
+    };
+}
+
+onMounted(async () => buildFilterDefinition());
+watch(locale, () => buildFilterDefinition());
 
 </script>
 
@@ -40,11 +71,32 @@ const fetchVesselExecutions = async (filtering?: Filter<VesselVisitExecutionFilt
             </div>
         </div>
 
-        <ListingBox listing-style="listing-triples" :fetch-function="fetchVesselExecutions" v-slot="{elements}">
-            <li v-for="vt in elements" :key="vt.id">
-                <VesselVisitExecutionPrinter class="listing-box" :execution="vt" :link="`/vessel-visit-executions/${vt.relatedVVN}`"/>
-            </li>
-        </ListingBox>
+        <sl-tab-group>
+            <sl-tab slot="nav" panel="table">{{ t('execution.tabs.table') }}</sl-tab>
+            <sl-tab slot="nav" panel="cards">{{ t('execution.tabs.cards') }}</sl-tab>
+
+            <sl-tab-panel name="table">
+                <ListingBox 
+                    listing-style="custom" 
+                    :fetch-function="fetchVesselExecutions" 
+                    :filter-definition="filterDefinition"
+                    v-slot="{elements}">
+                    <VesselVisitExecutionTable :executions="elements" />
+                </ListingBox>
+            </sl-tab-panel>
+
+            <sl-tab-panel name="cards">
+                <ListingBox 
+                    listing-style="listing-triples" 
+                    :fetch-function="fetchVesselExecutions" 
+                    :filter-definition="filterDefinition"
+                    v-slot="{elements}">
+                    <li v-for="vt in elements" :key="vt.id">
+                        <VesselVisitExecutionPrinter class="listing-box" :execution="vt" :link="`/vessel-visit-executions/${vt.relatedVVN}`"/>
+                    </li>
+                </ListingBox>
+            </sl-tab-panel>
+        </sl-tab-group>
     </header>
 </div>
 </template>
