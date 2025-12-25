@@ -19,6 +19,7 @@ const {t} = useI18n();
 
 const relatedVVN = ref<VesselVisitNotification | null>(null);
 const berthDialogRef = ref<any>(null);
+const refreshKey = ref(0);
 const id = route.params.id as string;
 
 const fetchVesselExecution = async (): Promise<VesselVisitExecution> => {
@@ -49,6 +50,10 @@ const openBerthDialog = () => {
     berthDialogRef.value?.open();
 };
 
+const onOperationStarted = () => {
+    refreshKey.value++;
+};
+
 
 </script>
 
@@ -66,7 +71,7 @@ const openBerthDialog = () => {
             </sl-breadcrumb-item>
         </sl-breadcrumb>
 
-        <EntityView ref="entityViewRef" :fetch-function="fetchVesselExecution" v-slot="entity">
+        <EntityView :key="refreshKey" :fetch-function="fetchVesselExecution" v-slot="entity">
             <div class="opposed">
                 <div class="view-header">
                     <span class="material-icons icon" aria-hidden="true">engineering</span>
@@ -81,6 +86,7 @@ const openBerthDialog = () => {
                         variant="primary" 
                         @click="openBerthDialog"
                     >
+                        <sl-icon name="pencil"></sl-icon>
                         {{ t('execution.berthOperation.button') }}
                     </sl-button>
                     <sl-tag :variant="entity.element.status === 'Open' ? 'success' : 'neutral'" size="large">
@@ -147,9 +153,10 @@ const openBerthDialog = () => {
             </div>
         </EntityView>
 
-        <BerthOperationDialog 
-            ref="berthDialogRef" 
-            :related-v-v-n="id"
+            <BerthOperationDialog 
+                ref="berthDialogRef" 
+                :related-v-v-n="id" 
+                @operation-started="onOperationStarted" 
         />
     </div>
 </template>

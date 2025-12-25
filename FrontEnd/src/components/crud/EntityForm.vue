@@ -36,6 +36,11 @@ const props = defineProps({
         type: Boolean,
         default: false,
         required: false
+    },
+    redirect: {
+        type: Boolean,
+        default: true,
+        required: false
     }
 });
 
@@ -81,7 +86,8 @@ const submit = async () => {
             props.successMessage,
             notification.notificationTypes.SUCCESS,
         );
-        router.back();
+        if (props.redirect)
+            router.back();
         
     } catch (error) {
 

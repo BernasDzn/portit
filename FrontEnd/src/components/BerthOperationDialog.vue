@@ -77,7 +77,7 @@ defineExpose({ open });
 
 <template>
     <sl-dialog ref="dialogRef" :label="t('execution.berthOperation.title')" class="berth-dialog">
-        <EntityForm ref="formRef" :object="operation" :submit-function="submitBerthOperation" :hide-buttons="true">
+        <EntityForm ref="formRef" :object="operation" :submit-function="submitBerthOperation" :hide-buttons="true" :redirect="false">
             <div class="dialog-content">
                 <p class="dialog-description">{{ t('execution.berthOperation.description') }}</p>
 
@@ -86,7 +86,7 @@ defineExpose({ open });
                     :placeholderText="t('execution.berthOperation.dockPlaceholder')" labelKey="name" required />
 
                 <FormField :name="t('execution.berthOperation.berthTime') + ' *'" v-model="operation.berthTime"
-                    type="datetime-local" :required="true" />
+                    type="datetime-local" required />
             </div>
         </EntityForm>
 
