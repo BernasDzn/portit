@@ -11,6 +11,7 @@ export interface IVesselVisitExecutionService {
     
     completeOperation(relatedVVN: string, operationId: string, endTime: Date): Promise<VesselVisitExecution>;
     startOperation(relatedVVN: string, operation: OperationDto): Promise<VesselVisitExecution>;
+    updateBerthDetails(relatedVVN: string, dock: string, berthTime: string): Promise<VesselVisitExecution>;
 
     count(): Promise<number>;
 }

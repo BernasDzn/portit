@@ -67,6 +67,14 @@ export class VesselVisitExecutionService implements IVesselVisitExecutionService
         return res.data;
     }
 
+    async updateBerthDetails(relatedVVN: string, dock: string, berthTime: string): Promise<VesselVisitExecution> {
+        const res = await this.http.put<VesselVisitExecution>(
+            `/oem/vessel-visit-executions/${encodeURIComponent(relatedVVN)}/berth`,
+            { dock, berthTime }
+        );
+        return res.data;
+    }
+
     async completeOperation(relatedVVN: string, operationId: string, endTime: Date): Promise<VesselVisitExecution> {
         const res = await this.http.put<VesselVisitExecution>(
             `/oem/vessel-visit-executions/${encodeURIComponent(relatedVVN)}/operations/${encodeURIComponent(operationId)}/complete`,

@@ -45,6 +45,8 @@ export class VesselVisitExecution {
     private _dateClosed?: Date;
     private _status: VesselVisitExecutionStatus;
     private _createdBy: string;
+    private _dock?: string;
+    private _berthTime?: Date;
 
     constructor(params: {
         id: string;
@@ -84,6 +86,8 @@ export class VesselVisitExecution {
     get dateClosed(): Date | undefined { return this._dateClosed; }
     get status(): VesselVisitExecutionStatus { return this._status; }
     get createdBy(): string { return this._createdBy; }
+    get dock(): string | undefined { return this._dock; }
+    get berthTime(): Date | undefined { return this._berthTime; }
 
     addOperation(operation: OperationWithStatus): void {
         if (!operation) {
@@ -144,6 +148,8 @@ export class VesselVisitExecution {
             dateOpen: this._dateOpen?.toISOString(),
             dateClosed: this._dateClosed?.toISOString(),
             status: this._status,
+            dock: this._dock,
+            berthTime: this._berthTime?.toISOString(),
             createdBy: this._createdBy
         };
     }
