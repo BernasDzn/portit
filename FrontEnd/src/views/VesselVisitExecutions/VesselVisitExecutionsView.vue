@@ -10,6 +10,7 @@ import type { VesselVisitExecution } from '@/model/VesselVisitExecution';
 import type { VesselVisitNotification } from '@/model/VesselVisitNotification';
 import EntityView from '@/components/crud/EntityView.vue';
 import VesselVisitNotificationPrinter from '@/components/printers/VesselVisitNotificationPrinter.vue';
+import BerthOperationDialog from '@/components/BerthOperationDialog.vue';
 
 const vveService = container.get<IVesselVisitExecutionService>(TYPES.vesselVisitExecutionService);
 const vvnService = container.get<IVesselVisitNotificationService>(TYPES.vesselVisitNotificationService);
@@ -17,9 +18,11 @@ const route = useRoute();
 const {t} = useI18n();
 
 const relatedVVN = ref<VesselVisitNotification | null>(null);
+const berthDialogRef = ref<any>(null);
+const id = route.params.id as string;
 
 const fetchVesselExecution = async (): Promise<VesselVisitExecution> => {
-    const id = route.params.id as string;
+    
     if (!id) {
         throw new Error('No vessel visit execution ID provided');
     }
@@ -42,6 +45,11 @@ const formatDate = (date?: Date) => {
     return d.toLocaleString();
 };
 
+const openBerthDialog = () => {
+    berthDialogRef.value?.open();
+};
+
+
 </script>
 
 <template>
@@ -58,7 +66,7 @@ const formatDate = (date?: Date) => {
             </sl-breadcrumb-item>
         </sl-breadcrumb>
 
-        <EntityView :fetch-function="fetchVesselExecution" v-slot="entity">
+        <EntityView ref="entityViewRef" :fetch-function="fetchVesselExecution" v-slot="entity">
             <div class="opposed">
                 <div class="view-header">
                     <span class="material-icons icon" aria-hidden="true">engineering</span>
@@ -68,6 +76,13 @@ const formatDate = (date?: Date) => {
                     </div>
                 </div>
                 <div style="display: flex; gap: 0.5rem;">
+                    <sl-button 
+                        v-if="entity.element.status === 'Open'" 
+                        variant="primary" 
+                        @click="openBerthDialog"
+                    >
+                        {{ t('execution.berthOperation.button') }}
+                    </sl-button>
                     <sl-tag :variant="entity.element.status === 'Open' ? 'success' : 'neutral'" size="large">
                         <sl-icon :name="entity.element.status === 'Open' ? 'unlock' : 'lock'"></sl-icon>
                         {{ entity.element.status }}
@@ -108,6 +123,15 @@ const formatDate = (date?: Date) => {
                                 <span class="label">{{ t('execution.fields.dateClosed') }}</span>
                                 <p>{{ formatDate(entity.element.dateClosed) }}</p>
                             </div>
+
+                            <div class="info-block" v-if="entity.element.dock">
+                                <span class="label">{{ t('execution.fields.dock') }}</span>
+                                <p>{{ entity.element.dock }}</p>
+                            </div>
+                            <div class="info-block" v-if="entity.element.berthTime">
+                                <span class="label">{{ t('execution.fields.berthTime') }}</span>
+                                <p>{{ formatDate(entity.element.berthTime) }}</p>
+                            </div>
                         </div>
                     </sl-card>
 
@@ -122,6 +146,11 @@ const formatDate = (date?: Date) => {
                 </div>
             </div>
         </EntityView>
+
+        <BerthOperationDialog 
+            ref="berthDialogRef" 
+            :related-v-v-n="id"
+        />
     </div>
 </template>
 
