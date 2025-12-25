@@ -16,7 +16,8 @@
             "saturday": "Saturday"
         },
         "number": "Number",
-        "actions": "Actions"
+        "actions": "Actions",
+        "none": "None"
     },
     "buttons": {
         "save": "Save",
