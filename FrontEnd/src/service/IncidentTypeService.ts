@@ -40,8 +40,8 @@ export class IncidentTypeService implements IIncidentTypeService {
         return res.data;
     }
 
-    async updateIncidentType(bid: string, incidentType: IncidentType): Promise<IncidentTypeDto> {
-        const res = await this.http.patch<IncidentTypeDto>(`/oem/incident-types/${bid}`, incidentType.toDto());
+    async updateIncidentType(bid: string, incidentType: PartialIncidentTypeDto): Promise<IncidentTypeDto> {
+        const res = await this.http.put<IncidentTypeDto>(`/oem/incident-types/${bid}`, incidentType);
         return res.data;
     }
 

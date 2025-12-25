@@ -6,6 +6,6 @@ export interface IIncidentTypeService {
     getAllIncidentTypes(filtering?: Filter<IncidentTypeFilter>): Promise<Page<IncidentTypeDto>>;
     getIncidentTypeById(id: string): Promise<IncidentTypeDto | undefined>;
     createIncidentType(incidentType: PartialIncidentTypeDto): Promise<IncidentTypeDto>;
-    updateIncidentType(id: string, incidentType: IncidentType): Promise<IncidentTypeDto>;
+    updateIncidentType(id: string, incidentType: PartialIncidentTypeDto): Promise<IncidentTypeDto>;
     count(): Promise<{count: number}>;
 }
