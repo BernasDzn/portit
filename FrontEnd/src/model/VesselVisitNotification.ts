@@ -1,3 +1,4 @@
+import type { Dock } from './Dock';
 import type { VesselVisitNotificationDto, CrewDetails, CargoManifestItem, Person } from './dto/VesselVisitNotificationDto';
 import { VesselVisitNotificationStatus, NotificationDecisionStatus } from './dto/VesselVisitNotificationDto';
 import type { Representative } from './Representative';
@@ -147,7 +148,7 @@ export class NotificationDecision {
     private _reason?: string;
     private _decisionDate: Date;
     private _officerEmail: string;
-    private _assignedDockCode?: string;
+    private _assignedDock?: Dock;
     private _isFinal: boolean;
 
     constructor(params: {
@@ -155,14 +156,14 @@ export class NotificationDecision {
         reason?: string;
         decisionDate: Date;
         officerEmail: string;
-        assignedDockCode?: string;
+        assignedDock?: Dock;
         isFinal: boolean;
     }) {
         this._status = params.status;
         this._reason = params.reason;
         this._decisionDate = params.decisionDate;
         this._officerEmail = params.officerEmail;
-        this._assignedDockCode = params.assignedDockCode;
+        this._assignedDock = params.assignedDock;
         this._isFinal = params.isFinal;
     }
 
@@ -170,7 +171,7 @@ export class NotificationDecision {
     get reason(): string | undefined { return this._reason; }
     get decisionDate(): Date { return this._decisionDate; }
     get officerEmail(): string { return this._officerEmail; }
-    get assignedDockCode(): string | undefined { return this._assignedDockCode; }
+    get assignedDock(): Dock | undefined { return this._assignedDock; }
     get isFinal(): boolean { return this._isFinal; }
 
     toDto() {
@@ -179,7 +180,7 @@ export class NotificationDecision {
             reason: this._reason,
             decisionDate: this._decisionDate,
             officerID: this._officerEmail,
-            assignedDockCode: this._assignedDockCode,
+            assignedDockCode: this._assignedDock?.code,
             isFinal: this._isFinal
         };
     }

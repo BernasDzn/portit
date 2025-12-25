@@ -28,7 +28,7 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits<{
-    operationStarted: [];
+    berthUpdated: [];
 }>();
 
 const open = async () => {
@@ -58,7 +58,7 @@ const submitBerthOperation = async (formData: any) => {
 
     console.log(formData.dock.code, formData.berthTime);
 
-    emit('operationStarted');
+    emit('berthUpdated');
     close();
 };
 

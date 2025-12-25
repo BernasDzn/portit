@@ -6,6 +6,7 @@ import { Vessel } from '../../../src/model/Vessel';
 import { VesselType } from '../../../src/model/VesselType';
 import type { ShippingAgentOrganization } from '../../../src/model/ShippingAgentOrganization';
 import type { CrewDetails, CargoManifestItem } from '../../../src/model/dto/VesselVisitNotificationDto';
+import { Dock } from '@/model/Dock';
 
 describe('VesselVisitNotification', () => {
 	let representative: Representative;
@@ -13,6 +14,7 @@ describe('VesselVisitNotification', () => {
 	let crewDetails: CrewDetails;
 	let loadCargoManifest: CargoManifestItem[];
 	let unloadCargoManifest: CargoManifestItem[];
+	let dock: Dock;
 
 	beforeEach(() => {
 		const vesselType = new VesselType({
@@ -108,6 +110,14 @@ describe('VesselVisitNotification', () => {
 				}
 			}
 		];
+
+		dock = new Dock({ 
+			code: 'DCK067',
+			name: 'Main Dock' ,
+			location: 'Harbor Area' ,
+			physicalCharacteristics: { length: 1500, depth: 120, draft: 115 },
+			supportedVesselTypes: [vesselType]
+		});
 	});
 
 	describe('Constructor', () => {
@@ -305,7 +315,7 @@ describe('VesselVisitNotification', () => {
 				status,
 				decisionDate: new Date(),
 				officerEmail: 'officer@email.com',
-				assignedDockCode: status === NotificationDecisionStatus.Accepted ? 'DCK003' : undefined,
+				assignedDock: status === NotificationDecisionStatus.Accepted ? dock : undefined,
 				reason,
 				isFinal: true
 			});
@@ -348,7 +358,7 @@ describe('VesselVisitNotification', () => {
 				status: NotificationDecisionStatus.Accepted,
 				decisionDate: new Date(),
 				officerEmail: 'officer@email.com',
-				assignedDockCode: 'DCK003',
+				assignedDock: dock,
 				isFinal: true
 			});
 
@@ -373,7 +383,7 @@ describe('VesselVisitNotification', () => {
 				status: NotificationDecisionStatus.Accepted,
 				decisionDate: new Date(),
 				officerEmail: 'officer@email.com',
-				assignedDockCode: 'DCK003',
+				assignedDock: dock,
 				isFinal: false
 			});
 
@@ -383,7 +393,7 @@ describe('VesselVisitNotification', () => {
 				status: NotificationDecisionStatus.Accepted,
 				decisionDate: new Date(Date.now() - 3600000), // 1 hour earlier
 				officerEmail: 'officer@email.com',
-				assignedDockCode: 'DCK003',
+				assignedDock: dock,
 				isFinal: true
 			});
 
@@ -408,7 +418,7 @@ describe('VesselVisitNotification', () => {
 				status: NotificationDecisionStatus.Accepted,
 				decisionDate: new Date(),
 				officerEmail: 'officer@email.com',
-				assignedDockCode: 'DCK003',
+				assignedDock: dock,
 				isFinal: true
 			});
 
@@ -491,19 +501,38 @@ describe('VesselVisitNotification', () => {
 });
 
 describe('NotificationDecision', () => {
+	let dock: Dock;
+	beforeEach(() => {
+		const vtype = new VesselType({
+			name: 'Panamax',
+			description: 'Max size for Panama Canal',
+			maxNumberOfRows: 20,
+			maxNumberOfBays: 10,
+			maxNumberOfTiers: 5,
+			physicalCharacteristics: { length: 300, depth: 15, draft: 12 }
+		});
+		dock = new Dock({ 
+			code: 'DCK003',
+			name: 'Secondary Dock' ,
+			location: 'Harbor Area' ,
+			physicalCharacteristics: { length: 1000, depth: 80, draft: 75 },
+			supportedVesselTypes: [vtype]
+		});
+	});
+
 	it('should create decision successfully', () => {
 		const decision = new NotificationDecision({
 			status: NotificationDecisionStatus.Accepted,
 			decisionDate: new Date('2024-07-01T10:00:00Z'),
 			officerEmail: 'officer@email.com',
-			assignedDockCode: 'DCK001',
+			assignedDock: dock,
 			reason: 'All requirements met',
 			isFinal: true
 		});
 
 		expect(decision.status).toBe(NotificationDecisionStatus.Accepted);
 		expect(decision.officerEmail).toBe('officer@email.com');
-		expect(decision.assignedDockCode).toBe('DCK001');
+		expect(decision.assignedDock).toBe(dock);
 		expect(decision.isFinal).toBe(true);
 	});
 

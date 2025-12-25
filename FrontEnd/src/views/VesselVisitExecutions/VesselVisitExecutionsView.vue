@@ -11,10 +11,12 @@ import type { VesselVisitNotification } from '@/model/VesselVisitNotification';
 import EntityView from '@/components/crud/EntityView.vue';
 import VesselVisitNotificationPrinter from '@/components/printers/VesselVisitNotificationPrinter.vue';
 import BerthOperationDialog from '@/components/BerthOperationDialog.vue';
+import { useAlerts } from '@/composables/alerts';
 
 const vveService = container.get<IVesselVisitExecutionService>(TYPES.vesselVisitExecutionService);
 const vvnService = container.get<IVesselVisitNotificationService>(TYPES.vesselVisitNotificationService);
 const route = useRoute();
+const notif = useAlerts();
 const {t} = useI18n();
 
 const relatedVVN = ref<VesselVisitNotification | null>(null);
@@ -50,7 +52,13 @@ const openBerthDialog = () => {
     berthDialogRef.value?.open();
 };
 
-const onOperationStarted = () => {
+const onBerthUpdated = async () => {
+    const vve = await vveService.getVesselVisitExecutionByVVN(id);
+    const decisions = await vvnService.getNotificationDecisions(vve.relatedVVN);
+    
+    if(decisions && vve && decisions[decisions.length - 1].assignedDock.code !== vve.dock)
+        notif.enqueueNotification(t('execution.berthOperation.DifferentThanPlanned'), 'warning');
+    
     refreshKey.value++;
 };
 
@@ -156,7 +164,7 @@ const onOperationStarted = () => {
             <BerthOperationDialog 
                 ref="berthDialogRef" 
                 :related-v-v-n="id" 
-                @operation-started="onOperationStarted" 
+                @berth-updated="onBerthUpdated" 
         />
     </div>
 </template>
