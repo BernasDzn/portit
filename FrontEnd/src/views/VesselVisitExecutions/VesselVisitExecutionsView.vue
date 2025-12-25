@@ -57,7 +57,7 @@ const onBerthUpdated = async () => {
     const decisions = await vvnService.getNotificationDecisions(vve.relatedVVN);
     
     if(decisions && vve && decisions[decisions.length - 1].assignedDock.code !== vve.dock)
-        notif.enqueueNotification(t('execution.berthOperation.DifferentThanPlanned'), 'warning');
+        notif.enqueueNotification(t('execution.berthOperation.differentThanPlanned'), 'warning');
     
     refreshKey.value++;
 };

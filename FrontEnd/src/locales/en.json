@@ -1013,7 +1013,8 @@
             "description": "Edit the berth dock and time for this vessel visit execution.",
             "dock": "Berth Dock",
             "dockPlaceholder": "Select berth dock",
-            "berthTime": "Berth Time"
+            "berthTime": "Berth Time",
+            "differentThanPlanned": "The selected dock is different than the one planned."
         }
     }
 }
