@@ -15,7 +15,8 @@
             "friday": "Friday",
             "saturday": "Saturday"
         },
-        "number": "Number"
+        "number": "Number",
+        "actions": "Actions"
     },
     "buttons": {
         "save": "Save",
@@ -965,7 +966,9 @@
             "dashboard": "Executions Dashboard",
             "search": "Search Executions",
             "view_dashboard": "View Executions",
-            "view": "View Execution"
+            "view": "View Execution",
+            "table": "Table View",
+            "cards": "Card View"
         },
         "fields": {
             "code": "Code",
@@ -976,10 +979,22 @@
             "dateClosed": "Date Closed",
             "relatedVesselVisit": "Related Vessel Visit"
         },
+        "filters": {
+            "startDate": "Start Date",
+            "endDate": "End Date",
+            "relatedVVN": "Vessel Visit Notification",
+            "status": "Status"
+        },
+        "metrics": {
+            "totalOperations": "Total Ops",
+            "completedOperations": "Progress",
+            "turnaroundTime": "Turnaround Time",
+            "berthOccupancy": "Berth Occupancy"
+        },
         "status": {
             "pending": "Pending",
-            "completed": "Completed",
-            "inProgress": "In Progress"
+            "inProgress": "In Progress",
+            "completed": "Completed"
         },
         "infoTitle": "Execution Information",
         "operationsTitle": "Operations",

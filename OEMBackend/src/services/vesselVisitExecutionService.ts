@@ -11,6 +11,7 @@ import { Resource, ResourceType } from "../domain/value/resource";
 import { PayloadValidator } from "./validators/operationPayloadValidator";
 import mongoose from "mongoose";
 import { Page } from "../utils/page";
+import { VesselVisitExecutionFilter } from "../dto/filters/vesselVisitExecutionFilter";
 
 @Service("vesselVisitExecutionService")
 export class VesselVisitExecutionService {
@@ -246,8 +247,8 @@ export class VesselVisitExecutionService {
         return vve.toDto();
     }
 
-    async getAllVesselVisitExecutions(page: number, limit: number): Promise<Page<VesselVisitExecutionDto>> {
-        const vvePage = await this.vesselVisitExecutionRepository.getAllVesselVisitExecutions(page, limit);
+    async getAllVesselVisitExecutions(filter: VesselVisitExecutionFilter): Promise<Page<VesselVisitExecutionDto>> {
+        const vvePage = await this.vesselVisitExecutionRepository.getAllVesselVisitExecutions(filter);
         return {
             items: vvePage.items.map(vve => vve.toDto()),
             pageSize: vvePage.pageSize,

@@ -3,6 +3,7 @@ import { VesselVisitExecutionMapper } from "../mappers/vesselVisitExecutionMappe
 import { VesselVisitExecutionModel } from "../schemas/vesselVisitExecutionSchema";
 import { Page } from "../utils/page";
 import { TaskCategoryRepository } from "./taskCategoryRepository";
+import { VesselVisitExecutionFilter } from "../dto/filters/vesselVisitExecutionFilter";
 
 export class VesselVisitExecutionRepository {
     
@@ -48,19 +49,53 @@ export class VesselVisitExecutionRepository {
         return await VesselVisitExecutionModel.countDocuments().exec();
     }
 
-    async getAllVesselVisitExecutions(page: number, limit: number): Promise<Page<VesselVisitExecution>> {
-        const skip = (page - 1) * limit;
-        const docs = await VesselVisitExecutionModel.find().skip(skip).limit(limit).exec();
-        const totalItems = await this.count();
-        const vesselVisitExecutions = await Promise.all(
-            docs.map(doc => VesselVisitExecutionMapper.fromSchema(doc, this.taskCategoryRepository))
-        );
+    async getAllVesselVisitExecutions(filter: VesselVisitExecutionFilter): Promise<Page<VesselVisitExecution>> {
+        const pageNumber = filter.pageNumber && filter.pageNumber > 0 ? filter.pageNumber : 1;
+        const pageSize = filter.pageSize && filter.pageSize > 0 ? filter.pageSize : 10;
+        const skip = (pageNumber - 1) * pageSize;
+
+        // build a query filter object so date range and other filters are applied correctly
+        const queryFilter: any = {};
+
+        const parseDate = (d?: string) => {
+            if (!d) return null;
+            const dt = new Date(d);
+            return isNaN(dt.getTime()) ? null : dt;
+        };
+
+        const start = parseDate(filter.startDate);
+        const end = parseDate(filter.endDate);
+
+        if (start || end) {
+            queryFilter.dateOpen = {};
+            if (start) queryFilter.dateOpen.$gte = start;
+            if (end) queryFilter.dateOpen.$lte = end;
+        }
+
+        if (filter.relatedVVN) {
+            // partial match, case-insensitive
+            queryFilter.relatedVVN = { $regex: filter.relatedVVN, $options: 'i' };
+        }
+
+        if (filter.status) {
+            queryFilter.status = filter.status;
+        }
+
+        const query = VesselVisitExecutionModel.find(queryFilter)
+            .sort({ 'updatedAt': -1 })
+            .skip(skip)
+            .limit(pageSize);
+
+        const docs = await query.exec();
+        const totalItems = await VesselVisitExecutionModel.countDocuments(queryFilter);
 
         return {
-            items: vesselVisitExecutions,
-            pageSize: totalItems,
-            pageNumber: page,
-            pageCount: Math.ceil(totalItems / limit)
+            pageNumber,
+            pageSize,
+            pageCount: Math.ceil(totalItems / pageSize),
+            items: await Promise.all(docs.map(async (doc) => {
+                return VesselVisitExecutionMapper.fromSchema(doc, this.taskCategoryRepository);
+            }))
         };
     }
 }
