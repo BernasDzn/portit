@@ -22,5 +22,7 @@ export interface VesselVisitExecutionDto {
   dateOpen?: Date;
   dateClosed?: Date;
   status: VesselVisitExecutionStatusDto;
+  dock?: string;
+  berthTime?: Date;
   createdBy: string;
 }

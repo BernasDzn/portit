@@ -220,6 +220,24 @@ export class VesselVisitExecutionService {
         return updated.toDto();
     }
 
+    async updateBerthDetails(relatedVVN: string, dock: string, berthTime: Date): Promise<VesselVisitExecutionDto> {
+        const vve = await this.vesselVisitExecutionRepository.getByVVN(relatedVVN);
+        if (!vve) {
+            throw new Error(`Vessel Visit Execution with VVN ${relatedVVN} not found.`);
+        }
+
+        if (vve.status === 'Closed') {
+            throw new Error(`Cannot update berth details for closed Vessel Visit Execution ${relatedVVN}.`);
+        }
+
+        vve.props.dock = dock;
+        vve.props.berthTime = berthTime;
+
+        const updated = await this.vesselVisitExecutionRepository.updateVesselVisitExecution(vve);
+        console.log('Updated VVE with berth details:', updated);
+        return updated.toDto();
+    }
+
     async getVesselVisitExecutionByVVN(relatedVVN: string): Promise<VesselVisitExecutionDto> {
         const vve = await this.vesselVisitExecutionRepository.getByVVN(relatedVVN);
         if (!vve) {

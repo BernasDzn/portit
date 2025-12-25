@@ -37,6 +37,16 @@ export class VesselVisitExecutionController extends Controller {
         return execution;
     }
 
+    @Put("{relatedVVN}/berth")
+    public async updateBerthDetails(@Path() relatedVVN: string, @Body() body: { dock: string; berthTime: string }) {
+        const execution = await this.vesselVisitExecutionService.updateBerthDetails(
+            relatedVVN,
+            body.dock,
+            new Date(body.berthTime)
+        );
+        return execution;
+    }
+
     @Put("{relatedVVN}/operations/start")
     public async startOperation(@Path() relatedVVN: string, @Body() operation: any) {
         const execution = await this.vesselVisitExecutionService.startOperation(relatedVVN, operation);

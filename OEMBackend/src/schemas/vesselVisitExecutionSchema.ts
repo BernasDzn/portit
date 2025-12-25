@@ -74,6 +74,14 @@ const VesselVisitExecutionSchema = new mongoose.Schema({
         enum: ['Open', 'Closed'],
         default: 'Open'
     },
+    dock: {
+        type: String,
+        required: false
+    },
+    berthTime: {
+        type: Date,
+        required: false
+    },
     createdBy: {
         type: String,
         required: true

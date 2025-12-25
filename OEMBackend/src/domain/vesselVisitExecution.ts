@@ -23,6 +23,8 @@ interface VesselVisitExecutionProps {
     dateOpen?: Date;
     dateClosed?: Date;
     status: VesselVisitExecutionStatus;
+    dock?: string;
+    berthTime?: Date;
     createdBy: string;
 }
 
@@ -60,6 +62,8 @@ export default class VesselVisitExecution extends Entity<VesselVisitExecutionPro
   get status() { return this.props.status; }
   get createdBy(): string { return this.props.createdBy; }
   get code(): string { return this.props.code; }
+  get dock(): string | undefined { return this.props.dock; }
+  get berthTime(): Date | undefined { return this.props.berthTime; }
 
   set status(newStatus: VesselVisitExecutionStatus) {
     this.props.status = newStatus;
@@ -85,6 +89,8 @@ export default class VesselVisitExecution extends Entity<VesselVisitExecutionPro
             dateOpen: this.dateOpen,
             dateClosed: this.dateClosed,
             status: this.status,
+            dock: this.dock,
+            berthTime: this.berthTime,
             createdBy: this.createdBy
         };
   }

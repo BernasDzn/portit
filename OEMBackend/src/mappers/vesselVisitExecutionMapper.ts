@@ -34,7 +34,9 @@ export class VesselVisitExecutionMapper {
             })),
             payload: opWS.operation.payload
         }
-      }))
+      })),
+      dock: vve.dock,
+      berthTime: vve.berthTime
     };
   }
 
@@ -100,7 +102,9 @@ export class VesselVisitExecutionMapper {
         operationsExecuted,
         dateOpen: doc.dateOpen,
         dateClosed: doc.dateClosed,
-        status: doc.status
+        status: doc.status,
+        dock: doc.dock,
+        berthTime: doc.berthTime
       },
       doc._id.toString()
     );
