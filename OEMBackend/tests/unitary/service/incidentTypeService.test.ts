@@ -1,308 +1,169 @@
-import { IncidentTypeDto } from "../../../src/dto/incidentTypeDto";
+import { PartialIncidentTypeDto, IncidentTypeDto } from "../../../src/dto/incidentTypeDto";
 import { IncidentTypeRepository } from "../../../src/repository/incidentTypeRepository";
 import { IncidentTypeService } from "../../../src/services/incidentTypeService";
 import IncidentType from "../../../src/domain/incidentType";
-import { Page, Pageable } from "../../../src/utils/page";
-import { IncidentTypeValidator } from "../../../src/services/validators/incidentTypeValidator";
+import { Pageable, Page } from "../../../src/utils/page";
+import { NotFoundError } from "../../../src/core/infra/extraErrors";
 
-let service: IncidentTypeService;
-let mockRepo: jest.Mocked<IncidentTypeRepository>;
-let mockValidator : jest.Mocked<IncidentTypeValidator>;
-let mockIncidentType: IncidentType;
+describe('IncidentTypeService', () => {
+	let service: IncidentTypeService;
+	let mockRepo: jest.Mocked<IncidentTypeRepository>;
 
-beforeEach(() => {
-	mockIncidentType = new IncidentType(
-		{ name: "Fire Incident", description: "", severity: "Minor" },
-		"INC-TEST123"
-	);
-
-	// Create mock repository
-	mockRepo = {
-		create: jest.fn(),
-        getById: jest.fn(),
-        getAll: jest.fn(),
-        update: jest.fn(),
-        removeSubtype: jest.fn(),
-        deleteById: jest.fn(),
-        mapToDto: jest.fn()
-	} as unknown as jest.Mocked<IncidentTypeRepository>;
-
-	mockValidator = {
-		validateHierarchy: jest.fn()
-	} as unknown as jest.Mocked<IncidentTypeValidator>;
-
-	// Create service and inject mock repository
-	service = new IncidentTypeService();
-	service.incidentTypeRepository = mockRepo;
-	service.incidentTypeValidator = mockValidator;
-});
-
-describe('createIncidentType', () => {
-	it('should create a new incident type', async () => {
-		const mockDto: IncidentTypeDto = {
-			id: "INC-TEST123",
-			description: "",
-			severity: "Minor",
-			name: "Fire Incident"
-		};
-
-		mockRepo.create.mockResolvedValue(mockDto);
-
-		const result = await service.createIncidentType("Fire Incident", "Minor", "");
-
-		expect(mockRepo.create).toHaveBeenCalled();
-		expect(result).toEqual(mockDto);
-		expect(result.name).toBe("Fire Incident");
-	});
-
-	it('should create incident type with proper structure', async () => {
-		const mockDto: IncidentTypeDto = {
-			id: "INC-TEST456",
-			description: "",
-			severity: "Major",
-			name: "Water Leak"
-		};
-
-		mockRepo.create.mockResolvedValue(mockDto);
-
-		const result = await service.createIncidentType("Water Leak", "Major", "");
-
-		const createCall = mockRepo.create.mock.calls[0]?.[0];
-		expect(createCall).toBeInstanceOf(IncidentType);
-		expect(createCall?.name).toBe("Water Leak");
-		expect(result).toEqual(mockDto);
-	});
-
-	it('shouldnt allow creation of circular relationships between incident types', async () => {
+	beforeEach(() => {
+		jest.clearAllMocks();
 		
-	});
-
-
-});
-
-describe('getIncidentTypeById', () => {
-	it('should return incident type when found', async () => {
-		const mockDto: IncidentTypeDto = {
-			id: "INC-TEST123",
-			description: "",
-			severity: "Minor",
-			name: "Fire Incident"
-		};
-
-		mockRepo.getById.mockResolvedValue(mockDto);
-
-		const result = await service.getIncidentTypeById("INC-TEST123");
-
-		expect(mockRepo.getById).toHaveBeenCalledWith("INC-TEST123");
-		expect(result).toEqual(mockDto);
-	});
-
-	it('should return null when incident type not found', async () => {
-		mockRepo.getById.mockResolvedValue(null);
-
-		const result = await service.getIncidentTypeById("INC-NOTFOUND");
-
-		expect(mockRepo.getById).toHaveBeenCalledWith("INC-NOTFOUND");
-		expect(result).toBeNull();
-	});
-
-	it('should return incident type with parent and children', async () => {
-		const mockDto: IncidentTypeDto = {
-			id: "INC-PARENT", description: "Parent Type",
-			severity: "Major", name: "Parent Type",
-			subtypesIds: ["INC-CHILD1", "INC-CHILD2"]
-		};
-
-		mockRepo.getById.mockResolvedValue(mockDto);
-
-		const result = await service.getIncidentTypeById("INC-PARENT");
-
-		expect(result?.subtypesIds).toHaveLength(2);
-		expect(result?.subtypesIds).toContain("INC-CHILD1");
-	});
-});
-
-describe('getAllIncidentTypes', () => {
-	it('should return all incident types', async () => {
-		const mockDtos: IncidentTypeDto[] = [
-			{ id: "INC-TYPE1", name: "Type 1", description: "", severity: "Minor" },
-			{ id: "INC-TYPE2", name: "Type 2", description: "", severity: "Minor" },
-			{ id: "INC-TYPE3", name: "Type 3", description: "", severity: "Minor" }
-		];
-
-		let page: Page<IncidentTypeDto> = {
-			pageNumber: 1, pageSize: 10, pageCount: 1, items: mockDtos
-		};
+		// Create service
+		service = new IncidentTypeService();
 		
-		mockRepo.getAll.mockResolvedValue(page);
-
-		let pageable: Pageable = { pageNumber: 1, pageSize: 10 };
-		const result = await service.getAllIncidentTypes(pageable);
-
-		expect(mockRepo.getAll).toHaveBeenCalled();
-		expect(result.items).toEqual(mockDtos);
-		expect(result.items).toHaveLength(3);
+		// Mock the repository
+		mockRepo = {
+			count: jest.fn(),
+			getPaged: jest.fn(),
+			getById: jest.fn(),
+			save: jest.fn(),
+			update: jest.fn(),
+			removeSubtype: jest.fn(),
+			deleteById: jest.fn(),
+		} as unknown as jest.Mocked<IncidentTypeRepository>;
+		
+		// Replace the repository in the service with our mock
+		(service as any).incidentTypeRepository = mockRepo;
 	});
 
-	it('should return empty page when no incident types exist', async () => {
-		let emptyPage: Page<IncidentTypeDto> = {
-			pageNumber: 1, pageSize: 10, pageCount: 0, items: []
-		};
-		mockRepo.getAll.mockResolvedValue(emptyPage);
+	describe('count', () => {
+		it('should return the count of incident types', async () => {
+			mockRepo.count.mockResolvedValue(5);
 
-		let pageable: Pageable = { pageNumber: 1, pageSize: 10 };
-		const result = await service.getAllIncidentTypes(pageable);
+			const result = await service.count();
 
-		expect(result.items).toEqual([]);
-		expect(result.items).toHaveLength(0);
+			expect(mockRepo.count).toHaveBeenCalled();
+			expect(result).toBe(5);
+		});
 	});
 
-	it('should return incident types with relationships', async () => {
-		const mockDtos: IncidentTypeDto[] = [
-			{ id: "INC-PARENT", name: "Parent", description: "", severity: "Major", 
-				subtypesIds: ["INC-CHILD1"] 
-			},
-			{ 
-				id: "INC-CHILD1", name: "Child 1", description: "", severity: "Minor", 
-				subtypeOfId: "INC-PARENT" 
-			}
-		];
+	describe('getPaged', () => {
+		it('should return paginated incident types', async () => {
+			const pageable: Pageable = { pageNumber: 1, pageSize: 10 };
+			const mockIncidentType = new IncidentType({
+				name: 'Type 1',
+				description: 'Description 1',
+				severity: 'Minor'
+			});
 
-		let page: Page<IncidentTypeDto> = {
-			pageNumber: 1, pageSize: 10, pageCount: 1, items: mockDtos
-		};
-		mockRepo.getAll.mockResolvedValue(page);
+			const mockPage: Page<IncidentType> = {
+				pageNumber: 1,
+				pageSize: 10,
+				pageCount: 1,
+				items: [mockIncidentType]
+			};
 
-		let pageable: Pageable = { pageNumber: 1, pageSize: 10 };
-		const result = await service.getAllIncidentTypes(pageable);
+			mockRepo.getPaged.mockResolvedValue(mockPage);
 
-		expect(result.items).toHaveLength(2);
-		expect(result.items.pop).toBeDefined();
-	});
-});
+			const result = await service.getPaged(pageable);
 
-describe('updateIncidentType', () => {
-	it('should update incident type name', async () => {
-		const mockDto: IncidentTypeDto = {
-			id: "INC-TEST123", description: "", severity: "Minor", name: "Updated Name"
-		};
-
-		mockRepo.update.mockResolvedValue(mockDto);
-
-		const result = await service.updateIncidentType(
-			mockDto.id, mockDto.name, mockDto.description, mockDto.severity
-		);
-
-		expect(mockRepo.update).toHaveBeenCalledWith("INC-TEST123", "Updated Name", "", "Minor", undefined);
-		expect(result?.name).toBe("Updated Name");
+			expect(mockRepo.getPaged).toHaveBeenCalledWith(pageable);
+			expect(result).toBeDefined();
+			expect(result.items).toBeDefined();
+			expect(result.items.length).toBe(1);
+		});
 	});
 
-	it('should add children to incident type', async () => {
-		const mockDto: IncidentTypeDto = {
-			id: "INC-PARENT", name: "Parent", description: "", severity: "Major",
-			subtypesIds: ["INC-CHILD1", "INC-CHILD2"]
-		};
+	describe('getById', () => {
+		it('should return incident type when found', async () => {
+			const incidentType = new IncidentType({
+				name: 'Fire Incident',
+				description: 'A fire',
+				severity: 'Critical'
+			});
 
-		mockRepo.update.mockResolvedValue(mockDto);
+			mockRepo.getById.mockResolvedValue(incidentType);
 
-		const result = await service.updateIncidentType(
-			mockDto.id, mockDto.name, mockDto.description, mockDto.severity, 
-			["INC-CHILD1", "INC-CHILD2"]
-		);
+			const result = await service.getById('INC-TEST123');
 
-		expect(mockRepo.update).toHaveBeenCalledWith(
-			mockDto.id, mockDto.name, mockDto.description, mockDto.severity, 
-			["INC-CHILD1", "INC-CHILD2"]
-		);
-		expect(result?.subtypesIds).toHaveLength(2);
+			expect(mockRepo.getById).toHaveBeenCalledWith('INC-TEST123');
+			expect(result).toBeDefined();
+			expect(result.name).toBe('Fire Incident');
+		});
+
+		it('should throw NotFoundError when incident type not found', async () => {
+			mockRepo.getById.mockRejectedValue(new NotFoundError('Not found'));
+
+			await expect(service.getById('INC-NOTFOUND')).rejects.toThrow();
+		});
 	});
 
-	it('should update both name and children', async () => {
-		const mockDto: IncidentTypeDto = {
-			id: "INC-TEST", name: "New Name", description: "", severity: "Minor",
-			subtypesIds: ["INC-CHILD"]
-		};
+	describe('create', () => {
+		it('should create a new incident type', async () => {
+			const body: PartialIncidentTypeDto = {
+				name: 'Fire Incident',
+				description: 'A fire',
+				severity: 'Critical'
+			};
 
-		mockRepo.update.mockResolvedValue(mockDto);
+			const created = new IncidentType({
+				name: 'Fire Incident',
+				description: 'A fire',
+				severity: 'Critical'
+			});
 
-		const result = await service.updateIncidentType("INC-TEST", "New Name", "", "Minor", ["INC-CHILD"]);
+			mockRepo.save.mockResolvedValue(created);
 
-		expect(mockRepo.update).toHaveBeenCalledWith("INC-TEST", "New Name", "", "Minor", ["INC-CHILD"]);
-		expect(result?.name).toBe("New Name");
-		expect(result?.subtypesIds).toContain("INC-CHILD");
+			const result = await service.create(body);
+
+			expect(mockRepo.save).toHaveBeenCalled();
+			expect(result).toBeDefined();
+			expect(result.name).toBe('Fire Incident');
+		});
+
+		it('should throw error when parent not found', async () => {
+			const body: PartialIncidentTypeDto = {
+				name: 'Child Incident',
+				description: 'Child',
+				severity: 'Major',
+				subtypeOf: 'INC-PARENT'
+			};
+
+			mockRepo.getById.mockRejectedValue(new Error('Parent not found'));
+
+			await expect(service.create(body)).rejects.toThrow();
+		});
 	});
 
-	it('should return null when incident type not found', async () => {
-		mockRepo.update.mockResolvedValue(null);
+	describe('update', () => {
+		it('should update incident type successfully', async () => {
+			const existing = new IncidentType({
+				name: 'Old Name',
+				description: 'Old description',
+				severity: 'Minor'
+			});
 
-		const result = await service.updateIncidentType("INC-NOTFOUND", "New Name");
+			const updated = new IncidentType({
+				name: 'New Name',
+				description: 'New description',
+				severity: 'Major'
+			});
 
-		expect(result).toBeNull();
-	});
-});
+			mockRepo.getById.mockResolvedValue(existing);
+			mockRepo.update.mockResolvedValue(updated);
 
-describe('removeChild', () => {
-	it('should remove child from incident type', async () => {
-		const mockDto: IncidentTypeDto = {
-			id: "INC-PARENT", name: "Parent", description: "", severity: "Major",
-			subtypesIds: ["INC-CHILD2"]
-		};
+			const result = await service.update('INC-TEST', {
+				name: 'New Name',
+				description: 'New description',
+				severity: 'Major'
+			});
 
-		mockRepo.removeSubtype.mockResolvedValue(mockDto);
+			expect(mockRepo.getById).toHaveBeenCalledWith('INC-TEST');
+			expect(mockRepo.update).toHaveBeenCalled();
+			expect(result).toBeDefined();
+			expect(result.name).toBe('New Name');
+		});
 
-		const result = await service.removeSubtype("INC-PARENT", "INC-CHILD1");
+		it('should throw NotFoundError when incident type does not exist', async () => {
+			mockRepo.getById.mockRejectedValue(new NotFoundError('Not found'));
 
-		expect(mockRepo.removeSubtype).toHaveBeenCalledWith("INC-PARENT", "INC-CHILD1");
-		expect(result?.subtypesIds).not.toContain("INC-CHILD1");
-	});
-
-	it('should return null when parent not found', async () => {
-		mockRepo.removeSubtype.mockResolvedValue(null);
-
-		const result = await service.removeSubtype("INC-NOTFOUND", "INC-CHILD");
-
-		expect(result).toBeNull();
-	});
-
-	it('should handle removing last child', async () => {
-		const mockDto: IncidentTypeDto = {
-			id: "INC-PARENT", name: "Parent", description: "", severity: "Major",
-			subtypesIds: []
-		};
-
-		mockRepo.removeSubtype.mockResolvedValue(mockDto);
-
-		const result = await service.removeSubtype("INC-PARENT", "INC-LASTCHILD");
-
-		expect(result?.subtypesIds).toHaveLength(0);
-	});
-});
-
-describe('deleteIncidentType', () => {
-	it('should delete incident type successfully', async () => {
-		mockRepo.deleteById.mockResolvedValue(true);
-
-		const result = await service.deleteIncidentType("INC-TEST123");
-
-		expect(mockRepo.deleteById).toHaveBeenCalledWith("INC-TEST123");
-		expect(result).toBe(true);
-	});
-
-	it('should return false when incident type not found', async () => {
-		mockRepo.deleteById.mockResolvedValue(false);
-
-		const result = await service.deleteIncidentType("INC-NOTFOUND");
-
-		expect(mockRepo.deleteById).toHaveBeenCalledWith("INC-NOTFOUND");
-		expect(result).toBe(false);
-	});
-
-	it('should delete incident type with children', async () => {
-		mockRepo.deleteById.mockResolvedValue(true);
-
-		const result = await service.deleteIncidentType("INC-PARENT");
-
-		expect(mockRepo.deleteById).toHaveBeenCalledWith("INC-PARENT");
-		expect(result).toBe(true);
+			await expect(service.update('INC-NOTFOUND', {
+				name: 'New Name'
+			})).rejects.toThrow();
+		});
 	});
 });

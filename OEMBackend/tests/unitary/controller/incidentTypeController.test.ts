@@ -1,354 +1,180 @@
-import IncidentTypeController from '../../../src/controllers/incidentTypeController';
+import { IncidentTypeController } from '../../../src/controllers/incidentTypeController';
 import { IncidentTypeService } from '../../../src/services/incidentTypeService';
-import { Request, Response, NextFunction } from 'express';
+import { PartialIncidentTypeDto, IncidentTypeDto } from '../../../src/dto/incidentTypeDto';
+import { NotFoundError } from '../../../src/core/infra/extraErrors';
 
-let controller: IncidentTypeController;
-let mockService: jest.Mocked<IncidentTypeService>;
-let mockRequest: Partial<Request>;
-let mockResponse: Partial<Response>;
-let mockNext: jest.Mock;
+// Mock the IncidentTypeService
+jest.mock('../../../src/services/incidentTypeService');
 
-beforeEach(() => {
-	mockService = new IncidentTypeService() as jest.Mocked<IncidentTypeService>;
-	controller = new IncidentTypeController(mockService);
-	
-	mockRequest = {
-		body: {},
-		params: {},
-		query: {}
-	};
-	
-	mockResponse = {
-		status: jest.fn().mockReturnThis(),
-		json: jest.fn().mockReturnThis()
-	};
-	
-	mockNext = jest.fn();
-});
+describe('IncidentTypeController', () => {
+	let controller: IncidentTypeController;
+	let mockService: jest.Mocked<IncidentTypeService>;
 
-describe('createIncidentType', () => {
-	it('should create a new incident type successfully', async () => {
-		const mockIncidentType = {
-			id: 'INC-TEST123',
-			name: 'Test Incident'
-		};
-
-		mockRequest.body = { name: 'Test Incident' };
-		mockService.createIncidentType = jest.fn().mockResolvedValue(mockIncidentType);
-
-		await controller.createIncidentType(
-			mockRequest as Request,
-			mockResponse as Response,
-			mockNext
-		);
-
-		expect(mockService.createIncidentType).toHaveBeenCalledWith('Test Incident', undefined, undefined, undefined, undefined);
-		expect(mockResponse.status).toHaveBeenCalledWith(201);
-		expect(mockResponse.json).toHaveBeenCalledWith(mockIncidentType);
+	beforeEach(() => {
+		// Clear all mocks before each test
+		jest.clearAllMocks();
+		
+		// Get the mocked service
+		mockService = new IncidentTypeService() as jest.Mocked<IncidentTypeService>;
+		
+		// Create controller instance
+		controller = new IncidentTypeController();
+		
+		// Replace the service in the controller with our mock
+		(controller as any).incidentTypeService = mockService;
 	});
 
-	it('should handle errors during creation', async () => {
-		const error = new Error('Database error');
-		mockRequest.body = { name: 'Test Type' };
-		mockService.createIncidentType = jest.fn().mockRejectedValue(error);
+	describe('count', () => {
+		it('should return the count of incident types', async () => {
+			mockService.count = jest.fn().mockResolvedValue(5);
 
-		await controller.createIncidentType(
-			mockRequest as Request,
-			mockResponse as Response,
-			mockNext
-		);
+			const result = await controller.count();
 
-		expect(mockNext).toHaveBeenCalledWith(error);
-	});
-});
-
-describe('getIncidentTypeById', () => {
-	it('should return incident type when found', async () => {
-		const mockIncidentType = {
-			id: 'INC-TEST123',
-			name: 'Fire Incident'
-		};
-
-		mockRequest.params = { id: 'INC-TEST123' };
-		mockService.getIncidentTypeById = jest.fn().mockResolvedValue(mockIncidentType);
-
-		await controller.getIncidentTypeById(
-			mockRequest as Request,
-			mockResponse as Response,
-			mockNext
-		);
-
-		expect(mockService.getIncidentTypeById).toHaveBeenCalledWith('INC-TEST123');
-		expect(mockResponse.status).toHaveBeenCalledWith(200);
-		expect(mockResponse.json).toHaveBeenCalledWith(mockIncidentType);
+			expect(mockService.count).toHaveBeenCalled();
+			expect(result).toEqual({ count: 5 });
+		});
 	});
 
-	it('should return 404 when incident type not found', async () => {
-		mockRequest.params = { id: 'INC-NOTFOUND' };
-		mockService.getIncidentTypeById = jest.fn().mockResolvedValue(null);
+	describe('getPaged', () => {
+		it('should return paginated incident types', async () => {
+			const mockPage = {
+				pageNumber: 1,
+				pageSize: 10,
+				pageCount: 1,
+				items: [
+					{ id: 'INC-TYPE1', name: 'Type 1' },
+					{ id: 'INC-TYPE2', name: 'Type 2' }
+				]
+			};
 
-		await controller.getIncidentTypeById(
-			mockRequest as Request,
-			mockResponse as Response,
-			mockNext
-		);
+			mockService.getPaged = jest.fn().mockResolvedValue(mockPage);
 
-		expect(mockService.getIncidentTypeById).toHaveBeenCalledWith('INC-NOTFOUND');
-		expect(mockResponse.status).toHaveBeenCalledWith(404);
+			const result = await controller.getPaged(1, 10);
+
+			expect(mockService.getPaged).toHaveBeenCalledWith({ pageNumber: 1, pageSize: 10 });
+			expect(result).toEqual(mockPage);
+		});
+
+		it('should use default pagination if not provided', async () => {
+			const mockPage = {
+				pageNumber: 1,
+				pageSize: 10,
+				pageCount: 1,
+				items: []
+			};
+
+			mockService.getPaged = jest.fn().mockResolvedValue(mockPage);
+
+			await controller.getPaged();
+
+			expect(mockService.getPaged).toHaveBeenCalledWith({ pageNumber: 1, pageSize: 10 });
+		});
 	});
 
-	it('should handle errors during retrieval', async () => {
-		const error = new Error('Database error');
-		mockRequest.params = { id: 'INC-TEST123' };
-		mockService.getIncidentTypeById = jest.fn().mockRejectedValue(error);
+	describe('getById', () => {
+		it('should return incident type when found', async () => {
+			const mockIncidentType: IncidentTypeDto = {
+				id: 'INC-TEST123',
+				name: 'Fire Incident',
+				description: 'A fire',
+				severity: 'CRITICAL'
+			};
 
-		await controller.getIncidentTypeById(
-			mockRequest as Request,
-			mockResponse as Response,
-			mockNext
-		);
+			mockService.getById = jest.fn().mockResolvedValue(mockIncidentType);
 
-		expect(mockNext).toHaveBeenCalledWith(error);
-	});
-});
+			const result = await controller.getById('INC-TEST123');
 
-describe('getAllIncidentTypes', () => {
-	it('should return all incident types', async () => {
-		const mockIncidentTypes = [
-			{ id: 'INC-TYPE1', name: 'Type 1' },
-			{ id: 'INC-TYPE2', name: 'Type 2' },
-			{ id: 'INC-TYPE3', name: 'Type 3' }
-		];
+			expect(mockService.getById).toHaveBeenCalledWith('INC-TEST123');
+			expect(result).toEqual(mockIncidentType);
+		});
 
-		mockService.getAllIncidentTypes = jest.fn().mockResolvedValue(mockIncidentTypes);
+		it('should handle not found error gracefully', async () => {
+			const error = new NotFoundError('IncidentType with bid INC-NOTFOUND not found.');
+			mockService.getById = jest.fn().mockRejectedValue(error);
 
-		await controller.getAllIncidentTypes(
-			mockRequest as Request,
-			mockResponse as Response,
-			mockNext
-		);
+			const result = await controller.getById('INC-NOTFOUND');
 
-		expect(mockService.getAllIncidentTypes).toHaveBeenCalled();
-		expect(mockResponse.status).toHaveBeenCalledWith(200);
-		expect(mockResponse.json).toHaveBeenCalledWith(mockIncidentTypes);
-	});
+			expect(result).toEqual({ message: error.message });
+		});
 
-	it('should return empty array when no incident types exist', async () => {
-		mockService.getAllIncidentTypes = jest.fn().mockResolvedValue([]);
+		it('should return 500 for other errors', async () => {
+			const error = new Error('Database error');
+			mockService.getById = jest.fn().mockRejectedValue(error);
 
-		await controller.getAllIncidentTypes(
-			mockRequest as Request,
-			mockResponse as Response,
-			mockNext
-		);
+			const result = await controller.getById('INC-TEST');
 
-		expect(mockResponse.status).toHaveBeenCalledWith(200);
-		expect(mockResponse.json).toHaveBeenCalledWith([]);
+			expect(result).toEqual({ message: 'Internal server error' });
+		});
 	});
 
-	it('should handle errors during retrieval', async () => {
-		const error = new Error('Database error');
-		mockService.getAllIncidentTypes = jest.fn().mockRejectedValue(error);
+	describe('createIncidentType', () => {
+		it('should create a new incident type successfully', async () => {
+			const body: PartialIncidentTypeDto = {
+				name: 'Test Incident',
+				description: 'A test incident',
+				severity: 'MINOR'
+			};
 
-		await controller.getAllIncidentTypes(
-			mockRequest as Request,
-			mockResponse as Response,
-			mockNext
-		);
+			const mockCreated: IncidentTypeDto = {
+				id: 'INC-TEST123',
+				name: 'Test Incident',
+				description: 'A test incident',
+				severity: 'MINOR'
+			};
 
-		expect(mockNext).toHaveBeenCalledWith(error);
-	});
-});
+			mockService.create = jest.fn().mockResolvedValue(mockCreated);
 
-describe('updateIncidentType', () => {
-	it('should update incident type name', async () => {
-		const mockUpdatedType = {
-			id: 'INC-TEST123',
-			name: 'Updated Name'
-		};
+			const result = await controller.createIncidentType(body);
 
-		mockRequest.params = { id: 'INC-TEST123' };
-		mockRequest.body = { name: 'Updated Name' };
-		mockService.updateIncidentType = jest.fn().mockResolvedValue(mockUpdatedType);
+			expect(mockService.create).toHaveBeenCalledWith(body);
+			expect(result).toEqual(mockCreated);
+		});
 
-		await controller.updateIncidentType(
-			mockRequest as Request,
-			mockResponse as Response,
-			mockNext
-		);
+		it('should handle errors during creation', async () => {
+			const body: PartialIncidentTypeDto = {
+				name: 'Test Type',
+				description: '',
+				severity: 'MINOR'
+			};
 
-		expect(mockService.updateIncidentType).toHaveBeenCalledWith('INC-TEST123', 'Updated Name', undefined, undefined, undefined);
-		expect(mockResponse.status).toHaveBeenCalledWith(200);
-		expect(mockResponse.json).toHaveBeenCalledWith(mockUpdatedType);
-	});
+			const error = new Error('Database error');
+			mockService.create = jest.fn().mockRejectedValue(error);
 
-	it('should add children to incident type', async () => {
-		const mockUpdatedType = {
-			id: 'INC-PARENT',
-			name: 'Parent',
-			subtypesIds: ['INC-CHILD1', 'INC-CHILD2']
-		};
-
-		mockRequest.params = { id: 'INC-PARENT' };
-		mockRequest.body = { subtypesIds: ['INC-CHILD1', 'INC-CHILD2'] };
-		mockService.updateIncidentType = jest.fn().mockResolvedValue(mockUpdatedType);
-
-		await controller.updateIncidentType(
-			mockRequest as Request,
-			mockResponse as Response,
-			mockNext
-		);
-
-		expect(mockService.updateIncidentType).toHaveBeenCalledWith(
-			'INC-PARENT', 
-			undefined, undefined, undefined,
-			['INC-CHILD1', 'INC-CHILD2']
-		);
-		expect(mockResponse.status).toHaveBeenCalledWith(200);
+			await expect(controller.createIncidentType(body)).rejects.toThrow('Database error');
+		});
 	});
 
-	it('should update both name and children', async () => {
-		const mockUpdatedType = {
-			id: 'INC-TEST',
-			name: 'New Name',
-			subtypesIds: ['INC-CHILD']
-		};
+	describe('updateIncidentType', () => {
+		it('should update incident type successfully', async () => {
+			const body: PartialIncidentTypeDto = {
+				name: 'Updated Name',
+				description: 'Updated description',
+				severity: 'MAJOR'
+			};
 
-		mockRequest.params = { id: 'INC-TEST' };
-		mockRequest.body = { name: 'New Name', subtypesIds: ['INC-CHILD'] };
-		mockService.updateIncidentType = jest.fn().mockResolvedValue(mockUpdatedType);
+			const mockUpdated: IncidentTypeDto = {
+				id: 'INC-TEST123',
+				...body
+			};
 
-		await controller.updateIncidentType(
-			mockRequest as Request,
-			mockResponse as Response,
-			mockNext
-		);
+			mockService.update = jest.fn().mockResolvedValue(mockUpdated);
 
-		expect(mockService.updateIncidentType).toHaveBeenCalledWith('INC-TEST', 'New Name', undefined, undefined, ['INC-CHILD']);
-		expect(mockResponse.status).toHaveBeenCalledWith(200);
-	});
+			const result = await controller.updateIncidentType('INC-TEST123', body);
 
-	it('should return 404 when incident type not found', async () => {
-		mockRequest.params = { id: 'INC-NOTFOUND' };
-		mockRequest.body = { name: 'New Name' };
-		mockService.updateIncidentType = jest.fn().mockResolvedValue(null);
+			expect(mockService.update).toHaveBeenCalledWith('INC-TEST123', body);
+			expect(result).toEqual(mockUpdated);
+		});
 
-		await controller.updateIncidentType(
-			mockRequest as Request,
-			mockResponse as Response,
-			mockNext
-		);
+		it('should return not found when incident type does not exist', async () => {
+			const body: PartialIncidentTypeDto = {
+				name: 'Updated Name'
+			};
 
-		expect(mockResponse.status).toHaveBeenCalledWith(404);
-	});
+			mockService.update = jest.fn().mockResolvedValue(null);
 
-	it('should handle errors during update', async () => {
-		const error = new Error('Update error');
-		mockRequest.params = { id: 'INC-TEST' };
-		mockRequest.body = { name: 'New Name' };
-		mockService.updateIncidentType = jest.fn().mockRejectedValue(error);
+			const result = await controller.updateIncidentType('INC-NOTFOUND', body);
 
-		await controller.updateIncidentType(
-			mockRequest as Request,
-			mockResponse as Response,
-			mockNext
-		);
-
-		expect(mockNext).toHaveBeenCalledWith(error);
-	});
-});
-
-describe('removeChild', () => {
-	it('should remove child from incident type', async () => {
-		const mockUpdatedType = {
-			id: 'INC-PARENT',
-			name: 'Parent',
-			subtypesIds: ['INC-CHILD2']
-		};
-
-		mockRequest.params = { id: 'INC-PARENT', subtypeId: 'INC-CHILD1' };
-		mockService.removeSubtype = jest.fn().mockResolvedValue(mockUpdatedType);
-
-		await controller.removeSubtype(
-			mockRequest as Request,
-			mockResponse as Response,
-			mockNext
-		);
-
-		expect(mockService.removeSubtype).toHaveBeenCalledWith('INC-PARENT', 'INC-CHILD1');
-		expect(mockResponse.status).toHaveBeenCalledWith(200);
-		expect(mockResponse.json).toHaveBeenCalledWith(mockUpdatedType);
-	});
-
-	it('should return 404 when incident type not found', async () => {
-		mockRequest.params = { id: 'INC-NOTFOUND', childId: 'INC-CHILD' };
-		mockService.removeSubtype = jest.fn().mockResolvedValue(null);
-
-		await controller.removeSubtype(
-			mockRequest as Request,
-			mockResponse as Response,
-			mockNext
-		);
-
-		expect(mockResponse.status).toHaveBeenCalledWith(404);
-	});
-
-	it('should handle errors during child removal', async () => {
-		const error = new Error('Removal error');
-		mockRequest.params = { id: 'INC-PARENT', childId: 'INC-CHILD' };
-		mockService.removeSubtype = jest.fn().mockRejectedValue(error);
-
-		await controller.removeSubtype(
-			mockRequest as Request,
-			mockResponse as Response,
-			mockNext
-		);
-
-		expect(mockNext).toHaveBeenCalledWith(error);
-	});
-});
-
-describe('deleteIncidentType', () => {
-	it('should delete incident type successfully', async () => {
-		mockRequest.params = { id: 'INC-TEST123' };
-		mockService.deleteIncidentType = jest.fn().mockResolvedValue(true);
-
-		await controller.deleteIncidentType(
-			mockRequest as Request,
-			mockResponse as Response,
-			mockNext
-		);
-
-		expect(mockService.deleteIncidentType).toHaveBeenCalledWith('INC-TEST123');
-		expect(mockResponse.status).toHaveBeenCalledWith(200);
-		expect(mockResponse.json).toHaveBeenCalledWith('Incident type deleted successfully');
-	});
-
-	it('should return 404 when incident type not found', async () => {
-		mockRequest.params = { id: 'INC-NOTFOUND' };
-		mockService.deleteIncidentType = jest.fn().mockResolvedValue(false);
-
-		await controller.deleteIncidentType(
-			mockRequest as Request,
-			mockResponse as Response,
-			mockNext
-		);
-
-		expect(mockService.deleteIncidentType).toHaveBeenCalledWith('INC-NOTFOUND');
-		expect(mockResponse.status).toHaveBeenCalledWith(404);
-	});
-
-	it('should handle errors during deletion', async () => {
-		const error = new Error('Deletion error');
-		mockRequest.params = { id: 'INC-TEST123' };
-		mockService.deleteIncidentType = jest.fn().mockRejectedValue(error);
-
-		await controller.deleteIncidentType(
-			mockRequest as Request,
-			mockResponse as Response,
-			mockNext
-		);
-
-		expect(mockNext).toHaveBeenCalledWith(error);
+			expect(result).toEqual({ message: 'Incident type not found' });
+		});
 	});
 });
