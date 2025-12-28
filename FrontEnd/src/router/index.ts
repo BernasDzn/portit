@@ -513,6 +513,10 @@ const router = createRouter({
         {
             path: '/vessel-visit-executions/:id',
             component: () => import('@/views/VesselVisitExecutions/VesselVisitExecutionsView.vue'),
+        },
+        {
+          path: '/vessel-visit-executions/update/:id',
+          component: () => import('@/views/VesselVisitExecutions/VesselVisitExecutionsUpdate.vue'),
         }
       ]
     },

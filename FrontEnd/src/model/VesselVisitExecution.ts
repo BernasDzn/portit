@@ -1,7 +1,7 @@
 import type { OperationWithStatusDto, VesselVisitExecutionDto } from "./dto/VesselVisitExecutionDto";
 import type { Operation } from "./Operation";
 
-export type OperationStatus = 'Pending' | 'InProgress' | 'Completed';
+export type OperationStatus = 'Pending' | 'Started' | 'Delayed' | 'Completed';
 export type VesselVisitExecutionStatus = 'Open' | 'Closed';
 
 export class OperationWithStatus {
@@ -119,7 +119,7 @@ export class VesselVisitExecution {
         }
 
         const hasIncompleteOperations = this._operationsExecuted.some(
-            op => op.status === 'Pending' || op.status === 'InProgress'
+            op => op.status === 'Pending' || op.status === 'Started' || op.status === 'Delayed'
         );
 
         if (hasIncompleteOperations) {

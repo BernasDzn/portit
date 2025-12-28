@@ -967,6 +967,7 @@
             "dashboard": "Executions Dashboard",
             "search": "Search Executions",
             "view_dashboard": "View Executions",
+            "update" : "Update Execution",
             "view": "View Execution",
             "table": "Table View",
             "cards": "Card View"
@@ -980,7 +981,8 @@
             "dateClosed": "Date Closed",
             "relatedVesselVisit": "Related Vessel Visit",
             "dock": "Berth Dock",
-            "berthTime": "Berth Time"
+            "berthTime": "Berth Time",
+            "operations": "Operations"
         },
         "filters": {
             "startDate": "Start Date",
@@ -996,7 +998,8 @@
         },
         "status": {
             "pending": "Pending",
-            "inProgress": "In Progress",
+            "started": "Started",
+            "delayed": "Delayed",
             "completed": "Completed"
         },
         "infoTitle": "Execution Information",

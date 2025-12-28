@@ -88,113 +88,51 @@ export class VesselVisitExecutionService {
         return updated.toDto();
     }
 
-    /**
-{
-  "type": "LOAD",
-  "startTime": "2025-12-17T16:59:10.341Z",
-  "endTime": "2025-12-17T16:59:10.341Z",
-  "resources": [
-    {
-      "name": "John Doe",
-      "startTime": "2025-12-17T16:59:10.341Z",
-      "endTime": "2025-12-17T17:59:10.341Z"
-    }
-  ],
-  "payload": {
-    "containerId": "AAAAA",
-    "storageLocation": "aaa"
-  }
-}
-     */
-
     async startOperation(vveId: string, operation: OperationStartDto): Promise<VesselVisitExecutionDto> {    
         
         const vve = await this.vesselVisitExecutionRepository.getByVVN(vveId);
         if (!vve) {
             throw new Error(`Vessel Visit Execution with id ${vveId} not found.`);
         }
-    
+
         const operationWS = vve.operationsExecuted.find(opWS => opWS.operation.id === operation.id);
-        
+
         if (!operationWS) {
-            const operationType = await this.taskCategoryRepository.getCategoryByCode(operation.type);
-            if (!operationType) {
-                throw new Error(`Operation type with code ${operation.type} not found.`);
-            }
-
-            // You cannot create a load or unload operation 
-            if (operationType.category.getValue() === 'LOAD' || operationType.category.getValue() === 'UNLOAD') {
-                throw new Error(`Operation type ${operation.type} cannot be started manually.`);
-            }
-    
-            new PayloadValidator(operation.payload, operationType.category.getValue()).validatePayloadForType();
-    
-            const mappedResources = operation.resources.map((res, index) => {
-                
-                const resource = new Resource({
-                    name: res.name,
-                    type: ResourceType.Staff,
-                    startTime: new Date(res.startTime),
-                    endTime: new Date(res.endTime)
-                });
-                
-                console.log(`Created Resource ${index}:`, resource);
-                return resource;
-            });
-    
-            const actualOperation = new Operation({
-                id: new mongoose.Types.ObjectId().toString(),
-                operationType: operationType,
-                startTime: new Date(operation.startTime),
-                endTime: new Date(operation.endTime),
-                resources: mappedResources,
-                payload: operation.payload
-            });
-    
-            console.log('Operation:', {
-                id: actualOperation.id,
-                operationType: actualOperation.operationType,
-                operationTypeId: actualOperation.operationType?.id,
-                operationTypeFullObject: JSON.stringify(actualOperation.operationType)
-            });
-            
-            vve.operationsExecuted.push(new OperationWithStatus({
-                operation: actualOperation,
-                status: 'InProgress'
-            }));
-
-        } else {
- 
-            if (operationWS.status !== 'Pending') {
-                throw new Error(`Operation with id ${operation.id} cannot be started because it is in status ${operationWS.status}.`);
-            }
- 
-            // If it exists, update the existing operation
-            // Only update start date, resources, and payload, other fields remain the same
-            operationWS.props.status = 'InProgress';
-            operationWS.operation.startTime = new Date(operation.startTime);
-            operationWS.operation.resources = operation.resources.map((res, index) => {
-                
-                const resource = new Resource({
-                    name: res.name,
-                    type: ResourceType.Staff,
-                    startTime: new Date(res.startTime),
-                    endTime: new Date(res.endTime)
-                });
-                
-                console.log(`Updated Resource ${index}:`, resource);
-                return resource;
-            });
-
-            const operationType = await this.taskCategoryRepository.getCategoryByCode(operation.type);
-            if (!operationType) {
-                throw new Error(`Operation type with code ${operation.type} not found.`);
-            }
-
-            new PayloadValidator(operation.payload, operationType?.category.getValue()).validatePayloadForType();
-            operationWS.operation.payload = operation.payload;
+            throw new Error(`Operation with id ${operation.id} not found in Vessel Visit Execution ${vveId}. Only existing operations can be started.`);
         }
-    
+
+        const newStartTime = new Date(operation.startTime);
+        let delayMs = 0;
+        if(newStartTime > operationWS.operation.startTime){
+            delayMs = newStartTime.getTime() - operationWS.operation.startTime.getTime();
+        }
+
+        let expectedNewEndTime = operationWS.operation.endTime;
+        const prevExpectedStart = operationWS.operation.startTime;
+
+        // If the new start time is after the previous expected start time, delay subsequent pending operations and add delay to their times
+        if (delayMs > 0) {
+            for (const opWS of vve.operationsExecuted) {
+                if(opWS.id === operationWS.id) continue;
+                if (opWS.operation.startTime >= prevExpectedStart) {
+                    if (opWS.status === 'Pending' || opWS.status === 'Delayed') {
+                        opWS.props.status = 'Delayed';
+                        if (opWS.operation.startTime) {
+                            opWS.operation.startTime = new Date(new Date(opWS.operation.startTime).getTime() + delayMs);
+                        }
+                        if (opWS.operation.endTime) {
+                            opWS.operation.endTime = new Date(new Date(opWS.operation.endTime).getTime() + delayMs);
+                        }
+                    }
+                }
+            }
+            expectedNewEndTime = new Date(operationWS.operation.endTime.getTime() + delayMs);
+        }
+        
+        operationWS.props.status = 'Started';
+        operationWS.operation.startTime = newStartTime;
+        operationWS.operation.endTime = expectedNewEndTime;
+
         const updated = await this.vesselVisitExecutionRepository.updateVesselVisitExecution(vve);
         return updated.toDto();
     }
@@ -210,8 +148,22 @@ export class VesselVisitExecutionService {
             throw new Error(`Operation with id ${operationId} not found in Vessel Visit Execution ${vveId}.`);
         }
 
-        if (operationWS.status !== 'InProgress') {
+        if (operationWS.status !== 'Started' && operationWS.status !== 'Delayed') {
             throw new Error(`Operation with id ${operationId} cannot be completed because it is in status ${operationWS.status}.`);
+        }
+
+        const resources = operationWS.operation.resources.map(r => r.name);
+        for (const otherOp of vve.operationsExecuted) {
+            if (otherOp.operation.id === operationId) continue;
+            if (otherOp.status === 'Completed') continue;
+            for (const otherOpres of otherOp.operation.resources) {
+                if (resources.includes(otherOpres.name) && otherOp.status === 'Started') {
+                    const otherStart = new Date(otherOp.operation.startTime);
+                    if (otherStart < endTime) {
+                        throw new Error(`Resource '${otherOpres.name}' is scheduled for another operation starting at ${otherStart.toLocaleString()} before this operation's end time.`);
+                    }
+                }
+            }
         }
 
         operationWS.props.status = 'Completed';

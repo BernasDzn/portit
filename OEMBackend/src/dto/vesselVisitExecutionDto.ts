@@ -2,9 +2,9 @@ import { OperationDto } from './value/operationDto';
 
 export type OperationStatusDto =
   | 'Pending'
-  | 'InProgress'
-  | 'Completed'
-  | 'Failed';
+  | 'Started'
+  | 'Delayed'
+  | 'Completed';
 
 export interface OperationWithStatusDto {
   id: string;

@@ -52,14 +52,16 @@ const calculateMetrics = (execution: VesselVisitExecution) => {
     }
 
     const completedOps = operations.filter(op => op.status === 'Completed').length;
-    const inProgressOps = operations.filter(op => op.status === 'InProgress').length;
+    const startedOps = operations.filter(op => op.status === 'Started').length;
+    const delayedOps = operations.filter(op => op.status === 'Delayed').length;
     const pendingOps = operations.filter(op => op.status === 'Pending').length;
 
     return {
         totalTurnaroundTime,
         berthOccupancyTime,
         completedOps,
-        inProgressOps,
+        startedOps,
+        delayedOps,
         pendingOps,
     };
 };
@@ -90,7 +92,8 @@ const rows = computed(() => {
                 completed: metrics.completedOps,
                 total: execution.operationsExecuted.length,
                 pending: metrics.pendingOps,
-                inProgress: metrics.inProgressOps
+                started: metrics.startedOps,
+                delayed: metrics.delayedOps
             },
             turnaroundTime: metrics.totalTurnaroundTime,
             berthOccupancy: metrics.berthOccupancyTime,
@@ -130,8 +133,11 @@ const statusVariants: Record<string, string> = {
                     <sl-badge v-if="value.pending > 0" variant="neutral" size="small" pill>
                         {{ value.pending }} {{ t('execution.status.pending') }}
                     </sl-badge>
-                    <sl-badge v-if="value.inProgress > 0" variant="primary" size="small" pill>
-                        {{ value.inProgress }} {{ t('execution.status.inProgress') }}
+                    <sl-badge v-if="value.started > 0" variant="primary" size="small" pill>
+                        {{ value.started }} {{ t('execution.status.started') }}
+                    </sl-badge>
+                    <sl-badge v-if="value.delayed > 0" variant="warning" size="small" pill>
+                        {{ value.delayed }} {{ t('execution.status.delayed') }}
                     </sl-badge>
                     <sl-badge v-if="value.completed > 0" variant="success" size="small" pill>
                         {{ value.completed }} {{ t('execution.status.completed') }}

@@ -15,13 +15,16 @@ const props = defineProps<{
 const operationCounts = computed(() => {
     const counts = {
         pending: 0,
-        inProgress: 0,
+        started: 0,
+        delayed: 0,
         completed: 0
     };
     
     props.execution.operationsExecuted.forEach(op => {
+        console.log(op.status);
         if (op.status === 'Pending') counts.pending++;
-        else if (op.status === 'InProgress') counts.inProgress++;
+        else if (op.status === 'Started') counts.started++;
+        else if (op.status === 'Delayed') counts.delayed++;
         else if (op.status === 'Completed') counts.completed++;
     });
     
@@ -70,7 +73,11 @@ const formatDate = (date?: Date) => {
                     </sl-badge>
                     <sl-badge variant="primary" pill>
                         <span class="material-icons badge-icon">play_arrow</span>
-                        {{ operationCounts.inProgress }} {{ t('execution.status.inProgress') }}
+                        {{ operationCounts.started }} {{ t('execution.status.started') }}
+                    </sl-badge>
+                    <sl-badge variant="warning" pill>
+                        <span class="material-icons badge-icon">error_outline</span>
+                        {{ operationCounts.delayed }} {{ t('execution.status.delayed') }}
                     </sl-badge>
                     <sl-badge variant="success" pill>
                         <span class="material-icons badge-icon">check_circle</span>

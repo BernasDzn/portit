@@ -31,6 +31,7 @@ export default class Operation {
 
 	toDto(): OperationDto {
 		return {
+			id: this.id,
 			type: this.operationType.toDto(),
 			startTime: this.startTime.toISOString(),
 			endTime: this.endTime.toISOString(),

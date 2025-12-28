@@ -74,12 +74,12 @@ export class VesselVisitExecutionMapper {
         const payload = opWS.operation.payload;
 
         const operation = new Operation({
-            id: opWS.operation._id.toString(),
-            operationType,
-            startTime: opWS.operation.startTime,
-            endTime: opWS.operation.endTime,
-            resources,
-            payload
+          id: (opWS.operation.id || opWS.operation._id)?.toString(),
+          operationType,
+          startTime: opWS.operation.startTime,
+          endTime: opWS.operation.endTime,
+          resources,
+          payload
         });
 
         const operationWithStatus = new OperationWithStatus(

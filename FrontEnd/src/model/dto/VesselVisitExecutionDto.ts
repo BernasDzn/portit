@@ -9,6 +9,7 @@ export interface ResourceDto {
 }
 
 export interface OperationDto {
+    id: string;
     type: TaskCategoryDto;
     startTime: string;
     endTime: string;
