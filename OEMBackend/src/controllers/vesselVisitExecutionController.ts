@@ -119,6 +119,19 @@ export class VesselVisitExecutionController extends Controller {
 
         return execution;
     }
+
+    @Get("code/{code}")
+    public async getVeselVisitExecution(
+        @Path() code: string
+    ){
+        const execution = await this.vesselVisitExecutionService.getVesselVisitExecutionByCode(code);
+        if (!execution) {
+            this.setStatus(404);
+            return { message: `Vessel Visit Execution with code ${code} not found.` };
+        }
+        return execution;
+    }
+
 }
 
 export const vesselVisitExecutionController = new VesselVisitExecutionController();
