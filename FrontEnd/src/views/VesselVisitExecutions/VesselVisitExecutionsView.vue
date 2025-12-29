@@ -89,7 +89,7 @@ const onBerthUpdated = async () => {
                     </div>
                 </div>
                 <div style="display: flex; gap: 0.5rem;">
-                    <RouterLink :to="`/vessel-visit-executions/update/${id}`" >
+                    <RouterLink :to="`/vessel-visit-executions/update/${id}`" v-if="entity.element.status === 'Open'">
                         <sl-button>
                             <sl-icon name="pencil"></sl-icon>
                             {{ t('execution.tabs.update') }}

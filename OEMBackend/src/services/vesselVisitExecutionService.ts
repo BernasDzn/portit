@@ -170,6 +170,12 @@ export class VesselVisitExecutionService {
         operationWS.operation.endTime = endTime;
 
         const updated = await this.vesselVisitExecutionRepository.updateVesselVisitExecution(vve);
+
+        const allCompleted = vve.operationsExecuted.every(opWS => opWS.props.status === 'Completed');
+        if (allCompleted) {
+            await this.closeVesselVisitExecution(vve.relatedVVN);
+        }
+
         return updated.toDto();
     }
 
