@@ -350,6 +350,14 @@ export class VesselVisitExecutionService {
         };
     }
 
+    async getVesselVisitExecutionByCode(code: string): Promise<VesselVisitExecutionDto> {
+        const vve = await this.vesselVisitExecutionRepository.getByCode(code);
+        if (!vve) {
+            throw new Error(`Vessel Visit Execution with code ${code} not found.`);
+        }
+        return vve.toDto();
+    }
+    
     async count(): Promise<number> {
         return this.vesselVisitExecutionRepository.count();
     }

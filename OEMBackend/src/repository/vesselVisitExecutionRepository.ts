@@ -21,10 +21,9 @@ export class VesselVisitExecutionRepository {
         return vesselVisitExecution;
     }
 
-    async getById(id: string): Promise<VesselVisitExecution | null> {
-        const doc = await VesselVisitExecutionModel.findById(id).exec();
-        if (!doc)
-            return null;
+    async getByCode(code: string): Promise<VesselVisitExecution | null> {
+        const doc = await VesselVisitExecutionModel.findOne({ code: code }).exec();
+        if (!doc) return null;
         return VesselVisitExecutionMapper.fromSchema(doc, this.taskCategoryRepository);
     }
 
