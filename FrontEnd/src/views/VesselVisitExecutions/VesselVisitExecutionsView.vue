@@ -62,6 +62,15 @@ const onBerthUpdated = async () => {
     refreshKey.value++;
 };
 
+const getOperationProgress = (vve: any) => {
+    if (!vve.operationsExecuted || vve.operationsExecuted.length === 0) {
+        return { completed: 0, total: 0, percentage: 0 };
+    }
+    const total = vve.operationsExecuted.length;
+    const completed = vve.operationsExecuted.filter((op: any) => op.status === 'Completed').length;
+    const percentage = Math.round((completed / total) * 100);
+    return { completed, total, percentage };
+};
 
 </script>
 
@@ -88,7 +97,21 @@ const onBerthUpdated = async () => {
                         <p class="subtitle">{{ entity.element.id }}</p>
                     </div>
                 </div>
-                <div style="display: flex; gap: 0.5rem;">
+                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                    <!-- Operations Progress Indicator -->
+                    <sl-tooltip :content="`${getOperationProgress(entity.element).completed} of ${getOperationProgress(entity.element).total} operations completed`" placement="bottom">
+                        <div style="display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; background: var(--sl-color-neutral-100); border-radius: var(--sl-border-radius-medium);">
+                            <sl-icon name="list-check" style="font-size: 1.25rem;"></sl-icon>
+                            <span style="font-weight: 600; font-size: 1rem;">
+                                {{ getOperationProgress(entity.element).completed }} / {{ getOperationProgress(entity.element).total }}
+                            </span>
+                            <sl-progress-bar 
+                                :value="getOperationProgress(entity.element).percentage" 
+                                style="width: 100px;"
+                            ></sl-progress-bar>
+                        </div>
+                    </sl-tooltip>
+                    
                     <RouterLink :to="`/vessel-visit-executions/update/${id}`" v-if="entity.element.status === 'Open'">
                         <sl-button>
                             <sl-icon name="pencil"></sl-icon>

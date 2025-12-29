@@ -65,11 +65,14 @@ export class VesselVisitExecutionService implements IVesselVisitExecutionService
                 }
             }
 
+            // Ensure pageNumber is at least 0 (backend expects 1-based, so we send 1 as minimum)
             if (filtering.pageNumber !== undefined) {
-                query.push(`pageNumber=${filtering.pageNumber}`);
+                const safePageNumber = Math.max(0, filtering.pageNumber);
+                query.push(`pageNumber=${safePageNumber}`);
             }
             if (filtering.pageSize !== undefined) {
-                query.push(`pageSize=${filtering.pageSize}`);
+                const safePageSize = Math.max(1, filtering.pageSize);
+                query.push(`pageSize=${safePageSize}`);
             }
         }
 
