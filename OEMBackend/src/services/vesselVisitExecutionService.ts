@@ -120,7 +120,6 @@ export class VesselVisitExecutionService {
                     endTime: new Date(res.endTime)
                 });
                 
-                console.log(`Created Resource ${index}:`, resource);
                 return resource;
             });
     
@@ -131,13 +130,6 @@ export class VesselVisitExecutionService {
                 endTime: new Date(operation.endTime),
                 resources: mappedResources,
                 payload: operation.payload
-            });
-    
-            console.log('Operation:', {
-                id: actualOperation.id,
-                operationType: actualOperation.operationType,
-                operationTypeId: actualOperation.operationType?.id,
-                operationTypeFullObject: JSON.stringify(actualOperation.operationType)
             });
             
             vve.operationsExecuted.push(new OperationWithStatus({
@@ -151,12 +143,9 @@ export class VesselVisitExecutionService {
             // When starting a complementary task that impacts other operations,
             // change their status to Delayed if they are Started or Pending
             if(operationWS!.impactedOperations.length > 0){
-                console.log('New complementary task impacts operations:', operationWS!.impactedOperations);
                 for(const opWS of vve.operationsExecuted){
                     if(operationWS!.impactedOperations.includes(opWS.operation.id!)){
-                        console.log(`  Checking operation ${opWS.operation.id}, status: ${opWS.status}`);
                         if(opWS.status === 'Started' || opWS.status === 'Pending'){
-                            console.log(`    Changing from ${opWS.status} to Delayed`);
                             opWS.props.status = 'Delayed';
                         }
                     }
@@ -193,7 +182,6 @@ export class VesselVisitExecutionService {
                     endTime: new Date(res.endTime)
                 });
                 
-                console.log(`Updated Resource ${index}:`, resource);
                 return resource;
             });
 
@@ -274,9 +262,6 @@ export class VesselVisitExecutionService {
         operationWS.props.status = 'Completed';
         operationWS.operation.endTime = endTime;
 
-        console.log('Completing operation:', operationId);
-        console.log('This operation impacts:', operationWS.impactedOperations);
-
         // When completing an operation that impacts others, check if those operations
         // can return to their previous status. They should only return if
         // there are NO other active (Started/Delayed) operations impacting them.
@@ -328,7 +313,6 @@ export class VesselVisitExecutionService {
         vve.props.berthTime = berthTime;
 
         const updated = await this.vesselVisitExecutionRepository.updateVesselVisitExecution(vve);
-        console.log('Updated VVE with berth details:', updated);
         return updated.toDto();
     }
 
