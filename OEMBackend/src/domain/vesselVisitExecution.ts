@@ -14,6 +14,7 @@ export type VesselVisitExecutionStatus = 'Open' | 'Closed';
 interface OperationWithStatusProps {
   operation: Operation;
   status: OperationStatus;
+  impactedOperations: string[];
 }
 
 interface VesselVisitExecutionProps {
@@ -33,6 +34,9 @@ export class OperationWithStatus extends Entity<OperationWithStatusProps> {
   get id(): string { return this._id.toString(); }
   get operation(): Operation { return this.props.operation; }
   get status() { return this.props.status; }
+  get impactedOperations(): string[] {
+    return this.props.impactedOperations;
+  }
 
   constructor(props: OperationWithStatusProps, id?: any) {
     super(
@@ -49,7 +53,8 @@ export class OperationWithStatus extends Entity<OperationWithStatusProps> {
     return {
       id: this.id,
       operation: this.operation.toDto(),
-      status: this.status
+      status: this.status,
+      impactedOperations: this.impactedOperations
     };
   }
 }

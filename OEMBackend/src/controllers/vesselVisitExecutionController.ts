@@ -74,15 +74,6 @@ export class VesselVisitExecutionController extends Controller {
         @Query() status?: string,
         @Request() request?: ExpressRequest
     ) {
-        // Log raw request.query so we can see unencoded values
-        try {
-            console.log('Raw request.query:', request?.query);
-        } catch (e) {
-            // ignore
-        }
-
-        // Some clients (or manual browser URLs) may not encode dates; attempt to
-        // read values from the raw request query as a fallback.
         const rawQuery = request?.query || {};
         const resolvedStart = startDate ?? (rawQuery.startDate as string | undefined);
         const resolvedEnd = endDate ?? (rawQuery.endDate as string | undefined);
@@ -98,7 +89,6 @@ export class VesselVisitExecutionController extends Controller {
             status: resolvedStatus
         };
 
-        // Log the incoming filter for debugging
         try {
             console.log("Filtering VVEs with filter:", JSON.stringify(filter));
         } catch (e) {

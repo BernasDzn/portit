@@ -1,6 +1,10 @@
 import mongoose from "mongoose";
 
 const ExecutionOperationSchema = new mongoose.Schema({
+    id: {
+        type: String,
+        required: false
+    },
     operationType: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "TaskCategory",
@@ -41,6 +45,11 @@ const OperationWithStatusSchema = new mongoose.Schema({
         required: true,
         enum: ['Pending', 'InProgress', 'Completed', 'Failed'],
         default: 'Pending'
+    },
+    impactedOperations: {
+        type: [String],
+        required: false,
+        default: []
     }
 }, {
     _id: false

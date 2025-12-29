@@ -19,6 +19,7 @@ export class VesselVisitExecutionMapper {
       dateClosed: vve.dateClosed,
       operationsExecuted: vve.operationsExecuted.map(opWS => ({
         status: opWS.status,
+        impactedOperations: opWS.impactedOperations || [],
         operation: {
             id: opWS.operation.id,    
             operationType: opWS.operation.operationType?.id 
@@ -85,7 +86,8 @@ export class VesselVisitExecutionMapper {
         const operationWithStatus = new OperationWithStatus(
           {
             operation,
-            status: opWS.status
+            status: opWS.status,
+            impactedOperations: opWS.impactedOperations || []
           },
           opWS._id?.toString()
         );

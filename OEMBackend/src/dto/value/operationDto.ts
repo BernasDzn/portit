@@ -8,6 +8,7 @@ export interface OperationDto {
     endTime: string;
     resources: ResourceDto[];
     payload?: any;
+    impactedOperations?: string[];
 }
 
 export interface OperationStartDto {
@@ -17,6 +18,7 @@ export interface OperationStartDto {
     endTime: string;
     resources: ResourceStartDto[];
     payload?: any;
+    impactedOperations?: string[];
 };
 
 export interface ResourceStartDto {
