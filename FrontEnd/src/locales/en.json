@@ -1002,6 +1002,7 @@
             "delayed": "Delayed",
             "completed": "Completed"
         },
+        "view_resources" : "View Resources",
         "infoTitle": "Execution Information",
         "operationsTitle": "Operations",
         "noOperations": "No operations available",
