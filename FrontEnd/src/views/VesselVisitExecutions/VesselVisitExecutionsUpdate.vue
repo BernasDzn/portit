@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRoute } from 'vue-router';
 import TYPES from '@/inversify/types';
@@ -25,6 +25,19 @@ const showCompleteDialog = ref(false);
 const completeDialogOp = ref<any>(null);
 const completeDialogTime = ref<string>('');
 
+// Resources dialog state
+const showResourcesDialog = ref(false);
+const resourcesDialogOp = ref<any>(null);
+
+const resourcesDialogTitle = computed(() => {
+  if (!resourcesDialogOp.value) return 'resources for operation';
+  const op = resourcesDialogOp.value;
+  const idx = operations.value.findIndex((o: any) => o.id === op.id);
+  if (idx >= 0) return `Resources for operation #${idx + 1}`;
+  if (op.id) return `Resources for operation #${op.id}`;
+  return 'Resources  for operation';
+});
+
 function openStartDialog(op: any) {
   startDialogOp.value = op;
   const expected = op.operation.startTime instanceof Date ? op.operation.startTime : new Date(op.operation.startTime);
@@ -39,6 +52,11 @@ function openCompleteDialog(op: any) {
   const pad = (n: number) => n.toString().padStart(2, '0');
   completeDialogTime.value = `${actualEnd.getFullYear()}-${pad(actualEnd.getMonth() + 1)}-${pad(actualEnd.getDate())}T${pad(actualEnd.getHours())}:${pad(actualEnd.getMinutes())}`;
   showCompleteDialog.value = true;
+}
+
+function openResourcesDialog(op: any) {
+  resourcesDialogOp.value = op;
+  showResourcesDialog.value = true;
 }
 
 async function confirmStartOperation() {
@@ -155,9 +173,9 @@ onMounted(fetchOperations);
       </sl-breadcrumb-item>
     </sl-breadcrumb>
 
-    <div v-if="operations.length">
+    <div v-if="operations.length" class="data-table">
       <h3>Update vessel visit execution</h3>
-      <table class="operations-table">
+      <table class="dt-table">
         <thead>
           <tr>
             <th>#</th>
@@ -179,20 +197,20 @@ onMounted(fetchOperations);
               </sl-tag>
             </td>
             <td>
-				<sl-tag variant="info" pill>{{ op.operation.type.category }}</sl-tag>
-			</td>
+              <sl-tag variant="neutral" pill>{{ op.operation.type.category }}</sl-tag>
+            </td>
             <td>
-              <span v-if="op.status === 'Pending' || op.status === 'Delayed'" class="expected-time">{{ formatDate(op.operation.startTime) }} (expected)</span>
+              <span v-if="op.status === 'Pending' || op.status === 'Delayed'" class="dt-expected">{{ formatDate(op.operation.startTime) }} (expected)</span>
               <span v-else>{{ formatDate(op.operation.startTime) }}</span>
             </td>
             <td>
-              <span v-if="op.status !== 'Completed' " class="expected-time">{{ formatDate(op.operation.endTime) }} (expected)</span>
+              <span v-if="op.status !== 'Completed' " class="dt-expected">{{ formatDate(op.operation.endTime) }} (expected)</span>
               <span v-else>{{ formatDate(op.operation.endTime) }}</span>
             </td>
             <td>
-              <span v-for="(res, rIdx) in op.operation.resources" :key="rIdx" style="margin-right:0.5em; white-space:nowrap;">
-				{{ res.name }}
-              </span>
+              <sl-button size="small" variant="default" @click="openResourcesDialog(op)">
+                <sl-icon name="eye"></sl-icon> {{ t('execution.view_resources') }}
+              </sl-button>
             </td>
             <td>
               <!-- Actions by status -->
@@ -264,124 +282,67 @@ onMounted(fetchOperations);
         </sl-button>
       </div>
     </sl-dialog>
+    <!-- Resources Dialog -->
+    <sl-dialog :label="resourcesDialogTitle" :open="showResourcesDialog" @sl-after-hide="showResourcesDialog = false" style="--width: 900px;">
+      <div style="width:100%; max-width: 95vw; overflow:auto;">
+        <table class="operations-table dt-table" style="width:100%; table-layout: auto;">
+          <thead>
+            <tr>
+              <th>Resource Type</th>
+              <th>Resource Name</th>
+              <th>Start Time</th>
+              <th>End Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-if="!(resourcesDialogOp && resourcesDialogOp.operation && resourcesDialogOp.operation.resources)" class="no-data">
+              <td colspan="4">No resources</td>
+            </tr>
+            <tr v-for="(res, rIdx) in (resourcesDialogOp && resourcesDialogOp.operation ? resourcesDialogOp.operation.resources : [])" :key="rIdx">
+              <td>{{ res.type || res.resourceType || (res.resource && res.resource.type) || '-' }}</td>
+              <td>{{ res.name || (res.resource && res.resource.name) || '-' }}</td>
+              <td>{{ formatDate(res.startTime) }}</td>
+              <td>{{ formatDate(res.endTime) }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div slot="footer" style="display: flex; gap: 0.5em; justify-content: flex-end;">
+        <sl-button variant="default" @click="showResourcesDialog = false">
+          <sl-icon name="x"></sl-icon> Close
+        </sl-button>
+      </div>
+    </sl-dialog>
   </div>
 </template>
 
 <style scoped>
-.icon {
-    margin: 0;
-    margin-right: 1rem;
-    font-size: 48px;
-}
+	.dt-table {
+		width: 100%;
+		border-collapse: collapse;
+	}
 
-.operations-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1.5rem;
-  background: #f8f9fa;
-  border: 1px solid #b0b0b0;
-  font-size: 1em;
-}
-.operations-table th, .operations-table td {
-  padding: 0.45rem 0.7rem;
-  text-align: left;
-  border: 1px solid #b0b0b0;
-}
-.operations-table th {
-  background: #e0e0e0;
-  color: #222;
-  font-weight: 700;
-  border-bottom: 2px solid #b0b0b0;
-}
-.operations-table tr {
-  background: #f8f9fa;
-}
-.operations-table tr:nth-child(even) {
-  background: #f0f0f0;
-}
-.operations-table tr:hover {
-  background: #e6f0fa;
-}
-.operations-table td {
-  border-bottom: 1px solid #b0b0b0;
-}
-.operations-table tr:last-child td {
-  border-bottom: 1px solid #b0b0b0;
-}
-.operations-table .icon-col {
-  width: 32px;
-  min-width: 32px;
-  max-width: 32px;
-  text-align: center;
-  opacity: 0.7;
-  padding-right: 0;
-  padding-left: 0.2rem;
-}
-.status-icon {
-  font-size: 1.1em;
-  vertical-align: middle;
-  color: #555;
-}
-.expected-time {
-  color: #b0b0b0;
-  font-style: italic;
-}
+	.dt-table thead {
+		font-weight: bold;
+		color: rgb(107, 105, 115);
+	}
 
-/* Remove rounded corners and shadow for a more utilitarian look */
-.operations-table,
-.operations-table th,
-.operations-table td {
-  border-radius: 0 !important;
-  box-shadow: none !important;
-}
+	.dt-table th,
+	.dt-table td {
+		border-bottom: 1px solid #ddd;
+		padding: 1rem;
+		text-align: left;
+	}
 
-/* Keep rest of the style for layout */
-.viewing-content {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-top: 1rem;
-}
+	.dt-empty {
+		text-align: center;
+		color: #666;
+		padding: 1rem;
+	}
 
-.top-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-}
+  .dt-expected {
+    font-style: italic;
+    color: #888;
+  }
 
-.info-card {
-    width: 100%;
-}
-
-.info-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 1.5rem;
-    margin-top: 1rem;
-}
-
-.info-block {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-}
-
-.label {
-    font-size: 0.875rem;
-    color: var(--sl-color-neutral-600);
-    font-weight: 500;
-}
-
-.no-data {
-    text-align: center;
-    color: var(--sl-color-neutral-500);
-    padding: 2rem;
-    margin-top: 1rem;
-}
-
-@media (max-width: 1024px) {
-    .top-row {
-        grid-template-columns: 1fr;
-    }
-}
 </style>
