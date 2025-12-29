@@ -12,22 +12,16 @@ export class VesselVisitExecutionController extends Controller {
 
     @Post("{relatedVVN}/open")
     public async openVesselVisitExecution(@Path() relatedVVN: string, @Request() request: ExpressRequest) {
-        // Check for token in Authorization header first, then in cookies
-        const authHeader = request.headers.authorization;
-        let token = authHeader?.startsWith('Bearer ') ? authHeader.substring(7) : undefined;
         
-        if (!token && request.cookies?.AuthToken) {
-            token = request.cookies.AuthToken;
-        }
+        let token: string | undefined = request.user?.token;
+        let userEmail: string = request.user?.emailAddress || 'unknown';
         
         if (!token) {
             this.setStatus(401);
             return { message: 'Authorization token required' };
         }
-        const decoded = jwt.decode(token) as any;
-        const creatorUser = decoded?.email_address || 'unknown';
 
-        const execution = await this.vesselVisitExecutionService.createVesselVisitExecution(relatedVVN, creatorUser);
+        const execution = await this.vesselVisitExecutionService.createVesselVisitExecution(relatedVVN, userEmail);
         this.setStatus(201);
         return execution;
     }

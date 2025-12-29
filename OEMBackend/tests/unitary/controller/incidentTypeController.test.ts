@@ -51,7 +51,9 @@ describe('IncidentTypeController', () => {
 
 			const result = await controller.getPaged(1, 10);
 
-			expect(mockService.getPaged).toHaveBeenCalledWith({ pageNumber: 1, pageSize: 10 });
+			const callArg = (mockService.getPaged).mock.calls[0][0];
+			expect(callArg.pageNumber).toBe(1);
+			expect(callArg.pageSize).toBe(10);
 			expect(result).toEqual(mockPage);
 		});
 

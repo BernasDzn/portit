@@ -7,6 +7,7 @@ jest.mock('../../../src/services/schedulingRequestService');
 describe('SchedulingRequestController', () => {
 	let controller: SchedulingRequestController;
 	let mockService: jest.Mocked<SchedulingRequestService>;
+	let mockreq : ExpressRequest;
 
 	beforeEach(() => {
 		jest.clearAllMocks();
@@ -14,6 +15,7 @@ describe('SchedulingRequestController', () => {
 		mockService = new SchedulingRequestService() as jest.Mocked<SchedulingRequestService>;
 		controller = new SchedulingRequestController();
 		(controller as any).schedulingRequestService = mockService;
+		mockreq = {user : { token: 'valid-token', emailAddress: 'system' }};
 	});
 
 	describe('scheduleRequest', () => {
@@ -29,7 +31,7 @@ describe('SchedulingRequestController', () => {
 
 			mockService.scheduleRequest = jest.fn().mockResolvedValue(mockResult);
 
-			const result = await controller.scheduleRequest('VVN-001', 'greedy', 2);
+			const result = await controller.scheduleRequest('VVN-001', 'greedy', 2, mockreq);
 
 			expect(mockService.scheduleRequest).toHaveBeenCalledWith('VVN-001', 'greedy', 1, 'system');
 			expect(result).toEqual(mockResult);
@@ -65,7 +67,7 @@ describe('SchedulingRequestController', () => {
 
 			mockService.scheduleRequest = jest.fn().mockResolvedValue(mockResult);
 
-			await controller.scheduleRequest('VVN-002', 'genetic');
+			await controller.scheduleRequest('VVN-002', 'genetic', 2, mockreq);
 
 			expect(mockService.scheduleRequest).toHaveBeenCalledWith('VVN-002', 'genetic', 1, 'system');
 		});
@@ -82,7 +84,7 @@ describe('SchedulingRequestController', () => {
 
 			mockService.scheduleRequest = jest.fn().mockResolvedValue(mockResult);
 
-			await controller.scheduleRequest('VVN-003', 'tabu', 10);
+			await controller.scheduleRequest('VVN-003', 'tabu', 10, mockreq);
 
 			expect(mockService.scheduleRequest).toHaveBeenCalledWith('VVN-003', 'tabu', 1, 'system');
 		});
@@ -145,9 +147,9 @@ describe('SchedulingRequestController', () => {
 
 			mockService.acceptRequest = jest.fn().mockResolvedValue(mockResult);
 
-			const result = await controller.acceptRequest('wqi-2');
+			const result = await controller.acceptRequest('wqi-2', mockreq);
 
-			expect(mockService.acceptRequest).toHaveBeenCalledWith('wqi-2', 'system', undefined);
+			expect(mockService.acceptRequest).toHaveBeenCalledWith('wqi-2', 'system', 'valid-token');
 			expect(result).toEqual(mockResult);
 		});
 
@@ -172,9 +174,9 @@ describe('SchedulingRequestController', () => {
 
 			mockService.acceptRequest = jest.fn().mockResolvedValue(mockResult);
 
-			await controller.acceptRequest('wqi-3');
+			await controller.acceptRequest('wqi-3', mockreq);
 
-			expect(mockService.acceptRequest).toHaveBeenCalledWith('wqi-3', 'system', undefined);
+			expect(mockService.acceptRequest).toHaveBeenCalledWith('wqi-3', 'system', 'valid-token');
 		});
 	});
 
@@ -191,7 +193,7 @@ describe('SchedulingRequestController', () => {
 
 			mockService.rejectRequest = jest.fn().mockResolvedValue(mockResult);
 
-			const result = await controller.rejectRequest('wqi-4');
+			const result = await controller.rejectRequest('wqi-4', mockreq);
 
 			expect(mockService.rejectRequest).toHaveBeenCalledWith('wqi-4', 'system');
 			expect(result).toEqual(mockResult);
@@ -218,7 +220,7 @@ describe('SchedulingRequestController', () => {
 
 			mockService.rejectRequest = jest.fn().mockResolvedValue(mockResult);
 
-			await controller.rejectRequest('wqi-5');
+			await controller.rejectRequest('wqi-5' , mockreq);
 
 			expect(mockService.rejectRequest).toHaveBeenCalledWith('wqi-5', 'system');
 		});
@@ -235,7 +237,7 @@ describe('SchedulingRequestController', () => {
 
 			mockService.rejectRequest = jest.fn().mockResolvedValue(mockResult);
 
-			const result = await controller.rejectRequest('wqi-6');
+			const result = await controller.rejectRequest('wqi-6' , mockreq);
 
 			expect(result.result).toBe('Rejected');
 		});

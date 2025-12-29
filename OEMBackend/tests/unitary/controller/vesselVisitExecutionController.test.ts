@@ -8,12 +8,14 @@ jest.mock('../../../src/services/vesselVisitExecutionService');
 describe('VesselVisitExecutionController', () => {
 	let controller: VesselVisitExecutionController;
 	let mockService: jest.Mocked<VesselVisitExecutionService>;
+	let mockreq : ExpressRequest;
 
 	beforeEach(() => {
 		jest.clearAllMocks();
 
 		mockService = new VesselVisitExecutionService() as jest.Mocked<VesselVisitExecutionService>;
 		controller = new VesselVisitExecutionController();
+		mockreq = {user : { token: 'valid-token', emailAddress: 'system' }};
 		(controller as any).vesselVisitExecutionService = mockService;
 	});
 
@@ -33,7 +35,7 @@ describe('VesselVisitExecutionController', () => {
 			mockService.createVesselVisitExecution = jest.fn().mockResolvedValue(mockVve);
 			controller.setStatus = jest.fn();
 
-			const result = await controller.openVesselVisitExecution('VVN-001');
+			const result = await controller.openVesselVisitExecution('VVN-001', mockreq);
 
 			expect(mockService.createVesselVisitExecution).toHaveBeenCalledWith('VVN-001', 'system');
 			expect(controller.setStatus).toHaveBeenCalledWith(201);
@@ -226,7 +228,7 @@ describe('VesselVisitExecutionController', () => {
 
 			const result = await controller.getAllVesselVisitExecutions();
 
-			expect(mockService.getAllVesselVisitExecutions).toHaveBeenCalledWith(1, 10);
+			expect(mockService.getAllVesselVisitExecutions).toHaveBeenCalledWith({pageNumber: 1, pageSize: 10});
 			expect(result).toEqual(mockPage);
 			expect(result.items).toHaveLength(1);
 		});
@@ -243,7 +245,7 @@ describe('VesselVisitExecutionController', () => {
 
 			const result = await controller.getAllVesselVisitExecutions(2, 20);
 
-			expect(mockService.getAllVesselVisitExecutions).toHaveBeenCalledWith(2, 20);
+			expect(mockService.getAllVesselVisitExecutions).toHaveBeenCalledWith({pageNumber: 2, pageSize: 20});
 			expect(result).toEqual(mockPage);
 		});
 
