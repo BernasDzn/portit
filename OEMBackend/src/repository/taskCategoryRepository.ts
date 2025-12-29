@@ -44,8 +44,14 @@ export class TaskCategoryRepository {
 
     async getAllCategories(pageable: TaskCategoryFilter): Promise<Page<TaskCategoryDto>> {
 
-        const { pageNumber, pageSize } = pageable;
-		const skip = (pageNumber - 1) * pageSize;
+        let pageNumber = parseInt(pageable.pageNumber as any) || 1;
+        let pageSize = parseInt(pageable.pageSize as any) || 10;
+        
+        pageNumber = Math.max(1, pageNumber);
+        pageSize = Math.max(1, pageSize);
+        
+		const skip = Math.max(0, (pageNumber - 1) * pageSize);
+        console.log('Filtering TaskCategories with:', { pageNumber, pageSize, skip, originalFilter: pageable });
 
         const name = pageable.name ? pageable.name : null;
 

@@ -5,7 +5,7 @@ import VesselVisitExecution, { OperationWithStatus } from "../domain/vesselVisit
 import { VesselVisitExecutionDto } from "../dto/vesselVisitExecutionDto";
 import { VesselVisitExecutionRepository } from "../repository/vesselVisitExecutionRepository";
 import Operation from "../domain/value/operation";
-import { OperationStartDto } from "../dto/value/operationDto";
+import { OperationDto, OperationStartDto } from "../dto/value/operationDto";
 import { TaskCategoryRepository } from "../repository/taskCategoryRepository";
 import { Resource, ResourceType } from "../domain/value/resource";
 import { PayloadValidator } from "./validators/operationPayloadValidator";
@@ -51,7 +51,8 @@ export class VesselVisitExecutionService {
                 return new OperationWithStatus(
                 {
                     operation: op,
-                    status: 'Pending'
+                    status: 'Pending',
+                    impactedOperations: []
                 }
             )}),
             status: 'Open',
@@ -95,25 +96,117 @@ export class VesselVisitExecutionService {
             throw new Error(`Vessel Visit Execution with id ${vveId} not found.`);
         }
 
-        const operationWS = vve.operationsExecuted.find(opWS => opWS.operation.id === operation.id);
+        let operationWS = vve.operationsExecuted.find(opWS => opWS.operation.id === operation.id);
 
         if (!operationWS) {
-            throw new Error(`Operation with id ${operation.id} not found in Vessel Visit Execution ${vveId}. Only existing operations can be started.`);
+            const operationType = await this.taskCategoryRepository.getCategoryByCode(operation.type);
+            if (!operationType) {
+                throw new Error(`Operation type with code ${operation.type} not found.`);
+            }
+
+            // You cannot create a load or unload operation 
+            if (operationType.category.getValue() === 'LOAD' || operationType.category.getValue() === 'UNLOAD') {
+                throw new Error(`Operation type ${operation.type} cannot be started manually.`);
+            }
+    
+            new PayloadValidator(operation.payload, operationType.category.getValue()).validatePayloadForType();
+    
+            const mappedResources = operation.resources.map((res, index) => {
+                
+                const resource = new Resource({
+                    name: res.name,
+                    type: ResourceType.Staff,
+                    startTime: new Date(res.startTime),
+                    endTime: new Date(res.endTime)
+                });
+                
+                return resource;
+            });
+    
+            const actualOperation = new Operation({
+                id: new mongoose.Types.ObjectId().toString(),
+                operationType: operationType,
+                startTime: new Date(operation.startTime),
+                endTime: new Date(operation.endTime),
+                resources: mappedResources,
+                payload: operation.payload
+            });
+            
+            vve.operationsExecuted.push(new OperationWithStatus({
+                operation: actualOperation,
+                status: 'Started',
+                impactedOperations: operation.impactedOperations || []
+            }));
+
+            operationWS = vve.operationsExecuted[vve.operationsExecuted.length - 1];
+
+            // When starting a complementary task that impacts other operations,
+            // change their status to Delayed if they are Started or Pending
+            if(operationWS!.impactedOperations.length > 0){
+                for(const opWS of vve.operationsExecuted){
+                    if(operationWS!.impactedOperations.includes(opWS.operation.id!)){
+                        if(opWS.status === 'Started' || opWS.status === 'Pending'){
+                            opWS.props.status = 'Delayed';
+                        }
+                    }
+                }
+            }
+        } else {
+ 
+            if (operationWS.status !== 'Pending' && operationWS.status !== 'Delayed') {
+                throw new Error(`Operation with id ${operation.id} cannot be started because it is in status ${operationWS.status}.`);
+            }
+            
+            // Check if this operation is being blocked by any active complementary tasks
+            if (operationWS.status === 'Delayed') {
+                const blockingTasks = vve.operationsExecuted.filter(opWS => 
+                    (opWS.status === 'Started' || opWS.status === 'Delayed') &&
+                    opWS.impactedOperations.includes(operationWS!.operation.id!)
+                );
+                if (blockingTasks.length > 0) {
+                    const taskNames = blockingTasks.map(t => t.operation.operationType?.category.getValue() || 'Unknown').join(', ');
+                    throw new Error(`Operation with id ${operation.id} is currently blocked by the following tasks: ${taskNames}. Complete those tasks first.`);
+                }
+            }
+ 
+            // If it exists, update the existing operation
+            // Only update start date, resources, and payload, other fields remain the same
+            operationWS.props.status = 'Started';
+            operationWS.operation.startTime = new Date(operation.startTime);
+            operationWS.operation.resources = operation.resources.map((res, index) => {
+                
+                const resource = new Resource({
+                    name: res.name,
+                    type: ResourceType.Staff,
+                    startTime: new Date(res.startTime),
+                    endTime: new Date(res.endTime)
+                });
+                
+                return resource;
+            });
+
+            const operationType = await this.taskCategoryRepository.getCategoryByCode(operation.type);
+            if (!operationType) {
+                throw new Error(`Operation type with code ${operation.type} not found.`);
+            }
+
+            new PayloadValidator(operation.payload, operationType?.category.getValue()).validatePayloadForType();
+            operationWS.operation.payload = operation.payload;
         }
 
         const newStartTime = new Date(operation.startTime);
         let delayMs = 0;
-        if(newStartTime > operationWS.operation.startTime){
-            delayMs = newStartTime.getTime() - operationWS.operation.startTime.getTime();
+        if(newStartTime > operationWS!.operation.startTime){
+            delayMs = newStartTime.getTime() - operationWS!.operation.startTime.getTime();
         }
 
-        let expectedNewEndTime = operationWS.operation.endTime;
-        const prevExpectedStart = operationWS.operation.startTime;
+        let expectedNewEndTime = operationWS!.operation.endTime;
+        const prevExpectedStart = operationWS!.operation.startTime;
 
         // If the new start time is after the previous expected start time, delay subsequent pending operations and add delay to their times
         if (delayMs > 0) {
             for (const opWS of vve.operationsExecuted) {
-                if(opWS.id === operationWS.id) continue;
+                if(opWS.id === operationWS!.id) continue;
                 if (opWS.operation.startTime >= prevExpectedStart) {
                     if (opWS.status === 'Pending' || opWS.status === 'Delayed') {
                         opWS.props.status = 'Delayed';
@@ -126,12 +219,12 @@ export class VesselVisitExecutionService {
                     }
                 }
             }
-            expectedNewEndTime = new Date(operationWS.operation.endTime.getTime() + delayMs);
+            expectedNewEndTime = new Date(operationWS!.operation.endTime.getTime() + delayMs);
         }
         
-        operationWS.props.status = 'Started';
-        operationWS.operation.startTime = newStartTime;
-        operationWS.operation.endTime = expectedNewEndTime;
+        operationWS!.props.status = 'Started';
+        operationWS!.operation.startTime = newStartTime;
+        operationWS!.operation.endTime = expectedNewEndTime;
 
         const updated = await this.vesselVisitExecutionRepository.updateVesselVisitExecution(vve);
         return updated.toDto();
@@ -169,6 +262,33 @@ export class VesselVisitExecutionService {
         operationWS.props.status = 'Completed';
         operationWS.operation.endTime = endTime;
 
+        // When completing an operation that impacts others, check if those operations
+        // can return to their previous status. They should only return if
+        // there are NO other active (Started/Delayed) operations impacting them.
+        if(operationWS!.impactedOperations.length > 0){
+            for(const opWS of vve.operationsExecuted){
+                const opId = opWS.operation.id!;
+                const isImpacted = operationWS!.impactedOperations.includes(opId);
+                
+                if(isImpacted){
+                    if(opWS.status === 'Delayed'){
+                        // Check if any other active operations are still impacting this operation
+                        const stillBlocked = vve.operationsExecuted.some(otherOp => {
+                            const isBlocking = otherOp.operation.id !== operationWS!.operation.id && // Not the current operation being completed
+                                (otherOp.status === 'Started' || otherOp.status === 'Delayed') && // Still active
+                                otherOp.impactedOperations.includes(opWS.operation.id!); // Impacts this operation
+                            return isBlocking;
+                        });
+                        // Only change back to Pending if no other operations are blocking it
+                        // (operations that were Pending before being Delayed should return to Pending, not Started)
+                        if (!stillBlocked) {
+                            opWS.props.status = 'Pending';
+                        }
+                    }
+                }
+            }
+        }
+
         const updated = await this.vesselVisitExecutionRepository.updateVesselVisitExecution(vve);
 
         const allCompleted = vve.operationsExecuted.every(opWS => opWS.props.status === 'Completed');
@@ -193,7 +313,6 @@ export class VesselVisitExecutionService {
         vve.props.berthTime = berthTime;
 
         const updated = await this.vesselVisitExecutionRepository.updateVesselVisitExecution(vve);
-        console.log('Updated VVE with berth details:', updated);
         return updated.toDto();
     }
 

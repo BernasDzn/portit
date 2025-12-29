@@ -8,20 +8,24 @@ export class OperationWithStatus {
     private _id: string;
     private _operation: Operation;
     private _status: OperationStatus;
+    private _impactedOperations: string[];
 
     constructor(params: {
         id: string;
         operation: Operation;
         status: OperationStatus;
+        impactedOperations?: string[];
     }) {
         this._id = params.id;
         this._operation = params.operation;
         this._status = params.status;
+        this._impactedOperations = params.impactedOperations || [];
     }
 
     get id(): string { return this._id; }
     get operation(): Operation { return this._operation; }
     get status(): OperationStatus { return this._status; }
+    get impactedOperations(): string[] { return this._impactedOperations; }
 
     set status(newStatus: OperationStatus) {
         this._status = newStatus;
@@ -31,7 +35,8 @@ export class OperationWithStatus {
         return {
             id: this._id,
             operation: this._operation.toDto(),
-            status: this._status
+            status: this._status,
+            impactedOperations: this._impactedOperations
         };
     }
 }

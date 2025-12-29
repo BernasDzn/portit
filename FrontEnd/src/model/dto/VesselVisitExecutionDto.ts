@@ -21,6 +21,7 @@ export interface OperationWithStatusDto {
     id: string;
     operation: OperationDto;
     status: OperationStatus;
+    impactedOperations: string[];
 }
 
 export interface VesselVisitExecutionDto {
