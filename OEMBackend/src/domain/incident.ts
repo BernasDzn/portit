@@ -2,14 +2,14 @@ import mongoose, { ObjectId } from "mongoose";
 import { Entity } from "../core/domain/entity";
 import IncidentType from "./incidentType";
 
-export type severity = 'Minor' | 'Major' | 'Critical';
+export type IncidentSeverity = 'Minor' | 'Major' | 'Critical';
 
 interface IncidentProps {
 	bid?: string;
 	type: IncidentType;
 	startTime: Date; // within the time frame the Incident is "Active"
 	endTime?: Date; // end time can be undefined in case the incident is ongoing
-	severity: severity; // could be different from type according to situation
+	severity: IncidentSeverity; // could be different from type according to situation
 	description: string; // free text description
 	createdBy: string; // email address of creator
 	affectedVVECodes?: string[];
@@ -24,6 +24,13 @@ export default class Incident extends Entity<IncidentProps> {
 	get description(): string { return this.props.description; }
 	get createdBy(): string { return this.props.createdBy; }
 	get affectedVVECodes(): string[] | undefined { return this.props.affectedVVECodes; }
+	
+	set type(value: IncidentType) { this.props.type = value; }
+	set startTime(value: Date) { this.props.startTime = value; }
+	set endTime(value: Date | undefined) { this.props.endTime = value; }
+	set severity(value: IncidentSeverity) { this.props.severity = value; }
+	set description(value: string) { this.props.description = value; }
+	set affectedVVECodes(value: string[] | undefined) { this.props.affectedVVECodes = value; }
 
 	constructor(props: IncidentProps, mongoId?: mongoose.Types.ObjectId) {
 		super(props, mongoId);
@@ -34,35 +41,6 @@ export default class Incident extends Entity<IncidentProps> {
 		const timestamp = Date.now().toString(16).substring(4, 7).toUpperCase();
 		const random = Math.random().toString(16).substring(2, 8).toUpperCase();
 		return "INC-" + timestamp + random;
-	}
-
-	isResolved(): boolean {
-		return this.props.endTime !== undefined;
-	}
-
-	withinDateRange(timeStart: Date, timeEnd?: Date) : boolean {
-		if(timeEnd !== undefined){
-			if(this.props.endTime !== undefined){
-				return this.props.startTime >= timeStart && this.props.endTime <= timeEnd;
-			}
-			return this.props.startTime >= timeStart && this.props.startTime <= timeEnd;
-		}
-		return this.props.startTime >= timeStart;
-	}
-
-	addAffectedVVE(vveCode: string) {
-		if (!this.props.affectedVVECodes) {
-			this.props.affectedVVECodes = [];
-		}
-		if (!this.props.affectedVVECodes.includes(vveCode)) {
-			this.props.affectedVVECodes.push(vveCode);
-		}
-	}
-
-	removeAffectedVVE(vveCode: string) {
-		if (this.props.affectedVVECodes) {
-			this.props.affectedVVECodes = this.props.affectedVVECodes.filter(code => code !== vveCode);
-		}
 	}
 
 }
