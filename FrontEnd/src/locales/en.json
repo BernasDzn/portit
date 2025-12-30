@@ -947,7 +947,7 @@
             "view_dashboard": "View Task Categories"
         },
         "generalFields": "General fields",
-        "title": "Task Categories",
+        "title": "Tasks",
         "subtitle": {
             "dashboard": "Overview of task category statistics and activities",
             "search": "Manage and view all registered task categories",

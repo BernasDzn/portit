@@ -15,7 +15,6 @@ import { VesselVisitExecutionFilter } from "../dto/filters/vesselVisitExecutionF
 
 @Service("vesselVisitExecutionService")
 export class VesselVisitExecutionService {
-
     operationPlanRepository: OperationPlanRepository;
     vesselVisitExecutionRepository: VesselVisitExecutionRepository;
     taskCategoryRepository: TaskCategoryRepository;
@@ -344,5 +343,49 @@ export class VesselVisitExecutionService {
     
     async count(): Promise<number> {
         return this.vesselVisitExecutionRepository.count();
+    }
+
+    async getAllComplementaryTasks(
+        pageNumber: number = 1, 
+        pageSize: number = 10,
+        status?: string
+    ): Promise<Page<any>> {
+        const allVVEsPage = await this.vesselVisitExecutionRepository.getAllVesselVisitExecutions({
+            pageNumber: 1,
+            pageSize: Number.MAX_SAFE_INTEGER
+        });
+        
+        const allComplementaryTasks: any[] = [];
+
+        for (const vve of allVVEsPage.items) {
+            for (const opWS of vve.operationsExecuted) {
+                if (opWS.impactedOperations && opWS.impactedOperations.length > 0) {
+                    const task = {
+                        vveCode: vve.code,
+                        vveRelatedVVN: vve.relatedVVN,
+                        taskId: opWS.operation.id,
+                        operation: opWS.operation.toDto(),
+                        status: opWS.status,
+                        impactedOperations: opWS.impactedOperations
+                    };
+                    
+                    if (!status || opWS.status === status) {
+                        allComplementaryTasks.push(task);
+                    }
+                }
+            }
+        }
+
+        const startIdx = (pageNumber - 1) * pageSize;
+        const endIdx = startIdx + pageSize;
+        const paginatedTasks = allComplementaryTasks.slice(startIdx, endIdx);
+        const totalPages = Math.ceil(allComplementaryTasks.length / pageSize);
+
+        return {
+            pageNumber,
+            pageSize,
+            pageCount: totalPages,
+            items: paginatedTasks
+        };
     }
 }

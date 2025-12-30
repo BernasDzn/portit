@@ -10,7 +10,9 @@ const { t } = useI18n();
     <div>
         <h1 class="title">{{ t('taskCategory.tabs.dashboard') }}</h1>
         <p class="subtitle">{{ t('taskCategory.subtitle.dashboard') }}</p>
+        
         <sl-card class="dashboard-overview">
+            <h3 style="margin: 0 0 1rem 0;">Task Categories</h3>
             <div class="dashboard-items">
                 <DashboardItem
                     :title="t('taskCategory.tabs.view_dashboard')"
@@ -23,6 +25,18 @@ const { t } = useI18n();
                     :description="t('taskCategory.subtitle.create')"
                     icon="add"
                     to="/task-categories/create"
+                />
+            </div>
+        </sl-card>
+
+        <sl-card class="dashboard-overview" style="margin-top: 1rem;">
+            <h3 style="margin: 0 0 1rem 0;">Complementary Tasks</h3>
+            <div class="dashboard-items">
+                <DashboardItem
+                    title="View Complementary Tasks"
+                    description="Browse all complementary tasks from vessel visit executions"
+                    icon="library_add"
+                    to="/complementary-tasks/search"
                 />
             </div>
         </sl-card>

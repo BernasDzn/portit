@@ -463,6 +463,14 @@ const router = createRouter({
           component: () => import('@/views/TaskCategories/TaskCategoryEdit.vue')
         },
         {
+          path: '/complementary-tasks/search',
+          name: 'Search Complementary Tasks',
+          component: () => import('@/views/ComplementaryTasks/ComplementaryTasksSearch.vue'),
+          meta: { 
+            icon: "search"
+          }
+        },
+        {
           path: '/about',
           name: 'about',
           component: () => import('@/views/About/About.vue'),

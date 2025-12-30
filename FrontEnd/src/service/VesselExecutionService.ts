@@ -114,4 +114,30 @@ export class VesselVisitExecutionService implements IVesselVisitExecutionService
         );
         return res.data;
     }
+
+    async getAllComplementaryTasks(filter?: Filter<any>): Promise<Page<import("@/model/dto/VesselVisitExecutionDto").ComplementaryTaskDto>> {
+        const query: string[] = [];
+
+        if (filter) {
+            if (filter.filter) {
+                if (filter.filter.status) {
+                    query.push(`status=${encodeURIComponent(filter.filter.status)}`);
+                }
+            }
+            if (filter.pageNumber !== undefined) {
+                const safePageNumber = Math.max(0, filter.pageNumber);
+                query.push(`pageNumber=${safePageNumber}`);
+            }
+            if (filter.pageSize !== undefined) {
+                const safePageSize = Math.max(1, filter.pageSize);
+                query.push(`pageSize=${safePageSize}`);
+            }
+        }
+
+        const queryString = query.length ? `?${query.join("&")}` : "";
+        const res = await this.http.get<Page<import("@/model/dto/VesselVisitExecutionDto").ComplementaryTaskDto>>(
+            `/oem/vessel-visit-executions/complementaryTasks${queryString}`
+        );
+        return res.data;
+    }
 }

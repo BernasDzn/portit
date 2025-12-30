@@ -64,6 +64,20 @@ export class VesselVisitExecutionController extends Controller {
         return { count };
     }
 
+    @Get("complementaryTasks")
+    public async getAllComplementaryTasks(
+        @Query() pageNumber: number = 1,
+        @Query() pageSize: number = 10,
+        @Query() status?: string
+    ) {
+        const tasks = await this.vesselVisitExecutionService.getAllComplementaryTasks(
+            pageNumber,
+            pageSize,
+            status
+        );
+        return tasks;
+    }
+
     @Get()
     public async getAllVesselVisitExecutions(
         @Query() pageNumber: number = 1,
