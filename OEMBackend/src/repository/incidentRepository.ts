@@ -16,7 +16,7 @@ export class IncidentRepository {
 	async getByBid(bid: string): Promise<Incident> {
 		const data = await IncidentModel.findOne({ bid: bid });
 		if (!data) throw new NotFoundError("Incident with bid " + bid + " not found.");
-		return this.mapper.fromSchema(data);
+		return await this.mapper.fromSchemaAsync(data);
 	}
 
 	async getPaged(filter : incidentFilter): Promise<Page<Incident>> {
@@ -67,7 +67,9 @@ export class IncidentRepository {
 			.exec();
 
 		return {
-			items: results.map(r => this.mapper.fromSchema(r)),
+			items: await Promise.all(results.map(async (r) => {
+                return this.mapper.fromSchemaAsync(r)
+            })),
 			pageNumber,
 			pageSize,
 			pageCount
@@ -77,7 +79,7 @@ export class IncidentRepository {
 	async save(newIncident: Incident): Promise<Incident> {
 		const created = await this.mapper.toPersistence(newIncident).save();
 		if (!created) throw new Error("There was an error saving Incident " + newIncident.bid);
-		return this.mapper.fromSchema(await this.getByBid(created.bid));
+		return await this.mapper.fromSchemaAsync(await this.getByBid(created.bid));
 	}
 
 	async update(incident: Incident): Promise<Incident> {
@@ -89,7 +91,7 @@ export class IncidentRepository {
 		).exec();
 
 		if (!updatedData) throw new Error("Incident " + incident.bid + " was not found.");
-		return this.mapper.fromSchema(await this.getByBid(updatedData.bid));
+		return incident;
 	}
 
 

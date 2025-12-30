@@ -61,7 +61,7 @@ import IncidentPrinter from '@/components/printers/IncidentPrinter.vue';
       <div>
         <sl-breadcrumb>
           <sl-breadcrumb-item>
-            <RouterLink to="/incidents/dashboard" class="breadcrumb-link">
+            <RouterLink to="/incident-types/dashboard" class="breadcrumb-link">
               {{ t('incident.tabs.dashboard') }}
             </RouterLink>
           </sl-breadcrumb-item>

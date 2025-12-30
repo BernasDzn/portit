@@ -6,6 +6,5 @@ export interface IIncidentService {
     getIncidentByBid(bid: string): Promise<IncidentDto | undefined>;
     createIncident(incident: CreateIncidentDto): Promise<IncidentDto>;
     updateIncident(bid: string, incident: UpdateIncidentDto): Promise<IncidentDto>;
-    deleteIncident(bid: string): Promise<void>;
     count(): Promise<{count: number}>;
 }

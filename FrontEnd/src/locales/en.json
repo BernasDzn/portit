@@ -1071,8 +1071,8 @@
             "title": "Created By"
         },
         "affectedVVECodes": {
-            "title": "Affected VVE Codes",
-            "placeholder": "Enter affected VVE codes"
+            "title": "Affected VVEs",
+            "placeholder": "Enter affected VVEs"
         },
         "vveCode": {
             "title": "VVE Code"
@@ -1095,41 +1095,48 @@
         }
         },
         "severity": {
-        "Minor": "Minor",
-        "Major": "Major",
-        "Critical": "Critical"
+            "Minor": "Minor",
+            "Major": "Major",
+            "Critical": "Critical"
         },
         "status": {
-        "active": "Active",
-        "resolved": "Resolved"
+            "active": "Active",
+            "resolved": "Resolved"
         },
         "ongoing": "Ongoing",
         "filters": {
-        "onlyActive": "Only Active",
-        "onlyMine": "Only Mine"
+            "onlyActive": "Only Active",
+            "onlyMine": "Only Mine"
         },
         "actions": {
-        "view": "View Details",
-        "edit": "Edit Incident",
-        "resolve": "Resolve Incident",
-        "delete": "Delete Incident"
+            "view": "View Details",
+            "edit": "Edit Incident",
+            "resolve": "Resolve Incident",
+            "delete": "Delete Incident"
         },
         "notifications": {
-        "createSuccess": "Incident created successfully",
-        "createFailed": "Failed to create incident",
-        "updateSuccess": "Incident updated successfully",
-        "updateFailed": "Failed to update incident",
-        "resolveSuccess": "Incident resolved successfully",
-        "resolveFailed": "Failed to resolve incident",
-        "deleteSuccess": "Incident deleted successfully",
-        "deleteFailed": "Failed to delete incident"
+            "createSuccess": "Incident created successfully",
+            "createFailed": "Failed to create incident",
+            "updateSuccess": "Incident updated successfully",
+            "updateFailed": "Failed to update incident",
+            "resolveSuccess": "Incident resolved successfully",
+            "resolveFailed": "Failed to resolve incident",
+            "deleteSuccess": "Incident deleted successfully",
+            "deleteFailed": "Failed to delete incident"
         },
         "table": {
-        "empty": "No incidents found"
+            "empty": "No incidents found"
         },
         "active": {
-        "title": "Active Incidents",
-        "subtitle": "View and manage ongoing incidents"
+            "title": "Active Incidents",
+            "subtitle": "View and manage ongoing incidents"
+        },
+        "infoTitle": "Incident details",
+        "closeDialog": {
+            "title": "Resolve indicent",
+            "message": "When did the incident get resolved",
+            "confirm": "Yes, close this incident",
+            "cancel": "Cancel"
         }
     }
 }

@@ -4,8 +4,22 @@ import { IncidentTypeModel } from "../schemas/incidentTypeSchema";
 import { Page, Pageable } from "../utils/page";
 import IncidentType from "../domain/incidentType";
 import { IncidentTypeFilter } from "../dto/filters/incidentTypeFilter";
+import mongoose from "mongoose";
 
 export class IncidentTypeRepository {
+
+    /**
+     * Gets an IncidentType by its id.
+     *
+     * @param bid the bussiness id of the IncidentType to fetch from db
+     * @returns the IncidentType with the given bid
+     */
+    async getByObjectId(type: string) {
+        const data = await IncidentTypeModel.findOne({ _id: type })
+            .populate('subtypeOf').populate('subtypes');
+        if (!data) throw new NotFoundError("IncidentType with id " + type + " not found.");
+        return this.mapper.fromSchema(data);
+    }
 
 	private mapper = new IncidentTypeMapper();
 

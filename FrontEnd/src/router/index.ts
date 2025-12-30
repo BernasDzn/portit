@@ -527,6 +527,22 @@ const router = createRouter({
             }
         },
         {
+            path: '/incidents/view/:id',
+            name: 'View incident',
+            component: () => import('@/views/IncidentTypes/IncidentView.vue'),
+            meta: {
+                hideFromSearch: true
+            }
+        },
+        {
+            path: '/incidents/edit/:id',
+            name: 'Edit incident',
+            component: () => import('@/views/IncidentTypes/IncidentEdit.vue'),
+            meta: {
+                hideFromSearch: true
+            }
+        },
+        {
             path: '/incident/create',
             name: 'Incident Search',
             component: () => import('@/views/IncidentTypes/IncidentCreate.vue'),
@@ -541,7 +557,7 @@ const router = createRouter({
         {
           path: '/vessel-visit-executions/update/:id',
           component: () => import('@/views/VesselVisitExecutions/VesselVisitExecutionsUpdate.vue'),
-        }
+        },
       ]
     },
     {

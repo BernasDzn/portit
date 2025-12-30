@@ -68,7 +68,7 @@ const duration = computed(() => {
                             {{ t(`incident.severity.${incident.severity}`) }}
                         </sl-badge>
                         <sl-badge variant="neutral">
-                            {{ incident.type }}
+                            {{ incident.type.name }}
                         </sl-badge>
                     </div>
                 </div>

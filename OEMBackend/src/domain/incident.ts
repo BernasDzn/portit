@@ -1,6 +1,7 @@
 import mongoose, { ObjectId } from "mongoose";
 import { Entity } from "../core/domain/entity";
 import IncidentType from "./incidentType";
+import VesselVisitExecution from "./vesselVisitExecution";
 
 export type IncidentSeverity = 'Minor' | 'Major' | 'Critical';
 
@@ -12,7 +13,7 @@ interface IncidentProps {
 	severity: IncidentSeverity; // could be different from type according to situation
 	description: string; // free text description
 	createdBy: string; // email address of creator
-	affectedVVECodes?: string[];
+	affectedVVECodes?: VesselVisitExecution[];
 }
 
 export default class Incident extends Entity<IncidentProps> {
@@ -23,14 +24,14 @@ export default class Incident extends Entity<IncidentProps> {
 	get severity(): string { return this.props.severity; }
 	get description(): string { return this.props.description; }
 	get createdBy(): string { return this.props.createdBy; }
-	get affectedVVECodes(): string[] | undefined { return this.props.affectedVVECodes; }
+	get affectedVVECodes(): VesselVisitExecution[] | undefined { return this.props.affectedVVECodes; }
 	
 	set type(value: IncidentType) { this.props.type = value; }
 	set startTime(value: Date) { this.props.startTime = value; }
 	set endTime(value: Date | undefined) { this.props.endTime = value; }
 	set severity(value: IncidentSeverity) { this.props.severity = value; }
 	set description(value: string) { this.props.description = value; }
-	set affectedVVECodes(value: string[] | undefined) { this.props.affectedVVECodes = value; }
+	set affectedVVECodes(value: VesselVisitExecution[] | undefined) { this.props.affectedVVECodes = value; }
 
 	constructor(props: IncidentProps, mongoId?: mongoose.Types.ObjectId) {
 		super(props, mongoId);

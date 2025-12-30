@@ -13,6 +13,7 @@ const props = defineProps<{
 }>();
 
 const operationCounts = computed(() => {
+
     const counts = {
         pending: 0,
         started: 0,
@@ -64,7 +65,7 @@ const formatDate = (date?: Date) => {
 
             <sl-divider></sl-divider>
 
-            <div class="operations-section">
+            <div class="operations-section" v-if="props.execution.operationsExecuted">
                 <p>{{ t('execution.fields.operations') }}: {{ totalOperations }}</p>
                 <div class="operations-stats">
                     <sl-badge variant="neutral" pill>

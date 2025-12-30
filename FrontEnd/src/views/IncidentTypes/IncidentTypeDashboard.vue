@@ -49,7 +49,7 @@ onMounted(async () => {
                     to="/incident-types/create"
                 />
                 <DashboardItem
-                    :title="t('incident.tabs.view_dashboard')"
+                    :title="t('incident.tabs.search')"
                     :description="t('incident.subtitle.search')"
                     icon="search"
                     to="/incident/search"

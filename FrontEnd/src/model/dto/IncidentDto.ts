@@ -7,16 +7,19 @@
 // 	description: string;
 // }
 
+import type { IncidentTypeDto } from "./IncidentTypeDto";
+import type { VesselVisitExecutionDto } from "./VesselVisitExecutionDto";
+
 
 export interface IncidentDto {
     bid: string;
-    type: string; // incident type bid
+    type: IncidentTypeDto;
     startTime: string; 
     endTime?: string;
     severity: string;
     description: string;
     createdBy: string;
-    affectedVVECodes?: string[];
+    affectedVVECodes?: VesselVisitExecutionDto[];
 }
 export interface CreateIncidentDto {
     type: string; 

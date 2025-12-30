@@ -45,10 +45,6 @@ export class IncidentService implements IIncidentService {
         return res.data;
     }
 
-    async deleteIncident(bid: string): Promise<void> {
-        await this.http.delete(`/oem/incidents/${bid}`);
-    }
-
     async count(): Promise<{count: number}> {
         const res = await this.http.get<{count: number}>('/oem/incidents/count');
         return res.data;
