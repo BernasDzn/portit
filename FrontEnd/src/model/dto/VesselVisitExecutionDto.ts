@@ -47,8 +47,9 @@ export interface VesselVisitExecutionFilter {
 export interface ComplementaryTaskDto {
     vveCode: string;
     vveRelatedVVN: string;
+    operationType: string;
     taskId: string;
-    operation: any;
+    operation: string;
     status: string;
     impactedOperations: string[];
 }

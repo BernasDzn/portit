@@ -12,7 +12,9 @@ import type { ComplementaryTaskDto } from '@/model/dto/VesselVisitExecutionDto';
 const vveService = container.get<IVesselVisitExecutionService>(TYPES.vesselVisitExecutionService);
 
 const fetchTasks = async (filtering?: Filter<any>): Promise<Page<ComplementaryTaskDto>> => {
-    return await vveService.getAllComplementaryTasks(filtering);
+    var page = await vveService.getAllComplementaryTasks(filtering);
+    console.log(page);
+    return page;
 }
 
 const { t, locale } = useI18n();
@@ -30,6 +32,14 @@ function buildFilterDefinition() {
                 { value: 'Delayed', text: 'Delayed' },
                 { value: 'Completed', text: 'Completed' }
             ]
+        },
+        dateStart: {
+            type: 'date',
+            label: 'Start Date'
+        },
+        dateEnd: {
+            type: 'date',
+            label: 'End Date'
         }
     };
 }
@@ -52,7 +62,7 @@ watch(locale, () => buildFilterDefinition());
         <h1 class="title">Complementary Tasks</h1>
         <p class="subtitle">Browse all complementary tasks from vessel visit executions</p>
 
-        <ListingBox :fetch-function="fetchTasks" search-filter="vveCode" :filter-definition="filterDefinition" v-slot="{elements}">
+        <ListingBox :fetch-function="fetchTasks" :filter-definition="filterDefinition" v-slot="{elements}">
             <li v-for="task in elements" :key="task.taskId">
                 <ComplementaryTaskPrinter class="listing-box" :task="task"/>
             </li>
@@ -60,24 +70,3 @@ watch(locale, () => buildFilterDefinition());
     </header>
 </div>
 </template>
-
-<style scoped>
-.loading-state, .no-data {
-    text-align: center;
-    padding: 3rem;
-    color: var(--sl-color-neutral-600);
-}
-
-.error-state {
-    margin: 2rem 0;
-}
-
-.listing {
-    list-style: none;
-    padding: 0;
-    margin: 1rem 0;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-</style>

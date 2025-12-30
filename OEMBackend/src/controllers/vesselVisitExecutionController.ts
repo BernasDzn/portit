@@ -68,12 +68,16 @@ export class VesselVisitExecutionController extends Controller {
     public async getAllComplementaryTasks(
         @Query() pageNumber: number = 1,
         @Query() pageSize: number = 10,
-        @Query() status?: string
+        @Query() status?: string,
+        @Query() dateStart?: string,
+        @Query() dateEnd?: string
     ) {
         const tasks = await this.vesselVisitExecutionService.getAllComplementaryTasks(
             pageNumber,
             pageSize,
-            status
+            status,
+            dateStart,
+            dateEnd
         );
         return tasks;
     }

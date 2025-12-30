@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
+import { useI18n } from 'vue-i18n';
 import type { ComplementaryTaskDto } from '@/model/dto/VesselVisitExecutionDto';
+
+const { t } = useI18n();
 
 const props = withDefaults(defineProps<{
     task: ComplementaryTaskDto;
@@ -35,28 +38,29 @@ const getStatusVariant = (status: string) => {
             <div class="opposed">
                 <div>
                     <div class="task-header">
-                        <sl-badge :variant="getStatusVariant(task.status)">
-                            {{ task.status }}
-                        </sl-badge>
                         <span class="vve-code">{{ task.vveCode }}</span>
                     </div>
                     
                     <p class="task-type">
-                        <strong>{{ task.operation?.type?.name || 'Unknown Task' }}</strong>
-                        <sl-badge variant="neutral" size="small">{{ task.operation?.type?.category || 'N/A' }}</sl-badge>
+                        <strong>{{ task.operationType }}</strong>
+                        <sl-badge :variant="getStatusVariant(task.status)">
+                            {{ task.status }}
+                        </sl-badge>
                     </p>
                     
                     <p class="item-description">
-                        {{ formatDate(task.operation?.startTime) }} → {{ formatDate(task.operation?.endTime) }}
+                        {{ formatDate(task.startTime) }} → {{ formatDate(task.endTime) }}
                     </p>
                 </div>
                 <span class="material-icons icon" style="color: #485ea9;" aria-hidden="true">library_add</span>
             </div>
             <div class="details" v-if="props.showDetails">
                 <sl-divider></sl-divider>
-                <div class="detail-row" v-if="task.operation?.resources && task.operation.resources.length > 0">
+                <div class="detail-row" v-if="task.resources && task.resources.length > 0">
                     <sl-icon name="people"></sl-icon>
-                    <span>{{ task.operation.resources.map((r: any) => r.name).join(', ') }}</span>
+                    <span>
+                        {{ task.resources.map((r: any) => r.name).join(', ').replace("_", " ") }}
+                    </span>
                 </div>
                 <div class="detail-row" v-if="task.impactedOperations.length > 0">
                     <sl-icon name="exclamation-triangle"></sl-icon>

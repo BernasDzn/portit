@@ -3,7 +3,7 @@ import { TYPES } from "@/inversify/types";
 import type { IHttpService } from "./IService/IHttpService";
 import type { Filter, Page } from "@/model/Page";
 import type { VesselVisitExecution } from "@/model/VesselVisitExecution";
-import type { VesselVisitExecutionDto, OperationDto, VesselVisitExecutionFilter } from "@/model/dto/VesselVisitExecutionDto";
+import type { VesselVisitExecutionDto, OperationDto, VesselVisitExecutionFilter, ComplementaryTaskDto } from "@/model/dto/VesselVisitExecutionDto";
 import type { IVesselVisitExecutionService } from "./IService/IVesselExecutionService";
 
 @injectable()
@@ -67,7 +67,7 @@ export class VesselVisitExecutionService implements IVesselVisitExecutionService
 
             // Ensure pageNumber is at least 0 (backend expects 1-based, so we send 1 as minimum)
             if (filtering.pageNumber !== undefined) {
-                const safePageNumber = Math.max(0, filtering.pageNumber);
+                const safePageNumber = Math.max(1, filtering.pageNumber);
                 query.push(`pageNumber=${safePageNumber}`);
             }
             if (filtering.pageSize !== undefined) {
@@ -115,7 +115,7 @@ export class VesselVisitExecutionService implements IVesselVisitExecutionService
         return res.data;
     }
 
-    async getAllComplementaryTasks(filter?: Filter<any>): Promise<Page<import("@/model/dto/VesselVisitExecutionDto").ComplementaryTaskDto>> {
+    async getAllComplementaryTasks(filter?: Filter<any>): Promise<Page<ComplementaryTaskDto>> {
         const query: string[] = [];
 
         if (filter) {
@@ -123,9 +123,15 @@ export class VesselVisitExecutionService implements IVesselVisitExecutionService
                 if (filter.filter.status) {
                     query.push(`status=${encodeURIComponent(filter.filter.status)}`);
                 }
+                if(filter.filter.dateStart) {
+                    query.push(`dateStart=${encodeURIComponent(filter.filter.dateStart)}`);
+                }
+                if(filter.filter.dateEnd) {
+                    query.push(`dateEnd=${encodeURIComponent(filter.filter.dateEnd)}`);
+                }
             }
             if (filter.pageNumber !== undefined) {
-                const safePageNumber = Math.max(0, filter.pageNumber);
+                const safePageNumber = Math.max(1, filter.pageNumber);
                 query.push(`pageNumber=${safePageNumber}`);
             }
             if (filter.pageSize !== undefined) {

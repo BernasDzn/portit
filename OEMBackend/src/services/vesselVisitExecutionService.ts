@@ -348,7 +348,9 @@ export class VesselVisitExecutionService {
     async getAllComplementaryTasks(
         pageNumber: number = 1, 
         pageSize: number = 10,
-        status?: string
+        status?: string,
+        startDate?: string,
+        endDate?: string
     ): Promise<Page<any>> {
         const allVVEsPage = await this.vesselVisitExecutionRepository.getAllVesselVisitExecutions({
             pageNumber: 1,
@@ -359,22 +361,45 @@ export class VesselVisitExecutionService {
 
         for (const vve of allVVEsPage.items) {
             for (const opWS of vve.operationsExecuted) {
-                if (opWS.impactedOperations && opWS.impactedOperations.length > 0) {
-                    const task = {
+                const category = opWS.operation.operationType?.category.getValue();
+                if (category && category !== 'LOAD' && category !== 'UNLOAD') {
+                    // Apply status filter
+                    if (status && opWS.status !== status) {
+                        continue;
+                    }
+                    // Apply date filters
+                    if (startDate) {
+                        const opStart = new Date(opWS.operation.startTime);
+                        const filterStart = new Date(startDate);
+                        if (opStart < filterStart) {
+                            continue;
+                        }
+                    }
+                    if (endDate) {
+                        const opEnd = new Date(opWS.operation.endTime);
+                        const filterEnd = new Date(endDate);
+                        if (opEnd > filterEnd) {
+                            continue;
+                        }
+                    }
+                    allComplementaryTasks.push({
+                        taskId: opWS.operation.id,
                         vveCode: vve.code,
                         vveRelatedVVN: vve.relatedVVN,
-                        taskId: opWS.operation.id,
-                        operation: opWS.operation.toDto(),
+                        operationType: opWS.operation.operationType?.category.getValue() || 'Unknown',
+                        startTime: opWS.operation.startTime,
+                        endTime: opWS.operation.endTime,
                         status: opWS.status,
+                        resources: opWS.operation.resources,
+                        payload: opWS.operation.payload,
                         impactedOperations: opWS.impactedOperations
-                    };
-                    
-                    if (!status || opWS.status === status) {
-                        allComplementaryTasks.push(task);
-                    }
+                    });
                 }
             }
         }
+
+        console.log("Filters:", { status, startDate, endDate });
+        console.log(`Found ${allComplementaryTasks.length} complementary tasks after filtering.`);
 
         const startIdx = (pageNumber - 1) * pageSize;
         const endIdx = startIdx + pageSize;
@@ -382,10 +407,10 @@ export class VesselVisitExecutionService {
         const totalPages = Math.ceil(allComplementaryTasks.length / pageSize);
 
         return {
-            pageNumber,
-            pageSize,
-            pageCount: totalPages,
-            items: paginatedTasks
+            items: paginatedTasks,
+            pageSize: pageSize,
+            pageNumber: pageNumber,
+            pageCount: totalPages
         };
     }
 }
