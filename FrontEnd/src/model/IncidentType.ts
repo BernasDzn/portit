@@ -46,7 +46,7 @@ export class IncidentType{
 
     toDto(): IncidentTypeDto {
         return {
-            id: this.bid,
+            bid: this.bid,
             name: this.name,
             description: this.description,
             severity: this.severity,

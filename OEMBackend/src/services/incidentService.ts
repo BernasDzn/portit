@@ -58,11 +58,19 @@ export class IncidentService {
 		if (UpdateIncidentDto.type)
 			domainIncident.type = await this.incidentTypeRepository.getById(UpdateIncidentDto.type);
 
-		if (UpdateIncidentDto.startTime)
-			domainIncident.startTime = new Date(UpdateIncidentDto.startTime);
+		if (UpdateIncidentDto.startTime){
 
-		if (UpdateIncidentDto.endTime)
+            if (domainIncident.endTime)
+                if (new Date(UpdateIncidentDto.startTime) > domainIncident.endTime!) 
+                    throw new Error("Start time can't be after end time");
+			domainIncident.startTime = new Date(UpdateIncidentDto.startTime);
+        }
+
+		if (UpdateIncidentDto.endTime){
+            if (domainIncident.startTime > new Date(UpdateIncidentDto.endTime)) 
+                throw new Error("Start time can't be after end time");
 			domainIncident.endTime = new Date(UpdateIncidentDto.endTime);
+        }
 
 		if (UpdateIncidentDto.severity)
 			domainIncident.severity = UpdateIncidentDto.severity as IncidentSeverity;

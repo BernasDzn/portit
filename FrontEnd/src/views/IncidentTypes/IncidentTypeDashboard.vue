@@ -52,13 +52,13 @@ onMounted(async () => {
                     :title="t('incident.tabs.view_dashboard')"
                     :description="t('incident.subtitle.search')"
                     icon="search"
-                    to="/incidents/search"
+                    to="/incident/search"
                 />
                 <DashboardItem
                     :title="t('incident.tabs.create')"
                     :description="t('incident.subtitle.create')"
                     icon="add"
-                    to="/incidents/create"
+                    to="/incident/create"
                 />
             </div>
         </sl-card>

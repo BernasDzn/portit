@@ -910,7 +910,7 @@
         },
         "generalFields": "General fields",
         "classification": "Classification",
-        "title": "Incident Types",
+        "title": "Incidents",
         "subtitle": {
             "dashboard": "Overview of incident type statistics and activities",
             "search": "Manage and view all registered incident types",
@@ -1020,6 +1020,116 @@
             "dockPlaceholder": "Select berth dock",
             "berthTime": "Berth Time",
             "differentThanPlanned": "The selected dock is different than the one planned."
+        }
+    },
+    "incident": {
+        "tabs": {
+        "dashboard": "Incidents Dashboard",
+        "create": "Create Incident",
+        "search": "Search Incidents",
+        "active": "Active Incidents",
+        "view": "View Incident",
+        "edit": "Edit Incident"
+        },
+        "subtitle": {
+        "create": "Report a new incident in the system",
+        "search": "Search and filter existing incidents",
+        "active": "View and manage active incidents"
+        },
+        "generalFields": "General Information",
+        "classification": "Classification",
+        "fields": {
+        "bid": {
+            "title": "Incident ID"
+        },
+        "type": {
+            "title": "Incident Type",
+            "placeholder": "Select an incident type"
+        },
+        "startTime": {
+            "title": "Start Time",
+            "placeholder": "When did the incident start?"
+        },
+        "endTime": {
+            "title": "End Time",
+            "placeholder": "When did the incident end?"
+        },
+        "severity": {
+            "title": "Severity",
+            "placeholder": "Select severity level",
+            "options": {
+            "minor": "Minor",
+            "major": "Major",
+            "critical": "Critical"
+            }
+        },
+        "description": {
+            "title": "Description",
+            "placeholder": "Describe the incident in detail"
+        },
+        "createdBy": {
+            "title": "Created By"
+        },
+        "affectedVVECodes": {
+            "title": "Affected VVE Codes",
+            "placeholder": "Enter affected VVE codes"
+        },
+        "vveCode": {
+            "title": "VVE Code"
+        },
+        "status": {
+            "title": "Status",
+            "options": {
+            "active": "Active",
+            "resolved": "Resolved"
+            }
+        },
+        "filterStartTime": {
+            "title": "Start Date From"
+        },
+        "filterEndTime": {
+            "title": "Start Date To"
+        },
+        "duration": {
+            "title": "Duration"
+        }
+        },
+        "severity": {
+        "Minor": "Minor",
+        "Major": "Major",
+        "Critical": "Critical"
+        },
+        "status": {
+        "active": "Active",
+        "resolved": "Resolved"
+        },
+        "ongoing": "Ongoing",
+        "filters": {
+        "onlyActive": "Only Active",
+        "onlyMine": "Only Mine"
+        },
+        "actions": {
+        "view": "View Details",
+        "edit": "Edit Incident",
+        "resolve": "Resolve Incident",
+        "delete": "Delete Incident"
+        },
+        "notifications": {
+        "createSuccess": "Incident created successfully",
+        "createFailed": "Failed to create incident",
+        "updateSuccess": "Incident updated successfully",
+        "updateFailed": "Failed to update incident",
+        "resolveSuccess": "Incident resolved successfully",
+        "resolveFailed": "Failed to resolve incident",
+        "deleteSuccess": "Incident deleted successfully",
+        "deleteFailed": "Failed to delete incident"
+        },
+        "table": {
+        "empty": "No incidents found"
+        },
+        "active": {
+        "title": "Active Incidents",
+        "subtitle": "View and manage ongoing incidents"
         }
     }
 }

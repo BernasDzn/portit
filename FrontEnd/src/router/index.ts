@@ -519,6 +519,22 @@ const router = createRouter({
             }
         },
         {
+            path: '/incident/search',
+            name: 'Active incident Search',
+            component: () => import('@/views/IncidentTypes/IncidentSearch.vue'),
+            meta: {
+                icon: "search"
+            }
+        },
+        {
+            path: '/incident/create',
+            name: 'Incident Search',
+            component: () => import('@/views/IncidentTypes/IncidentCreate.vue'),
+            meta: {
+                icon: "add"
+            }
+        },
+        {
             path: '/vessel-visit-executions/:id',
             component: () => import('@/views/VesselVisitExecutions/VesselVisitExecutionsView.vue'),
         },
@@ -587,6 +603,7 @@ router.beforeEach((to, from, next) => {
     { prefix: '/about', roles: [0, 1, 2, 3] },
     { prefix: '/my-data', roles: [0, 1, 2, 3] },
     { prefix: '/incident-types', roles: [0,3] },
+    { prefix: '/incident', roles: [0,3] },
     { prefix: '/scheduling/plans', roles: [0,3] },
     { prefix: '/vessel-visit-executions', roles: [0,3] }
   ];
