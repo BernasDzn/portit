@@ -95,7 +95,7 @@ const duration = computed(() => {
                     </div>
                     <div class="detail-item" v-if="incident.affectedVVECodes && incident.affectedVVECodes.length > 0">
                         <span class="detail-label">{{ t('incident.fields.affectedVVECodes.title') }}:</span>
-                        <span>{{ incident.affectedVVECodes.join(', ') }}</span>
+                        <span>{{ incident.affectedVVECodes.map(vve => vve.code).join(', ') }}</span>
                     </div>
                 </div>
             </div>

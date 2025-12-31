@@ -47,7 +47,7 @@ watch(locale, () => buildFilterDefinition());
     </sl-breadcrumb>
 
     <header>
-        <h1 class="title">{{ t('incidentType.title') }}</h1>
+        <h1 class="title">{{ t('incidentType.tabs.search') }}</h1>
         <p class="subtitle">{{ t('incidentType.subtitle.search') }}</p>
 
         <ListingBox :fetch-function="fetchIncidentTypes" search-filter="name" :filter-definition="filterDefinition" v-slot="{elements}">
