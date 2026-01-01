@@ -40,6 +40,8 @@ import type { ISystemNotificationService } from "./service/IService/ISystemNotif
 import type { IIncidentTypeService } from "./service/IService/IIncidentTypeService";
 import type { ITaskCategoryService } from "./service/IService/ITaskCategoryService";
 import type { IVesselVisitExecutionService } from "./service/IService/IVesselExecutionService";
+import type { IIncidentService } from "./service/IService/IIncidentService";
+import { IncidentService } from "./service/IncidentService";
 
 const container = new Container();
 
@@ -63,5 +65,6 @@ container.bind<ISystemNotificationService>(TYPES.systemNotificationService).to(S
 container.bind<IIncidentTypeService>(TYPES.incidentTypeService).to(IncidentTypeService).inSingletonScope();
 container.bind<ITaskCategoryService>(TYPES.taskCategoryService).to(TaskCategoryService).inSingletonScope();
 container.bind<IVesselVisitExecutionService>(TYPES.vesselVisitExecutionService).to(VesselVisitExecutionService).inSingletonScope();
+container.bind<IIncidentService>(TYPES.incidentService).to(IncidentService).inSingletonScope();
 
 export { container };

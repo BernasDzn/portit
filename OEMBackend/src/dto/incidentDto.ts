@@ -1,12 +1,15 @@
+import { IncidentTypeDto } from "./incidentTypeDto";
+import { VesselVisitExecutionDto } from "./vesselVisitExecutionDto";
+
 export interface IncidentDto {
 	bid: string;
-	type: string; // incident type bid
+	type: IncidentTypeDto; // incident type bid
 	startTime: string; 
 	endTime?: string;
 	severity: string;
 	description: string;
 	createdBy: string;
-	affectedVVECodes?: string[];
+	affectedVVECodes?: VesselVisitExecutionDto[];
 }
 
 export interface CreateIncidentDto {

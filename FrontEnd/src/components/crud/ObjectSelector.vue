@@ -19,6 +19,8 @@ const props = defineProps({
     multiple: { type: Boolean, default: false },
 
     inputId: { type: String, default: '' },
+
+    superSecretOption: { type: Boolean, default: undefined },
 });
 
 const emit = defineEmits(['update:modelValue']);
@@ -32,16 +34,20 @@ const internalValue = ref<Array<Object> | Object | null>(props.multiple ? [] : n
 // Keys represent an object in string form in our case
 // Since this time we're trying to store objects directly
 // We'll hash the object to make a key
-const makeKey = (opt: Object) => {
+const makeKey = (opt: any) => {
+    // SPECIAL CASE for VVEs I DONT CAR
+    if (props.superSecretOption) {
+        return opt.code;
+    }
+
     return btoa(JSON.stringify(opt));
 };
-
 const applyModelValueToInternal = () => {
     console.log('Applying modelValue to internalValue:', props.modelValue);
-    if (props.multiple)
+    if (props.multiple) {
         internalValue.value = (props.modelValue as any[]).map((obj) => makeKey(obj));
-    else
-        internalValue.value = props.modelValue ? makeKey(props.modelValue) : null;
+    }
+    else internalValue.value = props.modelValue ? makeKey(props.modelValue) : null;
 }
 
 onMounted(async () => {

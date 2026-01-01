@@ -20,6 +20,7 @@ export const TYPES = {
     taskCategoryService: Symbol.for('TaskCategoryService'),
     vesselVisitExecutionService: Symbol.for('VesselVisitExecutionService'),
     api: Symbol.for('Api'),
+    incidentService: Symbol.for('IncidentService')
 };
 
 export default TYPES;

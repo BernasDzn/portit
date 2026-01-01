@@ -519,13 +519,45 @@ const router = createRouter({
             }
         },
         {
+            path: '/incident/search',
+            name: 'Active incident Search',
+            component: () => import('@/views/IncidentTypes/IncidentSearch.vue'),
+            meta: {
+                icon: "search"
+            }
+        },
+        {
+            path: '/incidents/view/:id',
+            name: 'View incident',
+            component: () => import('@/views/IncidentTypes/IncidentView.vue'),
+            meta: {
+                hideFromSearch: true
+            }
+        },
+        {
+            path: '/incidents/edit/:id',
+            name: 'Edit incident',
+            component: () => import('@/views/IncidentTypes/IncidentEdit.vue'),
+            meta: {
+                hideFromSearch: true
+            }
+        },
+        {
+            path: '/incident/create',
+            name: 'Incident Search',
+            component: () => import('@/views/IncidentTypes/IncidentCreate.vue'),
+            meta: {
+                icon: "add"
+            }
+        },
+        {
             path: '/vessel-visit-executions/:id',
             component: () => import('@/views/VesselVisitExecutions/VesselVisitExecutionsView.vue'),
         },
         {
           path: '/vessel-visit-executions/update/:id',
           component: () => import('@/views/VesselVisitExecutions/VesselVisitExecutionsUpdate.vue'),
-        }
+        },
       ]
     },
     {
@@ -587,6 +619,7 @@ router.beforeEach((to, from, next) => {
     { prefix: '/about', roles: [0, 1, 2, 3] },
     { prefix: '/my-data', roles: [0, 1, 2, 3] },
     { prefix: '/incident-types', roles: [0,3] },
+    { prefix: '/incident', roles: [0,3] },
     { prefix: '/scheduling/plans', roles: [0,3] },
     { prefix: '/vessel-visit-executions', roles: [0,3] }
   ];

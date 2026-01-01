@@ -7,7 +7,6 @@ import type { IIncidentTypeService } from '@/service/IService/IIncidentTypeServi
 import { container } from '@/inversify.config';
 import TYPES from '@/inversify/types';
 import type { Filter, Page } from '@/model/Page';
-import type { IncidentTypeDto } from '@/model/IncidentType';
 
 const { t } = useI18n();
 
@@ -48,6 +47,18 @@ onMounted(async () => {
                     :description="t('incidentType.subtitle.create')"
                     icon="add"
                     to="/incident-types/create"
+                />
+                <DashboardItem
+                    :title="t('incident.tabs.search')"
+                    :description="t('incident.subtitle.search')"
+                    icon="search"
+                    to="/incident/search"
+                />
+                <DashboardItem
+                    :title="t('incident.tabs.create')"
+                    :description="t('incident.subtitle.create')"
+                    icon="add"
+                    to="/incident/create"
                 />
             </div>
         </sl-card>
