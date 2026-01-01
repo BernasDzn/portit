@@ -12,6 +12,7 @@ export default class Controls {
 
     originalRotation;
     originalPosition;
+    originalTarget;
 
     camera;
     controls;
@@ -42,11 +43,22 @@ export default class Controls {
         // Zoom speed control
         this.controls.zoomSpeed = zoomIncrement;
                   
-        this.camera.position.set(493, 411, -766);
+        this.camera.position.set(
+            339.17365384698405,
+            599.4642891044,
+            -738.8793914617654
+        );
+        this.controls.target.set(
+            -167.22674653030222,
+            144.8234979033887,
+            27.356463529269735
+        );        
+        
         this.camera.rotation.set(-2.6, 0.5, 2.8);
 
         this.originalRotation = this.camera.rotation.clone();
         this.originalPosition = this.camera.position.clone();
+        this.originalTarget = this.controls.target.clone();
 
         // Add reset keybind
         window.addEventListener('keydown', (event) => {
@@ -54,6 +66,8 @@ export default class Controls {
                 this.reset();
             }
         });
+
+        this.controls.update();
     }
 
     reset() {
@@ -64,8 +78,8 @@ export default class Controls {
         // this.controls.update();
         this.animateTo(
             this.originalPosition,
-            new THREE.Quaternion().setFromEuler(this.originalRotation),
-            new THREE.Vector3(0, 0, 0),
+            this.originalRotation,
+            this.originalTarget,
             1.0
         );
     }
