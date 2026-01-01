@@ -1,9 +1,9 @@
 from manim import Scene, Text, Write, Unwrite
 
 
-class HelloScene(Scene):
+class ByeScene(Scene):
     def construct(self):
-        text = Text("IARTI 2025/26 - 3DJ Group 1").scale(1)
+        text = Text("1221402\n\n1231090\n\n1231092\n\n1231402").scale(1)
         self.play(Write(text))
         self.wait(2)
         self.play(Unwrite(text))

@@ -208,7 +208,7 @@ class GreedyAlgorithm(GanttUtils, Scene):
         self.play(Write(title))
         self.wait(0.5)
         
-        description = Text("The greedy algorithm we implemented has\n"
+        description = Text("The greedy algorithm we implemented has\n\n"
                    "the earliest due date as its priority.").scale(0.75)
         description.move_to(UP * 1.5)
         self.play(Write(description))
@@ -225,31 +225,110 @@ class GreedyAlgorithm(GanttUtils, Scene):
         
         self.play(FadeOut(description))
         
-        vessel_texts = VGroup()
-        for v in vessels:
-            # support both short tuples (name, arrival, due)
-            # and full tuples (name, arrival, due, unload_cnt, load_cnt, cranes)
-            name = v[0]
-            arrival = v[1]
-            due = v[2]
-            if len(v) >= 6:
-                unload_cnt = v[3]
-                load_cnt = v[4]
-                cranes = v[5]
-                # represent cranes as speeds for display
-                try:
-                    crane_speeds = ",".join(str(c[1]) if isinstance(c, (list, tuple)) else str(c) for c in cranes)
-                except Exception:
-                    crane_speeds = str(cranes)
-                vessel_text = Text(f"{name}: Arrival={arrival}, Due={due}, Unl={unload_cnt}, Load={load_cnt}, Cranes={crane_speeds}").scale(0.5)
-            else:
-                vessel_text = Text(f"{name}: Arrival = {arrival}, Due = {due}").scale(9.5)
-            vessel_texts.add(vessel_text)
-        vessel_texts.arrange(DOWN)
-        self.play(Write(vessel_texts))
-        self.wait(3)
+        # Show all vessels with their arrival and due times
+        vessel_info_title = Text("Vessels to Schedule").scale(0.75).move_to(UP * 2)
+        self.play(Write(vessel_info_title))
+        self.wait(0.5)
         
-        self.play(FadeOut(vessel_texts))
+        # Define vessel colors
+        vessel_colors = {
+            "Vessel A": BLUE,
+            "Vessel B": GREEN,
+            "Vessel C": ORANGE,
+            "Vessel D": RED,
+            "Vessel E": PURPLE,
+        }
+        
+        vessel_info_texts = VGroup()
+        for v in vessels:
+            name, arrival, due = v[0], v[1], v[2]
+            color = vessel_colors.get(name, WHITE)
+            
+            # Create colored square indicator
+            square = Square(side_length=0.3, fill_color=color, fill_opacity=0.8, stroke_color=WHITE, stroke_width=2)
+            # Use short name for display
+            short_name = name.split()[-1]  # "Vessel A" -> "A"
+            letter = Text(short_name, color=WHITE).scale(0.4)
+            letter.move_to(square.get_center())
+            vessel_icon = VGroup(square, letter)
+            
+            # Create info text
+            info_text = Text(f"  Arrival: {arrival}  |  Due: {due}", color=WHITE).scale(0.4)
+            
+            # Combine icon and text
+            vessel_line = VGroup(vessel_icon, info_text)
+            vessel_line.arrange(RIGHT, buff=0.2)
+            vessel_info_texts.add(vessel_line)
+        
+        vessel_info_texts.arrange(DOWN, buff=0.35, aligned_edge=LEFT)
+        vessel_info_texts.move_to(ORIGIN)
+        
+        self.play(LaggedStart(*[FadeIn(vit) for vit in vessel_info_texts], lag_ratio=0.15))
+        self.wait(2)
+        
+        self.play(FadeOut(vessel_info_texts), FadeOut(vessel_info_title))
+        
+        # Show the sorting process
+        sort_title = Text("Step 1: Sort Vessels by Due Date").scale(0.7).move_to(UP * 3)
+        self.play(Transform(title, sort_title))
+        self.wait(0.5)
+        
+        def create_vessel_square(name, color, show_due=None):
+            """Create a colored square with vessel letter inside and optional due date."""
+            short_name = name.split()[-1] if " " in name else name
+            square = Square(side_length=0.7, fill_color=color, fill_opacity=0.8, stroke_color=WHITE, stroke_width=2)
+            letter = Text(short_name, color=WHITE).scale(0.6)
+            letter.move_to(square.get_center())
+            vessel_group = VGroup(square, letter)
+            
+            if show_due is not None:
+                due_label = Text(f"Due: {show_due}", color=YELLOW).scale(0.3)
+                due_label.next_to(square, DOWN, buff=0.1)
+                vessel_group.add(due_label)
+            
+            return vessel_group
+        
+        # Create initial vessel squares in original order
+        initial_vessels = VGroup()
+        for v in vessels:
+            name = v[0]
+            due = v[2]
+            color = vessel_colors[name]
+            vessel_sq = create_vessel_square(name, color, show_due=due)
+            initial_vessels.add(vessel_sq)
+        
+        initial_vessels.arrange(RIGHT, buff=0.5)
+        initial_vessels.move_to(ORIGIN)
+        
+        self.play(LaggedStart(*[FadeIn(v) for v in initial_vessels], lag_ratio=0.15))
+        self.wait(1)
+        
+        # Create sorted vessel squares (D=4, C=6, B=8, A=10, E=12)
+        sorted_vessels_data = sorted(vessels, key=lambda x: x[2])  # sort by due date
+        sorted_vessels = VGroup()
+        for v in sorted_vessels_data:
+            name = v[0]
+            due = v[2]
+            color = vessel_colors[name]
+            vessel_sq = create_vessel_square(name, color, show_due=due)
+            sorted_vessels.add(vessel_sq)
+        
+        sorted_vessels.arrange(RIGHT, buff=0.5)
+        sorted_vessels.move_to(ORIGIN)
+        
+        # Animate transformation from initial to sorted order
+        self.play(
+            Transform(initial_vessels, sorted_vessels),
+            run_time=1.5
+        )
+        self.wait(1.5)
+        
+        self.play(FadeOut(initial_vessels))
+        
+        # Transition to Gantt chart
+        gantt_title = Text("Step 2: Schedule Sequentially").scale(0.7).move_to(UP * 3)
+        self.play(Transform(title, gantt_title))
+        self.wait(0.5)
         
         schedule, delay = get_greedy_schedule(vessels)
 
@@ -356,7 +435,39 @@ class GreedyAlgorithm(GanttUtils, Scene):
 
         delay_text = Text(f"Total Delay: {delay}").scale(0.45).next_to(axes, DOWN, buff=0.5)
         self.play(Write(delay_text))
-        self.wait(1)
+        self.wait(1.5)
+        
+        # Fade out Gantt chart and show summary
+        chart_elements = VGroup(axes)
+        if ticks is not None:
+            chart_elements.add(ticks)
+        for _, rect in tasks_group:
+            chart_elements.add(rect)
+        for lbl in name_labels:
+            chart_elements.add(lbl)
+        for d in dash_objs:
+            chart_elements.add(d)
+        chart_elements.add(delay_text)
+        
+        self.play(FadeOut(chart_elements))
+        
+        # Show algorithm characteristics
+        summary_title = Text("Algorithm Characteristics").scale(0.8).move_to(UP * 3)
+        self.play(Transform(title, summary_title))
+        self.wait(0.5)
+        
+        summary = VGroup(
+            Text("✓ Fast: O(n log n) sorting", color=GREEN).scale(0.55),
+            Text("✓ Simple to implement", color=GREEN).scale(0.55),
+            Text("✓ Works well in practice", color=GREEN).scale(0.55),
+            Text("✗ No optimality guarantee", color=RED).scale(0.55),
+            Text("✗ Heuristic-based approach", color=RED).scale(0.55),
+        )
+        summary.arrange(DOWN, buff=0.4, aligned_edge=LEFT)
+        summary.move_to(ORIGIN)
+        
+        self.play(LaggedStart(*[Write(line) for line in summary], lag_ratio=0.3))
+        self.wait(3)
 
     def build_gantt_chart(self, schedule, vessels=None, unit_width=0.7, bar_height=0.45, top=1.5, left_padding=1.5):
         """Build Gantt components and return a dict with axis, separator, name_labels and events.
