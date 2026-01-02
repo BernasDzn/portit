@@ -1,0 +1,88 @@
+@startuml l4_process_view_delete
+skinparam handwritten true
+skinparam monochrome true
+skinparam packageStyle rect
+skinparam defaultFontName FG Virgil
+skinparam shadowing false
+
+actor User as Actor
+participant "(Frontend)\nX View" as View <<presentation>>
+participant "(Frontend)\nX Service" as UiXService <<service>>
+participant "(Frontend)\nHTTPService" as UiHttp <<service>>
+participant "API" as API <<application>>
+participant "(OEMBackend)\nXController" as Controller <<controller>>
+participant "(OEMBackend)\nXService" as Service <<service>>
+participant "(OEMBackend)\nXRepository" as Repository <<repository>>
+participant "(OEMBackend)\nODM Context" as Context <<context>>
+database MongoDB
+
+title OEMBackend - Delete process view for generic "X" entity (DELETE)
+
+Actor --> View: Request delete action
+activate View
+
+    View --> UiXService: deleteX(id)
+    activate UiXService
+
+        UiXService --> UiHttp: DELETE /api/x/{id}
+        activate UiHttp
+
+            UiHttp --> API: HTTP DELETE /api/x/{id}
+            activate API
+
+                API --> Controller: route -> XController.deleteX(id)
+                activate Controller
+
+                    Controller --> Service: delete(id)
+                    activate Service
+
+                        Service --> Repository: getById(id)
+                        activate Repository
+                            Repository --> Context: findOne({ id })
+                            activate Context
+                                Context --> MongoDB: findOne
+                                activate MongoDB
+                                    MongoDB --> Context: document
+                                deactivate MongoDB
+                                Context --> Repository: document
+                            deactivate Context
+                            Repository --> Service: X instance or null
+                        deactivate Repository
+
+alt entity found
+                        Service --> Repository: delete(id)
+                        activate Repository
+                            Repository --> Context: deleteOne({ id })
+                            activate Context
+                                Context --> MongoDB: deleteOne
+                                activate MongoDB
+                                    MongoDB --> Context: deleteResult
+                                deactivate MongoDB
+                                Context --> Repository: deleteResult
+                            deactivate Context
+
+                            Repository --> Service: success
+                        deactivate Repository
+
+                        Service --> Controller: success
+else entity not found
+                        Service --> Controller: Not Found Error
+end
+                    deactivate Service
+
+                    Controller --> API: 204 No Content
+                deactivate Controller
+
+            API --> UiHttp: HTTP Response 204
+            deactivate API
+
+        UiHttp --> UiXService: HTTP response (204)
+        deactivate UiHttp
+
+        UiXService --> View: deletion confirmed
+    deactivate UiXService
+
+    View --> Actor: Show success message / redirect
+deactivate View
+
+@enduml
