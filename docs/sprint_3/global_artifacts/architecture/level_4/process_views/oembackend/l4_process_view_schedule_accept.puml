@@ -1,0 +1,119 @@
+@startuml l4_process_view_schedule_accept
+skinparam handwritten true
+skinparam monochrome true
+skinparam packageStyle rect
+skinparam defaultFontName FG Virgil
+skinparam shadowing false
+
+actor User as Actor
+participant "(Frontend)\nScheduling View" as View <<presentation>>
+participant "(Frontend)\nScheduling Service" as UiSchedulingService <<service>>
+participant "(Frontend)\nHTTPService" as UiHttp <<service>>
+participant "API" as API <<application>>
+participant "(OEMBackend)\nSchedulingRequestController" as Controller <<controller>>
+participant "(OEMBackend)\nSchedulingRequestService" as Service <<service>>
+participant "(OEMBackend)\nWorkQueueRepository" as WorkQueueRepo <<repository>>
+participant "(OEMBackend)\nOperationPlanService" as PlanService <<service>>
+participant "(OEMBackend)\nOperationPlanRepository" as PlanRepo <<repository>>
+participant "(OEMBackend)\nODM Context" as Context <<context>>
+database MongoDB
+participant "Backend API" as BackendAPI <<external>>
+
+title OEMBackend - Accept Schedule Request (POST /schedule/acceptRequest)
+
+Actor --> View: Accept schedule result
+activate View
+
+    View --> UiSchedulingService: acceptRequest(id)
+    activate UiSchedulingService
+
+        UiSchedulingService --> UiHttp: POST /api/schedule/acceptRequest?id={id}
+        activate UiHttp
+
+            UiHttp --> API: HTTP POST /schedule/acceptRequest + Auth Token
+            activate API
+
+                API --> Controller: route -> SchedulingRequestController.acceptRequest(id)
+                activate Controller
+note right: Extract token and\nuser email from request
+
+                    Controller --> Service: acceptRequest(id, userEmail, token)
+                    activate Service
+
+                        Service --> WorkQueueRepo: getById(id)
+                        activate WorkQueueRepo
+                            WorkQueueRepo --> Context: findOne({ _id: id })
+                            activate Context
+                                Context --> MongoDB: findOne
+                                activate MongoDB
+                                    MongoDB --> Context: queue item document
+                                deactivate MongoDB
+                                Context --> WorkQueueRepo: queue item
+                            deactivate Context
+                            WorkQueueRepo --> Service: queue item
+                        deactivate WorkQueueRepo
+
+alt queue item found and status = 'completed' and issuer matches
+                        Service --> PlanService: createPlans(scheduleData, issuer, token)
+                        activate PlanService
+note right: Convert schedule result\ninto operation plans
+
+                            loop for each day in schedule
+                                PlanService --> BackendAPI: HTTP GET /vessel-visits/{vvn} (with token)
+                                activate BackendAPI
+note right: Fetch vessel visit details\nfrom main backend
+                                    BackendAPI --> PlanService: vessel visit data
+                                deactivate BackendAPI
+
+                                PlanService --> PlanRepo: save(operationPlan)
+                                activate PlanRepo
+                                    PlanRepo --> Context: save(operationPlan)
+                                    activate Context
+                                        Context --> MongoDB: insertOne
+                                        activate MongoDB
+                                            MongoDB --> Context: saved plan document
+                                        deactivate MongoDB
+                                        Context --> PlanRepo: saved plan
+                                    deactivate Context
+                                    PlanRepo --> PlanService: saved plan
+                                deactivate PlanRepo
+                            end
+
+                            PlanService --> Service: created operation plans[]
+                        deactivate PlanService
+
+                        Service --> WorkQueueRepo: finishRequest(id, 'accepted')
+                        activate WorkQueueRepo
+                            WorkQueueRepo --> Context: updateOne({ _id: id }, { status: 'accepted' })
+                            activate Context
+                                Context --> MongoDB: updateOne
+                                activate MongoDB
+                                    MongoDB --> Context: updated document
+                                deactivate MongoDB
+                                Context --> WorkQueueRepo: success
+                            deactivate Context
+                            WorkQueueRepo --> Service: success
+                        deactivate WorkQueueRepo
+
+                        Service --> Controller: queue item
+else queue item not found or invalid status or issuer mismatch
+                        Service --> Controller: Error
+end
+                    deactivate Service
+
+                    Controller --> API: 200 OK + queue item
+                deactivate Controller
+
+            API --> UiHttp: HTTP Response 200
+            deactivate API
+
+        UiHttp --> UiSchedulingService: acceptance confirmation
+        deactivate UiHttp
+
+        UiSchedulingService --> View: operation plans created
+    deactivate UiSchedulingService
+
+    View --> Actor: Show success message
+deactivate View
+
+@enduml

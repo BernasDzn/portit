@@ -1,0 +1,126 @@
+@startuml l4_process_view_vve_open
+skinparam handwritten true
+skinparam monochrome true
+skinparam packageStyle rect
+skinparam defaultFontName FG Virgil
+skinparam shadowing false
+
+actor User as Actor
+participant "(Frontend)\nVVE View" as View <<presentation>>
+participant "(Frontend)\nVVE Service" as UiVVEService <<service>>
+participant "(Frontend)\nHTTPService" as UiHttp <<service>>
+participant "API" as API <<application>>
+participant "(OEMBackend)\nVesselVisitExecutionController" as Controller <<controller>>
+participant "(OEMBackend)\nVesselVisitExecutionService" as Service <<service>>
+participant "(OEMBackend)\nVVERepository" as VVERepo <<repository>>
+participant "(OEMBackend)\nOperationPlanRepository" as PlanRepo <<repository>>
+participant "(OEMBackend)\nVesselVisitExecution" as Domain <<domain>>
+participant "(OEMBackend)\nODM Context" as Context <<context>>
+database MongoDB
+
+title OEMBackend - Open Vessel Visit Execution (POST /{relatedVVN}/open)
+
+Actor --> View: Open vessel visit execution
+activate View
+
+    View --> UiVVEService: openVVE(relatedVVN)
+    activate UiVVEService
+
+        UiVVEService --> UiHttp: POST /api/vessel-visit-executions/{relatedVVN}/open
+        activate UiHttp
+
+            UiHttp --> API: HTTP POST /{relatedVVN}/open + Auth Token
+            activate API
+
+                API --> Controller: route -> VVEController.openVesselVisitExecution(relatedVVN)
+                activate Controller
+note right: Extract token and\nuser email from request
+
+                    Controller --> Service: createVesselVisitExecution(relatedVVN, userEmail)
+                    activate Service
+
+                        Service --> VVERepo: getByVVN(relatedVVN)
+                        activate VVERepo
+                            VVERepo --> Context: findOne({ relatedVVN })
+                            activate Context
+                                Context --> MongoDB: findOne
+                                activate MongoDB
+                                    MongoDB --> Context: existing VVE (if any)
+                                deactivate MongoDB
+                                Context --> VVERepo: existing VVE or null
+                            deactivate Context
+                            VVERepo --> Service: existing VVE or null
+                        deactivate VVERepo
+
+alt VVE does not exist yet
+                        Service --> PlanRepo: getByVVN(relatedVVN)
+                        activate PlanRepo
+                            PlanRepo --> Context: findOne({ relatedVVN })
+                            activate Context
+                                Context --> MongoDB: findOne
+                                activate MongoDB
+                                    MongoDB --> Context: operation plan document
+                                deactivate MongoDB
+                                Context --> PlanRepo: operation plan
+                            deactivate Context
+                            PlanRepo --> Service: operation plan
+                        deactivate PlanRepo
+
+alt operation plan found
+                        Service --> Service: count VVE for code generation
+                        activate Service
+                            Service --> VVERepo: count()
+                            activate VVERepo
+                                VVERepo --> Context: countDocuments()
+                                activate Context
+                                    Context --> MongoDB: countDocuments
+                                    Context --> VVERepo: count
+                                deactivate Context
+                                VVERepo --> Service: count
+                            deactivate VVERepo
+                        deactivate Service
+
+                        Service --> Domain: new VesselVisitExecution(data)
+                        activate Domain
+note right: Create VVE from plan\nAll operations start as Pending\nStatus = 'Open'\nDateOpen = now
+                            Domain --> Service: VVE instance
+                        deactivate Domain
+
+                        Service --> VVERepo: createVesselVisitExecution(vve)
+                        activate VVERepo
+                            VVERepo --> Context: save(vve)
+                            activate Context
+                                Context --> MongoDB: insertOne
+                                activate MongoDB
+                                    MongoDB --> Context: created VVE document
+                                deactivate MongoDB
+                                Context --> VVERepo: created VVE
+                            deactivate Context
+                            VVERepo --> Service: created VVE
+                        deactivate VVERepo
+
+                        Service --> Controller: VVE DTO
+else operation plan not found
+                        Service --> Controller: Error - Plan not found
+end
+else VVE already exists
+                        Service --> Controller: Error - VVE already opened
+end
+                    deactivate Service
+
+                    Controller --> API: 201 Created + VVE
+                deactivate Controller
+
+            API --> UiHttp: HTTP Response 201
+            deactivate API
+
+        UiHttp --> UiVVEService: created VVE data
+        deactivate UiHttp
+
+        UiVVEService --> View: VVE opened
+    deactivate UiVVEService
+
+    View --> Actor: Show VVE details
+deactivate View
+
+@enduml

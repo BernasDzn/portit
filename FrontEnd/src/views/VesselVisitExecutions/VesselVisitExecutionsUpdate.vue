@@ -59,6 +59,46 @@ const resourcesDialogTitle = computed(() => {
   return 'Resources  for operation';
 });
 
+// Helper function to extract error message from backend responses
+function extractErrorMessage(e: unknown, defaultMessage: string): string {
+  if (!e || typeof e !== 'object') {
+    return defaultMessage + (e ? ' ' + String(e) : '');
+  }
+  
+  const err = e as any;
+  
+  // Axios error shape: e.response.data may contain the error
+  if (err.response?.data) {
+    const data = err.response.data;
+    // Check for various error message formats from backend
+    if (typeof data === 'string') {
+      return defaultMessage + ' ' + data;
+    }
+    if (data.message) {
+      return defaultMessage + ' ' + data.message;
+    }
+    if (data.error) {
+      return defaultMessage + ' ' + data.error;
+    }
+    if (data.title) {
+      // .NET Problem Details format
+      return defaultMessage + ' ' + data.title + (data.detail ? ': ' + data.detail : '');
+    }
+    if (data.errors) {
+      // Validation errors format
+      const errorMessages = Object.values(data.errors).flat().join('; ');
+      return defaultMessage + ' ' + errorMessages;
+    }
+  }
+  
+  // Standard Error object
+  if (err.message) {
+    return defaultMessage + ' ' + err.message;
+  }
+  
+  return defaultMessage;
+}
+
 // Get the complementary tasks that are blocking a given operation
 function getBlockingTasks(operationId: string) {
   console.log('getBlockingTasks called for operationId:', operationId);
@@ -167,21 +207,10 @@ async function confirmStartOperation() {
     };
     const e = await vveService.startOperation(related_vvn_id, payload);
     console.log('Operation started:', e);
+    notifications.enqueueNotification('Operation started successfully.', notifications.notificationTypes.SUCCESS);
   } catch (e) {
     console.error('Error starting operation:', e);
-    let message = 'Failed to start operation.';
-    if (e && typeof e === 'object') {
-      // Axios error shape
-      if (e.response && e.response.data && e.response.data.message) {
-        message += ' ' + e.response.data.message;
-      } else if (e.message) {
-        message += ' ' + e.message;
-      } else {
-        message += ' ' + JSON.stringify(e);
-      }
-    } else {
-      message += ' ' + String(e);
-    }
+    const message = extractErrorMessage(e, 'Failed to start operation.');
     notifications.enqueueNotification(message, notifications.notificationTypes.DANGER);
     return;
   }
@@ -190,12 +219,18 @@ async function confirmStartOperation() {
 }
 
 async function confirmCompleteOperation() {
-  if (!completeDialogOp.value) return;
-  const op = completeDialogOp.value;
-  const endTime = new Date(completeDialogTime.value);
-  await vveService.completeOperation(related_vvn_id, op.operation.id, endTime);
-  showCompleteDialog.value = false;
-  await fetchOperations();
+  if (!completeDialogOp.value) {
+    notifications.enqueueNotification('No operation selected to complete.', notifications.notificationTypes.DANGER);
+    return;
+  }
+  
+  try {
+    const op = completeDialogOp.value;
+    const endTime = new Date(completeDialogTime.value);
+    await vveService.completeOperation(related_vvn_id, op.operation.id, endTime);
+    notifications.enqueueNotification('Operation completed successfully.', notifications.notificationTypes.SUCCESS);
+    showCompleteDialog.value = false;
+    await fetchOperations();
   
   // If VVE is now closed, redirect to view page
   if (vveStatus.value === 'Closed') {
@@ -203,6 +238,11 @@ async function confirmCompleteOperation() {
     setTimeout(() => {
       router.push(`/vessel-visit-executions/${related_vvn_id}`);
     }, 1500);
+  }
+  } catch (e) {
+    console.error('Error completing operation:', e);
+    const message = extractErrorMessage(e, 'Failed to complete operation.');
+    notifications.enqueueNotification(message, notifications.notificationTypes.DANGER);
   }
 }
 
@@ -268,6 +308,8 @@ async function fetchOperations() {
 		});
 	} catch (e) {
 		console.error('Error fetching operations:', e);
+		const message = extractErrorMessage(e, 'Failed to load operations.');
+		notifications.enqueueNotification(message, notifications.notificationTypes.DANGER);
 		operations.value = [];
 		complementaryTasks.value = [];
 	}
@@ -346,14 +388,7 @@ async function confirmAddTask() {
     await fetchOperations();
   } catch (e) {
     console.error('Error adding complementary task:', e);
-    let message = 'Failed to add complementary task.';
-    if (e && typeof e === 'object') {
-      if (e.response && e.response.data && e.response.data.message) {
-        message += ' ' + e.response.data.message;
-      } else if (e.message) {
-        message += ' ' + e.message;
-      }
-    }
+    const message = extractErrorMessage(e, 'Failed to add complementary task.');
     notifications.enqueueNotification(message, notifications.notificationTypes.DANGER);
   }
 }
@@ -376,6 +411,8 @@ async function fetchStaffAndCategories() {
     );
   } catch (e) {
     console.error('Error fetching staff and categories:', e);
+    const message = extractErrorMessage(e, 'Failed to load staff and task categories.');
+    notifications.enqueueNotification(message, notifications.notificationTypes.WARNING);
   }
 }
 
@@ -477,9 +514,6 @@ onMounted(() => {
               <template v-else-if="op.status === 'Started'">
                 <sl-button size="small" variant="success" @click="openCompleteDialog(op)">
                   <sl-icon name="check2"></sl-icon> Complete
-                </sl-button>
-                <sl-button size="small" variant="default">
-                  <sl-icon name="pencil"></sl-icon> Edit
                 </sl-button>
               </template>
               <!-- Completed: no actions -->
@@ -643,8 +677,20 @@ onMounted(() => {
             <tr v-for="(res, rIdx) in (resourcesDialogOp && resourcesDialogOp.operation ? resourcesDialogOp.operation.resources : [])" :key="rIdx">
               <td>{{ res.type || res.resourceType || (res.resource && res.resource.type) || '-' }}</td>
               <td>{{ res.name || (res.resource && res.resource.name) || '-' }}</td>
-              <td>{{ formatDate(res.startTime) }}</td>
-              <td>{{ formatDate(res.endTime) }}</td>
+              <td>
+                <template v-if="res.startTime">
+                  <span v-if="resourcesDialogOp.status === 'Pending' || resourcesDialogOp.status === 'Delayed'" class="dt-expected">{{ formatDate(res.startTime) }} (expected)</span>
+                  <span v-else>{{ formatDate(res.startTime) }}</span>
+                </template>
+                <span v-else class="dt-expected">---</span>
+              </td>
+              <td>
+                <template v-if="res.endTime">
+                  <span v-if="resourcesDialogOp.status !== 'Completed'" class="dt-expected">{{ formatDate(res.endTime) }} (expected)</span>
+                  <span v-else>{{ formatDate(res.endTime) }}</span>
+                </template>
+                <span v-else class="dt-expected">---</span>
+              </td>
             </tr>
           </tbody>
         </table>

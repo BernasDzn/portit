@@ -1,0 +1,154 @@
+@startuml l4_process_view_vve_operation_start
+skinparam handwritten true
+skinparam monochrome true
+skinparam packageStyle rect
+skinparam defaultFontName FG Virgil
+skinparam shadowing false
+
+actor User as Actor
+participant "(Frontend)\nVVE View" as View <<presentation>>
+participant "(Frontend)\nVVE Service" as UiVVEService <<service>>
+participant "(Frontend)\nHTTPService" as UiHttp <<service>>
+participant "API" as API <<application>>
+participant "(OEMBackend)\nVesselVisitExecutionController" as Controller <<controller>>
+participant "(OEMBackend)\nVesselVisitExecutionService" as Service <<service>>
+participant "(OEMBackend)\nVVERepository" as VVERepo <<repository>>
+participant "(OEMBackend)\nTaskCategoryRepository" as TaskRepo <<repository>>
+participant "(OEMBackend)\nPayloadValidator" as Validator <<validator>>
+participant "(OEMBackend)\nVesselVisitExecution" as Domain <<domain>>
+participant "(OEMBackend)\nOperation" as OperationDomain <<domain>>
+participant "(OEMBackend)\nODM Context" as Context <<context>>
+database MongoDB
+
+title OEMBackend - Start Operation (PUT /{relatedVVN}/operations/start)
+
+Actor --> View: Start operation
+activate View
+
+    View --> UiVVEService: startOperation(relatedVVN, operation)
+    activate UiVVEService
+
+        UiVVEService --> UiHttp: PUT /api/vessel-visit-executions/{relatedVVN}/operations/start
+        activate UiHttp
+
+            UiHttp --> API: HTTP PUT /{relatedVVN}/operations/start + body
+            activate API
+
+                API --> Controller: route -> VVEController.startOperation(relatedVVN, operation)
+                activate Controller
+
+                    Controller --> Service: startOperation(relatedVVN, operation)
+                    activate Service
+
+                        Service --> VVERepo: getByVVN(relatedVVN)
+                        activate VVERepo
+                            VVERepo --> Context: findOne({ relatedVVN })
+                            activate Context
+                                Context --> MongoDB: findOne
+                                activate MongoDB
+                                    MongoDB --> Context: VVE document
+                                deactivate MongoDB
+                                Context --> VVERepo: VVE instance
+                            deactivate Context
+                            VVERepo --> Service: VVE instance
+                        deactivate VVERepo
+
+alt VVE found
+                        Service --> Domain: Find operation by ID in VVE
+                        activate Domain
+                            Domain --> Service: operation or null
+                        deactivate Domain
+
+alt operation not in plan (complementary task)
+                        Service --> TaskRepo: getCategoryByCode(operationType)
+                        activate TaskRepo
+                            TaskRepo --> Context: findOne({ code })
+                            activate Context
+                                Context --> MongoDB: findOne
+                                activate MongoDB
+                                    MongoDB --> Context: task category document
+                                deactivate MongoDB
+                                Context --> TaskRepo: task category
+                            deactivate Context
+                            TaskRepo --> Service: task category
+                        deactivate TaskRepo
+
+alt operation type found and not LOAD/UNLOAD
+                        Service --> Validator: validatePayloadForType(payload, type)
+                        activate Validator
+note right: Validate payload structure\nfor operation type
+                            Validator --> Service: validation result
+                        deactivate Validator
+
+alt payload valid
+                        Service --> OperationDomain: new Operation(data)
+                        activate OperationDomain
+note right: Create new operation\nwith resources and payload
+                            OperationDomain --> Service: operation instance
+                        deactivate OperationDomain
+
+                        Service --> Domain: Add operation to VVE with status 'Started'
+                        activate Domain
+note right: Add OperationWithStatus\nUpdate impacted operations to 'Delayed'
+                            Domain --> Service: updated VVE
+                        deactivate Domain
+
+                        Service --> VVERepo: updateVesselVisitExecution(vve)
+                        activate VVERepo
+                            VVERepo --> Context: updateOne({ relatedVVN }, vve)
+                            activate Context
+                                Context --> MongoDB: updateOne
+                                activate MongoDB
+                                    MongoDB --> Context: updated VVE document
+                                deactivate MongoDB
+                                Context --> VVERepo: updated VVE
+                            deactivate Context
+                            VVERepo --> Service: updated VVE
+                        deactivate VVERepo
+
+                        Service --> Controller: VVE DTO
+else payload invalid
+                        Service --> Controller: Validation Error
+end
+else operation type not found or is LOAD/UNLOAD
+                        Service --> Controller: Error - Invalid operation type
+end
+else operation already in plan
+                        Service --> Domain: Update operation status to 'Started'
+                        activate Domain
+                            Domain --> Service: updated VVE
+                        deactivate Domain
+
+                        Service --> VVERepo: updateVesselVisitExecution(vve)
+                        activate VVERepo
+                            VVERepo --> Context: updateOne
+                            activate Context
+                                Context --> MongoDB: updateOne
+                                Context --> VVERepo: updated VVE
+                            deactivate Context
+                            VVERepo --> Service: updated VVE
+                        deactivate VVERepo
+
+                        Service --> Controller: VVE DTO
+end
+else VVE not found
+                        Service --> Controller: Error - VVE not found
+end
+                    deactivate Service
+
+                    Controller --> API: 200 OK + VVE
+                deactivate Controller
+
+            API --> UiHttp: HTTP Response 200
+            deactivate API
+
+        UiHttp --> UiVVEService: updated VVE data
+        deactivate UiHttp
+
+        UiVVEService --> View: operation started
+    deactivate UiVVEService
+
+    View --> Actor: Show operation status
+deactivate View
+
+@enduml
