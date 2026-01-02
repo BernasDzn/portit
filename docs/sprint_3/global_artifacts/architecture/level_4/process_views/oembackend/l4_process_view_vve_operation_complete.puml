@@ -1,0 +1,103 @@
+@startuml l4_process_view_vve_operation_complete
+skinparam handwritten true
+skinparam monochrome true
+skinparam packageStyle rect
+skinparam defaultFontName FG Virgil
+skinparam shadowing false
+
+actor User as Actor
+participant "(Frontend)\nVVE View" as View <<presentation>>
+participant "(Frontend)\nVVE Service" as UiVVEService <<service>>
+participant "(Frontend)\nHTTPService" as UiHttp <<service>>
+participant "API" as API <<application>>
+participant "(OEMBackend)\nVesselVisitExecutionController" as Controller <<controller>>
+participant "(OEMBackend)\nVesselVisitExecutionService" as Service <<service>>
+participant "(OEMBackend)\nVVERepository" as VVERepo <<repository>>
+participant "(OEMBackend)\nVesselVisitExecution" as Domain <<domain>>
+participant "(OEMBackend)\nODM Context" as Context <<context>>
+database MongoDB
+
+title OEMBackend - Complete Operation (PUT /{relatedVVN}/operations/{operationId}/complete)
+
+Actor --> View: Complete operation
+activate View
+
+    View --> UiVVEService: completeOperation(relatedVVN, operationId, endTime)
+    activate UiVVEService
+
+        UiVVEService --> UiHttp: PUT /api/vessel-visit-executions/{relatedVVN}/operations/{operationId}/complete
+        activate UiHttp
+
+            UiHttp --> API: HTTP PUT /{relatedVVN}/operations/{operationId}/complete + body
+            activate API
+
+                API --> Controller: route -> VVEController.completeOperation(relatedVVN, operationId, endTime)
+                activate Controller
+
+                    Controller --> Service: completeOperation(relatedVVN, operationId, endTime)
+                    activate Service
+
+                        Service --> VVERepo: getByVVN(relatedVVN)
+                        activate VVERepo
+                            VVERepo --> Context: findOne({ relatedVVN })
+                            activate Context
+                                Context --> MongoDB: findOne
+                                activate MongoDB
+                                    MongoDB --> Context: VVE document
+                                deactivate MongoDB
+                                Context --> VVERepo: VVE instance
+                            deactivate Context
+                            VVERepo --> Service: VVE instance
+                        deactivate VVERepo
+
+alt VVE found
+                        Service --> Domain: Find operation by ID in VVE
+                        activate Domain
+                            Domain --> Service: operation
+                        deactivate Domain
+
+alt operation found and status = 'Started'
+                        Service --> Domain: Update operation status to 'Completed'
+                        activate Domain
+note right: Set status = 'Completed'\nUpdate endTime\nCheck delayed operations\nRestore to 'Pending' if no more blockers
+                            Domain --> Service: updated VVE
+                        deactivate Domain
+
+                        Service --> VVERepo: updateVesselVisitExecution(vve)
+                        activate VVERepo
+                            VVERepo --> Context: updateOne({ relatedVVN }, vve)
+                            activate Context
+                                Context --> MongoDB: updateOne
+                                activate MongoDB
+                                    MongoDB --> Context: updated VVE document
+                                deactivate MongoDB
+                                Context --> VVERepo: updated VVE
+                            deactivate Context
+                            VVERepo --> Service: updated VVE
+                        deactivate VVERepo
+
+                        Service --> Controller: VVE DTO
+else operation not found or status != 'Started'
+                        Service --> Controller: Error - Operation cannot be completed
+end
+else VVE not found
+                        Service --> Controller: Error - VVE not found
+end
+                    deactivate Service
+
+                    Controller --> API: 200 OK + VVE
+                deactivate Controller
+
+            API --> UiHttp: HTTP Response 200
+            deactivate API
+
+        UiHttp --> UiVVEService: updated VVE data
+        deactivate UiHttp
+
+        UiVVEService --> View: operation completed
+    deactivate UiVVEService
+
+    View --> Actor: Show completion confirmation
+deactivate View
+
+@enduml

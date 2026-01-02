@@ -1,0 +1,103 @@
+@startuml l4_process_view_vve_close
+skinparam handwritten true
+skinparam monochrome true
+skinparam packageStyle rect
+skinparam defaultFontName FG Virgil
+skinparam shadowing false
+
+actor User as Actor
+participant "(Frontend)\nVVE View" as View <<presentation>>
+participant "(Frontend)\nVVE Service" as UiVVEService <<service>>
+participant "(Frontend)\nHTTPService" as UiHttp <<service>>
+participant "API" as API <<application>>
+participant "(OEMBackend)\nVesselVisitExecutionController" as Controller <<controller>>
+participant "(OEMBackend)\nVesselVisitExecutionService" as Service <<service>>
+participant "(OEMBackend)\nVVERepository" as VVERepo <<repository>>
+participant "(OEMBackend)\nVesselVisitExecution" as Domain <<domain>>
+participant "(OEMBackend)\nODM Context" as Context <<context>>
+database MongoDB
+
+title OEMBackend - Close Vessel Visit Execution (PUT /{relatedVVN}/close)
+
+Actor --> View: Close vessel visit execution
+activate View
+
+    View --> UiVVEService: closeVVE(relatedVVN)
+    activate UiVVEService
+
+        UiVVEService --> UiHttp: PUT /api/vessel-visit-executions/{relatedVVN}/close
+        activate UiHttp
+
+            UiHttp --> API: HTTP PUT /{relatedVVN}/close
+            activate API
+
+                API --> Controller: route -> VVEController.closeVesselVisitExecution(relatedVVN)
+                activate Controller
+
+                    Controller --> Service: closeVesselVisitExecution(relatedVVN)
+                    activate Service
+
+                        Service --> VVERepo: getByVVN(relatedVVN)
+                        activate VVERepo
+                            VVERepo --> Context: findOne({ relatedVVN })
+                            activate Context
+                                Context --> MongoDB: findOne
+                                activate MongoDB
+                                    MongoDB --> Context: VVE document
+                                deactivate MongoDB
+                                Context --> VVERepo: VVE instance
+                            deactivate Context
+                            VVERepo --> Service: VVE instance
+                        deactivate VVERepo
+
+alt VVE found and status = 'Open'
+                        Service --> Service: Check all operations completed
+                        activate Service
+note right: Verify all operations\nhave status 'Completed'
+                        deactivate Service
+
+alt all operations completed
+                        Service --> Domain: vve.status = 'Closed'
+                        activate Domain
+note right: Update status to 'Closed'\nSet dateClosed = now
+                            Domain --> Service: updated VVE
+                        deactivate Domain
+
+                        Service --> VVERepo: updateVesselVisitExecution(vve)
+                        activate VVERepo
+                            VVERepo --> Context: updateOne({ relatedVVN }, vve)
+                            activate Context
+                                Context --> MongoDB: updateOne
+                                activate MongoDB
+                                    MongoDB --> Context: updated VVE document
+                                deactivate MongoDB
+                                Context --> VVERepo: updated VVE
+                            deactivate Context
+                            VVERepo --> Service: updated VVE
+                        deactivate VVERepo
+
+                        Service --> Controller: VVE DTO
+else operations not all completed
+                        Service --> Controller: Error - Cannot close, pending operations
+end
+else VVE not found or already closed
+                        Service --> Controller: Error
+end
+                    deactivate Service
+
+                    Controller --> API: 200 OK + VVE
+                deactivate Controller
+
+            API --> UiHttp: HTTP Response 200
+            deactivate API
+
+        UiHttp --> UiVVEService: closed VVE data
+        deactivate UiHttp
+
+        UiVVEService --> View: VVE closed
+    deactivate UiVVEService
+
+    View --> Actor: Show closure confirmation
+deactivate View
+
+@enduml

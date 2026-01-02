@@ -1,0 +1,110 @@
+@startuml l4_process_view_schedule_request
+skinparam handwritten true
+skinparam monochrome true
+skinparam packageStyle rect
+skinparam defaultFontName FG Virgil
+skinparam shadowing false
+
+actor User as Actor
+participant "(Frontend)\nScheduling View" as View <<presentation>>
+participant "(Frontend)\nScheduling Service" as UiSchedulingService <<service>>
+participant "(Frontend)\nHTTPService" as UiHttp <<service>>
+participant "API" as API <<application>>
+participant "(OEMBackend)\nSchedulingRequestController" as Controller <<controller>>
+participant "(OEMBackend)\nSchedulingRequestService" as Service <<service>>
+participant "(OEMBackend)\nWorkQueueRepository" as Repository <<repository>>
+participant "(OEMBackend)\nODM Context" as Context <<context>>
+database MongoDB
+participant "Prolog\nScheduling Server" as PrologServer <<external>>
+
+title OEMBackend - Schedule Request (GET /schedule/request) - External Prolog Service Call
+
+Actor --> View: Request schedule generation
+activate View
+
+    View --> UiSchedulingService: scheduleRequest(day, alg, daysAhead)
+    activate UiSchedulingService
+
+        UiSchedulingService --> UiHttp: GET /api/schedule/request?day&alg&daysAhead
+        activate UiHttp
+
+            UiHttp --> API: HTTP GET /schedule/request + Auth Token
+            activate API
+
+                API --> Controller: route -> SchedulingRequestController.scheduleRequest()
+                activate Controller
+note right: Extract token and\nuser email from request
+
+                    Controller --> Service: scheduleRequest(day, alg, daysAhead, userEmail)
+                    activate Service
+
+                        Service --> Repository: enqueueRequest(day, alg, daysAhead, issuer)
+                        activate Repository
+                            Repository --> Context: save(queueItem)
+                            activate Context
+                                Context --> MongoDB: insertOne
+                                activate MongoDB
+                                    MongoDB --> Context: queueItem document
+                                deactivate MongoDB
+                                Context --> Repository: queue position number
+                            deactivate Context
+                            Repository --> Service: queue position number
+                        deactivate Repository
+
+                        Service --> Service: getToWork() - async processing
+                        activate Service
+note right: Background worker\nprocesses queue
+
+                            Service --> Repository: dequeueRequest()
+                            activate Repository
+                                Repository --> Context: findOneAndUpdate (get next pending)
+                                activate Context
+                                    Context --> MongoDB: findOneAndUpdate
+                                    activate MongoDB
+                                        MongoDB --> Context: next queue item
+                                    deactivate MongoDB
+                                    Context --> Repository: queue item
+                                deactivate Context
+                                Repository --> Service: queue item
+                            deactivate Repository
+
+                            Service --> PrologServer: HTTP GET /schedule?day&alg&daysAhead
+                            activate PrologServer
+note right: External Prolog\nscheduling algorithm
+                                PrologServer --> Service: schedule result JSON
+                            deactivate PrologServer
+
+                            Service --> Repository: finishRequest(id, result, 'completed')
+                            activate Repository
+                                Repository --> Context: updateOne (set result and status)
+                                activate Context
+                                    Context --> MongoDB: updateOne
+                                    activate MongoDB
+                                        MongoDB --> Context: updated document
+                                    deactivate MongoDB
+                                    Context --> Repository: success
+                                deactivate Context
+                                Repository --> Service: success
+                            deactivate Repository
+
+                        deactivate Service
+
+                        Service --> Controller: queue position message
+                    deactivate Service
+
+                    Controller --> API: 200 OK + queue position
+                deactivate Controller
+
+            API --> UiHttp: HTTP Response 200
+            deactivate API
+
+        UiHttp --> UiSchedulingService: queue position
+        deactivate UiHttp
+
+        UiSchedulingService --> View: queue position message
+    deactivate UiSchedulingService
+
+    View --> Actor: Display queue position
+deactivate View
+
+@enduml

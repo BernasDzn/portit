@@ -1,0 +1,88 @@
+@startuml l4_process_view_schedule_reject
+skinparam handwritten true
+skinparam monochrome true
+skinparam packageStyle rect
+skinparam defaultFontName FG Virgil
+skinparam shadowing false
+
+actor User as Actor
+participant "(Frontend)\nScheduling View" as View <<presentation>>
+participant "(Frontend)\nScheduling Service" as UiSchedulingService <<service>>
+participant "(Frontend)\nHTTPService" as UiHttp <<service>>
+participant "API" as API <<application>>
+participant "(OEMBackend)\nSchedulingRequestController" as Controller <<controller>>
+participant "(OEMBackend)\nSchedulingRequestService" as Service <<service>>
+participant "(OEMBackend)\nWorkQueueRepository" as WorkQueueRepo <<repository>>
+participant "(OEMBackend)\nODM Context" as Context <<context>>
+database MongoDB
+
+title OEMBackend - Reject Schedule Request (POST /schedule/rejectRequest)
+
+Actor --> View: Reject schedule result
+activate View
+
+    View --> UiSchedulingService: rejectRequest(id)
+    activate UiSchedulingService
+
+        UiSchedulingService --> UiHttp: POST /api/schedule/rejectRequest?id={id}
+        activate UiHttp
+
+            UiHttp --> API: HTTP POST /schedule/rejectRequest + Auth Token
+            activate API
+
+                API --> Controller: route -> SchedulingRequestController.rejectRequest(id)
+                activate Controller
+note right: Extract token and\nuser email from request
+
+                    Controller --> Service: rejectRequest(id, userEmail)
+                    activate Service
+
+                        Service --> WorkQueueRepo: getById(id)
+                        activate WorkQueueRepo
+                            WorkQueueRepo --> Context: findOne({ _id: id })
+                            activate Context
+                                Context --> MongoDB: findOne
+                                activate MongoDB
+                                    MongoDB --> Context: queue item document
+                                deactivate MongoDB
+                                Context --> WorkQueueRepo: queue item
+                            deactivate Context
+                            WorkQueueRepo --> Service: queue item
+                        deactivate WorkQueueRepo
+
+alt queue item found and status = 'completed' and issuer matches
+                        Service --> WorkQueueRepo: finishRequest(id, 'rejected')
+                        activate WorkQueueRepo
+                            WorkQueueRepo --> Context: updateOne({ _id: id }, { status: 'rejected' })
+                            activate Context
+                                Context --> MongoDB: updateOne
+                                activate MongoDB
+                                    MongoDB --> Context: updated document
+                                deactivate MongoDB
+                                Context --> WorkQueueRepo: success
+                            deactivate Context
+                            WorkQueueRepo --> Service: success
+                        deactivate WorkQueueRepo
+
+                        Service --> Controller: queue item
+else queue item not found or invalid status or issuer mismatch
+                        Service --> Controller: Error
+end
+                    deactivate Service
+
+                    Controller --> API: 200 OK + queue item
+                deactivate Controller
+
+            API --> UiHttp: HTTP Response 200
+            deactivate API
+
+        UiHttp --> UiSchedulingService: rejection confirmation
+        deactivate UiHttp
+
+        UiSchedulingService --> View: rejection confirmed
+    deactivate UiSchedulingService
+
+    View --> Actor: Show rejection confirmation
+deactivate View
+
+@enduml
