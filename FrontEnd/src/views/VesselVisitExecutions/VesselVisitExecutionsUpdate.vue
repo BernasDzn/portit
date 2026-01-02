@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import TYPES from '@/inversify/types';
 import { container } from '@/inversify.config';
 import type { IVesselVisitExecutionService } from '@/service/IService/IVesselExecutionService';
@@ -14,6 +14,7 @@ import type TaskCategoryDto from '@/model/dto/TaskCategoryDto';
 
 const {t} = useI18n();
 const route = useRoute();
+const router = useRouter();
 const related_vvn_id = route.params.id as string
 const notifications = useAlerts();
 const vveService = container.get<IVesselVisitExecutionService>(TYPES.vesselVisitExecutionService);
@@ -22,6 +23,7 @@ const taskCategoryService = container.get<ITaskCategoryService>(TYPES.taskCatego
 
 const operations = ref<Array<OperationWithStatus>>([]);
 const complementaryTasks = ref<Array<OperationWithStatus>>([]);
+const vveStatus = ref<'Open' | 'Closed'>('Open');
 
 const availableStaff = ref<Staff[]>([]);
 const availableCategories = ref<TaskCategoryDto[]>([]);
@@ -194,6 +196,14 @@ async function confirmCompleteOperation() {
   await vveService.completeOperation(related_vvn_id, op.operation.id, endTime);
   showCompleteDialog.value = false;
   await fetchOperations();
+  
+  // If VVE is now closed, redirect to view page
+  if (vveStatus.value === 'Closed') {
+    notifications.enqueueNotification('All operations completed. VVE has been closed.', notifications.notificationTypes.SUCCESS);
+    setTimeout(() => {
+      router.push(`/vessel-visit-executions/${related_vvn_id}`);
+    }, 1500);
+  }
 }
 
 async function fetchOperations() {
@@ -205,6 +215,9 @@ async function fetchOperations() {
 		console.log('operationsExecuted:', vve.operationsExecuted);
 		console.log('operationsExecuted type:', typeof vve.operationsExecuted);
 		console.log('operationsExecuted length:', vve.operationsExecuted?.length);
+		
+		// Store VVE status
+		vveStatus.value = vve.status;
 		
 		const allOps = vve.operationsExecuted || [];
 		console.log('allOps:', allOps);
@@ -281,6 +294,10 @@ function statusIcon(status: string) {
 }
 
 function openAddTaskDialog() {
+  if (vveStatus.value === 'Closed') {
+    notifications.enqueueNotification('Cannot add complementary tasks to a closed Vessel Visit Execution.', notifications.notificationTypes.DANGER);
+    return;
+  }
   const now = new Date();
   const pad = (n: number) => n.toString().padStart(2, '0');
   newTaskStartTime.value = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
@@ -478,7 +495,7 @@ onMounted(() => {
     <div class="data-table" style="margin-top: 2rem;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
         <h3>Complementary Tasks</h3>
-        <sl-button variant="primary" @click="openAddTaskDialog">
+        <sl-button variant="primary" @click="openAddTaskDialog" :disabled="vveStatus === 'Closed'">
           <sl-icon name="plus-circle"></sl-icon> Add Complementary Task
         </sl-button>
       </div>
