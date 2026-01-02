@@ -112,6 +112,31 @@ const getOperationsSummary = (vve: any) => {
     return { byStatus, byType, complementaryTasks, plannedOperations };
 };
 
+const getSortedOperations = (vve: any) => {
+    if (!vve.operationsExecuted || vve.operationsExecuted.length === 0) {
+        return [];
+    }
+    
+    // Sort operations by start time
+    return [...vve.operationsExecuted].sort((a, b) => {
+        const aTime = new Date(a.operation.startTime).getTime();
+        const bTime = new Date(b.operation.startTime).getTime();
+        return aTime - bTime;
+    });
+};
+
+const getOperationType = (op: any) => {
+    return op.operation?.type?.category || op.operation?.operationType?.category || 'Unknown';
+};
+
+const isComplementaryTask = (op: any) => {
+    return op.impactedOperations && op.impactedOperations.length > 0;
+};
+
+const getResourceCount = (op: any) => {
+    return op.operation?.resources?.length || 0;
+};
+
 </script>
 
 <template>
@@ -299,6 +324,75 @@ const getOperationsSummary = (vve: any) => {
                         </div>
                     </div>
                 </sl-card>
+
+                <!-- Operations Timeline Table -->
+                <sl-card class="operations-table-card">
+                    <h3 style="margin: 0 0 1rem 0; display: flex; align-items: center; gap: 0.5rem;">
+                        <sl-icon name="clock-history" style="font-size: 1.5rem;"></sl-icon>
+                        Operations Timeline
+                    </h3>
+                    
+                    <div class="table-container" v-if="entity.element.operationsExecuted && entity.element.operationsExecuted.length > 0">
+                        <table class="operations-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Type</th>
+                                    <th>Category</th>
+                                    <th>Status</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                    <th>Resources</th>
+                                    <th>Impacted Operations</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(op, idx) in getSortedOperations(entity.element)" :key="op.id || idx">
+                                    <td>{{ idx + 1 }}</td>
+                                    <td>
+                                        <sl-badge :variant="isComplementaryTask(op) ? 'warning' : 'primary'">
+                                            {{ isComplementaryTask(op) ? 'Complementary' : 'Planned' }}
+                                        </sl-badge>
+                                    </td>
+                                    <td>
+                                        <strong>{{ getOperationType(op) }}</strong>
+                                    </td>
+                                    <td>
+                                        <sl-badge 
+                                            :variant="
+                                                op.status === 'Completed' ? 'success' :
+                                                op.status === 'Started' ? 'primary' :
+                                                op.status === 'Delayed' ? 'warning' :
+                                                'neutral'
+                                            "
+                                        >
+                                            {{ op.status }}
+                                        </sl-badge>
+                                    </td>
+                                    <td>{{ formatDate(op.operation.startTime) }}</td>
+                                    <td>{{ formatDate(op.operation.endTime) }}</td>
+                                    <td>
+                                        <sl-tooltip :content="getResourceCount(op) + ' resource(s) assigned'" placement="top">
+                                            <span style="display: flex; align-items: center; gap: 0.25rem;">
+                                                <sl-icon name="people"></sl-icon>
+                                                {{ getResourceCount(op) }}
+                                            </span>
+                                        </sl-tooltip>
+                                    </td>
+                                    <td>
+                                        <span v-if="isComplementaryTask(op)">
+                                            <sl-badge variant="danger">{{ op.impactedOperations.length }}</sl-badge>
+                                        </span>
+                                        <span v-else style="color: var(--sl-color-neutral-400);">—</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div v-else class="no-data">
+                        No operations available
+                    </div>
+                </sl-card>
             </div>
         </EntityView>
 
@@ -439,6 +533,43 @@ const getOperationsSummary = (vve: any) => {
     padding: 1rem;
 }
 
+.operations-table-card {
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.table-container {
+    overflow-x: auto;
+}
+
+.operations-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.operations-table thead {
+    background: var(--sl-color-neutral-100);
+}
+
+.operations-table th {
+    padding: 0.75rem;
+    text-align: left;
+    font-weight: 600;
+    color: var(--sl-color-neutral-700);
+    border-bottom: 2px solid var(--sl-color-neutral-200);
+}
+
+.operations-table td {
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--sl-color-neutral-100);
+    vertical-align: middle;
+}
+
+.operations-table tbody tr:hover {
+    background: var(--sl-color-neutral-50);
+}
+
 @media (max-width: 1024px) {
     .top-row {
         grid-template-columns: 1fr;
@@ -446,6 +577,15 @@ const getOperationsSummary = (vve: any) => {
     
     .summary-grid {
         grid-template-columns: 1fr;
+    }
+    
+    .operations-table {
+        font-size: 0.8rem;
+    }
+    
+    .operations-table th,
+    .operations-table td {
+        padding: 0.5rem;
     }
 }
 </style>
