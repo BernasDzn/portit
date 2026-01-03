@@ -88,7 +88,9 @@ public class VesselVisitNotification_CtS_IntegrationTest
             _dockRepositoryMock.Object,
             _physicalResourceRepositoryMock.Object,
             _staffRepositoryMock.Object,
-            new Mock<ILogger<VesselVisitNotificationService>>().Object);
+            new Mock<ILogger<VesselVisitNotificationService>>().Object,
+            null!
+        );
 
 
         var notificationDecisionService = new NotificationDecisionService(
@@ -194,7 +196,7 @@ public class VesselVisitNotification_CtS_IntegrationTest
     {
         var newNotificationDto = new CreateVesselVisitNotificationDto
         {
-            NotificationId = "2025-PORTO-000001",
+            NotificationId = "2026-PORTO-000001",
             ExpectedArrival = DateTime.UtcNow.AddDays(2),
             ExpectedDeparture = DateTime.UtcNow.AddDays(6),
             IsCargoHazardous = false,
@@ -228,7 +230,7 @@ public class VesselVisitNotification_CtS_IntegrationTest
     {
         var newNotificationDto = new CreateVesselVisitNotificationDto
         {
-            NotificationId = "2025-PORTO-000001",
+            NotificationId = "2026-PORTO-000001",
             ExpectedArrival = DateTime.UtcNow.AddDays(2),
             ExpectedDeparture = DateTime.UtcNow.AddDays(6),
             IsCargoHazardous = false,

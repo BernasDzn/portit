@@ -7,6 +7,7 @@ using Api.Domain.IRepository;
 using Api.Domain.ValueObjects;
 using Api.Infrastructure.Exceptions;
 using Api.Infrastructure.Utilities;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Moq;
 
@@ -121,7 +122,8 @@ public class VesselVisitNotificationServiceTest
             _dockRepositoryMock.Object,
             _physicalResourceRepositoryMock.Object,
             _staffRepositoryMock.Object,
-            new Mock<ILogger<VesselVisitNotificationService>>().Object
+            new Mock<ILogger<VesselVisitNotificationService>>().Object,
+            null!
         );
     }
 
@@ -186,7 +188,7 @@ public class VesselVisitNotificationServiceTest
 
         // the service generates the notification id via the id generator and repository
         // we assert the generated id has the expected prefix rather than a fixed value
-        Assert.StartsWith("2025-PORTO-", result.NotificationId.ToString());
+        Assert.StartsWith("2026-PORTO-", result.NotificationId.ToString());
     }
 
     [Fact]
