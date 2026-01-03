@@ -9,7 +9,8 @@
     "local": "npm run docgen && nodemon --exec ts-node src/server.ts RUN_MODE=local",
     "build": "tsc",
     "start": "node dist/src/server.js",
-    "test": "jest"
+    "test": "jest",
+    "test:e2e": "DISABLE_AUTH=true npm run docgen && DISABLE_AUTH=true nodemon --exec ts-node src/server.ts RUN_MODE=local"
   },
   "keywords": [],
   "author": "",
@@ -28,6 +29,7 @@
     "express": "^5.2.1",
     "install": "^0.13.0",
     "jest": "^30.2.0",
+    "mongodb-memory-server": "^11.0.1",
     "nodemon": "^3.1.11",
     "npm": "^11.6.3",
     "prettier": "^3.6.2",

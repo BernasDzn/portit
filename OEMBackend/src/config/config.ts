@@ -8,6 +8,7 @@ interface Config {
 	nodeEnv: string;
     mongoUri: string;
     shouldBootstrap?: boolean;
+    disableAuth?: boolean;
     jwt: {
         jwtSecret: string;
         jwtIssuer: string;
@@ -32,6 +33,7 @@ const config: Config = {
         jwtAudience: process.env.JWT_AUDIENCE || modeConfig.jwtAudience,
     },
     shouldBootstrap: process.env.SHOULD_BOOTSTRAP === 'true',
+    disableAuth: process.env.DISABLE_AUTH === 'true',
     schedulingServer: process.env.SCHEDULING_SERVER || modeConfig.schedulingServer,
     backendServer: process.env.BACKEND_SERVER || modeConfig.backendServer,
 };

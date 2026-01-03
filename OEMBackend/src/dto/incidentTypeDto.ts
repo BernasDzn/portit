@@ -3,7 +3,7 @@ export class IncidentTypeDto {
 	name!: string;
 	description!: string;
 	severity!: string;
-	subtypeOf?: string;
+	subtypeOf?: string | null;
 	subtypes?: string[];
 }
 
@@ -12,5 +12,5 @@ export class PartialIncidentTypeDto {
 	name!: string;
 	description!: string;
 	severity!: string;
-	subtypeOf?: string;
+	subtypeOf?: string | null;
 }
