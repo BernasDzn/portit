@@ -24,12 +24,12 @@
 The map of global artifacts is available through [here](global_artifacts/readme.md)
 
 As of this sprint, the generated artifacts are the following:
-1. [Glossary](global_artifacts/glossary.md)
+1. [Glossary](../global_docs/glossary.md)
 2. [Business model of entities](global_artifacts/domain_analysis/svg/business_model/business_model.svg)
 3. [Domain model](global_artifacts/domain_analysis/svg/domain_model/domain_model.svg)
 4. [Database modeling](global_artifacts/database_modeling/logical_model.svg)
 5. [C4+1 Model views](global_artifacts/arquitecture/readme.md)
-6. [Developer Manual](../user_manual.md)
+6. [Developer Manual](../sprint_1/user_manual.md)
 
 ### Documentation *(per user story/use case)*:
 

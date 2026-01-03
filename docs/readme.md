@@ -12,6 +12,6 @@ Bellow are the general pages that lead to the documentation made in each sprint:
 
 ### [Sprint 1 - Planning and Documentation](sprint_1/readme.md)
 
-### Sprint 2 - Planning and Documentation
+### [Sprint 2 - Planning and Documentation](sprint_2/readme.md)
 
-### ...
+### [Sprint 3 - Planning and Documentation](sprint_3/readme.md)
