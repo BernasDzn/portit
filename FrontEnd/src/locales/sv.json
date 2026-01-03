@@ -643,5 +643,195 @@
         "errors": {
             "shiftOverlap": "Ogiltigt skift. Överlapp eller sluttid före start."
         }
+    },
+    "about": {
+        "title": "Om applikationen",
+        "description": "Denna modul tillhandahåller en omfattande lösning för hantering av autonom fordonsflotta inklusive operationsplaner, incidenttyper och uppgiftskörning.",
+        "version": "Version",
+        "features": {
+            "title": "Funktioner",
+            "fleet": "Flotthantering",
+            "planning": "Operationsplanering",
+            "incidents": "Incidentspårning",
+            "tasks": "Uppgiftskörning"
+        }
+    },
+    "operationPlan": {
+        "title": "Operationsplan",
+        "list": {
+            "title": "Operationsplaner",
+            "empty": "Inga operationsplaner hittades",
+            "search": "Sök planer..."
+        },
+        "details": {
+            "title": "Plandetaljer",
+            "status": "Status",
+            "startDate": "Startdatum",
+            "endDate": "Slutdatum",
+            "assignedVehicles": "Tilldelade fordon",
+            "tasks": "Uppgifter"
+        },
+        "form": {
+            "create": "Skapa plan",
+            "edit": "Redigera plan",
+            "name": "Plannamn",
+            "description": "Beskrivning",
+            "selectVehicles": "Välj fordon"
+        },
+        "status": {
+            "draft": "Utkast",
+            "active": "Aktiv",
+            "completed": "Slutförd",
+            "cancelled": "Avbruten"
+        }
+    },
+    "incidentType": {
+        "title": "Incidenttyp",
+        "list": {
+            "title": "Incidenttyper",
+            "empty": "Inga incidenttyper hittades",
+            "search": "Sök typer..."
+        },
+        "details": {
+            "title": "Typdetaljer",
+            "code": "Kod",
+            "severity": "Allvarlighetsgrad",
+            "responseTime": "Svarstid",
+            "procedures": "Procedurer"
+        },
+        "form": {
+            "create": "Skapa typ",
+            "edit": "Redigera typ",
+            "name": "Typnamn",
+            "description": "Beskrivning",
+            "selectSeverity": "Välj allvarlighetsgrad"
+        },
+        "severity": {
+            "low": "Låg",
+            "medium": "Medel",
+            "high": "Hög",
+            "critical": "Kritisk"
+        }
+    },
+    "taskCategory": {
+        "title": "Uppgiftskategori",
+        "list": {
+            "title": "Uppgiftskategorier",
+            "empty": "Inga uppgiftskategorier hittades",
+            "search": "Sök kategorier..."
+        },
+        "details": {
+            "title": "Kategoridetaljer",
+            "code": "Kod",
+            "priority": "Prioritet",
+            "estimatedDuration": "Uppskattad varaktighet",
+            "requirements": "Krav"
+        },
+        "form": {
+            "create": "Skapa kategori",
+            "edit": "Redigera kategori",
+            "name": "Kategorinamn",
+            "description": "Beskrivning",
+            "selectPriority": "Välj prioritet"
+        },
+        "priority": {
+            "low": "Låg",
+            "normal": "Normal",
+            "high": "Hög",
+            "urgent": "Brskåd"
+        }
+    },
+    "execution": {
+        "title": "Utförande",
+        "status": {
+            "pending": "Väntande",
+            "inProgress": "Pågående",
+            "completed": "Slutförd",
+            "failed": "Misslyckades",
+            "cancelled": "Avbruten"
+        },
+        "details": {
+            "title": "Utförandedetaljer",
+            "startTime": "Starttid",
+            "endTime": "Sluttid",
+            "duration": "Varaktighet",
+            "assignedTo": "Tilldelad till",
+            "progress": "Framsteg"
+        },
+        "actions": {
+            "start": "Starta utförande",
+            "pause": "Pausa",
+            "resume": "Återuppta",
+            "complete": "Slutför",
+            "cancel": "Avbryt"
+        },
+        "messages": {
+            "started": "Utförande startad",
+            "paused": "Utförande pausad",
+            "resumed": "Utförande återupptagen",
+            "completed": "Utförande slutförd",
+            "cancelled": "Utförande avbruten",
+            "failed": "Utförande misslyckades"
+        }
+    },
+    "incident": {
+        "title": "Incident",
+        "list": {
+            "title": "Incidenter",
+            "empty": "Inga incidenter hittades",
+            "search": "Sök incidenter...",
+            "filter": {
+                "all": "Alla",
+                "open": "Öppna",
+                "inProgress": "Pågående",
+                "resolved": "Löst",
+                "closed": "Stängd"
+            }
+        },
+        "details": {
+            "title": "Incidentdetaljer",
+            "id": "Incident-ID",
+            "type": "Typ",
+            "status": "Status",
+            "severity": "Allvarlighetsgrad",
+            "reportedBy": "Rapporterad av",
+            "reportedAt": "Rapporterad",
+            "assignedTo": "Tilldelad till",
+            "location": "Plats",
+            "vehicle": "Fordon",
+            "description": "Beskrivning",
+            "resolution": "Lösning",
+            "timeline": "Tidslinje"
+        },
+        "form": {
+            "create": "Rapportera incident",
+            "edit": "Redigera incident",
+            "selectType": "Välj typ",
+            "selectSeverity": "Välj allvarlighetsgrad",
+            "selectVehicle": "Välj fordon",
+            "descriptionPlaceholder": "Beskriv incidenten...",
+            "resolutionPlaceholder": "Beskriv lösningen..."
+        },
+        "status": {
+            "open": "Öppen",
+            "inProgress": "Pågående",
+            "resolved": "Löst",
+            "closed": "Stängd"
+        },
+        "actions": {
+            "assign": "Tilldela",
+            "resolve": "Lös",
+            "close": "Stäng",
+            "reopen": "Återöppna",
+            "addNote": "Lägg till anteckning"
+        },
+        "messages": {
+            "created": "Incident skapad",
+            "updated": "Incident uppdaterad",
+            "assigned": "Incident tilldelad",
+            "resolved": "Incident löst",
+            "closed": "Incident stängd",
+            "reopened": "Incident återöppnad"
+        }
     }
 }

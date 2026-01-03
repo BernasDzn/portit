@@ -672,5 +672,387 @@
         "errors": {
             "shiftOverlap": "Ongeldige dienst: overlap of eindtijd vóór start."
         }
+    },
+    "about": {
+        "title": "Over PorTiT",
+        "privacy": {
+            "title": "Privacybeleid",
+            "lastUpdated": "Laatst bijgewerkt: {date}"
+        }
+    },
+    "operationPlan": {
+        "title": "Operatieplan",
+        "dock": "Kade",
+        "docks": "Kades",
+        "operations": "Operaties",
+        "cranes": "Kranen",
+        "createdBy": "Aangemaakt door",
+        "createdAt": "Aangemaakt op",
+        "totalSchedules": "Totaal schema's",
+        "vesselCount": "Schepen",
+        "plansOnDate": "Operatieplannen op geselecteerde datum",
+        "noPlansOnDate": "Geen operatieplannen op geselecteerde datum",
+        "id": "ID",
+        "vvn": "Scheepsbezoekmelding",
+        "for": "voor",
+        "details": "Details",
+        "totalOperations": "Totaal operaties",
+        "algorithmUsed": "Gebruikte algoritme",
+        "ganttChart": "Gantt-diagram",
+        "startTime": "Starttijd",
+        "endTime": "Eindtijd",
+        "totalDuration": "Totale duur",
+        "operation": "Operatie",
+        "duration": "Duur",
+        "resources": "Middelen",
+        "operationDetails": "Operatiedetails",
+        "operationNumber": "Operatie #{number}",
+        "notFound": "Operatieplan niet gevonden",
+        "operationType": {
+            "Unload": "Lossen",
+            "Load": "Laden"
+        },
+        "tabs": {
+            "unplannedVVNs": "Niet-geplande VVN's",
+            "search": "Zoek plannen",
+            "edit": "Plan bewerken",
+            "open": "Uitvoering openen"
+        },
+        "subtitle": {
+            "edit": "Wijzig operatieplandetails en schema"
+        },
+        "unplannedVVNs": {
+            "description": "Scheepsbezoeken die nog geen toegewezen operatieplan hebben",
+            "noUnplanned": "Alle scheepsbezoeken hebben toegewezen operatieplannen",
+            "foundMessage": "{vvnCount} VVN's zonder plannen gevonden in {dayCount} dag(en)",
+            "regenerateAll": "Regenereer alle ontbrekende plannen",
+            "regenerateDay": "Regenereer plannen voor deze dag",
+            "regenerateModalTitle": "Regenereer plannen voor {date}",
+            "warning": "Waarschuwing",
+            "warningMessage": "Het regenereren van plannen zal alle bestaande operatieplannen voor deze dag vervangen. Deze actie kan niet ongedaan worden gemaakt.",
+            "selectedDay": "Geselecteerde dag",
+            "confirmRegeneration": "Bevestig regeneratie",
+            "affectedDays": "Beïnvloede dagen",
+            "queueInfo": "Elk regeneratieverzoek wordt afzonderlijk in de wachtrij geplaatst. U kunt ze individueel beoordelen en accepteren/weigeren vanuit de planningswachtrij.",
+            "continue": "Doorgaan",
+            "confirmRegenerationTitle": "Bevestig regeneratie",
+            "irreversibleAction": "Deze actie is onomkeerbaar",
+            "overwriteWarning": "Het regenereren van operatieplannen zal permanent alle bestaande plannen voor de geselecteerde dagen overschrijven. Deze actie kan niet ongedaan worden gemaakt.",
+            "aboutToRegenerate": "U staat op het punt plannen te regenereren voor",
+            "days": "dagen",
+            "vesselVisitNotifications": "Scheepsbezoeken",
+            "using": "Met gebruik van",
+            "algorithm": "algoritme",
+            "proceedQuestion": "Wilt u doorgaan met deze operatie?",
+            "yesRegenerateAll": "Ja, regenereer alles"
+        },
+        "algorithm": {
+            "optimal": "Optimaal",
+            "greedy": "Greedy",
+            "genetic": "Genetisch",
+            "auto": "Automatisch"
+        },
+        "metrics": {
+            "title": "Statistieken",
+            "strategy": "Strategie",
+            "totalDelay": "Totale vertraging",
+            "computationTime": "Rekentijd",
+            "autoSelection": "Automatische algoritmeselectie"
+        },
+        "infoTitle": "Operatieplaninformatie",
+        "fields": {
+            "id": {
+                "title": "Plan-ID"
+            },
+            "relatedVVN": {
+                "title": "Gerelateerde VVN"
+            },
+            "dock": {
+                "title": "Kade"
+            },
+            "operations": {
+                "title": "Operaties"
+            }
+        },
+        "filters": {
+            "startDate": "Startdatum vanaf",
+            "endDate": "Einddatum tot"
+        },
+        "metadata": {
+            "title": "Metadata",
+            "createdBy": "Aangemaakt door",
+            "createdAt": "Aangemaakt op",
+            "algorithmUsed": "Gebruikte algoritme"
+        },
+        "schedule": {
+            "title": "Operatieschema",
+            "noOperations": "Geen geplande operaties"
+        }
+    },
+    "incidentType": {
+        "fields": {
+            "name": {
+                "title": "Naam",
+                "placeholder": "Naam incidenttype"
+            },
+            "description": {
+                "title": "Beschrijving",
+                "placeholder": "Gedetailleerde beschrijving van incidenttype"
+            },
+            "severity": {
+                "title": "Ernst",
+                "placeholder": "Selecteer ernstniveau"
+            },
+            "subtypeOf": {
+                "title": "Subtype van",
+                "placeholder": "Selecteer bovenliggend type"
+            },
+            "subtypes": {
+                "title": "Subtypes",
+                "placeholder": "Selecteer onderliggende types"
+            }
+        },
+        "severity": {
+            "Minor": "Klein",
+            "Major": "Groot",
+            "Critical": "Kritiek"
+        },
+        "tabs": {
+            "dashboard": "Incidenttype dashboard",
+            "view_dashboard": "Bekijk incidenttypes",
+            "search": "Zoek incidenttypes",
+            "create": "Maak incidenttype",
+            "edit": "Bewerk incidenttype"
+        },
+        "generalFields": "Algemene velden",
+        "classification": "Classificatie",
+        "title": "Incidenten",
+        "subtitle": {
+            "dashboard": "Overzicht van incidenttype statistieken en activiteit",
+            "search": "Beheer en bekijk alle geregistreerde incidenttypes",
+            "create": "Registreer een nieuw incidenttype in het systeem",
+            "edit": "Wijzig een bestaand incidenttype in het systeem"
+        },
+        "registeredIncidentTypes": "Geregistreerde incidenttypes",
+        "incidentTypeInformation": "Incidenttype informatie",
+        "parentType": "Bovenliggend type",
+        "confirmDelete": "Bevestig verwijdering",
+        "confirmDeleteMessage": "Weet u zeker dat u dit incidenttype wilt verwijderen?",
+        "failedToDelete": "Verwijderen incidenttype mislukt"
+    },
+    "taskCategory": {
+        "fields": {
+            "name": {
+                "title": "Naam",
+                "placeholder": "Taakcategorienaam"
+            },
+            "category": {
+                "title": "Categorie",
+                "placeholder": "Categoriecode"
+            },
+            "description": {
+                "title": "Beschrijving",
+                "placeholder": "Taakcategoriebeschrijving"
+            }
+        },
+        "tabs": {
+            "dashboard": "Taakcategorie dashboard",
+            "search": "Zoek taakcategorieën",
+            "create": "Maak taakcategorie",
+            "edit": "Bewerk taakcategorie",
+            "view_dashboard": "Bekijk taakcategorieën"
+        },
+        "generalFields": "Algemene velden",
+        "title": "Taken",
+        "subtitle": {
+            "dashboard": "Overzicht van taakcategorie statistieken en activiteit",
+            "search": "Beheer en bekijk alle geregistreerde taakcategorieën",
+            "create": "Registreer een nieuwe taakcategorie in het systeem",
+            "edit": "Wijzig een bestaande taakcategorie in het systeem"
+        },
+        "taskCategoryInformation": "Taakcategorie informatie",
+        "registeredTaskCategories": "Geregistreerde taakcategorieën"
+    },
+    "execution": {
+        "title": "Scheepsbezoek uitvoeringen",
+        "subtitle": {
+            "search": "Beheer en bekijk alle scheepsbezoek uitvoeringen",
+            "dashboard": "Overzicht van scheepsbezoek uitvoeringen statistieken en activiteit"
+        },
+        "tabs": {
+            "dashboard": "Uitvoeringen dashboard",
+            "search": "Zoek uitvoeringen",
+            "view_dashboard": "Bekijk uitvoeringen",
+            "update": "Update uitvoering",
+            "view": "Bekijk uitvoering",
+            "table": "Bekijk tabel",
+            "cards": "Bekijk kaarten"
+        },
+        "fields": {
+            "code": "Code",
+            "relatedVVN": "Gerelateerd aan",
+            "status": "Status",
+            "createdBy": "Aangemaakt door",
+            "dateOpen": "Openingsdatum",
+            "dateClosed": "Sluitingsdatum",
+            "relatedVesselVisit": "Gerelateerd scheepsbezoek",
+            "dock": "Aanlegkade",
+            "berthTime": "Aanlegtijd",
+            "operations": "Operaties"
+        },
+        "filters": {
+            "startDate": "Startdatum",
+            "endDate": "Einddatum",
+            "relatedVVN": "Scheepsbezoekmelding",
+            "status": "Status"
+        },
+        "metrics": {
+            "totalOperations": "Totaal operaties",
+            "completedOperations": "Voortgang",
+            "turnaroundTime": "Keertijd",
+            "berthOccupancy": "Kadebezetting"
+        },
+        "status": {
+            "pending": "In afwachting",
+            "started": "Gestart",
+            "delayed": "Vertraagd",
+            "completed": "Voltooid"
+        },
+        "view_resources": "Bekijk middelen",
+        "infoTitle": "Uitvoeringsinformatie",
+        "operationsTitle": "Operaties",
+        "noOperations": "Geen beschikbare operaties",
+        "startOperation": "Start operatie",
+        "completeOperation": "Voltooi operatie",
+        "addOperation": "Operatie toevoegen",
+        "addOperationDescription": "Voeg een nieuwe operatie toe aan de tijdlijn",
+        "confirmStartOperation": "Weet u zeker dat u deze operatie wilt starten?",
+        "confirmCompleteOperation": "Weet u zeker dat u deze operatie wilt voltooien?",
+        "berthOperation": {
+            "button": "Bewerk aanleggegevens",
+            "title": "Aanlegoperatie",
+            "description": "Bewerk de kade en tijd voor deze scheepsbezoekuitvoering.",
+            "dock": "Aanlegkade",
+            "dockPlaceholder": "Selecteer kade",
+            "berthTime": "Aanlegtijd",
+            "differentThanPlanned": "De geselecteerde kade is anders dan gepland."
+        }
+    },
+    "incident": {
+        "tabs": {
+            "dashboard": "Incidenten dashboard",
+            "create": "Maak incident",
+            "search": "Zoek incidenten",
+            "active": "Actieve incidenten",
+            "view": "Bekijk incident",
+            "edit": "Bewerk incident"
+        },
+        "subtitle": {
+            "create": "Rapporteer een nieuw incident in het systeem",
+            "search": "Zoek en filter bestaande incidenten",
+            "active": "Bekijk en beheer actieve incidenten"
+        },
+        "generalFields": "Algemene informatie",
+        "classification": "Classificatie",
+        "fields": {
+            "bid": {
+                "title": "Incident-ID"
+            },
+            "type": {
+                "title": "Incidenttype",
+                "placeholder": "Selecteer incidenttype"
+            },
+            "startTime": {
+                "title": "Starttijd",
+                "placeholder": "Wanneer begon het incident?"
+            },
+            "endTime": {
+                "title": "Eindtijd",
+                "placeholder": "Wanneer eindigde het incident?"
+            },
+            "severity": {
+                "title": "Ernst",
+                "placeholder": "Selecteer ernstniveau",
+                "options": {
+                    "minor": "Klein",
+                    "major": "Groot",
+                    "critical": "Kritiek"
+                }
+            },
+            "description": {
+                "title": "Beschrijving",
+                "placeholder": "Beschrijf het incident in detail"
+            },
+            "createdBy": {
+                "title": "Aangemaakt door"
+            },
+            "affectedVVECodes": {
+                "title": "Getroffen VVE's",
+                "placeholder": "Voer getroffen VVE's in"
+            },
+            "vveCode": {
+                "title": "VVE-code"
+            },
+            "status": {
+                "title": "Status",
+                "options": {
+                    "active": "Actief",
+                    "resolved": "Opgelost"
+                }
+            },
+            "filterStartTime": {
+                "title": "Startdatum vanaf"
+            },
+            "filterEndTime": {
+                "title": "Startdatum tot"
+            },
+            "duration": {
+                "title": "Duur"
+            }
+        },
+        "severity": {
+            "Minor": "Klein",
+            "Major": "Groot",
+            "Critical": "Kritiek"
+        },
+        "status": {
+            "active": "Actief",
+            "resolved": "Opgelost"
+        },
+        "ongoing": "Lopend",
+        "filters": {
+            "onlyActive": "Alleen actieve",
+            "onlyMine": "Alleen van mij"
+        },
+        "actions": {
+            "view": "Bekijk details",
+            "edit": "Bewerk incident",
+            "resolve": "Los incident op",
+            "delete": "Verwijder incident"
+        },
+        "notifications": {
+            "createSuccess": "Incident succesvol aangemaakt",
+            "createFailed": "Aanmaken incident mislukt",
+            "updateSuccess": "Incident succesvol bijgewerkt",
+            "updateFailed": "Bijwerken incident mislukt",
+            "resolveSuccess": "Incident succesvol opgelost",
+            "resolveFailed": "Oplossen incident mislukt",
+            "deleteSuccess": "Incident succesvol verwijderd",
+            "deleteFailed": "Verwijderen incident mislukt"
+        },
+        "table": {
+            "empty": "Geen incidenten gevonden"
+        },
+        "active": {
+            "title": "Actieve incidenten",
+            "subtitle": "Bekijk en beheer lopende incidenten"
+        },
+        "infoTitle": "Incidentdetails",
+        "closeDialog": {
+            "title": "Los incident op",
+            "message": "Wanneer werd het incident opgelost?",
+            "confirm": "Ja, sluit dit incident",
+            "cancel": "Annuleren"
+        }
     }
 }

@@ -648,5 +648,387 @@
         "errors": {
             "shiftOverlap": "Nieprawidłowa zmiana. Nakładanie się lub czas zakończenia przed czasem rozpoczęcia."
         }
+    },
+    "about": {
+        "title": "O PorTiT",
+        "privacy": {
+            "title": "Polityka prywatności",
+            "lastUpdated": "Ostatnia aktualizacja: {date}"
+        }
+    },
+    "operationPlan": {
+        "title": "Plan operacyjny",
+        "dock": "Dok",
+        "docks": "Doki",
+        "operations": "Operacje",
+        "cranes": "Dźwigi",
+        "createdBy": "Utworzono przez",
+        "createdAt": "Utworzono",
+        "totalSchedules": "Całkowite harmonogramy",
+        "vesselCount": "Statki",
+        "plansOnDate": "Plany operacyjne w wybranym dniu",
+        "noPlansOnDate": "Brak planów operacyjnych w wybranym dniu",
+        "id": "ID",
+        "vvn": "Powiadomienie o wizycie statku",
+        "for": "dla",
+        "details": "Szczegóły",
+        "totalOperations": "Całkowite operacje",
+        "algorithmUsed": "Użyty algorytm",
+        "ganttChart": "Wykres Gantta",
+        "startTime": "Czas rozpoczęcia",
+        "endTime": "Czas zakończenia",
+        "totalDuration": "Całkowity czas trwania",
+        "operation": "Operacja",
+        "duration": "Czas trwania",
+        "resources": "Zasoby",
+        "operationDetails": "Szczegóły operacji",
+        "operationNumber": "Operacja #{number}",
+        "notFound": "Plan operacyjny nie został znaleziony",
+        "operationType": {
+            "Unload": "Rozładunek",
+            "Load": "Załadunek"
+        },
+        "tabs": {
+            "unplannedVVNs": "Niezaplanowane VVN",
+            "search": "Szukaj planów",
+            "edit": "Edytuj plan",
+            "open": "Otwórz wykonanie"
+        },
+        "subtitle": {
+            "edit": "Zmień szczegóły planu operacyjnego i harmonogram"
+        },
+        "unplannedVVNs": {
+            "description": "Powiadomienia o wizycie statku, które nie mają jeszcze przypisanego planu operacyjnego",
+            "noUnplanned": "Wszystkie powiadomienia o wizycie statku mają przypisane plany operacyjne",
+            "foundMessage": "Znaleziono {vvnCount} VVN bez planów w {dayCount} dniu/dniach",
+            "regenerateAll": "Regeneruj wszystkie brakujące plany",
+            "regenerateDay": "Regeneruj plany na ten dzień",
+            "regenerateModalTitle": "Regeneruj plany dla {date}",
+            "warning": "Ostrzeżenie",
+            "warningMessage": "Regeneracja planów zastąpi wszystkie istniejące plany operacyjne na ten dzień. Tej operacji nie można cofnąć.",
+            "selectedDay": "Wybrany dzień",
+            "confirmRegeneration": "Potwierdź regenerację",
+            "affectedDays": "Dni, których dotyczy",
+            "queueInfo": "Każde żądanie regeneracji zostanie umieszczone w kolejce osobno. Możesz je przeglądać i akceptować/odrzucać indywidualnie z kolejki planowania.",
+            "continue": "Kontynuuj",
+            "confirmRegenerationTitle": "Potwierdź regenerację",
+            "irreversibleAction": "Ta operacja jest nieodwracalna",
+            "overwriteWarning": "Regeneracja planów operacyjnych trwale nadpisze wszystkie istniejące plany dla wybranych dni. Tej operacji nie można cofnąć.",
+            "aboutToRegenerate": "Za chwilę zregenerujesz plany dla",
+            "days": "dni",
+            "vesselVisitNotifications": "Powiadomienia o wizycie statku",
+            "using": "Używając",
+            "algorithm": "algorytm",
+            "proceedQuestion": "Czy chcesz kontynuować tę operację?",
+            "yesRegenerateAll": "Tak, regeneruj wszystko"
+        },
+        "algorithm": {
+            "optimal": "Optymalny",
+            "greedy": "Zachłanny",
+            "genetic": "Genetyczny",
+            "auto": "Automatyczny"
+        },
+        "metrics": {
+            "title": "Metryki",
+            "strategy": "Strategia",
+            "totalDelay": "Całkowite opóźnienie",
+            "computationTime": "Czas obliczeń",
+            "autoSelection": "Automatyczny wybór algorytmu"
+        },
+        "infoTitle": "Informacje o planie operacyjnym",
+        "fields": {
+            "id": {
+                "title": "ID planu"
+            },
+            "relatedVVN": {
+                "title": "Powiązany VVN"
+            },
+            "dock": {
+                "title": "Dok"
+            },
+            "operations": {
+                "title": "Operacje"
+            }
+        },
+        "filters": {
+            "startDate": "Data rozpoczęcia od",
+            "endDate": "Data zakończenia do"
+        },
+        "metadata": {
+            "title": "Metadane",
+            "createdBy": "Utworzono przez",
+            "createdAt": "Utworzono",
+            "algorithmUsed": "Użyty algorytm"
+        },
+        "schedule": {
+            "title": "Harmonogram operacji",
+            "noOperations": "Brak zaplanowanych operacji"
+        }
+    },
+    "incidentType": {
+        "fields": {
+            "name": {
+                "title": "Nazwa",
+                "placeholder": "Nazwa typu incydentu"
+            },
+            "description": {
+                "title": "Opis",
+                "placeholder": "Szczegółowy opis typu incydentu"
+            },
+            "severity": {
+                "title": "Waga",
+                "placeholder": "Wybierz poziom wagi"
+            },
+            "subtypeOf": {
+                "title": "Podtyp",
+                "placeholder": "Wybierz typ nadrzędny"
+            },
+            "subtypes": {
+                "title": "Podtypy",
+                "placeholder": "Wybierz typy podrzędne"
+            }
+        },
+        "severity": {
+            "Minor": "Pomniejszy",
+            "Major": "Główny",
+            "Critical": "Krytyczny"
+        },
+        "tabs": {
+            "dashboard": "Pulpit typów incydentów",
+            "view_dashboard": "Wyświetl typy incydentów",
+            "search": "Szukaj typów incydentów",
+            "create": "Utwórz typ incydentu",
+            "edit": "Edytuj typ incydentu"
+        },
+        "generalFields": "Pola ogólne",
+        "classification": "Klasyfikacja",
+        "title": "Incydenty",
+        "subtitle": {
+            "dashboard": "Przegląd statystyk i aktywności typów incydentów",
+            "search": "Zarządzaj i przeglądaj wszystkie zarejestrowane typy incydentów",
+            "create": "Zarejestruj nowy typ incydentu w systemie",
+            "edit": "Zmień istniejący typ incydentu w systemie"
+        },
+        "registeredIncidentTypes": "Zarejestrowane typy incydentów",
+        "incidentTypeInformation": "Informacje o typie incydentu",
+        "parentType": "Typ nadrzędny",
+        "confirmDelete": "Potwierdź usunięcie",
+        "confirmDeleteMessage": "Czy na pewno chcesz usunąć ten typ incydentu?",
+        "failedToDelete": "Nie udało się usunąć typu incydentu"
+    },
+    "taskCategory": {
+        "fields": {
+            "name": {
+                "title": "Nazwa",
+                "placeholder": "Nazwa kategorii zadania"
+            },
+            "category": {
+                "title": "Kategoria",
+                "placeholder": "Kod kategorii"
+            },
+            "description": {
+                "title": "Opis",
+                "placeholder": "Opis kategorii zadania"
+            }
+        },
+        "tabs": {
+            "dashboard": "Pulpit kategorii zadań",
+            "search": "Szukaj kategorii zadań",
+            "create": "Utwórz kategorię zadania",
+            "edit": "Edytuj kategorię zadania",
+            "view_dashboard": "Wyświetl kategorie zadań"
+        },
+        "generalFields": "Pola ogólne",
+        "title": "Zadania",
+        "subtitle": {
+            "dashboard": "Przegląd statystyk i aktywności kategorii zadań",
+            "search": "Zarządzaj i przeglądaj wszystkie zarejestrowane kategorie zadań",
+            "create": "Zarejestruj nową kategorię zadania w systemie",
+            "edit": "Zmień istniejącą kategorię zadania w systemie"
+        },
+        "taskCategoryInformation": "Informacje o kategorii zadania",
+        "registeredTaskCategories": "Zarejestrowane kategorie zadań"
+    },
+    "execution": {
+        "title": "Wykonania wizyt statków",
+        "subtitle": {
+            "search": "Zarządzaj i przeglądaj wszystkie wykonania wizyt statków",
+            "dashboard": "Przegląd statystyk i aktywności wykonania wizyt statków"
+        },
+        "tabs": {
+            "dashboard": "Pulpit wykonań",
+            "search": "Szukaj wykonań",
+            "view_dashboard": "Wyświetl wykonania",
+            "update": "Aktualizuj wykonanie",
+            "view": "Wyświetl wykonanie",
+            "table": "Wyświetl tabelę",
+            "cards": "Wyświetl karty"
+        },
+        "fields": {
+            "code": "Kod",
+            "relatedVVN": "Powiązany z",
+            "status": "Status",
+            "createdBy": "Utworzono przez",
+            "dateOpen": "Data otwarcia",
+            "dateClosed": "Data zamknięcia",
+            "relatedVesselVisit": "Powiązana wizyta statku",
+            "dock": "Dok do cumowania",
+            "berthTime": "Czas cumowania",
+            "operations": "Operacje"
+        },
+        "filters": {
+            "startDate": "Data rozpoczęcia",
+            "endDate": "Data zakończenia",
+            "relatedVVN": "Powiadomienie o wizycie statku",
+            "status": "Status"
+        },
+        "metrics": {
+            "totalOperations": "Całkowite operacje",
+            "completedOperations": "Postęp",
+            "turnaroundTime": "Czas obrotu",
+            "berthOccupancy": "Obciążenie doku"
+        },
+        "status": {
+            "pending": "Oczekujący",
+            "started": "Rozpoczęty",
+            "delayed": "Opóźniony",
+            "completed": "Zakończony"
+        },
+        "view_resources": "Wyświetl zasoby",
+        "infoTitle": "Informacje o wykonaniu",
+        "operationsTitle": "Operacje",
+        "noOperations": "Brak dostępnych operacji",
+        "startOperation": "Rozpocznij operację",
+        "completeOperation": "Zakończ operację",
+        "addOperation": "Dodaj operację",
+        "addOperationDescription": "Dodaj nową operację do osi czasu",
+        "confirmStartOperation": "Czy na pewno chcesz rozpocząć tę operację?",
+        "confirmCompleteOperation": "Czy na pewno chcesz zakończyć tę operację?",
+        "berthOperation": {
+            "button": "Edytuj dane cumowania",
+            "title": "Operacja cumowania",
+            "description": "Edytuj dok i czas dla tego wykonania wizyty statku.",
+            "dock": "Dok do cumowania",
+            "dockPlaceholder": "Wybierz dok",
+            "berthTime": "Czas cumowania",
+            "differentThanPlanned": "Wybrany dok różni się od zaplanowanego."
+        }
+    },
+    "incident": {
+        "tabs": {
+            "dashboard": "Pulpit incydentów",
+            "create": "Utwórz incydent",
+            "search": "Szukaj incydentów",
+            "active": "Aktywne incydenty",
+            "view": "Wyświetl incydent",
+            "edit": "Edytuj incydent"
+        },
+        "subtitle": {
+            "create": "Zgłoś nowy incydent w systemie",
+            "search": "Szukaj i filtruj istniejące incydenty",
+            "active": "Wyświetl i zarządzaj aktywnymi incydentami"
+        },
+        "generalFields": "Informacje ogólne",
+        "classification": "Klasyfikacja",
+        "fields": {
+            "bid": {
+                "title": "ID incydentu"
+            },
+            "type": {
+                "title": "Typ incydentu",
+                "placeholder": "Wybierz typ incydentu"
+            },
+            "startTime": {
+                "title": "Czas rozpoczęcia",
+                "placeholder": "Kiedy rozpoczął się incydent?"
+            },
+            "endTime": {
+                "title": "Czas zakończenia",
+                "placeholder": "Kiedy zakończył się incydent?"
+            },
+            "severity": {
+                "title": "Waga",
+                "placeholder": "Wybierz poziom wagi",
+                "options": {
+                    "minor": "Pomniejszy",
+                    "major": "Główny",
+                    "critical": "Krytyczny"
+                }
+            },
+            "description": {
+                "title": "Opis",
+                "placeholder": "Opisz incydent szczegółowo"
+            },
+            "createdBy": {
+                "title": "Utworzono przez"
+            },
+            "affectedVVECodes": {
+                "title": "Dotknięte VVE",
+                "placeholder": "Wprowadź dotknięte VVE"
+            },
+            "vveCode": {
+                "title": "Kod VVE"
+            },
+            "status": {
+                "title": "Status",
+                "options": {
+                    "active": "Aktywny",
+                    "resolved": "Rozwiązany"
+                }
+            },
+            "filterStartTime": {
+                "title": "Data rozpoczęcia od"
+            },
+            "filterEndTime": {
+                "title": "Data rozpoczęcia do"
+            },
+            "duration": {
+                "title": "Czas trwania"
+            }
+        },
+        "severity": {
+            "Minor": "Pomniejszy",
+            "Major": "Główny",
+            "Critical": "Krytyczny"
+        },
+        "status": {
+            "active": "Aktywny",
+            "resolved": "Rozwiązany"
+        },
+        "ongoing": "W toku",
+        "filters": {
+            "onlyActive": "Tylko aktywne",
+            "onlyMine": "Tylko moje"
+        },
+        "actions": {
+            "view": "Wyświetl szczegóły",
+            "edit": "Edytuj incydent",
+            "resolve": "Rozwiąż incydent",
+            "delete": "Usuń incydent"
+        },
+        "notifications": {
+            "createSuccess": "Incydent utworzony pomyślnie",
+            "createFailed": "Nie udało się utworzyć incydentu",
+            "updateSuccess": "Incydent zaktualizowany pomyślnie",
+            "updateFailed": "Nie udało się zaktualizować incydentu",
+            "resolveSuccess": "Incydent rozwiązany pomyślnie",
+            "resolveFailed": "Nie udało się rozwiązać incydentu",
+            "deleteSuccess": "Incydent usunięty pomyślnie",
+            "deleteFailed": "Nie udało się usunąć incydentu"
+        },
+        "table": {
+            "empty": "Nie znaleziono incydentów"
+        },
+        "active": {
+            "title": "Aktywne incydenty",
+            "subtitle": "Wyświetl i zarządzaj trwającymi incydentami"
+        },
+        "infoTitle": "Szczegóły incydentu",
+        "closeDialog": {
+            "title": "Rozwiąż incydent",
+            "message": "Kiedy został rozwiązany incydent?",
+            "confirm": "Tak, zamknij ten incydent",
+            "cancel": "Anuluj"
+        }
     }
 }

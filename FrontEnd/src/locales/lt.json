@@ -650,5 +650,387 @@
         "errors": {
             "shiftOverlap": "Neteisinga pamaina. Persidengia arba pabaiga anksčiau pradžios."
         }
+    },
+    "about": {
+        "title": "Apie PorTiT",
+        "privacy": {
+            "title": "Privatumo politika",
+            "lastUpdated": "Paskutinį kartą atnaujinta: {date}"
+        }
+    },
+    "operationPlan": {
+        "title": "Operacijų planas",
+        "dock": "Prieplaukla",
+        "docks": "Prieplaukos",
+        "operations": "Operacijos",
+        "cranes": "Kranai",
+        "createdBy": "Sukūrė",
+        "createdAt": "Sukurta",
+        "totalSchedules": "Viso tvarkaraščių",
+        "vesselCount": "Laivai",
+        "plansOnDate": "Operacijų planai pasirinktą datą",
+        "noPlansOnDate": "Nėra operacijų planų pasirinktą datą",
+        "id": "ID",
+        "vvn": "Laivo apsilankymo pranešimas",
+        "for": "kam",
+        "details": "Išsamiai",
+        "totalOperations": "Viso operacijų",
+        "algorithmUsed": "Naudotas algoritmas",
+        "ganttChart": "Ganto diagrama",
+        "startTime": "Pradžios laikas",
+        "endTime": "Pabaigos laikas",
+        "totalDuration": "Bendra trukmė",
+        "operation": "Operacija",
+        "duration": "Trukmė",
+        "resources": "Ištekliai",
+        "operationDetails": "Operacijos išsamiai",
+        "operationNumber": "Operacija #{number}",
+        "notFound": "Operacijų planas nerastas",
+        "operationType": {
+            "Unload": "Iškrovimas",
+            "Load": "Pakrovimas"
+        },
+        "tabs": {
+            "unplannedVVNs": "Nesuplanuoti VVN",
+            "search": "Ieškoti planų",
+            "edit": "Redaguoti planą",
+            "open": "Atidaryti vykdymą"
+        },
+        "subtitle": {
+            "edit": "Keisti operacijų plano išsamią informaciją ir tvarkaraštį"
+        },
+        "unplannedVVNs": {
+            "description": "Laivo apsilankymo pranešimai, kurie dar neturi priskirto operacijų plano",
+            "noUnplanned": "Visi laivo apsilankymo pranešimai turi priskirtus operacijų planus",
+            "foundMessage": "Rasta {vvnCount} VVN be planų per {dayCount} dieną/-as",
+            "regenerateAll": "Regeneruoti visus trūkstamus planus",
+            "regenerateDay": "Regeneruoti šios dienos planus",
+            "regenerateModalTitle": "Regeneruoti planus {date}",
+            "warning": "Įspėjimas",
+            "warningMessage": "Planų regeneravimas pakeis visus esamus šios dienos operacijų planus. Šio veiksmo negalima atšaukti.",
+            "selectedDay": "Pasirinkta diena",
+            "confirmRegeneration": "Patvirtinti regeneravimą",
+            "affectedDays": "Paveiktos dienos",
+            "queueInfo": "Kiekvienas regeneravimo užklausas bus įtrauktas į eilę atskirai. Galite juos peržiūrėti ir priimti/atmesti atskirai iš planavimo eilės.",
+            "continue": "Tęsti",
+            "confirmRegenerationTitle": "Patvirtinti regeneravimą",
+            "irreversibleAction": "Šis veiksmas yra negrįžtamas",
+            "overwriteWarning": "Operacijų planų regeneravimas nuolat perrašys visus esamus pasirinktų dienų planus. Šio veiksmo negalima atšaukti.",
+            "aboutToRegenerate": "Ketinate regeneruoti planus",
+            "days": "dienoms",
+            "vesselVisitNotifications": "Laivo apsilankymo pranešimai",
+            "using": "Naudojant",
+            "algorithm": "algoritmą",
+            "proceedQuestion": "Ar norite tęsti šią operaciją?",
+            "yesRegenerateAll": "Taip, regeneruoti viską"
+        },
+        "algorithm": {
+            "optimal": "Optimalus",
+            "greedy": "Godinis",
+            "genetic": "Genetinis",
+            "auto": "Automatinis"
+        },
+        "metrics": {
+            "title": "Metrika",
+            "strategy": "Strategija",
+            "totalDelay": "Bendras vėlavimas",
+            "computationTime": "Skaičiavimo laikas",
+            "autoSelection": "Automatinis algoritmo pasirinkimas"
+        },
+        "infoTitle": "Operacijų plano informacija",
+        "fields": {
+            "id": {
+                "title": "Plano ID"
+            },
+            "relatedVVN": {
+                "title": "Susijęs VVN"
+            },
+            "dock": {
+                "title": "Prieplaukla"
+            },
+            "operations": {
+                "title": "Operacijos"
+            }
+        },
+        "filters": {
+            "startDate": "Pradžios data nuo",
+            "endDate": "Pabaigos data iki"
+        },
+        "metadata": {
+            "title": "Metaduomenys",
+            "createdBy": "Sukūrė",
+            "createdAt": "Sukurta",
+            "algorithmUsed": "Naudotas algoritmas"
+        },
+        "schedule": {
+            "title": "Operacijų tvarkaraštis",
+            "noOperations": "Nėra suplanuotų operacijų"
+        }
+    },
+    "incidentType": {
+        "fields": {
+            "name": {
+                "title": "Pavadinimas",
+                "placeholder": "Incidento tipo pavadinimas"
+            },
+            "description": {
+                "title": "Aprašymas",
+                "placeholder": "Išsamus incidento tipo aprašymas"
+            },
+            "severity": {
+                "title": "Sunkumas",
+                "placeholder": "Pasirinkite sunkumo lygį"
+            },
+            "subtypeOf": {
+                "title": "Potipis",
+                "placeholder": "Pasirinkite tėvinį tipą"
+            },
+            "subtypes": {
+                "title": "Potipiai",
+                "placeholder": "Pasirinkite vaikinius tipus"
+            }
+        },
+        "severity": {
+            "Minor": "Nesunkus",
+            "Major": "Didelis",
+            "Critical": "Kritinis"
+        },
+        "tabs": {
+            "dashboard": "Incidentų tipų skydelis",
+            "view_dashboard": "Peržiūrėti incidentų tipus",
+            "search": "Ieškoti incidentų tipų",
+            "create": "Sukurti incidento tipą",
+            "edit": "Redaguoti incidento tipą"
+        },
+        "generalFields": "Bendri laukai",
+        "classification": "Klasifikacija",
+        "title": "Incidentai",
+        "subtitle": {
+            "dashboard": "Incidentų tipų statistikos ir veiklos apžvalga",
+            "search": "Valdyti ir peržiūrėti visus registruotus incidentų tipus",
+            "create": "Registruoti naują incidento tipą sistemoje",
+            "edit": "Keisti esamą incidento tipą sistemoje"
+        },
+        "registeredIncidentTypes": "Registruoti incidentų tipai",
+        "incidentTypeInformation": "Incidento tipo informacija",
+        "parentType": "Tėvinis tipas",
+        "confirmDelete": "Patvirtinti ištrynimą",
+        "confirmDeleteMessage": "Ar tikrai norite ištrinti šį incidento tipą?",
+        "failedToDelete": "Nepavyko ištrinti incidento tipo"
+    },
+    "taskCategory": {
+        "fields": {
+            "name": {
+                "title": "Pavadinimas",
+                "placeholder": "Užduoties kategorijos pavadinimas"
+            },
+            "category": {
+                "title": "Kategorija",
+                "placeholder": "Kategorijos kodas"
+            },
+            "description": {
+                "title": "Aprašymas",
+                "placeholder": "Užduoties kategorijos aprašymas"
+            }
+        },
+        "tabs": {
+            "dashboard": "Užduočių kategorijų skydelis",
+            "search": "Ieškoti užduočių kategorijų",
+            "create": "Sukurti užduoties kategoriją",
+            "edit": "Redaguoti užduoties kategoriją",
+            "view_dashboard": "Peržiūrėti užduočių kategorijas"
+        },
+        "generalFields": "Bendri laukai",
+        "title": "Užduotys",
+        "subtitle": {
+            "dashboard": "Užduočių kategorijų statistikos ir veiklos apžvalga",
+            "search": "Valdyti ir peržiūrėti visas registruotas užduočių kategorijas",
+            "create": "Registruoti naują užduoties kategoriją sistemoje",
+            "edit": "Keisti esamą užduoties kategoriją sistemoje"
+        },
+        "taskCategoryInformation": "Užduoties kategorijos informacija",
+        "registeredTaskCategories": "Registruotos užduočių kategorijos"
+    },
+    "execution": {
+        "title": "Laivo apsilankymo vykdymai",
+        "subtitle": {
+            "search": "Valdyti ir peržiūrėti visus laivo apsilankymo vykdymus",
+            "dashboard": "Laivo apsilankymo vykdymų statistikos ir veiklos apžvalga"
+        },
+        "tabs": {
+            "dashboard": "Vykdymų skydelis",
+            "search": "Ieškoti vykdymų",
+            "view_dashboard": "Peržiūrėti vykdymus",
+            "update": "Atnaujinti vykdymą",
+            "view": "Peržiūrėti vykdymą",
+            "table": "Peržiūrėti lentelę",
+            "cards": "Peržiūrėti korteles"
+        },
+        "fields": {
+            "code": "Kodas",
+            "relatedVVN": "Susijęs su",
+            "status": "Būsena",
+            "createdBy": "Sukūrė",
+            "dateOpen": "Atidarymo data",
+            "dateClosed": "Uždarymo data",
+            "relatedVesselVisit": "Susijęs laivo apsilankymas",
+            "dock": "Prieplaukla prisišvartavimui",
+            "berthTime": "Prisišvartavimo laikas",
+            "operations": "Operacijos"
+        },
+        "filters": {
+            "startDate": "Pradžios data",
+            "endDate": "Pabaigos data",
+            "relatedVVN": "Laivo apsilankymo pranešimas",
+            "status": "Būsena"
+        },
+        "metrics": {
+            "totalOperations": "Viso operacijų",
+            "completedOperations": "Progresas",
+            "turnaroundTime": "Apyvartos laikas",
+            "berthOccupancy": "Prieplauklos užimtumas"
+        },
+        "status": {
+            "pending": "Laukiama",
+            "started": "Pradėta",
+            "delayed": "Vėluojama",
+            "completed": "Užbaigta"
+        },
+        "view_resources": "Peržiūrėti išteklius",
+        "infoTitle": "Vykdymo informacija",
+        "operationsTitle": "Operacijos",
+        "noOperations": "Nėra prieinamų operacijų",
+        "startOperation": "Pradėti operaciją",
+        "completeOperation": "Užbaigti operaciją",
+        "addOperation": "Pridėti operaciją",
+        "addOperationDescription": "Pridėti naują operaciją į laiko juostą",
+        "confirmStartOperation": "Ar tikrai norite pradėti šią operaciją?",
+        "confirmCompleteOperation": "Ar tikrai norite užbaigti šią operaciją?",
+        "berthOperation": {
+            "button": "Redaguoti prisišvartavimo duomenis",
+            "title": "Prisišvartavimo operacija",
+            "description": "Redaguokite prieplauklą ir laiką šiam laivo apsilankymo vykdymui.",
+            "dock": "Prieplaukla prisišvartavimui",
+            "dockPlaceholder": "Pasirinkite prieplauklą",
+            "berthTime": "Prisišvartavimo laikas",
+            "differentThanPlanned": "Pasirinkta prieplaukla skiriasi nuo suplanuotos."
+        }
+    },
+    "incident": {
+        "tabs": {
+            "dashboard": "Incidentų skydelis",
+            "create": "Sukurti incidentą",
+            "search": "Ieškoti incidentų",
+            "active": "Aktyvūs incidentai",
+            "view": "Peržiūrėti incidentą",
+            "edit": "Redaguoti incidentą"
+        },
+        "subtitle": {
+            "create": "Pranešti apie naują incidentą sistemoje",
+            "search": "Ieškoti ir filtruoti esamus incidentus",
+            "active": "Peržiūrėti ir valdyti aktyvius incidentus"
+        },
+        "generalFields": "Bendra informacija",
+        "classification": "Klasifikacija",
+        "fields": {
+            "bid": {
+                "title": "Incidento ID"
+            },
+            "type": {
+                "title": "Incidento tipas",
+                "placeholder": "Pasirinkite incidento tipą"
+            },
+            "startTime": {
+                "title": "Pradžios laikas",
+                "placeholder": "Kada prasidėjo incidentas?"
+            },
+            "endTime": {
+                "title": "Pabaigos laikas",
+                "placeholder": "Kada baigėsi incidentas?"
+            },
+            "severity": {
+                "title": "Sunkumas",
+                "placeholder": "Pasirinkite sunkumo lygį",
+                "options": {
+                    "minor": "Nesunkus",
+                    "major": "Didelis",
+                    "critical": "Kritinis"
+                }
+            },
+            "description": {
+                "title": "Aprašymas",
+                "placeholder": "Aprašykite incidentą išsamiai"
+            },
+            "createdBy": {
+                "title": "Sukūrė"
+            },
+            "affectedVVECodes": {
+                "title": "Paveikti VVE",
+                "placeholder": "Įveskite paveiktus VVE"
+            },
+            "vveCode": {
+                "title": "VVE kodas"
+            },
+            "status": {
+                "title": "Būsena",
+                "options": {
+                    "active": "Aktyvus",
+                    "resolved": "Išspręstas"
+                }
+            },
+            "filterStartTime": {
+                "title": "Pradžios data nuo"
+            },
+            "filterEndTime": {
+                "title": "Pradžios data iki"
+            },
+            "duration": {
+                "title": "Trukmė"
+            }
+        },
+        "severity": {
+            "Minor": "Nesunkus",
+            "Major": "Didelis",
+            "Critical": "Kritinis"
+        },
+        "status": {
+            "active": "Aktyvus",
+            "resolved": "Išspręstas"
+        },
+        "ongoing": "Vyksta",
+        "filters": {
+            "onlyActive": "Tik aktyvūs",
+            "onlyMine": "Tik mano"
+        },
+        "actions": {
+            "view": "Peržiūrėti išsamiai",
+            "edit": "Redaguoti incidentą",
+            "resolve": "Išspręsti incidentą",
+            "delete": "Ištrinti incidentą"
+        },
+        "notifications": {
+            "createSuccess": "Incidentas sėkmingai sukurtas",
+            "createFailed": "Nepavyko sukurti incidento",
+            "updateSuccess": "Incidentas sėkmingai atnaujintas",
+            "updateFailed": "Nepavyko atnaujinti incidento",
+            "resolveSuccess": "Incidentas sėkmingai išspręstas",
+            "resolveFailed": "Nepavyko išspręsti incidento",
+            "deleteSuccess": "Incidentas sėkmingai ištrintas",
+            "deleteFailed": "Nepavyko ištrinti incidento"
+        },
+        "table": {
+            "empty": "Incidentų nerasta"
+        },
+        "active": {
+            "title": "Aktyvūs incidentai",
+            "subtitle": "Peržiūrėti ir valdyti vykstančius incidentus"
+        },
+        "infoTitle": "Incidento išsamiai",
+        "closeDialog": {
+            "title": "Išspręsti incidentą",
+            "message": "Kada buvo išspręstas incidentas?",
+            "confirm": "Taip, uždaryti šį incidentą",
+            "cancel": "Atšaukti"
+        }
     }
 }

@@ -649,6 +649,386 @@
         },
         "errors": {
             "shiftOverlap": "Nederīga maiņa. Pārklājas vai beigu laiks pirms sākuma."
+        }    },
+    "about": {
+        "title": "Par PorTiT",
+        "privacy": {
+            "title": "Privātuma politika",
+            "lastUpdated": "Pēdējo reizi atjaunināts: {date}"
         }
-    }
+    },
+    "operationPlan": {
+        "title": "Darbības plāns",
+        "dock": "Doks",
+        "docks": "Doki",
+        "operations": "Darbības",
+        "cranes": "Celtņi",
+        "createdBy": "Izveidoja",
+        "createdAt": "Izveidots",
+        "totalSchedules": "Kopā grafiku",
+        "vesselCount": "Kuģi",
+        "plansOnDate": "Darbības plāni izvēlētajā datumā",
+        "noPlansOnDate": "Nav darbības plānu izvēlētajā datumā",
+        "id": "ID",
+        "vvn": "Kuģa vizītes paziņojums",
+        "for": "priekš",
+        "details": "Detaļas",
+        "totalOperations": "Kopā darbību",
+        "algorithmUsed": "Izmantotais algoritms",
+        "ganttChart": "Ganta diagramma",
+        "startTime": "Sākuma laiks",
+        "endTime": "Beigu laiks",
+        "totalDuration": "Kopējais ilgums",
+        "operation": "Darbība",
+        "duration": "Ilgums",
+        "resources": "Resursi",
+        "operationDetails": "Darbības detaļas",
+        "operationNumber": "Darbība #{number}",
+        "notFound": "Darbības plāns nav atrasts",
+        "operationType": {
+            "Unload": "Izkraušana",
+            "Load": "Iekraušana"
+        },
+        "tabs": {
+            "unplannedVVNs": "Neplānoti VVN",
+            "search": "Meklēt plānus",
+            "edit": "Rediģēt plānu",
+            "open": "Atvērt izpildi"
+        },
+        "subtitle": {
+            "edit": "Mainīt darbības plāna detalizēto informāciju un grafiku"
+        },
+        "unplannedVVNs": {
+            "description": "Kuģa vizītes paziņojumi, kuriem vēl nav piešķirts darbības plāns",
+            "noUnplanned": "Visiem kuģa vizītes paziņojumiem ir piešķirti darbības plāni",
+            "foundMessage": "Atrasti {vvnCount} VVN bez plāniem {dayCount} dienā/-ās",
+            "regenerateAll": "Reģenerēt visus trūkstošos plānus",
+            "regenerateDay": "Reģenerēt šīs dienas plānus",
+            "regenerateModalTitle": "Reģenerēt plānus {date}",
+            "warning": "Brīdinājums",
+            "warningMessage": "Plānu reģenerēšana aizstās visus esošos šīs dienas darbības plānus. Šo darbību nevar atsaukt.",
+            "selectedDay": "Izvēlētā diena",
+            "confirmRegeneration": "Apstiprināt reģenerāciju",
+            "affectedDays": "Ietekmētās dienas",
+            "queueInfo": "Katrs reģenerācijas pieprasījums tiks ievietots rindā atsevišķi. Varat tos pārskatīt un pieņemt/noraidīt atsevišķi no plānošanas rindas.",
+            "continue": "Turpināt",
+            "confirmRegenerationTitle": "Apstiprināt reģenerāciju",
+            "irreversibleAction": "Šī darbība ir neatgriezeniska",
+            "overwriteWarning": "Darbības plānu reģenerēšana pastāvīgi pārrakstīs visus esošos izvēlēto dienu plānus. Šo darbību nevar atsaukt.",
+            "aboutToRegenerate": "Jūs gatavojaties reģenerēt plānus",
+            "days": "dienām",
+            "vesselVisitNotifications": "Kuģa vizītes paziņojumi",
+            "using": "Izmantojot",
+            "algorithm": "algoritmu",
+            "proceedQuestion": "Vai vēlaties turpināt šo darbību?",
+            "yesRegenerateAll": "Jā, reģenerēt visu"
+        },
+        "algorithm": {
+            "optimal": "Optimāls",
+            "greedy": "Alkatīgs",
+            "genetic": "Ģenētisks",
+            "auto": "Automātisks"
+        },
+        "metrics": {
+            "title": "Metrika",
+            "strategy": "Stratēģija",
+            "totalDelay": "Kopējais kavējums",
+            "computationTime": "Aprēķina laiks",
+            "autoSelection": "Automātiska algoritma izvēle"
+        },
+        "infoTitle": "Darbības plāna informācija",
+        "fields": {
+            "id": {
+                "title": "Plāna ID"
+            },
+            "relatedVVN": {
+                "title": "Saistītais VVN"
+            },
+            "dock": {
+                "title": "Doks"
+            },
+            "operations": {
+                "title": "Darbības"
+            }
+        },
+        "filters": {
+            "startDate": "Sākuma datums no",
+            "endDate": "Beigu datums līdz"
+        },
+        "metadata": {
+            "title": "Metadati",
+            "createdBy": "Izveidoja",
+            "createdAt": "Izveidots",
+            "algorithmUsed": "Izmantotais algoritms"
+        },
+        "schedule": {
+            "title": "Darbību grafiks",
+            "noOperations": "Nav ieplānotu darbību"
+        }
+    },
+    "incidentType": {
+        "fields": {
+            "name": {
+                "title": "Nosaukums",
+                "placeholder": "Incidenta tipa nosaukums"
+            },
+            "description": {
+                "title": "Apraksts",
+                "placeholder": "Detalizēts incidenta tipa apraksts"
+            },
+            "severity": {
+                "title": "Smagums",
+                "placeholder": "Izvēlieties smaguma līmeni"
+            },
+            "subtypeOf": {
+                "title": "Apakštips",
+                "placeholder": "Izvēlieties vecāka tipu"
+            },
+            "subtypes": {
+                "title": "Apakštipi",
+                "placeholder": "Izvēlieties bērnu tipus"
+            }
+        },
+        "severity": {
+            "Minor": "Neliels",
+            "Major": "Liels",
+            "Critical": "Kritisks"
+        },
+        "tabs": {
+            "dashboard": "Incidentu tipu panelis",
+            "view_dashboard": "Skatīt incidentu tipus",
+            "search": "Meklēt incidentu tipus",
+            "create": "Izveidot incidenta tipu",
+            "edit": "Rediģēt incidenta tipu"
+        },
+        "generalFields": "Vispārīgi lauki",
+        "classification": "Klasifikācija",
+        "title": "Incidenti",
+        "subtitle": {
+            "dashboard": "Incidentu tipu statistikas un darbību pārskats",
+            "search": "Pārvaldīt un skatīt visus reģistrētos incidentu tipus",
+            "create": "Reģistrēt jaunu incidenta tipu sistēmā",
+            "edit": "Mainīt esošu incidenta tipu sistēmā"
+        },
+        "registeredIncidentTypes": "Reģistrētie incidentu tipi",
+        "incidentTypeInformation": "Incidenta tipa informācija",
+        "parentType": "Vecāka tips",
+        "confirmDelete": "Apstiprināt dzēšanu",
+        "confirmDeleteMessage": "Vai tiešām vēlaties dzēst šo incidenta tipu?",
+        "failedToDelete": "Neizdevās dzēst incidenta tipu"
+    },
+    "taskCategory": {
+        "fields": {
+            "name": {
+                "title": "Nosaukums",
+                "placeholder": "Uzdevuma kategorijas nosaukums"
+            },
+            "category": {
+                "title": "Kategorija",
+                "placeholder": "Kategorijas kods"
+            },
+            "description": {
+                "title": "Apraksts",
+                "placeholder": "Uzdevuma kategorijas apraksts"
+            }
+        },
+        "tabs": {
+            "dashboard": "Uzdevumu kategoriju panelis",
+            "search": "Meklēt uzdevumu kategorijas",
+            "create": "Izveidot uzdevuma kategoriju",
+            "edit": "Rediģēt uzdevuma kategoriju",
+            "view_dashboard": "Skatīt uzdevumu kategorijas"
+        },
+        "generalFields": "Vispārīgi lauki",
+        "title": "Uzdevumi",
+        "subtitle": {
+            "dashboard": "Uzdevumu kategoriju statistikas un darbību pārskats",
+            "search": "Pārvaldīt un skatīt visas reģistrētās uzdevumu kategorijas",
+            "create": "Reģistrēt jaunu uzdevuma kategoriju sistēmā",
+            "edit": "Mainīt esošu uzdevuma kategoriju sistēmā"
+        },
+        "taskCategoryInformation": "Uzdevuma kategorijas informācija",
+        "registeredTaskCategories": "Reģistrētās uzdevumu kategorijas"
+    },
+    "execution": {
+        "title": "Kuģa vizītes izpildes",
+        "subtitle": {
+            "search": "Pārvaldīt un skatīt visas kuģa vizītes izpildes",
+            "dashboard": "Kuģa vizītes izpilžu statistikas un darbību pārskats"
+        },
+        "tabs": {
+            "dashboard": "Izpilžu panelis",
+            "search": "Meklēt izpildes",
+            "view_dashboard": "Skatīt izpildes",
+            "update": "Atjaunināt izpildi",
+            "view": "Skatīt izpildi",
+            "table": "Skatīt tabulu",
+            "cards": "Skatīt kartes"
+        },
+        "fields": {
+            "code": "Kods",
+            "relatedVVN": "Saistīts ar",
+            "status": "Statuss",
+            "createdBy": "Izveidoja",
+            "dateOpen": "Atvēršanas datums",
+            "dateClosed": "Aizvēršanas datums",
+            "relatedVesselVisit": "Saistītā kuģa vizīte",
+            "dock": "Piestātnes doks",
+            "berthTime": "Piestātnes laiks",
+            "operations": "Darbības"
+        },
+        "filters": {
+            "startDate": "Sākuma datums",
+            "endDate": "Beigu datums",
+            "relatedVVN": "Kuģa vizītes paziņojums",
+            "status": "Statuss"
+        },
+        "metrics": {
+            "totalOperations": "Kopā darbību",
+            "completedOperations": "Progress",
+            "turnaroundTime": "Apgrozījuma laiks",
+            "berthOccupancy": "Piestātnes aizņemtība"
+        },
+        "status": {
+            "pending": "Gaida",
+            "started": "Sākts",
+            "delayed": "Kavēts",
+            "completed": "Pabeigts"
+        },
+        "view_resources": "Skatīt resursus",
+        "infoTitle": "Izpildes informācija",
+        "operationsTitle": "Darbības",
+        "noOperations": "Nav pieejamu darbību",
+        "startOperation": "Sākt darbību",
+        "completeOperation": "Pabeigt darbību",
+        "addOperation": "Pievienot darbību",
+        "addOperationDescription": "Pievienot jaunu darbību laika līnijai",
+        "confirmStartOperation": "Vai tiešām vēlaties sākt šo darbību?",
+        "confirmCompleteOperation": "Vai tiešām vēlaties pabeigt šo darbību?",
+        "berthOperation": {
+            "button": "Rediģēt piestātnes datus",
+            "title": "Piestātnes darbība",
+            "description": "Rediģējiet doku un laiku šai kuģa vizītes izpildei.",
+            "dock": "Piestātnes doks",
+            "dockPlaceholder": "Izvēlieties doku",
+            "berthTime": "Piestātnes laiks",
+            "differentThanPlanned": "Izvēlētais doks atšķiras no plānotā."
+        }
+    },
+    "incident": {
+        "tabs": {
+            "dashboard": "Incidentu panelis",
+            "create": "Izveidot incidentu",
+            "search": "Meklēt incidentus",
+            "active": "Aktīvie incidenti",
+            "view": "Skatīt incidentu",
+            "edit": "Rediģēt incidentu"
+        },
+        "subtitle": {
+            "create": "Ziņot par jaunu incidentu sistēmā",
+            "search": "Meklēt un filtrēt esošos incidentus",
+            "active": "Skatīt un pārvaldīt aktīvos incidentus"
+        },
+        "generalFields": "Vispārīgā informācija",
+        "classification": "Klasifikācija",
+        "fields": {
+            "bid": {
+                "title": "Incidenta ID"
+            },
+            "type": {
+                "title": "Incidenta tips",
+                "placeholder": "Izvēlieties incidenta tipu"
+            },
+            "startTime": {
+                "title": "Sākuma laiks",
+                "placeholder": "Kad sākās incidents?"
+            },
+            "endTime": {
+                "title": "Beigu laiks",
+                "placeholder": "Kad beidzās incidents?"
+            },
+            "severity": {
+                "title": "Smagums",
+                "placeholder": "Izvēlieties smaguma līmeni",
+                "options": {
+                    "minor": "Neliels",
+                    "major": "Liels",
+                    "critical": "Kritisks"
+                }
+            },
+            "description": {
+                "title": "Apraksts",
+                "placeholder": "Aprakstiet incidentu detalizēti"
+            },
+            "createdBy": {
+                "title": "Izveidoja"
+            },
+            "affectedVVECodes": {
+                "title": "Ietekmētie VVE",
+                "placeholder": "Ievadiet ietekmētos VVE"
+            },
+            "vveCode": {
+                "title": "VVE kods"
+            },
+            "status": {
+                "title": "Statuss",
+                "options": {
+                    "active": "Aktīvs",
+                    "resolved": "Atrisināts"
+                }
+            },
+            "filterStartTime": {
+                "title": "Sākuma datums no"
+            },
+            "filterEndTime": {
+                "title": "Sākuma datums līdz"
+            },
+            "duration": {
+                "title": "Ilgums"
+            }
+        },
+        "severity": {
+            "Minor": "Neliels",
+            "Major": "Liels",
+            "Critical": "Kritisks"
+        },
+        "status": {
+            "active": "Aktīvs",
+            "resolved": "Atrisināts"
+        },
+        "ongoing": "Notiek",
+        "filters": {
+            "onlyActive": "Tikai aktīvie",
+            "onlyMine": "Tikai mani"
+        },
+        "actions": {
+            "view": "Skatīt detaļas",
+            "edit": "Rediģēt incidentu",
+            "resolve": "Atrisināt incidentu",
+            "delete": "Dzēst incidentu"
+        },
+        "notifications": {
+            "createSuccess": "Incidents veiksmīgi izveidots",
+            "createFailed": "Neizdevās izveidot incidentu",
+            "updateSuccess": "Incidents veiksmīgi atjaunināts",
+            "updateFailed": "Neizdevās atjaunināt incidentu",
+            "resolveSuccess": "Incidents veiksmīgi atrisināts",
+            "resolveFailed": "Neizdevās atrisināt incidentu",
+            "deleteSuccess": "Incidents veiksmīgi dzēsts",
+            "deleteFailed": "Neizdevās dzēst incidentu"
+        },
+        "table": {
+            "empty": "Incidenti nav atrasti"
+        },
+        "active": {
+            "title": "Aktīvie incidenti",
+            "subtitle": "Skatīt un pārvaldīt notiekošos incidentus"
+        },
+        "infoTitle": "Incidenta detaļas",
+        "closeDialog": {
+            "title": "Atrisināt incidentu",
+            "message": "Kad tika atrisināts incidents?",
+            "confirm": "Jā, aizvērt šo incidentu",
+            "cancel": "Atcelt"
+        }    }
 }

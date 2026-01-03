@@ -650,5 +650,387 @@
         "errors": {
             "shiftOverlap": "Neplatná směna. Překrývá se nebo konec před začátkem."
         }
+    },
+    "about": {
+        "title": "O PorTiT",
+        "privacy": {
+            "title": "Zásady ochrany osobních údajů",
+            "lastUpdated": "Poslední aktualizace: {date}"
+        }
+    },
+    "operationPlan": {
+        "title": "Operační plán",
+        "dock": "Dok",
+        "docks": "Doky",
+        "operations": "Operace",
+        "cranes": "Jeřáby",
+        "createdBy": "Vytvořil",
+        "createdAt": "Vytvořeno",
+        "totalSchedules": "Celkem rozvrhy",
+        "vesselCount": "Plavidla",
+        "plansOnDate": "Operační plány ve vybraném datu",
+        "noPlansOnDate": "Ve vybraném datu nejsou žádné operační plány",
+        "id": "ID",
+        "vvn": "Oznámení o návštěvě plavidla",
+        "for": "pro",
+        "details": "Podrobnosti",
+        "totalOperations": "Celkem operací",
+        "algorithmUsed": "Použitý algoritmus",
+        "ganttChart": "Ganttův diagram",
+        "startTime": "Čas začátku",
+        "endTime": "Čas konce",
+        "totalDuration": "Celková doba trvání",
+        "operation": "Operace",
+        "duration": "Doba trvání",
+        "resources": "Zdroje",
+        "operationDetails": "Podrobnosti operace",
+        "operationNumber": "Operace #{number}",
+        "notFound": "Operační plán nebyl nalezen",
+        "operationType": {
+            "Unload": "Vyložit",
+            "Load": "Naložit"
+        },
+        "tabs": {
+            "unplannedVVNs": "Neplánované VVN",
+            "search": "Hledat plány",
+            "edit": "Upravit plán",
+            "open": "Zahájit provádění"
+        },
+        "subtitle": {
+            "edit": "Upravit podrobnosti operačního plánu a rozvrh"
+        },
+        "unplannedVVNs": {
+            "description": "Oznámení o návštěvách plavidel, která ještě nemají přiřazený operační plán",
+            "noUnplanned": "Všechna oznámení o návštěvách plavidel mají přiřazené operační plány",
+            "foundMessage": "Nalezeno {vvnCount} VVN bez plánů napříč {dayCount} dny",
+            "regenerateAll": "Regenerovat všechny chybějící plány",
+            "regenerateDay": "Regenerovat plány pro tento den",
+            "regenerateModalTitle": "Regenerovat plány pro {date}",
+            "warning": "Varování",
+            "warningMessage": "Regenerace plánů přepíše všechny existující operační plány pro tento den. Tuto akci nelze vrátit zpět.",
+            "selectedDay": "Vybraný den",
+            "confirmRegeneration": "Potvrdit regeneraci",
+            "affectedDays": "Ovlivněné dny",
+            "queueInfo": "Každá žádost o regeneraci bude zařazena do fronty samostatně. Můžete je zkontrolovat a přijmout/odmítnout jednotlivě z fronty plánování.",
+            "continue": "Pokračovat",
+            "confirmRegenerationTitle": "Potvrdit regeneraci",
+            "irreversibleAction": "Tato akce je nevratná",
+            "overwriteWarning": "Regenerace operačních plánů trvale přepíše všechny existující plány pro vybrané dny. Tuto akci nelze vrátit zpět.",
+            "aboutToRegenerate": "Chystáte se regenerovat plány pro",
+            "days": "dny",
+            "vesselVisitNotifications": "Oznámení o návštěvách plavidel",
+            "using": "Použití",
+            "algorithm": "algoritmus",
+            "proceedQuestion": "Chcete pokračovat v této operaci?",
+            "yesRegenerateAll": "Ano, regenerovat vše"
+        },
+        "algorithm": {
+            "optimal": "Optimální",
+            "greedy": "Hladový",
+            "genetic": "Genetický",
+            "auto": "Automatický"
+        },
+        "metrics": {
+            "title": "Metriky",
+            "strategy": "Strategie",
+            "totalDelay": "Celkové zpoždění",
+            "computationTime": "Výpočetní čas",
+            "autoSelection": "Automatický výběr algoritmu"
+        },
+        "infoTitle": "Informace o operačním plánu",
+        "fields": {
+            "id": {
+                "title": "ID plánu"
+            },
+            "relatedVVN": {
+                "title": "Související VVN"
+            },
+            "dock": {
+                "title": "Dok"
+            },
+            "operations": {
+                "title": "Operace"
+            }
+        },
+        "filters": {
+            "startDate": "Datum zahájení od",
+            "endDate": "Datum ukončení do"
+        },
+        "metadata": {
+            "title": "Metadata",
+            "createdBy": "Vytvořil",
+            "createdAt": "Vytvořeno",
+            "algorithmUsed": "Použitý algoritmus"
+        },
+        "schedule": {
+            "title": "Operační rozvrh",
+            "noOperations": "Nejsou naplánovány žádné operace"
+        }
+    },
+    "incidentType": {
+        "fields": {
+            "name": {
+                "title": "Název",
+                "placeholder": "Název typu incidentu"
+            },
+            "description": {
+                "title": "Popis",
+                "placeholder": "Podrobný popis typu incidentu"
+            },
+            "severity": {
+                "title": "Závažnost",
+                "placeholder": "Vyberte úroveň závažnosti"
+            },
+            "subtypeOf": {
+                "title": "Podtyp",
+                "placeholder": "Vyberte nadřazený typ"
+            },
+            "subtypes": {
+                "title": "Podtypy",
+                "placeholder": "Vyberte podřízené typy"
+            }
+        },
+        "severity": {
+            "Minor": "Menší",
+            "Major": "Větší",
+            "Critical": "Kritický"
+        },
+        "tabs": {
+            "dashboard": "Přehled typů incidentů",
+            "view_dashboard": "Zobrazit typy incidentů",
+            "search": "Hledat typy incidentů",
+            "create": "Vytvořit typ incidentu",
+            "edit": "Upravit typ incidentu"
+        },
+        "generalFields": "Obecná pole",
+        "classification": "Klasifikace",
+        "title": "Incidenty",
+        "subtitle": {
+            "dashboard": "Přehled statistik a aktivit typů incidentů",
+            "search": "Správa a zobrazení všech registrovaných typů incidentů",
+            "create": "Registrace nového typu incidentu v systému",
+            "edit": "Úprava existujícího typu incidentu v systému"
+        },
+        "registeredIncidentTypes": "Registrované typy incidentů",
+        "incidentTypeInformation": "Informace o typu incidentu",
+        "parentType": "Nadřazený typ",
+        "confirmDelete": "Potvrdit smazání",
+        "confirmDeleteMessage": "Opravdu chcete smazat tento typ incidentu?",
+        "failedToDelete": "Nepodařilo se smazat typ incidentu"
+    },
+    "taskCategory": {
+        "fields": {
+            "name": {
+                "title": "Název",
+                "placeholder": "Název kategorie úkolů"
+            },
+            "category": {
+                "title": "Kategorie",
+                "placeholder": "Kód kategorie"
+            },
+            "description": {
+                "title": "Popis",
+                "placeholder": "Popis kategorie úkolů"
+            }
+        },
+        "tabs": {
+            "dashboard": "Přehled kategorií úkolů",
+            "search": "Hledat kategorie úkolů",
+            "create": "Vytvořit kategorii úkolů",
+            "edit": "Upravit kategorii úkolů",
+            "view_dashboard": "Zobrazit kategorie úkolů"
+        },
+        "generalFields": "Obecná pole",
+        "title": "Úkoly",
+        "subtitle": {
+            "dashboard": "Přehled statistik a aktivit kategorií úkolů",
+            "search": "Správa a zobrazení všech registrovaných kategorií úkolů",
+            "create": "Registrace nové kategorie úkolů v systému",
+            "edit": "Úprava existující kategorie úkolů v systému"
+        },
+        "taskCategoryInformation": "Informace o kategorii úkolů",
+        "registeredTaskCategories": "Registrované kategorie úkolů"
+    },
+    "execution": {
+        "title": "Provádění návštěv plavidel",
+        "subtitle": {
+            "search": "Správa a zobrazení všech provedení návštěv plavidel",
+            "dashboard": "Přehled statistik a aktivit provádění návštěv plavidel"
+        },
+        "tabs": {
+            "dashboard": "Přehled provádění",
+            "search": "Hledat provádění",
+            "view_dashboard": "Zobrazit provádění",
+            "update": "Aktualizovat provádění",
+            "view": "Zobrazit provádění",
+            "table": "Zobrazení tabulky",
+            "cards": "Zobrazení karet"
+        },
+        "fields": {
+            "code": "Kód",
+            "relatedVVN": "Související s",
+            "status": "Stav",
+            "createdBy": "Vytvořil",
+            "dateOpen": "Datum otevření",
+            "dateClosed": "Datum uzavření",
+            "relatedVesselVisit": "Související návštěva plavidla",
+            "dock": "Kotvení u doku",
+            "berthTime": "Čas kotvení",
+            "operations": "Operace"
+        },
+        "filters": {
+            "startDate": "Datum zahájení",
+            "endDate": "Datum ukončení",
+            "relatedVVN": "Oznámení o návštěvě plavidla",
+            "status": "Stav"
+        },
+        "metrics": {
+            "totalOperations": "Celkem operací",
+            "completedOperations": "Průběh",
+            "turnaroundTime": "Doba obratu",
+            "berthOccupancy": "Obsazenost kotvení"
+        },
+        "status": {
+            "pending": "Čeká",
+            "started": "Zahájeno",
+            "delayed": "Zpožděno",
+            "completed": "Dokončeno"
+        },
+        "view_resources": "Zobrazit zdroje",
+        "infoTitle": "Informace o provádění",
+        "operationsTitle": "Operace",
+        "noOperations": "Nejsou k dispozici žádné operace",
+        "startOperation": "Zahájit operaci",
+        "completeOperation": "Dokončit operaci",
+        "addOperation": "Přidat operaci",
+        "addOperationDescription": "Přidat novou operaci do časové osy",
+        "confirmStartOperation": "Opravdu chcete zahájit tuto operaci?",
+        "confirmCompleteOperation": "Opravdu chcete dokončit tuto operaci?",
+        "berthOperation": {
+            "button": "Upravit data kotvení",
+            "title": "Operace kotvení",
+            "description": "Upravte dok a čas pro toto provádění návštěvy plavidla.",
+            "dock": "Kotvení u doku",
+            "dockPlaceholder": "Vyberte dok",
+            "berthTime": "Čas kotvení",
+            "differentThanPlanned": "Vybraný dok se liší od plánovaného."
+        }
+    },
+    "incident": {
+        "tabs": {
+            "dashboard": "Přehled incidentů",
+            "create": "Vytvořit incident",
+            "search": "Hledat incidenty",
+            "active": "Aktivní incidenty",
+            "view": "Zobrazit incident",
+            "edit": "Upravit incident"
+        },
+        "subtitle": {
+            "create": "Nahlásit nový incident v systému",
+            "search": "Vyhledat a filtrovat existující incidenty",
+            "active": "Zobrazit a spravovat aktivní incidenty"
+        },
+        "generalFields": "Obecné informace",
+        "classification": "Klasifikace",
+        "fields": {
+            "bid": {
+                "title": "ID incidentu"
+            },
+            "type": {
+                "title": "Typ incidentu",
+                "placeholder": "Vyberte typ incidentu"
+            },
+            "startTime": {
+                "title": "Čas začátku",
+                "placeholder": "Kdy incident začal?"
+            },
+            "endTime": {
+                "title": "Čas konce",
+                "placeholder": "Kdy incident skončil?"
+            },
+            "severity": {
+                "title": "Závažnost",
+                "placeholder": "Vyberte úroveň závažnosti",
+                "options": {
+                    "minor": "Menší",
+                    "major": "Větší",
+                    "critical": "Kritický"
+                }
+            },
+            "description": {
+                "title": "Popis",
+                "placeholder": "Popište incident podrobně"
+            },
+            "createdBy": {
+                "title": "Vytvořil"
+            },
+            "affectedVVECodes": {
+                "title": "Postižené VVE",
+                "placeholder": "Zadejte postižené VVE"
+            },
+            "vveCode": {
+                "title": "Kód VVE"
+            },
+            "status": {
+                "title": "Stav",
+                "options": {
+                    "active": "Aktivní",
+                    "resolved": "Vyřešeno"
+                }
+            },
+            "filterStartTime": {
+                "title": "Datum zahájení od"
+            },
+            "filterEndTime": {
+                "title": "Datum zahájení do"
+            },
+            "duration": {
+                "title": "Doba trvání"
+            }
+        },
+        "severity": {
+            "Minor": "Menší",
+            "Major": "Větší",
+            "Critical": "Kritický"
+        },
+        "status": {
+            "active": "Aktivní",
+            "resolved": "Vyřešeno"
+        },
+        "ongoing": "Probíhající",
+        "filters": {
+            "onlyActive": "Pouze aktivní",
+            "onlyMine": "Pouze moje"
+        },
+        "actions": {
+            "view": "Zobrazit podrobnosti",
+            "edit": "Upravit incident",
+            "resolve": "Vyřešit incident",
+            "delete": "Smazat incident"
+        },
+        "notifications": {
+            "createSuccess": "Incident byl úspěšně vytvořen",
+            "createFailed": "Nepodařilo se vytvořit incident",
+            "updateSuccess": "Incident byl úspěšně aktualizován",
+            "updateFailed": "Nepodařilo se aktualizovat incident",
+            "resolveSuccess": "Incident byl úspěšně vyřešen",
+            "resolveFailed": "Nepodařilo se vyřešit incident",
+            "deleteSuccess": "Incident byl úspěšně smazán",
+            "deleteFailed": "Nepodařilo se smazat incident"
+        },
+        "table": {
+            "empty": "Nebyly nalezeny žádné incidenty"
+        },
+        "active": {
+            "title": "Aktivní incidenty",
+            "subtitle": "Zobrazit a spravovat probíhající incidenty"
+        },
+        "infoTitle": "Podrobnosti incidentu",
+        "closeDialog": {
+            "title": "Vyřešit incident",
+            "message": "Kdy byl incident vyřešen",
+            "confirm": "Ano, uzavřít tento incident",
+            "cancel": "Zrušit"
+        }
     }
 }

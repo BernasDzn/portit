@@ -637,5 +637,195 @@
         "errors": {
             "shiftOverlap": "无效班次：时间重叠或结束早于开始。"
         }
+    },
+    "about": {
+        "title": "关于应用",
+        "description": "此模块为自主车队管理提供全面解决方案，包括操作计划、事件类型和任务执行。",
+        "version": "版本",
+        "features": {
+            "title": "功能",
+            "fleet": "车队管理",
+            "planning": "操作规划",
+            "incidents": "事件跟踪",
+            "tasks": "任务执行"
+        }
+    },
+    "operationPlan": {
+        "title": "操作计划",
+        "list": {
+            "title": "操作计划",
+            "empty": "未找到操作计划",
+            "search": "搜索计划..."
+        },
+        "details": {
+            "title": "计划详情",
+            "status": "状态",
+            "startDate": "开始日期",
+            "endDate": "结束日期",
+            "assignedVehicles": "分配的车辆",
+            "tasks": "任务"
+        },
+        "form": {
+            "create": "创建计划",
+            "edit": "编辑计划",
+            "name": "计划名称",
+            "description": "描述",
+            "selectVehicles": "选择车辆"
+        },
+        "status": {
+            "draft": "草稿",
+            "active": "活动",
+            "completed": "已完成",
+            "cancelled": "已取消"
+        }
+    },
+    "incidentType": {
+        "title": "事件类型",
+        "list": {
+            "title": "事件类型",
+            "empty": "未找到事件类型",
+            "search": "搜索类型..."
+        },
+        "details": {
+            "title": "类型详情",
+            "code": "代码",
+            "severity": "严重程度",
+            "responseTime": "响应时间",
+            "procedures": "程序"
+        },
+        "form": {
+            "create": "创建类型",
+            "edit": "编辑类型",
+            "name": "类型名称",
+            "description": "描述",
+            "selectSeverity": "选择严重程度"
+        },
+        "severity": {
+            "low": "低",
+            "medium": "中",
+            "high": "高",
+            "critical": "严重"
+        }
+    },
+    "taskCategory": {
+        "title": "任务类别",
+        "list": {
+            "title": "任务类别",
+            "empty": "未找到任务类别",
+            "search": "搜索类别..."
+        },
+        "details": {
+            "title": "类别详情",
+            "code": "代码",
+            "priority": "优先级",
+            "estimatedDuration": "预计持续时间",
+            "requirements": "要求"
+        },
+        "form": {
+            "create": "创建类别",
+            "edit": "编辑类别",
+            "name": "类别名称",
+            "description": "描述",
+            "selectPriority": "选择优先级"
+        },
+        "priority": {
+            "low": "低",
+            "normal": "正常",
+            "high": "高",
+            "urgent": "紧急"
+        }
+    },
+    "execution": {
+        "title": "执行",
+        "status": {
+            "pending": "待处理",
+            "inProgress": "进行中",
+            "completed": "已完成",
+            "failed": "失败",
+            "cancelled": "已取消"
+        },
+        "details": {
+            "title": "执行详情",
+            "startTime": "开始时间",
+            "endTime": "结束时间",
+            "duration": "持续时间",
+            "assignedTo": "分配给",
+            "progress": "进度"
+        },
+        "actions": {
+            "start": "开始执行",
+            "pause": "暂停",
+            "resume": "恢复",
+            "complete": "完成",
+            "cancel": "取消"
+        },
+        "messages": {
+            "started": "执行已开始",
+            "paused": "执行已暂停",
+            "resumed": "执行已恢复",
+            "completed": "执行已完成",
+            "cancelled": "执行已取消",
+            "failed": "执行失败"
+        }
+    },
+    "incident": {
+        "title": "事件",
+        "list": {
+            "title": "事件",
+            "empty": "未找到事件",
+            "search": "搜索事件...",
+            "filter": {
+                "all": "全部",
+                "open": "开放",
+                "inProgress": "进行中",
+                "resolved": "已解决",
+                "closed": "已关闭"
+            }
+        },
+        "details": {
+            "title": "事件详情",
+            "id": "事件ID",
+            "type": "类型",
+            "status": "状态",
+            "severity": "严重程度",
+            "reportedBy": "报告者",
+            "reportedAt": "报告日期",
+            "assignedTo": "分配给",
+            "location": "位置",
+            "vehicle": "车辆",
+            "description": "描述",
+            "resolution": "解决方案",
+            "timeline": "时间线"
+        },
+        "form": {
+            "create": "报告事件",
+            "edit": "编辑事件",
+            "selectType": "选择类型",
+            "selectSeverity": "选择严重程度",
+            "selectVehicle": "选择车辆",
+            "descriptionPlaceholder": "描述事件...",
+            "resolutionPlaceholder": "描述解决方案..."
+        },
+        "status": {
+            "open": "开放",
+            "inProgress": "进行中",
+            "resolved": "已解决",
+            "closed": "已关闭"
+        },
+        "actions": {
+            "assign": "分配",
+            "resolve": "解决",
+            "close": "关闭",
+            "reopen": "重新打开",
+            "addNote": "添加备注"
+        },
+        "messages": {
+            "created": "事件已创建",
+            "updated": "事件已更新",
+            "assigned": "事件已分配",
+            "resolved": "事件已解决",
+            "closed": "事件已关闭",
+            "reopened": "事件已重新打开"
+        }
     }
 }

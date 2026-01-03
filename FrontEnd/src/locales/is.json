@@ -626,5 +626,387 @@
             "weekDays": "Vikudagar"
         },
         "errors": {"shiftOverlap": "Ógild vakt. Skörun eða loktími fyrir upphaf."}
+    },
+    "about": {
+        "title": "Um PorTiT",
+        "privacy": {
+            "title": "Persónuverndarstefna",
+            "lastUpdated": "Síðast uppfært: {date}"
+        }
+    },
+    "operationPlan": {
+        "title": "Rekstraráætlun",
+        "dock": "Bryggja",
+        "docks": "Bryggjur",
+        "operations": "Aðgerðir",
+        "cranes": "Kranar",
+        "createdBy": "Búið til af",
+        "createdAt": "Búið til",
+        "totalSchedules": "Heildaráætlanir",
+        "vesselCount": "Skip",
+        "plansOnDate": "Rekstraráætlanir á völdum degi",
+        "noPlansOnDate": "Engar rekstraráætlanir á völdum degi",
+        "id": "Auðkenni",
+        "vvn": "Skipaheimsóknatilkynning",
+        "for": "fyrir",
+        "details": "Upplýsingar",
+        "totalOperations": "Heildaraðgerðir",
+        "algorithmUsed": "Reiknirit notað",
+        "ganttChart": "Gantt graf",
+        "startTime": "Upphafstími",
+        "endTime": "Lokatími",
+        "totalDuration": "Heildarlengd",
+        "operation": "Aðgerð",
+        "duration": "Lengd",
+        "resources": "Tilföng",
+        "operationDetails": "Upplýsingar um aðgerð",
+        "operationNumber": "Aðgerð #{number}",
+        "notFound": "Rekstraráætlun fannst ekki",
+        "operationType": {
+            "Unload": "Affermingu",
+            "Load": "Hleðsla"
+        },
+        "tabs": {
+            "unplannedVVNs": "Óáætlaðar VVN",
+            "search": "Leita að áætlunum",
+            "edit": "Breyta áætlun",
+            "open": "Opna framkvæmd"
+        },
+        "subtitle": {
+            "edit": "Breyta rekstraráætlunarupplýsingum og áætlun"
+        },
+        "unplannedVVNs": {
+            "description": "Skipaheimsóknatilkynningar sem hafa ekki enn fengið úthlutaða rekstraráætlun",
+            "noUnplanned": "Allar skipaheimsóknatilkynningar hafa úthlutaðar rekstraráætlanir",
+            "foundMessage": "Fundust {vvnCount} VVN án áætlana á {dayCount} degi/dögum",
+            "regenerateAll": "Endurgera allar áætlanir sem vantar",
+            "regenerateDay": "Endurgera áætlanir fyrir þennan dag",
+            "regenerateModalTitle": "Endurgera áætlanir fyrir {date}",
+            "warning": "Viðvörun",
+            "warningMessage": "Endurgerð áætlana mun skipta út öllum núverandi rekstraráætlunum fyrir þennan dag. Þessa aðgerð er ekki hægt að afturkalla.",
+            "selectedDay": "Valinn dagur",
+            "confirmRegeneration": "Staðfesta endurgerð",
+            "affectedDays": "Dagar sem verða fyrir áhrifum",
+            "queueInfo": "Hver endurgerðarbeiðni verður sett í biðröð sérstaklega. Þú getur skoðað og samþykkt/hafnað þeim hver fyrir sig úr tímasetningarbiðröðinni.",
+            "continue": "Halda áfram",
+            "confirmRegenerationTitle": "Staðfesta endurgerð",
+            "irreversibleAction": "Þessi aðgerð er óafturkræf",
+            "overwriteWarning": "Endurgerð rekstraráætlana mun varanlega skrifa yfir allar núverandi áætlanir fyrir valda daga. Þessa aðgerð er ekki hægt að afturkalla.",
+            "aboutToRegenerate": "Þú ert að fara að endurgera áætlanir fyrir",
+            "days": "daga",
+            "vesselVisitNotifications": "Skipaheimsóknatilkynningar",
+            "using": "Nota",
+            "algorithm": "reiknirit",
+            "proceedQuestion": "Viltu halda áfram með þessa aðgerð?",
+            "yesRegenerateAll": "Já, endurgera allt"
+        },
+        "algorithm": {
+            "optimal": "Ákjósanlegur",
+            "greedy": "Gráðugur",
+            "genetic": "Erfðafræðilegur",
+            "auto": "Sjálfvirkt"
+        },
+        "metrics": {
+            "title": "Mælikvarðar",
+            "strategy": "Stefna",
+            "totalDelay": "Heildarseinkun",
+            "computationTime": "Útreikningartími",
+            "autoSelection": "Sjálfvirkt val reiknarits"
+        },
+        "infoTitle": "Rekstraráætlunarupplýsingar",
+        "fields": {
+            "id": {
+                "title": "Áætlunarauðkenni"
+            },
+            "relatedVVN": {
+                "title": "Tengd VVN"
+            },
+            "dock": {
+                "title": "Bryggja"
+            },
+            "operations": {
+                "title": "Aðgerðir"
+            }
+        },
+        "filters": {
+            "startDate": "Upphafsdagur frá",
+            "endDate": "Lokadagur til"
+        },
+        "metadata": {
+            "title": "Lýsigögn",
+            "createdBy": "Búið til af",
+            "createdAt": "Búið til",
+            "algorithmUsed": "Reiknirit notað"
+        },
+        "schedule": {
+            "title": "Aðgerðaáætlun",
+            "noOperations": "Engar áætlaðar aðgerðir"
+        }
+    },
+    "incidentType": {
+        "fields": {
+            "name": {
+                "title": "Nafn",
+                "placeholder": "Nafn atvikategundar"
+            },
+            "description": {
+                "title": "Lýsing",
+                "placeholder": "Ítarleg lýsing á atvikategund"
+            },
+            "severity": {
+                "title": "Alvarleiki",
+                "placeholder": "Veldu alvarleikastig"
+            },
+            "subtypeOf": {
+                "title": "Undirtegund af",
+                "placeholder": "Veldu yfirtegund"
+            },
+            "subtypes": {
+                "title": "Undirtegundir",
+                "placeholder": "Veldu undirtegundir"
+            }
+        },
+        "severity": {
+            "Minor": "Minniháttar",
+            "Major": "Stór",
+            "Critical": "Alvarlegt"
+        },
+        "tabs": {
+            "dashboard": "Stjórnborð atvikategunda",
+            "view_dashboard": "Skoða atvikategundir",
+            "search": "Leita að atvikategundum",
+            "create": "Búa til atvikategund",
+            "edit": "Breyta atvikategund"
+        },
+        "generalFields": "Almenn svæði",
+        "classification": "Flokkun",
+        "title": "Atvik",
+        "subtitle": {
+            "dashboard": "Yfirlit yfir tölfræði og starfsemi atvikategunda",
+            "search": "Stjórna og skoða allar skráðar atvikategundir",
+            "create": "Skrá nýja atvikategund í kerfið",
+            "edit": "Breyta núverandi atvikategund í kerfinu"
+        },
+        "registeredIncidentTypes": "Skráðar atvikategundir",
+        "incidentTypeInformation": "Upplýsingar um atvikategund",
+        "parentType": "Yfirtegund",
+        "confirmDelete": "Staðfesta eyðingu",
+        "confirmDeleteMessage": "Ertu viss um að þú viljir eyða þessari atvikategund?",
+        "failedToDelete": "Mistókst að eyða atvikategund"
+    },
+    "taskCategory": {
+        "fields": {
+            "name": {
+                "title": "Nafn",
+                "placeholder": "Nafn verkefnategundar"
+            },
+            "category": {
+                "title": "Tegund",
+                "placeholder": "Tegundarkóði"
+            },
+            "description": {
+                "title": "Lýsing",
+                "placeholder": "Lýsing á verkefnategund"
+            }
+        },
+        "tabs": {
+            "dashboard": "Stjórnborð verkefnategunda",
+            "search": "Leita að verkefnategundum",
+            "create": "Búa til verkefnategund",
+            "edit": "Breyta verkefnategund",
+            "view_dashboard": "Skoða verkefnategundir"
+        },
+        "generalFields": "Almenn svæði",
+        "title": "Verkefni",
+        "subtitle": {
+            "dashboard": "Yfirlit yfir tölfræði og starfsemi verkefnategunda",
+            "search": "Stjórna og skoða allar skráðar verkefnategundir",
+            "create": "Skrá nýja verkefnategund í kerfið",
+            "edit": "Breyta núverandi verkefnategund í kerfinu"
+        },
+        "taskCategoryInformation": "Upplýsingar um verkefnategund",
+        "registeredTaskCategories": "Skráðar verkefnategundir"
+    },
+    "execution": {
+        "title": "Framkvæmdir skipaheimsókna",
+        "subtitle": {
+            "search": "Stjórna og skoða allar framkvæmdir skipaheimsókna",
+            "dashboard": "Yfirlit yfir tölfræði og starfsemi framkvæmda skipaheimsókna"
+        },
+        "tabs": {
+            "dashboard": "Stjórnborð framkvæmda",
+            "search": "Leita að framkvæmdum",
+            "view_dashboard": "Skoða framkvæmdir",
+            "update": "Uppfæra framkvæmd",
+            "view": "Skoða framkvæmd",
+            "table": "Skoða töflu",
+            "cards": "Skoða kort"
+        },
+        "fields": {
+            "code": "Kóði",
+            "relatedVVN": "Tengt við",
+            "status": "Staða",
+            "createdBy": "Búið til af",
+            "dateOpen": "Opnunardagur",
+            "dateClosed": "Lokunardagur",
+            "relatedVesselVisit": "Tengd skipaheimsókn",
+            "dock": "Legubryggja",
+            "berthTime": "Legutími",
+            "operations": "Aðgerðir"
+        },
+        "filters": {
+            "startDate": "Upphafsdagur",
+            "endDate": "Lokadagur",
+            "relatedVVN": "Skipaheimsóknatilkynning",
+            "status": "Staða"
+        },
+        "metrics": {
+            "totalOperations": "Heildaraðgerðir",
+            "completedOperations": "Framvinda",
+            "turnaroundTime": "Snúningstími",
+            "berthOccupancy": "Bryggjanýting"
+        },
+        "status": {
+            "pending": "Í bið",
+            "started": "Byrjað",
+            "delayed": "Seinkað",
+            "completed": "Lokið"
+        },
+        "view_resources": "Skoða tilföng",
+        "infoTitle": "Framkvæmdaupplýsingar",
+        "operationsTitle": "Aðgerðir",
+        "noOperations": "Engar aðgerðir í boði",
+        "startOperation": "Byrja aðgerð",
+        "completeOperation": "Ljúka aðgerð",
+        "addOperation": "Bæta við aðgerð",
+        "addOperationDescription": "Bæta nýrri aðgerð við tímalínu",
+        "confirmStartOperation": "Ertu viss um að þú viljir byrja þessa aðgerð?",
+        "confirmCompleteOperation": "Ertu viss um að þú viljir ljúka þessari aðgerð?",
+        "berthOperation": {
+            "button": "Breyta legugögnum",
+            "title": "Leguaðgerð",
+            "description": "Breyttu bryggju og tíma fyrir þessa framkvæmd skipaheimsóknar.",
+            "dock": "Legubryggja",
+            "dockPlaceholder": "Veldu bryggju",
+            "berthTime": "Legutími",
+            "differentThanPlanned": "Valin bryggja er frábrugðin áætlaðri."
+        }
+    },
+    "incident": {
+        "tabs": {
+            "dashboard": "Stjórnborð atvika",
+            "create": "Búa til atvik",
+            "search": "Leita að atvikum",
+            "active": "Virk atvik",
+            "view": "Skoða atvik",
+            "edit": "Breyta atviki"
+        },
+        "subtitle": {
+            "create": "Tilkynna nýtt atvik í kerfinu",
+            "search": "Leita að og sía núverandi atvik",
+            "active": "Skoða og stjórna virkum atvikum"
+        },
+        "generalFields": "Almennar upplýsingar",
+        "classification": "Flokkun",
+        "fields": {
+            "bid": {
+                "title": "Atvikauðkenni"
+            },
+            "type": {
+                "title": "Atvikategund",
+                "placeholder": "Veldu atvikategund"
+            },
+            "startTime": {
+                "title": "Upphafstími",
+                "placeholder": "Hvenær byrjaði atvikið?"
+            },
+            "endTime": {
+                "title": "Lokatími",
+                "placeholder": "Hvenær lauk atvikinu?"
+            },
+            "severity": {
+                "title": "Alvarleiki",
+                "placeholder": "Veldu alvarleikastig",
+                "options": {
+                    "minor": "Minniháttar",
+                    "major": "Stór",
+                    "critical": "Alvarlegt"
+                }
+            },
+            "description": {
+                "title": "Lýsing",
+                "placeholder": "Lýstu atvikinu í smáatriðum"
+            },
+            "createdBy": {
+                "title": "Búið til af"
+            },
+            "affectedVVECodes": {
+                "title": "Áhrifaþolendur VVE",
+                "placeholder": "Sláðu inn áhrifaþolendur VVE"
+            },
+            "vveCode": {
+                "title": "VVE kóði"
+            },
+            "status": {
+                "title": "Staða",
+                "options": {
+                    "active": "Virkt",
+                    "resolved": "Leyst"
+                }
+            },
+            "filterStartTime": {
+                "title": "Upphafsdagur frá"
+            },
+            "filterEndTime": {
+                "title": "Upphafsdagur til"
+            },
+            "duration": {
+                "title": "Lengd"
+            }
+        },
+        "severity": {
+            "Minor": "Minniháttar",
+            "Major": "Stór",
+            "Critical": "Alvarlegt"
+        },
+        "status": {
+            "active": "Virkt",
+            "resolved": "Leyst"
+        },
+        "ongoing": "Í gangi",
+        "filters": {
+            "onlyActive": "Aðeins virk",
+            "onlyMine": "Aðeins mín"
+        },
+        "actions": {
+            "view": "Skoða upplýsingar",
+            "edit": "Breyta atviki",
+            "resolve": "Leysa atvik",
+            "delete": "Eyða atviki"
+        },
+        "notifications": {
+            "createSuccess": "Atvik búið til",
+            "createFailed": "Mistókst að búa til atvik",
+            "updateSuccess": "Atvik uppfært",
+            "updateFailed": "Mistókst að uppfæra atvik",
+            "resolveSuccess": "Atvik leyst",
+            "resolveFailed": "Mistókst að leysa atvik",
+            "deleteSuccess": "Atviki eytt",
+            "deleteFailed": "Mistókst að eyða atviki"
+        },
+        "table": {
+            "empty": "Engin atvik fundust"
+        },
+        "active": {
+            "title": "Virk atvik",
+            "subtitle": "Skoða og stjórna atvikum í gangi"
+        },
+        "infoTitle": "Upplýsingar um atvik",
+        "closeDialog": {
+            "title": "Leysa atvik",
+            "message": "Hvenær var atvikið leyst?",
+            "confirm": "Já, loka þessu atviki",
+            "cancel": "Hætta við"
+        }
     }
 }

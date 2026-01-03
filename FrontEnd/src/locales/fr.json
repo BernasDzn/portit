@@ -671,7 +671,389 @@
             "weekDays": "Jours de la semaine"
         },
         "errors": {
-            "shiftOverlap": "Quart invalide. Chevauchement ou heure de fin avant l\u0027heure de début."
+            "shiftOverlap": "Quart invalide. Chevauchement ou heure de fin avant l'heure de début."
+        }
+    },
+    "about": {
+        "title": "À propos de PorTiT",
+        "privacy": {
+            "title": "Politique de confidentialité",
+            "lastUpdated": "Dernière mise à jour : {date}"
+        }
+    },
+    "operationPlan": {
+        "title": "Plan d'opération",
+        "dock": "Quai",
+        "docks": "Quais",
+        "operations": "Opérations",
+        "cranes": "Grues",
+        "createdBy": "Créé par",
+        "createdAt": "Créé le",
+        "totalSchedules": "Total des horaires",
+        "vesselCount": "Navires",
+        "plansOnDate": "Plans d'opération à la date sélectionnée",
+        "noPlansOnDate": "Aucun plan d'opération à la date sélectionnée",
+        "id": "ID",
+        "vvn": "Notification de visite de navire",
+        "for": "pour",
+        "details": "Détails",
+        "totalOperations": "Total des opérations",
+        "algorithmUsed": "Algorithme utilisé",
+        "ganttChart": "Diagramme de Gantt",
+        "startTime": "Heure de début",
+        "endTime": "Heure de fin",
+        "totalDuration": "Durée totale",
+        "operation": "Opération",
+        "duration": "Durée",
+        "resources": "Ressources",
+        "operationDetails": "Détails de l'opération",
+        "operationNumber": "Opération #{number}",
+        "notFound": "Plan d'opération non trouvé",
+        "operationType": {
+            "Unload": "Déchargement",
+            "Load": "Chargement"
+        },
+        "tabs": {
+            "unplannedVVNs": "VVN non planifiés",
+            "search": "Rechercher des plans",
+            "edit": "Modifier le plan",
+            "open": "Ouvrir l'exécution"
+        },
+        "subtitle": {
+            "edit": "Modifier les détails du plan d'opération et l'horaire"
+        },
+        "unplannedVVNs": {
+            "description": "Notifications de visite de navire qui n'ont pas encore de plan d'opération assigné",
+            "noUnplanned": "Toutes les notifications de visite de navire ont des plans d'opération assignés",
+            "foundMessage": "{vvnCount} VVN sans plans trouvés en {dayCount} jour(s)",
+            "regenerateAll": "Régénérer tous les plans manquants",
+            "regenerateDay": "Régénérer les plans pour ce jour",
+            "regenerateModalTitle": "Régénérer les plans pour {date}",
+            "warning": "Avertissement",
+            "warningMessage": "La régénération des plans remplacera tous les plans d'opération existants pour ce jour. Cette action ne peut pas être annulée.",
+            "selectedDay": "Jour sélectionné",
+            "confirmRegeneration": "Confirmer la régénération",
+            "affectedDays": "Jours affectés",
+            "queueInfo": "Chaque demande de régénération sera mise en file d'attente séparément. Vous pouvez les examiner et les accepter/rejeter individuellement depuis la file de planification.",
+            "continue": "Continuer",
+            "confirmRegenerationTitle": "Confirmer la régénération",
+            "irreversibleAction": "Cette action est irréversible",
+            "overwriteWarning": "La régénération des plans d'opération écrasera définitivement tous les plans existants pour les jours sélectionnés. Cette action ne peut pas être annulée.",
+            "aboutToRegenerate": "Vous êtes sur le point de régénérer des plans pour",
+            "days": "jours",
+            "vesselVisitNotifications": "Notifications de visite de navire",
+            "using": "Utilisant",
+            "algorithm": "algorithme",
+            "proceedQuestion": "Souhaitez-vous continuer avec cette opération ?",
+            "yesRegenerateAll": "Oui, régénérer tout"
+        },
+        "algorithm": {
+            "optimal": "Optimal",
+            "greedy": "Glouton",
+            "genetic": "Génétique",
+            "auto": "Automatique"
+        },
+        "metrics": {
+            "title": "Métriques",
+            "strategy": "Stratégie",
+            "totalDelay": "Retard total",
+            "computationTime": "Temps de calcul",
+            "autoSelection": "Sélection automatique de l'algorithme"
+        },
+        "infoTitle": "Informations du plan d'opération",
+        "fields": {
+            "id": {
+                "title": "ID du plan"
+            },
+            "relatedVVN": {
+                "title": "VVN associé"
+            },
+            "dock": {
+                "title": "Quai"
+            },
+            "operations": {
+                "title": "Opérations"
+            }
+        },
+        "filters": {
+            "startDate": "Date de début à partir de",
+            "endDate": "Date de fin jusqu'à"
+        },
+        "metadata": {
+            "title": "Métadonnées",
+            "createdBy": "Créé par",
+            "createdAt": "Créé le",
+            "algorithmUsed": "Algorithme utilisé"
+        },
+        "schedule": {
+            "title": "Horaire des opérations",
+            "noOperations": "Aucune opération planifiée"
+        }
+    },
+    "incidentType": {
+        "fields": {
+            "name": {
+                "title": "Nom",
+                "placeholder": "Nom du type d'incident"
+            },
+            "description": {
+                "title": "Description",
+                "placeholder": "Description détaillée du type d'incident"
+            },
+            "severity": {
+                "title": "Gravité",
+                "placeholder": "Sélectionnez le niveau de gravité"
+            },
+            "subtypeOf": {
+                "title": "Sous-type de",
+                "placeholder": "Sélectionnez le type parent"
+            },
+            "subtypes": {
+                "title": "Sous-types",
+                "placeholder": "Sélectionnez les types enfants"
+            }
+        },
+        "severity": {
+            "Minor": "Mineur",
+            "Major": "Majeur",
+            "Critical": "Critique"
+        },
+        "tabs": {
+            "dashboard": "Tableau de bord des types d'incidents",
+            "view_dashboard": "Afficher les types d'incidents",
+            "search": "Rechercher des types d'incidents",
+            "create": "Créer un type d'incident",
+            "edit": "Modifier le type d'incident"
+        },
+        "generalFields": "Champs généraux",
+        "classification": "Classification",
+        "title": "Incidents",
+        "subtitle": {
+            "dashboard": "Aperçu des statistiques et activités des types d'incidents",
+            "search": "Gérer et afficher tous les types d'incidents enregistrés",
+            "create": "Enregistrer un nouveau type d'incident dans le système",
+            "edit": "Modifier un type d'incident existant dans le système"
+        },
+        "registeredIncidentTypes": "Types d'incidents enregistrés",
+        "incidentTypeInformation": "Informations sur le type d'incident",
+        "parentType": "Type parent",
+        "confirmDelete": "Confirmer la suppression",
+        "confirmDeleteMessage": "Êtes-vous sûr de vouloir supprimer ce type d'incident ?",
+        "failedToDelete": "Échec de la suppression du type d'incident"
+    },
+    "taskCategory": {
+        "fields": {
+            "name": {
+                "title": "Nom",
+                "placeholder": "Nom de la catégorie de tâche"
+            },
+            "category": {
+                "title": "Catégorie",
+                "placeholder": "Code de catégorie"
+            },
+            "description": {
+                "title": "Description",
+                "placeholder": "Description de la catégorie de tâche"
+            }
+        },
+        "tabs": {
+            "dashboard": "Tableau de bord des catégories de tâches",
+            "search": "Rechercher des catégories de tâches",
+            "create": "Créer une catégorie de tâche",
+            "edit": "Modifier la catégorie de tâche",
+            "view_dashboard": "Afficher les catégories de tâches"
+        },
+        "generalFields": "Champs généraux",
+        "title": "Tâches",
+        "subtitle": {
+            "dashboard": "Aperçu des statistiques et activités des catégories de tâches",
+            "search": "Gérer et afficher toutes les catégories de tâches enregistrées",
+            "create": "Enregistrer une nouvelle catégorie de tâche dans le système",
+            "edit": "Modifier une catégorie de tâche existante dans le système"
+        },
+        "taskCategoryInformation": "Informations sur la catégorie de tâche",
+        "registeredTaskCategories": "Catégories de tâches enregistrées"
+    },
+    "execution": {
+        "title": "Exécutions de visites de navires",
+        "subtitle": {
+            "search": "Gérer et afficher toutes les exécutions de visites de navires",
+            "dashboard": "Aperçu des statistiques et activités des exécutions de visites de navires"
+        },
+        "tabs": {
+            "dashboard": "Tableau de bord des exécutions",
+            "search": "Rechercher des exécutions",
+            "view_dashboard": "Afficher les exécutions",
+            "update": "Mettre à jour l'exécution",
+            "view": "Afficher l'exécution",
+            "table": "Afficher le tableau",
+            "cards": "Afficher les cartes"
+        },
+        "fields": {
+            "code": "Code",
+            "relatedVVN": "Associé à",
+            "status": "Statut",
+            "createdBy": "Créé par",
+            "dateOpen": "Date d'ouverture",
+            "dateClosed": "Date de fermeture",
+            "relatedVesselVisit": "Visite de navire associée",
+            "dock": "Quai d'accostage",
+            "berthTime": "Heure d'accostage",
+            "operations": "Opérations"
+        },
+        "filters": {
+            "startDate": "Date de début",
+            "endDate": "Date de fin",
+            "relatedVVN": "Notification de visite de navire",
+            "status": "Statut"
+        },
+        "metrics": {
+            "totalOperations": "Total des opérations",
+            "completedOperations": "Progression",
+            "turnaroundTime": "Temps de rotation",
+            "berthOccupancy": "Occupation du quai"
+        },
+        "status": {
+            "pending": "En attente",
+            "started": "Démarré",
+            "delayed": "Retardé",
+            "completed": "Terminé"
+        },
+        "view_resources": "Afficher les ressources",
+        "infoTitle": "Informations sur l'exécution",
+        "operationsTitle": "Opérations",
+        "noOperations": "Aucune opération disponible",
+        "startOperation": "Démarrer l'opération",
+        "completeOperation": "Terminer l'opération",
+        "addOperation": "Ajouter une opération",
+        "addOperationDescription": "Ajouter une nouvelle opération à la chronologie",
+        "confirmStartOperation": "Êtes-vous sûr de vouloir démarrer cette opération ?",
+        "confirmCompleteOperation": "Êtes-vous sûr de vouloir terminer cette opération ?",
+        "berthOperation": {
+            "button": "Modifier les données d'accostage",
+            "title": "Opération d'accostage",
+            "description": "Modifiez le quai et l'heure pour cette exécution de visite de navire.",
+            "dock": "Quai d'accostage",
+            "dockPlaceholder": "Sélectionnez un quai",
+            "berthTime": "Heure d'accostage",
+            "differentThanPlanned": "Le quai sélectionné est différent de celui planifié."
+        }
+    },
+    "incident": {
+        "tabs": {
+            "dashboard": "Tableau de bord des incidents",
+            "create": "Créer un incident",
+            "search": "Rechercher des incidents",
+            "active": "Incidents actifs",
+            "view": "Afficher l'incident",
+            "edit": "Modifier l'incident"
+        },
+        "subtitle": {
+            "create": "Signaler un nouvel incident dans le système",
+            "search": "Rechercher et filtrer les incidents existants",
+            "active": "Afficher et gérer les incidents actifs"
+        },
+        "generalFields": "Informations générales",
+        "classification": "Classification",
+        "fields": {
+            "bid": {
+                "title": "ID de l'incident"
+            },
+            "type": {
+                "title": "Type d'incident",
+                "placeholder": "Sélectionnez le type d'incident"
+            },
+            "startTime": {
+                "title": "Heure de début",
+                "placeholder": "Quand l'incident a-t-il commencé ?"
+            },
+            "endTime": {
+                "title": "Heure de fin",
+                "placeholder": "Quand l'incident s'est-il terminé ?"
+            },
+            "severity": {
+                "title": "Gravité",
+                "placeholder": "Sélectionnez le niveau de gravité",
+                "options": {
+                    "minor": "Mineur",
+                    "major": "Majeur",
+                    "critical": "Critique"
+                }
+            },
+            "description": {
+                "title": "Description",
+                "placeholder": "Décrivez l'incident en détail"
+            },
+            "createdBy": {
+                "title": "Créé par"
+            },
+            "affectedVVECodes": {
+                "title": "VVE affectés",
+                "placeholder": "Entrez les VVE affectés"
+            },
+            "vveCode": {
+                "title": "Code VVE"
+            },
+            "status": {
+                "title": "Statut",
+                "options": {
+                    "active": "Actif",
+                    "resolved": "Résolu"
+                }
+            },
+            "filterStartTime": {
+                "title": "Date de début à partir de"
+            },
+            "filterEndTime": {
+                "title": "Date de début jusqu'à"
+            },
+            "duration": {
+                "title": "Durée"
+            }
+        },
+        "severity": {
+            "Minor": "Mineur",
+            "Major": "Majeur",
+            "Critical": "Critique"
+        },
+        "status": {
+            "active": "Actif",
+            "resolved": "Résolu"
+        },
+        "ongoing": "En cours",
+        "filters": {
+            "onlyActive": "Actifs uniquement",
+            "onlyMine": "Les miens uniquement"
+        },
+        "actions": {
+            "view": "Afficher les détails",
+            "edit": "Modifier l'incident",
+            "resolve": "Résoudre l'incident",
+            "delete": "Supprimer l'incident"
+        },
+        "notifications": {
+            "createSuccess": "Incident créé avec succès",
+            "createFailed": "Échec de la création de l'incident",
+            "updateSuccess": "Incident mis à jour avec succès",
+            "updateFailed": "Échec de la mise à jour de l'incident",
+            "resolveSuccess": "Incident résolu avec succès",
+            "resolveFailed": "Échec de la résolution de l'incident",
+            "deleteSuccess": "Incident supprimé avec succès",
+            "deleteFailed": "Échec de la suppression de l'incident"
+        },
+        "table": {
+            "empty": "Aucun incident trouvé"
+        },
+        "active": {
+            "title": "Incidents actifs",
+            "subtitle": "Afficher et gérer les incidents en cours"
+        },
+        "infoTitle": "Détails de l'incident",
+        "closeDialog": {
+            "title": "Résoudre l'incident",
+            "message": "Quand l'incident a-t-il été résolu ?",
+            "confirm": "Oui, fermer cet incident",
+            "cancel": "Annuler"
         }
     }
 }

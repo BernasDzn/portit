@@ -651,5 +651,387 @@
         "errors": {
             "shiftOverlap": "Nevažeća smjena. Preklapanje ili vrijeme završetka prije početka."
         }
+    },
+    "about": {
+        "title": "O PorTiT-u",
+        "privacy": {
+            "title": "Politika privatnosti",
+            "lastUpdated": "Posljednje ažurirano: {date}"
+        }
+    },
+    "operationPlan": {
+        "title": "Operativni plan",
+        "dock": "Vez",
+        "docks": "Vezovi",
+        "operations": "Operacije",
+        "cranes": "Dizalice",
+        "createdBy": "Kreirao",
+        "createdAt": "Kreirano",
+        "totalSchedules": "Ukupno rasporeda",
+        "vesselCount": "Brodova",
+        "plansOnDate": "Operativni planovi za odabrani datum",
+        "noPlansOnDate": "Nema operativnih planova za odabrani datum",
+        "id": "ID",
+        "vvn": "Obavještenje o posjeti broda",
+        "for": "za",
+        "details": "Detalji",
+        "totalOperations": "Ukupno operacija",
+        "algorithmUsed": "Korišteni algoritam",
+        "ganttChart": "Gantt dijagram",
+        "startTime": "Vrijeme početka",
+        "endTime": "Vrijeme završetka",
+        "totalDuration": "Ukupno trajanje",
+        "operation": "Operacija",
+        "duration": "Trajanje",
+        "resources": "Resursi",
+        "operationDetails": "Detalji operacije",
+        "operationNumber": "Operacija #{number}",
+        "notFound": "Operativni plan nije pronađen",
+        "operationType": {
+            "Unload": "Istovar",
+            "Load": "Utovar"
+        },
+        "tabs": {
+            "unplannedVVNs": "Neplanirani VVN-ovi",
+            "search": "Pretraga planova",
+            "edit": "Uredi plan",
+            "open": "Započni izvršenje"
+        },
+        "subtitle": {
+            "edit": "Izmijeni detalje operativnog plana i raspored"
+        },
+        "unplannedVVNs": {
+            "description": "Obavještenja o posjetama brodova koja još nemaju dodijeljeni operativni plan",
+            "noUnplanned": "Sva obavještenja o posjetama brodova imaju dodijeljene operativne planove",
+            "foundMessage": "Pronađeno {vvnCount} VVN(ova) bez planova u {dayCount} dan(a)",
+            "regenerateAll": "Regeneriraj sve nedostajuće planove",
+            "regenerateDay": "Regeneriraj planove za ovaj dan",
+            "regenerateModalTitle": "Regeneriraj planove za {date}",
+            "warning": "Upozorenje",
+            "warningMessage": "Regeneriranje planova će prebrisati sve postojeće operativne planove za ovaj dan. Ova akcija se ne može poništiti.",
+            "selectedDay": "Odabrani dan",
+            "confirmRegeneration": "Potvrdite regeneraciju",
+            "affectedDays": "Pogođeni dani",
+            "queueInfo": "Svaki zahtjev za regeneraciju će biti pojedinačno stavljen u red. Možete ih pregledati i prihvatiti/odbiti pojedinačno iz reda za planiranje.",
+            "continue": "Nastavi",
+            "confirmRegenerationTitle": "Potvrdite regeneraciju",
+            "irreversibleAction": "Ova akcija je nepovratna",
+            "overwriteWarning": "Regeneriranje operativnih planova će trajno prebrisati sve postojeće planove za odabrane dane. Ova akcija se ne može poništiti.",
+            "aboutToRegenerate": "Spremate se regenerirati planove za",
+            "days": "dana",
+            "vesselVisitNotifications": "Obavještenja o posjetama brodova",
+            "using": "Koristeći",
+            "algorithm": "algoritam",
+            "proceedQuestion": "Želite li nastaviti s ovom operacijom?",
+            "yesRegenerateAll": "Da, regeneriraj sve"
+        },
+        "algorithm": {
+            "optimal": "Optimalan",
+            "greedy": "Pohlepan",
+            "genetic": "Genetski",
+            "auto": "Automatski"
+        },
+        "metrics": {
+            "title": "Metrike",
+            "strategy": "Strategija",
+            "totalDelay": "Ukupno kašnjenje",
+            "computationTime": "Vrijeme izračuna",
+            "autoSelection": "Automatski odabir algoritma"
+        },
+        "infoTitle": "Informacije o operativnom planu",
+        "fields": {
+            "id": {
+                "title": "ID plana"
+            },
+            "relatedVVN": {
+                "title": "Povezano VVN"
+            },
+            "dock": {
+                "title": "Vez"
+            },
+            "operations": {
+                "title": "Operacije"
+            }
+        },
+        "filters": {
+            "startDate": "Datum početka od",
+            "endDate": "Datum završetka do"
+        },
+        "metadata": {
+            "title": "Metapodaci",
+            "createdBy": "Kreirao",
+            "createdAt": "Kreirano",
+            "algorithmUsed": "Korišteni algoritam"
+        },
+        "schedule": {
+            "title": "Operativni raspored",
+            "noOperations": "Nema planiranih operacija"
+        }
+    },
+    "incidentType": {
+        "fields": {
+            "name": {
+                "title": "Naziv",
+                "placeholder": "Naziv tipa incidenta"
+            },
+            "description": {
+                "title": "Opis",
+                "placeholder": "Detaljan opis tipa incidenta"
+            },
+            "severity": {
+                "title": "Težina",
+                "placeholder": "Odaberite nivo težine"
+            },
+            "subtypeOf": {
+                "title": "Podtip od",
+                "placeholder": "Odaberite nadređeni tip"
+            },
+            "subtypes": {
+                "title": "Podtipovi",
+                "placeholder": "Odaberite podređene tipove"
+            }
+        },
+        "severity": {
+            "Minor": "Manji",
+            "Major": "Veći",
+            "Critical": "Kritičan"
+        },
+        "tabs": {
+            "dashboard": "Kontrolna tabla tipova incidenata",
+            "view_dashboard": "Pregled tipova incidenata",
+            "search": "Pretraga tipova incidenata",
+            "create": "Kreiraj tip incidenta",
+            "edit": "Uredi tip incidenta"
+        },
+        "generalFields": "Opća polja",
+        "classification": "Klasifikacija",
+        "title": "Incidenti",
+        "subtitle": {
+            "dashboard": "Pregled statistike i aktivnosti tipova incidenata",
+            "search": "Upravljanje i pregled svih registriranih tipova incidenata",
+            "create": "Registracija novog tipa incidenta u sistemu",
+            "edit": "Izmjena postojećeg tipa incidenta u sistemu"
+        },
+        "registeredIncidentTypes": "Registrirani tipovi incidenata",
+        "incidentTypeInformation": "Informacije o tipu incidenta",
+        "parentType": "Nadređeni tip",
+        "confirmDelete": "Potvrdi brisanje",
+        "confirmDeleteMessage": "Jeste li sigurni da želite obrisati ovaj tip incidenta?",
+        "failedToDelete": "Neuspjelo brisanje tipa incidenta"
+    },
+    "taskCategory": {
+        "fields": {
+            "name": {
+                "title": "Naziv",
+                "placeholder": "Naziv kategorije zadatka"
+            },
+            "category": {
+                "title": "Kategorija",
+                "placeholder": "Kod kategorije"
+            },
+            "description": {
+                "title": "Opis",
+                "placeholder": "Opis kategorije zadatka"
+            }
+        },
+        "tabs": {
+            "dashboard": "Kontrolna tabla kategorija zadataka",
+            "search": "Pretraga kategorija zadataka",
+            "create": "Kreiraj kategoriju zadatka",
+            "edit": "Uredi kategoriju zadatka",
+            "view_dashboard": "Pregled kategorija zadataka"
+        },
+        "generalFields": "Opća polja",
+        "title": "Zadaci",
+        "subtitle": {
+            "dashboard": "Pregled statistike i aktivnosti kategorija zadataka",
+            "search": "Upravljanje i pregled svih registriranih kategorija zadataka",
+            "create": "Registracija nove kategorije zadatka u sistemu",
+            "edit": "Izmjena postojeće kategorije zadatka u sistemu"
+        },
+        "taskCategoryInformation": "Informacije o kategoriji zadatka",
+        "registeredTaskCategories": "Registrirane kategorije zadataka"
+    },
+    "execution": {
+        "title": "Izvršenja posjeta brodova",
+        "subtitle": {
+            "search": "Upravljanje i pregled svih izvršenja posjeta brodova",
+            "dashboard": "Pregled statistike i aktivnosti izvršenja posjeta brodova"
+        },
+        "tabs": {
+            "dashboard": "Kontrolna tabla izvršenja",
+            "search": "Pretraga izvršenja",
+            "view_dashboard": "Pregled izvršenja",
+            "update": "Ažuriraj izvršenje",
+            "view": "Pregledaj izvršenje",
+            "table": "Tabelarni pregled",
+            "cards": "Pregled kartica"
+        },
+        "fields": {
+            "code": "Kod",
+            "relatedVVN": "Povezano sa",
+            "status": "Status",
+            "createdBy": "Kreirao",
+            "dateOpen": "Datum otvaranja",
+            "dateClosed": "Datum zatvaranja",
+            "relatedVesselVisit": "Povezana posjeta broda",
+            "dock": "Vez pristana",
+            "berthTime": "Vrijeme vezivanja",
+            "operations": "Operacije"
+        },
+        "filters": {
+            "startDate": "Datum početka",
+            "endDate": "Datum završetka",
+            "relatedVVN": "Obavještenje o posjeti broda",
+            "status": "Status"
+        },
+        "metrics": {
+            "totalOperations": "Ukupno operacija",
+            "completedOperations": "Napredak",
+            "turnaroundTime": "Vrijeme obrtaja",
+            "berthOccupancy": "Zauzetost veza"
+        },
+        "status": {
+            "pending": "Na čekanju",
+            "started": "Započeto",
+            "delayed": "Odgođeno",
+            "completed": "Završeno"
+        },
+        "view_resources": "Pregled resursa",
+        "infoTitle": "Informacije o izvršenju",
+        "operationsTitle": "Operacije",
+        "noOperations": "Nema dostupnih operacija",
+        "startOperation": "Započni operaciju",
+        "completeOperation": "Završi operaciju",
+        "addOperation": "Dodaj operaciju",
+        "addOperationDescription": "Dodajte novu operaciju na vremensku liniju",
+        "confirmStartOperation": "Jeste li sigurni da želite započeti ovu operaciju?",
+        "confirmCompleteOperation": "Jeste li sigurni da želite završiti ovu operaciju?",
+        "berthOperation": {
+            "button": "Uredi podatke o vezu",
+            "title": "Operacija vezivanja",
+            "description": "Uredite vez i vrijeme za ovo izvršenje posjete broda.",
+            "dock": "Vez pristana",
+            "dockPlaceholder": "Odaberite vez",
+            "berthTime": "Vrijeme vezivanja",
+            "differentThanPlanned": "Odabrani vez se razlikuje od planiranog."
+        }
+    },
+    "incident": {
+        "tabs": {
+            "dashboard": "Kontrolna tabla incidenata",
+            "create": "Kreiraj incident",
+            "search": "Pretraži incidente",
+            "active": "Aktivni incidenti",
+            "view": "Pregledaj incident",
+            "edit": "Uredi incident"
+        },
+        "subtitle": {
+            "create": "Prijavite novi incident u sistemu",
+            "search": "Pretražite i filtrirajte postojeće incidente",
+            "active": "Pregledajte i upravljajte aktivnim incidentima"
+        },
+        "generalFields": "Opće informacije",
+        "classification": "Klasifikacija",
+        "fields": {
+            "bid": {
+                "title": "ID incidenta"
+            },
+            "type": {
+                "title": "Tip incidenta",
+                "placeholder": "Odaberite tip incidenta"
+            },
+            "startTime": {
+                "title": "Vrijeme početka",
+                "placeholder": "Kada je incident počeo?"
+            },
+            "endTime": {
+                "title": "Vrijeme završetka",
+                "placeholder": "Kada se incident završio?"
+            },
+            "severity": {
+                "title": "Težina",
+                "placeholder": "Odaberite nivo težine",
+                "options": {
+                    "minor": "Manji",
+                    "major": "Veći",
+                    "critical": "Kritičan"
+                }
+            },
+            "description": {
+                "title": "Opis",
+                "placeholder": "Detaljno opišite incident"
+            },
+            "createdBy": {
+                "title": "Kreirao"
+            },
+            "affectedVVECodes": {
+                "title": "Pogođeni VVE",
+                "placeholder": "Unesite pogođene VVE"
+            },
+            "vveCode": {
+                "title": "VVE kod"
+            },
+            "status": {
+                "title": "Status",
+                "options": {
+                    "active": "Aktivan",
+                    "resolved": "Riješen"
+                }
+            },
+            "filterStartTime": {
+                "title": "Datum početka od"
+            },
+            "filterEndTime": {
+                "title": "Datum početka do"
+            },
+            "duration": {
+                "title": "Trajanje"
+            }
+        },
+        "severity": {
+            "Minor": "Manji",
+            "Major": "Veći",
+            "Critical": "Kritičan"
+        },
+        "status": {
+            "active": "Aktivan",
+            "resolved": "Riješen"
+        },
+        "ongoing": "U toku",
+        "filters": {
+            "onlyActive": "Samo aktivni",
+            "onlyMine": "Samo moji"
+        },
+        "actions": {
+            "view": "Pregledaj detalje",
+            "edit": "Uredi incident",
+            "resolve": "Riješi incident",
+            "delete": "Obriši incident"
+        },
+        "notifications": {
+            "createSuccess": "Incident uspješno kreiran",
+            "createFailed": "Neuspjelo kreiranje incidenta",
+            "updateSuccess": "Incident uspješno ažuriran",
+            "updateFailed": "Neuspjelo ažuriranje incidenta",
+            "resolveSuccess": "Incident uspješno riješen",
+            "resolveFailed": "Neuspjelo rješavanje incidenta",
+            "deleteSuccess": "Incident uspješno obrisan",
+            "deleteFailed": "Neuspjelo brisanje incidenta"
+        },
+        "table": {
+            "empty": "Nisu pronađeni incidenti"
+        },
+        "active": {
+            "title": "Aktivni incidenti",
+            "subtitle": "Pregledajte i upravljajte tekućim incidentima"
+        },
+        "infoTitle": "Detalji incidenta",
+        "closeDialog": {
+            "title": "Riješi incident",
+            "message": "Kada je incident riješen",
+            "confirm": "Da, zatvori ovaj incident",
+            "cancel": "Otkaži"
+        }
     }
 }

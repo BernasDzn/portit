@@ -650,5 +650,387 @@
         "errors": {
             "shiftOverlap": "Virheellinen vuoro. Päällekkäinen tai loppuaika ennen aloitusta."
         }
+    },
+    "about": {
+        "title": "Tietoja PorTiT:sta",
+        "privacy": {
+            "title": "Tietosuojakäytäntö",
+            "lastUpdated": "Viimeksi päivitetty: {date}"
+        }
+    },
+    "operationPlan": {
+        "title": "Toimintasuunnitelma",
+        "dock": "Laituri",
+        "docks": "Laiturit",
+        "operations": "Toiminnot",
+        "cranes": "Nosturit",
+        "createdBy": "Luonut",
+        "createdAt": "Luotu",
+        "totalSchedules": "Aikatauluja yhteensä",
+        "vesselCount": "Alukset",
+        "plansOnDate": "Toimintasuunnitelmat valitulla päivällä",
+        "noPlansOnDate": "Ei toimintasuunnitelmia valitulla päivällä",
+        "id": "Tunniste",
+        "vvn": "Aluskäynnin ilmoitus",
+        "for": "kohteelle",
+        "details": "Yksityiskohdat",
+        "totalOperations": "Toimintoja yhteensä",
+        "algorithmUsed": "Käytetty algoritmi",
+        "ganttChart": "Gantt-kaavio",
+        "startTime": "Aloitusaika",
+        "endTime": "Lopetusaika",
+        "totalDuration": "Kokonaiskesto",
+        "operation": "Toiminto",
+        "duration": "Kesto",
+        "resources": "Resurssit",
+        "operationDetails": "Toiminnon yksityiskohdat",
+        "operationNumber": "Toiminto #{number}",
+        "notFound": "Toimintasuunnitelmaa ei löytynyt",
+        "operationType": {
+            "Unload": "Purkaminen",
+            "Load": "Lastaus"
+        },
+        "tabs": {
+            "unplannedVVNs": "Suunnittelemattomat VVN:t",
+            "search": "Hae suunnitelmia",
+            "edit": "Muokkaa suunnitelmaa",
+            "open": "Avaa toteutus"
+        },
+        "subtitle": {
+            "edit": "Muokkaa toimintasuunnitelman yksityiskohtia ja aikataulua"
+        },
+        "unplannedVVNs": {
+            "description": "Aluskäynnin ilmoitukset, joilla ei ole vielä osoitettua toimintasuunnitelmaa",
+            "noUnplanned": "Kaikilla aluskäynnin ilmoituksilla on osoitetut toimintasuunnitelmat",
+            "foundMessage": "Löydettiin {vvnCount} VVN ilman suunnitelmia {dayCount} päivässä/päivässä",
+            "regenerateAll": "Luo kaikki puuttuvat suunnitelmat",
+            "regenerateDay": "Luo tämän päivän suunnitelmat",
+            "regenerateModalTitle": "Luo suunnitelmat päivälle {date}",
+            "warning": "Varoitus",
+            "warningMessage": "Suunnitelmien uudelleenluonti korvaa kaikki olemassa olevat toimintasuunnitelmat tälle päivälle. Tätä toimintoa ei voi perua.",
+            "selectedDay": "Valittu päivä",
+            "confirmRegeneration": "Vahvista uudelleenluonti",
+            "affectedDays": "Vaikutetut päivät",
+            "queueInfo": "Jokainen uudelleenluontipyyntö asetetaan jonoon erikseen. Voit tarkastella ja hyväksyä/hylätä ne erikseen aikataulutusjonosta.",
+            "continue": "Jatka",
+            "confirmRegenerationTitle": "Vahvista uudelleenluonti",
+            "irreversibleAction": "Tämä toiminto on peruuttamaton",
+            "overwriteWarning": "Toimintasuunnitelmien uudelleenluonti korvaa pysyvästi kaikki olemassa olevat suunnitelmat valituille päiville. Tätä toimintoa ei voi perua.",
+            "aboutToRegenerate": "Olet luomassa suunnitelmia",
+            "days": "päivälle",
+            "vesselVisitNotifications": "Aluskäynnin ilmoitukset",
+            "using": "Käyttäen",
+            "algorithm": "algoritmia",
+            "proceedQuestion": "Haluatko jatkaa tätä toimintoa?",
+            "yesRegenerateAll": "Kyllä, luo kaikki"
+        },
+        "algorithm": {
+            "optimal": "Optimaalinen",
+            "greedy": "Ahne",
+            "genetic": "Geneettinen",
+            "auto": "Automaattinen"
+        },
+        "metrics": {
+            "title": "Mittarit",
+            "strategy": "Strategia",
+            "totalDelay": "Kokonaisviive",
+            "computationTime": "Laskenta-aika",
+            "autoSelection": "Automaattinen algoritmin valinta"
+        },
+        "infoTitle": "Toimintasuunnitelman tiedot",
+        "fields": {
+            "id": {
+                "title": "Suunnitelman tunniste"
+            },
+            "relatedVVN": {
+                "title": "Liittyvä VVN"
+            },
+            "dock": {
+                "title": "Laituri"
+            },
+            "operations": {
+                "title": "Toiminnot"
+            }
+        },
+        "filters": {
+            "startDate": "Aloituspäivä alkaen",
+            "endDate": "Lopetuspäivä asti"
+        },
+        "metadata": {
+            "title": "Metatiedot",
+            "createdBy": "Luonut",
+            "createdAt": "Luotu",
+            "algorithmUsed": "Käytetty algoritmi"
+        },
+        "schedule": {
+            "title": "Toimintojen aikataulu",
+            "noOperations": "Ei suunniteltuja toimintoja"
+        }
+    },
+    "incidentType": {
+        "fields": {
+            "name": {
+                "title": "Nimi",
+                "placeholder": "Tapahtuman tyypin nimi"
+            },
+            "description": {
+                "title": "Kuvaus",
+                "placeholder": "Tapahtuman tyypin yksityiskohtainen kuvaus"
+            },
+            "severity": {
+                "title": "Vakavuus",
+                "placeholder": "Valitse vakavuustaso"
+            },
+            "subtypeOf": {
+                "title": "Alatyyppi",
+                "placeholder": "Valitse ylätyyppi"
+            },
+            "subtypes": {
+                "title": "Alatyypit",
+                "placeholder": "Valitse alatyypit"
+            }
+        },
+        "severity": {
+            "Minor": "Vähäinen",
+            "Major": "Suuri",
+            "Critical": "Kriittinen"
+        },
+        "tabs": {
+            "dashboard": "Tapahtumien kojelauta",
+            "view_dashboard": "Näytä tapahtumatyypit",
+            "search": "Hae tapahtumatyyppejä",
+            "create": "Luo tapahtumatyyppi",
+            "edit": "Muokkaa tapahtumatyyppiä"
+        },
+        "generalFields": "Yleiset kentät",
+        "classification": "Luokittelu",
+        "title": "Tapahtumat",
+        "subtitle": {
+            "dashboard": "Tapahtumien tyyppien tilastojen ja toimintojen yleiskatsaus",
+            "search": "Hallitse ja tarkastele kaikkia rekisteröityjä tapahtumatyyppejä",
+            "create": "Rekisteröi uusi tapahtumatyyppi järjestelmään",
+            "edit": "Muokkaa olemassa olevaa tapahtumatyyppiä järjestelmässä"
+        },
+        "registeredIncidentTypes": "Rekisteröidyt tapahtumatyypit",
+        "incidentTypeInformation": "Tapahtumatyypin tiedot",
+        "parentType": "Ylätyyppi",
+        "confirmDelete": "Vahvista poisto",
+        "confirmDeleteMessage": "Oletko varma, että haluat poistaa tämän tapahtumatyypin?",
+        "failedToDelete": "Tapahtumatyypin poistaminen epäonnistui"
+    },
+    "taskCategory": {
+        "fields": {
+            "name": {
+                "title": "Nimi",
+                "placeholder": "Tehtäväluokan nimi"
+            },
+            "category": {
+                "title": "Luokka",
+                "placeholder": "Luokkakoodi"
+            },
+            "description": {
+                "title": "Kuvaus",
+                "placeholder": "Tehtäväluokan kuvaus"
+            }
+        },
+        "tabs": {
+            "dashboard": "Tehtävien kojelauta",
+            "search": "Hae tehtäväluokkia",
+            "create": "Luo tehtäväluokka",
+            "edit": "Muokkaa tehtäväluokkaa",
+            "view_dashboard": "Näytä tehtäväluokat"
+        },
+        "generalFields": "Yleiset kentät",
+        "title": "Tehtävät",
+        "subtitle": {
+            "dashboard": "Tehtäväluokkien tilastojen ja toimintojen yleiskatsaus",
+            "search": "Hallitse ja tarkastele kaikkia rekisteröityjä tehtäväluokkia",
+            "create": "Rekisteröi uusi tehtäväluokka järjestelmään",
+            "edit": "Muokkaa olemassa olevaa tehtäväluokkaa järjestelmässä"
+        },
+        "taskCategoryInformation": "Tehtäväluokan tiedot",
+        "registeredTaskCategories": "Rekisteröidyt tehtäväluokat"
+    },
+    "execution": {
+        "title": "Aluskäynnin toteutukset",
+        "subtitle": {
+            "search": "Hallitse ja tarkastele kaikkia aluskäynnin toteutuksia",
+            "dashboard": "Aluskäynnin toteutusten tilastojen ja toimintojen yleiskatsaus"
+        },
+        "tabs": {
+            "dashboard": "Toteutusten kojelauta",
+            "search": "Hae toteutuksia",
+            "view_dashboard": "Näytä toteutukset",
+            "update": "Päivitä toteutus",
+            "view": "Näytä toteutus",
+            "table": "Näytä taulukko",
+            "cards": "Näytä kortit"
+        },
+        "fields": {
+            "code": "Koodi",
+            "relatedVVN": "Liittyvä",
+            "status": "Tila",
+            "createdBy": "Luonut",
+            "dateOpen": "Avauspäivä",
+            "dateClosed": "Sulkemispäivä",
+            "relatedVesselVisit": "Liittyvä aluskäynti",
+            "dock": "Telakointilaitu ri",
+            "berthTime": "Telakointiaika",
+            "operations": "Toiminnot"
+        },
+        "filters": {
+            "startDate": "Aloituspäivä",
+            "endDate": "Lopetuspäivä",
+            "relatedVVN": "Aluskäynnin ilmoitus",
+            "status": "Tila"
+        },
+        "metrics": {
+            "totalOperations": "Toimintoja yhteensä",
+            "completedOperations": "Edistyminen",
+            "turnaroundTime": "Käännösaika",
+            "berthOccupancy": "Laiturin käyttöaste"
+        },
+        "status": {
+            "pending": "Odottaa",
+            "started": "Aloitettu",
+            "delayed": "Viivästynyt",
+            "completed": "Valmis"
+        },
+        "view_resources": "Näytä resurssit",
+        "infoTitle": "Toteutuksen tiedot",
+        "operationsTitle": "Toiminnot",
+        "noOperations": "Ei saatavilla olevia toimintoja",
+        "startOperation": "Aloita toiminto",
+        "completeOperation": "Viimeistele toiminto",
+        "addOperation": "Lisää toiminto",
+        "addOperationDescription": "Lisää uusi toiminto aikajanalle",
+        "confirmStartOperation": "Oletko varma, että haluat aloittaa tämän toiminnon?",
+        "confirmCompleteOperation": "Oletko varma, että haluat viimeistellä tämän toiminnon?",
+        "berthOperation": {
+            "button": "Muokkaa telakointitietoja",
+            "title": "Telakointitoiminto",
+            "description": "Muokkaa tämän aluskäynnin toteutuksen laituria ja aikaa.",
+            "dock": "Telakointilaituri",
+            "dockPlaceholder": "Valitse laituri",
+            "berthTime": "Telakointiaika",
+            "differentThanPlanned": "Valittu laituri on eri kuin suunniteltu."
+        }
+    },
+    "incident": {
+        "tabs": {
+            "dashboard": "Tapahtumien kojelauta",
+            "create": "Luo tapahtuma",
+            "search": "Hae tapahtumia",
+            "active": "Aktiiviset tapahtumat",
+            "view": "Näytä tapahtuma",
+            "edit": "Muokkaa tapahtumaa"
+        },
+        "subtitle": {
+            "create": "Ilmoita uusi tapahtuma järjestelmään",
+            "search": "Hae ja suodata olemassa olevia tapahtumia",
+            "active": "Tarkastele ja hallitse aktiivisia tapahtumia"
+        },
+        "generalFields": "Yleiset tiedot",
+        "classification": "Luokittelu",
+        "fields": {
+            "bid": {
+                "title": "Tapahtuman tunniste"
+            },
+            "type": {
+                "title": "Tapahtumatyyppi",
+                "placeholder": "Valitse tapahtumatyyppi"
+            },
+            "startTime": {
+                "title": "Aloitusaika",
+                "placeholder": "Milloin tapahtuma alkoi?"
+            },
+            "endTime": {
+                "title": "Lopetusaika",
+                "placeholder": "Milloin tapahtuma päättyi?"
+            },
+            "severity": {
+                "title": "Vakavuus",
+                "placeholder": "Valitse vakavuustaso",
+                "options": {
+                    "minor": "Vähäinen",
+                    "major": "Suuri",
+                    "critical": "Kriittinen"
+                }
+            },
+            "description": {
+                "title": "Kuvaus",
+                "placeholder": "Kuvaile tapahtuma yksityiskohtaisesti"
+            },
+            "createdBy": {
+                "title": "Luonut"
+            },
+            "affectedVVECodes": {
+                "title": "Vaikutetut VVE:t",
+                "placeholder": "Syötä vaikutetut VVE:t"
+            },
+            "vveCode": {
+                "title": "VVE-koodi"
+            },
+            "status": {
+                "title": "Tila",
+                "options": {
+                    "active": "Aktiivinen",
+                    "resolved": "Ratkaistu"
+                }
+            },
+            "filterStartTime": {
+                "title": "Aloituspäivä alkaen"
+            },
+            "filterEndTime": {
+                "title": "Aloituspäivä asti"
+            },
+            "duration": {
+                "title": "Kesto"
+            }
+        },
+        "severity": {
+            "Minor": "Vähäinen",
+            "Major": "Suuri",
+            "Critical": "Kriittinen"
+        },
+        "status": {
+            "active": "Aktiivinen",
+            "resolved": "Ratkaistu"
+        },
+        "ongoing": "Käynnissä",
+        "filters": {
+            "onlyActive": "Vain aktiiviset",
+            "onlyMine": "Vain omat"
+        },
+        "actions": {
+            "view": "Näytä yksityiskohdat",
+            "edit": "Muokkaa tapahtumaa",
+            "resolve": "Ratkaise tapahtuma",
+            "delete": "Poista tapahtuma"
+        },
+        "notifications": {
+            "createSuccess": "Tapahtuma luotu onnistuneesti",
+            "createFailed": "Tapahtuman luonti epäonnistui",
+            "updateSuccess": "Tapahtuma päivitetty onnistuneesti",
+            "updateFailed": "Tapahtuman päivitys epäonnistui",
+            "resolveSuccess": "Tapahtuma ratkaistu onnistuneesti",
+            "resolveFailed": "Tapahtuman ratkaisu epäonnistui",
+            "deleteSuccess": "Tapahtuma poistettu onnistuneesti",
+            "deleteFailed": "Tapahtuman poisto epäonnistui"
+        },
+        "table": {
+            "empty": "Tapahtumia ei löytynyt"
+        },
+        "active": {
+            "title": "Aktiiviset tapahtumat",
+            "subtitle": "Tarkastele ja hallitse käynnissä olevia tapahtumia"
+        },
+        "infoTitle": "Tapahtuman yksityiskohdat",
+        "closeDialog": {
+            "title": "Ratkaise tapahtuma",
+            "message": "Milloin tapahtuma ratkottiin?",
+            "confirm": "Kyllä, sulje tämä tapahtuma",
+            "cancel": "Peruuta"
+        }
     }
 }

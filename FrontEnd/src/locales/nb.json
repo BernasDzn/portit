@@ -649,5 +649,387 @@
         "errors": {
             "shiftOverlap": "Ugyldig skift: overlapp eller sluttid før start."
         }
+    },
+    "about": {
+        "title": "Om PorTiT",
+        "privacy": {
+            "title": "Personvernerklæring",
+            "lastUpdated": "Sist oppdatert: {date}"
+        }
+    },
+    "operationPlan": {
+        "title": "Driftsplan",
+        "dock": "Kai",
+        "docks": "Kaier",
+        "operations": "Operasjoner",
+        "cranes": "Kraner",
+        "createdBy": "Opprettet av",
+        "createdAt": "Opprettet",
+        "totalSchedules": "Totale tidsplaner",
+        "vesselCount": "Fartøy",
+        "plansOnDate": "Driftsplaner på valgt dato",
+        "noPlansOnDate": "Ingen driftsplaner på valgt dato",
+        "id": "ID",
+        "vvn": "Fartøybesøksvarsel",
+        "for": "for",
+        "details": "Detaljer",
+        "totalOperations": "Totale operasjoner",
+        "algorithmUsed": "Algoritme brukt",
+        "ganttChart": "Gantt-diagram",
+        "startTime": "Starttid",
+        "endTime": "Sluttid",
+        "totalDuration": "Total varighet",
+        "operation": "Operasjon",
+        "duration": "Varighet",
+        "resources": "Ressurser",
+        "operationDetails": "Operasjonsdetaljer",
+        "operationNumber": "Operasjon #{number}",
+        "notFound": "Driftsplan ikke funnet",
+        "operationType": {
+            "Unload": "Lossing",
+            "Load": "Lasting"
+        },
+        "tabs": {
+            "unplannedVVNs": "Uplanlagte VVN-er",
+            "search": "Søk planer",
+            "edit": "Rediger plan",
+            "open": "Åpne utførelse"
+        },
+        "subtitle": {
+            "edit": "Endre driftsplandetaljer og tidsplan"
+        },
+        "unplannedVVNs": {
+            "description": "Fartøybesøksvarsler som ennå ikke har en tildelt driftsplan",
+            "noUnplanned": "Alle fartøybesøksvarsler har tildelte driftsplaner",
+            "foundMessage": "Fant {vvnCount} VVN-er uten planer på {dayCount} dag(er)",
+            "regenerateAll": "Regenerer alle manglende planer",
+            "regenerateDay": "Regenerer planer for denne dagen",
+            "regenerateModalTitle": "Regenerer planer for {date}",
+            "warning": "Advarsel",
+            "warningMessage": "Regenerering av planer vil erstatte alle eksisterende driftsplaner for denne dagen. Denne handlingen kan ikke angres.",
+            "selectedDay": "Valgt dag",
+            "confirmRegeneration": "Bekreft regenerering",
+            "affectedDays": "Berørte dager",
+            "queueInfo": "Hver regenereringsforespørsel vil bli satt i kø separat. Du kan gjennomgå og godta/avvise dem individuelt fra planleggingskøen.",
+            "continue": "Fortsett",
+            "confirmRegenerationTitle": "Bekreft regenerering",
+            "irreversibleAction": "Denne handlingen er irreversibel",
+            "overwriteWarning": "Regenerering av driftsplaner vil permanent overskrive alle eksisterende planer for de valgte dagene. Denne handlingen kan ikke angres.",
+            "aboutToRegenerate": "Du er i ferd med å regenerere planer for",
+            "days": "dager",
+            "vesselVisitNotifications": "Fartøybesøksvarsler",
+            "using": "Ved bruk av",
+            "algorithm": "algoritme",
+            "proceedQuestion": "Vil du fortsette med denne operasjonen?",
+            "yesRegenerateAll": "Ja, regenerer alt"
+        },
+        "algorithm": {
+            "optimal": "Optimal",
+            "greedy": "Grådig",
+            "genetic": "Genetisk",
+            "auto": "Automatisk"
+        },
+        "metrics": {
+            "title": "Metrikker",
+            "strategy": "Strategi",
+            "totalDelay": "Total forsinkelse",
+            "computationTime": "Beregningstid",
+            "autoSelection": "Automatisk algoritmevalg"
+        },
+        "infoTitle": "Driftsplaninformasjon",
+        "fields": {
+            "id": {
+                "title": "Plan-ID"
+            },
+            "relatedVVN": {
+                "title": "Relatert VVN"
+            },
+            "dock": {
+                "title": "Kai"
+            },
+            "operations": {
+                "title": "Operasjoner"
+            }
+        },
+        "filters": {
+            "startDate": "Startdato fra",
+            "endDate": "Sluttdato til"
+        },
+        "metadata": {
+            "title": "Metadata",
+            "createdBy": "Opprettet av",
+            "createdAt": "Opprettet",
+            "algorithmUsed": "Algoritme brukt"
+        },
+        "schedule": {
+            "title": "Operasjonstidsplan",
+            "noOperations": "Ingen planlagte operasjoner"
+        }
+    },
+    "incidentType": {
+        "fields": {
+            "name": {
+                "title": "Navn",
+                "placeholder": "Hendelsestypenavn"
+            },
+            "description": {
+                "title": "Beskrivelse",
+                "placeholder": "Detaljert beskrivelse av hendelsestype"
+            },
+            "severity": {
+                "title": "Alvorlighetsgrad",
+                "placeholder": "Velg alvorlighetsgrad"
+            },
+            "subtypeOf": {
+                "title": "Undertype av",
+                "placeholder": "Velg overordnet type"
+            },
+            "subtypes": {
+                "title": "Undertyper",
+                "placeholder": "Velg underordnede typer"
+            }
+        },
+        "severity": {
+            "Minor": "Mindre",
+            "Major": "Større",
+            "Critical": "Kritisk"
+        },
+        "tabs": {
+            "dashboard": "Hendelsestypeoversikt",
+            "view_dashboard": "Vis hendelsestyper",
+            "search": "Søk hendelsestyper",
+            "create": "Opprett hendelsestype",
+            "edit": "Rediger hendelsestype"
+        },
+        "generalFields": "Generelle felt",
+        "classification": "Klassifisering",
+        "title": "Hendelser",
+        "subtitle": {
+            "dashboard": "Oversikt over statistikk og aktivitet for hendelsestyper",
+            "search": "Administrer og vis alle registrerte hendelsestyper",
+            "create": "Registrer ny hendelsestype i systemet",
+            "edit": "Endre eksisterende hendelsestype i systemet"
+        },
+        "registeredIncidentTypes": "Registrerte hendelsestyper",
+        "incidentTypeInformation": "Hendelsestypeinformasjon",
+        "parentType": "Overordnet type",
+        "confirmDelete": "Bekreft sletting",
+        "confirmDeleteMessage": "Er du sikker på at du vil slette denne hendelsestypen?",
+        "failedToDelete": "Kunne ikke slette hendelsestype"
+    },
+    "taskCategory": {
+        "fields": {
+            "name": {
+                "title": "Navn",
+                "placeholder": "Oppgavekategorinavn"
+            },
+            "category": {
+                "title": "Kategori",
+                "placeholder": "Kategorikode"
+            },
+            "description": {
+                "title": "Beskrivelse",
+                "placeholder": "Oppgavekategoribeskrivelse"
+            }
+        },
+        "tabs": {
+            "dashboard": "Oppgavekategorioversikt",
+            "search": "Søk oppgavekategorier",
+            "create": "Opprett oppgavekategori",
+            "edit": "Rediger oppgavekategori",
+            "view_dashboard": "Vis oppgavekategorier"
+        },
+        "generalFields": "Generelle felt",
+        "title": "Oppgaver",
+        "subtitle": {
+            "dashboard": "Oversikt over statistikk og aktivitet for oppgavekategorier",
+            "search": "Administrer og vis alle registrerte oppgavekategorier",
+            "create": "Registrer ny oppgavekategori i systemet",
+            "edit": "Endre eksisterende oppgavekategori i systemet"
+        },
+        "taskCategoryInformation": "Oppgavekategoriinformasjon",
+        "registeredTaskCategories": "Registrerte oppgavekategorier"
+    },
+    "execution": {
+        "title": "Fartøybesøksutførelser",
+        "subtitle": {
+            "search": "Administrer og vis alle fartøybesøksutførelser",
+            "dashboard": "Oversikt over statistikk og aktivitet for fartøybesøksutførelser"
+        },
+        "tabs": {
+            "dashboard": "Utførelsesoversikt",
+            "search": "Søk utførelser",
+            "view_dashboard": "Vis utførelser",
+            "update": "Oppdater utførelse",
+            "view": "Vis utførelse",
+            "table": "Vis tabell",
+            "cards": "Vis kort"
+        },
+        "fields": {
+            "code": "Kode",
+            "relatedVVN": "Relatert til",
+            "status": "Status",
+            "createdBy": "Opprettet av",
+            "dateOpen": "Åpningsdato",
+            "dateClosed": "Lukkingsdato",
+            "relatedVesselVisit": "Relatert fartøybesøk",
+            "dock": "Fortøyningskai",
+            "berthTime": "Fortøyningstid",
+            "operations": "Operasjoner"
+        },
+        "filters": {
+            "startDate": "Startdato",
+            "endDate": "Sluttdato",
+            "relatedVVN": "Fartøybesøksvarsel",
+            "status": "Status"
+        },
+        "metrics": {
+            "totalOperations": "Totale operasjoner",
+            "completedOperations": "Fremdrift",
+            "turnaroundTime": "Snuttid",
+            "berthOccupancy": "Kaibelegg"
+        },
+        "status": {
+            "pending": "Venter",
+            "started": "Startet",
+            "delayed": "Forsinket",
+            "completed": "Fullført"
+        },
+        "view_resources": "Vis ressurser",
+        "infoTitle": "Utførelsesinformasjon",
+        "operationsTitle": "Operasjoner",
+        "noOperations": "Ingen tilgjengelige operasjoner",
+        "startOperation": "Start operasjon",
+        "completeOperation": "Fullfør operasjon",
+        "addOperation": "Legg til operasjon",
+        "addOperationDescription": "Legg til ny operasjon på tidslinjen",
+        "confirmStartOperation": "Er du sikker på at du vil starte denne operasjonen?",
+        "confirmCompleteOperation": "Er du sikker på at du vil fullføre denne operasjonen?",
+        "berthOperation": {
+            "button": "Rediger fortøyningsdata",
+            "title": "Fortøyningsoperasjon",
+            "description": "Rediger kai og tid for denne fartøybesøksutførelsen.",
+            "dock": "Fortøyningskai",
+            "dockPlaceholder": "Velg kai",
+            "berthTime": "Fortøyningstid",
+            "differentThanPlanned": "Valgt kai er forskjellig fra planlagt."
+        }
+    },
+    "incident": {
+        "tabs": {
+            "dashboard": "Hendelsesoversikt",
+            "create": "Opprett hendelse",
+            "search": "Søk hendelser",
+            "active": "Aktive hendelser",
+            "view": "Vis hendelse",
+            "edit": "Rediger hendelse"
+        },
+        "subtitle": {
+            "create": "Rapporter ny hendelse i systemet",
+            "search": "Søk og filtrer eksisterende hendelser",
+            "active": "Vis og administrer aktive hendelser"
+        },
+        "generalFields": "Generell informasjon",
+        "classification": "Klassifisering",
+        "fields": {
+            "bid": {
+                "title": "Hendelses-ID"
+            },
+            "type": {
+                "title": "Hendelsestype",
+                "placeholder": "Velg hendelsestype"
+            },
+            "startTime": {
+                "title": "Starttid",
+                "placeholder": "Når startet hendelsen?"
+            },
+            "endTime": {
+                "title": "Sluttid",
+                "placeholder": "Når sluttet hendelsen?"
+            },
+            "severity": {
+                "title": "Alvorlighetsgrad",
+                "placeholder": "Velg alvorlighetsgrad",
+                "options": {
+                    "minor": "Mindre",
+                    "major": "Større",
+                    "critical": "Kritisk"
+                }
+            },
+            "description": {
+                "title": "Beskrivelse",
+                "placeholder": "Beskriv hendelsen detaljert"
+            },
+            "createdBy": {
+                "title": "Opprettet av"
+            },
+            "affectedVVECodes": {
+                "title": "Berørte VVE-er",
+                "placeholder": "Angi berørte VVE-er"
+            },
+            "vveCode": {
+                "title": "VVE-kode"
+            },
+            "status": {
+                "title": "Status",
+                "options": {
+                    "active": "Aktiv",
+                    "resolved": "Løst"
+                }
+            },
+            "filterStartTime": {
+                "title": "Startdato fra"
+            },
+            "filterEndTime": {
+                "title": "Startdato til"
+            },
+            "duration": {
+                "title": "Varighet"
+            }
+        },
+        "severity": {
+            "Minor": "Mindre",
+            "Major": "Større",
+            "Critical": "Kritisk"
+        },
+        "status": {
+            "active": "Aktiv",
+            "resolved": "Løst"
+        },
+        "ongoing": "Pågående",
+        "filters": {
+            "onlyActive": "Kun aktive",
+            "onlyMine": "Kun mine"
+        },
+        "actions": {
+            "view": "Vis detaljer",
+            "edit": "Rediger hendelse",
+            "resolve": "Løs hendelse",
+            "delete": "Slett hendelse"
+        },
+        "notifications": {
+            "createSuccess": "Hendelse opprettet",
+            "createFailed": "Kunne ikke opprette hendelse",
+            "updateSuccess": "Hendelse oppdatert",
+            "updateFailed": "Kunne ikke oppdatere hendelse",
+            "resolveSuccess": "Hendelse løst",
+            "resolveFailed": "Kunne ikke løse hendelse",
+            "deleteSuccess": "Hendelse slettet",
+            "deleteFailed": "Kunne ikke slette hendelse"
+        },
+        "table": {
+            "empty": "Ingen hendelser funnet"
+        },
+        "active": {
+            "title": "Aktive hendelser",
+            "subtitle": "Vis og administrer pågående hendelser"
+        },
+        "infoTitle": "Hendelsesdetaljer",
+        "closeDialog": {
+            "title": "Løs hendelse",
+            "message": "Når ble hendelsen løst?",
+            "confirm": "Ja, lukk denne hendelsen",
+            "cancel": "Avbryt"
+        }
     }
 }

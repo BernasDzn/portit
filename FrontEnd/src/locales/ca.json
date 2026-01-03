@@ -645,5 +645,387 @@
         "errors": {
             "shiftOverlap": "Torn invàlid. Superposició o hora final abans de l'inici."
         }
+    },
+    "about": {
+        "title": "Sobre PorTiT",
+        "privacy": {
+            "title": "Política de Privacitat",
+            "lastUpdated": "Última actualització: {date}"
+        }
+    },
+    "operationPlan": {
+        "title": "Pla d'Operació",
+        "dock": "Moll",
+        "docks": "Molls",
+        "operations": "Operacions",
+        "cranes": "Grues",
+        "createdBy": "Creat per",
+        "createdAt": "Creat el",
+        "totalSchedules": "Total de programacions",
+        "vesselCount": "Vaixells",
+        "plansOnDate": "Plans d'operació a la data seleccionada",
+        "noPlansOnDate": "No hi ha plans d'operació a la data seleccionada",
+        "id": "ID",
+        "vvn": "Notificació de visita de vaixell",
+        "for": "per",
+        "details": "Detalls",
+        "totalOperations": "Total d'operacions",
+        "algorithmUsed": "Algoritme utilitzat",
+        "ganttChart": "Diagrama de Gantt",
+        "startTime": "Hora d'inici",
+        "endTime": "Hora de finalització",
+        "totalDuration": "Durada total",
+        "operation": "Operació",
+        "duration": "Durada",
+        "resources": "Recursos",
+        "operationDetails": "Detalls de l'operació",
+        "operationNumber": "Operació #{number}",
+        "notFound": "Pla d'operació no trobat",
+        "operationType": {
+            "Unload": "Descarregar",
+            "Load": "Carregar"
+        },
+        "tabs": {
+            "unplannedVVNs": "VVN no planificats",
+            "search": "Cercar plans",
+            "edit": "Editar pla",
+            "open": "Iniciar execució"
+        },
+        "subtitle": {
+            "edit": "Modificar els detalls del pla d'operació i la programació"
+        },
+        "unplannedVVNs": {
+            "description": "Notificacions de visites de vaixells que encara no tenen un pla d'operació assignat",
+            "noUnplanned": "Totes les notificacions de visites de vaixells tenen plans d'operació assignats",
+            "foundMessage": "S'han trobat {vvnCount} VVN sense plans en {dayCount} dia/es",
+            "regenerateAll": "Regenerar tots els plans faltants",
+            "regenerateDay": "Regenerar plans per aquest dia",
+            "regenerateModalTitle": "Regenerar plans per {date}",
+            "warning": "Avís",
+            "warningMessage": "Regenerar els plans sobreescriurà tots els plans d'operació existents per aquest dia. Aquesta acció no es pot desfer.",
+            "selectedDay": "Dia seleccionat",
+            "confirmRegeneration": "Confirmar regeneració",
+            "affectedDays": "Dies afectats",
+            "queueInfo": "Cada sol·licitud de regeneració es posarà a la cua per separat. Podeu revisar-les i acceptar-les/rebutjar-les individualment des de la cua de programació.",
+            "continue": "Continuar",
+            "confirmRegenerationTitle": "Confirmar regeneració",
+            "irreversibleAction": "Aquesta acció és irreversible",
+            "overwriteWarning": "Regenerar els plans d'operació sobreescriurà permanentment tots els plans existents per als dies seleccionats. Aquesta acció no es pot desfer.",
+            "aboutToRegenerate": "Esteu a punt de regenerar plans per",
+            "days": "dies",
+            "vesselVisitNotifications": "Notificacions de visites de vaixells",
+            "using": "Utilitzant",
+            "algorithm": "algoritme",
+            "proceedQuestion": "Voleu continuar amb aquesta operació?",
+            "yesRegenerateAll": "Sí, regenerar-ho tot"
+        },
+        "algorithm": {
+            "optimal": "Òptim",
+            "greedy": "Greedy",
+            "genetic": "Genètic",
+            "auto": "Automàtic"
+        },
+        "metrics": {
+            "title": "Mètriques",
+            "strategy": "Estratègia",
+            "totalDelay": "Retard total",
+            "computationTime": "Temps de càlcul",
+            "autoSelection": "Selecció automàtica d'algoritme"
+        },
+        "infoTitle": "Informació del pla d'operació",
+        "fields": {
+            "id": {
+                "title": "ID del pla"
+            },
+            "relatedVVN": {
+                "title": "VVN relacionat"
+            },
+            "dock": {
+                "title": "Moll"
+            },
+            "operations": {
+                "title": "Operacions"
+            }
+        },
+        "filters": {
+            "startDate": "Data d'inici des de",
+            "endDate": "Data de finalització fins a"
+        },
+        "metadata": {
+            "title": "Metadades",
+            "createdBy": "Creat per",
+            "createdAt": "Creat el",
+            "algorithmUsed": "Algoritme utilitzat"
+        },
+        "schedule": {
+            "title": "Programació d'operacions",
+            "noOperations": "No hi ha operacions programades"
+        }
+    },
+    "incidentType": {
+        "fields": {
+            "name": {
+                "title": "Nom",
+                "placeholder": "Nom del tipus d'incident"
+            },
+            "description": {
+                "title": "Descripció",
+                "placeholder": "Descripció detallada del tipus d'incident"
+            },
+            "severity": {
+                "title": "Gravetat",
+                "placeholder": "Seleccioneu el nivell de gravetat"
+            },
+            "subtypeOf": {
+                "title": "Subtipus de",
+                "placeholder": "Seleccioneu el tipus pare"
+            },
+            "subtypes": {
+                "title": "Subtipus",
+                "placeholder": "Seleccioneu els tipus fills"
+            }
+        },
+        "severity": {
+            "Minor": "Menor",
+            "Major": "Important",
+            "Critical": "Crític"
+        },
+        "tabs": {
+            "dashboard": "Tauler de tipus d'incidents",
+            "view_dashboard": "Veure tipus d'incidents",
+            "search": "Cercar tipus d'incidents",
+            "create": "Crear tipus d'incident",
+            "edit": "Editar tipus d'incident"
+        },
+        "generalFields": "Camps generals",
+        "classification": "Classificació",
+        "title": "Incidents",
+        "subtitle": {
+            "dashboard": "Resum de les estadístiques i activitats dels tipus d'incidents",
+            "search": "Gestionar i veure tots els tipus d'incidents registrats",
+            "create": "Registrar un nou tipus d'incident al sistema",
+            "edit": "Modificar un tipus d'incident existent al sistema"
+        },
+        "registeredIncidentTypes": "Tipus d'incidents registrats",
+        "incidentTypeInformation": "Informació del tipus d'incident",
+        "parentType": "Tipus pare",
+        "confirmDelete": "Confirmar eliminació",
+        "confirmDeleteMessage": "Esteu segur que voleu eliminar aquest tipus d'incident?",
+        "failedToDelete": "Error en eliminar el tipus d'incident"
+    },
+    "taskCategory": {
+        "fields": {
+            "name": {
+                "title": "Nom",
+                "placeholder": "Nom de la categoria de tasques"
+            },
+            "category": {
+                "title": "Categoria",
+                "placeholder": "Codi de categoria"
+            },
+            "description": {
+                "title": "Descripció",
+                "placeholder": "Descripció de la categoria de tasques"
+            }
+        },
+        "tabs": {
+            "dashboard": "Tauler de categories de tasques",
+            "search": "Cercar categories de tasques",
+            "create": "Crear categoria de tasques",
+            "edit": "Editar categoria de tasques",
+            "view_dashboard": "Veure categories de tasques"
+        },
+        "generalFields": "Camps generals",
+        "title": "Tasques",
+        "subtitle": {
+            "dashboard": "Resum de les estadístiques i activitats de les categories de tasques",
+            "search": "Gestionar i veure totes les categories de tasques registrades",
+            "create": "Registrar una nova categoria de tasques al sistema",
+            "edit": "Modificar una categoria de tasques existent al sistema"
+        },
+        "taskCategoryInformation": "Informació de la categoria de tasques",
+        "registeredTaskCategories": "Categories de tasques registrades"
+    },
+    "execution": {
+        "title": "Execucions de visites de vaixells",
+        "subtitle": {
+            "search": "Gestionar i veure totes les execucions de visites de vaixells",
+            "dashboard": "Resum de les estadístiques i activitats d'execució de visites de vaixells"
+        },
+        "tabs": {
+            "dashboard": "Tauler d'execucions",
+            "search": "Cercar execucions",
+            "view_dashboard": "Veure execucions",
+            "update": "Actualitzar execució",
+            "view": "Veure execució",
+            "table": "Vista de taula",
+            "cards": "Vista de targetes"
+        },
+        "fields": {
+            "code": "Codi",
+            "relatedVVN": "Relacionat amb",
+            "status": "Estat",
+            "createdBy": "Creat per",
+            "dateOpen": "Data d'obertura",
+            "dateClosed": "Data de tancament",
+            "relatedVesselVisit": "Visita de vaixell relacionada",
+            "dock": "Moll d'atracada",
+            "berthTime": "Hora d'atracada",
+            "operations": "Operacions"
+        },
+        "filters": {
+            "startDate": "Data d'inici",
+            "endDate": "Data de finalització",
+            "relatedVVN": "Notificació de visita de vaixell",
+            "status": "Estat"
+        },
+        "metrics": {
+            "totalOperations": "Total d'operacions",
+            "completedOperations": "Progrés",
+            "turnaroundTime": "Temps de rotació",
+            "berthOccupancy": "Ocupació del moll"
+        },
+        "status": {
+            "pending": "Pendent",
+            "started": "Iniciat",
+            "delayed": "Retardat",
+            "completed": "Completat"
+        },
+        "view_resources": "Veure recursos",
+        "infoTitle": "Informació d'execució",
+        "operationsTitle": "Operacions",
+        "noOperations": "No hi ha operacions disponibles",
+        "startOperation": "Iniciar operació",
+        "completeOperation": "Completar operació",
+        "addOperation": "Afegir operació",
+        "addOperationDescription": "Afegir una nova operació a la línia temporal",
+        "confirmStartOperation": "Esteu segur que voleu iniciar aquesta operació?",
+        "confirmCompleteOperation": "Esteu segur que voleu completar aquesta operació?",
+        "berthOperation": {
+            "button": "Editar dades d'atracada",
+            "title": "Operació d'atracada",
+            "description": "Editeu el moll i l'hora per a aquesta execució de visita de vaixell.",
+            "dock": "Moll d'atracada",
+            "dockPlaceholder": "Seleccioneu el moll",
+            "berthTime": "Hora d'atracada",
+            "differentThanPlanned": "El moll seleccionat és diferent del planificat."
+        }
+    },
+    "incident": {
+        "tabs": {
+            "dashboard": "Tauler d'incidents",
+            "create": "Crear incident",
+            "search": "Cercar incidents",
+            "active": "Incidents actius",
+            "view": "Veure incident",
+            "edit": "Editar incident"
+        },
+        "subtitle": {
+            "create": "Informar d'un nou incident al sistema",
+            "search": "Cercar i filtrar incidents existents",
+            "active": "Veure i gestionar incidents actius"
+        },
+        "generalFields": "Informació general",
+        "classification": "Classificació",
+        "fields": {
+            "bid": {
+                "title": "ID de l'incident"
+            },
+            "type": {
+                "title": "Tipus d'incident",
+                "placeholder": "Seleccioneu un tipus d'incident"
+            },
+            "startTime": {
+                "title": "Hora d'inici",
+                "placeholder": "Quan va començar l'incident?"
+            },
+            "endTime": {
+                "title": "Hora de finalització",
+                "placeholder": "Quan va acabar l'incident?"
+            },
+            "severity": {
+                "title": "Gravetat",
+                "placeholder": "Seleccioneu el nivell de gravetat",
+                "options": {
+                    "minor": "Menor",
+                    "major": "Important",
+                    "critical": "Crític"
+                }
+            },
+            "description": {
+                "title": "Descripció",
+                "placeholder": "Descriviu l'incident en detall"
+            },
+            "createdBy": {
+                "title": "Creat per"
+            },
+            "affectedVVECodes": {
+                "title": "VVE afectats",
+                "placeholder": "Introduïu els VVE afectats"
+            },
+            "vveCode": {
+                "title": "Codi VVE"
+            },
+            "status": {
+                "title": "Estat",
+                "options": {
+                    "active": "Actiu",
+                    "resolved": "Resolt"
+                }
+            },
+            "filterStartTime": {
+                "title": "Data d'inici des de"
+            },
+            "filterEndTime": {
+                "title": "Data d'inici fins a"
+            },
+            "duration": {
+                "title": "Durada"
+            }
+        },
+        "severity": {
+            "Minor": "Menor",
+            "Major": "Important",
+            "Critical": "Crític"
+        },
+        "status": {
+            "active": "Actiu",
+            "resolved": "Resolt"
+        },
+        "ongoing": "En curs",
+        "filters": {
+            "onlyActive": "Només actius",
+            "onlyMine": "Només els meus"
+        },
+        "actions": {
+            "view": "Veure detalls",
+            "edit": "Editar incident",
+            "resolve": "Resoldre incident",
+            "delete": "Eliminar incident"
+        },
+        "notifications": {
+            "createSuccess": "Incident creat amb èxit",
+            "createFailed": "Error en crear l'incident",
+            "updateSuccess": "Incident actualitzat amb èxit",
+            "updateFailed": "Error en actualitzar l'incident",
+            "resolveSuccess": "Incident resolt amb èxit",
+            "resolveFailed": "Error en resoldre l'incident",
+            "deleteSuccess": "Incident eliminat amb èxit",
+            "deleteFailed": "Error en eliminar l'incident"
+        },
+        "table": {
+            "empty": "No s'han trobat incidents"
+        },
+        "active": {
+            "title": "Incidents actius",
+            "subtitle": "Veure i gestionar incidents en curs"
+        },
+        "infoTitle": "Detalls de l'incident",
+        "closeDialog": {
+            "title": "Resoldre incident",
+            "message": "Quan es va resoldre l'incident",
+            "confirm": "Sí, tancar aquest incident",
+            "cancel": "Cancel·lar"
+        }
     }
 }

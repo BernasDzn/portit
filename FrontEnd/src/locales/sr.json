@@ -650,5 +650,195 @@
         "errors": {
             "shiftOverlap": "Nevažeća smena. Preklapanje ili vreme završetka pre početka."
         }
+    },
+    "about": {
+        "title": "O aplikaciji",
+        "description": "Ovaj modul pruža sveobuhvatno rešenje za upravljanje flotom autonomnih vozila uključujući operativne planove, tipove incidenata i izvršavanje zadataka.",
+        "version": "Verzija",
+        "features": {
+            "title": "Funkcije",
+            "fleet": "Upravljanje flotom",
+            "planning": "Planiranje operacija",
+            "incidents": "Praćenje incidenata",
+            "tasks": "Izvršavanje zadataka"
+        }
+    },
+    "operationPlan": {
+        "title": "Operativni plan",
+        "list": {
+            "title": "Operativni planovi",
+            "empty": "Nisu pronađeni operativni planovi",
+            "search": "Pretraži planove..."
+        },
+        "details": {
+            "title": "Detalji plana",
+            "status": "Status",
+            "startDate": "Datum početka",
+            "endDate": "Datum završetka",
+            "assignedVehicles": "Dodeljena vozila",
+            "tasks": "Zadaci"
+        },
+        "form": {
+            "create": "Kreiraj plan",
+            "edit": "Uredi plan",
+            "name": "Ime plana",
+            "description": "Opis",
+            "selectVehicles": "Izaberi vozila"
+        },
+        "status": {
+            "draft": "Nacrt",
+            "active": "Aktivan",
+            "completed": "Završen",
+            "cancelled": "Otkazan"
+        }
+    },
+    "incidentType": {
+        "title": "Tip incidenta",
+        "list": {
+            "title": "Tipovi incidenata",
+            "empty": "Nisu pronađeni tipovi incidenata",
+            "search": "Pretraži tipove..."
+        },
+        "details": {
+            "title": "Detalji tipa",
+            "code": "Kod",
+            "severity": "Ozbiljnost",
+            "responseTime": "Vreme odgovora",
+            "procedures": "Procedure"
+        },
+        "form": {
+            "create": "Kreiraj tip",
+            "edit": "Uredi tip",
+            "name": "Ime tipa",
+            "description": "Opis",
+            "selectSeverity": "Izaberi ozbiljnost"
+        },
+        "severity": {
+            "low": "Niska",
+            "medium": "Srednja",
+            "high": "Visoka",
+            "critical": "Kritična"
+        }
+    },
+    "taskCategory": {
+        "title": "Kategorija zadatka",
+        "list": {
+            "title": "Kategorije zadataka",
+            "empty": "Nisu pronađene kategorije zadataka",
+            "search": "Pretraži kategorije..."
+        },
+        "details": {
+            "title": "Detalji kategorije",
+            "code": "Kod",
+            "priority": "Prioritet",
+            "estimatedDuration": "Procenjeno trajanje",
+            "requirements": "Zahtevi"
+        },
+        "form": {
+            "create": "Kreiraj kategoriju",
+            "edit": "Uredi kategoriju",
+            "name": "Ime kategorije",
+            "description": "Opis",
+            "selectPriority": "Izaberi prioritet"
+        },
+        "priority": {
+            "low": "Nizak",
+            "normal": "Normalan",
+            "high": "Visok",
+            "urgent": "Hitan"
+        }
+    },
+    "execution": {
+        "title": "Izvršavanje",
+        "status": {
+            "pending": "Na čekanju",
+            "inProgress": "U toku",
+            "completed": "Završeno",
+            "failed": "Neuspešno",
+            "cancelled": "Otkazano"
+        },
+        "details": {
+            "title": "Detalji izvršavanja",
+            "startTime": "Vreme početka",
+            "endTime": "Vreme završetka",
+            "duration": "Trajanje",
+            "assignedTo": "Dodeljeno kome",
+            "progress": "Napredak"
+        },
+        "actions": {
+            "start": "Pokreni izvršavanje",
+            "pause": "Pauziraj",
+            "resume": "Nastavi",
+            "complete": "Završi",
+            "cancel": "Otkaži"
+        },
+        "messages": {
+            "started": "Izvršavanje pokrenuto",
+            "paused": "Izvršavanje pauzirano",
+            "resumed": "Izvršavanje nastavljeno",
+            "completed": "Izvršavanje završeno",
+            "cancelled": "Izvršavanje otkazano",
+            "failed": "Izvršavanje neuspešno"
+        }
+    },
+    "incident": {
+        "title": "Incident",
+        "list": {
+            "title": "Incidenti",
+            "empty": "Nisu pronađeni incidenti",
+            "search": "Pretraži incidente...",
+            "filter": {
+                "all": "Svi",
+                "open": "Otvoreni",
+                "inProgress": "U toku",
+                "resolved": "Rešeni",
+                "closed": "Zatvoreni"
+            }
+        },
+        "details": {
+            "title": "Detalji incidenta",
+            "id": "ID incidenta",
+            "type": "Tip",
+            "status": "Status",
+            "severity": "Ozbiljnost",
+            "reportedBy": "Prijavio",
+            "reportedAt": "Prijavljeno dana",
+            "assignedTo": "Dodeljeno kome",
+            "location": "Lokacija",
+            "vehicle": "Vozilo",
+            "description": "Opis",
+            "resolution": "Rešenje",
+            "timeline": "Vremenska linija"
+        },
+        "form": {
+            "create": "Prijavi incident",
+            "edit": "Uredi incident",
+            "selectType": "Izaberi tip",
+            "selectSeverity": "Izaberi ozbiljnost",
+            "selectVehicle": "Izaberi vozilo",
+            "descriptionPlaceholder": "Opiši incident...",
+            "resolutionPlaceholder": "Opiši rešenje..."
+        },
+        "status": {
+            "open": "Otvoren",
+            "inProgress": "U toku",
+            "resolved": "Rešen",
+            "closed": "Zatvoren"
+        },
+        "actions": {
+            "assign": "Dodeli",
+            "resolve": "Reši",
+            "close": "Zatvori",
+            "reopen": "Ponovo otvori",
+            "addNote": "Dodaj belešku"
+        },
+        "messages": {
+            "created": "Incident kreiran",
+            "updated": "Incident ažuriran",
+            "assigned": "Incident dodeljen",
+            "resolved": "Incident rešen",
+            "closed": "Incident zatvoren",
+            "reopened": "Incident ponovo otvoren"
+        }
     }
 }

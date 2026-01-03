@@ -646,5 +646,195 @@
         "errors": {
             "shiftOverlap": "Geçersiz vardiya. Çakışma veya bitiş başlangıçtan önce."
         }
+    },
+    "about": {
+        "title": "Uygulama Hakkında",
+        "description": "Bu modül, operasyon planları, olay türleri ve görev yürütme dahil olmak üzere otonom araç filosu yönetimi için kapsamlı bir çözüm sağlar.",
+        "version": "Sürüm",
+        "features": {
+            "title": "Özellikler",
+            "fleet": "Filo Yönetimi",
+            "planning": "Operasyon Planlaması",
+            "incidents": "Olay Takibi",
+            "tasks": "Görev Yürütme"
+        }
+    },
+    "operationPlan": {
+        "title": "Operasyon Planı",
+        "list": {
+            "title": "Operasyon Planları",
+            "empty": "Operasyon planı bulunamadı",
+            "search": "Planları ara..."
+        },
+        "details": {
+            "title": "Plan Detayları",
+            "status": "Durum",
+            "startDate": "Başlangıç Tarihi",
+            "endDate": "Bitiş Tarihi",
+            "assignedVehicles": "Atanan Araçlar",
+            "tasks": "Görevler"
+        },
+        "form": {
+            "create": "Plan Oluştur",
+            "edit": "Planı Düzenle",
+            "name": "Plan Adı",
+            "description": "Açıklama",
+            "selectVehicles": "Araç Seç"
+        },
+        "status": {
+            "draft": "Taslak",
+            "active": "Aktif",
+            "completed": "Tamamlandı",
+            "cancelled": "İptal Edildi"
+        }
+    },
+    "incidentType": {
+        "title": "Olay Türü",
+        "list": {
+            "title": "Olay Türleri",
+            "empty": "Olay türü bulunamadı",
+            "search": "Türleri ara..."
+        },
+        "details": {
+            "title": "Tür Detayları",
+            "code": "Kod",
+            "severity": "Şiddet",
+            "responseTime": "Yanıt Süresi",
+            "procedures": "Prosedürler"
+        },
+        "form": {
+            "create": "Tür Oluştur",
+            "edit": "Türü Düzenle",
+            "name": "Tür Adı",
+            "description": "Açıklama",
+            "selectSeverity": "Şiddet Seç"
+        },
+        "severity": {
+            "low": "Düşük",
+            "medium": "Orta",
+            "high": "Yüksek",
+            "critical": "Kritik"
+        }
+    },
+    "taskCategory": {
+        "title": "Görev Kategorisi",
+        "list": {
+            "title": "Görev Kategorileri",
+            "empty": "Görev kategorisi bulunamadı",
+            "search": "Kategorileri ara..."
+        },
+        "details": {
+            "title": "Kategori Detayları",
+            "code": "Kod",
+            "priority": "Öncelik",
+            "estimatedDuration": "Tahmini Süre",
+            "requirements": "Gereksinimler"
+        },
+        "form": {
+            "create": "Kategori Oluştur",
+            "edit": "Kategoriyi Düzenle",
+            "name": "Kategori Adı",
+            "description": "Açıklama",
+            "selectPriority": "Öncelik Seç"
+        },
+        "priority": {
+            "low": "Düşük",
+            "normal": "Normal",
+            "high": "Yüksek",
+            "urgent": "Acil"
+        }
+    },
+    "execution": {
+        "title": "Yürütme",
+        "status": {
+            "pending": "Bekliyor",
+            "inProgress": "Devam Ediyor",
+            "completed": "Tamamlandı",
+            "failed": "Başarısız",
+            "cancelled": "İptal Edildi"
+        },
+        "details": {
+            "title": "Yürütme Detayları",
+            "startTime": "Başlangıç Saati",
+            "endTime": "Bitiş Saati",
+            "duration": "Süre",
+            "assignedTo": "Atanan Kişi",
+            "progress": "İlerleme"
+        },
+        "actions": {
+            "start": "Yürütmeyi Başlat",
+            "pause": "Duraklat",
+            "resume": "Devam Et",
+            "complete": "Tamamla",
+            "cancel": "İptal Et"
+        },
+        "messages": {
+            "started": "Yürütme başlatıldı",
+            "paused": "Yürütme duraklatıldı",
+            "resumed": "Yürütme devam ettirildi",
+            "completed": "Yürütme tamamlandı",
+            "cancelled": "Yürütme iptal edildi",
+            "failed": "Yürütme başarısız"
+        }
+    },
+    "incident": {
+        "title": "Olay",
+        "list": {
+            "title": "Olaylar",
+            "empty": "Olay bulunamadı",
+            "search": "Olayları ara...",
+            "filter": {
+                "all": "Tümü",
+                "open": "Açık",
+                "inProgress": "Devam Ediyor",
+                "resolved": "Çözüldü",
+                "closed": "Kapalı"
+            }
+        },
+        "details": {
+            "title": "Olay Detayları",
+            "id": "Olay Kimliği",
+            "type": "Tür",
+            "status": "Durum",
+            "severity": "Şiddet",
+            "reportedBy": "Rapor Eden",
+            "reportedAt": "Rapor Tarihi",
+            "assignedTo": "Atanan Kişi",
+            "location": "Konum",
+            "vehicle": "Araç",
+            "description": "Açıklama",
+            "resolution": "Çözüm",
+            "timeline": "Zaman Çizgisi"
+        },
+        "form": {
+            "create": "Olay Bildir",
+            "edit": "Olayı Düzenle",
+            "selectType": "Tür Seç",
+            "selectSeverity": "Şiddet Seç",
+            "selectVehicle": "Araç Seç",
+            "descriptionPlaceholder": "Olayı açıklayın...",
+            "resolutionPlaceholder": "Çözümü açıklayın..."
+        },
+        "status": {
+            "open": "Açık",
+            "inProgress": "Devam Ediyor",
+            "resolved": "Çözüldü",
+            "closed": "Kapalı"
+        },
+        "actions": {
+            "assign": "Ata",
+            "resolve": "Çöz",
+            "close": "Kapat",
+            "reopen": "Yeniden Aç",
+            "addNote": "Not Ekle"
+        },
+        "messages": {
+            "created": "Olay oluşturuldu",
+            "updated": "Olay güncellendi",
+            "assigned": "Olay atandı",
+            "resolved": "Olay çözüldü",
+            "closed": "Olay kapatıldı",
+            "reopened": "Olay yeniden açıldı"
+        }
     }
 }

@@ -642,5 +642,387 @@
         "errors": {
             "shiftOverlap": "Tură invalidă. Suprapunere sau ora de sfârșit înainte de ora de început."
         }
+    },
+    "about": {
+        "title": "Despre PorTiT",
+        "privacy": {
+            "title": "Politica de confidențialitate",
+            "lastUpdated": "Ultima actualizare: {date}"
+        }
+    },
+    "operationPlan": {
+        "title": "Plan operațional",
+        "dock": "Doc",
+        "docks": "Docuri",
+        "operations": "Operații",
+        "cranes": "Macarale",
+        "createdBy": "Creat de",
+        "createdAt": "Creat la",
+        "totalSchedules": "Total programe",
+        "vesselCount": "Nave",
+        "plansOnDate": "Planuri operaționale la data selectată",
+        "noPlansOnDate": "Niciun plan operațional la data selectată",
+        "id": "ID",
+        "vvn": "Notificare vizită navă",
+        "for": "pentru",
+        "details": "Detalii",
+        "totalOperations": "Total operații",
+        "algorithmUsed": "Algoritm utilizat",
+        "ganttChart": "Diagramă Gantt",
+        "startTime": "Ora de început",
+        "endTime": "Ora de sfârșit",
+        "totalDuration": "Durată totală",
+        "operation": "Operație",
+        "duration": "Durată",
+        "resources": "Resurse",
+        "operationDetails": "Detalii operație",
+        "operationNumber": "Operația #{number}",
+        "notFound": "Plan operațional negăsit",
+        "operationType": {
+            "Unload": "Descărcare",
+            "Load": "Încărcare"
+        },
+        "tabs": {
+            "unplannedVVNs": "VVN-uri neplanificate",
+            "search": "Căutare planuri",
+            "edit": "Editare plan",
+            "open": "Deschide execuție"
+        },
+        "subtitle": {
+            "edit": "Modifică detaliile planului operațional și programul"
+        },
+        "unplannedVVNs": {
+            "description": "Notificări de vizită a navei care nu au încă un plan operațional alocat",
+            "noUnplanned": "Toate notificările de vizită a navei au planuri operaționale alocate",
+            "foundMessage": "Gasit {vvnCount} VVN fără planuri în {dayCount} zi/zile",
+            "regenerateAll": "Regenerează toate planurile lipsă",
+            "regenerateDay": "Regenerează planurile pentru această zi",
+            "regenerateModalTitle": "Regenerează planuri pentru {date}",
+            "warning": "Avertisment",
+            "warningMessage": "Regenerarea planurilor va înlocui toate planurile operaționale existente pentru această zi. Această acțiune nu poate fi anulată.",
+            "selectedDay": "Ziua selectată",
+            "confirmRegeneration": "Confirmă regenerarea",
+            "affectedDays": "Zile afectate",
+            "queueInfo": "Fiecare cerere de regenerare va fi adăugată în coadă separat. Le puteți revizui și accepta/respinge individual din coada de planificare.",
+            "continue": "Continuă",
+            "confirmRegenerationTitle": "Confirmă regenerarea",
+            "irreversibleAction": "Această acțiune este ireversibilă",
+            "overwriteWarning": "Regenerarea planurilor operaționale va suprascrie permanent toate planurile existente pentru zilele selectate. Această acțiune nu poate fi anulată.",
+            "aboutToRegenerate": "Sunteți pe cale să regenerați planuri pentru",
+            "days": "zile",
+            "vesselVisitNotifications": "Notificări de vizită a navei",
+            "using": "Utilizând",
+            "algorithm": "algoritm",
+            "proceedQuestion": "Doriți să continuați cu această operațiune?",
+            "yesRegenerateAll": "Da, regenerează tot"
+        },
+        "algorithm": {
+            "optimal": "Optim",
+            "greedy": "Greedy",
+            "genetic": "Genetic",
+            "auto": "Automat"
+        },
+        "metrics": {
+            "title": "Metrici",
+            "strategy": "Strategie",
+            "totalDelay": "Întârziere totală",
+            "computationTime": "Timp de calcul",
+            "autoSelection": "Selecție automată algoritm"
+        },
+        "infoTitle": "Informații plan operațional",
+        "fields": {
+            "id": {
+                "title": "ID plan"
+            },
+            "relatedVVN": {
+                "title": "VVN asociat"
+            },
+            "dock": {
+                "title": "Doc"
+            },
+            "operations": {
+                "title": "Operații"
+            }
+        },
+        "filters": {
+            "startDate": "Data de început de la",
+            "endDate": "Data de sfârșit până la"
+        },
+        "metadata": {
+            "title": "Metadate",
+            "createdBy": "Creat de",
+            "createdAt": "Creat la",
+            "algorithmUsed": "Algoritm utilizat"
+        },
+        "schedule": {
+            "title": "Program operații",
+            "noOperations": "Nicio operație programată"
+        }
+    },
+    "incidentType": {
+        "fields": {
+            "name": {
+                "title": "Nume",
+                "placeholder": "Numele tipului de incident"
+            },
+            "description": {
+                "title": "Descriere",
+                "placeholder": "Descriere detaliată a tipului de incident"
+            },
+            "severity": {
+                "title": "Gravitate",
+                "placeholder": "Selectați nivelul de gravitate"
+            },
+            "subtypeOf": {
+                "title": "Subtip al",
+                "placeholder": "Selectați tipul părinte"
+            },
+            "subtypes": {
+                "title": "Subtipuri",
+                "placeholder": "Selectați tipurile copil"
+            }
+        },
+        "severity": {
+            "Minor": "Minor",
+            "Major": "Major",
+            "Critical": "Critic"
+        },
+        "tabs": {
+            "dashboard": "Tablou de bord tipuri de incidente",
+            "view_dashboard": "Vizualizează tipuri de incidente",
+            "search": "Caută tipuri de incidente",
+            "create": "Creează tip de incident",
+            "edit": "Editează tip de incident"
+        },
+        "generalFields": "Câmpuri generale",
+        "classification": "Clasificare",
+        "title": "Incidente",
+        "subtitle": {
+            "dashboard": "Prezentare generală a statisticilor și activității tipurilor de incidente",
+            "search": "Gestionează și vizualizează toate tipurile de incidente înregistrate",
+            "create": "Înregistrează un nou tip de incident în sistem",
+            "edit": "Modifică un tip de incident existent în sistem"
+        },
+        "registeredIncidentTypes": "Tipuri de incidente înregistrate",
+        "incidentTypeInformation": "Informații tip de incident",
+        "parentType": "Tip părinte",
+        "confirmDelete": "Confirmă ștergerea",
+        "confirmDeleteMessage": "Sunteți sigur că doriți să ștergeți acest tip de incident?",
+        "failedToDelete": "Eșec la ștergerea tipului de incident"
+    },
+    "taskCategory": {
+        "fields": {
+            "name": {
+                "title": "Nume",
+                "placeholder": "Numele categoriei de task"
+            },
+            "category": {
+                "title": "Categorie",
+                "placeholder": "Cod categorie"
+            },
+            "description": {
+                "title": "Descriere",
+                "placeholder": "Descrierea categoriei de task"
+            }
+        },
+        "tabs": {
+            "dashboard": "Tablou de bord categorii de task-uri",
+            "search": "Caută categorii de task-uri",
+            "create": "Creează categorie de task",
+            "edit": "Editează categorie de task",
+            "view_dashboard": "Vizualizează categorii de task-uri"
+        },
+        "generalFields": "Câmpuri generale",
+        "title": "Task-uri",
+        "subtitle": {
+            "dashboard": "Prezentare generală a statisticilor și activității categoriilor de task-uri",
+            "search": "Gestionează și vizualizează toate categoriile de task-uri înregistrate",
+            "create": "Înregistrează o nouă categorie de task în sistem",
+            "edit": "Modifică o categorie de task existentă în sistem"
+        },
+        "taskCategoryInformation": "Informații categorie task",
+        "registeredTaskCategories": "Categorii de task-uri înregistrate"
+    },
+    "execution": {
+        "title": "Execuții vizite nave",
+        "subtitle": {
+            "search": "Gestionează și vizualizează toate execuțiile de vizite ale navelor",
+            "dashboard": "Prezentare generală a statisticilor și activității execuțiilor de vizite ale navelor"
+        },
+        "tabs": {
+            "dashboard": "Tablou de bord execuții",
+            "search": "Caută execuții",
+            "view_dashboard": "Vizualizează execuții",
+            "update": "Actualizează execuția",
+            "view": "Vizualizează execuția",
+            "table": "Vizualizează tabel",
+            "cards": "Vizualizează carduri"
+        },
+        "fields": {
+            "code": "Cod",
+            "relatedVVN": "Asociat cu",
+            "status": "Status",
+            "createdBy": "Creat de",
+            "dateOpen": "Data deschiderii",
+            "dateClosed": "Data închiderii",
+            "relatedVesselVisit": "Vizită navă asociată",
+            "dock": "Doc de acostare",
+            "berthTime": "Ora de acostare",
+            "operations": "Operații"
+        },
+        "filters": {
+            "startDate": "Data de început",
+            "endDate": "Data de sfârșit",
+            "relatedVVN": "Notificare vizită navă",
+            "status": "Status"
+        },
+        "metrics": {
+            "totalOperations": "Total operații",
+            "completedOperations": "Progres",
+            "turnaroundTime": "Timp de rotație",
+            "berthOccupancy": "Ocupare doc"
+        },
+        "status": {
+            "pending": "În așteptare",
+            "started": "Pornit",
+            "delayed": "Întârziat",
+            "completed": "Finalizat"
+        },
+        "view_resources": "Vizualizează resurse",
+        "infoTitle": "Informații execuție",
+        "operationsTitle": "Operații",
+        "noOperations": "Nicio operație disponibilă",
+        "startOperation": "Pornește operația",
+        "completeOperation": "Finalizează operația",
+        "addOperation": "Adăugă operație",
+        "addOperationDescription": "Adăugă o nouă operație pe linia de timp",
+        "confirmStartOperation": "Sunteți sigur că doriți să porniți această operație?",
+        "confirmCompleteOperation": "Sunteți sigur că doriți să finalizați această operație?",
+        "berthOperation": {
+            "button": "Editează datele de acostare",
+            "title": "Operațiune de acostare",
+            "description": "Editează docul și ora pentru această execuție de vizită a navei.",
+            "dock": "Doc de acostare",
+            "dockPlaceholder": "Selectați docul",
+            "berthTime": "Ora de acostare",
+            "differentThanPlanned": "Docul selectat este diferit de cel planificat."
+        }
+    },
+    "incident": {
+        "tabs": {
+            "dashboard": "Tablou de bord incidente",
+            "create": "Creează incident",
+            "search": "Caută incidente",
+            "active": "Incidente active",
+            "view": "Vizualizează incident",
+            "edit": "Editează incident"
+        },
+        "subtitle": {
+            "create": "Raportează un incident nou în sistem",
+            "search": "Caută și filtrează incidentele existente",
+            "active": "Vizualizează și gestionează incidentele active"
+        },
+        "generalFields": "Informații generale",
+        "classification": "Clasificare",
+        "fields": {
+            "bid": {
+                "title": "ID incident"
+            },
+            "type": {
+                "title": "Tip de incident",
+                "placeholder": "Selectați tipul de incident"
+            },
+            "startTime": {
+                "title": "Ora de început",
+                "placeholder": "Când a început incidentul?"
+            },
+            "endTime": {
+                "title": "Ora de sfârșit",
+                "placeholder": "Când s-a terminat incidentul?"
+            },
+            "severity": {
+                "title": "Gravitate",
+                "placeholder": "Selectați nivelul de gravitate",
+                "options": {
+                    "minor": "Minor",
+                    "major": "Major",
+                    "critical": "Critic"
+                }
+            },
+            "description": {
+                "title": "Descriere",
+                "placeholder": "Describeți incidentul în detaliu"
+            },
+            "createdBy": {
+                "title": "Creat de"
+            },
+            "affectedVVECodes": {
+                "title": "VVE-uri afectate",
+                "placeholder": "Introduceți VVE-urile afectate"
+            },
+            "vveCode": {
+                "title": "Cod VVE"
+            },
+            "status": {
+                "title": "Status",
+                "options": {
+                    "active": "Activ",
+                    "resolved": "Rezolvat"
+                }
+            },
+            "filterStartTime": {
+                "title": "Data de început de la"
+            },
+            "filterEndTime": {
+                "title": "Data de început până la"
+            },
+            "duration": {
+                "title": "Durată"
+            }
+        },
+        "severity": {
+            "Minor": "Minor",
+            "Major": "Major",
+            "Critical": "Critic"
+        },
+        "status": {
+            "active": "Activ",
+            "resolved": "Rezolvat"
+        },
+        "ongoing": "În desfășurare",
+        "filters": {
+            "onlyActive": "Doar active",
+            "onlyMine": "Doar ale mele"
+        },
+        "actions": {
+            "view": "Vizualizează detalii",
+            "edit": "Editează incident",
+            "resolve": "Rezolvă incident",
+            "delete": "Șterge incident"
+        },
+        "notifications": {
+            "createSuccess": "Incident creat cu succes",
+            "createFailed": "Eșec la crearea incidentului",
+            "updateSuccess": "Incident actualizat cu succes",
+            "updateFailed": "Eșec la actualizarea incidentului",
+            "resolveSuccess": "Incident rezolvat cu succes",
+            "resolveFailed": "Eșec la rezolvarea incidentului",
+            "deleteSuccess": "Incident șters cu succes",
+            "deleteFailed": "Eșec la ștergerea incidentului"
+        },
+        "table": {
+            "empty": "Niciun incident găsit"
+        },
+        "active": {
+            "title": "Incidente active",
+            "subtitle": "Vizualizează și gestionează incidentele în desfășurare"
+        },
+        "infoTitle": "Detalii incident",
+        "closeDialog": {
+            "title": "Rezolvă incident",
+            "message": "Când a fost rezolvat incidentul?",
+            "confirm": "Da, închide acest incident",
+            "cancel": "Anulează"
+        }
     }
 }

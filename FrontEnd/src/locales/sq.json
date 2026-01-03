@@ -650,5 +650,195 @@
         "errors": {
             "shiftOverlap": "Turn i pavlefshëm. Mbivendosje ose orë mbarimi para fillimit."
         }
+    },
+    "about": {
+        "title": "Rreth aplikacionit",
+        "description": "Ky modul ofron një zgjidhje gjithëpërfshirëse për menaxhimin e flotës së automjeteve autonome duke përfshirë planet operacionale, llojet e incidenteve dhe ekzekutimin e detyrave.",
+        "version": "Versioni",
+        "features": {
+            "title": "Veçoritë",
+            "fleet": "Menaxhimi i flotës",
+            "planning": "Planifikimi i operacioneve",
+            "incidents": "Gjurmimi i incidenteve",
+            "tasks": "Ekzekutimi i detyrave"
+        }
+    },
+    "operationPlan": {
+        "title": "Plani operacional",
+        "list": {
+            "title": "Planet operacionale",
+            "empty": "Nuk u gjetën plane operacionale",
+            "search": "Kërko plane..."
+        },
+        "details": {
+            "title": "Detajet e planit",
+            "status": "Statusi",
+            "startDate": "Data e fillimit",
+            "endDate": "Data e mbarimit",
+            "assignedVehicles": "Automjetet e caktuara",
+            "tasks": "Detyrat"
+        },
+        "form": {
+            "create": "Krijo plan",
+            "edit": "Redakto planin",
+            "name": "Emri i planit",
+            "description": "Përshkrimi",
+            "selectVehicles": "Zgjidh automjetet"
+        },
+        "status": {
+            "draft": "Draft",
+            "active": "Aktiv",
+            "completed": "I përfunduar",
+            "cancelled": "I anuluar"
+        }
+    },
+    "incidentType": {
+        "title": "Lloji i incidentit",
+        "list": {
+            "title": "Llojet e incidenteve",
+            "empty": "Nuk u gjetën lloje incidentesh",
+            "search": "Kërko lloje..."
+        },
+        "details": {
+            "title": "Detajet e llojit",
+            "code": "Kodi",
+            "severity": "Rëndësia",
+            "responseTime": "Koha e përgjigjes",
+            "procedures": "Procedurat"
+        },
+        "form": {
+            "create": "Krijo lloj",
+            "edit": "Redakto llojin",
+            "name": "Emri i llojit",
+            "description": "Përshkrimi",
+            "selectSeverity": "Zgjidh rëndësinë"
+        },
+        "severity": {
+            "low": "E ulët",
+            "medium": "E mesme",
+            "high": "E lartë",
+            "critical": "Kritike"
+        }
+    },
+    "taskCategory": {
+        "title": "Kategoria e detyrës",
+        "list": {
+            "title": "Kategoritë e detyrave",
+            "empty": "Nuk u gjetën kategori detyrash",
+            "search": "Kërko kategori..."
+        },
+        "details": {
+            "title": "Detajet e kategorisë",
+            "code": "Kodi",
+            "priority": "Prioriteti",
+            "estimatedDuration": "Kohëzgjatja e parashikuar",
+            "requirements": "Kërkesat"
+        },
+        "form": {
+            "create": "Krijo kategori",
+            "edit": "Redakto kategorinë",
+            "name": "Emri i kategorisë",
+            "description": "Përshkrimi",
+            "selectPriority": "Zgjidh prioritetin"
+        },
+        "priority": {
+            "low": "E ulët",
+            "normal": "Normale",
+            "high": "E lartë",
+            "urgent": "Urgjente"
+        }
+    },
+    "execution": {
+        "title": "Ekzekutimi",
+        "status": {
+            "pending": "Në pritje",
+            "inProgress": "Në zhvillim",
+            "completed": "I përfunduar",
+            "failed": "Dështoi",
+            "cancelled": "I anuluar"
+        },
+        "details": {
+            "title": "Detajet e ekzekutimit",
+            "startTime": "Ora e fillimit",
+            "endTime": "Ora e mbarimit",
+            "duration": "Kohëzgjatja",
+            "assignedTo": "I caktuar për",
+            "progress": "Progresi"
+        },
+        "actions": {
+            "start": "Fillo ekzekutimin",
+            "pause": "Pusho",
+            "resume": "Vazhdo",
+            "complete": "Përfundo",
+            "cancel": "Anulo"
+        },
+        "messages": {
+            "started": "Ekzekutimi filloi",
+            "paused": "Ekzekutimi u ndal përkohësisht",
+            "resumed": "Ekzekutimi vazhdoi",
+            "completed": "Ekzekutimi përfundoi",
+            "cancelled": "Ekzekutimi u anulua",
+            "failed": "Ekzekutimi dështoi"
+        }
+    },
+    "incident": {
+        "title": "Incidenti",
+        "list": {
+            "title": "Incidentet",
+            "empty": "Nuk u gjetën incidente",
+            "search": "Kërko incidente...",
+            "filter": {
+                "all": "Të gjitha",
+                "open": "Të hapura",
+                "inProgress": "Në zhvillim",
+                "resolved": "Të zgjidhura",
+                "closed": "Të mbyllura"
+            }
+        },
+        "details": {
+            "title": "Detajet e incidentit",
+            "id": "ID e incidentit",
+            "type": "Lloji",
+            "status": "Statusi",
+            "severity": "Rëndësia",
+            "reportedBy": "Raportuar nga",
+            "reportedAt": "Raportuar më",
+            "assignedTo": "I caktuar për",
+            "location": "Vendndodhja",
+            "vehicle": "Automjeti",
+            "description": "Përshkrimi",
+            "resolution": "Zgjidhja",
+            "timeline": "Rrjedha kohore"
+        },
+        "form": {
+            "create": "Raporto incident",
+            "edit": "Redakto incidentin",
+            "selectType": "Zgjidh llojin",
+            "selectSeverity": "Zgjidh rëndësinë",
+            "selectVehicle": "Zgjidh automjetin",
+            "descriptionPlaceholder": "Përshkruaj incidentin...",
+            "resolutionPlaceholder": "Përshkruaj zgjidhjen..."
+        },
+        "status": {
+            "open": "I hapur",
+            "inProgress": "Në zhvillim",
+            "resolved": "I zgjidhur",
+            "closed": "I mbyllur"
+        },
+        "actions": {
+            "assign": "Cakto",
+            "resolve": "Zgjidh",
+            "close": "Mbyll",
+            "reopen": "Rihap",
+            "addNote": "Shto shënim"
+        },
+        "messages": {
+            "created": "Incidenti u krijua",
+            "updated": "Incidenti u përditësua",
+            "assigned": "Incidenti u caktua",
+            "resolved": "Incidenti u zgjidh",
+            "closed": "Incidenti u mbyll",
+            "reopened": "Incidenti u rihap"
+        }
     }
 }

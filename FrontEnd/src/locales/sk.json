@@ -648,5 +648,195 @@
                               "errors":  {
                                              "shiftOverlap":  "Neplatná zmena. Prekryv alebo čas konca pred časom začiatku."
                                          }
-                          }
+                          },
+    "about": {
+        "title": "O aplikácii",
+        "description": "Tento modul poskytuje komplexné riešenie na správu flotily autonómnych vozidiel vrátane operácií plánovn, typov incidentov a vykonávania úloh.",
+        "version": "Verzia",
+        "features": {
+            "title": "Funkcie",
+            "fleet": "Správa flotily",
+            "planning": "Plánovanie operácií",
+            "incidents": "Sledovanie incidentov",
+            "tasks": "Vykonávanie úloh"
+        }
+    },
+    "operationPlan": {
+        "title": "Operačný plán",
+        "list": {
+            "title": "Plány operácií",
+            "empty": "Nenájdené žiadne operačné plány",
+            "search": "Hľadať plány..."
+        },
+        "details": {
+            "title": "Podrobnosti plánu",
+            "status": "Stav",
+            "startDate": "Dátum začiatku",
+            "endDate": "Dátum ukončenia",
+            "assignedVehicles": "Priradené vozidlá",
+            "tasks": "Úlohy"
+        },
+        "form": {
+            "create": "Vytvoriť plán",
+            "edit": "Upraviť plán",
+            "name": "Názov plánu",
+            "description": "Popis",
+            "selectVehicles": "Vybrať vozidlá"
+        },
+        "status": {
+            "draft": "Koncept",
+            "active": "Aktívny",
+            "completed": "Dokončený",
+            "cancelled": "Zrušený"
+        }
+    },
+    "incidentType": {
+        "title": "Typ incidentu",
+        "list": {
+            "title": "Typy incidentov",
+            "empty": "Nenájdené žiadne typy incidentov",
+            "search": "Hľadať typy..."
+        },
+        "details": {
+            "title": "Podrobnosti typu",
+            "code": "Kód",
+            "severity": "Závažnosť",
+            "responseTime": "Čas reakcie",
+            "procedures": "Postupy"
+        },
+        "form": {
+            "create": "Vytvoriť typ",
+            "edit": "Upraviť typ",
+            "name": "Názov typu",
+            "description": "Popis",
+            "selectSeverity": "Vybrať závažnosť"
+        },
+        "severity": {
+            "low": "Nízka",
+            "medium": "Stredná",
+            "high": "Vysoká",
+            "critical": "Kritická"
+        }
+    },
+    "taskCategory": {
+        "title": "Kategória úlohy",
+        "list": {
+            "title": "Kategórie úloh",
+            "empty": "Nenájdené žiadne kategórie úloh",
+            "search": "Hľadať kategórie..."
+        },
+        "details": {
+            "title": "Podrobnosti kategórie",
+            "code": "Kód",
+            "priority": "Priorita",
+            "estimatedDuration": "Odhadovaná doba trvania",
+            "requirements": "Požiadavky"
+        },
+        "form": {
+            "create": "Vytvoriť kategóriu",
+            "edit": "Upraviť kategóriu",
+            "name": "Názov kategórie",
+            "description": "Popis",
+            "selectPriority": "Vybrať prioritu"
+        },
+        "priority": {
+            "low": "Nízka",
+            "normal": "Normálna",
+            "high": "Vysoká",
+            "urgent": "Naliehavá"
+        }
+    },
+    "execution": {
+        "title": "Vykonávanie",
+        "status": {
+            "pending": "Čakajúce",
+            "inProgress": "Prebieha",
+            "completed": "Dokončené",
+            "failed": "Zlyhalo",
+            "cancelled": "Zrušené"
+        },
+        "details": {
+            "title": "Podrobnosti vykonávania",
+            "startTime": "Čas začiatku",
+            "endTime": "Čas ukončenia",
+            "duration": "Trvanie",
+            "assignedTo": "Priradené komu",
+            "progress": "Pokrok"
+        },
+        "actions": {
+            "start": "Začať vykonávanie",
+            "pause": "Pozastaviť",
+            "resume": "Obnoviť",
+            "complete": "Dokončiť",
+            "cancel": "Zrušiť"
+        },
+        "messages": {
+            "started": "Vykonávanie začalo",
+            "paused": "Vykonávanie pozastavené",
+            "resumed": "Vykonávanie obnovené",
+            "completed": "Vykonávanie dokončené",
+            "cancelled": "Vykonávanie zrušené",
+            "failed": "Vykonávanie zlyhalo"
+        }
+    },
+    "incident": {
+        "title": "Incident",
+        "list": {
+            "title": "Incidenty",
+            "empty": "Nenájdené žiadne incidenty",
+            "search": "Hľadať incidenty...",
+            "filter": {
+                "all": "Všetky",
+                "open": "Otvorené",
+                "inProgress": "Prebieha",
+                "resolved": "Vyriešené",
+                "closed": "Zatvorené"
+            }
+        },
+        "details": {
+            "title": "Podrobnosti incidentu",
+            "id": "ID incidentu",
+            "type": "Typ",
+            "status": "Stav",
+            "severity": "Závažnosť",
+            "reportedBy": "Nahlásil",
+            "reportedAt": "Nahlásené dňa",
+            "assignedTo": "Priradené komu",
+            "location": "Umiestnenie",
+            "vehicle": "Vozidlo",
+            "description": "Popis",
+            "resolution": "Riešenie",
+            "timeline": "Časová os"
+        },
+        "form": {
+            "create": "Nahlásiť incident",
+            "edit": "Upraviť incident",
+            "selectType": "Vybrať typ",
+            "selectSeverity": "Vybrať závažnosť",
+            "selectVehicle": "Vybrať vozidlo",
+            "descriptionPlaceholder": "Opíšte incident...",
+            "resolutionPlaceholder": "Opíšte riešenie..."
+        },
+        "status": {
+            "open": "Otvorený",
+            "inProgress": "Prebieha",
+            "resolved": "Vyriešený",
+            "closed": "Zatvorený"
+        },
+        "actions": {
+            "assign": "Priradiť",
+            "resolve": "Vyriešiť",
+            "close": "Zatvoriť",
+            "reopen": "Znovu otvoriť",
+            "addNote": "Pridať poznámku"
+        },
+        "messages": {
+            "created": "Incident vytvorený",
+            "updated": "Incident aktualizovaný",
+            "assigned": "Incident priradený",
+            "resolved": "Incident vyriešený",
+            "closed": "Incident zatvorený",
+            "reopened": "Incident znovu otvorený"
+        }
+    }
 }

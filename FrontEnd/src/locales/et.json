@@ -648,5 +648,387 @@
         "errors": {
             "shiftOverlap": "Vigane vahetus. Ülekattumine või lõppaeg enne algusaega."
         }
+    },
+    "about": {
+        "title": "PorTiTi kohta",
+        "privacy": {
+            "title": "Privaatsuspoliitika",
+            "lastUpdated": "Viimati uuendatud: {date}"
+        }
+    },
+    "operationPlan": {
+        "title": "Operatsiooniplan",
+        "dock": "Dokk",
+        "docks": "Dokid",
+        "operations": "Operatsioonid",
+        "cranes": "Kraanid",
+        "createdBy": "Loonud",
+        "createdAt": "Loodud",
+        "totalSchedules": "Kokku Ajakavasid",
+        "vesselCount": "Laevad",
+        "plansOnDate": "Valitud kuupäeva operatsioonipla anid",
+        "noPlansOnDate": "Valitud kuupäeval ei ole operatsiooniplaane",
+        "id": "ID",
+        "vvn": "Laevakülastuse Teatis",
+        "for": "jaoks",
+        "details": "Üksikasjad",
+        "totalOperations": "Kokku Operatsioone",
+        "algorithmUsed": "Kasutatud Algoritm",
+        "ganttChart": "Gantti Diagramm",
+        "startTime": "Algusaeg",
+        "endTime": "Lõppaeg",
+        "totalDuration": "Kogu Kestus",
+        "operation": "Operatsioon",
+        "duration": "Kestus",
+        "resources": "Ressursid",
+        "operationDetails": "Operatsiooni Üksikasjad",
+        "operationNumber": "Operatsioon #{number}",
+        "notFound": "Operatsiooniplaani ei leitud",
+        "operationType": {
+            "Unload": "Mahalaadimire",
+            "Load": "Laadimine"
+        },
+        "tabs": {
+            "unplannedVVNs": "Planeerimata VVN-id",
+            "search": "Otsi Plaane",
+            "edit": "Muuda Plaani",
+            "open": "Ava Täitmine"
+        },
+        "subtitle": {
+            "edit": "Muuda operatsiooniplaani üksikasju ja ajakava"
+        },
+        "unplannedVVNs": {
+            "description": "Laevakülastuse teated, millel puudub määratud operatsiooniplaan",
+            "noUnplanned": "Kõikidel laevakülastuse teadetel on määratud operatsiooniplaan",
+            "foundMessage": "Leitud {vvnCount} VVN ilma plaanideta {dayCount} päevas/päevades",
+            "regenerateAll": "Genereeri Kõik Puuduvad Plaanid",
+            "regenerateDay": "Genereeri Selle Päeva Plaanid",
+            "regenerateModalTitle": "Genereeri plaanid kuupäevale {date}",
+            "warning": "Hoiatus",
+            "warningMessage": "Plaanide regenereerimine asendab kõik olemasolevad selle päeva operatsiooniplaan id. Seda toimingut ei saa tagasi võtta.",
+            "selectedDay": "Valitud Päev",
+            "confirmRegeneration": "Kinnita Regenereerimine",
+            "affectedDays": "Mõjutatud Päevad",
+            "queueInfo": "Iga regenereerimise taotlus pannakse eraldi järjekorda. Saate neid üle vaadata ja vastu võtta/tagasi lükata eraldi ajakavastusjärjekorrast.",
+            "continue": "Jätka",
+            "confirmRegenerationTitle": "Kinnita Regenereerimine",
+            "irreversibleAction": "See toiming on pöörd umatu",
+            "overwriteWarning": "Operatsioonide regenereerimine kirjutab püsivalt üle kõik olemasolevad plaanid valitud päevadeks. Seda toimingut ei saa tagasi võtta.",
+            "aboutToRegenerate": "Olete looma plaane",
+            "days": "päevaks",
+            "vesselVisitNotifications": "Laevakülastuse Teated",
+            "using": "Kasutades",
+            "algorithm": "algoritmi",
+            "proceedQuestion": "Kas soovite jätkata selle toiminguga?",
+            "yesRegenerateAll": "Jah, genereeri kõik"
+        },
+        "algorithm": {
+            "optimal": "Optimaalne",
+            "greedy": "Ahnev",
+            "genetic": "Geneetiline",
+            "auto": "Automaatne"
+        },
+        "metrics": {
+            "title": "Mõõdikud",
+            "strategy": "Strateegia",
+            "totalDelay": "Kogu Viivitus",
+            "computationTime": "Arvutusaeg",
+            "autoSelection": "Automaatne Algoritmi Valik"
+        },
+        "infoTitle": "Operatsiooniplaani Teave",
+        "fields": {
+            "id": {
+                "title": "Plaani ID"
+            },
+            "relatedVVN": {
+                "title": "Seotud VVN"
+            },
+            "dock": {
+                "title": "Dokk"
+            },
+            "operations": {
+                "title": "Operatsioonid"
+            }
+        },
+        "filters": {
+            "startDate": "Alguskuupäev Alates",
+            "endDate": "Lõppkuupäev Kuni"
+        },
+        "metadata": {
+            "title": "Metaandmed",
+            "createdBy": "Loonud",
+            "createdAt": "Loodud",
+            "algorithmUsed": "Kasutatud Algoritm"
+        },
+        "schedule": {
+            "title": "Operatsioonide Ajakava",
+            "noOperations": "Planeeritud operatsioone pole"
+        }
+    },
+    "incidentType": {
+        "fields": {
+            "name": {
+                "title": "Nimi",
+                "placeholder": "Intsidendi tüübi nimi"
+            },
+            "description": {
+                "title": "Kirjeldus",
+                "placeholder": "Intsidendi tüübi üksikasjalik kirjeldus"
+            },
+            "severity": {
+                "title": "Raskusaste",
+                "placeholder": "Valige raskusaste"
+            },
+            "subtypeOf": {
+                "title": "Alamtüüp",
+                "placeholder": "Valige ülemtüüp"
+            },
+            "subtypes": {
+                "title": "Alamtüübid",
+                "placeholder": "Valige alamtüübid"
+            }
+        },
+        "severity": {
+            "Minor": "Kerge",
+            "Major": "Suur",
+            "Critical": "Kriitiline"
+        },
+        "tabs": {
+            "dashboard": "Intsidentide Töölaud",
+            "view_dashboard": "Vaata Intsidentide Tüüpe",
+            "search": "Otsi Intsidentide Tüüpe",
+            "create": "Loo Intsidendi Tüüp",
+            "edit": "Muuda Intsidendi Tüüpi"
+        },
+        "generalFields": "Üldised Väljad",
+        "classification": "Klassifikatsioon",
+        "title": "Intsidendid",
+        "subtitle": {
+            "dashboard": "Intsidentide tüüpide statistika ja tegevuste ülevaade",
+            "search": "Halda ja vaata kõiki registreeritud intsidentide tüüpe",
+            "create": "Registreeri uus intsidendi tüüp süsteemi",
+            "edit": "Muuda olemasolevat intsidendi tüüpi süsteemis"
+        },
+        "registeredIncidentTypes": "Registreeritud Intsidentide Tüübid",
+        "incidentTypeInformation": "Intsidendi Tüübi Teave",
+        "parentType": "Ülemtüüp",
+        "confirmDelete": "Kinnita kustutamine",
+        "confirmDeleteMessage": "Kas olete kindel, et soovite selle intsidendi tüübi kustutada?",
+        "failedToDelete": "Intsidendi tüübi kustutamine ebaõnnestus"
+    },
+    "taskCategory": {
+        "fields": {
+            "name": {
+                "title": "Nimi",
+                "placeholder": "Ülesande kategooria nimi"
+            },
+            "category": {
+                "title": "Kategooria",
+                "placeholder": "Kategooria kood"
+            },
+            "description": {
+                "title": "Kirjeldus",
+                "placeholder": "Ülesande kategooria kirjeldus"
+            }
+        },
+        "tabs": {
+            "dashboard": "Ülesannete Töölaud",
+            "search": "Otsi Ülesannete Kategooriaid",
+            "create": "Loo Ülesande Kategooria",
+            "edit": "Muuda Ülesande Kategooriat",
+            "view_dashboard": "Vaata Ülesannete Kategooriaid"
+        },
+        "generalFields": "Üldised Väljad",
+        "title": "Ülesanded",
+        "subtitle": {
+            "dashboard": "Ülesannete kategooriate statistika ja tegevuste ülevaade",
+            "search": "Halda ja vaata kõiki registreeritud ülesannete kategooriaid",
+            "create": "Registreeri uus ülesande kategooria süsteemi",
+            "edit": "Muuda olemasolevat ülesande kategooriat süsteemis"
+        },
+        "taskCategoryInformation": "Ülesande Kategooria Teave",
+        "registeredTaskCategories": "Registreeritud Ülesannete Kategooriad"
+    },
+    "execution": {
+        "title": "Laevakülastuse Täitmised",
+        "subtitle": {
+            "search": "Halda ja vaata kõiki laevakülastuse täitmisi",
+            "dashboard": "Laevakülastuse täitmiste statistika ja tegevuste ülevaade"
+        },
+        "tabs": {
+            "dashboard": "Täitmiste Töölaud",
+            "search": "Otsi Täitmisi",
+            "view_dashboard": "Vaata Täitmisi",
+            "update": "Uuenda Täitmist",
+            "view": "Vaata Täitmist",
+            "table": "Vaata Tabelit",
+            "cards": "Vaata Kaarte"
+        },
+        "fields": {
+            "code": "Kood",
+            "relatedVVN": "Seotud",
+            "status": "Olek",
+            "createdBy": "Loonud",
+            "dateOpen": "Avamiskuupäev",
+            "dateClosed": "Sulgemiskuupäev",
+            "relatedVesselVisit": "Seotud Laevakülastus",
+            "dock": "Sõiduk ikoht",
+            "berthTime": "Sõidukipaigaaeg",
+            "operations": "Operatsioonid"
+        },
+        "filters": {
+            "startDate": "Alguskuupäev",
+            "endDate": "Lõppkuupäev",
+            "relatedVVN": "Laevakülastuse Teatis",
+            "status": "Olek"
+        },
+        "metrics": {
+            "totalOperations": "Kokku Operatsioone",
+            "completedOperations": "Edenemine",
+            "turnaroundTime": "Pöördeaeg",
+            "berthOccupancy": "Sõidukikoha Hõivatus"
+        },
+        "status": {
+            "pending": "Ootel",
+            "started": "Alustatud",
+            "delayed": "Viivitatud",
+            "completed": "Lõpetatud"
+        },
+        "view_resources": "Vaata Ressursse",
+        "infoTitle": "Täitmise Teave",
+        "operationsTitle": "Operatsioonid",
+        "noOperations": "Operatsioone pole saadaval",
+        "startOperation": "Alusta Operatsiooni",
+        "completeOperation": "Lõpeta Operatsioon",
+        "addOperation": "Lisa Operatsioon",
+        "addOperationDescription": "Lisa uus operatsioon ajajoone",
+        "confirmStartOperation": "Kas olete kindel, et soovite seda operatsiooni alustada?",
+        "confirmCompleteOperation": "Kas olete kindel, et soovite seda operatsiooni lõpetada?",
+        "berthOperation": {
+            "button": "Muuda sõidukikoha andmeid",
+            "title": "Sõidukikoha Operatsioon",
+            "description": "Muuda selle laevakülastuse täitmise dokki ja aega.",
+            "dock": "Sõidukikoht",
+            "dockPlaceholder": "Valige dokk",
+            "berthTime": "Sõidukipaigaaeg",
+            "differentThanPlanned": "Valitud dokk erineb planeeritust."
+        }
+    },
+    "incident": {
+        "tabs": {
+            "dashboard": "Intsidentide Töölaud",
+            "create": "Loo Intsident",
+            "search": "Otsi Intsidente",
+            "active": "Aktiivsed Intsidendid",
+            "view": "Vaata Intsidenti",
+            "edit": "Muuda Intsidenti"
+        },
+        "subtitle": {
+            "create": "Teavita uuest intsidendist süsteemis",
+            "search": "Otsi ja filtreeri olemasolevaid intsidente",
+            "active": "Vaata ja halda aktiivseid intsidente"
+        },
+        "generalFields": "Üldine Teave",
+        "classification": "Klassifikatsioon",
+        "fields": {
+            "bid": {
+                "title": "Intsidendi ID"
+            },
+            "type": {
+                "title": "Intsidendi Tüüp",
+                "placeholder": "Valige intsidendi tüüp"
+            },
+            "startTime": {
+                "title": "Algusaeg",
+                "placeholder": "Millal intsident algas?"
+            },
+            "endTime": {
+                "title": "Lõppaeg",
+                "placeholder": "Millal intsident lõppes?"
+            },
+            "severity": {
+                "title": "Raskusaste",
+                "placeholder": "Valige raskusaste",
+                "options": {
+                    "minor": "Kerge",
+                    "major": "Suur",
+                    "critical": "Kriitiline"
+                }
+            },
+            "description": {
+                "title": "Kirjeldus",
+                "placeholder": "Kirjeldage intsidenti üksikasjalikult"
+            },
+            "createdBy": {
+                "title": "Loonud"
+            },
+            "affectedVVECodes": {
+                "title": "Mõjutatud VVE-d",
+                "placeholder": "Sisestage mõjutatud VVE-d"
+            },
+            "vveCode": {
+                "title": "VVE Kood"
+            },
+            "status": {
+                "title": "Olek",
+                "options": {
+                    "active": "Aktiivne",
+                    "resolved": "Lahendatud"
+                }
+            },
+            "filterStartTime": {
+                "title": "Alguskuupäev Alates"
+            },
+            "filterEndTime": {
+                "title": "Alguskuupäev Kuni"
+            },
+            "duration": {
+                "title": "Kestus"
+            }
+        },
+        "severity": {
+            "Minor": "Kerge",
+            "Major": "Suur",
+            "Critical": "Kriitiline"
+        },
+        "status": {
+            "active": "Aktiivne",
+            "resolved": "Lahendatud"
+        },
+        "ongoing": "Käimas",
+        "filters": {
+            "onlyActive": "Ainult Aktiivsed",
+            "onlyMine": "Ainult Minu"
+        },
+        "actions": {
+            "view": "Vaata Üksikasju",
+            "edit": "Muuda Intsidenti",
+            "resolve": "Lahenda Intsident",
+            "delete": "Kustuta Intsident"
+        },
+        "notifications": {
+            "createSuccess": "Intsident edukalt loodud",
+            "createFailed": "Intsidendi loomine ebaõnnestus",
+            "updateSuccess": "Intsident edukalt uuendatud",
+            "updateFailed": "Intsidendi uuendamine ebaõnnestus",
+            "resolveSuccess": "Intsident edukalt lahendatud",
+            "resolveFailed": "Intsidendi lahendamine ebaõnnestus",
+            "deleteSuccess": "Intsident edukalt kustutatud",
+            "deleteFailed": "Intsidendi kustutamine ebaõnnestus"
+        },
+        "table": {
+            "empty": "Intsidente ei leitud"
+        },
+        "active": {
+            "title": "Aktiivsed Intsidendid",
+            "subtitle": "Vaata ja halda käimasolevaid intsidente"
+        },
+        "infoTitle": "Intsidendi Üksikasjad",
+        "closeDialog": {
+            "title": "Lahenda intsident",
+            "message": "Millal intsident lahendati?",
+            "confirm": "Jah, sulge see intsident",
+            "cancel": "Tühista"
+        }
     }
 }

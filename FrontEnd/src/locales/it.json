@@ -673,5 +673,387 @@
         "errors": {
             "shiftOverlap": "Turno non valido. Sovrapposizione o ora di fine precedente all'inizio."
         }
+    },
+    "about": {
+        "title": "Informazioni su PorTiT",
+        "privacy": {
+            "title": "Informativa sulla privacy",
+            "lastUpdated": "Ultimo aggiornamento: {date}"
+        }
+    },
+    "operationPlan": {
+        "title": "Piano operativo",
+        "dock": "Molo",
+        "docks": "Moli",
+        "operations": "Operazioni",
+        "cranes": "Gru",
+        "createdBy": "Creato da",
+        "createdAt": "Creato il",
+        "totalSchedules": "Programmi totali",
+        "vesselCount": "Navi",
+        "plansOnDate": "Piani operativi nella data selezionata",
+        "noPlansOnDate": "Nessun piano operativo nella data selezionata",
+        "id": "ID",
+        "vvn": "Notifica visita nave",
+        "for": "per",
+        "details": "Dettagli",
+        "totalOperations": "Operazioni totali",
+        "algorithmUsed": "Algoritmo utilizzato",
+        "ganttChart": "Diagramma di Gantt",
+        "startTime": "Ora di inizio",
+        "endTime": "Ora di fine",
+        "totalDuration": "Durata totale",
+        "operation": "Operazione",
+        "duration": "Durata",
+        "resources": "Risorse",
+        "operationDetails": "Dettagli operazione",
+        "operationNumber": "Operazione #{number}",
+        "notFound": "Piano operativo non trovato",
+        "operationType": {
+            "Unload": "Scarico",
+            "Load": "Carico"
+        },
+        "tabs": {
+            "unplannedVVNs": "VVN non pianificati",
+            "search": "Cerca piani",
+            "edit": "Modifica piano",
+            "open": "Apri esecuzione"
+        },
+        "subtitle": {
+            "edit": "Modifica dettagli piano operativo e programma"
+        },
+        "unplannedVVNs": {
+            "description": "Notifiche di visita nave che non hanno ancora un piano operativo assegnato",
+            "noUnplanned": "Tutte le notifiche di visita nave hanno piani operativi assegnati",
+            "foundMessage": "Trovati {vvnCount} VVN senza piani in {dayCount} giorno/i",
+            "regenerateAll": "Rigenera tutti i piani mancanti",
+            "regenerateDay": "Rigenera piani per questo giorno",
+            "regenerateModalTitle": "Rigenera piani per {date}",
+            "warning": "Avviso",
+            "warningMessage": "La rigenerazione dei piani sostituirà tutti i piani operativi esistenti per questo giorno. Questa azione non può essere annullata.",
+            "selectedDay": "Giorno selezionato",
+            "confirmRegeneration": "Conferma rigenerazione",
+            "affectedDays": "Giorni interessati",
+            "queueInfo": "Ogni richiesta di rigenerazione sarà messa in coda separatamente. Puoi esaminarle e accettarle/rifiutarle individualmente dalla coda di pianificazione.",
+            "continue": "Continua",
+            "confirmRegenerationTitle": "Conferma rigenerazione",
+            "irreversibleAction": "Questa azione è irreversibile",
+            "overwriteWarning": "La rigenerazione dei piani operativi sovrascriverà permanentemente tutti i piani esistenti per i giorni selezionati. Questa azione non può essere annullata.",
+            "aboutToRegenerate": "Stai per rigenerare piani per",
+            "days": "giorni",
+            "vesselVisitNotifications": "Notifiche visita nave",
+            "using": "Usando",
+            "algorithm": "algoritmo",
+            "proceedQuestion": "Vuoi procedere con questa operazione?",
+            "yesRegenerateAll": "Sì, rigenera tutto"
+        },
+        "algorithm": {
+            "optimal": "Ottimale",
+            "greedy": "Greedy",
+            "genetic": "Genetico",
+            "auto": "Automatico"
+        },
+        "metrics": {
+            "title": "Metriche",
+            "strategy": "Strategia",
+            "totalDelay": "Ritardo totale",
+            "computationTime": "Tempo di calcolo",
+            "autoSelection": "Selezione automatica algoritmo"
+        },
+        "infoTitle": "Informazioni piano operativo",
+        "fields": {
+            "id": {
+                "title": "ID piano"
+            },
+            "relatedVVN": {
+                "title": "VVN correlato"
+            },
+            "dock": {
+                "title": "Molo"
+            },
+            "operations": {
+                "title": "Operazioni"
+            }
+        },
+        "filters": {
+            "startDate": "Data inizio da",
+            "endDate": "Data fine a"
+        },
+        "metadata": {
+            "title": "Metadati",
+            "createdBy": "Creato da",
+            "createdAt": "Creato il",
+            "algorithmUsed": "Algoritmo utilizzato"
+        },
+        "schedule": {
+            "title": "Programma operazioni",
+            "noOperations": "Nessuna operazione programmata"
+        }
+    },
+    "incidentType": {
+        "fields": {
+            "name": {
+                "title": "Nome",
+                "placeholder": "Nome tipo incidente"
+            },
+            "description": {
+                "title": "Descrizione",
+                "placeholder": "Descrizione dettagliata del tipo di incidente"
+            },
+            "severity": {
+                "title": "Gravità",
+                "placeholder": "Seleziona livello di gravità"
+            },
+            "subtypeOf": {
+                "title": "Sottotipo di",
+                "placeholder": "Seleziona tipo genitore"
+            },
+            "subtypes": {
+                "title": "Sottotipi",
+                "placeholder": "Seleziona tipi figlio"
+            }
+        },
+        "severity": {
+            "Minor": "Minore",
+            "Major": "Maggiore",
+            "Critical": "Critico"
+        },
+        "tabs": {
+            "dashboard": "Dashboard tipi incidente",
+            "view_dashboard": "Visualizza tipi incidente",
+            "search": "Cerca tipi incidente",
+            "create": "Crea tipo incidente",
+            "edit": "Modifica tipo incidente"
+        },
+        "generalFields": "Campi generali",
+        "classification": "Classificazione",
+        "title": "Incidenti",
+        "subtitle": {
+            "dashboard": "Panoramica statistiche e attività tipi incidente",
+            "search": "Gestisci e visualizza tutti i tipi di incidente registrati",
+            "create": "Registra un nuovo tipo di incidente nel sistema",
+            "edit": "Modifica un tipo di incidente esistente nel sistema"
+        },
+        "registeredIncidentTypes": "Tipi incidente registrati",
+        "incidentTypeInformation": "Informazioni tipo incidente",
+        "parentType": "Tipo genitore",
+        "confirmDelete": "Conferma eliminazione",
+        "confirmDeleteMessage": "Sei sicuro di voler eliminare questo tipo di incidente?",
+        "failedToDelete": "Eliminazione tipo incidente fallita"
+    },
+    "taskCategory": {
+        "fields": {
+            "name": {
+                "title": "Nome",
+                "placeholder": "Nome categoria attività"
+            },
+            "category": {
+                "title": "Categoria",
+                "placeholder": "Codice categoria"
+            },
+            "description": {
+                "title": "Descrizione",
+                "placeholder": "Descrizione categoria attività"
+            }
+        },
+        "tabs": {
+            "dashboard": "Dashboard categorie attività",
+            "search": "Cerca categorie attività",
+            "create": "Crea categoria attività",
+            "edit": "Modifica categoria attività",
+            "view_dashboard": "Visualizza categorie attività"
+        },
+        "generalFields": "Campi generali",
+        "title": "Attività",
+        "subtitle": {
+            "dashboard": "Panoramica statistiche e attività categorie attività",
+            "search": "Gestisci e visualizza tutte le categorie attività registrate",
+            "create": "Registra una nuova categoria attività nel sistema",
+            "edit": "Modifica una categoria attività esistente nel sistema"
+        },
+        "taskCategoryInformation": "Informazioni categoria attività",
+        "registeredTaskCategories": "Categorie attività registrate"
+    },
+    "execution": {
+        "title": "Esecuzioni visite nave",
+        "subtitle": {
+            "search": "Gestisci e visualizza tutte le esecuzioni visite nave",
+            "dashboard": "Panoramica statistiche e attività esecuzioni visite nave"
+        },
+        "tabs": {
+            "dashboard": "Dashboard esecuzioni",
+            "search": "Cerca esecuzioni",
+            "view_dashboard": "Visualizza esecuzioni",
+            "update": "Aggiorna esecuzione",
+            "view": "Visualizza esecuzione",
+            "table": "Visualizza tabella",
+            "cards": "Visualizza schede"
+        },
+        "fields": {
+            "code": "Codice",
+            "relatedVVN": "Correlato a",
+            "status": "Stato",
+            "createdBy": "Creato da",
+            "dateOpen": "Data apertura",
+            "dateClosed": "Data chiusura",
+            "relatedVesselVisit": "Visita nave correlata",
+            "dock": "Molo ormeggio",
+            "berthTime": "Ora ormeggio",
+            "operations": "Operazioni"
+        },
+        "filters": {
+            "startDate": "Data inizio",
+            "endDate": "Data fine",
+            "relatedVVN": "Notifica visita nave",
+            "status": "Stato"
+        },
+        "metrics": {
+            "totalOperations": "Operazioni totali",
+            "completedOperations": "Avanzamento",
+            "turnaroundTime": "Tempo di rotazione",
+            "berthOccupancy": "Occupazione molo"
+        },
+        "status": {
+            "pending": "In attesa",
+            "started": "Avviato",
+            "delayed": "Ritardato",
+            "completed": "Completato"
+        },
+        "view_resources": "Visualizza risorse",
+        "infoTitle": "Informazioni esecuzione",
+        "operationsTitle": "Operazioni",
+        "noOperations": "Nessuna operazione disponibile",
+        "startOperation": "Avvia operazione",
+        "completeOperation": "Completa operazione",
+        "addOperation": "Aggiungi operazione",
+        "addOperationDescription": "Aggiungi una nuova operazione alla timeline",
+        "confirmStartOperation": "Sei sicuro di voler avviare questa operazione?",
+        "confirmCompleteOperation": "Sei sicuro di voler completare questa operazione?",
+        "berthOperation": {
+            "button": "Modifica dati ormeggio",
+            "title": "Operazione ormeggio",
+            "description": "Modifica il molo e l'ora per questa esecuzione visita nave.",
+            "dock": "Molo ormeggio",
+            "dockPlaceholder": "Seleziona molo",
+            "berthTime": "Ora ormeggio",
+            "differentThanPlanned": "Il molo selezionato è diverso da quello pianificato."
+        }
+    },
+    "incident": {
+        "tabs": {
+            "dashboard": "Dashboard incidenti",
+            "create": "Crea incidente",
+            "search": "Cerca incidenti",
+            "active": "Incidenti attivi",
+            "view": "Visualizza incidente",
+            "edit": "Modifica incidente"
+        },
+        "subtitle": {
+            "create": "Segnala un nuovo incidente nel sistema",
+            "search": "Cerca e filtra incidenti esistenti",
+            "active": "Visualizza e gestisci incidenti attivi"
+        },
+        "generalFields": "Informazioni generali",
+        "classification": "Classificazione",
+        "fields": {
+            "bid": {
+                "title": "ID incidente"
+            },
+            "type": {
+                "title": "Tipo incidente",
+                "placeholder": "Seleziona tipo incidente"
+            },
+            "startTime": {
+                "title": "Ora inizio",
+                "placeholder": "Quando è iniziato l'incidente?"
+            },
+            "endTime": {
+                "title": "Ora fine",
+                "placeholder": "Quando è terminato l'incidente?"
+            },
+            "severity": {
+                "title": "Gravità",
+                "placeholder": "Seleziona livello di gravità",
+                "options": {
+                    "minor": "Minore",
+                    "major": "Maggiore",
+                    "critical": "Critico"
+                }
+            },
+            "description": {
+                "title": "Descrizione",
+                "placeholder": "Descrivi l'incidente in dettaglio"
+            },
+            "createdBy": {
+                "title": "Creato da"
+            },
+            "affectedVVECodes": {
+                "title": "VVE interessati",
+                "placeholder": "Inserisci VVE interessati"
+            },
+            "vveCode": {
+                "title": "Codice VVE"
+            },
+            "status": {
+                "title": "Stato",
+                "options": {
+                    "active": "Attivo",
+                    "resolved": "Risolto"
+                }
+            },
+            "filterStartTime": {
+                "title": "Data inizio da"
+            },
+            "filterEndTime": {
+                "title": "Data inizio a"
+            },
+            "duration": {
+                "title": "Durata"
+            }
+        },
+        "severity": {
+            "Minor": "Minore",
+            "Major": "Maggiore",
+            "Critical": "Critico"
+        },
+        "status": {
+            "active": "Attivo",
+            "resolved": "Risolto"
+        },
+        "ongoing": "In corso",
+        "filters": {
+            "onlyActive": "Solo attivi",
+            "onlyMine": "Solo miei"
+        },
+        "actions": {
+            "view": "Visualizza dettagli",
+            "edit": "Modifica incidente",
+            "resolve": "Risolvi incidente",
+            "delete": "Elimina incidente"
+        },
+        "notifications": {
+            "createSuccess": "Incidente creato con successo",
+            "createFailed": "Creazione incidente fallita",
+            "updateSuccess": "Incidente aggiornato con successo",
+            "updateFailed": "Aggiornamento incidente fallito",
+            "resolveSuccess": "Incidente risolto con successo",
+            "resolveFailed": "Risoluzione incidente fallita",
+            "deleteSuccess": "Incidente eliminato con successo",
+            "deleteFailed": "Eliminazione incidente fallita"
+        },
+        "table": {
+            "empty": "Nessun incidente trovato"
+        },
+        "active": {
+            "title": "Incidenti attivi",
+            "subtitle": "Visualizza e gestisci incidenti in corso"
+        },
+        "infoTitle": "Dettagli incidente",
+        "closeDialog": {
+            "title": "Risolvi incidente",
+            "message": "Quando è stato risolto l'incidente?",
+            "confirm": "Sì, chiudi questo incidente",
+            "cancel": "Annulla"
+        }
     }
 } 

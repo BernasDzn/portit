@@ -673,5 +673,387 @@
                               "errors":  {
                                              "shiftOverlap":  "Ungültige Schicht. Überlappung oder Endzeit vor Startzeit."
                                          }
-                          }
+                          },
+    "about":  {
+                  "title":  "Über PorTiT",
+                  "privacy":  {
+                                  "title":  "Datenschutzrichtlinie",
+                                  "lastUpdated":  "Zuletzt aktualisiert: {date}"
+                              }
+              },
+    "operationPlan":  {
+                          "title":  "Betriebsplan",
+                          "dock":  "Dock",
+                          "docks":  "Docks",
+                          "operations":  "Operationen",
+                          "cranes":  "Kräne",
+                          "createdBy":  "Erstellt von",
+                          "createdAt":  "Erstellt am",
+                          "totalSchedules":  "Gesamtzeitpläne",
+                          "vesselCount":  "Schiffe",
+                          "plansOnDate":  "Betriebspläne am ausgewählten Datum",
+                          "noPlansOnDate":  "Keine Betriebspläne am ausgewählten Datum",
+                          "id":  "ID",
+                          "vvn":  "Schiffsbesuchsmitteilung",
+                          "for":  "für",
+                          "details":  "Details",
+                          "totalOperations":  "Gesamtoperationen",
+                          "algorithmUsed":  "Verwendeter Algorithmus",
+                          "ganttChart":  "Gantt-Diagramm",
+                          "startTime":  "Startzeit",
+                          "endTime":  "Endzeit",
+                          "totalDuration":  "Gesamtdauer",
+                          "operation":  "Operation",
+                          "duration":  "Dauer",
+                          "resources":  "Ressourcen",
+                          "operationDetails":  "Operationsdetails",
+                          "operationNumber":  "Operation #{number}",
+                          "notFound":  "Betriebsplan nicht gefunden",
+                          "operationType":  {
+                                                "Unload":  "Entladen",
+                                                "Load":  "Laden"
+                                            },
+                          "tabs":  {
+                                       "unplannedVVNs":  "Ungeplante VVNs",
+                                       "search":  "Pläne suchen",
+                                       "edit":  "Plan bearbeiten",
+                                       "open":  "Ausführung starten"
+                                   },
+                          "subtitle":  {
+                                           "edit":  "Betriebsplandetails und Zeitplan ändern"
+                                       },
+                          "unplannedVVNs":  {
+                                                "description":  "Schiffsbesuchsmitteilungen, die noch keinen zugewiesenen Betriebsplan haben",
+                                                "noUnplanned":  "Alle Schiffsbesuchsmitteilungen haben zugewiesene Betriebspläne",
+                                                "foundMessage":  "{vvnCount} VVN(s) ohne Pläne über {dayCount} Tag(e) gefunden",
+                                                "regenerateAll":  "Alle fehlenden Pläne regenerieren",
+                                                "regenerateDay":  "Pläne für diesen Tag regenerieren",
+                                                "regenerateModalTitle":  "Pläne für {date} regenerieren",
+                                                "warning":  "Warnung",
+                                                "warningMessage":  "Das Regenerieren von Plänen überschreibt alle vorhandenen Betriebspläne für diesen Tag. Diese Aktion kann nicht rückgängig gemacht werden.",
+                                                "selectedDay":  "Ausgewählter Tag",
+                                                "confirmRegeneration":  "Regenerierung bestätigen",
+                                                "affectedDays":  "Betroffene Tage",
+                                                "queueInfo":  "Jede Regenerierungsanfrage wird separat in die Warteschlange gestellt. Sie können sie einzeln in der Planungswarteschlange überprüfen und akzeptieren/ablehnen.",
+                                                "continue":  "Fortfahren",
+                                                "confirmRegenerationTitle":  "Regenerierung bestätigen",
+                                                "irreversibleAction":  "Diese Aktion ist irreversibel",
+                                                "overwriteWarning":  "Das Regenerieren von Betriebsplänen überschreibt dauerhaft alle vorhandenen Pläne für die ausgewählten Tage. Diese Aktion kann nicht rückgängig gemacht werden.",
+                                                "aboutToRegenerate":  "Sie sind dabei, Pläne zu regenerieren für",
+                                                "days":  "Tage",
+                                                "vesselVisitNotifications":  "Schiffsbesuchsmitteilungen",
+                                                "using":  "Verwenden",
+                                                "algorithm":  "Algorithmus",
+                                                "proceedQuestion":  "Möchten Sie mit diesem Vorgang fortfahren?",
+                                                "yesRegenerateAll":  "Ja, alles regenerieren"
+                                            },
+                          "algorithm":  {
+                                            "optimal":  "Optimal",
+                                            "greedy":  "Gierig",
+                                            "genetic":  "Genetisch",
+                                            "auto":  "Automatisch"
+                                        },
+                          "metrics":  {
+                                          "title":  "Metriken",
+                                          "strategy":  "Strategie",
+                                          "totalDelay":  "Gesamtverzögerung",
+                                          "computationTime":  "Berechnungszeit",
+                                          "autoSelection":  "Automatische Algorithmusauswahl"
+                                      },
+                          "infoTitle":  "Betriebsplaninformationen",
+                          "fields":  {
+                                         "id":  {
+                                                    "title":  "Plan-ID"
+                                                },
+                                         "relatedVVN":  {
+                                                            "title":  "Zugehöriges VVN"
+                                                        },
+                                         "dock":  {
+                                                      "title":  "Dock"
+                                                  },
+                                         "operations":  {
+                                                            "title":  "Operationen"
+                                                        }
+                                     },
+                          "filters":  {
+                                          "startDate":  "Startdatum ab",
+                                          "endDate":  "Enddatum bis"
+                                      },
+                          "metadata":  {
+                                           "title":  "Metadaten",
+                                           "createdBy":  "Erstellt von",
+                                           "createdAt":  "Erstellt am",
+                                           "algorithmUsed":  "Verwendeter Algorithmus"
+                                       },
+                          "schedule":  {
+                                           "title":  "Betriebszeitplan",
+                                           "noOperations":  "Keine Operationen geplant"
+                                       }
+                      },
+    "incidentType":  {
+                         "fields":  {
+                                        "name":  {
+                                                     "title":  "Name",
+                                                     "placeholder":  "Vorfalltyp-Name"
+                                                 },
+                                        "description":  {
+                                                            "title":  "Beschreibung",
+                                                            "placeholder":  "Detaillierte Beschreibung des Vorfalltyps"
+                                                        },
+                                        "severity":  {
+                                                         "title":  "Schweregrad",
+                                                         "placeholder":  "Schweregrad auswählen"
+                                                     },
+                                        "subtypeOf":  {
+                                                          "title":  "Untertyp von",
+                                                          "placeholder":  "Übergeordneten Typ auswählen"
+                                                      },
+                                        "subtypes":  {
+                                                         "title":  "Untertypen",
+                                                         "placeholder":  "Untergeordnete Typen auswählen"
+                                                     }
+                                    },
+                         "severity":  {
+                                          "Minor":  "Gering",
+                                          "Major":  "Mittel",
+                                          "Critical":  "Kritisch"
+                                      },
+                         "tabs":  {
+                                      "dashboard":  "Vorfalltypen-Dashboard",
+                                      "view_dashboard":  "Vorfalltypen anzeigen",
+                                      "search":  "Vorfalltypen suchen",
+                                      "create":  "Vorfalltyp erstellen",
+                                      "edit":  "Vorfalltyp bearbeiten"
+                                  },
+                         "generalFields":  "Allgemeine Felder",
+                         "classification":  "Klassifizierung",
+                         "title":  "Vorfälle",
+                         "subtitle":  {
+                                          "dashboard":  "Übersicht über Vorfalltyp-Statistiken und Aktivitäten",
+                                          "search":  "Alle registrierten Vorfalltypen verwalten und anzeigen",
+                                          "create":  "Neuen Vorfalltyp im System registrieren",
+                                          "edit":  "Vorhandenen Vorfalltyp im System ändern"
+                                      },
+                         "registeredIncidentTypes":  "Registrierte Vorfalltypen",
+                         "incidentTypeInformation":  "Vorfalltyp-Informationen",
+                         "parentType":  "Übergeordneter Typ",
+                         "confirmDelete":  "Löschen bestätigen",
+                         "confirmDeleteMessage":  "Möchten Sie diesen Vorfalltyp wirklich löschen?",
+                         "failedToDelete":  "Fehler beim Löschen des Vorfalltyps"
+                     },
+    "taskCategory":  {
+                         "fields":  {
+                                        "name":  {
+                                                     "title":  "Name",
+                                                     "placeholder":  "Aufgabenkategorie-Name"
+                                                 },
+                                        "category":  {
+                                                         "title":  "Kategorie",
+                                                         "placeholder":  "Kategoriecode"
+                                                     },
+                                        "description":  {
+                                                            "title":  "Beschreibung",
+                                                            "placeholder":  "Beschreibung der Aufgabenkategorie"
+                                                        }
+                                    },
+                         "tabs":  {
+                                      "dashboard":  "Aufgabenkategorien-Dashboard",
+                                      "search":  "Aufgabenkategorien suchen",
+                                      "create":  "Aufgabenkategorie erstellen",
+                                      "edit":  "Aufgabenkategorie bearbeiten",
+                                      "view_dashboard":  "Aufgabenkategorien anzeigen"
+                                  },
+                         "generalFields":  "Allgemeine Felder",
+                         "title":  "Aufgaben",
+                         "subtitle":  {
+                                          "dashboard":  "Übersicht über Aufgabenkategorie-Statistiken und Aktivitäten",
+                                          "search":  "Alle registrierten Aufgabenkategorien verwalten und anzeigen",
+                                          "create":  "Neue Aufgabenkategorie im System registrieren",
+                                          "edit":  "Vorhandene Aufgabenkategorie im System ändern"
+                                      },
+                         "taskCategoryInformation":  "Aufgabenkategorie-Informationen",
+                         "registeredTaskCategories":  "Registrierte Aufgabenkategorien"
+                     },
+    "execution":  {
+                      "title":  "Schiffsbesuchsausführungen",
+                      "subtitle":  {
+                                       "search":  "Alle Schiffsbesuchsausführungen verwalten und anzeigen",
+                                       "dashboard":  "Übersicht über Schiffsbesuchsausführungs-Statistiken und Aktivitäten"
+                                   },
+                      "tabs":  {
+                                   "dashboard":  "Ausführungs-Dashboard",
+                                   "search":  "Ausführungen suchen",
+                                   "view_dashboard":  "Ausführungen anzeigen",
+                                   "update":  "Ausführung aktualisieren",
+                                   "view":  "Ausführung anzeigen",
+                                   "table":  "Tabellenansicht",
+                                   "cards":  "Kartenansicht"
+                               },
+                      "fields":  {
+                                     "code":  "Code",
+                                     "relatedVVN":  "Zugehörig zu",
+                                     "status":  "Status",
+                                     "createdBy":  "Erstellt von",
+                                     "dateOpen":  "Öffnungsdatum",
+                                     "dateClosed":  "Schließdatum",
+                                     "relatedVesselVisit":  "Zugehöriger Schiffsbesuch",
+                                     "dock":  "Anlegedock",
+                                     "berthTime":  "Anlegezeit",
+                                     "operations":  "Operationen"
+                                 },
+                      "filters":  {
+                                      "startDate":  "Startdatum",
+                                      "endDate":  "Enddatum",
+                                      "relatedVVN":  "Schiffsbesuchsmitteilung",
+                                      "status":  "Status"
+                                  },
+                      "metrics":  {
+                                      "totalOperations":  "Gesamtoperationen",
+                                      "completedOperations":  "Fortschritt",
+                                      "turnaroundTime":  "Umschlagszeit",
+                                      "berthOccupancy":  "Anlegestellenbelegung"
+                                  },
+                      "status":  {
+                                     "pending":  "Ausstehend",
+                                     "started":  "Gestartet",
+                                     "delayed":  "Verzögert",
+                                     "completed":  "Abgeschlossen"
+                                 },
+                      "view_resources":  "Ressourcen anzeigen",
+                      "infoTitle":  "Ausführungsinformationen",
+                      "operationsTitle":  "Operationen",
+                      "noOperations":  "Keine Operationen verfügbar",
+                      "startOperation":  "Operation starten",
+                      "completeOperation":  "Operation abschließen",
+                      "addOperation":  "Operation hinzufügen",
+                      "addOperationDescription":  "Eine neue Operation zur Zeitleiste hinzufügen",
+                      "confirmStartOperation":  "Möchten Sie diese Operation wirklich starten?",
+                      "confirmCompleteOperation":  "Möchten Sie diese Operation wirklich abschließen?",
+                      "berthOperation":  {
+                                             "button":  "Anlegedaten bearbeiten",
+                                             "title":  "Anlegeoperation",
+                                             "description":  "Bearbeiten Sie das Dock und die Zeit für diese Schiffsbesuchsausführung.",
+                                             "dock":  "Anlegedock",
+                                             "dockPlaceholder":  "Dock auswählen",
+                                             "berthTime":  "Anlegezeit",
+                                             "differentThanPlanned":  "Das ausgewählte Dock unterscheidet sich vom geplanten."
+                                         }
+                  },
+    "incident":  {
+                     "tabs":  {
+                                  "dashboard":  "Vorfall-Dashboard",
+                                  "create":  "Vorfall erstellen",
+                                  "search":  "Vorfälle suchen",
+                                  "active":  "Aktive Vorfälle",
+                                  "view":  "Vorfall anzeigen",
+                                  "edit":  "Vorfall bearbeiten"
+                              },
+                     "subtitle":  {
+                                      "create":  "Einen neuen Vorfall im System melden",
+                                      "search":  "Bestehende Vorfälle suchen und filtern",
+                                      "active":  "Aktive Vorfälle anzeigen und verwalten"
+                                  },
+                     "generalFields":  "Allgemeine Informationen",
+                     "classification":  "Klassifizierung",
+                     "fields":  {
+                                    "bid":  {
+                                                "title":  "Vorfall-ID"
+                                            },
+                                    "type":  {
+                                                 "title":  "Vorfalltyp",
+                                                 "placeholder":  "Einen Vorfalltyp auswählen"
+                                             },
+                                    "startTime":  {
+                                                      "title":  "Startzeit",
+                                                      "placeholder":  "Wann hat der Vorfall begonnen?"
+                                                  },
+                                    "endTime":  {
+                                                    "title":  "Endzeit",
+                                                    "placeholder":  "Wann endete der Vorfall?"
+                                                },
+                                    "severity":  {
+                                                     "title":  "Schweregrad",
+                                                     "placeholder":  "Schweregrad auswählen",
+                                                     "options":  {
+                                                                     "minor":  "Gering",
+                                                                     "major":  "Mittel",
+                                                                     "critical":  "Kritisch"
+                                                                 }
+                                                 },
+                                    "description":  {
+                                                        "title":  "Beschreibung",
+                                                        "placeholder":  "Beschreiben Sie den Vorfall im Detail"
+                                                    },
+                                    "createdBy":  {
+                                                      "title":  "Erstellt von"
+                                                  },
+                                    "affectedVVECodes":  {
+                                                             "title":  "Betroffene VVEs",
+                                                             "placeholder":  "Betroffene VVEs eingeben"
+                                                         },
+                                    "vveCode":  {
+                                                    "title":  "VVE-Code"
+                                                },
+                                    "status":  {
+                                                   "title":  "Status",
+                                                   "options":  {
+                                                                   "active":  "Aktiv",
+                                                                   "resolved":  "Gelöst"
+                                                               }
+                                               },
+                                    "filterStartTime":  {
+                                                            "title":  "Startdatum ab"
+                                                        },
+                                    "filterEndTime":  {
+                                                          "title":  "Startdatum bis"
+                                                      },
+                                    "duration":  {
+                                                     "title":  "Dauer"
+                                                 }
+                                },
+                     "severity":  {
+                                      "Minor":  "Gering",
+                                      "Major":  "Mittel",
+                                      "Critical":  "Kritisch"
+                                  },
+                     "status":  {
+                                    "active":  "Aktiv",
+                                    "resolved":  "Gelöst"
+                                },
+                     "ongoing":  "Laufend",
+                     "filters":  {
+                                     "onlyActive":  "Nur aktive",
+                                     "onlyMine":  "Nur meine"
+                                 },
+                     "actions":  {
+                                     "view":  "Details anzeigen",
+                                     "edit":  "Vorfall bearbeiten",
+                                     "resolve":  "Vorfall lösen",
+                                     "delete":  "Vorfall löschen"
+                                 },
+                     "notifications":  {
+                                           "createSuccess":  "Vorfall erfolgreich erstellt",
+                                           "createFailed":  "Fehler beim Erstellen des Vorfalls",
+                                           "updateSuccess":  "Vorfall erfolgreich aktualisiert",
+                                           "updateFailed":  "Fehler beim Aktualisieren des Vorfalls",
+                                           "resolveSuccess":  "Vorfall erfolgreich gelöst",
+                                           "resolveFailed":  "Fehler beim Lösen des Vorfalls",
+                                           "deleteSuccess":  "Vorfall erfolgreich gelöscht",
+                                           "deleteFailed":  "Fehler beim Löschen des Vorfalls"
+                                       },
+                     "table":  {
+                                   "empty":  "Keine Vorfälle gefunden"
+                               },
+                     "active":  {
+                                    "title":  "Aktive Vorfälle",
+                                    "subtitle":  "Laufende Vorfälle anzeigen und verwalten"
+                                },
+                     "infoTitle":  "Vorfalldetails",
+                     "closeDialog":  {
+                                         "title":  "Vorfall lösen",
+                                         "message":  "Wann wurde der Vorfall gelöst",
+                                         "confirm":  "Ja, diesen Vorfall schließen",
+                                         "cancel":  "Abbrechen"
+                                     }
+                 }
 }
