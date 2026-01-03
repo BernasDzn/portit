@@ -1,0 +1,141 @@
+@startuml OperationPlan_Class_Diagram
+title US4103 - Search and List Operation Plans
+
+' Domain Model
+package "Domain" {
+    class OperationPlan {
+        - id: string
+        - dock: string
+        - date: Date
+        - relatedVVN: string
+        - operationSchedule: LinkedList<Operation>
+        - metadata: OperationPlanMetadata
+        + toDto(): OperationPlanDto
+    }
+
+    class Operation {
+        - operationType: TaskCategory
+        - startTime: Date
+        - endTime: Date
+        - resources: Resource[]
+        - payload: Payload
+    }
+
+    class OperationPlanMetadata {
+        - createdBy: string
+        - createdAt: Date
+        - algorithmUsed: string
+    }
+
+    class Resource {
+        - name: string
+        - type: ResourceType
+        - startTime: Date
+        - endTime: Date
+    }
+
+    enum ResourceType {
+        Crane
+        Staff
+        Equipment
+    }
+
+    class TaskCategory {
+        - id: string
+        - code: string
+        - name: string
+        - description: string
+        - defaultDuration: number
+    }
+
+    class Payload {
+        - containers: Container[]
+    }
+
+    class Container {
+        - containerCode: string
+        - weight: number
+        - destination: string
+    }
+}
+
+' DTO Package
+package "DTO" {
+    class OperationPlanDto {
+        - id: string
+        - dock: string
+        - date: Date
+        - relatedVVN: string
+        - operationSchedule: Operation[]
+        - metadata: OperationPlanMetadata
+    }
+
+    class PlanFilter {
+        - startDate: string
+        - endDate: string
+        - pageNumber: number
+        - pageSize: number
+    }
+}
+
+' Repository Package
+package "Repository" {
+    class OperationPlanRepository {
+        - getAll(pageable: PlanFilter): Promise<Page<OperationPlan>>
+        - getById(id: string): Promise<OperationPlan|null>
+        - getByDateGrouped(): Promise<{date, plans}[]>
+    }
+}
+
+' Mapper Package
+package "Mapper" {
+    class OperationPlanMapper {
+        - fromSchema(doc: any): Promise<OperationPlan>
+    }
+}
+
+' Service Package
+package "Service" {
+    class OperationPlanService {
+        - operationPlanRepository: OperationPlanRepository
+        - getAll(pageable: PlanFilter): Promise<Page<OperationPlanDto>>
+        - getById(id: string): Promise<OperationPlanDto|null>
+        - getByDateGrouped(): Promise<{date, plans}[]>
+    }
+}
+
+' Controller Package
+package "Controller" {
+    class OperationPlanController {
+        - operationPlanService: OperationPlanService
+        + getPlans(pageNumber, pageSize, startDate, endDate): Promise<Page<OperationPlanDto>>
+        + getPlansByDate(): Promise<{date, plans}[]>
+        + getPlanById(id): Promise<OperationPlanDto>
+    }
+}
+
+' Relationships
+OperationPlan --> OperationPlanMetadata: has
+OperationPlan --> Operation: contains (in schedule)
+Operation --> Resource: uses
+Operation --> TaskCategory: has type
+Operation --> Payload: contains
+Payload --> Container: contains
+
+OperationPlanDto --> OperationPlanMetadata: has
+OperationPlanDto --> Operation: contains
+
+OperationPlanRepository --> OperationPlan: manages
+OperationPlanRepository --> OperationPlanMapper: uses
+
+OperationPlanMapper --> OperationPlan: converts to/from
+OperationPlanMapper --> OperationPlanDto: creates
+
+OperationPlanService --> OperationPlanRepository: uses
+OperationPlanService --> OperationPlanDto: returns
+
+OperationPlanController --> OperationPlanService: uses
+OperationPlanController --> PlanFilter: uses
+OperationPlanController --> OperationPlanDto: returns
+
+@enduml

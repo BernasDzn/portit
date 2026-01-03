@@ -1,14 +1,16 @@
-# US4109 - As a Logistics Operator, I want to update an in progress VVE with executed operations, so that the system reflects real execution progress and performance.
+# US4109 - Update VVE with Executed Operations
 
-### Process View
-- SPA fetches the planned operations for a VVE and shows editable fields such as actual start/end times and resource usage.
-- Operators confirm or adjust the values and submit them in batches.
-- OEM updates both the execution log and the linked Operation Plan, advancing the planned statuses to started/completed/delayed accordingly.
+### System Sequence Diagrams per feature:
 
-### REST Endpoints
-- `PATCH /vves/{vveId}/operations`: accepts an array of executed operation records, enforces timestamps, and persists them with operator metadata.
-- `GET /vves/{vveId}/operations`: returns both planned and executed operations with their current statuses to allow the SPA to display differences.
+#### - Update Operations:
+![sequence_diagram](../../../global_artifacts/architecture/level_4/process_views/oembackend/svg/l4_process_view_put/l4_process_view_put.svg)
 
-### Data Synchronization
-- Each execution record contains `planOperationId`, `actualStart`, `actualEnd`, `resourcesUsed`, and `operatorId`.
-- The API infers delays by comparing actual times against plan windows and updates the Operation Plan status (e.g., set to `DELAYED`).
+#### - Fetch Planned:
+![sequence_diagram](../../../global_artifacts/architecture/level_4/process_views/oembackend/svg/l4_process_view_get/l4_process_view_get.svg)
+
+#### - Sync Status:
+![sequence_diagram](../../../global_artifacts/architecture/level_4/process_views/oembackend/svg/l4_process_view_put/l4_process_view_put.svg)
+
+### Class Diagram:
+
+![class_diagram](class/svg/VesselVisitExecution_Class_Diagram/VesselVisitExecution_Class_Diagram.svg)

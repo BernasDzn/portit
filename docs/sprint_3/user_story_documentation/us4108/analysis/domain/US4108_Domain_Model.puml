@@ -1,0 +1,53 @@
+@startuml US4108_Domain_Model
+title US4108 - Update VVE with Berth Time and Dock - Domain Model
+
+package "Vessel Visit Execution Domain" {
+    entity "Vessel Visit Execution" as VVE {
+        * id: string
+        * relatedVVN: string
+        * status: ExecutionStatus
+        * actualArrivalTime: Date
+        * actualBerthTime: Date
+        * actualDockId: string
+        * plannedDockId: string
+    }
+
+    entity "Dock" as Dock {
+        * id: string
+        * code: string
+        * name: string
+        * capacity: number
+    }
+
+    entity "Berth Update" as BerthUpdate {
+        * vveId: string
+        * actualBerthTime: Date
+        * actualDockId: string
+        * plannedDockId: string
+        * discrepancy: Discrepancy
+        * updatedBy: string
+        * updatedAt: Date
+    }
+
+    entity "Discrepancy" as Discrepancy {
+        * type: string
+        * severity: string
+        * description: string
+        * affectedResources: string[]
+    }
+
+    entity "Execution Log Entry" as LogEntry {
+        * vveId: string
+        * timestamp: Date
+        * action: string
+        * details: object
+    }
+}
+
+VVE "1" --o "1" Dock : uses (planned)
+VVE "1" --o "1" Dock : uses (actual)
+VVE "1" --o "0..*" BerthUpdate : updated by
+BerthUpdate "1" --o "0..1" Discrepancy : may have
+VVE "1" --o "0..*" LogEntry : generates
+
+@enduml

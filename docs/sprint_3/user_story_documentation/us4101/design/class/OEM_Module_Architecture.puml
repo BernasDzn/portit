@@ -1,0 +1,352 @@
+@startuml OEM_Module_Architecture
+!theme plain
+skinparam backgroundColor #FEFEFE
+skinparam classBackgroundColor #F3F3F3
+skinparam classBorderColor #555555
+skinparam classArrowColor #555555
+
+' ============================================
+' OEM Backend Module - System Level View
+' ============================================
+
+package "REST API Layer" {
+    interface IHealthEndpoint {
+        GET /health
+    }
+    
+    interface IAuthEndpoint {
+        POST /auth/login
+        POST /auth/refresh
+        GET /auth/validate
+    }
+    
+    class APIRouter {
+        +registerHealthRoutes()
+        +registerAuthRoutes()
+        +registerOperationRoutes()
+        +registerVesselVisitRoutes()
+        +registerIncidentRoutes()
+        +registerTaskCategoryRoutes()
+    }
+}
+
+package "Application Layer" {
+    interface IOperationPlanController {
+        POST /operation-plans
+        GET /operation-plans
+        GET /operation-plans/{id}
+        PATCH /operation-plans/{id}
+        DELETE /operation-plans/{id}
+    }
+    
+    interface IVesselVisitController {
+        POST /vessel-visits
+        GET /vessel-visits
+        GET /vessel-visits/{id}
+        PATCH /vessel-visits/{id}
+    }
+    
+    interface IIncidentController {
+        POST /incidents
+        GET /incidents
+        GET /incidents/{id}
+        PATCH /incidents/{id}
+        DELETE /incidents/{id}
+    }
+    
+    interface IIncidentTypeController {
+        POST /incident-types
+        GET /incident-types
+        PATCH /incident-types/{id}
+        DELETE /incident-types/{id}
+    }
+    
+    interface ITaskCategoryController {
+        POST /task-categories
+        GET /task-categories
+        PATCH /task-categories/{id}
+        DELETE /task-categories/{id}
+    }
+}
+
+package "Business Logic Layer" {
+    interface IOperationPlanService {
+        +createOperationPlan(dto)
+        +listOperationPlans(filter)
+        +getOperationPlan(id)
+        +updateOperationPlan(id, dto)
+        +deleteOperationPlan(id)
+        +detectConflicts(plan)
+    }
+    
+    interface IVesselVisitService {
+        +createVesselVisitExecution(dto)
+        +listVesselVisits(filter)
+        +getVesselVisit(id)
+        +updateVesselVisit(id, dto)
+        +recordExecutedOperations(id, operations)
+    }
+    
+    interface IIncidentService {
+        +createIncident(dto)
+        +listIncidents(filter)
+        +getIncident(id)
+        +updateIncident(id, dto)
+        +deleteIncident(id)
+    }
+    
+    interface IIncidentTypeService {
+        +createIncidentType(dto)
+        +listIncidentTypes()
+        +updateIncidentType(id, dto)
+        +deleteIncidentType(id)
+    }
+    
+    interface ITaskCategoryService {
+        +createTaskCategory(dto)
+        +listTaskCategories(filter)
+        +updateTaskCategory(id, dto)
+        +softDeleteTaskCategory(id)
+    }
+}
+
+package "Data Access Layer" {
+    interface IOperationPlanRepository {
+        +save(entity)
+        +findById(id)
+        +find(filter)
+        +update(id, entity)
+        +delete(id)
+    }
+    
+    interface IVesselVisitRepository {
+        +save(entity)
+        +findById(id)
+        +find(filter)
+        +update(id, entity)
+    }
+    
+    interface IIncidentRepository {
+        +save(entity)
+        +findById(id)
+        +find(filter)
+        +update(id, entity)
+        +delete(id)
+    }
+    
+    interface IIncidentTypeRepository {
+        +save(entity)
+        +findById(id)
+        +find()
+        +update(id, entity)
+        +delete(id)
+    }
+    
+    interface ITaskCategoryRepository {
+        +save(entity)
+        +findById(id)
+        +find(filter)
+        +update(id, entity)
+        +softDelete(id)
+    }
+}
+
+package "Data Mapping Layer" {
+    class OperationPlanMapper {
+        +toPersistence(dto): OperationPlan
+        +toDTO(entity): OperationPlanDTO
+    }
+    
+    class VesselVisitMapper {
+        +toPersistence(dto): VesselVisitExecution
+        +toDTO(entity): VesselVisitDTO
+    }
+    
+    class IncidentMapper {
+        +toPersistence(dto): Incident
+        +toDTO(entity): IncidentDTO
+    }
+    
+    class IncidentTypeMapper {
+        +toPersistence(dto): IncidentType
+        +toDTO(entity): IncidentTypeDTO
+    }
+    
+    class TaskCategoryMapper {
+        +toPersistence(dto): TaskCategory
+        +toDTO(entity): TaskCategoryDTO
+    }
+}
+
+package "Domain Model Layer" {
+    class OperationPlan {
+        -id: string
+        -vesselVisitNumber: string
+        -operations: Operation[]
+        -resourceAllocations: ResourceAllocation[]
+        -createdAt: Date
+        -updatedAt: Date
+    }
+    
+    class Operation {
+        -id: string
+        -sequenceNumber: number
+        -name: string
+        -durationMinutes: number
+        -assignedCrane: string
+        -assignedDock: string
+        -staffRequired: number
+    }
+    
+    class VesselVisitExecution {
+        -id: string
+        -vesselVisitNumber: string
+        -status: ExecutionStatus
+        -actualArrivalTime: Date
+        -plannedOperations: Operation[]
+        -executedOperations: ExecutedOperation[]
+        -berthInformation: BerthInfo
+        -incidents: string[]
+        -createdAt: Date
+        -updatedAt: Date
+    }
+    
+    class ExecutedOperation {
+        -id: string
+        -plannedOperationId: string
+        -startTime: Date
+        -endTime: Date
+        -actualResources: string[]
+        -status: OperationStatus
+    }
+    
+    class Incident {
+        -id: string
+        -incidentTypeId: string
+        -severity: Severity
+        -description: string
+        -startTime: Date
+        -endTime: Date
+        -affectedVVEs: string[]
+        -createdBy: string
+    }
+    
+    class IncidentType {
+        -id: string
+        -code: string
+        -name: string
+        -description: string
+        -parentTypeId: string
+        -subTypes: IncidentType[]
+        -defaultSeverity: Severity
+    }
+    
+    class TaskCategory {
+        -id: string
+        -code: string
+        -name: string
+        -description: string
+        -grouping: TaskGrouping
+        -defaultDuration: number
+        -isActive: boolean
+    }
+    
+    enum ExecutionStatus {
+        PLANNED
+        IN_PROGRESS
+        COMPLETED
+        DELAYED
+        CANCELLED
+    }
+    
+    enum OperationStatus {
+        PENDING
+        IN_PROGRESS
+        COMPLETED
+        DELAYED
+    }
+    
+    enum Severity {
+        LOW
+        MEDIUM
+        HIGH
+        CRITICAL
+    }
+    
+    enum TaskGrouping {
+        SAFETY_SECURITY
+        MAINTENANCE
+        CLEANING
+        OTHER
+    }
+}
+
+package "Database" {
+    database MongoDB {
+        table "operation_plans" as OP
+        table "vessel_visits" as VV
+        table "incidents" as INC
+        table "incident_types" as INCT
+        table "task_categories" as TC
+    }
+}
+
+package "Infrastructure" {
+    class DIContainer {
+        +register(service, implementation)
+        +resolve(service)
+    }
+    
+    class ErrorHandler {
+        +handleValidationError()
+        +handleNotFoundError()
+        +handleAuthError()
+        +handleServerError()
+    }
+    
+    class Logger {
+        +info(message)
+        +warn(message)
+        +error(message)
+    }
+}
+
+' Relationships
+APIRouter --> IHealthEndpoint
+APIRouter --> IAuthEndpoint
+APIRouter --> IOperationPlanController
+APIRouter --> IVesselVisitController
+APIRouter --> IIncidentController
+APIRouter --> IIncidentTypeController
+APIRouter --> ITaskCategoryController
+
+IOperationPlanController --> IOperationPlanService
+IVesselVisitController --> IVesselVisitService
+IIncidentController --> IIncidentService
+IIncidentTypeController --> IIncidentTypeService
+ITaskCategoryController --> ITaskCategoryService
+
+IOperationPlanService --> IOperationPlanRepository
+IOperationPlanService --> OperationPlanMapper
+IVesselVisitService --> IVesselVisitRepository
+IVesselVisitService --> VesselVisitMapper
+IIncidentService --> IIncidentRepository
+IIncidentService --> IncidentMapper
+IIncidentTypeService --> IIncidentTypeRepository
+IIncidentTypeService --> IncidentTypeMapper
+ITaskCategoryService --> ITaskCategoryRepository
+ITaskCategoryService --> TaskCategoryMapper
+
+OperationPlanMapper --> OperationPlan
+VesselVisitMapper --> VesselVisitExecution
+IncidentMapper --> Incident
+IncidentTypeMapper --> IncidentType
+TaskCategoryMapper --> TaskCategory
+
+IOperationPlanRepository --> MongoDB
+IVesselVisitRepository --> MongoDB
+IIncidentRepository --> MongoDB
+IIncidentTypeRepository --> MongoDB
+ITaskCategoryRepository --> MongoDB
+
+@enduml

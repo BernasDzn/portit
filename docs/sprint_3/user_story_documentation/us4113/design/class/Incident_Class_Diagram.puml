@@ -1,0 +1,236 @@
+@startuml Incident_Class_Diagram
+title US4113 - Record and Manage Incidents
+
+' Domain Model
+package "Domain" {
+    class Incident {
+        - bid: string
+        - type: IncidentType
+        - startTime: Date
+        - endTime: Date
+        - severity: IncidentSeverity
+        - description: string
+        - createdBy: string
+        - affectedVVECodes: VesselVisitExecution[]
+        + toDto(): IncidentDto
+    }
+
+    enum IncidentSeverity {
+        Minor
+        Major
+        Critical
+    }
+
+    class IncidentType {
+        - bid: string
+        - name: string
+        - description: string
+        - severity: Severity
+        - subtypeOf: IncidentType
+        - subtypes: IncidentType[]
+        + validate(): void
+        + addSubtype(subtype): void
+        + setSubtypeOf(parent): void
+    }
+
+    enum Severity {
+        Minor
+        Major
+        Critical
+    }
+
+    class VesselVisitExecution {
+        - id: string
+        - relatedVVN: string
+        - status: ExecutionStatus
+    }
+
+    enum ExecutionStatus {
+        Planned
+        InProgress
+        Completed
+        Delayed
+        Cancelled
+    }
+}
+
+' DTO Package
+package "DTO" {
+    class IncidentDto {
+        - bid: string
+        - type: IncidentType
+        - startTime: Date
+        - endTime: Date
+        - severity: IncidentSeverity
+        - description: string
+        - createdBy: string
+        - affectedVVECodes: VesselVisitExecution[]
+    }
+
+    class CreateIncidentDto {
+        - typeId: string
+        - startTime: Date
+        - endTime: Date
+        - severity: IncidentSeverity
+        - description: string
+        - affectedVVECodes: string[]
+    }
+
+    class UpdateIncidentDto {
+        - typeId: string
+        - endTime: Date
+        - severity: IncidentSeverity
+        - description: string
+        - affectedVVECodes: string[]
+    }
+
+    class IncidentTypeDto {
+        - bid: string
+        - name: string
+        - description: string
+        - severity: Severity
+        - subtypeOf: IncidentTypeDto
+        - subtypes: IncidentTypeDto[]
+    }
+
+    class incidentFilter {
+        - vveCode: string
+        - filterStartTime: string
+        - filterEndTime: string
+        - severity: string
+        - isResolved: boolean
+        - pageNumber: number
+        - pageSize: number
+    }
+
+    class IncidentTypeFilter {
+        - name: string
+        - severity: string
+        - pageNumber: number
+        - pageSize: number
+    }
+}
+
+' Repository Package
+package "Repository" {
+    class IncidentRepository {
+        - create(incident: Incident): Promise<Incident>
+        - getByBid(bid: string): Promise<Incident|null>
+        - getPaged(filter): Promise<Page<Incident>>
+        - update(id, data): Promise<Incident|null>
+        - delete(id): Promise<void>
+        - count(): Promise<number>
+        - associateVVEs(incidentId, vveIds): Promise<Incident>
+        - dissociateVVEs(incidentId, vveIds): Promise<Incident>
+    }
+
+    class IncidentTypeRepository {
+        - create(type: IncidentType): Promise<IncidentType>
+        - getById(id: string): Promise<IncidentType|null>
+        - getPaged(filter): Promise<Page<IncidentType>>
+        - update(id, data): Promise<IncidentType|null>
+        - delete(id): Promise<void>
+        - count(): Promise<number>
+    }
+}
+
+' Mapper Package
+package "Mapper" {
+    class IncidentMapper {
+        - toSchema(incident: Incident): any
+        - fromSchema(doc: any): Promise<Incident>
+    }
+
+    class IncidentTypeMapper {
+        - toSchema(type: IncidentType): any
+        - fromSchema(doc: any): Promise<IncidentType>
+    }
+}
+
+' Service Package
+package "Service" {
+    class IncidentService {
+        - incidentRepository: IncidentRepository
+        - incidentTypeRepository: IncidentTypeRepository
+        - getByBid(bid: string): Promise<IncidentDto|null>
+        - getPaged(filter): Promise<Page<IncidentDto>>
+        - create(data, createdBy): Promise<IncidentDto>
+        - update(id, data): Promise<IncidentDto|null>
+        - delete(id): Promise<void>
+        - count(): Promise<number>
+        - associateVVEs(incidentId, vveIds): Promise<IncidentDto>
+        - dissociateVVEs(incidentId, vveIds): Promise<IncidentDto>
+    }
+
+    class IncidentTypeService {
+        - incidentTypeRepository: IncidentTypeRepository
+        - getById(id: string): Promise<IncidentTypeDto|null>
+        - getPaged(filter): Promise<Page<IncidentTypeDto>>
+        - create(data): Promise<IncidentTypeDto>
+        - update(id, data): Promise<IncidentTypeDto|null>
+        - delete(id): Promise<void>
+        - count(): Promise<number>
+    }
+}
+
+' Controller Package
+package "Controller" {
+    class IncidentController {
+        - incidentService: IncidentService
+        + count(): Promise<{count: number}>
+        + getByBid(bid: string): Promise<IncidentDto>
+        + getPaged(filter): Promise<Page<IncidentDto>>
+        + createIncident(body, request): Promise<IncidentDto>
+        + updateIncident(id, body): Promise<IncidentDto>
+        + deleteIncident(id): Promise<void>
+        + associateVVEs(id, body): Promise<IncidentDto>
+        + dissociateVVEs(id, body): Promise<IncidentDto>
+    }
+
+    class IncidentTypeController {
+        - incidentTypeService: IncidentTypeService
+        + count(): Promise<{count: number}>
+        + getPaged(filter): Promise<Page<IncidentTypeDto>>
+        + getById(id: string): Promise<IncidentTypeDto>
+        + createIncidentType(body): Promise<IncidentTypeDto>
+        + updateIncidentType(id, body): Promise<IncidentTypeDto>
+    }
+}
+
+' Relationships
+Incident --> IncidentType: has
+Incident --> VesselVisitExecution: affects
+IncidentType --> Severity: has
+IncidentType --> IncidentType: subtypeOf/subtypes
+
+IncidentDto --> IncidentType: has
+IncidentDto --> VesselVisitExecution: affects
+CreateIncidentDto --> IncidentSeverity: has
+UpdateIncidentDto --> IncidentSeverity: has
+IncidentTypeDto --> Severity: has
+
+IncidentRepository --> Incident: manages
+IncidentRepository --> IncidentMapper: uses
+IncidentTypeRepository --> IncidentType: manages
+IncidentTypeRepository --> IncidentTypeMapper: uses
+
+IncidentMapper --> Incident: converts to/from
+IncidentMapper --> IncidentDto: creates
+IncidentTypeMapper --> IncidentType: converts to/from
+IncidentTypeMapper --> IncidentTypeDto: creates
+
+IncidentService --> IncidentRepository: uses
+IncidentService --> IncidentDto: returns
+IncidentTypeService --> IncidentTypeRepository: uses
+IncidentTypeService --> IncidentTypeDto: returns
+
+IncidentController --> IncidentService: uses
+IncidentController --> CreateIncidentDto: uses
+IncidentController --> UpdateIncidentDto: uses
+IncidentController --> IncidentDto: returns
+
+IncidentTypeController --> IncidentTypeService: uses
+IncidentTypeController --> PartialIncidentTypeDto: uses
+IncidentTypeController --> IncidentTypeDto: returns
+
+@enduml

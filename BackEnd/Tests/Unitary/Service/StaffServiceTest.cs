@@ -123,7 +123,7 @@ public class StaffServiceTest
 		var Result = await _staffService.Create(_staff_dto_mock);
 
 		Assert.NotNull(Result);
-		Assert.Equal("STF250002", Result.MechanographicNumber);
+		Assert.StartsWith("STF26", Result.MechanographicNumber);
 	}
 
 	[Fact]

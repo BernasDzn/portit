@@ -1,0 +1,128 @@
+@startuml IncidentType_Class_Diagram
+title US4112 - Manage Incident Types Catalog
+
+' Domain Model
+package "Domain" {
+    class IncidentType {
+        - bid: string
+        - name: string
+        - description: string
+        - severity: Severity
+        - subtypeOf: IncidentType
+        - subtypes: IncidentType[]
+        + validate(): void
+        + addSubtype(subtype): void
+        + setSubtypeOf(parent): void
+        + toDto(): IncidentTypeDto
+    }
+
+    enum Severity {
+        Minor
+        Major
+        Critical
+    }
+}
+
+' DTO Package
+package "DTO" {
+    class IncidentTypeDto {
+        - bid: string
+        - name: string
+        - description: string
+        - severity: Severity
+        - subtypeOf: IncidentTypeDto
+        - subtypes: IncidentTypeDto[]
+    }
+
+    class PartialIncidentTypeDto {
+        - name: string
+        - description: string
+        - severity: Severity
+        - subtypeOf: string
+    }
+
+    class IncidentTypeFilter {
+        - name: string
+        - severity: string
+        - pageNumber: number
+        - pageSize: number
+    }
+}
+
+' Repository Package
+package "Repository" {
+    class IncidentTypeRepository {
+        - create(type: IncidentType): Promise<IncidentType>
+        - getById(id: string): Promise<IncidentType|null>
+        - getAll(): Promise<IncidentType[]>
+        - getPaged(filter): Promise<Page<IncidentType>>
+        - update(id, data): Promise<IncidentType|null>
+        - delete(id): Promise<void>
+        - count(): Promise<number>
+        - getByName(name: string): Promise<IncidentType|null>
+        - getBySeverity(severity): Promise<IncidentType[]>
+    }
+}
+
+' Mapper Package
+package "Mapper" {
+    class IncidentTypeMapper {
+        - toSchema(type: IncidentType): any
+        - fromSchema(doc: any): Promise<IncidentType>
+        - toDto(type: IncidentType): IncidentTypeDto
+    }
+}
+
+' Service Package
+package "Service" {
+    class IncidentTypeService {
+        - incidentTypeRepository: IncidentTypeRepository
+        - getById(id: string): Promise<IncidentTypeDto|null>
+        - getAll(): Promise<IncidentTypeDto[]>
+        - getPaged(filter): Promise<Page<IncidentTypeDto>>
+        - create(data): Promise<IncidentTypeDto>
+        - update(id, data): Promise<IncidentTypeDto|null>
+        - delete(id): Promise<void>
+        - count(): Promise<number>
+        - addSubtype(parentId, subtypeData): Promise<IncidentTypeDto>
+        - removeSubtype(parentId, subtypeId): Promise<IncidentTypeDto>
+    }
+}
+
+' Controller Package
+package "Controller" {
+    class IncidentTypeController {
+        - incidentTypeService: IncidentTypeService
+        + count(): Promise<{count: number}>
+        + getPaged(name, severity, pageNumber, pageSize): Promise<Page<IncidentTypeDto>>
+        + getById(id: string): Promise<IncidentTypeDto>
+        + createIncidentType(body): Promise<IncidentTypeDto>
+        + updateIncidentType(id, body): Promise<IncidentTypeDto>
+        + deleteIncidentType(id): Promise<void>
+    }
+}
+
+' Relationships
+IncidentType --> Severity: has
+IncidentType --> IncidentType: subtypeOf/subtypes (hierarchy)
+
+IncidentTypeDto --> Severity: has
+IncidentTypeDto --> IncidentTypeDto: subtypeOf/subtypes (hierarchy)
+
+PartialIncidentTypeDto --> Severity: has
+
+IncidentTypeRepository --> IncidentType: manages
+IncidentTypeRepository --> IncidentTypeMapper: uses
+
+IncidentTypeMapper --> IncidentType: converts to/from
+IncidentTypeMapper --> IncidentTypeDto: creates
+
+IncidentTypeService --> IncidentTypeRepository: uses
+IncidentTypeService --> IncidentTypeDto: returns
+
+IncidentTypeController --> IncidentTypeService: uses
+IncidentTypeController --> PartialIncidentTypeDto: uses
+IncidentTypeController --> IncidentTypeFilter: uses
+IncidentTypeController --> IncidentTypeDto: returns
+
+@enduml

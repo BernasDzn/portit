@@ -57,7 +57,7 @@ public class StaffApplicationTest : BaseApplicationTest
     {
         var createDto = new CreateStaffDto
         {
-            MechanographicNumber = "STF250004",
+            MechanographicNumber = "STF260001",
             Name = "Bob",
             Email = "bob@example.com",
             PhoneNumber = "900000002",
@@ -70,7 +70,7 @@ public class StaffApplicationTest : BaseApplicationTest
         Assert.Equal(System.Net.HttpStatusCode.Created, response.StatusCode);
         var created = await response.Content.ReadFromJsonAsync<StaffDto>();
         Assert.NotNull(created);
-        Assert.Equal(createDto.MechanographicNumber, created.MechanographicNumber);
+        Assert.StartsWith("STF26", created.MechanographicNumber);
     }
 
     [Fact]

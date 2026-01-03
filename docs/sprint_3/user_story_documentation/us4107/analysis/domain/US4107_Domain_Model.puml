@@ -1,0 +1,51 @@
+@startuml US4107_Domain_Model
+title US4107 - Create Vessel Visit Execution (VVE) Record - Domain Model
+
+package "Vessel Visit Execution Domain" {
+    entity "Vessel Visit Notification" as VVN {
+        * id: string
+        * vesselName: string
+        * plannedArrival: Date
+        * plannedDock: string
+        * status: VVNStatus
+    }
+
+    entity "Vessel Visit Execution" as VVE {
+        * id: string
+        * relatedVVN: string
+        * status: ExecutionStatus
+        * actualArrivalTime: Date
+        * createdBy: string
+        * createdAt: Date
+    }
+
+    entity "Operation Plan" as OpPlan {
+        * id: string
+        * relatedVVN: string
+        * dock: string
+        * date: Date
+        * operationSchedule: Operation[]
+    }
+
+    entity "Operation" as Op {
+        * id: string
+        * startTime: Date
+        * endTime: Date
+        * resources: Resource[]
+    }
+
+    entity "Execution Log Entry" as LogEntry {
+        * vveId: string
+        * timestamp: Date
+        * action: string
+        * details: object
+        * createdBy: string
+    }
+}
+
+VVN "1" --o "1" VVE : has
+VVE "1" --o "1" OpPlan : executes
+VVE "1" --o "0..*" LogEntry : generates
+OpPlan "1" --o "1..*" Op : contains
+
+@enduml

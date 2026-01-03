@@ -1,0 +1,163 @@
+@startuml VesselVisitExecution_Class_Diagram
+title US4107/US4108/US4109 - Vessel Visit Execution
+
+' Domain Model
+package "Domain" {
+    class VesselVisitExecution {
+        - id: string
+        - relatedVVN: string
+        - status: ExecutionStatus
+        - actualArrivalTime: Date
+        - actualBerthTime: Date
+        - actualDockId: string
+        - plannedDockId: string
+        - executedOperations: ExecutedOperation[]
+        - createdBy: string
+        - createdAt: Date
+        + toDto(): VesselVisitExecutionDto
+    }
+
+    enum ExecutionStatus {
+        Planned
+        InProgress
+        Completed
+        Delayed
+        Cancelled
+    }
+
+    class ExecutedOperation {
+        - id: string
+        - planOperationId: string
+        - actualStartTime: Date
+        - actualEndTime: Date
+        - resourcesUsed: Resource[]
+        - status: OperationStatus
+    }
+
+    enum OperationStatus {
+        Started
+        InProgress
+        Completed
+        Delayed
+    }
+
+    class Resource {
+        - name: string
+        - type: ResourceType
+        - startTime: Date
+        - endTime: Date
+    }
+
+    enum ResourceType {
+        Crane
+        Staff
+        Equipment
+    }
+}
+
+' DTO Package
+package "DTO" {
+    class VesselVisitExecutionDto {
+        - id: string
+        - relatedVVN: string
+        - status: ExecutionStatus
+        - actualArrivalTime: Date
+        - actualBerthTime: Date
+        - actualDockId: string
+        - plannedDockId: string
+        - executedOperations: ExecutedOperation[]
+        - createdBy: string
+        - createdAt: Date
+    }
+
+    class VesselVisitExecutionFilter {
+        - vveCode: string
+        - pageNumber: number
+        - pageSize: number
+    }
+
+    class BerthUpdateDto {
+        - dock: string
+        - berthTime: Date
+    }
+
+    class OperationUpdateDto {
+        - endTime: Date
+    }
+}
+
+' Repository Package
+package "Repository" {
+    class VesselVisitExecutionRepository {
+        - create(vve: VesselVisitExecution): Promise<VesselVisitExecution>
+        - getByVVN(vvnId: string): Promise<VesselVisitExecution|null>
+        - getById(id: string): Promise<VesselVisitExecution|null>
+        - getAll(filter): Promise<Page<VesselVisitExecution>>
+        - updateBerthDetails(vvnId, dock, berthTime): Promise<VesselVisitExecution>
+        - updateExecutedOperations(vvnId, operations): Promise<VesselVisitExecution>
+        - count(): Promise<number>
+    }
+}
+
+' Mapper Package
+package "Mapper" {
+    class VesselVisitExecutionMapper {
+        - toSchema(vve: VesselVisitExecution): any
+        - fromSchema(doc: any): Promise<VesselVisitExecution>
+    }
+}
+
+' Service Package
+package "Service" {
+    class VesselVisitExecutionService {
+        - vveRepository: VesselVisitExecutionRepository
+        - operationPlanService: OperationPlanService
+        - createVesselVisitExecution(vvnId, userEmail): Promise<VesselVisitExecutionDto>
+        - closeVesselVisitExecution(vvnId): Promise<VesselVisitExecutionDto>
+        - updateBerthDetails(vvnId, dock, berthTime): Promise<VesselVisitExecutionDto>
+        - startOperation(vvnId, operation): Promise<VesselVisitExecutionDto>
+        - completeOperation(vvnId, operationId, endTime): Promise<VesselVisitExecutionDto>
+        - count(): Promise<number>
+        - getAllComplementaryTasks(...): Promise<Page<any>>
+    }
+}
+
+' Controller Package
+package "Controller" {
+    class VesselVisitExecutionController {
+        - vesselVisitExecutionService: VesselVisitExecutionService
+        + openVesselVisitExecution(vvnId, request): Promise<VesselVisitExecutionDto>
+        + closeVesselVisitExecution(vvnId): Promise<VesselVisitExecutionDto>
+        + updateBerthDetails(vvnId, body): Promise<VesselVisitExecutionDto>
+        + startOperation(vvnId, operation): Promise<VesselVisitExecutionDto>
+        + completeOperation(vvnId, operationId, body): Promise<VesselVisitExecutionDto>
+        + countVesselVisitExecutions(): Promise<{count: number}>
+        + getAllComplementaryTasks(...): Promise<Page<any>>
+    }
+}
+
+' Relationships
+VesselVisitExecution --> ExecutionStatus: has
+VesselVisitExecution --> ExecutedOperation: contains
+ExecutedOperation --> OperationStatus: has
+ExecutedOperation --> Resource: uses
+Resource --> ResourceType: is
+
+VesselVisitExecutionDto --> ExecutionStatus: has
+VesselVisitExecutionDto --> ExecutedOperation: contains
+
+VesselVisitExecutionRepository --> VesselVisitExecution: manages
+VesselVisitExecutionRepository --> VesselVisitExecutionMapper: uses
+
+VesselVisitExecutionMapper --> VesselVisitExecution: converts to/from
+VesselVisitExecutionMapper --> VesselVisitExecutionDto: creates
+
+VesselVisitExecutionService --> VesselVisitExecutionRepository: uses
+VesselVisitExecutionService --> VesselVisitExecutionDto: returns
+
+VesselVisitExecutionController --> VesselVisitExecutionService: uses
+VesselVisitExecutionController --> BerthUpdateDto: uses
+VesselVisitExecutionController --> OperationUpdateDto: uses
+VesselVisitExecutionController --> VesselVisitExecutionDto: returns
+
+@enduml

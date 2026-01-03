@@ -1,0 +1,63 @@
+@startuml US4104_Domain_Model
+title US4104 - Manual Update of Operation Plan - Domain Model
+
+package "Operation Planning Domain" {
+    entity "Operation Plan" as OpPlan {
+        * id: string
+        * relatedVVN: string
+        * dock: string
+        * date: Date
+        * operationSchedule: Operation[]
+        * metadata: OperationPlanMetadata
+        * status: PlanStatus
+    }
+
+    entity "Operation" as Op {
+        * id: string
+        * operationType: string
+        * startTime: Date
+        * endTime: Date
+        * resources: Resource[]
+        * payload: Payload
+    }
+
+    entity "Resource" as Res {
+        * id: string
+        * name: string
+        * type: ResourceType
+        * startTime: Date
+        * endTime: Date
+    }
+
+    entity "Resource Conflict" as Conflict {
+        * resourceId: string
+        * affectedOperations: string[]
+        * conflictType: string
+        * severity: string
+    }
+
+    entity "Plan Update Request" as Update {
+        * planId: string
+        * changes: object
+        * createdBy: string
+        * createdAt: Date
+        * reason: string
+        * requiresApproval: boolean
+    }
+
+    entity "Operation Plan Metadata" as Meta {
+        * createdBy: string
+        * createdAt: Date
+        * algorithmUsed: string
+        * lastModifiedBy: string
+        * lastModifiedAt: Date
+    }
+}
+
+OpPlan "1" --o "1..*" Op : contains
+Op "1" --o "1..*" Res : uses
+OpPlan "1" --o "1" Meta : has
+OpPlan "1" --o "0..*" Conflict : may have
+OpPlan "1" --o "0..*" Update : tracked by
+
+@enduml

@@ -1,0 +1,190 @@
+@startuml OperationPlan_Class_Diagram
+title US4102 - Automatic Generation of Operation Plans
+
+' Domain Model
+package "Domain" {
+    class OperationPlan {
+        - id: string
+        - dock: string
+        - date: Date
+        - relatedVVN: string
+        - operationSchedule: LinkedList<Operation>
+        - metadata: OperationPlanMetadata
+        + toDto(): OperationPlanDto
+    }
+
+    class Operation {
+        - operationType: TaskCategory
+        - startTime: Date
+        - endTime: Date
+        - resources: Resource[]
+        - payload: Payload
+    }
+
+    class OperationPlanMetadata {
+        - createdBy: string
+        - createdAt: Date
+        - algorithmUsed: string
+    }
+
+    class Resource {
+        - name: string
+        - type: ResourceType
+        - startTime: Date
+        - endTime: Date
+    }
+
+    enum ResourceType {
+        Crane
+        Staff
+        Equipment
+    }
+
+    class TaskCategory {
+        - id: string
+        - code: string
+        - name: string
+        - description: string
+        - defaultDuration: number
+    }
+
+    class Payload {
+        - containers: Container[]
+    }
+
+    class Container {
+        - containerCode: string
+        - weight: number
+        - destination: string
+    }
+}
+
+' DTO Package
+package "DTO" {
+    class OperationPlanDto {
+        - id: string
+        - dock: string
+        - date: Date
+        - relatedVVN: string
+        - operationSchedule: Operation[]
+        - metadata: OperationPlanMetadata
+    }
+
+    class PlanFilter {
+        - startDate: string
+        - endDate: string
+        - pageNumber: number
+        - pageSize: number
+    }
+
+    class ScheduleDataDto {
+        - date: Date
+        - data: DockScheduleData[]
+        - metrics: ScheduleMetrics[]
+    }
+
+    class DockScheduleData {
+        - dock: string
+        - schedule: VesselSchedule[]
+    }
+
+    class VesselSchedule {
+        - name: string
+        - cranes: string[]
+        - unloading_enter_time: number
+        - unloading_exit_time: number
+        - loading_enter_time: number
+        - loading_exit_time: number
+    }
+
+    class ScheduleMetrics {
+        - algorithm: string
+    }
+}
+
+' Repository Package
+package "Repository" {
+    class OperationPlanRepository {
+        - create(plan: OperationPlan): Promise<OperationPlan>
+        - getAll(pageable: PlanFilter): Promise<Page<OperationPlan>>
+        - getById(id: string): Promise<OperationPlan|null>
+        - getByDateGrouped(): Promise<{date, plans}[]>
+        - getNotificationsWithoutPlan(token): Promise<string[]>
+        - updateOperationPlan(id, data): Promise<OperationPlan>
+        - deleteById(id: string): Promise<void>
+    }
+}
+
+' Mapper Package
+package "Mapper" {
+    class OperationPlanMapper {
+        - toSchema(plan: OperationPlan): any
+        - fromSchema(doc: any): Promise<OperationPlan>
+    }
+
+    class ScheduleDataMapper {
+        - toDto(data: any): ScheduleDataDto
+    }
+}
+
+' Service Package
+package "Service" {
+    class OperationPlanService {
+        - operationPlanRepository: OperationPlanRepository
+        - getAll(pageable: PlanFilter): Promise<Page<OperationPlanDto>>
+        - getById(id: string): Promise<OperationPlanDto|null>
+        - getByDateGrouped(): Promise<{date, plans}[]>
+        - getNotificationsWithoutPlan(token): Promise<string[]>
+        - createPlans(data, createdBy, token): Promise<OperationPlanDto[]>
+        - regeneratePlansForDay(day, algorithm, daysAhead, userEmail): Promise<any>
+        - updateOperationPlan(id, data): Promise<OperationPlanDto>
+        - subdivideOperationIntoContainers(start, end, resources, isUnload, token, vesselName): Promise<Operation[]>
+    }
+}
+
+' Controller Package
+package "Controller" {
+    class OperationPlanController {
+        - operationPlanService: OperationPlanService
+        + getPlans(pageNumber, pageSize, startDate, endDate): Promise<Page<OperationPlanDto>>
+        + getPlansByDate(): Promise<{date, plans}[]>
+        + getNotificationWithoutPlan(request): Promise<any>
+        + regeneratePlansForDay(body, request): Promise<any>
+        + updateOperationPlan(id, planData): Promise<OperationPlanDto>
+        + getPlanById(id): Promise<OperationPlanDto>
+    }
+}
+
+' Relationships
+OperationPlan --> OperationPlanMetadata: has
+OperationPlan --> Operation: contains (in schedule)
+Operation --> Resource: uses
+Operation --> TaskCategory: has type
+Operation --> Payload: contains
+Payload --> Container: contains
+Resource --> ResourceType: is
+
+OperationPlanDto --> OperationPlanMetadata: has
+OperationPlanDto --> Operation: contains
+
+ScheduleDataDto --> DockScheduleData: contains
+DockScheduleData --> VesselSchedule: contains
+ScheduleDataDto --> ScheduleMetrics: has
+
+OperationPlanRepository --> OperationPlan: manages
+OperationPlanRepository --> OperationPlanMapper: uses
+
+OperationPlanMapper --> OperationPlan: converts to/from
+OperationPlanMapper --> OperationPlanDto: creates
+
+ScheduleDataMapper --> ScheduleDataDto: creates
+
+OperationPlanService --> OperationPlanRepository: uses
+OperationPlanService --> ScheduleDataMapper: uses
+OperationPlanService --> OperationPlanDto: returns
+
+OperationPlanController --> OperationPlanService: uses
+OperationPlanController --> PlanFilter: uses
+OperationPlanController --> OperationPlanDto: returns
+
+@enduml

@@ -1,0 +1,134 @@
+@startuml VesselVisitExecution_Class_Diagram
+title US4108 - Update VVE with Berth Time and Dock
+
+' Domain Model
+package "Domain" {
+    class VesselVisitExecution {
+        - id: string
+        - relatedVVN: string
+        - status: ExecutionStatus
+        - actualArrivalTime: Date
+        - actualBerthTime: Date
+        - actualDockId: string
+        - plannedDockId: string
+        - executedOperations: ExecutedOperation[]
+        - createdBy: string
+        - createdAt: Date
+        + toDto(): VesselVisitExecutionDto
+    }
+
+    enum ExecutionStatus {
+        Planned
+        InProgress
+        Completed
+        Delayed
+        Cancelled
+    }
+
+    class ExecutedOperation {
+        - id: string
+        - planOperationId: string
+        - actualStartTime: Date
+        - actualEndTime: Date
+        - resourcesUsed: Resource[]
+        - status: OperationStatus
+    }
+
+    enum OperationStatus {
+        Started
+        InProgress
+        Completed
+        Delayed
+    }
+
+    class Resource {
+        - name: string
+        - type: ResourceType
+        - startTime: Date
+        - endTime: Date
+    }
+
+    enum ResourceType {
+        Crane
+        Staff
+        Equipment
+    }
+}
+
+' DTO Package
+package "DTO" {
+    class VesselVisitExecutionDto {
+        - id: string
+        - relatedVVN: string
+        - status: ExecutionStatus
+        - actualArrivalTime: Date
+        - actualBerthTime: Date
+        - actualDockId: string
+        - plannedDockId: string
+        - executedOperations: ExecutedOperation[]
+        - createdBy: string
+        - createdAt: Date
+    }
+
+    class BerthUpdateDto {
+        - dock: string
+        - berthTime: Date
+    }
+}
+
+' Repository Package
+package "Repository" {
+    class VesselVisitExecutionRepository {
+        - getByVVN(vvnId: string): Promise<VesselVisitExecution|null>
+        - updateBerthDetails(vvnId, dock, berthTime): Promise<VesselVisitExecution>
+    }
+}
+
+' Mapper Package
+package "Mapper" {
+    class VesselVisitExecutionMapper {
+        - fromSchema(doc: any): Promise<VesselVisitExecution>
+    }
+}
+
+' Service Package
+package "Service" {
+    class VesselVisitExecutionService {
+        - vveRepository: VesselVisitExecutionRepository
+        - updateBerthDetails(vvnId, dock, berthTime): Promise<VesselVisitExecutionDto>
+        - validateBerthUpdate(vvnId, dock): Promise<ValidationResult>
+    }
+}
+
+' Controller Package
+package "Controller" {
+    class VesselVisitExecutionController {
+        - vesselVisitExecutionService: VesselVisitExecutionService
+        + updateBerthDetails(relatedVVN, body): Promise<VesselVisitExecutionDto>
+    }
+}
+
+' Relationships
+VesselVisitExecution --> ExecutionStatus: has
+VesselVisitExecution --> ExecutedOperation: contains
+ExecutedOperation --> OperationStatus: has
+ExecutedOperation --> Resource: uses
+Resource --> ResourceType: is
+
+VesselVisitExecutionDto --> ExecutionStatus: has
+VesselVisitExecutionDto --> ExecutedOperation: contains
+
+VesselVisitExecutionRepository --> VesselVisitExecution: manages
+VesselVisitExecutionRepository --> VesselVisitExecutionMapper: uses
+
+VesselVisitExecutionMapper --> VesselVisitExecution: converts to/from
+VesselVisitExecutionMapper --> VesselVisitExecutionDto: creates
+
+VesselVisitExecutionService --> VesselVisitExecutionRepository: uses
+VesselVisitExecutionService --> VesselVisitExecutionDto: returns
+
+VesselVisitExecutionController --> VesselVisitExecutionService: uses
+VesselVisitExecutionController --> BerthUpdateDto: uses
+VesselVisitExecutionController --> VesselVisitExecutionDto: returns
+
+@enduml

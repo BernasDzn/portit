@@ -1,10 +1,16 @@
-# US4112 - As a Port Authority Officer, I want to manage the catalog of Incident Types so that the classification of operational disruptions remains standardized, hierarchical, and clearly distinct from complementary tasks
+# US4112 - Manage Incident Types Catalog
 
-### Process View(s):
+### System Sequence Diagrams per feature:
 
-#### - [Feature name]:
-![diagram]()
+#### - Create:
+![sequence_diagram](../../../global_artifacts/architecture/level_4/process_views/oembackend/svg/l4_process_view_post/l4_process_view_post.svg)
 
-### Class Diagram(s):
+#### - Update:
+![sequence_diagram](../../../global_artifacts/architecture/level_4/process_views/oembackend/svg/l4_process_view_put/l4_process_view_put.svg)
 
-![class_diagram](class/svg/class_diagram/class_diagram.svg) 
+#### - Filter:
+![sequence_diagram](../../../global_artifacts/architecture/level_4/process_views/oembackend/svg/l4_process_view_get_filter/l4_process_view_get_filter.svg)
+
+### Class Diagram:
+
+![class_diagram](class/svg/IncidentType_Class_Diagram/IncidentType_Class_Diagram.svg) 
