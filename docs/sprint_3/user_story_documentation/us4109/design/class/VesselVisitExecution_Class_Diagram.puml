@@ -1,0 +1,174 @@
+@startuml VesselVisitExecution_Class_Diagram
+title US4109 - Update VVE with Executed Operations
+
+' Domain Model
+package "Domain" {
+    class VesselVisitExecution {
+        - id: string
+        - relatedVVN: string
+        - status: ExecutionStatus
+        - actualArrivalTime: Date
+        - actualBerthTime: Date
+        - actualDockId: string
+        - plannedDockId: string
+        - executedOperations: ExecutedOperation[]
+        - createdBy: string
+        - createdAt: Date
+        + toDto(): VesselVisitExecutionDto
+    }
+
+    enum ExecutionStatus {
+        Planned
+        InProgress
+        Completed
+        Delayed
+        Cancelled
+    }
+
+    class ExecutedOperation {
+        - id: string
+        - planOperationId: string
+        - actualStartTime: Date
+        - actualEndTime: Date
+        - resourcesUsed: Resource[]
+        - status: OperationStatus
+    }
+
+    enum OperationStatus {
+        Started
+        InProgress
+        Completed
+        Delayed
+    }
+
+    class Resource {
+        - name: string
+        - type: ResourceType
+        - startTime: Date
+        - endTime: Date
+    }
+
+    enum ResourceType {
+        Crane
+        Staff
+        Equipment
+    }
+
+    class OperationPlan {
+        - id: string
+        - dock: string
+        - date: Date
+        - relatedVVN: string
+        - operationSchedule: LinkedList<Operation>
+    }
+
+    class Operation {
+        - operationType: TaskCategory
+        - startTime: Date
+        - endTime: Date
+        - resources: Resource[]
+    }
+}
+
+' DTO Package
+package "DTO" {
+    class VesselVisitExecutionDto {
+        - id: string
+        - relatedVVN: string
+        - status: ExecutionStatus
+        - actualArrivalTime: Date
+        - actualBerthTime: Date
+        - actualDockId: string
+        - plannedDockId: string
+        - executedOperations: ExecutedOperation[]
+        - createdBy: string
+        - createdAt: Date
+    }
+
+    class OperationUpdateDto {
+        - endTime: Date
+    }
+}
+
+' Repository Package
+package "Repository" {
+    class VesselVisitExecutionRepository {
+        - getByVVN(vvnId: string): Promise<VesselVisitExecution|null>
+        - updateExecutedOperations(vvnId, operations): Promise<VesselVisitExecution>
+    }
+
+    class OperationPlanRepository {
+        - getByVVN(vvnId: string): Promise<OperationPlan|null>
+        - updateOperationPlan(id, data): Promise<OperationPlan>
+    }
+}
+
+' Mapper Package
+package "Mapper" {
+    class VesselVisitExecutionMapper {
+        - fromSchema(doc: any): Promise<VesselVisitExecution>
+    }
+
+    class OperationPlanMapper {
+        - fromSchema(doc: any): Promise<OperationPlan>
+    }
+}
+
+' Service Package
+package "Service" {
+    class VesselVisitExecutionService {
+        - vveRepository: VesselVisitExecutionRepository
+        - operationPlanService: OperationPlanService
+        - completeOperation(vvnId, operationId, endTime): Promise<VesselVisitExecutionDto>
+        - updateExecutedOperations(vvnId, operations): Promise<VesselVisitExecutionDto>
+        - syncOperationPlanStatus(vvnId): Promise<void>
+    }
+
+    class OperationPlanService {
+        - operationPlanRepository: OperationPlanRepository
+        - getByVVN(vvnId: string): Promise<OperationPlanDto|null>
+        - updateOperationPlan(id, data): Promise<OperationPlanDto>
+    }
+}
+
+' Controller Package
+package "Controller" {
+    class VesselVisitExecutionController {
+        - vesselVisitExecutionService: VesselVisitExecutionService
+        + completeOperation(relatedVVN, operationId, body): Promise<VesselVisitExecutionDto>
+        + startOperation(relatedVVN, operation): Promise<VesselVisitExecutionDto>
+    }
+}
+
+' Relationships
+VesselVisitExecution --> ExecutionStatus: has
+VesselVisitExecution --> ExecutedOperation: contains
+ExecutedOperation --> OperationStatus: has
+ExecutedOperation --> Resource: uses
+Resource --> ResourceType: is
+
+VesselVisitExecutionDto --> ExecutionStatus: has
+VesselVisitExecutionDto --> ExecutedOperation: contains
+
+OperationPlan --> Operation: contains
+Operation --> Resource: uses
+
+VesselVisitExecutionRepository --> VesselVisitExecution: manages
+VesselVisitExecutionRepository --> VesselVisitExecutionMapper: uses
+OperationPlanRepository --> OperationPlan: manages
+OperationPlanRepository --> OperationPlanMapper: uses
+
+VesselVisitExecutionMapper --> VesselVisitExecution: converts to/from
+VesselVisitExecutionMapper --> VesselVisitExecutionDto: creates
+OperationPlanMapper --> OperationPlan: converts to/from
+
+VesselVisitExecutionService --> VesselVisitExecutionRepository: uses
+VesselVisitExecutionService --> OperationPlanService: uses
+VesselVisitExecutionService --> VesselVisitExecutionDto: returns
+OperationPlanService --> OperationPlanRepository: uses
+
+VesselVisitExecutionController --> VesselVisitExecutionService: uses
+VesselVisitExecutionController --> OperationUpdateDto: uses
+VesselVisitExecutionController --> VesselVisitExecutionDto: returns
+
+@enduml

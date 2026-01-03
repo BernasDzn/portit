@@ -1,0 +1,111 @@
+@startuml ComplementaryTaskCategory_Class_Diagram
+title US4114 - Manage Complementary Task Categories Catalog
+
+' Domain Model
+package "Domain" {
+    class TaskCategory {
+        - id: string
+        - category: IdCode
+        - name: string
+        - description: string
+        + toDto(): TaskCategoryDto
+    }
+
+    class IdCode {
+        - value: string
+        + getValue(): string
+        + isValid(): boolean
+    }
+}
+
+' DTO Package
+package "DTO" {
+    class TaskCategoryDto {
+        - id: string
+        - category: string
+        - name: string
+        - description: string
+    }
+
+    class CreateTaskCategoryDto {
+        - category: string
+        - name: string
+        - description: string
+    }
+
+    class TaskCategoryFilter {
+        - pageNumber: number
+        - pageSize: number
+        - name: string
+    }
+}
+
+' Repository Package
+package "Repository" {
+    class TaskCategoryRepository {
+        - create(category: TaskCategory): Promise<TaskCategory>
+        - getById(id: string): Promise<TaskCategory|null>
+        - getByCode(code: string): Promise<TaskCategory|null>
+        - getAll(filter): Promise<Page<TaskCategory>>
+        - update(id, data): Promise<TaskCategory|null>
+        - delete(id): Promise<void>
+        - count(): Promise<number>
+        - findByName(name: string): Promise<TaskCategory[]>
+    }
+}
+
+' Mapper Package
+package "Mapper" {
+    class TaskCategoryMapper {
+        - toSchema(category: TaskCategory): any
+        - fromSchema(doc: any): Promise<TaskCategory>
+        - toDto(category: TaskCategory): TaskCategoryDto
+    }
+}
+
+' Service Package
+package "Service" {
+    class TaskCategoryService {
+        - taskCategoryRepository: TaskCategoryRepository
+        - getById(id: string): Promise<TaskCategoryDto|null>
+        - getByCode(code: string): Promise<TaskCategoryDto|null>
+        - getAllCategories(filter): Promise<Page<TaskCategoryDto>>
+        - createCategory(data): Promise<TaskCategoryDto>
+        - updateCategory(id, data): Promise<TaskCategoryDto|null>
+        - deleteCategory(id): Promise<void>
+        - count(): Promise<number>
+        - validateCategoryCode(code): Promise<boolean>
+    }
+}
+
+' Controller Package
+package "Controller" {
+    class TaskCategoryController {
+        - taskCategoryService: TaskCategoryService
+        + createCategory(categoryDto): Promise<TaskCategoryDto>
+        + updateCategory(id, categoryDto): Promise<TaskCategoryDto>
+        + getCategoryByCode(code): Promise<TaskCategoryDto>
+        + getAllCategories(pageNumber, pageSize, name): Promise<Page<TaskCategoryDto>>
+    }
+}
+
+' Relationships
+TaskCategory --> IdCode: contains
+
+TaskCategoryDto --> TaskCategoryFilter: uses
+
+TaskCategoryRepository --> TaskCategory: manages
+TaskCategoryRepository --> TaskCategoryMapper: uses
+
+TaskCategoryMapper --> TaskCategory: converts to/from
+TaskCategoryMapper --> TaskCategoryDto: creates
+
+TaskCategoryService --> TaskCategoryRepository: uses
+TaskCategoryService --> TaskCategoryDto: returns
+
+TaskCategoryController --> TaskCategoryService: uses
+TaskCategoryController --> CreateTaskCategoryDto: uses
+TaskCategoryController --> TaskCategoryFilter: uses
+TaskCategoryController --> TaskCategoryDto: returns
+
+@enduml

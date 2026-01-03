@@ -1,0 +1,57 @@
+@startuml US4113_Domain_Model
+title US4113 - Record and Manage Incidents - Domain Model
+
+package "Incident Management Domain" {
+    entity "Incident" as Inc {
+        * id: string
+        * bid: string
+        * type: IncidentType
+        * startTime: Date
+        * endTime: Date
+        * severity: Severity
+        * description: string
+        * status: IncidentStatus
+        * affectedVVECodes: VesselVisitExecution[]
+    }
+
+    entity "Incident Type" as IncType {
+        * id: string
+        * name: string
+        * severity: Severity
+    }
+
+    entity "Vessel Visit Execution" as VVE {
+        * id: string
+        * relatedVVN: string
+        * status: ExecutionStatus
+    }
+
+    entity "Incident Log Entry" as LogEntry {
+        * incidentId: string
+        * timestamp: Date
+        * action: string
+        * details: object
+        * createdBy: string
+    }
+
+    entity "Incident Impact" as Impact {
+        * incidentId: string
+        * affectedVVECount: number
+        * totalDuration: Duration
+        * associatedCost: number
+        * recoveryTime: Duration
+    }
+
+    entity "Severity Level" as Severity {
+        * level: string
+        * impact: string
+    }
+}
+
+Inc "0..*" --o "1" IncType : is of type
+Inc "0..*" --o "1..*" VVE : affects
+Inc "1" --o "0..*" LogEntry : generates
+Inc "1" --o "1" Impact : has
+Inc "1" --o "1" Severity : has
+
+@enduml

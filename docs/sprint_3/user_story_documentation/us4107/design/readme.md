@@ -1,14 +1,16 @@
-# US4107 - As a Logistics Operator, I want to create a Vessel Visit Execution (VVE) record when a vessel arrives at the port, so that the actual start of operations can be logged and monitored.
+# US4107 - Create Vessel Visit Execution (VVE) Record
 
-### Process View
-- Operator selects a scheduled VVN in the SPA and clicks “Record Arrival.”
-- The SPA calls `POST /vves` with the VVN reference, actual arrival time, and the user credentials.
-- The OEM API validates the VVN linkage, generates a VVE ID, marks the status as In Progress, and returns the new execution record.
+### System Sequence Diagrams per feature:
 
-### REST Endpoints
-- `POST /vves`: creates the VVE, enforces the VVN reference, and sets defaults for status, creator, and timestamps.
-- `GET /vvns/{id}/context`: (helper endpoint) supplies the SPA with any missing VVN data to ease creation.
+#### - Create:
+![sequence_diagram](../../../global_artifacts/architecture/level_4/process_views/oembackend/svg/l4_process_view_post/l4_process_view_post.svg)
 
-### SPA Behavior
-- Prepopulates the vessel name, ETA, and planned dock; operator only adds the actual arrival time and optional notes.
-- Shows success toast with the new VVE ID and in-progress badge after creation.
+#### - Validate:
+![sequence_diagram](../../../global_artifacts/architecture/level_4/process_views/oembackend/svg/l4_process_view_get/l4_process_view_get.svg)
+
+#### - Log Arrival:
+![sequence_diagram](../../../global_artifacts/architecture/level_4/process_views/oembackend/svg/l4_process_view_post/l4_process_view_post.svg)
+
+### Class Diagram:
+
+![class_diagram](class/svg/VesselVisitExecution_Class_Diagram/VesselVisitExecution_Class_Diagram.svg)

@@ -1,0 +1,138 @@
+@startuml US4101_Domain_Model
+!theme plain
+skinparam backgroundColor #FEFEFE
+skinparam entityBackgroundColor #F3F3F3
+skinparam entityBorderColor #555555
+
+' ============================================
+' US4101 - OEM Module Domain Model
+' ============================================
+
+entity "Vessel Visit Number" as VVN {
+    *vesselId : string
+    *scheduledDate : date
+    *eta : time
+    *plannedBerth : string
+}
+
+entity "Operation Plan" as OpPlan {
+    *id : string
+    *vesselVisitNumber : string
+    *planningDate : date
+    plannedStart : time
+    plannedEnd : time
+}
+
+entity "Operation" as Op {
+    *id : string
+    *operationPlanId : string
+    *sequenceNumber : integer
+    name : string
+    type : string
+    duration : integer
+}
+
+entity "Resource Allocation" as Resource {
+    *id : string
+    *operationId : string
+    resourceType : string
+    assignedValue : string
+    allocationDate : date
+}
+
+entity "Vessel Visit Execution" as VVE {
+    *id : string
+    *vesselVisitNumber : string
+    status : string
+    actualArrivalTime : datetime
+    berth : string
+    dock : string
+}
+
+entity "Executed Operation" as ExOp {
+    *id : string
+    *vesselVisitExecutionId : string
+    *plannedOperationId : string
+    actualStartTime : datetime
+    actualEndTime : datetime
+    performanceStatus : string
+}
+
+entity "Performance Metrics" as Metrics {
+    *id : string
+    *executedOperationId : string
+    plannedDuration : integer
+    actualDuration : integer
+    delayMinutes : integer
+    efficiency : decimal
+}
+
+entity "Incident" as Inc {
+    *id : string
+    *incidentTypeId : string
+    *vesselVisitExecutionId : string
+    severity : string
+    description : string
+    startTime : datetime
+    endTime : datetime
+}
+
+entity "Incident Type" as IncType {
+    *id : string
+    *code : string
+    name : string
+    description : string
+    parentTypeId : string
+    defaultSeverity : string
+}
+
+entity "Task Category" as TaskCat {
+    *id : string
+    *code : string
+    name : string
+    description : string
+    grouping : string
+    defaultDuration : integer
+}
+
+entity "Complementary Task" as CompTask {
+    *id : string
+    *taskCategoryId : string
+    *vesselVisitExecutionId : string
+    scheduledStartTime : datetime
+    estimatedDuration : integer
+    status : string
+}
+
+entity "Audit Log Entry" as Audit {
+    *id : string
+    entityType : string
+    entityId : string
+    action : string
+    userId : string
+    timestamp : datetime
+    changes : json
+}
+
+' Relationships
+VVN ||--o{ OpPlan : "generates"
+OpPlan ||--o{ Op : "contains"
+Op ||--o{ Resource : "requires"
+
+VVN ||--o{ VVE : "tracked by"
+VVE ||--o{ ExOp : "records"
+ExOp ||--o{ Metrics : "measures"
+
+VVE ||--o{ Inc : "affected by"
+Inc }o--|| IncType : "classified as"
+IncType ||--o{ IncType : "subtype of"
+
+VVE ||--o{ CompTask : "includes"
+CompTask }o--|| TaskCat : "categorized as"
+
+VVN ||--o{ Audit : "tracked by"
+OpPlan ||--o{ Audit : "tracked by"
+VVE ||--o{ Audit : "tracked by"
+Inc ||--o{ Audit : "tracked by"
+
+@enduml

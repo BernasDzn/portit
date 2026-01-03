@@ -1,0 +1,56 @@
+@startuml US4103_Domain_Model
+title US4103 - Search and List Operation Plans - Domain Model
+
+package "Operation Planning Domain" {
+    entity "Operation Plan" as OpPlan {
+        * id: string
+        * relatedVVN: string
+        * dock: string
+        * date: Date
+        * operationSchedule: Operation[]
+        * metadata: OperationPlanMetadata
+        * status: PlanStatus
+    }
+
+    entity "Operation" as Op {
+        * id: string
+        * operationType: string
+        * startTime: Date
+        * endTime: Date
+        * resources: Resource[]
+    }
+
+    entity "Resource" as Res {
+        * id: string
+        * name: string
+        * type: ResourceType
+    }
+
+    entity "Plan Filter Criteria" as Filter {
+        * startDate: Date
+        * endDate: Date
+        * vesselId: string
+        * dock: string
+        * status: PlanStatus
+    }
+
+    entity "Operation Plan Metadata" as Meta {
+        * createdBy: string
+        * createdAt: Date
+        * algorithmUsed: string
+    }
+
+    entity "Vessel Visit Notification" as VVN {
+        * id: string
+        * vesselName: string
+        * plannedDock: string
+    }
+}
+
+OpPlan "1" --o "1..*" Op : contains
+Op "1" --o "1..*" Res : uses
+OpPlan "1" --o "1" Meta : has
+OpPlan "0..*" --o "1" VVN : related to
+Filter "1" --o "0..*" OpPlan : searches
+
+@enduml

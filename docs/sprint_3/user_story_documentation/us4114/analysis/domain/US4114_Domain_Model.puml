@@ -1,0 +1,57 @@
+@startuml US4114_Domain_Model
+title US4114 - Manage Complementary Task Categories - Domain Model
+
+package "Task Management Domain" {
+    entity "Task Category" as TaskCat {
+        * id: string
+        * code: string
+        * name: string
+        * description: string
+        * grouping: string
+        * defaultDuration: Duration
+        * active: boolean
+    }
+
+    entity "Task Category Grouping" as Grouping {
+        * type: string
+        * name: string
+        * description: string
+    }
+
+    entity "Complementary Task" as CompTask {
+        * id: string
+        * categoryId: string
+        * vveId: string
+        * startTime: Date
+        * endTime: Date
+        * actualDuration: Duration
+        * status: TaskStatus
+    }
+
+    entity "Vessel Visit Execution" as VVE {
+        * id: string
+        * relatedVVN: string
+    }
+
+    entity "Task Category Metadata" as Meta {
+        * categoryId: string
+        * createdBy: string
+        * createdAt: Date
+        * lastModifiedBy: string
+        * lastModifiedAt: Date
+        * usageCount: number
+    }
+
+    entity "Task Status" as Status {
+        * status: string
+        * pendingDuration: Duration
+    }
+}
+
+TaskCat "1" --o "1" Grouping : belongs to
+TaskCat "1" --o "0..*" CompTask : categorizes
+CompTask "0..*" --o "1" VVE : associated with
+TaskCat "1" --o "1" Meta : has
+CompTask "1" --o "1" Status : has
+
+@enduml

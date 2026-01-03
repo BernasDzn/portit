@@ -1,0 +1,63 @@
+@startuml US4109_Domain_Model
+title US4109 - Update VVE with Executed Operations - Domain Model
+
+package "Vessel Visit Execution Domain" {
+    entity "Vessel Visit Execution" as VVE {
+        * id: string
+        * relatedVVN: string
+        * status: ExecutionStatus
+        * executedOperations: ExecutedOperation[]
+    }
+
+    entity "Operation Plan" as OpPlan {
+        * id: string
+        * relatedVVN: string
+        * operationSchedule: PlannedOperation[]
+    }
+
+    entity "Planned Operation" as PlannedOp {
+        * id: string
+        * operationType: string
+        * startTime: Date
+        * endTime: Date
+        * resources: Resource[]
+        * status: OperationStatus
+    }
+
+    entity "Executed Operation" as ExecOp {
+        * id: string
+        * planOperationId: string
+        * actualStartTime: Date
+        * actualEndTime: Date
+        * resourcesUsed: Resource[]
+        * status: OperationStatus
+        * delay: Duration
+    }
+
+    entity "Resource" as Res {
+        * id: string
+        * name: string
+        * type: ResourceType
+        * startTime: Date
+        * endTime: Date
+    }
+
+    entity "Performance Metrics" as Metrics {
+        * vveId: string
+        * totalPlannedDuration: Duration
+        * totalActualDuration: Duration
+        * totalDelay: Duration
+        * delayPercentage: number
+        * completedOperations: number
+        * totalOperations: number
+    }
+}
+
+VVE "1" --o "1" OpPlan : executes
+OpPlan "1" --o "1..*" PlannedOp : contains
+VVE "1" --o "0..*" ExecOp : records
+ExecOp "0..*" --o "1" PlannedOp : executes
+ExecOp "1" --o "1..*" Res : uses
+VVE "1" --o "1" Metrics : has
+
+@enduml

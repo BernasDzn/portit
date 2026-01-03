@@ -1,0 +1,131 @@
+@startuml OperationPlan_Class_Diagram
+title US4104 - Manual Update of Operation Plan
+
+' Domain Model
+package "Domain" {
+    class OperationPlan {
+        - id: string
+        - dock: string
+        - date: Date
+        - relatedVVN: string
+        - operationSchedule: LinkedList<Operation>
+        - metadata: OperationPlanMetadata
+        + toDto(): OperationPlanDto
+    }
+
+    class Operation {
+        - operationType: TaskCategory
+        - startTime: Date
+        - endTime: Date
+        - resources: Resource[]
+        - payload: Payload
+    }
+
+    class OperationPlanMetadata {
+        - createdBy: string
+        - createdAt: Date
+        - algorithmUsed: string
+    }
+
+    class Resource {
+        - name: string
+        - type: ResourceType
+        - startTime: Date
+        - endTime: Date
+    }
+
+    enum ResourceType {
+        Crane
+        Staff
+        Equipment
+    }
+
+    class TaskCategory {
+        - id: string
+        - code: string
+        - name: string
+        - description: string
+        - defaultDuration: number
+    }
+
+    class Payload {
+        - containers: Container[]
+    }
+
+    class Container {
+        - containerCode: string
+        - weight: number
+        - destination: string
+    }
+}
+
+' DTO Package
+package "DTO" {
+    class OperationPlanDto {
+        - id: string
+        - dock: string
+        - date: Date
+        - relatedVVN: string
+        - operationSchedule: Operation[]
+        - metadata: OperationPlanMetadata
+    }
+}
+
+' Repository Package
+package "Repository" {
+    class OperationPlanRepository {
+        - getById(id: string): Promise<OperationPlan|null>
+        - updateOperationPlan(id, data): Promise<OperationPlan>
+    }
+}
+
+' Mapper Package
+package "Mapper" {
+    class OperationPlanMapper {
+        - fromSchema(doc: any): Promise<OperationPlan>
+    }
+}
+
+' Service Package
+package "Service" {
+    class OperationPlanService {
+        - operationPlanRepository: OperationPlanRepository
+        - getById(id: string): Promise<OperationPlanDto|null>
+        - updateOperationPlan(id, data): Promise<OperationPlanDto>
+        - validatePlanUpdate(plan, updates): Promise<ValidationResult>
+    }
+}
+
+' Controller Package
+package "Controller" {
+    class OperationPlanController {
+        - operationPlanService: OperationPlanService
+        + updateOperationPlan(id, planData): Promise<OperationPlanDto>
+        + getPlanById(id): Promise<OperationPlanDto>
+    }
+}
+
+' Relationships
+OperationPlan --> OperationPlanMetadata: has
+OperationPlan --> Operation: contains (in schedule)
+Operation --> Resource: uses
+Operation --> TaskCategory: has type
+Operation --> Payload: contains
+Payload --> Container: contains
+
+OperationPlanDto --> OperationPlanMetadata: has
+OperationPlanDto --> Operation: contains
+
+OperationPlanRepository --> OperationPlan: manages
+OperationPlanRepository --> OperationPlanMapper: uses
+
+OperationPlanMapper --> OperationPlan: converts to/from
+OperationPlanMapper --> OperationPlanDto: creates
+
+OperationPlanService --> OperationPlanRepository: uses
+OperationPlanService --> OperationPlanDto: returns
+
+OperationPlanController --> OperationPlanService: uses
+OperationPlanController --> OperationPlanDto: returns
+
+@enduml

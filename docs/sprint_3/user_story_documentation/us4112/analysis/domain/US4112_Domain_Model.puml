@@ -1,0 +1,44 @@
+@startuml US4112_Domain_Model
+title US4112 - Manage Incident Types Catalog - Domain Model
+
+package "Incident Management Domain" {
+    entity "Incident Type" as IncType {
+        * id: string
+        * bid: string
+        * name: string
+        * description: string
+        * severity: Severity
+        * subtypeOf: IncidentType
+        * subtypes: IncidentType[]
+    }
+
+    entity "Severity Level" as Severity {
+        * level: string
+        * minorImpact: boolean
+        * majorImpact: boolean
+        * criticalImpact: boolean
+    }
+
+    entity "Incident Type Hierarchy" as Hierarchy {
+        * parentTypeId: string
+        * childTypeId: string
+        * level: number
+    }
+
+    entity "Incident Type Metadata" as Meta {
+        * typeId: string
+        * createdBy: string
+        * createdAt: Date
+        * lastModifiedBy: string
+        * lastModifiedAt: Date
+        * usageCount: number
+    }
+}
+
+IncType "1" --o "0..1" IncType : is subtype of
+IncType "1" --o "0..*" IncType : has subtypes
+IncType "1" --o "1" Severity : has
+IncType "1" --o "1" Meta : has
+Hierarchy "1" --o "0..*" IncType : links
+
+@enduml
