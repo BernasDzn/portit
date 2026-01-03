@@ -1,9 +1,5 @@
 # Sprint 3 - Planning and Technical Documentation
 
-### Aim of this Sprint:
-
-> write here
-
 ### Team:
 
 | Number | Name |
@@ -17,8 +13,19 @@
 
 | US     | 1221402 | 1231090 | 1231092 | 1231108 |
 | ------ | :-----: | :-----: | :-----: | :-----: |
-| US4101 |    x    |    x    |	  x    |    x    |
-
+| US4101 |    X    |    X    |    X    |    X    |
+| US4102 |    X    |         |    X    |         |
+| US4103 |         |         |    X    |    X    |
+| US4104 |    X    |         |         |    X    |
+| US4105 |         |    X    |         |         |
+| US4107 |         |         |         |    X    |
+| US4108 |         |         |    X    |         |
+| US4109 |    X    |         |         |         |
+| US4110 |         |    X    |         |         |
+| US4112 |    X    |         |    X    |         |
+| US4113 |    X    |         |         |    X    |
+| US4114 |         |         |    X    |    X    |
+| US4115 |         |    X    |         |         |
 
 ### Global artifacts
 The map of global artifacts is available through [here](global_artifacts/readme.md)
