@@ -16,6 +16,8 @@ const privacyPolicyService = container.get<IPrivacyPolicyService>(TYPES.privacyP
 const notifications = useAlerts();
 const markdownContent = ref<string>('# Hello world!');
 const router = useRouter();
+const previousVersions = ref<PrivacyPolicy[]>([]);
+const showVersionHistory = ref<boolean>(false);
 
 onMounted(async () => {
     try {
@@ -27,6 +29,26 @@ onMounted(async () => {
         );
     }
 });
+
+const loadVersionHistory = async () => {
+    try {
+        const allVersions = await privacyPolicyService.getAllPrivacyPolicies();
+        previousVersions.value = allVersions.filter(p => !p.active).sort((a, b) => 
+            new Date(b.updatedOn).getTime() - new Date(a.updatedOn).getTime()
+        );
+        showVersionHistory.value = true;
+    } catch (error) {
+        notifications.enqueueNotification(
+            'Failed to load version history',
+            notifications.notificationTypes.DANGER
+        );
+    }
+};
+
+const viewVersion = (version: PrivacyPolicy) => {
+    markdownContent.value = version.content;
+    showVersionHistory.value = false;
+};
 
 const updatePolicy = async () => {
     try {
@@ -67,13 +89,83 @@ const updatePolicy = async () => {
             height="500px"
         />
 
-        <sl-button
-            variant="primary"
-            class="mt-3"
-            @click="updatePolicy"
+        <div class="button-group mt-3">
+            <sl-button
+                variant="primary"
+                @click="updatePolicy"
+            >
+                Update Privacy Policy
+            </sl-button>
+
+            <sl-button
+                variant="default"
+                @click="loadVersionHistory"
+            >
+                View Previous Versions
+            </sl-button>
+        </div>
+
+        <sl-dialog 
+            :open="showVersionHistory" 
+            @sl-hide="showVersionHistory = false"
+            label="Privacy Policy Version History"
         >
-            Update Privacy Policy
-        </sl-button>
+            <div v-if="previousVersions.length === 0" class="no-versions">
+                No previous versions available.
+            </div>
+            <div v-else class="version-list">
+                <div 
+                    v-for="version in previousVersions" 
+                    :key="version.id"
+                    class="version-item"
+                    @click="viewVersion(version)"
+                >
+                    <div class="version-info">
+                        <strong>Updated:</strong> {{ new Date(version.updatedOn).toLocaleString() }}
+                    </div>
+                    <sl-button size="small" variant="text">View</sl-button>
+                </div>
+            </div>
+        </sl-dialog>
 
     </div>
 </template>
+
+<style scoped>
+.button-group {
+    display: flex;
+    gap: 1rem;
+}
+
+.version-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.version-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border: 1px solid var(--sl-color-neutral-200);
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.version-item:hover {
+    background-color: var(--sl-color-neutral-50);
+}
+
+.version-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.no-versions {
+    padding: 2rem;
+    text-align: center;
+    color: var(--sl-color-neutral-500);
+}
+</style>
