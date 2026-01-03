@@ -13,34 +13,106 @@ After cloning, run `git submodule update --init --recursive` to include all subm
 > [Planning and Technical Documentation](docs/readme.md)
 
 ### 3. How to Build
-For a pre-built version of the software, refer to the [Releases](https://github.com/Departamento-de-Engenharia-Informatica/LEI-SEM5-PI-2025-26-3DJ-01/releases) page, available for Windows and Linux systems. 
-You will need the following dependencies to build this project:
+For a pre-built version of the software, refer to the [Releases](https://github.com/Departamento-de-Engenharia-Informatica/LEI-SEM5-PI-2025-26-3DJ-01/releases) page, available for Windows and Linux systems.
+
+#### Building the Backend API
+You will need the following dependencies:
 - .NET==9.0
 
-#### Building with dotnet
 Navigate to the `Backend/Api` directory and use `dotnet build`. 
 After building, the compiled output should be at `Backend/Api/bin/Debug/net9.0/Api.exe` (or `Api.elf`). 
 
-Unlike the development version, this production build has no UI. To check if it's working, curl (or visit through a web browser) this URL: `http://localhost:5000/Qualification` (host and port subject to change, please double check with the console logs).
+#### Building the Frontend
+You will need the following dependencies:
+- Node.js (>=20.19.0 or >=22.12.0)
+
+Navigate to the `FrontEnd` directory and run:
+```
+npm install
+npm run build
+```
+The compiled output will be in the `FrontEnd/dist` directory.
+
+#### Building the OEM Backend
+You will need the following dependencies:
+- Node.js (>=20.19.0 or >=22.12.0)
+- TypeScript
+
+Navigate to the `OEMBackend` directory and run:
+```
+npm install
+npm run build
+```
+The compiled output will be in the `OEMBackend/dist` directory.
+
+#### Building the Prolog Scheduling Server
+You will need the following dependencies:
+- SWI-Prolog (>=8.0.0)
+
+No compilation is needed for the Prolog server. The server is ready to run directly from the `SchedulingNPlanning` directory.
 
 ### 4. How to Execute Tests
 For the complete testing instructions read [this](docs/global_docs/testing-guide.md).
 
 ### 5. How to Run
-You will need the following dependencies to run this project:
+To run the complete system in development mode, you will need:
 - .NET==9.0
+- Node.js (>=20.19.0 or >=22.12.0)
+- SWI-Prolog (>=8.0.0)
 
-To run in development mode, there are two options:
-#### Using the scripts
-Navigate to the `scripts` directory and from there execute either `run.cmd` or `run.sh` depending on your system.
+#### Using the convenience scripts
+Navigate to the `script` directory and execute `app-run.cmd` (Windows) to start all services.
 
-#### Running with dotnet
-Navigate to the `Backend/Api` directory and use `dotnet run`, alternatively use `dotnet run --project Api` from the `Backend` directory.
+#### Running components individually
 
-This version of the software allows you to visualise and interact with the API via a [Swagger UI](https://swagger.io/tools/swagger-ui/).
-To access it, visit `http://localhost:5195/swagger/index.html?url=/openapi/v1.json` (host and port subject to change, please double check with the console logs) from any capable browser.
+**Backend API (Development)**
+Navigate to the `Backend/Api` directory and use:
+```
+dotnet run
+```
+Alternatively from the `Backend` directory:
+```
+dotnet run --project Api
+```
+The API will be available at `http://localhost:5195` with Swagger UI at `http://localhost:5195/swagger/index.html?url=/openapi/v1.json`.
 
-For a comprehensive list of endpoints and their uses, refer to the [Developer Manual](docs/user_manual.md)
+**Frontend (Development)**
+Navigate to the `FrontEnd` directory and run:
+```
+npm install
+npm run dev
+```
+For local testing mode:
+```
+npm run local
+```
+The frontend will be available at `http://localhost:5173` (or as indicated in the console).
+
+**OEM Backend (Development)**
+Navigate to the `OEMBackend` directory and run:
+```
+npm install
+npm run dev
+```
+For local testing mode:
+```
+npm run local
+```
+The OEM backend will generate API documentation and start the development server with hot reload.
+
+**Prolog Scheduling Server (Development)**
+Navigate to the `SchedulingNPlanning` directory and run:
+```
+swipl main.pl
+```
+For testing mode:
+```
+swipl main.pl test
+```
+The server will start on port 4000 by default.
+Testing mode uses the regular swipl user interaction console, regular mode is not interactible
+
+For a comprehensive list of Backend API endpoints and their uses, refer to the [Developer Manual](docs/sprint_1/user_manual.md)/[Developer Manual (curl)](docs/sprint_1/user_manual_with_curl.md).
 
 ### 6. How to read Logs
 Logs of the application are made virtually everytime the API has to run any sort of code. 

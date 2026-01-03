@@ -18,6 +18,12 @@ export class PrivacyPolicyService implements IPrivacyPolicyService {
         return res.data;
     }
 
+    async getAllPrivacyPolicies(): Promise<PrivacyPolicy[]> {
+        
+        const res = await this.http.get<PrivacyPolicy[]>(`/api/PrivacyPolicy`);
+        return res.data;
+    }
+
     async updatePrivacyPolicy(content: PrivacyPolicy): Promise<PrivacyPolicy> {
      
         const res = await this.http.post<PrivacyPolicy>(`/api/PrivacyPolicy`, content.toDto());

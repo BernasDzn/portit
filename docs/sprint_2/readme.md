@@ -2,10 +2,6 @@
 
 > **NOTE:** This document is applied to all modules of the system.
 
-### Aim of this Sprint:
-
-#### LOREMIPSUM
-
 ### Team:
 
 | Number | Name |
@@ -14,26 +10,24 @@
 | 1231090 | Bernardo Cardoso |
 | 1231092 | Francisco Lousada |
 | 1231108 | Tiago Barros |
-| 1XXXXXX |  |
 
 ### Distribution of Tasks:
 
-
-| US     | 1221402 | 1231090 | 1231092 | 1231108 | 1XXXXXX |
-| ------ | :-----: | :-----: | :-----: | :-----: | :-----: |
-| US2201 |         |    X    |    X    |         |		   |
-| US2202 |         |    X    |         |         |		   |
-| US2203 |         |         |    X    |         |		   |
-| US2204 |    X    |    X    |    X    |    X    |		   |
-| US2205 |         |         |         |    X    |		   |
-| US2206 |         |    X    |         |         |		   |
-| US2207 |         |         |    X    |         |		   |
-| US2208 |         |    X    |         |         |		   |
-| US2209 |    X    |         |         |         |		   |
-| US2210 |         |         |         |    X    |		   |
-| US2211 |    X    |         |         |         |		   |
-| US2212 |         |         |         |    X    |		   |
-| US2213 |    X    |         |         |    X    |		   |
+| US     | 1221402 | 1231090 | 1231092 | 1231108 |
+| ------ | :-----: | :-----: | :-----: | :-----: |
+| US2201 |         |    X    |    X    |         |
+| US2202 |         |    X    |         |         |
+| US2203 |         |         |    X    |         |
+| US2204 |    X    |    X    |    X    |    X    |
+| US2205 |         |         |         |    X    |
+| US2206 |         |    X    |         |         |
+| US2207 |         |         |    X    |         |
+| US2208 |         |    X    |         |         |
+| US2209 |    X    |         |         |         |
+| US2210 |         |         |         |    X    |
+| US2211 |    X    |         |         |         |
+| US2212 |         |         |         |    X    |
+| US2213 |    X    |         |         |    X    |
 
 ### Global artifacts
 The map of global artifacts is available through [here](global_artifacts/readme.md)

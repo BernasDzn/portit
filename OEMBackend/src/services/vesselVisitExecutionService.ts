@@ -95,6 +95,11 @@ export class VesselVisitExecutionService {
             throw new Error(`Vessel Visit Execution with id ${vveId} not found.`);
         }
 
+        // Check if VVE is closed
+        if (vve.status === 'Closed') {
+            throw new Error(`Cannot add operations to a closed Vessel Visit Execution.`);
+        }
+
         let operationWS = vve.operationsExecuted.find(opWS => opWS.operation.id === operation.id);
 
         if (!operationWS) {
