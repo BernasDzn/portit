@@ -40,4 +40,13 @@ As of this sprint, the generated artifacts are the following:
 
 ### Documentation *(per user story/use case)*:
 
-- TODO
+- [US4101 - Operations & Execution Management (OEM) Module](user_story_documentation/us4101/readme.md)
+- [US4102 - Automatic Generation of Operation Plans](user_story_documentation/us4102/readme.md)
+- [US4103 - Search and List Operation Plans](user_story_documentation/us4103/readme.md)
+- [US4104 - Manual Update of Operation Plan](user_story_documentation/us4104/readme.md)
+- [US4107 - Create Vessel Visit Execution (VVE) Record](user_story_documentation/us4107/readme.md)
+- [US4108 - Update VVE with Berth Time and Dock](user_story_documentation/us4108/readme.md)
+- [US4109 - Update VVE with Executed Operations](user_story_documentation/us4109/readme.md)
+- [US4112 - Manage Incident Types Catalog](user_story_documentation/us4112/readme.md)
+- [US4113 - Record and Manage Incidents](user_story_documentation/us4113/readme.md)
+- [US4114 - Manage Complementary Task Categories Catalog](user_story_documentation/us4114/readme.md)
