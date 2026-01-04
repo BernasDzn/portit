@@ -1,1036 +1,1141 @@
 ﻿{
-    "common": {
-        "loading": "Načítání...",
-        "noData": "Žádná dostupná data",
-        "statistics": "Statistiky",
-        "yes": "Ano",
-        "no": "Ne",
-        "weekDay": "Den v týdnu",
-        "days": {
-            "sunday": "Neděle",
-            "monday": "Pondělí",
-            "tuesday": "Úterý",
-            "wednesday": "Středa",
-            "thursday": "Čtvrtek",
-            "friday": "Pátek",
-            "saturday": "Sobota"
-        },
-        "number": "Číslo"
-    },
-    "buttons": {
-        "save": "Uložit",
-        "cancel": "Zrušit",
-        "delete": "Smazat",
-        "edit": "Upravit",
-        "create": "Vytvořit",
-        "search": "Hledat",
-        "select": "Vybrat",
-        "activate": "Aktivovat",
-        "deactivate": "Deaktivovat",
-        "generate": "Generovat",
-        "close": "Zavřít",
-        "add": "Přidat",
-        "review": "Zkontrolovat",
-        "ok": "OK",
-        "downloadSample": "Stáhnout vzorek",
-        "filter": {
-            "title": "Filtry",
-            "add": "Filtrovat",
-            "clear": "Vymazat filtry"
-        },
-        "pagination": {
-            "previous": "Předchozí",
-            "next": "Další"
-        },
-        "login": "Přihlásit se",
-        "goBackToLogin": "Zpět na přihlášení",
-        "logout": "Odhlásit se",
-        "seeMore": "Zobrazit více"
-    },
-    "unsavedChanges": {
-        "title": "Zrušit změny?",
-        "message": "Máte neuložené změny. Opravdu chcete opustit tuto stránku a zahodit změny?",
-        "confirm": "Zahodit",
-        "cancel": "Pokračovat v úpravách"
-    },
-    "expirationWarning": {
-        "title": "Relace brzy vyprší",
-        "messageOneMinute": "Vaše relace vyprší za 1 minutu.",
-        "messageLessThanOneMinute": "Vaše relace brzy vyprší.",
-        "extendSession": "Prodloužit relaci"
-    },
-    "dashboard": {
-        "welcome": "Vítejte zpět, [name]!",
-        "sidebarTitle": "Nástěnka",
-        "title": "PortIT Nástěnka",
-        "subtitle": "Přehled systému PortIT",
-        "SAOR": {
-            "subtitle": "Přehled činností zasílatelského agenta",
-            "pendingNotifications": "Čekající oznámení",
-            "recent": "Nedávná oznámení o návštěvách plavidel",
-            "recentReview": "Oznámení o návštěvách plavidel k revizi",
-            "noRecent": "Žádná nedávná oznámení"
-        },
-        "3DModel": {
-            "title": "3D vizualizace přístavu",
-            "description": "Zobrazte interaktivní 3D reprezentaci celého přístavního komplexu. Sledujte obsazenost doků, pozice lodí, skladovací prostory a zdroje v reálném čase.",
-            "open": "Otevřít 3D model"
-        }
-    },
-    "admin": {
-        "sidebarTitle": "Admin",
-        "title": "Admin rozhraní",
-        "subtitle": "Správní přehled a řízení",
-        "userManagement": {
-            "title": "Správa uživatelů",
-            "subtitle": "Spravujte uživatele systému, role a oprávnění."
-        },
-        "auditLogs": {
-            "title": "Auditní záznamy",
-            "subtitle": "Zobrazit a sledovat systémové záznamy aktivit."
-        }
-    },
-    "user": {
-        "registeredUsers": "Registrovaní uživatelé",
-        "fields": {
-            "email": {
-                "title": "Email",
-                "placeholder": "email@mail.com"
-            },
-            "role": {
-                "title": "Role",
-                "placeholder": "Vyberte roli uživatele",
-                "options": {
-                    "admin": "Správce",
-                    "saoRep": "Zástupce SAO",
-                    "pao": "Úředník přístavní správy",
-                    "logisticsOperator": "Provozovatel logistiky"
-                }
-            },
-            "isActive": {
-                "title": "Aktivní",
-                "options": {
-                    "active": "Ano",
-                    "inactive": "Ne"
-                }
-            }
-        },
-        "tabs": {
-            "dashboard": "Uživatelská nástěnka",
-            "create": "Vytvořit uživatele",
-            "view": "Zobrazit uživatele",
-            "search": "Hledat uživatele"
-        },
-        "infoTitle": "Detaily uživatele",
-        "title": "Uživatelé",
-        "subtitle": {
-            "dashboard": "Přehled a správa uživatelů",
-            "create": "Zaregistrujte nového uživatele do systému",
-            "view": "Zobrazit a spravovat existující uživatele"
-        }
-    },
-    "representative": {
-        "title": "Zástupce",
-        "select": "Vyberte zástupce"
-    },
-    "physicalCharacteristics": {
-        "title": "Fyzické charakteristiky (m)",
-        "length": {
-            "title": "Délka",
-            "placeholder": "Délka v metrech"
-        },
-        "depth": {
-            "title": "Hloubka",
-            "placeholder": "Hloubka v metrech"
-        },
-        "draft": {
-            "title": "Ponor",
-            "placeholder": "Ponor v metrech"
-        }
-    },
-    "dock": {
-        "fields": {
-            "code": {
-                "title": "Kód",
-                "placeholder": "Kód doku"
-            },
-            "name": {
-                "title": "Název",
-                "placeholder": "Název doku"
-            },
-            "location": {
-                "title": "Umístění",
-                "placeholder": "Umístění doku"
-            },
-            "supportedVesselTypes": {
-                "title": "Podporované typy lodí",
-                "vesselTypes": {
-                    "title": "Typy lodí",
-                    "placeholder": "Vyberte typy lodí"
+    "common":  {
+                   "loading":  "Načítání...",
+                   "noData":  "Žádná dostupná data",
+                   "statistics":  "Statistiky",
+                   "yes":  "Ano",
+                   "no":  "Ne",
+                   "weekDay":  "Den v týdnu",
+                   "days":  {
+                                "sunday":  "Neděle",
+                                "monday":  "Pondělí",
+                                "tuesday":  "Úterý",
+                                "wednesday":  "Středa",
+                                "thursday":  "Čtvrtek",
+                                "friday":  "Pátek",
+                                "saturday":  "Sobota"
+                            },
+                   "number":  "Číslo",
+                   "actions":  "Akce",
+                   "none":  "Žádný"
+               },
+    "buttons":  {
+                    "save":  "Uložit",
+                    "cancel":  "Zrušit",
+                    "delete":  "Smazat",
+                    "edit":  "Upravit",
+                    "create":  "Vytvořit",
+                    "search":  "Hledat",
+                    "select":  "Vybrat",
+                    "activate":  "Aktivovat",
+                    "deactivate":  "Deaktivovat",
+                    "generate":  "Generovat",
+                    "close":  "Zavřít",
+                    "add":  "Přidat",
+                    "review":  "Zkontrolovat",
+                    "filter":  {
+                                   "title":  "Filtry",
+                                   "add":  "Filtrovat",
+                                   "clear":  "Vymazat filtry"
+                               },
+                    "pagination":  {
+                                       "previous":  "Předchozí",
+                                       "next":  "Další"
+                                   },
+                    "login":  "Přihlásit se",
+                    "goBackToLogin":  "Zpět na přihlášení",
+                    "logout":  "Odhlásit se",
+                    "seeMore":  "Zobrazit více",
+                    "ok":  "OK",
+                    "downloadSample":  "Stáhnout vzorek"
                 },
-                "vesselType": "Typ lodi"
-            }
-        },
-        "tabs": {
-            "dashboard": "Nástěnka doků",
-            "view_dashboard": "Zobrazit doky",
-            "search": "Hledat doky",
-            "create": "Vytvořit dok",
-            "view": "Zobrazit dok",
-            "edit": "Upravit dok"
-        },
-        "generalFields": "Obecná pole",
-        "infoTitle": "Informace o doku",
-        "title": "Doky",
-        "subtitle": {
-            "dashboard": "Přehled statistik a aktivit doků",
-            "search": "Spravujte a zobrazte všechny registrované doky",
-            "create": "Zaregistrujte nový dok do systému",
-            "edit": "Upravit existující dok v systému"
-        },
-        "registeredDocks": "Registrované doky"
-    },
-    "vesselType": {
-        "fields": {
-            "name": {
-                "title": "Název",
-                "placeholder": "Název typu lodi"
-            },
-            "description": {
-                "title": "Popis",
-                "placeholder": "Popis typu lodi"
-            },
-            "capacity": {
-                "title": "Kapacita",
-                "placeholder": "Kapacita kontejnerů v TEU"
-            },
-            "containerCapacity": {
-                "title": "Kapacita kontejnerů (TEU)",
-                "maxNumberOfRows": {
-                    "title": "Maximální počet řad",
-                    "placeholder": "Max řad v TEU"
-                },
-                "maxNumberOfBays": {
-                    "title": "Maximální počet prostor",
-                    "placeholder": "Max prostor v TEU"
-                },
-                "maxNumberOfTiers": {
-                    "title": "Maximální počet úrovní",
-                    "placeholder": "Max úrovní v TEU"
-                }
-            }
-        },
-        "generalFields": "Obecná pole",
-        "tabs": {
-            "dashboard": "Nástěnka typů lodí",
-            "view_dashboard": "Zobrazit typy lodí",
-            "search": "Hledat typy lodí",
-            "create": "Vytvořit typ lodi",
-            "view": "Zobrazit typ lodi",
-            "edit": "Upravit typ lodi"
-        },
-        "infoTitle": "Informace o typu lodi",
-        "title": "Typy lodí",
-        "subtitle": {
-            "dashboard": "Přehled statistik a aktivit typů lodí",
-            "search": "Spravujte a zobrazte všechny registrované typy lodí",
-            "create": "Zaregistrujte nový typ lodi do systému",
-            "edit": "Upravit existující typ lodi v systému"
-        },
-        "registeredVesselTypes": "Registrované typy lodí"
-    },
-    "vessel": {
-        "fields": {
-            "name": {
-                "title": "Název",
-                "placeholder": "Název lodi"
-            },
-            "imoNumber": {
-                "title": "IMO číslo",
-                "placeholder": "IMO číslo lodi"
-            },
-            "owner": {
-                "title": "Vlastník",
-                "placeholder": "Organizace vlastníka"
-            },
-            "vesselType": {
-                "title": "Typ lodi",
-                "placeholder": "Vyberte typ lodi"
-            },
-            "taxNumber": {
-                "title": "Daňové číslo"
-            }
-        },
-        "infoTitle": "Informace o lodi",
-        "physicalCharacteristicsTitle": "Fyzické charakteristiky",
-        "tabs": {
-            "dashboard": "Nástěnka lodí",
-            "view_dashboard": "Zobrazit lodě",
-            "search": "Hledat lodě",
-            "create": "Vytvořit loď",
-            "view": "Zobrazit loď",
-            "edit": "Upravit loď"
-        },
-        "title": "Lodě",
-        "subtitle": {
-            "dashboard": "Přehled statistik a aktivit lodí",
-            "search": "Spravujte a zobrazte všechny registrované lodě",
-            "create": "Zaregistrujte novou loď v systému",
-            "edit": "Upravit existující loď v systému"
-        },
-        "ownedBy": "Vlastník",
-        "registeredVessels": "Registrované lodě"
-    },
-    "staff": {
-        "registeredStaffMembers": "Registrovaní členové personálu",
-        "fields": {
-            "mechanographicNumber": {
-                "title": "Mechanografické číslo",
-                "placeholder": "Mechanografické číslo"
-            },
-            "name": {
-                "title": "Jméno",
-                "placeholder": "Jméno zaměstnance"
-            },
-            "email": {
-                "title": "Email",
-                "placeholder": "Emailová adresa"
-            },
-            "phoneNumber": {
-                "title": "Telefonní číslo",
-                "placeholder": "Telefonní číslo"
-            },
-            "qualifications": {
-                "title": "Kvalifikace",
-                "placeholder": "Vyberte kvalifikace"
-            },
-            "status": {
-                "title": "Stav",
-                "options": {
-                    "available": "Dostupný",
-                    "unavailable": "Nedostupný",
-                    "temporarilyReassigned": "Dočasně přeřazen"
-                }
-            },
-            "operationalWindow": "Provozní okno"
-        },
-        "tabs": {
-            "dashboard": "Nástěnka zaměstnanců",
-            "view_dashboard": "Zobrazit zaměstnance",
-            "search": "Hledat zaměstnance",
-            "create": "Vytvořit zaměstnance",
-            "view": "Zobrazit zaměstnance",
-            "edit": "Upravit zaměstnance"
-        },
-        "infoTitle": "Informace o zaměstnanci",
-        "title": "Zaměstnanci",
-        "subtitle": {
-            "search": "Spravujte a zobrazte všechny registrované zaměstnance",
-            "dashboard": "Přehled statistik a aktivit zaměstnanců",
-            "create": "Zaregistrujte nového zaměstnance v systému",
-            "view": "Zobrazit detaily zaměstnance",
-            "edit": "Upravit existujícího zaměstnance v systému"
-        },
-        "deactivation": {
-            "title": "Deaktivovat člena personálu",
-            "message": "Opravdu chcete deaktivovat tohoto člena personálu? Můžete jej znovu aktivovat později.",
-            "successMessage": "Člen personálu byl úspěšně deaktivován.",
-            "errorMessage": "Chyba při deaktivaci. Zkuste to znovu."
-        }
-    },
-    "qualification": {
-        "registeredQualifications": "Registrované kvalifikace",
-        "tabs": {
-            "dashboard": "Nástěnka kvalifikací",
-            "view_dashboard": "Zobrazit kvalifikace",
-            "search": "Hledat kvalifikace",
-            "create": "Vytvořit kvalifikaci",
-            "view": "Zobrazit kvalifikaci",
-            "edit": "Upravit kvalifikaci"
-        },
-        "infoTitle": "Informace o kvalifikaci",
-        "title": "Kvalifikace",
-        "subtitle": {
-            "search": "Spravujte a zobrazte všechny registrované kvalifikace",
-            "dashboard": "Přehled statistik a aktivit kvalifikací",
-            "create": "Zaregistrujte novou kvalifikaci v systému",
-            "edit": "Upravit existující kvalifikaci v systému",
-            "view": "Zobrazit detaily kvalifikace"
-        },
-        "fields": {
-            "idCode": {
-                "title": "Kód kvalifikace",
-                "placeholder": "Kód kvalifikace"
-            },
-            "qualificationName": {
-                "title": "Název kvalifikace",
-                "placeholder": "Název kvalifikace"
-            }
-        }
-    },
-    "physicalResource": {
-        "registeredPhysicalResources": "Registrované fyzické zdroje",
-        "tabs": {
-            "dashboard": "Nástěnka fyzických zdrojů",
-            "view_dashboard": "Zobrazit fyzické zdroje",
-            "search": "Hledat fyzické zdroje",
-            "create": "Vytvořit fyzický zdroj",
-            "view": "Zobrazit fyzický zdroj",
-            "edit": "Upravit fyzický zdroj"
-        },
-        "infoTitle": "Informace o fyzickém zdroji",
-        "title": "Fyzické zdroje",
-        "subtitle": {
-            "search": "Spravujte a zobrazte všechny registrované fyzické zdroje",
-            "dashboard": "Ovládací panel pro všechny fyzické zdroje",
-            "view_dashboard": "Zobrazit fyzické zdroje",
-            "create": "Zaregistrujte nový fyzický zdroj v systému",
-            "view": "Zobrazit detaily fyzického zdroje",
-            "edit": "Upravit existující fyzický zdroj v systému"
-        },
-        "generalFields": "Obecná pole",
-        "specificFields": "Specifická pole",
-        "fields": {
-            "code": {
-                "title": "Kód",
-                "placeholder": "Kód zdroje"
-            },
-            "description": {
-                "title": "Popis",
-                "placeholder": "Popis zdroje"
-            },
-            "status": {
-                "title": "Stav",
-                "placeholder": "Vyberte stav zdroje",
-                "options": {
-                    "available": "Dostupný",
-                    "maintenance": "Údržba",
-                    "outOfService": "Mimo provoz"
-                }
-            },
-            "qualifications": {
-                "title": "Požadované kvalifikace",
-                "placeholder": "Kvalifikace potřebné k obsluze tohoto zdroje"
-            },
-            "setupTime": {
-                "title": "Čas nastavení (minuty)",
-                "placeholder": "Čas nastavení"
-            },
-            "servingDocks": {
-                "title": "Obsluhující doky",
-                "placeholder": "Vyberte obsluhující doky"
-            },
-            "liftingCapacity": {
-                "title": "Nosnost (kg)",
-                "placeholder": "Nosnost"
-            },
-            "containersPerHour": {
-                "title": "Kontejnery za hodinu",
-                "placeholder": "Kontejnery za hodinu"
-            },
-            "maxLoadCapacity": {
-                "title": "Maximální nosnost (kg)",
-                "placeholder": "Maximální nosnost"
-            },
-            "averageSpeed": {
-                "title": "Průměrná rychlost (km/h)",
-                "placeholder": "Průměrná rychlost"
-            },
-            "containersPerTrip": {
-                "title": "Kontejnery na jízdu",
-                "placeholder": "Kontejnery na jízdu"
-            },
-            "type": {
-                "title": "Typ zdroje",
-                "options": {
-                    "stsCrane": "Příbřežní jeřáb (STS)",
-                    "yardGantry": "Příhradový jeřáb",
-                    "truck": "Nákladní auto"
-                }
-            }
-        },
-        "actions": {
-            "deactivate": "Deaktivovat fyzický zdroj"
-        },
-        "deactivation": {
-            "title": "Deaktivovat fyzický zdroj",
-            "message": "Opravdu chcete deaktivovat tento fyzický zdroj? Můžete jej znovu aktivovat později.",
-            "successMessage": "Fyzický zdroj byl úspěšně deaktivován.",
-            "errorMessage": "Chyba při deaktivaci. Zkuste to znovu."
-        }
-    },
-    "storageArea": {
-        "registeredStorageAreas": "Registrované skladovací prostory",
-        "tabs": {
-            "dashboard": "Nástěnka skladovacích oblastí",
-            "view_dashboard": "Zobrazit skladovací oblasti",
-            "search": "Hledat skladovací oblasti",
-            "create": "Vytvořit skladovací oblast",
-            "view": "Zobrazit skladovací oblast",
-            "edit": "Upravit skladovací oblast"
-        },
-        "infoTitle": "Informace o skladovací oblasti",
-        "title": "Skladovací oblasti",
-        "subtitle": {
-            "search": "Spravujte a zobrazte všechny registrované skladovací oblasti",
-            "dashboard": "Ovládací panel pro všechny funkce skladovacích oblastí",
-            "view_dashboard": "Zobrazit skladovací oblasti",
-            "create": "Zaregistrujte novou skladovací oblast v systému",
-            "view": "Zobrazit detaily skladovací oblasti",
-            "edit": "Upravit existující skladovací oblast v systému"
-        },
-        "printer": {
-            "docks_serviced": "obsluhované doky",
-            "capacity_usage": "Využití kapacity",
-            "units": "jednotky",
-            "available": "dostupné",
-            "no_registered_distances": "Žádné registrované vzdálenosti",
-            "no_docks_serviced": "Žádné obsluhované doky",
-            "all_docks_serviced": "Všechny doky obsluhovány",
-            "serviced_docks_distance": "Vzdálenost obsluhovaných doků",
-            "no_registered_docks": "Žádné registrované doky"
-        },
-        "create": {
-            "distance_meters": "Vzdálenost (metry)"
-        },
-        "fields": {
-            "nameCode": {
-                "title": "Kód názvu",
-                "placeholder": "Kód názvu skladovací oblasti"
-            },
-            "location": {
-                "title": "Umístění",
-                "placeholder": "Umístění skladovací oblasti"
-            },
-            "type": {
-                "title": "Typ",
-                "placeholder": "Vyberte typ skladovací oblasti",
-                "options": {
-                    "yard": "Dvůr",
-                    "warehouse": "Sklad"
-                }
-            },
-            "capacity": {
-                "title": "Kapacita",
-                "placeholder": "Maximální kapacita"
-            },
-            "occupancy": {
-                "title": "Obsazenost",
-                "placeholder": "Aktuální obsazenost"
-            }
-        }
-    },
-    "search": {
-        "languages": "Hledat jazyky..."
-    },
-    "scheduling": {
-        "title": "Vyžádat denní plán",
-        "subtitle": "Použijte náš automatický plánovací algoritmus k analýze naplánovaných úkolů pro vybraný den.",
-        "noVisits": "Žádné návštěvy plavidel naplánované na vybrané datum.",
-        "visitsOnSelectedDay": "Návštěvy plavidel ve vybraný den",
-        "viewVisits": "Generovat plán úkolů",
-        "generateTasksButton": "Generovat plán úkolů",
-        "aboutAlgorithmButton": "O algoritmu",
-        "fields": {
-            "algorithm": {
-                "title": "Plánovací algoritmus",
-                "placeholder": "Vyberte plánovací algoritmus"
-            },
-            "relatedDocks": "Vyberte související dok"
-        },
-        "generateTasksModal": {
-            "title": "Doplňková logistika"
-        },
-        "aboutAlgorithmModal": {
-            "title": "O algoritmu",
-            "content": "Aktuální algoritmus bere v úvahu oznámení o návštěvách plavidel naplánovaných pro vybraný den a dok. Poté kontroluje dostupnost STS jeřábů pro daný dok a určuje dobu trvání každého úkolu na základě rychlosti jeřábu. Ignoruje návštěvy určené pro údržbu nebo jiné ne-nakládací/vykládací aktivity."
-        }
-    },
-    "notification": {
-        "registeredVesselVisitNotifications": "Registrovaná oznámení o návštěvách plavidel",
-        "step": "Krok",
-        "of": "z",
-        "id": "ID oznámení",
-        "hazardous": "Nebezpečný",
-        "nonHazardous": "Nenebezpečný",
-        "arrival": "Příjezd",
-        "departure": "Odjezd",
-        "specialRequirements": "Speciální požadavky",
-        "none": "Žádné",
-        "crew": "Posádka",
-        "captain": "Kapitán",
-        "unknown": "Neznámé",
-        "from": "Od",
-        "to": "Do",
-        "tabs": {
-            "dashboard": "Nástěnka oznámení",
-            "search": "Hledat oznámení",
-            "edit": "Upravit oznámení",
-            "create": "Vytvořit oznámení",
-            "makeDraft": "Vytvořit koncept oznámení",
-            "myNotifications": "Má oznámení",
-            "review": "Revize oznámení",
-            "general": "Obecný výpis",
-            "byDate": "Kalendářní výpis",
-            "submit": "Odeslat oznámení",
-            "delete": "Smazat oznámení"
-        },
-        "eventsOnDate": "Události ve vybraný den",
-        "noEventsOnDate": "Žádné události ve vybraný den",
-        "title": "Oznámení o návštěvách plavidel",
-        "subtitle": {
-            "dashboard": "Přehled oznámení o návštěvách plavidel",
-            "search": "Spravujte a zobrazte všechna oznámení o návštěvách plavidel",
-            "create": "Vytvořit nové oznámení o návštěvě plavidla",
-            "edit": "Upravit existující oznámení o návštěvě plavidla",
-            "review": "Revize čekajících oznámení o návštěvě plavidla"
-        },
-        "errors": {
-            "noNotificationId": "Nebyl poskytnut ID oznámení"
-        },
-        "infoTitle": "Informace o oznámení",
-        "cargoTitle": "Informace o nákladu",
-        "vesselTitle": "Informace o plavidle",
-        "manifestInfo": "Informace o manifestu",
-        "fields": {
-            "openLoadManifest": "Otevřít nakládací manifest",
-            "openUnloadManifest": "Otevřít vykládací manifest",
-            "expectedArrival": "Očekávaný příjezd",
-            "expectedDeparture": "Očekávaný odjezd",
-            "isCargoHazardous": "Náklad nebezpečný",
-            "specialRequirements": "Speciální požadavky",
-            "captain": "Kapitán",
-            "totalCrewMembers": "Celkový počet členů posádky",
-            "safetyOfficers": "Bezpečnostní pracovníci",
-            "loadCargoManifest": "Nakládací manifest",
-            "unloadCargoManifest": "Vykládací manifest",
-            "position": "Pozice",
-            "area": "Oblast",
-            "container": "Kontejner",
-            "crewMembers": "Členové posádky",
-            "status": "Stav"
-        },
-        "timeline": {
-            "pending": "Čeká",
-            "inProgress": "Probíhá",
-            "completed": "Dokončeno",
-            "submitted": "Odesláno",
-            "accepted": "Přijato",
-            "rejected": "Zamítnuto"
-        },
-        "filters": {
-            "expectedArrivalFrom": "Očekávaný příjezd od",
-            "expectedArrivalTo": "Očekávaný příjezd do",
-            "withReason": "S odůvodněním",
-            "withDockAssigned": "S přiřazeným dokem"
-        },
-        "decision": {
-            "isFinal": "Konečné",
-            "assignedDock": {
-                "title": "Přiřazený dok",
-                "placeholder": "Vyberte přiřazený dok"
-            },
-            "reason": {
-                "title": "Důvod",
-                "placeholder": "Uveďte důvod rozhodnutí"
-            },
-            "status": "Stav rozhodnutí"
-        }
-    },
-    "operationalWindow": {
-        "title": "Provozní okno",
-        "printer": {
-            "addShift": "Přidat směnu",
-            "shifts": "Směny:",
-            "noShifts": "Žádné směny.",
-            "startTime": "Čas začátku",
-            "endTime": "Čas konce",
-            "weekDays": "Dny v týdnu"
-        },
-        "errors": {
-            "shiftOverlap": "Neplatná směna. Překrývá se nebo konec před začátkem."
-        }
-    },
-    "about": {
-        "title": "O PorTiT",
-        "privacy": {
-            "title": "Zásady ochrany osobních údajů",
-            "lastUpdated": "Poslední aktualizace: {date}"
-        }
-    },
-    "operationPlan": {
-        "title": "Operační plán",
-        "dock": "Dok",
-        "docks": "Doky",
-        "operations": "Operace",
-        "cranes": "Jeřáby",
-        "createdBy": "Vytvořil",
-        "createdAt": "Vytvořeno",
-        "totalSchedules": "Celkem rozvrhy",
-        "vesselCount": "Plavidla",
-        "plansOnDate": "Operační plány ve vybraném datu",
-        "noPlansOnDate": "Ve vybraném datu nejsou žádné operační plány",
-        "id": "ID",
-        "vvn": "Oznámení o návštěvě plavidla",
-        "for": "pro",
-        "details": "Podrobnosti",
-        "totalOperations": "Celkem operací",
-        "algorithmUsed": "Použitý algoritmus",
-        "ganttChart": "Ganttův diagram",
-        "startTime": "Čas začátku",
-        "endTime": "Čas konce",
-        "totalDuration": "Celková doba trvání",
-        "operation": "Operace",
-        "duration": "Doba trvání",
-        "resources": "Zdroje",
-        "operationDetails": "Podrobnosti operace",
-        "operationNumber": "Operace #{number}",
-        "notFound": "Operační plán nebyl nalezen",
-        "operationType": {
-            "Unload": "Vyložit",
-            "Load": "Naložit"
-        },
-        "tabs": {
-            "unplannedVVNs": "Neplánované VVN",
-            "search": "Hledat plány",
-            "edit": "Upravit plán",
-            "open": "Zahájit provádění"
-        },
-        "subtitle": {
-            "edit": "Upravit podrobnosti operačního plánu a rozvrh"
-        },
-        "unplannedVVNs": {
-            "description": "Oznámení o návštěvách plavidel, která ještě nemají přiřazený operační plán",
-            "noUnplanned": "Všechna oznámení o návštěvách plavidel mají přiřazené operační plány",
-            "foundMessage": "Nalezeno {vvnCount} VVN bez plánů napříč {dayCount} dny",
-            "regenerateAll": "Regenerovat všechny chybějící plány",
-            "regenerateDay": "Regenerovat plány pro tento den",
-            "regenerateModalTitle": "Regenerovat plány pro {date}",
-            "warning": "Varování",
-            "warningMessage": "Regenerace plánů přepíše všechny existující operační plány pro tento den. Tuto akci nelze vrátit zpět.",
-            "selectedDay": "Vybraný den",
-            "confirmRegeneration": "Potvrdit regeneraci",
-            "affectedDays": "Ovlivněné dny",
-            "queueInfo": "Každá žádost o regeneraci bude zařazena do fronty samostatně. Můžete je zkontrolovat a přijmout/odmítnout jednotlivě z fronty plánování.",
-            "continue": "Pokračovat",
-            "confirmRegenerationTitle": "Potvrdit regeneraci",
-            "irreversibleAction": "Tato akce je nevratná",
-            "overwriteWarning": "Regenerace operačních plánů trvale přepíše všechny existující plány pro vybrané dny. Tuto akci nelze vrátit zpět.",
-            "aboutToRegenerate": "Chystáte se regenerovat plány pro",
-            "days": "dny",
-            "vesselVisitNotifications": "Oznámení o návštěvách plavidel",
-            "using": "Použití",
-            "algorithm": "algoritmus",
-            "proceedQuestion": "Chcete pokračovat v této operaci?",
-            "yesRegenerateAll": "Ano, regenerovat vše"
-        },
-        "algorithm": {
-            "optimal": "Optimální",
-            "greedy": "Hladový",
-            "genetic": "Genetický",
-            "auto": "Automatický"
-        },
-        "metrics": {
-            "title": "Metriky",
-            "strategy": "Strategie",
-            "totalDelay": "Celkové zpoždění",
-            "computationTime": "Výpočetní čas",
-            "autoSelection": "Automatický výběr algoritmu"
-        },
-        "infoTitle": "Informace o operačním plánu",
-        "fields": {
-            "id": {
-                "title": "ID plánu"
-            },
-            "relatedVVN": {
-                "title": "Související VVN"
-            },
-            "dock": {
-                "title": "Dok"
-            },
-            "operations": {
-                "title": "Operace"
-            }
-        },
-        "filters": {
-            "startDate": "Datum zahájení od",
-            "endDate": "Datum ukončení do"
-        },
-        "metadata": {
-            "title": "Metadata",
-            "createdBy": "Vytvořil",
-            "createdAt": "Vytvořeno",
-            "algorithmUsed": "Použitý algoritmus"
-        },
-        "schedule": {
-            "title": "Operační rozvrh",
-            "noOperations": "Nejsou naplánovány žádné operace"
-        }
-    },
-    "incidentType": {
-        "fields": {
-            "name": {
-                "title": "Název",
-                "placeholder": "Název typu incidentu"
-            },
-            "description": {
-                "title": "Popis",
-                "placeholder": "Podrobný popis typu incidentu"
-            },
-            "severity": {
-                "title": "Závažnost",
-                "placeholder": "Vyberte úroveň závažnosti"
-            },
-            "subtypeOf": {
-                "title": "Podtyp",
-                "placeholder": "Vyberte nadřazený typ"
-            },
-            "subtypes": {
-                "title": "Podtypy",
-                "placeholder": "Vyberte podřízené typy"
-            }
-        },
-        "severity": {
-            "Minor": "Menší",
-            "Major": "Větší",
-            "Critical": "Kritický"
-        },
-        "tabs": {
-            "dashboard": "Přehled typů incidentů",
-            "view_dashboard": "Zobrazit typy incidentů",
-            "search": "Hledat typy incidentů",
-            "create": "Vytvořit typ incidentu",
-            "edit": "Upravit typ incidentu"
-        },
-        "generalFields": "Obecná pole",
-        "classification": "Klasifikace",
-        "title": "Incidenty",
-        "subtitle": {
-            "dashboard": "Přehled statistik a aktivit typů incidentů",
-            "search": "Správa a zobrazení všech registrovaných typů incidentů",
-            "create": "Registrace nového typu incidentu v systému",
-            "edit": "Úprava existujícího typu incidentu v systému"
-        },
-        "registeredIncidentTypes": "Registrované typy incidentů",
-        "incidentTypeInformation": "Informace o typu incidentu",
-        "parentType": "Nadřazený typ",
-        "confirmDelete": "Potvrdit smazání",
-        "confirmDeleteMessage": "Opravdu chcete smazat tento typ incidentu?",
-        "failedToDelete": "Nepodařilo se smazat typ incidentu"
-    },
-    "taskCategory": {
-        "fields": {
-            "name": {
-                "title": "Název",
-                "placeholder": "Název kategorie úkolů"
-            },
-            "category": {
-                "title": "Kategorie",
-                "placeholder": "Kód kategorie"
-            },
-            "description": {
-                "title": "Popis",
-                "placeholder": "Popis kategorie úkolů"
-            }
-        },
-        "tabs": {
-            "dashboard": "Přehled kategorií úkolů",
-            "search": "Hledat kategorie úkolů",
-            "create": "Vytvořit kategorii úkolů",
-            "edit": "Upravit kategorii úkolů",
-            "view_dashboard": "Zobrazit kategorie úkolů"
-        },
-        "generalFields": "Obecná pole",
-        "title": "Úkoly",
-        "subtitle": {
-            "dashboard": "Přehled statistik a aktivit kategorií úkolů",
-            "search": "Správa a zobrazení všech registrovaných kategorií úkolů",
-            "create": "Registrace nové kategorie úkolů v systému",
-            "edit": "Úprava existující kategorie úkolů v systému"
-        },
-        "taskCategoryInformation": "Informace o kategorii úkolů",
-        "registeredTaskCategories": "Registrované kategorie úkolů"
-    },
-    "execution": {
-        "title": "Provádění návštěv plavidel",
-        "subtitle": {
-            "search": "Správa a zobrazení všech provedení návštěv plavidel",
-            "dashboard": "Přehled statistik a aktivit provádění návštěv plavidel"
-        },
-        "tabs": {
-            "dashboard": "Přehled provádění",
-            "search": "Hledat provádění",
-            "view_dashboard": "Zobrazit provádění",
-            "update": "Aktualizovat provádění",
-            "view": "Zobrazit provádění",
-            "table": "Zobrazení tabulky",
-            "cards": "Zobrazení karet"
-        },
-        "fields": {
-            "code": "Kód",
-            "relatedVVN": "Související s",
-            "status": "Stav",
-            "createdBy": "Vytvořil",
-            "dateOpen": "Datum otevření",
-            "dateClosed": "Datum uzavření",
-            "relatedVesselVisit": "Související návštěva plavidla",
-            "dock": "Kotvení u doku",
-            "berthTime": "Čas kotvení",
-            "operations": "Operace"
-        },
-        "filters": {
-            "startDate": "Datum zahájení",
-            "endDate": "Datum ukončení",
-            "relatedVVN": "Oznámení o návštěvě plavidla",
-            "status": "Stav"
-        },
-        "metrics": {
-            "totalOperations": "Celkem operací",
-            "completedOperations": "Průběh",
-            "turnaroundTime": "Doba obratu",
-            "berthOccupancy": "Obsazenost kotvení"
-        },
-        "status": {
-            "pending": "Čeká",
-            "started": "Zahájeno",
-            "delayed": "Zpožděno",
-            "completed": "Dokončeno"
-        },
-        "view_resources": "Zobrazit zdroje",
-        "infoTitle": "Informace o provádění",
-        "operationsTitle": "Operace",
-        "noOperations": "Nejsou k dispozici žádné operace",
-        "startOperation": "Zahájit operaci",
-        "completeOperation": "Dokončit operaci",
-        "addOperation": "Přidat operaci",
-        "addOperationDescription": "Přidat novou operaci do časové osy",
-        "confirmStartOperation": "Opravdu chcete zahájit tuto operaci?",
-        "confirmCompleteOperation": "Opravdu chcete dokončit tuto operaci?",
-        "berthOperation": {
-            "button": "Upravit data kotvení",
-            "title": "Operace kotvení",
-            "description": "Upravte dok a čas pro toto provádění návštěvy plavidla.",
-            "dock": "Kotvení u doku",
-            "dockPlaceholder": "Vyberte dok",
-            "berthTime": "Čas kotvení",
-            "differentThanPlanned": "Vybraný dok se liší od plánovaného."
-        }
-    },
-    "incident": {
-        "tabs": {
-            "dashboard": "Přehled incidentů",
-            "create": "Vytvořit incident",
-            "search": "Hledat incidenty",
-            "active": "Aktivní incidenty",
-            "view": "Zobrazit incident",
-            "edit": "Upravit incident"
-        },
-        "subtitle": {
-            "create": "Nahlásit nový incident v systému",
-            "search": "Vyhledat a filtrovat existující incidenty",
-            "active": "Zobrazit a spravovat aktivní incidenty"
-        },
-        "generalFields": "Obecné informace",
-        "classification": "Klasifikace",
-        "fields": {
-            "bid": {
-                "title": "ID incidentu"
-            },
-            "type": {
-                "title": "Typ incidentu",
-                "placeholder": "Vyberte typ incidentu"
-            },
-            "startTime": {
-                "title": "Čas začátku",
-                "placeholder": "Kdy incident začal?"
-            },
-            "endTime": {
-                "title": "Čas konce",
-                "placeholder": "Kdy incident skončil?"
-            },
-            "severity": {
-                "title": "Závažnost",
-                "placeholder": "Vyberte úroveň závažnosti",
-                "options": {
-                    "minor": "Menší",
-                    "major": "Větší",
-                    "critical": "Kritický"
-                }
-            },
-            "description": {
-                "title": "Popis",
-                "placeholder": "Popište incident podrobně"
-            },
-            "createdBy": {
-                "title": "Vytvořil"
-            },
-            "affectedVVECodes": {
-                "title": "Postižené VVE",
-                "placeholder": "Zadejte postižené VVE"
-            },
-            "vveCode": {
-                "title": "Kód VVE"
-            },
-            "status": {
-                "title": "Stav",
-                "options": {
-                    "active": "Aktivní",
-                    "resolved": "Vyřešeno"
-                }
-            },
-            "filterStartTime": {
-                "title": "Datum zahájení od"
-            },
-            "filterEndTime": {
-                "title": "Datum zahájení do"
-            },
-            "duration": {
-                "title": "Doba trvání"
-            }
-        },
-        "severity": {
-            "Minor": "Menší",
-            "Major": "Větší",
-            "Critical": "Kritický"
-        },
-        "status": {
-            "active": "Aktivní",
-            "resolved": "Vyřešeno"
-        },
-        "ongoing": "Probíhající",
-        "filters": {
-            "onlyActive": "Pouze aktivní",
-            "onlyMine": "Pouze moje"
-        },
-        "actions": {
-            "view": "Zobrazit podrobnosti",
-            "edit": "Upravit incident",
-            "resolve": "Vyřešit incident",
-            "delete": "Smazat incident"
-        },
-        "notifications": {
-            "createSuccess": "Incident byl úspěšně vytvořen",
-            "createFailed": "Nepodařilo se vytvořit incident",
-            "updateSuccess": "Incident byl úspěšně aktualizován",
-            "updateFailed": "Nepodařilo se aktualizovat incident",
-            "resolveSuccess": "Incident byl úspěšně vyřešen",
-            "resolveFailed": "Nepodařilo se vyřešit incident",
-            "deleteSuccess": "Incident byl úspěšně smazán",
-            "deleteFailed": "Nepodařilo se smazat incident"
-        },
-        "table": {
-            "empty": "Nebyly nalezeny žádné incidenty"
-        },
-        "active": {
-            "title": "Aktivní incidenty",
-            "subtitle": "Zobrazit a spravovat probíhající incidenty"
-        },
-        "infoTitle": "Podrobnosti incidentu",
-        "closeDialog": {
-            "title": "Vyřešit incident",
-            "message": "Kdy byl incident vyřešen",
-            "confirm": "Ano, uzavřít tento incident",
-            "cancel": "Zrušit"
-        }
-    }
+    "search":  {
+                   "languages":  "Hledat jazyky..."
+               },
+    "unsavedChanges":  {
+                           "title":  "Zrušit změny?",
+                           "message":  "Máte neuložené změny. Opravdu chcete opustit tuto stránku a zahodit změny?",
+                           "confirm":  "Zahodit",
+                           "cancel":  "Pokračovat v úpravách"
+                       },
+    "expirationWarning":  {
+                              "messageOneMinute":  "Vaše relace vyprší za 1 minutu.",
+                              "messageLessThanOneMinute":  "Vaše relace brzy vyprší."
+                          },
+    "dashboard":  {
+                      "welcome":  "Vítejte zpět, [name]!",
+                      "sidebarTitle":  "Nástěnka",
+                      "title":  "PortIT Nástěnka",
+                      "subtitle":  "Přehled systému PortIT",
+                      "SAOR":  {
+                                   "subtitle":  "Přehled činností zasílatelského agenta",
+                                   "pendingNotifications":  "Čekající oznámení",
+                                   "recent":  "Nedávná oznámení o návštěvách plavidel",
+                                   "recentReview":  "Oznámení o návštěvách plavidel k revizi",
+                                   "noRecent":  "Žádná nedávná oznámení"
+                               },
+                      "3DModel":  {
+                                      "title":  "3D vizualizace přístavu",
+                                      "description":  "Zobrazte interaktivní 3D reprezentaci celého přístavního komplexu. Sledujte obsazenost doků, pozice lodí, skladovací prostory a zdroje v reálném čase.",
+                                      "open":  "Otevřít 3D model"
+                                  }
+                  },
+    "admin":  {
+                  "sidebarTitle":  "Admin",
+                  "title":  "Admin rozhraní",
+                  "subtitle":  "Správní přehled a řízení",
+                  "userManagement":  {
+                                         "title":  "Správa uživatelů",
+                                         "subtitle":  "Spravujte uživatele systému, role a oprávnění."
+                                     },
+                  "auditLogs":  {
+                                    "title":  "Auditní záznamy",
+                                    "subtitle":  "Zobrazit a sledovat systémové záznamy aktivit."
+                                },
+                  "pp":  {
+                             "title":  "Zásady ochrany osobních údajů",
+                             "subtitle":  "Definujte a spravujte zásady ochrany osobních údajů přístavu."
+                         },
+                  "notifications":  {
+                                        "create":  "Vytvořit oznámení",
+                                        "subtitleCreate":  "Send important announcements to any or all users.",
+                                        "title":  "Systémová oznámení",
+                                        "subtitle":  "Vytvářejte a spravujte obecná systémová oznámení.",
+                                        "broadcastToggle":  "Broadcast to all users",
+                                        "sendEmailToggle":  "Also send as email",
+                                        "fields":  {
+                                                       "title":  {
+                                                                     "title":  "Title",
+                                                                     "placeholder":  "Zadejte nadpis oznámení"
+                                                                 },
+                                                       "message":  {
+                                                                       "title":  "Message",
+                                                                       "placeholder":  "Zadejte zprávu oznámení"
+                                                                   },
+                                                       "email":  {
+                                                                     "title":  "User email",
+                                                                     "placeholder":  "Specify user email to send to"
+                                                                 },
+                                                       "urgency":  {
+                                                                       "title":  "Urgency",
+                                                                       "options":  {
+                                                                                       "normal":  "Normal",
+                                                                                       "urgent":  "Urgent"
+                                                                                   }
+                                                                   }
+                                                   }
+                                    }
+              },
+    "user":  {
+                 "fields":  {
+                                "email":  {
+                                              "title":  "Email",
+                                              "placeholder":  "email@mail.com"
+                                          },
+                                "role":  {
+                                             "title":  "Role",
+                                             "placeholder":  "Vyberte roli uživatele",
+                                             "options":  {
+                                                             "admin":  "Správce",
+                                                             "saoRep":  "Zástupce SAO",
+                                                             "pao":  "Úředník přístavní správy",
+                                                             "logisticsOperator":  "Provozovatel logistiky"
+                                                         }
+                                         },
+                                "isActive":  {
+                                                 "title":  "Aktivní",
+                                                 "options":  {
+                                                                 "active":  "Ano",
+                                                                 "inactive":  "Ne"
+                                                             }
+                                             }
+                            },
+                 "tabs":  {
+                              "dashboard":  "Uživatelská nástěnka",
+                              "create":  "Vytvořit uživatele",
+                              "view":  "Zobrazit uživatele",
+                              "search":  "Hledat uživatele"
+                          },
+                 "infoTitle":  "Detaily uživatele",
+                 "title":  "Uživatelé",
+                 "subtitle":  {
+                                  "dashboard":  "Přehled a správa uživatelů",
+                                  "create":  "Zaregistrujte nového uživatele do systému",
+                                  "view":  "Zobrazit a spravovat existující uživatele"
+                              },
+                 "registeredUsers":  "Registrovaní uživatelé",
+                 "confirmDelete":  "Potvrdit smazání",
+                 "confirmDeleteMessage":  "Opravdu chcete smazat tohoto uživatele?"
+             },
+    "representative":  {
+                           "title":  "Zástupce",
+                           "select":  "Vyberte zástupce"
+                       },
+    "physicalCharacteristics":  {
+                                    "title":  "Fyzické charakteristiky (m)",
+                                    "length":  {
+                                                   "title":  "Délka",
+                                                   "placeholder":  "Délka v metrech"
+                                               },
+                                    "depth":  {
+                                                  "title":  "Hloubka",
+                                                  "placeholder":  "Hloubka v metrech"
+                                              },
+                                    "draft":  {
+                                                  "title":  "Ponor",
+                                                  "placeholder":  "Ponor v metrech"
+                                              }
+                                },
+    "dock":  {
+                 "fields":  {
+                                "code":  {
+                                             "title":  "Kód",
+                                             "placeholder":  "Kód doku"
+                                         },
+                                "name":  {
+                                             "title":  "Název",
+                                             "placeholder":  "Název doku"
+                                         },
+                                "location":  {
+                                                 "title":  "Umístění",
+                                                 "placeholder":  "Umístění doku"
+                                             },
+                                "supportedVesselTypes":  {
+                                                             "title":  "Podporované typy lodí",
+                                                             "vesselTypes":  {
+                                                                                 "title":  "Typy lodí",
+                                                                                 "placeholder":  "Vyberte typy lodí"
+                                                                             },
+                                                             "vesselType":  "Typ lodi"
+                                                         }
+                            },
+                 "tabs":  {
+                              "dashboard":  "Nástěnka doků",
+                              "view_dashboard":  "Zobrazit doky",
+                              "search":  "Hledat doky",
+                              "create":  "Vytvořit dok",
+                              "view":  "Zobrazit dok",
+                              "edit":  "Upravit dok"
+                          },
+                 "generalFields":  "Obecná pole",
+                 "infoTitle":  "Informace o doku",
+                 "title":  "Doky",
+                 "subtitle":  {
+                                  "dashboard":  "Přehled statistik a aktivit doků",
+                                  "search":  "Spravujte a zobrazte všechny registrované doky",
+                                  "create":  "Zaregistrujte nový dok do systému",
+                                  "edit":  "Upravit existující dok v systému"
+                              },
+                 "registeredDocks":  "Registrované doky"
+             },
+    "vesselType":  {
+                       "fields":  {
+                                      "name":  {
+                                                   "title":  "Název",
+                                                   "placeholder":  "Název typu lodi"
+                                               },
+                                      "description":  {
+                                                          "title":  "Popis",
+                                                          "placeholder":  "Popis typu lodi"
+                                                      },
+                                      "capacity":  {
+                                                       "title":  "Kapacita",
+                                                       "placeholder":  "Kapacita kontejnerů v TEU"
+                                                   },
+                                      "containerCapacity":  {
+                                                                "title":  "Kapacita kontejnerů (TEU)",
+                                                                "maxNumberOfRows":  {
+                                                                                        "title":  "Maximální počet řad",
+                                                                                        "placeholder":  "Max řad v TEU"
+                                                                                    },
+                                                                "maxNumberOfBays":  {
+                                                                                        "title":  "Maximální počet prostor",
+                                                                                        "placeholder":  "Max prostor v TEU"
+                                                                                    },
+                                                                "maxNumberOfTiers":  {
+                                                                                         "title":  "Maximální počet úrovní",
+                                                                                         "placeholder":  "Max úrovní v TEU"
+                                                                                     }
+                                                            }
+                                  },
+                       "generalFields":  "Obecná pole",
+                       "tabs":  {
+                                    "dashboard":  "Nástěnka typů lodí",
+                                    "view_dashboard":  "Zobrazit typy lodí",
+                                    "search":  "Hledat typy lodí",
+                                    "create":  "Vytvořit typ lodi",
+                                    "view":  "Zobrazit typ lodi",
+                                    "edit":  "Upravit typ lodi"
+                                },
+                       "infoTitle":  "Informace o typu lodi",
+                       "title":  "Typy lodí",
+                       "subtitle":  {
+                                        "dashboard":  "Přehled statistik a aktivit typů lodí",
+                                        "search":  "Spravujte a zobrazte všechny registrované typy lodí",
+                                        "create":  "Zaregistrujte nový typ lodi do systému",
+                                        "edit":  "Upravit existující typ lodi v systému"
+                                    },
+                       "registeredVesselTypes":  "Registrované typy lodí"
+                   },
+    "vessel":  {
+                   "fields":  {
+                                  "name":  {
+                                               "title":  "Název",
+                                               "placeholder":  "Název lodi"
+                                           },
+                                  "imoNumber":  {
+                                                    "title":  "IMO číslo",
+                                                    "placeholder":  "IMO číslo lodi"
+                                                },
+                                  "owner":  {
+                                                "title":  "Vlastník",
+                                                "placeholder":  "Organizace vlastníka"
+                                            },
+                                  "vesselType":  {
+                                                     "title":  "Typ lodi",
+                                                     "placeholder":  "Vyberte typ lodi"
+                                                 },
+                                  "taxNumber":  {
+                                                    "title":  "Daňové číslo"
+                                                }
+                              },
+                   "infoTitle":  "Informace o lodi",
+                   "physicalCharacteristicsTitle":  "Fyzické charakteristiky",
+                   "tabs":  {
+                                "dashboard":  "Nástěnka lodí",
+                                "view_dashboard":  "Zobrazit lodě",
+                                "search":  "Hledat lodě",
+                                "create":  "Vytvořit loď",
+                                "view":  "Zobrazit loď",
+                                "edit":  "Upravit loď"
+                            },
+                   "title":  "Lodě",
+                   "subtitle":  {
+                                    "dashboard":  "Přehled statistik a aktivit lodí",
+                                    "search":  "Spravujte a zobrazte všechny registrované lodě",
+                                    "create":  "Zaregistrujte novou loď v systému",
+                                    "edit":  "Upravit existující loď v systému"
+                                },
+                   "ownedBy":  "Vlastník",
+                   "registeredVessels":  "Registrované lodě"
+               },
+    "staff":  {
+                  "deactivation":  {
+                                       "title":  "Deaktivovat člena personálu",
+                                       "message":  "Opravdu chcete deaktivovat tohoto člena personálu? Můžete jej znovu aktivovat později.",
+                                       "successMessage":  "Člen personálu byl úspěšně deaktivován.",
+                                       "errorMessage":  "Chyba při deaktivaci. Zkuste to znovu."
+                                   },
+                  "fields":  {
+                                 "mechanographicNumber":  {
+                                                              "title":  "Mechanografické číslo",
+                                                              "placeholder":  "Mechanografické číslo"
+                                                          },
+                                 "name":  {
+                                              "title":  "Jméno",
+                                              "placeholder":  "Jméno zaměstnance"
+                                          },
+                                 "email":  {
+                                               "title":  "Email",
+                                               "placeholder":  "Emailová adresa"
+                                           },
+                                 "phoneNumber":  {
+                                                     "title":  "Telefonní číslo",
+                                                     "placeholder":  "Telefonní číslo"
+                                                 },
+                                 "qualifications":  {
+                                                        "title":  "Kvalifikace",
+                                                        "placeholder":  "Vyberte kvalifikace"
+                                                    },
+                                 "status":  {
+                                                "title":  "Stav",
+                                                "options":  {
+                                                                "available":  "Dostupný",
+                                                                "unavailable":  "Nedostupný",
+                                                                "temporarilyReassigned":  "Dočasně přeřazen"
+                                                            }
+                                            },
+                                 "operationalWindow":  "Provozní okno"
+                             },
+                  "tabs":  {
+                               "dashboard":  "Nástěnka zaměstnanců",
+                               "view_dashboard":  "Zobrazit zaměstnance",
+                               "search":  "Hledat zaměstnance",
+                               "create":  "Vytvořit zaměstnance",
+                               "view":  "Zobrazit zaměstnance",
+                               "edit":  "Upravit zaměstnance"
+                           },
+                  "infoTitle":  "Informace o zaměstnanci",
+                  "title":  "Zaměstnanci",
+                  "subtitle":  {
+                                   "search":  "Spravujte a zobrazte všechny registrované zaměstnance",
+                                   "dashboard":  "Přehled statistik a aktivit zaměstnanců",
+                                   "create":  "Zaregistrujte nového zaměstnance v systému",
+                                   "view":  "Zobrazit detaily zaměstnance",
+                                   "edit":  "Upravit existujícího zaměstnance v systému"
+                               },
+                  "registeredStaffMembers":  "Registrovaní členové personálu"
+              },
+    "qualification":  {
+                          "tabs":  {
+                                       "dashboard":  "Nástěnka kvalifikací",
+                                       "view_dashboard":  "Zobrazit kvalifikace",
+                                       "search":  "Hledat kvalifikace",
+                                       "create":  "Vytvořit kvalifikaci",
+                                       "view":  "Zobrazit kvalifikaci",
+                                       "edit":  "Upravit kvalifikaci"
+                                   },
+                          "infoTitle":  "Informace o kvalifikaci",
+                          "title":  "Kvalifikace",
+                          "subtitle":  {
+                                           "search":  "Spravujte a zobrazte všechny registrované kvalifikace",
+                                           "dashboard":  "Přehled statistik a aktivit kvalifikací",
+                                           "create":  "Zaregistrujte novou kvalifikaci v systému",
+                                           "edit":  "Upravit existující kvalifikaci v systému",
+                                           "view":  "Zobrazit detaily kvalifikace"
+                                       },
+                          "fields":  {
+                                         "idCode":  {
+                                                        "title":  "Kód kvalifikace",
+                                                        "placeholder":  "Kód kvalifikace"
+                                                    },
+                                         "qualificationName":  {
+                                                                   "title":  "Název kvalifikace",
+                                                                   "placeholder":  "Název kvalifikace"
+                                                               }
+                                     },
+                          "registeredQualifications":  "Registrované kvalifikace"
+                      },
+    "scheduling":  {
+                       "title":  "Vyžádat denní plán",
+                       "subtitle":  "Použijte náš automatický plánovací algoritmus k analýze naplánovaných úkolů pro vybraný den.",
+                       "noVisits":  "Žádné návštěvy plavidel naplánované na vybrané datum.",
+                       "visitsOnSelectedDay":  "Návštěvy plavidel ve vybraný den",
+                       "viewVisits":  "Generovat plán úkolů",
+                       "generateTasksButton":  "Generovat plán úkolů",
+                       "aboutAlgorithmButton":  "O algoritmu",
+                       "fields":  {
+                                      "algorithm":  {
+                                                        "title":  "Plánovací algoritmus",
+                                                        "placeholder":  "Vyberte plánovací algoritmus"
+                                                    },
+                                      "relatedDocks":  "Vyberte související dok"
+                                  },
+                       "generateTasksModal":  {
+                                                  "title":  "Doplňková logistika"
+                                              },
+                       "aboutAlgorithmModal":  {
+                                                   "title":  "O algoritmu",
+                                                   "content":  "Aktuální algoritmus bere v úvahu oznámení o návštěvách plavidel naplánovaných pro vybraný den a dok. Poté kontroluje dostupnost STS jeřábů pro daný dok a určuje dobu trvání každého úkolu na základě rychlosti jeřábu. Ignoruje návštěvy určené pro údržbu nebo jiné ne-nakládací/vykládací aktivity."
+                                               },
+                       "results":  {
+                                       "title":  "Scheduling Results",
+                                       "subtitle":  "Generated task schedule for the selected date"
+                                   },
+                       "tabs":  {
+                                    "dashboard":  "Scheduling Dashboard",
+                                    "results":  "Scheduling Results",
+                                    "schedule":  "Request Task Schedule",
+                                    "view_dashboard":  "View Scheduling",
+                                    "search":  "List Operation Plans",
+                                    "create":  "Create Scheduling",
+                                    "view":  "View Scheduling",
+                                    "edit":  "Edit Scheduling",
+                                    "queue":  "Scheduling Queue"
+                                },
+                       "subtitles":  {
+                                         "dashboard":  "Overview of scheduling of berth operations and incidents",
+                                         "schedule":  "Request a task schedule for a specific date",
+                                         "search":  "List all operation plans for a given date",
+                                         "create":  "Create a new scheduling into the system",
+                                         "edit":  "Edit an existing scheduling in the system",
+                                         "queue":  "View pending scheduling requests"
+                                     },
+                       "queue":  {
+                                     "title":  "Scheduling Queue",
+                                     "subtitle":  "Pending scheduling requests",
+                                     "onlyMine":  "Show only my requests"
+                                 },
+                       "rebalancing":  {
+                                           "title":  "Dock Rebalancing Required",
+                                           "warningMessage":  "Before scheduling, the system recommends rebalancing dock assignments to optimize load distribution.",
+                                           "vesselsToReassign":  "Vessels to Reassign",
+                                           "averageLoad":  "Average Load",
+                                           "loadRange":  "Load Range",
+                                           "proposedReassignments":  "Proposed Reassignments",
+                                           "vesselImo":  "Vessel IMO",
+                                           "currentDock":  "Current Dock",
+                                           "proposedDock":  "Proposed Dock",
+                                           "skipButton":  "Skip \u0026 Continue with Current Assignments",
+                                           "applyButton":  "Apply Rebalancing \u0026 Generate Schedule"
+                                       }
+                   },
+    "physicalResource":  {
+                             "deactivation":  {
+                                                  "title":  "Deaktivovat fyzický zdroj",
+                                                  "message":  "Opravdu chcete deaktivovat tento fyzický zdroj? Můžete jej znovu aktivovat později.",
+                                                  "successMessage":  "Fyzický zdroj byl úspěšně deaktivován.",
+                                                  "errorMessage":  "Chyba při deaktivaci. Zkuste to znovu."
+                                              },
+                             "tabs":  {
+                                          "dashboard":  "Nástěnka fyzických zdrojů",
+                                          "view_dashboard":  "Zobrazit fyzické zdroje",
+                                          "search":  "Hledat fyzické zdroje",
+                                          "create":  "Vytvořit fyzický zdroj",
+                                          "view":  "Zobrazit fyzický zdroj",
+                                          "edit":  "Upravit fyzický zdroj"
+                                      },
+                             "infoTitle":  "Informace o fyzickém zdroji",
+                             "title":  "Fyzické zdroje",
+                             "subtitle":  {
+                                              "search":  "Spravujte a zobrazte všechny registrované fyzické zdroje",
+                                              "dashboard":  "Ovládací panel pro všechny fyzické zdroje",
+                                              "view_dashboard":  "Zobrazit fyzické zdroje",
+                                              "create":  "Zaregistrujte nový fyzický zdroj v systému",
+                                              "view":  "Zobrazit detaily fyzického zdroje",
+                                              "edit":  "Upravit existující fyzický zdroj v systému"
+                                          },
+                             "generalFields":  "Obecná pole",
+                             "specificFields":  "Specifická pole",
+                             "fields":  {
+                                            "code":  {
+                                                         "title":  "Kód",
+                                                         "placeholder":  "Kód zdroje"
+                                                     },
+                                            "description":  {
+                                                                "title":  "Popis",
+                                                                "placeholder":  "Popis zdroje"
+                                                            },
+                                            "status":  {
+                                                           "title":  "Stav",
+                                                           "placeholder":  "Vyberte stav zdroje",
+                                                           "options":  {
+                                                                           "available":  "Dostupný",
+                                                                           "maintenance":  "Údržba",
+                                                                           "outOfService":  "Mimo provoz"
+                                                                       }
+                                                       },
+                                            "qualifications":  {
+                                                                   "title":  "Požadované kvalifikace",
+                                                                   "placeholder":  "Kvalifikace potřebné k obsluze tohoto zdroje"
+                                                               },
+                                            "setupTime":  {
+                                                              "title":  "Čas nastavení (minuty)",
+                                                              "placeholder":  "Čas nastavení"
+                                                          },
+                                            "servingDocks":  {
+                                                                 "title":  "Obsluhující doky",
+                                                                 "placeholder":  "Vyberte obsluhující doky"
+                                                             },
+                                            "liftingCapacity":  {
+                                                                    "title":  "Nosnost (kg)",
+                                                                    "placeholder":  "Nosnost"
+                                                                },
+                                            "containersPerHour":  {
+                                                                      "title":  "Kontejnery za hodinu",
+                                                                      "placeholder":  "Kontejnery za hodinu"
+                                                                  },
+                                            "maxLoadCapacity":  {
+                                                                    "title":  "Maximální nosnost (kg)",
+                                                                    "placeholder":  "Maximální nosnost"
+                                                                },
+                                            "averageSpeed":  {
+                                                                 "title":  "Průměrná rychlost (km/h)",
+                                                                 "placeholder":  "Průměrná rychlost"
+                                                             },
+                                            "containersPerTrip":  {
+                                                                      "title":  "Kontejnery na jízdu",
+                                                                      "placeholder":  "Kontejnery na jízdu"
+                                                                  },
+                                            "type":  {
+                                                         "title":  "Typ zdroje",
+                                                         "options":  {
+                                                                         "stsCrane":  "Příbřežní jeřáb (STS)",
+                                                                         "yardGantry":  "Příhradový jeřáb",
+                                                                         "truck":  "Nákladní auto"
+                                                                     }
+                                                     }
+                                        },
+                             "actions":  {
+                                             "deactivate":  "Deaktivovat fyzický zdroj"
+                                         },
+                             "registeredPhysicalResources":  "Registrované fyzické zdroje"
+                         },
+    "storageArea":  {
+                        "tabs":  {
+                                     "dashboard":  "Nástěnka skladovacích oblastí",
+                                     "view_dashboard":  "Zobrazit skladovací oblasti",
+                                     "search":  "Hledat skladovací oblasti",
+                                     "create":  "Vytvořit skladovací oblast",
+                                     "view":  "Zobrazit skladovací oblast",
+                                     "edit":  "Upravit skladovací oblast"
+                                 },
+                        "create":  {
+                                       "distance_meters":  "Vzdálenost (metry)"
+                                   },
+                        "infoTitle":  "Informace o skladovací oblasti",
+                        "title":  "Skladovací oblasti",
+                        "subtitle":  {
+                                         "search":  "Spravujte a zobrazte všechny registrované skladovací oblasti",
+                                         "dashboard":  "Ovládací panel pro všechny funkce skladovacích oblastí",
+                                         "view_dashboard":  "Zobrazit skladovací oblasti",
+                                         "create":  "Zaregistrujte novou skladovací oblast v systému",
+                                         "view":  "Zobrazit detaily skladovací oblasti",
+                                         "edit":  "Upravit existující skladovací oblast v systému"
+                                     },
+                        "printer":  {
+                                        "docks_serviced":  "obsluhované doky",
+                                        "capacity_usage":  "Využití kapacity",
+                                        "units":  "jednotky",
+                                        "available":  "dostupné",
+                                        "no_registered_distances":  "Žádné registrované vzdálenosti",
+                                        "no_docks_serviced":  "Žádné obsluhované doky",
+                                        "all_docks_serviced":  "Všechny doky obsluhovány",
+                                        "serviced_docks_distance":  "Vzdálenost obsluhovaných doků",
+                                        "no_registered_docks":  "Žádné registrované doky"
+                                    },
+                        "fields":  {
+                                       "nameCode":  {
+                                                        "title":  "Kód názvu",
+                                                        "placeholder":  "Kód názvu skladovací oblasti"
+                                                    },
+                                       "location":  {
+                                                        "title":  "Umístění",
+                                                        "placeholder":  "Umístění skladovací oblasti"
+                                                    },
+                                       "type":  {
+                                                    "title":  "Typ",
+                                                    "placeholder":  "Vyberte typ skladovací oblasti",
+                                                    "options":  {
+                                                                    "yard":  "Dvůr",
+                                                                    "warehouse":  "Sklad"
+                                                                }
+                                                },
+                                       "capacity":  {
+                                                        "title":  "Kapacita",
+                                                        "placeholder":  "Maximální kapacita"
+                                                    },
+                                       "occupancy":  {
+                                                         "title":  "Obsazenost",
+                                                         "placeholder":  "Aktuální obsazenost"
+                                                     }
+                                   },
+                        "registeredStorageAreas":  "Registrované skladovací prostory"
+                    },
+    "notification":  {
+                         "id":  "ID oznámení",
+                         "hazardous":  "Nebezpečný",
+                         "nonHazardous":  "Nenebezpečný",
+                         "arrival":  "Příjezd",
+                         "departure":  "Odjezd",
+                         "specialRequirements":  "Speciální požadavky",
+                         "none":  "Žádné",
+                         "crew":  "Posádka",
+                         "captain":  "Kapitán",
+                         "unknown":  "Neznámé",
+                         "from":  "Od",
+                         "to":  "Do",
+                         "step":  "Krok",
+                         "of":  "z",
+                         "tabs":  {
+                                      "dashboard":  "Nástěnka oznámení",
+                                      "search":  "Hledat oznámení",
+                                      "edit":  "Upravit oznámení",
+                                      "create":  "Vytvořit oznámení",
+                                      "update":  "Update Notification",
+                                      "makeDraft":  "Vytvořit koncept oznámení",
+                                      "myNotifications":  "Má oznámení",
+                                      "review":  "Revize oznámení",
+                                      "general":  "Obecný výpis",
+                                      "byDate":  "Kalendářní výpis",
+                                      "submit":  "Odeslat oznámení",
+                                      "delete":  "Smazat oznámení"
+                                  },
+                         "eventsOnDate":  "Události ve vybraný den",
+                         "noEventsOnDate":  "Žádné události ve vybraný den",
+                         "title":  "Oznámení o návštěvách plavidel",
+                         "subtitle":  {
+                                          "dashboard":  "Přehled oznámení o návštěvách plavidel",
+                                          "search":  "Spravujte a zobrazte všechna oznámení o návštěvách plavidel",
+                                          "create":  "Vytvořit nové oznámení o návštěvě plavidla",
+                                          "update":  "Update an existing vessel visit notification",
+                                          "edit":  "Upravit existující oznámení o návštěvě plavidla",
+                                          "review":  "Revize čekajících oznámení o návštěvě plavidla"
+                                      },
+                         "errors":  {
+                                        "noNotificationId":  "Nebyl poskytnut ID oznámení"
+                                    },
+                         "infoTitle":  "Informace o oznámení",
+                         "cargoTitle":  "Informace o nákladu",
+                         "vesselTitle":  "Informace o plavidle",
+                         "manifestInfo":  "Informace o manifestu",
+                         "fields":  {
+                                        "selectVessel":  "Select corresponding vessel",
+                                        "openLoadManifest":  "Otevřít nakládací manifest",
+                                        "openUnloadManifest":  "Otevřít vykládací manifest",
+                                        "expectedArrival":  "Očekávaný příjezd",
+                                        "expectedDeparture":  "Očekávaný odjezd",
+                                        "isCargoHazardous":  "Náklad nebezpečný",
+                                        "specialRequirements":  "Speciální požadavky",
+                                        "captain":  "Kapitán",
+                                        "totalCrewMembers":  "Celkový počet členů posádky",
+                                        "safetyOfficers":  "Bezpečnostní pracovníci",
+                                        "loadCargoManifest":  "Nakládací manifest",
+                                        "unloadCargoManifest":  "Vykládací manifest",
+                                        "position":  "Pozice",
+                                        "area":  "Oblast",
+                                        "container":  "Kontejner",
+                                        "crewMembers":  "Členové posádky",
+                                        "status":  "Stav",
+                                        "isCargoHazardousQ":  "Is Cargo Hazardous?",
+                                        "cargoManifestInfo":  "About cargo manifest files"
+                                    },
+                         "timeline":  {
+                                          "pending":  "Čeká",
+                                          "inProgress":  "Probíhá",
+                                          "completed":  "Dokončeno",
+                                          "submitted":  "Odesláno",
+                                          "accepted":  "Přijato",
+                                          "rejected":  "Zamítnuto"
+                                      },
+                         "filters":  {
+                                         "expectedArrivalFrom":  "Očekávaný příjezd od",
+                                         "expectedArrivalTo":  "Očekávaný příjezd do",
+                                         "withReason":  "S odůvodněním",
+                                         "withDockAssigned":  "S přiřazeným dokem"
+                                     },
+                         "decision":  {
+                                          "isFinal":  "Konečné",
+                                          "assignedDock":  {
+                                                               "title":  "Přiřazený dok",
+                                                               "placeholder":  "Vyberte přiřazený dok"
+                                                           },
+                                          "reason":  {
+                                                         "title":  "Důvod",
+                                                         "placeholder":  "Uveďte důvod rozhodnutí"
+                                                     },
+                                          "status":  "Stav rozhodnutí"
+                                      },
+                         "sections":  {
+                                          "vesselDetails":  "Informace o návštěvě",
+                                          "crewDetails":  "Detaily posádky",
+                                          "cargoRequirements":  "Požadavky na náklad",
+                                          "cargoContent":  "Obsah nákladu"
+                                      },
+                         "about":  {
+                                       "text":  "Soubory manifestu nákladu (v současnosti) musí být v evropském standardním formátu CSV. Každý řádek v CSV souboru představuje položku nákladu s následujícími sloupci:",
+                                       "bay":  "Přihrádka (číslo)",
+                                       "row":  "Řada (číslo)",
+                                       "tier":  "Úroveň (číslo)",
+                                       "area":  "Kód oblasti (odkud/kam)",
+                                       "containerNumber":  "Číslo kontejneru (text)",
+                                       "conatinerType":  "Typ kontejneru (číslo)",
+                                       "description":  "Popis (text)",
+                                       "containerTypes":  {
+                                                              "refrigeratedGoods":  "Chlazené zboží",
+                                                              "generalConsumerProducts":  "Obecné spotřební produkty",
+                                                              "electronics":  "Elektronika",
+                                                              "hazmat":  "Nebezpečné materiály",
+                                                              "oversizedIndustrialEquipment":  "Nadrozměrné průmyslové zařízení",
+                                                              "other":  "Jiné"
+                                                          }
+                                   },
+                         "registeredVesselVisitNotifications":  "Registrovaná oznámení o návštěvách plavidel"
+                     },
+    "operationalWindow":  {
+                              "title":  "Provozní okno",
+                              "printer":  {
+                                              "addShift":  "Přidat směnu",
+                                              "shifts":  "Směny:",
+                                              "noShifts":  "Žádné směny.",
+                                              "startTime":  "Čas začátku",
+                                              "endTime":  "Čas konce",
+                                              "weekDays":  "Dny v týdnu"
+                                          },
+                              "errors":  {
+                                             "shiftOverlap":  "Neplatná směna. Překrývá se nebo konec před začátkem."
+                                         }
+                          },
+    "about":  {
+                  "title":  "O PorTiT",
+                  "privacy":  {
+                                  "title":  "Zásady ochrany osobních údajů",
+                                  "lastUpdated":  "Poslední aktualizace: {date}"
+                              }
+              },
+    "operationPlan":  {
+                          "title":  "Operační plán",
+                          "dock":  "Dok",
+                          "docks":  "Doky",
+                          "operations":  "Operace",
+                          "cranes":  "Jeřáby",
+                          "createdBy":  "Vytvořil",
+                          "createdAt":  "Vytvořeno",
+                          "totalSchedules":  "Celkem rozvrhy",
+                          "vesselCount":  "Plavidla",
+                          "plansOnDate":  "Operační plány ve vybraném datu",
+                          "noPlansOnDate":  "Ve vybraném datu nejsou žádné operační plány",
+                          "id":  "ID",
+                          "vvn":  "Oznámení o návštěvě plavidla",
+                          "for":  "pro",
+                          "details":  "Podrobnosti",
+                          "totalOperations":  "Celkem operací",
+                          "algorithmUsed":  "Použitý algoritmus",
+                          "ganttChart":  "Ganttův diagram",
+                          "startTime":  "Čas začátku",
+                          "endTime":  "Čas konce",
+                          "totalDuration":  "Celková doba trvání",
+                          "operation":  "Operace",
+                          "duration":  "Doba trvání",
+                          "resources":  "Zdroje",
+                          "operationDetails":  "Podrobnosti operace",
+                          "operationNumber":  "Operace #{number}",
+                          "notFound":  "Operační plán nebyl nalezen",
+                          "operationType":  {
+                                                "Unload":  "Vyložit",
+                                                "Load":  "Naložit"
+                                            },
+                          "tabs":  {
+                                       "unplannedVVNs":  "Neplánované VVN",
+                                       "search":  "Hledat plány",
+                                       "edit":  "Upravit plán",
+                                       "open":  "Zahájit provádění"
+                                   },
+                          "subtitle":  {
+                                           "edit":  "Upravit podrobnosti operačního plánu a rozvrh"
+                                       },
+                          "unplannedVVNs":  {
+                                                "description":  "Oznámení o návštěvách plavidel, která ještě nemají přiřazený operační plán",
+                                                "noUnplanned":  "Všechna oznámení o návštěvách plavidel mají přiřazené operační plány",
+                                                "foundMessage":  "Nalezeno {vvnCount} VVN bez plánů napříč {dayCount} dny",
+                                                "regenerateAll":  "Regenerovat všechny chybějící plány",
+                                                "regenerateDay":  "Regenerovat plány pro tento den",
+                                                "regenerateModalTitle":  "Regenerovat plány pro {date}",
+                                                "warning":  "Varování",
+                                                "warningMessage":  "Regenerace plánů přepíše všechny existující operační plány pro tento den. Tuto akci nelze vrátit zpět.",
+                                                "selectedDay":  "Vybraný den",
+                                                "confirmRegeneration":  "Potvrdit regeneraci",
+                                                "affectedDays":  "Ovlivněné dny",
+                                                "queueInfo":  "Každá žádost o regeneraci bude zařazena do fronty samostatně. Můžete je zkontrolovat a přijmout/odmítnout jednotlivě z fronty plánování.",
+                                                "continue":  "Pokračovat",
+                                                "confirmRegenerationTitle":  "Potvrdit regeneraci",
+                                                "irreversibleAction":  "Tato akce je nevratná",
+                                                "overwriteWarning":  "Regenerace operačních plánů trvale přepíše všechny existující plány pro vybrané dny. Tuto akci nelze vrátit zpět.",
+                                                "aboutToRegenerate":  "Chystáte se regenerovat plány pro",
+                                                "days":  "dny",
+                                                "vesselVisitNotifications":  "Oznámení o návštěvách plavidel",
+                                                "using":  "Použití",
+                                                "algorithm":  "algoritmus",
+                                                "proceedQuestion":  "Chcete pokračovat v této operaci?",
+                                                "yesRegenerateAll":  "Ano, regenerovat vše"
+                                            },
+                          "algorithm":  {
+                                            "optimal":  "Optimální",
+                                            "greedy":  "Hladový",
+                                            "genetic":  "Genetický",
+                                            "auto":  "Automatický"
+                                        },
+                          "metrics":  {
+                                          "title":  "Metriky",
+                                          "strategy":  "Strategie",
+                                          "totalDelay":  "Celkové zpoždění",
+                                          "computationTime":  "Výpočetní čas",
+                                          "autoSelection":  "Automatický výběr algoritmu"
+                                      },
+                          "infoTitle":  "Informace o operačním plánu",
+                          "fields":  {
+                                         "id":  {
+                                                    "title":  "ID plánu"
+                                                },
+                                         "relatedVVN":  {
+                                                            "title":  "Související VVN"
+                                                        },
+                                         "dock":  {
+                                                      "title":  "Dok"
+                                                  },
+                                         "operations":  {
+                                                            "title":  "Operace"
+                                                        }
+                                     },
+                          "filters":  {
+                                          "startDate":  "Datum zahájení od",
+                                          "endDate":  "Datum ukončení do"
+                                      },
+                          "metadata":  {
+                                           "title":  "Metadata",
+                                           "createdBy":  "Vytvořil",
+                                           "createdAt":  "Vytvořeno",
+                                           "algorithmUsed":  "Použitý algoritmus"
+                                       },
+                          "schedule":  {
+                                           "title":  "Operační rozvrh",
+                                           "noOperations":  "Nejsou naplánovány žádné operace"
+                                       }
+                      },
+    "incidentType":  {
+                         "fields":  {
+                                        "name":  {
+                                                     "title":  "Název",
+                                                     "placeholder":  "Název typu incidentu"
+                                                 },
+                                        "description":  {
+                                                            "title":  "Popis",
+                                                            "placeholder":  "Podrobný popis typu incidentu"
+                                                        },
+                                        "severity":  {
+                                                         "title":  "Závažnost",
+                                                         "placeholder":  "Vyberte úroveň závažnosti"
+                                                     },
+                                        "subtypeOf":  {
+                                                          "title":  "Podtyp",
+                                                          "placeholder":  "Vyberte nadřazený typ"
+                                                      },
+                                        "subtypes":  {
+                                                         "title":  "Podtypy",
+                                                         "placeholder":  "Vyberte podřízené typy"
+                                                     }
+                                    },
+                         "severity":  {
+                                          "Minor":  "Menší",
+                                          "Major":  "Větší",
+                                          "Critical":  "Kritický"
+                                      },
+                         "tabs":  {
+                                      "dashboard":  "Přehled typů incidentů",
+                                      "view_dashboard":  "Zobrazit typy incidentů",
+                                      "search":  "Hledat typy incidentů",
+                                      "create":  "Vytvořit typ incidentu",
+                                      "edit":  "Upravit typ incidentu"
+                                  },
+                         "generalFields":  "Obecná pole",
+                         "classification":  "Klasifikace",
+                         "title":  "Incidenty",
+                         "subtitle":  {
+                                          "dashboard":  "Přehled statistik a aktivit typů incidentů",
+                                          "search":  "Správa a zobrazení všech registrovaných typů incidentů",
+                                          "create":  "Registrace nového typu incidentu v systému",
+                                          "edit":  "Úprava existujícího typu incidentu v systému"
+                                      },
+                         "registeredIncidentTypes":  "Registrované typy incidentů",
+                         "incidentTypeInformation":  "Informace o typu incidentu",
+                         "parentType":  "Nadřazený typ",
+                         "confirmDelete":  "Potvrdit smazání",
+                         "confirmDeleteMessage":  "Opravdu chcete smazat tento typ incidentu?",
+                         "failedToDelete":  "Nepodařilo se smazat typ incidentu"
+                     },
+    "taskCategory":  {
+                         "fields":  {
+                                        "name":  {
+                                                     "title":  "Název",
+                                                     "placeholder":  "Název kategorie úkolů"
+                                                 },
+                                        "category":  {
+                                                         "title":  "Kategorie",
+                                                         "placeholder":  "Kód kategorie"
+                                                     },
+                                        "description":  {
+                                                            "title":  "Popis",
+                                                            "placeholder":  "Popis kategorie úkolů"
+                                                        }
+                                    },
+                         "tabs":  {
+                                      "dashboard":  "Přehled kategorií úkolů",
+                                      "search":  "Hledat kategorie úkolů",
+                                      "create":  "Vytvořit kategorii úkolů",
+                                      "edit":  "Upravit kategorii úkolů",
+                                      "view_dashboard":  "Zobrazit kategorie úkolů"
+                                  },
+                         "generalFields":  "Obecná pole",
+                         "title":  "Úkoly",
+                         "subtitle":  {
+                                          "dashboard":  "Přehled statistik a aktivit kategorií úkolů",
+                                          "search":  "Správa a zobrazení všech registrovaných kategorií úkolů",
+                                          "create":  "Registrace nové kategorie úkolů v systému",
+                                          "edit":  "Úprava existující kategorie úkolů v systému"
+                                      },
+                         "taskCategoryInformation":  "Informace o kategorii úkolů",
+                         "registeredTaskCategories":  "Registrované kategorie úkolů"
+                     },
+    "execution":  {
+                      "title":  "Provádění návštěv plavidel",
+                      "subtitle":  {
+                                       "search":  "Správa a zobrazení všech provedení návštěv plavidel",
+                                       "dashboard":  "Přehled statistik a aktivit provádění návštěv plavidel"
+                                   },
+                      "tabs":  {
+                                   "dashboard":  "Přehled provádění",
+                                   "search":  "Hledat provádění",
+                                   "view_dashboard":  "Zobrazit provádění",
+                                   "update":  "Aktualizovat provádění",
+                                   "view":  "Zobrazit provádění",
+                                   "table":  "Zobrazení tabulky",
+                                   "cards":  "Zobrazení karet"
+                               },
+                      "fields":  {
+                                     "code":  "Kód",
+                                     "relatedVVN":  "Související s",
+                                     "status":  "Stav",
+                                     "createdBy":  "Vytvořil",
+                                     "dateOpen":  "Datum otevření",
+                                     "dateClosed":  "Datum uzavření",
+                                     "relatedVesselVisit":  "Související návštěva plavidla",
+                                     "dock":  "Kotvení u doku",
+                                     "berthTime":  "Čas kotvení",
+                                     "operations":  "Operace"
+                                 },
+                      "filters":  {
+                                      "startDate":  "Datum zahájení",
+                                      "endDate":  "Datum ukončení",
+                                      "relatedVVN":  "Oznámení o návštěvě plavidla",
+                                      "status":  "Stav"
+                                  },
+                      "metrics":  {
+                                      "totalOperations":  "Celkem operací",
+                                      "completedOperations":  "Průběh",
+                                      "turnaroundTime":  "Doba obratu",
+                                      "berthOccupancy":  "Obsazenost kotvení"
+                                  },
+                      "status":  {
+                                     "pending":  "Čeká",
+                                     "started":  "Zahájeno",
+                                     "delayed":  "Zpožděno",
+                                     "completed":  "Dokončeno"
+                                 },
+                      "view_resources":  "Zobrazit zdroje",
+                      "infoTitle":  "Informace o provádění",
+                      "operationsTitle":  "Operace",
+                      "noOperations":  "Nejsou k dispozici žádné operace",
+                      "startOperation":  "Zahájit operaci",
+                      "completeOperation":  "Dokončit operaci",
+                      "addOperation":  "Přidat operaci",
+                      "addOperationDescription":  "Přidat novou operaci do časové osy",
+                      "confirmStartOperation":  "Opravdu chcete zahájit tuto operaci?",
+                      "confirmCompleteOperation":  "Opravdu chcete dokončit tuto operaci?",
+                      "berthOperation":  {
+                                             "button":  "Upravit data kotvení",
+                                             "title":  "Operace kotvení",
+                                             "description":  "Upravte dok a čas pro toto provádění návštěvy plavidla.",
+                                             "dock":  "Kotvení u doku",
+                                             "dockPlaceholder":  "Vyberte dok",
+                                             "berthTime":  "Čas kotvení",
+                                             "differentThanPlanned":  "Vybraný dok se liší od plánovaného."
+                                         }
+                  },
+    "incident":  {
+                     "tabs":  {
+                                  "dashboard":  "Přehled incidentů",
+                                  "create":  "Vytvořit incident",
+                                  "search":  "Hledat incidenty",
+                                  "active":  "Aktivní incidenty",
+                                  "view":  "Zobrazit incident",
+                                  "edit":  "Upravit incident"
+                              },
+                     "subtitle":  {
+                                      "create":  "Nahlásit nový incident v systému",
+                                      "search":  "Vyhledat a filtrovat existující incidenty",
+                                      "active":  "Zobrazit a spravovat aktivní incidenty"
+                                  },
+                     "generalFields":  "Obecné informace",
+                     "classification":  "Klasifikace",
+                     "fields":  {
+                                    "bid":  {
+                                                "title":  "ID incidentu"
+                                            },
+                                    "type":  {
+                                                 "title":  "Typ incidentu",
+                                                 "placeholder":  "Vyberte typ incidentu"
+                                             },
+                                    "startTime":  {
+                                                      "title":  "Čas začátku",
+                                                      "placeholder":  "Kdy incident začal?"
+                                                  },
+                                    "endTime":  {
+                                                    "title":  "Čas konce",
+                                                    "placeholder":  "Kdy incident skončil?"
+                                                },
+                                    "severity":  {
+                                                     "title":  "Závažnost",
+                                                     "placeholder":  "Vyberte úroveň závažnosti",
+                                                     "options":  {
+                                                                     "minor":  "Menší",
+                                                                     "major":  "Větší",
+                                                                     "critical":  "Kritický"
+                                                                 }
+                                                 },
+                                    "description":  {
+                                                        "title":  "Popis",
+                                                        "placeholder":  "Popište incident podrobně"
+                                                    },
+                                    "createdBy":  {
+                                                      "title":  "Vytvořil"
+                                                  },
+                                    "affectedVVECodes":  {
+                                                             "title":  "Postižené VVE",
+                                                             "placeholder":  "Zadejte postižené VVE"
+                                                         },
+                                    "vveCode":  {
+                                                    "title":  "Kód VVE"
+                                                },
+                                    "status":  {
+                                                   "title":  "Stav",
+                                                   "options":  {
+                                                                   "active":  "Aktivní",
+                                                                   "resolved":  "Vyřešeno"
+                                                               }
+                                               },
+                                    "filterStartTime":  {
+                                                            "title":  "Datum zahájení od"
+                                                        },
+                                    "filterEndTime":  {
+                                                          "title":  "Datum zahájení do"
+                                                      },
+                                    "duration":  {
+                                                     "title":  "Doba trvání"
+                                                 }
+                                },
+                     "severity":  {
+                                      "Minor":  "Menší",
+                                      "Major":  "Větší",
+                                      "Critical":  "Kritický"
+                                  },
+                     "status":  {
+                                    "active":  "Aktivní",
+                                    "resolved":  "Vyřešeno"
+                                },
+                     "ongoing":  "Probíhající",
+                     "filters":  {
+                                     "onlyActive":  "Pouze aktivní",
+                                     "onlyMine":  "Pouze moje"
+                                 },
+                     "actions":  {
+                                     "view":  "Zobrazit podrobnosti",
+                                     "edit":  "Upravit incident",
+                                     "resolve":  "Vyřešit incident",
+                                     "delete":  "Smazat incident"
+                                 },
+                     "notifications":  {
+                                           "createSuccess":  "Incident byl úspěšně vytvořen",
+                                           "createFailed":  "Nepodařilo se vytvořit incident",
+                                           "updateSuccess":  "Incident byl úspěšně aktualizován",
+                                           "updateFailed":  "Nepodařilo se aktualizovat incident",
+                                           "resolveSuccess":  "Incident byl úspěšně vyřešen",
+                                           "resolveFailed":  "Nepodařilo se vyřešit incident",
+                                           "deleteSuccess":  "Incident byl úspěšně smazán",
+                                           "deleteFailed":  "Nepodařilo se smazat incident"
+                                       },
+                     "table":  {
+                                   "empty":  "Nebyly nalezeny žádné incidenty"
+                               },
+                     "active":  {
+                                    "title":  "Aktivní incidenty",
+                                    "subtitle":  "Zobrazit a spravovat probíhající incidenty"
+                                },
+                     "infoTitle":  "Podrobnosti incidentu",
+                     "closeDialog":  {
+                                         "title":  "Vyřešit incident",
+                                         "message":  "Kdy byl incident vyřešen",
+                                         "confirm":  "Ano, uzavřít tento incident",
+                                         "cancel":  "Zrušit"
+                                     }
+                 }
 }

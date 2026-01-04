@@ -1,844 +1,1143 @@
 ﻿{
-    "common": {
-        "loading": "Duke ngarkuar...",
-        "noData": "Nuk ka të dhëna",
-        "statistics": "Statistikat",
-        "yes": "Po",
-        "no": "Jo",
-        "weekDay": "Dita e javës",
-        "days": {
-            "sunday": "E diel",
-            "monday": "E hënë",
-            "tuesday": "E martë",
-            "wednesday": "E mërkurë",
-            "thursday": "E enjte",
-            "friday": "E premte",
-            "saturday": "E shtunë"
-        },
-        "number": "Numri"
-    },
-    "buttons": {
-        "save": "Ruaj",
-        "cancel": "Anulo",
-        "delete": "Fshi",
-        "edit": "Redakto",
-        "create": "Krijo",
-        "search": "Kërko",
-        "select": "Zgjidh",
-        "activate": "Aktivo",
-        "deactivate": "Çaktivizo",
-        "filter": {
-            "title": "Filtro",
-            "add": "Shto filtër",
-            "clear": "Pastro filtrat"
-        },
-        "pagination": {
-            "previous": "E mëparshme",
-            "next": "Tjetra"
-        },
-        "login": "Hyrje",
-        "goBackToLogin": "Kthehu te hyrja",
-        "logout": "Dil",
-        "generate": "Gjenero",
-        "close": "Mbyll",
-        "add": "Shto",
-        "review": "Rishiko",
-        "ok": "Në rregull",
-        "downloadSample": "Shkarko shembullin",
-        "seeMore": "Shiko më shumë"
-    },
-    "unsavedChanges": {
-        "title": "Të braktisen ndryshimet?",
-        "message": "Keni ndryshime të paruajtura. Jeni i sigurt që dëshironi të largoheni nga kjo faqe dhe t’i hidhni këto ndryshime?",
-        "confirm": "Braktis",
-        "cancel": "Vazhdo redaktimin"
-    },
-    "dashboard": {
-        "sidebarTitle": "Paneli",
-        "title": "Paneli PortIT",
-        "subtitle": "Përmbledhje e sistemit PortIT",
-        "3DModel": {
-            "title": "Vizualizimi 3D i portit",
-            "description": "Shikoni një paraqitje 3D interaktive të të gjithë objektit të portit. Monitoroni zënien e molave, pozicionet e anijeve, zonat e magazinimit dhe burimet në kohë reale.",
-            "open": "Hap modelin 3D"
-        },
-        "welcome": "Mirë se u ktheve, [name]!",
-        "SAOR": {
-            "subtitle": "Përmbledhje e operacioneve të agjentit detar",
-            "pendingNotifications": "Njoftime në pritje",
-            "recent": "Njoftime të fundit për vizitat e anijeve",
-            "recentReview": "Njoftime për vizitat e anijeve që duhen rishikuar",
-            "noRecent": "Nuk ka njoftime të fundit"
-        }
-    },
-    "admin": {
-        "sidebarTitle": "Admin",
-        "title": "Paneli i administratorit",
-        "subtitle": "Përmbledhje administrative dhe menaxhim",
-        "userManagement": {
-            "title": "Menaxhimi i përdoruesve",
-            "subtitle": "Menaxhoni përdoruesit e sistemit, rolet dhe lejet."
-        },
-        "auditLogs": {
-            "title": "Regjistrat e auditimit",
-            "subtitle": "Shikoni dhe monitoroni regjistrat e aktiviteteve të sistemit."
-        }
-    },
-    "user": {
-        "registeredUsers": "Përdoruesit e regjistruar",
-        "fields": {
-            "email": {
-                "title": "Email",
-                "placeholder": "email@mail.com"
-            },
-            "role": {
-                "title": "Roli",
-                "placeholder": "Zgjidh rolin e përdoruesit",
-                "options": {
-                    "admin": "Administrator",
-                    "saoRep": "Përfaqësues SAO",
-                    "pao": "Zyrtar i Autoritetit Portual",
-                    "logisticsOperator": "Operator logjistik"
-                }
-            },
-            "isActive": {
-                "title": "Aktiv",
-                "options": {
-                    "active": "Po",
-                    "inactive": "Jo"
-                }
-            }
-        },
-        "tabs": {
-            "dashboard": "Paneli i përdoruesit",
-            "create": "Krijo përdorues",
-            "view": "Shiko përdoruesit",
-            "search": "Kërko përdorues"
-        },
-        "infoTitle": "Detajet e përdoruesit",
-        "title": "Përdoruesit",
-        "subtitle": {
-            "dashboard": "Përmbledhje dhe menaxhim i përdoruesve",
-            "create": "Regjistro një përdorues të ri në sistem",
-            "view": "Shiko dhe menaxho përdoruesit ekzistues"
-        }
-    },
-    "physicalCharacteristics": {
-        "title": "Karakteristikat fizike (m)",
-        "length": {
-            "title": "Gjatësia",
-            "placeholder": "Gjatësia në metra"
-        },
-        "depth": {
-            "title": "Thellësia",
-            "placeholder": "Thellësia në metra"
-        },
-        "draft": {
-            "title": "Zhytja",
-            "placeholder": "Zhytja në metra"
-        }
-    },
-    "dock": {
-        "fields": {
-            "code": {
-                "title": "Kodi",
-                "placeholder": "Kodi i molit"
-            },
-            "name": {
-                "title": "Emri",
-                "placeholder": "Emri i molit"
-            },
-            "location": {
-                "title": "Lokacioni",
-                "placeholder": "Lokacioni i molit"
-            },
-            "supportedVesselTypes": {
-                "title": "Llojet e mbështetura të anijeve",
-                "vesselTypes": {
-                    "title": "Llojet e anijeve",
-                    "placeholder": "Zgjidh llojet e anijeve"
+    "common":  {
+                   "loading":  "Duke ngarkuar...",
+                   "noData":  "Nuk ka të dhëna",
+                   "statistics":  "Statistikat",
+                   "yes":  "Po",
+                   "no":  "Jo",
+                   "weekDay":  "Dita e javës",
+                   "days":  {
+                                "sunday":  "E diel",
+                                "monday":  "E hënë",
+                                "tuesday":  "E martë",
+                                "wednesday":  "E mërkurë",
+                                "thursday":  "E enjte",
+                                "friday":  "E premte",
+                                "saturday":  "E shtunë"
+                            },
+                   "number":  "Numër",
+                   "actions":  "Veprimet",
+                   "none":  "Asnjë"
+               },
+    "buttons":  {
+                    "save":  "Ruaj",
+                    "cancel":  "Anulo",
+                    "delete":  "Fshi",
+                    "edit":  "Redakto",
+                    "create":  "Krijo",
+                    "search":  "Kërko",
+                    "select":  "Zgjidh",
+                    "activate":  "Aktivo",
+                    "deactivate":  "Çaktivizo",
+                    "generate":  "Gjenero",
+                    "close":  "Mbyll",
+                    "add":  "Shto",
+                    "review":  "Rishiko",
+                    "filter":  {
+                                   "title":  "Filtro",
+                                   "add":  "Shto filtër",
+                                   "clear":  "Pastro filtrat"
+                               },
+                    "pagination":  {
+                                       "previous":  "E mëparshme",
+                                       "next":  "Tjetra"
+                                   },
+                    "login":  "Hyrje",
+                    "goBackToLogin":  "Kthehu te hyrja",
+                    "logout":  "Dil",
+                    "seeMore":  "Shiko më shumë",
+                    "ok":  "Në rregull",
+                    "downloadSample":  "Shkarko shembullin"
                 },
-                "vesselType": "Lloji i anijes"
-            }
-        },
-        "tabs": {
-            "dashboard": "Paneli i molit",
-            "view_dashboard": "Shiko molat",
-            "search": "Kërko mola",
-            "create": "Krijo mol",
-            "view": "Shiko molin",
-            "edit": "Redakto molin"
-        },
-        "generalFields": "Fushat e përgjithshme",
-        "infoTitle": "Informacion mbi molin",
-        "title": "Molat",
-        "subtitle": {
-            "dashboard": "Përmbledhje e statistikave dhe aktiviteteve të molit",
-            "search": "Menaxho dhe shiko të gjitha molat e regjistruara",
-            "create": "Regjistro një mol të ri në sistem",
-            "edit": "Ndrysho molin ekzistues në sistem"
-        },
-        "registeredDocks": "Mola të regjistruara"
-    },
-    "vesselType": {
-        "fields": {
-            "name": {
-                "title": "Emri",
-                "placeholder": "Emri i tipit të anijes"
-            },
-            "description": {
-                "title": "Përshkrimi",
-                "placeholder": "Përshkrimi i tipit të anijes"
-            },
-            "capacity": {
-                "title": "Kapaciteti",
-                "placeholder": "Kapaciteti i kontejnerëve në TEU"
-            },
-            "containerCapacity": {
-                "title": "Kapaciteti i kontejnerëve (TEU)",
-                "maxNumberOfRows": {
-                    "title": "Numri maksimal i rreshtave",
-                    "placeholder": "Maks. rreshtat në TEU"
-                },
-                "maxNumberOfBays": {
-                    "title": "Numri maksimal i fushave",
-                    "placeholder": "Maks. fushat në TEU"
-                },
-                "maxNumberOfTiers": {
-                    "title": "Numri maksimal i niveleve",
-                    "placeholder": "Maks. nivelet në TEU"
-                }
-            }
-        },
-        "generalFields": "Fushat e përgjithshme",
-        "tabs": {
-            "dashboard": "Paneli i llojeve të anijeve",
-            "view_dashboard": "Shiko llojet e anijeve",
-            "search": "Kërko llojet e anijeve",
-            "create": "Krijo lloj anije",
-            "view": "Shiko lloj anije",
-            "edit": "Redakto lloj anije"
-        },
-        "infoTitle": "Informacion mbi llojin e anijes",
-        "title": "Llojet e anijeve",
-        "subtitle": {
-            "dashboard": "Përmbledhje e statistikave të llojit të anijes",
-            "search": "Menaxho dhe shiko të gjitha llojet e regjistruara të anijeve",
-            "create": "Regjistro një lloj të ri anije në sistem",
-            "edit": "Ndrysho një lloj anije ekzistues në sistem"
-        },
-        "registeredVesselTypes": "Llojet e regjistruara të anijeve"
-    },
-    "vessel": {
-        "fields": {
-            "name": {
-                "title": "Emri",
-                "placeholder": "Emri i anijes"
-            },
-            "imoNumber": {
-                "title": "Numri IMO",
-                "placeholder": "Numri IMO i anijes"
-            },
-            "owner": {
-                "title": "Pronari",
-                "placeholder": "Organizata pronare"
-            },
-            "vesselType": {
-                "title": "Lloji i anijes",
-                "placeholder": "Zgjidh llojin e anijes"
-            },
-            "taxNumber": {
-                "title": "Numri i tatimit"
-            }
-        },
-        "infoTitle": "Informacion mbi anijen",
-        "physicalCharacteristicsTitle": "Karakteristikat fizike",
-        "tabs": {
-            "dashboard": "Paneli i anijeve",
-            "view_dashboard": "Shiko anijet",
-            "search": "Kërko anijet",
-            "create": "Krijo anije",
-            "view": "Shiko anije",
-            "edit": "Redakto anije"
-        },
-        "title": "Anijet",
-        "subtitle": {
-            "dashboard": "Përmbledhje e statistikave dhe aktiviteteve të anijeve",
-            "search": "Menaxho dhe shiko të gjitha anijet e regjistruara",
-            "create": "Regjistro një anije të re në sistem",
-            "edit": "Redakto një anije ekzistuese në sistem"
-        },
-        "ownedBy": "Pronësi e",
-        "registeredVessels": "Anije të regjistruara"
-    },
-    "staff": {
-        "registeredStaffMembers": "Anëtarët e stafit të regjistruar",
-        "fields": {
-            "mechanographicNumber": {
-                "title": "Numri mekanografik",
-                "placeholder": "Numri mekanografik"
-            },
-            "name": {
-                "title": "Emri",
-                "placeholder": "Emri i punonjësit"
-            },
-            "email": {
-                "title": "Email",
-                "placeholder": "Adresa e email"
-            },
-            "phoneNumber": {
-                "title": "Telefoni",
-                "placeholder": "Numri i telefonit"
-            },
-            "qualifications": {
-                "title": "Kualifikimet",
-                "placeholder": "Zgjidh kualifikimet"
-            },
-            "status": {
-                "title": "Statusi",
-                "options": {
-                    "available": "Në dispozicion",
-                    "unavailable": "Nuk është në dispozicion",
-                    "temporarilyReassigned": "Përkohësisht ricaktuar"
-                }
-            },
-            "operationalWindow": "Dritarja Operacionale"
-        },
-        "tabs": {
-            "dashboard": "Paneli i stafit",
-            "view_dashboard": "Shiko stafin",
-            "search": "Kërko stafin",
-            "create": "Krijo anëtar stafi",
-            "view": "Shiko anëtar stafi",
-            "edit": "Redakto anëtar stafi"
-        },
-        "infoTitle": "Informacion për anëtarin e stafit",
-        "title": "Stafi",
-        "subtitle": {
-            "search": "Menaxhoni dhe shikoni të gjithë stafin e regjistruar",
-            "dashboard": "Përmbledhje e statistikave të stafit",
-            "create": "Regjistro një anëtar të ri të stafit në sistem",
-            "view": "Shiko detajet e stafit",
-            "edit": "Redakto anëtarin ekzistues të stafit në sistem"
-        },
-        "deactivation": {
-            "title": "Çaktivizo anëtarin e stafit",
-            "message": "Jeni i sigurt që doni të çaktivizoni këtë anëtar stafi? Mund ta aktivizoni përsëri më vonë.",
-            "successMessage": "Anëtari i stafit u çaktivizua me sukses.",
-            "errorMessage": "Ndodhi një gabim gjatë përpjekjes për të çaktivizuar anëtarin e stafit. Ju lutemi provoni përsëri."
-        }
-    },
-    "qualification": {
-        "registeredQualifications": "Kualifikimet e regjistruara",
-        "tabs": {
-            "dashboard": "Paneli i kualifikimeve",
-            "view_dashboard": "Shiko kualifikimet",
-            "search": "Kërko kualifikimet",
-            "create": "Krijo kualifikim",
-            "view": "Shiko kualifikim",
-            "edit": "Redakto kualifikim"
-        },
-        "infoTitle": "Informacion mbi kualifikimin",
-        "title": "Kualifikimet",
-        "subtitle": {
-            "search": "Menaxhoni dhe shikoni të gjitha kualifikimet e regjistruara",
-            "dashboard": "Përmbledhje e statistikave të kualifikimeve",
-            "create": "Regjistro një kualifikim të ri në sistem",
-            "edit": "Redakto një kualifikim ekzistues në sistem",
-            "view": "Shiko detajet e kualifikimit"
-        },
-        "fields": {
-            "idCode": {
-                "title": "Kodi i kualifikimit",
-                "placeholder": "Kodi i kualifikimit"
-            },
-            "qualificationName": {
-                "title": "Emri i kualifikimit",
-                "placeholder": "Emri i kualifikimit"
-            }
-        }
-    },
-    "physicalResource": {
-        "registeredPhysicalResources": "Burimet fizike të regjistruara",
-        "tabs": {
-            "dashboard": "Paneli i burimeve fizike",
-            "view_dashboard": "Shiko burimet fizike",
-            "search": "Kërko burimet fizike",
-            "create": "Krijo burim fizik",
-            "view": "Shiko burim fizik",
-            "edit": "Redakto burim fizik"
-        },
-        "infoTitle": "Informacion mbi burimin fizik",
-        "title": "Burimet fizike",
-        "subtitle": {
-            "search": "Menaxhoni dhe shikoni të gjitha burimet fizike të regjistruara",
-            "dashboard": "Paneli i kontrollit për burimet fizike",
-            "view_dashboard": "Shiko burimet fizike",
-            "create": "Regjistro një burim fizik të ri në sistem",
-            "view": "Shiko detajet e burimit fizik",
-            "edit": "Redakto burimin fizik ekzistues në sistem"
-        },
-        "generalFields": "Fushat e përgjithshme",
-        "specificFields": "Fusha specifike",
-        "fields": {
-            "code": {
-                "title": "Kodi",
-                "placeholder": "Kodi i burimit"
-            },
-            "description": {
-                "title": "Përshkrimi",
-                "placeholder": "Përshkrimi i burimit"
-            },
-            "status": {
-                "title": "Statusi",
-                "placeholder": "Zgjidh statusin e burimit",
-                "options": {
-                    "available": "Në dispozicion",
-                    "maintenance": "Mirëmbajtje",
-                    "outOfService": "Jashtë shërbimit"
-                }
-            },
-            "qualifications": {
-                "title": "Kualifikimet e kërkuara",
-                "placeholder": "Kualifikimet e nevojshme për të operuar këtë burim"
-            },
-            "setupTime": {
-                "title": "Koha e vendosjes (min)",
-                "placeholder": "Koha e vendosjes"
-            },
-            "servingDocks": {
-                "title": "Molat e shërbyera",
-                "placeholder": "Zgjidh molat e shërbyera"
-            },
-            "liftingCapacity": {
-                "title": "Kapaciteti i ngritjes (kg)",
-                "placeholder": "Kapaciteti i ngritjes"
-            },
-            "containersPerHour": {
-                "title": "Konteinerë në orë",
-                "placeholder": "Konteinerë në orë"
-            },
-            "maxLoadCapacity": {
-                "title": "Ngarkesa maksimale (kg)",
-                "placeholder": "Ngarkesa maksimale"
-            },
-            "averageSpeed": {
-                "title": "Shpejtësia mesatare (km/h)",
-                "placeholder": "Shpejtësia mesatare"
-            },
-            "containersPerTrip": {
-                "title": "Konteinerë për udhëtim",
-                "placeholder": "Konteinerë për udhëtim"
-            },
-            "type": {
-                "title": "Lloji i burimit",
-                "options": {
-                    "stsCrane": "Kran STS",
-                    "yardGantry": "Vinç i oborrit",
-                    "truck": "Kamion"
-                }
-            }
-        },
-        "actions": {
-            "deactivate": "Çaktivizo burimin fizik"
-        },
-        "deactivation": {
-            "title": "Çaktivizo burimin fizik",
-            "message": "Jeni i sigurt që doni të çaktivizoni këtë burim fizik? Mund ta aktivizoni përsëri më vonë.",
-            "successMessage": "Burimi fizik u çaktivizua me sukses.",
-            "errorMessage": "Ndodhi një gabim gjatë përpjekjes për të çaktivizuar burimin fizik. Ju lutemi provoni përsëri."
-        }
-    },
-    "storageArea": {
-        "registeredStorageAreas": "Zonat e magazinimit të regjistruara",
-        "tabs": {
-            "dashboard": "Paneli i zonave të magazinimit",
-            "view_dashboard": "Shiko zonat e magazinimit",
-            "search": "Kërko zonat e magazinimit",
-            "create": "Krijo zonë magazinimi",
-            "view": "Shiko zonën e magazinimit",
-            "edit": "Redakto zonën e magazinimit"
-        },
-        "infoTitle": "Informacion mbi zonën e magazinimit",
-        "title": "Zonat e magazinimit",
-        "subtitle": {
-            "search": "Menaxhoni dhe shikoni të gjitha zonat e magazinimit të regjistruara",
-            "dashboard": "Paneli i menaxhimit për zonat e magazinimit",
-            "view_dashboard": "Shiko zonat e magazinimit",
-            "create": "Regjistro një zonë të re magazinimi në sistem",
-            "view": "Shiko detajet e zonës së magazinimit",
-            "edit": "Redakto zonën e magazinimit ekzistuese në sistem"
-        },
-        "printer": {
-            "docks_serviced": "mola të shërbyera",
-            "capacity_usage": "Përdorimi i kapacitetit",
-            "units": "njësi",
-            "available": "në dispozicion",
-            "no_registered_distances": "Nuk ka distanca të regjistruara",
-            "no_docks_serviced": "Nuk ka mola të shërbyera",
-            "all_docks_serviced": "Të gjitha molat e shërbyera",
-            "serviced_docks_distance": "Distanca e molave të shërbyera",
-            "no_registered_docks": "Nuk ka mola të regjistruara"
-        },
-        "create": {
-            "distance_meters": "Distanca (metra)"
-        },
-        "fields": {
-            "nameCode": {
-                "title": "Kodi i emërtimit",
-                "placeholder": "Kodi i emërtimit të zonës së magazinimit"
-            },
-            "location": {
-                "title": "Vendndodhja",
-                "placeholder": "Vendndodhja e zonës së magazinimit"
-            },
-            "type": {
-                "title": "Lloji",
-                "placeholder": "Zgjidh llojin e zonës së magazinimit",
-                "options": {
-                    "yard": "Oborr",
-                    "warehouse": "Magazinë"
-                }
-            },
-            "capacity": {
-                "title": "Kapaciteti",
-                "placeholder": "Kapaciteti maksimal"
-            },
-            "occupancy": {
-                "title": "Zënia",
-                "placeholder": "Zënia aktuale"
-            }
-        }
-    },
-    "search": {
-        "languages": "Kërko gjuhët..."
-    },
-    "expirationWarning": {
-        "title": "Seanca po skadon",
-        "messageOneMinute": "Seanca juaj do të skadojë për 1 minutë.",
-        "messageLessThanOneMinute": "Seanca juaj është drejt skadimit.",
-        "extendSession": "Zgjat seancën"
-    },
-    "representative": {
-        "title": "Përfaqësues",
-        "select": "Zgjidh një përfaqësues"
-    },
-    "scheduling": {
-        "title": "Kërko orarin ditor",
-        "subtitle": "Përdorni algoritmin tonë të planifikimit për të analizuar detyrat e planifikuara për një ditë të caktuar.",
-        "noVisits": "Nuk ka vizita anijesh të planifikuara për datën e zgjedhur.",
-        "visitsOnSelectedDay": "Vizitat e anijeve në datën e zgjedhur",
-        "viewVisits": "Gjenero orarin e detyrave",
-        "generateTasksButton": "Gjenero orarin e detyrave",
-        "aboutAlgorithmButton": "Rreth algoritmit",
-        "fields": {
-            "algorithm": {
-                "title": "Algoritmi i planifikimit",
-                "placeholder": "Zgjidh algoritmin e planifikimit"
-            },
-            "relatedDocks": "Zgjidh molin përkatës"
-        },
-        "generateTasksModal": {
-            "title": "Logjistika shtesë"
-        },
-        "aboutAlgorithmModal": {
-            "title": "Rreth algoritmit",
-            "content": "Algoritmi aktual merr në konsideratë njoftimet e vizitave të anijeve të planifikuara për datën dhe molin e zgjedhur. \nMë pas kontrollon disponueshmërinë e vinçave STS për molin e specifikuar dhe vendos kohëzgjatjen e çdo detyre bazuar në shpejtësinë e vinçit.\nGjithashtu injoron vizitat që janë për mirëmbajtje ose aktivitete të tjera jo-ngarkim/shkarkim."
-        }
-    },
-    "notification": {
-        "registeredVesselVisitNotifications": "Njoftime të regjistruara për vizitat e anijeve",
-        "step": "Hapi",
-        "of": "nga",
-        "id": "ID e njoftimit",
-        "hazardous": "I rrezikshëm",
-        "nonHazardous": "Jo i rrezikshëm",
-        "arrival": "Mbërritje",
-        "departure": "Nisje",
-        "specialRequirements": "Kërkesa të veçanta",
-        "none": "Asnjë",
-        "crew": "Ekuipazh",
-        "captain": "Kapiteni",
-        "unknown": "E panjohur",
-        "from": "Nga",
-        "to": "Deri",
-        "tabs": {
-            "dashboard": "Paneli i njoftimeve",
-            "search": "Kërko njoftime",
-            "edit": "Redakto njoftimin",
-            "create": "Krijo njoftim",
-            "makeDraft": "Krijo njoftim draft",
-            "myNotifications": "Njoftimet e mia",
-            "review": "Rishiko njoftimet",
-            "general": "Listim i përgjithshëm",
-            "byDate": "Listim sipas kalendarit",
-            "submit": "Dorëzo njoftimin",
-            "delete": "Fshi njoftimin"
-        },
-        "eventsOnDate": "Ngjarje në datën e zgjedhur",
-        "noEventsOnDate": "Nuk ka ngjarje në datën e zgjedhur",
-        "title": "Njoftime për vizitat e anijeve",
-        "subtitle": {
-            "dashboard": "Përmbledhje e njoftimeve për vizitat e anijeve",
-            "search": "Menaxho dhe shiko të gjitha njoftimet për vizitat e anijeve",
-            "create": "Krijo një njoftim të ri për vizitë anijeje",
-            "edit": "Redakto një njoftim ekzistues për vizitë anijeje",
-            "review": "Rishiko njoftimet e pritjes"
-        },
-        "errors": {
-            "noNotificationId": "Nuk është dhënë ID e njoftimit"
-        },
-        "infoTitle": "Informacioni i njoftimit",
-        "cargoTitle": "Informacioni i ngarkesës",
-        "vesselTitle": "Informacioni i anijes",
-        "manifestInfo": "Informacioni i manifestit",
-        "fields": {
-            "openLoadManifest": "Hap manifestin e ngarkimit",
-            "openUnloadManifest": "Hap manifestin e shkarkimit",
-            "expectedArrival": "Mbërritje e pritshme",
-            "expectedDeparture": "Nisje e pritshme",
-            "isCargoHazardous": "Ngarkesë e rrezikshme",
-            "specialRequirements": "Kërkesa të veçanta",
-            "captain": "Kapiteni",
-            "totalCrewMembers": "Numri total i anëtarëve të ekuipazhit",
-            "safetyOfficers": "Oficerë sigurie",
-            "loadCargoManifest": "Ngarko manifestin e ngarkesës",
-            "unloadCargoManifest": "Shkarko manifestin e ngarkesës",
-            "position": "Pozicioni",
-            "area": "Zona",
-            "container": "Konteineri",
-            "crewMembers": "Anëtarë ekuipazhi",
-            "status": "Statusi"
-        },
-        "timeline": {
-            "pending": "Në pritje",
-            "inProgress": "Në progres",
-            "completed": "Përfunduar",
-            "submitted": "Dorëzuar",
-            "accepted": "Pranuar",
-            "rejected": "Refuzuar"
-        },
-        "filters": {
-            "expectedArrivalFrom": "Mbërritje e pritshme nga",
-            "expectedArrivalTo": "Mbërritje e pritshme deri",
-            "withReason": "Me arsye",
-            "withDockAssigned": "Me mol të caktuar"
-        },
-        "decision": {
-            "isFinal": "Përfundimtare",
-            "assignedDock": {
-                "title": "Moli i caktuar",
-                "placeholder": "Zgjidh molin e caktuar"
-            },
-            "reason": {
-                "title": "Arsyeja",
-                "placeholder": "Jepni arsyen për vendimin"
-            },
-            "status": "Statusi i vendimit"
-        }
-    },
-    "operationalWindow": {
-        "title": "Dritarja Operacionale",
-        "printer": {
-            "addShift": "Shto turn",
-            "shifts": "Turne:",
-            "noShifts": "Nuk ka turne.",
-            "startTime": "Ora e fillimit",
-            "endTime": "Ora e mbarimit",
-            "weekDays": "Ditët e javës"
-        },
-        "errors": {
-            "shiftOverlap": "Turn i pavlefshëm. Mbivendosje ose orë mbarimi para fillimit."
-        }
-    },
-    "about": {
-        "title": "Rreth aplikacionit",
-        "description": "Ky modul ofron një zgjidhje gjithëpërfshirëse për menaxhimin e flotës së automjeteve autonome duke përfshirë planet operacionale, llojet e incidenteve dhe ekzekutimin e detyrave.",
-        "version": "Versioni",
-        "features": {
-            "title": "Veçoritë",
-            "fleet": "Menaxhimi i flotës",
-            "planning": "Planifikimi i operacioneve",
-            "incidents": "Gjurmimi i incidenteve",
-            "tasks": "Ekzekutimi i detyrave"
-        }
-    },
-    "operationPlan": {
-        "title": "Plani operacional",
-        "list": {
-            "title": "Planet operacionale",
-            "empty": "Nuk u gjetën plane operacionale",
-            "search": "Kërko plane..."
-        },
-        "details": {
-            "title": "Detajet e planit",
-            "status": "Statusi",
-            "startDate": "Data e fillimit",
-            "endDate": "Data e mbarimit",
-            "assignedVehicles": "Automjetet e caktuara",
-            "tasks": "Detyrat"
-        },
-        "form": {
-            "create": "Krijo plan",
-            "edit": "Redakto planin",
-            "name": "Emri i planit",
-            "description": "Përshkrimi",
-            "selectVehicles": "Zgjidh automjetet"
-        },
-        "status": {
-            "draft": "Draft",
-            "active": "Aktiv",
-            "completed": "I përfunduar",
-            "cancelled": "I anuluar"
-        }
-    },
-    "incidentType": {
-        "title": "Lloji i incidentit",
-        "list": {
-            "title": "Llojet e incidenteve",
-            "empty": "Nuk u gjetën lloje incidentesh",
-            "search": "Kërko lloje..."
-        },
-        "details": {
-            "title": "Detajet e llojit",
-            "code": "Kodi",
-            "severity": "Rëndësia",
-            "responseTime": "Koha e përgjigjes",
-            "procedures": "Procedurat"
-        },
-        "form": {
-            "create": "Krijo lloj",
-            "edit": "Redakto llojin",
-            "name": "Emri i llojit",
-            "description": "Përshkrimi",
-            "selectSeverity": "Zgjidh rëndësinë"
-        },
-        "severity": {
-            "low": "E ulët",
-            "medium": "E mesme",
-            "high": "E lartë",
-            "critical": "Kritike"
-        }
-    },
-    "taskCategory": {
-        "title": "Kategoria e detyrës",
-        "list": {
-            "title": "Kategoritë e detyrave",
-            "empty": "Nuk u gjetën kategori detyrash",
-            "search": "Kërko kategori..."
-        },
-        "details": {
-            "title": "Detajet e kategorisë",
-            "code": "Kodi",
-            "priority": "Prioriteti",
-            "estimatedDuration": "Kohëzgjatja e parashikuar",
-            "requirements": "Kërkesat"
-        },
-        "form": {
-            "create": "Krijo kategori",
-            "edit": "Redakto kategorinë",
-            "name": "Emri i kategorisë",
-            "description": "Përshkrimi",
-            "selectPriority": "Zgjidh prioritetin"
-        },
-        "priority": {
-            "low": "E ulët",
-            "normal": "Normale",
-            "high": "E lartë",
-            "urgent": "Urgjente"
-        }
-    },
-    "execution": {
-        "title": "Ekzekutimi",
-        "status": {
-            "pending": "Në pritje",
-            "inProgress": "Në zhvillim",
-            "completed": "I përfunduar",
-            "failed": "Dështoi",
-            "cancelled": "I anuluar"
-        },
-        "details": {
-            "title": "Detajet e ekzekutimit",
-            "startTime": "Ora e fillimit",
-            "endTime": "Ora e mbarimit",
-            "duration": "Kohëzgjatja",
-            "assignedTo": "I caktuar për",
-            "progress": "Progresi"
-        },
-        "actions": {
-            "start": "Fillo ekzekutimin",
-            "pause": "Pusho",
-            "resume": "Vazhdo",
-            "complete": "Përfundo",
-            "cancel": "Anulo"
-        },
-        "messages": {
-            "started": "Ekzekutimi filloi",
-            "paused": "Ekzekutimi u ndal përkohësisht",
-            "resumed": "Ekzekutimi vazhdoi",
-            "completed": "Ekzekutimi përfundoi",
-            "cancelled": "Ekzekutimi u anulua",
-            "failed": "Ekzekutimi dështoi"
-        }
-    },
-    "incident": {
-        "title": "Incidenti",
-        "list": {
-            "title": "Incidentet",
-            "empty": "Nuk u gjetën incidente",
-            "search": "Kërko incidente...",
-            "filter": {
-                "all": "Të gjitha",
-                "open": "Të hapura",
-                "inProgress": "Në zhvillim",
-                "resolved": "Të zgjidhura",
-                "closed": "Të mbyllura"
-            }
-        },
-        "details": {
-            "title": "Detajet e incidentit",
-            "id": "ID e incidentit",
-            "type": "Lloji",
-            "status": "Statusi",
-            "severity": "Rëndësia",
-            "reportedBy": "Raportuar nga",
-            "reportedAt": "Raportuar më",
-            "assignedTo": "I caktuar për",
-            "location": "Vendndodhja",
-            "vehicle": "Automjeti",
-            "description": "Përshkrimi",
-            "resolution": "Zgjidhja",
-            "timeline": "Rrjedha kohore"
-        },
-        "form": {
-            "create": "Raporto incident",
-            "edit": "Redakto incidentin",
-            "selectType": "Zgjidh llojin",
-            "selectSeverity": "Zgjidh rëndësinë",
-            "selectVehicle": "Zgjidh automjetin",
-            "descriptionPlaceholder": "Përshkruaj incidentin...",
-            "resolutionPlaceholder": "Përshkruaj zgjidhjen..."
-        },
-        "status": {
-            "open": "I hapur",
-            "inProgress": "Në zhvillim",
-            "resolved": "I zgjidhur",
-            "closed": "I mbyllur"
-        },
-        "actions": {
-            "assign": "Cakto",
-            "resolve": "Zgjidh",
-            "close": "Mbyll",
-            "reopen": "Rihap",
-            "addNote": "Shto shënim"
-        },
-        "messages": {
-            "created": "Incidenti u krijua",
-            "updated": "Incidenti u përditësua",
-            "assigned": "Incidenti u caktua",
-            "resolved": "Incidenti u zgjidh",
-            "closed": "Incidenti u mbyll",
-            "reopened": "Incidenti u rihap"
-        }
-    }
+    "search":  {
+                   "languages":  "Kërko gjuhët..."
+               },
+    "unsavedChanges":  {
+                           "title":  "Të braktisen ndryshimet?",
+                           "message":  "Keni ndryshime të paruajtura. Jeni i sigurt që dëshironi të largoheni nga kjo faqe dhe t’i hidhni këto ndryshime?",
+                           "confirm":  "Braktis",
+                           "cancel":  "Vazhdo redaktimin"
+                       },
+    "expirationWarning":  {
+                              "messageOneMinute":  "Seanca juaj do të skadojë për 1 minutë.",
+                              "messageLessThanOneMinute":  "Seanca juaj është drejt skadimit."
+                          },
+    "dashboard":  {
+                      "welcome":  "Mirë se u ktheve, [name]!",
+                      "sidebarTitle":  "Paneli",
+                      "title":  "Paneli PortIT",
+                      "subtitle":  "Përmbledhje e sistemit PortIT",
+                      "SAOR":  {
+                                   "subtitle":  "Përmbledhje e operacioneve të agjentit detar",
+                                   "pendingNotifications":  "Njoftime në pritje",
+                                   "recent":  "Njoftime të fundit për vizitat e anijeve",
+                                   "recentReview":  "Njoftime për vizitat e anijeve që duhen rishikuar",
+                                   "noRecent":  "Nuk ka njoftime të fundit"
+                               },
+                      "3DModel":  {
+                                      "title":  "Vizualizimi 3D i portit",
+                                      "description":  "Shikoni një paraqitje 3D interaktive të të gjithë objektit të portit. Monitoroni zënien e molave, pozicionet e anijeve, zonat e magazinimit dhe burimet në kohë reale.",
+                                      "open":  "Hap modelin 3D"
+                                  }
+                  },
+    "admin":  {
+                  "sidebarTitle":  "Admin",
+                  "title":  "Paneli i administratorit",
+                  "subtitle":  "Përmbledhje administrative dhe menaxhim",
+                  "userManagement":  {
+                                         "title":  "Menaxhimi i përdoruesve",
+                                         "subtitle":  "Menaxhoni përdoruesit e sistemit, rolet dhe lejet."
+                                     },
+                  "auditLogs":  {
+                                    "title":  "Regjistrat e auditimit",
+                                    "subtitle":  "Shikoni dhe monitoroni regjistrat e aktiviteteve të sistemit."
+                                },
+                  "pp":  {
+                             "title":  "Politikat e privatit",
+                             "subtitle":  "Përcaktoni dhe menaxhoni politikat e mbledhjes së të dhënave të portit."
+                         },
+                  "notifications":  {
+                                        "create":  "Krijo njoftim",
+                                        "subtitleCreate":  "Send important announcements to any or all users.",
+                                        "title":  "Njoftimet e sistemit",
+                                        "subtitle":  "Krijoni dhe menaxhoni njoftimet e përgjithshme të sistemit.",
+                                        "broadcastToggle":  "Broadcast to all users",
+                                        "sendEmailToggle":  "Also send as email",
+                                        "fields":  {
+                                                       "title":  {
+                                                                     "title":  "Title",
+                                                                     "placeholder":  "Vendosni titullin e njoftimit"
+                                                                 },
+                                                       "message":  {
+                                                                       "title":  "Message",
+                                                                       "placeholder":  "Vendosni mesazhin e njoftimit"
+                                                                   },
+                                                       "email":  {
+                                                                     "title":  "User email",
+                                                                     "placeholder":  "Specify user email to send to"
+                                                                 },
+                                                       "urgency":  {
+                                                                       "title":  "Urgency",
+                                                                       "options":  {
+                                                                                       "normal":  "Normal",
+                                                                                       "urgent":  "Urgent"
+                                                                                   }
+                                                                   }
+                                                   }
+                                    }
+              },
+    "user":  {
+                 "fields":  {
+                                "email":  {
+                                              "title":  "Email",
+                                              "placeholder":  "email@mail.com"
+                                          },
+                                "role":  {
+                                             "title":  "Roli",
+                                             "placeholder":  "Zgjidh rolin e përdoruesit",
+                                             "options":  {
+                                                             "admin":  "Administrator",
+                                                             "saoRep":  "Përfaqësues SAO",
+                                                             "pao":  "Zyrtar i Autoritetit Portual",
+                                                             "logisticsOperator":  "Operator logjistik"
+                                                         }
+                                         },
+                                "isActive":  {
+                                                 "title":  "Aktiv",
+                                                 "options":  {
+                                                                 "active":  "Po",
+                                                                 "inactive":  "Jo"
+                                                             }
+                                             }
+                            },
+                 "tabs":  {
+                              "dashboard":  "Paneli i përdoruesit",
+                              "create":  "Krijo përdorues",
+                              "view":  "Shiko përdoruesit",
+                              "search":  "Kërko përdorues"
+                          },
+                 "infoTitle":  "Detajet e përdoruesit",
+                 "title":  "Përdoruesit",
+                 "subtitle":  {
+                                  "dashboard":  "Përmbledhje dhe menaxhim i përdoruesve",
+                                  "create":  "Regjistro një përdorues të ri në sistem",
+                                  "view":  "Shiko dhe menaxho përdoruesit ekzistues"
+                              },
+                 "registeredUsers":  "Përdoruesit e regjistruar",
+                 "confirmDelete":  "Konfirmo fshirjen",
+                 "confirmDeleteMessage":  "Jeni i sigurt që dëshironi të fshini këtë përdorues?"
+             },
+    "representative":  {
+                           "title":  "Përfaqësues",
+                           "select":  "Zgjidh një përfaqësues"
+                       },
+    "physicalCharacteristics":  {
+                                    "title":  "Karakteristikat fizike (m)",
+                                    "length":  {
+                                                   "title":  "Gjatësia",
+                                                   "placeholder":  "Gjatësia në metra"
+                                               },
+                                    "depth":  {
+                                                  "title":  "Thellësia",
+                                                  "placeholder":  "Thellësia në metra"
+                                              },
+                                    "draft":  {
+                                                  "title":  "Zhytja",
+                                                  "placeholder":  "Zhytja në metra"
+                                              }
+                                },
+    "dock":  {
+                 "fields":  {
+                                "code":  {
+                                             "title":  "Kodi",
+                                             "placeholder":  "Kodi i molit"
+                                         },
+                                "name":  {
+                                             "title":  "Emri",
+                                             "placeholder":  "Emri i molit"
+                                         },
+                                "location":  {
+                                                 "title":  "Lokacioni",
+                                                 "placeholder":  "Lokacioni i molit"
+                                             },
+                                "supportedVesselTypes":  {
+                                                             "title":  "Llojet e mbështetura të anijeve",
+                                                             "vesselTypes":  {
+                                                                                 "title":  "Llojet e anijeve",
+                                                                                 "placeholder":  "Zgjidh llojet e anijeve"
+                                                                             },
+                                                             "vesselType":  "Lloji i anijes"
+                                                         }
+                            },
+                 "tabs":  {
+                              "dashboard":  "Paneli i molit",
+                              "view_dashboard":  "Shiko molat",
+                              "search":  "Kërko mola",
+                              "create":  "Krijo mol",
+                              "view":  "Shiko molin",
+                              "edit":  "Redakto molin"
+                          },
+                 "generalFields":  "Fushat e përgjithshme",
+                 "infoTitle":  "Informacion mbi molin",
+                 "title":  "Molat",
+                 "subtitle":  {
+                                  "dashboard":  "Përmbledhje e statistikave dhe aktiviteteve të molit",
+                                  "search":  "Menaxho dhe shiko të gjitha molat e regjistruara",
+                                  "create":  "Regjistro një mol të ri në sistem",
+                                  "edit":  "Ndrysho molin ekzistues në sistem"
+                              },
+                 "registeredDocks":  "Mola të regjistruara"
+             },
+    "vesselType":  {
+                       "fields":  {
+                                      "name":  {
+                                                   "title":  "Emri",
+                                                   "placeholder":  "Emri i tipit të anijes"
+                                               },
+                                      "description":  {
+                                                          "title":  "Përshkrimi",
+                                                          "placeholder":  "Përshkrimi i tipit të anijes"
+                                                      },
+                                      "capacity":  {
+                                                       "title":  "Kapaciteti",
+                                                       "placeholder":  "Kapaciteti i kontejnerëve në TEU"
+                                                   },
+                                      "containerCapacity":  {
+                                                                "title":  "Kapaciteti i kontejnerëve (TEU)",
+                                                                "maxNumberOfRows":  {
+                                                                                        "title":  "Numri maksimal i rreshtave",
+                                                                                        "placeholder":  "Maks. rreshtat në TEU"
+                                                                                    },
+                                                                "maxNumberOfBays":  {
+                                                                                        "title":  "Numri maksimal i fushave",
+                                                                                        "placeholder":  "Maks. fushat në TEU"
+                                                                                    },
+                                                                "maxNumberOfTiers":  {
+                                                                                         "title":  "Numri maksimal i niveleve",
+                                                                                         "placeholder":  "Maks. nivelet në TEU"
+                                                                                     }
+                                                            }
+                                  },
+                       "generalFields":  "Fushat e përgjithshme",
+                       "tabs":  {
+                                    "dashboard":  "Paneli i llojeve të anijeve",
+                                    "view_dashboard":  "Shiko llojet e anijeve",
+                                    "search":  "Kërko llojet e anijeve",
+                                    "create":  "Krijo lloj anije",
+                                    "view":  "Shiko lloj anije",
+                                    "edit":  "Redakto lloj anije"
+                                },
+                       "infoTitle":  "Informacion mbi llojin e anijes",
+                       "title":  "Llojet e anijeve",
+                       "subtitle":  {
+                                        "dashboard":  "Përmbledhje e statistikave të llojit të anijes",
+                                        "search":  "Menaxho dhe shiko të gjitha llojet e regjistruara të anijeve",
+                                        "create":  "Regjistro një lloj të ri anije në sistem",
+                                        "edit":  "Ndrysho një lloj anije ekzistues në sistem"
+                                    },
+                       "registeredVesselTypes":  "Llojet e regjistruara të anijeve"
+                   },
+    "vessel":  {
+                   "fields":  {
+                                  "name":  {
+                                               "title":  "Emri",
+                                               "placeholder":  "Emri i anijes"
+                                           },
+                                  "imoNumber":  {
+                                                    "title":  "Numri IMO",
+                                                    "placeholder":  "Numri IMO i anijes"
+                                                },
+                                  "owner":  {
+                                                "title":  "Pronari",
+                                                "placeholder":  "Organizata pronare"
+                                            },
+                                  "vesselType":  {
+                                                     "title":  "Lloji i anijes",
+                                                     "placeholder":  "Zgjidh llojin e anijes"
+                                                 },
+                                  "taxNumber":  {
+                                                    "title":  "Numri i tatimit"
+                                                }
+                              },
+                   "infoTitle":  "Informacion mbi anijen",
+                   "physicalCharacteristicsTitle":  "Karakteristikat fizike",
+                   "tabs":  {
+                                "dashboard":  "Paneli i anijeve",
+                                "view_dashboard":  "Shiko anijet",
+                                "search":  "Kërko anijet",
+                                "create":  "Krijo anije",
+                                "view":  "Shiko anije",
+                                "edit":  "Redakto anije"
+                            },
+                   "title":  "Anijet",
+                   "subtitle":  {
+                                    "dashboard":  "Përmbledhje e statistikave dhe aktiviteteve të anijeve",
+                                    "search":  "Menaxho dhe shiko të gjitha anijet e regjistruara",
+                                    "create":  "Regjistro një anije të re në sistem",
+                                    "edit":  "Redakto një anije ekzistuese në sistem"
+                                },
+                   "ownedBy":  "Pronësi e",
+                   "registeredVessels":  "Anije të regjistruara"
+               },
+    "staff":  {
+                  "deactivation":  {
+                                       "title":  "Çaktivizo anëtarin e stafit",
+                                       "message":  "Jeni i sigurt që doni të çaktivizoni këtë anëtar stafi? Mund ta aktivizoni përsëri më vonë.",
+                                       "successMessage":  "Anëtari i stafit u çaktivizua me sukses.",
+                                       "errorMessage":  "Ndodhi një gabim gjatë përpjekjes për të çaktivizuar anëtarin e stafit. Ju lutemi provoni përsëri."
+                                   },
+                  "fields":  {
+                                 "mechanographicNumber":  {
+                                                              "title":  "Numri mekanografik",
+                                                              "placeholder":  "Numri mekanografik"
+                                                          },
+                                 "name":  {
+                                              "title":  "Emri",
+                                              "placeholder":  "Emri i punonjësit"
+                                          },
+                                 "email":  {
+                                               "title":  "Email",
+                                               "placeholder":  "Adresa e email"
+                                           },
+                                 "phoneNumber":  {
+                                                     "title":  "Telefoni",
+                                                     "placeholder":  "Numri i telefonit"
+                                                 },
+                                 "qualifications":  {
+                                                        "title":  "Kualifikimet",
+                                                        "placeholder":  "Zgjidh kualifikimet"
+                                                    },
+                                 "status":  {
+                                                "title":  "Statusi",
+                                                "options":  {
+                                                                "available":  "Në dispozicion",
+                                                                "unavailable":  "Nuk është në dispozicion",
+                                                                "temporarilyReassigned":  "Përkohësisht ricaktuar"
+                                                            }
+                                            },
+                                 "operationalWindow":  "Dritarja Operacionale"
+                             },
+                  "tabs":  {
+                               "dashboard":  "Paneli i stafit",
+                               "view_dashboard":  "Shiko stafin",
+                               "search":  "Kërko stafin",
+                               "create":  "Krijo anëtar stafi",
+                               "view":  "Shiko anëtar stafi",
+                               "edit":  "Redakto anëtar stafi"
+                           },
+                  "infoTitle":  "Informacion për anëtarin e stafit",
+                  "title":  "Stafi",
+                  "subtitle":  {
+                                   "search":  "Menaxhoni dhe shikoni të gjithë stafin e regjistruar",
+                                   "dashboard":  "Përmbledhje e statistikave të stafit",
+                                   "create":  "Regjistro një anëtar të ri të stafit në sistem",
+                                   "view":  "Shiko detajet e stafit",
+                                   "edit":  "Redakto anëtarin ekzistues të stafit në sistem"
+                               },
+                  "registeredStaffMembers":  "Anëtarët e stafit të regjistruar"
+              },
+    "qualification":  {
+                          "tabs":  {
+                                       "dashboard":  "Paneli i kualifikimeve",
+                                       "view_dashboard":  "Shiko kualifikimet",
+                                       "search":  "Kërko kualifikimet",
+                                       "create":  "Krijo kualifikim",
+                                       "view":  "Shiko kualifikim",
+                                       "edit":  "Redakto kualifikim"
+                                   },
+                          "infoTitle":  "Informacion mbi kualifikimin",
+                          "title":  "Kualifikimet",
+                          "subtitle":  {
+                                           "search":  "Menaxhoni dhe shikoni të gjitha kualifikimet e regjistruara",
+                                           "dashboard":  "Përmbledhje e statistikave të kualifikimeve",
+                                           "create":  "Regjistro një kualifikim të ri në sistem",
+                                           "edit":  "Redakto një kualifikim ekzistues në sistem",
+                                           "view":  "Shiko detajet e kualifikimit"
+                                       },
+                          "fields":  {
+                                         "idCode":  {
+                                                        "title":  "Kodi i kualifikimit",
+                                                        "placeholder":  "Kodi i kualifikimit"
+                                                    },
+                                         "qualificationName":  {
+                                                                   "title":  "Emri i kualifikimit",
+                                                                   "placeholder":  "Emri i kualifikimit"
+                                                               }
+                                     },
+                          "registeredQualifications":  "Kualifikimet e regjistruara"
+                      },
+    "scheduling":  {
+                       "title":  "Kërko orarin ditor",
+                       "subtitle":  "Përdorni algoritmin tonë të planifikimit për të analizuar detyrat e planifikuara për një ditë të caktuar.",
+                       "noVisits":  "Nuk ka vizita anijesh të planifikuara për datën e zgjedhur.",
+                       "visitsOnSelectedDay":  "Vizitat e anijeve në datën e zgjedhur",
+                       "viewVisits":  "Gjenero orarin e detyrave",
+                       "generateTasksButton":  "Gjenero orarin e detyrave",
+                       "aboutAlgorithmButton":  "Rreth algoritmit",
+                       "fields":  {
+                                      "algorithm":  {
+                                                        "title":  "Algoritmi i planifikimit",
+                                                        "placeholder":  "Zgjidh algoritmin e planifikimit"
+                                                    },
+                                      "relatedDocks":  "Zgjidh molin përkatës"
+                                  },
+                       "generateTasksModal":  {
+                                                  "title":  "Logjistika shtesë"
+                                              },
+                       "aboutAlgorithmModal":  {
+                                                   "title":  "Rreth algoritmit",
+                                                   "content":  "Algoritmi aktual merr në konsideratë njoftimet e vizitave të anijeve të planifikuara për datën dhe molin e zgjedhur. \nMë pas kontrollon disponueshmërinë e vinçave STS për molin e specifikuar dhe vendos kohëzgjatjen e çdo detyre bazuar në shpejtësinë e vinçit.\nGjithashtu injoron vizitat që janë për mirëmbajtje ose aktivitete të tjera jo-ngarkim/shkarkim."
+                                               },
+                       "results":  {
+                                       "title":  "Scheduling Results",
+                                       "subtitle":  "Generated task schedule for the selected date"
+                                   },
+                       "tabs":  {
+                                    "dashboard":  "Scheduling Dashboard",
+                                    "results":  "Scheduling Results",
+                                    "schedule":  "Request Task Schedule",
+                                    "view_dashboard":  "View Scheduling",
+                                    "search":  "List Operation Plans",
+                                    "create":  "Create Scheduling",
+                                    "view":  "View Scheduling",
+                                    "edit":  "Edit Scheduling",
+                                    "queue":  "Scheduling Queue"
+                                },
+                       "subtitles":  {
+                                         "dashboard":  "Overview of scheduling of berth operations and incidents",
+                                         "schedule":  "Request a task schedule for a specific date",
+                                         "search":  "List all operation plans for a given date",
+                                         "create":  "Create a new scheduling into the system",
+                                         "edit":  "Edit an existing scheduling in the system",
+                                         "queue":  "View pending scheduling requests"
+                                     },
+                       "queue":  {
+                                     "title":  "Scheduling Queue",
+                                     "subtitle":  "Pending scheduling requests",
+                                     "onlyMine":  "Show only my requests"
+                                 },
+                       "rebalancing":  {
+                                           "title":  "Dock Rebalancing Required",
+                                           "warningMessage":  "Before scheduling, the system recommends rebalancing dock assignments to optimize load distribution.",
+                                           "vesselsToReassign":  "Vessels to Reassign",
+                                           "averageLoad":  "Average Load",
+                                           "loadRange":  "Load Range",
+                                           "proposedReassignments":  "Proposed Reassignments",
+                                           "vesselImo":  "Vessel IMO",
+                                           "currentDock":  "Current Dock",
+                                           "proposedDock":  "Proposed Dock",
+                                           "skipButton":  "Skip \u0026 Continue with Current Assignments",
+                                           "applyButton":  "Apply Rebalancing \u0026 Generate Schedule"
+                                       }
+                   },
+    "physicalResource":  {
+                             "deactivation":  {
+                                                  "title":  "Çaktivizo burimin fizik",
+                                                  "message":  "Jeni i sigurt që doni të çaktivizoni këtë burim fizik? Mund ta aktivizoni përsëri më vonë.",
+                                                  "successMessage":  "Burimi fizik u çaktivizua me sukses.",
+                                                  "errorMessage":  "Ndodhi një gabim gjatë përpjekjes për të çaktivizuar burimin fizik. Ju lutemi provoni përsëri."
+                                              },
+                             "tabs":  {
+                                          "dashboard":  "Paneli i burimeve fizike",
+                                          "view_dashboard":  "Shiko burimet fizike",
+                                          "search":  "Kërko burimet fizike",
+                                          "create":  "Krijo burim fizik",
+                                          "view":  "Shiko burim fizik",
+                                          "edit":  "Redakto burim fizik"
+                                      },
+                             "infoTitle":  "Informacion mbi burimin fizik",
+                             "title":  "Burimet fizike",
+                             "subtitle":  {
+                                              "search":  "Menaxhoni dhe shikoni të gjitha burimet fizike të regjistruara",
+                                              "dashboard":  "Paneli i kontrollit për burimet fizike",
+                                              "view_dashboard":  "Shiko burimet fizike",
+                                              "create":  "Regjistro një burim fizik të ri në sistem",
+                                              "view":  "Shiko detajet e burimit fizik",
+                                              "edit":  "Redakto burimin fizik ekzistues në sistem"
+                                          },
+                             "generalFields":  "Fushat e përgjithshme",
+                             "specificFields":  "Fusha specifike",
+                             "fields":  {
+                                            "code":  {
+                                                         "title":  "Kodi",
+                                                         "placeholder":  "Kodi i burimit"
+                                                     },
+                                            "description":  {
+                                                                "title":  "Përshkrimi",
+                                                                "placeholder":  "Përshkrimi i burimit"
+                                                            },
+                                            "status":  {
+                                                           "title":  "Statusi",
+                                                           "placeholder":  "Zgjidh statusin e burimit",
+                                                           "options":  {
+                                                                           "available":  "Në dispozicion",
+                                                                           "maintenance":  "Mirëmbajtje",
+                                                                           "outOfService":  "Jashtë shërbimit"
+                                                                       }
+                                                       },
+                                            "qualifications":  {
+                                                                   "title":  "Kualifikimet e kërkuara",
+                                                                   "placeholder":  "Kualifikimet e nevojshme për të operuar këtë burim"
+                                                               },
+                                            "setupTime":  {
+                                                              "title":  "Koha e vendosjes (min)",
+                                                              "placeholder":  "Koha e vendosjes"
+                                                          },
+                                            "servingDocks":  {
+                                                                 "title":  "Molat e shërbyera",
+                                                                 "placeholder":  "Zgjidh molat e shërbyera"
+                                                             },
+                                            "liftingCapacity":  {
+                                                                    "title":  "Kapaciteti i ngritjes (kg)",
+                                                                    "placeholder":  "Kapaciteti i ngritjes"
+                                                                },
+                                            "containersPerHour":  {
+                                                                      "title":  "Konteinerë në orë",
+                                                                      "placeholder":  "Konteinerë në orë"
+                                                                  },
+                                            "maxLoadCapacity":  {
+                                                                    "title":  "Ngarkesa maksimale (kg)",
+                                                                    "placeholder":  "Ngarkesa maksimale"
+                                                                },
+                                            "averageSpeed":  {
+                                                                 "title":  "Shpejtësia mesatare (km/h)",
+                                                                 "placeholder":  "Shpejtësia mesatare"
+                                                             },
+                                            "containersPerTrip":  {
+                                                                      "title":  "Konteinerë për udhëtim",
+                                                                      "placeholder":  "Konteinerë për udhëtim"
+                                                                  },
+                                            "type":  {
+                                                         "title":  "Lloji i burimit",
+                                                         "options":  {
+                                                                         "stsCrane":  "Kran STS",
+                                                                         "yardGantry":  "Vinç i oborrit",
+                                                                         "truck":  "Kamion"
+                                                                     }
+                                                     }
+                                        },
+                             "actions":  {
+                                             "deactivate":  "Çaktivizo burimin fizik"
+                                         },
+                             "registeredPhysicalResources":  "Burimet fizike të regjistruara"
+                         },
+    "storageArea":  {
+                        "tabs":  {
+                                     "dashboard":  "Paneli i zonave të magazinimit",
+                                     "view_dashboard":  "Shiko zonat e magazinimit",
+                                     "search":  "Kërko zonat e magazinimit",
+                                     "create":  "Krijo zonë magazinimi",
+                                     "view":  "Shiko zonën e magazinimit",
+                                     "edit":  "Redakto zonën e magazinimit"
+                                 },
+                        "create":  {
+                                       "distance_meters":  "Distanca (metra)"
+                                   },
+                        "infoTitle":  "Informacion mbi zonën e magazinimit",
+                        "title":  "Zonat e magazinimit",
+                        "subtitle":  {
+                                         "search":  "Menaxhoni dhe shikoni të gjitha zonat e magazinimit të regjistruara",
+                                         "dashboard":  "Paneli i menaxhimit për zonat e magazinimit",
+                                         "view_dashboard":  "Shiko zonat e magazinimit",
+                                         "create":  "Regjistro një zonë të re magazinimi në sistem",
+                                         "view":  "Shiko detajet e zonës së magazinimit",
+                                         "edit":  "Redakto zonën e magazinimit ekzistuese në sistem"
+                                     },
+                        "printer":  {
+                                        "docks_serviced":  "mola të shërbyera",
+                                        "capacity_usage":  "Përdorimi i kapacitetit",
+                                        "units":  "njësi",
+                                        "available":  "në dispozicion",
+                                        "no_registered_distances":  "Nuk ka distanca të regjistruara",
+                                        "no_docks_serviced":  "Nuk ka mola të shërbyera",
+                                        "all_docks_serviced":  "Të gjitha molat e shërbyera",
+                                        "serviced_docks_distance":  "Distanca e molave të shërbyera",
+                                        "no_registered_docks":  "Nuk ka mola të regjistruara"
+                                    },
+                        "fields":  {
+                                       "nameCode":  {
+                                                        "title":  "Kodi i emërtimit",
+                                                        "placeholder":  "Kodi i emërtimit të zonës së magazinimit"
+                                                    },
+                                       "location":  {
+                                                        "title":  "Vendndodhja",
+                                                        "placeholder":  "Vendndodhja e zonës së magazinimit"
+                                                    },
+                                       "type":  {
+                                                    "title":  "Lloji",
+                                                    "placeholder":  "Zgjidh llojin e zonës së magazinimit",
+                                                    "options":  {
+                                                                    "yard":  "Oborr",
+                                                                    "warehouse":  "Magazinë"
+                                                                }
+                                                },
+                                       "capacity":  {
+                                                        "title":  "Kapaciteti",
+                                                        "placeholder":  "Kapaciteti maksimal"
+                                                    },
+                                       "occupancy":  {
+                                                         "title":  "Zënia",
+                                                         "placeholder":  "Zënia aktuale"
+                                                     }
+                                   },
+                        "registeredStorageAreas":  "Zonat e magazinimit të regjistruara"
+                    },
+    "notification":  {
+                         "id":  "ID e njoftimit",
+                         "hazardous":  "I rrezikshëm",
+                         "nonHazardous":  "Jo i rrezikshëm",
+                         "arrival":  "Mbërritje",
+                         "departure":  "Nisje",
+                         "specialRequirements":  "Kërkesa të veçanta",
+                         "none":  "Asnjë",
+                         "crew":  "Ekuipazh",
+                         "captain":  "Kapiteni",
+                         "unknown":  "E panjohur",
+                         "from":  "Nga",
+                         "to":  "Deri",
+                         "step":  "Hapi",
+                         "of":  "nga",
+                         "tabs":  {
+                                      "dashboard":  "Paneli i njoftimeve",
+                                      "search":  "Kërko njoftime",
+                                      "edit":  "Redakto njoftimin",
+                                      "create":  "Krijo njoftim",
+                                      "update":  "Update Notification",
+                                      "makeDraft":  "Krijo njoftim draft",
+                                      "myNotifications":  "Njoftimet e mia",
+                                      "review":  "Rishiko njoftimet",
+                                      "general":  "Listim i përgjithshëm",
+                                      "byDate":  "Listim sipas kalendarit",
+                                      "submit":  "Dorëzo njoftimin",
+                                      "delete":  "Fshi njoftimin"
+                                  },
+                         "eventsOnDate":  "Ngjarje në datën e zgjedhur",
+                         "noEventsOnDate":  "Nuk ka ngjarje në datën e zgjedhur",
+                         "title":  "Njoftime për vizitat e anijeve",
+                         "subtitle":  {
+                                          "dashboard":  "Përmbledhje e njoftimeve për vizitat e anijeve",
+                                          "search":  "Menaxho dhe shiko të gjitha njoftimet për vizitat e anijeve",
+                                          "create":  "Krijo një njoftim të ri për vizitë anijeje",
+                                          "update":  "Update an existing vessel visit notification",
+                                          "edit":  "Redakto një njoftim ekzistues për vizitë anijeje",
+                                          "review":  "Rishiko njoftimet e pritjes"
+                                      },
+                         "errors":  {
+                                        "noNotificationId":  "Nuk është dhënë ID e njoftimit"
+                                    },
+                         "infoTitle":  "Informacioni i njoftimit",
+                         "cargoTitle":  "Informacioni i ngarkesës",
+                         "vesselTitle":  "Informacioni i anijes",
+                         "manifestInfo":  "Informacioni i manifestit",
+                         "fields":  {
+                                        "selectVessel":  "Select corresponding vessel",
+                                        "openLoadManifest":  "Hap manifestin e ngarkimit",
+                                        "openUnloadManifest":  "Hap manifestin e shkarkimit",
+                                        "expectedArrival":  "Mbërritje e pritshme",
+                                        "expectedDeparture":  "Nisje e pritshme",
+                                        "isCargoHazardous":  "Ngarkesë e rrezikshme",
+                                        "specialRequirements":  "Kërkesa të veçanta",
+                                        "captain":  "Kapiteni",
+                                        "totalCrewMembers":  "Numri total i anëtarëve të ekuipazhit",
+                                        "safetyOfficers":  "Oficerë sigurie",
+                                        "loadCargoManifest":  "Ngarko manifestin e ngarkesës",
+                                        "unloadCargoManifest":  "Shkarko manifestin e ngarkesës",
+                                        "position":  "Pozicioni",
+                                        "area":  "Zona",
+                                        "container":  "Konteineri",
+                                        "crewMembers":  "Anëtarë ekuipazhi",
+                                        "status":  "Statusi",
+                                        "isCargoHazardousQ":  "Is Cargo Hazardous?",
+                                        "cargoManifestInfo":  "About cargo manifest files"
+                                    },
+                         "timeline":  {
+                                          "pending":  "Në pritje",
+                                          "inProgress":  "Në progres",
+                                          "completed":  "Përfunduar",
+                                          "submitted":  "Dorëzuar",
+                                          "accepted":  "Pranuar",
+                                          "rejected":  "Refuzuar"
+                                      },
+                         "filters":  {
+                                         "expectedArrivalFrom":  "Mbërritje e pritshme nga",
+                                         "expectedArrivalTo":  "Mbërritje e pritshme deri",
+                                         "withReason":  "Me arsye",
+                                         "withDockAssigned":  "Me mol të caktuar"
+                                     },
+                         "decision":  {
+                                          "isFinal":  "Përfundimtare",
+                                          "assignedDock":  {
+                                                               "title":  "Moli i caktuar",
+                                                               "placeholder":  "Zgjidh molin e caktuar"
+                                                           },
+                                          "reason":  {
+                                                         "title":  "Arsyeja",
+                                                         "placeholder":  "Jepni arsyen për vendimin"
+                                                     },
+                                          "status":  "Statusi i vendimit"
+                                      },
+                         "sections":  {
+                                          "vesselDetails":  "Informacion mbi vizitën",
+                                          "crewDetails":  "Detajet e ekuipazhit",
+                                          "cargoRequirements":  "Kërkesa për ngarkesen",
+                                          "cargoContent":  "Përmbajtja e ngarkeses"
+                                      },
+                         "about":  {
+                                       "text":  "Skedarët e manifestit të ngarkeses (aktualisht) duhet të jenë në format standard evropian CSV. Çdo rresht në skedarin CSV përfaqëson një artikull ngarkese me kolonat e mëposhtme:",
+                                       "bay":  "Bay (numër)",
+                                       "row":  "Rresht (numër)",
+                                       "tier":  "Nivel (numër)",
+                                       "area":  "Kodi i zonës (nga/për ku)",
+                                       "containerNumber":  "Numëri i kontejnerit (tekst)",
+                                       "conatinerType":  "Lloji i kontejnerit (numër)",
+                                       "description":  "Përshkrimi (tekst)",
+                                       "containerTypes":  {
+                                                              "refrigeratedGoods":  "Mallra të ftohura",
+                                                              "generalConsumerProducts":  "Produkte të përgjithshme konsumatore",
+                                                              "electronics":  "Elektronikë",
+                                                              "hazmat":  "Materiale të rrezikshme",
+                                                              "oversizedIndustrialEquipment":  "Pajisje industriale të mëdha",
+                                                              "other":  "Të tjera"
+                                                          }
+                                   },
+                         "registeredVesselVisitNotifications":  "Njoftime të regjistruara për vizitat e anijeve"
+                     },
+    "operationalWindow":  {
+                              "title":  "Dritarja Operacionale",
+                              "printer":  {
+                                              "addShift":  "Shto turn",
+                                              "shifts":  "Turne:",
+                                              "noShifts":  "Nuk ka turne.",
+                                              "startTime":  "Ora e fillimit",
+                                              "endTime":  "Ora e mbarimit",
+                                              "weekDays":  "Ditët e javës"
+                                          },
+                              "errors":  {
+                                             "shiftOverlap":  "Turn i pavlefshëm. Mbivendosje ose orë mbarimi para fillimit."
+                                         }
+                          },
+    "about":  {
+                  "title":  "Rreth aplikacionit",
+                  "privacy":  {
+                                  "title":  "Privacy Policy",
+                                  "lastUpdated":  "Last updated: {date}"
+                              }
+              },
+    "operationPlan":  {
+                          "title":  "Plani operacional",
+                          "dock":  "Dock",
+                          "docks":  "Docks",
+                          "operations":  "Operations",
+                          "cranes":  "Cranes",
+                          "createdBy":  "Created By",
+                          "createdAt":  "Created At",
+                          "totalSchedules":  "Total Schedules",
+                          "vesselCount":  "Vessels",
+                          "plansOnDate":  "Operation plans on selected date",
+                          "noPlansOnDate":  "No operation plans on selected date",
+                          "id":  "ID",
+                          "vvn":  "Vessel Visit Notification",
+                          "for":  "for",
+                          "details":  {
+                                          "title":  "Detajet e planit"
+                                      },
+                          "totalOperations":  "Total Operations",
+                          "algorithmUsed":  "Algorithm Used",
+                          "ganttChart":  "Gantt Chart",
+                          "startTime":  "Start Time",
+                          "endTime":  "End Time",
+                          "totalDuration":  "Total Duration",
+                          "operation":  "Operation",
+                          "duration":  "Duration",
+                          "resources":  "Resources",
+                          "operationDetails":  "Operation Details",
+                          "operationNumber":  "Operation #{number}",
+                          "notFound":  "Operation plan not found",
+                          "operationType":  {
+                                                "Unload":  "Unload",
+                                                "Load":  "Load"
+                                            },
+                          "tabs":  {
+                                       "unplannedVVNs":  "Unplanned VVNs",
+                                       "search":  "Search Plans",
+                                       "edit":  "Edit Plan",
+                                       "open":  "Start Execution"
+                                   },
+                          "subtitle":  {
+                                           "edit":  "Modify operation plan details and schedule"
+                                       },
+                          "unplannedVVNs":  {
+                                                "description":  "Vessel visit notifications that do not have an operation plan assigned yet",
+                                                "noUnplanned":  "All vessel visit notifications have operation plans assigned",
+                                                "foundMessage":  "Found {vvnCount} VVN(s) without plans across {dayCount} day(s)",
+                                                "regenerateAll":  "Regenerate All Missing Plans",
+                                                "regenerateDay":  "Regenerate Plans for This Day",
+                                                "regenerateModalTitle":  "Regenerate Plans for {date}",
+                                                "warning":  "Warning",
+                                                "warningMessage":  "Regenerating plans will overwrite any existing operation plans for this day. This action cannot be undone.",
+                                                "selectedDay":  "Selected Day",
+                                                "confirmRegeneration":  "Confirm Regeneration",
+                                                "affectedDays":  "Affected Days",
+                                                "queueInfo":  "Each regeneration request will be queued separately. You can review and accept/reject them individually from the Scheduling Queue.",
+                                                "continue":  "Continue",
+                                                "confirmRegenerationTitle":  "Confirm Regeneration",
+                                                "irreversibleAction":  "This action is irreversible",
+                                                "overwriteWarning":  "Regenerating operation plans will permanently overwrite any existing plans for the selected days. This action cannot be undone.",
+                                                "aboutToRegenerate":  "You are about to regenerate plans for",
+                                                "days":  "days",
+                                                "vesselVisitNotifications":  "Vessel Visit Notifications",
+                                                "using":  "Using",
+                                                "algorithm":  "algorithm",
+                                                "proceedQuestion":  "Do you want to proceed with this operation?",
+                                                "yesRegenerateAll":  "Yes, Regenerate All"
+                                            },
+                          "algorithm":  {
+                                            "optimal":  "Optimal",
+                                            "greedy":  "Greedy",
+                                            "genetic":  "Genetic",
+                                            "auto":  "Auto"
+                                        },
+                          "metrics":  {
+                                          "title":  "Metrics",
+                                          "strategy":  "Strategy",
+                                          "totalDelay":  "Total Delay",
+                                          "computationTime":  "Computation Time",
+                                          "autoSelection":  "Automatic Algorithm Selection"
+                                      },
+                          "infoTitle":  "Operation Plan Information",
+                          "fields":  {
+                                         "id":  {
+                                                    "title":  "Plan ID"
+                                                },
+                                         "relatedVVN":  {
+                                                            "title":  "Related VVN"
+                                                        },
+                                         "dock":  {
+                                                      "title":  "Dock"
+                                                  },
+                                         "operations":  {
+                                                            "title":  "Operations"
+                                                        }
+                                     },
+                          "filters":  {
+                                          "startDate":  "Start Date From",
+                                          "endDate":  "End Date To"
+                                      },
+                          "metadata":  {
+                                           "title":  "Metadata",
+                                           "createdBy":  "Created By",
+                                           "createdAt":  "Created At",
+                                           "algorithmUsed":  "Algorithm Used"
+                                       },
+                          "schedule":  {
+                                           "title":  "Operation Schedule",
+                                           "noOperations":  "No operations scheduled"
+                                       }
+                      },
+    "incidentType":  {
+                         "fields":  {
+                                        "name":  {
+                                                     "title":  "Name",
+                                                     "placeholder":  "Incident type name"
+                                                 },
+                                        "description":  {
+                                                            "title":  "Description",
+                                                            "placeholder":  "Detailed description of the incident type"
+                                                        },
+                                        "severity":  {
+                                                         "title":  "Severity",
+                                                         "placeholder":  "Select severity level"
+                                                     },
+                                        "subtypeOf":  {
+                                                          "title":  "Subtype Of",
+                                                          "placeholder":  "Select parent type"
+                                                      },
+                                        "subtypes":  {
+                                                         "title":  "Subtypes",
+                                                         "placeholder":  "Select child types"
+                                                     }
+                                    },
+                         "severity":  {
+                                          "Minor":  "Minor",
+                                          "Major":  "Major",
+                                          "Critical":  "Kritike"
+                                      },
+                         "tabs":  {
+                                      "dashboard":  "Incident Types Dashboard",
+                                      "view_dashboard":  "View Incident Types",
+                                      "search":  "Search Incident Types",
+                                      "create":  "Create Incident Type",
+                                      "edit":  "Edit Incident Type"
+                                  },
+                         "generalFields":  "General fields",
+                         "classification":  "Classification",
+                         "title":  "Lloji i incidentit",
+                         "subtitle":  {
+                                          "dashboard":  "Overview of incident type statistics and activities",
+                                          "search":  "Manage and view all registered incident types",
+                                          "create":  "Register a new incident type into the system",
+                                          "edit":  "Modify an existing incident type in the system"
+                                      },
+                         "registeredIncidentTypes":  "Registered Incident Types",
+                         "incidentTypeInformation":  "Incident Type Information",
+                         "parentType":  "Parent Type",
+                         "confirmDelete":  "Confirm delete",
+                         "confirmDeleteMessage":  "Are you sure you want to delete this incident type?",
+                         "failedToDelete":  "Failed to delete incident type"
+                     },
+    "taskCategory":  {
+                         "fields":  {
+                                        "name":  {
+                                                     "title":  "Name",
+                                                     "placeholder":  "Task category name"
+                                                 },
+                                        "category":  {
+                                                         "title":  "Category",
+                                                         "placeholder":  "Category code"
+                                                     },
+                                        "description":  {
+                                                            "title":  "Description",
+                                                            "placeholder":  "Description of the task category"
+                                                        }
+                                    },
+                         "tabs":  {
+                                      "dashboard":  "Task Categories Dashboard",
+                                      "search":  "Search Task Categories",
+                                      "create":  "Create Task Category",
+                                      "edit":  "Edit Task Category",
+                                      "view_dashboard":  "View Task Categories"
+                                  },
+                         "generalFields":  "General fields",
+                         "title":  "Kategoria e detyrës",
+                         "subtitle":  {
+                                          "dashboard":  "Overview of task category statistics and activities",
+                                          "search":  "Manage and view all registered task categories",
+                                          "create":  "Register a new task category in the system",
+                                          "edit":  "Modify an existing task category in the system"
+                                      },
+                         "taskCategoryInformation":  "Task Category Information",
+                         "registeredTaskCategories":  "Registered Task Categories"
+                     },
+    "execution":  {
+                      "title":  "Ekzekutimi",
+                      "subtitle":  {
+                                       "search":  "Manage and view all vessel visit executions",
+                                       "dashboard":  "Overview of vessel visit execution statistics and activities"
+                                   },
+                      "tabs":  {
+                                   "dashboard":  "Executions Dashboard",
+                                   "search":  "Search Executions",
+                                   "view_dashboard":  "View Executions",
+                                   "update":  "Update Execution",
+                                   "view":  "View Execution",
+                                   "table":  "Table View",
+                                   "cards":  "Card View"
+                               },
+                      "fields":  {
+                                     "code":  "Code",
+                                     "relatedVVN":  "Related To",
+                                     "status":  "Status",
+                                     "createdBy":  "Created By",
+                                     "dateOpen":  "Date Open",
+                                     "dateClosed":  "Date Closed",
+                                     "relatedVesselVisit":  "Related Vessel Visit",
+                                     "dock":  "Berth Dock",
+                                     "berthTime":  "Berth Time",
+                                     "operations":  "Operations"
+                                 },
+                      "filters":  {
+                                      "startDate":  "Start Date",
+                                      "endDate":  "End Date",
+                                      "relatedVVN":  "Vessel Visit Notification",
+                                      "status":  "Status"
+                                  },
+                      "metrics":  {
+                                      "totalOperations":  "Total Ops",
+                                      "completedOperations":  "Progress",
+                                      "turnaroundTime":  "Turnaround Time",
+                                      "berthOccupancy":  "Berth Occupancy"
+                                  },
+                      "status":  {
+                                     "pending":  "Në pritje",
+                                     "started":  "Started",
+                                     "delayed":  "Delayed",
+                                     "completed":  "I përfunduar"
+                                 },
+                      "view_resources":  "View Resources",
+                      "infoTitle":  "Execution Information",
+                      "operationsTitle":  "Operations",
+                      "noOperations":  "No operations available",
+                      "startOperation":  "Start Operation",
+                      "completeOperation":  "Complete Operation",
+                      "addOperation":  "Add Operation",
+                      "addOperationDescription":  "Add a new operation to the timeline",
+                      "confirmStartOperation":  "Are you sure you want to start this operation?",
+                      "confirmCompleteOperation":  "Are you sure you want to complete this operation?",
+                      "berthOperation":  {
+                                             "button":  "Edit berth data",
+                                             "title":  "Berth Operation",
+                                             "description":  "Edit the berth dock and time for this vessel visit execution.",
+                                             "dock":  "Berth Dock",
+                                             "dockPlaceholder":  "Select berth dock",
+                                             "berthTime":  "Berth Time",
+                                             "differentThanPlanned":  "The selected dock is different than the one planned."
+                                         }
+                  },
+    "incident":  {
+                     "tabs":  {
+                                  "dashboard":  "Incidents Dashboard",
+                                  "create":  "Create Incident",
+                                  "search":  "Search Incidents",
+                                  "active":  "Active Incidents",
+                                  "view":  "View Incident",
+                                  "edit":  "Edit Incident"
+                              },
+                     "subtitle":  {
+                                      "create":  "Report a new incident in the system",
+                                      "search":  "Search and filter existing incidents",
+                                      "active":  "View and manage active incidents"
+                                  },
+                     "generalFields":  "General Information",
+                     "classification":  "Classification",
+                     "fields":  {
+                                    "bid":  {
+                                                "title":  "Incident ID"
+                                            },
+                                    "type":  {
+                                                 "title":  "Incident Type",
+                                                 "placeholder":  "Select an incident type"
+                                             },
+                                    "startTime":  {
+                                                      "title":  "Start Time",
+                                                      "placeholder":  "When did the incident start?"
+                                                  },
+                                    "endTime":  {
+                                                    "title":  "End Time",
+                                                    "placeholder":  "When did the incident end?"
+                                                },
+                                    "severity":  {
+                                                     "title":  "Severity",
+                                                     "placeholder":  "Select severity level",
+                                                     "options":  {
+                                                                     "minor":  "Minor",
+                                                                     "major":  "Major",
+                                                                     "critical":  "Critical"
+                                                                 }
+                                                 },
+                                    "description":  {
+                                                        "title":  "Description",
+                                                        "placeholder":  "Describe the incident in detail"
+                                                    },
+                                    "createdBy":  {
+                                                      "title":  "Created By"
+                                                  },
+                                    "affectedVVECodes":  {
+                                                             "title":  "Affected VVEs",
+                                                             "placeholder":  "Enter affected VVEs"
+                                                         },
+                                    "vveCode":  {
+                                                    "title":  "VVE Code"
+                                                },
+                                    "status":  {
+                                                   "title":  "Status",
+                                                   "options":  {
+                                                                   "active":  "Active",
+                                                                   "resolved":  "Resolved"
+                                                               }
+                                               },
+                                    "filterStartTime":  {
+                                                            "title":  "Start Date From"
+                                                        },
+                                    "filterEndTime":  {
+                                                          "title":  "Start Date To"
+                                                      },
+                                    "duration":  {
+                                                     "title":  "Duration"
+                                                 }
+                                },
+                     "severity":  {
+                                      "Minor":  "Minor",
+                                      "Major":  "Major",
+                                      "Critical":  "Critical"
+                                  },
+                     "status":  {
+                                    "active":  "Active",
+                                    "resolved":  "I zgjidhur"
+                                },
+                     "ongoing":  "Ongoing",
+                     "filters":  {
+                                     "onlyActive":  "Only Active",
+                                     "onlyMine":  "Only Mine"
+                                 },
+                     "actions":  {
+                                     "view":  "View Details",
+                                     "edit":  "Edit Incident",
+                                     "resolve":  "Zgjidh",
+                                     "delete":  "Delete Incident"
+                                 },
+                     "notifications":  {
+                                           "createSuccess":  "Incident created successfully",
+                                           "createFailed":  "Failed to create incident",
+                                           "updateSuccess":  "Incident updated successfully",
+                                           "updateFailed":  "Failed to update incident",
+                                           "resolveSuccess":  "Incident resolved successfully",
+                                           "resolveFailed":  "Failed to resolve incident",
+                                           "deleteSuccess":  "Incident deleted successfully",
+                                           "deleteFailed":  "Failed to delete incident"
+                                       },
+                     "table":  {
+                                   "empty":  "No incidents found"
+                               },
+                     "active":  {
+                                    "title":  "Active Incidents",
+                                    "subtitle":  "View and manage ongoing incidents"
+                                },
+                     "infoTitle":  "Incident details",
+                     "closeDialog":  {
+                                         "title":  "Resolve indicent",
+                                         "message":  "When did the incident get resolved",
+                                         "confirm":  "Yes, close this incident",
+                                         "cancel":  "Cancel"
+                                     }
+                 }
 }

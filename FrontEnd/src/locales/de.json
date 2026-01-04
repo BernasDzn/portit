@@ -15,7 +15,9 @@
                                 "friday":  "Freitag",
                                 "saturday":  "Samstag"
                             },
-                   "number":  "Nummer"
+                   "number":  "Nummer",
+                   "actions":  "Actions",
+                   "none":  "None"
                },
     "buttons":  {
                     "save":  "Speichern",
@@ -31,8 +33,6 @@
                     "close":  "Schließen",
                     "add":  "Hinzufügen",
                     "review":  "Überprüfen",
-                    "ok":  "OK",
-                    "downloadSample":  "Muster herunterladen",
                     "filter":  {
                                    "title":  "Filter",
                                    "add":  "Filtern",
@@ -45,7 +45,9 @@
                     "login":  "Anmelden",
                     "goBackToLogin":  "Zurück zur Anmeldung",
                     "logout":  "Abmelden",
-                    "seeMore":  "Mehr anzeigen"
+                    "seeMore":  "Mehr anzeigen",
+                    "ok":  "OK",
+                    "downloadSample":  "Muster herunterladen"
                 },
     "search":  {
                    "languages":  "Sprachen suchen..."
@@ -89,10 +91,42 @@
                   "auditLogs":  {
                                     "title":  "Prüfprotokolle",
                                     "subtitle":  "Systemaktivitätsprotokolle anzeigen und überwachen."
-                                }
+                                },
+                  "pp":  {
+                             "title":  "Privacy Policies",
+                             "subtitle":  "Define and manage port data collection policies."
+                         },
+                  "notifications":  {
+                                        "create":  "Create Notification",
+                                        "subtitleCreate":  "Send important announcements to any or all users.",
+                                        "title":  "Notify users",
+                                        "subtitle":  "Send important announcements to any or all users.",
+                                        "broadcastToggle":  "Broadcast to all users",
+                                        "sendEmailToggle":  "Also send as email",
+                                        "fields":  {
+                                                       "title":  {
+                                                                     "title":  "Title",
+                                                                     "placeholder":  "Notification title"
+                                                                 },
+                                                       "message":  {
+                                                                       "title":  "Message",
+                                                                       "placeholder":  "Notification message"
+                                                                   },
+                                                       "email":  {
+                                                                     "title":  "User email",
+                                                                     "placeholder":  "Specify user email to send to"
+                                                                 },
+                                                       "urgency":  {
+                                                                       "title":  "Urgency",
+                                                                       "options":  {
+                                                                                       "normal":  "Normal",
+                                                                                       "urgent":  "Urgent"
+                                                                                   }
+                                                                   }
+                                                   }
+                                    }
               },
     "user":  {
-                 "registeredUsers":  "Registrierte Benutzer",
                  "fields":  {
                                 "email":  {
                                               "title":  "E-Mail",
@@ -128,7 +162,10 @@
                                   "dashboard":  "Benutzerübersicht und Verwaltung",
                                   "create":  "Einen neuen Benutzer im System registrieren",
                                   "view":  "Bestehende Benutzer anzeigen und verwalten"
-                              }
+                              },
+                 "registeredUsers":  "Registrierte Benutzer",
+                 "confirmDelete":  "Löschung bestätigen",
+                 "confirmDeleteMessage":  "Sind Sie sicher, dass Sie diesen Benutzer löschen möchten?"
              },
     "representative":  {
                            "title":  "Vertreter",
@@ -283,7 +320,6 @@
                    "registeredVessels":  "Registrierte Schiffe"
                },
     "staff":  {
-                  "registeredStaffMembers":  "Registrierte Mitarbeiter",
                   "deactivation":  {
                                        "title":  "Mitarbeiter deaktivieren",
                                        "message":  "Sind Sie sicher, dass Sie diesen Mitarbeiter deaktivieren möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
@@ -337,10 +373,10 @@
                                    "create":  "Einen neuen Mitarbeiter im System registrieren",
                                    "view":  "Mitarbeiterdetails anzeigen",
                                    "edit":  "Einen vorhandenen Mitarbeiter im System bearbeiten"
-                               }
+                               },
+                  "registeredStaffMembers":  "Registrierte Mitarbeiter"
               },
     "qualification":  {
-                          "registeredQualifications":  "Registrierte Qualifikationen",
                           "tabs":  {
                                        "dashboard":  "Qualifikation Dashboard",
                                        "view_dashboard":  "Qualifikationen anzeigen",
@@ -367,10 +403,80 @@
                                                                    "title":  "Qualifikationsname",
                                                                    "placeholder":  "Qualifikationsname"
                                                                }
-                                     }
+                                     },
+                          "registeredQualifications":  "Registrierte Qualifikationen"
                       },
+    "scheduling":  {
+                       "title":  "Tagesplan anfordern",
+                       "subtitle":  "Verwenden Sie unseren automatisierten Planungsalgorithmus, um die geplanten Aufgaben für einen bestimmten Tag zu analysieren.",
+                       "noVisits":  "Keine Schiffsbesuche für das ausgewählte Datum geplant.",
+                       "visitsOnSelectedDay":  "Schiffsbesuche am ausgewählten Datum",
+                       "viewVisits":  "Aufgabenplan generieren",
+                       "generateTasksButton":  "Aufgabenplan generieren",
+                       "aboutAlgorithmButton":  "Über den Algorithmus",
+                       "fields":  {
+                                      "algorithm":  {
+                                                        "title":  "Planungsalgorithmus",
+                                                        "placeholder":  "Planungsalgorithmus auswählen"
+                                                    },
+                                      "relatedDocks":  "Zugehöriges Dock auswählen"
+                                  },
+                       "generateTasksModal":  {
+                                                  "title":  "Zusätzliche Logistik"
+                                              },
+                       "aboutAlgorithmModal":  {
+                                                   "title":  "Über den Algorithmus",
+                                                   "content":  "Der aktuelle Algorithmus berücksichtigt die Schiffsbesuchsbenachrichtigungen, die für das ausgewählte Datum und Dock geplant sind. \nEr überprüft dann die Verfügbarkeit von STS-Kränen für das angegebene Dock und entscheidet über die Dauer jeder Aufgabe basierend auf der Geschwindigkeit des Krans.\nEr ignoriert auch Besuche, die für Wartungs- oder andere Aktivitäten außer Lade-/Entladearbeiten vorgesehen sind."
+                                               },
+                       "results":  {
+                                       "title":  "Scheduling Results",
+                                       "subtitle":  "Generated task schedule for the selected date"
+                                   },
+                       "tabs":  {
+                                    "dashboard":  "Scheduling Dashboard",
+                                    "results":  "Scheduling Results",
+                                    "schedule":  "Request Task Schedule",
+                                    "view_dashboard":  "View Scheduling",
+                                    "search":  "List Operation Plans",
+                                    "create":  "Create Scheduling",
+                                    "view":  "View Scheduling",
+                                    "edit":  "Edit Scheduling",
+                                    "queue":  "Scheduling Queue"
+                                },
+                       "subtitles":  {
+                                         "dashboard":  "Overview of scheduling of berth operations and incidents",
+                                         "schedule":  "Request a task schedule for a specific date",
+                                         "search":  "List all operation plans for a given date",
+                                         "create":  "Create a new scheduling into the system",
+                                         "edit":  "Edit an existing scheduling in the system",
+                                         "queue":  "View pending scheduling requests"
+                                     },
+                       "queue":  {
+                                     "title":  "Scheduling Queue",
+                                     "subtitle":  "Pending scheduling requests",
+                                     "onlyMine":  "Show only my requests"
+                                 },
+                       "rebalancing":  {
+                                           "title":  "Dock Rebalancing Required",
+                                           "warningMessage":  "Before scheduling, the system recommends rebalancing dock assignments to optimize load distribution.",
+                                           "vesselsToReassign":  "Vessels to Reassign",
+                                           "averageLoad":  "Average Load",
+                                           "loadRange":  "Load Range",
+                                           "proposedReassignments":  "Proposed Reassignments",
+                                           "vesselImo":  "Vessel IMO",
+                                           "currentDock":  "Current Dock",
+                                           "proposedDock":  "Proposed Dock",
+                                           "skipButton":  "Skip \u0026 Continue with Current Assignments",
+                                           "applyButton":  "Apply Rebalancing \u0026 Generate Schedule"
+                                       }
+                   },
     "physicalResource":  {
-                             "registeredPhysicalResources":  "Registrierte physische Ressourcen",
+                             "deactivation":  {
+                                                  "title":  "Physische Ressource deaktivieren",
+                                                  "message":  "Sind Sie sicher, dass Sie diese physische Ressource deaktivieren möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
+                                                  "successMessage":  "Physische Ressource wurde erfolgreich deaktiviert.",
+                                                  "errorMessage":  "Beim Versuch, die physische Ressource zu deaktivieren, ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+                                              },
                              "tabs":  {
                                           "dashboard":  "Physische Ressource Dashboard",
                                           "view_dashboard":  "Physische Ressourcen anzeigen",
@@ -453,38 +559,9 @@
                              "actions":  {
                                              "deactivate":  "Physische Ressource deaktivieren"
                                          },
-                             "deactivation":  {
-                                                  "title":  "Physische Ressource deaktivieren",
-                                                  "message":  "Sind Sie sicher, dass Sie diese physische Ressource deaktivieren möchten? Diese Aktion kann nicht rückgängig gemacht werden.",
-                                                  "successMessage":  "Physische Ressource wurde erfolgreich deaktiviert.",
-                                                  "errorMessage":  "Beim Versuch, die physische Ressource zu deaktivieren, ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
-                                              }
+                             "registeredPhysicalResources":  "Registrierte physische Ressourcen"
                          },
-    "scheduling":  {
-                       "title":  "Tagesplan anfordern",
-                       "subtitle":  "Verwenden Sie unseren automatisierten Planungsalgorithmus, um die geplanten Aufgaben für einen bestimmten Tag zu analysieren.",
-                       "noVisits":  "Keine Schiffsbesuche für das ausgewählte Datum geplant.",
-                       "visitsOnSelectedDay":  "Schiffsbesuche am ausgewählten Datum",
-                       "viewVisits":  "Aufgabenplan generieren",
-                       "generateTasksButton":  "Aufgabenplan generieren",
-                       "aboutAlgorithmButton":  "Über den Algorithmus",
-                       "fields":  {
-                                      "algorithm":  {
-                                                        "title":  "Planungsalgorithmus",
-                                                        "placeholder":  "Planungsalgorithmus auswählen"
-                                                    },
-                                      "relatedDocks":  "Zugehöriges Dock auswählen"
-                                  },
-                       "generateTasksModal":  {
-                                                  "title":  "Zusätzliche Logistik"
-                                              },
-                       "aboutAlgorithmModal":  {
-                                                   "title":  "Über den Algorithmus",
-                                                   "content":  "Der aktuelle Algorithmus berücksichtigt die Schiffsbesuchsbenachrichtigungen, die für das ausgewählte Datum und Dock geplant sind. \nEr überprüft dann die Verfügbarkeit von STS-Kränen für das angegebene Dock und entscheidet über die Dauer jeder Aufgabe basierend auf der Geschwindigkeit des Krans.\nEr ignoriert auch Besuche, die für Wartungs- oder andere Aktivitäten außer Lade-/Entladearbeiten vorgesehen sind."
-                                               }
-                   },
     "storageArea":  {
-                        "registeredStorageAreas":  "Registrierte Lagerbereiche",
                         "tabs":  {
                                      "dashboard":  "Lagerbereich Dashboard",
                                      "view_dashboard":  "Lagerbereiche anzeigen",
@@ -493,6 +570,9 @@
                                      "view":  "Lagerbereich anzeigen",
                                      "edit":  "Lagerbereich bearbeiten"
                                  },
+                        "create":  {
+                                       "distance_meters":  "Entfernung (Meter)"
+                                   },
                         "infoTitle":  "Informationen zum Lagerbereich",
                         "title":  "Lagerbereiche",
                         "subtitle":  {
@@ -503,9 +583,6 @@
                                          "view":  "Details zum Lagerbereich anzeigen",
                                          "edit":  "Einen vorhandenen Lagerbereich im System bearbeiten"
                                      },
-                        "create":  {
-                                       "distance_meters":  "Entfernung (Meter)"
-                                   },
                         "printer":  {
                                         "docks_serviced":  "bediente Docks",
                                         "capacity_usage":  "Kapazitätsauslastung",
@@ -542,12 +619,10 @@
                                                          "title":  "Belegung",
                                                          "placeholder":  "Aktuelle Belegung"
                                                      }
-                                   }
+                                   },
+                        "registeredStorageAreas":  "Registrierte Lagerbereiche"
                     },
     "notification":  {
-                         "registeredVesselVisitNotifications":  "Registrierte Schiffsbesuchsbenachrichtigungen",
-                         "step":  "Schritt",
-                         "of":  "von",
                          "id":  "Benachrichtigungs-ID",
                          "hazardous":  "Gefährlich",
                          "nonHazardous":  "Nicht gefährlich",
@@ -560,19 +635,21 @@
                          "unknown":  "Unbekannt",
                          "from":  "Von",
                          "to":  "Bis",
+                         "step":  "Schritt",
+                         "of":  "von",
                          "tabs":  {
                                       "dashboard":  "Benachrichtigungs-Dashboard",
                                       "search":  "Benachrichtigungen suchen",
                                       "edit":  "Benachrichtigung bearbeiten",
                                       "create":  "Benachrichtigung erstellen",
+                                      "update":  "Benachrichtigung aktualisieren",
                                       "makeDraft":  "Entwurf erstellen",
                                       "myNotifications":  "Meine Benachrichtigungen",
                                       "review":  "Benachrichtigungen überprüfen",
                                       "general":  "Allgemeine Auflistung",
                                       "byDate":  "Kalenderauflistung",
                                       "submit":  "Benachrichtigung absenden",
-                                      "delete":  "Benachrichtigung löschen",
-                                      "update":  "Benachrichtigung aktualisieren"
+                                      "delete":  "Benachrichtigung löschen"
                                   },
                          "eventsOnDate":  "Ereignisse am ausgewählten Datum",
                          "noEventsOnDate":  "Keine Ereignisse am ausgewählten Datum",
@@ -581,6 +658,7 @@
                                           "dashboard":  "Überblick über Schiffsbesuchsbenachrichtigungen",
                                           "search":  "Alle Schiffsbesuchsbenachrichtigungen verwalten und anzeigen",
                                           "create":  "Eine neue Schiffsbesuchsbenachrichtigung erstellen",
+                                          "update":  "Update an existing vessel visit notification",
                                           "edit":  "Eine bestehende Schiffsbesuchsbenachrichtigung bearbeiten",
                                           "review":  "Ausstehende Schiffsbesuchsbenachrichtigungen überprüfen"
                                       },
@@ -592,13 +670,12 @@
                          "vesselTitle":  "Schiffsinformationen",
                          "manifestInfo":  "Manifestinformationen",
                          "fields":  {
+                                        "selectVessel":  "Select corresponding vessel",
                                         "openLoadManifest":  "Lademanifest öffnen",
                                         "openUnloadManifest":  "Entlademanifest öffnen",
                                         "expectedArrival":  "Erwartete Ankunft",
                                         "expectedDeparture":  "Erwartete Abfahrt",
                                         "isCargoHazardous":  "Fracht gefährlich",
-                                        "isCargoHazardousQ":  "Ist die Fracht gefährlich?",
-                                        "cargoManifestInfo":  "Über Frachtmanifest-Dateien",
                                         "specialRequirements":  "Besondere Anforderungen",
                                         "captain":  "Kapitän",
                                         "totalCrewMembers":  "Gesamtzahl der Besatzungsmitglieder",
@@ -609,7 +686,9 @@
                                         "area":  "Bereich",
                                         "container":  "Container",
                                         "crewMembers":  "Besatzungsmitglieder",
-                                        "status":  "Status"
+                                        "status":  "Status",
+                                        "isCargoHazardousQ":  "Ist die Fracht gefährlich?",
+                                        "cargoManifestInfo":  "Über Frachtmanifest-Dateien"
                                     },
                          "timeline":  {
                                           "pending":  "Ausstehend",
@@ -625,28 +704,6 @@
                                          "withReason":  "Mit Grund",
                                          "withDockAssigned":  "Mit zugewiesenem Dock"
                                      },
-                         "sections":  {
-                                         "vesselDetails":  "Schiffsdetails",
-                                         "crewDetails":  "Besatzungsdetails",
-                                         "cargoRequirements":  "Frachtanforderungen",
-                                         "cargoContent":  "Frachtinhalt"
-                                     },
-                         "about":  {
-                                       "title":  "Über Frachtmanifest-Dateien",
-                                       "intro":  "Frachtmanifest-Dateien sind CSV-Dateien mit Informationen über Container zum Laden oder Entladen. Siehe die Musterdokumentation und das Format unten.",
-                                       "required":  "Eine gültige Frachtmanifest-Datei muss die folgenden Spalten enthalten:",
-                                       "position":  "Position: Die Position des Containers auf dem Schiff (z. B. 1-2-3)",
-                                       "area":  "Bereich: Der Lagerbereich, in dem der Container platziert werden soll (z. B. YA1)",
-                                       "container":  "Container: Der Container-Code (z. B. CONT001)",
-                                       "type":  "Typ: Der Containertyp. Verfügbare Containertypen sind:",
-                                       "containerTypes":  {
-                                                             "dry":  "Trocken - Standard-Trockenfracht-Container",
-                                                             "reefer":  "Kühl - Temperaturgesteuerter Container",
-                                                             "openTop":  "Offener Deckel - Container ohne Deckel für hohe Fracht",
-                                                             "flatRack":  "Flachgestell - Container ohne Seitenwände für breite Fracht",
-                                                             "tank":  "Tank - Container für Flüssigkeiten"
-                                                         }
-                                   },
                          "decision":  {
                                           "isFinal":  "Ist endgültig",
                                           "assignedDock":  {
@@ -658,7 +715,32 @@
                                                          "placeholder":  "Grund für die Entscheidung angeben"
                                                      },
                                           "status":  "Entscheidungsstatus"
-                                      }
+                                      },
+                         "sections":  {
+                                          "vesselDetails":  "Schiffsdetails",
+                                          "crewDetails":  "Besatzungsdetails",
+                                          "cargoRequirements":  "Frachtanforderungen",
+                                          "cargoContent":  "Frachtinhalt"
+                                      },
+                         "about":  {
+                                       "text":  "Frachtmanifestdateien müssen (derzeit) im europäischen Standard-CSV-Format vorliegen. Jede Zeile in der CSV-Datei repräsentiert einen Frachtartikel mit folgenden Spalten:",
+                                       "bay":  "Bucht (Nummer)",
+                                       "row":  "Reihe (Nummer)",
+                                       "tier":  "Ebene (Nummer)",
+                                       "area":  "Bereichscode (woher/wohin)",
+                                       "containerNumber":  "Containernummer (Text)",
+                                       "conatinerType":  "Containertyp (Nummer)",
+                                       "description":  "Beschreibung (Text)",
+                                       "containerTypes":  {
+                                                              "refrigeratedGoods":  "Kühlgüter",
+                                                              "generalConsumerProducts":  "Allgemeine Konsumgüter",
+                                                              "electronics":  "Elektronik",
+                                                              "hazmat":  "Gefahrstoffe",
+                                                              "oversizedIndustrialEquipment":  "Übergroße Industrieanlagen",
+                                                              "other":  "Sonstige"
+                                                          }
+                                   },
+                         "registeredVesselVisitNotifications":  "Registrierte Schiffsbesuchsbenachrichtigungen"
                      },
     "operationalWindow":  {
                               "title":  "Betriebsfenster",

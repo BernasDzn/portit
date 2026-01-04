@@ -1,1034 +1,1141 @@
 ﻿{
-    "common": {
-        "loading": "Laadimine...",
-        "noData": "Andmeid pole saadaval",
-        "statistics": "Statistika",
-        "yes": "Jah",
-        "no": "Ei",
-        "weekDay": "Nädalapäev",
-        "days": {
-            "sunday": "Pühapäev",
-            "monday": "Esmaspäev",
-            "tuesday": "Teisipäev",
-            "wednesday": "Kolmapäev",
-            "thursday": "Neljapäev",
-            "friday": "Reede",
-            "saturday": "Laupäev"
-        },
-        "number": "Number"
-    },
-    "buttons": {
-        "save": "Salvesta",
-        "cancel": "Tühista",
-        "delete": "Kustuta",
-        "edit": "Muuda",
-        "create": "Loo",
-        "search": "Otsi",
-        "select": "Vali",
-        "activate": "Aktiveeri",
-        "deactivate": "Deaktiveeri",
-        "filter": {
-            "title": "Filtrid",
-            "add": "Filtreeri",
-            "clear": "Tühjenda filtrid"
-        },
-        "pagination": {
-            "previous": "Eelmine",
-            "next": "Järgmine"
-        },
-        "login": "Logi sisse",
-        "goBackToLogin": "Tagasi sisselogimisele",
-        "logout": "Logi välja",
-        "generate": "Genereeri",
-        "close": "Sulge",
-        "add": "Lisa",
-        "review": "Vaata üle",
-        "ok": "OK",
-        "downloadSample": "Laadi näidis alla",
-        "seeMore": "Vaata rohkem"
-    },
-    "unsavedChanges": {
-        "title": "Hülga muudatused?",
-        "message": "Teil on salvestamata muudatusi. Kas olete kindel, et soovite lahkuda ja hülgata muudatused?",
-        "confirm": "Hülga",
-        "cancel": "Jätka muutmist"
-    },
-    "expirationWarning": {
-        "title": "Seanss aegub peagi",
-        "messageOneMinute": "Teie seanss aegub 1 minuti pärast.",
-        "messageLessThanOneMinute": "Teie seanss aegub varsti.",
-        "extendSession": "Pikenda seanssi"
-    },
-    "dashboard": {
-        "welcome": "Tere tulemast tagasi, [name]!",
-        "sidebarTitle": "Töölaud",
-        "title": "PortIT töölaud",
-        "subtitle": "PortIT süsteemi ülevaade",
-        "SAOR": {
-            "subtitle": "Laevaagendi operatsioonide ülevaade",
-            "pendingNotifications": "Ootel teavitused",
-            "recent": "Hiljutised laevakülastuste teavitused",
-            "recentReview": "Laevakülastuste teavitused, mis vajavad ülevaatamist",
-            "noRecent": "Hiljutisi teavitusi pole"
-        },
-        "3DModel": {
-            "title": "Sadam 3D vaade",
-            "description": "Vaadake kogu sadamakompleksi interaktiivset 3D-vaadet. Jälgige dokkide koormust, laevade asukohti, ladustusalasid ja ressursse reaalajas.",
-            "open": "Ava 3D mudel"
-        }
-    },
-    "admin": {
-        "sidebarTitle": "Admin",
-        "title": "Administraatori töölaud",
-        "subtitle": "Administratsioon ja haldus",
-        "userManagement": {
-            "title": "Kasutajate haldus",
-            "subtitle": "Halda süsteemi kasutajaid, rolle ja õigusi."
-        },
-        "auditLogs": {
-            "title": "Auditilogid",
-            "subtitle": "Vaata ja jälgi süsteemi tegevuste logisid."
-        }
-    },
-    "user": {
-        "registeredUsers": "Registreeritud kasutajad",
-        "fields": {
-            "email": {
-                "title": "E-post",
-                "placeholder": "email@mail.com"
-            },
-            "role": {
-                "title": "Roll",
-                "placeholder": "Valige kasutaja roll",
-                "options": {
-                    "admin": "Administraator",
-                    "saoRep": "SAO esindaja",
-                    "pao": "PAO ametnik",
-                    "logisticsOperator": "Logistika operaator"
-                }
-            },
-            "isActive": {
-                "title": "Aktiivne",
-                "options": {
-                    "active": "Jah",
-                    "inactive": "Ei"
-                }
-            }
-        },
-        "tabs": {
-            "dashboard": "Kasutaja töölaud",
-            "create": "Loo kasutaja",
-            "view": "Vaata kasutajat",
-            "search": "Otsi kasutajaid"
-        },
-        "infoTitle": "Kasutaja info",
-        "title": "Kasutajad",
-        "subtitle": {
-            "dashboard": "Kasutajate ülevaade ja haldus",
-            "create": "Registreeri uus kasutaja süsteemi",
-            "view": "Halda ja vaata olemasolevaid kasutajaid"
-        }
-    },
-    "representative": {
-        "title": "Esindaja",
-        "select": "Vali esindaja"
-    },
-    "physicalCharacteristics": {
-        "title": "Füüsilised omadused (m)",
-        "length": {
-            "title": "Pikkus",
-            "placeholder": "Pikkus meetrites"
-        },
-        "depth": {
-            "title": "Sügavus",
-            "placeholder": "Sügavus meetrites"
-        },
-        "draft": {
-            "title": "Süvis",
-            "placeholder": "Süvis meetrites"
-        }
-    },
-    "dock": {
-        "fields": {
-            "code": {
-                "title": "Kood",
-                "placeholder": "Doki kood"
-            },
-            "name": {
-                "title": "Nimi",
-                "placeholder": "Doki nimi"
-            },
-            "location": {
-                "title": "Asukoht",
-                "placeholder": "Doki asukoht"
-            },
-            "supportedVesselTypes": {
-                "title": "Toetatud laevatüübid",
-                "vesselTypes": {
-                    "title": "Laevatüübid",
-                    "placeholder": "Valige laevatüübid"
+    "common":  {
+                   "loading":  "Laadimine...",
+                   "noData":  "Andmeid pole saadaval",
+                   "statistics":  "Statistika",
+                   "yes":  "Jah",
+                   "no":  "Ei",
+                   "weekDay":  "Nädalapäev",
+                   "days":  {
+                                "sunday":  "Pühapäev",
+                                "monday":  "Esmaspäev",
+                                "tuesday":  "Teisipäev",
+                                "wednesday":  "Kolmapäev",
+                                "thursday":  "Neljapäev",
+                                "friday":  "Reede",
+                                "saturday":  "Laupäev"
+                            },
+                   "number":  "Number",
+                   "actions":  "Tegevused",
+                   "none":  "Ei midagi"
+               },
+    "buttons":  {
+                    "save":  "Salvesta",
+                    "cancel":  "Tühista",
+                    "delete":  "Kustuta",
+                    "edit":  "Muuda",
+                    "create":  "Loo",
+                    "search":  "Otsi",
+                    "select":  "Vali",
+                    "activate":  "Aktiveeri",
+                    "deactivate":  "Deaktiveeri",
+                    "generate":  "Genereeri",
+                    "close":  "Sulge",
+                    "add":  "Lisa",
+                    "review":  "Vaata üle",
+                    "filter":  {
+                                   "title":  "Filtrid",
+                                   "add":  "Filtreeri",
+                                   "clear":  "Tühjenda filtrid"
+                               },
+                    "pagination":  {
+                                       "previous":  "Eelmine",
+                                       "next":  "Järgmine"
+                                   },
+                    "login":  "Logi sisse",
+                    "goBackToLogin":  "Tagasi sisselogimisele",
+                    "logout":  "Logi välja",
+                    "seeMore":  "Vaata rohkem",
+                    "ok":  "OK",
+                    "downloadSample":  "Laadi näidis alla"
                 },
-                "vesselType": "Laevatüüp"
-            }
-        },
-        "tabs": {
-            "dashboard": "Doki töölaud",
-            "view_dashboard": "Vaata dokke",
-            "search": "Otsi dokke",
-            "create": "Loo dokk",
-            "view": "Vaata dokki",
-            "edit": "Muuda dokki"
-        },
-        "generalFields": "Üldised väljad",
-        "infoTitle": "Doki info",
-        "title": "Dokid",
-        "subtitle": {
-            "dashboard": "Dokkide statistika ja tegevuste ülevaade",
-            "search": "Halda ja vaata kõiki registreeritud dokke",
-            "create": "Registreeri uus dokk süsteemi",
-            "edit": "Muuda olemasolevat dokki süsteemis"
-        },
-        "registeredDocks": "Registreeritud dokid"
-    },
-    "vesselType": {
-        "fields": {
-            "name": {
-                "title": "Nimi",
-                "placeholder": "Laevatüübi nimi"
-            },
-            "description": {
-                "title": "Kirjeldus",
-                "placeholder": "Laevatüübi kirjeldus"
-            },
-            "capacity": {
-                "title": "Mahutavus",
-                "placeholder": "Mahutavus konteinerites (TEU)"
-            },
-            "containerCapacity": {
-                "title": "Konteinerite mahutavus (TEU)",
-                "maxNumberOfRows": {
-                    "title": "Max. ridade arv",
-                    "placeholder": "Max. ridade arv TEU"
-                },
-                "maxNumberOfBays": {
-                    "title": "Max. lahtrite arv",
-                    "placeholder": "Max. lahtrite arv TEU"
-                },
-                "maxNumberOfTiers": {
-                    "title": "Max. tasemete arv",
-                    "placeholder": "Max. tasemete arv TEU"
-                }
-            }
-        },
-        "generalFields": "Üldised väljad",
-        "tabs": {
-            "dashboard": "Laevatüüpide töölaud",
-            "view_dashboard": "Vaata laevatüüpe",
-            "search": "Otsi laevatüüpe",
-            "create": "Loo laevatüüp",
-            "view": "Vaata laevatüüpi",
-            "edit": "Muuda laevatüüpi"
-        },
-        "infoTitle": "Laevatüübi info",
-        "title": "Laevatüübid",
-        "subtitle": {
-            "dashboard": "Laevatüüpide statistika ülevaade",
-            "search": "Halda ja vaata kõiki registreeritud laevatüüpe",
-            "create": "Registreeri uus laevatüüp süsteemi",
-            "edit": "Muuda olemasolevat laevatüüpi süsteemis"
-        },
-        "registeredVesselTypes": "Registreeritud laevatüübid"
-    },
-    "vessel": {
-        "fields": {
-            "name": {
-                "title": "Nimi",
-                "placeholder": "Laeva nimi"
-            },
-            "imoNumber": {
-                "title": "IMO number",
-                "placeholder": "Laeva IMO number"
-            },
-            "owner": {
-                "title": "Omanik",
-                "placeholder": "Omaniku organisatsioon"
-            },
-            "vesselType": {
-                "title": "Laevatüüp",
-                "placeholder": "Vali laevatüüp"
-            },
-            "taxNumber": {
-                "title": "Maksunumber"
-            }
-        },
-        "infoTitle": "Laeva info",
-        "physicalCharacteristicsTitle": "Füüsilised omadused",
-        "tabs": {
-            "dashboard": "Laevade töölaud",
-            "view_dashboard": "Vaata laevu",
-            "search": "Otsi laevu",
-            "create": "Loo laev",
-            "view": "Vaata laeva",
-            "edit": "Muuda laeva"
-        },
-        "title": "Laevad",
-        "subtitle": {
-            "dashboard": "Laevade statistika ja tegevuste ülevaade",
-            "search": "Halda ja vaata kõiki registreeritud laevu",
-            "create": "Registreeri uus laev süsteemi",
-            "edit": "Muuda olemasolevat laeva süsteemis"
-        },
-        "ownedBy": "Omanik",
-        "registeredVessels": "Registreeritud laevad"
-    },
-    "staff": {
-        "deactivation": {
-            "title": "Deaktiveeri töötaja",
-            "message": "Kas olete kindel, et soovite selle töötaja deaktiveerida? Saate ta hiljem uuesti aktiveerida.",
-            "successMessage": "Töötaja deaktiveeriti edukalt.",
-            "errorMessage": "Töötaja deaktiveerimisel ilmnes viga. Proovige uuesti."
-        },
-        "fields": {
-            "mechanographicNumber": {
-                "title": "Töötaja number",
-                "placeholder": "Töötaja number"
-            },
-            "name": {
-                "title": "Nimi",
-                "placeholder": "Töötaja nimi"
-            },
-            "email": {
-                "title": "E-post",
-                "placeholder": "E-posti aadress"
-            },
-            "phoneNumber": {
-                "title": "Telefon",
-                "placeholder": "Telefoninumber"
-            },
-            "qualifications": {
-                "title": "Kvalifikatsioonid",
-                "placeholder": "Vali kvalifikatsioonid"
-            },
-            "status": {
-                "title": "Staatus",
-                "options": {
-                    "available": "Saadaval",
-                    "unavailable": "Pole saadaval",
-                    "temporarilyReassigned": "Ajutiselt ümber suunatud"
-                }
-            },
-            "operationalWindow": "Operatiivaken"
-        },
-        "tabs": {
-            "dashboard": "Töötajate töölaud",
-            "view_dashboard": "Vaata töötajaid",
-            "search": "Otsi töötajaid",
-            "create": "Loo töötaja",
-            "view": "Vaata töötajat",
-            "edit": "Muuda töötajat"
-        },
-        "infoTitle": "Töötaja info",
-        "title": "Töötajad",
-        "subtitle": {
-            "search": "Halda ja vaata kõiki registreeritud töötajaid",
-            "dashboard": "Töötajate statistika ja tegevuste ülevaade",
-            "create": "Registreeri uus töötaja süsteemi",
-            "view": "Vaata töötaja detaile",
-            "edit": "Muuda olemasolevat töötajat süsteemis"
-        }
-    },
-    "qualification": {
-        "registeredQualifications": "Registreeritud kvalifikatsioonid",
-        "tabs": {
-            "dashboard": "Kvalifikatsioonide töölaud",
-            "view_dashboard": "Vaata kvalifikatsioone",
-            "search": "Otsi kvalifikatsioone",
-            "create": "Loo kvalifikatsioon",
-            "view": "Vaata kvalifikatsiooni",
-            "edit": "Muuda kvalifikatsiooni"
-        },
-        "infoTitle": "Kvalifikatsiooni info",
-        "title": "Kvalifikatsioonid",
-        "subtitle": {
-            "search": "Halda ja vaata kõiki registreeritud kvalifikatsioone",
-            "dashboard": "Kvalifikatsioonide statistika ülevaade",
-            "create": "Registreeri uus kvalifikatsioon süsteemi",
-            "edit": "Muuda olemasolevat kvalifikatsiooni süsteemis",
-            "view": "Vaata kvalifikatsiooni detaile"
-        },
-        "fields": {
-            "idCode": {
-                "title": "Kvalifikatsiooni kood",
-                "placeholder": "Kvalifikatsiooni kood"
-            },
-            "qualificationName": {
-                "title": "Kvalifikatsiooni nimi",
-                "placeholder": "Kvalifikatsiooni nimi"
-            }
-        }
-    },
-    "physicalResource": {
-        "deactivation": {
-            "title": "Deaktiveeri füüsiline ressurss",
-            "message": "Kas olete kindel, et soovite selle füüsilise ressursi deaktiveerida? Saate selle hiljem uuesti aktiveerida.",
-            "successMessage": "Füüsiline ressurss deaktiveeriti edukalt.",
-            "errorMessage": "Füüsilise ressursi deaktiveerimisel ilmnes viga. Proovige uuesti."
-        },
-        "tabs": {
-            "dashboard": "Füüsiliste ressursside töölaud",
-            "view_dashboard": "Vaata füüsilisi ressursse",
-            "search": "Otsi füüsilisi ressursse",
-            "create": "Loo füüsiline ressurss",
-            "view": "Vaata füüsilist ressurssi",
-            "edit": "Muuda füüsilist ressurssi"
-        },
-        "infoTitle": "Füüsilise ressursi info",
-        "title": "Füüsilised ressursid",
-        "subtitle": {
-            "search": "Halda ja vaata kõiki registreeritud füüsilisi ressursse",
-            "dashboard": "Füüsiliste ressursside haldus",
-            "view_dashboard": "Vaata füüsilisi ressursse",
-            "create": "Registreeri uus füüsiline ressurss süsteemi",
-            "view": "Vaata füüsilise ressursi detaile",
-            "edit": "Muuda olemasolevat füüsilist ressurssi süsteemis"
-        },
-        "generalFields": "Üldised väljad",
-        "specificFields": "Spetsiifilised väljad",
-        "fields": {
-            "code": {
-                "title": "Kood",
-                "placeholder": "Ressursi kood"
-            },
-            "description": {
-                "title": "Kirjeldus",
-                "placeholder": "Ressursi kirjeldus"
-            },
-            "status": {
-                "title": "Staatus",
-                "placeholder": "Valige ressursi staatus",
-                "options": {
-                    "available": "Saadaval",
-                    "maintenance": "Hooldus",
-                    "outOfService": "Kasutusest väljas"
-                }
-            },
-            "qualifications": {
-                "title": "Vajalikud kvalifikatsioonid",
-                "placeholder": "Kvalifikatsioonid, mis on vajalikud selle ressursi kasutamiseks"
-            },
-            "setupTime": {
-                "title": "Seadistusaeg (min)",
-                "placeholder": "Seadistusaeg"
-            },
-            "servingDocks": {
-                "title": "Teenindatavad dokid",
-                "placeholder": "Valige teenindatavad dokid"
-            },
-            "liftingCapacity": {
-                "title": "Tõstevõime (kg)",
-                "placeholder": "Tõstevõime"
-            },
-            "containersPerHour": {
-                "title": "Konteinereid tunnis",
-                "placeholder": "Konteinereid tunnis"
-            },
-            "maxLoadCapacity": {
-                "title": "Maksimaalne kandevõime (kg)",
-                "placeholder": "Maksimaalne kandevõime"
-            },
-            "averageSpeed": {
-                "title": "Keskmine kiirus (km/h)",
-                "placeholder": "Keskmine kiirus"
-            },
-            "containersPerTrip": {
-                "title": "Konteinereid reisi kohta",
-                "placeholder": "Konteinereid reisi kohta"
-            },
-            "type": {
-                "title": "Ressursi tüüp",
-                "options": {
-                    "stsCrane": "STS kraana",
-                    "yardGantry": "Õueportaalkraana",
-                    "truck": "Veok"
-                }
-            }
-        },
-        "actions": {
-            "deactivate": "Deaktiveeri füüsiline ressurss"
-        }
-    },
-    "storageArea": {
-        "registeredStorageAreas": "Registreeritud ladustusalad",
-        "tabs": {
-            "dashboard": "Ladustusalade töölaud",
-            "view_dashboard": "Vaata ladustusalasid",
-            "search": "Otsi ladustusalasid",
-            "create": "Loo ladustusala",
-            "view": "Vaata ladustusala",
-            "edit": "Muuda ladustusala"
-        },
-        "infoTitle": "Ladustusala info",
-        "title": "Ladustusalad",
-        "subtitle": {
-            "search": "Halda ja vaata kõiki registreeritud ladustusalasid",
-            "dashboard": "Ladustusalade haldustöölaud",
-            "view_dashboard": "Vaata ladustusalasid",
-            "create": "Registreeri uus ladustusala süsteemi",
-            "view": "Vaata ladustusala detaile",
-            "edit": "Muuda olemasolevat ladustusala süsteemis"
-        },
-        "printer": {
-            "docks_serviced": "teenindatavad dokid",
-            "capacity_usage": "mahu kasutus",
-            "units": "ühikud",
-            "available": "saadaval",
-            "no_registered_distances": "Registreeritud vahemaid pole",
-            "no_docks_serviced": "Ühtegi dokki ei teenindata",
-            "all_docks_serviced": "Kõiki dokke teenindatakse",
-            "serviced_docks_distance": "Teenindatud dokkide vahemaa",
-            "no_registered_docks": "Registreeritud dokke pole"
-        },
-        "create": {
-            "distance_meters": "Vahemaa (meetrid)"
-        },
-        "fields": {
-            "nameCode": {
-                "title": "Nime kood",
-                "placeholder": "Ladustusala nime kood"
-            },
-            "location": {
-                "title": "Asukoht",
-                "placeholder": "Ladustusala asukoht"
-            },
-            "type": {
-                "title": "Tüüp",
-                "placeholder": "Valige ladustusala tüüp",
-                "options": {
-                    "yard": "Õueala",
-                    "warehouse": "Ladu"
-                }
-            },
-            "capacity": {
-                "title": "Mahutavus",
-                "placeholder": "Maksimaalne mahutavus"
-            },
-            "occupancy": {
-                "title": "Hõivatus",
-                "placeholder": "Praegune hõivatus"
-            }
-        }
-    },
-    "search": {
-        "languages": "Otsi keeli..."
-    },
-    "scheduling": {
-        "title": "Taotle päevaplaani",
-        "subtitle": "Kasuta meie automatiseeritud ajastamisalgoritmi antud päeva ülesannete analüüsimiseks.",
-        "noVisits": "Valitud kuupäeval pole laevakülastusi ajastatud.",
-        "visitsOnSelectedDay": "Laevakülastused valitud kuupäeval",
-        "viewVisits": "Genereeri ülesannete ajakava",
-        "generateTasksButton": "Genereeri ülesannete ajakava",
-        "aboutAlgorithmButton": "Algoritmi kohta",
-        "fields": {
-            "algorithm": {
-                "title": "Ajastamisalgoritm",
-                "placeholder": "Valige ajastamisalgoritm"
-            },
-            "relatedDocks": "Valige seotud dokk"
-        },
-        "generateTasksModal": {
-            "title": "Täiendav logistika"
-        },
-        "aboutAlgorithmModal": {
-            "title": "Algoritmi kohta",
-            "content": "Praegune algoritm arvestab valitud kuupäevaks ja dokiks ajastatud laevakülastuste teavitusi.\nSeejärel kontrollib see STS kraanade saadavust määratud doki jaoks ning määrab iga ülesande kestuse kraana kiiruse põhjal.\nAlgoritm ignoreerib külastusi, mis on seotud hoolduse või muude mitte laadimis/mahalaadimis tegevustega."
-        }
-    },
-    "notification": {
-        "registeredVesselVisitNotifications": "Registreeritud laevakülastuse teavitused",
-        "step": "Samm",
-        "of": "/",
-        "id": "Teavituse ID",
-        "hazardous": "Ohtlik",
-        "nonHazardous": "Mitteohtlik",
-        "arrival": "Saabumine",
-        "departure": "Lahkumine",
-        "specialRequirements": "Erinõuded",
-        "none": "Puudub",
-        "crew": "Meeskond",
-        "captain": "Kapten",
-        "unknown": "Tundmatu",
-        "from": "Alates",
-        "to": "Kuni",
-        "tabs": {
-            "dashboard": "Teavituste töölaud",
-            "search": "Otsi teavitusi",
-            "edit": "Muuda teavitust",
-            "create": "Loo teavitus",
-            "makeDraft": "Loo teavituse mustand",
-            "myNotifications": "Minu teavitused",
-            "review": "Vaata teavitusi üle",
-            "general": "Üldine loend",
-            "byDate": "Kalendri loend",
-            "submit": "Esita teavitus",
-            "delete": "Kustuta teavitus"
-        },
-        "eventsOnDate": "Sündmused valitud kuupäeval",
-        "noEventsOnDate": "Valitud kuupäeval sündmusi pole",
-        "title": "Laevakülastuste teavitused",
-        "subtitle": {
-            "dashboard": "Laevakülastuste teavituste ülevaade",
-            "search": "Halda ja vaata kõiki laevakülastuste teavitusi",
-            "create": "Loo uus laevakülastuse teavitus",
-            "edit": "Muuda olemasolevat laevakülastuse teavitust",
-            "review": "Vaata ootel laevakülastuste teavitusi"
-        },
-        "errors": {
-            "noNotificationId": "Teavituse ID pole antud"
-        },
-        "infoTitle": "Teavituse info",
-        "cargoTitle": "Kauba info",
-        "vesselTitle": "Laeva info",
-        "manifestInfo": "Manifesti info",
-        "fields": {
-            "openLoadManifest": "Ava laadimismanifest",
-            "openUnloadManifest": "Ava mahalaadimismanifest",
-            "expectedArrival": "Eeldatav saabumine",
-            "expectedDeparture": "Eeldatav lahkumine",
-            "isCargoHazardous": "Last ohtlik",
-            "specialRequirements": "Erinõuded",
-            "captain": "Kapten",
-            "totalCrewMembers": "Meeskonnaliikmete koguarv",
-            "safetyOfficers": "Ohutusametnikud",
-            "loadCargoManifest": "Kauba laadimismanifest",
-            "unloadCargoManifest": "Kauba mahalaadimismanifest",
-            "position": "Positsioon",
-            "area": "Ala",
-            "container": "Konteiner",
-            "crewMembers": "Meeskonnaliikmed",
-            "status": "Staatus"
-        },
-        "timeline": {
-            "pending": "Ootel",
-            "inProgress": "Töös",
-            "completed": "Lõpetatud",
-            "submitted": "Esitatud",
-            "accepted": "Aktsepteeritud",
-            "rejected": "Tagasi lükatud"
-        },
-        "filters": {
-            "expectedArrivalFrom": "Eeldatav saabumine alates",
-            "expectedArrivalTo": "Eeldatav saabumine kuni",
-            "withReason": "Põhjusega",
-            "withDockAssigned": "Määratud dokiga"
-        },
-        "decision": {
-            "isFinal": "Lõplik",
-            "assignedDock": {
-                "title": "Määratud dokk",
-                "placeholder": "Valige määratud dokk"
-            },
-            "reason": {
-                "title": "Põhjus",
-                "placeholder": "Sisestage otsuse põhjus"
-            },
-            "status": "Otsuse staatus"
-        }
-    },
-    "operationalWindow": {
-        "title": "Operatiivaken",
-        "printer": {
-            "addShift": "Lisa vahetus",
-            "shifts": "Vahetused:",
-            "noShifts": "Vahetusi pole.",
-            "startTime": "Algusaeg",
-            "endTime": "Lõppaeg",
-            "weekDays": "Nädalapäevad"
-        },
-        "errors": {
-            "shiftOverlap": "Vigane vahetus. Ülekattumine või lõppaeg enne algusaega."
-        }
-    },
-    "about": {
-        "title": "PorTiTi kohta",
-        "privacy": {
-            "title": "Privaatsuspoliitika",
-            "lastUpdated": "Viimati uuendatud: {date}"
-        }
-    },
-    "operationPlan": {
-        "title": "Operatsiooniplan",
-        "dock": "Dokk",
-        "docks": "Dokid",
-        "operations": "Operatsioonid",
-        "cranes": "Kraanid",
-        "createdBy": "Loonud",
-        "createdAt": "Loodud",
-        "totalSchedules": "Kokku Ajakavasid",
-        "vesselCount": "Laevad",
-        "plansOnDate": "Valitud kuupäeva operatsioonipla anid",
-        "noPlansOnDate": "Valitud kuupäeval ei ole operatsiooniplaane",
-        "id": "ID",
-        "vvn": "Laevakülastuse Teatis",
-        "for": "jaoks",
-        "details": "Üksikasjad",
-        "totalOperations": "Kokku Operatsioone",
-        "algorithmUsed": "Kasutatud Algoritm",
-        "ganttChart": "Gantti Diagramm",
-        "startTime": "Algusaeg",
-        "endTime": "Lõppaeg",
-        "totalDuration": "Kogu Kestus",
-        "operation": "Operatsioon",
-        "duration": "Kestus",
-        "resources": "Ressursid",
-        "operationDetails": "Operatsiooni Üksikasjad",
-        "operationNumber": "Operatsioon #{number}",
-        "notFound": "Operatsiooniplaani ei leitud",
-        "operationType": {
-            "Unload": "Mahalaadimire",
-            "Load": "Laadimine"
-        },
-        "tabs": {
-            "unplannedVVNs": "Planeerimata VVN-id",
-            "search": "Otsi Plaane",
-            "edit": "Muuda Plaani",
-            "open": "Ava Täitmine"
-        },
-        "subtitle": {
-            "edit": "Muuda operatsiooniplaani üksikasju ja ajakava"
-        },
-        "unplannedVVNs": {
-            "description": "Laevakülastuse teated, millel puudub määratud operatsiooniplaan",
-            "noUnplanned": "Kõikidel laevakülastuse teadetel on määratud operatsiooniplaan",
-            "foundMessage": "Leitud {vvnCount} VVN ilma plaanideta {dayCount} päevas/päevades",
-            "regenerateAll": "Genereeri Kõik Puuduvad Plaanid",
-            "regenerateDay": "Genereeri Selle Päeva Plaanid",
-            "regenerateModalTitle": "Genereeri plaanid kuupäevale {date}",
-            "warning": "Hoiatus",
-            "warningMessage": "Plaanide regenereerimine asendab kõik olemasolevad selle päeva operatsiooniplaan id. Seda toimingut ei saa tagasi võtta.",
-            "selectedDay": "Valitud Päev",
-            "confirmRegeneration": "Kinnita Regenereerimine",
-            "affectedDays": "Mõjutatud Päevad",
-            "queueInfo": "Iga regenereerimise taotlus pannakse eraldi järjekorda. Saate neid üle vaadata ja vastu võtta/tagasi lükata eraldi ajakavastusjärjekorrast.",
-            "continue": "Jätka",
-            "confirmRegenerationTitle": "Kinnita Regenereerimine",
-            "irreversibleAction": "See toiming on pöörd umatu",
-            "overwriteWarning": "Operatsioonide regenereerimine kirjutab püsivalt üle kõik olemasolevad plaanid valitud päevadeks. Seda toimingut ei saa tagasi võtta.",
-            "aboutToRegenerate": "Olete looma plaane",
-            "days": "päevaks",
-            "vesselVisitNotifications": "Laevakülastuse Teated",
-            "using": "Kasutades",
-            "algorithm": "algoritmi",
-            "proceedQuestion": "Kas soovite jätkata selle toiminguga?",
-            "yesRegenerateAll": "Jah, genereeri kõik"
-        },
-        "algorithm": {
-            "optimal": "Optimaalne",
-            "greedy": "Ahnev",
-            "genetic": "Geneetiline",
-            "auto": "Automaatne"
-        },
-        "metrics": {
-            "title": "Mõõdikud",
-            "strategy": "Strateegia",
-            "totalDelay": "Kogu Viivitus",
-            "computationTime": "Arvutusaeg",
-            "autoSelection": "Automaatne Algoritmi Valik"
-        },
-        "infoTitle": "Operatsiooniplaani Teave",
-        "fields": {
-            "id": {
-                "title": "Plaani ID"
-            },
-            "relatedVVN": {
-                "title": "Seotud VVN"
-            },
-            "dock": {
-                "title": "Dokk"
-            },
-            "operations": {
-                "title": "Operatsioonid"
-            }
-        },
-        "filters": {
-            "startDate": "Alguskuupäev Alates",
-            "endDate": "Lõppkuupäev Kuni"
-        },
-        "metadata": {
-            "title": "Metaandmed",
-            "createdBy": "Loonud",
-            "createdAt": "Loodud",
-            "algorithmUsed": "Kasutatud Algoritm"
-        },
-        "schedule": {
-            "title": "Operatsioonide Ajakava",
-            "noOperations": "Planeeritud operatsioone pole"
-        }
-    },
-    "incidentType": {
-        "fields": {
-            "name": {
-                "title": "Nimi",
-                "placeholder": "Intsidendi tüübi nimi"
-            },
-            "description": {
-                "title": "Kirjeldus",
-                "placeholder": "Intsidendi tüübi üksikasjalik kirjeldus"
-            },
-            "severity": {
-                "title": "Raskusaste",
-                "placeholder": "Valige raskusaste"
-            },
-            "subtypeOf": {
-                "title": "Alamtüüp",
-                "placeholder": "Valige ülemtüüp"
-            },
-            "subtypes": {
-                "title": "Alamtüübid",
-                "placeholder": "Valige alamtüübid"
-            }
-        },
-        "severity": {
-            "Minor": "Kerge",
-            "Major": "Suur",
-            "Critical": "Kriitiline"
-        },
-        "tabs": {
-            "dashboard": "Intsidentide Töölaud",
-            "view_dashboard": "Vaata Intsidentide Tüüpe",
-            "search": "Otsi Intsidentide Tüüpe",
-            "create": "Loo Intsidendi Tüüp",
-            "edit": "Muuda Intsidendi Tüüpi"
-        },
-        "generalFields": "Üldised Väljad",
-        "classification": "Klassifikatsioon",
-        "title": "Intsidendid",
-        "subtitle": {
-            "dashboard": "Intsidentide tüüpide statistika ja tegevuste ülevaade",
-            "search": "Halda ja vaata kõiki registreeritud intsidentide tüüpe",
-            "create": "Registreeri uus intsidendi tüüp süsteemi",
-            "edit": "Muuda olemasolevat intsidendi tüüpi süsteemis"
-        },
-        "registeredIncidentTypes": "Registreeritud Intsidentide Tüübid",
-        "incidentTypeInformation": "Intsidendi Tüübi Teave",
-        "parentType": "Ülemtüüp",
-        "confirmDelete": "Kinnita kustutamine",
-        "confirmDeleteMessage": "Kas olete kindel, et soovite selle intsidendi tüübi kustutada?",
-        "failedToDelete": "Intsidendi tüübi kustutamine ebaõnnestus"
-    },
-    "taskCategory": {
-        "fields": {
-            "name": {
-                "title": "Nimi",
-                "placeholder": "Ülesande kategooria nimi"
-            },
-            "category": {
-                "title": "Kategooria",
-                "placeholder": "Kategooria kood"
-            },
-            "description": {
-                "title": "Kirjeldus",
-                "placeholder": "Ülesande kategooria kirjeldus"
-            }
-        },
-        "tabs": {
-            "dashboard": "Ülesannete Töölaud",
-            "search": "Otsi Ülesannete Kategooriaid",
-            "create": "Loo Ülesande Kategooria",
-            "edit": "Muuda Ülesande Kategooriat",
-            "view_dashboard": "Vaata Ülesannete Kategooriaid"
-        },
-        "generalFields": "Üldised Väljad",
-        "title": "Ülesanded",
-        "subtitle": {
-            "dashboard": "Ülesannete kategooriate statistika ja tegevuste ülevaade",
-            "search": "Halda ja vaata kõiki registreeritud ülesannete kategooriaid",
-            "create": "Registreeri uus ülesande kategooria süsteemi",
-            "edit": "Muuda olemasolevat ülesande kategooriat süsteemis"
-        },
-        "taskCategoryInformation": "Ülesande Kategooria Teave",
-        "registeredTaskCategories": "Registreeritud Ülesannete Kategooriad"
-    },
-    "execution": {
-        "title": "Laevakülastuse Täitmised",
-        "subtitle": {
-            "search": "Halda ja vaata kõiki laevakülastuse täitmisi",
-            "dashboard": "Laevakülastuse täitmiste statistika ja tegevuste ülevaade"
-        },
-        "tabs": {
-            "dashboard": "Täitmiste Töölaud",
-            "search": "Otsi Täitmisi",
-            "view_dashboard": "Vaata Täitmisi",
-            "update": "Uuenda Täitmist",
-            "view": "Vaata Täitmist",
-            "table": "Vaata Tabelit",
-            "cards": "Vaata Kaarte"
-        },
-        "fields": {
-            "code": "Kood",
-            "relatedVVN": "Seotud",
-            "status": "Olek",
-            "createdBy": "Loonud",
-            "dateOpen": "Avamiskuupäev",
-            "dateClosed": "Sulgemiskuupäev",
-            "relatedVesselVisit": "Seotud Laevakülastus",
-            "dock": "Sõiduk ikoht",
-            "berthTime": "Sõidukipaigaaeg",
-            "operations": "Operatsioonid"
-        },
-        "filters": {
-            "startDate": "Alguskuupäev",
-            "endDate": "Lõppkuupäev",
-            "relatedVVN": "Laevakülastuse Teatis",
-            "status": "Olek"
-        },
-        "metrics": {
-            "totalOperations": "Kokku Operatsioone",
-            "completedOperations": "Edenemine",
-            "turnaroundTime": "Pöördeaeg",
-            "berthOccupancy": "Sõidukikoha Hõivatus"
-        },
-        "status": {
-            "pending": "Ootel",
-            "started": "Alustatud",
-            "delayed": "Viivitatud",
-            "completed": "Lõpetatud"
-        },
-        "view_resources": "Vaata Ressursse",
-        "infoTitle": "Täitmise Teave",
-        "operationsTitle": "Operatsioonid",
-        "noOperations": "Operatsioone pole saadaval",
-        "startOperation": "Alusta Operatsiooni",
-        "completeOperation": "Lõpeta Operatsioon",
-        "addOperation": "Lisa Operatsioon",
-        "addOperationDescription": "Lisa uus operatsioon ajajoone",
-        "confirmStartOperation": "Kas olete kindel, et soovite seda operatsiooni alustada?",
-        "confirmCompleteOperation": "Kas olete kindel, et soovite seda operatsiooni lõpetada?",
-        "berthOperation": {
-            "button": "Muuda sõidukikoha andmeid",
-            "title": "Sõidukikoha Operatsioon",
-            "description": "Muuda selle laevakülastuse täitmise dokki ja aega.",
-            "dock": "Sõidukikoht",
-            "dockPlaceholder": "Valige dokk",
-            "berthTime": "Sõidukipaigaaeg",
-            "differentThanPlanned": "Valitud dokk erineb planeeritust."
-        }
-    },
-    "incident": {
-        "tabs": {
-            "dashboard": "Intsidentide Töölaud",
-            "create": "Loo Intsident",
-            "search": "Otsi Intsidente",
-            "active": "Aktiivsed Intsidendid",
-            "view": "Vaata Intsidenti",
-            "edit": "Muuda Intsidenti"
-        },
-        "subtitle": {
-            "create": "Teavita uuest intsidendist süsteemis",
-            "search": "Otsi ja filtreeri olemasolevaid intsidente",
-            "active": "Vaata ja halda aktiivseid intsidente"
-        },
-        "generalFields": "Üldine Teave",
-        "classification": "Klassifikatsioon",
-        "fields": {
-            "bid": {
-                "title": "Intsidendi ID"
-            },
-            "type": {
-                "title": "Intsidendi Tüüp",
-                "placeholder": "Valige intsidendi tüüp"
-            },
-            "startTime": {
-                "title": "Algusaeg",
-                "placeholder": "Millal intsident algas?"
-            },
-            "endTime": {
-                "title": "Lõppaeg",
-                "placeholder": "Millal intsident lõppes?"
-            },
-            "severity": {
-                "title": "Raskusaste",
-                "placeholder": "Valige raskusaste",
-                "options": {
-                    "minor": "Kerge",
-                    "major": "Suur",
-                    "critical": "Kriitiline"
-                }
-            },
-            "description": {
-                "title": "Kirjeldus",
-                "placeholder": "Kirjeldage intsidenti üksikasjalikult"
-            },
-            "createdBy": {
-                "title": "Loonud"
-            },
-            "affectedVVECodes": {
-                "title": "Mõjutatud VVE-d",
-                "placeholder": "Sisestage mõjutatud VVE-d"
-            },
-            "vveCode": {
-                "title": "VVE Kood"
-            },
-            "status": {
-                "title": "Olek",
-                "options": {
-                    "active": "Aktiivne",
-                    "resolved": "Lahendatud"
-                }
-            },
-            "filterStartTime": {
-                "title": "Alguskuupäev Alates"
-            },
-            "filterEndTime": {
-                "title": "Alguskuupäev Kuni"
-            },
-            "duration": {
-                "title": "Kestus"
-            }
-        },
-        "severity": {
-            "Minor": "Kerge",
-            "Major": "Suur",
-            "Critical": "Kriitiline"
-        },
-        "status": {
-            "active": "Aktiivne",
-            "resolved": "Lahendatud"
-        },
-        "ongoing": "Käimas",
-        "filters": {
-            "onlyActive": "Ainult Aktiivsed",
-            "onlyMine": "Ainult Minu"
-        },
-        "actions": {
-            "view": "Vaata Üksikasju",
-            "edit": "Muuda Intsidenti",
-            "resolve": "Lahenda Intsident",
-            "delete": "Kustuta Intsident"
-        },
-        "notifications": {
-            "createSuccess": "Intsident edukalt loodud",
-            "createFailed": "Intsidendi loomine ebaõnnestus",
-            "updateSuccess": "Intsident edukalt uuendatud",
-            "updateFailed": "Intsidendi uuendamine ebaõnnestus",
-            "resolveSuccess": "Intsident edukalt lahendatud",
-            "resolveFailed": "Intsidendi lahendamine ebaõnnestus",
-            "deleteSuccess": "Intsident edukalt kustutatud",
-            "deleteFailed": "Intsidendi kustutamine ebaõnnestus"
-        },
-        "table": {
-            "empty": "Intsidente ei leitud"
-        },
-        "active": {
-            "title": "Aktiivsed Intsidendid",
-            "subtitle": "Vaata ja halda käimasolevaid intsidente"
-        },
-        "infoTitle": "Intsidendi Üksikasjad",
-        "closeDialog": {
-            "title": "Lahenda intsident",
-            "message": "Millal intsident lahendati?",
-            "confirm": "Jah, sulge see intsident",
-            "cancel": "Tühista"
-        }
-    }
+    "search":  {
+                   "languages":  "Otsi keeli..."
+               },
+    "unsavedChanges":  {
+                           "title":  "Hülga muudatused?",
+                           "message":  "Teil on salvestamata muudatusi. Kas olete kindel, et soovite lahkuda ja hülgata muudatused?",
+                           "confirm":  "Hülga",
+                           "cancel":  "Jätka muutmist"
+                       },
+    "expirationWarning":  {
+                              "messageOneMinute":  "Teie seanss aegub 1 minuti pärast.",
+                              "messageLessThanOneMinute":  "Teie seanss aegub varsti."
+                          },
+    "dashboard":  {
+                      "welcome":  "Tere tulemast tagasi, [name]!",
+                      "sidebarTitle":  "Töölaud",
+                      "title":  "PortIT töölaud",
+                      "subtitle":  "PortIT süsteemi ülevaade",
+                      "SAOR":  {
+                                   "subtitle":  "Laevaagendi operatsioonide ülevaade",
+                                   "pendingNotifications":  "Ootel teavitused",
+                                   "recent":  "Hiljutised laevakülastuste teavitused",
+                                   "recentReview":  "Laevakülastuste teavitused, mis vajavad ülevaatamist",
+                                   "noRecent":  "Hiljutisi teavitusi pole"
+                               },
+                      "3DModel":  {
+                                      "title":  "Sadam 3D vaade",
+                                      "description":  "Vaadake kogu sadamakompleksi interaktiivset 3D-vaadet. Jälgige dokkide koormust, laevade asukohti, ladustusalasid ja ressursse reaalajas.",
+                                      "open":  "Ava 3D mudel"
+                                  }
+                  },
+    "admin":  {
+                  "sidebarTitle":  "Admin",
+                  "title":  "Administraatori töölaud",
+                  "subtitle":  "Administratsioon ja haldus",
+                  "userManagement":  {
+                                         "title":  "Kasutajate haldus",
+                                         "subtitle":  "Halda süsteemi kasutajaid, rolle ja õigusi."
+                                     },
+                  "auditLogs":  {
+                                    "title":  "Auditilogid",
+                                    "subtitle":  "Vaata ja jälgi süsteemi tegevuste logisid."
+                                },
+                  "pp":  {
+                             "title":  "Privaatsuspoliitikad",
+                             "subtitle":  "Määratle ja halda sadama privaatsuspoliitikat."
+                         },
+                  "notifications":  {
+                                        "create":  "Loo teade",
+                                        "subtitleCreate":  "Send important announcements to any or all users.",
+                                        "title":  "Süsteemiteated",
+                                        "subtitle":  "Loo ja halda üldisi süsteemiteateid.",
+                                        "broadcastToggle":  "Broadcast to all users",
+                                        "sendEmailToggle":  "Also send as email",
+                                        "fields":  {
+                                                       "title":  {
+                                                                     "title":  "Title",
+                                                                     "placeholder":  "Sisesta teate pealkiri"
+                                                                 },
+                                                       "message":  {
+                                                                       "title":  "Message",
+                                                                       "placeholder":  "Sisesta teate sõnum"
+                                                                   },
+                                                       "email":  {
+                                                                     "title":  "User email",
+                                                                     "placeholder":  "Specify user email to send to"
+                                                                 },
+                                                       "urgency":  {
+                                                                       "title":  "Urgency",
+                                                                       "options":  {
+                                                                                       "normal":  "Normal",
+                                                                                       "urgent":  "Urgent"
+                                                                                   }
+                                                                   }
+                                                   }
+                                    }
+              },
+    "user":  {
+                 "fields":  {
+                                "email":  {
+                                              "title":  "E-post",
+                                              "placeholder":  "email@mail.com"
+                                          },
+                                "role":  {
+                                             "title":  "Roll",
+                                             "placeholder":  "Valige kasutaja roll",
+                                             "options":  {
+                                                             "admin":  "Administraator",
+                                                             "saoRep":  "SAO esindaja",
+                                                             "pao":  "PAO ametnik",
+                                                             "logisticsOperator":  "Logistika operaator"
+                                                         }
+                                         },
+                                "isActive":  {
+                                                 "title":  "Aktiivne",
+                                                 "options":  {
+                                                                 "active":  "Jah",
+                                                                 "inactive":  "Ei"
+                                                             }
+                                             }
+                            },
+                 "tabs":  {
+                              "dashboard":  "Kasutaja töölaud",
+                              "create":  "Loo kasutaja",
+                              "view":  "Vaata kasutajat",
+                              "search":  "Otsi kasutajaid"
+                          },
+                 "infoTitle":  "Kasutaja info",
+                 "title":  "Kasutajad",
+                 "subtitle":  {
+                                  "dashboard":  "Kasutajate ülevaade ja haldus",
+                                  "create":  "Registreeri uus kasutaja süsteemi",
+                                  "view":  "Halda ja vaata olemasolevaid kasutajaid"
+                              },
+                 "registeredUsers":  "Registreeritud kasutajad",
+                 "confirmDelete":  "Kinnita kustutamine",
+                 "confirmDeleteMessage":  "Kas olete kindel, et soovite selle kasutaja kustutada?"
+             },
+    "representative":  {
+                           "title":  "Esindaja",
+                           "select":  "Vali esindaja"
+                       },
+    "physicalCharacteristics":  {
+                                    "title":  "Füüsilised omadused (m)",
+                                    "length":  {
+                                                   "title":  "Pikkus",
+                                                   "placeholder":  "Pikkus meetrites"
+                                               },
+                                    "depth":  {
+                                                  "title":  "Sügavus",
+                                                  "placeholder":  "Sügavus meetrites"
+                                              },
+                                    "draft":  {
+                                                  "title":  "Süvis",
+                                                  "placeholder":  "Süvis meetrites"
+                                              }
+                                },
+    "dock":  {
+                 "fields":  {
+                                "code":  {
+                                             "title":  "Kood",
+                                             "placeholder":  "Doki kood"
+                                         },
+                                "name":  {
+                                             "title":  "Nimi",
+                                             "placeholder":  "Doki nimi"
+                                         },
+                                "location":  {
+                                                 "title":  "Asukoht",
+                                                 "placeholder":  "Doki asukoht"
+                                             },
+                                "supportedVesselTypes":  {
+                                                             "title":  "Toetatud laevatüübid",
+                                                             "vesselTypes":  {
+                                                                                 "title":  "Laevatüübid",
+                                                                                 "placeholder":  "Valige laevatüübid"
+                                                                             },
+                                                             "vesselType":  "Laevatüüp"
+                                                         }
+                            },
+                 "tabs":  {
+                              "dashboard":  "Doki töölaud",
+                              "view_dashboard":  "Vaata dokke",
+                              "search":  "Otsi dokke",
+                              "create":  "Loo dokk",
+                              "view":  "Vaata dokki",
+                              "edit":  "Muuda dokki"
+                          },
+                 "generalFields":  "Üldised väljad",
+                 "infoTitle":  "Doki info",
+                 "title":  "Dokid",
+                 "subtitle":  {
+                                  "dashboard":  "Dokkide statistika ja tegevuste ülevaade",
+                                  "search":  "Halda ja vaata kõiki registreeritud dokke",
+                                  "create":  "Registreeri uus dokk süsteemi",
+                                  "edit":  "Muuda olemasolevat dokki süsteemis"
+                              },
+                 "registeredDocks":  "Registreeritud dokid"
+             },
+    "vesselType":  {
+                       "fields":  {
+                                      "name":  {
+                                                   "title":  "Nimi",
+                                                   "placeholder":  "Laevatüübi nimi"
+                                               },
+                                      "description":  {
+                                                          "title":  "Kirjeldus",
+                                                          "placeholder":  "Laevatüübi kirjeldus"
+                                                      },
+                                      "capacity":  {
+                                                       "title":  "Mahutavus",
+                                                       "placeholder":  "Mahutavus konteinerites (TEU)"
+                                                   },
+                                      "containerCapacity":  {
+                                                                "title":  "Konteinerite mahutavus (TEU)",
+                                                                "maxNumberOfRows":  {
+                                                                                        "title":  "Max. ridade arv",
+                                                                                        "placeholder":  "Max. ridade arv TEU"
+                                                                                    },
+                                                                "maxNumberOfBays":  {
+                                                                                        "title":  "Max. lahtrite arv",
+                                                                                        "placeholder":  "Max. lahtrite arv TEU"
+                                                                                    },
+                                                                "maxNumberOfTiers":  {
+                                                                                         "title":  "Max. tasemete arv",
+                                                                                         "placeholder":  "Max. tasemete arv TEU"
+                                                                                     }
+                                                            }
+                                  },
+                       "generalFields":  "Üldised väljad",
+                       "tabs":  {
+                                    "dashboard":  "Laevatüüpide töölaud",
+                                    "view_dashboard":  "Vaata laevatüüpe",
+                                    "search":  "Otsi laevatüüpe",
+                                    "create":  "Loo laevatüüp",
+                                    "view":  "Vaata laevatüüpi",
+                                    "edit":  "Muuda laevatüüpi"
+                                },
+                       "infoTitle":  "Laevatüübi info",
+                       "title":  "Laevatüübid",
+                       "subtitle":  {
+                                        "dashboard":  "Laevatüüpide statistika ülevaade",
+                                        "search":  "Halda ja vaata kõiki registreeritud laevatüüpe",
+                                        "create":  "Registreeri uus laevatüüp süsteemi",
+                                        "edit":  "Muuda olemasolevat laevatüüpi süsteemis"
+                                    },
+                       "registeredVesselTypes":  "Registreeritud laevatüübid"
+                   },
+    "vessel":  {
+                   "fields":  {
+                                  "name":  {
+                                               "title":  "Nimi",
+                                               "placeholder":  "Laeva nimi"
+                                           },
+                                  "imoNumber":  {
+                                                    "title":  "IMO number",
+                                                    "placeholder":  "Laeva IMO number"
+                                                },
+                                  "owner":  {
+                                                "title":  "Omanik",
+                                                "placeholder":  "Omaniku organisatsioon"
+                                            },
+                                  "vesselType":  {
+                                                     "title":  "Laevatüüp",
+                                                     "placeholder":  "Vali laevatüüp"
+                                                 },
+                                  "taxNumber":  {
+                                                    "title":  "Maksunumber"
+                                                }
+                              },
+                   "infoTitle":  "Laeva info",
+                   "physicalCharacteristicsTitle":  "Füüsilised omadused",
+                   "tabs":  {
+                                "dashboard":  "Laevade töölaud",
+                                "view_dashboard":  "Vaata laevu",
+                                "search":  "Otsi laevu",
+                                "create":  "Loo laev",
+                                "view":  "Vaata laeva",
+                                "edit":  "Muuda laeva"
+                            },
+                   "title":  "Laevad",
+                   "subtitle":  {
+                                    "dashboard":  "Laevade statistika ja tegevuste ülevaade",
+                                    "search":  "Halda ja vaata kõiki registreeritud laevu",
+                                    "create":  "Registreeri uus laev süsteemi",
+                                    "edit":  "Muuda olemasolevat laeva süsteemis"
+                                },
+                   "ownedBy":  "Omanik",
+                   "registeredVessels":  "Registreeritud laevad"
+               },
+    "staff":  {
+                  "deactivation":  {
+                                       "title":  "Deaktiveeri töötaja",
+                                       "message":  "Kas olete kindel, et soovite selle töötaja deaktiveerida? Saate ta hiljem uuesti aktiveerida.",
+                                       "successMessage":  "Töötaja deaktiveeriti edukalt.",
+                                       "errorMessage":  "Töötaja deaktiveerimisel ilmnes viga. Proovige uuesti."
+                                   },
+                  "fields":  {
+                                 "mechanographicNumber":  {
+                                                              "title":  "Töötaja number",
+                                                              "placeholder":  "Töötaja number"
+                                                          },
+                                 "name":  {
+                                              "title":  "Nimi",
+                                              "placeholder":  "Töötaja nimi"
+                                          },
+                                 "email":  {
+                                               "title":  "E-post",
+                                               "placeholder":  "E-posti aadress"
+                                           },
+                                 "phoneNumber":  {
+                                                     "title":  "Telefon",
+                                                     "placeholder":  "Telefoninumber"
+                                                 },
+                                 "qualifications":  {
+                                                        "title":  "Kvalifikatsioonid",
+                                                        "placeholder":  "Vali kvalifikatsioonid"
+                                                    },
+                                 "status":  {
+                                                "title":  "Staatus",
+                                                "options":  {
+                                                                "available":  "Saadaval",
+                                                                "unavailable":  "Pole saadaval",
+                                                                "temporarilyReassigned":  "Ajutiselt ümber suunatud"
+                                                            }
+                                            },
+                                 "operationalWindow":  "Operatiivaken"
+                             },
+                  "tabs":  {
+                               "dashboard":  "Töötajate töölaud",
+                               "view_dashboard":  "Vaata töötajaid",
+                               "search":  "Otsi töötajaid",
+                               "create":  "Loo töötaja",
+                               "view":  "Vaata töötajat",
+                               "edit":  "Muuda töötajat"
+                           },
+                  "infoTitle":  "Töötaja info",
+                  "title":  "Töötajad",
+                  "subtitle":  {
+                                   "search":  "Halda ja vaata kõiki registreeritud töötajaid",
+                                   "dashboard":  "Töötajate statistika ja tegevuste ülevaade",
+                                   "create":  "Registreeri uus töötaja süsteemi",
+                                   "view":  "Vaata töötaja detaile",
+                                   "edit":  "Muuda olemasolevat töötajat süsteemis"
+                               },
+                  "registeredStaffMembers":  "Registered Staff Members"
+              },
+    "qualification":  {
+                          "tabs":  {
+                                       "dashboard":  "Kvalifikatsioonide töölaud",
+                                       "view_dashboard":  "Vaata kvalifikatsioone",
+                                       "search":  "Otsi kvalifikatsioone",
+                                       "create":  "Loo kvalifikatsioon",
+                                       "view":  "Vaata kvalifikatsiooni",
+                                       "edit":  "Muuda kvalifikatsiooni"
+                                   },
+                          "infoTitle":  "Kvalifikatsiooni info",
+                          "title":  "Kvalifikatsioonid",
+                          "subtitle":  {
+                                           "search":  "Halda ja vaata kõiki registreeritud kvalifikatsioone",
+                                           "dashboard":  "Kvalifikatsioonide statistika ülevaade",
+                                           "create":  "Registreeri uus kvalifikatsioon süsteemi",
+                                           "edit":  "Muuda olemasolevat kvalifikatsiooni süsteemis",
+                                           "view":  "Vaata kvalifikatsiooni detaile"
+                                       },
+                          "fields":  {
+                                         "idCode":  {
+                                                        "title":  "Kvalifikatsiooni kood",
+                                                        "placeholder":  "Kvalifikatsiooni kood"
+                                                    },
+                                         "qualificationName":  {
+                                                                   "title":  "Kvalifikatsiooni nimi",
+                                                                   "placeholder":  "Kvalifikatsiooni nimi"
+                                                               }
+                                     },
+                          "registeredQualifications":  "Registreeritud kvalifikatsioonid"
+                      },
+    "scheduling":  {
+                       "title":  "Taotle päevaplaani",
+                       "subtitle":  "Kasuta meie automatiseeritud ajastamisalgoritmi antud päeva ülesannete analüüsimiseks.",
+                       "noVisits":  "Valitud kuupäeval pole laevakülastusi ajastatud.",
+                       "visitsOnSelectedDay":  "Laevakülastused valitud kuupäeval",
+                       "viewVisits":  "Genereeri ülesannete ajakava",
+                       "generateTasksButton":  "Genereeri ülesannete ajakava",
+                       "aboutAlgorithmButton":  "Algoritmi kohta",
+                       "fields":  {
+                                      "algorithm":  {
+                                                        "title":  "Ajastamisalgoritm",
+                                                        "placeholder":  "Valige ajastamisalgoritm"
+                                                    },
+                                      "relatedDocks":  "Valige seotud dokk"
+                                  },
+                       "generateTasksModal":  {
+                                                  "title":  "Täiendav logistika"
+                                              },
+                       "aboutAlgorithmModal":  {
+                                                   "title":  "Algoritmi kohta",
+                                                   "content":  "Praegune algoritm arvestab valitud kuupäevaks ja dokiks ajastatud laevakülastuste teavitusi.\nSeejärel kontrollib see STS kraanade saadavust määratud doki jaoks ning määrab iga ülesande kestuse kraana kiiruse põhjal.\nAlgoritm ignoreerib külastusi, mis on seotud hoolduse või muude mitte laadimis/mahalaadimis tegevustega."
+                                               },
+                       "results":  {
+                                       "title":  "Scheduling Results",
+                                       "subtitle":  "Generated task schedule for the selected date"
+                                   },
+                       "tabs":  {
+                                    "dashboard":  "Scheduling Dashboard",
+                                    "results":  "Scheduling Results",
+                                    "schedule":  "Request Task Schedule",
+                                    "view_dashboard":  "View Scheduling",
+                                    "search":  "List Operation Plans",
+                                    "create":  "Create Scheduling",
+                                    "view":  "View Scheduling",
+                                    "edit":  "Edit Scheduling",
+                                    "queue":  "Scheduling Queue"
+                                },
+                       "subtitles":  {
+                                         "dashboard":  "Overview of scheduling of berth operations and incidents",
+                                         "schedule":  "Request a task schedule for a specific date",
+                                         "search":  "List all operation plans for a given date",
+                                         "create":  "Create a new scheduling into the system",
+                                         "edit":  "Edit an existing scheduling in the system",
+                                         "queue":  "View pending scheduling requests"
+                                     },
+                       "queue":  {
+                                     "title":  "Scheduling Queue",
+                                     "subtitle":  "Pending scheduling requests",
+                                     "onlyMine":  "Show only my requests"
+                                 },
+                       "rebalancing":  {
+                                           "title":  "Dock Rebalancing Required",
+                                           "warningMessage":  "Before scheduling, the system recommends rebalancing dock assignments to optimize load distribution.",
+                                           "vesselsToReassign":  "Vessels to Reassign",
+                                           "averageLoad":  "Average Load",
+                                           "loadRange":  "Load Range",
+                                           "proposedReassignments":  "Proposed Reassignments",
+                                           "vesselImo":  "Vessel IMO",
+                                           "currentDock":  "Current Dock",
+                                           "proposedDock":  "Proposed Dock",
+                                           "skipButton":  "Skip \u0026 Continue with Current Assignments",
+                                           "applyButton":  "Apply Rebalancing \u0026 Generate Schedule"
+                                       }
+                   },
+    "physicalResource":  {
+                             "deactivation":  {
+                                                  "title":  "Deaktiveeri füüsiline ressurss",
+                                                  "message":  "Kas olete kindel, et soovite selle füüsilise ressursi deaktiveerida? Saate selle hiljem uuesti aktiveerida.",
+                                                  "successMessage":  "Füüsiline ressurss deaktiveeriti edukalt.",
+                                                  "errorMessage":  "Füüsilise ressursi deaktiveerimisel ilmnes viga. Proovige uuesti."
+                                              },
+                             "tabs":  {
+                                          "dashboard":  "Füüsiliste ressursside töölaud",
+                                          "view_dashboard":  "Vaata füüsilisi ressursse",
+                                          "search":  "Otsi füüsilisi ressursse",
+                                          "create":  "Loo füüsiline ressurss",
+                                          "view":  "Vaata füüsilist ressurssi",
+                                          "edit":  "Muuda füüsilist ressurssi"
+                                      },
+                             "infoTitle":  "Füüsilise ressursi info",
+                             "title":  "Füüsilised ressursid",
+                             "subtitle":  {
+                                              "search":  "Halda ja vaata kõiki registreeritud füüsilisi ressursse",
+                                              "dashboard":  "Füüsiliste ressursside haldus",
+                                              "view_dashboard":  "Vaata füüsilisi ressursse",
+                                              "create":  "Registreeri uus füüsiline ressurss süsteemi",
+                                              "view":  "Vaata füüsilise ressursi detaile",
+                                              "edit":  "Muuda olemasolevat füüsilist ressurssi süsteemis"
+                                          },
+                             "generalFields":  "Üldised väljad",
+                             "specificFields":  "Spetsiifilised väljad",
+                             "fields":  {
+                                            "code":  {
+                                                         "title":  "Kood",
+                                                         "placeholder":  "Ressursi kood"
+                                                     },
+                                            "description":  {
+                                                                "title":  "Kirjeldus",
+                                                                "placeholder":  "Ressursi kirjeldus"
+                                                            },
+                                            "status":  {
+                                                           "title":  "Staatus",
+                                                           "placeholder":  "Valige ressursi staatus",
+                                                           "options":  {
+                                                                           "available":  "Saadaval",
+                                                                           "maintenance":  "Hooldus",
+                                                                           "outOfService":  "Kasutusest väljas"
+                                                                       }
+                                                       },
+                                            "qualifications":  {
+                                                                   "title":  "Vajalikud kvalifikatsioonid",
+                                                                   "placeholder":  "Kvalifikatsioonid, mis on vajalikud selle ressursi kasutamiseks"
+                                                               },
+                                            "setupTime":  {
+                                                              "title":  "Seadistusaeg (min)",
+                                                              "placeholder":  "Seadistusaeg"
+                                                          },
+                                            "servingDocks":  {
+                                                                 "title":  "Teenindatavad dokid",
+                                                                 "placeholder":  "Valige teenindatavad dokid"
+                                                             },
+                                            "liftingCapacity":  {
+                                                                    "title":  "Tõstevõime (kg)",
+                                                                    "placeholder":  "Tõstevõime"
+                                                                },
+                                            "containersPerHour":  {
+                                                                      "title":  "Konteinereid tunnis",
+                                                                      "placeholder":  "Konteinereid tunnis"
+                                                                  },
+                                            "maxLoadCapacity":  {
+                                                                    "title":  "Maksimaalne kandevõime (kg)",
+                                                                    "placeholder":  "Maksimaalne kandevõime"
+                                                                },
+                                            "averageSpeed":  {
+                                                                 "title":  "Keskmine kiirus (km/h)",
+                                                                 "placeholder":  "Keskmine kiirus"
+                                                             },
+                                            "containersPerTrip":  {
+                                                                      "title":  "Konteinereid reisi kohta",
+                                                                      "placeholder":  "Konteinereid reisi kohta"
+                                                                  },
+                                            "type":  {
+                                                         "title":  "Ressursi tüüp",
+                                                         "options":  {
+                                                                         "stsCrane":  "STS kraana",
+                                                                         "yardGantry":  "Õueportaalkraana",
+                                                                         "truck":  "Veok"
+                                                                     }
+                                                     }
+                                        },
+                             "actions":  {
+                                             "deactivate":  "Deaktiveeri füüsiline ressurss"
+                                         },
+                             "registeredPhysicalResources":  "Registered Physical Resources"
+                         },
+    "storageArea":  {
+                        "tabs":  {
+                                     "dashboard":  "Ladustusalade töölaud",
+                                     "view_dashboard":  "Vaata ladustusalasid",
+                                     "search":  "Otsi ladustusalasid",
+                                     "create":  "Loo ladustusala",
+                                     "view":  "Vaata ladustusala",
+                                     "edit":  "Muuda ladustusala"
+                                 },
+                        "create":  {
+                                       "distance_meters":  "Vahemaa (meetrid)"
+                                   },
+                        "infoTitle":  "Ladustusala info",
+                        "title":  "Ladustusalad",
+                        "subtitle":  {
+                                         "search":  "Halda ja vaata kõiki registreeritud ladustusalasid",
+                                         "dashboard":  "Ladustusalade haldustöölaud",
+                                         "view_dashboard":  "Vaata ladustusalasid",
+                                         "create":  "Registreeri uus ladustusala süsteemi",
+                                         "view":  "Vaata ladustusala detaile",
+                                         "edit":  "Muuda olemasolevat ladustusala süsteemis"
+                                     },
+                        "printer":  {
+                                        "docks_serviced":  "teenindatavad dokid",
+                                        "capacity_usage":  "mahu kasutus",
+                                        "units":  "ühikud",
+                                        "available":  "saadaval",
+                                        "no_registered_distances":  "Registreeritud vahemaid pole",
+                                        "no_docks_serviced":  "Ühtegi dokki ei teenindata",
+                                        "all_docks_serviced":  "Kõiki dokke teenindatakse",
+                                        "serviced_docks_distance":  "Teenindatud dokkide vahemaa",
+                                        "no_registered_docks":  "Registreeritud dokke pole"
+                                    },
+                        "fields":  {
+                                       "nameCode":  {
+                                                        "title":  "Nime kood",
+                                                        "placeholder":  "Ladustusala nime kood"
+                                                    },
+                                       "location":  {
+                                                        "title":  "Asukoht",
+                                                        "placeholder":  "Ladustusala asukoht"
+                                                    },
+                                       "type":  {
+                                                    "title":  "Tüüp",
+                                                    "placeholder":  "Valige ladustusala tüüp",
+                                                    "options":  {
+                                                                    "yard":  "Õueala",
+                                                                    "warehouse":  "Ladu"
+                                                                }
+                                                },
+                                       "capacity":  {
+                                                        "title":  "Mahutavus",
+                                                        "placeholder":  "Maksimaalne mahutavus"
+                                                    },
+                                       "occupancy":  {
+                                                         "title":  "Hõivatus",
+                                                         "placeholder":  "Praegune hõivatus"
+                                                     }
+                                   },
+                        "registeredStorageAreas":  "Registreeritud ladustusalad"
+                    },
+    "notification":  {
+                         "id":  "Teavituse ID",
+                         "hazardous":  "Ohtlik",
+                         "nonHazardous":  "Mitteohtlik",
+                         "arrival":  "Saabumine",
+                         "departure":  "Lahkumine",
+                         "specialRequirements":  "Erinõuded",
+                         "none":  "Puudub",
+                         "crew":  "Meeskond",
+                         "captain":  "Kapten",
+                         "unknown":  "Tundmatu",
+                         "from":  "Alates",
+                         "to":  "Kuni",
+                         "step":  "Samm",
+                         "of":  "/",
+                         "tabs":  {
+                                      "dashboard":  "Teavituste töölaud",
+                                      "search":  "Otsi teavitusi",
+                                      "edit":  "Muuda teavitust",
+                                      "create":  "Loo teavitus",
+                                      "update":  "Update Notification",
+                                      "makeDraft":  "Loo teavituse mustand",
+                                      "myNotifications":  "Minu teavitused",
+                                      "review":  "Vaata teavitusi üle",
+                                      "general":  "Üldine loend",
+                                      "byDate":  "Kalendri loend",
+                                      "submit":  "Esita teavitus",
+                                      "delete":  "Kustuta teavitus"
+                                  },
+                         "eventsOnDate":  "Sündmused valitud kuupäeval",
+                         "noEventsOnDate":  "Valitud kuupäeval sündmusi pole",
+                         "title":  "Laevakülastuste teavitused",
+                         "subtitle":  {
+                                          "dashboard":  "Laevakülastuste teavituste ülevaade",
+                                          "search":  "Halda ja vaata kõiki laevakülastuste teavitusi",
+                                          "create":  "Loo uus laevakülastuse teavitus",
+                                          "update":  "Update an existing vessel visit notification",
+                                          "edit":  "Muuda olemasolevat laevakülastuse teavitust",
+                                          "review":  "Vaata ootel laevakülastuste teavitusi"
+                                      },
+                         "errors":  {
+                                        "noNotificationId":  "Teavituse ID pole antud"
+                                    },
+                         "infoTitle":  "Teavituse info",
+                         "cargoTitle":  "Kauba info",
+                         "vesselTitle":  "Laeva info",
+                         "manifestInfo":  "Manifesti info",
+                         "fields":  {
+                                        "selectVessel":  "Select corresponding vessel",
+                                        "openLoadManifest":  "Ava laadimismanifest",
+                                        "openUnloadManifest":  "Ava mahalaadimismanifest",
+                                        "expectedArrival":  "Eeldatav saabumine",
+                                        "expectedDeparture":  "Eeldatav lahkumine",
+                                        "isCargoHazardous":  "Last ohtlik",
+                                        "specialRequirements":  "Erinõuded",
+                                        "captain":  "Kapten",
+                                        "totalCrewMembers":  "Meeskonnaliikmete koguarv",
+                                        "safetyOfficers":  "Ohutusametnikud",
+                                        "loadCargoManifest":  "Kauba laadimismanifest",
+                                        "unloadCargoManifest":  "Kauba mahalaadimismanifest",
+                                        "position":  "Positsioon",
+                                        "area":  "Ala",
+                                        "container":  "Konteiner",
+                                        "crewMembers":  "Meeskonnaliikmed",
+                                        "status":  "Staatus",
+                                        "isCargoHazardousQ":  "Is Cargo Hazardous?",
+                                        "cargoManifestInfo":  "About cargo manifest files"
+                                    },
+                         "timeline":  {
+                                          "pending":  "Ootel",
+                                          "inProgress":  "Töös",
+                                          "completed":  "Lõpetatud",
+                                          "submitted":  "Esitatud",
+                                          "accepted":  "Aktsepteeritud",
+                                          "rejected":  "Tagasi lükatud"
+                                      },
+                         "filters":  {
+                                         "expectedArrivalFrom":  "Eeldatav saabumine alates",
+                                         "expectedArrivalTo":  "Eeldatav saabumine kuni",
+                                         "withReason":  "Põhjusega",
+                                         "withDockAssigned":  "Määratud dokiga"
+                                     },
+                         "decision":  {
+                                          "isFinal":  "Lõplik",
+                                          "assignedDock":  {
+                                                               "title":  "Määratud dokk",
+                                                               "placeholder":  "Valige määratud dokk"
+                                                           },
+                                          "reason":  {
+                                                         "title":  "Põhjus",
+                                                         "placeholder":  "Sisestage otsuse põhjus"
+                                                     },
+                                          "status":  "Otsuse staatus"
+                                      },
+                         "sections":  {
+                                          "vesselDetails":  "Külastuse teave",
+                                          "crewDetails":  "Meeskonna üksikasjad",
+                                          "cargoRequirements":  "Lasti nõuded",
+                                          "cargoContent":  "Lasti sisu"
+                                      },
+                         "about":  {
+                                       "text":  "Lastimanifestitiedostod peavad (praegu) olema Euroopa standardses CSV-vormingus. Iga rida CSV-failis esindab lastiüksust järgmiste veergudega:",
+                                       "bay":  "Laht (number)",
+                                       "row":  "Rida (number)",
+                                       "tier":  "Tase (number)",
+                                       "area":  "Piirkonna kood (kust/kuhu)",
+                                       "containerNumber":  "Konteinerinumber (tekst)",
+                                       "conatinerType":  "Konteineritüüp (number)",
+                                       "description":  "Kirjeldus (tekst)",
+                                       "containerTypes":  {
+                                                              "refrigeratedGoods":  "Külmutatud kaubad",
+                                                              "generalConsumerProducts":  "Üldised tarbekaubad",
+                                                              "electronics":  "Elektroonikatoodet",
+                                                              "hazmat":  "Ohtlikud materjalid",
+                                                              "oversizedIndustrialEquipment":  "Ülmõõdulised tööstusseadmed",
+                                                              "other":  "Muu"
+                                                          }
+                                   },
+                         "registeredVesselVisitNotifications":  "Registreeritud laevakülastuse teavitused"
+                     },
+    "operationalWindow":  {
+                              "title":  "Operatiivaken",
+                              "printer":  {
+                                              "addShift":  "Lisa vahetus",
+                                              "shifts":  "Vahetused:",
+                                              "noShifts":  "Vahetusi pole.",
+                                              "startTime":  "Algusaeg",
+                                              "endTime":  "Lõppaeg",
+                                              "weekDays":  "Nädalapäevad"
+                                          },
+                              "errors":  {
+                                             "shiftOverlap":  "Vigane vahetus. Ülekattumine või lõppaeg enne algusaega."
+                                         }
+                          },
+    "about":  {
+                  "title":  "PorTiTi kohta",
+                  "privacy":  {
+                                  "title":  "Privaatsuspoliitika",
+                                  "lastUpdated":  "Viimati uuendatud: {date}"
+                              }
+              },
+    "operationPlan":  {
+                          "title":  "Operatsiooniplan",
+                          "dock":  "Dokk",
+                          "docks":  "Dokid",
+                          "operations":  "Operatsioonid",
+                          "cranes":  "Kraanid",
+                          "createdBy":  "Loonud",
+                          "createdAt":  "Loodud",
+                          "totalSchedules":  "Kokku Ajakavasid",
+                          "vesselCount":  "Laevad",
+                          "plansOnDate":  "Valitud kuupäeva operatsioonipla anid",
+                          "noPlansOnDate":  "Valitud kuupäeval ei ole operatsiooniplaane",
+                          "id":  "ID",
+                          "vvn":  "Laevakülastuse Teatis",
+                          "for":  "jaoks",
+                          "details":  "Üksikasjad",
+                          "totalOperations":  "Kokku Operatsioone",
+                          "algorithmUsed":  "Kasutatud Algoritm",
+                          "ganttChart":  "Gantti Diagramm",
+                          "startTime":  "Algusaeg",
+                          "endTime":  "Lõppaeg",
+                          "totalDuration":  "Kogu Kestus",
+                          "operation":  "Operatsioon",
+                          "duration":  "Kestus",
+                          "resources":  "Ressursid",
+                          "operationDetails":  "Operatsiooni Üksikasjad",
+                          "operationNumber":  "Operatsioon #{number}",
+                          "notFound":  "Operatsiooniplaani ei leitud",
+                          "operationType":  {
+                                                "Unload":  "Mahalaadimire",
+                                                "Load":  "Laadimine"
+                                            },
+                          "tabs":  {
+                                       "unplannedVVNs":  "Planeerimata VVN-id",
+                                       "search":  "Otsi Plaane",
+                                       "edit":  "Muuda Plaani",
+                                       "open":  "Ava Täitmine"
+                                   },
+                          "subtitle":  {
+                                           "edit":  "Muuda operatsiooniplaani üksikasju ja ajakava"
+                                       },
+                          "unplannedVVNs":  {
+                                                "description":  "Laevakülastuse teated, millel puudub määratud operatsiooniplaan",
+                                                "noUnplanned":  "Kõikidel laevakülastuse teadetel on määratud operatsiooniplaan",
+                                                "foundMessage":  "Leitud {vvnCount} VVN ilma plaanideta {dayCount} päevas/päevades",
+                                                "regenerateAll":  "Genereeri Kõik Puuduvad Plaanid",
+                                                "regenerateDay":  "Genereeri Selle Päeva Plaanid",
+                                                "regenerateModalTitle":  "Genereeri plaanid kuupäevale {date}",
+                                                "warning":  "Hoiatus",
+                                                "warningMessage":  "Plaanide regenereerimine asendab kõik olemasolevad selle päeva operatsiooniplaan id. Seda toimingut ei saa tagasi võtta.",
+                                                "selectedDay":  "Valitud Päev",
+                                                "confirmRegeneration":  "Kinnita Regenereerimine",
+                                                "affectedDays":  "Mõjutatud Päevad",
+                                                "queueInfo":  "Iga regenereerimise taotlus pannakse eraldi järjekorda. Saate neid üle vaadata ja vastu võtta/tagasi lükata eraldi ajakavastusjärjekorrast.",
+                                                "continue":  "Jätka",
+                                                "confirmRegenerationTitle":  "Kinnita Regenereerimine",
+                                                "irreversibleAction":  "See toiming on pöörd umatu",
+                                                "overwriteWarning":  "Operatsioonide regenereerimine kirjutab püsivalt üle kõik olemasolevad plaanid valitud päevadeks. Seda toimingut ei saa tagasi võtta.",
+                                                "aboutToRegenerate":  "Olete looma plaane",
+                                                "days":  "päevaks",
+                                                "vesselVisitNotifications":  "Laevakülastuse Teated",
+                                                "using":  "Kasutades",
+                                                "algorithm":  "algoritmi",
+                                                "proceedQuestion":  "Kas soovite jätkata selle toiminguga?",
+                                                "yesRegenerateAll":  "Jah, genereeri kõik"
+                                            },
+                          "algorithm":  {
+                                            "optimal":  "Optimaalne",
+                                            "greedy":  "Ahnev",
+                                            "genetic":  "Geneetiline",
+                                            "auto":  "Automaatne"
+                                        },
+                          "metrics":  {
+                                          "title":  "Mõõdikud",
+                                          "strategy":  "Strateegia",
+                                          "totalDelay":  "Kogu Viivitus",
+                                          "computationTime":  "Arvutusaeg",
+                                          "autoSelection":  "Automaatne Algoritmi Valik"
+                                      },
+                          "infoTitle":  "Operatsiooniplaani Teave",
+                          "fields":  {
+                                         "id":  {
+                                                    "title":  "Plaani ID"
+                                                },
+                                         "relatedVVN":  {
+                                                            "title":  "Seotud VVN"
+                                                        },
+                                         "dock":  {
+                                                      "title":  "Dokk"
+                                                  },
+                                         "operations":  {
+                                                            "title":  "Operatsioonid"
+                                                        }
+                                     },
+                          "filters":  {
+                                          "startDate":  "Alguskuupäev Alates",
+                                          "endDate":  "Lõppkuupäev Kuni"
+                                      },
+                          "metadata":  {
+                                           "title":  "Metaandmed",
+                                           "createdBy":  "Loonud",
+                                           "createdAt":  "Loodud",
+                                           "algorithmUsed":  "Kasutatud Algoritm"
+                                       },
+                          "schedule":  {
+                                           "title":  "Operatsioonide Ajakava",
+                                           "noOperations":  "Planeeritud operatsioone pole"
+                                       }
+                      },
+    "incidentType":  {
+                         "fields":  {
+                                        "name":  {
+                                                     "title":  "Nimi",
+                                                     "placeholder":  "Intsidendi tüübi nimi"
+                                                 },
+                                        "description":  {
+                                                            "title":  "Kirjeldus",
+                                                            "placeholder":  "Intsidendi tüübi üksikasjalik kirjeldus"
+                                                        },
+                                        "severity":  {
+                                                         "title":  "Raskusaste",
+                                                         "placeholder":  "Valige raskusaste"
+                                                     },
+                                        "subtypeOf":  {
+                                                          "title":  "Alamtüüp",
+                                                          "placeholder":  "Valige ülemtüüp"
+                                                      },
+                                        "subtypes":  {
+                                                         "title":  "Alamtüübid",
+                                                         "placeholder":  "Valige alamtüübid"
+                                                     }
+                                    },
+                         "severity":  {
+                                          "Minor":  "Kerge",
+                                          "Major":  "Suur",
+                                          "Critical":  "Kriitiline"
+                                      },
+                         "tabs":  {
+                                      "dashboard":  "Intsidentide Töölaud",
+                                      "view_dashboard":  "Vaata Intsidentide Tüüpe",
+                                      "search":  "Otsi Intsidentide Tüüpe",
+                                      "create":  "Loo Intsidendi Tüüp",
+                                      "edit":  "Muuda Intsidendi Tüüpi"
+                                  },
+                         "generalFields":  "Üldised Väljad",
+                         "classification":  "Klassifikatsioon",
+                         "title":  "Intsidendid",
+                         "subtitle":  {
+                                          "dashboard":  "Intsidentide tüüpide statistika ja tegevuste ülevaade",
+                                          "search":  "Halda ja vaata kõiki registreeritud intsidentide tüüpe",
+                                          "create":  "Registreeri uus intsidendi tüüp süsteemi",
+                                          "edit":  "Muuda olemasolevat intsidendi tüüpi süsteemis"
+                                      },
+                         "registeredIncidentTypes":  "Registreeritud Intsidentide Tüübid",
+                         "incidentTypeInformation":  "Intsidendi Tüübi Teave",
+                         "parentType":  "Ülemtüüp",
+                         "confirmDelete":  "Kinnita kustutamine",
+                         "confirmDeleteMessage":  "Kas olete kindel, et soovite selle intsidendi tüübi kustutada?",
+                         "failedToDelete":  "Intsidendi tüübi kustutamine ebaõnnestus"
+                     },
+    "taskCategory":  {
+                         "fields":  {
+                                        "name":  {
+                                                     "title":  "Nimi",
+                                                     "placeholder":  "Ülesande kategooria nimi"
+                                                 },
+                                        "category":  {
+                                                         "title":  "Kategooria",
+                                                         "placeholder":  "Kategooria kood"
+                                                     },
+                                        "description":  {
+                                                            "title":  "Kirjeldus",
+                                                            "placeholder":  "Ülesande kategooria kirjeldus"
+                                                        }
+                                    },
+                         "tabs":  {
+                                      "dashboard":  "Ülesannete Töölaud",
+                                      "search":  "Otsi Ülesannete Kategooriaid",
+                                      "create":  "Loo Ülesande Kategooria",
+                                      "edit":  "Muuda Ülesande Kategooriat",
+                                      "view_dashboard":  "Vaata Ülesannete Kategooriaid"
+                                  },
+                         "generalFields":  "Üldised Väljad",
+                         "title":  "Ülesanded",
+                         "subtitle":  {
+                                          "dashboard":  "Ülesannete kategooriate statistika ja tegevuste ülevaade",
+                                          "search":  "Halda ja vaata kõiki registreeritud ülesannete kategooriaid",
+                                          "create":  "Registreeri uus ülesande kategooria süsteemi",
+                                          "edit":  "Muuda olemasolevat ülesande kategooriat süsteemis"
+                                      },
+                         "taskCategoryInformation":  "Ülesande Kategooria Teave",
+                         "registeredTaskCategories":  "Registreeritud Ülesannete Kategooriad"
+                     },
+    "execution":  {
+                      "title":  "Laevakülastuse Täitmised",
+                      "subtitle":  {
+                                       "search":  "Halda ja vaata kõiki laevakülastuse täitmisi",
+                                       "dashboard":  "Laevakülastuse täitmiste statistika ja tegevuste ülevaade"
+                                   },
+                      "tabs":  {
+                                   "dashboard":  "Täitmiste Töölaud",
+                                   "search":  "Otsi Täitmisi",
+                                   "view_dashboard":  "Vaata Täitmisi",
+                                   "update":  "Uuenda Täitmist",
+                                   "view":  "Vaata Täitmist",
+                                   "table":  "Vaata Tabelit",
+                                   "cards":  "Vaata Kaarte"
+                               },
+                      "fields":  {
+                                     "code":  "Kood",
+                                     "relatedVVN":  "Seotud",
+                                     "status":  "Olek",
+                                     "createdBy":  "Loonud",
+                                     "dateOpen":  "Avamiskuupäev",
+                                     "dateClosed":  "Sulgemiskuupäev",
+                                     "relatedVesselVisit":  "Seotud Laevakülastus",
+                                     "dock":  "Sõiduk ikoht",
+                                     "berthTime":  "Sõidukipaigaaeg",
+                                     "operations":  "Operatsioonid"
+                                 },
+                      "filters":  {
+                                      "startDate":  "Alguskuupäev",
+                                      "endDate":  "Lõppkuupäev",
+                                      "relatedVVN":  "Laevakülastuse Teatis",
+                                      "status":  "Olek"
+                                  },
+                      "metrics":  {
+                                      "totalOperations":  "Kokku Operatsioone",
+                                      "completedOperations":  "Edenemine",
+                                      "turnaroundTime":  "Pöördeaeg",
+                                      "berthOccupancy":  "Sõidukikoha Hõivatus"
+                                  },
+                      "status":  {
+                                     "pending":  "Ootel",
+                                     "started":  "Alustatud",
+                                     "delayed":  "Viivitatud",
+                                     "completed":  "Lõpetatud"
+                                 },
+                      "view_resources":  "Vaata Ressursse",
+                      "infoTitle":  "Täitmise Teave",
+                      "operationsTitle":  "Operatsioonid",
+                      "noOperations":  "Operatsioone pole saadaval",
+                      "startOperation":  "Alusta Operatsiooni",
+                      "completeOperation":  "Lõpeta Operatsioon",
+                      "addOperation":  "Lisa Operatsioon",
+                      "addOperationDescription":  "Lisa uus operatsioon ajajoone",
+                      "confirmStartOperation":  "Kas olete kindel, et soovite seda operatsiooni alustada?",
+                      "confirmCompleteOperation":  "Kas olete kindel, et soovite seda operatsiooni lõpetada?",
+                      "berthOperation":  {
+                                             "button":  "Muuda sõidukikoha andmeid",
+                                             "title":  "Sõidukikoha Operatsioon",
+                                             "description":  "Muuda selle laevakülastuse täitmise dokki ja aega.",
+                                             "dock":  "Sõidukikoht",
+                                             "dockPlaceholder":  "Valige dokk",
+                                             "berthTime":  "Sõidukipaigaaeg",
+                                             "differentThanPlanned":  "Valitud dokk erineb planeeritust."
+                                         }
+                  },
+    "incident":  {
+                     "tabs":  {
+                                  "dashboard":  "Intsidentide Töölaud",
+                                  "create":  "Loo Intsident",
+                                  "search":  "Otsi Intsidente",
+                                  "active":  "Aktiivsed Intsidendid",
+                                  "view":  "Vaata Intsidenti",
+                                  "edit":  "Muuda Intsidenti"
+                              },
+                     "subtitle":  {
+                                      "create":  "Teavita uuest intsidendist süsteemis",
+                                      "search":  "Otsi ja filtreeri olemasolevaid intsidente",
+                                      "active":  "Vaata ja halda aktiivseid intsidente"
+                                  },
+                     "generalFields":  "Üldine Teave",
+                     "classification":  "Klassifikatsioon",
+                     "fields":  {
+                                    "bid":  {
+                                                "title":  "Intsidendi ID"
+                                            },
+                                    "type":  {
+                                                 "title":  "Intsidendi Tüüp",
+                                                 "placeholder":  "Valige intsidendi tüüp"
+                                             },
+                                    "startTime":  {
+                                                      "title":  "Algusaeg",
+                                                      "placeholder":  "Millal intsident algas?"
+                                                  },
+                                    "endTime":  {
+                                                    "title":  "Lõppaeg",
+                                                    "placeholder":  "Millal intsident lõppes?"
+                                                },
+                                    "severity":  {
+                                                     "title":  "Raskusaste",
+                                                     "placeholder":  "Valige raskusaste",
+                                                     "options":  {
+                                                                     "minor":  "Kerge",
+                                                                     "major":  "Suur",
+                                                                     "critical":  "Kriitiline"
+                                                                 }
+                                                 },
+                                    "description":  {
+                                                        "title":  "Kirjeldus",
+                                                        "placeholder":  "Kirjeldage intsidenti üksikasjalikult"
+                                                    },
+                                    "createdBy":  {
+                                                      "title":  "Loonud"
+                                                  },
+                                    "affectedVVECodes":  {
+                                                             "title":  "Mõjutatud VVE-d",
+                                                             "placeholder":  "Sisestage mõjutatud VVE-d"
+                                                         },
+                                    "vveCode":  {
+                                                    "title":  "VVE Kood"
+                                                },
+                                    "status":  {
+                                                   "title":  "Olek",
+                                                   "options":  {
+                                                                   "active":  "Aktiivne",
+                                                                   "resolved":  "Lahendatud"
+                                                               }
+                                               },
+                                    "filterStartTime":  {
+                                                            "title":  "Alguskuupäev Alates"
+                                                        },
+                                    "filterEndTime":  {
+                                                          "title":  "Alguskuupäev Kuni"
+                                                      },
+                                    "duration":  {
+                                                     "title":  "Kestus"
+                                                 }
+                                },
+                     "severity":  {
+                                      "Minor":  "Kerge",
+                                      "Major":  "Suur",
+                                      "Critical":  "Kriitiline"
+                                  },
+                     "status":  {
+                                    "active":  "Aktiivne",
+                                    "resolved":  "Lahendatud"
+                                },
+                     "ongoing":  "Käimas",
+                     "filters":  {
+                                     "onlyActive":  "Ainult Aktiivsed",
+                                     "onlyMine":  "Ainult Minu"
+                                 },
+                     "actions":  {
+                                     "view":  "Vaata Üksikasju",
+                                     "edit":  "Muuda Intsidenti",
+                                     "resolve":  "Lahenda Intsident",
+                                     "delete":  "Kustuta Intsident"
+                                 },
+                     "notifications":  {
+                                           "createSuccess":  "Intsident edukalt loodud",
+                                           "createFailed":  "Intsidendi loomine ebaõnnestus",
+                                           "updateSuccess":  "Intsident edukalt uuendatud",
+                                           "updateFailed":  "Intsidendi uuendamine ebaõnnestus",
+                                           "resolveSuccess":  "Intsident edukalt lahendatud",
+                                           "resolveFailed":  "Intsidendi lahendamine ebaõnnestus",
+                                           "deleteSuccess":  "Intsident edukalt kustutatud",
+                                           "deleteFailed":  "Intsidendi kustutamine ebaõnnestus"
+                                       },
+                     "table":  {
+                                   "empty":  "Intsidente ei leitud"
+                               },
+                     "active":  {
+                                    "title":  "Aktiivsed Intsidendid",
+                                    "subtitle":  "Vaata ja halda käimasolevaid intsidente"
+                                },
+                     "infoTitle":  "Intsidendi Üksikasjad",
+                     "closeDialog":  {
+                                         "title":  "Lahenda intsident",
+                                         "message":  "Millal intsident lahendati?",
+                                         "confirm":  "Jah, sulge see intsident",
+                                         "cancel":  "Tühista"
+                                     }
+                 }
 }
