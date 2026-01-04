@@ -14,6 +14,16 @@ export const authMiddleware = (
     res: Response,
     next: NextFunction
 ) => {
+    if (config.disableAuth) {
+        req.user = {
+            id: 'test-user-id',
+            emailAddress: 'test@example.com',
+            name: 'Test User',
+            user_role: 'Admin',
+            token: 'test-token'
+        };
+        return next();
+    }
 
     // Try reading token from cookie first
     let token = req.cookies?.AuthToken;
