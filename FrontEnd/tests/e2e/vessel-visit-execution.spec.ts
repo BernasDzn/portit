@@ -41,3 +41,27 @@ test('Update VVE Operations', async ({ page }) => {
   await page.getByRole('button', { name: 'Complete' }).nth(1).click();
   await expect(page.getByText('Completed', { exact: true })).toBeVisible();
 });
+
+test('Add Complementary Task', async ({ page }) => {
+  await page.goto('http://localhost:5173/vessel-visit-executions/2026-PORTO-000001');
+  await page.getByRole('button', { name: 'Update Execution' }).click();
+  await page.getByRole('button', { name: 'Add Complementary Task' }).click();
+  await page.locator('.select__combobox').first().click();
+  await page.getByRole('option', { name: 'Berthing (BERTH)' }).press('ArrowDown');
+  await page.getByRole('option', { name: 'Maintenance (MAINT)' }).press('Enter');
+  await page.locator('.select.select--standard.select--filled.select--multiple > .select__combobox').first().click();
+  await page.getByRole('option', { name: 'Carlos Santos (STF250003)' }).press('Enter');
+  await page.locator('.select.select--standard.select--filled.select--multiple > .select__combobox').first().click();
+  await page.locator('.select.select--standard.select--filled.select--multiple.select--placeholder-visible > .select__combobox').click();
+  await page.getByRole('option', { name: 'Operation #1 - UNLOAD' }).press('ArrowDown');
+  await page.getByRole('option', { name: 'Operation #1 - UNLOAD' }).press('ArrowRight');
+  await page.getByRole('option', { name: 'Operation #1 - UNLOAD' }).press('Enter');
+  await page.getByRole('button', { name: 'Create Task' }).click();
+  await expect(page.getByText('Delayed', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Complete' }).click();
+  await page.getByRole('button', { name: 'Complete' }).nth(1).click();
+  await expect(page.getByText('Pending')).toBeVisible();
+  await page.getByRole('link', { name: 'Tasks' }).click();
+  await page.getByRole('link', { name: 'library_add View' }).click();
+  await expect(page.getByText('VVE-PORTO-1').first()).toBeVisible();
+});
