@@ -15,7 +15,9 @@
                                 "friday":  "Péntek",
                                 "saturday":  "Szombat"
                             },
-                   "number":  "Szám"
+                   "number":  "Szám",
+                   "actions":  "Műveletek",
+                   "none":  "Nincs"
                },
     "buttons":  {
                     "save":  "Mentés",
@@ -27,6 +29,10 @@
                     "select":  "Kiválasztás",
                     "activate":  "Aktiválás",
                     "deactivate":  "Letiltás",
+                    "generate":  "Generálás",
+                    "close":  "Bezárás",
+                    "add":  "Hozzáadás",
+                    "review":  "Áttekintés",
                     "filter":  {
                                    "title":  "Szűrők",
                                    "add":  "Szűrő hozzáadása",
@@ -39,35 +45,40 @@
                     "login":  "Bejelentkezés",
                     "goBackToLogin":  "Vissza a bejelentkezéshez",
                     "logout":  "Kijelentkezés",
-                    "generate":  "Generálás",
-                    "close":  "Bezárás",
-                    "add":  "Hozzáadás",
-                    "review":  "Áttekintés",
-                    "seeMore":  "Továbbiak megtekintése"
+                    "seeMore":  "Továbbiak megtekintése",
+                    "ok":  "OK",
+                    "downloadSample":  "Download Sample"
                 },
+    "search":  {
+                   "languages":  "Nyelvek keresése..."
+               },
     "unsavedChanges":  {
                            "title":  "Módosítások elvetése?",
                            "message":  "Vannak mentetlen módosításai. Biztosan elhagyja az oldalt és elveti a módosításokat?",
                            "confirm":  "Elvetés",
                            "cancel":  "Szerkesztés folytatása"
                        },
+    "expirationWarning":  {
+                              "messageOneMinute":  "A munkamenet 1 percen belül lejár.",
+                              "messageLessThanOneMinute":  "A munkamenet hamarosan lejár."
+                          },
     "dashboard":  {
+                      "welcome":  "Üdv újra, [name]!",
                       "sidebarTitle":  "Irányítópult",
                       "title":  "PortIT irányítópult",
                       "subtitle":  "A PortIT rendszer áttekintése",
-                      "3DModel":  {
-                                      "title":  "Kikötő 3D‑vizualizációja",
-                                      "description":  "Tekintse meg a kikötő létesítmény teljes, interaktív 3D ábrázolását. Valós időben követheti a mólók kihasználtságát, a hajók helyzetét, a tárolóterületeket és az erőforrásokat.",
-                                      "open":  "3D modell megnyitása"
-                                  },
-                      "welcome":  "Üdv újra, [name]!",
                       "SAOR":  {
                                    "subtitle":  "A hajóügynök műveleteinek áttekintése",
                                    "pendingNotifications":  "Függő értesítések",
                                    "recent":  "Legutóbbi hajólátogatási értesítések",
                                    "recentReview":  "Áttekintést igénylő hajólátogatási értesítések",
                                    "noRecent":  "Nincsenek legutóbbi értesítések"
-                               }
+                               },
+                      "3DModel":  {
+                                      "title":  "Kikötő 3D‑vizualizációja",
+                                      "description":  "Tekintse meg a kikötő létesítmény teljes, interaktív 3D ábrázolását. Valós időben követheti a mólók kihasználtságát, a hajók helyzetét, a tárolóterületeket és az erőforrásokat.",
+                                      "open":  "3D modell megnyitása"
+                                  }
                   },
     "admin":  {
                   "sidebarTitle":  "Admin",
@@ -80,10 +91,42 @@
                   "auditLogs":  {
                                     "title":  "Ellenőrzési naplók",
                                     "subtitle":  "A rendszer tevékenységi naplóinak megtekintése és nyomon követése."
-                                }
+                                },
+                  "pp":  {
+                             "title":  "Adatvédelmi irányelvek",
+                             "subtitle":  "Határozza meg és kezelje a kikotő adatvédelmi irányelveit."
+                         },
+                  "notifications":  {
+                                        "create":  "Értesítés létrehozása",
+                                        "subtitleCreate":  "Send important announcements to any or all users.",
+                                        "title":  "Rendszerértesítések",
+                                        "subtitle":  "Általános rendszerértesítések létrehozása és kezelése.",
+                                        "broadcastToggle":  "Broadcast to all users",
+                                        "sendEmailToggle":  "Also send as email",
+                                        "fields":  {
+                                                       "title":  {
+                                                                     "title":  "Title",
+                                                                     "placeholder":  "Adja meg az értesítés címét"
+                                                                 },
+                                                       "message":  {
+                                                                       "title":  "Message",
+                                                                       "placeholder":  "Adja meg az értesítés üzenetét"
+                                                                   },
+                                                       "email":  {
+                                                                     "title":  "User email",
+                                                                     "placeholder":  "Specify user email to send to"
+                                                                 },
+                                                       "urgency":  {
+                                                                       "title":  "Urgency",
+                                                                       "options":  {
+                                                                                       "normal":  "Normal",
+                                                                                       "urgent":  "Urgent"
+                                                                                   }
+                                                                   }
+                                                   }
+                                    }
               },
     "user":  {
-                 "registeredUsers":  "Regisztrált felhasználók",
                  "fields":  {
                                 "email":  {
                                               "title":  "Email",
@@ -100,7 +143,7 @@
                                                          }
                                          },
                                 "isActive":  {
-                                                "title":  "Aktív",
+                                                 "title":  "Aktív",
                                                  "options":  {
                                                                  "active":  "Igen",
                                                                  "inactive":  "Nem"
@@ -119,8 +162,15 @@
                                   "dashboard":  "Felhasználói áttekintés és kezelés",
                                   "create":  "Új felhasználó regisztrálása a rendszerbe",
                                   "view":  "Meglévő felhasználók megtekintése és kezelése"
-                              }
+                              },
+                 "registeredUsers":  "Regisztrált felhasználók",
+                 "confirmDelete":  "Törlés megerősítése",
+                 "confirmDeleteMessage":  "Biztosan törölni szeretné ezt a felhasználót?"
              },
+    "representative":  {
+                           "title":  "Képviselő",
+                           "select":  "Válasszon képviselőt"
+                       },
     "physicalCharacteristics":  {
                                     "title":  "Fizikai jellemzÅ‘k (m)",
                                     "length":  {
@@ -270,7 +320,12 @@
                    "registeredVessels":  "Regisztrált hajók"
                },
     "staff":  {
-                  "registeredStaffMembers":  "Regisztrált személyzeti tagok",
+                  "deactivation":  {
+                                       "title":  "Személyzeti tag letiltása",
+                                       "message":  "Biztosan letiltja ezt a személyzeti tagot? Ez a művelet nem vonható vissza.",
+                                       "successMessage":  "A személyzeti tag sikeresen le lett tiltva.",
+                                       "errorMessage":  "Hiba történt a személyzeti tag letiltása közben. Kérjük, próbálja újra."
+                                   },
                   "fields":  {
                                  "mechanographicNumber":  {
                                                               "title":  "Mechanográf szám",
@@ -319,15 +374,9 @@
                                    "view":  "Személyzet részleteinek megtekintése",
                                    "edit":  "Meglévő személyzet szerkesztése a rendszerben"
                                },
-                  "deactivation":  {
-                                       "title":  "Személyzeti tag letiltása",
-                                       "message":  "Biztosan letiltja ezt a személyzeti tagot? Ez a művelet nem vonható vissza.",
-                                       "successMessage":  "A személyzeti tag sikeresen le lett tiltva.",
-                                       "errorMessage":  "Hiba történt a személyzeti tag letiltása közben. Kérjük, próbálja újra."
-                                   }
+                  "registeredStaffMembers":  "Regisztrált személyzeti tagok"
               },
     "qualification":  {
-                          "registeredQualifications":  "Regisztrált képesítések",
                           "tabs":  {
                                        "dashboard":  "Képesítések panel",
                                        "view_dashboard":  "Képesítések megtekintése",
@@ -354,10 +403,80 @@
                                                                    "title":  "Képesítés neve",
                                                                    "placeholder":  "Képesítés neve"
                                                                }
-                                     }
+                                     },
+                          "registeredQualifications":  "Regisztrált képesítések"
                       },
+    "scheduling":  {
+                       "title":  "Napi ütemterv kérése",
+                       "subtitle":  "Automatizált ütemező algoritmusunk elemzi az adott napra tervezett feladatokat.",
+                       "noVisits":  "A kiválasztott dátumra nincs tervezett hajólátogatás.",
+                       "visitsOnSelectedDay":  "Hajólátogatások a kiválasztott napon",
+                       "viewVisits":  "Feladatütemterv generálása",
+                       "generateTasksButton":  "Feladatütemterv generálása",
+                       "aboutAlgorithmButton":  "Az algoritmusról",
+                       "fields":  {
+                                      "algorithm":  {
+                                                        "title":  "Ütemező algoritmus",
+                                                        "placeholder":  "Válasszon ütemező algoritmust"
+                                                    },
+                                      "relatedDocks":  "Válasszon kapcsolódó mólót"
+                                  },
+                       "generateTasksModal":  {
+                                                  "title":  "További logisztika"
+                                              },
+                       "aboutAlgorithmModal":  {
+                                                   "title":  "Az algoritmusról",
+                                                   "content":  "A jelenlegi algoritmus figyelembe veszi a kiválasztott dátumra és mólóra ütemezett hajólátogatási értesítéseket. \nEzt követően ellenőrzi az STS daruk elérhetőségét az adott mólón, és a daru sebessége alapján határozza meg az egyes feladatok időtartamát.\nFigyelmen kívül hagyja a karbantartási vagy egyéb, nem rakodási/lerakodási tevékenységeket."
+                                               },
+                       "results":  {
+                                       "title":  "Scheduling Results",
+                                       "subtitle":  "Generated task schedule for the selected date"
+                                   },
+                       "tabs":  {
+                                    "dashboard":  "Scheduling Dashboard",
+                                    "results":  "Scheduling Results",
+                                    "schedule":  "Request Task Schedule",
+                                    "view_dashboard":  "View Scheduling",
+                                    "search":  "List Operation Plans",
+                                    "create":  "Create Scheduling",
+                                    "view":  "View Scheduling",
+                                    "edit":  "Edit Scheduling",
+                                    "queue":  "Scheduling Queue"
+                                },
+                       "subtitles":  {
+                                         "dashboard":  "Overview of scheduling of berth operations and incidents",
+                                         "schedule":  "Request a task schedule for a specific date",
+                                         "search":  "List all operation plans for a given date",
+                                         "create":  "Create a new scheduling into the system",
+                                         "edit":  "Edit an existing scheduling in the system",
+                                         "queue":  "View pending scheduling requests"
+                                     },
+                       "queue":  {
+                                     "title":  "Scheduling Queue",
+                                     "subtitle":  "Pending scheduling requests",
+                                     "onlyMine":  "Show only my requests"
+                                 },
+                       "rebalancing":  {
+                                           "title":  "Dock Rebalancing Required",
+                                           "warningMessage":  "Before scheduling, the system recommends rebalancing dock assignments to optimize load distribution.",
+                                           "vesselsToReassign":  "Vessels to Reassign",
+                                           "averageLoad":  "Average Load",
+                                           "loadRange":  "Load Range",
+                                           "proposedReassignments":  "Proposed Reassignments",
+                                           "vesselImo":  "Vessel IMO",
+                                           "currentDock":  "Current Dock",
+                                           "proposedDock":  "Proposed Dock",
+                                           "skipButton":  "Skip \u0026 Continue with Current Assignments",
+                                           "applyButton":  "Apply Rebalancing \u0026 Generate Schedule"
+                                       }
+                   },
     "physicalResource":  {
-                             "registeredPhysicalResources":  "Regisztrált fizikai erőforrások",
+                             "deactivation":  {
+                                                  "title":  "Fizikai erőforrás letiltása",
+                                                  "message":  "Biztosan letiltja ezt a fizikai erőforrást? Ez a művelet nem vonható vissza.",
+                                                  "successMessage":  "A fizikai erőforrás sikeresen le lett tiltva.",
+                                                  "errorMessage":  "Hiba történt a fizikai erőforrás letiltása közben. Kérjük, próbálja újra."
+                                              },
                              "tabs":  {
                                           "dashboard":  "Fizikai erőforrások panel",
                                           "view_dashboard":  "Fizikai erőforrások megtekintése",
@@ -440,15 +559,9 @@
                              "actions":  {
                                              "deactivate":  "Fizikai erőforrás letiltása"
                                          },
-                             "deactivation":  {
-                                                  "title":  "Fizikai erőforrás letiltása",
-                                                  "message":  "Biztosan letiltja ezt a fizikai erőforrást? Ez a művelet nem vonható vissza.",
-                                                  "successMessage":  "A fizikai erőforrás sikeresen le lett tiltva.",
-                                                  "errorMessage":  "Hiba történt a fizikai erőforrás letiltása közben. Kérjük, próbálja újra."
-                                              }
+                             "registeredPhysicalResources":  "Regisztrált fizikai erőforrások"
                          },
     "storageArea":  {
-                        "registeredStorageAreas":  "Regisztrált tárolóterületek",
                         "tabs":  {
                                      "dashboard":  "Tárolási területek panel",
                                      "view_dashboard":  "Tárolási területek megtekintése",
@@ -457,6 +570,9 @@
                                      "view":  "Tárolási terület megtekintése",
                                      "edit":  "Tárolási terület szerkesztése"
                                  },
+                        "create":  {
+                                       "distance_meters":  "Távolság (méter)"
+                                   },
                         "infoTitle":  "Tárolási terület információ",
                         "title":  "Tárolási területek",
                         "subtitle":  {
@@ -478,9 +594,6 @@
                                         "serviced_docks_distance":  "Kiszolgált mólók távolsága",
                                         "no_registered_docks":  "Nincsenek regisztrált mólók"
                                     },
-                        "create":  {
-                                       "distance_meters":  "Távolság (méter)"
-                                   },
                         "fields":  {
                                        "nameCode":  {
                                                         "title":  "Név kódja",
@@ -506,46 +619,10 @@
                                                          "title":  "Fogláltság",
                                                          "placeholder":  "Jelenlegi foglaltság"
                                                      }
-                                   }
+                                   },
+                        "registeredStorageAreas":  "Regisztrált tárolóterületek"
                     },
-    "search":  {
-                   "languages":  "Nyelvek keresése..."
-               },
-    "expirationWarning":  {
-                              "messageOneMinute":  "A munkamenet 1 percen belül lejár.",
-                              "messageLessThanOneMinute":  "A munkamenet hamarosan lejár."
-                          },
-    "representative":  {
-                           "title":  "Képviselő",
-                           "select":  "Válasszon képviselőt"
-                       },
-    "scheduling":  {
-                       "title":  "Napi ütemterv kérése",
-                       "subtitle":  "Automatizált ütemező algoritmusunk elemzi az adott napra tervezett feladatokat.",
-                       "noVisits":  "A kiválasztott dátumra nincs tervezett hajólátogatás.",
-                       "visitsOnSelectedDay":  "Hajólátogatások a kiválasztott napon",
-                       "viewVisits":  "Feladatütemterv generálása",
-                       "generateTasksButton":  "Feladatütemterv generálása",
-                       "aboutAlgorithmButton":  "Az algoritmusról",
-                       "fields":  {
-                                      "algorithm":  {
-                                                        "title":  "Ütemező algoritmus",
-                                                        "placeholder":  "Válasszon ütemező algoritmust"
-                                                    },
-                                      "relatedDocks":  "Válasszon kapcsolódó mólót"
-                                  },
-                       "generateTasksModal":  {
-                                                  "title":  "További logisztika"
-                                              },
-                       "aboutAlgorithmModal":  {
-                                                   "title":  "Az algoritmusról",
-                                                   "content":  "A jelenlegi algoritmus figyelembe veszi a kiválasztott dátumra és mólóra ütemezett hajólátogatási értesítéseket. \nEzt követően ellenőrzi az STS daruk elérhetőségét az adott mólón, és a daru sebessége alapján határozza meg az egyes feladatok időtartamát.\nFigyelmen kívül hagyja a karbantartási vagy egyéb, nem rakodási/lerakodási tevékenységeket."
-                                               }
-                   },
     "notification":  {
-                         "registeredVesselVisitNotifications":  "Regisztrált hajólátogatási értesítések",
-                         "step":  "Lépés",
-                         "of":  "/",
                          "id":  "Értesítés azonosító",
                          "hazardous":  "Veszélyes",
                          "nonHazardous":  "Nem veszélyes",
@@ -558,11 +635,14 @@
                          "unknown":  "Ismeretlen",
                          "from":  "Ettől",
                          "to":  "Eddig",
+                         "step":  "Lépés",
+                         "of":  "/",
                          "tabs":  {
                                       "dashboard":  "Értesítések irányítópult",
                                       "search":  "Értesítések keresése",
                                       "edit":  "Értesítés szerkesztése",
                                       "create":  "Értesítés létrehozása",
+                                      "update":  "Update Notification",
                                       "makeDraft":  "Piszkozat értesítés létrehozása",
                                       "myNotifications":  "Saját értesítéseim",
                                       "review":  "Értesítések áttekintése",
@@ -578,6 +658,7 @@
                                           "dashboard":  "Hajólátogatási értesítések áttekintése",
                                           "search":  "Minden hajólátogatási értesítés kezelése és megtekintése",
                                           "create":  "Új hajólátogatási értesítés létrehozása",
+                                          "update":  "Update an existing vessel visit notification",
                                           "edit":  "Meglévő hajólátogatási értesítés szerkesztése",
                                           "review":  "Függő hajólátogatási értesítések áttekintése"
                                       },
@@ -589,6 +670,7 @@
                          "vesselTitle":  "Hajó információ",
                          "manifestInfo":  "Manifest információ",
                          "fields":  {
+                                        "selectVessel":  "Select corresponding vessel",
                                         "openLoadManifest":  "Rakodási manifest megnyitása",
                                         "openUnloadManifest":  "Kirakodási manifest megnyitása",
                                         "expectedArrival":  "Várható érkezés",
@@ -604,7 +686,9 @@
                                         "area":  "Terület",
                                         "container":  "Konténer",
                                         "crewMembers":  "Személyzet tagjai",
-                                        "status":  "Állapot"
+                                        "status":  "Állapot",
+                                        "isCargoHazardousQ":  "Is Cargo Hazardous?",
+                                        "cargoManifestInfo":  "About cargo manifest files"
                                     },
                          "timeline":  {
                                           "pending":  "Függőben",
@@ -631,7 +715,32 @@
                                                          "placeholder":  "Adja meg a döntés indokát"
                                                      },
                                           "status":  "Döntés állapota"
-                                      }
+                                      },
+                         "sections":  {
+                                          "vesselDetails":  "Látogatás információk",
+                                          "crewDetails":  "Legénység részletei",
+                                          "cargoRequirements":  "Rakomány követelmények",
+                                          "cargoContent":  "Rakomány tartalma"
+                                      },
+                         "about":  {
+                                       "text":  "A rakománymanifeszt fájloknak (jelenleg) európai szabványos CSV formátumban kell lenniük. A CSV fájl minden sora egy rakománytételt jelent a következő oszlopokkal:",
+                                       "bay":  "Rekesz (szám)",
+                                       "row":  "Sor (szám)",
+                                       "tier":  "Szint (szám)",
+                                       "area":  "Terület kód (honnan/hová)",
+                                       "containerNumber":  "Konténer szám (szöveg)",
+                                       "conatinerType":  "Konténer típus (szám)",
+                                       "description":  "Leírás (szöveg)",
+                                       "containerTypes":  {
+                                                              "refrigeratedGoods":  "Hűtött áruk",
+                                                              "generalConsumerProducts":  "Általános fogyasztási cikkek",
+                                                              "electronics":  "Elektronika",
+                                                              "hazmat":  "Veszélyes anyagok",
+                                                              "oversizedIndustrialEquipment":  "Túlméretezett ipari berendezés",
+                                                              "other":  "Egyéb"
+                                                          }
+                                   },
+                         "registeredVesselVisitNotifications":  "Regisztrált hajólátogatási értesítések"
                      },
     "operationalWindow":  {
                               "title":  "Működési ablak",
@@ -647,386 +756,386 @@
                                              "shiftOverlap":  "Érvénytelen műszak. Átfedés vagy a befejezés korábbi, mint a kezdés."
                                          }
                           },
-    "about": {
-        "title": "A PorTiT-ről",
-        "privacy": {
-            "title": "Adatvédelmi irányelvek",
-            "lastUpdated": "Utoljára frissítve: {date}"
-        }
-    },
-    "operationPlan": {
-        "title": "Műveleti terv",
-        "dock": "Dokk",
-        "docks": "Dokkok",
-        "operations": "Műveletek",
-        "cranes": "Daruk",
-        "createdBy": "Létrehozta",
-        "createdAt": "Létrehozva",
-        "totalSchedules": "Összes ütemterv",
-        "vesselCount": "Hajók",
-        "plansOnDate": "Műveleti tervek a kiválasztott dátumon",
-        "noPlansOnDate": "Nincsenek műveleti tervek a kiválasztott dátumon",
-        "id": "Azonosító",
-        "vvn": "Hajólátogatási értesítés",
-        "for": "számára",
-        "details": "Részletek",
-        "totalOperations": "Összes művelet",
-        "algorithmUsed": "Használt algoritmus",
-        "ganttChart": "Gantt diagram",
-        "startTime": "Kezdési idő",
-        "endTime": "Befejezési idő",
-        "totalDuration": "Teljes időtartam",
-        "operation": "Művelet",
-        "duration": "Időtartam",
-        "resources": "Erőforrások",
-        "operationDetails": "Művelet részletei",
-        "operationNumber": "Művelet #{number}",
-        "notFound": "Műveleti terv nem található",
-        "operationType": {
-            "Unload": "Kirakodás",
-            "Load": "Berakodás"
-        },
-        "tabs": {
-            "unplannedVVNs": "Tervezetlen VVN-ek",
-            "search": "Tervek keresése",
-            "edit": "Terv szerkesztése",
-            "open": "Végrehajtás megnyitása"
-        },
-        "subtitle": {
-            "edit": "Műveleti terv részleteinek és ütemterv módosítása"
-        },
-        "unplannedVVNs": {
-            "description": "Hajólátogatási értesítések, amelyekhez még nincs hozzárendelve műveleti terv",
-            "noUnplanned": "Minden hajólátogatási értesítéshez hozzá van rendelve műveleti terv",
-            "foundMessage": "{vvnCount} VVN található tervek nélkül {dayCount} napban",
-            "regenerateAll": "Összes hiányzó terv újragenerálása",
-            "regenerateDay": "Tervek újragenerálása erre a napra",
-            "regenerateModalTitle": "Tervek újragenerálása {date} dátumra",
-            "warning": "Figyelmeztetés",
-            "warningMessage": "A tervek újragenerálása lecseréli az erre a napra vonatkozó összes meglévő műveleti tervet. Ez a művelet nem vonható vissza.",
-            "selectedDay": "Kiválasztott nap",
-            "confirmRegeneration": "Újragenerálás megerősítése",
-            "affectedDays": "Érintett napok",
-            "queueInfo": "Minden újragenerálási kérés külön sorba kerül. Az ütemezési sorból egyenként áttekintheti és elfogadhatja/elutasíthatja őket.",
-            "continue": "Folytatás",
-            "confirmRegenerationTitle": "Újragenerálás megerősítése",
-            "irreversibleAction": "Ez a művelet visszafordíthatatlan",
-            "overwriteWarning": "A műveleti tervek újragenerálása véglegesen felülírja a kiválasztott napokra vonatkozó összes meglévő tervet. Ez a művelet nem vonható vissza.",
-            "aboutToRegenerate": "Terveket fog újragenerálni",
-            "days": "napra",
-            "vesselVisitNotifications": "Hajólátogatási értesítések",
-            "using": "Használva",
-            "algorithm": "algoritmus",
-            "proceedQuestion": "Szeretné folytatni ezt a műveletet?",
-            "yesRegenerateAll": "Igen, mindent újragenerálok"
-        },
-        "algorithm": {
-            "optimal": "Optimális",
-            "greedy": "Mohó",
-            "genetic": "Genetikus",
-            "auto": "Automatikus"
-        },
-        "metrics": {
-            "title": "Mutatók",
-            "strategy": "Stratégia",
-            "totalDelay": "Teljes késés",
-            "computationTime": "Számítási idő",
-            "autoSelection": "Automatikus algoritmus kiválasztás"
-        },
-        "infoTitle": "Műveleti terv információk",
-        "fields": {
-            "id": {
-                "title": "Terv azonosító"
-            },
-            "relatedVVN": {
-                "title": "Kapcsolódó VVN"
-            },
-            "dock": {
-                "title": "Dokk"
-            },
-            "operations": {
-                "title": "Műveletek"
-            }
-        },
-        "filters": {
-            "startDate": "Kezdő dátum -tól",
-            "endDate": "Záró dátum -ig"
-        },
-        "metadata": {
-            "title": "Metaadatok",
-            "createdBy": "Létrehozta",
-            "createdAt": "Létrehozva",
-            "algorithmUsed": "Használt algoritmus"
-        },
-        "schedule": {
-            "title": "Műveletek ütemterve",
-            "noOperations": "Nincsenek ütemezett műveletek"
-        }
-    },
-    "incidentType": {
-        "fields": {
-            "name": {
-                "title": "Név",
-                "placeholder": "Incidens típus neve"
-            },
-            "description": {
-                "title": "Leírás",
-                "placeholder": "Az incidens típus részletes leírása"
-            },
-            "severity": {
-                "title": "Súlyosság",
-                "placeholder": "Válasszon súlyossági szintet"
-            },
-            "subtypeOf": {
-                "title": "Altípusa",
-                "placeholder": "Válasszon szülő típust"
-            },
-            "subtypes": {
-                "title": "Altípusok",
-                "placeholder": "Válasszon gyermek típusokat"
-            }
-        },
-        "severity": {
-            "Minor": "Kisebb",
-            "Major": "Jelentős",
-            "Critical": "Kritikus"
-        },
-        "tabs": {
-            "dashboard": "Incidens típusok irányítópult",
-            "view_dashboard": "Incidens típusok megtekintése",
-            "search": "Incidens típusok keresése",
-            "create": "Incidens típus létrehozása",
-            "edit": "Incidens típus szerkesztése"
-        },
-        "generalFields": "Általános mezők",
-        "classification": "Osztályozás",
-        "title": "Incidensek",
-        "subtitle": {
-            "dashboard": "Incidens típusok statisztikáinak és tevékenységeinek áttekintése",
-            "search": "Összes regisztrált incidens típus kezelése és megtekintése",
-            "create": "Új incidens típus regisztrálása a rendszerben",
-            "edit": "Meglévő incidens típus módosítása a rendszerben"
-        },
-        "registeredIncidentTypes": "Regisztrált incidens típusok",
-        "incidentTypeInformation": "Incidens típus információk",
-        "parentType": "Szülő típus",
-        "confirmDelete": "Törlés megerősítése",
-        "confirmDeleteMessage": "Biztosan törölni szeretné ezt az incidens típust?",
-        "failedToDelete": "Az incidens típus törlése sikertelen"
-    },
-    "taskCategory": {
-        "fields": {
-            "name": {
-                "title": "Név",
-                "placeholder": "Feladat kategória neve"
-            },
-            "category": {
-                "title": "Kategória",
-                "placeholder": "Kategória kód"
-            },
-            "description": {
-                "title": "Leírás",
-                "placeholder": "Feladat kategória leírása"
-            }
-        },
-        "tabs": {
-            "dashboard": "Feladat kategóriák irányítópult",
-            "search": "Feladat kategóriák keresése",
-            "create": "Feladat kategória létrehozása",
-            "edit": "Feladat kategória szerkesztése",
-            "view_dashboard": "Feladat kategóriák megtekintése"
-        },
-        "generalFields": "Általános mezők",
-        "title": "Feladatok",
-        "subtitle": {
-            "dashboard": "Feladat kategóriák statisztikáinak és tevékenységeinek áttekintése",
-            "search": "Összes regisztrált feladat kategória kezelése és megtekintése",
-            "create": "Új feladat kategória regisztrálása a rendszerben",
-            "edit": "Meglévő feladat kategória módosítása a rendszerben"
-        },
-        "taskCategoryInformation": "Feladat kategória információk",
-        "registeredTaskCategories": "Regisztrált feladat kategóriák"
-    },
-    "execution": {
-        "title": "Hajólátogatás végrehajtások",
-        "subtitle": {
-            "search": "Összes hajólátogatás végrehajtás kezelése és megtekintése",
-            "dashboard": "Hajólátogatás végrehajtások statisztikáinak és tevékenységeinek áttekintése"
-        },
-        "tabs": {
-            "dashboard": "Végrehajtások irányítópult",
-            "search": "Végrehajtások keresése",
-            "view_dashboard": "Végrehajtások megtekintése",
-            "update": "Végrehajtás frissítése",
-            "view": "Végrehajtás megtekintése",
-            "table": "Táblázat megtekintése",
-            "cards": "Kártyák megtekintése"
-        },
-        "fields": {
-            "code": "Kód",
-            "relatedVVN": "Kapcsolódik",
-            "status": "Állapot",
-            "createdBy": "Létrehozta",
-            "dateOpen": "Megnyitás dátuma",
-            "dateClosed": "Lezárás dátuma",
-            "relatedVesselVisit": "Kapcsolódó hajólátogatás",
-            "dock": "Kikötő dokk",
-            "berthTime": "Kikötési idő",
-            "operations": "Műveletek"
-        },
-        "filters": {
-            "startDate": "Kezdő dátum",
-            "endDate": "Záró dátum",
-            "relatedVVN": "Hajólátogatási értesítés",
-            "status": "Állapot"
-        },
-        "metrics": {
-            "totalOperations": "Összes művelet",
-            "completedOperations": "Előrehaladás",
-            "turnaroundTime": "Fordulási idő",
-            "berthOccupancy": "Dokk kihasználtság"
-        },
-        "status": {
-            "pending": "Függőben",
-            "started": "Elindítva",
-            "delayed": "Késik",
-            "completed": "Befejezve"
-        },
-        "view_resources": "Erőforrások megtekintése",
-        "infoTitle": "Végrehajtás információk",
-        "operationsTitle": "Műveletek",
-        "noOperations": "Nincsenek elérhető műveletek",
-        "startOperation": "Művelet indítása",
-        "completeOperation": "Művelet befejezése",
-        "addOperation": "Művelet hozzáadása",
-        "addOperationDescription": "Új művelet hozzáadása az idővonalon",
-        "confirmStartOperation": "Biztosan el szeretné indítani ezt a műveletet?",
-        "confirmCompleteOperation": "Biztosan be szeretné fejezni ezt a műveletet?",
-        "berthOperation": {
-            "button": "Kikötési adatok szerkesztése",
-            "title": "Kikötési művelet",
-            "description": "Szerkessze a dokkot és az időt ehhez a hajólátogatás végrehajtáshoz.",
-            "dock": "Kikötő dokk",
-            "dockPlaceholder": "Válasszon dokkot",
-            "berthTime": "Kikötési idő",
-            "differentThanPlanned": "A kiválasztott dokk eltér a tervezettől."
-        }
-    },
-    "incident": {
-        "tabs": {
-            "dashboard": "Incidensek irányítópult",
-            "create": "Incidens létrehozása",
-            "search": "Incidensek keresése",
-            "active": "Aktív incidensek",
-            "view": "Incidens megtekintése",
-            "edit": "Incidens szerkesztése"
-        },
-        "subtitle": {
-            "create": "Új incidens jelentése a rendszerben",
-            "search": "Meglévő incidensek keresése és szűrése",
-            "active": "Aktív incidensek megtekintése és kezelése"
-        },
-        "generalFields": "Általános információk",
-        "classification": "Osztályozás",
-        "fields": {
-            "bid": {
-                "title": "Incidens azonosító"
-            },
-            "type": {
-                "title": "Incidens típus",
-                "placeholder": "Válasszon incidens típust"
-            },
-            "startTime": {
-                "title": "Kezdési idő",
-                "placeholder": "Mikor kezdődött az incidens?"
-            },
-            "endTime": {
-                "title": "Befejezési idő",
-                "placeholder": "Mikor ért véget az incidens?"
-            },
-            "severity": {
-                "title": "Súlyosság",
-                "placeholder": "Válasszon súlyossági szintet",
-                "options": {
-                    "minor": "Kisebb",
-                    "major": "Jelentős",
-                    "critical": "Kritikus"
-                }
-            },
-            "description": {
-                "title": "Leírás",
-                "placeholder": "Írja le részletesen az incidenst"
-            },
-            "createdBy": {
-                "title": "Létrehozta"
-            },
-            "affectedVVECodes": {
-                "title": "Érintett VVE-k",
-                "placeholder": "Adja meg az érintett VVE-ket"
-            },
-            "vveCode": {
-                "title": "VVE kód"
-            },
-            "status": {
-                "title": "Állapot",
-                "options": {
-                    "active": "Aktív",
-                    "resolved": "Megoldva"
-                }
-            },
-            "filterStartTime": {
-                "title": "Kezdő dátum -tól"
-            },
-            "filterEndTime": {
-                "title": "Kezdő dátum -ig"
-            },
-            "duration": {
-                "title": "Időtartam"
-            }
-        },
-        "severity": {
-            "Minor": "Kisebb",
-            "Major": "Jelentős",
-            "Critical": "Kritikus"
-        },
-        "status": {
-            "active": "Aktív",
-            "resolved": "Megoldva"
-        },
-        "ongoing": "Folyamatban",
-        "filters": {
-            "onlyActive": "Csak aktívak",
-            "onlyMine": "Csak sajátom"
-        },
-        "actions": {
-            "view": "Részletek megtekintése",
-            "edit": "Incidens szerkesztése",
-            "resolve": "Incidens megoldása",
-            "delete": "Incidens törlése"
-        },
-        "notifications": {
-            "createSuccess": "Incidens sikeresen létrehozva",
-            "createFailed": "Incidens létrehozása sikertelen",
-            "updateSuccess": "Incidens sikeresen frissítve",
-            "updateFailed": "Incidens frissítése sikertelen",
-            "resolveSuccess": "Incidens sikeresen megoldva",
-            "resolveFailed": "Incidens megoldása sikertelen",
-            "deleteSuccess": "Incidens sikeresen törölve",
-            "deleteFailed": "Incidens törlése sikertelen"
-        },
-        "table": {
-            "empty": "Nem találhatók incidensek"
-        },
-        "active": {
-            "title": "Aktív incidensek",
-            "subtitle": "Folyamatban lévő incidensek megtekintése és kezelése"
-        },
-        "infoTitle": "Incidens részletei",
-        "closeDialog": {
-            "title": "Incidens megoldása",
-            "message": "Mikor oldódott meg az incidens?",
-            "confirm": "Igen, zárja be ezt az incidenst",
-            "cancel": "Mégse"
-        }
-    }
+    "about":  {
+                  "title":  "A PorTiT-ről",
+                  "privacy":  {
+                                  "title":  "Adatvédelmi irányelvek",
+                                  "lastUpdated":  "Utoljára frissítve: {date}"
+                              }
+              },
+    "operationPlan":  {
+                          "title":  "Műveleti terv",
+                          "dock":  "Dokk",
+                          "docks":  "Dokkok",
+                          "operations":  "Műveletek",
+                          "cranes":  "Daruk",
+                          "createdBy":  "Létrehozta",
+                          "createdAt":  "Létrehozva",
+                          "totalSchedules":  "Összes ütemterv",
+                          "vesselCount":  "Hajók",
+                          "plansOnDate":  "Műveleti tervek a kiválasztott dátumon",
+                          "noPlansOnDate":  "Nincsenek műveleti tervek a kiválasztott dátumon",
+                          "id":  "Azonosító",
+                          "vvn":  "Hajólátogatási értesítés",
+                          "for":  "számára",
+                          "details":  "Részletek",
+                          "totalOperations":  "Összes művelet",
+                          "algorithmUsed":  "Használt algoritmus",
+                          "ganttChart":  "Gantt diagram",
+                          "startTime":  "Kezdési idő",
+                          "endTime":  "Befejezési idő",
+                          "totalDuration":  "Teljes időtartam",
+                          "operation":  "Művelet",
+                          "duration":  "Időtartam",
+                          "resources":  "Erőforrások",
+                          "operationDetails":  "Művelet részletei",
+                          "operationNumber":  "Művelet #{number}",
+                          "notFound":  "Műveleti terv nem található",
+                          "operationType":  {
+                                                "Unload":  "Kirakodás",
+                                                "Load":  "Berakodás"
+                                            },
+                          "tabs":  {
+                                       "unplannedVVNs":  "Tervezetlen VVN-ek",
+                                       "search":  "Tervek keresése",
+                                       "edit":  "Terv szerkesztése",
+                                       "open":  "Végrehajtás megnyitása"
+                                   },
+                          "subtitle":  {
+                                           "edit":  "Műveleti terv részleteinek és ütemterv módosítása"
+                                       },
+                          "unplannedVVNs":  {
+                                                "description":  "Hajólátogatási értesítések, amelyekhez még nincs hozzárendelve műveleti terv",
+                                                "noUnplanned":  "Minden hajólátogatási értesítéshez hozzá van rendelve műveleti terv",
+                                                "foundMessage":  "{vvnCount} VVN található tervek nélkül {dayCount} napban",
+                                                "regenerateAll":  "Összes hiányzó terv újragenerálása",
+                                                "regenerateDay":  "Tervek újragenerálása erre a napra",
+                                                "regenerateModalTitle":  "Tervek újragenerálása {date} dátumra",
+                                                "warning":  "Figyelmeztetés",
+                                                "warningMessage":  "A tervek újragenerálása lecseréli az erre a napra vonatkozó összes meglévő műveleti tervet. Ez a művelet nem vonható vissza.",
+                                                "selectedDay":  "Kiválasztott nap",
+                                                "confirmRegeneration":  "Újragenerálás megerősítése",
+                                                "affectedDays":  "Érintett napok",
+                                                "queueInfo":  "Minden újragenerálási kérés külön sorba kerül. Az ütemezési sorból egyenként áttekintheti és elfogadhatja/elutasíthatja őket.",
+                                                "continue":  "Folytatás",
+                                                "confirmRegenerationTitle":  "Újragenerálás megerősítése",
+                                                "irreversibleAction":  "Ez a művelet visszafordíthatatlan",
+                                                "overwriteWarning":  "A műveleti tervek újragenerálása véglegesen felülírja a kiválasztott napokra vonatkozó összes meglévő tervet. Ez a művelet nem vonható vissza.",
+                                                "aboutToRegenerate":  "Terveket fog újragenerálni",
+                                                "days":  "napra",
+                                                "vesselVisitNotifications":  "Hajólátogatási értesítések",
+                                                "using":  "Használva",
+                                                "algorithm":  "algoritmus",
+                                                "proceedQuestion":  "Szeretné folytatni ezt a műveletet?",
+                                                "yesRegenerateAll":  "Igen, mindent újragenerálok"
+                                            },
+                          "algorithm":  {
+                                            "optimal":  "Optimális",
+                                            "greedy":  "Mohó",
+                                            "genetic":  "Genetikus",
+                                            "auto":  "Automatikus"
+                                        },
+                          "metrics":  {
+                                          "title":  "Mutatók",
+                                          "strategy":  "Stratégia",
+                                          "totalDelay":  "Teljes késés",
+                                          "computationTime":  "Számítási idő",
+                                          "autoSelection":  "Automatikus algoritmus kiválasztás"
+                                      },
+                          "infoTitle":  "Műveleti terv információk",
+                          "fields":  {
+                                         "id":  {
+                                                    "title":  "Terv azonosító"
+                                                },
+                                         "relatedVVN":  {
+                                                            "title":  "Kapcsolódó VVN"
+                                                        },
+                                         "dock":  {
+                                                      "title":  "Dokk"
+                                                  },
+                                         "operations":  {
+                                                            "title":  "Műveletek"
+                                                        }
+                                     },
+                          "filters":  {
+                                          "startDate":  "Kezdő dátum -tól",
+                                          "endDate":  "Záró dátum -ig"
+                                      },
+                          "metadata":  {
+                                           "title":  "Metaadatok",
+                                           "createdBy":  "Létrehozta",
+                                           "createdAt":  "Létrehozva",
+                                           "algorithmUsed":  "Használt algoritmus"
+                                       },
+                          "schedule":  {
+                                           "title":  "Műveletek ütemterve",
+                                           "noOperations":  "Nincsenek ütemezett műveletek"
+                                       }
+                      },
+    "incidentType":  {
+                         "fields":  {
+                                        "name":  {
+                                                     "title":  "Név",
+                                                     "placeholder":  "Incidens típus neve"
+                                                 },
+                                        "description":  {
+                                                            "title":  "Leírás",
+                                                            "placeholder":  "Az incidens típus részletes leírása"
+                                                        },
+                                        "severity":  {
+                                                         "title":  "Súlyosság",
+                                                         "placeholder":  "Válasszon súlyossági szintet"
+                                                     },
+                                        "subtypeOf":  {
+                                                          "title":  "Altípusa",
+                                                          "placeholder":  "Válasszon szülő típust"
+                                                      },
+                                        "subtypes":  {
+                                                         "title":  "Altípusok",
+                                                         "placeholder":  "Válasszon gyermek típusokat"
+                                                     }
+                                    },
+                         "severity":  {
+                                          "Minor":  "Kisebb",
+                                          "Major":  "Jelentős",
+                                          "Critical":  "Kritikus"
+                                      },
+                         "tabs":  {
+                                      "dashboard":  "Incidens típusok irányítópult",
+                                      "view_dashboard":  "Incidens típusok megtekintése",
+                                      "search":  "Incidens típusok keresése",
+                                      "create":  "Incidens típus létrehozása",
+                                      "edit":  "Incidens típus szerkesztése"
+                                  },
+                         "generalFields":  "Általános mezők",
+                         "classification":  "Osztályozás",
+                         "title":  "Incidensek",
+                         "subtitle":  {
+                                          "dashboard":  "Incidens típusok statisztikáinak és tevékenységeinek áttekintése",
+                                          "search":  "Összes regisztrált incidens típus kezelése és megtekintése",
+                                          "create":  "Új incidens típus regisztrálása a rendszerben",
+                                          "edit":  "Meglévő incidens típus módosítása a rendszerben"
+                                      },
+                         "registeredIncidentTypes":  "Regisztrált incidens típusok",
+                         "incidentTypeInformation":  "Incidens típus információk",
+                         "parentType":  "Szülő típus",
+                         "confirmDelete":  "Törlés megerősítése",
+                         "confirmDeleteMessage":  "Biztosan törölni szeretné ezt az incidens típust?",
+                         "failedToDelete":  "Az incidens típus törlése sikertelen"
+                     },
+    "taskCategory":  {
+                         "fields":  {
+                                        "name":  {
+                                                     "title":  "Név",
+                                                     "placeholder":  "Feladat kategória neve"
+                                                 },
+                                        "category":  {
+                                                         "title":  "Kategória",
+                                                         "placeholder":  "Kategória kód"
+                                                     },
+                                        "description":  {
+                                                            "title":  "Leírás",
+                                                            "placeholder":  "Feladat kategória leírása"
+                                                        }
+                                    },
+                         "tabs":  {
+                                      "dashboard":  "Feladat kategóriák irányítópult",
+                                      "search":  "Feladat kategóriák keresése",
+                                      "create":  "Feladat kategória létrehozása",
+                                      "edit":  "Feladat kategória szerkesztése",
+                                      "view_dashboard":  "Feladat kategóriák megtekintése"
+                                  },
+                         "generalFields":  "Általános mezők",
+                         "title":  "Feladatok",
+                         "subtitle":  {
+                                          "dashboard":  "Feladat kategóriák statisztikáinak és tevékenységeinek áttekintése",
+                                          "search":  "Összes regisztrált feladat kategória kezelése és megtekintése",
+                                          "create":  "Új feladat kategória regisztrálása a rendszerben",
+                                          "edit":  "Meglévő feladat kategória módosítása a rendszerben"
+                                      },
+                         "taskCategoryInformation":  "Feladat kategória információk",
+                         "registeredTaskCategories":  "Regisztrált feladat kategóriák"
+                     },
+    "execution":  {
+                      "title":  "Hajólátogatás végrehajtások",
+                      "subtitle":  {
+                                       "search":  "Összes hajólátogatás végrehajtás kezelése és megtekintése",
+                                       "dashboard":  "Hajólátogatás végrehajtások statisztikáinak és tevékenységeinek áttekintése"
+                                   },
+                      "tabs":  {
+                                   "dashboard":  "Végrehajtások irányítópult",
+                                   "search":  "Végrehajtások keresése",
+                                   "view_dashboard":  "Végrehajtások megtekintése",
+                                   "update":  "Végrehajtás frissítése",
+                                   "view":  "Végrehajtás megtekintése",
+                                   "table":  "Táblázat megtekintése",
+                                   "cards":  "Kártyák megtekintése"
+                               },
+                      "fields":  {
+                                     "code":  "Kód",
+                                     "relatedVVN":  "Kapcsolódik",
+                                     "status":  "Állapot",
+                                     "createdBy":  "Létrehozta",
+                                     "dateOpen":  "Megnyitás dátuma",
+                                     "dateClosed":  "Lezárás dátuma",
+                                     "relatedVesselVisit":  "Kapcsolódó hajólátogatás",
+                                     "dock":  "Kikötő dokk",
+                                     "berthTime":  "Kikötési idő",
+                                     "operations":  "Műveletek"
+                                 },
+                      "filters":  {
+                                      "startDate":  "Kezdő dátum",
+                                      "endDate":  "Záró dátum",
+                                      "relatedVVN":  "Hajólátogatási értesítés",
+                                      "status":  "Állapot"
+                                  },
+                      "metrics":  {
+                                      "totalOperations":  "Összes művelet",
+                                      "completedOperations":  "Előrehaladás",
+                                      "turnaroundTime":  "Fordulási idő",
+                                      "berthOccupancy":  "Dokk kihasználtság"
+                                  },
+                      "status":  {
+                                     "pending":  "Függőben",
+                                     "started":  "Elindítva",
+                                     "delayed":  "Késik",
+                                     "completed":  "Befejezve"
+                                 },
+                      "view_resources":  "Erőforrások megtekintése",
+                      "infoTitle":  "Végrehajtás információk",
+                      "operationsTitle":  "Műveletek",
+                      "noOperations":  "Nincsenek elérhető műveletek",
+                      "startOperation":  "Művelet indítása",
+                      "completeOperation":  "Művelet befejezése",
+                      "addOperation":  "Művelet hozzáadása",
+                      "addOperationDescription":  "Új művelet hozzáadása az idővonalon",
+                      "confirmStartOperation":  "Biztosan el szeretné indítani ezt a műveletet?",
+                      "confirmCompleteOperation":  "Biztosan be szeretné fejezni ezt a műveletet?",
+                      "berthOperation":  {
+                                             "button":  "Kikötési adatok szerkesztése",
+                                             "title":  "Kikötési művelet",
+                                             "description":  "Szerkessze a dokkot és az időt ehhez a hajólátogatás végrehajtáshoz.",
+                                             "dock":  "Kikötő dokk",
+                                             "dockPlaceholder":  "Válasszon dokkot",
+                                             "berthTime":  "Kikötési idő",
+                                             "differentThanPlanned":  "A kiválasztott dokk eltér a tervezettől."
+                                         }
+                  },
+    "incident":  {
+                     "tabs":  {
+                                  "dashboard":  "Incidensek irányítópult",
+                                  "create":  "Incidens létrehozása",
+                                  "search":  "Incidensek keresése",
+                                  "active":  "Aktív incidensek",
+                                  "view":  "Incidens megtekintése",
+                                  "edit":  "Incidens szerkesztése"
+                              },
+                     "subtitle":  {
+                                      "create":  "Új incidens jelentése a rendszerben",
+                                      "search":  "Meglévő incidensek keresése és szűrése",
+                                      "active":  "Aktív incidensek megtekintése és kezelése"
+                                  },
+                     "generalFields":  "Általános információk",
+                     "classification":  "Osztályozás",
+                     "fields":  {
+                                    "bid":  {
+                                                "title":  "Incidens azonosító"
+                                            },
+                                    "type":  {
+                                                 "title":  "Incidens típus",
+                                                 "placeholder":  "Válasszon incidens típust"
+                                             },
+                                    "startTime":  {
+                                                      "title":  "Kezdési idő",
+                                                      "placeholder":  "Mikor kezdődött az incidens?"
+                                                  },
+                                    "endTime":  {
+                                                    "title":  "Befejezési idő",
+                                                    "placeholder":  "Mikor ért véget az incidens?"
+                                                },
+                                    "severity":  {
+                                                     "title":  "Súlyosság",
+                                                     "placeholder":  "Válasszon súlyossági szintet",
+                                                     "options":  {
+                                                                     "minor":  "Kisebb",
+                                                                     "major":  "Jelentős",
+                                                                     "critical":  "Kritikus"
+                                                                 }
+                                                 },
+                                    "description":  {
+                                                        "title":  "Leírás",
+                                                        "placeholder":  "Írja le részletesen az incidenst"
+                                                    },
+                                    "createdBy":  {
+                                                      "title":  "Létrehozta"
+                                                  },
+                                    "affectedVVECodes":  {
+                                                             "title":  "Érintett VVE-k",
+                                                             "placeholder":  "Adja meg az érintett VVE-ket"
+                                                         },
+                                    "vveCode":  {
+                                                    "title":  "VVE kód"
+                                                },
+                                    "status":  {
+                                                   "title":  "Állapot",
+                                                   "options":  {
+                                                                   "active":  "Aktív",
+                                                                   "resolved":  "Megoldva"
+                                                               }
+                                               },
+                                    "filterStartTime":  {
+                                                            "title":  "Kezdő dátum -tól"
+                                                        },
+                                    "filterEndTime":  {
+                                                          "title":  "Kezdő dátum -ig"
+                                                      },
+                                    "duration":  {
+                                                     "title":  "Időtartam"
+                                                 }
+                                },
+                     "severity":  {
+                                      "Minor":  "Kisebb",
+                                      "Major":  "Jelentős",
+                                      "Critical":  "Kritikus"
+                                  },
+                     "status":  {
+                                    "active":  "Aktív",
+                                    "resolved":  "Megoldva"
+                                },
+                     "ongoing":  "Folyamatban",
+                     "filters":  {
+                                     "onlyActive":  "Csak aktívak",
+                                     "onlyMine":  "Csak sajátom"
+                                 },
+                     "actions":  {
+                                     "view":  "Részletek megtekintése",
+                                     "edit":  "Incidens szerkesztése",
+                                     "resolve":  "Incidens megoldása",
+                                     "delete":  "Incidens törlése"
+                                 },
+                     "notifications":  {
+                                           "createSuccess":  "Incidens sikeresen létrehozva",
+                                           "createFailed":  "Incidens létrehozása sikertelen",
+                                           "updateSuccess":  "Incidens sikeresen frissítve",
+                                           "updateFailed":  "Incidens frissítése sikertelen",
+                                           "resolveSuccess":  "Incidens sikeresen megoldva",
+                                           "resolveFailed":  "Incidens megoldása sikertelen",
+                                           "deleteSuccess":  "Incidens sikeresen törölve",
+                                           "deleteFailed":  "Incidens törlése sikertelen"
+                                       },
+                     "table":  {
+                                   "empty":  "Nem találhatók incidensek"
+                               },
+                     "active":  {
+                                    "title":  "Aktív incidensek",
+                                    "subtitle":  "Folyamatban lévő incidensek megtekintése és kezelése"
+                                },
+                     "infoTitle":  "Incidens részletei",
+                     "closeDialog":  {
+                                         "title":  "Incidens megoldása",
+                                         "message":  "Mikor oldódott meg az incidens?",
+                                         "confirm":  "Igen, zárja be ezt az incidenst",
+                                         "cancel":  "Mégse"
+                                     }
+                 }
 }

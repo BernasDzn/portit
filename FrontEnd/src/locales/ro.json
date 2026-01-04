@@ -1,1028 +1,1141 @@
 ﻿{
-    "common": {
-        "loading": "Se încarcă...",
-        "noData": "Nu există date disponibile",
-        "statistics": "Statistici",
-        "yes": "Da",
-        "no": "Nu",
-        "weekDay": "Ziua săptămânii",
-        "days": {
-            "sunday": "Duminică",
-            "monday": "Luni",
-            "tuesday": "Marți",
-            "wednesday": "Miercuri",
-            "thursday": "Joi",
-            "friday": "Vineri",
-            "saturday": "Sâmbătă"
-        },
-        "number": "Număr"
-    },
-    "buttons": {
-        "save": "Salvează",
-        "cancel": "Anulează",
-        "delete": "È˜terge",
-        "edit": "Editează",
-        "create": "Creează",
-        "search": "Caută",
-        "select": "Selectează",
-        "activate": "Activează",
-        "deactivate": "Dezactivează",
-        "filter": {
-            "title": "Filtre",
-            "add": "Filtrează",
-            "clear": "Curăță filtrele"
-        },
-        "pagination": {
-            "previous": "Anterior",
-            "next": "Următorul"
-        },
-        "login": "Autentificare",
-        "goBackToLogin": "Întoarce-te la autentificare",
-        "logout": "Deconectare",
-        "generate": "Generează",
-        "close": "Închide",
-        "add": "Adaugă",
-        "review": "Revizuiește",
-        "ok": "OK",
-        "downloadSample": "Descarcă exemplu",
-        "seeMore": "Vezi mai multe"
-    },
-    "unsavedChanges": {
-        "title": "Renunți la modificări?",
-        "message": "Ai modificări nesalvate. Ești sigur că vrei să părăsești această pagină și să renunți la modificări?",
-        "confirm": "Renunță",
-        "cancel": "Continuă editarea"
-    },
-    "dashboard": {
-        "sidebarTitle": "Tablou de bord",
-        "title": "PortIT Tablou de bord",
-        "subtitle": "Prezentare generală a sistemului PortIT",
-        "3DModel": {
-            "title": "Vizualizare 3D port",
-            "description": "Vizualizați o reprezentare 3D interactivă a întregii facilități portuare. Monitorizați ocuparea docurilor, pozițiile navelor, zonele de depozitare și resursele în timp real.",
-            "open": "Deschide model 3D"
-        },
-        "welcome": "Bine ai revenit, [name]!",
-        "SAOR": {
-            "subtitle": "Overview of the shipping agent\u0027s operations",
-            "pendingNotifications": "Notificări în așteptare",
-            "recent": "Notificări recente despre vizitele navelor",
-            "recentReview": "Notificări de vizită a navelor care necesită revizuire",
-            "noRecent": "Nu există notificări recente"
-        }
-    },
-    "admin": {
-        "sidebarTitle": "Admin",
-        "title": "Tablou administrativ",
-        "subtitle": "Prezentare administrativă și management",
-        "userManagement": {
-            "title": "Gestionare utilizatori",
-            "subtitle": "Gestionați utilizatorii sistemului, rolurile și permisiunile."
-        },
-        "auditLogs": {
-            "title": "Jurnale de audit",
-            "subtitle": "Vizualizați și monitorizați jurnalele de activitate ale sistemului."
-        }
-    },
-    "user": {
-        "registeredUsers": "Utilizatori înregistrați",
-        "fields": {
-            "email": {
-                "title": "Email",
-                "placeholder": "email@mail.com"
-            },
-            "role": {
-                "title": "Rol",
-                "placeholder": "Selectează rolul utilizatorului",
-                "options": {
-                    "admin": "Administrator",
-                    "saoRep": "Reprezentant SAO",
-                    "pao": "Ofițer Autoritate Portuară",
-                    "logisticsOperator": "Operator logistic"
-                }
-            },
-            "isActive": {
-                "title": "Activ",
-                "options": {
-                    "active": "Da",
-                    "inactive": "Nu"
-                }
-            }
-        },
-        "tabs": {
-            "dashboard": "Tablou utilizator",
-            "create": "Creează utilizator",
-            "view": "Vizualizează utilizatori",
-            "search": "Caută utilizatori"
-        },
-        "infoTitle": "Detalii utilizator",
-        "title": "Utilizatori",
-        "subtitle": {
-            "dashboard": "Prezentare generală și management utilizatori",
-            "create": "Înregistrează un utilizator nou în sistem",
-            "view": "Vizualizează și gestionează utilizatorii existenți"
-        }
-    },
-    "physicalCharacteristics": {
-        "title": "Caracteristici fizice (m)",
-        "length": {
-            "title": "Lungime",
-            "placeholder": "Lungime în metri"
-        },
-        "depth": {
-            "title": "Adâncime",
-            "placeholder": "Adâncime în metri"
-        },
-        "draft": {
-            "title": "Pescaj",
-            "placeholder": "Pescaj în metri"
-        }
-    },
-    "dock": {
-        "fields": {
-            "code": {
-                "title": "Cod",
-                "placeholder": "Cod doc"
-            },
-            "name": {
-                "title": "Nume",
-                "placeholder": "Numele docului"
-            },
-            "location": {
-                "title": "Locație",
-                "placeholder": "Locația docului"
-            },
-            "supportedVesselTypes": {
-                "title": "Tipuri de nave suportate",
-                "vesselTypes": {
-                    "title": "Tipuri de nave",
-                    "placeholder": "Selectează tipuri de nave"
+    "common":  {
+                   "loading":  "Se încarcă...",
+                   "noData":  "Nu există date disponibile",
+                   "statistics":  "Statistici",
+                   "yes":  "Da",
+                   "no":  "Nu",
+                   "weekDay":  "Ziua săptămânii",
+                   "days":  {
+                                "sunday":  "Duminică",
+                                "monday":  "Luni",
+                                "tuesday":  "Marți",
+                                "wednesday":  "Miercuri",
+                                "thursday":  "Joi",
+                                "friday":  "Vineri",
+                                "saturday":  "Sâmbătă"
+                            },
+                   "number":  "Număr",
+                   "actions":  "Acțiuni",
+                   "none":  "Niciunul"
+               },
+    "buttons":  {
+                    "save":  "Salvează",
+                    "cancel":  "Anulează",
+                    "delete":  "È˜terge",
+                    "edit":  "Editează",
+                    "create":  "Creează",
+                    "search":  "Caută",
+                    "select":  "Selectează",
+                    "activate":  "Activează",
+                    "deactivate":  "Dezactivează",
+                    "generate":  "Generează",
+                    "close":  "Închide",
+                    "add":  "Adaugă",
+                    "review":  "Revizuiește",
+                    "filter":  {
+                                   "title":  "Filtre",
+                                   "add":  "Filtrează",
+                                   "clear":  "Curăță filtrele"
+                               },
+                    "pagination":  {
+                                       "previous":  "Anterior",
+                                       "next":  "Următorul"
+                                   },
+                    "login":  "Autentificare",
+                    "goBackToLogin":  "Întoarce-te la autentificare",
+                    "logout":  "Deconectare",
+                    "seeMore":  "Vezi mai multe",
+                    "ok":  "OK",
+                    "downloadSample":  "Descarcă exemplu"
                 },
-                "vesselType": "Tip navă"
-            }
-        },
-        "tabs": {
-            "dashboard": "Tablou docuri",
-            "view_dashboard": "Vizualizează docuri",
-            "search": "Caută docuri",
-            "create": "Creează doc",
-            "view": "Vizualizează doc",
-            "edit": "Editează doc"
-        },
-        "generalFields": "Câmpuri generale",
-        "infoTitle": "Informații doc",
-        "title": "Docuri",
-        "subtitle": {
-            "dashboard": "Prezentare statistică a docurilor și activităților",
-            "search": "Gestionează și vizualizează toate docurile înregistrate",
-            "create": "Înregistrează un doc nou în sistem",
-            "edit": "Editează un doc existent în sistem"
-        },
-        "registeredDocks": "Docuri înregistrate"
-    },
-    "vesselType": {
-        "fields": {
-            "name": {
-                "title": "Nume",
-                "placeholder": "Numele tipului de navă"
-            },
-            "description": {
-                "title": "Descriere",
-                "placeholder": "Descrierea tipului de navă"
-            },
-            "capacity": {
-                "title": "Capacitate",
-                "placeholder": "Capacitatea de containere în TEU"
-            },
-            "containerCapacity": {
-                "title": "Capacitate containere (TEU)",
-                "maxNumberOfRows": {
-                    "title": "Nr. maxim de rânduri",
-                    "placeholder": "Max rânduri în TEU"
-                },
-                "maxNumberOfBays": {
-                    "title": "Nr. maxim de benzi",
-                    "placeholder": "Max benzi în TEU"
-                },
-                "maxNumberOfTiers": {
-                    "title": "Nr. maxim de niveluri",
-                    "placeholder": "Max niveluri în TEU"
-                }
-            }
-        },
-        "generalFields": "Câmpuri generale",
-        "tabs": {
-            "dashboard": "Tablou tipuri nave",
-            "view_dashboard": "Vizualizează tipuri nave",
-            "search": "Caută tipuri nave",
-            "create": "Creează tip navă",
-            "view": "Vizualizează tip navă",
-            "edit": "Editează tip navă"
-        },
-        "infoTitle": "Informații tip navă",
-        "title": "Tipuri nave",
-        "subtitle": {
-            "dashboard": "Prezentare generală a statisticilor și activităților pe tipuri de nave",
-            "search": "Gestionează și vizualizează toate tipurile de nave înregistrate",
-            "create": "Înregistrează un tip de navă nou în sistem",
-            "edit": "Editează un tip de navă existent în sistem"
-        },
-        "registeredVesselTypes": "Tipuri nave înregistrate"
-    },
-    "vessel": {
-        "fields": {
-            "name": {
-                "title": "Nume",
-                "placeholder": "Numele navei"
-            },
-            "imoNumber": {
-                "title": "Număr IMO",
-                "placeholder": "Numărul IMO al navei"
-            },
-            "owner": {
-                "title": "Proprietar",
-                "placeholder": "Organizația proprietară"
-            },
-            "vesselType": {
-                "title": "Tip navă",
-                "placeholder": "Selectează tip navă"
-            },
-            "taxNumber": {
-                "title": "Număr fiscal"
-            }
-        },
-        "infoTitle": "Informații navă",
-        "physicalCharacteristicsTitle": "Caracteristici fizice",
-        "tabs": {
-            "dashboard": "Tablou nave",
-            "view_dashboard": "Vizualizează nave",
-            "search": "Caută nave",
-            "create": "Creează navă",
-            "view": "Vizualizează navă",
-            "edit": "Editează navă"
-        },
-        "title": "Nave",
-        "subtitle": {
-            "dashboard": "Prezentare generală a statisticilor și activităților navelor",
-            "search": "Gestionează și vizualizează toate navele înregistrate",
-            "create": "Înregistrează o navă nouă în sistem",
-            "edit": "Editează o navă existentă în sistem"
-        },
-        "ownedBy": "Deținut de",
-        "registeredVessels": "Nave înregistrate"
-    },
-    "staff": {
-        "registeredStaffMembers": "Membri ai personalului înregistrați",
-        "fields": {
-            "mechanographicNumber": {
-                "title": "Număr mecanografic",
-                "placeholder": "Număr mecanografic"
-            },
-            "name": {
-                "title": "Nume",
-                "placeholder": "Numele personalului"
-            },
-            "email": {
-                "title": "Email",
-                "placeholder": "Adresa de email"
-            },
-            "phoneNumber": {
-                "title": "Număr de telefon",
-                "placeholder": "Număr de telefon"
-            },
-            "qualifications": {
-                "title": "Calificări",
-                "placeholder": "Selectează calificări"
-            },
-            "status": {
-                "title": "Stare",
-                "options": {
-                    "available": "Disponibil",
-                    "unavailable": "Indisponibil",
-                    "temporarilyReassigned": "Realocat temporar"
-                }
-            },
-            "operationalWindow": "Operational Window"
-        },
-        "tabs": {
-            "dashboard": "Tablou personal",
-            "view_dashboard": "Vizualizează personalul",
-            "search": "Caută personal",
-            "create": "Creează membru personal",
-            "view": "Vizualizează membru personal",
-            "edit": "Editează membru personal"
-        },
-        "infoTitle": "Informații membru personal",
-        "title": "Personal",
-        "subtitle": {
-            "search": "Gestionează și vizualizează tot personalul înregistrat",
-            "dashboard": "Prezentare generală a statisticilor și activităților personalului",
-            "create": "Înregistrează un nou membru al personalului în sistem",
-            "view": "Vizualizează detalii personale",
-            "edit": "Editează un membru al personalului existent în sistem"
-        },
-        "deactivation": {
-            "title": "Deactivate Staff Member",
-            "message": "Are you sure you want to deactivate this staff member? You can activate them again later.",
-            "successMessage": "Staff member has been successfully deactivated.",
-            "errorMessage": "An error occurred while trying to deactivate the staff member. Please try again."
-        }
-    },
-    "qualification": {
-        "tabs": {
-            "dashboard": "Tablou calificări",
-            "view_dashboard": "Vizualizează calificări",
-            "search": "Caută calificări",
-            "create": "Creează calificare",
-            "view": "Vizualizează calificare",
-            "edit": "Editează calificare"
-        },
-        "infoTitle": "Informații calificare",
-        "title": "Calificări",
-        "subtitle": {
-            "search": "Gestionează și vizualizează toate calificările înregistrate",
-            "dashboard": "Prezentare generală a statisticilor și activităților calificărilor",
-            "create": "Înregistrează o calificare nouă în sistem",
-            "edit": "Editează o calificare existentă în sistem",
-            "view": "Vizualizează detaliile calificării"
-        },
-        "fields": {
-            "idCode": {
-                "title": "Codul calificării",
-                "placeholder": "Cod calificare"
-            },
-            "qualificationName": {
-                "title": "Nume calificare",
-                "placeholder": "Nume calificare"
-            }
-        }
-    },
-    "physicalResource": {
-        "tabs": {
-            "dashboard": "Tablou resurse fizice",
-            "view_dashboard": "Vizualizează resurse fizice",
-            "search": "Caută resurse fizice",
-            "create": "Creează resursă fizică",
-            "view": "Vizualizează resursă fizică",
-            "edit": "Editează resursă fizică"
-        },
-        "infoTitle": "Informații resursă fizică",
-        "title": "Resurse fizice",
-        "subtitle": {
-            "search": "Gestionează și vizualizează toate resursele fizice înregistrate",
-            "dashboard": "Panou de control pentru resurse fizice",
-            "view_dashboard": "Vizualizează resurse fizice",
-            "create": "Înregistrează o nouă resursă fizică în sistem",
-            "view": "Vizualizează detaliile resursei fizice",
-            "edit": "Editează o resursă fizică existentă în sistem"
-        },
-        "generalFields": "Câmpuri generale",
-        "specificFields": "Câmpuri specifice",
-        "fields": {
-            "code": {
-                "title": "Cod",
-                "placeholder": "Cod resursă"
-            },
-            "description": {
-                "title": "Descriere",
-                "placeholder": "Descriere resursă"
-            },
-            "status": {
-                "title": "Stare",
-                "placeholder": "Selectați starea resursei",
-                "options": {
-                    "available": "Disponibil",
-                    "maintenance": "În mentenanță",
-                    "outOfService": "În afara serviciului"
-                }
-            },
-            "qualifications": {
-                "title": "Calificări necesare",
-                "placeholder": "Calificările necesare pentru operarea acestei resurse"
-            },
-            "setupTime": {
-                "title": "Timp de configurare (minute)",
-                "placeholder": "Timp de configurare"
-            },
-            "servingDocks": {
-                "title": "Docuri deservite",
-                "placeholder": "Selectați docurile deservite"
-            },
-            "liftingCapacity": {
-                "title": "Capacitate de ridicare (kgs)",
-                "placeholder": "Capacitate de ridicare"
-            },
-            "containersPerHour": {
-                "title": "Containere pe oră",
-                "placeholder": "Containere pe oră"
-            },
-            "maxLoadCapacity": {
-                "title": "Capacitatea maximă de încărcare (kg)",
-                "placeholder": "Capacitatea maximă de încărcare"
-            },
-            "averageSpeed": {
-                "title": "Viteza medie (km/h)",
-                "placeholder": "Viteza medie"
-            },
-            "containersPerTrip": {
-                "title": "Containere pe călătorie",
-                "placeholder": "Containere pe călătorie"
-            },
-            "type": {
-                "title": "Tip resursă",
-                "options": {
-                    "stsCrane": "Macara STS",
-                    "yardGantry": "Macara portică pentru curte",
-                    "truck": "Camion"
-                }
-            }
-        },
-        "actions": {
-            "deactivate": "Dezactivează resursa fizică"
-        },
-        "deactivation": {
-            "title": "Deactivate Physical Resource",
-            "message": "Are you sure you want to deactivate this physical resource? You can activate it again later.",
-            "successMessage": "Physical Resource has been successfully deactivated.",
-            "errorMessage": "An error occurred while trying to deactivate the Physical Resource. Please try again."
-        }
-    },
-    "storageZonă": {
-        "tabs": {
-            "dashboard": "Tablou zone depozitare",
-            "view_dashboard": "Vizualizează zone depozitare",
-            "search": "Caută zone depozitare",
-            "create": "Creează zonă depozitare",
-            "view": "Vizualizează zonă depozitare",
-            "edit": "Editează zonă depozitare"
-        },
-        "infoTitle": "Informații zonă depozitare",
-        "title": "Zone depozitare",
-        "subtitle": {
-            "search": "Gestionează și vizualizează toate zonele de depozitare înregistrate",
-            "dashboard": "Panou de control pentru toate zonele de depozitare",
-            "view_dashboard": "Vizualizează zone depozitare",
-            "create": "Înregistrează o nouă zonă de depozitare în sistem",
-            "view": "Vizualizează detaliile zonei de depozitare",
-            "edit": "Editează o zonă de depozitare existentă în sistem"
-        },
-        "printer": {
-            "docks_serviced": "docuri deservite",
-            "capacity_usage": "Utilizare capacitate",
-            "units": "unități",
-            "available": "disponibil",
-            "no_registered_distances": "Nici o distanță înregistrată",
-            "no_docks_serviced": "Niciun doc deservit",
-            "all_docks_serviced": "Toate docurile deservite",
-            "serviced_docks_distance": "Distanța până la docurile deservite",
-            "no_registered_docks": "Niciun doc înregistrat"
-        },
-        "create": {
-            "distance_meters": "Distanță (metri)"
-        },
-        "fields": {
-            "nameCode": {
-                "title": "Cod nume",
-                "placeholder": "Cod nume zonă depozitare"
-            },
-            "location": {
-                "title": "Location",
-                "placeholder": "Locația zonei de depozitare"
-            },
-            "type": {
-                "title": "Type",
-                "placeholder": "Select Storage Zonă type",
-                "options": {
-                    "yard": "Yard",
-                    "warehouse": "Warehouse"
-                }
-            },
-            "capacity": {
-                "title": "Capacity",
-                "placeholder": "Maximum capacity"
-            },
-            "occupancy": {
-                "title": "Occupancy",
-                "placeholder": "Current occupancy"
-            }
-        }
-    },
-    "search": {
-        "languages": "Caută limbi..."
-    },
-    "expirationWarning": {
-        "messageOneMinute": "Sesiunea ta va expira în 1 minut.",
-        "messageLessThanOneMinute": "Sesiunea ta este pe cale să expire."
-    },
-    "representative": {
-        "title": "Reprezentant",
-        "select": "Selectați un reprezentant"
-    },
-    "scheduling": {
-        "title": "Planificare zilnică",
-        "subtitle": "Folosește algoritmul nostru automat de planificare pentru a analiza sarcinile programate pentru o anumită zi.",
-        "noVisits": "Nu există vizite de nave programate pentru data selectată.",
-        "visitsOnSelectedDay": "Vizite de nave în data selectată",
-        "viewVisits": "Afișează planul de sarcini",
-        "generateTasksButton": "Generează planul de sarcini",
-        "aboutAlgorithmButton": "Despre algoritm",
-        "fields": {
-            "algorithm": {
-                "title": "Algoritm de planificare",
-                "placeholder": "Selectează algoritmul de planificare"
-            },
-            "relatedDocks": "Selectează cheiul aferent"
-        },
-        "generateTasksModal": {
-            "title": "Logistică suplimentară"
-        },
-        "aboutAlgorithmModal": {
-            "title": "Despre algoritm",
-            "content": "Algoritmul actual ia în considerare notificările de vizită ale navelor programate pentru data și cheiul selectate.\nApoi verifică disponibilitatea macaralelor STS pentru cheiul specificat și stabilește durata fiecărei operațiuni în funcție de viteza macaralei.\nSunt ignorate vizitele pentru mentenanță sau alte activități care nu implică încărcare/descărcare."
-        }
-    },
-    "notification": {
-        "id": "ID notificare",
-        "hazardous": "Marfă periculoasă",
-        "nonHazardous": "Marfă nepericuloasă",
-        "arrival": "Sosire",
-        "departure": "Plecare",
-        "specialRequirements": "Cerințe speciale",
-        "none": "Niciuna",
-        "crew": "Echipaj",
-        "captain": "Căpitan",
-        "unknown": "Necunoscut",
-        "from": "De la",
-        "to": "La",
-        "tabs": {
-            "dashboard": "Tablou notificări",
-            "search": "Caută notificări",
-            "edit": "Editează notificare",
-            "create": "Creează notificare",
-            "makeDraft": "Creează ciornă notificare",
-            "myNotifications": "Notificările mele",
-            "review": "Revizuiește notificări",
-            "general": "Listă generală",
-            "byDate": "Vizualizare calendar",
-            "submit": "Trimite notificare",
-            "delete": "Șterge notificare"
-        },
-        "eventsOnDate": "Evenimente la data selectată",
-        "noEventsOnDate": "Nu există evenimente la data selectată",
-        "title": "Notificări vizite navă",
-        "subtitle": {
-            "dashboard": "Prezentare notificări vizite navă",
-            "search": "Gestionează și vizualizează toate notificările de vizită navă",
-            "create": "Creează o nouă notificare de vizită navă",
-            "edit": "Editează o notificare de vizită navă existentă",
-            "review": "Revizuiește notificările în așteptare"
-        },
-        "errors": {
-            "noNotificationId": "Nu a fost furnizat ID de notificare"
-        },
-        "infoTitle": "Informații notificare",
-        "cargoTitle": "Informații marfă",
-        "vesselTitle": "Informații navă",
-        "manifestInfo": "Informații manifest",
-        "fields": {
-            "openLoadManifest": "Deschide manifest încărcare",
-            "openUnloadManifest": "Deschide manifest descărcare",
-            "expectedArrival": "Sosire preconizată",
-            "expectedDeparture": "Plecare preconizată",
-            "isCargoHazardous": "Marfă periculoasă",
-            "specialRequirements": "Cerințe speciale",
-            "captain": "Căpitan",
-            "totalCrewMembers": "Număr total membri echipaj",
-            "safetyOfficers": "Ofițeri de securitate",
-            "loadCargoManifest": "Manifest de încărcare",
-            "unloadCargoManifest": "Manifest de descărcare",
-            "position": "Poziție",
-            "area": "Zonă",
-            "container": "Container",
-            "crewMembers": "Membri echipaj",
-            "status": "Stare"
-        },
-        "timeline": {
-            "pending": "În așteptare",
-            "inProgress": "În desfășurare",
-            "completed": "Finalizat",
-            "submitted": "Trimis",
-            "accepted": "Acceptat",
-            "rejected": "Respins"
-        },
-        "filters": {
-            "expectedArrivalFrom": "Sosire preconizată de la",
-            "expectedArrivalTo": "Sosire preconizată până la",
-            "withReason": "Cu motiv",
-            "withDockAssigned": "Cu chei alocat"
-        },
-        "decision": {
-            "isFinal": "Este finală",
-            "assignedDock": {
-                "title": "Chei alocat",
-                "placeholder": "Selectează cheiul alocat"
-            },
-            "reason": {
-                "title": "Motiv",
-                "placeholder": "Furnizează motivul deciziei"
-            },
-            "status": "Stare decizie"
-        }
-    },
-    "operationalWindow": {
-        "title": "Fereastră operațională",
-        "printer": {
-            "addShift": "Adaugă tură",
-            "shifts": "Ture:",
-            "noShifts": "Fără ture.",
-            "startTime": "Ora de început",
-            "endTime": "Ora de sfârșit",
-            "weekDays": "Zilele săptămânii"
-        },
-        "errors": {
-            "shiftOverlap": "Tură invalidă. Suprapunere sau ora de sfârșit înainte de ora de început."
-        }
-    },
-    "about": {
-        "title": "Despre PorTiT",
-        "privacy": {
-            "title": "Politica de confidențialitate",
-            "lastUpdated": "Ultima actualizare: {date}"
-        }
-    },
-    "operationPlan": {
-        "title": "Plan operațional",
-        "dock": "Doc",
-        "docks": "Docuri",
-        "operations": "Operații",
-        "cranes": "Macarale",
-        "createdBy": "Creat de",
-        "createdAt": "Creat la",
-        "totalSchedules": "Total programe",
-        "vesselCount": "Nave",
-        "plansOnDate": "Planuri operaționale la data selectată",
-        "noPlansOnDate": "Niciun plan operațional la data selectată",
-        "id": "ID",
-        "vvn": "Notificare vizită navă",
-        "for": "pentru",
-        "details": "Detalii",
-        "totalOperations": "Total operații",
-        "algorithmUsed": "Algoritm utilizat",
-        "ganttChart": "Diagramă Gantt",
-        "startTime": "Ora de început",
-        "endTime": "Ora de sfârșit",
-        "totalDuration": "Durată totală",
-        "operation": "Operație",
-        "duration": "Durată",
-        "resources": "Resurse",
-        "operationDetails": "Detalii operație",
-        "operationNumber": "Operația #{number}",
-        "notFound": "Plan operațional negăsit",
-        "operationType": {
-            "Unload": "Descărcare",
-            "Load": "Încărcare"
-        },
-        "tabs": {
-            "unplannedVVNs": "VVN-uri neplanificate",
-            "search": "Căutare planuri",
-            "edit": "Editare plan",
-            "open": "Deschide execuție"
-        },
-        "subtitle": {
-            "edit": "Modifică detaliile planului operațional și programul"
-        },
-        "unplannedVVNs": {
-            "description": "Notificări de vizită a navei care nu au încă un plan operațional alocat",
-            "noUnplanned": "Toate notificările de vizită a navei au planuri operaționale alocate",
-            "foundMessage": "Gasit {vvnCount} VVN fără planuri în {dayCount} zi/zile",
-            "regenerateAll": "Regenerează toate planurile lipsă",
-            "regenerateDay": "Regenerează planurile pentru această zi",
-            "regenerateModalTitle": "Regenerează planuri pentru {date}",
-            "warning": "Avertisment",
-            "warningMessage": "Regenerarea planurilor va înlocui toate planurile operaționale existente pentru această zi. Această acțiune nu poate fi anulată.",
-            "selectedDay": "Ziua selectată",
-            "confirmRegeneration": "Confirmă regenerarea",
-            "affectedDays": "Zile afectate",
-            "queueInfo": "Fiecare cerere de regenerare va fi adăugată în coadă separat. Le puteți revizui și accepta/respinge individual din coada de planificare.",
-            "continue": "Continuă",
-            "confirmRegenerationTitle": "Confirmă regenerarea",
-            "irreversibleAction": "Această acțiune este ireversibilă",
-            "overwriteWarning": "Regenerarea planurilor operaționale va suprascrie permanent toate planurile existente pentru zilele selectate. Această acțiune nu poate fi anulată.",
-            "aboutToRegenerate": "Sunteți pe cale să regenerați planuri pentru",
-            "days": "zile",
-            "vesselVisitNotifications": "Notificări de vizită a navei",
-            "using": "Utilizând",
-            "algorithm": "algoritm",
-            "proceedQuestion": "Doriți să continuați cu această operațiune?",
-            "yesRegenerateAll": "Da, regenerează tot"
-        },
-        "algorithm": {
-            "optimal": "Optim",
-            "greedy": "Greedy",
-            "genetic": "Genetic",
-            "auto": "Automat"
-        },
-        "metrics": {
-            "title": "Metrici",
-            "strategy": "Strategie",
-            "totalDelay": "Întârziere totală",
-            "computationTime": "Timp de calcul",
-            "autoSelection": "Selecție automată algoritm"
-        },
-        "infoTitle": "Informații plan operațional",
-        "fields": {
-            "id": {
-                "title": "ID plan"
-            },
-            "relatedVVN": {
-                "title": "VVN asociat"
-            },
-            "dock": {
-                "title": "Doc"
-            },
-            "operations": {
-                "title": "Operații"
-            }
-        },
-        "filters": {
-            "startDate": "Data de început de la",
-            "endDate": "Data de sfârșit până la"
-        },
-        "metadata": {
-            "title": "Metadate",
-            "createdBy": "Creat de",
-            "createdAt": "Creat la",
-            "algorithmUsed": "Algoritm utilizat"
-        },
-        "schedule": {
-            "title": "Program operații",
-            "noOperations": "Nicio operație programată"
-        }
-    },
-    "incidentType": {
-        "fields": {
-            "name": {
-                "title": "Nume",
-                "placeholder": "Numele tipului de incident"
-            },
-            "description": {
-                "title": "Descriere",
-                "placeholder": "Descriere detaliată a tipului de incident"
-            },
-            "severity": {
-                "title": "Gravitate",
-                "placeholder": "Selectați nivelul de gravitate"
-            },
-            "subtypeOf": {
-                "title": "Subtip al",
-                "placeholder": "Selectați tipul părinte"
-            },
-            "subtypes": {
-                "title": "Subtipuri",
-                "placeholder": "Selectați tipurile copil"
-            }
-        },
-        "severity": {
-            "Minor": "Minor",
-            "Major": "Major",
-            "Critical": "Critic"
-        },
-        "tabs": {
-            "dashboard": "Tablou de bord tipuri de incidente",
-            "view_dashboard": "Vizualizează tipuri de incidente",
-            "search": "Caută tipuri de incidente",
-            "create": "Creează tip de incident",
-            "edit": "Editează tip de incident"
-        },
-        "generalFields": "Câmpuri generale",
-        "classification": "Clasificare",
-        "title": "Incidente",
-        "subtitle": {
-            "dashboard": "Prezentare generală a statisticilor și activității tipurilor de incidente",
-            "search": "Gestionează și vizualizează toate tipurile de incidente înregistrate",
-            "create": "Înregistrează un nou tip de incident în sistem",
-            "edit": "Modifică un tip de incident existent în sistem"
-        },
-        "registeredIncidentTypes": "Tipuri de incidente înregistrate",
-        "incidentTypeInformation": "Informații tip de incident",
-        "parentType": "Tip părinte",
-        "confirmDelete": "Confirmă ștergerea",
-        "confirmDeleteMessage": "Sunteți sigur că doriți să ștergeți acest tip de incident?",
-        "failedToDelete": "Eșec la ștergerea tipului de incident"
-    },
-    "taskCategory": {
-        "fields": {
-            "name": {
-                "title": "Nume",
-                "placeholder": "Numele categoriei de task"
-            },
-            "category": {
-                "title": "Categorie",
-                "placeholder": "Cod categorie"
-            },
-            "description": {
-                "title": "Descriere",
-                "placeholder": "Descrierea categoriei de task"
-            }
-        },
-        "tabs": {
-            "dashboard": "Tablou de bord categorii de task-uri",
-            "search": "Caută categorii de task-uri",
-            "create": "Creează categorie de task",
-            "edit": "Editează categorie de task",
-            "view_dashboard": "Vizualizează categorii de task-uri"
-        },
-        "generalFields": "Câmpuri generale",
-        "title": "Task-uri",
-        "subtitle": {
-            "dashboard": "Prezentare generală a statisticilor și activității categoriilor de task-uri",
-            "search": "Gestionează și vizualizează toate categoriile de task-uri înregistrate",
-            "create": "Înregistrează o nouă categorie de task în sistem",
-            "edit": "Modifică o categorie de task existentă în sistem"
-        },
-        "taskCategoryInformation": "Informații categorie task",
-        "registeredTaskCategories": "Categorii de task-uri înregistrate"
-    },
-    "execution": {
-        "title": "Execuții vizite nave",
-        "subtitle": {
-            "search": "Gestionează și vizualizează toate execuțiile de vizite ale navelor",
-            "dashboard": "Prezentare generală a statisticilor și activității execuțiilor de vizite ale navelor"
-        },
-        "tabs": {
-            "dashboard": "Tablou de bord execuții",
-            "search": "Caută execuții",
-            "view_dashboard": "Vizualizează execuții",
-            "update": "Actualizează execuția",
-            "view": "Vizualizează execuția",
-            "table": "Vizualizează tabel",
-            "cards": "Vizualizează carduri"
-        },
-        "fields": {
-            "code": "Cod",
-            "relatedVVN": "Asociat cu",
-            "status": "Status",
-            "createdBy": "Creat de",
-            "dateOpen": "Data deschiderii",
-            "dateClosed": "Data închiderii",
-            "relatedVesselVisit": "Vizită navă asociată",
-            "dock": "Doc de acostare",
-            "berthTime": "Ora de acostare",
-            "operations": "Operații"
-        },
-        "filters": {
-            "startDate": "Data de început",
-            "endDate": "Data de sfârșit",
-            "relatedVVN": "Notificare vizită navă",
-            "status": "Status"
-        },
-        "metrics": {
-            "totalOperations": "Total operații",
-            "completedOperations": "Progres",
-            "turnaroundTime": "Timp de rotație",
-            "berthOccupancy": "Ocupare doc"
-        },
-        "status": {
-            "pending": "În așteptare",
-            "started": "Pornit",
-            "delayed": "Întârziat",
-            "completed": "Finalizat"
-        },
-        "view_resources": "Vizualizează resurse",
-        "infoTitle": "Informații execuție",
-        "operationsTitle": "Operații",
-        "noOperations": "Nicio operație disponibilă",
-        "startOperation": "Pornește operația",
-        "completeOperation": "Finalizează operația",
-        "addOperation": "Adăugă operație",
-        "addOperationDescription": "Adăugă o nouă operație pe linia de timp",
-        "confirmStartOperation": "Sunteți sigur că doriți să porniți această operație?",
-        "confirmCompleteOperation": "Sunteți sigur că doriți să finalizați această operație?",
-        "berthOperation": {
-            "button": "Editează datele de acostare",
-            "title": "Operațiune de acostare",
-            "description": "Editează docul și ora pentru această execuție de vizită a navei.",
-            "dock": "Doc de acostare",
-            "dockPlaceholder": "Selectați docul",
-            "berthTime": "Ora de acostare",
-            "differentThanPlanned": "Docul selectat este diferit de cel planificat."
-        }
-    },
-    "incident": {
-        "tabs": {
-            "dashboard": "Tablou de bord incidente",
-            "create": "Creează incident",
-            "search": "Caută incidente",
-            "active": "Incidente active",
-            "view": "Vizualizează incident",
-            "edit": "Editează incident"
-        },
-        "subtitle": {
-            "create": "Raportează un incident nou în sistem",
-            "search": "Caută și filtrează incidentele existente",
-            "active": "Vizualizează și gestionează incidentele active"
-        },
-        "generalFields": "Informații generale",
-        "classification": "Clasificare",
-        "fields": {
-            "bid": {
-                "title": "ID incident"
-            },
-            "type": {
-                "title": "Tip de incident",
-                "placeholder": "Selectați tipul de incident"
-            },
-            "startTime": {
-                "title": "Ora de început",
-                "placeholder": "Când a început incidentul?"
-            },
-            "endTime": {
-                "title": "Ora de sfârșit",
-                "placeholder": "Când s-a terminat incidentul?"
-            },
-            "severity": {
-                "title": "Gravitate",
-                "placeholder": "Selectați nivelul de gravitate",
-                "options": {
-                    "minor": "Minor",
-                    "major": "Major",
-                    "critical": "Critic"
-                }
-            },
-            "description": {
-                "title": "Descriere",
-                "placeholder": "Describeți incidentul în detaliu"
-            },
-            "createdBy": {
-                "title": "Creat de"
-            },
-            "affectedVVECodes": {
-                "title": "VVE-uri afectate",
-                "placeholder": "Introduceți VVE-urile afectate"
-            },
-            "vveCode": {
-                "title": "Cod VVE"
-            },
-            "status": {
-                "title": "Status",
-                "options": {
-                    "active": "Activ",
-                    "resolved": "Rezolvat"
-                }
-            },
-            "filterStartTime": {
-                "title": "Data de început de la"
-            },
-            "filterEndTime": {
-                "title": "Data de început până la"
-            },
-            "duration": {
-                "title": "Durată"
-            }
-        },
-        "severity": {
-            "Minor": "Minor",
-            "Major": "Major",
-            "Critical": "Critic"
-        },
-        "status": {
-            "active": "Activ",
-            "resolved": "Rezolvat"
-        },
-        "ongoing": "În desfășurare",
-        "filters": {
-            "onlyActive": "Doar active",
-            "onlyMine": "Doar ale mele"
-        },
-        "actions": {
-            "view": "Vizualizează detalii",
-            "edit": "Editează incident",
-            "resolve": "Rezolvă incident",
-            "delete": "Șterge incident"
-        },
-        "notifications": {
-            "createSuccess": "Incident creat cu succes",
-            "createFailed": "Eșec la crearea incidentului",
-            "updateSuccess": "Incident actualizat cu succes",
-            "updateFailed": "Eșec la actualizarea incidentului",
-            "resolveSuccess": "Incident rezolvat cu succes",
-            "resolveFailed": "Eșec la rezolvarea incidentului",
-            "deleteSuccess": "Incident șters cu succes",
-            "deleteFailed": "Eșec la ștergerea incidentului"
-        },
-        "table": {
-            "empty": "Niciun incident găsit"
-        },
-        "active": {
-            "title": "Incidente active",
-            "subtitle": "Vizualizează și gestionează incidentele în desfășurare"
-        },
-        "infoTitle": "Detalii incident",
-        "closeDialog": {
-            "title": "Rezolvă incident",
-            "message": "Când a fost rezolvat incidentul?",
-            "confirm": "Da, închide acest incident",
-            "cancel": "Anulează"
-        }
-    }
+    "search":  {
+                   "languages":  "Caută limbi..."
+               },
+    "unsavedChanges":  {
+                           "title":  "Renunți la modificări?",
+                           "message":  "Ai modificări nesalvate. Ești sigur că vrei să părăsești această pagină și să renunți la modificări?",
+                           "confirm":  "Renunță",
+                           "cancel":  "Continuă editarea"
+                       },
+    "expirationWarning":  {
+                              "messageOneMinute":  "Sesiunea ta va expira în 1 minut.",
+                              "messageLessThanOneMinute":  "Sesiunea ta este pe cale să expire."
+                          },
+    "dashboard":  {
+                      "welcome":  "Bine ai revenit, [name]!",
+                      "sidebarTitle":  "Tablou de bord",
+                      "title":  "PortIT Tablou de bord",
+                      "subtitle":  "Prezentare generală a sistemului PortIT",
+                      "SAOR":  {
+                                   "subtitle":  "Overview of the shipping agent\u0027s operations",
+                                   "pendingNotifications":  "Notificări în așteptare",
+                                   "recent":  "Notificări recente despre vizitele navelor",
+                                   "recentReview":  "Notificări de vizită a navelor care necesită revizuire",
+                                   "noRecent":  "Nu există notificări recente"
+                               },
+                      "3DModel":  {
+                                      "title":  "Vizualizare 3D port",
+                                      "description":  "Vizualizați o reprezentare 3D interactivă a întregii facilități portuare. Monitorizați ocuparea docurilor, pozițiile navelor, zonele de depozitare și resursele în timp real.",
+                                      "open":  "Deschide model 3D"
+                                  }
+                  },
+    "admin":  {
+                  "sidebarTitle":  "Admin",
+                  "title":  "Tablou administrativ",
+                  "subtitle":  "Prezentare administrativă și management",
+                  "userManagement":  {
+                                         "title":  "Gestionare utilizatori",
+                                         "subtitle":  "Gestionați utilizatorii sistemului, rolurile și permisiunile."
+                                     },
+                  "auditLogs":  {
+                                    "title":  "Jurnale de audit",
+                                    "subtitle":  "Vizualizați și monitorizați jurnalele de activitate ale sistemului."
+                                },
+                  "pp":  {
+                             "title":  "Politici de confidențialitate",
+                             "subtitle":  "Definiți și gestionați politicile de confidențialitate ale portului."
+                         },
+                  "notifications":  {
+                                        "create":  "Creați notificare",
+                                        "subtitleCreate":  "Send important announcements to any or all users.",
+                                        "title":  "Notificări sistem",
+                                        "subtitle":  "Creați și gestionați notificări generale ale sistemului.",
+                                        "broadcastToggle":  "Broadcast to all users",
+                                        "sendEmailToggle":  "Also send as email",
+                                        "fields":  {
+                                                       "title":  {
+                                                                     "title":  "Title",
+                                                                     "placeholder":  "Introduceți titlul notificării"
+                                                                 },
+                                                       "message":  {
+                                                                       "title":  "Message",
+                                                                       "placeholder":  "Introduceți mesajul notificării"
+                                                                   },
+                                                       "email":  {
+                                                                     "title":  "User email",
+                                                                     "placeholder":  "Specify user email to send to"
+                                                                 },
+                                                       "urgency":  {
+                                                                       "title":  "Urgency",
+                                                                       "options":  {
+                                                                                       "normal":  "Normal",
+                                                                                       "urgent":  "Urgent"
+                                                                                   }
+                                                                   }
+                                                   }
+                                    }
+              },
+    "user":  {
+                 "fields":  {
+                                "email":  {
+                                              "title":  "Email",
+                                              "placeholder":  "email@mail.com"
+                                          },
+                                "role":  {
+                                             "title":  "Rol",
+                                             "placeholder":  "Selectează rolul utilizatorului",
+                                             "options":  {
+                                                             "admin":  "Administrator",
+                                                             "saoRep":  "Reprezentant SAO",
+                                                             "pao":  "Ofițer Autoritate Portuară",
+                                                             "logisticsOperator":  "Operator logistic"
+                                                         }
+                                         },
+                                "isActive":  {
+                                                 "title":  "Activ",
+                                                 "options":  {
+                                                                 "active":  "Da",
+                                                                 "inactive":  "Nu"
+                                                             }
+                                             }
+                            },
+                 "tabs":  {
+                              "dashboard":  "Tablou utilizator",
+                              "create":  "Creează utilizator",
+                              "view":  "Vizualizează utilizatori",
+                              "search":  "Caută utilizatori"
+                          },
+                 "infoTitle":  "Detalii utilizator",
+                 "title":  "Utilizatori",
+                 "subtitle":  {
+                                  "dashboard":  "Prezentare generală și management utilizatori",
+                                  "create":  "Înregistrează un utilizator nou în sistem",
+                                  "view":  "Vizualizează și gestionează utilizatorii existenți"
+                              },
+                 "registeredUsers":  "Utilizatori înregistrați",
+                 "confirmDelete":  "Confirmă ștergerea",
+                 "confirmDeleteMessage":  "Sunteți sigur că doriți să ștergeți acest utilizator?"
+             },
+    "representative":  {
+                           "title":  "Reprezentant",
+                           "select":  "Selectați un reprezentant"
+                       },
+    "physicalCharacteristics":  {
+                                    "title":  "Caracteristici fizice (m)",
+                                    "length":  {
+                                                   "title":  "Lungime",
+                                                   "placeholder":  "Lungime în metri"
+                                               },
+                                    "depth":  {
+                                                  "title":  "Adâncime",
+                                                  "placeholder":  "Adâncime în metri"
+                                              },
+                                    "draft":  {
+                                                  "title":  "Pescaj",
+                                                  "placeholder":  "Pescaj în metri"
+                                              }
+                                },
+    "dock":  {
+                 "fields":  {
+                                "code":  {
+                                             "title":  "Cod",
+                                             "placeholder":  "Cod doc"
+                                         },
+                                "name":  {
+                                             "title":  "Nume",
+                                             "placeholder":  "Numele docului"
+                                         },
+                                "location":  {
+                                                 "title":  "Locație",
+                                                 "placeholder":  "Locația docului"
+                                             },
+                                "supportedVesselTypes":  {
+                                                             "title":  "Tipuri de nave suportate",
+                                                             "vesselTypes":  {
+                                                                                 "title":  "Tipuri de nave",
+                                                                                 "placeholder":  "Selectează tipuri de nave"
+                                                                             },
+                                                             "vesselType":  "Tip navă"
+                                                         }
+                            },
+                 "tabs":  {
+                              "dashboard":  "Tablou docuri",
+                              "view_dashboard":  "Vizualizează docuri",
+                              "search":  "Caută docuri",
+                              "create":  "Creează doc",
+                              "view":  "Vizualizează doc",
+                              "edit":  "Editează doc"
+                          },
+                 "generalFields":  "Câmpuri generale",
+                 "infoTitle":  "Informații doc",
+                 "title":  "Docuri",
+                 "subtitle":  {
+                                  "dashboard":  "Prezentare statistică a docurilor și activităților",
+                                  "search":  "Gestionează și vizualizează toate docurile înregistrate",
+                                  "create":  "Înregistrează un doc nou în sistem",
+                                  "edit":  "Editează un doc existent în sistem"
+                              },
+                 "registeredDocks":  "Docuri înregistrate"
+             },
+    "vesselType":  {
+                       "fields":  {
+                                      "name":  {
+                                                   "title":  "Nume",
+                                                   "placeholder":  "Numele tipului de navă"
+                                               },
+                                      "description":  {
+                                                          "title":  "Descriere",
+                                                          "placeholder":  "Descrierea tipului de navă"
+                                                      },
+                                      "capacity":  {
+                                                       "title":  "Capacitate",
+                                                       "placeholder":  "Capacitatea de containere în TEU"
+                                                   },
+                                      "containerCapacity":  {
+                                                                "title":  "Capacitate containere (TEU)",
+                                                                "maxNumberOfRows":  {
+                                                                                        "title":  "Nr. maxim de rânduri",
+                                                                                        "placeholder":  "Max rânduri în TEU"
+                                                                                    },
+                                                                "maxNumberOfBays":  {
+                                                                                        "title":  "Nr. maxim de benzi",
+                                                                                        "placeholder":  "Max benzi în TEU"
+                                                                                    },
+                                                                "maxNumberOfTiers":  {
+                                                                                         "title":  "Nr. maxim de niveluri",
+                                                                                         "placeholder":  "Max niveluri în TEU"
+                                                                                     }
+                                                            }
+                                  },
+                       "generalFields":  "Câmpuri generale",
+                       "tabs":  {
+                                    "dashboard":  "Tablou tipuri nave",
+                                    "view_dashboard":  "Vizualizează tipuri nave",
+                                    "search":  "Caută tipuri nave",
+                                    "create":  "Creează tip navă",
+                                    "view":  "Vizualizează tip navă",
+                                    "edit":  "Editează tip navă"
+                                },
+                       "infoTitle":  "Informații tip navă",
+                       "title":  "Tipuri nave",
+                       "subtitle":  {
+                                        "dashboard":  "Prezentare generală a statisticilor și activităților pe tipuri de nave",
+                                        "search":  "Gestionează și vizualizează toate tipurile de nave înregistrate",
+                                        "create":  "Înregistrează un tip de navă nou în sistem",
+                                        "edit":  "Editează un tip de navă existent în sistem"
+                                    },
+                       "registeredVesselTypes":  "Tipuri nave înregistrate"
+                   },
+    "vessel":  {
+                   "fields":  {
+                                  "name":  {
+                                               "title":  "Nume",
+                                               "placeholder":  "Numele navei"
+                                           },
+                                  "imoNumber":  {
+                                                    "title":  "Număr IMO",
+                                                    "placeholder":  "Numărul IMO al navei"
+                                                },
+                                  "owner":  {
+                                                "title":  "Proprietar",
+                                                "placeholder":  "Organizația proprietară"
+                                            },
+                                  "vesselType":  {
+                                                     "title":  "Tip navă",
+                                                     "placeholder":  "Selectează tip navă"
+                                                 },
+                                  "taxNumber":  {
+                                                    "title":  "Număr fiscal"
+                                                }
+                              },
+                   "infoTitle":  "Informații navă",
+                   "physicalCharacteristicsTitle":  "Caracteristici fizice",
+                   "tabs":  {
+                                "dashboard":  "Tablou nave",
+                                "view_dashboard":  "Vizualizează nave",
+                                "search":  "Caută nave",
+                                "create":  "Creează navă",
+                                "view":  "Vizualizează navă",
+                                "edit":  "Editează navă"
+                            },
+                   "title":  "Nave",
+                   "subtitle":  {
+                                    "dashboard":  "Prezentare generală a statisticilor și activităților navelor",
+                                    "search":  "Gestionează și vizualizează toate navele înregistrate",
+                                    "create":  "Înregistrează o navă nouă în sistem",
+                                    "edit":  "Editează o navă existentă în sistem"
+                                },
+                   "ownedBy":  "Deținut de",
+                   "registeredVessels":  "Nave înregistrate"
+               },
+    "staff":  {
+                  "deactivation":  {
+                                       "title":  "Deactivate Staff Member",
+                                       "message":  "Are you sure you want to deactivate this staff member? You can activate them again later.",
+                                       "successMessage":  "Staff member has been successfully deactivated.",
+                                       "errorMessage":  "An error occurred while trying to deactivate the staff member. Please try again."
+                                   },
+                  "fields":  {
+                                 "mechanographicNumber":  {
+                                                              "title":  "Număr mecanografic",
+                                                              "placeholder":  "Număr mecanografic"
+                                                          },
+                                 "name":  {
+                                              "title":  "Nume",
+                                              "placeholder":  "Numele personalului"
+                                          },
+                                 "email":  {
+                                               "title":  "Email",
+                                               "placeholder":  "Adresa de email"
+                                           },
+                                 "phoneNumber":  {
+                                                     "title":  "Număr de telefon",
+                                                     "placeholder":  "Număr de telefon"
+                                                 },
+                                 "qualifications":  {
+                                                        "title":  "Calificări",
+                                                        "placeholder":  "Selectează calificări"
+                                                    },
+                                 "status":  {
+                                                "title":  "Stare",
+                                                "options":  {
+                                                                "available":  "Disponibil",
+                                                                "unavailable":  "Indisponibil",
+                                                                "temporarilyReassigned":  "Realocat temporar"
+                                                            }
+                                            },
+                                 "operationalWindow":  "Operational Window"
+                             },
+                  "tabs":  {
+                               "dashboard":  "Tablou personal",
+                               "view_dashboard":  "Vizualizează personalul",
+                               "search":  "Caută personal",
+                               "create":  "Creează membru personal",
+                               "view":  "Vizualizează membru personal",
+                               "edit":  "Editează membru personal"
+                           },
+                  "infoTitle":  "Informații membru personal",
+                  "title":  "Personal",
+                  "subtitle":  {
+                                   "search":  "Gestionează și vizualizează tot personalul înregistrat",
+                                   "dashboard":  "Prezentare generală a statisticilor și activităților personalului",
+                                   "create":  "Înregistrează un nou membru al personalului în sistem",
+                                   "view":  "Vizualizează detalii personale",
+                                   "edit":  "Editează un membru al personalului existent în sistem"
+                               },
+                  "registeredStaffMembers":  "Membri ai personalului înregistrați"
+              },
+    "qualification":  {
+                          "tabs":  {
+                                       "dashboard":  "Tablou calificări",
+                                       "view_dashboard":  "Vizualizează calificări",
+                                       "search":  "Caută calificări",
+                                       "create":  "Creează calificare",
+                                       "view":  "Vizualizează calificare",
+                                       "edit":  "Editează calificare"
+                                   },
+                          "infoTitle":  "Informații calificare",
+                          "title":  "Calificări",
+                          "subtitle":  {
+                                           "search":  "Gestionează și vizualizează toate calificările înregistrate",
+                                           "dashboard":  "Prezentare generală a statisticilor și activităților calificărilor",
+                                           "create":  "Înregistrează o calificare nouă în sistem",
+                                           "edit":  "Editează o calificare existentă în sistem",
+                                           "view":  "Vizualizează detaliile calificării"
+                                       },
+                          "fields":  {
+                                         "idCode":  {
+                                                        "title":  "Codul calificării",
+                                                        "placeholder":  "Cod calificare"
+                                                    },
+                                         "qualificationName":  {
+                                                                   "title":  "Nume calificare",
+                                                                   "placeholder":  "Nume calificare"
+                                                               }
+                                     },
+                          "registeredQualifications":  "Registered Qualifications"
+                      },
+    "scheduling":  {
+                       "title":  "Planificare zilnică",
+                       "subtitle":  "Folosește algoritmul nostru automat de planificare pentru a analiza sarcinile programate pentru o anumită zi.",
+                       "noVisits":  "Nu există vizite de nave programate pentru data selectată.",
+                       "visitsOnSelectedDay":  "Vizite de nave în data selectată",
+                       "viewVisits":  "Afișează planul de sarcini",
+                       "generateTasksButton":  "Generează planul de sarcini",
+                       "aboutAlgorithmButton":  "Despre algoritm",
+                       "fields":  {
+                                      "algorithm":  {
+                                                        "title":  "Algoritm de planificare",
+                                                        "placeholder":  "Selectează algoritmul de planificare"
+                                                    },
+                                      "relatedDocks":  "Selectează cheiul aferent"
+                                  },
+                       "generateTasksModal":  {
+                                                  "title":  "Logistică suplimentară"
+                                              },
+                       "aboutAlgorithmModal":  {
+                                                   "title":  "Despre algoritm",
+                                                   "content":  "Algoritmul actual ia în considerare notificările de vizită ale navelor programate pentru data și cheiul selectate.\nApoi verifică disponibilitatea macaralelor STS pentru cheiul specificat și stabilește durata fiecărei operațiuni în funcție de viteza macaralei.\nSunt ignorate vizitele pentru mentenanță sau alte activități care nu implică încărcare/descărcare."
+                                               },
+                       "results":  {
+                                       "title":  "Scheduling Results",
+                                       "subtitle":  "Generated task schedule for the selected date"
+                                   },
+                       "tabs":  {
+                                    "dashboard":  "Scheduling Dashboard",
+                                    "results":  "Scheduling Results",
+                                    "schedule":  "Request Task Schedule",
+                                    "view_dashboard":  "View Scheduling",
+                                    "search":  "List Operation Plans",
+                                    "create":  "Create Scheduling",
+                                    "view":  "View Scheduling",
+                                    "edit":  "Edit Scheduling",
+                                    "queue":  "Scheduling Queue"
+                                },
+                       "subtitles":  {
+                                         "dashboard":  "Overview of scheduling of berth operations and incidents",
+                                         "schedule":  "Request a task schedule for a specific date",
+                                         "search":  "List all operation plans for a given date",
+                                         "create":  "Create a new scheduling into the system",
+                                         "edit":  "Edit an existing scheduling in the system",
+                                         "queue":  "View pending scheduling requests"
+                                     },
+                       "queue":  {
+                                     "title":  "Scheduling Queue",
+                                     "subtitle":  "Pending scheduling requests",
+                                     "onlyMine":  "Show only my requests"
+                                 },
+                       "rebalancing":  {
+                                           "title":  "Dock Rebalancing Required",
+                                           "warningMessage":  "Before scheduling, the system recommends rebalancing dock assignments to optimize load distribution.",
+                                           "vesselsToReassign":  "Vessels to Reassign",
+                                           "averageLoad":  "Average Load",
+                                           "loadRange":  "Load Range",
+                                           "proposedReassignments":  "Proposed Reassignments",
+                                           "vesselImo":  "Vessel IMO",
+                                           "currentDock":  "Current Dock",
+                                           "proposedDock":  "Proposed Dock",
+                                           "skipButton":  "Skip \u0026 Continue with Current Assignments",
+                                           "applyButton":  "Apply Rebalancing \u0026 Generate Schedule"
+                                       }
+                   },
+    "physicalResource":  {
+                             "deactivation":  {
+                                                  "title":  "Deactivate Physical Resource",
+                                                  "message":  "Are you sure you want to deactivate this physical resource? You can activate it again later.",
+                                                  "successMessage":  "Physical Resource has been successfully deactivated.",
+                                                  "errorMessage":  "An error occurred while trying to deactivate the Physical Resource. Please try again."
+                                              },
+                             "tabs":  {
+                                          "dashboard":  "Tablou resurse fizice",
+                                          "view_dashboard":  "Vizualizează resurse fizice",
+                                          "search":  "Caută resurse fizice",
+                                          "create":  "Creează resursă fizică",
+                                          "view":  "Vizualizează resursă fizică",
+                                          "edit":  "Editează resursă fizică"
+                                      },
+                             "infoTitle":  "Informații resursă fizică",
+                             "title":  "Resurse fizice",
+                             "subtitle":  {
+                                              "search":  "Gestionează și vizualizează toate resursele fizice înregistrate",
+                                              "dashboard":  "Panou de control pentru resurse fizice",
+                                              "view_dashboard":  "Vizualizează resurse fizice",
+                                              "create":  "Înregistrează o nouă resursă fizică în sistem",
+                                              "view":  "Vizualizează detaliile resursei fizice",
+                                              "edit":  "Editează o resursă fizică existentă în sistem"
+                                          },
+                             "generalFields":  "Câmpuri generale",
+                             "specificFields":  "Câmpuri specifice",
+                             "fields":  {
+                                            "code":  {
+                                                         "title":  "Cod",
+                                                         "placeholder":  "Cod resursă"
+                                                     },
+                                            "description":  {
+                                                                "title":  "Descriere",
+                                                                "placeholder":  "Descriere resursă"
+                                                            },
+                                            "status":  {
+                                                           "title":  "Stare",
+                                                           "placeholder":  "Selectați starea resursei",
+                                                           "options":  {
+                                                                           "available":  "Disponibil",
+                                                                           "maintenance":  "În mentenanță",
+                                                                           "outOfService":  "În afara serviciului"
+                                                                       }
+                                                       },
+                                            "qualifications":  {
+                                                                   "title":  "Calificări necesare",
+                                                                   "placeholder":  "Calificările necesare pentru operarea acestei resurse"
+                                                               },
+                                            "setupTime":  {
+                                                              "title":  "Timp de configurare (minute)",
+                                                              "placeholder":  "Timp de configurare"
+                                                          },
+                                            "servingDocks":  {
+                                                                 "title":  "Docuri deservite",
+                                                                 "placeholder":  "Selectați docurile deservite"
+                                                             },
+                                            "liftingCapacity":  {
+                                                                    "title":  "Capacitate de ridicare (kgs)",
+                                                                    "placeholder":  "Capacitate de ridicare"
+                                                                },
+                                            "containersPerHour":  {
+                                                                      "title":  "Containere pe oră",
+                                                                      "placeholder":  "Containere pe oră"
+                                                                  },
+                                            "maxLoadCapacity":  {
+                                                                    "title":  "Capacitatea maximă de încărcare (kg)",
+                                                                    "placeholder":  "Capacitatea maximă de încărcare"
+                                                                },
+                                            "averageSpeed":  {
+                                                                 "title":  "Viteza medie (km/h)",
+                                                                 "placeholder":  "Viteza medie"
+                                                             },
+                                            "containersPerTrip":  {
+                                                                      "title":  "Containere pe călătorie",
+                                                                      "placeholder":  "Containere pe călătorie"
+                                                                  },
+                                            "type":  {
+                                                         "title":  "Tip resursă",
+                                                         "options":  {
+                                                                         "stsCrane":  "Macara STS",
+                                                                         "yardGantry":  "Macara portică pentru curte",
+                                                                         "truck":  "Camion"
+                                                                     }
+                                                     }
+                                        },
+                             "actions":  {
+                                             "deactivate":  "Dezactivează resursa fizică"
+                                         },
+                             "registeredPhysicalResources":  "Registered Physical Resources"
+                         },
+    "storageArea":  {
+                        "tabs":  {
+                                     "dashboard":  "Tablou de bord Zone de Stocare",
+                                     "view_dashboard":  "Vizualizare Zone de Stocare",
+                                     "search":  "Căutare Zone de Stocare",
+                                     "create":  "Creare Zonă de Stocare",
+                                     "view":  "Vizualizare Zonă de Stocare",
+                                     "edit":  "Editare Zonă de Stocare"
+                                 },
+                        "create":  {
+                                       "distance_meters":  "Distanța (metri)"
+                                   },
+                        "infoTitle":  "Informații Zonă de Stocare",
+                        "title":  "Zone de Stocare",
+                        "subtitle":  {
+                                         "search":  "Gestionați și vizualizați toate zonele de stocare înregistrate",
+                                         "dashboard":  "Panou de control pentru toate lucrurile legate de zona de stocare",
+                                         "view_dashboard":  "Vizualizare Zone de Stocare",
+                                         "create":  "Înregistrați o nouă Zonă de Stocare în sistem",
+                                         "view":  "Vizualizați detaliile zonei de stocare",
+                                         "edit":  "Editați o Zonă de Stocare existentă în sistem"
+                                     },
+                        "printer":  {
+                                        "docks_serviced":  "docuri deservite",
+                                        "capacity_usage":  "Utilizare capacitate",
+                                        "units":  "unități",
+                                        "available":  "disponibil",
+                                        "no_registered_distances":  "Fără distanțe înregistrate",
+                                        "no_docks_serviced":  "Fără docuri deservite",
+                                        "all_docks_serviced":  "Toate docurile deservite",
+                                        "serviced_docks_distance":  "Distanța docurilor deservite",
+                                        "no_registered_docks":  "Fără docuri înregistrate"
+                                    },
+                        "fields":  {
+                                       "nameCode":  {
+                                                        "title":  "Cod Nume",
+                                                        "placeholder":  "Cod nume zonă de stocare"
+                                                    },
+                                       "location":  {
+                                                        "title":  "Locație",
+                                                        "placeholder":  "Locație zonă de stocare"
+                                                    },
+                                       "type":  {
+                                                    "title":  "Tip",
+                                                    "placeholder":  "Selectați tipul zonei de stocare",
+                                                    "options":  {
+                                                                    "yard":  "Curte",
+                                                                    "warehouse":  "Depozit"
+                                                                }
+                                                },
+                                       "capacity":  {
+                                                        "title":  "Capacitate",
+                                                        "placeholder":  "Capacitate maximă"
+                                                    },
+                                       "occupancy":  {
+                                                         "title":  "Ocupare",
+                                                         "placeholder":  "Ocupare curentă"
+                                                     }
+                                   },
+                        "registeredStorageAreas":  "Zone de Stocare Înregistrate"
+                    },
+    "notification":  {
+                         "id":  "ID notificare",
+                         "hazardous":  "Marfă periculoasă",
+                         "nonHazardous":  "Marfă nepericuloasă",
+                         "arrival":  "Sosire",
+                         "departure":  "Plecare",
+                         "specialRequirements":  "Cerințe speciale",
+                         "none":  "Niciuna",
+                         "crew":  "Echipaj",
+                         "captain":  "Căpitan",
+                         "unknown":  "Necunoscut",
+                         "from":  "De la",
+                         "to":  "La",
+                         "step":  "Step",
+                         "of":  "of",
+                         "tabs":  {
+                                      "dashboard":  "Tablou notificări",
+                                      "search":  "Caută notificări",
+                                      "edit":  "Editează notificare",
+                                      "create":  "Creează notificare",
+                                      "update":  "Update Notification",
+                                      "makeDraft":  "Creează ciornă notificare",
+                                      "myNotifications":  "Notificările mele",
+                                      "review":  "Revizuiește notificări",
+                                      "general":  "Listă generală",
+                                      "byDate":  "Vizualizare calendar",
+                                      "submit":  "Trimite notificare",
+                                      "delete":  "Șterge notificare"
+                                  },
+                         "eventsOnDate":  "Evenimente la data selectată",
+                         "noEventsOnDate":  "Nu există evenimente la data selectată",
+                         "title":  "Notificări vizite navă",
+                         "subtitle":  {
+                                          "dashboard":  "Prezentare notificări vizite navă",
+                                          "search":  "Gestionează și vizualizează toate notificările de vizită navă",
+                                          "create":  "Creează o nouă notificare de vizită navă",
+                                          "update":  "Update an existing vessel visit notification",
+                                          "edit":  "Editează o notificare de vizită navă existentă",
+                                          "review":  "Revizuiește notificările în așteptare"
+                                      },
+                         "errors":  {
+                                        "noNotificationId":  "Nu a fost furnizat ID de notificare"
+                                    },
+                         "infoTitle":  "Informații notificare",
+                         "cargoTitle":  "Informații marfă",
+                         "vesselTitle":  "Informații navă",
+                         "manifestInfo":  "Informații manifest",
+                         "fields":  {
+                                        "selectVessel":  "Select corresponding vessel",
+                                        "openLoadManifest":  "Deschide manifest încărcare",
+                                        "openUnloadManifest":  "Deschide manifest descărcare",
+                                        "expectedArrival":  "Sosire preconizată",
+                                        "expectedDeparture":  "Plecare preconizată",
+                                        "isCargoHazardous":  "Marfă periculoasă",
+                                        "specialRequirements":  "Cerințe speciale",
+                                        "captain":  "Căpitan",
+                                        "totalCrewMembers":  "Număr total membri echipaj",
+                                        "safetyOfficers":  "Ofițeri de securitate",
+                                        "loadCargoManifest":  "Manifest de încărcare",
+                                        "unloadCargoManifest":  "Manifest de descărcare",
+                                        "position":  "Poziție",
+                                        "area":  "Zonă",
+                                        "container":  "Container",
+                                        "crewMembers":  "Membri echipaj",
+                                        "status":  "Stare",
+                                        "isCargoHazardousQ":  "Is Cargo Hazardous?",
+                                        "cargoManifestInfo":  "About cargo manifest files"
+                                    },
+                         "timeline":  {
+                                          "pending":  "În așteptare",
+                                          "inProgress":  "În desfășurare",
+                                          "completed":  "Finalizat",
+                                          "submitted":  "Trimis",
+                                          "accepted":  "Acceptat",
+                                          "rejected":  "Respins"
+                                      },
+                         "filters":  {
+                                         "expectedArrivalFrom":  "Sosire preconizată de la",
+                                         "expectedArrivalTo":  "Sosire preconizată până la",
+                                         "withReason":  "Cu motiv",
+                                         "withDockAssigned":  "Cu chei alocat"
+                                     },
+                         "decision":  {
+                                          "isFinal":  "Este finală",
+                                          "assignedDock":  {
+                                                               "title":  "Chei alocat",
+                                                               "placeholder":  "Selectează cheiul alocat"
+                                                           },
+                                          "reason":  {
+                                                         "title":  "Motiv",
+                                                         "placeholder":  "Furnizează motivul deciziei"
+                                                     },
+                                          "status":  "Stare decizie"
+                                      },
+                         "sections":  {
+                                          "vesselDetails":  "Informații despre vizită",
+                                          "crewDetails":  "Detalii echipaj",
+                                          "cargoRequirements":  "Cerințe de încărcătură",
+                                          "cargoContent":  "Conținutul încărcăturii"
+                                      },
+                         "about":  {
+                                       "text":  "Fișierele manifest de încărcătură (momentan) trebuie să fie în format CSV standard european. Fiecare rând din fișierul CSV reprezintă un articol de încărcătură cu următoarele coloane:",
+                                       "bay":  "Bay (număr)",
+                                       "row":  "Rând (număr)",
+                                       "tier":  "Nivel (număr)",
+                                       "area":  "Cod zonă (de unde/unde)",
+                                       "containerNumber":  "Număr container (text)",
+                                       "conatinerType":  "Tip container (număr)",
+                                       "description":  "Descriere (text)",
+                                       "containerTypes":  {
+                                                              "refrigeratedGoods":  "Mărfuri refrigerate",
+                                                              "generalConsumerProducts":  "Produse generale de consum",
+                                                              "electronics":  "Electronică",
+                                                              "hazmat":  "Materiale periculoase",
+                                                              "oversizedIndustrialEquipment":  "Echipamente industriale supradimensionate",
+                                                              "other":  "Altele"
+                                                          }
+                                   },
+                         "registeredVesselVisitNotifications":  "Registered Vessel Visit Notifications"
+                     },
+    "operationalWindow":  {
+                              "title":  "Fereastră operațională",
+                              "printer":  {
+                                              "addShift":  "Adaugă tură",
+                                              "shifts":  "Ture:",
+                                              "noShifts":  "Fără ture.",
+                                              "startTime":  "Ora de început",
+                                              "endTime":  "Ora de sfârșit",
+                                              "weekDays":  "Zilele săptămânii"
+                                          },
+                              "errors":  {
+                                             "shiftOverlap":  "Tură invalidă. Suprapunere sau ora de sfârșit înainte de ora de început."
+                                         }
+                          },
+    "about":  {
+                  "title":  "Despre PorTiT",
+                  "privacy":  {
+                                  "title":  "Politica de confidențialitate",
+                                  "lastUpdated":  "Ultima actualizare: {date}"
+                              }
+              },
+    "operationPlan":  {
+                          "title":  "Plan operațional",
+                          "dock":  "Doc",
+                          "docks":  "Docuri",
+                          "operations":  "Operații",
+                          "cranes":  "Macarale",
+                          "createdBy":  "Creat de",
+                          "createdAt":  "Creat la",
+                          "totalSchedules":  "Total programe",
+                          "vesselCount":  "Nave",
+                          "plansOnDate":  "Planuri operaționale la data selectată",
+                          "noPlansOnDate":  "Niciun plan operațional la data selectată",
+                          "id":  "ID",
+                          "vvn":  "Notificare vizită navă",
+                          "for":  "pentru",
+                          "details":  "Detalii",
+                          "totalOperations":  "Total operații",
+                          "algorithmUsed":  "Algoritm utilizat",
+                          "ganttChart":  "Diagramă Gantt",
+                          "startTime":  "Ora de început",
+                          "endTime":  "Ora de sfârșit",
+                          "totalDuration":  "Durată totală",
+                          "operation":  "Operație",
+                          "duration":  "Durată",
+                          "resources":  "Resurse",
+                          "operationDetails":  "Detalii operație",
+                          "operationNumber":  "Operația #{number}",
+                          "notFound":  "Plan operațional negăsit",
+                          "operationType":  {
+                                                "Unload":  "Descărcare",
+                                                "Load":  "Încărcare"
+                                            },
+                          "tabs":  {
+                                       "unplannedVVNs":  "VVN-uri neplanificate",
+                                       "search":  "Căutare planuri",
+                                       "edit":  "Editare plan",
+                                       "open":  "Deschide execuție"
+                                   },
+                          "subtitle":  {
+                                           "edit":  "Modifică detaliile planului operațional și programul"
+                                       },
+                          "unplannedVVNs":  {
+                                                "description":  "Notificări de vizită a navei care nu au încă un plan operațional alocat",
+                                                "noUnplanned":  "Toate notificările de vizită a navei au planuri operaționale alocate",
+                                                "foundMessage":  "Gasit {vvnCount} VVN fără planuri în {dayCount} zi/zile",
+                                                "regenerateAll":  "Regenerează toate planurile lipsă",
+                                                "regenerateDay":  "Regenerează planurile pentru această zi",
+                                                "regenerateModalTitle":  "Regenerează planuri pentru {date}",
+                                                "warning":  "Avertisment",
+                                                "warningMessage":  "Regenerarea planurilor va înlocui toate planurile operaționale existente pentru această zi. Această acțiune nu poate fi anulată.",
+                                                "selectedDay":  "Ziua selectată",
+                                                "confirmRegeneration":  "Confirmă regenerarea",
+                                                "affectedDays":  "Zile afectate",
+                                                "queueInfo":  "Fiecare cerere de regenerare va fi adăugată în coadă separat. Le puteți revizui și accepta/respinge individual din coada de planificare.",
+                                                "continue":  "Continuă",
+                                                "confirmRegenerationTitle":  "Confirmă regenerarea",
+                                                "irreversibleAction":  "Această acțiune este ireversibilă",
+                                                "overwriteWarning":  "Regenerarea planurilor operaționale va suprascrie permanent toate planurile existente pentru zilele selectate. Această acțiune nu poate fi anulată.",
+                                                "aboutToRegenerate":  "Sunteți pe cale să regenerați planuri pentru",
+                                                "days":  "zile",
+                                                "vesselVisitNotifications":  "Notificări de vizită a navei",
+                                                "using":  "Utilizând",
+                                                "algorithm":  "algoritm",
+                                                "proceedQuestion":  "Doriți să continuați cu această operațiune?",
+                                                "yesRegenerateAll":  "Da, regenerează tot"
+                                            },
+                          "algorithm":  {
+                                            "optimal":  "Optim",
+                                            "greedy":  "Greedy",
+                                            "genetic":  "Genetic",
+                                            "auto":  "Automat"
+                                        },
+                          "metrics":  {
+                                          "title":  "Metrici",
+                                          "strategy":  "Strategie",
+                                          "totalDelay":  "Întârziere totală",
+                                          "computationTime":  "Timp de calcul",
+                                          "autoSelection":  "Selecție automată algoritm"
+                                      },
+                          "infoTitle":  "Informații plan operațional",
+                          "fields":  {
+                                         "id":  {
+                                                    "title":  "ID plan"
+                                                },
+                                         "relatedVVN":  {
+                                                            "title":  "VVN asociat"
+                                                        },
+                                         "dock":  {
+                                                      "title":  "Doc"
+                                                  },
+                                         "operations":  {
+                                                            "title":  "Operații"
+                                                        }
+                                     },
+                          "filters":  {
+                                          "startDate":  "Data de început de la",
+                                          "endDate":  "Data de sfârșit până la"
+                                      },
+                          "metadata":  {
+                                           "title":  "Metadate",
+                                           "createdBy":  "Creat de",
+                                           "createdAt":  "Creat la",
+                                           "algorithmUsed":  "Algoritm utilizat"
+                                       },
+                          "schedule":  {
+                                           "title":  "Program operații",
+                                           "noOperations":  "Nicio operație programată"
+                                       }
+                      },
+    "incidentType":  {
+                         "fields":  {
+                                        "name":  {
+                                                     "title":  "Nume",
+                                                     "placeholder":  "Numele tipului de incident"
+                                                 },
+                                        "description":  {
+                                                            "title":  "Descriere",
+                                                            "placeholder":  "Descriere detaliată a tipului de incident"
+                                                        },
+                                        "severity":  {
+                                                         "title":  "Gravitate",
+                                                         "placeholder":  "Selectați nivelul de gravitate"
+                                                     },
+                                        "subtypeOf":  {
+                                                          "title":  "Subtip al",
+                                                          "placeholder":  "Selectați tipul părinte"
+                                                      },
+                                        "subtypes":  {
+                                                         "title":  "Subtipuri",
+                                                         "placeholder":  "Selectați tipurile copil"
+                                                     }
+                                    },
+                         "severity":  {
+                                          "Minor":  "Minor",
+                                          "Major":  "Major",
+                                          "Critical":  "Critic"
+                                      },
+                         "tabs":  {
+                                      "dashboard":  "Tablou de bord tipuri de incidente",
+                                      "view_dashboard":  "Vizualizează tipuri de incidente",
+                                      "search":  "Caută tipuri de incidente",
+                                      "create":  "Creează tip de incident",
+                                      "edit":  "Editează tip de incident"
+                                  },
+                         "generalFields":  "Câmpuri generale",
+                         "classification":  "Clasificare",
+                         "title":  "Incidente",
+                         "subtitle":  {
+                                          "dashboard":  "Prezentare generală a statisticilor și activității tipurilor de incidente",
+                                          "search":  "Gestionează și vizualizează toate tipurile de incidente înregistrate",
+                                          "create":  "Înregistrează un nou tip de incident în sistem",
+                                          "edit":  "Modifică un tip de incident existent în sistem"
+                                      },
+                         "registeredIncidentTypes":  "Tipuri de incidente înregistrate",
+                         "incidentTypeInformation":  "Informații tip de incident",
+                         "parentType":  "Tip părinte",
+                         "confirmDelete":  "Confirmă ștergerea",
+                         "confirmDeleteMessage":  "Sunteți sigur că doriți să ștergeți acest tip de incident?",
+                         "failedToDelete":  "Eșec la ștergerea tipului de incident"
+                     },
+    "taskCategory":  {
+                         "fields":  {
+                                        "name":  {
+                                                     "title":  "Nume",
+                                                     "placeholder":  "Numele categoriei de task"
+                                                 },
+                                        "category":  {
+                                                         "title":  "Categorie",
+                                                         "placeholder":  "Cod categorie"
+                                                     },
+                                        "description":  {
+                                                            "title":  "Descriere",
+                                                            "placeholder":  "Descrierea categoriei de task"
+                                                        }
+                                    },
+                         "tabs":  {
+                                      "dashboard":  "Tablou de bord categorii de task-uri",
+                                      "search":  "Caută categorii de task-uri",
+                                      "create":  "Creează categorie de task",
+                                      "edit":  "Editează categorie de task",
+                                      "view_dashboard":  "Vizualizează categorii de task-uri"
+                                  },
+                         "generalFields":  "Câmpuri generale",
+                         "title":  "Task-uri",
+                         "subtitle":  {
+                                          "dashboard":  "Prezentare generală a statisticilor și activității categoriilor de task-uri",
+                                          "search":  "Gestionează și vizualizează toate categoriile de task-uri înregistrate",
+                                          "create":  "Înregistrează o nouă categorie de task în sistem",
+                                          "edit":  "Modifică o categorie de task existentă în sistem"
+                                      },
+                         "taskCategoryInformation":  "Informații categorie task",
+                         "registeredTaskCategories":  "Categorii de task-uri înregistrate"
+                     },
+    "execution":  {
+                      "title":  "Execuții vizite nave",
+                      "subtitle":  {
+                                       "search":  "Gestionează și vizualizează toate execuțiile de vizite ale navelor",
+                                       "dashboard":  "Prezentare generală a statisticilor și activității execuțiilor de vizite ale navelor"
+                                   },
+                      "tabs":  {
+                                   "dashboard":  "Tablou de bord execuții",
+                                   "search":  "Caută execuții",
+                                   "view_dashboard":  "Vizualizează execuții",
+                                   "update":  "Actualizează execuția",
+                                   "view":  "Vizualizează execuția",
+                                   "table":  "Vizualizează tabel",
+                                   "cards":  "Vizualizează carduri"
+                               },
+                      "fields":  {
+                                     "code":  "Cod",
+                                     "relatedVVN":  "Asociat cu",
+                                     "status":  "Status",
+                                     "createdBy":  "Creat de",
+                                     "dateOpen":  "Data deschiderii",
+                                     "dateClosed":  "Data închiderii",
+                                     "relatedVesselVisit":  "Vizită navă asociată",
+                                     "dock":  "Doc de acostare",
+                                     "berthTime":  "Ora de acostare",
+                                     "operations":  "Operații"
+                                 },
+                      "filters":  {
+                                      "startDate":  "Data de început",
+                                      "endDate":  "Data de sfârșit",
+                                      "relatedVVN":  "Notificare vizită navă",
+                                      "status":  "Status"
+                                  },
+                      "metrics":  {
+                                      "totalOperations":  "Total operații",
+                                      "completedOperations":  "Progres",
+                                      "turnaroundTime":  "Timp de rotație",
+                                      "berthOccupancy":  "Ocupare doc"
+                                  },
+                      "status":  {
+                                     "pending":  "În așteptare",
+                                     "started":  "Pornit",
+                                     "delayed":  "Întârziat",
+                                     "completed":  "Finalizat"
+                                 },
+                      "view_resources":  "Vizualizează resurse",
+                      "infoTitle":  "Informații execuție",
+                      "operationsTitle":  "Operații",
+                      "noOperations":  "Nicio operație disponibilă",
+                      "startOperation":  "Pornește operația",
+                      "completeOperation":  "Finalizează operația",
+                      "addOperation":  "Adăugă operație",
+                      "addOperationDescription":  "Adăugă o nouă operație pe linia de timp",
+                      "confirmStartOperation":  "Sunteți sigur că doriți să porniți această operație?",
+                      "confirmCompleteOperation":  "Sunteți sigur că doriți să finalizați această operație?",
+                      "berthOperation":  {
+                                             "button":  "Editează datele de acostare",
+                                             "title":  "Operațiune de acostare",
+                                             "description":  "Editează docul și ora pentru această execuție de vizită a navei.",
+                                             "dock":  "Doc de acostare",
+                                             "dockPlaceholder":  "Selectați docul",
+                                             "berthTime":  "Ora de acostare",
+                                             "differentThanPlanned":  "Docul selectat este diferit de cel planificat."
+                                         }
+                  },
+    "incident":  {
+                     "tabs":  {
+                                  "dashboard":  "Tablou de bord incidente",
+                                  "create":  "Creează incident",
+                                  "search":  "Caută incidente",
+                                  "active":  "Incidente active",
+                                  "view":  "Vizualizează incident",
+                                  "edit":  "Editează incident"
+                              },
+                     "subtitle":  {
+                                      "create":  "Raportează un incident nou în sistem",
+                                      "search":  "Caută și filtrează incidentele existente",
+                                      "active":  "Vizualizează și gestionează incidentele active"
+                                  },
+                     "generalFields":  "Informații generale",
+                     "classification":  "Clasificare",
+                     "fields":  {
+                                    "bid":  {
+                                                "title":  "ID incident"
+                                            },
+                                    "type":  {
+                                                 "title":  "Tip de incident",
+                                                 "placeholder":  "Selectați tipul de incident"
+                                             },
+                                    "startTime":  {
+                                                      "title":  "Ora de început",
+                                                      "placeholder":  "Când a început incidentul?"
+                                                  },
+                                    "endTime":  {
+                                                    "title":  "Ora de sfârșit",
+                                                    "placeholder":  "Când s-a terminat incidentul?"
+                                                },
+                                    "severity":  {
+                                                     "title":  "Gravitate",
+                                                     "placeholder":  "Selectați nivelul de gravitate",
+                                                     "options":  {
+                                                                     "minor":  "Minor",
+                                                                     "major":  "Major",
+                                                                     "critical":  "Critic"
+                                                                 }
+                                                 },
+                                    "description":  {
+                                                        "title":  "Descriere",
+                                                        "placeholder":  "Describeți incidentul în detaliu"
+                                                    },
+                                    "createdBy":  {
+                                                      "title":  "Creat de"
+                                                  },
+                                    "affectedVVECodes":  {
+                                                             "title":  "VVE-uri afectate",
+                                                             "placeholder":  "Introduceți VVE-urile afectate"
+                                                         },
+                                    "vveCode":  {
+                                                    "title":  "Cod VVE"
+                                                },
+                                    "status":  {
+                                                   "title":  "Status",
+                                                   "options":  {
+                                                                   "active":  "Activ",
+                                                                   "resolved":  "Rezolvat"
+                                                               }
+                                               },
+                                    "filterStartTime":  {
+                                                            "title":  "Data de început de la"
+                                                        },
+                                    "filterEndTime":  {
+                                                          "title":  "Data de început până la"
+                                                      },
+                                    "duration":  {
+                                                     "title":  "Durată"
+                                                 }
+                                },
+                     "severity":  {
+                                      "Minor":  "Minor",
+                                      "Major":  "Major",
+                                      "Critical":  "Critic"
+                                  },
+                     "status":  {
+                                    "active":  "Activ",
+                                    "resolved":  "Rezolvat"
+                                },
+                     "ongoing":  "În desfășurare",
+                     "filters":  {
+                                     "onlyActive":  "Doar active",
+                                     "onlyMine":  "Doar ale mele"
+                                 },
+                     "actions":  {
+                                     "view":  "Vizualizează detalii",
+                                     "edit":  "Editează incident",
+                                     "resolve":  "Rezolvă incident",
+                                     "delete":  "Șterge incident"
+                                 },
+                     "notifications":  {
+                                           "createSuccess":  "Incident creat cu succes",
+                                           "createFailed":  "Eșec la crearea incidentului",
+                                           "updateSuccess":  "Incident actualizat cu succes",
+                                           "updateFailed":  "Eșec la actualizarea incidentului",
+                                           "resolveSuccess":  "Incident rezolvat cu succes",
+                                           "resolveFailed":  "Eșec la rezolvarea incidentului",
+                                           "deleteSuccess":  "Incident șters cu succes",
+                                           "deleteFailed":  "Eșec la ștergerea incidentului"
+                                       },
+                     "table":  {
+                                   "empty":  "Niciun incident găsit"
+                               },
+                     "active":  {
+                                    "title":  "Incidente active",
+                                    "subtitle":  "Vizualizează și gestionează incidentele în desfășurare"
+                                },
+                     "infoTitle":  "Detalii incident",
+                     "closeDialog":  {
+                                         "title":  "Rezolvă incident",
+                                         "message":  "Când a fost rezolvat incidentul?",
+                                         "confirm":  "Da, închide acest incident",
+                                         "cancel":  "Anulează"
+                                     }
+                 }
 }

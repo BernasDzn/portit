@@ -1,1036 +1,1141 @@
 ﻿{
-    "common": {
-        "loading": "Ladataan...",
-        "noData": "Ei saatavilla olevia tietoja",
-        "statistics": "Tilastot",
-        "yes": "Kyllä",
-        "no": "Ei",
-        "weekDay": "Viikonpäivä",
-        "days": {
-            "sunday": "Sunnuntai",
-            "monday": "Maanantai",
-            "tuesday": "Tiistai",
-            "wednesday": "Keskiviikko",
-            "thursday": "Torstai",
-            "friday": "Perjantai",
-            "saturday": "Lauantai"
-        },
-        "number": "Numero"
-    },
-    "buttons": {
-        "save": "Tallenna",
-        "cancel": "Peruuta",
-        "delete": "Poista",
-        "edit": "Muokkaa",
-        "create": "Luo",
-        "search": "Etsi",
-        "select": "Valitse",
-        "activate": "Aktivoi",
-        "deactivate": "Poista käytöstä",
-        "generate": "Luo",
-        "close": "Sulje",
-        "add": "Lisää",
-        "review": "Tarkista",
-        "ok": "OK",
-        "downloadSample": "Lataa näyte",
-        "filter": {
-            "title": "Suodattimet",
-            "add": "Suodata",
-            "clear": "Tyhjennä suodattimet"
-        },
-        "pagination": {
-            "previous": "Edellinen",
-            "next": "Seuraava"
-        },
-        "login": "Kirjaudu",
-        "goBackToLogin": "Palaa kirjautumiseen",
-        "logout": "Kirjaudu ulos",
-        "seeMore": "Näytä lisää"
-    },
-    "unsavedChanges": {
-        "title": "Hylätäänkö muutokset?",
-        "message": "Sinulla on tallentamattomia muutoksia. Haluatko varmasti poistua tältä sivulta ja hylätä muutokset?",
-        "confirm": "Hylkää",
-        "cancel": "Jatka muokkausta"
-    },
-    "expirationWarning": {
-        "title": "Istunto päättymässä",
-        "messageOneMinute": "Istuntosi päättyy 1 minuutissa.",
-        "messageLessThanOneMinute": "Istuntosi on päättymässä.",
-        "extendSession": "Jatka istuntoa"
-    },
-    "dashboard": {
-        "welcome": "Tervetuloa takaisin, [name]!",
-        "sidebarTitle": "Kojelauta",
-        "title": "PortIT Kojelauta",
-        "subtitle": "Yleiskatsaus PortIT-järjestelmään",
-        "SAOR": {
-            "subtitle": "Laivaedustajan toimintojen yhteenveto",
-            "pendingNotifications": "Odotettavat ilmoitukset",
-            "recent": "Viimeaikaiset laivavierailuilmoitukset",
-            "recentReview": "Laivavierailuilmoitukset joilla tarkistus tarpeen",
-            "noRecent": "Ei viimeaikaisia ilmoituksia"
-        },
-        "3DModel": {
-            "title": "3D Sataman visualisointi",
-            "description": "Näytä interaktiivinen 3D-esitys koko satamasta. Seuraa laiturien käyttöastetta, alusten sijainteja, varastoalueita ja resursseja reaaliajassa.",
-            "open": "Avaa 3D-malli"
-        }
-    },
-    "admin": {
-        "sidebarTitle": "Ylläpito",
-        "title": "Ylläpitopaneeli",
-        "subtitle": "Hallinnollinen yleiskatsaus ja hallinta",
-        "userManagement": {
-            "title": "Käyttäjähallinta",
-            "subtitle": "Hallitse järjestelmän käyttäjiä, rooleja ja oikeuksia."
-        },
-        "auditLogs": {
-            "title": "Tarkastuslokit",
-            "subtitle": "Näytä ja seuraa järjestelmän toimintalokeja."
-        }
-    },
-    "user": {
-        "registeredUsers": "Rekisteröidyt käyttäjät",
-        "fields": {
-            "email": {
-                "title": "Sähköposti",
-                "placeholder": "email@mail.com"
-            },
-            "role": {
-                "title": "Rooli",
-                "placeholder": "Valitse käyttäjärooli",
-                "options": {
-                    "admin": "Ylläpitäjä",
-                    "saoRep": "SAO-edustaja",
-                    "pao": "Satamaviranomainen",
-                    "logisticsOperator": "Logistiikkaoperaattori"
-                }
-            },
-            "isActive": {
-                "title": "Aktiivinen",
-                "options": {
-                    "active": "Kyllä",
-                    "inactive": "Ei"
-                }
-            }
-        },
-        "tabs": {
-            "dashboard": "Käyttäjän kojelauta",
-            "create": "Luo käyttäjä",
-            "view": "Näytä käyttäjät",
-            "search": "Hae käyttäjiä"
-        },
-        "infoTitle": "Käyttäjän tiedot",
-        "title": "Käyttäjät",
-        "subtitle": {
-            "dashboard": "Käyttäjien yleiskatsaus ja hallinta",
-            "create": "Rekisteröi uusi käyttäjä järjestelmään",
-            "view": "Näytä ja hallitse olemassa olevia käyttäjiä"
-        }
-    },
-    "representative": {
-        "title": "Edustaja",
-        "select": "Valitse edustaja"
-    },
-    "vessel": {
-        "fields": {
-            "name": {
-                "title": "Nimi",
-                "placeholder": "Aluksen nimi"
-            },
-            "imoNumber": {
-                "title": "IMO-numero",
-                "placeholder": "Aluksen IMO-numero"
-            },
-            "owner": {
-                "title": "Omistaja",
-                "placeholder": "Omistava organisaatio"
-            },
-            "vesselType": {
-                "title": "Alustyyppi",
-                "placeholder": "Valitse alustyyppi"
-            },
-            "taxNumber": {
-                "title": "Veronumero"
-            }
-        },
-        "infoTitle": "Aluksen tiedot",
-        "physicalCharacteristicsTitle": "Fyysiset ominaisuudet",
-        "tabs": {
-            "dashboard": "Aluskojetaulu",
-            "view_dashboard": "Näytä alukset",
-            "search": "Etsi aluksia",
-            "create": "Luo alus",
-            "view": "Näytä alus",
-            "edit": "Muokkaa alusta"
-        },
-        "title": "Alukset",
-        "subtitle": {
-            "dashboard": "Yleiskatsaus alusten tilastoihin ja toimintaan",
-            "search": "Hallitse ja näytä kaikki rekisteröidyt alukset",
-            "create": "Rekisteröi uusi alus järjestelmään",
-            "edit": "Muokkaa olemassa olevaa alusta järjestelmässä"
-        },
-        "ownedBy": "Omistaja",
-        "registeredVessels": "Rekisteröidyt alukset"
-    },
-    "physicalCharacteristics": {
-        "title": "Fyysiset ominaisuudet (m)",
-        "length": {
-            "title": "Pituus",
-            "placeholder": "Pituus metreinä"
-        },
-        "depth": {
-            "title": "Syvyys",
-            "placeholder": "Syvyys metreinä"
-        },
-        "draft": {
-            "title": "Syväys",
-            "placeholder": "Syväys metreinä"
-        }
-    },
-    "dock": {
-        "fields": {
-            "code": {
-                "title": "Koodi",
-                "placeholder": "Laiturikoodi"
-            },
-            "name": {
-                "title": "Nimi",
-                "placeholder": "Laiturin nimi"
-            },
-            "location": {
-                "title": "Sijainti",
-                "placeholder": "Laiturin sijainti"
-            },
-            "supportedVesselTypes": {
-                "title": "Tuetut alustyypit",
-                "vesselTypes": {
-                    "title": "Alustyypit",
-                    "placeholder": "Valitse alustyypit"
+    "common":  {
+                   "loading":  "Ladataan...",
+                   "noData":  "Ei saatavilla olevia tietoja",
+                   "statistics":  "Tilastot",
+                   "yes":  "Kyllä",
+                   "no":  "Ei",
+                   "weekDay":  "Viikonpäivä",
+                   "days":  {
+                                "sunday":  "Sunnuntai",
+                                "monday":  "Maanantai",
+                                "tuesday":  "Tiistai",
+                                "wednesday":  "Keskiviikko",
+                                "thursday":  "Torstai",
+                                "friday":  "Perjantai",
+                                "saturday":  "Lauantai"
+                            },
+                   "number":  "Numero",
+                   "actions":  "Toiminnot",
+                   "none":  "Ei mitään"
+               },
+    "buttons":  {
+                    "save":  "Tallenna",
+                    "cancel":  "Peruuta",
+                    "delete":  "Poista",
+                    "edit":  "Muokkaa",
+                    "create":  "Luo",
+                    "search":  "Etsi",
+                    "select":  "Valitse",
+                    "activate":  "Aktivoi",
+                    "deactivate":  "Poista käytöstä",
+                    "generate":  "Luo",
+                    "close":  "Sulje",
+                    "add":  "Lisää",
+                    "review":  "Tarkista",
+                    "filter":  {
+                                   "title":  "Suodattimet",
+                                   "add":  "Suodata",
+                                   "clear":  "Tyhjennä suodattimet"
+                               },
+                    "pagination":  {
+                                       "previous":  "Edellinen",
+                                       "next":  "Seuraava"
+                                   },
+                    "login":  "Kirjaudu",
+                    "goBackToLogin":  "Palaa kirjautumiseen",
+                    "logout":  "Kirjaudu ulos",
+                    "seeMore":  "Näytä lisää",
+                    "ok":  "OK",
+                    "downloadSample":  "Lataa näyte"
                 },
-                "vesselType": "Alustyyppi"
-            }
-        },
-        "tabs": {
-            "dashboard": "Laiturikojetaulu",
-            "view_dashboard": "Näytä laiturit",
-            "search": "Etsi laitureita",
-            "create": "Luo laituri",
-            "view": "Näytä laituri",
-            "edit": "Muokkaa laituria"
-        },
-        "generalFields": "Yleiset kentät",
-        "infoTitle": "Laiturin tiedot",
-        "title": "Laiturit",
-        "subtitle": {
-            "dashboard": "Yleiskatsaus laiturien tilastoihin ja toimintaan",
-            "search": "Hallitse ja näytä kaikki rekisteröidyt laiturit",
-            "create": "Rekisteröi uusi laituri järjestelmään",
-            "edit": "Muokkaa olemassa olevaa laituria järjestelmässä"
-        },
-        "registeredDocks": "Rekisteröidyt laiturit"
-    },
-    "vesselType": {
-        "fields": {
-            "name": {
-                "title": "Nimi",
-                "placeholder": "Alustyypin nimi"
-            },
-            "description": {
-                "title": "Kuvaus",
-                "placeholder": "Alustyypin kuvaus"
-            },
-            "capacity": {
-                "title": "Kapasiteetti",
-                "placeholder": "Konttikapasiteetti TEU:ssa"
-            },
-            "containerCapacity": {
-                "title": "Konttikapasiteetti (TEU)",
-                "maxNumberOfRows": {
-                    "title": "Maks. rivien määrä",
-                    "placeholder": "Maks. rivit TEU:ssa"
-                },
-                "maxNumberOfBays": {
-                    "title": "Maks. tilojen määrä",
-                    "placeholder": "Maks. tilat TEU:ssa"
-                },
-                "maxNumberOfTiers": {
-                    "title": "Maks. tasojen määrä",
-                    "placeholder": "Maks. tasot TEU:ssa"
-                }
-            }
-        },
-        "generalFields": "Yleiset kentät",
-        "tabs": {
-            "dashboard": "Alustyyppien kojetaulu",
-            "view_dashboard": "Näytä alustyypit",
-            "search": "Etsi alustyyppejä",
-            "create": "Luo alustyyppi",
-            "view": "Näytä alustyyppi",
-            "edit": "Muokkaa alustyyppiä"
-        },
-        "infoTitle": "Alustyypin tiedot",
-        "title": "Alustyypit",
-        "subtitle": {
-            "dashboard": "Yleiskatsaus alustyyppien tilastoihin ja toimintaan",
-            "search": "Hallitse ja näytä kaikki rekisteröidyt alustyypit",
-            "create": "Rekisteröi uusi alustyyppi järjestelmään",
-            "edit": "Muokkaa olemassa olevaa alustyyppiä järjestelmässä"
-        },
-        "registeredVesselTypes": "Rekisteröidyt alustyypit"
-    },
-    "staff": {
-        "registeredStaffMembers": "Rekisteröidyt henkilöstön jäsenet",
-        "fields": {
-            "mechanographicNumber": {
-                "title": "Henkilönumero",
-                "placeholder": "Henkilönumero"
-            },
-            "name": {
-                "title": "Nimi",
-                "placeholder": "Henkilöstön nimi"
-            },
-            "email": {
-                "title": "Sähköposti",
-                "placeholder": "Sähköpostiosoite"
-            },
-            "phoneNumber": {
-                "title": "Puhelinnumero",
-                "placeholder": "Puhelinnumero"
-            },
-            "qualifications": {
-                "title": "Pätevyydet",
-                "placeholder": "Valitse pätevyydet"
-            },
-            "status": {
-                "title": "Tila",
-                "options": {
-                    "available": "Saatavilla",
-                    "unavailable": "Ei saatavilla",
-                    "temporarilyReassigned": "Tilapäisesti siirretty"
-                }
-            },
-            "operationalWindow": "Toiminta-aika"
-        },
-        "tabs": {
-            "dashboard": "Henkilöstökojetaulu",
-            "view_dashboard": "Näytä henkilöstö",
-            "search": "Etsi henkilöstöä",
-            "create": "Luo henkilöstön jäsen",
-            "view": "Näytä henkilöstön jäsen",
-            "edit": "Muokkaa henkilöstön jäsentä"
-        },
-        "infoTitle": "Henkilöstön jäsenen tiedot",
-        "title": "Henkilöstö",
-        "subtitle": {
-            "search": "Hallitse ja näytä kaikki rekisteröity henkilöstö",
-            "dashboard": "Yleiskatsaus henkilöstön tilastoihin ja toimintaan",
-            "create": "Rekisteröi uusi henkilöstön jäsen järjestelmään",
-            "view": "Näytä henkilöstön tiedot",
-            "edit": "Muokkaa olemassa olevaa henkilöstön jäsentä järjestelmässä"
-        },
-        "deactivation": {
-            "title": "Henkilöstön jäsenen poisto käytöstä",
-            "message": "Vahvistatko tämän jäsenen poiston käytöstä? Voit aktivoida hänet uudelleen myöhemmin.",
-            "successMessage": "Henkilöstön jäsen poistettiin käytöstä onnistuneesti.",
-            "errorMessage": "Virhe poistettaessa käytöstä. Yritä uudelleen."
-        }
-    },
-    "qualification": {
-        "registeredQualifications": "Rekisteröidyt pätevyydet",
-        "tabs": {
-            "dashboard": "Pätevyydet-kojetaulu",
-            "view_dashboard": "Näytä pätevyydet",
-            "search": "Etsi pätevyyksiä",
-            "create": "Luo pätevyys",
-            "view": "Näytä pätevyys",
-            "edit": "Muokkaa pätevyyttä"
-        },
-        "infoTitle": "Pätevyystiedot",
-        "title": "Pätevyydet",
-        "subtitle": {
-            "search": "Hallitse ja näytä kaikki rekisteröidyt pätevyydet",
-            "dashboard": "Yleiskatsaus pätevyyksien tilastoihin ja toimintaan",
-            "create": "Rekisteröi uusi pätevyys järjestelmään",
-            "edit": "Muokkaa olemassa olevaa pätevyyttä järjestelmässä",
-            "view": "Näytä pätevyyden tiedot"
-        },
-        "fields": {
-            "idCode": {
-                "title": "Pätevyyskoodi",
-                "placeholder": "Pätevyyskoodi"
-            },
-            "qualificationName": {
-                "title": "Pätevyyden nimi",
-                "placeholder": "Pätevyyden nimi"
-            }
-        }
-    },
-    "physicalResource": {
-        "registeredPhysicalResources": "Rekisteröidyt fyysiset resurssit",
-        "tabs": {
-            "dashboard": "Fyysisen resurssin kojetaulu",
-            "view_dashboard": "Näytä fyysiset resurssit",
-            "search": "Etsi fyysisiä resursseja",
-            "create": "Luo fyysinen resurssi",
-            "view": "Näytä fyysinen resurssi",
-            "edit": "Muokkaa fyysistä resurssia"
-        },
-        "infoTitle": "Fyysisen resurssin tiedot",
-        "title": "Fyysiset resurssit",
-        "subtitle": {
-            "search": "Hallitse ja näytä kaikki rekisteröidyt fyysiset resurssit",
-            "dashboard": "Ohjauspaneeli fyysisille resursseille",
-            "view_dashboard": "Näytä fyysiset resurssit",
-            "create": "Rekisteröi uusi fyysinen resurssi järjestelmään",
-            "view": "Näytä fyysisen resurssin tiedot",
-            "edit": "Muokkaa olemassa olevaa fyysistä resurssia järjestelmässä"
-        },
-        "generalFields": "Yleiset kentät",
-        "specificFields": "Erityiset kentät",
-        "fields": {
-            "code": {
-                "title": "Koodi",
-                "placeholder": "Resurssin koodi"
-            },
-            "description": {
-                "title": "Kuvaus",
-                "placeholder": "Resurssin kuvaus"
-            },
-            "status": {
-                "title": "Tila",
-                "placeholder": "Valitse resurssin tila",
-                "options": {
-                    "available": "Saatavilla",
-                    "maintenance": "Huolto",
-                    "outOfService": "Pois käytöstä"
-                }
-            },
-            "qualifications": {
-                "title": "Vaatimukset",
-                "placeholder": "Pätevyydet joita vaaditaan tämän resurssin käyttöön"
-            },
-            "setupTime": {
-                "title": "Asetusaika (minuutit)",
-                "placeholder": "Asetusaika"
-            },
-            "servingDocks": {
-                "title": "Palveltavat laiturit",
-                "placeholder": "Valitse palveltavat laiturit"
-            },
-            "liftingCapacity": {
-                "title": "Nostokapasiteetti (kg)",
-                "placeholder": "Nostokapasiteetti"
-            },
-            "containersPerHour": {
-                "title": "Kontteja tunnissa",
-                "placeholder": "Kontteja tunnissa"
-            },
-            "maxLoadCapacity": {
-                "title": "Suurin kuormauskapasiteetti (kg)",
-                "placeholder": "Suurin kuormauskapasiteetti"
-            },
-            "averageSpeed": {
-                "title": "Keskinopeus (km/h)",
-                "placeholder": "Keskinopeus"
-            },
-            "containersPerTrip": {
-                "title": "Kontteja per matka",
-                "placeholder": "Kontteja per matka"
-            },
-            "type": {
-                "title": "Resurssin tyyppi",
-                "options": {
-                    "stsCrane": "STS-nosturi",
-                    "yardGantry": "Varaston nosturi",
-                    "truck": "Kuorma-auto"
-                }
-            }
-        },
-        "actions": {
-            "deactivate": "Poista fyysinen resurssi käytöstä"
-        },
-        "deactivation": {
-            "title": "Fyysisen resurssin poisto käytöstä",
-            "message": "Vahvistatko tämän resurssin poiston käytöstä? Voit aktivoida sen uudelleen myöhemmin.",
-            "successMessage": "Fyysinen resurssi poistettiin käytöstä onnistuneesti.",
-            "errorMessage": "Virhe poistettaessa resurssia käytöstä. Yritä uudelleen."
-        }
-    },
-    "storageArea": {
-        "registeredStorageAreas": "Rekisteröidyt varastointialueet",
-        "tabs": {
-            "dashboard": "Varastoalueiden kojetaulu",
-            "view_dashboard": "Näytä varastoalueet",
-            "search": "Etsi varastoalueita",
-            "create": "Luo varastoalue",
-            "view": "Näytä varastoalue",
-            "edit": "Muokkaa varastoaluetta"
-        },
-        "infoTitle": "Varastoalueen tiedot",
-        "title": "Varastoalueet",
-        "subtitle": {
-            "search": "Hallitse ja näytä kaikki rekisteröidyt varastoalueet",
-            "dashboard": "Ohjauspaneeli kaikille varastoalueille",
-            "view_dashboard": "Näytä varastoalueet",
-            "create": "Rekisteröi uusi varastoalue järjestelmään",
-            "view": "Näytä varastoalueen tiedot",
-            "edit": "Muokkaa olemassa olevaa varastoaluetta järjestelmässä"
-        },
-        "printer": {
-            "docks_serviced": "Palvellut laiturit",
-            "capacity_usage": "Kapasiteetin käyttö",
-            "units": "Yksiköt",
-            "available": "Saatavilla",
-            "no_registered_distances": "Ei rekisteröityjä etäisyyksiä",
-            "no_docks_serviced": "Ei palveltavia laitureita",
-            "all_docks_serviced": "Kaikki laiturit palvellaan",
-            "serviced_docks_distance": "Palveltavien laitureiden etäisyys",
-            "no_registered_docks": "Ei rekisteröityjä laitureita"
-        },
-        "create": {
-            "distance_meters": "Etäisyys (metriä)"
-        },
-        "fields": {
-            "nameCode": {
-                "title": "Nimikoodi",
-                "placeholder": "Varastoalueen nimikoodi"
-            },
-            "location": {
-                "title": "Sijainti",
-                "placeholder": "Varastoalueen sijainti"
-            },
-            "type": {
-                "title": "Tyyppi",
-                "placeholder": "Valitse varastoalueen tyyppi",
-                "options": {
-                    "yard": "Piha",
-                    "warehouse": "Varasto"
-                }
-            },
-            "capacity": {
-                "title": "Kapasiteetti",
-                "placeholder": "Maksimikapasiteetti"
-            },
-            "occupancy": {
-                "title": "Täyttöaste",
-                "placeholder": "Nykyinen täyttöaste"
-            }
-        }
-    },
-    "search": {
-        "languages": "Etsi kieliä..."
-    },
-    "scheduling": {
-        "title": "Pyydä päivän aikataulu",
-        "subtitle": "Käytä automaattista aikataulualgoritmiamme analysoidaksesi tietyn päivän tehtävät.",
-        "noVisits": "Ei aluskäyntejä valitulle päivälle.",
-        "visitsOnSelectedDay": "Aluskäynnit valittuna päivänä",
-        "viewVisits": "Luo tehtäväaikataulu",
-        "generateTasksButton": "Luo tehtäväaikataulu",
-        "aboutAlgorithmButton": "Tietoa algoritmista",
-        "fields": {
-            "algorithm": {
-                "title": "Aikataulualgoritmi",
-                "placeholder": "Valitse aikataulualgoritmi"
-            },
-            "relatedDocks": "Valitse liittyvä laituri"
-        },
-        "generateTasksModal": {
-            "title": "Lisälogistiikka"
-        },
-        "aboutAlgorithmModal": {
-            "title": "Tietoa algoritmista",
-            "content": "Nykyinen algoritmi huomioi valitulle päivälle ja laiturille ajoitetut aluskäyntien ilmoitukset. Se tarkistaa STS-nostureiden saatavuuden ja päättää kunkin tehtävän keston nosturin nopeuden perusteella. Se ohittaa käynnit, jotka liittyvät huoltoon tai muihin ei-kuormaus/ei-purku -toimintoihin."
-        }
-    },
-    "notification": {
-        "registeredVesselVisitNotifications": "Rekisteröidyt laivavierailuilmoitukset",
-        "step": "Vaihe",
-        "of": "/",
-        "id": "Ilmoituksen tunnus",
-        "hazardous": "Vaarallinen",
-        "nonHazardous": "Ei vaarallinen",
-        "arrival": "Saapuminen",
-        "departure": "Lähtö",
-        "specialRequirements": "Erityisvaatimukset",
-        "none": "Ei mitään",
-        "crew": "Miehistö",
-        "captain": "Kapteeni",
-        "unknown": "Tuntematon",
-        "from": "Alkaen",
-        "to": "Asti",
-        "tabs": {
-            "dashboard": "Ilmoitusten kojetaulu",
-            "search": "Hae ilmoituksia",
-            "edit": "Muokkaa ilmoitusta",
-            "create": "Luo ilmoitus",
-            "makeDraft": "Luo luonnosilmoitus",
-            "myNotifications": "Omat ilmoitukset",
-            "review": "Tarkista ilmoitukset",
-            "general": "Yleinen listaus",
-            "byDate": "Kalenterilistaus",
-            "submit": "Lähetä ilmoitus",
-            "delete": "Poista ilmoitus"
-        },
-        "eventsOnDate": "Tapahtumat valittuna päivänä",
-        "noEventsOnDate": "Ei tapahtumia valittuna päivänä",
-        "title": "Aluskäyntien ilmoitukset",
-        "subtitle": {
-            "dashboard": "Yleiskatsaus aluskäyntien ilmoituksiin",
-            "search": "Hallitse ja näytä kaikki aluskäyntien ilmoitukset",
-            "create": "Luo uusi aluskäynnin ilmoitus",
-            "edit": "Muokkaa olemassa olevaa aluskäynnin ilmoitusta",
-            "review": "Tarkista odottavat aluskäynnin ilmoitukset"
-        },
-        "errors": {
-            "noNotificationId": "Ilmoituksen tunnusta ei annettu"
-        },
-        "infoTitle": "Ilmoituksen tiedot",
-        "cargoTitle": "Lastin tiedot",
-        "vesselTitle": "Aluksen tiedot",
-        "manifestInfo": "Manifestin tiedot",
-        "fields": {
-            "openLoadManifest": "Avaa lastausmanifesti",
-            "openUnloadManifest": "Avaa purkumanifesti",
-            "expectedArrival": "Odotettu saapuminen",
-            "expectedDeparture": "Odotettu lähtö",
-            "isCargoHazardous": "Lasti vaarallinen",
-            "specialRequirements": "Erityisvaatimukset",
-            "captain": "Kapteeni",
-            "totalCrewMembers": "Miehistön kokonaismäärä",
-            "safetyOfficers": "Turvallisuusvastaavat",
-            "loadCargoManifest": "Latausmanifesti",
-            "unloadCargoManifest": "Purkumanifesti",
-            "position": "Sijainti",
-            "area": "Alue",
-            "container": "Kontti",
-            "crewMembers": "Miehistön jäsenet",
-            "status": "Tila"
-        },
-        "timeline": {
-            "pending": "Odottaa",
-            "inProgress": "Käynnissä",
-            "completed": "Valmis",
-            "submitted": "Lähetetty",
-            "accepted": "Hyväksytty",
-            "rejected": "Hylätty"
-        },
-        "filters": {
-            "expectedArrivalFrom": "Odotettu saapuminen alkaen",
-            "expectedArrivalTo": "Odotettu saapuminen asti",
-            "withReason": "Perustelulla",
-            "withDockAssigned": "Laituri määritettynä"
-        },
-        "decision": {
-            "isFinal": "Lopullinen",
-            "assignedDock": {
-                "title": "Määritetty laituri",
-                "placeholder": "Valitse määritetty laituri"
-            },
-            "reason": {
-                "title": "Perustelu",
-                "placeholder": "Anna päätöksen perustelu"
-            },
-            "status": "Päätöksen tila"
-        }
-    },
-    "operationalWindow": {
-        "title": "Toiminta-aika",
-        "printer": {
-            "addShift": "Lisää vuoro",
-            "shifts": "Vuorot:",
-            "noShifts": "Ei vuoroja.",
-            "startTime": "Aloitusaika",
-            "endTime": "Lopetusaika",
-            "weekDays": "Viikonpäivät"
-        },
-        "errors": {
-            "shiftOverlap": "Virheellinen vuoro. Päällekkäinen tai loppuaika ennen aloitusta."
-        }
-    },
-    "about": {
-        "title": "Tietoja PorTiT:sta",
-        "privacy": {
-            "title": "Tietosuojakäytäntö",
-            "lastUpdated": "Viimeksi päivitetty: {date}"
-        }
-    },
-    "operationPlan": {
-        "title": "Toimintasuunnitelma",
-        "dock": "Laituri",
-        "docks": "Laiturit",
-        "operations": "Toiminnot",
-        "cranes": "Nosturit",
-        "createdBy": "Luonut",
-        "createdAt": "Luotu",
-        "totalSchedules": "Aikatauluja yhteensä",
-        "vesselCount": "Alukset",
-        "plansOnDate": "Toimintasuunnitelmat valitulla päivällä",
-        "noPlansOnDate": "Ei toimintasuunnitelmia valitulla päivällä",
-        "id": "Tunniste",
-        "vvn": "Aluskäynnin ilmoitus",
-        "for": "kohteelle",
-        "details": "Yksityiskohdat",
-        "totalOperations": "Toimintoja yhteensä",
-        "algorithmUsed": "Käytetty algoritmi",
-        "ganttChart": "Gantt-kaavio",
-        "startTime": "Aloitusaika",
-        "endTime": "Lopetusaika",
-        "totalDuration": "Kokonaiskesto",
-        "operation": "Toiminto",
-        "duration": "Kesto",
-        "resources": "Resurssit",
-        "operationDetails": "Toiminnon yksityiskohdat",
-        "operationNumber": "Toiminto #{number}",
-        "notFound": "Toimintasuunnitelmaa ei löytynyt",
-        "operationType": {
-            "Unload": "Purkaminen",
-            "Load": "Lastaus"
-        },
-        "tabs": {
-            "unplannedVVNs": "Suunnittelemattomat VVN:t",
-            "search": "Hae suunnitelmia",
-            "edit": "Muokkaa suunnitelmaa",
-            "open": "Avaa toteutus"
-        },
-        "subtitle": {
-            "edit": "Muokkaa toimintasuunnitelman yksityiskohtia ja aikataulua"
-        },
-        "unplannedVVNs": {
-            "description": "Aluskäynnin ilmoitukset, joilla ei ole vielä osoitettua toimintasuunnitelmaa",
-            "noUnplanned": "Kaikilla aluskäynnin ilmoituksilla on osoitetut toimintasuunnitelmat",
-            "foundMessage": "Löydettiin {vvnCount} VVN ilman suunnitelmia {dayCount} päivässä/päivässä",
-            "regenerateAll": "Luo kaikki puuttuvat suunnitelmat",
-            "regenerateDay": "Luo tämän päivän suunnitelmat",
-            "regenerateModalTitle": "Luo suunnitelmat päivälle {date}",
-            "warning": "Varoitus",
-            "warningMessage": "Suunnitelmien uudelleenluonti korvaa kaikki olemassa olevat toimintasuunnitelmat tälle päivälle. Tätä toimintoa ei voi perua.",
-            "selectedDay": "Valittu päivä",
-            "confirmRegeneration": "Vahvista uudelleenluonti",
-            "affectedDays": "Vaikutetut päivät",
-            "queueInfo": "Jokainen uudelleenluontipyyntö asetetaan jonoon erikseen. Voit tarkastella ja hyväksyä/hylätä ne erikseen aikataulutusjonosta.",
-            "continue": "Jatka",
-            "confirmRegenerationTitle": "Vahvista uudelleenluonti",
-            "irreversibleAction": "Tämä toiminto on peruuttamaton",
-            "overwriteWarning": "Toimintasuunnitelmien uudelleenluonti korvaa pysyvästi kaikki olemassa olevat suunnitelmat valituille päiville. Tätä toimintoa ei voi perua.",
-            "aboutToRegenerate": "Olet luomassa suunnitelmia",
-            "days": "päivälle",
-            "vesselVisitNotifications": "Aluskäynnin ilmoitukset",
-            "using": "Käyttäen",
-            "algorithm": "algoritmia",
-            "proceedQuestion": "Haluatko jatkaa tätä toimintoa?",
-            "yesRegenerateAll": "Kyllä, luo kaikki"
-        },
-        "algorithm": {
-            "optimal": "Optimaalinen",
-            "greedy": "Ahne",
-            "genetic": "Geneettinen",
-            "auto": "Automaattinen"
-        },
-        "metrics": {
-            "title": "Mittarit",
-            "strategy": "Strategia",
-            "totalDelay": "Kokonaisviive",
-            "computationTime": "Laskenta-aika",
-            "autoSelection": "Automaattinen algoritmin valinta"
-        },
-        "infoTitle": "Toimintasuunnitelman tiedot",
-        "fields": {
-            "id": {
-                "title": "Suunnitelman tunniste"
-            },
-            "relatedVVN": {
-                "title": "Liittyvä VVN"
-            },
-            "dock": {
-                "title": "Laituri"
-            },
-            "operations": {
-                "title": "Toiminnot"
-            }
-        },
-        "filters": {
-            "startDate": "Aloituspäivä alkaen",
-            "endDate": "Lopetuspäivä asti"
-        },
-        "metadata": {
-            "title": "Metatiedot",
-            "createdBy": "Luonut",
-            "createdAt": "Luotu",
-            "algorithmUsed": "Käytetty algoritmi"
-        },
-        "schedule": {
-            "title": "Toimintojen aikataulu",
-            "noOperations": "Ei suunniteltuja toimintoja"
-        }
-    },
-    "incidentType": {
-        "fields": {
-            "name": {
-                "title": "Nimi",
-                "placeholder": "Tapahtuman tyypin nimi"
-            },
-            "description": {
-                "title": "Kuvaus",
-                "placeholder": "Tapahtuman tyypin yksityiskohtainen kuvaus"
-            },
-            "severity": {
-                "title": "Vakavuus",
-                "placeholder": "Valitse vakavuustaso"
-            },
-            "subtypeOf": {
-                "title": "Alatyyppi",
-                "placeholder": "Valitse ylätyyppi"
-            },
-            "subtypes": {
-                "title": "Alatyypit",
-                "placeholder": "Valitse alatyypit"
-            }
-        },
-        "severity": {
-            "Minor": "Vähäinen",
-            "Major": "Suuri",
-            "Critical": "Kriittinen"
-        },
-        "tabs": {
-            "dashboard": "Tapahtumien kojelauta",
-            "view_dashboard": "Näytä tapahtumatyypit",
-            "search": "Hae tapahtumatyyppejä",
-            "create": "Luo tapahtumatyyppi",
-            "edit": "Muokkaa tapahtumatyyppiä"
-        },
-        "generalFields": "Yleiset kentät",
-        "classification": "Luokittelu",
-        "title": "Tapahtumat",
-        "subtitle": {
-            "dashboard": "Tapahtumien tyyppien tilastojen ja toimintojen yleiskatsaus",
-            "search": "Hallitse ja tarkastele kaikkia rekisteröityjä tapahtumatyyppejä",
-            "create": "Rekisteröi uusi tapahtumatyyppi järjestelmään",
-            "edit": "Muokkaa olemassa olevaa tapahtumatyyppiä järjestelmässä"
-        },
-        "registeredIncidentTypes": "Rekisteröidyt tapahtumatyypit",
-        "incidentTypeInformation": "Tapahtumatyypin tiedot",
-        "parentType": "Ylätyyppi",
-        "confirmDelete": "Vahvista poisto",
-        "confirmDeleteMessage": "Oletko varma, että haluat poistaa tämän tapahtumatyypin?",
-        "failedToDelete": "Tapahtumatyypin poistaminen epäonnistui"
-    },
-    "taskCategory": {
-        "fields": {
-            "name": {
-                "title": "Nimi",
-                "placeholder": "Tehtäväluokan nimi"
-            },
-            "category": {
-                "title": "Luokka",
-                "placeholder": "Luokkakoodi"
-            },
-            "description": {
-                "title": "Kuvaus",
-                "placeholder": "Tehtäväluokan kuvaus"
-            }
-        },
-        "tabs": {
-            "dashboard": "Tehtävien kojelauta",
-            "search": "Hae tehtäväluokkia",
-            "create": "Luo tehtäväluokka",
-            "edit": "Muokkaa tehtäväluokkaa",
-            "view_dashboard": "Näytä tehtäväluokat"
-        },
-        "generalFields": "Yleiset kentät",
-        "title": "Tehtävät",
-        "subtitle": {
-            "dashboard": "Tehtäväluokkien tilastojen ja toimintojen yleiskatsaus",
-            "search": "Hallitse ja tarkastele kaikkia rekisteröityjä tehtäväluokkia",
-            "create": "Rekisteröi uusi tehtäväluokka järjestelmään",
-            "edit": "Muokkaa olemassa olevaa tehtäväluokkaa järjestelmässä"
-        },
-        "taskCategoryInformation": "Tehtäväluokan tiedot",
-        "registeredTaskCategories": "Rekisteröidyt tehtäväluokat"
-    },
-    "execution": {
-        "title": "Aluskäynnin toteutukset",
-        "subtitle": {
-            "search": "Hallitse ja tarkastele kaikkia aluskäynnin toteutuksia",
-            "dashboard": "Aluskäynnin toteutusten tilastojen ja toimintojen yleiskatsaus"
-        },
-        "tabs": {
-            "dashboard": "Toteutusten kojelauta",
-            "search": "Hae toteutuksia",
-            "view_dashboard": "Näytä toteutukset",
-            "update": "Päivitä toteutus",
-            "view": "Näytä toteutus",
-            "table": "Näytä taulukko",
-            "cards": "Näytä kortit"
-        },
-        "fields": {
-            "code": "Koodi",
-            "relatedVVN": "Liittyvä",
-            "status": "Tila",
-            "createdBy": "Luonut",
-            "dateOpen": "Avauspäivä",
-            "dateClosed": "Sulkemispäivä",
-            "relatedVesselVisit": "Liittyvä aluskäynti",
-            "dock": "Telakointilaitu ri",
-            "berthTime": "Telakointiaika",
-            "operations": "Toiminnot"
-        },
-        "filters": {
-            "startDate": "Aloituspäivä",
-            "endDate": "Lopetuspäivä",
-            "relatedVVN": "Aluskäynnin ilmoitus",
-            "status": "Tila"
-        },
-        "metrics": {
-            "totalOperations": "Toimintoja yhteensä",
-            "completedOperations": "Edistyminen",
-            "turnaroundTime": "Käännösaika",
-            "berthOccupancy": "Laiturin käyttöaste"
-        },
-        "status": {
-            "pending": "Odottaa",
-            "started": "Aloitettu",
-            "delayed": "Viivästynyt",
-            "completed": "Valmis"
-        },
-        "view_resources": "Näytä resurssit",
-        "infoTitle": "Toteutuksen tiedot",
-        "operationsTitle": "Toiminnot",
-        "noOperations": "Ei saatavilla olevia toimintoja",
-        "startOperation": "Aloita toiminto",
-        "completeOperation": "Viimeistele toiminto",
-        "addOperation": "Lisää toiminto",
-        "addOperationDescription": "Lisää uusi toiminto aikajanalle",
-        "confirmStartOperation": "Oletko varma, että haluat aloittaa tämän toiminnon?",
-        "confirmCompleteOperation": "Oletko varma, että haluat viimeistellä tämän toiminnon?",
-        "berthOperation": {
-            "button": "Muokkaa telakointitietoja",
-            "title": "Telakointitoiminto",
-            "description": "Muokkaa tämän aluskäynnin toteutuksen laituria ja aikaa.",
-            "dock": "Telakointilaituri",
-            "dockPlaceholder": "Valitse laituri",
-            "berthTime": "Telakointiaika",
-            "differentThanPlanned": "Valittu laituri on eri kuin suunniteltu."
-        }
-    },
-    "incident": {
-        "tabs": {
-            "dashboard": "Tapahtumien kojelauta",
-            "create": "Luo tapahtuma",
-            "search": "Hae tapahtumia",
-            "active": "Aktiiviset tapahtumat",
-            "view": "Näytä tapahtuma",
-            "edit": "Muokkaa tapahtumaa"
-        },
-        "subtitle": {
-            "create": "Ilmoita uusi tapahtuma järjestelmään",
-            "search": "Hae ja suodata olemassa olevia tapahtumia",
-            "active": "Tarkastele ja hallitse aktiivisia tapahtumia"
-        },
-        "generalFields": "Yleiset tiedot",
-        "classification": "Luokittelu",
-        "fields": {
-            "bid": {
-                "title": "Tapahtuman tunniste"
-            },
-            "type": {
-                "title": "Tapahtumatyyppi",
-                "placeholder": "Valitse tapahtumatyyppi"
-            },
-            "startTime": {
-                "title": "Aloitusaika",
-                "placeholder": "Milloin tapahtuma alkoi?"
-            },
-            "endTime": {
-                "title": "Lopetusaika",
-                "placeholder": "Milloin tapahtuma päättyi?"
-            },
-            "severity": {
-                "title": "Vakavuus",
-                "placeholder": "Valitse vakavuustaso",
-                "options": {
-                    "minor": "Vähäinen",
-                    "major": "Suuri",
-                    "critical": "Kriittinen"
-                }
-            },
-            "description": {
-                "title": "Kuvaus",
-                "placeholder": "Kuvaile tapahtuma yksityiskohtaisesti"
-            },
-            "createdBy": {
-                "title": "Luonut"
-            },
-            "affectedVVECodes": {
-                "title": "Vaikutetut VVE:t",
-                "placeholder": "Syötä vaikutetut VVE:t"
-            },
-            "vveCode": {
-                "title": "VVE-koodi"
-            },
-            "status": {
-                "title": "Tila",
-                "options": {
-                    "active": "Aktiivinen",
-                    "resolved": "Ratkaistu"
-                }
-            },
-            "filterStartTime": {
-                "title": "Aloituspäivä alkaen"
-            },
-            "filterEndTime": {
-                "title": "Aloituspäivä asti"
-            },
-            "duration": {
-                "title": "Kesto"
-            }
-        },
-        "severity": {
-            "Minor": "Vähäinen",
-            "Major": "Suuri",
-            "Critical": "Kriittinen"
-        },
-        "status": {
-            "active": "Aktiivinen",
-            "resolved": "Ratkaistu"
-        },
-        "ongoing": "Käynnissä",
-        "filters": {
-            "onlyActive": "Vain aktiiviset",
-            "onlyMine": "Vain omat"
-        },
-        "actions": {
-            "view": "Näytä yksityiskohdat",
-            "edit": "Muokkaa tapahtumaa",
-            "resolve": "Ratkaise tapahtuma",
-            "delete": "Poista tapahtuma"
-        },
-        "notifications": {
-            "createSuccess": "Tapahtuma luotu onnistuneesti",
-            "createFailed": "Tapahtuman luonti epäonnistui",
-            "updateSuccess": "Tapahtuma päivitetty onnistuneesti",
-            "updateFailed": "Tapahtuman päivitys epäonnistui",
-            "resolveSuccess": "Tapahtuma ratkaistu onnistuneesti",
-            "resolveFailed": "Tapahtuman ratkaisu epäonnistui",
-            "deleteSuccess": "Tapahtuma poistettu onnistuneesti",
-            "deleteFailed": "Tapahtuman poisto epäonnistui"
-        },
-        "table": {
-            "empty": "Tapahtumia ei löytynyt"
-        },
-        "active": {
-            "title": "Aktiiviset tapahtumat",
-            "subtitle": "Tarkastele ja hallitse käynnissä olevia tapahtumia"
-        },
-        "infoTitle": "Tapahtuman yksityiskohdat",
-        "closeDialog": {
-            "title": "Ratkaise tapahtuma",
-            "message": "Milloin tapahtuma ratkottiin?",
-            "confirm": "Kyllä, sulje tämä tapahtuma",
-            "cancel": "Peruuta"
-        }
-    }
+    "search":  {
+                   "languages":  "Etsi kieliä..."
+               },
+    "unsavedChanges":  {
+                           "title":  "Hylätäänkö muutokset?",
+                           "message":  "Sinulla on tallentamattomia muutoksia. Haluatko varmasti poistua tältä sivulta ja hylätä muutokset?",
+                           "confirm":  "Hylkää",
+                           "cancel":  "Jatka muokkausta"
+                       },
+    "expirationWarning":  {
+                              "messageOneMinute":  "Istuntosi päättyy 1 minuutissa.",
+                              "messageLessThanOneMinute":  "Istuntosi on päättymässä."
+                          },
+    "dashboard":  {
+                      "welcome":  "Tervetuloa takaisin, [name]!",
+                      "sidebarTitle":  "Kojelauta",
+                      "title":  "PortIT Kojelauta",
+                      "subtitle":  "Yleiskatsaus PortIT-järjestelmään",
+                      "SAOR":  {
+                                   "subtitle":  "Laivaedustajan toimintojen yhteenveto",
+                                   "pendingNotifications":  "Odotettavat ilmoitukset",
+                                   "recent":  "Viimeaikaiset laivavierailuilmoitukset",
+                                   "recentReview":  "Laivavierailuilmoitukset joilla tarkistus tarpeen",
+                                   "noRecent":  "Ei viimeaikaisia ilmoituksia"
+                               },
+                      "3DModel":  {
+                                      "title":  "3D Sataman visualisointi",
+                                      "description":  "Näytä interaktiivinen 3D-esitys koko satamasta. Seuraa laiturien käyttöastetta, alusten sijainteja, varastoalueita ja resursseja reaaliajassa.",
+                                      "open":  "Avaa 3D-malli"
+                                  }
+                  },
+    "admin":  {
+                  "sidebarTitle":  "Ylläpito",
+                  "title":  "Ylläpitopaneeli",
+                  "subtitle":  "Hallinnollinen yleiskatsaus ja hallinta",
+                  "userManagement":  {
+                                         "title":  "Käyttäjähallinta",
+                                         "subtitle":  "Hallitse järjestelmän käyttäjiä, rooleja ja oikeuksia."
+                                     },
+                  "auditLogs":  {
+                                    "title":  "Tarkastuslokit",
+                                    "subtitle":  "Näytä ja seuraa järjestelmän toimintalokeja."
+                                },
+                  "pp":  {
+                             "title":  "Tietosuojakäytännöt",
+                             "subtitle":  "Määrittele ja hallitse sataman tietosuojakäytäntöjä."
+                         },
+                  "notifications":  {
+                                        "create":  "Luo ilmoitus",
+                                        "subtitleCreate":  "Send important announcements to any or all users.",
+                                        "title":  "Järjestelmäilmoitukset",
+                                        "subtitle":  "Luo ja hallitse yleisiä järjestelmäilmoituksia.",
+                                        "broadcastToggle":  "Broadcast to all users",
+                                        "sendEmailToggle":  "Also send as email",
+                                        "fields":  {
+                                                       "title":  {
+                                                                     "title":  "Title",
+                                                                     "placeholder":  "Anna ilmoituksen otsikko"
+                                                                 },
+                                                       "message":  {
+                                                                       "title":  "Message",
+                                                                       "placeholder":  "Anna ilmoituksen viesti"
+                                                                   },
+                                                       "email":  {
+                                                                     "title":  "User email",
+                                                                     "placeholder":  "Specify user email to send to"
+                                                                 },
+                                                       "urgency":  {
+                                                                       "title":  "Urgency",
+                                                                       "options":  {
+                                                                                       "normal":  "Normal",
+                                                                                       "urgent":  "Urgent"
+                                                                                   }
+                                                                   }
+                                                   }
+                                    }
+              },
+    "user":  {
+                 "fields":  {
+                                "email":  {
+                                              "title":  "Sähköposti",
+                                              "placeholder":  "email@mail.com"
+                                          },
+                                "role":  {
+                                             "title":  "Rooli",
+                                             "placeholder":  "Valitse käyttäjärooli",
+                                             "options":  {
+                                                             "admin":  "Ylläpitäjä",
+                                                             "saoRep":  "SAO-edustaja",
+                                                             "pao":  "Satamaviranomainen",
+                                                             "logisticsOperator":  "Logistiikkaoperaattori"
+                                                         }
+                                         },
+                                "isActive":  {
+                                                 "title":  "Aktiivinen",
+                                                 "options":  {
+                                                                 "active":  "Kyllä",
+                                                                 "inactive":  "Ei"
+                                                             }
+                                             }
+                            },
+                 "tabs":  {
+                              "dashboard":  "Käyttäjän kojelauta",
+                              "create":  "Luo käyttäjä",
+                              "view":  "Näytä käyttäjät",
+                              "search":  "Hae käyttäjiä"
+                          },
+                 "infoTitle":  "Käyttäjän tiedot",
+                 "title":  "Käyttäjät",
+                 "subtitle":  {
+                                  "dashboard":  "Käyttäjien yleiskatsaus ja hallinta",
+                                  "create":  "Rekisteröi uusi käyttäjä järjestelmään",
+                                  "view":  "Näytä ja hallitse olemassa olevia käyttäjiä"
+                              },
+                 "registeredUsers":  "Rekisteröidyt käyttäjät",
+                 "confirmDelete":  "Vahvista poisto",
+                 "confirmDeleteMessage":  "Haluatko varmasti poistaa tämän käyttäjän?"
+             },
+    "representative":  {
+                           "title":  "Edustaja",
+                           "select":  "Valitse edustaja"
+                       },
+    "physicalCharacteristics":  {
+                                    "title":  "Fyysiset ominaisuudet (m)",
+                                    "length":  {
+                                                   "title":  "Pituus",
+                                                   "placeholder":  "Pituus metreinä"
+                                               },
+                                    "depth":  {
+                                                  "title":  "Syvyys",
+                                                  "placeholder":  "Syvyys metreinä"
+                                              },
+                                    "draft":  {
+                                                  "title":  "Syväys",
+                                                  "placeholder":  "Syväys metreinä"
+                                              }
+                                },
+    "dock":  {
+                 "fields":  {
+                                "code":  {
+                                             "title":  "Koodi",
+                                             "placeholder":  "Laiturikoodi"
+                                         },
+                                "name":  {
+                                             "title":  "Nimi",
+                                             "placeholder":  "Laiturin nimi"
+                                         },
+                                "location":  {
+                                                 "title":  "Sijainti",
+                                                 "placeholder":  "Laiturin sijainti"
+                                             },
+                                "supportedVesselTypes":  {
+                                                             "title":  "Tuetut alustyypit",
+                                                             "vesselTypes":  {
+                                                                                 "title":  "Alustyypit",
+                                                                                 "placeholder":  "Valitse alustyypit"
+                                                                             },
+                                                             "vesselType":  "Alustyyppi"
+                                                         }
+                            },
+                 "tabs":  {
+                              "dashboard":  "Laiturikojetaulu",
+                              "view_dashboard":  "Näytä laiturit",
+                              "search":  "Etsi laitureita",
+                              "create":  "Luo laituri",
+                              "view":  "Näytä laituri",
+                              "edit":  "Muokkaa laituria"
+                          },
+                 "generalFields":  "Yleiset kentät",
+                 "infoTitle":  "Laiturin tiedot",
+                 "title":  "Laiturit",
+                 "subtitle":  {
+                                  "dashboard":  "Yleiskatsaus laiturien tilastoihin ja toimintaan",
+                                  "search":  "Hallitse ja näytä kaikki rekisteröidyt laiturit",
+                                  "create":  "Rekisteröi uusi laituri järjestelmään",
+                                  "edit":  "Muokkaa olemassa olevaa laituria järjestelmässä"
+                              },
+                 "registeredDocks":  "Rekisteröidyt laiturit"
+             },
+    "vesselType":  {
+                       "fields":  {
+                                      "name":  {
+                                                   "title":  "Nimi",
+                                                   "placeholder":  "Alustyypin nimi"
+                                               },
+                                      "description":  {
+                                                          "title":  "Kuvaus",
+                                                          "placeholder":  "Alustyypin kuvaus"
+                                                      },
+                                      "capacity":  {
+                                                       "title":  "Kapasiteetti",
+                                                       "placeholder":  "Konttikapasiteetti TEU:ssa"
+                                                   },
+                                      "containerCapacity":  {
+                                                                "title":  "Konttikapasiteetti (TEU)",
+                                                                "maxNumberOfRows":  {
+                                                                                        "title":  "Maks. rivien määrä",
+                                                                                        "placeholder":  "Maks. rivit TEU:ssa"
+                                                                                    },
+                                                                "maxNumberOfBays":  {
+                                                                                        "title":  "Maks. tilojen määrä",
+                                                                                        "placeholder":  "Maks. tilat TEU:ssa"
+                                                                                    },
+                                                                "maxNumberOfTiers":  {
+                                                                                         "title":  "Maks. tasojen määrä",
+                                                                                         "placeholder":  "Maks. tasot TEU:ssa"
+                                                                                     }
+                                                            }
+                                  },
+                       "generalFields":  "Yleiset kentät",
+                       "tabs":  {
+                                    "dashboard":  "Alustyyppien kojetaulu",
+                                    "view_dashboard":  "Näytä alustyypit",
+                                    "search":  "Etsi alustyyppejä",
+                                    "create":  "Luo alustyyppi",
+                                    "view":  "Näytä alustyyppi",
+                                    "edit":  "Muokkaa alustyyppiä"
+                                },
+                       "infoTitle":  "Alustyypin tiedot",
+                       "title":  "Alustyypit",
+                       "subtitle":  {
+                                        "dashboard":  "Yleiskatsaus alustyyppien tilastoihin ja toimintaan",
+                                        "search":  "Hallitse ja näytä kaikki rekisteröidyt alustyypit",
+                                        "create":  "Rekisteröi uusi alustyyppi järjestelmään",
+                                        "edit":  "Muokkaa olemassa olevaa alustyyppiä järjestelmässä"
+                                    },
+                       "registeredVesselTypes":  "Rekisteröidyt alustyypit"
+                   },
+    "vessel":  {
+                   "fields":  {
+                                  "name":  {
+                                               "title":  "Nimi",
+                                               "placeholder":  "Aluksen nimi"
+                                           },
+                                  "imoNumber":  {
+                                                    "title":  "IMO-numero",
+                                                    "placeholder":  "Aluksen IMO-numero"
+                                                },
+                                  "owner":  {
+                                                "title":  "Omistaja",
+                                                "placeholder":  "Omistava organisaatio"
+                                            },
+                                  "vesselType":  {
+                                                     "title":  "Alustyyppi",
+                                                     "placeholder":  "Valitse alustyyppi"
+                                                 },
+                                  "taxNumber":  {
+                                                    "title":  "Veronumero"
+                                                }
+                              },
+                   "infoTitle":  "Aluksen tiedot",
+                   "physicalCharacteristicsTitle":  "Fyysiset ominaisuudet",
+                   "tabs":  {
+                                "dashboard":  "Aluskojetaulu",
+                                "view_dashboard":  "Näytä alukset",
+                                "search":  "Etsi aluksia",
+                                "create":  "Luo alus",
+                                "view":  "Näytä alus",
+                                "edit":  "Muokkaa alusta"
+                            },
+                   "title":  "Alukset",
+                   "subtitle":  {
+                                    "dashboard":  "Yleiskatsaus alusten tilastoihin ja toimintaan",
+                                    "search":  "Hallitse ja näytä kaikki rekisteröidyt alukset",
+                                    "create":  "Rekisteröi uusi alus järjestelmään",
+                                    "edit":  "Muokkaa olemassa olevaa alusta järjestelmässä"
+                                },
+                   "ownedBy":  "Omistaja",
+                   "registeredVessels":  "Rekisteröidyt alukset"
+               },
+    "staff":  {
+                  "deactivation":  {
+                                       "title":  "Henkilöstön jäsenen poisto käytöstä",
+                                       "message":  "Vahvistatko tämän jäsenen poiston käytöstä? Voit aktivoida hänet uudelleen myöhemmin.",
+                                       "successMessage":  "Henkilöstön jäsen poistettiin käytöstä onnistuneesti.",
+                                       "errorMessage":  "Virhe poistettaessa käytöstä. Yritä uudelleen."
+                                   },
+                  "fields":  {
+                                 "mechanographicNumber":  {
+                                                              "title":  "Henkilönumero",
+                                                              "placeholder":  "Henkilönumero"
+                                                          },
+                                 "name":  {
+                                              "title":  "Nimi",
+                                              "placeholder":  "Henkilöstön nimi"
+                                          },
+                                 "email":  {
+                                               "title":  "Sähköposti",
+                                               "placeholder":  "Sähköpostiosoite"
+                                           },
+                                 "phoneNumber":  {
+                                                     "title":  "Puhelinnumero",
+                                                     "placeholder":  "Puhelinnumero"
+                                                 },
+                                 "qualifications":  {
+                                                        "title":  "Pätevyydet",
+                                                        "placeholder":  "Valitse pätevyydet"
+                                                    },
+                                 "status":  {
+                                                "title":  "Tila",
+                                                "options":  {
+                                                                "available":  "Saatavilla",
+                                                                "unavailable":  "Ei saatavilla",
+                                                                "temporarilyReassigned":  "Tilapäisesti siirretty"
+                                                            }
+                                            },
+                                 "operationalWindow":  "Toiminta-aika"
+                             },
+                  "tabs":  {
+                               "dashboard":  "Henkilöstökojetaulu",
+                               "view_dashboard":  "Näytä henkilöstö",
+                               "search":  "Etsi henkilöstöä",
+                               "create":  "Luo henkilöstön jäsen",
+                               "view":  "Näytä henkilöstön jäsen",
+                               "edit":  "Muokkaa henkilöstön jäsentä"
+                           },
+                  "infoTitle":  "Henkilöstön jäsenen tiedot",
+                  "title":  "Henkilöstö",
+                  "subtitle":  {
+                                   "search":  "Hallitse ja näytä kaikki rekisteröity henkilöstö",
+                                   "dashboard":  "Yleiskatsaus henkilöstön tilastoihin ja toimintaan",
+                                   "create":  "Rekisteröi uusi henkilöstön jäsen järjestelmään",
+                                   "view":  "Näytä henkilöstön tiedot",
+                                   "edit":  "Muokkaa olemassa olevaa henkilöstön jäsentä järjestelmässä"
+                               },
+                  "registeredStaffMembers":  "Rekisteröidyt henkilöstön jäsenet"
+              },
+    "qualification":  {
+                          "tabs":  {
+                                       "dashboard":  "Pätevyydet-kojetaulu",
+                                       "view_dashboard":  "Näytä pätevyydet",
+                                       "search":  "Etsi pätevyyksiä",
+                                       "create":  "Luo pätevyys",
+                                       "view":  "Näytä pätevyys",
+                                       "edit":  "Muokkaa pätevyyttä"
+                                   },
+                          "infoTitle":  "Pätevyystiedot",
+                          "title":  "Pätevyydet",
+                          "subtitle":  {
+                                           "search":  "Hallitse ja näytä kaikki rekisteröidyt pätevyydet",
+                                           "dashboard":  "Yleiskatsaus pätevyyksien tilastoihin ja toimintaan",
+                                           "create":  "Rekisteröi uusi pätevyys järjestelmään",
+                                           "edit":  "Muokkaa olemassa olevaa pätevyyttä järjestelmässä",
+                                           "view":  "Näytä pätevyyden tiedot"
+                                       },
+                          "fields":  {
+                                         "idCode":  {
+                                                        "title":  "Pätevyyskoodi",
+                                                        "placeholder":  "Pätevyyskoodi"
+                                                    },
+                                         "qualificationName":  {
+                                                                   "title":  "Pätevyyden nimi",
+                                                                   "placeholder":  "Pätevyyden nimi"
+                                                               }
+                                     },
+                          "registeredQualifications":  "Rekisteröidyt pätevyydet"
+                      },
+    "scheduling":  {
+                       "title":  "Pyydä päivän aikataulu",
+                       "subtitle":  "Käytä automaattista aikataulualgoritmiamme analysoidaksesi tietyn päivän tehtävät.",
+                       "noVisits":  "Ei aluskäyntejä valitulle päivälle.",
+                       "visitsOnSelectedDay":  "Aluskäynnit valittuna päivänä",
+                       "viewVisits":  "Luo tehtäväaikataulu",
+                       "generateTasksButton":  "Luo tehtäväaikataulu",
+                       "aboutAlgorithmButton":  "Tietoa algoritmista",
+                       "fields":  {
+                                      "algorithm":  {
+                                                        "title":  "Aikataulualgoritmi",
+                                                        "placeholder":  "Valitse aikataulualgoritmi"
+                                                    },
+                                      "relatedDocks":  "Valitse liittyvä laituri"
+                                  },
+                       "generateTasksModal":  {
+                                                  "title":  "Lisälogistiikka"
+                                              },
+                       "aboutAlgorithmModal":  {
+                                                   "title":  "Tietoa algoritmista",
+                                                   "content":  "Nykyinen algoritmi huomioi valitulle päivälle ja laiturille ajoitetut aluskäyntien ilmoitukset. Se tarkistaa STS-nostureiden saatavuuden ja päättää kunkin tehtävän keston nosturin nopeuden perusteella. Se ohittaa käynnit, jotka liittyvät huoltoon tai muihin ei-kuormaus/ei-purku -toimintoihin."
+                                               },
+                       "results":  {
+                                       "title":  "Scheduling Results",
+                                       "subtitle":  "Generated task schedule for the selected date"
+                                   },
+                       "tabs":  {
+                                    "dashboard":  "Scheduling Dashboard",
+                                    "results":  "Scheduling Results",
+                                    "schedule":  "Request Task Schedule",
+                                    "view_dashboard":  "View Scheduling",
+                                    "search":  "List Operation Plans",
+                                    "create":  "Create Scheduling",
+                                    "view":  "View Scheduling",
+                                    "edit":  "Edit Scheduling",
+                                    "queue":  "Scheduling Queue"
+                                },
+                       "subtitles":  {
+                                         "dashboard":  "Overview of scheduling of berth operations and incidents",
+                                         "schedule":  "Request a task schedule for a specific date",
+                                         "search":  "List all operation plans for a given date",
+                                         "create":  "Create a new scheduling into the system",
+                                         "edit":  "Edit an existing scheduling in the system",
+                                         "queue":  "View pending scheduling requests"
+                                     },
+                       "queue":  {
+                                     "title":  "Scheduling Queue",
+                                     "subtitle":  "Pending scheduling requests",
+                                     "onlyMine":  "Show only my requests"
+                                 },
+                       "rebalancing":  {
+                                           "title":  "Dock Rebalancing Required",
+                                           "warningMessage":  "Before scheduling, the system recommends rebalancing dock assignments to optimize load distribution.",
+                                           "vesselsToReassign":  "Vessels to Reassign",
+                                           "averageLoad":  "Average Load",
+                                           "loadRange":  "Load Range",
+                                           "proposedReassignments":  "Proposed Reassignments",
+                                           "vesselImo":  "Vessel IMO",
+                                           "currentDock":  "Current Dock",
+                                           "proposedDock":  "Proposed Dock",
+                                           "skipButton":  "Skip \u0026 Continue with Current Assignments",
+                                           "applyButton":  "Apply Rebalancing \u0026 Generate Schedule"
+                                       }
+                   },
+    "physicalResource":  {
+                             "deactivation":  {
+                                                  "title":  "Fyysisen resurssin poisto käytöstä",
+                                                  "message":  "Vahvistatko tämän resurssin poiston käytöstä? Voit aktivoida sen uudelleen myöhemmin.",
+                                                  "successMessage":  "Fyysinen resurssi poistettiin käytöstä onnistuneesti.",
+                                                  "errorMessage":  "Virhe poistettaessa resurssia käytöstä. Yritä uudelleen."
+                                              },
+                             "tabs":  {
+                                          "dashboard":  "Fyysisen resurssin kojetaulu",
+                                          "view_dashboard":  "Näytä fyysiset resurssit",
+                                          "search":  "Etsi fyysisiä resursseja",
+                                          "create":  "Luo fyysinen resurssi",
+                                          "view":  "Näytä fyysinen resurssi",
+                                          "edit":  "Muokkaa fyysistä resurssia"
+                                      },
+                             "infoTitle":  "Fyysisen resurssin tiedot",
+                             "title":  "Fyysiset resurssit",
+                             "subtitle":  {
+                                              "search":  "Hallitse ja näytä kaikki rekisteröidyt fyysiset resurssit",
+                                              "dashboard":  "Ohjauspaneeli fyysisille resursseille",
+                                              "view_dashboard":  "Näytä fyysiset resurssit",
+                                              "create":  "Rekisteröi uusi fyysinen resurssi järjestelmään",
+                                              "view":  "Näytä fyysisen resurssin tiedot",
+                                              "edit":  "Muokkaa olemassa olevaa fyysistä resurssia järjestelmässä"
+                                          },
+                             "generalFields":  "Yleiset kentät",
+                             "specificFields":  "Erityiset kentät",
+                             "fields":  {
+                                            "code":  {
+                                                         "title":  "Koodi",
+                                                         "placeholder":  "Resurssin koodi"
+                                                     },
+                                            "description":  {
+                                                                "title":  "Kuvaus",
+                                                                "placeholder":  "Resurssin kuvaus"
+                                                            },
+                                            "status":  {
+                                                           "title":  "Tila",
+                                                           "placeholder":  "Valitse resurssin tila",
+                                                           "options":  {
+                                                                           "available":  "Saatavilla",
+                                                                           "maintenance":  "Huolto",
+                                                                           "outOfService":  "Pois käytöstä"
+                                                                       }
+                                                       },
+                                            "qualifications":  {
+                                                                   "title":  "Vaatimukset",
+                                                                   "placeholder":  "Pätevyydet joita vaaditaan tämän resurssin käyttöön"
+                                                               },
+                                            "setupTime":  {
+                                                              "title":  "Asetusaika (minuutit)",
+                                                              "placeholder":  "Asetusaika"
+                                                          },
+                                            "servingDocks":  {
+                                                                 "title":  "Palveltavat laiturit",
+                                                                 "placeholder":  "Valitse palveltavat laiturit"
+                                                             },
+                                            "liftingCapacity":  {
+                                                                    "title":  "Nostokapasiteetti (kg)",
+                                                                    "placeholder":  "Nostokapasiteetti"
+                                                                },
+                                            "containersPerHour":  {
+                                                                      "title":  "Kontteja tunnissa",
+                                                                      "placeholder":  "Kontteja tunnissa"
+                                                                  },
+                                            "maxLoadCapacity":  {
+                                                                    "title":  "Suurin kuormauskapasiteetti (kg)",
+                                                                    "placeholder":  "Suurin kuormauskapasiteetti"
+                                                                },
+                                            "averageSpeed":  {
+                                                                 "title":  "Keskinopeus (km/h)",
+                                                                 "placeholder":  "Keskinopeus"
+                                                             },
+                                            "containersPerTrip":  {
+                                                                      "title":  "Kontteja per matka",
+                                                                      "placeholder":  "Kontteja per matka"
+                                                                  },
+                                            "type":  {
+                                                         "title":  "Resurssin tyyppi",
+                                                         "options":  {
+                                                                         "stsCrane":  "STS-nosturi",
+                                                                         "yardGantry":  "Varaston nosturi",
+                                                                         "truck":  "Kuorma-auto"
+                                                                     }
+                                                     }
+                                        },
+                             "actions":  {
+                                             "deactivate":  "Poista fyysinen resurssi käytöstä"
+                                         },
+                             "registeredPhysicalResources":  "Rekisteröidyt fyysiset resurssit"
+                         },
+    "storageArea":  {
+                        "tabs":  {
+                                     "dashboard":  "Varastoalueiden kojetaulu",
+                                     "view_dashboard":  "Näytä varastoalueet",
+                                     "search":  "Etsi varastoalueita",
+                                     "create":  "Luo varastoalue",
+                                     "view":  "Näytä varastoalue",
+                                     "edit":  "Muokkaa varastoaluetta"
+                                 },
+                        "create":  {
+                                       "distance_meters":  "Etäisyys (metriä)"
+                                   },
+                        "infoTitle":  "Varastoalueen tiedot",
+                        "title":  "Varastoalueet",
+                        "subtitle":  {
+                                         "search":  "Hallitse ja näytä kaikki rekisteröidyt varastoalueet",
+                                         "dashboard":  "Ohjauspaneeli kaikille varastoalueille",
+                                         "view_dashboard":  "Näytä varastoalueet",
+                                         "create":  "Rekisteröi uusi varastoalue järjestelmään",
+                                         "view":  "Näytä varastoalueen tiedot",
+                                         "edit":  "Muokkaa olemassa olevaa varastoaluetta järjestelmässä"
+                                     },
+                        "printer":  {
+                                        "docks_serviced":  "Palvellut laiturit",
+                                        "capacity_usage":  "Kapasiteetin käyttö",
+                                        "units":  "Yksiköt",
+                                        "available":  "Saatavilla",
+                                        "no_registered_distances":  "Ei rekisteröityjä etäisyyksiä",
+                                        "no_docks_serviced":  "Ei palveltavia laitureita",
+                                        "all_docks_serviced":  "Kaikki laiturit palvellaan",
+                                        "serviced_docks_distance":  "Palveltavien laitureiden etäisyys",
+                                        "no_registered_docks":  "Ei rekisteröityjä laitureita"
+                                    },
+                        "fields":  {
+                                       "nameCode":  {
+                                                        "title":  "Nimikoodi",
+                                                        "placeholder":  "Varastoalueen nimikoodi"
+                                                    },
+                                       "location":  {
+                                                        "title":  "Sijainti",
+                                                        "placeholder":  "Varastoalueen sijainti"
+                                                    },
+                                       "type":  {
+                                                    "title":  "Tyyppi",
+                                                    "placeholder":  "Valitse varastoalueen tyyppi",
+                                                    "options":  {
+                                                                    "yard":  "Piha",
+                                                                    "warehouse":  "Varasto"
+                                                                }
+                                                },
+                                       "capacity":  {
+                                                        "title":  "Kapasiteetti",
+                                                        "placeholder":  "Maksimikapasiteetti"
+                                                    },
+                                       "occupancy":  {
+                                                         "title":  "Täyttöaste",
+                                                         "placeholder":  "Nykyinen täyttöaste"
+                                                     }
+                                   },
+                        "registeredStorageAreas":  "Rekisteröidyt varastointialueet"
+                    },
+    "notification":  {
+                         "id":  "Ilmoituksen tunnus",
+                         "hazardous":  "Vaarallinen",
+                         "nonHazardous":  "Ei vaarallinen",
+                         "arrival":  "Saapuminen",
+                         "departure":  "Lähtö",
+                         "specialRequirements":  "Erityisvaatimukset",
+                         "none":  "Ei mitään",
+                         "crew":  "Miehistö",
+                         "captain":  "Kapteeni",
+                         "unknown":  "Tuntematon",
+                         "from":  "Alkaen",
+                         "to":  "Asti",
+                         "step":  "Vaihe",
+                         "of":  "/",
+                         "tabs":  {
+                                      "dashboard":  "Ilmoitusten kojetaulu",
+                                      "search":  "Hae ilmoituksia",
+                                      "edit":  "Muokkaa ilmoitusta",
+                                      "create":  "Luo ilmoitus",
+                                      "update":  "Update Notification",
+                                      "makeDraft":  "Luo luonnosilmoitus",
+                                      "myNotifications":  "Omat ilmoitukset",
+                                      "review":  "Tarkista ilmoitukset",
+                                      "general":  "Yleinen listaus",
+                                      "byDate":  "Kalenterilistaus",
+                                      "submit":  "Lähetä ilmoitus",
+                                      "delete":  "Poista ilmoitus"
+                                  },
+                         "eventsOnDate":  "Tapahtumat valittuna päivänä",
+                         "noEventsOnDate":  "Ei tapahtumia valittuna päivänä",
+                         "title":  "Aluskäyntien ilmoitukset",
+                         "subtitle":  {
+                                          "dashboard":  "Yleiskatsaus aluskäyntien ilmoituksiin",
+                                          "search":  "Hallitse ja näytä kaikki aluskäyntien ilmoitukset",
+                                          "create":  "Luo uusi aluskäynnin ilmoitus",
+                                          "update":  "Update an existing vessel visit notification",
+                                          "edit":  "Muokkaa olemassa olevaa aluskäynnin ilmoitusta",
+                                          "review":  "Tarkista odottavat aluskäynnin ilmoitukset"
+                                      },
+                         "errors":  {
+                                        "noNotificationId":  "Ilmoituksen tunnusta ei annettu"
+                                    },
+                         "infoTitle":  "Ilmoituksen tiedot",
+                         "cargoTitle":  "Lastin tiedot",
+                         "vesselTitle":  "Aluksen tiedot",
+                         "manifestInfo":  "Manifestin tiedot",
+                         "fields":  {
+                                        "selectVessel":  "Select corresponding vessel",
+                                        "openLoadManifest":  "Avaa lastausmanifesti",
+                                        "openUnloadManifest":  "Avaa purkumanifesti",
+                                        "expectedArrival":  "Odotettu saapuminen",
+                                        "expectedDeparture":  "Odotettu lähtö",
+                                        "isCargoHazardous":  "Lasti vaarallinen",
+                                        "specialRequirements":  "Erityisvaatimukset",
+                                        "captain":  "Kapteeni",
+                                        "totalCrewMembers":  "Miehistön kokonaismäärä",
+                                        "safetyOfficers":  "Turvallisuusvastaavat",
+                                        "loadCargoManifest":  "Latausmanifesti",
+                                        "unloadCargoManifest":  "Purkumanifesti",
+                                        "position":  "Sijainti",
+                                        "area":  "Alue",
+                                        "container":  "Kontti",
+                                        "crewMembers":  "Miehistön jäsenet",
+                                        "status":  "Tila",
+                                        "isCargoHazardousQ":  "Is Cargo Hazardous?",
+                                        "cargoManifestInfo":  "About cargo manifest files"
+                                    },
+                         "timeline":  {
+                                          "pending":  "Odottaa",
+                                          "inProgress":  "Käynnissä",
+                                          "completed":  "Valmis",
+                                          "submitted":  "Lähetetty",
+                                          "accepted":  "Hyväksytty",
+                                          "rejected":  "Hylätty"
+                                      },
+                         "filters":  {
+                                         "expectedArrivalFrom":  "Odotettu saapuminen alkaen",
+                                         "expectedArrivalTo":  "Odotettu saapuminen asti",
+                                         "withReason":  "Perustelulla",
+                                         "withDockAssigned":  "Laituri määritettynä"
+                                     },
+                         "decision":  {
+                                          "isFinal":  "Lopullinen",
+                                          "assignedDock":  {
+                                                               "title":  "Määritetty laituri",
+                                                               "placeholder":  "Valitse määritetty laituri"
+                                                           },
+                                          "reason":  {
+                                                         "title":  "Perustelu",
+                                                         "placeholder":  "Anna päätöksen perustelu"
+                                                     },
+                                          "status":  "Päätöksen tila"
+                                      },
+                         "sections":  {
+                                          "vesselDetails":  "Vierailutiedot",
+                                          "crewDetails":  "Miehistön tiedot",
+                                          "cargoRequirements":  "Lastivaatimukset",
+                                          "cargoContent":  "Lastin sisältö"
+                                      },
+                         "about":  {
+                                       "text":  "Lastimanifestien (tällä hetkellä) tulee olla eurooppalaisessa CSV-standardimuodossa. Jokainen CSV-tiedoston rivi edustaa lastieraa seuraavilla sarakkeilla:",
+                                       "bay":  "Lokero (numero)",
+                                       "row":  "Rivi (numero)",
+                                       "tier":  "Taso (numero)",
+                                       "area":  "Alueen koodi (mistä/minne)",
+                                       "containerNumber":  "Kontin numero (teksti)",
+                                       "conatinerType":  "Kontin tyyppi (numero)",
+                                       "description":  "Kuvaus (teksti)",
+                                       "containerTypes":  {
+                                                              "refrigeratedGoods":  "Jäähdytetyt tavarat",
+                                                              "generalConsumerProducts":  "Yleiset kulutustuotteet",
+                                                              "electronics":  "Elektroniikka",
+                                                              "hazmat":  "Vaaralliset aineet",
+                                                              "oversizedIndustrialEquipment":  "Ylisuuret teollisuuslaitteet",
+                                                              "other":  "Muu"
+                                                          }
+                                   },
+                         "registeredVesselVisitNotifications":  "Rekisteröidyt laivavierailuilmoitukset"
+                     },
+    "operationalWindow":  {
+                              "title":  "Toiminta-aika",
+                              "printer":  {
+                                              "addShift":  "Lisää vuoro",
+                                              "shifts":  "Vuorot:",
+                                              "noShifts":  "Ei vuoroja.",
+                                              "startTime":  "Aloitusaika",
+                                              "endTime":  "Lopetusaika",
+                                              "weekDays":  "Viikonpäivät"
+                                          },
+                              "errors":  {
+                                             "shiftOverlap":  "Virheellinen vuoro. Päällekkäinen tai loppuaika ennen aloitusta."
+                                         }
+                          },
+    "about":  {
+                  "title":  "Tietoja PorTiT:sta",
+                  "privacy":  {
+                                  "title":  "Tietosuojakäytäntö",
+                                  "lastUpdated":  "Viimeksi päivitetty: {date}"
+                              }
+              },
+    "operationPlan":  {
+                          "title":  "Toimintasuunnitelma",
+                          "dock":  "Laituri",
+                          "docks":  "Laiturit",
+                          "operations":  "Toiminnot",
+                          "cranes":  "Nosturit",
+                          "createdBy":  "Luonut",
+                          "createdAt":  "Luotu",
+                          "totalSchedules":  "Aikatauluja yhteensä",
+                          "vesselCount":  "Alukset",
+                          "plansOnDate":  "Toimintasuunnitelmat valitulla päivällä",
+                          "noPlansOnDate":  "Ei toimintasuunnitelmia valitulla päivällä",
+                          "id":  "Tunniste",
+                          "vvn":  "Aluskäynnin ilmoitus",
+                          "for":  "kohteelle",
+                          "details":  "Yksityiskohdat",
+                          "totalOperations":  "Toimintoja yhteensä",
+                          "algorithmUsed":  "Käytetty algoritmi",
+                          "ganttChart":  "Gantt-kaavio",
+                          "startTime":  "Aloitusaika",
+                          "endTime":  "Lopetusaika",
+                          "totalDuration":  "Kokonaiskesto",
+                          "operation":  "Toiminto",
+                          "duration":  "Kesto",
+                          "resources":  "Resurssit",
+                          "operationDetails":  "Toiminnon yksityiskohdat",
+                          "operationNumber":  "Toiminto #{number}",
+                          "notFound":  "Toimintasuunnitelmaa ei löytynyt",
+                          "operationType":  {
+                                                "Unload":  "Purkaminen",
+                                                "Load":  "Lastaus"
+                                            },
+                          "tabs":  {
+                                       "unplannedVVNs":  "Suunnittelemattomat VVN:t",
+                                       "search":  "Hae suunnitelmia",
+                                       "edit":  "Muokkaa suunnitelmaa",
+                                       "open":  "Avaa toteutus"
+                                   },
+                          "subtitle":  {
+                                           "edit":  "Muokkaa toimintasuunnitelman yksityiskohtia ja aikataulua"
+                                       },
+                          "unplannedVVNs":  {
+                                                "description":  "Aluskäynnin ilmoitukset, joilla ei ole vielä osoitettua toimintasuunnitelmaa",
+                                                "noUnplanned":  "Kaikilla aluskäynnin ilmoituksilla on osoitetut toimintasuunnitelmat",
+                                                "foundMessage":  "Löydettiin {vvnCount} VVN ilman suunnitelmia {dayCount} päivässä/päivässä",
+                                                "regenerateAll":  "Luo kaikki puuttuvat suunnitelmat",
+                                                "regenerateDay":  "Luo tämän päivän suunnitelmat",
+                                                "regenerateModalTitle":  "Luo suunnitelmat päivälle {date}",
+                                                "warning":  "Varoitus",
+                                                "warningMessage":  "Suunnitelmien uudelleenluonti korvaa kaikki olemassa olevat toimintasuunnitelmat tälle päivälle. Tätä toimintoa ei voi perua.",
+                                                "selectedDay":  "Valittu päivä",
+                                                "confirmRegeneration":  "Vahvista uudelleenluonti",
+                                                "affectedDays":  "Vaikutetut päivät",
+                                                "queueInfo":  "Jokainen uudelleenluontipyyntö asetetaan jonoon erikseen. Voit tarkastella ja hyväksyä/hylätä ne erikseen aikataulutusjonosta.",
+                                                "continue":  "Jatka",
+                                                "confirmRegenerationTitle":  "Vahvista uudelleenluonti",
+                                                "irreversibleAction":  "Tämä toiminto on peruuttamaton",
+                                                "overwriteWarning":  "Toimintasuunnitelmien uudelleenluonti korvaa pysyvästi kaikki olemassa olevat suunnitelmat valituille päiville. Tätä toimintoa ei voi perua.",
+                                                "aboutToRegenerate":  "Olet luomassa suunnitelmia",
+                                                "days":  "päivälle",
+                                                "vesselVisitNotifications":  "Aluskäynnin ilmoitukset",
+                                                "using":  "Käyttäen",
+                                                "algorithm":  "algoritmia",
+                                                "proceedQuestion":  "Haluatko jatkaa tätä toimintoa?",
+                                                "yesRegenerateAll":  "Kyllä, luo kaikki"
+                                            },
+                          "algorithm":  {
+                                            "optimal":  "Optimaalinen",
+                                            "greedy":  "Ahne",
+                                            "genetic":  "Geneettinen",
+                                            "auto":  "Automaattinen"
+                                        },
+                          "metrics":  {
+                                          "title":  "Mittarit",
+                                          "strategy":  "Strategia",
+                                          "totalDelay":  "Kokonaisviive",
+                                          "computationTime":  "Laskenta-aika",
+                                          "autoSelection":  "Automaattinen algoritmin valinta"
+                                      },
+                          "infoTitle":  "Toimintasuunnitelman tiedot",
+                          "fields":  {
+                                         "id":  {
+                                                    "title":  "Suunnitelman tunniste"
+                                                },
+                                         "relatedVVN":  {
+                                                            "title":  "Liittyvä VVN"
+                                                        },
+                                         "dock":  {
+                                                      "title":  "Laituri"
+                                                  },
+                                         "operations":  {
+                                                            "title":  "Toiminnot"
+                                                        }
+                                     },
+                          "filters":  {
+                                          "startDate":  "Aloituspäivä alkaen",
+                                          "endDate":  "Lopetuspäivä asti"
+                                      },
+                          "metadata":  {
+                                           "title":  "Metatiedot",
+                                           "createdBy":  "Luonut",
+                                           "createdAt":  "Luotu",
+                                           "algorithmUsed":  "Käytetty algoritmi"
+                                       },
+                          "schedule":  {
+                                           "title":  "Toimintojen aikataulu",
+                                           "noOperations":  "Ei suunniteltuja toimintoja"
+                                       }
+                      },
+    "incidentType":  {
+                         "fields":  {
+                                        "name":  {
+                                                     "title":  "Nimi",
+                                                     "placeholder":  "Tapahtuman tyypin nimi"
+                                                 },
+                                        "description":  {
+                                                            "title":  "Kuvaus",
+                                                            "placeholder":  "Tapahtuman tyypin yksityiskohtainen kuvaus"
+                                                        },
+                                        "severity":  {
+                                                         "title":  "Vakavuus",
+                                                         "placeholder":  "Valitse vakavuustaso"
+                                                     },
+                                        "subtypeOf":  {
+                                                          "title":  "Alatyyppi",
+                                                          "placeholder":  "Valitse ylätyyppi"
+                                                      },
+                                        "subtypes":  {
+                                                         "title":  "Alatyypit",
+                                                         "placeholder":  "Valitse alatyypit"
+                                                     }
+                                    },
+                         "severity":  {
+                                          "Minor":  "Vähäinen",
+                                          "Major":  "Suuri",
+                                          "Critical":  "Kriittinen"
+                                      },
+                         "tabs":  {
+                                      "dashboard":  "Tapahtumien kojelauta",
+                                      "view_dashboard":  "Näytä tapahtumatyypit",
+                                      "search":  "Hae tapahtumatyyppejä",
+                                      "create":  "Luo tapahtumatyyppi",
+                                      "edit":  "Muokkaa tapahtumatyyppiä"
+                                  },
+                         "generalFields":  "Yleiset kentät",
+                         "classification":  "Luokittelu",
+                         "title":  "Tapahtumat",
+                         "subtitle":  {
+                                          "dashboard":  "Tapahtumien tyyppien tilastojen ja toimintojen yleiskatsaus",
+                                          "search":  "Hallitse ja tarkastele kaikkia rekisteröityjä tapahtumatyyppejä",
+                                          "create":  "Rekisteröi uusi tapahtumatyyppi järjestelmään",
+                                          "edit":  "Muokkaa olemassa olevaa tapahtumatyyppiä järjestelmässä"
+                                      },
+                         "registeredIncidentTypes":  "Rekisteröidyt tapahtumatyypit",
+                         "incidentTypeInformation":  "Tapahtumatyypin tiedot",
+                         "parentType":  "Ylätyyppi",
+                         "confirmDelete":  "Vahvista poisto",
+                         "confirmDeleteMessage":  "Oletko varma, että haluat poistaa tämän tapahtumatyypin?",
+                         "failedToDelete":  "Tapahtumatyypin poistaminen epäonnistui"
+                     },
+    "taskCategory":  {
+                         "fields":  {
+                                        "name":  {
+                                                     "title":  "Nimi",
+                                                     "placeholder":  "Tehtäväluokan nimi"
+                                                 },
+                                        "category":  {
+                                                         "title":  "Luokka",
+                                                         "placeholder":  "Luokkakoodi"
+                                                     },
+                                        "description":  {
+                                                            "title":  "Kuvaus",
+                                                            "placeholder":  "Tehtäväluokan kuvaus"
+                                                        }
+                                    },
+                         "tabs":  {
+                                      "dashboard":  "Tehtävien kojelauta",
+                                      "search":  "Hae tehtäväluokkia",
+                                      "create":  "Luo tehtäväluokka",
+                                      "edit":  "Muokkaa tehtäväluokkaa",
+                                      "view_dashboard":  "Näytä tehtäväluokat"
+                                  },
+                         "generalFields":  "Yleiset kentät",
+                         "title":  "Tehtävät",
+                         "subtitle":  {
+                                          "dashboard":  "Tehtäväluokkien tilastojen ja toimintojen yleiskatsaus",
+                                          "search":  "Hallitse ja tarkastele kaikkia rekisteröityjä tehtäväluokkia",
+                                          "create":  "Rekisteröi uusi tehtäväluokka järjestelmään",
+                                          "edit":  "Muokkaa olemassa olevaa tehtäväluokkaa järjestelmässä"
+                                      },
+                         "taskCategoryInformation":  "Tehtäväluokan tiedot",
+                         "registeredTaskCategories":  "Rekisteröidyt tehtäväluokat"
+                     },
+    "execution":  {
+                      "title":  "Aluskäynnin toteutukset",
+                      "subtitle":  {
+                                       "search":  "Hallitse ja tarkastele kaikkia aluskäynnin toteutuksia",
+                                       "dashboard":  "Aluskäynnin toteutusten tilastojen ja toimintojen yleiskatsaus"
+                                   },
+                      "tabs":  {
+                                   "dashboard":  "Toteutusten kojelauta",
+                                   "search":  "Hae toteutuksia",
+                                   "view_dashboard":  "Näytä toteutukset",
+                                   "update":  "Päivitä toteutus",
+                                   "view":  "Näytä toteutus",
+                                   "table":  "Näytä taulukko",
+                                   "cards":  "Näytä kortit"
+                               },
+                      "fields":  {
+                                     "code":  "Koodi",
+                                     "relatedVVN":  "Liittyvä",
+                                     "status":  "Tila",
+                                     "createdBy":  "Luonut",
+                                     "dateOpen":  "Avauspäivä",
+                                     "dateClosed":  "Sulkemispäivä",
+                                     "relatedVesselVisit":  "Liittyvä aluskäynti",
+                                     "dock":  "Telakointilaitu ri",
+                                     "berthTime":  "Telakointiaika",
+                                     "operations":  "Toiminnot"
+                                 },
+                      "filters":  {
+                                      "startDate":  "Aloituspäivä",
+                                      "endDate":  "Lopetuspäivä",
+                                      "relatedVVN":  "Aluskäynnin ilmoitus",
+                                      "status":  "Tila"
+                                  },
+                      "metrics":  {
+                                      "totalOperations":  "Toimintoja yhteensä",
+                                      "completedOperations":  "Edistyminen",
+                                      "turnaroundTime":  "Käännösaika",
+                                      "berthOccupancy":  "Laiturin käyttöaste"
+                                  },
+                      "status":  {
+                                     "pending":  "Odottaa",
+                                     "started":  "Aloitettu",
+                                     "delayed":  "Viivästynyt",
+                                     "completed":  "Valmis"
+                                 },
+                      "view_resources":  "Näytä resurssit",
+                      "infoTitle":  "Toteutuksen tiedot",
+                      "operationsTitle":  "Toiminnot",
+                      "noOperations":  "Ei saatavilla olevia toimintoja",
+                      "startOperation":  "Aloita toiminto",
+                      "completeOperation":  "Viimeistele toiminto",
+                      "addOperation":  "Lisää toiminto",
+                      "addOperationDescription":  "Lisää uusi toiminto aikajanalle",
+                      "confirmStartOperation":  "Oletko varma, että haluat aloittaa tämän toiminnon?",
+                      "confirmCompleteOperation":  "Oletko varma, että haluat viimeistellä tämän toiminnon?",
+                      "berthOperation":  {
+                                             "button":  "Muokkaa telakointitietoja",
+                                             "title":  "Telakointitoiminto",
+                                             "description":  "Muokkaa tämän aluskäynnin toteutuksen laituria ja aikaa.",
+                                             "dock":  "Telakointilaituri",
+                                             "dockPlaceholder":  "Valitse laituri",
+                                             "berthTime":  "Telakointiaika",
+                                             "differentThanPlanned":  "Valittu laituri on eri kuin suunniteltu."
+                                         }
+                  },
+    "incident":  {
+                     "tabs":  {
+                                  "dashboard":  "Tapahtumien kojelauta",
+                                  "create":  "Luo tapahtuma",
+                                  "search":  "Hae tapahtumia",
+                                  "active":  "Aktiiviset tapahtumat",
+                                  "view":  "Näytä tapahtuma",
+                                  "edit":  "Muokkaa tapahtumaa"
+                              },
+                     "subtitle":  {
+                                      "create":  "Ilmoita uusi tapahtuma järjestelmään",
+                                      "search":  "Hae ja suodata olemassa olevia tapahtumia",
+                                      "active":  "Tarkastele ja hallitse aktiivisia tapahtumia"
+                                  },
+                     "generalFields":  "Yleiset tiedot",
+                     "classification":  "Luokittelu",
+                     "fields":  {
+                                    "bid":  {
+                                                "title":  "Tapahtuman tunniste"
+                                            },
+                                    "type":  {
+                                                 "title":  "Tapahtumatyyppi",
+                                                 "placeholder":  "Valitse tapahtumatyyppi"
+                                             },
+                                    "startTime":  {
+                                                      "title":  "Aloitusaika",
+                                                      "placeholder":  "Milloin tapahtuma alkoi?"
+                                                  },
+                                    "endTime":  {
+                                                    "title":  "Lopetusaika",
+                                                    "placeholder":  "Milloin tapahtuma päättyi?"
+                                                },
+                                    "severity":  {
+                                                     "title":  "Vakavuus",
+                                                     "placeholder":  "Valitse vakavuustaso",
+                                                     "options":  {
+                                                                     "minor":  "Vähäinen",
+                                                                     "major":  "Suuri",
+                                                                     "critical":  "Kriittinen"
+                                                                 }
+                                                 },
+                                    "description":  {
+                                                        "title":  "Kuvaus",
+                                                        "placeholder":  "Kuvaile tapahtuma yksityiskohtaisesti"
+                                                    },
+                                    "createdBy":  {
+                                                      "title":  "Luonut"
+                                                  },
+                                    "affectedVVECodes":  {
+                                                             "title":  "Vaikutetut VVE:t",
+                                                             "placeholder":  "Syötä vaikutetut VVE:t"
+                                                         },
+                                    "vveCode":  {
+                                                    "title":  "VVE-koodi"
+                                                },
+                                    "status":  {
+                                                   "title":  "Tila",
+                                                   "options":  {
+                                                                   "active":  "Aktiivinen",
+                                                                   "resolved":  "Ratkaistu"
+                                                               }
+                                               },
+                                    "filterStartTime":  {
+                                                            "title":  "Aloituspäivä alkaen"
+                                                        },
+                                    "filterEndTime":  {
+                                                          "title":  "Aloituspäivä asti"
+                                                      },
+                                    "duration":  {
+                                                     "title":  "Kesto"
+                                                 }
+                                },
+                     "severity":  {
+                                      "Minor":  "Vähäinen",
+                                      "Major":  "Suuri",
+                                      "Critical":  "Kriittinen"
+                                  },
+                     "status":  {
+                                    "active":  "Aktiivinen",
+                                    "resolved":  "Ratkaistu"
+                                },
+                     "ongoing":  "Käynnissä",
+                     "filters":  {
+                                     "onlyActive":  "Vain aktiiviset",
+                                     "onlyMine":  "Vain omat"
+                                 },
+                     "actions":  {
+                                     "view":  "Näytä yksityiskohdat",
+                                     "edit":  "Muokkaa tapahtumaa",
+                                     "resolve":  "Ratkaise tapahtuma",
+                                     "delete":  "Poista tapahtuma"
+                                 },
+                     "notifications":  {
+                                           "createSuccess":  "Tapahtuma luotu onnistuneesti",
+                                           "createFailed":  "Tapahtuman luonti epäonnistui",
+                                           "updateSuccess":  "Tapahtuma päivitetty onnistuneesti",
+                                           "updateFailed":  "Tapahtuman päivitys epäonnistui",
+                                           "resolveSuccess":  "Tapahtuma ratkaistu onnistuneesti",
+                                           "resolveFailed":  "Tapahtuman ratkaisu epäonnistui",
+                                           "deleteSuccess":  "Tapahtuma poistettu onnistuneesti",
+                                           "deleteFailed":  "Tapahtuman poisto epäonnistui"
+                                       },
+                     "table":  {
+                                   "empty":  "Tapahtumia ei löytynyt"
+                               },
+                     "active":  {
+                                    "title":  "Aktiiviset tapahtumat",
+                                    "subtitle":  "Tarkastele ja hallitse käynnissä olevia tapahtumia"
+                                },
+                     "infoTitle":  "Tapahtuman yksityiskohdat",
+                     "closeDialog":  {
+                                         "title":  "Ratkaise tapahtuma",
+                                         "message":  "Milloin tapahtuma ratkottiin?",
+                                         "confirm":  "Kyllä, sulje tämä tapahtuma",
+                                         "cancel":  "Peruuta"
+                                     }
+                 }
 }

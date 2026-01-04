@@ -1,1030 +1,1141 @@
 ﻿{
-    "common": {
-        "loading": "Indlæser...",
-        "noData": "Ingen data tilgængelige",
-        "statistics": "Statistik",
-        "yes": "Ja",
-        "no": "Nej",
-        "weekDay": "Ugedag",
-        "days": {
-            "sunday": "Søndag",
-            "monday": "Mandag",
-            "tuesday": "Tirsdag",
-            "wednesday": "Onsdag",
-            "thursday": "Torsdag",
-            "friday": "Fredag",
-            "saturday": "Lørdag"
-        },
-        "number": "Nummer"
-    },
-    "buttons": {
-        "save": "Gem",
-        "cancel": "Annuller",
-        "delete": "Slet",
-        "edit": "Rediger",
-        "create": "Opret",
-        "search": "Søg",
-        "select": "Vælg",
-        "activate": "Aktivér",
-        "deactivate": "Deaktivér",
-        "generate": "Generér",
-        "close": "Luk",
-        "add": "Tilføj",
-        "review": "Gennemse",
-        "ok": "OK",
-        "downloadSample": "Download prøve",
-        "filter": {
-            "title": "Filtre",
-            "add": "Filtrer",
-            "clear": "Ryd filtre"
-        },
-        "pagination": {
-            "previous": "Forrige",
-            "next": "Næste"
-        },
-        "login": "Log ind",
-        "goBackToLogin": "Gå tilbage til login",
-        "logout": "Log ud",
-        "seeMore": "Se mere"
-    },
-    "unsavedChanges": {
-        "title": "Forkaste ændringer?",
-        "message": "Du har ugemte ændringer. Er du sikker på, at du vil forlade siden og forkaste ændringerne?",
-        "confirm": "Forkast",
-        "cancel": "Fortsæt redigering"
-    },
-    "expirationWarning": {
-        "title": "Session udløber",
-        "messageOneMinute": "Din session udløber om 1 minut.",
-        "messageLessThanOneMinute": "Din session er ved at udløbe.",
-        "extendSession": "Forlæng session"
-    },
-    "dashboard": {
-        "welcome": "Velkommen tilbage, [name]!",
-        "sidebarTitle": "Dashboard",
-        "title": "PortIT Dashboard",
-        "subtitle": "Oversigt over PortIT-systemet",
-        "SAOR": {
-            "subtitle": "Oversigt over shipping-agentens drift",
-            "pendingNotifications": "Ventende notifikationer",
-            "recent": "Seneste notifikationer om skibsbesøg",
-            "recentReview": "Notifikationer om skibsbesøg til gennemgang",
-            "noRecent": "Ingen nye notifikationer"
-        },
-        "3DModel": {
-            "title": "3D havnvisualisering",
-            "description": "Se en interaktiv 3D-repræsentation af hele havnen. Overvåg dokbelægning, fartøjspositioner, oplagsområder og ressourcer i realtid.",
-            "open": "Åbn 3D-model"
-        }
-    },
-    "admin": {
-        "sidebarTitle": "Admin",
-        "title": "Admin Dashboard",
-        "subtitle": "Administrativ oversigt og styring",
-        "userManagement": {
-            "title": "Brugeradministration",
-            "subtitle": "Administrer systembrugere, roller og tilladelser."
-        },
-        "auditLogs": {
-            "title": "Revisionslog",
-            "subtitle": "Vis og overvåg systemaktivitetslogge."
-        }
-    },
-    "user": {
-        "registeredUsers": "Registrerede brugere",
-        "fields": {
-            "email": {
-                "title": "Email",
-                "placeholder": "email@mail.com"
-            },
-            "role": {
-                "title": "Rolle",
-                "placeholder": "Vælg brugerrolle",
-                "options": {
-                    "admin": "Administrator",
-                    "saoRep": "SAO-repræsentant",
-                    "pao": "Havnemyndighedsofficer",
-                    "logisticsOperator": "Logistikoperatør"
-                }
-            },
-            "isActive": {
-                "title": "Aktiv",
-                "options": {
-                    "active": "Ja",
-                    "inactive": "Nej"
-                }
-            }
-        },
-        "tabs": {
-            "dashboard": "Bruger-dashboard",
-            "create": "Opret bruger",
-            "view": "Vis brugere",
-            "search": "Søg brugere"
-        },
-        "infoTitle": "Brugeroplysninger",
-        "title": "Brugere",
-        "subtitle": {
-            "dashboard": "Brugeroversigt og administration",
-            "create": "Registrer en ny bruger i systemet",
-            "view": "Vis og administrer eksisterende brugere"
-        }
-    },
-    "representative": {
-        "title": "Repræsentant",
-        "select": "Vælg en repræsentant"
-    },
-    "physicalCharacteristics": {
-        "title": "Fysiske egenskaber (m)",
-        "length": {
-            "title": "Længde",
-            "placeholder": "Længde i meter"
-        },
-        "depth": {
-            "title": "Dybde",
-            "placeholder": "Dybde i meter"
-        },
-        "draft": {
-            "title": "Dybgang",
-            "placeholder": "Dybgang i meter"
-        }
-    },
-    "dock": {
-        "fields": {
-            "code": {
-                "title": "Kode",
-                "placeholder": "Dokkode"
-            },
-            "name": {
-                "title": "Navn",
-                "placeholder": "Doknavn"
-            },
-            "location": {
-                "title": "Placering",
-                "placeholder": "Dok placering"
-            },
-            "supportedVesselTypes": {
-                "title": "Understøttede fartøjstyper",
-                "vesselTypes": {
-                    "title": "Fartøjstyper",
-                    "placeholder": "Vælg fartøjstyper"
+    "common":  {
+                   "loading":  "Indlæser...",
+                   "noData":  "Ingen data tilgængelige",
+                   "statistics":  "Statistik",
+                   "yes":  "Ja",
+                   "no":  "Nej",
+                   "weekDay":  "Ugedag",
+                   "days":  {
+                                "sunday":  "Søndag",
+                                "monday":  "Mandag",
+                                "tuesday":  "Tirsdag",
+                                "wednesday":  "Onsdag",
+                                "thursday":  "Torsdag",
+                                "friday":  "Fredag",
+                                "saturday":  "Lørdag"
+                            },
+                   "number":  "Nummer",
+                   "actions":  "Handlinger",
+                   "none":  "Ingen"
+               },
+    "buttons":  {
+                    "save":  "Gem",
+                    "cancel":  "Annuller",
+                    "delete":  "Slet",
+                    "edit":  "Rediger",
+                    "create":  "Opret",
+                    "search":  "Søg",
+                    "select":  "Vælg",
+                    "activate":  "Aktivér",
+                    "deactivate":  "Deaktivér",
+                    "generate":  "Generér",
+                    "close":  "Luk",
+                    "add":  "Tilføj",
+                    "review":  "Gennemse",
+                    "filter":  {
+                                   "title":  "Filtre",
+                                   "add":  "Filtrer",
+                                   "clear":  "Ryd filtre"
+                               },
+                    "pagination":  {
+                                       "previous":  "Forrige",
+                                       "next":  "Næste"
+                                   },
+                    "login":  "Log ind",
+                    "goBackToLogin":  "Gå tilbage til login",
+                    "logout":  "Log ud",
+                    "seeMore":  "Se mere",
+                    "ok":  "OK",
+                    "downloadSample":  "Download prøve"
                 },
-                "vesselType": "Fartøjstype"
-            }
-        },
-        "tabs": {
-            "dashboard": "Dok-dashboard",
-            "view_dashboard": "Vis dokke",
-            "search": "Søg dokke",
-            "create": "Opret dok",
-            "view": "Vis dok",
-            "edit": "Rediger dok"
-        },
-        "generalFields": "Generelle felter",
-        "infoTitle": "Dokoplysninger",
-        "title": "Dokke",
-        "subtitle": {
-            "dashboard": "Oversigt over dokstatistik og aktiviteter",
-            "search": "Administrer og vis alle registrerede dokke",
-            "create": "Registrer en ny dok i systemet",
-            "edit": "Rediger en eksisterende dok i systemet"
-        },
-        "registeredDocks": "Registrerede dokke"
-    },
-    "vesselType": {
-        "fields": {
-            "name": {
-                "title": "Navn",
-                "placeholder": "Fartøjstypens navn"
-            },
-            "description": {
-                "title": "Beskrivelse",
-                "placeholder": "Beskrivelse af fartøjstypen"
-            },
-            "capacity": {
-                "title": "Kapacitet",
-                "placeholder": "Containerkapacitet i TEU"
-            },
-            "containerCapacity": {
-                "title": "Containerkapacitet (TEU)",
-                "maxNumberOfRows": {
-                    "title": "Maks antal rækker",
-                    "placeholder": "Maks rækker i TEU"
-                },
-                "maxNumberOfBays": {
-                    "title": "Maks antal rum",
-                    "placeholder": "Maks rum i TEU"
-                },
-                "maxNumberOfTiers": {
-                    "title": "Maks antal lag",
-                    "placeholder": "Maks lag i TEU"
-                }
-            }
-        },
-        "generalFields": "Generelle felter",
-        "tabs": {
-            "dashboard": "Fartøjstyper dashboard",
-            "view_dashboard": "Vis fartøjstyper",
-            "search": "Søg fartøjstyper",
-            "create": "Opret fartøjstype",
-            "view": "Vis fartøjstype",
-            "edit": "Rediger fartøjstype"
-        },
-        "infoTitle": "Fartøjstypes oplysninger",
-        "title": "Fartøjstyper",
-        "subtitle": {
-            "dashboard": "Oversigt over statistik og aktiviteter for fartøjstyper",
-            "search": "Administrer og vis alle registrerede fartøjstyper",
-            "create": "Registrer en ny fartøjstype i systemet",
-            "edit": "Rediger en eksisterende fartøjstype i systemet"
-        },
-        "registeredVesselTypes": "Registrerede fartøjstyper"
-    },
-    "vessel": {
-        "fields": {
-            "name": {
-                "title": "Navn",
-                "placeholder": "Fartøjsnavn"
-            },
-            "imoNumber": {
-                "title": "IMO nummer",
-                "placeholder": "Fartøjets IMO nummer"
-            },
-            "owner": {
-                "title": "Ejerorganisation",
-                "placeholder": "Ejerorganisation"
-            },
-            "vesselType": {
-                "title": "Fartøjstype",
-                "placeholder": "Vælg fartøjstype"
-            },
-            "taxNumber": {
-                "title": "Skattenummer"
-            }
-        },
-        "infoTitle": "Fartøjsinformation",
-        "physicalCharacteristicsTitle": "Fysiske egenskaber",
-        "tabs": {
-            "dashboard": "Fartøj dashboard",
-            "view_dashboard": "Vis fartøjer",
-            "search": "Søg fartøjer",
-            "create": "Opret fartøj",
-            "view": "Vis fartøj",
-            "edit": "Rediger fartøj"
-        },
-        "title": "Fartøjer",
-        "subtitle": {
-            "dashboard": "Oversigt over fartøjsstatistik og aktiviteter",
-            "search": "Administrer og vis alle registrerede fartøjer",
-            "create": "Registrer et nyt fartøj i systemet",
-            "edit": "Rediger et eksisterende fartøj i systemet"
-        },
-        "ownedBy": "Ejet af",
-        "registeredVessels": "Registrerede fartøjer"
-    },
-    "staff": {
-        "registeredStaffMembers": "Registrerede medarbejdere",
-        "fields": {
-            "mechanographicNumber": {
-                "title": "Mekanografisk nummer",
-                "placeholder": "Mekanografisk nummer"
-            },
-            "name": {
-                "title": "Navn",
-                "placeholder": "Medarbejdernavn"
-            },
-            "email": {
-                "title": "Email",
-                "placeholder": "Email adresse"
-            },
-            "phoneNumber": {
-                "title": "Telefonnummer",
-                "placeholder": "Telefonnummer"
-            },
-            "qualifications": {
-                "title": "Kvalifikationer",
-                "placeholder": "Vælg kvalifikationer"
-            },
-            "status": {
-                "title": "Status",
-                "options": {
-                    "available": "Tilgængelig",
-                    "unavailable": "Ikke tilgængelig",
-                    "temporarilyReassigned": "Midlertidigt omplaceret"
-                }
-            },
-            "operationalWindow": "Operationsvindue"
-        },
-        "tabs": {
-            "dashboard": "Medarbejder dashboard",
-            "view_dashboard": "Vis medarbejdere",
-            "search": "Søg medarbejdere",
-            "create": "Opret medarbejder",
-            "view": "Vis medarbejder",
-            "edit": "Rediger medarbejder"
-        },
-        "infoTitle": "Medarbejderinformation",
-        "title": "Medarbejdere",
-        "subtitle": {
-            "search": "Administrer og vis alle registrerede medarbejdere",
-            "dashboard": "Oversigt over medarbejderstatistik og aktiviteter",
-            "create": "Registrer en ny medarbejder i systemet",
-            "view": "Vis medarbejderdetaljer",
-            "edit": "Rediger en eksisterende medarbejder i systemet"
-        },
-        "deactivation": {
-            "title": "Deaktiver medarbejder",
-            "message": "Er du sikker på at du vil deaktivere denne medarbejder? Du kan aktivere medarbejderen igen senere.",
-            "successMessage": "Medarbejderen blev deaktiveret succesfuldt.",
-            "errorMessage": "Fejl under deaktivering. Prøv igen."
-        }
-    },
-    "qualification": {
-        "tabs": {
-            "dashboard": "Kvalifikations dashboard",
-            "view_dashboard": "Vis kvalifikationer",
-            "search": "Søg kvalifikationer",
-            "create": "Opret kvalifikation",
-            "view": "Vis kvalifikation",
-            "edit": "Rediger kvalifikation"
-        },
-        "infoTitle": "Kvalifikationsinformation",
-        "title": "Kvalifikationer",
-        "subtitle": {
-            "search": "Administrer og vis alle registrerede kvalifikationer",
-            "dashboard": "Oversigt over kvalifikationsstatistik og aktiviteter",
-            "create": "Registrer en ny kvalifikation i systemet",
-            "edit": "Rediger en eksisterende kvalifikation i systemet",
-            "view": "Vis kvalifikationsdetaljer"
-        },
-        "fields": {
-            "idCode": {
-                "title": "Kvalifikationskode",
-                "placeholder": "Kvalifikationskode"
-            },
-            "qualificationName": {
-                "title": "Kvalifikationsnavn",
-                "placeholder": "Kvalifikationsnavn"
-            }
-        }
-    },
-    "physicalResource": {
-        "tabs": {
-            "dashboard": "Fysisk ressource dashboard",
-            "view_dashboard": "Vis fysiske ressourcer",
-            "search": "Søg fysiske ressourcer",
-            "create": "Opret fysisk ressource",
-            "view": "Vis fysisk ressource",
-            "edit": "Rediger fysisk ressource"
-        },
-        "infoTitle": "Information om fysisk ressource",
-        "title": "Fysiske ressourcer",
-        "subtitle": {
-            "search": "Administrer og vis alle registrerede fysiske ressourcer",
-            "dashboard": "Kontrolpanel for alle fysiske ressourcer",
-            "view_dashboard": "Vis fysiske ressourcer",
-            "create": "Registrer en ny fysisk ressource i systemet",
-            "view": "Vis detaljer om fysisk ressource",
-            "edit": "Rediger en eksisterende fysisk ressource i systemet"
-        },
-        "generalFields": "Generelle felter",
-        "specificFields": "Specifikke felter",
-        "fields": {
-            "code": {
-                "title": "Kode",
-                "placeholder": "Ressourcekode"
-            },
-            "description": {
-                "title": "Beskrivelse",
-                "placeholder": "Ressourcebeskrivelse"
-            },
-            "status": {
-                "title": "Status",
-                "placeholder": "Vælg ressource status",
-                "options": {
-                    "available": "Tilgængelig",
-                    "maintenance": "Vedligeholdelse",
-                    "outOfService": "Uden for drift"
-                }
-            },
-            "qualifications": {
-                "title": "Påkrævede kvalifikationer",
-                "placeholder": "Kvalifikationer der kræves for at betjene denne ressource"
-            },
-            "setupTime": {
-                "title": "Opsætningstid (minutter)",
-                "placeholder": "Opsætningstid"
-            },
-            "servingDocks": {
-                "title": "Betjente dokke",
-                "placeholder": "Vælg betjente dokke"
-            },
-            "liftingCapacity": {
-                "title": "Løftekapacitet (kg)",
-                "placeholder": "Løftekapacitet"
-            },
-            "containersPerHour": {
-                "title": "Containere per time",
-                "placeholder": "Containere per time"
-            },
-            "maxLoadCapacity": {
-                "title": "Maksimal lasteevne (kg)",
-                "placeholder": "Maksimal lasteevne"
-            },
-            "averageSpeed": {
-                "title": "Gennemsnitlig hastighed (km/t)",
-                "placeholder": "Gennemsnitlig hastighed"
-            },
-            "containersPerTrip": {
-                "title": "Containere per tur",
-                "placeholder": "Containere per tur"
-            },
-            "type": {
-                "title": "Ressourcetype",
-                "options": {
-                    "stsCrane": "STS kran",
-                    "yardGantry": "Gård portalkran",
-                    "truck": "Lastbil"
-                }
-            }
-        },
-        "actions": {
-            "deactivate": "Deaktivér fysisk ressource"
-        },
-        "deactivation": {
-            "title": "Deaktiver fysisk ressource",
-            "message": "Er du sikker på at du vil deaktivere denne ressource? Du kan aktivere den igen senere.",
-            "successMessage": "Fysisk ressource deaktiveret succesfuldt.",
-            "errorMessage": "Fejl under deaktivering. Prøv igen."
-        }
-    },
-    "storageArea": {
-        "tabs": {
-            "dashboard": "Lagerområde dashboard",
-            "view_dashboard": "Vis lagerområder",
-            "search": "Søg lagerområder",
-            "create": "Opret lagerområde",
-            "view": "Vis lagerområde",
-            "edit": "Rediger lagerområde"
-        },
-        "infoTitle": "Information om lagerområde",
-        "title": "Lagerområder",
-        "subtitle": {
-            "search": "Administrer og vis alle registrerede lagerområder",
-            "dashboard": "Kontrolpanel for alle lagerområder",
-            "view_dashboard": "Vis lagerområder",
-            "create": "Registrer et nyt lagerområde i systemet",
-            "view": "Vis lagerområdets detaljer",
-            "edit": "Rediger et eksisterende lagerområde i systemet"
-        },
-        "printer": {
-            "docks_serviced": "Betjente dokke",
-            "capacity_usage": "Kapacitetsudnyttelse",
-            "units": "Enheder",
-            "available": "Tilgængelige",
-            "no_registered_distances": "Ingen registrerede afstande",
-            "no_docks_serviced": "Ingen betjente dokke",
-            "all_docks_serviced": "Alle dokke betjenes",
-            "serviced_docks_distance": "Afstand til betjente dokke",
-            "no_registered_docks": "Ingen registrerede dokke"
-        },
-        "create": {
-            "distance_meters": "Afstand (meter)"
-        },
-        "fields": {
-            "nameCode": {
-                "title": "Navnekode",
-                "placeholder": "Lagerområdets navnekode"
-            },
-            "location": {
-                "title": "Placering",
-                "placeholder": "Lagerområdets placering"
-            },
-            "type": {
-                "title": "Type",
-                "placeholder": "Vælg lagerområdets type",
-                "options": {
-                    "yard": "Plads",
-                    "warehouse": "Lager"
-                }
-            },
-            "capacity": {
-                "title": "Kapacitet",
-                "placeholder": "Maksimal kapacitet"
-            },
-            "occupancy": {
-                "title": "Belægning",
-                "placeholder": "Nuværende belægning"
-            }
-        }
-    },
-    "search": {
-        "languages": "Søg sprog..."
-    },
-    "scheduling": {
-        "title": "Anmod om daglig tidsplan",
-        "subtitle": "Brug vores automatiske planlægningsalgoritme til at analysere opgaverne for en bestemt dag.",
-        "noVisits": "Ingen skibsbesøg planlagt for den valgte dato.",
-        "visitsOnSelectedDay": "Skibsbesøg på valgt dato",
-        "viewVisits": "Generer opgavetidsplan",
-        "generateTasksButton": "Generer opgavetidsplan",
-        "aboutAlgorithmButton": "Om algoritmen",
-        "fields": {
-            "algorithm": {
-                "title": "Planlægningsalgoritme",
-                "placeholder": "Vælg planlægningsalgoritme"
-            },
-            "relatedDocks": "Vælg relateret dok"
-        },
-        "generateTasksModal": {
-            "title": "Ekstra logistik"
-        },
-        "aboutAlgorithmModal": {
-            "title": "Om algoritmen",
-            "content": "Den nuværende algoritme tager højde for skibsbesøgsnotifikationerne planlagt til den valgte dato og dok. Den tjekker tilgængeligheden af STS-kraner og afgør varigheden af hver opgave baseret på kranens hastighed. Besøg der kun vedrører vedligehold eller andre ikke-lastning/pasning aktiviteter ignoreres."
-        }
-    },
-    "notification": {
-        "id": "Notifikations-ID",
-        "hazardous": "Farlig",
-        "nonHazardous": "Ikke-farlig",
-        "arrival": "Ankomst",
-        "departure": "Afgang",
-        "specialRequirements": "Særlige krav",
-        "none": "Ingen",
-        "crew": "Besætning",
-        "captain": "Kaptajn",
-        "unknown": "Ukendt",
-        "from": "Fra",
-        "to": "Til",
-        "tabs": {
-            "dashboard": "Notifikationer dashboard",
-            "search": "Søg notifikationer",
-            "edit": "Rediger notifikation",
-            "create": "Opret notifikation",
-            "makeDraft": "Opret kladdenotifikation",
-            "myNotifications": "Mine notifikationer",
-            "review": "Gennemgå notifikationer",
-            "general": "Generel visning",
-            "byDate": "Kalendervisning",
-            "submit": "Indsend notifikation",
-            "delete": "Slet notifikation"
-        },
-        "eventsOnDate": "Begivenheder på valgt dato",
-        "noEventsOnDate": "Ingen begivenheder på valgt dato",
-        "title": "Skibsbesøgsnotifikationer",
-        "subtitle": {
-            "dashboard": "Oversigt over skibsbesøgsnotifikationer",
-            "search": "Administrer og vis alle skibsbesøgsnotifikationer",
-            "create": "Opret en ny skibsbesøgsnotifikation",
-            "edit": "Rediger en eksisterende skibsbesøgsnotifikation",
-            "review": "Gennemgå ventende skibsbesøgsnotifikationer"
-        },
-        "errors": {
-            "noNotificationId": "Intet notifikations-ID angivet"
-        },
-        "infoTitle": "Notifikationsinformation",
-        "cargoTitle": "Lastinformation",
-        "vesselTitle": "Fartøjsinformation",
-        "manifestInfo": "Manifestinformation",
-        "fields": {
-            "openLoadManifest": "Åbn lastningsmanifest",
-            "openUnloadManifest": "Åbn losningsmanifest",
-            "expectedArrival": "Forventet ankomst",
-            "expectedDeparture": "Forventet afgang",
-            "isCargoHazardous": "Last farlig",
-            "specialRequirements": "Særlige krav",
-            "captain": "Kaptajn",
-            "totalCrewMembers": "Samlet antal besætningsmedlemmer",
-            "safetyOfficers": "Sikkerhedsofficerer",
-            "loadCargoManifest": "Lastningsmanifest",
-            "unloadCargoManifest": "Losningsmanifest",
-            "position": "Position",
-            "area": "Område",
-            "container": "Container",
-            "crewMembers": "Besætningsmedlemmer",
-            "status": "Status"
-        },
-        "timeline": {
-            "pending": "Afventer",
-            "inProgress": "I gang",
-            "completed": "Afsluttet",
-            "submitted": "Indsendt",
-            "accepted": "Accepteret",
-            "rejected": "Afvist"
-        },
-        "filters": {
-            "expectedArrivalFrom": "Forventet ankomst fra",
-            "expectedArrivalTo": "Forventet ankomst til",
-            "withReason": "Med begrundelse",
-            "withDockAssigned": "Med tildelt dok"
-        },
-        "decision": {
-            "isFinal": "Endelig",
-            "assignedDock": {
-                "title": "Tildelt dok",
-                "placeholder": "Vælg tildelt dok"
-            },
-            "reason": {
-                "title": "Begrundelse",
-                "placeholder": "Angiv begrundelse for beslutning"
-            },
-            "status": "Beslutningsstatus"
-        }
-    },
-    "operationalWindow": {
-        "title": "Operationsvindue",
-        "printer": {
-            "addShift": "Tilføj vagt",
-            "shifts": "Vagter:",
-            "noShifts": "Ingen vagter.",
-            "startTime": "Starttid",
-            "endTime": "Sluttid",
-            "weekDays": "Ugedage"
-        },
-        "errors": {
-            "shiftOverlap": "Ugyldig vagt. Overlapper eller sluttid før starttid."
-        }
-    },
-    "about": {
-        "title": "Om PorTiT",
-        "privacy": {
-            "title": "Privatlivspolitik",
-            "lastUpdated": "Sidst opdateret: {date}"
-        }
-    },
-    "operationPlan": {
-        "title": "Operationsplan",
-        "dock": "Kaj",
-        "docks": "Kajer",
-        "operations": "Operationer",
-        "cranes": "Kraner",
-        "createdBy": "Oprettet af",
-        "createdAt": "Oprettet",
-        "totalSchedules": "Samlede tidsplaner",
-        "vesselCount": "Fartøjer",
-        "plansOnDate": "Operationsplaner på den valgte dato",
-        "noPlansOnDate": "Ingen operationsplaner på den valgte dato",
-        "id": "ID",
-        "vvn": "Fartøjsbesøgsmeddelelse",
-        "for": "for",
-        "details": "Detaljer",
-        "totalOperations": "Samlede operationer",
-        "algorithmUsed": "Anvendt algoritme",
-        "ganttChart": "Gantt-diagram",
-        "startTime": "Starttid",
-        "endTime": "Sluttid",
-        "totalDuration": "Samlet varighed",
-        "operation": "Operation",
-        "duration": "Varighed",
-        "resources": "Ressourcer",
-        "operationDetails": "Operationsdetaljer",
-        "operationNumber": "Operation #{number}",
-        "notFound": "Operationsplan ikke fundet",
-        "operationType": {
-            "Unload": "Aflæsse",
-            "Load": "Laste"
-        },
-        "tabs": {
-            "unplannedVVNs": "Ikke-planlagte VVN'er",
-            "search": "Søg planer",
-            "edit": "Rediger plan",
-            "open": "Start udførelse"
-        },
-        "subtitle": {
-            "edit": "Modificer operationsplanens detaljer og tidsplan"
-        },
-        "unplannedVVNs": {
-            "description": "Fartøjsbesøgsmeddelelser, der endnu ikke har en tildelt operationsplan",
-            "noUnplanned": "Alle fartøjsbesøgsmeddelelser har tildelte operationsplaner",
-            "foundMessage": "Fundet {vvnCount} VVN(er) uden planer på tværs af {dayCount} dag(e)",
-            "regenerateAll": "Regenerer alle manglende planer",
-            "regenerateDay": "Regenerer planer for denne dag",
-            "regenerateModalTitle": "Regenerer planer for {date}",
-            "warning": "Advarsel",
-            "warningMessage": "Regenerering af planer vil overskrive alle eksisterende operationsplaner for denne dag. Denne handling kan ikke fortrydes.",
-            "selectedDay": "Valgt dag",
-            "confirmRegeneration": "Bekræft regenerering",
-            "affectedDays": "Berørte dage",
-            "queueInfo": "Hver regenereringsanmodning vil blive sat i kø separat. Du kan gennemgå og acceptere/afvise dem individuelt fra planlægningskøen.",
-            "continue": "Fortsæt",
-            "confirmRegenerationTitle": "Bekræft regenerering",
-            "irreversibleAction": "Denne handling er irreversibel",
-            "overwriteWarning": "Regenerering af operationsplaner vil permanent overskrive alle eksisterende planer for de valgte dage. Denne handling kan ikke fortrydes.",
-            "aboutToRegenerate": "Du er ved at regenerere planer for",
-            "days": "dage",
-            "vesselVisitNotifications": "Fartøjsbesøgsmeddelelser",
-            "using": "Bruger",
-            "algorithm": "algoritme",
-            "proceedQuestion": "Vil du fortsætte med denne operation?",
-            "yesRegenerateAll": "Ja, regenerer alle"
-        },
-        "algorithm": {
-            "optimal": "Optimal",
-            "greedy": "Grådig",
-            "genetic": "Genetisk",
-            "auto": "Automatisk"
-        },
-        "metrics": {
-            "title": "Målinger",
-            "strategy": "Strategi",
-            "totalDelay": "Samlet forsinkelse",
-            "computationTime": "Beregningstid",
-            "autoSelection": "Automatisk algoritmevalg"
-        },
-        "infoTitle": "Operationsplaninformation",
-        "fields": {
-            "id": {
-                "title": "Plan-ID"
-            },
-            "relatedVVN": {
-                "title": "Relateret VVN"
-            },
-            "dock": {
-                "title": "Kaj"
-            },
-            "operations": {
-                "title": "Operationer"
-            }
-        },
-        "filters": {
-            "startDate": "Startdato fra",
-            "endDate": "Slutdato til"
-        },
-        "metadata": {
-            "title": "Metadata",
-            "createdBy": "Oprettet af",
-            "createdAt": "Oprettet",
-            "algorithmUsed": "Anvendt algoritme"
-        },
-        "schedule": {
-            "title": "Operationstidsplan",
-            "noOperations": "Ingen operationer planlagt"
-        }
-    },
-    "incidentType": {
-        "fields": {
-            "name": {
-                "title": "Navn",
-                "placeholder": "Hændelsestypenavn"
-            },
-            "description": {
-                "title": "Beskrivelse",
-                "placeholder": "Detaljeret beskrivelse af hændelsestypen"
-            },
-            "severity": {
-                "title": "Alvorlighed",
-                "placeholder": "Vælg alvorsgrad"
-            },
-            "subtypeOf": {
-                "title": "Undertype af",
-                "placeholder": "Vælg overordnet type"
-            },
-            "subtypes": {
-                "title": "Undertyper",
-                "placeholder": "Vælg underordnede typer"
-            }
-        },
-        "severity": {
-            "Minor": "Mindre",
-            "Major": "Større",
-            "Critical": "Kritisk"
-        },
-        "tabs": {
-            "dashboard": "Hændelsestypeoversigt",
-            "view_dashboard": "Se hændelsestyper",
-            "search": "Søg hændelsestyper",
-            "create": "Opret hændelsestype",
-            "edit": "Rediger hændelsestype"
-        },
-        "generalFields": "Generelle felter",
-        "classification": "Klassificering",
-        "title": "Hændelser",
-        "subtitle": {
-            "dashboard": "Oversigt over hændelsestypestatistikker og aktiviteter",
-            "search": "Administrer og se alle registrerede hændelsestyper",
-            "create": "Registrer en ny hændelsestype i systemet",
-            "edit": "Modificer en eksisterende hændelsestype i systemet"
-        },
-        "registeredIncidentTypes": "Registrerede hændelsestyper",
-        "incidentTypeInformation": "Hændelsestypeinformation",
-        "parentType": "Overordnet type",
-        "confirmDelete": "Bekræft sletning",
-        "confirmDeleteMessage": "Er du sikker på, at du vil slette denne hændelsestype?",
-        "failedToDelete": "Kunne ikke slette hændelsestype"
-    },
-    "taskCategory": {
-        "fields": {
-            "name": {
-                "title": "Navn",
-                "placeholder": "Opgavekategorinavn"
-            },
-            "category": {
-                "title": "Kategori",
-                "placeholder": "Kategorikode"
-            },
-            "description": {
-                "title": "Beskrivelse",
-                "placeholder": "Beskrivelse af opgavekategorien"
-            }
-        },
-        "tabs": {
-            "dashboard": "Opgavekategorioversigt",
-            "search": "Søg opgavekategorier",
-            "create": "Opret opgavekategori",
-            "edit": "Rediger opgavekategori",
-            "view_dashboard": "Se opgavekategorier"
-        },
-        "generalFields": "Generelle felter",
-        "title": "Opgaver",
-        "subtitle": {
-            "dashboard": "Oversigt over opgavekategoristatistikker og aktiviteter",
-            "search": "Administrer og se alle registrerede opgavekategorier",
-            "create": "Registrer en ny opgavekategori i systemet",
-            "edit": "Modificer en eksisterende opgavekategori i systemet"
-        },
-        "taskCategoryInformation": "Opgavekategoriinformation",
-        "registeredTaskCategories": "Registrerede opgavekategorier"
-    },
-    "execution": {
-        "title": "Fartøjsbesøgsudførelser",
-        "subtitle": {
-            "search": "Administrer og se alle fartøjsbesøgsudførelser",
-            "dashboard": "Oversigt over fartøjsbesøgsudførelsesstatistikker og aktiviteter"
-        },
-        "tabs": {
-            "dashboard": "Udførelsesoversigt",
-            "search": "Søg udførelser",
-            "view_dashboard": "Se udførelser",
-            "update": "Opdater udførelse",
-            "view": "Se udførelse",
-            "table": "Tabelvisning",
-            "cards": "Kortvisning"
-        },
-        "fields": {
-            "code": "Kode",
-            "relatedVVN": "Relateret til",
-            "status": "Status",
-            "createdBy": "Oprettet af",
-            "dateOpen": "Åbningsdato",
-            "dateClosed": "Lukningsdato",
-            "relatedVesselVisit": "Relateret fartøjsbesøg",
-            "dock": "Anløbskaj",
-            "berthTime": "Anløbstid",
-            "operations": "Operationer"
-        },
-        "filters": {
-            "startDate": "Startdato",
-            "endDate": "Slutdato",
-            "relatedVVN": "Fartøjsbesøgsmeddelelse",
-            "status": "Status"
-        },
-        "metrics": {
-            "totalOperations": "Samlede operationer",
-            "completedOperations": "Fremskridt",
-            "turnaroundTime": "Vendingstid",
-            "berthOccupancy": "Kajbelægning"
-        },
-        "status": {
-            "pending": "Afventende",
-            "started": "Startet",
-            "delayed": "Forsinket",
-            "completed": "Fuldført"
-        },
-        "view_resources": "Se ressourcer",
-        "infoTitle": "Udførelsesinformation",
-        "operationsTitle": "Operationer",
-        "noOperations": "Ingen tilgængelige operationer",
-        "startOperation": "Start operation",
-        "completeOperation": "Fuldfør operation",
-        "addOperation": "Tilføj operation",
-        "addOperationDescription": "Tilføj en ny operation til tidslinjen",
-        "confirmStartOperation": "Er du sikker på, at du vil starte denne operation?",
-        "confirmCompleteOperation": "Er du sikker på, at du vil fuldføre denne operation?",
-        "berthOperation": {
-            "button": "Rediger anløbsdata",
-            "title": "Anløbsoperation",
-            "description": "Rediger kajen og tiden for denne fartøjsbesøgsudførelse.",
-            "dock": "Anløbskaj",
-            "dockPlaceholder": "Vælg kaj",
-            "berthTime": "Anløbstid",
-            "differentThanPlanned": "Den valgte kaj er forskellig fra den planlagte."
-        }
-    },
-    "incident": {
-        "tabs": {
-            "dashboard": "Hændelsessoversigt",
-            "create": "Opret hændelse",
-            "search": "Søg hændelser",
-            "active": "Aktive hændelser",
-            "view": "Se hændelse",
-            "edit": "Rediger hændelse"
-        },
-        "subtitle": {
-            "create": "Rapporter en ny hændelse i systemet",
-            "search": "Søg og filtrer eksisterende hændelser",
-            "active": "Se og administrer aktive hændelser"
-        },
-        "generalFields": "Generel information",
-        "classification": "Klassificering",
-        "fields": {
-            "bid": {
-                "title": "Hændelses-ID"
-            },
-            "type": {
-                "title": "Hændelsestype",
-                "placeholder": "Vælg en hændelsestype"
-            },
-            "startTime": {
-                "title": "Starttid",
-                "placeholder": "Hvornår startede hændelsen?"
-            },
-            "endTime": {
-                "title": "Sluttid",
-                "placeholder": "Hvornår sluttede hændelsen?"
-            },
-            "severity": {
-                "title": "Alvorlighed",
-                "placeholder": "Vælg alvorsgrad",
-                "options": {
-                    "minor": "Mindre",
-                    "major": "Større",
-                    "critical": "Kritisk"
-                }
-            },
-            "description": {
-                "title": "Beskrivelse",
-                "placeholder": "Beskriv hændelsen i detaljer"
-            },
-            "createdBy": {
-                "title": "Oprettet af"
-            },
-            "affectedVVECodes": {
-                "title": "Berørte VVE'er",
-                "placeholder": "Indtast berørte VVE'er"
-            },
-            "vveCode": {
-                "title": "VVE-kode"
-            },
-            "status": {
-                "title": "Status",
-                "options": {
-                    "active": "Aktiv",
-                    "resolved": "Løst"
-                }
-            },
-            "filterStartTime": {
-                "title": "Startdato fra"
-            },
-            "filterEndTime": {
-                "title": "Startdato til"
-            },
-            "duration": {
-                "title": "Varighed"
-            }
-        },
-        "severity": {
-            "Minor": "Mindre",
-            "Major": "Større",
-            "Critical": "Kritisk"
-        },
-        "status": {
-            "active": "Aktiv",
-            "resolved": "Løst"
-        },
-        "ongoing": "Igangværende",
-        "filters": {
-            "onlyActive": "Kun aktive",
-            "onlyMine": "Kun mine"
-        },
-        "actions": {
-            "view": "Se detaljer",
-            "edit": "Rediger hændelse",
-            "resolve": "Løs hændelse",
-            "delete": "Slet hændelse"
-        },
-        "notifications": {
-            "createSuccess": "Hændelse oprettet",
-            "createFailed": "Kunne ikke oprette hændelse",
-            "updateSuccess": "Hændelse opdateret",
-            "updateFailed": "Kunne ikke opdatere hændelse",
-            "resolveSuccess": "Hændelse løst",
-            "resolveFailed": "Kunne ikke løse hændelse",
-            "deleteSuccess": "Hændelse slettet",
-            "deleteFailed": "Kunne ikke slette hændelse"
-        },
-        "table": {
-            "empty": "Ingen hændelser fundet"
-        },
-        "active": {
-            "title": "Aktive hændelser",
-            "subtitle": "Se og administrer igangværende hændelser"
-        },
-        "infoTitle": "Hændelsesdetaljer",
-        "closeDialog": {
-            "title": "Løs hændelse",
-            "message": "Hvornår blev hændelsen løst",
-            "confirm": "Ja, luk denne hændelse",
-            "cancel": "Annuller"
-        }
-    }
+    "search":  {
+                   "languages":  "Søg sprog..."
+               },
+    "unsavedChanges":  {
+                           "title":  "Forkaste ændringer?",
+                           "message":  "Du har ugemte ændringer. Er du sikker på, at du vil forlade siden og forkaste ændringerne?",
+                           "confirm":  "Forkast",
+                           "cancel":  "Fortsæt redigering"
+                       },
+    "expirationWarning":  {
+                              "messageOneMinute":  "Din session udløber om 1 minut.",
+                              "messageLessThanOneMinute":  "Din session er ved at udløbe."
+                          },
+    "dashboard":  {
+                      "welcome":  "Velkommen tilbage, [name]!",
+                      "sidebarTitle":  "Dashboard",
+                      "title":  "PortIT Dashboard",
+                      "subtitle":  "Oversigt over PortIT-systemet",
+                      "SAOR":  {
+                                   "subtitle":  "Oversigt over shipping-agentens drift",
+                                   "pendingNotifications":  "Ventende notifikationer",
+                                   "recent":  "Seneste notifikationer om skibsbesøg",
+                                   "recentReview":  "Notifikationer om skibsbesøg til gennemgang",
+                                   "noRecent":  "Ingen nye notifikationer"
+                               },
+                      "3DModel":  {
+                                      "title":  "3D havnvisualisering",
+                                      "description":  "Se en interaktiv 3D-repræsentation af hele havnen. Overvåg dokbelægning, fartøjspositioner, oplagsområder og ressourcer i realtid.",
+                                      "open":  "Åbn 3D-model"
+                                  }
+                  },
+    "admin":  {
+                  "sidebarTitle":  "Admin",
+                  "title":  "Admin Dashboard",
+                  "subtitle":  "Administrativ oversigt og styring",
+                  "userManagement":  {
+                                         "title":  "Brugeradministration",
+                                         "subtitle":  "Administrer systembrugere, roller og tilladelser."
+                                     },
+                  "auditLogs":  {
+                                    "title":  "Revisionslog",
+                                    "subtitle":  "Vis og overvåg systemaktivitetslogge."
+                                },
+                  "pp":  {
+                             "title":  "Fortrolighedspolitikker",
+                             "subtitle":  "Definer og administrer havns fortrolighedspolitikker."
+                         },
+                  "notifications":  {
+                                        "create":  "Opret notifikation",
+                                        "subtitleCreate":  "Send important announcements to any or all users.",
+                                        "title":  "Systemnotifikationer",
+                                        "subtitle":  "Opret og administrer generelle systemnotifikationer.",
+                                        "broadcastToggle":  "Broadcast to all users",
+                                        "sendEmailToggle":  "Also send as email",
+                                        "fields":  {
+                                                       "title":  {
+                                                                     "title":  "Title",
+                                                                     "placeholder":  "Indtast notifikationstitel"
+                                                                 },
+                                                       "message":  {
+                                                                       "title":  "Message",
+                                                                       "placeholder":  "Indtast notifikationsbesked"
+                                                                   },
+                                                       "email":  {
+                                                                     "title":  "User email",
+                                                                     "placeholder":  "Specify user email to send to"
+                                                                 },
+                                                       "urgency":  {
+                                                                       "title":  "Urgency",
+                                                                       "options":  {
+                                                                                       "normal":  "Normal",
+                                                                                       "urgent":  "Urgent"
+                                                                                   }
+                                                                   }
+                                                   }
+                                    }
+              },
+    "user":  {
+                 "fields":  {
+                                "email":  {
+                                              "title":  "Email",
+                                              "placeholder":  "email@mail.com"
+                                          },
+                                "role":  {
+                                             "title":  "Rolle",
+                                             "placeholder":  "Vælg brugerrolle",
+                                             "options":  {
+                                                             "admin":  "Administrator",
+                                                             "saoRep":  "SAO-repræsentant",
+                                                             "pao":  "Havnemyndighedsofficer",
+                                                             "logisticsOperator":  "Logistikoperatør"
+                                                         }
+                                         },
+                                "isActive":  {
+                                                 "title":  "Aktiv",
+                                                 "options":  {
+                                                                 "active":  "Ja",
+                                                                 "inactive":  "Nej"
+                                                             }
+                                             }
+                            },
+                 "tabs":  {
+                              "dashboard":  "Bruger-dashboard",
+                              "create":  "Opret bruger",
+                              "view":  "Vis brugere",
+                              "search":  "Søg brugere"
+                          },
+                 "infoTitle":  "Brugeroplysninger",
+                 "title":  "Brugere",
+                 "subtitle":  {
+                                  "dashboard":  "Brugeroversigt og administration",
+                                  "create":  "Registrer en ny bruger i systemet",
+                                  "view":  "Vis og administrer eksisterende brugere"
+                              },
+                 "registeredUsers":  "Registrerede brugere",
+                 "confirmDelete":  "Bekræft sletning",
+                 "confirmDeleteMessage":  "Er du sikker på, at du vil slette denne bruger?"
+             },
+    "representative":  {
+                           "title":  "Repræsentant",
+                           "select":  "Vælg en repræsentant"
+                       },
+    "physicalCharacteristics":  {
+                                    "title":  "Fysiske egenskaber (m)",
+                                    "length":  {
+                                                   "title":  "Længde",
+                                                   "placeholder":  "Længde i meter"
+                                               },
+                                    "depth":  {
+                                                  "title":  "Dybde",
+                                                  "placeholder":  "Dybde i meter"
+                                              },
+                                    "draft":  {
+                                                  "title":  "Dybgang",
+                                                  "placeholder":  "Dybgang i meter"
+                                              }
+                                },
+    "dock":  {
+                 "fields":  {
+                                "code":  {
+                                             "title":  "Kode",
+                                             "placeholder":  "Dokkode"
+                                         },
+                                "name":  {
+                                             "title":  "Navn",
+                                             "placeholder":  "Doknavn"
+                                         },
+                                "location":  {
+                                                 "title":  "Placering",
+                                                 "placeholder":  "Dok placering"
+                                             },
+                                "supportedVesselTypes":  {
+                                                             "title":  "Understøttede fartøjstyper",
+                                                             "vesselTypes":  {
+                                                                                 "title":  "Fartøjstyper",
+                                                                                 "placeholder":  "Vælg fartøjstyper"
+                                                                             },
+                                                             "vesselType":  "Fartøjstype"
+                                                         }
+                            },
+                 "tabs":  {
+                              "dashboard":  "Dok-dashboard",
+                              "view_dashboard":  "Vis dokke",
+                              "search":  "Søg dokke",
+                              "create":  "Opret dok",
+                              "view":  "Vis dok",
+                              "edit":  "Rediger dok"
+                          },
+                 "generalFields":  "Generelle felter",
+                 "infoTitle":  "Dokoplysninger",
+                 "title":  "Dokke",
+                 "subtitle":  {
+                                  "dashboard":  "Oversigt over dokstatistik og aktiviteter",
+                                  "search":  "Administrer og vis alle registrerede dokke",
+                                  "create":  "Registrer en ny dok i systemet",
+                                  "edit":  "Rediger en eksisterende dok i systemet"
+                              },
+                 "registeredDocks":  "Registrerede dokke"
+             },
+    "vesselType":  {
+                       "fields":  {
+                                      "name":  {
+                                                   "title":  "Navn",
+                                                   "placeholder":  "Fartøjstypens navn"
+                                               },
+                                      "description":  {
+                                                          "title":  "Beskrivelse",
+                                                          "placeholder":  "Beskrivelse af fartøjstypen"
+                                                      },
+                                      "capacity":  {
+                                                       "title":  "Kapacitet",
+                                                       "placeholder":  "Containerkapacitet i TEU"
+                                                   },
+                                      "containerCapacity":  {
+                                                                "title":  "Containerkapacitet (TEU)",
+                                                                "maxNumberOfRows":  {
+                                                                                        "title":  "Maks antal rækker",
+                                                                                        "placeholder":  "Maks rækker i TEU"
+                                                                                    },
+                                                                "maxNumberOfBays":  {
+                                                                                        "title":  "Maks antal rum",
+                                                                                        "placeholder":  "Maks rum i TEU"
+                                                                                    },
+                                                                "maxNumberOfTiers":  {
+                                                                                         "title":  "Maks antal lag",
+                                                                                         "placeholder":  "Maks lag i TEU"
+                                                                                     }
+                                                            }
+                                  },
+                       "generalFields":  "Generelle felter",
+                       "tabs":  {
+                                    "dashboard":  "Fartøjstyper dashboard",
+                                    "view_dashboard":  "Vis fartøjstyper",
+                                    "search":  "Søg fartøjstyper",
+                                    "create":  "Opret fartøjstype",
+                                    "view":  "Vis fartøjstype",
+                                    "edit":  "Rediger fartøjstype"
+                                },
+                       "infoTitle":  "Fartøjstypes oplysninger",
+                       "title":  "Fartøjstyper",
+                       "subtitle":  {
+                                        "dashboard":  "Oversigt over statistik og aktiviteter for fartøjstyper",
+                                        "search":  "Administrer og vis alle registrerede fartøjstyper",
+                                        "create":  "Registrer en ny fartøjstype i systemet",
+                                        "edit":  "Rediger en eksisterende fartøjstype i systemet"
+                                    },
+                       "registeredVesselTypes":  "Registrerede fartøjstyper"
+                   },
+    "vessel":  {
+                   "fields":  {
+                                  "name":  {
+                                               "title":  "Navn",
+                                               "placeholder":  "Fartøjsnavn"
+                                           },
+                                  "imoNumber":  {
+                                                    "title":  "IMO nummer",
+                                                    "placeholder":  "Fartøjets IMO nummer"
+                                                },
+                                  "owner":  {
+                                                "title":  "Ejerorganisation",
+                                                "placeholder":  "Ejerorganisation"
+                                            },
+                                  "vesselType":  {
+                                                     "title":  "Fartøjstype",
+                                                     "placeholder":  "Vælg fartøjstype"
+                                                 },
+                                  "taxNumber":  {
+                                                    "title":  "Skattenummer"
+                                                }
+                              },
+                   "infoTitle":  "Fartøjsinformation",
+                   "physicalCharacteristicsTitle":  "Fysiske egenskaber",
+                   "tabs":  {
+                                "dashboard":  "Fartøj dashboard",
+                                "view_dashboard":  "Vis fartøjer",
+                                "search":  "Søg fartøjer",
+                                "create":  "Opret fartøj",
+                                "view":  "Vis fartøj",
+                                "edit":  "Rediger fartøj"
+                            },
+                   "title":  "Fartøjer",
+                   "subtitle":  {
+                                    "dashboard":  "Oversigt over fartøjsstatistik og aktiviteter",
+                                    "search":  "Administrer og vis alle registrerede fartøjer",
+                                    "create":  "Registrer et nyt fartøj i systemet",
+                                    "edit":  "Rediger et eksisterende fartøj i systemet"
+                                },
+                   "ownedBy":  "Ejet af",
+                   "registeredVessels":  "Registrerede fartøjer"
+               },
+    "staff":  {
+                  "deactivation":  {
+                                       "title":  "Deaktiver medarbejder",
+                                       "message":  "Er du sikker på at du vil deaktivere denne medarbejder? Du kan aktivere medarbejderen igen senere.",
+                                       "successMessage":  "Medarbejderen blev deaktiveret succesfuldt.",
+                                       "errorMessage":  "Fejl under deaktivering. Prøv igen."
+                                   },
+                  "fields":  {
+                                 "mechanographicNumber":  {
+                                                              "title":  "Mekanografisk nummer",
+                                                              "placeholder":  "Mekanografisk nummer"
+                                                          },
+                                 "name":  {
+                                              "title":  "Navn",
+                                              "placeholder":  "Medarbejdernavn"
+                                          },
+                                 "email":  {
+                                               "title":  "Email",
+                                               "placeholder":  "Email adresse"
+                                           },
+                                 "phoneNumber":  {
+                                                     "title":  "Telefonnummer",
+                                                     "placeholder":  "Telefonnummer"
+                                                 },
+                                 "qualifications":  {
+                                                        "title":  "Kvalifikationer",
+                                                        "placeholder":  "Vælg kvalifikationer"
+                                                    },
+                                 "status":  {
+                                                "title":  "Status",
+                                                "options":  {
+                                                                "available":  "Tilgængelig",
+                                                                "unavailable":  "Ikke tilgængelig",
+                                                                "temporarilyReassigned":  "Midlertidigt omplaceret"
+                                                            }
+                                            },
+                                 "operationalWindow":  "Operationsvindue"
+                             },
+                  "tabs":  {
+                               "dashboard":  "Medarbejder dashboard",
+                               "view_dashboard":  "Vis medarbejdere",
+                               "search":  "Søg medarbejdere",
+                               "create":  "Opret medarbejder",
+                               "view":  "Vis medarbejder",
+                               "edit":  "Rediger medarbejder"
+                           },
+                  "infoTitle":  "Medarbejderinformation",
+                  "title":  "Medarbejdere",
+                  "subtitle":  {
+                                   "search":  "Administrer og vis alle registrerede medarbejdere",
+                                   "dashboard":  "Oversigt over medarbejderstatistik og aktiviteter",
+                                   "create":  "Registrer en ny medarbejder i systemet",
+                                   "view":  "Vis medarbejderdetaljer",
+                                   "edit":  "Rediger en eksisterende medarbejder i systemet"
+                               },
+                  "registeredStaffMembers":  "Registrerede medarbejdere"
+              },
+    "qualification":  {
+                          "tabs":  {
+                                       "dashboard":  "Kvalifikations dashboard",
+                                       "view_dashboard":  "Vis kvalifikationer",
+                                       "search":  "Søg kvalifikationer",
+                                       "create":  "Opret kvalifikation",
+                                       "view":  "Vis kvalifikation",
+                                       "edit":  "Rediger kvalifikation"
+                                   },
+                          "infoTitle":  "Kvalifikationsinformation",
+                          "title":  "Kvalifikationer",
+                          "subtitle":  {
+                                           "search":  "Administrer og vis alle registrerede kvalifikationer",
+                                           "dashboard":  "Oversigt over kvalifikationsstatistik og aktiviteter",
+                                           "create":  "Registrer en ny kvalifikation i systemet",
+                                           "edit":  "Rediger en eksisterende kvalifikation i systemet",
+                                           "view":  "Vis kvalifikationsdetaljer"
+                                       },
+                          "fields":  {
+                                         "idCode":  {
+                                                        "title":  "Kvalifikationskode",
+                                                        "placeholder":  "Kvalifikationskode"
+                                                    },
+                                         "qualificationName":  {
+                                                                   "title":  "Kvalifikationsnavn",
+                                                                   "placeholder":  "Kvalifikationsnavn"
+                                                               }
+                                     },
+                          "registeredQualifications":  "Registered Qualifications"
+                      },
+    "scheduling":  {
+                       "title":  "Anmod om daglig tidsplan",
+                       "subtitle":  "Brug vores automatiske planlægningsalgoritme til at analysere opgaverne for en bestemt dag.",
+                       "noVisits":  "Ingen skibsbesøg planlagt for den valgte dato.",
+                       "visitsOnSelectedDay":  "Skibsbesøg på valgt dato",
+                       "viewVisits":  "Generer opgavetidsplan",
+                       "generateTasksButton":  "Generer opgavetidsplan",
+                       "aboutAlgorithmButton":  "Om algoritmen",
+                       "fields":  {
+                                      "algorithm":  {
+                                                        "title":  "Planlægningsalgoritme",
+                                                        "placeholder":  "Vælg planlægningsalgoritme"
+                                                    },
+                                      "relatedDocks":  "Vælg relateret dok"
+                                  },
+                       "generateTasksModal":  {
+                                                  "title":  "Ekstra logistik"
+                                              },
+                       "aboutAlgorithmModal":  {
+                                                   "title":  "Om algoritmen",
+                                                   "content":  "Den nuværende algoritme tager højde for skibsbesøgsnotifikationerne planlagt til den valgte dato og dok. Den tjekker tilgængeligheden af STS-kraner og afgør varigheden af hver opgave baseret på kranens hastighed. Besøg der kun vedrører vedligehold eller andre ikke-lastning/pasning aktiviteter ignoreres."
+                                               },
+                       "results":  {
+                                       "title":  "Scheduling Results",
+                                       "subtitle":  "Generated task schedule for the selected date"
+                                   },
+                       "tabs":  {
+                                    "dashboard":  "Scheduling Dashboard",
+                                    "results":  "Scheduling Results",
+                                    "schedule":  "Request Task Schedule",
+                                    "view_dashboard":  "View Scheduling",
+                                    "search":  "List Operation Plans",
+                                    "create":  "Create Scheduling",
+                                    "view":  "View Scheduling",
+                                    "edit":  "Edit Scheduling",
+                                    "queue":  "Scheduling Queue"
+                                },
+                       "subtitles":  {
+                                         "dashboard":  "Overview of scheduling of berth operations and incidents",
+                                         "schedule":  "Request a task schedule for a specific date",
+                                         "search":  "List all operation plans for a given date",
+                                         "create":  "Create a new scheduling into the system",
+                                         "edit":  "Edit an existing scheduling in the system",
+                                         "queue":  "View pending scheduling requests"
+                                     },
+                       "queue":  {
+                                     "title":  "Scheduling Queue",
+                                     "subtitle":  "Pending scheduling requests",
+                                     "onlyMine":  "Show only my requests"
+                                 },
+                       "rebalancing":  {
+                                           "title":  "Dock Rebalancing Required",
+                                           "warningMessage":  "Before scheduling, the system recommends rebalancing dock assignments to optimize load distribution.",
+                                           "vesselsToReassign":  "Vessels to Reassign",
+                                           "averageLoad":  "Average Load",
+                                           "loadRange":  "Load Range",
+                                           "proposedReassignments":  "Proposed Reassignments",
+                                           "vesselImo":  "Vessel IMO",
+                                           "currentDock":  "Current Dock",
+                                           "proposedDock":  "Proposed Dock",
+                                           "skipButton":  "Skip \u0026 Continue with Current Assignments",
+                                           "applyButton":  "Apply Rebalancing \u0026 Generate Schedule"
+                                       }
+                   },
+    "physicalResource":  {
+                             "deactivation":  {
+                                                  "title":  "Deaktiver fysisk ressource",
+                                                  "message":  "Er du sikker på at du vil deaktivere denne ressource? Du kan aktivere den igen senere.",
+                                                  "successMessage":  "Fysisk ressource deaktiveret succesfuldt.",
+                                                  "errorMessage":  "Fejl under deaktivering. Prøv igen."
+                                              },
+                             "tabs":  {
+                                          "dashboard":  "Fysisk ressource dashboard",
+                                          "view_dashboard":  "Vis fysiske ressourcer",
+                                          "search":  "Søg fysiske ressourcer",
+                                          "create":  "Opret fysisk ressource",
+                                          "view":  "Vis fysisk ressource",
+                                          "edit":  "Rediger fysisk ressource"
+                                      },
+                             "infoTitle":  "Information om fysisk ressource",
+                             "title":  "Fysiske ressourcer",
+                             "subtitle":  {
+                                              "search":  "Administrer og vis alle registrerede fysiske ressourcer",
+                                              "dashboard":  "Kontrolpanel for alle fysiske ressourcer",
+                                              "view_dashboard":  "Vis fysiske ressourcer",
+                                              "create":  "Registrer en ny fysisk ressource i systemet",
+                                              "view":  "Vis detaljer om fysisk ressource",
+                                              "edit":  "Rediger en eksisterende fysisk ressource i systemet"
+                                          },
+                             "generalFields":  "Generelle felter",
+                             "specificFields":  "Specifikke felter",
+                             "fields":  {
+                                            "code":  {
+                                                         "title":  "Kode",
+                                                         "placeholder":  "Ressourcekode"
+                                                     },
+                                            "description":  {
+                                                                "title":  "Beskrivelse",
+                                                                "placeholder":  "Ressourcebeskrivelse"
+                                                            },
+                                            "status":  {
+                                                           "title":  "Status",
+                                                           "placeholder":  "Vælg ressource status",
+                                                           "options":  {
+                                                                           "available":  "Tilgængelig",
+                                                                           "maintenance":  "Vedligeholdelse",
+                                                                           "outOfService":  "Uden for drift"
+                                                                       }
+                                                       },
+                                            "qualifications":  {
+                                                                   "title":  "Påkrævede kvalifikationer",
+                                                                   "placeholder":  "Kvalifikationer der kræves for at betjene denne ressource"
+                                                               },
+                                            "setupTime":  {
+                                                              "title":  "Opsætningstid (minutter)",
+                                                              "placeholder":  "Opsætningstid"
+                                                          },
+                                            "servingDocks":  {
+                                                                 "title":  "Betjente dokke",
+                                                                 "placeholder":  "Vælg betjente dokke"
+                                                             },
+                                            "liftingCapacity":  {
+                                                                    "title":  "Løftekapacitet (kg)",
+                                                                    "placeholder":  "Løftekapacitet"
+                                                                },
+                                            "containersPerHour":  {
+                                                                      "title":  "Containere per time",
+                                                                      "placeholder":  "Containere per time"
+                                                                  },
+                                            "maxLoadCapacity":  {
+                                                                    "title":  "Maksimal lasteevne (kg)",
+                                                                    "placeholder":  "Maksimal lasteevne"
+                                                                },
+                                            "averageSpeed":  {
+                                                                 "title":  "Gennemsnitlig hastighed (km/t)",
+                                                                 "placeholder":  "Gennemsnitlig hastighed"
+                                                             },
+                                            "containersPerTrip":  {
+                                                                      "title":  "Containere per tur",
+                                                                      "placeholder":  "Containere per tur"
+                                                                  },
+                                            "type":  {
+                                                         "title":  "Ressourcetype",
+                                                         "options":  {
+                                                                         "stsCrane":  "STS kran",
+                                                                         "yardGantry":  "Gård portalkran",
+                                                                         "truck":  "Lastbil"
+                                                                     }
+                                                     }
+                                        },
+                             "actions":  {
+                                             "deactivate":  "Deaktivér fysisk ressource"
+                                         },
+                             "registeredPhysicalResources":  "Registered Physical Resources"
+                         },
+    "storageArea":  {
+                        "tabs":  {
+                                     "dashboard":  "Lagerområde dashboard",
+                                     "view_dashboard":  "Vis lagerområder",
+                                     "search":  "Søg lagerområder",
+                                     "create":  "Opret lagerområde",
+                                     "view":  "Vis lagerområde",
+                                     "edit":  "Rediger lagerområde"
+                                 },
+                        "create":  {
+                                       "distance_meters":  "Afstand (meter)"
+                                   },
+                        "infoTitle":  "Information om lagerområde",
+                        "title":  "Lagerområder",
+                        "subtitle":  {
+                                         "search":  "Administrer og vis alle registrerede lagerområder",
+                                         "dashboard":  "Kontrolpanel for alle lagerområder",
+                                         "view_dashboard":  "Vis lagerområder",
+                                         "create":  "Registrer et nyt lagerområde i systemet",
+                                         "view":  "Vis lagerområdets detaljer",
+                                         "edit":  "Rediger et eksisterende lagerområde i systemet"
+                                     },
+                        "printer":  {
+                                        "docks_serviced":  "Betjente dokke",
+                                        "capacity_usage":  "Kapacitetsudnyttelse",
+                                        "units":  "Enheder",
+                                        "available":  "Tilgængelige",
+                                        "no_registered_distances":  "Ingen registrerede afstande",
+                                        "no_docks_serviced":  "Ingen betjente dokke",
+                                        "all_docks_serviced":  "Alle dokke betjenes",
+                                        "serviced_docks_distance":  "Afstand til betjente dokke",
+                                        "no_registered_docks":  "Ingen registrerede dokke"
+                                    },
+                        "fields":  {
+                                       "nameCode":  {
+                                                        "title":  "Navnekode",
+                                                        "placeholder":  "Lagerområdets navnekode"
+                                                    },
+                                       "location":  {
+                                                        "title":  "Placering",
+                                                        "placeholder":  "Lagerområdets placering"
+                                                    },
+                                       "type":  {
+                                                    "title":  "Type",
+                                                    "placeholder":  "Vælg lagerområdets type",
+                                                    "options":  {
+                                                                    "yard":  "Plads",
+                                                                    "warehouse":  "Lager"
+                                                                }
+                                                },
+                                       "capacity":  {
+                                                        "title":  "Kapacitet",
+                                                        "placeholder":  "Maksimal kapacitet"
+                                                    },
+                                       "occupancy":  {
+                                                         "title":  "Belægning",
+                                                         "placeholder":  "Nuværende belægning"
+                                                     }
+                                   },
+                        "registeredStorageAreas":  "Registered Storage Areas"
+                    },
+    "notification":  {
+                         "id":  "Notifikations-ID",
+                         "hazardous":  "Farlig",
+                         "nonHazardous":  "Ikke-farlig",
+                         "arrival":  "Ankomst",
+                         "departure":  "Afgang",
+                         "specialRequirements":  "Særlige krav",
+                         "none":  "Ingen",
+                         "crew":  "Besætning",
+                         "captain":  "Kaptajn",
+                         "unknown":  "Ukendt",
+                         "from":  "Fra",
+                         "to":  "Til",
+                         "step":  "Step",
+                         "of":  "of",
+                         "tabs":  {
+                                      "dashboard":  "Notifikationer dashboard",
+                                      "search":  "Søg notifikationer",
+                                      "edit":  "Rediger notifikation",
+                                      "create":  "Opret notifikation",
+                                      "update":  "Update Notification",
+                                      "makeDraft":  "Opret kladdenotifikation",
+                                      "myNotifications":  "Mine notifikationer",
+                                      "review":  "Gennemgå notifikationer",
+                                      "general":  "Generel visning",
+                                      "byDate":  "Kalendervisning",
+                                      "submit":  "Indsend notifikation",
+                                      "delete":  "Slet notifikation"
+                                  },
+                         "eventsOnDate":  "Begivenheder på valgt dato",
+                         "noEventsOnDate":  "Ingen begivenheder på valgt dato",
+                         "title":  "Skibsbesøgsnotifikationer",
+                         "subtitle":  {
+                                          "dashboard":  "Oversigt over skibsbesøgsnotifikationer",
+                                          "search":  "Administrer og vis alle skibsbesøgsnotifikationer",
+                                          "create":  "Opret en ny skibsbesøgsnotifikation",
+                                          "update":  "Update an existing vessel visit notification",
+                                          "edit":  "Rediger en eksisterende skibsbesøgsnotifikation",
+                                          "review":  "Gennemgå ventende skibsbesøgsnotifikationer"
+                                      },
+                         "errors":  {
+                                        "noNotificationId":  "Intet notifikations-ID angivet"
+                                    },
+                         "infoTitle":  "Notifikationsinformation",
+                         "cargoTitle":  "Lastinformation",
+                         "vesselTitle":  "Fartøjsinformation",
+                         "manifestInfo":  "Manifestinformation",
+                         "fields":  {
+                                        "selectVessel":  "Select corresponding vessel",
+                                        "openLoadManifest":  "Åbn lastningsmanifest",
+                                        "openUnloadManifest":  "Åbn losningsmanifest",
+                                        "expectedArrival":  "Forventet ankomst",
+                                        "expectedDeparture":  "Forventet afgang",
+                                        "isCargoHazardous":  "Last farlig",
+                                        "specialRequirements":  "Særlige krav",
+                                        "captain":  "Kaptajn",
+                                        "totalCrewMembers":  "Samlet antal besætningsmedlemmer",
+                                        "safetyOfficers":  "Sikkerhedsofficerer",
+                                        "loadCargoManifest":  "Lastningsmanifest",
+                                        "unloadCargoManifest":  "Losningsmanifest",
+                                        "position":  "Position",
+                                        "area":  "Område",
+                                        "container":  "Container",
+                                        "crewMembers":  "Besætningsmedlemmer",
+                                        "status":  "Status",
+                                        "isCargoHazardousQ":  "Is Cargo Hazardous?",
+                                        "cargoManifestInfo":  "About cargo manifest files"
+                                    },
+                         "timeline":  {
+                                          "pending":  "Afventer",
+                                          "inProgress":  "I gang",
+                                          "completed":  "Afsluttet",
+                                          "submitted":  "Indsendt",
+                                          "accepted":  "Accepteret",
+                                          "rejected":  "Afvist"
+                                      },
+                         "filters":  {
+                                         "expectedArrivalFrom":  "Forventet ankomst fra",
+                                         "expectedArrivalTo":  "Forventet ankomst til",
+                                         "withReason":  "Med begrundelse",
+                                         "withDockAssigned":  "Med tildelt dok"
+                                     },
+                         "decision":  {
+                                          "isFinal":  "Endelig",
+                                          "assignedDock":  {
+                                                               "title":  "Tildelt dok",
+                                                               "placeholder":  "Vælg tildelt dok"
+                                                           },
+                                          "reason":  {
+                                                         "title":  "Begrundelse",
+                                                         "placeholder":  "Angiv begrundelse for beslutning"
+                                                     },
+                                          "status":  "Beslutningsstatus"
+                                      },
+                         "sections":  {
+                                          "vesselDetails":  "Besøgsinformation",
+                                          "crewDetails":  "Besætningsdetaljer",
+                                          "cargoRequirements":  "Lastkrav",
+                                          "cargoContent":  "Lastindhold"
+                                      },
+                         "about":  {
+                                       "text":  "Lastmanifestfiler skal (i øjeblikket) være i et europæisk standard CSV-format. Hver række i CSV-filen repræsenterer en lastvare med følgende kolonner:",
+                                       "bay":  "Bay (nummer)",
+                                       "row":  "Række (nummer)",
+                                       "tier":  "Niveau (nummer)",
+                                       "area":  "Områdekode (hvor til/fra)",
+                                       "containerNumber":  "Containernummer (tekst)",
+                                       "conatinerType":  "Containertype (nummer)",
+                                       "description":  "Beskrivelse (tekst)",
+                                       "containerTypes":  {
+                                                              "refrigeratedGoods":  "Kølevarer",
+                                                              "generalConsumerProducts":  "Generelle forbrugerprodukter",
+                                                              "electronics":  "Elektronik",
+                                                              "hazmat":  "Farlige materialer",
+                                                              "oversizedIndustrialEquipment":  "Overdimensioneret industrielt udstyr",
+                                                              "other":  "Andet"
+                                                          }
+                                   },
+                         "registeredVesselVisitNotifications":  "Registered Vessel Visit Notifications"
+                     },
+    "operationalWindow":  {
+                              "title":  "Operationsvindue",
+                              "printer":  {
+                                              "addShift":  "Tilføj vagt",
+                                              "shifts":  "Vagter:",
+                                              "noShifts":  "Ingen vagter.",
+                                              "startTime":  "Starttid",
+                                              "endTime":  "Sluttid",
+                                              "weekDays":  "Ugedage"
+                                          },
+                              "errors":  {
+                                             "shiftOverlap":  "Ugyldig vagt. Overlapper eller sluttid før starttid."
+                                         }
+                          },
+    "about":  {
+                  "title":  "Om PorTiT",
+                  "privacy":  {
+                                  "title":  "Privatlivspolitik",
+                                  "lastUpdated":  "Sidst opdateret: {date}"
+                              }
+              },
+    "operationPlan":  {
+                          "title":  "Operationsplan",
+                          "dock":  "Kaj",
+                          "docks":  "Kajer",
+                          "operations":  "Operationer",
+                          "cranes":  "Kraner",
+                          "createdBy":  "Oprettet af",
+                          "createdAt":  "Oprettet",
+                          "totalSchedules":  "Samlede tidsplaner",
+                          "vesselCount":  "Fartøjer",
+                          "plansOnDate":  "Operationsplaner på den valgte dato",
+                          "noPlansOnDate":  "Ingen operationsplaner på den valgte dato",
+                          "id":  "ID",
+                          "vvn":  "Fartøjsbesøgsmeddelelse",
+                          "for":  "for",
+                          "details":  "Detaljer",
+                          "totalOperations":  "Samlede operationer",
+                          "algorithmUsed":  "Anvendt algoritme",
+                          "ganttChart":  "Gantt-diagram",
+                          "startTime":  "Starttid",
+                          "endTime":  "Sluttid",
+                          "totalDuration":  "Samlet varighed",
+                          "operation":  "Operation",
+                          "duration":  "Varighed",
+                          "resources":  "Ressourcer",
+                          "operationDetails":  "Operationsdetaljer",
+                          "operationNumber":  "Operation #{number}",
+                          "notFound":  "Operationsplan ikke fundet",
+                          "operationType":  {
+                                                "Unload":  "Aflæsse",
+                                                "Load":  "Laste"
+                                            },
+                          "tabs":  {
+                                       "unplannedVVNs":  "Ikke-planlagte VVN\u0027er",
+                                       "search":  "Søg planer",
+                                       "edit":  "Rediger plan",
+                                       "open":  "Start udførelse"
+                                   },
+                          "subtitle":  {
+                                           "edit":  "Modificer operationsplanens detaljer og tidsplan"
+                                       },
+                          "unplannedVVNs":  {
+                                                "description":  "Fartøjsbesøgsmeddelelser, der endnu ikke har en tildelt operationsplan",
+                                                "noUnplanned":  "Alle fartøjsbesøgsmeddelelser har tildelte operationsplaner",
+                                                "foundMessage":  "Fundet {vvnCount} VVN(er) uden planer på tværs af {dayCount} dag(e)",
+                                                "regenerateAll":  "Regenerer alle manglende planer",
+                                                "regenerateDay":  "Regenerer planer for denne dag",
+                                                "regenerateModalTitle":  "Regenerer planer for {date}",
+                                                "warning":  "Advarsel",
+                                                "warningMessage":  "Regenerering af planer vil overskrive alle eksisterende operationsplaner for denne dag. Denne handling kan ikke fortrydes.",
+                                                "selectedDay":  "Valgt dag",
+                                                "confirmRegeneration":  "Bekræft regenerering",
+                                                "affectedDays":  "Berørte dage",
+                                                "queueInfo":  "Hver regenereringsanmodning vil blive sat i kø separat. Du kan gennemgå og acceptere/afvise dem individuelt fra planlægningskøen.",
+                                                "continue":  "Fortsæt",
+                                                "confirmRegenerationTitle":  "Bekræft regenerering",
+                                                "irreversibleAction":  "Denne handling er irreversibel",
+                                                "overwriteWarning":  "Regenerering af operationsplaner vil permanent overskrive alle eksisterende planer for de valgte dage. Denne handling kan ikke fortrydes.",
+                                                "aboutToRegenerate":  "Du er ved at regenerere planer for",
+                                                "days":  "dage",
+                                                "vesselVisitNotifications":  "Fartøjsbesøgsmeddelelser",
+                                                "using":  "Bruger",
+                                                "algorithm":  "algoritme",
+                                                "proceedQuestion":  "Vil du fortsætte med denne operation?",
+                                                "yesRegenerateAll":  "Ja, regenerer alle"
+                                            },
+                          "algorithm":  {
+                                            "optimal":  "Optimal",
+                                            "greedy":  "Grådig",
+                                            "genetic":  "Genetisk",
+                                            "auto":  "Automatisk"
+                                        },
+                          "metrics":  {
+                                          "title":  "Målinger",
+                                          "strategy":  "Strategi",
+                                          "totalDelay":  "Samlet forsinkelse",
+                                          "computationTime":  "Beregningstid",
+                                          "autoSelection":  "Automatisk algoritmevalg"
+                                      },
+                          "infoTitle":  "Operationsplaninformation",
+                          "fields":  {
+                                         "id":  {
+                                                    "title":  "Plan-ID"
+                                                },
+                                         "relatedVVN":  {
+                                                            "title":  "Relateret VVN"
+                                                        },
+                                         "dock":  {
+                                                      "title":  "Kaj"
+                                                  },
+                                         "operations":  {
+                                                            "title":  "Operationer"
+                                                        }
+                                     },
+                          "filters":  {
+                                          "startDate":  "Startdato fra",
+                                          "endDate":  "Slutdato til"
+                                      },
+                          "metadata":  {
+                                           "title":  "Metadata",
+                                           "createdBy":  "Oprettet af",
+                                           "createdAt":  "Oprettet",
+                                           "algorithmUsed":  "Anvendt algoritme"
+                                       },
+                          "schedule":  {
+                                           "title":  "Operationstidsplan",
+                                           "noOperations":  "Ingen operationer planlagt"
+                                       }
+                      },
+    "incidentType":  {
+                         "fields":  {
+                                        "name":  {
+                                                     "title":  "Navn",
+                                                     "placeholder":  "Hændelsestypenavn"
+                                                 },
+                                        "description":  {
+                                                            "title":  "Beskrivelse",
+                                                            "placeholder":  "Detaljeret beskrivelse af hændelsestypen"
+                                                        },
+                                        "severity":  {
+                                                         "title":  "Alvorlighed",
+                                                         "placeholder":  "Vælg alvorsgrad"
+                                                     },
+                                        "subtypeOf":  {
+                                                          "title":  "Undertype af",
+                                                          "placeholder":  "Vælg overordnet type"
+                                                      },
+                                        "subtypes":  {
+                                                         "title":  "Undertyper",
+                                                         "placeholder":  "Vælg underordnede typer"
+                                                     }
+                                    },
+                         "severity":  {
+                                          "Minor":  "Mindre",
+                                          "Major":  "Større",
+                                          "Critical":  "Kritisk"
+                                      },
+                         "tabs":  {
+                                      "dashboard":  "Hændelsestypeoversigt",
+                                      "view_dashboard":  "Se hændelsestyper",
+                                      "search":  "Søg hændelsestyper",
+                                      "create":  "Opret hændelsestype",
+                                      "edit":  "Rediger hændelsestype"
+                                  },
+                         "generalFields":  "Generelle felter",
+                         "classification":  "Klassificering",
+                         "title":  "Hændelser",
+                         "subtitle":  {
+                                          "dashboard":  "Oversigt over hændelsestypestatistikker og aktiviteter",
+                                          "search":  "Administrer og se alle registrerede hændelsestyper",
+                                          "create":  "Registrer en ny hændelsestype i systemet",
+                                          "edit":  "Modificer en eksisterende hændelsestype i systemet"
+                                      },
+                         "registeredIncidentTypes":  "Registrerede hændelsestyper",
+                         "incidentTypeInformation":  "Hændelsestypeinformation",
+                         "parentType":  "Overordnet type",
+                         "confirmDelete":  "Bekræft sletning",
+                         "confirmDeleteMessage":  "Er du sikker på, at du vil slette denne hændelsestype?",
+                         "failedToDelete":  "Kunne ikke slette hændelsestype"
+                     },
+    "taskCategory":  {
+                         "fields":  {
+                                        "name":  {
+                                                     "title":  "Navn",
+                                                     "placeholder":  "Opgavekategorinavn"
+                                                 },
+                                        "category":  {
+                                                         "title":  "Kategori",
+                                                         "placeholder":  "Kategorikode"
+                                                     },
+                                        "description":  {
+                                                            "title":  "Beskrivelse",
+                                                            "placeholder":  "Beskrivelse af opgavekategorien"
+                                                        }
+                                    },
+                         "tabs":  {
+                                      "dashboard":  "Opgavekategorioversigt",
+                                      "search":  "Søg opgavekategorier",
+                                      "create":  "Opret opgavekategori",
+                                      "edit":  "Rediger opgavekategori",
+                                      "view_dashboard":  "Se opgavekategorier"
+                                  },
+                         "generalFields":  "Generelle felter",
+                         "title":  "Opgaver",
+                         "subtitle":  {
+                                          "dashboard":  "Oversigt over opgavekategoristatistikker og aktiviteter",
+                                          "search":  "Administrer og se alle registrerede opgavekategorier",
+                                          "create":  "Registrer en ny opgavekategori i systemet",
+                                          "edit":  "Modificer en eksisterende opgavekategori i systemet"
+                                      },
+                         "taskCategoryInformation":  "Opgavekategoriinformation",
+                         "registeredTaskCategories":  "Registrerede opgavekategorier"
+                     },
+    "execution":  {
+                      "title":  "Fartøjsbesøgsudførelser",
+                      "subtitle":  {
+                                       "search":  "Administrer og se alle fartøjsbesøgsudførelser",
+                                       "dashboard":  "Oversigt over fartøjsbesøgsudførelsesstatistikker og aktiviteter"
+                                   },
+                      "tabs":  {
+                                   "dashboard":  "Udførelsesoversigt",
+                                   "search":  "Søg udførelser",
+                                   "view_dashboard":  "Se udførelser",
+                                   "update":  "Opdater udførelse",
+                                   "view":  "Se udførelse",
+                                   "table":  "Tabelvisning",
+                                   "cards":  "Kortvisning"
+                               },
+                      "fields":  {
+                                     "code":  "Kode",
+                                     "relatedVVN":  "Relateret til",
+                                     "status":  "Status",
+                                     "createdBy":  "Oprettet af",
+                                     "dateOpen":  "Åbningsdato",
+                                     "dateClosed":  "Lukningsdato",
+                                     "relatedVesselVisit":  "Relateret fartøjsbesøg",
+                                     "dock":  "Anløbskaj",
+                                     "berthTime":  "Anløbstid",
+                                     "operations":  "Operationer"
+                                 },
+                      "filters":  {
+                                      "startDate":  "Startdato",
+                                      "endDate":  "Slutdato",
+                                      "relatedVVN":  "Fartøjsbesøgsmeddelelse",
+                                      "status":  "Status"
+                                  },
+                      "metrics":  {
+                                      "totalOperations":  "Samlede operationer",
+                                      "completedOperations":  "Fremskridt",
+                                      "turnaroundTime":  "Vendingstid",
+                                      "berthOccupancy":  "Kajbelægning"
+                                  },
+                      "status":  {
+                                     "pending":  "Afventende",
+                                     "started":  "Startet",
+                                     "delayed":  "Forsinket",
+                                     "completed":  "Fuldført"
+                                 },
+                      "view_resources":  "Se ressourcer",
+                      "infoTitle":  "Udførelsesinformation",
+                      "operationsTitle":  "Operationer",
+                      "noOperations":  "Ingen tilgængelige operationer",
+                      "startOperation":  "Start operation",
+                      "completeOperation":  "Fuldfør operation",
+                      "addOperation":  "Tilføj operation",
+                      "addOperationDescription":  "Tilføj en ny operation til tidslinjen",
+                      "confirmStartOperation":  "Er du sikker på, at du vil starte denne operation?",
+                      "confirmCompleteOperation":  "Er du sikker på, at du vil fuldføre denne operation?",
+                      "berthOperation":  {
+                                             "button":  "Rediger anløbsdata",
+                                             "title":  "Anløbsoperation",
+                                             "description":  "Rediger kajen og tiden for denne fartøjsbesøgsudførelse.",
+                                             "dock":  "Anløbskaj",
+                                             "dockPlaceholder":  "Vælg kaj",
+                                             "berthTime":  "Anløbstid",
+                                             "differentThanPlanned":  "Den valgte kaj er forskellig fra den planlagte."
+                                         }
+                  },
+    "incident":  {
+                     "tabs":  {
+                                  "dashboard":  "Hændelsessoversigt",
+                                  "create":  "Opret hændelse",
+                                  "search":  "Søg hændelser",
+                                  "active":  "Aktive hændelser",
+                                  "view":  "Se hændelse",
+                                  "edit":  "Rediger hændelse"
+                              },
+                     "subtitle":  {
+                                      "create":  "Rapporter en ny hændelse i systemet",
+                                      "search":  "Søg og filtrer eksisterende hændelser",
+                                      "active":  "Se og administrer aktive hændelser"
+                                  },
+                     "generalFields":  "Generel information",
+                     "classification":  "Klassificering",
+                     "fields":  {
+                                    "bid":  {
+                                                "title":  "Hændelses-ID"
+                                            },
+                                    "type":  {
+                                                 "title":  "Hændelsestype",
+                                                 "placeholder":  "Vælg en hændelsestype"
+                                             },
+                                    "startTime":  {
+                                                      "title":  "Starttid",
+                                                      "placeholder":  "Hvornår startede hændelsen?"
+                                                  },
+                                    "endTime":  {
+                                                    "title":  "Sluttid",
+                                                    "placeholder":  "Hvornår sluttede hændelsen?"
+                                                },
+                                    "severity":  {
+                                                     "title":  "Alvorlighed",
+                                                     "placeholder":  "Vælg alvorsgrad",
+                                                     "options":  {
+                                                                     "minor":  "Mindre",
+                                                                     "major":  "Større",
+                                                                     "critical":  "Kritisk"
+                                                                 }
+                                                 },
+                                    "description":  {
+                                                        "title":  "Beskrivelse",
+                                                        "placeholder":  "Beskriv hændelsen i detaljer"
+                                                    },
+                                    "createdBy":  {
+                                                      "title":  "Oprettet af"
+                                                  },
+                                    "affectedVVECodes":  {
+                                                             "title":  "Berørte VVE\u0027er",
+                                                             "placeholder":  "Indtast berørte VVE\u0027er"
+                                                         },
+                                    "vveCode":  {
+                                                    "title":  "VVE-kode"
+                                                },
+                                    "status":  {
+                                                   "title":  "Status",
+                                                   "options":  {
+                                                                   "active":  "Aktiv",
+                                                                   "resolved":  "Løst"
+                                                               }
+                                               },
+                                    "filterStartTime":  {
+                                                            "title":  "Startdato fra"
+                                                        },
+                                    "filterEndTime":  {
+                                                          "title":  "Startdato til"
+                                                      },
+                                    "duration":  {
+                                                     "title":  "Varighed"
+                                                 }
+                                },
+                     "severity":  {
+                                      "Minor":  "Mindre",
+                                      "Major":  "Større",
+                                      "Critical":  "Kritisk"
+                                  },
+                     "status":  {
+                                    "active":  "Aktiv",
+                                    "resolved":  "Løst"
+                                },
+                     "ongoing":  "Igangværende",
+                     "filters":  {
+                                     "onlyActive":  "Kun aktive",
+                                     "onlyMine":  "Kun mine"
+                                 },
+                     "actions":  {
+                                     "view":  "Se detaljer",
+                                     "edit":  "Rediger hændelse",
+                                     "resolve":  "Løs hændelse",
+                                     "delete":  "Slet hændelse"
+                                 },
+                     "notifications":  {
+                                           "createSuccess":  "Hændelse oprettet",
+                                           "createFailed":  "Kunne ikke oprette hændelse",
+                                           "updateSuccess":  "Hændelse opdateret",
+                                           "updateFailed":  "Kunne ikke opdatere hændelse",
+                                           "resolveSuccess":  "Hændelse løst",
+                                           "resolveFailed":  "Kunne ikke løse hændelse",
+                                           "deleteSuccess":  "Hændelse slettet",
+                                           "deleteFailed":  "Kunne ikke slette hændelse"
+                                       },
+                     "table":  {
+                                   "empty":  "Ingen hændelser fundet"
+                               },
+                     "active":  {
+                                    "title":  "Aktive hændelser",
+                                    "subtitle":  "Se og administrer igangværende hændelser"
+                                },
+                     "infoTitle":  "Hændelsesdetaljer",
+                     "closeDialog":  {
+                                         "title":  "Løs hændelse",
+                                         "message":  "Hvornår blev hændelsen løst",
+                                         "confirm":  "Ja, luk denne hændelse",
+                                         "cancel":  "Annuller"
+                                     }
+                 }
 }

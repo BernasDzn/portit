@@ -1,1031 +1,1141 @@
 ﻿{
-    "common": {
-        "loading": "Ag luchtú...",
-        "noData": "Níl sonraí ar fáil",
-        "statistics": "Staitisticí",
-        "yes": "Tá",
-        "no": "Níl",
-        "weekDay": "Lá na seachtaine",
-        "days": {
-            "sunday": "Domhnach",
-            "monday": "Luan",
-            "tuesday": "Márta",
-            "wednesday": "Céadaoin",
-            "thursday": "Déardaoin",
-            "friday": "Aoine",
-            "saturday": "Satharn"
-        },
-        "number": "Uimhir"
-    },
-    "buttons": {
-        "save": "Sábháil",
-        "cancel": "Cealaigh",
-        "delete": "Scrios",
-        "edit": "Cuir in eagar",
-        "create": "Cruthaigh",
-        "search": "Cuardaigh",
-        "select": "Roghnaigh",
-        "activate": "Gníomhachtaigh",
-        "deactivate": "Díghníomhachtaigh",
-        "filter": {
-            "title": "Scagairí",
-            "add": "Scag",
-            "clear": "Glan scagairí"
-        },
-        "pagination": {
-            "previous": "Roimhe",
-            "next": "Ar Aghaidh"
-        },
-        "login": "Logáil isteach",
-        "goBackToLogin": "Fill ar ais chuig logáil isteach",
-        "logout": "Logáil amach",
-        "generate": "Giniú",
-        "close": "Dún",
-        "add": "Cuir le",
-        "review": "Athbhreithniú",
-        "ok": "Ceart go leor",
-        "downloadSample": "Íoslódáil sampla",
-        "seeMore": "Féach Nios Mó"
-    },
-    "unsavedChanges": {
-        "title": "Déan neamhaird ar na hathruithe?",
-        "message": "Tá athruithe neamhshábháilte agat. An bhfuil tú cinnte go dteastaíonn uait an leathanach a fhágáil agus na hathruithe a dhéanamh neamhbhailí?",
-        "confirm": "Déan neamhaird",
-        "cancel": "Lean ar aghaidh ag eagarthóireacht"
-    },
-    "dashboard": {
-        "sidebarTitle": "Painéal",
-        "title": "Painéal PortIT",
-        "subtitle": "Forbhreathnú ar an gcóras PortIT",
-        "3DModel": {
-            "title": "Léiriú 3D ar an gcalafort",
-            "description": "Amharc ar léiriú idirghníomhach 3D den chonair calafort go léir. Féach ar luchtú na dugaí, suíomhanna long, réigiúin stórála agus acmhainní i bhfíor-am.",
-            "open": "Oscail an múnla 3D"
-        },
-        "welcome": "Fáilte ar ais, [name]!",
-        "SAOR": {
-            "subtitle": "Forbhreathnú ar oibríochtaí an ghníomhaí iompair",
-            "pendingNotifications": "Fógraí ar feitheamh",
-            "recent": "Fógraí cuairteanna loinge le déanaí",
-            "recentReview": "Fógraí cuairteanna loinge le haghaidh athbhreithnithe",
-            "noRecent": "Níl fógraí le déanaí"
-        }
-    },
-    "admin": {
-        "sidebarTitle": "Riarachán",
-        "title": "Painéal Riaracháin",
-        "subtitle": "Riarachán agus bainistíocht",
-        "userManagement": {
-            "title": "Bainistíocht úsáideoirí",
-            "subtitle": "Bainistigh úsáideoirí an chórais, róil agus ceadanna."
-        },
-        "auditLogs": {
-            "title": "Logaí iniúchta",
-            "subtitle": "Amharc agus monatóireacht ar logaí gníomhaíochta an chórais."
-        }
-    },
-    "user": {
-        "registeredUsers": "Úsáideoirí cláraithe",
-        "fields": {
-            "email": {
-                "title": "R-phost",
-                "placeholder": "email@mail.com"
-            },
-            "role": {
-                "title": "Ról",
-                "placeholder": "Roghnaigh ról an úsáideora",
-                "options": {
-                    "admin": "Riarthóir",
-                    "saoRep": "Ionadaí SAO",
-                    "pao": "Oifigeach PAO",
-                    "logisticsOperator": "Oibreoir loighistíochta"
-                }
-            },
-            "isActive": {
-                "title": "Gníomhach",
-                "options": {
-                    "active": "Sea",
-                    "inactive": "Níl"
-                }
-            }
-        },
-        "tabs": {
-            "dashboard": "Painéal úsáideora",
-            "create": "Cruthaigh úsáideoir",
-            "view": "Féach ar úsáideoirí",
-            "search": "Cuardaigh úsáideoirí"
-        },
-        "infoTitle": "Sonraí an úsáideora",
-        "title": "Úsáideoirí",
-        "subtitle": {
-            "dashboard": "Forbhreathnú agus bainistíocht úsáideoirí",
-            "create": "Cláraigh úsáideoir nua sa chóras",
-            "view": "Féach agus bainistigh úsáideoirí atá ann"
-        }
-    },
-    "physicalCharacteristics": {
-        "title": "Tréithe fisiciúla (m)",
-        "length": {
-            "title": "Fad",
-            "placeholder": "Fad i méadar"
-        },
-        "depth": {
-            "title": "Doimhneacht",
-            "placeholder": "Doimhneacht i méadar"
-        },
-        "draft": {
-            "title": "Dréacht",
-            "placeholder": "Dréacht i méadar"
-        }
-    },
-    "dock": {
-        "fields": {
-            "code": {
-                "title": "Cód",
-                "placeholder": "Cód an dua"
-            },
-            "name": {
-                "title": "Ainm",
-                "placeholder": "Ainm an dua"
-            },
-            "location": {
-                "title": "Suíomh",
-                "placeholder": "Suíomh an dua"
-            },
-            "supportedVesselTypes": {
-                "title": "Cineálacha longa a thacaítear leo",
-                "vesselTypes": {
-                    "title": "Cineálacha longa",
-                    "placeholder": "Roghnaigh cineálacha longa"
+    "common":  {
+                   "loading":  "Ag luchtú...",
+                   "noData":  "Níl sonraí ar fáil",
+                   "statistics":  "Staitisticí",
+                   "yes":  "Tá",
+                   "no":  "Níl",
+                   "weekDay":  "Lá na seachtaine",
+                   "days":  {
+                                "sunday":  "Domhnach",
+                                "monday":  "Luan",
+                                "tuesday":  "Márta",
+                                "wednesday":  "Céadaoin",
+                                "thursday":  "Déardaoin",
+                                "friday":  "Aoine",
+                                "saturday":  "Satharn"
+                            },
+                   "number":  "Uimhir",
+                   "actions":  "Gníomhartha",
+                   "none":  "Ceann ar bith"
+               },
+    "buttons":  {
+                    "save":  "Sábháil",
+                    "cancel":  "Cealaigh",
+                    "delete":  "Scrios",
+                    "edit":  "Cuir in eagar",
+                    "create":  "Cruthaigh",
+                    "search":  "Cuardaigh",
+                    "select":  "Roghnaigh",
+                    "activate":  "Gníomhachtaigh",
+                    "deactivate":  "Díghníomhachtaigh",
+                    "generate":  "Giniú",
+                    "close":  "Dún",
+                    "add":  "Cuir le",
+                    "review":  "Athbhreithniú",
+                    "filter":  {
+                                   "title":  "Scagairí",
+                                   "add":  "Scag",
+                                   "clear":  "Glan scagairí"
+                               },
+                    "pagination":  {
+                                       "previous":  "Roimhe",
+                                       "next":  "Ar Aghaidh"
+                                   },
+                    "login":  "Logáil isteach",
+                    "goBackToLogin":  "Fill ar ais chuig logáil isteach",
+                    "logout":  "Logáil amach",
+                    "seeMore":  "Féach Nios Mó",
+                    "ok":  "Ceart go leor",
+                    "downloadSample":  "Íoslódáil sampla"
                 },
-                "vesselType": "Cineál loinge"
-            }
-        },
-        "tabs": {
-            "dashboard": "Painéal dua",
-            "view_dashboard": "Féach ar dua",
-            "search": "Cuardaigh dua",
-            "create": "Cruthaigh dua",
-            "view": "Féach ar dua",
-            "edit": "Cuir in eagar dua"
-        },
-        "generalFields": "Réimsí ginearálta",
-        "infoTitle": "Eolas faoi an dua",
-        "title": "Dua",
-        "subtitle": {
-            "dashboard": "Forbhreathnú ar staitisticí agus gníomhaíocht dua",
-            "search": "Bainistigh agus féach ar na dua atá cláraithe",
-            "create": "Cláraigh dua nua sa chóras",
-            "edit": "Cuir in eagar dua atá ann"
-        },
-        "registeredDocks": "Dua cláraithe"
-    },
-    "vesselType": {
-        "fields": {
-            "name": {
-                "title": "Ainm",
-                "placeholder": "Ainm cineál long"
-            },
-            "description": {
-                "title": "Cur síos",
-                "placeholder": "Cur síos ar chineál long"
-            },
-            "capacity": {
-                "title": "Cumas",
-                "placeholder": "Cumas coimeádán i TEU"
-            },
-            "containerCapacity": {
-                "title": "Cumas coimeádán (TEU)",
-                "maxNumberOfRows": {
-                    "title": "Uimhir uachtair uasta",
-                    "placeholder": "Uimhir uachtair uasta i TEU"
-                },
-                "maxNumberOfBays": {
-                    "title": "Uimhir bairr uasta",
-                    "placeholder": "Uimhir bairr uasta i TEU"
-                },
-                "maxNumberOfTiers": {
-                    "title": "Uimhir sraithe uasta",
-                    "placeholder": "Uimhir sraithe uasta i TEU"
-                }
-            }
-        },
-        "generalFields": "Réimsí ginearálta",
-        "tabs": {
-            "dashboard": "Painéal cineálacha longa",
-            "view_dashboard": "Féach ar cineálacha longa",
-            "search": "Cuardaigh cineálacha longa",
-            "create": "Cruthaigh cineál long",
-            "view": "Féach ar chineál long",
-            "edit": "Cuir in eagar cineál long"
-        },
-        "infoTitle": "Eolas faoi cineál long",
-        "title": "Cineálacha longa",
-        "subtitle": {
-            "dashboard": "Forbhreathnú ar staitisticí cineálacha longa",
-            "search": "Bainistigh agus féach ar na cineálacha longa atá cláraithe",
-            "create": "Cláraigh cineál long nua sa chóras",
-            "edit": "Cuir in eagar cineál long atá ann"
-        },
-        "registeredVesselTypes": "Cineálacha longa cláraithe"
-    },
-    "vessel": {
-        "fields": {
-            "name": {
-                "title": "Ainm",
-                "placeholder": "Ainm an longa"
-            },
-            "imoNumber": {
-                "title": "Uimhir IMO",
-                "placeholder": "Uimhir IMO an longa"
-            },
-            "owner": {
-                "title": "Úinéir",
-                "placeholder": "Eagraíocht úinéara"
-            },
-            "vesselType": {
-                "title": "Cineál long",
-                "placeholder": "Roghnaigh cineál long"
-            },
-            "taxNumber": {
-                "title": "Tax Number"
-            }
-        },
-        "infoTitle": "Eolas an longa",
-        "physicalCharacteristicsTitle": "Tréithe fisiciúla",
-        "tabs": {
-            "dashboard": "Painéal long",
-            "view_dashboard": "Féach ar longa",
-            "search": "Cuardaigh longa",
-            "create": "Cruthaigh long",
-            "view": "Féach ar long",
-            "edit": "Cuir in eagar long"
-        },
-        "title": "Longa",
-        "subtitle": {
-            "dashboard": "Forbhreathnú ar staitisticí agus gníomhaíocht longa",
-            "search": "Bainistigh agus féach ar na longa atá cláraithe",
-            "create": "Cláraigh longa nua sa chóras",
-            "edit": "Cuir in eagar longa atá ann"
-        },
-        "ownedBy": "Seilbh ag",
-        "registeredVessels": "Longa cláraithe"
-    },
-    "staff": {
-        "registeredStaffMembers": "Baill foirne cláraithe",
-        "fields": {
-            "mechanographicNumber": {
-                "title": "Uimhir mheicnifeagrafach",
-                "placeholder": "Uimhir mheicnifeagrafach"
-            },
-            "name": {
-                "title": "Ainm",
-                "placeholder": "Ainm an fostaí"
-            },
-            "email": {
-                "title": "R-phost",
-                "placeholder": "Seoladh ríomhphoist"
-            },
-            "phoneNumber": {
-                "title": "Fón",
-                "placeholder": "Uimhir theileafóin"
-            },
-            "qualifications": {
-                "title": "Cáilíochtaí",
-                "placeholder": "Roghnaigh cáilíochtaí"
-            },
-            "status": {
-                "title": "Stádas",
-                "options": {
-                    "available": "Ar fáil",
-                    "unavailable": "Ní ar fáil",
-                    "temporarilyReassigned": "Athshainithe go sealadach"
-                }
-            },
-            "operationalWindow": "Operational Window"
-        },
-        "tabs": {
-            "dashboard": "Painéal foirne",
-            "view_dashboard": "Féach ar fostaithe",
-            "search": "Cuardaigh fostaithe",
-            "create": "Cruthaigh fostaí",
-            "view": "Féach ar fostaí",
-            "edit": "Cuir in eagar fostaí"
-        },
-        "infoTitle": "Sonraí fostaí",
-        "title": "Fostaithe",
-        "subtitle": {
-            "search": "Bainistigh agus féach ar na fostaithe cláraithe",
-            "dashboard": "Forbhreathnú ar staitisticí agus gníomhaíocht fostaithe",
-            "create": "Cláraigh fostaí nua sa chóras",
-            "view": "Féach ar shonraí an fostaí",
-            "edit": "Cuir in eagar fostaí atá ann"
-        },
-        "deactivation": {
-            "title": "Deactivate Staff Member",
-            "message": "Are you sure you want to deactivate this staff member? You can activate them again later.",
-            "successMessage": "Staff member has been successfully deactivated.",
-            "errorMessage": "An error occurred while trying to deactivate the staff member. Please try again."
-        }
-    },
-    "qualification": {
-        "registeredQualifications": "Cáilíochtaí cláraithe",
-        "tabs": {
-            "dashboard": "Painéal cáilíochtaí",
-            "view_dashboard": "Féach ar cáilíochtaí",
-            "search": "Cuardaigh cáilíochtaí",
-            "create": "Cruthaigh cáilíocht",
-            "view": "Féach ar cháilíocht",
-            "edit": "Cuir in eagar cáilíocht"
-        },
-        "infoTitle": "Sonraí cáilíochta",
-        "title": "Cáilíochtaí",
-        "subtitle": {
-            "search": "Bainistigh agus féach ar na cáilíochtaí cláraithe",
-            "dashboard": "Forbhreathnú ar staitisticí cáilíochtaí",
-            "create": "Cláraigh cáilíocht nua sa chóras",
-            "edit": "Cuir in eagar cáilíocht atá ann",
-            "view": "Féach ar shonraí cáilíochta"
-        },
-        "fields": {
-            "idCode": {
-                "title": "Cód cáilíochta",
-                "placeholder": "Cód cáilíochta"
-            },
-            "qualificationName": {
-                "title": "Ainm an cháilíochta",
-                "placeholder": "Ainm an cháilíochta"
-            }
-        }
-    },
-    "physicalResource": {
-        "registeredPhysicalResources": "Acmhainní fisiciúla cláraithe",
-        "tabs": {
-            "dashboard": "Painéal acmhainní fisiciúla",
-            "view_dashboard": "Féach ar acmhainní fisiciúla",
-            "search": "Cuardaigh acmhainní fisiciúla",
-            "create": "Cruthaigh acmhainn fiseolaíoch",
-            "view": "Féach ar acmhainn fiseolaíoch",
-            "edit": "Cuir in eagar acmhainn fiseolaíoch"
-        },
-        "infoTitle": "Sonraí an acmhainn fiseolaíoch",
-        "title": "Acmhainní fisiciúla",
-        "subtitle": {
-            "search": "Bainistigh agus féach ar na hacmhainní fisiciúla cláraithe",
-            "dashboard": "Painéal bainistíochta do gach acmhainn fiseolaíoch",
-            "view_dashboard": "Féach ar acmhainní fisiciúla",
-            "create": "Cláraigh acmhainn fiseolaíoch nua sa chóras",
-            "view": "Féach ar shonraí an acmhainn fiseolaíoch",
-            "edit": "Cuir in eagar acmhainn fiseolaíoch atá ann"
-        },
-        "generalFields": "Réimsí ginearálta",
-        "specificFields": "Réimsí shonracha",
-        "fields": {
-            "code": {
-                "title": "Cód",
-                "placeholder": "Cód acmhainne"
-            },
-            "description": {
-                "title": "Cur síos",
-                "placeholder": "Cur síos an acmhainn"
-            },
-            "status": {
-                "title": "Stádas",
-                "placeholder": "Roghnaigh stádas an acmhainn",
-                "options": {
-                    "available": "Ar fáil",
-                    "maintenance": "Cothabháil",
-                    "outOfService": "As seirbhís"
-                }
-            },
-            "qualifications": {
-                "title": "Cáilíochtaí riachtanacha",
-                "placeholder": "Cáilíochtaí a theastaíonn don acmhainn seo"
-            },
-            "setupTime": {
-                "title": "Am socraithe (nóim)",
-                "placeholder": "Am socraithe"
-            },
-            "servingDocks": {
-                "title": "Dugaí seirbhíse",
-                "placeholder": "Roghnaigh dugaí seirbhíse"
-            },
-            "liftingCapacity": {
-                "title": "Inchumas ardaithe (kg)",
-                "placeholder": "Inchumas ardaithe"
-            },
-            "containersPerHour": {
-                "title": "Coimeádáin in aghaidh na huaire",
-                "placeholder": "Coimeádáin in aghaidh na huaire"
-            },
-            "maxLoadCapacity": {
-                "title": "Uasmhéid luchtaithe (kg)",
-                "placeholder": "Uasmhéid luchtaithe"
-            },
-            "averageSpeed": {
-                "title": "Average speed (km/h)",
-                "placeholder": "Average speed"
-            },
-            "containersPerTrip": {
-                "title": "Containers per trip",
-                "placeholder": "Containers per trip"
-            },
-            "type": {
-                "title": "Resource Type",
-                "options": {
-                    "stsCrane": "STS Crane",
-                    "yardGantry": "Yard Gantry Crane",
-                    "truck": "Truck"
-                }
-            }
-        },
-        "actions": {
-            "deactivate": "Díghníomhachtaigh acmhainn fiseolaíoch"
-        },
-        "deactivation": {
-            "title": "Deactivate Physical Resource",
-            "message": "Are you sure you want to deactivate this physical resource? You can activate it again later.",
-            "successMessage": "Physical Resource has been successfully deactivated.",
-            "errorMessage": "An error occurred while trying to deactivate the Physical Resource. Please try again."
-        }
-    },
-    "storageArea": {
-        "registeredStorageAreas": "Limistéir stórála cláraithe",
-        "tabs": {
-            "dashboard": "Painéal réimsí stórála",
-            "view_dashboard": "Féach ar réimsí stórála",
-            "search": "Cuardaigh réimsí stórála",
-            "create": "Cruthaigh réimse stórála",
-            "view": "Féach ar réimse stórála",
-            "edit": "Cuir in eagar réimse stórála"
-        },
-        "infoTitle": "Sonraí réimse stórála",
-        "title": "Réimsí stórála",
-        "subtitle": {
-            "search": "Bainistigh agus féach ar réimsí stórála cláraithe",
-            "dashboard": "Painéal bainistíochta do réimsí stórála",
-            "view_dashboard": "Féach ar réimsí stórála",
-            "create": "Cláraigh réimse stórála nua sa chóras",
-            "view": "Féach ar shonraí réimse stórála",
-            "edit": "Cuir in eagar réimse stórála atá ann"
-        },
-        "printer": {
-            "docks_serviced": "dugaí seirbhíse",
-            "capacity_usage": "úsáid cumais",
-            "units": "aonaid",
-            "available": "ar fáil",
-            "no_registered_distances": "No registered distances",
-            "no_docks_serviced": "No docks serviced",
-            "all_docks_serviced": "All docks serviced",
-            "serviced_docks_distance": "Serviced docks distance",
-            "no_registered_docks": "No registered docks"
-        },
-        "create": {
-            "distance_meters": "Fad (méadar)"
-        },
-        "fields": {
-            "nameCode": {
-                "title": "Name Code",
-                "placeholder": "Códain ainm réimse stórála"
-            },
-            "location": {
-                "title": "Location",
-                "placeholder": "Suíomh réimse stórála"
-            },
-            "type": {
-                "title": "Type",
-                "placeholder": "Select Storage Area type",
-                "options": {
-                    "yard": "Yard",
-                    "warehouse": "Warehouse"
-                }
-            },
-            "capacity": {
-                "title": "Capacity",
-                "placeholder": "Maximum capacity"
-            },
-            "occupancy": {
-                "title": "Occupancy",
-                "placeholder": "Current occupancy"
-            }
-        }
-    },
-    "search": {
-        "languages": "Cuardaigh teangacha..."
-    },
-    "expirationWarning": {
-        "messageOneMinute": "Beidh do sheisiún éagtha i gceann 1 nóiméad.",
-        "messageLessThanOneMinute": "Tá do sheisiún ar tí éagtha."
-    },
-    "representative": {
-        "title": "Ionadaí",
-        "select": "Roghnaigh ionadaí"
-    },
-    "scheduling": {
-        "title": "Iarratas sceideal laethúil",
-        "subtitle": "Bain úsáid as ár halgartam sceidhlithe uathoibrithe chun na tascanna sceidilithe don lá a anailísiú.",
-        "noVisits": "Níl aon chuairteanna long sceidealta don dáta roghnaithe.",
-        "visitsOnSelectedDay": "Cuairteanna longa ar an dáta roghnaithe",
-        "viewVisits": "Gineadh sceideal tascanna",
-        "generateTasksButton": "Gineadh sceideal tascanna",
-        "aboutAlgorithmButton": "Maidir leis an algartam",
-        "fields": {
-            "algorithm": {
-                "title": "Scheduling Algorithm",
-                "placeholder": "Select scheduling algorithm"
-            },
-            "relatedDocks": "Select related dock"
-        },
-        "generateTasksModal": {
-            "title": "Additional logistics"
-        },
-        "aboutAlgorithmModal": {
-            "title": "Maidir leis an algartam",
-            "content": "Tugann an algartam reatha aird ar na fógraí cuairte longa atá sceidealta don dáta agus don dua sonraithe.\nSeiceálann sé infhaighteacht criún STS don dua roghnaithe agus socraíonn sé fad gach tasc bunaithe ar luas an chriún.\nDéanann sé dearmad freisin ar chuairteanna a bhaineann le cothabháil nó gníomhaíochtaí nach mbaineann le luchtú/díluchtú."
-        }
-    },
-    "notification": {
-        "id": "Aitheantas fógra",
-        "hazardous": "Contúirteach",
-        "nonHazardous": "Neamh-chontúirteach",
-        "arrival": "Teacht",
-        "departure": "Fágáil",
-        "specialRequirements": "Riachtanais speisialta",
-        "none": "Níl",
-        "crew": "Criú",
-        "captain": "Captaen",
-        "unknown": "Anaithnid",
-        "from": "Ó",
-        "to": "Go",
-        "tabs": {
-            "dashboard": "Painéal Fógraí",
-            "search": "Cuardaigh Fógraí",
-            "edit": "Cuir in eagar Fógra",
-            "create": "Cruthaigh Fógra",
-            "makeDraft": "Cruthaigh dréacht fógra",
-            "myNotifications": "Mo Fógraí",
-            "review": "Athbhreithniú Fógraí",
-            "general": "Liosta ginearálta",
-            "byDate": "Liosta féilire",
-            "submit": "Cuir an fógra isteach",
-            "delete": "Scrios Fógra"
-        },
-        "eventsOnDate": "Imeachtaí ar an dáta roghnaithe",
-        "noEventsOnDate": "Níl imeachtaí ar an dáta roghnaithe",
-        "title": "Fógraí cuairteanna longa",
-        "subtitle": {
-            "dashboard": "Forbhreathnú ar fógraí cuairteanna longa",
-            "search": "Bainistigh agus féach ar fhógraí cuairteanna longa",
-            "create": "Cruthaigh fógra nua cuairte longa",
-            "edit": "Cuir in eagar fógra cuairte longa atá ann",
-            "review": "Athbhreithniú ar fhógraí cuairte longa atá ar feitheamh"
-        },
-        "errors": {
-            "noNotificationId": "No notification id provided"
-        },
-        "infoTitle": "Notification Information",
-        "cargoTitle": "Cargo Information",
-        "vesselTitle": "Vessel Information",
-        "manifestInfo": "Manifest Information",
-        "fields": {
-            "openLoadManifest": "Oscail Manifest Luchtaithe",
-            "openUnloadManifest": "Oscail Manifest Díluchtaithe",
-            "expectedArrival": "Teacht Inmheánach",
-            "expectedDeparture": "Imeacht Inmheánach",
-            "isCargoHazardous": "Cargo Hazardous",
-            "specialRequirements": "Special Requirements",
-            "captain": "Captain",
-            "totalCrewMembers": "Total Crew Members",
-            "safetyOfficers": "Safety Officers",
-            "loadCargoManifest": "Load Cargo Manifest",
-            "unloadCargoManifest": "Unload Cargo Manifest",
-            "position": "Position",
-            "area": "Area",
-            "container": "Container",
-            "crewMembers": "Crew Members",
-            "status": "Status"
-        },
-        "timeline": {
-            "pending": "Pending",
-            "inProgress": "In Progress",
-            "completed": "Completed",
-            "submitted": "Submitted",
-            "accepted": "Accepted",
-            "rejected": "Rejected"
-        },
-        "filters": {
-            "expectedArrivalFrom": "Teacht Inmheánach From",
-            "expectedArrivalTo": "Teacht Inmheánach To",
-            "withReason": "With Reason",
-            "withDockAssigned": "With Dock Assigned"
-        },
-        "decision": {
-            "isFinal": "Is Final",
-            "assignedDock": {
-                "title": "Assigned Dock",
-                "placeholder": "Select assigned dock"
-            },
-            "reason": {
-                "title": "Reason",
-                "placeholder": "Provide reason for decision"
-            },
-            "status": "Decision Status"
-        }
-    },
-    "operationalWindow": {
-        "title": "Fuinneog oibríochtúil",
-        "printer": {
-            "addShift": "Cuir isteach athrú",
-            "shifts": "Athruithe:",
-            "noShifts": "Níl athruithe.",
-            "startTime": "Am tosaithe",
-            "endTime": "Am deiridh",
-            "weekDays": "Lá na seachtaine"
-        },
-        "errors": {
-            "shiftOverlap": "Athrú neamhbhailí. Trasnaíonn siad nó tá am deiridh sula dtosaíonn an t-athrú."
-        }
-    },
-    "about": {
-        "title": "Maidir le PorTiT",
-        "privacy": {
-            "title": "Beartas Príobháideachais",
-            "lastUpdated": "Nuashonraithe: {date}"
-        }
-    },
-    "operationPlan": {
-        "title": "Plean Oibríochta",
-        "dock": "Dugaí",
-        "docks": "Dugaithe",
-        "operations": "Oibríochtaí",
-        "cranes": "Craenacha",
-        "createdBy": "Cruthaithe ag",
-        "createdAt": "Cruthaithe ag",
-        "totalSchedules": "Sceidil Iomlána",
-        "vesselCount": "Soithí",
-        "plansOnDate": "Pleananna oibríochta ar an dáta roghnaithe",
-        "noPlansOnDate": "Níl aon phleananna oibríochta ar an dáta roghnaithe",
-        "id": "ID",
-        "vvn": "Fógra Cuairte Soithí",
-        "for": "do",
-        "details": "Sonraí",
-        "totalOperations": "Oibríochtaí Iomlána",
-        "algorithmUsed": "Algartam Úsáidte",
-        "ganttChart": "Cairt Gantt",
-        "startTime": "Am Tosaithe",
-        "endTime": "Am Deiridh",
-        "totalDuration": "Fad Iomlán",
-        "operation": "Oibríocht",
-        "duration": "Fad",
-        "resources": "Acmhainní",
-        "operationDetails": "Sonraí Oibríochta",
-        "operationNumber": "Oibríocht #{number}",
-        "notFound": "Plean oibríochta gan aimsiú",
-        "operationType": {
-            "Unload": "Díluchtú",
-            "Load": "Luchtú"
-        },
-        "tabs": {
-            "unplannedVVNs": "VVN gan phleanáil",
-            "search": "Cuardaigh Pleananna",
-            "edit": "Cuir Plean in Eagar",
-            "open": "Oscail Forghníomhú"
-        },
-        "subtitle": {
-            "edit": "Modhnú sonraí phlean oibríochta agus sceideal"
-        },
-        "unplannedVVNs": {
-            "description": "Fógraí cuairte soithí nach bhfuil plean oibríochta sannta acu fós",
-            "noUnplanned": "Tá pleananna oibríochta sannta ag gach fógra cuairte soithí",
-            "foundMessage": "Aimsíodh {vvnCount} VVN gan phle ananna i {dayCount} lá/laethanta",
-            "regenerateAll": "Athghiniúint Gach Plean atá in Easnamh",
-            "regenerateDay": "Athghiniúint Pleananna don Lá Seo",
-            "regenerateModalTitle": "Athghiniúint pleananna do {date}",
-            "warning": "Rabhadh",
-            "warningMessage": "Cuirfidh athghiniúint na bpleananna gach plean oibríochta atá ann cheana don lá seo in ionad. Ní féidir an gníomh seo a chealú.",
-            "selectedDay": "Lá Roghnaithe",
-            "confirmRegeneration": "Deimhnigh Athghiniúint",
-            "affectedDays": "Laethanta Atá Tionchar Orthu",
-            "queueInfo": "Cuirfear gach iarratas athghiniúinte i scuaine ar leithligh. Is féidir leat iad a athbhreithniú agus a ghlacadh/a dhiúltú go haonair ón scuaine sceidealúcháin.",
-            "continue": "Lean ar aghaidh",
-            "confirmRegenerationTitle": "Deimhnigh Athghiniúint",
-            "irreversibleAction": "Is gníomh dochúlaithe é seo",
-            "overwriteWarning": "Forscríobhfaidh athghiniúint na bpleananna oibríochta go buan gach plean atá ann cheana do na laethanta roghnaithe. Ní féidir an gníomh seo a chealú.",
-            "aboutToRegenerate": "Tá tú ar tí pleananna a athghiniúint do",
-            "days": "laethanta",
-            "vesselVisitNotifications": "Fógraí Cuairte Soithí",
-            "using": "Ag úsáid",
-            "algorithm": "algartam",
-            "proceedQuestion": "Ar mhaith leat leanúint ar aghaidh leis an oibríocht seo?",
-            "yesRegenerateAll": "Tá, athghiniúint gach rud"
-        },
-        "algorithm": {
-            "optimal": "Optamach",
-            "greedy": "Saintach",
-            "genetic": "Géiniteach",
-            "auto": "Uathoibríoch"
-        },
-        "metrics": {
-            "title": "Méadrachta",
-            "strategy": "Straitéis",
-            "totalDelay": "Moill Iomlán",
-            "computationTime": "Am Ríomhaireachta",
-            "autoSelection": "Roghnú Uathoibríoch Algartaim"
-        },
-        "infoTitle": "Faisnéis Phlean Oibríochta",
-        "fields": {
-            "id": {
-                "title": "ID Phlean"
-            },
-            "relatedVVN": {
-                "title": "VVN Gaolmhar"
-            },
-            "dock": {
-                "title": "Dugaí"
-            },
-            "operations": {
-                "title": "Oibríochtaí"
-            }
-        },
-        "filters": {
-            "startDate": "Dáta Tosaithe Ó",
-            "endDate": "Dáta Deiridh Go"
-        },
-        "metadata": {
-            "title": "Meiteashonraí",
-            "createdBy": "Cruthaithe ag",
-            "createdAt": "Cruthaithe ag",
-            "algorithmUsed": "Algartam Úsáidte"
-        },
-        "schedule": {
-            "title": "Sceideal Oibríochtaí",
-            "noOperations": "Níl aon oibríochtaí sceidealaithe"
-        }
-    },
-    "incidentType": {
-        "fields": {
-            "name": {
-                "title": "Ainm",
-                "placeholder": "Ainm an chineáil teagmhais"
-            },
-            "description": {
-                "title": "Cur Síos",
-                "placeholder": "Cur síos mionsonraithe ar an gcineál teagmhais"
-            },
-            "severity": {
-                "title": "Déine",
-                "placeholder": "Roghnaigh leibhéal déine"
-            },
-            "subtypeOf": {
-                "title": "Focineál De",
-                "placeholder": "Roghnaigh cineál tuismitheora"
-            },
-            "subtypes": {
-                "title": "Focineálacha",
-                "placeholder": "Roghnaigh cineálacha linbh"
-            }
-        },
-        "severity": {
-            "Minor": "Mion",
-            "Major": "Mór",
-            "Critical": "Ríthábhachtach"
-        },
-        "tabs": {
-            "dashboard": "Painéal Cineálacha Teagmhais",
-            "view_dashboard": "Féach ar Chineálacha Teagmhais",
-            "search": "Cuardaigh Cineálacha Teagmhais",
-            "create": "Cruthaigh Cineál Teagmhais",
-            "edit": "Cuir Cineál Teagmhais in Eagar"
-        },
-        "generalFields": "Réimsí Ginearálta",
-        "classification": "Aicmiú",
-        "title": "Teagmhais",
-        "subtitle": {
-            "dashboard": "Forbhreathnú ar staitisticí agus gníomhaíochtaí cineálacha teagmhais",
-            "search": "Bainistigh agus féach ar gach cineál teagmhais cláraithe",
-            "create": "Cláraigh cineál teagmhais nua sa chóras",
-            "edit": "Modhn aigh cineál teagmhais atá ann cheana sa chóras"
-        },
-        "registeredIncidentTypes": "Cineálacha Teagmhais Cláraithe",
-        "incidentTypeInformation": "Faisnéis Cineál Teagmhais",
-        "parentType": "Cineál Tuismitheora",
-        "confirmDelete": "Deimhnigh scriosadh",
-        "confirmDeleteMessage": "An bhfuil tú cinnte gur mhaith leat an cineál teagmhais seo a scriosadh?",
-        "failedToDelete": "Theip ar scriosadh an chineál teagmhais"
-    },
-    "taskCategory": {
-        "fields": {
-            "name": {
-                "title": "Ainm",
-                "placeholder": "Ainm catagóir tascanna"
-            },
-            "category": {
-                "title": "Catagóir",
-                "placeholder": "Cód catagóire"
-            },
-            "description": {
-                "title": "Cur Síos",
-                "placeholder": "Cur síos ar an gcatagóir tascanna"
-            }
-        },
-        "tabs": {
-            "dashboard": "Painéal Catagóirí Tascanna",
-            "search": "Cuardaigh Catagóirí Tascanna",
-            "create": "Cruthaigh Catagóir Tascanna",
-            "edit": "Cuir Catagóir Tascanna in Eagar",
-            "view_dashboard": "Féach ar Chatagóirí Tascanna"
-        },
-        "generalFields": "Réimsí Ginearálta",
-        "title": "Tascanna",
-        "subtitle": {
-            "dashboard": "Forbhreathnú ar staitisticí agus gníomhaíochtaí catagóirí tascanna",
-            "search": "Bainistigh agus féach ar gach catagóir tascanna cláraithe",
-            "create": "Cláraigh catagóir tascanna nua sa chóras",
-            "edit": "Modh naigh catagóir tascanna atá ann cheana sa chóras"
-        },
-        "taskCategoryInformation": "Faisnéis Catagóir Tascanna",
-        "registeredTaskCategories": "Catagóirí Tascanna Cláraithe"
-    },
-    "execution": {
-        "title": "Forghníomhuithe Cuairte Soithí",
-        "subtitle": {
-            "search": "Bainistigh agus féach ar gach forghníomhú cuairte soithí",
-            "dashboard": "Forbhreathnú ar staitisticí agus gníomhaíochtaí forghníomhuithe cuairte soithí"
-        },
-        "tabs": {
-            "dashboard": "Painéal Forghníomhuithe",
-            "search": "Cuardaigh Forghníomhuithe",
-            "view_dashboard": "Féach ar Fhorghníomhuithe",
-            "update": "Nuashonraigh Forghníomhú",
-            "view": "Féach ar Fhorghníomhú",
-            "table": "Féach ar Thábla",
-            "cards": "Féach ar Chártaí"
-        },
-        "fields": {
-            "code": "Cód",
-            "relatedVVN": "Bainteach le",
-            "status": "Stádas",
-            "createdBy": "Cruthaithe ag",
-            "dateOpen": "Dáta Oscailte",
-            "dateClosed": "Dáta Dúnta",
-            "relatedVesselVisit": "Cuairt Soithigh Gaolmhar",
-            "dock": "Dugaí Muiríochta",
-            "berthTime": "Am Muiríochta",
-            "operations": "Oibríochtaí"
-        },
-        "filters": {
-            "startDate": "Dáta Tosaithe",
-            "endDate": "Dáta Deiridh",
-            "relatedVVN": "Fógra Cuairte Soithí",
-            "status": "Stádas"
-        },
-        "metrics": {
-            "totalOperations": "Oibríochtaí Iomlána",
-            "completedOperations": "Dul Chun Cinn",
-            "turnaroundTime": "Am Thart",
-            "berthOccupancy": "Áitiú Dugaí"
-        },
-        "status": {
-            "pending": "Ar Feitheamh",
-            "started": "Tosaithe",
-            "delayed": "Moillithe",
-            "completed": "Críochnaithe"
-        },
-        "view_resources": "Féach ar Acmhainní",
-        "infoTitle": "Faisnéis Forghníomhaithe",
-        "operationsTitle": "Oibríochtaí",
-        "noOperations": "Níl aon oibríochtaí ar fáil",
-        "startOperation": "Tosaigh Oibríocht",
-        "completeOperation": "Críochnaigh Oibríocht",
-        "addOperation": "Cuir Oibríocht Leis",
-        "addOperationDescription": "Cuir oibríocht nua leis an amlíne",
-        "confirmStartOperation": "An bhfuil tú cinnte gur mhaith leat an oibríocht seo a thosú?",
-        "confirmCompleteOperation": "An bhfuil tú cinnte gur mhaith leat an oibríocht seo a chríochnú?",
-        "berthOperation": {
-            "button": "Cuir sonraí muiríochta in eagar",
-            "title": "Oibríocht Muiríochta",
-            "description": "Cuir an dugaí agus an t-am in eagar don fhorghníomhú cuairte soithí seo.",
-            "dock": "Dugaí Muiríochta",
-            "dockPlaceholder": "Roghnaigh dugaí",
-            "berthTime": "Am Muiríochta",
-            "differentThanPlanned": "Tá an dugaí roghnaithe difriúil ón gceann pleanáilte."
-        }
-    },
-    "incident": {
-        "tabs": {
-            "dashboard": "Painéal Teagmhais",
-            "create": "Cruthaigh Teagmhas",
-            "search": "Cuardaigh Teagmhais",
-            "active": "Teagmhais Ghníomhacha",
-            "view": "Féach ar Theagmhas",
-            "edit": "Cuir Teagmhas in Eagar"
-        },
-        "subtitle": {
-            "create": "Tuairiscigh teagmhas nua sa chóras",
-            "search": "Cuardaigh agus scag teagmhais atá ann cheana",
-            "active": "Féach ar agus bainistigh teagmhais ghníomhacha"
-        },
-        "generalFields": "Faisnéis Ghinearálta",
-        "classification": "Aicmiú",
-        "fields": {
-            "bid": {
-                "title": "ID Teagmhais"
-            },
-            "type": {
-                "title": "Cineál Teagmhais",
-                "placeholder": "Roghnaigh cineál teagmhais"
-            },
-            "startTime": {
-                "title": "Am Tosaithe",
-                "placeholder": "Cathain a thosaigh an teagmhas?"
-            },
-            "endTime": {
-                "title": "Am Deiridh",
-                "placeholder": "Cathain a chríochnaigh an teagmhas?"
-            },
-            "severity": {
-                "title": "Déine",
-                "placeholder": "Roghnaigh leibhéal déine",
-                "options": {
-                    "minor": "Mion",
-                    "major": "Mór",
-                    "critical": "Ríthábhachtach"
-                }
-            },
-            "description": {
-                "title": "Cur Síos",
-                "placeholder": "Déan cur síos mionsonraithe ar an teagmhas"
-            },
-            "createdBy": {
-                "title": "Cruthaithe ag"
-            },
-            "affectedVVECodes": {
-                "title": "VVE-anna Difear",
-                "placeholder": "Cuir isteach VVE-anna difear"
-            },
-            "vveCode": {
-                "title": "Cód VVE"
-            },
-            "status": {
-                "title": "Stádas",
-                "options": {
-                    "active": "Gníomhach",
-                    "resolved": "Réitithe"
-                }
-            },
-            "filterStartTime": {
-                "title": "Dáta Tosaithe Ó"
-            },
-            "filterEndTime": {
-                "title": "Dáta Tosaithe Go"
-            },
-            "duration": {
-                "title": "Fad"
-            }
-        },
-        "severity": {
-            "Minor": "Mion",
-            "Major": "Mór",
-            "Critical": "Ríthábhachtach"
-        },
-        "status": {
-            "active": "Gníomhach",
-            "resolved": "Réitithe"
-        },
-        "ongoing": "Ar Siúl",
-        "filters": {
-            "onlyActive": "Cinn Ghníomhacha Amháin",
-            "onlyMine": "Mo Chuid Amháin"
-        },
-        "actions": {
-            "view": "Féach ar Shonraí",
-            "edit": "Cuir Teagmhas in Eagar",
-            "resolve": "Réitigh Teagmhas",
-            "delete": "Scrios Teagmhas"
-        },
-        "notifications": {
-            "createSuccess": "Teagmhas cruthaithe go rathúil",
-            "createFailed": "Theip ar chruthú teagmhais",
-            "updateSuccess": "Teagmhas nuashonraithe go rathúil",
-            "updateFailed": "Theip ar nuashonrú teagmhais",
-            "resolveSuccess": "Teagmhas réitithe go rathúil",
-            "resolveFailed": "Theip ar réiteach teagmhais",
-            "deleteSuccess": "Teagmhas scriosta go rathúil",
-            "deleteFailed": "Theip ar scriosadh teagmhais"
-        },
-        "table": {
-            "empty": "Níor aimsíodh aon teagmhais"
-        },
-        "active": {
-            "title": "Teagmhais Ghníomhacha",
-            "subtitle": "Féach ar agus bainistigh teagmhais atá ar siúl"
-        },
-        "infoTitle": "Sonraí Teagmhais",
-        "closeDialog": {
-            "title": "Réitigh teagmhas",
-            "message": "Cathain a réitíodh an teagmhas?",
-            "confirm": "Tá, dún an teagmhas seo",
-            "cancel": "Cealaigh"
-        }
-    }
+    "search":  {
+                   "languages":  "Cuardaigh teangacha..."
+               },
+    "unsavedChanges":  {
+                           "title":  "Déan neamhaird ar na hathruithe?",
+                           "message":  "Tá athruithe neamhshábháilte agat. An bhfuil tú cinnte go dteastaíonn uait an leathanach a fhágáil agus na hathruithe a dhéanamh neamhbhailí?",
+                           "confirm":  "Déan neamhaird",
+                           "cancel":  "Lean ar aghaidh ag eagarthóireacht"
+                       },
+    "expirationWarning":  {
+                              "messageOneMinute":  "Beidh do sheisiún éagtha i gceann 1 nóiméad.",
+                              "messageLessThanOneMinute":  "Tá do sheisiún ar tí éagtha."
+                          },
+    "dashboard":  {
+                      "welcome":  "Fáilte ar ais, [name]!",
+                      "sidebarTitle":  "Painéal",
+                      "title":  "Painéal PortIT",
+                      "subtitle":  "Forbhreathnú ar an gcóras PortIT",
+                      "SAOR":  {
+                                   "subtitle":  "Forbhreathnú ar oibríochtaí an ghníomhaí iompair",
+                                   "pendingNotifications":  "Fógraí ar feitheamh",
+                                   "recent":  "Fógraí cuairteanna loinge le déanaí",
+                                   "recentReview":  "Fógraí cuairteanna loinge le haghaidh athbhreithnithe",
+                                   "noRecent":  "Níl fógraí le déanaí"
+                               },
+                      "3DModel":  {
+                                      "title":  "Léiriú 3D ar an gcalafort",
+                                      "description":  "Amharc ar léiriú idirghníomhach 3D den chonair calafort go léir. Féach ar luchtú na dugaí, suíomhanna long, réigiúin stórála agus acmhainní i bhfíor-am.",
+                                      "open":  "Oscail an múnla 3D"
+                                  }
+                  },
+    "admin":  {
+                  "sidebarTitle":  "Riarachán",
+                  "title":  "Painéal Riaracháin",
+                  "subtitle":  "Riarachán agus bainistíocht",
+                  "userManagement":  {
+                                         "title":  "Bainistíocht úsáideoirí",
+                                         "subtitle":  "Bainistigh úsáideoirí an chórais, róil agus ceadanna."
+                                     },
+                  "auditLogs":  {
+                                    "title":  "Logaí iniúchta",
+                                    "subtitle":  "Amharc agus monatóireacht ar logaí gníomhaíochta an chórais."
+                                },
+                  "pp":  {
+                             "title":  "Beartaí Príobháideachais",
+                             "subtitle":  "Sainmhínígh agus bainistigh beartaí príobháideachais an chaladh."
+                         },
+                  "notifications":  {
+                                        "create":  "Cruthaigh fógra",
+                                        "subtitleCreate":  "Send important announcements to any or all users.",
+                                        "title":  "Fógraí Córais",
+                                        "subtitle":  "Cruthaigh agus bainistigh fógraí ginearálta córais.",
+                                        "broadcastToggle":  "Broadcast to all users",
+                                        "sendEmailToggle":  "Also send as email",
+                                        "fields":  {
+                                                       "title":  {
+                                                                     "title":  "Title",
+                                                                     "placeholder":  "Cuir isteach teideal an fhógra"
+                                                                 },
+                                                       "message":  {
+                                                                       "title":  "Message",
+                                                                       "placeholder":  "Cuir isteach teachtaireacht an fhógra"
+                                                                   },
+                                                       "email":  {
+                                                                     "title":  "User email",
+                                                                     "placeholder":  "Specify user email to send to"
+                                                                 },
+                                                       "urgency":  {
+                                                                       "title":  "Urgency",
+                                                                       "options":  {
+                                                                                       "normal":  "Normal",
+                                                                                       "urgent":  "Urgent"
+                                                                                   }
+                                                                   }
+                                                   }
+                                    }
+              },
+    "user":  {
+                 "fields":  {
+                                "email":  {
+                                              "title":  "R-phost",
+                                              "placeholder":  "email@mail.com"
+                                          },
+                                "role":  {
+                                             "title":  "Ról",
+                                             "placeholder":  "Roghnaigh ról an úsáideora",
+                                             "options":  {
+                                                             "admin":  "Riarthóir",
+                                                             "saoRep":  "Ionadaí SAO",
+                                                             "pao":  "Oifigeach PAO",
+                                                             "logisticsOperator":  "Oibreoir loighistíochta"
+                                                         }
+                                         },
+                                "isActive":  {
+                                                 "title":  "Gníomhach",
+                                                 "options":  {
+                                                                 "active":  "Sea",
+                                                                 "inactive":  "Níl"
+                                                             }
+                                             }
+                            },
+                 "tabs":  {
+                              "dashboard":  "Painéal úsáideora",
+                              "create":  "Cruthaigh úsáideoir",
+                              "view":  "Féach ar úsáideoirí",
+                              "search":  "Cuardaigh úsáideoirí"
+                          },
+                 "infoTitle":  "Sonraí an úsáideora",
+                 "title":  "Úsáideoirí",
+                 "subtitle":  {
+                                  "dashboard":  "Forbhreathnú agus bainistíocht úsáideoirí",
+                                  "create":  "Cláraigh úsáideoir nua sa chóras",
+                                  "view":  "Féach agus bainistigh úsáideoirí atá ann"
+                              },
+                 "registeredUsers":  "Úsáideoirí cláraithe",
+                 "confirmDelete":  "Deimhnigh scriosadh",
+                 "confirmDeleteMessage":  "An bhfuil tú cinnte gur mhaith leat an úsáideoir seo a scriosadh?"
+             },
+    "representative":  {
+                           "title":  "Ionadaí",
+                           "select":  "Roghnaigh ionadaí"
+                       },
+    "physicalCharacteristics":  {
+                                    "title":  "Tréithe fisiciúla (m)",
+                                    "length":  {
+                                                   "title":  "Fad",
+                                                   "placeholder":  "Fad i méadar"
+                                               },
+                                    "depth":  {
+                                                  "title":  "Doimhneacht",
+                                                  "placeholder":  "Doimhneacht i méadar"
+                                              },
+                                    "draft":  {
+                                                  "title":  "Dréacht",
+                                                  "placeholder":  "Dréacht i méadar"
+                                              }
+                                },
+    "dock":  {
+                 "fields":  {
+                                "code":  {
+                                             "title":  "Cód",
+                                             "placeholder":  "Cód an dua"
+                                         },
+                                "name":  {
+                                             "title":  "Ainm",
+                                             "placeholder":  "Ainm an dua"
+                                         },
+                                "location":  {
+                                                 "title":  "Suíomh",
+                                                 "placeholder":  "Suíomh an dua"
+                                             },
+                                "supportedVesselTypes":  {
+                                                             "title":  "Cineálacha longa a thacaítear leo",
+                                                             "vesselTypes":  {
+                                                                                 "title":  "Cineálacha longa",
+                                                                                 "placeholder":  "Roghnaigh cineálacha longa"
+                                                                             },
+                                                             "vesselType":  "Cineál loinge"
+                                                         }
+                            },
+                 "tabs":  {
+                              "dashboard":  "Painéal dua",
+                              "view_dashboard":  "Féach ar dua",
+                              "search":  "Cuardaigh dua",
+                              "create":  "Cruthaigh dua",
+                              "view":  "Féach ar dua",
+                              "edit":  "Cuir in eagar dua"
+                          },
+                 "generalFields":  "Réimsí ginearálta",
+                 "infoTitle":  "Eolas faoi an dua",
+                 "title":  "Dua",
+                 "subtitle":  {
+                                  "dashboard":  "Forbhreathnú ar staitisticí agus gníomhaíocht dua",
+                                  "search":  "Bainistigh agus féach ar na dua atá cláraithe",
+                                  "create":  "Cláraigh dua nua sa chóras",
+                                  "edit":  "Cuir in eagar dua atá ann"
+                              },
+                 "registeredDocks":  "Dua cláraithe"
+             },
+    "vesselType":  {
+                       "fields":  {
+                                      "name":  {
+                                                   "title":  "Ainm",
+                                                   "placeholder":  "Ainm cineál long"
+                                               },
+                                      "description":  {
+                                                          "title":  "Cur síos",
+                                                          "placeholder":  "Cur síos ar chineál long"
+                                                      },
+                                      "capacity":  {
+                                                       "title":  "Cumas",
+                                                       "placeholder":  "Cumas coimeádán i TEU"
+                                                   },
+                                      "containerCapacity":  {
+                                                                "title":  "Cumas coimeádán (TEU)",
+                                                                "maxNumberOfRows":  {
+                                                                                        "title":  "Uimhir uachtair uasta",
+                                                                                        "placeholder":  "Uimhir uachtair uasta i TEU"
+                                                                                    },
+                                                                "maxNumberOfBays":  {
+                                                                                        "title":  "Uimhir bairr uasta",
+                                                                                        "placeholder":  "Uimhir bairr uasta i TEU"
+                                                                                    },
+                                                                "maxNumberOfTiers":  {
+                                                                                         "title":  "Uimhir sraithe uasta",
+                                                                                         "placeholder":  "Uimhir sraithe uasta i TEU"
+                                                                                     }
+                                                            }
+                                  },
+                       "generalFields":  "Réimsí ginearálta",
+                       "tabs":  {
+                                    "dashboard":  "Painéal cineálacha longa",
+                                    "view_dashboard":  "Féach ar cineálacha longa",
+                                    "search":  "Cuardaigh cineálacha longa",
+                                    "create":  "Cruthaigh cineál long",
+                                    "view":  "Féach ar chineál long",
+                                    "edit":  "Cuir in eagar cineál long"
+                                },
+                       "infoTitle":  "Eolas faoi cineál long",
+                       "title":  "Cineálacha longa",
+                       "subtitle":  {
+                                        "dashboard":  "Forbhreathnú ar staitisticí cineálacha longa",
+                                        "search":  "Bainistigh agus féach ar na cineálacha longa atá cláraithe",
+                                        "create":  "Cláraigh cineál long nua sa chóras",
+                                        "edit":  "Cuir in eagar cineál long atá ann"
+                                    },
+                       "registeredVesselTypes":  "Cineálacha longa cláraithe"
+                   },
+    "vessel":  {
+                   "fields":  {
+                                  "name":  {
+                                               "title":  "Ainm",
+                                               "placeholder":  "Ainm an longa"
+                                           },
+                                  "imoNumber":  {
+                                                    "title":  "Uimhir IMO",
+                                                    "placeholder":  "Uimhir IMO an longa"
+                                                },
+                                  "owner":  {
+                                                "title":  "Úinéir",
+                                                "placeholder":  "Eagraíocht úinéara"
+                                            },
+                                  "vesselType":  {
+                                                     "title":  "Cineál long",
+                                                     "placeholder":  "Roghnaigh cineál long"
+                                                 },
+                                  "taxNumber":  {
+                                                    "title":  "Tax Number"
+                                                }
+                              },
+                   "infoTitle":  "Eolas an longa",
+                   "physicalCharacteristicsTitle":  "Tréithe fisiciúla",
+                   "tabs":  {
+                                "dashboard":  "Painéal long",
+                                "view_dashboard":  "Féach ar longa",
+                                "search":  "Cuardaigh longa",
+                                "create":  "Cruthaigh long",
+                                "view":  "Féach ar long",
+                                "edit":  "Cuir in eagar long"
+                            },
+                   "title":  "Longa",
+                   "subtitle":  {
+                                    "dashboard":  "Forbhreathnú ar staitisticí agus gníomhaíocht longa",
+                                    "search":  "Bainistigh agus féach ar na longa atá cláraithe",
+                                    "create":  "Cláraigh longa nua sa chóras",
+                                    "edit":  "Cuir in eagar longa atá ann"
+                                },
+                   "ownedBy":  "Seilbh ag",
+                   "registeredVessels":  "Longa cláraithe"
+               },
+    "staff":  {
+                  "deactivation":  {
+                                       "title":  "Deactivate Staff Member",
+                                       "message":  "Are you sure you want to deactivate this staff member? You can activate them again later.",
+                                       "successMessage":  "Staff member has been successfully deactivated.",
+                                       "errorMessage":  "An error occurred while trying to deactivate the staff member. Please try again."
+                                   },
+                  "fields":  {
+                                 "mechanographicNumber":  {
+                                                              "title":  "Uimhir mheicnifeagrafach",
+                                                              "placeholder":  "Uimhir mheicnifeagrafach"
+                                                          },
+                                 "name":  {
+                                              "title":  "Ainm",
+                                              "placeholder":  "Ainm an fostaí"
+                                          },
+                                 "email":  {
+                                               "title":  "R-phost",
+                                               "placeholder":  "Seoladh ríomhphoist"
+                                           },
+                                 "phoneNumber":  {
+                                                     "title":  "Fón",
+                                                     "placeholder":  "Uimhir theileafóin"
+                                                 },
+                                 "qualifications":  {
+                                                        "title":  "Cáilíochtaí",
+                                                        "placeholder":  "Roghnaigh cáilíochtaí"
+                                                    },
+                                 "status":  {
+                                                "title":  "Stádas",
+                                                "options":  {
+                                                                "available":  "Ar fáil",
+                                                                "unavailable":  "Ní ar fáil",
+                                                                "temporarilyReassigned":  "Athshainithe go sealadach"
+                                                            }
+                                            },
+                                 "operationalWindow":  "Operational Window"
+                             },
+                  "tabs":  {
+                               "dashboard":  "Painéal foirne",
+                               "view_dashboard":  "Féach ar fostaithe",
+                               "search":  "Cuardaigh fostaithe",
+                               "create":  "Cruthaigh fostaí",
+                               "view":  "Féach ar fostaí",
+                               "edit":  "Cuir in eagar fostaí"
+                           },
+                  "infoTitle":  "Sonraí fostaí",
+                  "title":  "Fostaithe",
+                  "subtitle":  {
+                                   "search":  "Bainistigh agus féach ar na fostaithe cláraithe",
+                                   "dashboard":  "Forbhreathnú ar staitisticí agus gníomhaíocht fostaithe",
+                                   "create":  "Cláraigh fostaí nua sa chóras",
+                                   "view":  "Féach ar shonraí an fostaí",
+                                   "edit":  "Cuir in eagar fostaí atá ann"
+                               },
+                  "registeredStaffMembers":  "Baill foirne cláraithe"
+              },
+    "qualification":  {
+                          "tabs":  {
+                                       "dashboard":  "Painéal cáilíochtaí",
+                                       "view_dashboard":  "Féach ar cáilíochtaí",
+                                       "search":  "Cuardaigh cáilíochtaí",
+                                       "create":  "Cruthaigh cáilíocht",
+                                       "view":  "Féach ar cháilíocht",
+                                       "edit":  "Cuir in eagar cáilíocht"
+                                   },
+                          "infoTitle":  "Sonraí cáilíochta",
+                          "title":  "Cáilíochtaí",
+                          "subtitle":  {
+                                           "search":  "Bainistigh agus féach ar na cáilíochtaí cláraithe",
+                                           "dashboard":  "Forbhreathnú ar staitisticí cáilíochtaí",
+                                           "create":  "Cláraigh cáilíocht nua sa chóras",
+                                           "edit":  "Cuir in eagar cáilíocht atá ann",
+                                           "view":  "Féach ar shonraí cáilíochta"
+                                       },
+                          "fields":  {
+                                         "idCode":  {
+                                                        "title":  "Cód cáilíochta",
+                                                        "placeholder":  "Cód cáilíochta"
+                                                    },
+                                         "qualificationName":  {
+                                                                   "title":  "Ainm an cháilíochta",
+                                                                   "placeholder":  "Ainm an cháilíochta"
+                                                               }
+                                     },
+                          "registeredQualifications":  "Cáilíochtaí cláraithe"
+                      },
+    "scheduling":  {
+                       "title":  "Iarratas sceideal laethúil",
+                       "subtitle":  "Bain úsáid as ár halgartam sceidhlithe uathoibrithe chun na tascanna sceidilithe don lá a anailísiú.",
+                       "noVisits":  "Níl aon chuairteanna long sceidealta don dáta roghnaithe.",
+                       "visitsOnSelectedDay":  "Cuairteanna longa ar an dáta roghnaithe",
+                       "viewVisits":  "Gineadh sceideal tascanna",
+                       "generateTasksButton":  "Gineadh sceideal tascanna",
+                       "aboutAlgorithmButton":  "Maidir leis an algartam",
+                       "fields":  {
+                                      "algorithm":  {
+                                                        "title":  "Scheduling Algorithm",
+                                                        "placeholder":  "Select scheduling algorithm"
+                                                    },
+                                      "relatedDocks":  "Select related dock"
+                                  },
+                       "generateTasksModal":  {
+                                                  "title":  "Additional logistics"
+                                              },
+                       "aboutAlgorithmModal":  {
+                                                   "title":  "Maidir leis an algartam",
+                                                   "content":  "Tugann an algartam reatha aird ar na fógraí cuairte longa atá sceidealta don dáta agus don dua sonraithe.\nSeiceálann sé infhaighteacht criún STS don dua roghnaithe agus socraíonn sé fad gach tasc bunaithe ar luas an chriún.\nDéanann sé dearmad freisin ar chuairteanna a bhaineann le cothabháil nó gníomhaíochtaí nach mbaineann le luchtú/díluchtú."
+                                               },
+                       "results":  {
+                                       "title":  "Scheduling Results",
+                                       "subtitle":  "Generated task schedule for the selected date"
+                                   },
+                       "tabs":  {
+                                    "dashboard":  "Scheduling Dashboard",
+                                    "results":  "Scheduling Results",
+                                    "schedule":  "Request Task Schedule",
+                                    "view_dashboard":  "View Scheduling",
+                                    "search":  "List Operation Plans",
+                                    "create":  "Create Scheduling",
+                                    "view":  "View Scheduling",
+                                    "edit":  "Edit Scheduling",
+                                    "queue":  "Scheduling Queue"
+                                },
+                       "subtitles":  {
+                                         "dashboard":  "Overview of scheduling of berth operations and incidents",
+                                         "schedule":  "Request a task schedule for a specific date",
+                                         "search":  "List all operation plans for a given date",
+                                         "create":  "Create a new scheduling into the system",
+                                         "edit":  "Edit an existing scheduling in the system",
+                                         "queue":  "View pending scheduling requests"
+                                     },
+                       "queue":  {
+                                     "title":  "Scheduling Queue",
+                                     "subtitle":  "Pending scheduling requests",
+                                     "onlyMine":  "Show only my requests"
+                                 },
+                       "rebalancing":  {
+                                           "title":  "Dock Rebalancing Required",
+                                           "warningMessage":  "Before scheduling, the system recommends rebalancing dock assignments to optimize load distribution.",
+                                           "vesselsToReassign":  "Vessels to Reassign",
+                                           "averageLoad":  "Average Load",
+                                           "loadRange":  "Load Range",
+                                           "proposedReassignments":  "Proposed Reassignments",
+                                           "vesselImo":  "Vessel IMO",
+                                           "currentDock":  "Current Dock",
+                                           "proposedDock":  "Proposed Dock",
+                                           "skipButton":  "Skip \u0026 Continue with Current Assignments",
+                                           "applyButton":  "Apply Rebalancing \u0026 Generate Schedule"
+                                       }
+                   },
+    "physicalResource":  {
+                             "deactivation":  {
+                                                  "title":  "Deactivate Physical Resource",
+                                                  "message":  "Are you sure you want to deactivate this physical resource? You can activate it again later.",
+                                                  "successMessage":  "Physical Resource has been successfully deactivated.",
+                                                  "errorMessage":  "An error occurred while trying to deactivate the Physical Resource. Please try again."
+                                              },
+                             "tabs":  {
+                                          "dashboard":  "Painéal acmhainní fisiciúla",
+                                          "view_dashboard":  "Féach ar acmhainní fisiciúla",
+                                          "search":  "Cuardaigh acmhainní fisiciúla",
+                                          "create":  "Cruthaigh acmhainn fiseolaíoch",
+                                          "view":  "Féach ar acmhainn fiseolaíoch",
+                                          "edit":  "Cuir in eagar acmhainn fiseolaíoch"
+                                      },
+                             "infoTitle":  "Sonraí an acmhainn fiseolaíoch",
+                             "title":  "Acmhainní fisiciúla",
+                             "subtitle":  {
+                                              "search":  "Bainistigh agus féach ar na hacmhainní fisiciúla cláraithe",
+                                              "dashboard":  "Painéal bainistíochta do gach acmhainn fiseolaíoch",
+                                              "view_dashboard":  "Féach ar acmhainní fisiciúla",
+                                              "create":  "Cláraigh acmhainn fiseolaíoch nua sa chóras",
+                                              "view":  "Féach ar shonraí an acmhainn fiseolaíoch",
+                                              "edit":  "Cuir in eagar acmhainn fiseolaíoch atá ann"
+                                          },
+                             "generalFields":  "Réimsí ginearálta",
+                             "specificFields":  "Réimsí shonracha",
+                             "fields":  {
+                                            "code":  {
+                                                         "title":  "Cód",
+                                                         "placeholder":  "Cód acmhainne"
+                                                     },
+                                            "description":  {
+                                                                "title":  "Cur síos",
+                                                                "placeholder":  "Cur síos an acmhainn"
+                                                            },
+                                            "status":  {
+                                                           "title":  "Stádas",
+                                                           "placeholder":  "Roghnaigh stádas an acmhainn",
+                                                           "options":  {
+                                                                           "available":  "Ar fáil",
+                                                                           "maintenance":  "Cothabháil",
+                                                                           "outOfService":  "As seirbhís"
+                                                                       }
+                                                       },
+                                            "qualifications":  {
+                                                                   "title":  "Cáilíochtaí riachtanacha",
+                                                                   "placeholder":  "Cáilíochtaí a theastaíonn don acmhainn seo"
+                                                               },
+                                            "setupTime":  {
+                                                              "title":  "Am socraithe (nóim)",
+                                                              "placeholder":  "Am socraithe"
+                                                          },
+                                            "servingDocks":  {
+                                                                 "title":  "Dugaí seirbhíse",
+                                                                 "placeholder":  "Roghnaigh dugaí seirbhíse"
+                                                             },
+                                            "liftingCapacity":  {
+                                                                    "title":  "Inchumas ardaithe (kg)",
+                                                                    "placeholder":  "Inchumas ardaithe"
+                                                                },
+                                            "containersPerHour":  {
+                                                                      "title":  "Coimeádáin in aghaidh na huaire",
+                                                                      "placeholder":  "Coimeádáin in aghaidh na huaire"
+                                                                  },
+                                            "maxLoadCapacity":  {
+                                                                    "title":  "Uasmhéid luchtaithe (kg)",
+                                                                    "placeholder":  "Uasmhéid luchtaithe"
+                                                                },
+                                            "averageSpeed":  {
+                                                                 "title":  "Average speed (km/h)",
+                                                                 "placeholder":  "Average speed"
+                                                             },
+                                            "containersPerTrip":  {
+                                                                      "title":  "Containers per trip",
+                                                                      "placeholder":  "Containers per trip"
+                                                                  },
+                                            "type":  {
+                                                         "title":  "Resource Type",
+                                                         "options":  {
+                                                                         "stsCrane":  "STS Crane",
+                                                                         "yardGantry":  "Yard Gantry Crane",
+                                                                         "truck":  "Truck"
+                                                                     }
+                                                     }
+                                        },
+                             "actions":  {
+                                             "deactivate":  "Díghníomhachtaigh acmhainn fiseolaíoch"
+                                         },
+                             "registeredPhysicalResources":  "Acmhainní fisiciúla cláraithe"
+                         },
+    "storageArea":  {
+                        "tabs":  {
+                                     "dashboard":  "Painéal réimsí stórála",
+                                     "view_dashboard":  "Féach ar réimsí stórála",
+                                     "search":  "Cuardaigh réimsí stórála",
+                                     "create":  "Cruthaigh réimse stórála",
+                                     "view":  "Féach ar réimse stórála",
+                                     "edit":  "Cuir in eagar réimse stórála"
+                                 },
+                        "create":  {
+                                       "distance_meters":  "Fad (méadar)"
+                                   },
+                        "infoTitle":  "Sonraí réimse stórála",
+                        "title":  "Réimsí stórála",
+                        "subtitle":  {
+                                         "search":  "Bainistigh agus féach ar réimsí stórála cláraithe",
+                                         "dashboard":  "Painéal bainistíochta do réimsí stórála",
+                                         "view_dashboard":  "Féach ar réimsí stórála",
+                                         "create":  "Cláraigh réimse stórála nua sa chóras",
+                                         "view":  "Féach ar shonraí réimse stórála",
+                                         "edit":  "Cuir in eagar réimse stórála atá ann"
+                                     },
+                        "printer":  {
+                                        "docks_serviced":  "dugaí seirbhíse",
+                                        "capacity_usage":  "úsáid cumais",
+                                        "units":  "aonaid",
+                                        "available":  "ar fáil",
+                                        "no_registered_distances":  "No registered distances",
+                                        "no_docks_serviced":  "No docks serviced",
+                                        "all_docks_serviced":  "All docks serviced",
+                                        "serviced_docks_distance":  "Serviced docks distance",
+                                        "no_registered_docks":  "No registered docks"
+                                    },
+                        "fields":  {
+                                       "nameCode":  {
+                                                        "title":  "Name Code",
+                                                        "placeholder":  "Códain ainm réimse stórála"
+                                                    },
+                                       "location":  {
+                                                        "title":  "Location",
+                                                        "placeholder":  "Suíomh réimse stórála"
+                                                    },
+                                       "type":  {
+                                                    "title":  "Type",
+                                                    "placeholder":  "Select Storage Area type",
+                                                    "options":  {
+                                                                    "yard":  "Yard",
+                                                                    "warehouse":  "Warehouse"
+                                                                }
+                                                },
+                                       "capacity":  {
+                                                        "title":  "Capacity",
+                                                        "placeholder":  "Maximum capacity"
+                                                    },
+                                       "occupancy":  {
+                                                         "title":  "Occupancy",
+                                                         "placeholder":  "Current occupancy"
+                                                     }
+                                   },
+                        "registeredStorageAreas":  "Limistéir stórála cláraithe"
+                    },
+    "notification":  {
+                         "id":  "Aitheantas fógra",
+                         "hazardous":  "Contúirteach",
+                         "nonHazardous":  "Neamh-chontúirteach",
+                         "arrival":  "Teacht",
+                         "departure":  "Fágáil",
+                         "specialRequirements":  "Riachtanais speisialta",
+                         "none":  "Níl",
+                         "crew":  "Criú",
+                         "captain":  "Captaen",
+                         "unknown":  "Anaithnid",
+                         "from":  "Ó",
+                         "to":  "Go",
+                         "step":  "Step",
+                         "of":  "of",
+                         "tabs":  {
+                                      "dashboard":  "Painéal Fógraí",
+                                      "search":  "Cuardaigh Fógraí",
+                                      "edit":  "Cuir in eagar Fógra",
+                                      "create":  "Cruthaigh Fógra",
+                                      "update":  "Update Notification",
+                                      "makeDraft":  "Cruthaigh dréacht fógra",
+                                      "myNotifications":  "Mo Fógraí",
+                                      "review":  "Athbhreithniú Fógraí",
+                                      "general":  "Liosta ginearálta",
+                                      "byDate":  "Liosta féilire",
+                                      "submit":  "Cuir an fógra isteach",
+                                      "delete":  "Scrios Fógra"
+                                  },
+                         "eventsOnDate":  "Imeachtaí ar an dáta roghnaithe",
+                         "noEventsOnDate":  "Níl imeachtaí ar an dáta roghnaithe",
+                         "title":  "Fógraí cuairteanna longa",
+                         "subtitle":  {
+                                          "dashboard":  "Forbhreathnú ar fógraí cuairteanna longa",
+                                          "search":  "Bainistigh agus féach ar fhógraí cuairteanna longa",
+                                          "create":  "Cruthaigh fógra nua cuairte longa",
+                                          "update":  "Update an existing vessel visit notification",
+                                          "edit":  "Cuir in eagar fógra cuairte longa atá ann",
+                                          "review":  "Athbhreithniú ar fhógraí cuairte longa atá ar feitheamh"
+                                      },
+                         "errors":  {
+                                        "noNotificationId":  "No notification id provided"
+                                    },
+                         "infoTitle":  "Notification Information",
+                         "cargoTitle":  "Cargo Information",
+                         "vesselTitle":  "Vessel Information",
+                         "manifestInfo":  "Manifest Information",
+                         "fields":  {
+                                        "selectVessel":  "Select corresponding vessel",
+                                        "openLoadManifest":  "Oscail Manifest Luchtaithe",
+                                        "openUnloadManifest":  "Oscail Manifest Díluchtaithe",
+                                        "expectedArrival":  "Teacht Inmheánach",
+                                        "expectedDeparture":  "Imeacht Inmheánach",
+                                        "isCargoHazardous":  "Cargo Hazardous",
+                                        "specialRequirements":  "Special Requirements",
+                                        "captain":  "Captain",
+                                        "totalCrewMembers":  "Total Crew Members",
+                                        "safetyOfficers":  "Safety Officers",
+                                        "loadCargoManifest":  "Load Cargo Manifest",
+                                        "unloadCargoManifest":  "Unload Cargo Manifest",
+                                        "position":  "Position",
+                                        "area":  "Area",
+                                        "container":  "Container",
+                                        "crewMembers":  "Crew Members",
+                                        "status":  "Status",
+                                        "isCargoHazardousQ":  "Is Cargo Hazardous?",
+                                        "cargoManifestInfo":  "About cargo manifest files"
+                                    },
+                         "timeline":  {
+                                          "pending":  "Pending",
+                                          "inProgress":  "In Progress",
+                                          "completed":  "Completed",
+                                          "submitted":  "Submitted",
+                                          "accepted":  "Accepted",
+                                          "rejected":  "Rejected"
+                                      },
+                         "filters":  {
+                                         "expectedArrivalFrom":  "Teacht Inmheánach From",
+                                         "expectedArrivalTo":  "Teacht Inmheánach To",
+                                         "withReason":  "With Reason",
+                                         "withDockAssigned":  "With Dock Assigned"
+                                     },
+                         "decision":  {
+                                          "isFinal":  "Is Final",
+                                          "assignedDock":  {
+                                                               "title":  "Assigned Dock",
+                                                               "placeholder":  "Select assigned dock"
+                                                           },
+                                          "reason":  {
+                                                         "title":  "Reason",
+                                                         "placeholder":  "Provide reason for decision"
+                                                     },
+                                          "status":  "Decision Status"
+                                      },
+                         "sections":  {
+                                          "vesselDetails":  "Eolas faoin gcuairt",
+                                          "crewDetails":  "Sonraí na foirne",
+                                          "cargoRequirements":  "Riacht anais lasta",
+                                          "cargoContent":  "Ábhar an lasta"
+                                      },
+                         "about":  {
+                                       "text":  "Ní mhór (faoi láthair) go mbídh comhaid mhaniéist lasta i bhformáid chaighdeánach Eorpach CSV. Léirionn gach líne sa chomhad CSV mír lasta leis na colúin seo a leanas:",
+                                       "bay":  "Bá (uimhir)",
+                                       "row":  "Rá (uimhir)",
+                                       "tier":  "Sraith (uimhir)",
+                                       "area":  "Cód limistéir (cá/chuig cá)",
+                                       "containerNumber":  "Uimhir choimeádáin (téacs)",
+                                       "conatinerType":  "Cineál coimeádáin (uimhir)",
+                                       "description":  "Cur síos (téacs)",
+                                       "containerTypes":  {
+                                                              "refrigeratedGoods":  "Earrai cuisnithe",
+                                                              "generalConsumerProducts":  "Táirgtheíomhaithe ginearálta",
+                                                              "electronics":  "Leictreonáin",
+                                                              "hazmat":  "Ábháir chontairtíe",
+                                                              "oversizedIndustrialEquipment":  "Treallamh tionsclach rómhór",
+                                                              "other":  "Eile"
+                                                          }
+                                   },
+                         "registeredVesselVisitNotifications":  "Registered Vessel Visit Notifications"
+                     },
+    "operationalWindow":  {
+                              "title":  "Fuinneog oibríochtúil",
+                              "printer":  {
+                                              "addShift":  "Cuir isteach athrú",
+                                              "shifts":  "Athruithe:",
+                                              "noShifts":  "Níl athruithe.",
+                                              "startTime":  "Am tosaithe",
+                                              "endTime":  "Am deiridh",
+                                              "weekDays":  "Lá na seachtaine"
+                                          },
+                              "errors":  {
+                                             "shiftOverlap":  "Athrú neamhbhailí. Trasnaíonn siad nó tá am deiridh sula dtosaíonn an t-athrú."
+                                         }
+                          },
+    "about":  {
+                  "title":  "Maidir le PorTiT",
+                  "privacy":  {
+                                  "title":  "Beartas Príobháideachais",
+                                  "lastUpdated":  "Nuashonraithe: {date}"
+                              }
+              },
+    "operationPlan":  {
+                          "title":  "Plean Oibríochta",
+                          "dock":  "Dugaí",
+                          "docks":  "Dugaithe",
+                          "operations":  "Oibríochtaí",
+                          "cranes":  "Craenacha",
+                          "createdBy":  "Cruthaithe ag",
+                          "createdAt":  "Cruthaithe ag",
+                          "totalSchedules":  "Sceidil Iomlána",
+                          "vesselCount":  "Soithí",
+                          "plansOnDate":  "Pleananna oibríochta ar an dáta roghnaithe",
+                          "noPlansOnDate":  "Níl aon phleananna oibríochta ar an dáta roghnaithe",
+                          "id":  "ID",
+                          "vvn":  "Fógra Cuairte Soithí",
+                          "for":  "do",
+                          "details":  "Sonraí",
+                          "totalOperations":  "Oibríochtaí Iomlána",
+                          "algorithmUsed":  "Algartam Úsáidte",
+                          "ganttChart":  "Cairt Gantt",
+                          "startTime":  "Am Tosaithe",
+                          "endTime":  "Am Deiridh",
+                          "totalDuration":  "Fad Iomlán",
+                          "operation":  "Oibríocht",
+                          "duration":  "Fad",
+                          "resources":  "Acmhainní",
+                          "operationDetails":  "Sonraí Oibríochta",
+                          "operationNumber":  "Oibríocht #{number}",
+                          "notFound":  "Plean oibríochta gan aimsiú",
+                          "operationType":  {
+                                                "Unload":  "Díluchtú",
+                                                "Load":  "Luchtú"
+                                            },
+                          "tabs":  {
+                                       "unplannedVVNs":  "VVN gan phleanáil",
+                                       "search":  "Cuardaigh Pleananna",
+                                       "edit":  "Cuir Plean in Eagar",
+                                       "open":  "Oscail Forghníomhú"
+                                   },
+                          "subtitle":  {
+                                           "edit":  "Modhnú sonraí phlean oibríochta agus sceideal"
+                                       },
+                          "unplannedVVNs":  {
+                                                "description":  "Fógraí cuairte soithí nach bhfuil plean oibríochta sannta acu fós",
+                                                "noUnplanned":  "Tá pleananna oibríochta sannta ag gach fógra cuairte soithí",
+                                                "foundMessage":  "Aimsíodh {vvnCount} VVN gan phle ananna i {dayCount} lá/laethanta",
+                                                "regenerateAll":  "Athghiniúint Gach Plean atá in Easnamh",
+                                                "regenerateDay":  "Athghiniúint Pleananna don Lá Seo",
+                                                "regenerateModalTitle":  "Athghiniúint pleananna do {date}",
+                                                "warning":  "Rabhadh",
+                                                "warningMessage":  "Cuirfidh athghiniúint na bpleananna gach plean oibríochta atá ann cheana don lá seo in ionad. Ní féidir an gníomh seo a chealú.",
+                                                "selectedDay":  "Lá Roghnaithe",
+                                                "confirmRegeneration":  "Deimhnigh Athghiniúint",
+                                                "affectedDays":  "Laethanta Atá Tionchar Orthu",
+                                                "queueInfo":  "Cuirfear gach iarratas athghiniúinte i scuaine ar leithligh. Is féidir leat iad a athbhreithniú agus a ghlacadh/a dhiúltú go haonair ón scuaine sceidealúcháin.",
+                                                "continue":  "Lean ar aghaidh",
+                                                "confirmRegenerationTitle":  "Deimhnigh Athghiniúint",
+                                                "irreversibleAction":  "Is gníomh dochúlaithe é seo",
+                                                "overwriteWarning":  "Forscríobhfaidh athghiniúint na bpleananna oibríochta go buan gach plean atá ann cheana do na laethanta roghnaithe. Ní féidir an gníomh seo a chealú.",
+                                                "aboutToRegenerate":  "Tá tú ar tí pleananna a athghiniúint do",
+                                                "days":  "laethanta",
+                                                "vesselVisitNotifications":  "Fógraí Cuairte Soithí",
+                                                "using":  "Ag úsáid",
+                                                "algorithm":  "algartam",
+                                                "proceedQuestion":  "Ar mhaith leat leanúint ar aghaidh leis an oibríocht seo?",
+                                                "yesRegenerateAll":  "Tá, athghiniúint gach rud"
+                                            },
+                          "algorithm":  {
+                                            "optimal":  "Optamach",
+                                            "greedy":  "Saintach",
+                                            "genetic":  "Géiniteach",
+                                            "auto":  "Uathoibríoch"
+                                        },
+                          "metrics":  {
+                                          "title":  "Méadrachta",
+                                          "strategy":  "Straitéis",
+                                          "totalDelay":  "Moill Iomlán",
+                                          "computationTime":  "Am Ríomhaireachta",
+                                          "autoSelection":  "Roghnú Uathoibríoch Algartaim"
+                                      },
+                          "infoTitle":  "Faisnéis Phlean Oibríochta",
+                          "fields":  {
+                                         "id":  {
+                                                    "title":  "ID Phlean"
+                                                },
+                                         "relatedVVN":  {
+                                                            "title":  "VVN Gaolmhar"
+                                                        },
+                                         "dock":  {
+                                                      "title":  "Dugaí"
+                                                  },
+                                         "operations":  {
+                                                            "title":  "Oibríochtaí"
+                                                        }
+                                     },
+                          "filters":  {
+                                          "startDate":  "Dáta Tosaithe Ó",
+                                          "endDate":  "Dáta Deiridh Go"
+                                      },
+                          "metadata":  {
+                                           "title":  "Meiteashonraí",
+                                           "createdBy":  "Cruthaithe ag",
+                                           "createdAt":  "Cruthaithe ag",
+                                           "algorithmUsed":  "Algartam Úsáidte"
+                                       },
+                          "schedule":  {
+                                           "title":  "Sceideal Oibríochtaí",
+                                           "noOperations":  "Níl aon oibríochtaí sceidealaithe"
+                                       }
+                      },
+    "incidentType":  {
+                         "fields":  {
+                                        "name":  {
+                                                     "title":  "Ainm",
+                                                     "placeholder":  "Ainm an chineáil teagmhais"
+                                                 },
+                                        "description":  {
+                                                            "title":  "Cur Síos",
+                                                            "placeholder":  "Cur síos mionsonraithe ar an gcineál teagmhais"
+                                                        },
+                                        "severity":  {
+                                                         "title":  "Déine",
+                                                         "placeholder":  "Roghnaigh leibhéal déine"
+                                                     },
+                                        "subtypeOf":  {
+                                                          "title":  "Focineál De",
+                                                          "placeholder":  "Roghnaigh cineál tuismitheora"
+                                                      },
+                                        "subtypes":  {
+                                                         "title":  "Focineálacha",
+                                                         "placeholder":  "Roghnaigh cineálacha linbh"
+                                                     }
+                                    },
+                         "severity":  {
+                                          "Minor":  "Mion",
+                                          "Major":  "Mór",
+                                          "Critical":  "Ríthábhachtach"
+                                      },
+                         "tabs":  {
+                                      "dashboard":  "Painéal Cineálacha Teagmhais",
+                                      "view_dashboard":  "Féach ar Chineálacha Teagmhais",
+                                      "search":  "Cuardaigh Cineálacha Teagmhais",
+                                      "create":  "Cruthaigh Cineál Teagmhais",
+                                      "edit":  "Cuir Cineál Teagmhais in Eagar"
+                                  },
+                         "generalFields":  "Réimsí Ginearálta",
+                         "classification":  "Aicmiú",
+                         "title":  "Teagmhais",
+                         "subtitle":  {
+                                          "dashboard":  "Forbhreathnú ar staitisticí agus gníomhaíochtaí cineálacha teagmhais",
+                                          "search":  "Bainistigh agus féach ar gach cineál teagmhais cláraithe",
+                                          "create":  "Cláraigh cineál teagmhais nua sa chóras",
+                                          "edit":  "Modhn aigh cineál teagmhais atá ann cheana sa chóras"
+                                      },
+                         "registeredIncidentTypes":  "Cineálacha Teagmhais Cláraithe",
+                         "incidentTypeInformation":  "Faisnéis Cineál Teagmhais",
+                         "parentType":  "Cineál Tuismitheora",
+                         "confirmDelete":  "Deimhnigh scriosadh",
+                         "confirmDeleteMessage":  "An bhfuil tú cinnte gur mhaith leat an cineál teagmhais seo a scriosadh?",
+                         "failedToDelete":  "Theip ar scriosadh an chineál teagmhais"
+                     },
+    "taskCategory":  {
+                         "fields":  {
+                                        "name":  {
+                                                     "title":  "Ainm",
+                                                     "placeholder":  "Ainm catagóir tascanna"
+                                                 },
+                                        "category":  {
+                                                         "title":  "Catagóir",
+                                                         "placeholder":  "Cód catagóire"
+                                                     },
+                                        "description":  {
+                                                            "title":  "Cur Síos",
+                                                            "placeholder":  "Cur síos ar an gcatagóir tascanna"
+                                                        }
+                                    },
+                         "tabs":  {
+                                      "dashboard":  "Painéal Catagóirí Tascanna",
+                                      "search":  "Cuardaigh Catagóirí Tascanna",
+                                      "create":  "Cruthaigh Catagóir Tascanna",
+                                      "edit":  "Cuir Catagóir Tascanna in Eagar",
+                                      "view_dashboard":  "Féach ar Chatagóirí Tascanna"
+                                  },
+                         "generalFields":  "Réimsí Ginearálta",
+                         "title":  "Tascanna",
+                         "subtitle":  {
+                                          "dashboard":  "Forbhreathnú ar staitisticí agus gníomhaíochtaí catagóirí tascanna",
+                                          "search":  "Bainistigh agus féach ar gach catagóir tascanna cláraithe",
+                                          "create":  "Cláraigh catagóir tascanna nua sa chóras",
+                                          "edit":  "Modh naigh catagóir tascanna atá ann cheana sa chóras"
+                                      },
+                         "taskCategoryInformation":  "Faisnéis Catagóir Tascanna",
+                         "registeredTaskCategories":  "Catagóirí Tascanna Cláraithe"
+                     },
+    "execution":  {
+                      "title":  "Forghníomhuithe Cuairte Soithí",
+                      "subtitle":  {
+                                       "search":  "Bainistigh agus féach ar gach forghníomhú cuairte soithí",
+                                       "dashboard":  "Forbhreathnú ar staitisticí agus gníomhaíochtaí forghníomhuithe cuairte soithí"
+                                   },
+                      "tabs":  {
+                                   "dashboard":  "Painéal Forghníomhuithe",
+                                   "search":  "Cuardaigh Forghníomhuithe",
+                                   "view_dashboard":  "Féach ar Fhorghníomhuithe",
+                                   "update":  "Nuashonraigh Forghníomhú",
+                                   "view":  "Féach ar Fhorghníomhú",
+                                   "table":  "Féach ar Thábla",
+                                   "cards":  "Féach ar Chártaí"
+                               },
+                      "fields":  {
+                                     "code":  "Cód",
+                                     "relatedVVN":  "Bainteach le",
+                                     "status":  "Stádas",
+                                     "createdBy":  "Cruthaithe ag",
+                                     "dateOpen":  "Dáta Oscailte",
+                                     "dateClosed":  "Dáta Dúnta",
+                                     "relatedVesselVisit":  "Cuairt Soithigh Gaolmhar",
+                                     "dock":  "Dugaí Muiríochta",
+                                     "berthTime":  "Am Muiríochta",
+                                     "operations":  "Oibríochtaí"
+                                 },
+                      "filters":  {
+                                      "startDate":  "Dáta Tosaithe",
+                                      "endDate":  "Dáta Deiridh",
+                                      "relatedVVN":  "Fógra Cuairte Soithí",
+                                      "status":  "Stádas"
+                                  },
+                      "metrics":  {
+                                      "totalOperations":  "Oibríochtaí Iomlána",
+                                      "completedOperations":  "Dul Chun Cinn",
+                                      "turnaroundTime":  "Am Thart",
+                                      "berthOccupancy":  "Áitiú Dugaí"
+                                  },
+                      "status":  {
+                                     "pending":  "Ar Feitheamh",
+                                     "started":  "Tosaithe",
+                                     "delayed":  "Moillithe",
+                                     "completed":  "Críochnaithe"
+                                 },
+                      "view_resources":  "Féach ar Acmhainní",
+                      "infoTitle":  "Faisnéis Forghníomhaithe",
+                      "operationsTitle":  "Oibríochtaí",
+                      "noOperations":  "Níl aon oibríochtaí ar fáil",
+                      "startOperation":  "Tosaigh Oibríocht",
+                      "completeOperation":  "Críochnaigh Oibríocht",
+                      "addOperation":  "Cuir Oibríocht Leis",
+                      "addOperationDescription":  "Cuir oibríocht nua leis an amlíne",
+                      "confirmStartOperation":  "An bhfuil tú cinnte gur mhaith leat an oibríocht seo a thosú?",
+                      "confirmCompleteOperation":  "An bhfuil tú cinnte gur mhaith leat an oibríocht seo a chríochnú?",
+                      "berthOperation":  {
+                                             "button":  "Cuir sonraí muiríochta in eagar",
+                                             "title":  "Oibríocht Muiríochta",
+                                             "description":  "Cuir an dugaí agus an t-am in eagar don fhorghníomhú cuairte soithí seo.",
+                                             "dock":  "Dugaí Muiríochta",
+                                             "dockPlaceholder":  "Roghnaigh dugaí",
+                                             "berthTime":  "Am Muiríochta",
+                                             "differentThanPlanned":  "Tá an dugaí roghnaithe difriúil ón gceann pleanáilte."
+                                         }
+                  },
+    "incident":  {
+                     "tabs":  {
+                                  "dashboard":  "Painéal Teagmhais",
+                                  "create":  "Cruthaigh Teagmhas",
+                                  "search":  "Cuardaigh Teagmhais",
+                                  "active":  "Teagmhais Ghníomhacha",
+                                  "view":  "Féach ar Theagmhas",
+                                  "edit":  "Cuir Teagmhas in Eagar"
+                              },
+                     "subtitle":  {
+                                      "create":  "Tuairiscigh teagmhas nua sa chóras",
+                                      "search":  "Cuardaigh agus scag teagmhais atá ann cheana",
+                                      "active":  "Féach ar agus bainistigh teagmhais ghníomhacha"
+                                  },
+                     "generalFields":  "Faisnéis Ghinearálta",
+                     "classification":  "Aicmiú",
+                     "fields":  {
+                                    "bid":  {
+                                                "title":  "ID Teagmhais"
+                                            },
+                                    "type":  {
+                                                 "title":  "Cineál Teagmhais",
+                                                 "placeholder":  "Roghnaigh cineál teagmhais"
+                                             },
+                                    "startTime":  {
+                                                      "title":  "Am Tosaithe",
+                                                      "placeholder":  "Cathain a thosaigh an teagmhas?"
+                                                  },
+                                    "endTime":  {
+                                                    "title":  "Am Deiridh",
+                                                    "placeholder":  "Cathain a chríochnaigh an teagmhas?"
+                                                },
+                                    "severity":  {
+                                                     "title":  "Déine",
+                                                     "placeholder":  "Roghnaigh leibhéal déine",
+                                                     "options":  {
+                                                                     "minor":  "Mion",
+                                                                     "major":  "Mór",
+                                                                     "critical":  "Ríthábhachtach"
+                                                                 }
+                                                 },
+                                    "description":  {
+                                                        "title":  "Cur Síos",
+                                                        "placeholder":  "Déan cur síos mionsonraithe ar an teagmhas"
+                                                    },
+                                    "createdBy":  {
+                                                      "title":  "Cruthaithe ag"
+                                                  },
+                                    "affectedVVECodes":  {
+                                                             "title":  "VVE-anna Difear",
+                                                             "placeholder":  "Cuir isteach VVE-anna difear"
+                                                         },
+                                    "vveCode":  {
+                                                    "title":  "Cód VVE"
+                                                },
+                                    "status":  {
+                                                   "title":  "Stádas",
+                                                   "options":  {
+                                                                   "active":  "Gníomhach",
+                                                                   "resolved":  "Réitithe"
+                                                               }
+                                               },
+                                    "filterStartTime":  {
+                                                            "title":  "Dáta Tosaithe Ó"
+                                                        },
+                                    "filterEndTime":  {
+                                                          "title":  "Dáta Tosaithe Go"
+                                                      },
+                                    "duration":  {
+                                                     "title":  "Fad"
+                                                 }
+                                },
+                     "severity":  {
+                                      "Minor":  "Mion",
+                                      "Major":  "Mór",
+                                      "Critical":  "Ríthábhachtach"
+                                  },
+                     "status":  {
+                                    "active":  "Gníomhach",
+                                    "resolved":  "Réitithe"
+                                },
+                     "ongoing":  "Ar Siúl",
+                     "filters":  {
+                                     "onlyActive":  "Cinn Ghníomhacha Amháin",
+                                     "onlyMine":  "Mo Chuid Amháin"
+                                 },
+                     "actions":  {
+                                     "view":  "Féach ar Shonraí",
+                                     "edit":  "Cuir Teagmhas in Eagar",
+                                     "resolve":  "Réitigh Teagmhas",
+                                     "delete":  "Scrios Teagmhas"
+                                 },
+                     "notifications":  {
+                                           "createSuccess":  "Teagmhas cruthaithe go rathúil",
+                                           "createFailed":  "Theip ar chruthú teagmhais",
+                                           "updateSuccess":  "Teagmhas nuashonraithe go rathúil",
+                                           "updateFailed":  "Theip ar nuashonrú teagmhais",
+                                           "resolveSuccess":  "Teagmhas réitithe go rathúil",
+                                           "resolveFailed":  "Theip ar réiteach teagmhais",
+                                           "deleteSuccess":  "Teagmhas scriosta go rathúil",
+                                           "deleteFailed":  "Theip ar scriosadh teagmhais"
+                                       },
+                     "table":  {
+                                   "empty":  "Níor aimsíodh aon teagmhais"
+                               },
+                     "active":  {
+                                    "title":  "Teagmhais Ghníomhacha",
+                                    "subtitle":  "Féach ar agus bainistigh teagmhais atá ar siúl"
+                                },
+                     "infoTitle":  "Sonraí Teagmhais",
+                     "closeDialog":  {
+                                         "title":  "Réitigh teagmhas",
+                                         "message":  "Cathain a réitíodh an teagmhas?",
+                                         "confirm":  "Tá, dún an teagmhas seo",
+                                         "cancel":  "Cealaigh"
+                                     }
+                 }
 }

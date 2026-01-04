@@ -71,7 +71,7 @@
             "subtitle": "Overview of the shipping agent's operations",
             "pendingNotifications": "Pending Notifications",
             "recent": "Recent Vessel visit notifications",
-            "recentReview": "Vessel visit notifications needing review",
+            "recentReview": "Vessel Visit Notifications needing review",
             "noRecent": "No recent notifications"
         },
         "3DModel": {

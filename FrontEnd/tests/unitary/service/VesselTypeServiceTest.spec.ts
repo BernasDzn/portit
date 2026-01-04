@@ -70,7 +70,7 @@ describe('VesselTypeService', () => {
 
       const result = await vesselTypeService.getVesselTypes();
 
-      expect(mockHttpService.get).toHaveBeenCalledWith('/VesselType/filter');
+      expect(mockHttpService.get).toHaveBeenCalledWith('/api/VesselType/filter');
       expect(result).toEqual(mockPage);
     });
 
@@ -87,7 +87,7 @@ describe('VesselTypeService', () => {
         pageSize: 10,
       });
 
-      expect(mockHttpService.get).toHaveBeenCalledWith('/VesselType/filter?Name=Container&PageNumber=1&PageSize=10');
+      expect(mockHttpService.get).toHaveBeenCalledWith('/api/VesselType/filter?Name=Container&PageNumber=1&PageSize=10');
       expect(result).toEqual(mockPage);
     });
 
@@ -108,7 +108,7 @@ describe('VesselTypeService', () => {
 
       const result = await vesselTypeService.getVesselTypeByName('Container Ship');
 
-      expect(mockHttpService.get).toHaveBeenCalledWith('/VesselType/Container Ship');
+      expect(mockHttpService.get).toHaveBeenCalledWith('/api/VesselType/Container Ship');
       expect(result).toEqual(mockVesselType);
     });
 
@@ -129,7 +129,7 @@ describe('VesselTypeService', () => {
 
       const result = await vesselTypeService.createVesselType(mockVesselTypeWithToDto);
 
-      expect(mockHttpService.post).toHaveBeenCalledWith('/VesselType', mockVesselTypeDto);
+      expect(mockHttpService.post).toHaveBeenCalledWith('/api/VesselType', mockVesselTypeDto);
       expect(result).toEqual(mockVesselType);
     });
 
@@ -168,7 +168,7 @@ describe('VesselTypeService', () => {
 
       const result = await vesselTypeService.updateVesselType(mockVesselTypeWithToDto);
 
-      expect(mockHttpService.put).toHaveBeenCalledWith(`/VesselType/${mockVesselTypeDto.name}`, mockVesselTypeDto);
+      expect(mockHttpService.put).toHaveBeenCalledWith(`/api/VesselType/${mockVesselTypeDto.name}`, mockVesselTypeDto);
       expect(result).toEqual(mockVesselType);
     });
 
@@ -201,7 +201,7 @@ describe('VesselTypeService', () => {
 
       const result = await vesselTypeService.getNumberOfVesselTypes();
 
-      expect(mockHttpService.get).toHaveBeenCalledWith('/VesselType/count');
+      expect(mockHttpService.get).toHaveBeenCalledWith('/api/VesselType/count');
       expect(result).toBe(8);
     });
 

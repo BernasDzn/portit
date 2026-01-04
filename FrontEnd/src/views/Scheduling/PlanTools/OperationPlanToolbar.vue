@@ -56,17 +56,6 @@ const confirmReset = () => {
             </sl-button>
         </div>
 
-        <div class="toolbar-divider"></div>
-
-        <div class="toolbar-section">
-            <sl-button variant="primary" size="medium" @click="handleOptimize">
-                <sl-icon slot="prefix" name="magic"></sl-icon>
-                Optimize Schedule
-            </sl-button>
-        </div>
-
-        <div class="toolbar-divider"></div>
-
         <div class="toolbar-section">
             <sl-button variant="danger" size="medium" @click="handleReset">
                 <sl-icon slot="prefix" name="arrow-counterclockwise"></sl-icon>

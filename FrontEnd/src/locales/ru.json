@@ -15,7 +15,9 @@
             "friday": "Пятница",
             "saturday": "Суббота"
         },
-        "number": "Номер"
+        "number": "Номер",
+        "actions": "Действия",
+        "none": "Нет"
     },
     "buttons": {
         "save": "Сохранить",
@@ -27,6 +29,10 @@
         "select": "Выбрать",
         "activate": "Активировать",
         "deactivate": "Деактивировать",
+        "generate": "Сгенерировать",
+        "close": "Закрыть",
+        "add": "Добавить",
+        "review": "Просмотреть",
         "filter": {
             "title": "Фильтры",
             "add": "Фильтровать",
@@ -39,13 +45,12 @@
         "login": "Вход",
         "goBackToLogin": "Вернуться ко входу",
         "logout": "Выход",
-        "generate": "Сгенерировать",
-        "close": "Закрыть",
-        "add": "Добавить",
-        "review": "Просмотреть",
+        "seeMore": "Показать больше",
         "ok": "Хорошо",
-        "downloadSample": "Скачать образец",
-        "seeMore": "Показать больше"
+        "downloadSample": "Скачать образец"
+    },
+    "search": {
+        "languages": "Поиск языков..."
     },
     "unsavedChanges": {
         "title": "Отменить изменения?",
@@ -53,22 +58,26 @@
         "confirm": "Отменить",
         "cancel": "Продолжить редактирование"
     },
+    "expirationWarning": {
+        "messageOneMinute": "Ваш сеанс истечет через 1 минуту.",
+        "messageLessThanOneMinute": "Ваш сеанс скоро истечет."
+    },
     "dashboard": {
+        "welcome": "С возвращением, [name]!",
         "sidebarTitle": "Панель",
         "title": "Панель PortIT",
         "subtitle": "Обзор системы PortIT",
-        "3DModel": {
-            "title": "3D визуализация порта",
-            "description": "Просматривайте интерактивную 3D визуализацию всего порта. Отслеживайте занятость причалов, позиции судов, складские зоны и ресурсы в реальном времени.",
-            "open": "Открыть 3D модель"
-        },
-        "welcome": "С возвращением, [name]!",
         "SAOR": {
             "subtitle": "Обзор операций экспедитора",
             "pendingNotifications": "Ожидающие уведомления",
             "recent": "Недавние уведомления о посещении судна",
             "recentReview": "Уведомления о посещениях судна, требующие проверки",
             "noRecent": "Нет недавних уведомлений"
+        },
+        "3DModel": {
+            "title": "3D визуализация порта",
+            "description": "Просматривайте интерактивную 3D визуализацию всего порта. Отслеживайте занятость причалов, позиции судов, складские зоны и ресурсы в реальном времени.",
+            "open": "Открыть 3D модель"
         }
     },
     "admin": {
@@ -82,10 +91,42 @@
         "auditLogs": {
             "title": "Аудит логи",
             "subtitle": "Просмотр и мониторинг журналов активности системы."
+        },
+        "pp": {
+            "title": "Политики конфиденциальности",
+            "subtitle": "Определите и управляйте политиками конфиденциальности порта."
+        },
+        "notifications": {
+            "create": "Создать уведомление",
+            "subtitleCreate": "Send important announcements to any or all users.",
+            "title": "Системные уведомления",
+            "subtitle": "Создавайте и управляйте общими системными уведомлениями.",
+            "broadcastToggle": "Broadcast to all users",
+            "sendEmailToggle": "Also send as email",
+            "fields": {
+                "title": {
+                    "title": "Title",
+                    "placeholder": "Введите заголовок уведомления"
+                },
+                "message": {
+                    "title": "Message",
+                    "placeholder": "Введите сообщение уведомления"
+                },
+                "email": {
+                    "title": "User email",
+                    "placeholder": "Specify user email to send to"
+                },
+                "urgency": {
+                    "title": "Urgency",
+                    "options": {
+                        "normal": "Normal",
+                        "urgent": "Urgent"
+                    }
+                }
+            }
         }
     },
     "user": {
-        "registeredUsers": "Зарегистрированные пользователи",
         "fields": {
             "email": {
                 "title": "Эл. почта",
@@ -121,7 +162,14 @@
             "dashboard": "Обзор и управление пользователями",
             "create": "Зарегистрировать нового пользователя в системе",
             "view": "Просматривать и управлять существующими пользователями"
-        }
+        },
+        "registeredUsers": "Зарегистрированные пользователи",
+        "confirmDelete": "Подтвердите удаление",
+        "confirmDeleteMessage": "Вы уверены, что хотите удалить этого пользователя?"
+    },
+    "representative": {
+        "title": "Представитель",
+        "select": "Выберите представителя"
     },
     "physicalCharacteristics": {
         "title": "Физические характеристики (м)",
@@ -272,7 +320,12 @@
         "registeredVessels": "Зарегистрированные суда"
     },
     "staff": {
-        "registeredStaffMembers": "Зарегистрированные сотрудники",
+        "deactivation": {
+            "title": "Деактивировать сотрудника",
+            "message": "Вы уверены, что хотите деактивировать этого сотрудника? Это действие можно будет отменить позже повторной активацией.",
+            "successMessage": "Сотрудник успешно деактивирован.",
+            "errorMessage": "Произошла ошибка при попытке деактивировать сотрудника. Повторите попытку."
+        },
         "fields": {
             "mechanographicNumber": {
                 "title": "Механографический номер",
@@ -321,15 +374,9 @@
             "view": "Просмотреть подробности сотрудника",
             "edit": "Редактировать существующего сотрудника в системе"
         },
-        "deactivation": {
-            "title": "Деактивировать сотрудника",
-            "message": "Вы уверены, что хотите деактивировать этого сотрудника? Это действие можно будет отменить позже повторной активацией.",
-            "successMessage": "Сотрудник успешно деактивирован.",
-            "errorMessage": "Произошла ошибка при попытке деактивировать сотрудника. Повторите попытку."
-        }
+        "registeredStaffMembers": "Зарегистрированные сотрудники"
     },
     "qualification": {
-        "registeredQualifications": "Зарегистрированные квалификации",
         "tabs": {
             "dashboard": "Панель квалификаций",
             "view_dashboard": "Просмотреть квалификации",
@@ -356,10 +403,80 @@
                 "title": "Название квалификации",
                 "placeholder": "Название квалификации"
             }
+        },
+        "registeredQualifications": "Зарегистрированные квалификации"
+    },
+    "scheduling": {
+        "title": "Запросить дневное расписание",
+        "subtitle": "Используйте наш автоматизированный алгоритм планирования для анализа задач, запланированных на определённый день.",
+        "noVisits": "Нет посещений судов, запланированных на выбранную дату.",
+        "visitsOnSelectedDay": "Посещения судов в выбранную дату",
+        "viewVisits": "Сгенерировать расписание задач",
+        "generateTasksButton": "Сгенерировать расписание задач",
+        "aboutAlgorithmButton": "Об алгоритме",
+        "fields": {
+            "algorithm": {
+                "title": "Алгоритм планирования",
+                "placeholder": "Выберите алгоритм планирования"
+            },
+            "relatedDocks": "Выберите связанный причал"
+        },
+        "generateTasksModal": {
+            "title": "Дополнительная логистика"
+        },
+        "aboutAlgorithmModal": {
+            "title": "Об алгоритме",
+            "content": "Текущий алгоритм учитывает уведомления о посещении судна, запланированные на выбранную дату и причал.\nЗатем он проверяет доступность STS кранов для указанного причала и определяет длительность каждой задачи на основе скорости крана.\nОн также игнорирует посещения, связанные с обслуживанием или другими не связанными с погрузкой/разгрузкой действиями."
+        },
+        "results": {
+            "title": "Scheduling Results",
+            "subtitle": "Generated task schedule for the selected date"
+        },
+        "tabs": {
+            "dashboard": "Scheduling Dashboard",
+            "results": "Scheduling Results",
+            "schedule": "Request Task Schedule",
+            "view_dashboard": "View Scheduling",
+            "search": "List Operation Plans",
+            "create": "Create Scheduling",
+            "view": "View Scheduling",
+            "edit": "Edit Scheduling",
+            "queue": "Scheduling Queue"
+        },
+        "subtitles": {
+            "dashboard": "Overview of scheduling of berth operations and incidents",
+            "schedule": "Request a task schedule for a specific date",
+            "search": "List all operation plans for a given date",
+            "create": "Create a new scheduling into the system",
+            "edit": "Edit an existing scheduling in the system",
+            "queue": "View pending scheduling requests"
+        },
+        "queue": {
+            "title": "Scheduling Queue",
+            "subtitle": "Pending scheduling requests",
+            "onlyMine": "Show only my requests"
+        },
+        "rebalancing": {
+            "title": "Dock Rebalancing Required",
+            "warningMessage": "Before scheduling, the system recommends rebalancing dock assignments to optimize load distribution.",
+            "vesselsToReassign": "Vessels to Reassign",
+            "averageLoad": "Average Load",
+            "loadRange": "Load Range",
+            "proposedReassignments": "Proposed Reassignments",
+            "vesselImo": "Vessel IMO",
+            "currentDock": "Current Dock",
+            "proposedDock": "Proposed Dock",
+            "skipButton": "Skip \u0026 Continue with Current Assignments",
+            "applyButton": "Apply Rebalancing \u0026 Generate Schedule"
         }
     },
     "physicalResource": {
-        "registeredPhysicalResources": "Зарегистрированные физические ресурсы",
+        "deactivation": {
+            "title": "Деактивировать физический ресурс",
+            "message": "Вы уверены, что хотите деактивировать этот физический ресурс? Это действие можно будет отменить повторной активацией.",
+            "successMessage": "Физический ресурс успешно деактивирован.",
+            "errorMessage": "Произошла ошибка при попытке деактивировать физический ресурс. Повторите попытку."
+        },
         "tabs": {
             "dashboard": "Панель физических ресурсов",
             "view_dashboard": "Просмотр физических ресурсов",
@@ -442,15 +559,9 @@
         "actions": {
             "deactivate": "Деактивировать физический ресурс"
         },
-        "deactivation": {
-            "title": "Деактивировать физический ресурс",
-            "message": "Вы уверены, что хотите деактивировать этот физический ресурс? Это действие можно будет отменить повторной активацией.",
-            "successMessage": "Физический ресурс успешно деактивирован.",
-            "errorMessage": "Произошла ошибка при попытке деактивировать физический ресурс. Повторите попытку."
-        }
+        "registeredPhysicalResources": "Зарегистрированные физические ресурсы"
     },
     "storageArea": {
-        "registeredStorageAreas": "Зарегистрированные складские зоны",
         "tabs": {
             "dashboard": "Панель складских зон",
             "view_dashboard": "Просмотр складских зон",
@@ -458,6 +569,9 @@
             "create": "Создать складскую зону",
             "view": "Просмотр складской зоны",
             "edit": "Редактировать складскую зону"
+        },
+        "create": {
+            "distance_meters": "Расстояние (метры)"
         },
         "infoTitle": "Информация о складской зоне",
         "title": "Складские зоны",
@@ -479,9 +593,6 @@
             "all_docks_serviced": "Все причалы обслуживаются",
             "serviced_docks_distance": "Расстояние до обслуживаемых причалов",
             "no_registered_docks": "Нет зарегистрированных причалов"
-        },
-        "create": {
-            "distance_meters": "Расстояние (метры)"
         },
         "fields": {
             "nameCode": {
@@ -508,48 +619,10 @@
                 "title": "Занятость",
                 "placeholder": "Текущая занятость"
             }
-        }
-    },
-    "search": {
-        "languages": "Поиск языков..."
-    },
-    "expirationWarning": {
-        "title": "Сеанс скоро завершится",
-        "messageOneMinute": "Ваш сеанс истечет через 1 минуту.",
-        "messageLessThanOneMinute": "Ваш сеанс скоро истечет.",
-        "extendSession": "Продлить сеанс"
-    },
-    "representative": {
-        "title": "Представитель",
-        "select": "Выберите представителя"
-    },
-    "scheduling": {
-        "title": "Запросить дневное расписание",
-        "subtitle": "Используйте наш автоматизированный алгоритм планирования для анализа задач, запланированных на определённый день.",
-        "noVisits": "Нет посещений судов, запланированных на выбранную дату.",
-        "visitsOnSelectedDay": "Посещения судов в выбранную дату",
-        "viewVisits": "Сгенерировать расписание задач",
-        "generateTasksButton": "Сгенерировать расписание задач",
-        "aboutAlgorithmButton": "Об алгоритме",
-        "fields": {
-            "algorithm": {
-                "title": "Алгоритм планирования",
-                "placeholder": "Выберите алгоритм планирования"
-            },
-            "relatedDocks": "Выберите связанный причал"
         },
-        "generateTasksModal": {
-            "title": "Дополнительная логистика"
-        },
-        "aboutAlgorithmModal": {
-            "title": "Об алгоритме",
-            "content": "Текущий алгоритм учитывает уведомления о посещении судна, запланированные на выбранную дату и причал.\nЗатем он проверяет доступность STS кранов для указанного причала и определяет длительность каждой задачи на основе скорости крана.\nОн также игнорирует посещения, связанные с обслуживанием или другими не связанными с погрузкой/разгрузкой действиями."
-        }
+        "registeredStorageAreas": "Зарегистрированные складские зоны"
     },
     "notification": {
-        "registeredVesselVisitNotifications": "Зарегистрированные уведомления о посещении судна",
-        "step": "Шаг",
-        "of": "из",
         "id": "ID уведомления",
         "hazardous": "Опасный",
         "nonHazardous": "Неопасный",
@@ -562,11 +635,14 @@
         "unknown": "Неизвестно",
         "from": "От",
         "to": "До",
+        "step": "Шаг",
+        "of": "из",
         "tabs": {
             "dashboard": "Панель уведомлений",
             "search": "Поиск уведомлений",
             "edit": "Редактировать уведомление",
             "create": "Создать уведомление",
+            "update": "Update Notification",
             "makeDraft": "Создать черновик уведомления",
             "myNotifications": "Мои уведомления",
             "review": "Проверить уведомления",
@@ -582,6 +658,7 @@
             "dashboard": "Обзор уведомлений о посещении судна",
             "search": "Управление и просмотр всех уведомлений о посещении судна",
             "create": "Создать новое уведомление о посещении судна",
+            "update": "Update an existing vessel visit notification",
             "edit": "Редактировать существующее уведомление о посещении судна",
             "review": "Проверка ожидающих уведомлений о посещении судна"
         },
@@ -593,6 +670,7 @@
         "vesselTitle": "Информация о судне",
         "manifestInfo": "Информация о манифесте",
         "fields": {
+            "selectVessel": "Select corresponding vessel",
             "openLoadManifest": "Открыть манифест погрузки",
             "openUnloadManifest": "Открыть манифест выгрузки",
             "expectedArrival": "Ожидаемое прибытие",
@@ -608,7 +686,9 @@
             "area": "Зона",
             "container": "Контейнер",
             "crewMembers": "Члены экипажа",
-            "status": "Статус"
+            "status": "Статус",
+            "isCargoHazardousQ": "Is Cargo Hazardous?",
+            "cargoManifestInfo": "About cargo manifest files"
         },
         "timeline": {
             "pending": "Ожидает",
@@ -635,7 +715,31 @@
                 "placeholder": "Укажите причину решения"
             },
             "status": "Статус решения"
-        }
+        },
+        "sections": {
+            "vesselDetails": "Информация о посещении",
+            "crewDetails": "Детали экипажа",
+            "cargoRequirements": "Требования к грузу",
+            "cargoContent": "Содержимое груза"
+        },
+        "about": {
+            "text": "Файлы манифеста груза (в настоящее время) должны быть в европейском стандартном формате CSV. Каждая строка в файле CSV представляет единицу груза со следующими столбцами:",
+            "bay": "Отсек (номер)",
+            "row": "Ряд (номер)",
+            "tier": "Уровень (номер)",
+            "area": "Код области (откуда/куда)",
+            "containerNumber": "Номер контейнера (текст)",
+            "conatinerType": "Тип контейнера (номер)",
+            "description": "Описание (текст)",
+            "containerTypes": {
+                "refrigeratedGoods": "Холодильные товары",
+                "generalConsumerProducts": "Общие потребительские товары",
+                "electronics":  "Электроника","hazmat": "Опасные материалы",
+                "oversizedIndustrialEquipment": "Крупногабаритное промышленное оборудование",
+                "other": "Другое"
+            }
+        },
+        "registeredVesselVisitNotifications": "Зарегистрированные уведомления о посещении судна"
     },
     "operationalWindow": {
         "title": "Рабочее окно",

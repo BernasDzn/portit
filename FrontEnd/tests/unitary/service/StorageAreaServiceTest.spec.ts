@@ -73,7 +73,7 @@ describe('StorageAreaService', () => {
 
       const result = await storageAreaService.getStorageAreas();
 
-      expect(mockHttpService.get).toHaveBeenCalledWith('/StorageArea/filter');
+      expect(mockHttpService.get).toHaveBeenCalledWith('/api/StorageArea/filter');
       expect(result).toEqual(mockPage);
     });
 
@@ -92,7 +92,7 @@ describe('StorageAreaService', () => {
 
       const result = await storageAreaService.getStorageAreas(filter);
 
-      expect(mockHttpService.get).toHaveBeenCalledWith('/StorageArea/filter?NameCode=WH001&');
+      expect(mockHttpService.get).toHaveBeenCalledWith('/api/StorageArea/filter?NameCode=WH001&');
       expect(result).toEqual(mockPage);
     });
 
@@ -113,7 +113,7 @@ describe('StorageAreaService', () => {
 
       const result = await storageAreaService.getStorageAreaById('WH001');
 
-      expect(mockHttpService.get).toHaveBeenCalledWith('/StorageArea/WH001');
+      expect(mockHttpService.get).toHaveBeenCalledWith('/api/StorageArea/WH001');
       expect(result).toEqual(mockStorageArea);
     });
 
@@ -134,7 +134,7 @@ describe('StorageAreaService', () => {
 
       const result = await storageAreaService.createStorageArea(mockStorageAreaWithToDto);
 
-      expect(mockHttpService.post).toHaveBeenCalledWith('/StorageArea', mockStorageAreaDto);
+      expect(mockHttpService.post).toHaveBeenCalledWith('/api/StorageArea', mockStorageAreaDto);
       expect(result).toEqual(mockStorageArea);
     });
 
@@ -177,7 +177,7 @@ describe('StorageAreaService', () => {
 
       const result = await storageAreaService.updateStorageArea(mockStorageAreaWithToDto);
 
-      expect(mockHttpService.put).toHaveBeenCalledWith('/StorageArea/WH001', mockStorageAreaDto);
+      expect(mockHttpService.put).toHaveBeenCalledWith('/api/StorageArea/WH001', mockStorageAreaDto);
       expect(result).toEqual(mockStorageArea);
     });
 
@@ -212,7 +212,7 @@ describe('StorageAreaService', () => {
 
       await storageAreaService.deleteStorageArea('WH001');
 
-      expect(mockHttpService.delete).toHaveBeenCalledWith('/StorageArea/WH001');
+      expect(mockHttpService.delete).toHaveBeenCalledWith('/api/StorageArea/WH001');
     });
 
     it('should throw error when storage area not found during deletion', async () => {
@@ -244,7 +244,7 @@ describe('StorageAreaService', () => {
 
       const result = await storageAreaService.getNumberOfStorageAreas();
 
-      expect(mockHttpService.get).toHaveBeenCalledWith('/StorageArea/count');
+      expect(mockHttpService.get).toHaveBeenCalledWith('/api/StorageArea/count');
       expect(result).toBe(15);
     });
 

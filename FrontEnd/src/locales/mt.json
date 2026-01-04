@@ -1,86 +1,132 @@
 ﻿{
-    "common": {
-        "loading": "Tgħabba...",
-        "noData": "Ebda data disponibbli",
-        "statistics": "Statistiċi",
-        "yes": "Iva",
-        "no": "Le",
-        "weekDay": "Jum tal-ġimgħa",
-        "days": {
-            "sunday": "Il-Ħadd",
-            "monday": "It-Tnejn",
-            "tuesday": "It-Tlieta",
-            "wednesday": "L-Erbgħa",
-            "thursday": "Il-Ħamis",
-            "friday": "Il-Ġimgħa",
-            "saturday": "Is-Sibt"
-        },
-        "number": "Numru"
-    },
-    "buttons": {
-        "save": "Ħlief",
-        "cancel": "Ikkanċella",
-        "delete": "Ħassar",
-        "edit": "Editja",
-        "create": "Oħloq",
-        "search": "Fittex",
-        "select": "Agħżel",
-        "activate": "Attiva",
-        "deactivate": "Diżattiva",
-        "generate": "Ġenera",
-        "close": "Agħlaq",
-        "add": "Żid",
-        "review": "Irrevedi",
-        "ok": "Tajjeb",
-        "downloadSample": "Niżżel kampjun",
-        "seeMore": "Ara aktar",
-        "filter": {
-            "title": "Filtri",
-            "add": "Żid filtru",
-            "clear": "Neħħi l-filtri"
-        },
-        "pagination": {"previous": "Preċedenti", "next": "Li jmiss"},
-        "login": "Illoggja",
-        "goBackToLogin": "Mur lura għall-login",
-        "logout": "Oħroġ"
-    },
-    "unsavedChanges": {
-        "title": "Tarmi l-bidliet?",
-        "message": "Għandek bidliet mhux salvati. Żgur li trid toħroġ minn din il-paġna u tarmi l-bidliet?",
-        "confirm": "Tarmi",
-        "cancel": "Kompli teditja"
-    },
-    "expirationWarning": {
-        "messageOneMinute": "Is-sessjoni se tispiċċa fi minuta.",
-        "messageLessThanOneMinute": "Is-sessjoni tiegħek dalwaqt tispiċċa."
-    },
-    "dashboard": {
-        "sidebarTitle": "Pannell",
-        "title": "Pannell PortIT",
-        "subtitle": "Panoramika tas-sistema PortIT",
-        "welcome": "Merħba lura, [name]!",
-        "SAOR": {
-            "subtitle": "Panoramika tal-operazzjonijiet tal-aġent tat-tbaħħir",
-            "pendingNotifications": "Notifikazzjonijiet pendenti",
-            "recent": "Notifikazzjonijiet riċenti ta' żjara ta' vapuri",
-            "recentReview": "Notifikazzjonijiet li jeħtieġu reviżjoni",
-            "noRecent": "Ebda notifikazzjonijiet riċenti"
-        },
-        "3DModel": {
-            "title": "Mudell 3D tal-Port",
-            "description": "Ara mudell 3D interattiv tal-infrastruttura kollha tal-port. Oqgħod attent għall-okkupazzjoni tal-mollijiet, pożizzjonijiet tal-vapuri, żoni ta' ħażna u riżorsi f'ħin reali.",
-            "open": "Iftaħ mudell 3D"
-        }
-    },
-    "admin": {
-        "sidebarTitle": "Amministrazzjoni",
-        "title": "Pannell ta' Amministrazzjoni",
-        "subtitle": "Panoramika u ġestjoni",
-        "userManagement": {"title": "Ġestjoni tal-Utenti", "subtitle": "Ġestixxi utenti, rwoli u permessi."},
-        "auditLogs": {"title": "Logijiet tal-Awditjar", "subtitle": "Ara u monitora l-attivitajiet tas-sistema."}
-    },
+    "common":  {
+                   "loading":  "Tgħabba...",
+                   "noData":  "Ebda data disponibbli",
+                   "statistics":  "Statistiċi",
+                   "yes":  "Iva",
+                   "no":  "Le",
+                   "weekDay":  "Jum tal-ġimgħa",
+                   "days":  {
+                                "sunday":  "Il-Ħadd",
+                                "monday":  "It-Tnejn",
+                                "tuesday":  "It-Tlieta",
+                                "wednesday":  "L-Erbgħa",
+                                "thursday":  "Il-Ħamis",
+                                "friday":  "Il-Ġimgħa",
+                                "saturday":  "Is-Sibt"
+                            },
+                   "number":  "Numru",
+                   "actions":  "Azzjonijiet",
+                   "none":  "Xejn"
+               },
+    "buttons":  {
+                    "save":  "Ħlief",
+                    "cancel":  "Ikkanċella",
+                    "delete":  "Ħassar",
+                    "edit":  "Editja",
+                    "create":  "Oħloq",
+                    "search":  "Fittex",
+                    "select":  "Agħżel",
+                    "activate":  "Attiva",
+                    "deactivate":  "Diżattiva",
+                    "generate":  "Ġenera",
+                    "close":  "Agħlaq",
+                    "add":  "Żid",
+                    "review":  "Irrevedi",
+                    "filter":  {
+                                   "title":  "Filtri",
+                                   "add":  "Żid filtru",
+                                   "clear":  "Neħħi l-filtri"
+                               },
+                    "pagination":  {
+                                       "previous":  "Preċedenti",
+                                       "next":  "Li jmiss"
+                                   },
+                    "login":  "Illoggja",
+                    "goBackToLogin":  "Mur lura għall-login",
+                    "logout":  "Oħroġ",
+                    "seeMore":  "Ara aktar",
+                    "ok":  "Tajjeb",
+                    "downloadSample":  "Niżżel kampjun"
+                },
+    "search":  {
+                   "languages":  "Fittex lingwi..."
+               },
+    "unsavedChanges":  {
+                           "title":  "Tarmi l-bidliet?",
+                           "message":  "Għandek bidliet mhux salvati. Żgur li trid toħroġ minn din il-paġna u tarmi l-bidliet?",
+                           "confirm":  "Tarmi",
+                           "cancel":  "Kompli teditja"
+                       },
+    "expirationWarning":  {
+                              "messageOneMinute":  "Is-sessjoni se tispiċċa fi minuta.",
+                              "messageLessThanOneMinute":  "Is-sessjoni tiegħek dalwaqt tispiċċa."
+                          },
+    "dashboard":  {
+                      "welcome":  "Merħba lura, [name]!",
+                      "sidebarTitle":  "Pannell",
+                      "title":  "Pannell PortIT",
+                      "subtitle":  "Panoramika tas-sistema PortIT",
+                      "SAOR":  {
+                                   "subtitle":  "Panoramika tal-operazzjonijiet tal-aġent tat-tbaħħir",
+                                   "pendingNotifications":  "Notifikazzjonijiet pendenti",
+                                   "recent":  "Notifikazzjonijiet riċenti ta\u0027 żjara ta\u0027 vapuri",
+                                   "recentReview":  "Notifikazzjonijiet li jeħtieġu reviżjoni",
+                                   "noRecent":  "Ebda notifikazzjonijiet riċenti"
+                               },
+                      "3DModel":  {
+                                      "title":  "Mudell 3D tal-Port",
+                                      "description":  "Ara mudell 3D interattiv tal-infrastruttura kollha tal-port. Oqgħod attent għall-okkupazzjoni tal-mollijiet, pożizzjonijiet tal-vapuri, żoni ta\u0027 ħażna u riżorsi f\u0027ħin reali.",
+                                      "open":  "Iftaħ mudell 3D"
+                                  }
+                  },
+    "admin":  {
+                  "sidebarTitle":  "Amministrazzjoni",
+                  "title":  "Pannell ta\u0027 Amministrazzjoni",
+                  "subtitle":  "Panoramika u ġestjoni",
+                  "userManagement":  {
+                                         "title":  "Ġestjoni tal-Utenti",
+                                         "subtitle":  "Ġestixxi utenti, rwoli u permessi."
+                                     },
+                  "auditLogs":  {
+                                    "title":  "Logijiet tal-Awditjar",
+                                    "subtitle":  "Ara u monitora l-attivitajiet tas-sistema."
+                                },
+                  "pp":  {
+                             "title":  "Politikat tal-Privatezza",
+                             "subtitle":  "Iddefinixxi u ġestixxi l-politikat ta\u0027 ġbiran tad-data tal-port."
+                         },
+                  "notifications":  {
+                                        "create":  "Oħloq notifika",
+                                        "subtitleCreate":  "Send important announcements to any or all users.",
+                                        "title":  "Notifiki tas-sistema",
+                                        "subtitle":  "Oħloq u ġestixxi notifiki ġenerali tas-sistema.",
+                                        "broadcastToggle":  "Broadcast to all users",
+                                        "sendEmailToggle":  "Also send as email",
+                                        "fields":  {
+                                                       "title":  {
+                                                                     "title":  "Title",
+                                                                     "placeholder":  "Dahal it-titlu tan-notifika"
+                                                                 },
+                                                       "message":  {
+                                                                       "title":  "Message",
+                                                                       "placeholder":  "Dahal il-messagġ tan-notifika"
+                                                                   },
+                                                       "email":  {
+                                                                     "title":  "User email",
+                                                                     "placeholder":  "Specify user email to send to"
+                                                                 },
+                                                       "urgency":  {
+                                                                       "title":  "Urgency",
+                                                                       "options":  {
+                                                                                       "normal":  "Normal",
+                                                                                       "urgent":  "Urgent"
+                                                                                   }
+                                                                   }
+                                                   }
+                                    }
+              },
     "user":  {
-                 "registeredUsers":  "Utenti rreġistrati",
                  "fields":  {
                                 "email":  {
                                               "title":  "Email",
@@ -116,14 +162,30 @@
                                   "dashboard":  "Panoramika u ġestjoni tal-utenti",
                                   "create":  "Irreġistra utent ġdid",
                                   "view":  "Ara u ġestixxi utenti eżistenti"
-                              }
+                              },
+                 "registeredUsers":  "Utenti rreġistrati",
+                 "confirmDelete":  "Ikkonferma t-tħassir",
+                 "confirmDeleteMessage":  "Int żigur li trid tħassar dan l-utent?"
              },
-    "physicalCharacteristics": {
-        "title": "Karatteristiċi Fiżiċi (m)",
-        "length": {"title": "Tul", "placeholder": "Tul f'metri"},
-        "depth": {"title": "Fond", "placeholder": "Fond f'metri"},
-        "draft": {"title": "Kalata", "placeholder": "Kalata f'metri"}
-    },
+    "representative":  {
+                           "title":  "Rappreżentant",
+                           "select":  "Agħżel rappreżentant"
+                       },
+    "physicalCharacteristics":  {
+                                    "title":  "Karatteristiċi Fiżiċi (m)",
+                                    "length":  {
+                                                   "title":  "Tul",
+                                                   "placeholder":  "Tul f\u0027metri"
+                                               },
+                                    "depth":  {
+                                                  "title":  "Fond",
+                                                  "placeholder":  "Fond f\u0027metri"
+                                              },
+                                    "draft":  {
+                                                  "title":  "Kalata",
+                                                  "placeholder":  "Kalata f\u0027metri"
+                                              }
+                                },
     "dock":  {
                  "fields":  {
                                 "code":  {
@@ -139,12 +201,12 @@
                                                  "placeholder":  "Post tal-moll"
                                              },
                                 "supportedVesselTypes":  {
-                                                             "title":  "Tipi ta' Vapur Appoġġjati",
+                                                             "title":  "Tipi ta\u0027 Vapur Appoġġjati",
                                                              "vesselTypes":  {
-                                                                                 "title":  "Tipi ta' Vapur",
-                                                                                 "placeholder":  "Agħżel tipi ta' vapur"
+                                                                                 "title":  "Tipi ta\u0027 Vapur",
+                                                                                 "placeholder":  "Agħżel tipi ta\u0027 vapur"
                                                                              },
-                                                             "vesselType":  "Tip ta' Vapur"
+                                                             "vesselType":  "Tip ta\u0027 Vapur"
                                                          }
                             },
                  "tabs":  {
@@ -159,7 +221,7 @@
                  "infoTitle":  "Informazzjoni dwar il-Moll",
                  "title":  "Mollijiet",
                  "subtitle":  {
-                                  "dashboard":  "Panoramika ta' statistika u attivitajiet tal-mollijiet",
+                                  "dashboard":  "Panoramika ta\u0027 statistika u attivitajiet tal-mollijiet",
                                   "search":  "Ġestixxi u ara l-mollijiet kollha reġistrati",
                                   "create":  "Irreġistra moll ġdid",
                                   "edit":  "Editja moll eżistenti"
@@ -170,7 +232,7 @@
                        "fields":  {
                                       "name":  {
                                                    "title":  "Isem",
-                                                   "placeholder":  "Isem tat-tip ta' vapur"
+                                                   "placeholder":  "Isem tat-tip ta\u0027 vapur"
                                                },
                                       "description":  {
                                                           "title":  "Deskrizzjoni",
@@ -178,37 +240,37 @@
                                                       },
                                       "capacity":  {
                                                        "title":  "Kapaċità",
-                                                       "placeholder":  "Kapaċità ta' kontenituri f'TEU"
+                                                       "placeholder":  "Kapaċità ta\u0027 kontenituri f\u0027TEU"
                                                    },
                                       "containerCapacity":  {
-                                                                "title":  "Kapaċità ta' Kontenituri (TEU)",
+                                                                "title":  "Kapaċità ta\u0027 Kontenituri (TEU)",
                                                                 "maxNumberOfRows":  {
-                                                                                        "title":  "Massimu ta' Ringieli",
-                                                                                        "placeholder":  "Massimu f'TEU"
+                                                                                        "title":  "Massimu ta\u0027 Ringieli",
+                                                                                        "placeholder":  "Massimu f\u0027TEU"
                                                                                     },
                                                                 "maxNumberOfBays":  {
-                                                                                        "title":  "Massimu ta' Bays",
-                                                                                        "placeholder":  "Massimu f'TEU"
+                                                                                        "title":  "Massimu ta\u0027 Bays",
+                                                                                        "placeholder":  "Massimu f\u0027TEU"
                                                                                     },
                                                                 "maxNumberOfTiers":  {
-                                                                                         "title":  "Massimu ta' Saffi",
-                                                                                         "placeholder":  "Massimu f'TEU"
+                                                                                         "title":  "Massimu ta\u0027 Saffi",
+                                                                                         "placeholder":  "Massimu f\u0027TEU"
                                                                                      }
                                                             }
                                   },
                        "generalFields":  "Kampijiet Ġenerali",
                        "tabs":  {
-                                    "dashboard":  "Pannell tat-Tipi ta' Vapur",
-                                    "view_dashboard":  "Ara Tipi ta' Vapur",
-                                    "search":  "Fittex Tipi ta' Vapur",
+                                    "dashboard":  "Pannell tat-Tipi ta\u0027 Vapur",
+                                    "view_dashboard":  "Ara Tipi ta\u0027 Vapur",
+                                    "search":  "Fittex Tipi ta\u0027 Vapur",
                                     "create":  "Oħloq Tip Vapur",
                                     "view":  "Ara Tip Vapur",
                                     "edit":  "Editja Tip Vapur"
                                 },
-                       "infoTitle":  "Informazzjoni dwar it-Tip ta' Vapur",
+                       "infoTitle":  "Informazzjoni dwar it-Tip ta\u0027 Vapur",
                        "title":  "Tipi ta\u0027 Vapur",
                        "subtitle":  {
-                                        "dashboard":  "Panoramika ta' statistika tat-tipi ta' vapur",
+                                        "dashboard":  "Panoramika ta\u0027 statistika tat-tipi ta\u0027 vapur",
                                         "search":  "Ġestixxi u ara t-tipi kollha reġistrati",
                                         "create":  "Irreġistra tip ġdid",
                                         "edit":  "Editja tip eżistenti"
@@ -230,7 +292,7 @@
                                                 "placeholder":  "Organizzazzjoni sid"
                                             },
                                   "vesselType":  {
-                                                     "title":  "Tip ta' Vapur",
+                                                     "title":  "Tip ta\u0027 Vapur",
                                                      "placeholder":  "Agħżel tip"
                                                  },
                                   "taxNumber":  {
@@ -249,16 +311,21 @@
                             },
                    "title":  "Vapuri",
                    "subtitle":  {
-                                    "dashboard":  "Panoramika ta' statistika u attivitajiet tal-vapuri",
+                                    "dashboard":  "Panoramika ta\u0027 statistika u attivitajiet tal-vapuri",
                                     "search":  "Ġestixxi u ara l-vapuri reġistrati",
                                     "create":  "Irreġistra vapur ġdid",
                                     "edit":  "Editja vapur eżistenti"
                                 },
-                   "ownedBy":  "Fil-proprjetà ta'",
+                   "ownedBy":  "Fil-proprjetà ta\u0027",
                    "registeredVessels":  "Vapuri rreÄ¡istrati"
                },
     "staff":  {
-                  "registeredStaffMembers":  "Membri tal-istaff rreġistrati",
+                  "deactivation":  {
+                                       "title":  "Diżattiva Membru tal-Persunal",
+                                       "message":  "Żgur li trid tiżżattiva dan il-membru tal-persunal? Din l-azzjoni ma tistax tiġi mħassra.",
+                                       "successMessage":  "Il-membru tal-persunal ġie diżattivat b\u0027suċċess.",
+                                       "errorMessage":  "Sar żball waqt id-diżattivazzjoni. Erġa\u0027 pprova."
+                                   },
                   "fields":  {
                                  "mechanographicNumber":  {
                                                               "title":  "Numru Mekanografiku",
@@ -302,20 +369,14 @@
                   "title":  "Persunal",
                   "subtitle":  {
                                    "search":  "Ġestixxi u ara l-persunal reġistrat",
-                                   "dashboard":  "Panoramika ta' statistika tal-persunal",
+                                   "dashboard":  "Panoramika ta\u0027 statistika tal-persunal",
                                    "create":  "Irreġistra membru ġdid tal-persunal",
                                    "view":  "Ara dettalji tal-persunal",
                                    "edit":  "Editja membru eżistenti tal-persunal"
                                },
-                  "deactivation":  {
-                                       "title":  "Diżattiva Membru tal-Persunal",
-                                       "message":  "Żgur li trid tiżżattiva dan il-membru tal-persunal? Din l-azzjoni ma tistax tiġi mħassra.",
-                                       "successMessage":  "Il-membru tal-persunal ġie diżattivat b'suċċess.",
-                                       "errorMessage":  "Sar żball waqt id-diżattivazzjoni. Erġa' pprova."
-                                   }
+                  "registeredStaffMembers":  "Membri tal-istaff rreġistrati"
               },
     "qualification":  {
-                          "registeredQualifications":  "Kwalifikazzjonijiet rreġistrati",
                           "tabs":  {
                                        "dashboard":  "Pannell tal-Kwalifikazzjonijiet",
                                        "view_dashboard":  "Ara Kwalifikazzjonijiet",
@@ -328,7 +389,7 @@
                           "title":  "Kwalifikazzjonijiet",
                           "subtitle":  {
                                            "search":  "Ġestixxi u ara l-kwalifikazzjonijiet reġistrati",
-                                           "dashboard":  "Panoramika ta' statistika tal-kwalifikazzjonijiet",
+                                           "dashboard":  "Panoramika ta\u0027 statistika tal-kwalifikazzjonijiet",
                                            "create":  "Irreġistra kwalifikazzjoni ġdida",
                                            "edit":  "Editja kwalifikazzjoni eżistenti",
                                            "view":  "Ara dettalji tal-kwalifikazzjoni"
@@ -342,10 +403,80 @@
                                                                    "title":  "Isem Kwalifikazzjoni",
                                                                    "placeholder":  "Isem Kwalifikazzjoni"
                                                                }
-                                     }
+                                     },
+                          "registeredQualifications":  "Kwalifikazzjonijiet rreġistrati"
                       },
+    "scheduling":  {
+                       "title":  "Itlob skeda ta\u0027 kuljum",
+                       "subtitle":  "Uża l-algoritmu awtomatiku tagħna biex tanalizza l-kompiti skedati għad-data magħżula.",
+                       "noVisits":  "Ebda żjarat ta\u0027 vapuri skedati għad-data magħżula.",
+                       "visitsOnSelectedDay":  "Żjarat ta\u0027 vapuri fid-data magħżula",
+                       "viewVisits":  "Ġenera skeda ta\u0027 kompiti",
+                       "generateTasksButton":  "Ġenera skeda ta\u0027 kompiti",
+                       "aboutAlgorithmButton":  "Dwar l-algoritmu",
+                       "fields":  {
+                                      "algorithm":  {
+                                                        "title":  "Algoritmu ta\u0027 Skedar",
+                                                        "placeholder":  "Agħżel algoritmu"
+                                                    },
+                                      "relatedDocks":  "Agħżel moll relatat"
+                                  },
+                       "generateTasksModal":  {
+                                                  "title":  "Loġistika addizzjonali"
+                                              },
+                       "aboutAlgorithmModal":  {
+                                                   "title":  "Dwar l-algoritmu",
+                                                   "content":  "L-algoritmu jikkunsidra n-notifiki ta\u0027 żjarat ta\u0027 vapuri skedati għad-data u l-moll magħżula, jiċċekkja d-disponibilità tal-krani STS u jistma t-tul tal-kompiti skont il-veloċità tal-kran, u jinjoraw żjarat ta\u0027 manutenzjoni."
+                                               },
+                       "results":  {
+                                       "title":  "Scheduling Results",
+                                       "subtitle":  "Generated task schedule for the selected date"
+                                   },
+                       "tabs":  {
+                                    "dashboard":  "Scheduling Dashboard",
+                                    "results":  "Scheduling Results",
+                                    "schedule":  "Request Task Schedule",
+                                    "view_dashboard":  "View Scheduling",
+                                    "search":  "List Operation Plans",
+                                    "create":  "Create Scheduling",
+                                    "view":  "View Scheduling",
+                                    "edit":  "Edit Scheduling",
+                                    "queue":  "Scheduling Queue"
+                                },
+                       "subtitles":  {
+                                         "dashboard":  "Overview of scheduling of berth operations and incidents",
+                                         "schedule":  "Request a task schedule for a specific date",
+                                         "search":  "List all operation plans for a given date",
+                                         "create":  "Create a new scheduling into the system",
+                                         "edit":  "Edit an existing scheduling in the system",
+                                         "queue":  "View pending scheduling requests"
+                                     },
+                       "queue":  {
+                                     "title":  "Scheduling Queue",
+                                     "subtitle":  "Pending scheduling requests",
+                                     "onlyMine":  "Show only my requests"
+                                 },
+                       "rebalancing":  {
+                                           "title":  "Dock Rebalancing Required",
+                                           "warningMessage":  "Before scheduling, the system recommends rebalancing dock assignments to optimize load distribution.",
+                                           "vesselsToReassign":  "Vessels to Reassign",
+                                           "averageLoad":  "Average Load",
+                                           "loadRange":  "Load Range",
+                                           "proposedReassignments":  "Proposed Reassignments",
+                                           "vesselImo":  "Vessel IMO",
+                                           "currentDock":  "Current Dock",
+                                           "proposedDock":  "Proposed Dock",
+                                           "skipButton":  "Skip \u0026 Continue with Current Assignments",
+                                           "applyButton":  "Apply Rebalancing \u0026 Generate Schedule"
+                                       }
+                   },
     "physicalResource":  {
-                             "registeredPhysicalResources":  "Riżorsi fiżiċi rreġistrati",
+                             "deactivation":  {
+                                                  "title":  "Diżattiva Riżors Fiżiku",
+                                                  "message":  "Żgur li trid tiżżattiva dan ir-riżors fiżiku? L-azzjoni hija finali.",
+                                                  "successMessage":  "Riżors fiżiku diżattivat b\u0027suċċess.",
+                                                  "errorMessage":  "Żball waqt id-diżattivazzjoni. Erġa\u0027 pprova."
+                                              },
                              "tabs":  {
                                           "dashboard":  "Pannell tar-Riżorsi Fiżiċi",
                                           "view_dashboard":  "Ara Riżorsi Fiżiċi",
@@ -358,7 +489,7 @@
                              "title":  "Riżorsi Fiżiċi",
                              "subtitle":  {
                                               "search":  "Ġestixxi u ara r-riżorsi fiżiċi reġistrati",
-                                              "dashboard":  "Pannell ta' kontroll tar-riżorsi fiżiċi",
+                                              "dashboard":  "Pannell ta\u0027 kontroll tar-riżorsi fiżiċi",
                                               "view_dashboard":  "Ara Riżorsi Fiżiċi",
                                               "create":  "Irreġistra riżors fiżiku ġdid",
                                               "view":  "Ara dettalji tar-riżors fiżiku",
@@ -389,16 +520,16 @@
                                                                    "placeholder":  "Kwalifikazzjonijiet meħtieġa għall-operazzjoni"
                                                                },
                                             "setupTime":  {
-                                                              "title":  "Ħin ta' setup (minuti)",
-                                                              "placeholder":  "Ħin ta' setup"
+                                                              "title":  "Ħin ta\u0027 setup (minuti)",
+                                                              "placeholder":  "Ħin ta\u0027 setup"
                                                           },
                                             "servingDocks":  {
                                                                  "title":  "Mollijiet servuti",
                                                                  "placeholder":  "Agħżel mollijiet servuti"
                                                              },
                                             "liftingCapacity":  {
-                                                                    "title":  "Kapaċità ta' tebgħa (kg)",
-                                                                    "placeholder":  "Kapaċità ta' tebgħa"
+                                                                    "title":  "Kapaċità ta\u0027 tebgħa (kg)",
+                                                                    "placeholder":  "Kapaċità ta\u0027 tebgħa"
                                                                 },
                                             "containersPerHour":  {
                                                                       "title":  "Kontenituri kull siegħa",
@@ -425,33 +556,32 @@
                                                                      }
                                                      }
                                         },
-                             "actions":  {"deactivate":  "Diżattiva riżors fiżiku"},
-                             "deactivation":  {
-                                                  "title":  "Diżattiva Riżors Fiżiku",
-                                                  "message":  "Żgur li trid tiżżattiva dan ir-riżors fiżiku? L-azzjoni hija finali.",
-                                                  "successMessage":  "Riżors fiżiku diżattivat b'suċċess.",
-                                                  "errorMessage":  "Żball waqt id-diżattivazzjoni. Erġa' pprova."
-                                              }
+                             "actions":  {
+                                             "deactivate":  "Diżattiva riżors fiżiku"
+                                         },
+                             "registeredPhysicalResources":  "Riżorsi fiżiċi rreġistrati"
                          },
     "storageArea":  {
-                        "registeredStorageAreas":  "Żoni ta' ħażna rreġistrati",
                         "tabs":  {
-                                     "dashboard":  "Pannell Żoni ta' Ħażna",
-                                     "view_dashboard":  "Ara Żoni ta' Ħażna",
-                                     "search":  "Fittex Żoni ta' Ħażna",
-                                     "create":  "Oħloq Żona ta' Ħażna",
-                                     "view":  "Ara Żona ta' Ħażna",
-                                     "edit":  "Editja Żona ta' Ħażna"
+                                     "dashboard":  "Pannell Żoni ta\u0027 Ħażna",
+                                     "view_dashboard":  "Ara Żoni ta\u0027 Ħażna",
+                                     "search":  "Fittex Żoni ta\u0027 Ħażna",
+                                     "create":  "Oħloq Żona ta\u0027 Ħażna",
+                                     "view":  "Ara Żona ta\u0027 Ħażna",
+                                     "edit":  "Editja Żona ta\u0027 Ħażna"
                                  },
-                        "infoTitle":  "Informazzjoni dwar iż-Żona ta' Ħażna",
-                        "title":  "Żoni ta' Ħażna",
+                        "create":  {
+                                       "distance_meters":  "Distanza (metri)"
+                                   },
+                        "infoTitle":  "Informazzjoni dwar iż-Żona ta\u0027 Ħażna",
+                        "title":  "Żoni ta\u0027 Ħażna",
                         "subtitle":  {
-                                         "search":  "Ġestixxi u ara ż-żoni ta' ħażna reġistrati",
-                                         "dashboard":  "Pannell ta' kontroll żoni ta' ħażna",
-                                         "view_dashboard":  "Ara Żoni ta' Ħażna",
-                                         "create":  "Irreġistra żona ta' ħażna ġdida",
+                                         "search":  "Ġestixxi u ara ż-żoni ta\u0027 ħażna reġistrati",
+                                         "dashboard":  "Pannell ta\u0027 kontroll żoni ta\u0027 ħażna",
+                                         "view_dashboard":  "Ara Żoni ta\u0027 Ħażna",
+                                         "create":  "Irreġistra żona ta\u0027 ħażna ġdida",
                                          "view":  "Ara dettalji",
-                                         "edit":  "Editja żona ta' ħażna"
+                                         "edit":  "Editja żona ta\u0027 ħażna"
                                      },
                         "printer":  {
                                         "docks_serviced":  "mollijiet servuti",
@@ -464,9 +594,6 @@
                                         "serviced_docks_distance":  "Distanza tal-mollijiet servuti",
                                         "no_registered_docks":  "Ebda moll reġistrat"
                                     },
-                        "create":  {
-                                       "distance_meters":  "Distanza (metri)"
-                                   },
                         "fields":  {
                                        "nameCode":  {
                                                         "title":  "Kodiċi tal-Isem",
@@ -478,7 +605,7 @@
                                                     },
                                        "type":  {
                                                     "title":  "Tip",
-                                                    "placeholder":  "Agħżel tip ta' Żona",
+                                                    "placeholder":  "Agħżel tip ta\u0027 Żona",
                                                     "options":  {
                                                                     "yard":  "Bitħa",
                                                                     "warehouse":  "Maħżen"
@@ -492,497 +619,523 @@
                                                          "title":  "Okkupazzjoni",
                                                          "placeholder":  "Okkupazzjoni kurrenti"
                                                      }
-                                   }
+                                   },
+                        "registeredStorageAreas":  "Żoni ta\u0027 ħażna rreġistrati"
                     },
-    "search":  {"languages":  "Fittex lingwi..."},
-    "representative":  {"title":  "Rappreżentant", "select":  "Agħżel rappreżentant"},
-        "scheduling":  {
-            "title":  "Itlob skeda ta' kuljum",
-            "subtitle":  "Uża l-algoritmu awtomatiku tagħna biex tanalizza l-kompiti skedati għad-data magħżula.",
-            "noVisits":  "Ebda żjarat ta' vapuri skedati għad-data magħżula.",
-            "visitsOnSelectedDay":  "Żjarat ta' vapuri fid-data magħżula",
-            "viewVisits":  "Ġenera skeda ta' kompiti",
-            "generateTasksButton":  "Ġenera skeda ta' kompiti",
-            "aboutAlgorithmButton":  "Dwar l-algoritmu",
-            "fields":  {
-                "algorithm":  {"title":  "Algoritmu ta' Skedar", "placeholder":  "Agħżel algoritmu"},
-                "relatedDocks":  "Agħżel moll relatat"
-            },
-            "generateTasksModal":  {"title":  "Loġistika addizzjonali"},
-            "aboutAlgorithmModal":  {"title":  "Dwar l-algoritmu", "content":  "L-algoritmu jikkunsidra n-notifiki ta' żjarat ta' vapuri skedati għad-data u l-moll magħżula, jiċċekkja d-disponibilità tal-krani STS u jistma t-tul tal-kompiti skont il-veloċità tal-kran, u jinjoraw żjarat ta' manutenzjoni."}
-        },
-        "notification":  {
-            "id":  "ID Notifika",
-            "hazardous":  "Perikoluż",
-            "nonHazardous":  "Mhux perikoluż",
-            "arrival":  "Wasla",
-            "departure":  "Tluq",
-            "specialRequirements":  "Rekwiżiti Speċjali",
-            "none":  "Xejn",
-            "crew":  "Ekwipaġġ",
-            "captain":  "Kaptan",
-            "unknown":  "Mhux magħruf",
-            "from":  "Minn",
-            "to":  "Sa",
-            "tabs":  {
-                "dashboard":  "Pannell Notifiki",
-                "search":  "Fittex Notifiki",
-                "edit":  "Editja Notifika",
-                "create":  "Oħloq Notifika",
-                "makeDraft":  "Oħloq abbozz",
-                "myNotifications":  "In-Notifiki Tiegħi",
-                "review":  "Revedi Notifiki",
-                "general":  "Lista Ġenerika",
-                "byDate":  "Lista Kalendarju",
-                "submit":  "Issottometti Notifika",
-                "delete":  "Ħassar Notifika"
-            },
-            "eventsOnDate":  "Avvenimenti fid-data magħżula",
-            "noEventsOnDate":  "Ebda avvenimenti fid-data magħżula",
-            "title":  "Notifiki ta' Żjara ta' Vapur",
-            "subtitle":  {
-                "dashboard":  "Panoramika tan-notifiki ta' żjarat ta' vapuri",
-                "search":  "Ġestixxi u ara n-notifiki kollha",
-                "create":  "Oħloq notifika ġdida",
-                "edit":  "Editja notifika eżistenti",
-                "review":  "Revedi notifiki pendenti"
-            },
-            "errors":  {"noNotificationId":  "Ebda ID notifika provdut"},
-            "infoTitle":  "Informazzjoni Notifika",
-            "cargoTitle":  "Informazzjoni Tagħbija",
-            "vesselTitle":  "Informazzjoni Vapur",
-            "manifestInfo":  "Informazzjoni Manifest",
-            "fields":  {
-                "openLoadManifest":  "Iftaħ Manifest tat-Tagħbija",
-                "openUnloadManifest":  "Iftaħ Manifest tal-Ixxottjar",
-                "expectedArrival":  "Wasla Mistennija",
-                "expectedDeparture":  "Tluq Mistennija",
-                "isCargoHazardous":  "Tagħbija Perikoluża",
-                "specialRequirements":  "Rekwiżiti Speċjali",
-                "captain":  "Kaptan",
-                "totalCrewMembers":  "Numru Totali tal-Ekwipaġġ",
-                "safetyOfficers":  "Uffiċjali tas-Sigurtà",
-                "loadCargoManifest":  "Manifest tat-Tagħbija",
-                "unloadCargoManifest":  "Manifest tal-Ixxottjar",
-                "position":  "Pożizzjoni",
-                "area":  "Żona",
-                "container":  "Kontenitur",
-                "crewMembers":  "Membri tal-Ekwipaġġ",
-                "status":  "Status"
-            },
-            "timeline":  {
-                "pending":  "Pendenti",
-                "inProgress":  "Għaddej",
-                "completed":  "Kkompletat",
-                "submitted":  "Issottomess",
-                "accepted":  "Aċċettat",
-                "rejected":  "Miċħud"
-            },
-            "filters":  {
-                "expectedArrivalFrom":  "Wasla Mistennija Minn",
-                "expectedArrivalTo":  "Wasla Mistennija Sa",
-                "withReason":  "B'Raġuni",
-                "withDockAssigned":  "B'Moll Assenjat"
-            },
-            "decision":  {
-                "isFinal":  "Finali",
-                "assignedDock":  {"title":  "Moll Assenjat", "placeholder":  "Agħżel moll"},
-                "reason":  {"title":  "Raġuni", "placeholder":  "Daħħal raġuni"},
-                "status":  "Status Deċiżjoni"
-            }
-        },
-        "operationalWindow":  {
-            "title":  "Tieqa Operattiva",
-            "printer":  {
-                "addShift":  "Żid xift",
-                "shifts":  "Xifts:",
-                "noShifts":  "Ebda xift.",
-                "startTime":  "Ħin tal-bidu",
-                "endTime":  "Ħin tat-tmiem",
-                "weekDays":  "Jiem tal-ġimgħa"
-            },
-            "errors":  {"shiftOverlap":  "Xift invalidu. Skambju jew ħin tat-tmiem qabel il-bidu."}
-        },
-    "about": {
-        "title": "Dwar PorTiT",
-        "privacy": {
-            "title": "Politika tal-Privatezza",
-            "lastUpdated": "L-aħħar aġġornament: {date}"
-        }
-    },
-    "operationPlan": {
-        "title": "Pjan Operattiv",
-        "dock": "Dok",
-        "docks": "Dkokk",
-        "operations": "Operazzjonijiet",
-        "cranes": "Kranes",
-        "createdBy": "Maħluqa minn",
-        "createdAt": "Maħluqa fi",
-        "totalSchedules": "Skedi totali",
-        "vesselCount": "Bastimenti",
-        "plansOnDate": "Pjanijiet operattivi fid-data magħżula",
-        "noPlansOnDate": "Ebda pjan operattiv fid-data magħżula",
-        "id": "ID",
-        "vvn": "Notifika ta' Żjara tal-Bastiment",
-        "for": "għal",
-        "details": "Dettalji",
-        "totalOperations": "Operazzjonijiet totali",
-        "algorithmUsed": "Algoritmu użat",
-        "ganttChart": "Ċart Gantt",
-        "startTime": "Ħin tal-bidu",
-        "endTime": "Ħin tat-tmiem",
-        "totalDuration": "Dewmien totali",
-        "operation": "Operazzjoni",
-        "duration": "Dewmien",
-        "resources": "Riżorsi",
-        "operationDetails": "Dettalji tal-operazzjoni",
-        "operationNumber": "Operazzjoni #{number}",
-        "notFound": "Pjan operattiv ma nstabx",
-        "operationType": {
-            "Unload": "Tniżżil",
-            "Load": "Tagħbija"
-        },
-        "tabs": {
-            "unplannedVVNs": "VVNs mhux ippjanati",
-            "search": "Fittex pjanijiet",
-            "edit": "Editja l-pjan",
-            "open": "Iftaħ eżekuzzjoni"
-        },
-        "subtitle": {
-            "edit": "Biddel dettalji u skeda tal-pjan operattiv"
-        },
-        "unplannedVVNs": {
-            "description": "Notifiki ta' żjara tal-bastiment li għadhom m'għandhomx pjan operattiv assenjat",
-            "noUnplanned": "In-notifiki kollha ta' żjara tal-bastiment għandhom pjanijiet operattivi assenjati",
-            "foundMessage": "Instabu {vvnCount} VVN mingħajr pjanijiet f'{dayCount} jum/jiem",
-            "regenerateAll": "Irriġenera l-pjanijiet kollha nieqsa",
-            "regenerateDay": "Irriġenera pjanijiet għal dan il-jum",
-            "regenerateModalTitle": "Irriġenera pjanijiet għal {date}",
-            "warning": "Twissija",
-            "warningMessage": "Ir-riġenerazzjoni tal-pjanijiet se tissostitwixxi l-pjanijiet operattivi kollha eżistenti għal dan il-jum. Din l-azzjoni ma tistax tiġi annullata.",
-            "selectedDay": "Jum magħżul",
-            "confirmRegeneration": "Ikkonferma r-riġenerazzjoni",
-            "affectedDays": "Jiem affettwati",
-            "queueInfo": "Kull talba ta' riġenerazzjoni se tiġi mqiegħda fil-kju separatament. Tista' tirrevedihom u taċċettahom/tirrifjutahom individwalment mill-kju tal-ippjanar.",
-            "continue": "Kompli",
-            "confirmRegenerationTitle": "Ikkonferma r-riġenerazzjoni",
-            "irreversibleAction": "Din l-azzjoni hija irreversibbli",
-            "overwriteWarning": "Ir-riġenerazzjoni tal-pjanijiet operattivi se tissostitwixxi permanentement il-pjanijiet kollha eżistenti għall-jiem magħżula. Din l-azzjoni ma tistax tiġi annullata.",
-            "aboutToRegenerate": "Int se tirriġenera pjanijiet għal",
-            "days": "jiem",
-            "vesselVisitNotifications": "Notifiki ta' żjara tal-bastiment",
-            "using": "Bl-użu ta'",
-            "algorithm": "algoritmu",
-            "proceedQuestion": "Trid tkompli b'din l-operazzjoni?",
-            "yesRegenerateAll": "Iva, irriġenera kollox"
-        },
-        "algorithm": {
-            "optimal": "Ottimali",
-            "greedy": "Greedy",
-            "genetic": "Ġenetiku",
-            "auto": "Awtomatiku"
-        },
-        "metrics": {
-            "title": "Metriċi",
-            "strategy": "Strateġija",
-            "totalDelay": "Dewmien totali",
-            "computationTime": "Ħin tal-kalkolu",
-            "autoSelection": "Għażla awtomatika tal-algoritmu"
-        },
-        "infoTitle": "Informazzjoni dwar il-pjan operattiv",
-        "fields": {
-            "id": {
-                "title": "ID tal-pjan"
-            },
-            "relatedVVN": {
-                "title": "VVN relatat"
-            },
-            "dock": {
-                "title": "Dok"
-            },
-            "operations": {
-                "title": "Operazzjonijiet"
-            }
-        },
-        "filters": {
-            "startDate": "Data tal-bidu minn",
-            "endDate": "Data tat-tmiem sa"
-        },
-        "metadata": {
-            "title": "Metadata",
-            "createdBy": "Maħluqa minn",
-            "createdAt": "Maħluqa fi",
-            "algorithmUsed": "Algoritmu użat"
-        },
-        "schedule": {
-            "title": "Skeda tal-operazzjonijiet",
-            "noOperations": "Ebda operazzjonijiet skedjati"
-        }
-    },
-    "incidentType": {
-        "fields": {
-            "name": {
-                "title": "Isem",
-                "placeholder": "Isem tat-tip ta' inċident"
-            },
-            "description": {
-                "title": "Deskrizzjoni",
-                "placeholder": "Deskrizzjoni dettaljata tat-tip ta' inċident"
-            },
-            "severity": {
-                "title": "Severità",
-                "placeholder": "Agħżel livell ta' severità"
-            },
-            "subtypeOf": {
-                "title": "Sottotip ta'",
-                "placeholder": "Agħżel tip ġenitur"
-            },
-            "subtypes": {
-                "title": "Sottotipi",
-                "placeholder": "Agħżel tipi tat-tfal"
-            }
-        },
-        "severity": {
-            "Minor": "Minuri",
-            "Major": "Maġġuri",
-            "Critical": "Kritiku"
-        },
-        "tabs": {
-            "dashboard": "Dashboard tat-tipi ta' inċidenti",
-            "view_dashboard": "Ara t-tipi ta' inċidenti",
-            "search": "Fittex tipi ta' inċidenti",
-            "create": "Oħloq tip ta' inċident",
-            "edit": "Editja tip ta' inċident"
-        },
-        "generalFields": "Oqsma ġenerali",
-        "classification": "Klassifikazzjoni",
-        "title": "Inċidenti",
-        "subtitle": {
-            "dashboard": "Ħarsa ġenerali tal-istatistiċi u l-attività tat-tipi ta' inċidenti",
-            "search": "Immaniġġja u ara t-tipi kollha ta' inċidenti rreġistrati",
-            "create": "Irreġistra tip ġdid ta' inċident fis-sistema",
-            "edit": "Biddel tip eżistenti ta' inċident fis-sistema"
-        },
-        "registeredIncidentTypes": "Tipi ta' inċidenti rreġistrati",
-        "incidentTypeInformation": "Informazzjoni dwar it-tip ta' inċident",
-        "parentType": "Tip ġenitur",
-        "confirmDelete": "Ikkonferma t-tħassir",
-        "confirmDeleteMessage": "Żgur li trid tħassar dan it-tip ta' inċident?",
-        "failedToDelete": "Naqset milli tħassar it-tip ta' inċident"
-    },
-    "taskCategory": {
-        "fields": {
-            "name": {
-                "title": "Isem",
-                "placeholder": "Isem tal-kategorija tal-kompitu"
-            },
-            "category": {
-                "title": "Kategorija",
-                "placeholder": "Kodiċi tal-kategorija"
-            },
-            "description": {
-                "title": "Deskrizzjoni",
-                "placeholder": "Deskrizzjoni tal-kategorija tal-kompitu"
-            }
-        },
-        "tabs": {
-            "dashboard": "Dashboard tal-kategoriji tal-kompiti",
-            "search": "Fittex kategoriji tal-kompiti",
-            "create": "Oħloq kategorija tal-kompitu",
-            "edit": "Editja kategorija tal-kompitu",
-            "view_dashboard": "Ara l-kategoriji tal-kompiti"
-        },
-        "generalFields": "Oqsma ġenerali",
-        "title": "Kompiti",
-        "subtitle": {
-            "dashboard": "Ħarsa ġenerali tal-istatistiċi u l-attività tal-kategoriji tal-kompiti",
-            "search": "Immaniġġja u ara l-kategoriji kollha tal-kompiti rreġistrati",
-            "create": "Irreġistra kategorija ġdida tal-kompitu fis-sistema",
-            "edit": "Biddel kategorija eżistenti tal-kompitu fis-sistema"
-        },
-        "taskCategoryInformation": "Informazzjoni dwar il-kategorija tal-kompitu",
-        "registeredTaskCategories": "Kategoriji tal-kompiti rreġistrati"
-    },
-    "execution": {
-        "title": "Eżekuzzjonijiet ta' żjara tal-bastiment",
-        "subtitle": {
-            "search": "Immaniġġja u ara l-eżekuzzjonijiet kollha ta' żjara tal-bastiment",
-            "dashboard": "Ħarsa ġenerali tal-istatistiċi u l-attività tal-eżekuzzjonijiet ta' żjara tal-bastiment"
-        },
-        "tabs": {
-            "dashboard": "Dashboard tal-eżekuzzjonijiet",
-            "search": "Fittex eżekuzzjonijiet",
-            "view_dashboard": "Ara l-eżekuzzjonijiet",
-            "update": "Aġġorna l-eżekuzzjoni",
-            "view": "Ara l-eżekuzzjoni",
-            "table": "Ara t-tabella",
-            "cards": "Ara l-karti"
-        },
-        "fields": {
-            "code": "Kodiċi",
-            "relatedVVN": "Relatat ma'",
-            "status": "Status",
-            "createdBy": "Maħluqa minn",
-            "dateOpen": "Data tal-ftuħ",
-            "dateClosed": "Data tal-għeluq",
-            "relatedVesselVisit": "Żjara tal-bastiment relatata",
-            "dock": "Dok għall-ormeggio",
-            "berthTime": "Ħin tal-ormeggio",
-            "operations": "Operazzjonijiet"
-        },
-        "filters": {
-            "startDate": "Data tal-bidu",
-            "endDate": "Data tat-tmiem",
-            "relatedVVN": "Notifika ta' żjara tal-bastiment",
-            "status": "Status"
-        },
-        "metrics": {
-            "totalOperations": "Operazzjonijiet totali",
-            "completedOperations": "Progress",
-            "turnaroundTime": "Ħin ta' turnaround",
-            "berthOccupancy": "Okkupanza tad-dok"
-        },
-        "status": {
-            "pending": "Pendenti",
-            "started": "Beda",
-            "delayed": "Dewmien",
-            "completed": "Komplet"
-        },
-        "view_resources": "Ara r-riżorsi",
-        "infoTitle": "Informazzjoni dwar l-eżekuzzjoni",
-        "operationsTitle": "Operazzjonijiet",
-        "noOperations": "Ebda operazzjonijiet disponibbli",
-        "startOperation": "Ibda l-operazzjoni",
-        "completeOperation": "Ikkompleta l-operazzjoni",
-        "addOperation": "Żid operazzjoni",
-        "addOperationDescription": "Żid operazzjoni ġdida mal-linja taż-żmien",
-        "confirmStartOperation": "Żgur li trid tibda din l-operazzjoni?",
-        "confirmCompleteOperation": "Żgur li trid tikkompleta din l-operazzjoni?",
-        "berthOperation": {
-            "button": "Editja d-data tal-ormeggio",
-            "title": "Operazzjoni tal-ormeggio",
-            "description": "Editja d-dok u l-ħin għal din l-eżekuzzjoni ta' żjara tal-bastiment.",
-            "dock": "Dok għall-ormeggio",
-            "dockPlaceholder": "Agħżel dok",
-            "berthTime": "Ħin tal-ormeggio",
-            "differentThanPlanned": "Id-dok magħżul huwa differenti minn dak ippjanat."
-        }
-    },
-    "incident": {
-        "tabs": {
-            "dashboard": "Dashboard tal-inċidenti",
-            "create": "Oħloq inċident",
-            "search": "Fittex inċidenti",
-            "active": "Inċidenti attivi",
-            "view": "Ara l-inċident",
-            "edit": "Editja l-inċident"
-        },
-        "subtitle": {
-            "create": "Irraporta inċident ġdid fis-sistema",
-            "search": "Fittex u ffiltra inċidenti eżistenti",
-            "active": "Ara u immaniġġja inċidenti attivi"
-        },
-        "generalFields": "Informazzjoni ġenerali",
-        "classification": "Klassifikazzjoni",
-        "fields": {
-            "bid": {
-                "title": "ID tal-inċident"
-            },
-            "type": {
-                "title": "Tip ta' inċident",
-                "placeholder": "Agħżel tip ta' inċident"
-            },
-            "startTime": {
-                "title": "Ħin tal-bidu",
-                "placeholder": "Meta beda l-inċident?"
-            },
-            "endTime": {
-                "title": "Ħin tat-tmiem",
-                "placeholder": "Meta intemm l-inċident?"
-            },
-            "severity": {
-                "title": "Severità",
-                "placeholder": "Agħżel livell ta' severità",
-                "options": {
-                    "minor": "Minuri",
-                    "major": "Maġġuri",
-                    "critical": "Kritiku"
-                }
-            },
-            "description": {
-                "title": "Deskrizzjoni",
-                "placeholder": "Iddeskrivi l-inċident fid-dettall"
-            },
-            "createdBy": {
-                "title": "Maħluq minn"
-            },
-            "affectedVVECodes": {
-                "title": "VVEs affettwati",
-                "placeholder": "Daħħal VVEs affettwati"
-            },
-            "vveCode": {
-                "title": "Kodiċi VVE"
-            },
-            "status": {
-                "title": "Status",
-                "options": {
-                    "active": "Attiv",
-                    "resolved": "Riżolt"
-                }
-            },
-            "filterStartTime": {
-                "title": "Data tal-bidu minn"
-            },
-            "filterEndTime": {
-                "title": "Data tal-bidu sa"
-            },
-            "duration": {
-                "title": "Dewmien"
-            }
-        },
-        "severity": {
-            "Minor": "Minuri",
-            "Major": "Maġġuri",
-            "Critical": "Kritiku"
-        },
-        "status": {
-            "active": "Attiv",
-            "resolved": "Riżolt"
-        },
-        "ongoing": "Għaddej",
-        "filters": {
-            "onlyActive": "Attivi biss",
-            "onlyMine": "Tiegħi biss"
-        },
-        "actions": {
-            "view": "Ara d-dettalji",
-            "edit": "Editja l-inċident",
-            "resolve": "Issolvi l-inċident",
-            "delete": "Ħassar l-inċident"
-        },
-        "notifications": {
-            "createSuccess": "Inċident maħluq b'suċċess",
-            "createFailed": "Naqset milli jinħoloq l-inċident",
-            "updateSuccess": "Inċident aġġornat b'suċċess",
-            "updateFailed": "Naqset milli jiġi aġġornat l-inċident",
-            "resolveSuccess": "Inċident riżolt b'suċċess",
-            "resolveFailed": "Naqset milli jinżamm l-inċident",
-            "deleteSuccess": "Inċident imħassar b'suċċess",
-            "deleteFailed": "Naqset milli jitħassar l-inċident"
-        },
-        "table": {
-            "empty": "Ebda inċident instab"
-        },
-        "active": {
-            "title": "Inċidenti attivi",
-            "subtitle": "Ara u immaniġġja inċidenti għaddejjin"
-        },
-        "infoTitle": "Dettalji tal-inċident",
-        "closeDialog": {
-            "title": "Issolvi l-inċident",
-            "message": "Meta nżamm l-inċident?",
-            "confirm": "Iva, agħlaq dan l-inċident",
-            "cancel": "Ikkanċella"
-        }
-    }
+    "notification":  {
+                         "id":  "ID Notifika",
+                         "hazardous":  "Perikoluż",
+                         "nonHazardous":  "Mhux perikoluż",
+                         "arrival":  "Wasla",
+                         "departure":  "Tluq",
+                         "specialRequirements":  "Rekwiżiti Speċjali",
+                         "none":  "Xejn",
+                         "crew":  "Ekwipaġġ",
+                         "captain":  "Kaptan",
+                         "unknown":  "Mhux magħruf",
+                         "from":  "Minn",
+                         "to":  "Sa",
+                         "step":  "Step",
+                         "of":  "of",
+                         "tabs":  {
+                                      "dashboard":  "Pannell Notifiki",
+                                      "search":  "Fittex Notifiki",
+                                      "edit":  "Editja Notifika",
+                                      "create":  "Oħloq Notifika",
+                                      "update":  "Update Notification",
+                                      "makeDraft":  "Oħloq abbozz",
+                                      "myNotifications":  "In-Notifiki Tiegħi",
+                                      "review":  "Revedi Notifiki",
+                                      "general":  "Lista Ġenerika",
+                                      "byDate":  "Lista Kalendarju",
+                                      "submit":  "Issottometti Notifika",
+                                      "delete":  "Ħassar Notifika"
+                                  },
+                         "eventsOnDate":  "Avvenimenti fid-data magħżula",
+                         "noEventsOnDate":  "Ebda avvenimenti fid-data magħżula",
+                         "title":  "Notifiki ta\u0027 Żjara ta\u0027 Vapur",
+                         "subtitle":  {
+                                          "dashboard":  "Panoramika tan-notifiki ta\u0027 żjarat ta\u0027 vapuri",
+                                          "search":  "Ġestixxi u ara n-notifiki kollha",
+                                          "create":  "Oħloq notifika ġdida",
+                                          "update":  "Update an existing vessel visit notification",
+                                          "edit":  "Editja notifika eżistenti",
+                                          "review":  "Revedi notifiki pendenti"
+                                      },
+                         "errors":  {
+                                        "noNotificationId":  "Ebda ID notifika provdut"
+                                    },
+                         "infoTitle":  "Informazzjoni Notifika",
+                         "cargoTitle":  "Informazzjoni Tagħbija",
+                         "vesselTitle":  "Informazzjoni Vapur",
+                         "manifestInfo":  "Informazzjoni Manifest",
+                         "fields":  {
+                                        "selectVessel":  "Select corresponding vessel",
+                                        "openLoadManifest":  "Iftaħ Manifest tat-Tagħbija",
+                                        "openUnloadManifest":  "Iftaħ Manifest tal-Ixxottjar",
+                                        "expectedArrival":  "Wasla Mistennija",
+                                        "expectedDeparture":  "Tluq Mistennija",
+                                        "isCargoHazardous":  "Tagħbija Perikoluża",
+                                        "specialRequirements":  "Rekwiżiti Speċjali",
+                                        "captain":  "Kaptan",
+                                        "totalCrewMembers":  "Numru Totali tal-Ekwipaġġ",
+                                        "safetyOfficers":  "Uffiċjali tas-Sigurtà",
+                                        "loadCargoManifest":  "Manifest tat-Tagħbija",
+                                        "unloadCargoManifest":  "Manifest tal-Ixxottjar",
+                                        "position":  "Pożizzjoni",
+                                        "area":  "Żona",
+                                        "container":  "Kontenitur",
+                                        "crewMembers":  "Membri tal-Ekwipaġġ",
+                                        "status":  "Status",
+                                        "isCargoHazardousQ":  "Is Cargo Hazardous?",
+                                        "cargoManifestInfo":  "About cargo manifest files"
+                                    },
+                         "timeline":  {
+                                          "pending":  "Pendenti",
+                                          "inProgress":  "Għaddej",
+                                          "completed":  "Kkompletat",
+                                          "submitted":  "Issottomess",
+                                          "accepted":  "Aċċettat",
+                                          "rejected":  "Miċħud"
+                                      },
+                         "filters":  {
+                                         "expectedArrivalFrom":  "Wasla Mistennija Minn",
+                                         "expectedArrivalTo":  "Wasla Mistennija Sa",
+                                         "withReason":  "B\u0027Raġuni",
+                                         "withDockAssigned":  "B\u0027Moll Assenjat"
+                                     },
+                         "decision":  {
+                                          "isFinal":  "Finali",
+                                          "assignedDock":  {
+                                                               "title":  "Moll Assenjat",
+                                                               "placeholder":  "Agħżel moll"
+                                                           },
+                                          "reason":  {
+                                                         "title":  "Raġuni",
+                                                         "placeholder":  "Daħħal raġuni"
+                                                     },
+                                          "status":  "Status Deċiżjoni"
+                                      },
+                         "sections":  {
+                                          "vesselDetails":  "Informazzjoni dwar iż-żjara",
+                                          "crewDetails":  "Dettalli tal-ekwipaġġ",
+                                          "cargoRequirements":  "Rekwiżiti tal-merkanzija",
+                                          "cargoContent":  "Kontenut tal-merkanzija"
+                                      },
+                         "about":  {
+                                       "text":  "Il-fajls tal-manifest tal-merkanzija (bissa) għandhom ikunu f'format CSV standard Ewropew. Kull ringiela fil-fajl CSV tirrapreżenta artikolu ta' merkanzija bil-kolonni li ġejjin:",
+                                       "bay":  "Bajja (numru)",
+                                       "row":  "Ringiela (numru)",
+                                       "tier":  "Livell (numru)",
+                                       "area":  "Koġiċi taż-żona (minn fejn/lejn fejn)",
+                                       "containerNumber":  "Numru tal-kontejner (test)",
+                                       "conatinerType":  "Tip ta' kontejner (numru)",
+                                       "description":  "Deskrizzjoni (test)",
+                                       "containerTypes":  {
+                                                              "refrigeratedGoods":  "Ogg ett refriġerati",
+                                                              "generalConsumerProducts":  "Prodotti ġenerali tal-konsumatur",
+                                                              "electronics":  "Elettronika",
+                                                              "hazmat":  "Materjali periġlużi",
+                                                              "oversizedIndustrialEquipment":  "Tagħmir industrijali kbir żejjed",
+                                                              "other":  "Oħrajn"
+                                                          }
+                                   },
+                         "registeredVesselVisitNotifications":  "Registered Vessel Visit Notifications"
+                     },
+    "operationalWindow":  {
+                              "title":  "Tieqa Operattiva",
+                              "printer":  {
+                                              "addShift":  "Żid xift",
+                                              "shifts":  "Xifts:",
+                                              "noShifts":  "Ebda xift.",
+                                              "startTime":  "Ħin tal-bidu",
+                                              "endTime":  "Ħin tat-tmiem",
+                                              "weekDays":  "Jiem tal-ġimgħa"
+                                          },
+                              "errors":  {
+                                             "shiftOverlap":  "Xift invalidu. Skambju jew ħin tat-tmiem qabel il-bidu."
+                                         }
+                          },
+    "about":  {
+                  "title":  "Dwar PorTiT",
+                  "privacy":  {
+                                  "title":  "Politika tal-Privatezza",
+                                  "lastUpdated":  "L-aħħar aġġornament: {date}"
+                              }
+              },
+    "operationPlan":  {
+                          "title":  "Pjan Operattiv",
+                          "dock":  "Dok",
+                          "docks":  "Dkokk",
+                          "operations":  "Operazzjonijiet",
+                          "cranes":  "Kranes",
+                          "createdBy":  "Maħluqa minn",
+                          "createdAt":  "Maħluqa fi",
+                          "totalSchedules":  "Skedi totali",
+                          "vesselCount":  "Bastimenti",
+                          "plansOnDate":  "Pjanijiet operattivi fid-data magħżula",
+                          "noPlansOnDate":  "Ebda pjan operattiv fid-data magħżula",
+                          "id":  "ID",
+                          "vvn":  "Notifika ta\u0027 Żjara tal-Bastiment",
+                          "for":  "għal",
+                          "details":  "Dettalji",
+                          "totalOperations":  "Operazzjonijiet totali",
+                          "algorithmUsed":  "Algoritmu użat",
+                          "ganttChart":  "Ċart Gantt",
+                          "startTime":  "Ħin tal-bidu",
+                          "endTime":  "Ħin tat-tmiem",
+                          "totalDuration":  "Dewmien totali",
+                          "operation":  "Operazzjoni",
+                          "duration":  "Dewmien",
+                          "resources":  "Riżorsi",
+                          "operationDetails":  "Dettalji tal-operazzjoni",
+                          "operationNumber":  "Operazzjoni #{number}",
+                          "notFound":  "Pjan operattiv ma nstabx",
+                          "operationType":  {
+                                                "Unload":  "Tniżżil",
+                                                "Load":  "Tagħbija"
+                                            },
+                          "tabs":  {
+                                       "unplannedVVNs":  "VVNs mhux ippjanati",
+                                       "search":  "Fittex pjanijiet",
+                                       "edit":  "Editja l-pjan",
+                                       "open":  "Iftaħ eżekuzzjoni"
+                                   },
+                          "subtitle":  {
+                                           "edit":  "Biddel dettalji u skeda tal-pjan operattiv"
+                                       },
+                          "unplannedVVNs":  {
+                                                "description":  "Notifiki ta\u0027 żjara tal-bastiment li għadhom m\u0027għandhomx pjan operattiv assenjat",
+                                                "noUnplanned":  "In-notifiki kollha ta\u0027 żjara tal-bastiment għandhom pjanijiet operattivi assenjati",
+                                                "foundMessage":  "Instabu {vvnCount} VVN mingħajr pjanijiet f\u0027{dayCount} jum/jiem",
+                                                "regenerateAll":  "Irriġenera l-pjanijiet kollha nieqsa",
+                                                "regenerateDay":  "Irriġenera pjanijiet għal dan il-jum",
+                                                "regenerateModalTitle":  "Irriġenera pjanijiet għal {date}",
+                                                "warning":  "Twissija",
+                                                "warningMessage":  "Ir-riġenerazzjoni tal-pjanijiet se tissostitwixxi l-pjanijiet operattivi kollha eżistenti għal dan il-jum. Din l-azzjoni ma tistax tiġi annullata.",
+                                                "selectedDay":  "Jum magħżul",
+                                                "confirmRegeneration":  "Ikkonferma r-riġenerazzjoni",
+                                                "affectedDays":  "Jiem affettwati",
+                                                "queueInfo":  "Kull talba ta\u0027 riġenerazzjoni se tiġi mqiegħda fil-kju separatament. Tista\u0027 tirrevedihom u taċċettahom/tirrifjutahom individwalment mill-kju tal-ippjanar.",
+                                                "continue":  "Kompli",
+                                                "confirmRegenerationTitle":  "Ikkonferma r-riġenerazzjoni",
+                                                "irreversibleAction":  "Din l-azzjoni hija irreversibbli",
+                                                "overwriteWarning":  "Ir-riġenerazzjoni tal-pjanijiet operattivi se tissostitwixxi permanentement il-pjanijiet kollha eżistenti għall-jiem magħżula. Din l-azzjoni ma tistax tiġi annullata.",
+                                                "aboutToRegenerate":  "Int se tirriġenera pjanijiet għal",
+                                                "days":  "jiem",
+                                                "vesselVisitNotifications":  "Notifiki ta\u0027 żjara tal-bastiment",
+                                                "using":  "Bl-użu ta\u0027",
+                                                "algorithm":  "algoritmu",
+                                                "proceedQuestion":  "Trid tkompli b\u0027din l-operazzjoni?",
+                                                "yesRegenerateAll":  "Iva, irriġenera kollox"
+                                            },
+                          "algorithm":  {
+                                            "optimal":  "Ottimali",
+                                            "greedy":  "Greedy",
+                                            "genetic":  "Ġenetiku",
+                                            "auto":  "Awtomatiku"
+                                        },
+                          "metrics":  {
+                                          "title":  "Metriċi",
+                                          "strategy":  "Strateġija",
+                                          "totalDelay":  "Dewmien totali",
+                                          "computationTime":  "Ħin tal-kalkolu",
+                                          "autoSelection":  "Għażla awtomatika tal-algoritmu"
+                                      },
+                          "infoTitle":  "Informazzjoni dwar il-pjan operattiv",
+                          "fields":  {
+                                         "id":  {
+                                                    "title":  "ID tal-pjan"
+                                                },
+                                         "relatedVVN":  {
+                                                            "title":  "VVN relatat"
+                                                        },
+                                         "dock":  {
+                                                      "title":  "Dok"
+                                                  },
+                                         "operations":  {
+                                                            "title":  "Operazzjonijiet"
+                                                        }
+                                     },
+                          "filters":  {
+                                          "startDate":  "Data tal-bidu minn",
+                                          "endDate":  "Data tat-tmiem sa"
+                                      },
+                          "metadata":  {
+                                           "title":  "Metadata",
+                                           "createdBy":  "Maħluqa minn",
+                                           "createdAt":  "Maħluqa fi",
+                                           "algorithmUsed":  "Algoritmu użat"
+                                       },
+                          "schedule":  {
+                                           "title":  "Skeda tal-operazzjonijiet",
+                                           "noOperations":  "Ebda operazzjonijiet skedjati"
+                                       }
+                      },
+    "incidentType":  {
+                         "fields":  {
+                                        "name":  {
+                                                     "title":  "Isem",
+                                                     "placeholder":  "Isem tat-tip ta\u0027 inċident"
+                                                 },
+                                        "description":  {
+                                                            "title":  "Deskrizzjoni",
+                                                            "placeholder":  "Deskrizzjoni dettaljata tat-tip ta\u0027 inċident"
+                                                        },
+                                        "severity":  {
+                                                         "title":  "Severità",
+                                                         "placeholder":  "Agħżel livell ta\u0027 severità"
+                                                     },
+                                        "subtypeOf":  {
+                                                          "title":  "Sottotip ta\u0027",
+                                                          "placeholder":  "Agħżel tip ġenitur"
+                                                      },
+                                        "subtypes":  {
+                                                         "title":  "Sottotipi",
+                                                         "placeholder":  "Agħżel tipi tat-tfal"
+                                                     }
+                                    },
+                         "severity":  {
+                                          "Minor":  "Minuri",
+                                          "Major":  "Maġġuri",
+                                          "Critical":  "Kritiku"
+                                      },
+                         "tabs":  {
+                                      "dashboard":  "Dashboard tat-tipi ta\u0027 inċidenti",
+                                      "view_dashboard":  "Ara t-tipi ta\u0027 inċidenti",
+                                      "search":  "Fittex tipi ta\u0027 inċidenti",
+                                      "create":  "Oħloq tip ta\u0027 inċident",
+                                      "edit":  "Editja tip ta\u0027 inċident"
+                                  },
+                         "generalFields":  "Oqsma ġenerali",
+                         "classification":  "Klassifikazzjoni",
+                         "title":  "Inċidenti",
+                         "subtitle":  {
+                                          "dashboard":  "Ħarsa ġenerali tal-istatistiċi u l-attività tat-tipi ta\u0027 inċidenti",
+                                          "search":  "Immaniġġja u ara t-tipi kollha ta\u0027 inċidenti rreġistrati",
+                                          "create":  "Irreġistra tip ġdid ta\u0027 inċident fis-sistema",
+                                          "edit":  "Biddel tip eżistenti ta\u0027 inċident fis-sistema"
+                                      },
+                         "registeredIncidentTypes":  "Tipi ta\u0027 inċidenti rreġistrati",
+                         "incidentTypeInformation":  "Informazzjoni dwar it-tip ta\u0027 inċident",
+                         "parentType":  "Tip ġenitur",
+                         "confirmDelete":  "Ikkonferma t-tħassir",
+                         "confirmDeleteMessage":  "Żgur li trid tħassar dan it-tip ta\u0027 inċident?",
+                         "failedToDelete":  "Naqset milli tħassar it-tip ta\u0027 inċident"
+                     },
+    "taskCategory":  {
+                         "fields":  {
+                                        "name":  {
+                                                     "title":  "Isem",
+                                                     "placeholder":  "Isem tal-kategorija tal-kompitu"
+                                                 },
+                                        "category":  {
+                                                         "title":  "Kategorija",
+                                                         "placeholder":  "Kodiċi tal-kategorija"
+                                                     },
+                                        "description":  {
+                                                            "title":  "Deskrizzjoni",
+                                                            "placeholder":  "Deskrizzjoni tal-kategorija tal-kompitu"
+                                                        }
+                                    },
+                         "tabs":  {
+                                      "dashboard":  "Dashboard tal-kategoriji tal-kompiti",
+                                      "search":  "Fittex kategoriji tal-kompiti",
+                                      "create":  "Oħloq kategorija tal-kompitu",
+                                      "edit":  "Editja kategorija tal-kompitu",
+                                      "view_dashboard":  "Ara l-kategoriji tal-kompiti"
+                                  },
+                         "generalFields":  "Oqsma ġenerali",
+                         "title":  "Kompiti",
+                         "subtitle":  {
+                                          "dashboard":  "Ħarsa ġenerali tal-istatistiċi u l-attività tal-kategoriji tal-kompiti",
+                                          "search":  "Immaniġġja u ara l-kategoriji kollha tal-kompiti rreġistrati",
+                                          "create":  "Irreġistra kategorija ġdida tal-kompitu fis-sistema",
+                                          "edit":  "Biddel kategorija eżistenti tal-kompitu fis-sistema"
+                                      },
+                         "taskCategoryInformation":  "Informazzjoni dwar il-kategorija tal-kompitu",
+                         "registeredTaskCategories":  "Kategoriji tal-kompiti rreġistrati"
+                     },
+    "execution":  {
+                      "title":  "Eżekuzzjonijiet ta\u0027 żjara tal-bastiment",
+                      "subtitle":  {
+                                       "search":  "Immaniġġja u ara l-eżekuzzjonijiet kollha ta\u0027 żjara tal-bastiment",
+                                       "dashboard":  "Ħarsa ġenerali tal-istatistiċi u l-attività tal-eżekuzzjonijiet ta\u0027 żjara tal-bastiment"
+                                   },
+                      "tabs":  {
+                                   "dashboard":  "Dashboard tal-eżekuzzjonijiet",
+                                   "search":  "Fittex eżekuzzjonijiet",
+                                   "view_dashboard":  "Ara l-eżekuzzjonijiet",
+                                   "update":  "Aġġorna l-eżekuzzjoni",
+                                   "view":  "Ara l-eżekuzzjoni",
+                                   "table":  "Ara t-tabella",
+                                   "cards":  "Ara l-karti"
+                               },
+                      "fields":  {
+                                     "code":  "Kodiċi",
+                                     "relatedVVN":  "Relatat ma\u0027",
+                                     "status":  "Status",
+                                     "createdBy":  "Maħluqa minn",
+                                     "dateOpen":  "Data tal-ftuħ",
+                                     "dateClosed":  "Data tal-għeluq",
+                                     "relatedVesselVisit":  "Żjara tal-bastiment relatata",
+                                     "dock":  "Dok għall-ormeggio",
+                                     "berthTime":  "Ħin tal-ormeggio",
+                                     "operations":  "Operazzjonijiet"
+                                 },
+                      "filters":  {
+                                      "startDate":  "Data tal-bidu",
+                                      "endDate":  "Data tat-tmiem",
+                                      "relatedVVN":  "Notifika ta\u0027 żjara tal-bastiment",
+                                      "status":  "Status"
+                                  },
+                      "metrics":  {
+                                      "totalOperations":  "Operazzjonijiet totali",
+                                      "completedOperations":  "Progress",
+                                      "turnaroundTime":  "Ħin ta\u0027 turnaround",
+                                      "berthOccupancy":  "Okkupanza tad-dok"
+                                  },
+                      "status":  {
+                                     "pending":  "Pendenti",
+                                     "started":  "Beda",
+                                     "delayed":  "Dewmien",
+                                     "completed":  "Komplet"
+                                 },
+                      "view_resources":  "Ara r-riżorsi",
+                      "infoTitle":  "Informazzjoni dwar l-eżekuzzjoni",
+                      "operationsTitle":  "Operazzjonijiet",
+                      "noOperations":  "Ebda operazzjonijiet disponibbli",
+                      "startOperation":  "Ibda l-operazzjoni",
+                      "completeOperation":  "Ikkompleta l-operazzjoni",
+                      "addOperation":  "Żid operazzjoni",
+                      "addOperationDescription":  "Żid operazzjoni ġdida mal-linja taż-żmien",
+                      "confirmStartOperation":  "Żgur li trid tibda din l-operazzjoni?",
+                      "confirmCompleteOperation":  "Żgur li trid tikkompleta din l-operazzjoni?",
+                      "berthOperation":  {
+                                             "button":  "Editja d-data tal-ormeggio",
+                                             "title":  "Operazzjoni tal-ormeggio",
+                                             "description":  "Editja d-dok u l-ħin għal din l-eżekuzzjoni ta\u0027 żjara tal-bastiment.",
+                                             "dock":  "Dok għall-ormeggio",
+                                             "dockPlaceholder":  "Agħżel dok",
+                                             "berthTime":  "Ħin tal-ormeggio",
+                                             "differentThanPlanned":  "Id-dok magħżul huwa differenti minn dak ippjanat."
+                                         }
+                  },
+    "incident":  {
+                     "tabs":  {
+                                  "dashboard":  "Dashboard tal-inċidenti",
+                                  "create":  "Oħloq inċident",
+                                  "search":  "Fittex inċidenti",
+                                  "active":  "Inċidenti attivi",
+                                  "view":  "Ara l-inċident",
+                                  "edit":  "Editja l-inċident"
+                              },
+                     "subtitle":  {
+                                      "create":  "Irraporta inċident ġdid fis-sistema",
+                                      "search":  "Fittex u ffiltra inċidenti eżistenti",
+                                      "active":  "Ara u immaniġġja inċidenti attivi"
+                                  },
+                     "generalFields":  "Informazzjoni ġenerali",
+                     "classification":  "Klassifikazzjoni",
+                     "fields":  {
+                                    "bid":  {
+                                                "title":  "ID tal-inċident"
+                                            },
+                                    "type":  {
+                                                 "title":  "Tip ta\u0027 inċident",
+                                                 "placeholder":  "Agħżel tip ta\u0027 inċident"
+                                             },
+                                    "startTime":  {
+                                                      "title":  "Ħin tal-bidu",
+                                                      "placeholder":  "Meta beda l-inċident?"
+                                                  },
+                                    "endTime":  {
+                                                    "title":  "Ħin tat-tmiem",
+                                                    "placeholder":  "Meta intemm l-inċident?"
+                                                },
+                                    "severity":  {
+                                                     "title":  "Severità",
+                                                     "placeholder":  "Agħżel livell ta\u0027 severità",
+                                                     "options":  {
+                                                                     "minor":  "Minuri",
+                                                                     "major":  "Maġġuri",
+                                                                     "critical":  "Kritiku"
+                                                                 }
+                                                 },
+                                    "description":  {
+                                                        "title":  "Deskrizzjoni",
+                                                        "placeholder":  "Iddeskrivi l-inċident fid-dettall"
+                                                    },
+                                    "createdBy":  {
+                                                      "title":  "Maħluq minn"
+                                                  },
+                                    "affectedVVECodes":  {
+                                                             "title":  "VVEs affettwati",
+                                                             "placeholder":  "Daħħal VVEs affettwati"
+                                                         },
+                                    "vveCode":  {
+                                                    "title":  "Kodiċi VVE"
+                                                },
+                                    "status":  {
+                                                   "title":  "Status",
+                                                   "options":  {
+                                                                   "active":  "Attiv",
+                                                                   "resolved":  "Riżolt"
+                                                               }
+                                               },
+                                    "filterStartTime":  {
+                                                            "title":  "Data tal-bidu minn"
+                                                        },
+                                    "filterEndTime":  {
+                                                          "title":  "Data tal-bidu sa"
+                                                      },
+                                    "duration":  {
+                                                     "title":  "Dewmien"
+                                                 }
+                                },
+                     "severity":  {
+                                      "Minor":  "Minuri",
+                                      "Major":  "Maġġuri",
+                                      "Critical":  "Kritiku"
+                                  },
+                     "status":  {
+                                    "active":  "Attiv",
+                                    "resolved":  "Riżolt"
+                                },
+                     "ongoing":  "Għaddej",
+                     "filters":  {
+                                     "onlyActive":  "Attivi biss",
+                                     "onlyMine":  "Tiegħi biss"
+                                 },
+                     "actions":  {
+                                     "view":  "Ara d-dettalji",
+                                     "edit":  "Editja l-inċident",
+                                     "resolve":  "Issolvi l-inċident",
+                                     "delete":  "Ħassar l-inċident"
+                                 },
+                     "notifications":  {
+                                           "createSuccess":  "Inċident maħluq b\u0027suċċess",
+                                           "createFailed":  "Naqset milli jinħoloq l-inċident",
+                                           "updateSuccess":  "Inċident aġġornat b\u0027suċċess",
+                                           "updateFailed":  "Naqset milli jiġi aġġornat l-inċident",
+                                           "resolveSuccess":  "Inċident riżolt b\u0027suċċess",
+                                           "resolveFailed":  "Naqset milli jinżamm l-inċident",
+                                           "deleteSuccess":  "Inċident imħassar b\u0027suċċess",
+                                           "deleteFailed":  "Naqset milli jitħassar l-inċident"
+                                       },
+                     "table":  {
+                                   "empty":  "Ebda inċident instab"
+                               },
+                     "active":  {
+                                    "title":  "Inċidenti attivi",
+                                    "subtitle":  "Ara u immaniġġja inċidenti għaddejjin"
+                                },
+                     "infoTitle":  "Dettalji tal-inċident",
+                     "closeDialog":  {
+                                         "title":  "Issolvi l-inċident",
+                                         "message":  "Meta nżamm l-inċident?",
+                                         "confirm":  "Iva, agħlaq dan l-inċident",
+                                         "cancel":  "Ikkanċella"
+                                     }
+                 }
 }

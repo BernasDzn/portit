@@ -15,6 +15,11 @@ const bootstrapTaskCategories = async () => {
             { category: 'BERTH', description: 'Vessel berthing procedures', name: "Berthing" },
             { category: 'LOAD', description: 'Container loading procedures', name: "Loading" },
             { category: 'UNLOAD', description: 'Container unloading procedures', name: "Unloading" },
+            { category: 'MAINT', description: 'Equipment maintenance tasks', name: "Maintenance" },
+            { category: 'SAFETY', description: 'Safety inspections and drills', name: "Safety" },
+            { category: 'CUSTOMS', description: 'Customs clearance tasks', name: "Customs" },
+            { category: 'CARGO', description: 'Cargo handling procedures', name: "Cargo Handling" },
+            { category: 'SECURITY', description: 'Security checks and protocols', name: "Security" }
         ];
 
         categories.map((c) => new TaskCategory({

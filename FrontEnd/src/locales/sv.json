@@ -1,837 +1,1143 @@
 ﻿{
-    "common": {
-        "loading": "Laddar...",
-        "noData": "Inga data tillgängliga",
-        "statistics": "Statistik",
-        "yes": "Ja",
-        "no": "Nej",
-        "weekDay": "Veckodag",
-        "days": {
-            "sunday": "Söndag",
-            "monday": "Måndag",
-            "tuesday": "Tisdag",
-            "wednesday": "Onsdag",
-            "thursday": "Torsdag",
-            "friday": "Fredag",
-            "saturday": "Lördag"
-        },
-        "number": "Nummer"
-    },
-    "buttons": {
-        "save": "Spara",
-        "cancel": "Avbryt",
-        "delete": "Ta bort",
-        "edit": "Redigera",
-        "create": "Skapa",
-        "search": "Sök",
-        "select": "Välj",
-        "activate": "Aktivera",
-        "deactivate": "Inaktivera",
-        "filter": {
-            "title": "Filter",
-            "add": "Lägg till filter",
-            "clear": "Rensa filter"
-        },
-        "pagination": {
-            "previous": "Föregående",
-            "next": "Nästa"
-        },
-        "login": "Logga in",
-        "goBackToLogin": "Tillbaka till inloggningen",
-        "logout": "Logga ut",
-        "generate": "Generera",
-        "close": "Stäng",
-        "add": "Lägg till",
-        "review": "Granska",
-        "ok": "OK",
-        "downloadSample": "Ladda ner exempel",
-        "seeMore": "Visa mer"
-    },
-    "unsavedChanges": {
-        "title": "Osparade ändringar",
-        "message": "Du har osparade ändringar. Är du säker på att du vill lämna sidan utan att spara?",
-        "confirm": "Kassera",
-        "cancel": "Fortsätt redigera"
-    },
-    "dashboard": {
-        "sidebarTitle": "Instrumentpanel",
-        "title": "PortIT Instrumentpanel",
-        "subtitle": "Översikt över PortIT-systemet",
-        "3DModel": {
-            "title": "3D hamnvisualisering",
-            "description": "Visa en interaktiv 3D-representation av hela hamnanläggningen. Övervaka kajupptagning, fartygspositioner, lagringsområden och resurser i realtid.",
-            "open": "Öppna 3D-modell"
-        },
-        "welcome": "Välkommen tillbaka, [name]!",
-        "SAOR": {
-            "subtitle": "Översikt över speditörens verksamhet",
-            "pendingNotifications": "Väntande aviseringar",
-            "recent": "Senaste aviseringar för fartygsbesök",
-            "recentReview": "Aviseringar som kräver granskning",
-            "noRecent": "Inga senaste aviseringar"
-        }
-    },
-    "admin": {
-        "sidebarTitle": "Admin",
-        "title": "Admin-panel",
-        "subtitle": "Administrativ översikt och hantering",
-        "userManagement": {
-            "title": "Användarhantering",
-            "subtitle": "Hantera användare, roller och behörigheter"
-        },
-        "auditLogs": {
-            "title": "Revisionsloggar",
-            "subtitle": "Visa och övervaka systemaktiviteter"
-        }
-    },
-    "user": {
-        "registeredUsers": "Registrerade användare",
-        "fields": {
-            "email": {
-                "title": "E‑post",
-                "placeholder": "email@mail.com"
-            },
-            "role": {
-                "title": "Roll",
-                "placeholder": "Välj roll",
-                "options": {
-                    "admin": "Administratör",
-                    "saoRep": "SAO-representant",
-                    "pao": "Hamnautoritetstjänsteman",
-                    "logisticsOperator": "Logistikoperatör"
-                }
-            },
-            "isActive": {
-                "title": "Aktiv",
-                "options": {
-                    "active": "Ja",
-                    "inactive": "Nej"
-                }
-            }
-        },
-        "tabs": {
-            "dashboard": "Användarpanel",
-            "create": "Skapa användare",
-            "view": "Visa användare",
-            "search": "Sök användare"
-        },
-        "infoTitle": "Användardetaljer",
-        "title": "Användare",
-        "subtitle": {
-            "dashboard": "Översikt och hantering av användare",
-            "create": "Registrera en ny användare",
-            "view": "Visa och hantera befintliga användare"
-        }
-    },
-    "physicalCharacteristics": {
-        "title": "Fysiska egenskaper (m)",
-        "length": {
-            "title": "Längd",
-            "placeholder": "Längd i meter"
-        },
-        "depth": {
-            "title": "Djup",
-            "placeholder": "Djup i meter"
-        },
-        "draft": {
-            "title": "Djupgående",
-            "placeholder": "Djupgående i meter"
-        }
-    },
-    "dock": {
-        "fields": {
-            "code": {
-                "title": "Kod",
-                "placeholder": "Kajkod"
-            },
-            "name": {
-                "title": "Namn",
-                "placeholder": "Kajnamn"
-            },
-            "location": {
-                "title": "Plats",
-                "placeholder": "Kajplats"
-            },
-            "supportedVesselTypes": {
-                "title": "Stödda fartygstyper",
-                "vesselTypes": {
-                    "title": "Fartygstyper",
-                    "placeholder": "Välj fartygstyper"
+    "common":  {
+                   "loading":  "Laddar...",
+                   "noData":  "Inga data tillgängliga",
+                   "statistics":  "Statistik",
+                   "yes":  "Ja",
+                   "no":  "Nej",
+                   "weekDay":  "Veckodag",
+                   "days":  {
+                                "sunday":  "Söndag",
+                                "monday":  "Måndag",
+                                "tuesday":  "Tisdag",
+                                "wednesday":  "Onsdag",
+                                "thursday":  "Torsdag",
+                                "friday":  "Fredag",
+                                "saturday":  "Lördag"
+                            },
+                   "number":  "Nummer",
+                   "actions":  "Åtgärder",
+                   "none":  "Ingen"
+               },
+    "buttons":  {
+                    "save":  "Spara",
+                    "cancel":  "Avbryt",
+                    "delete":  "Ta bort",
+                    "edit":  "Redigera",
+                    "create":  "Skapa",
+                    "search":  "Sök",
+                    "select":  "Välj",
+                    "activate":  "Aktivera",
+                    "deactivate":  "Inaktivera",
+                    "generate":  "Generera",
+                    "close":  "Stäng",
+                    "add":  "Lägg till",
+                    "review":  "Granska",
+                    "filter":  {
+                                   "title":  "Filter",
+                                   "add":  "Lägg till filter",
+                                   "clear":  "Rensa filter"
+                               },
+                    "pagination":  {
+                                       "previous":  "Föregående",
+                                       "next":  "Nästa"
+                                   },
+                    "login":  "Logga in",
+                    "goBackToLogin":  "Tillbaka till inloggningen",
+                    "logout":  "Logga ut",
+                    "seeMore":  "Visa mer",
+                    "ok":  "OK",
+                    "downloadSample":  "Ladda ner exempel"
                 },
-                "vesselType": "Fartygstyp"
-            }
-        },
-        "tabs": {
-            "dashboard": "Kajpanel",
-            "view_dashboard": "Visa kajer",
-            "search": "Sök kajer",
-            "create": "Skapa kaj",
-            "view": "Visa kaj",
-            "edit": "Redigera kaj"
-        },
-        "generalFields": "Allmänna fält",
-        "infoTitle": "Kajinformation",
-        "title": "Kajer",
-        "subtitle": {
-            "dashboard": "Översikt över kajstatistik och aktiviteter",
-            "search": "Hantera och visa alla kajer",
-            "create": "Registrera en ny kaj",
-            "edit": "Redigera befintlig kaj"
-        },
-        "registeredDocks": "Registrerade kajer"
-    },
-    "vesselType": {
-        "fields": {
-            "name": {
-                "title": "Namn",
-                "placeholder": "Fartygstypens namn"
-            },
-            "description": {
-                "title": "Beskrivning",
-                "placeholder": "Beskrivning av fartygstypen"
-            },
-            "capacity": {
-                "title": "Kapacitet",
-                "placeholder": "Containermängd i TEU"
-            },
-            "containerCapacity": {
-                "title": "Containerkapacitet (TEU)",
-                "maxNumberOfRows": {
-                    "title": "Max antal rader",
-                    "placeholder": "Max rader"
-                },
-                "maxNumberOfBays": {
-                    "title": "Max antal fack",
-                    "placeholder": "Max fack"
-                },
-                "maxNumberOfTiers": {
-                    "title": "Max antal nivåer",
-                    "placeholder": "Max nivåer"
-                }
-            }
-        },
-        "generalFields": "Allmänna fält",
-        "tabs": {
-            "dashboard": "Fartygstyppanel",
-            "view_dashboard": "Visa fartygstyper",
-            "search": "Sök fartygstyper",
-            "create": "Skapa fartygstyp",
-            "view": "Visa fartygstyp",
-            "edit": "Redigera fartygstyp"
-        },
-        "infoTitle": "Information om fartygstyp",
-        "title": "Fartygstyper",
-        "subtitle": {
-            "dashboard": "Översikt över statistik och aktiviteter per fartygstyp",
-            "search": "Hantera och visa alla fartygstyper",
-            "create": "Registrera en ny fartygstyp",
-            "edit": "Redigera befintlig fartygstyp"
-        },
-        "registeredVesselTypes": "Registrerade fartygstyper"
-    },
-    "vessel": {
-        "fields": {
-            "name": {
-                "title": "Namn",
-                "placeholder": "Fartygsnamn"
-            },
-            "imoNumber": {
-                "title": "IMO-nummer",
-                "placeholder": "IMO-nummer"
-            },
-            "owner": {
-                "title": "Ägare",
-                "placeholder": "Ägarorganisation"
-            },
-            "vesselType": {
-                "title": "Fartygstyp",
-                "placeholder": "Välj fartygstyp"
-            },
-            "taxNumber": {
-                "title": "Skattenummer",
-                "placeholder": "Skattenummer"
-            }
-        },
-        "infoTitle": "Fartygsinformation",
-        "physicalCharacteristicsTitle": "Fysiska egenskaper",
-        "tabs": {
-            "dashboard": "Fartygspanel",
-            "view_dashboard": "Visa fartyg",
-            "search": "Sök fartyg",
-            "create": "Skapa fartyg",
-            "view": "Visa fartyg",
-            "edit": "Redigera fartyg"
-        },
-        "title": "Fartyg",
-        "subtitle": {
-            "dashboard": "Översikt över fartygsstatistik och aktiviteter",
-            "search": "Hantera och visa alla fartyg",
-            "create": "Registrera nytt fartyg",
-            "edit": "Redigera befintligt fartyg"
-        },
-        "ownedBy": "Ägs av",
-        "registeredVessels": "Registrerade fartyg"
-    },
-    "staff": {
-        "registeredStaffMembers": "Registrerade personalmeder",
-        "fields": {
-            "mechanographicNumber": {
-                "title": "Mekanografiskt nummer",
-                "placeholder": "Mekanografiskt nummer"
-            },
-            "name": {
-                "title": "Namn",
-                "placeholder": "Personalnamn"
-            },
-            "email": {
-                "title": "E‑post",
-                "placeholder": "E‑postadress"
-            },
-            "phoneNumber": {
-                "title": "Telefonnummer",
-                "placeholder": "Telefonnummer"
-            },
-            "qualifications": {
-                "title": "Kvalifikationer",
-                "placeholder": "Välj kvalifikationer"
-            },
-            "status": {
-                "title": "Status",
-                "options": {
-                    "available": "Tillgänglig",
-                    "unavailable": "Otillgänglig",
-                    "temporarilyReassigned": "Tillfälligt omplacerad"
-                }
-            },
-            "operationalWindow": "Operativt fönster"
-        },
-        "tabs": {
-            "dashboard": "Personalpanel",
-            "view_dashboard": "Visa personal",
-            "search": "Sök personal",
-            "create": "Skapa personal",
-            "view": "Visa personal",
-            "edit": "Redigera personal"
-        },
-        "infoTitle": "Personalinformation",
-        "title": "Personal",
-        "subtitle": {
-            "search": "Hantera och visa all personal",
-            "dashboard": "Översikt över personalstatistik och aktiviteter",
-            "create": "Registrera ny personal",
-            "view": "Visa personaluppgifter",
-            "edit": "Redigera befintlig personal"
-        },
-        "deactivation": {
-            "title": "Inaktivera personal",
-            "message": "Är du säker på att du vill inaktivera denna person? Åtgärden kan återställas av en administratör.",
-            "successMessage": "Personalen har inaktiverats.",
-            "errorMessage": "Ett fel uppstod vid inaktivering. Försök igen."
-        }
-    },
-    "qualification": {
-        "tabs": {
-            "dashboard": "Kvalifikationspanel",
-            "view_dashboard": "Visa kvalifikationer",
-            "search": "Sök kvalifikationer",
-            "create": "Skapa kvalifikation",
-            "view": "Visa kvalifikation",
-            "edit": "Redigera kvalifikation"
-        },
-        "infoTitle": "Kvalifikationsinformation",
-        "title": "Kvalifikationer",
-        "subtitle": {
-            "search": "Hantera och visa alla kvalifikationer",
-            "dashboard": "Översikt över kvalifikationsstatistik och aktiviteter",
-            "create": "Registrera ny kvalifikation",
-            "edit": "Redigera befintlig kvalifikation",
-            "view": "Visa kvalifikationsdetaljer"
-        },
-        "fields": {
-            "idCode": {
-                "title": "Kvalifikationskod",
-                "placeholder": "Kvalifikationskod"
-            },
-            "qualificationName": {
-                "title": "Kvalifikationsnamn",
-                "placeholder": "Kvalifikationsnamn"
-            }
-        }
-    },
-    "physicalResource": {
-        "tabs": {
-            "dashboard": "Resurspanel",
-            "view_dashboard": "Visa resurser",
-            "search": "Sök resurser",
-            "create": "Skapa resurs",
-            "view": "Visa resurs",
-            "edit": "Redigera resurs"
-        },
-        "infoTitle": "Resursinformation",
-        "title": "Fysiska resurser",
-        "subtitle": {
-            "search": "Hantera och visa alla resurser",
-            "dashboard": "Översikt över resurser",
-            "create": "Registrera ny resurs",
-            "view": "Visa resursinformation",
-            "edit": "Redigera befintlig resurs"
-        },
-        "generalFields": "Allmänna fält",
-        "specificFields": "Specifika fält",
-        "fields": {
-            "code": {
-                "title": "Kod",
-                "placeholder": "Resurskod"
-            },
-            "description": {
-                "title": "Beskrivning",
-                "placeholder": "Resursbeskrivning"
-            },
-            "status": {
-                "title": "Status",
-                "placeholder": "Välj status",
-                "options": {
-                    "available": "Tillgänglig",
-                    "maintenance": "Underhåll",
-                    "outOfService": "Ur bruk"
-                }
-            },
-            "qualifications": {
-                "title": "Krävda kvalifikationer",
-                "placeholder": "Kvalifikationer som krävs"
-            },
-            "setupTime": {
-                "title": "Uppställningstid (min)",
-                "placeholder": "Uppställningstid"
-            },
-            "servingDocks": {
-                "title": "Betjänade kajer",
-                "placeholder": "Välj kajer"
-            },
-            "liftingCapacity": {
-                "title": "Lyftkapacitet (kg)",
-                "placeholder": "Lyftkapacitet"
-            },
-            "containersPerHour": {
-                "title": "Containrar per timme",
-                "placeholder": "Antal/timme"
-            },
-            "maxLoadCapacity": {
-                "title": "Max lastkapacitet (kg)",
-                "placeholder": "Max lastkapacitet"
-            },
-            "averageSpeed": {
-                "title": "Genomsnittsfart (km/h)",
-                "placeholder": "Fart"
-            },
-            "containersPerTrip": {
-                "title": "Containrar per resa",
-                "placeholder": "Antal/resa"
-            },
-            "type": {
-                "title": "Resurstyp",
-                "options": {
-                    "stsCrane": "STS-kran",
-                    "yardGantry": "Yard-portalkran",
-                    "truck": "Lastbil"
-                }
-            }
-        },
-        "actions": {
-            "deactivate": "Inaktivera resurs"
-        },
-        "deactivation": {
-            "title": "Inaktivera fysisk resurs",
-            "message": "Är du säker på att du vill inaktivera denna resurs? Åtgärden kan återställas av en administratör.",
-            "successMessage": "Resursen har inaktiverats.",
-            "errorMessage": "Fel vid inaktivering av resursen. Försök igen."
-        }
-    },
-    "storageArea": {
-        "tabs": {
-            "dashboard": "Lagringspanel",
-            "view_dashboard": "Visa lagringsområden",
-            "search": "Sök lagringsområden",
-            "create": "Skapa lagringsområde",
-            "view": "Visa lagringsområde",
-            "edit": "Redigera lagringsområde"
-        },
-        "infoTitle": "Information om lagringsområde",
-        "title": "Lagringsområden",
-        "subtitle": {
-            "search": "Hantera och visa alla lagringsområden",
-            "dashboard": "Översikt över lagringskapacitet",
-            "create": "Registrera nytt lagringsområde",
-            "view": "Visa detaljer",
-            "edit": "Redigera lagringsområde"
-        },
-        "printer": {
-            "docks_serviced": "betjänade kajer",
-            "capacity_usage": "Kapacitetsutnyttjande",
-            "units": "enheter",
-            "available": "tillgänglig",
-            "no_registered_distances": "Inga registrerade avstånd",
-            "no_docks_serviced": "Inga kajer betjänas",
-            "all_docks_serviced": "Alla kajer betjänas",
-            "serviced_docks_distance": "Avstånd till betjänade kajer",
-            "no_registered_docks": "Inga registrerade kajer"
-        },
-        "create": {
-            "distance_meters": "Avstånd (meter)"
-        },
-        "fields": {
-            "nameCode": {
-                "title": "Namnkod",
-                "placeholder": "Kod för lagringsområde"
-            },
-            "location": {
-                "title": "Plats",
-                "placeholder": "Plats för lagringsområde"
-            },
-            "type": {
-                "title": "Typ",
-                "placeholder": "Välj typ",
-                "options": {
-                    "yard": "Yard",
-                    "warehouse": "Lager"
-                }
-            },
-            "capacity": {
-                "title": "Kapacitet",
-                "placeholder": "Max kapacitet"
-            },
-            "occupancy": {
-                "title": "Beläggning",
-                "placeholder": "Nuvarande beläggning"
-            }
-        }
-    },
-    "search": {
-        "languages": "Sök språk..."
-    },
-    "expirationWarning": {
-        "title": "Session löper snart ut",
-        "messageOneMinute": "Din session löper ut om 1 minut.",
-        "messageLessThanOneMinute": "Din session är på väg att löpa ut.",
-        "extend": "Förläng session"
-    },
-    "representative": {
-        "title": "Representant",
-        "select": "Välj representant"
-    },
-    "scheduling": {
-        "title": "Begär dagligt schema",
-        "subtitle": "Använd den automatiska algoritmen för att analysera planerade uppgifter för vald dag.",
-        "noVisits": "Inga fartygsbesök är planerade för valt datum.",
-        "visitsOnSelectedDay": "Fartygsbesök på valt datum",
-        "viewVisits": "Generera uppgiftsschema",
-        "generateTasksButton": "Generera uppgiftsschema",
-        "aboutAlgorithmButton": "Om algoritmen",
-        "fields": {
-            "algorithm": {
-                "title": "Schemaläggningsalgoritm",
-                "placeholder": "Välj algoritm"
-            },
-            "relatedDocks": "Välj relaterad kaj"
-        },
-        "generateTasksModal": {
-            "title": "Ytterligare logistik"
-        },
-        "aboutAlgorithmModal": {
-            "title": "Om algoritmen",
-            "content": "Algoritmen tar hänsyn till fartygsbesöksaviseringar för valt datum och kaj. Den kontrollerar tillgänglighet av STS-kranar och beräknar varaktighet baserat på kranhastighet samt ignorerar underhållsrelaterade besök."
-        }
-    },
-    "notification": {
-        "id": "Aviserings-ID",
-        "hazardous": "Farligt",
-        "nonHazardous": "Ej farligt",
-        "arrival": "Ankomst",
-        "departure": "Avgång",
-        "specialRequirements": "Särskilda krav",
-        "none": "Inga",
-        "crew": "Besättning",
-        "captain": "Kapten",
-        "unknown": "Okänt",
-        "from": "Från",
-        "to": "Till",
-        "tabs": {
-            "dashboard": "Aviseringspanel",
-            "search": "Sök aviseringar",
-            "edit": "Redigera avisering",
-            "create": "Skapa avisering",
-            "makeDraft": "Skapa utkast",
-            "myNotifications": "Mina aviseringar",
-            "review": "Granska aviseringar",
-            "general": "Generisk lista",
-            "byDate": "Kalenderlista",
-            "submit": "Skicka avisering",
-            "delete": "Radera avisering"
-        },
-        "eventsOnDate": "Händelser på valt datum",
-        "noEventsOnDate": "Inga händelser på valt datum",
-        "title": "Aviseringar för fartygsbesök",
-        "subtitle": {
-            "dashboard": "Översikt över aviseringar",
-            "search": "Hantera och visa alla aviseringar",
-            "create": "Skapa ny avisering",
-            "edit": "Redigera avisering",
-            "review": "Granska väntande aviseringar"
-        },
-        "errors": {
-            "noNotificationId": "Inget avisering-ID angivet"
-        },
-        "infoTitle": "Aviseringsinformation",
-        "cargoTitle": "Lastinformation",
-        "vesselTitle": "Fartygsinformation",
-        "manifestInfo": "Manifestinformation",
-        "fields": {
-            "openLoadManifest": "Öppna lastningsmanifest",
-            "openUnloadManifest": "Öppna lossningsmanifest",
-            "expectedArrival": "Beräknad ankomst",
-            "expectedDeparture": "Beräknad avgång",
-            "isCargoHazardous": "Lasten är farlig",
-            "specialRequirements": "Särskilda krav",
-            "captain": "Kapten",
-            "totalCrewMembers": "Totalt antal besättningsmedlemmar",
-            "safetyOfficers": "Säkerhetsansvariga",
-            "loadCargoManifest": "Lastningsmanifest",
-            "unloadCargoManifest": "Lossningsmanifest",
-            "position": "Position",
-            "area": "Område",
-            "container": "Container",
-            "crewMembers": "Besättningsmedlemmar",
-            "status": "Status"
-        },
-        "timeline": {
-            "pending": "Väntande",
-            "inProgress": "Pågår",
-            "completed": "Slutförd",
-            "submitted": "Inskickad",
-            "accepted": "Godkänd",
-            "rejected": "Avvisad"
-        },
-        "filters": {
-            "expectedArrivalFrom": "Beräknad ankomst från",
-            "expectedArrivalTo": "Beräknad ankomst till",
-            "withReason": "Med anledning",
-            "withDockAssigned": "Med tilldelad kaj"
-        },
-        "decision": {
-            "isFinal": "Slutgiltig",
-            "assignedDock": {
-                "title": "Tilldelad kaj",
-                "placeholder": "Välj kaj"
-            },
-            "reason": {
-                "title": "Anledning",
-                "placeholder": "Ange anledning"
-            },
-            "status": "Beslutsstatus"
-        }
-    },
-    "operationalWindow": {
-        "title": "Operativt fönster",
-        "printer": {
-            "addShift": "Lägg till skift",
-            "shifts": "Skift:",
-            "noShifts": "Inga skift",
-            "startTime": "Starttid",
-            "endTime": "Sluttid",
-            "weekDays": "Veckodagar"
-        },
-        "errors": {
-            "shiftOverlap": "Ogiltigt skift. Överlapp eller sluttid före start."
-        }
-    },
-    "about": {
-        "title": "Om applikationen",
-        "description": "Denna modul tillhandahåller en omfattande lösning för hantering av autonom fordonsflotta inklusive operationsplaner, incidenttyper och uppgiftskörning.",
-        "version": "Version",
-        "features": {
-            "title": "Funktioner",
-            "fleet": "Flotthantering",
-            "planning": "Operationsplanering",
-            "incidents": "Incidentspårning",
-            "tasks": "Uppgiftskörning"
-        }
-    },
-    "operationPlan": {
-        "title": "Operationsplan",
-        "list": {
-            "title": "Operationsplaner",
-            "empty": "Inga operationsplaner hittades",
-            "search": "Sök planer..."
-        },
-        "details": {
-            "title": "Plandetaljer",
-            "status": "Status",
-            "startDate": "Startdatum",
-            "endDate": "Slutdatum",
-            "assignedVehicles": "Tilldelade fordon",
-            "tasks": "Uppgifter"
-        },
-        "form": {
-            "create": "Skapa plan",
-            "edit": "Redigera plan",
-            "name": "Plannamn",
-            "description": "Beskrivning",
-            "selectVehicles": "Välj fordon"
-        },
-        "status": {
-            "draft": "Utkast",
-            "active": "Aktiv",
-            "completed": "Slutförd",
-            "cancelled": "Avbruten"
-        }
-    },
-    "incidentType": {
-        "title": "Incidenttyp",
-        "list": {
-            "title": "Incidenttyper",
-            "empty": "Inga incidenttyper hittades",
-            "search": "Sök typer..."
-        },
-        "details": {
-            "title": "Typdetaljer",
-            "code": "Kod",
-            "severity": "Allvarlighetsgrad",
-            "responseTime": "Svarstid",
-            "procedures": "Procedurer"
-        },
-        "form": {
-            "create": "Skapa typ",
-            "edit": "Redigera typ",
-            "name": "Typnamn",
-            "description": "Beskrivning",
-            "selectSeverity": "Välj allvarlighetsgrad"
-        },
-        "severity": {
-            "low": "Låg",
-            "medium": "Medel",
-            "high": "Hög",
-            "critical": "Kritisk"
-        }
-    },
-    "taskCategory": {
-        "title": "Uppgiftskategori",
-        "list": {
-            "title": "Uppgiftskategorier",
-            "empty": "Inga uppgiftskategorier hittades",
-            "search": "Sök kategorier..."
-        },
-        "details": {
-            "title": "Kategoridetaljer",
-            "code": "Kod",
-            "priority": "Prioritet",
-            "estimatedDuration": "Uppskattad varaktighet",
-            "requirements": "Krav"
-        },
-        "form": {
-            "create": "Skapa kategori",
-            "edit": "Redigera kategori",
-            "name": "Kategorinamn",
-            "description": "Beskrivning",
-            "selectPriority": "Välj prioritet"
-        },
-        "priority": {
-            "low": "Låg",
-            "normal": "Normal",
-            "high": "Hög",
-            "urgent": "Brskåd"
-        }
-    },
-    "execution": {
-        "title": "Utförande",
-        "status": {
-            "pending": "Väntande",
-            "inProgress": "Pågående",
-            "completed": "Slutförd",
-            "failed": "Misslyckades",
-            "cancelled": "Avbruten"
-        },
-        "details": {
-            "title": "Utförandedetaljer",
-            "startTime": "Starttid",
-            "endTime": "Sluttid",
-            "duration": "Varaktighet",
-            "assignedTo": "Tilldelad till",
-            "progress": "Framsteg"
-        },
-        "actions": {
-            "start": "Starta utförande",
-            "pause": "Pausa",
-            "resume": "Återuppta",
-            "complete": "Slutför",
-            "cancel": "Avbryt"
-        },
-        "messages": {
-            "started": "Utförande startad",
-            "paused": "Utförande pausad",
-            "resumed": "Utförande återupptagen",
-            "completed": "Utförande slutförd",
-            "cancelled": "Utförande avbruten",
-            "failed": "Utförande misslyckades"
-        }
-    },
-    "incident": {
-        "title": "Incident",
-        "list": {
-            "title": "Incidenter",
-            "empty": "Inga incidenter hittades",
-            "search": "Sök incidenter...",
-            "filter": {
-                "all": "Alla",
-                "open": "Öppna",
-                "inProgress": "Pågående",
-                "resolved": "Löst",
-                "closed": "Stängd"
-            }
-        },
-        "details": {
-            "title": "Incidentdetaljer",
-            "id": "Incident-ID",
-            "type": "Typ",
-            "status": "Status",
-            "severity": "Allvarlighetsgrad",
-            "reportedBy": "Rapporterad av",
-            "reportedAt": "Rapporterad",
-            "assignedTo": "Tilldelad till",
-            "location": "Plats",
-            "vehicle": "Fordon",
-            "description": "Beskrivning",
-            "resolution": "Lösning",
-            "timeline": "Tidslinje"
-        },
-        "form": {
-            "create": "Rapportera incident",
-            "edit": "Redigera incident",
-            "selectType": "Välj typ",
-            "selectSeverity": "Välj allvarlighetsgrad",
-            "selectVehicle": "Välj fordon",
-            "descriptionPlaceholder": "Beskriv incidenten...",
-            "resolutionPlaceholder": "Beskriv lösningen..."
-        },
-        "status": {
-            "open": "Öppen",
-            "inProgress": "Pågående",
-            "resolved": "Löst",
-            "closed": "Stängd"
-        },
-        "actions": {
-            "assign": "Tilldela",
-            "resolve": "Lös",
-            "close": "Stäng",
-            "reopen": "Återöppna",
-            "addNote": "Lägg till anteckning"
-        },
-        "messages": {
-            "created": "Incident skapad",
-            "updated": "Incident uppdaterad",
-            "assigned": "Incident tilldelad",
-            "resolved": "Incident löst",
-            "closed": "Incident stängd",
-            "reopened": "Incident återöppnad"
-        }
-    }
+    "search":  {
+                   "languages":  "Sök språk..."
+               },
+    "unsavedChanges":  {
+                           "title":  "Osparade ändringar",
+                           "message":  "Du har osparade ändringar. Är du säker på att du vill lämna sidan utan att spara?",
+                           "confirm":  "Kassera",
+                           "cancel":  "Fortsätt redigera"
+                       },
+    "expirationWarning":  {
+                              "messageOneMinute":  "Din session löper ut om 1 minut.",
+                              "messageLessThanOneMinute":  "Din session är på väg att löpa ut."
+                          },
+    "dashboard":  {
+                      "welcome":  "Välkommen tillbaka, [name]!",
+                      "sidebarTitle":  "Instrumentpanel",
+                      "title":  "PortIT Instrumentpanel",
+                      "subtitle":  "Översikt över PortIT-systemet",
+                      "SAOR":  {
+                                   "subtitle":  "Översikt över speditörens verksamhet",
+                                   "pendingNotifications":  "Väntande aviseringar",
+                                   "recent":  "Senaste aviseringar för fartygsbesök",
+                                   "recentReview":  "Aviseringar som kräver granskning",
+                                   "noRecent":  "Inga senaste aviseringar"
+                               },
+                      "3DModel":  {
+                                      "title":  "3D hamnvisualisering",
+                                      "description":  "Visa en interaktiv 3D-representation av hela hamnanläggningen. Övervaka kajupptagning, fartygspositioner, lagringsområden och resurser i realtid.",
+                                      "open":  "Öppna 3D-modell"
+                                  }
+                  },
+    "admin":  {
+                  "sidebarTitle":  "Admin",
+                  "title":  "Admin-panel",
+                  "subtitle":  "Administrativ översikt och hantering",
+                  "userManagement":  {
+                                         "title":  "Användarhantering",
+                                         "subtitle":  "Hantera användare, roller och behörigheter"
+                                     },
+                  "auditLogs":  {
+                                    "title":  "Revisionsloggar",
+                                    "subtitle":  "Visa och övervaka systemaktiviteter"
+                                },
+                  "pp":  {
+                             "title":  "Sekretesspolicy",
+                             "subtitle":  "Definiera och hantera hamnens datainsamlingspolicy."
+                         },
+                  "notifications":  {
+                                        "create":  "Skapa avisering",
+                                        "subtitleCreate":  "Send important announcements to any or all users.",
+                                        "title":  "Systemaviseringar",
+                                        "subtitle":  "Skapa och hantera allmänna systemaviseringar.",
+                                        "broadcastToggle":  "Broadcast to all users",
+                                        "sendEmailToggle":  "Also send as email",
+                                        "fields":  {
+                                                       "title":  {
+                                                                     "title":  "Title",
+                                                                     "placeholder":  "Ange aviseringstitel"
+                                                                 },
+                                                       "message":  {
+                                                                       "title":  "Message",
+                                                                       "placeholder":  "Ange aviseringsmeddelande"
+                                                                   },
+                                                       "email":  {
+                                                                     "title":  "User email",
+                                                                     "placeholder":  "Specify user email to send to"
+                                                                 },
+                                                       "urgency":  {
+                                                                       "title":  "Urgency",
+                                                                       "options":  {
+                                                                                       "normal":  "Normal",
+                                                                                       "urgent":  "Urgent"
+                                                                                   }
+                                                                   }
+                                                   }
+                                    }
+              },
+    "user":  {
+                 "fields":  {
+                                "email":  {
+                                              "title":  "E‑post",
+                                              "placeholder":  "email@mail.com"
+                                          },
+                                "role":  {
+                                             "title":  "Roll",
+                                             "placeholder":  "Välj roll",
+                                             "options":  {
+                                                             "admin":  "Administratör",
+                                                             "saoRep":  "SAO-representant",
+                                                             "pao":  "Hamnautoritetstjänsteman",
+                                                             "logisticsOperator":  "Logistikoperatör"
+                                                         }
+                                         },
+                                "isActive":  {
+                                                 "title":  "Aktiv",
+                                                 "options":  {
+                                                                 "active":  "Ja",
+                                                                 "inactive":  "Nej"
+                                                             }
+                                             }
+                            },
+                 "tabs":  {
+                              "dashboard":  "Användarpanel",
+                              "create":  "Skapa användare",
+                              "view":  "Visa användare",
+                              "search":  "Sök användare"
+                          },
+                 "infoTitle":  "Användardetaljer",
+                 "title":  "Användare",
+                 "subtitle":  {
+                                  "dashboard":  "Översikt och hantering av användare",
+                                  "create":  "Registrera en ny användare",
+                                  "view":  "Visa och hantera befintliga användare"
+                              },
+                 "registeredUsers":  "Registrerade användare",
+                 "confirmDelete":  "Bekräfta radering",
+                 "confirmDeleteMessage":  "Är du säker på att du vill radera denna användare?"
+             },
+    "representative":  {
+                           "title":  "Representant",
+                           "select":  "Välj representant"
+                       },
+    "physicalCharacteristics":  {
+                                    "title":  "Fysiska egenskaper (m)",
+                                    "length":  {
+                                                   "title":  "Längd",
+                                                   "placeholder":  "Längd i meter"
+                                               },
+                                    "depth":  {
+                                                  "title":  "Djup",
+                                                  "placeholder":  "Djup i meter"
+                                              },
+                                    "draft":  {
+                                                  "title":  "Djupgående",
+                                                  "placeholder":  "Djupgående i meter"
+                                              }
+                                },
+    "dock":  {
+                 "fields":  {
+                                "code":  {
+                                             "title":  "Kod",
+                                             "placeholder":  "Kajkod"
+                                         },
+                                "name":  {
+                                             "title":  "Namn",
+                                             "placeholder":  "Kajnamn"
+                                         },
+                                "location":  {
+                                                 "title":  "Plats",
+                                                 "placeholder":  "Kajplats"
+                                             },
+                                "supportedVesselTypes":  {
+                                                             "title":  "Stödda fartygstyper",
+                                                             "vesselTypes":  {
+                                                                                 "title":  "Fartygstyper",
+                                                                                 "placeholder":  "Välj fartygstyper"
+                                                                             },
+                                                             "vesselType":  "Fartygstyp"
+                                                         }
+                            },
+                 "tabs":  {
+                              "dashboard":  "Kajpanel",
+                              "view_dashboard":  "Visa kajer",
+                              "search":  "Sök kajer",
+                              "create":  "Skapa kaj",
+                              "view":  "Visa kaj",
+                              "edit":  "Redigera kaj"
+                          },
+                 "generalFields":  "Allmänna fält",
+                 "infoTitle":  "Kajinformation",
+                 "title":  "Kajer",
+                 "subtitle":  {
+                                  "dashboard":  "Översikt över kajstatistik och aktiviteter",
+                                  "search":  "Hantera och visa alla kajer",
+                                  "create":  "Registrera en ny kaj",
+                                  "edit":  "Redigera befintlig kaj"
+                              },
+                 "registeredDocks":  "Registrerade kajer"
+             },
+    "vesselType":  {
+                       "fields":  {
+                                      "name":  {
+                                                   "title":  "Namn",
+                                                   "placeholder":  "Fartygstypens namn"
+                                               },
+                                      "description":  {
+                                                          "title":  "Beskrivning",
+                                                          "placeholder":  "Beskrivning av fartygstypen"
+                                                      },
+                                      "capacity":  {
+                                                       "title":  "Kapacitet",
+                                                       "placeholder":  "Containermängd i TEU"
+                                                   },
+                                      "containerCapacity":  {
+                                                                "title":  "Containerkapacitet (TEU)",
+                                                                "maxNumberOfRows":  {
+                                                                                        "title":  "Max antal rader",
+                                                                                        "placeholder":  "Max rader"
+                                                                                    },
+                                                                "maxNumberOfBays":  {
+                                                                                        "title":  "Max antal fack",
+                                                                                        "placeholder":  "Max fack"
+                                                                                    },
+                                                                "maxNumberOfTiers":  {
+                                                                                         "title":  "Max antal nivåer",
+                                                                                         "placeholder":  "Max nivåer"
+                                                                                     }
+                                                            }
+                                  },
+                       "generalFields":  "Allmänna fält",
+                       "tabs":  {
+                                    "dashboard":  "Fartygstyppanel",
+                                    "view_dashboard":  "Visa fartygstyper",
+                                    "search":  "Sök fartygstyper",
+                                    "create":  "Skapa fartygstyp",
+                                    "view":  "Visa fartygstyp",
+                                    "edit":  "Redigera fartygstyp"
+                                },
+                       "infoTitle":  "Information om fartygstyp",
+                       "title":  "Fartygstyper",
+                       "subtitle":  {
+                                        "dashboard":  "Översikt över statistik och aktiviteter per fartygstyp",
+                                        "search":  "Hantera och visa alla fartygstyper",
+                                        "create":  "Registrera en ny fartygstyp",
+                                        "edit":  "Redigera befintlig fartygstyp"
+                                    },
+                       "registeredVesselTypes":  "Registrerade fartygstyper"
+                   },
+    "vessel":  {
+                   "fields":  {
+                                  "name":  {
+                                               "title":  "Namn",
+                                               "placeholder":  "Fartygsnamn"
+                                           },
+                                  "imoNumber":  {
+                                                    "title":  "IMO-nummer",
+                                                    "placeholder":  "IMO-nummer"
+                                                },
+                                  "owner":  {
+                                                "title":  "Ägare",
+                                                "placeholder":  "Ägarorganisation"
+                                            },
+                                  "vesselType":  {
+                                                     "title":  "Fartygstyp",
+                                                     "placeholder":  "Välj fartygstyp"
+                                                 },
+                                  "taxNumber":  {
+                                                    "title":  "Skattenummer"
+                                                }
+                              },
+                   "infoTitle":  "Fartygsinformation",
+                   "physicalCharacteristicsTitle":  "Fysiska egenskaper",
+                   "tabs":  {
+                                "dashboard":  "Fartygspanel",
+                                "view_dashboard":  "Visa fartyg",
+                                "search":  "Sök fartyg",
+                                "create":  "Skapa fartyg",
+                                "view":  "Visa fartyg",
+                                "edit":  "Redigera fartyg"
+                            },
+                   "title":  "Fartyg",
+                   "subtitle":  {
+                                    "dashboard":  "Översikt över fartygsstatistik och aktiviteter",
+                                    "search":  "Hantera och visa alla fartyg",
+                                    "create":  "Registrera nytt fartyg",
+                                    "edit":  "Redigera befintligt fartyg"
+                                },
+                   "ownedBy":  "Ägs av",
+                   "registeredVessels":  "Registrerade fartyg"
+               },
+    "staff":  {
+                  "deactivation":  {
+                                       "title":  "Inaktivera personal",
+                                       "message":  "Är du säker på att du vill inaktivera denna person? Åtgärden kan återställas av en administratör.",
+                                       "successMessage":  "Personalen har inaktiverats.",
+                                       "errorMessage":  "Ett fel uppstod vid inaktivering. Försök igen."
+                                   },
+                  "fields":  {
+                                 "mechanographicNumber":  {
+                                                              "title":  "Mekanografiskt nummer",
+                                                              "placeholder":  "Mekanografiskt nummer"
+                                                          },
+                                 "name":  {
+                                              "title":  "Namn",
+                                              "placeholder":  "Personalnamn"
+                                          },
+                                 "email":  {
+                                               "title":  "E‑post",
+                                               "placeholder":  "E‑postadress"
+                                           },
+                                 "phoneNumber":  {
+                                                     "title":  "Telefonnummer",
+                                                     "placeholder":  "Telefonnummer"
+                                                 },
+                                 "qualifications":  {
+                                                        "title":  "Kvalifikationer",
+                                                        "placeholder":  "Välj kvalifikationer"
+                                                    },
+                                 "status":  {
+                                                "title":  "Status",
+                                                "options":  {
+                                                                "available":  "Tillgänglig",
+                                                                "unavailable":  "Otillgänglig",
+                                                                "temporarilyReassigned":  "Tillfälligt omplacerad"
+                                                            }
+                                            },
+                                 "operationalWindow":  "Operativt fönster"
+                             },
+                  "tabs":  {
+                               "dashboard":  "Personalpanel",
+                               "view_dashboard":  "Visa personal",
+                               "search":  "Sök personal",
+                               "create":  "Skapa personal",
+                               "view":  "Visa personal",
+                               "edit":  "Redigera personal"
+                           },
+                  "infoTitle":  "Personalinformation",
+                  "title":  "Personal",
+                  "subtitle":  {
+                                   "search":  "Hantera och visa all personal",
+                                   "dashboard":  "Översikt över personalstatistik och aktiviteter",
+                                   "create":  "Registrera ny personal",
+                                   "view":  "Visa personaluppgifter",
+                                   "edit":  "Redigera befintlig personal"
+                               },
+                  "registeredStaffMembers":  "Registrerade personalmeder"
+              },
+    "qualification":  {
+                          "tabs":  {
+                                       "dashboard":  "Kvalifikationspanel",
+                                       "view_dashboard":  "Visa kvalifikationer",
+                                       "search":  "Sök kvalifikationer",
+                                       "create":  "Skapa kvalifikation",
+                                       "view":  "Visa kvalifikation",
+                                       "edit":  "Redigera kvalifikation"
+                                   },
+                          "infoTitle":  "Kvalifikationsinformation",
+                          "title":  "Kvalifikationer",
+                          "subtitle":  {
+                                           "search":  "Hantera och visa alla kvalifikationer",
+                                           "dashboard":  "Översikt över kvalifikationsstatistik och aktiviteter",
+                                           "create":  "Registrera ny kvalifikation",
+                                           "edit":  "Redigera befintlig kvalifikation",
+                                           "view":  "Visa kvalifikationsdetaljer"
+                                       },
+                          "fields":  {
+                                         "idCode":  {
+                                                        "title":  "Kvalifikationskod",
+                                                        "placeholder":  "Kvalifikationskod"
+                                                    },
+                                         "qualificationName":  {
+                                                                   "title":  "Kvalifikationsnamn",
+                                                                   "placeholder":  "Kvalifikationsnamn"
+                                                               }
+                                     },
+                          "registeredQualifications":  "Registered Qualifications"
+                      },
+    "scheduling":  {
+                       "title":  "Begär dagligt schema",
+                       "subtitle":  "Använd den automatiska algoritmen för att analysera planerade uppgifter för vald dag.",
+                       "noVisits":  "Inga fartygsbesök är planerade för valt datum.",
+                       "visitsOnSelectedDay":  "Fartygsbesök på valt datum",
+                       "viewVisits":  "Generera uppgiftsschema",
+                       "generateTasksButton":  "Generera uppgiftsschema",
+                       "aboutAlgorithmButton":  "Om algoritmen",
+                       "fields":  {
+                                      "algorithm":  {
+                                                        "title":  "Schemaläggningsalgoritm",
+                                                        "placeholder":  "Välj algoritm"
+                                                    },
+                                      "relatedDocks":  "Välj relaterad kaj"
+                                  },
+                       "generateTasksModal":  {
+                                                  "title":  "Ytterligare logistik"
+                                              },
+                       "aboutAlgorithmModal":  {
+                                                   "title":  "Om algoritmen",
+                                                   "content":  "Algoritmen tar hänsyn till fartygsbesöksaviseringar för valt datum och kaj. Den kontrollerar tillgänglighet av STS-kranar och beräknar varaktighet baserat på kranhastighet samt ignorerar underhållsrelaterade besök."
+                                               },
+                       "results":  {
+                                       "title":  "Scheduling Results",
+                                       "subtitle":  "Generated task schedule for the selected date"
+                                   },
+                       "tabs":  {
+                                    "dashboard":  "Scheduling Dashboard",
+                                    "results":  "Scheduling Results",
+                                    "schedule":  "Request Task Schedule",
+                                    "view_dashboard":  "View Scheduling",
+                                    "search":  "List Operation Plans",
+                                    "create":  "Create Scheduling",
+                                    "view":  "View Scheduling",
+                                    "edit":  "Edit Scheduling",
+                                    "queue":  "Scheduling Queue"
+                                },
+                       "subtitles":  {
+                                         "dashboard":  "Overview of scheduling of berth operations and incidents",
+                                         "schedule":  "Request a task schedule for a specific date",
+                                         "search":  "List all operation plans for a given date",
+                                         "create":  "Create a new scheduling into the system",
+                                         "edit":  "Edit an existing scheduling in the system",
+                                         "queue":  "View pending scheduling requests"
+                                     },
+                       "queue":  {
+                                     "title":  "Scheduling Queue",
+                                     "subtitle":  "Pending scheduling requests",
+                                     "onlyMine":  "Show only my requests"
+                                 },
+                       "rebalancing":  {
+                                           "title":  "Dock Rebalancing Required",
+                                           "warningMessage":  "Before scheduling, the system recommends rebalancing dock assignments to optimize load distribution.",
+                                           "vesselsToReassign":  "Vessels to Reassign",
+                                           "averageLoad":  "Average Load",
+                                           "loadRange":  "Load Range",
+                                           "proposedReassignments":  "Proposed Reassignments",
+                                           "vesselImo":  "Vessel IMO",
+                                           "currentDock":  "Current Dock",
+                                           "proposedDock":  "Proposed Dock",
+                                           "skipButton":  "Skip \u0026 Continue with Current Assignments",
+                                           "applyButton":  "Apply Rebalancing \u0026 Generate Schedule"
+                                       }
+                   },
+    "physicalResource":  {
+                             "deactivation":  {
+                                                  "title":  "Inaktivera fysisk resurs",
+                                                  "message":  "Är du säker på att du vill inaktivera denna resurs? Åtgärden kan återställas av en administratör.",
+                                                  "successMessage":  "Resursen har inaktiverats.",
+                                                  "errorMessage":  "Fel vid inaktivering av resursen. Försök igen."
+                                              },
+                             "tabs":  {
+                                          "dashboard":  "Resurspanel",
+                                          "view_dashboard":  "Visa resurser",
+                                          "search":  "Sök resurser",
+                                          "create":  "Skapa resurs",
+                                          "view":  "Visa resurs",
+                                          "edit":  "Redigera resurs"
+                                      },
+                             "infoTitle":  "Resursinformation",
+                             "title":  "Fysiska resurser",
+                             "subtitle":  {
+                                              "search":  "Hantera och visa alla resurser",
+                                              "dashboard":  "Översikt över resurser",
+                                              "view_dashboard":  "View Physical Resources",
+                                              "create":  "Registrera ny resurs",
+                                              "view":  "Visa resursinformation",
+                                              "edit":  "Redigera befintlig resurs"
+                                          },
+                             "generalFields":  "Allmänna fält",
+                             "specificFields":  "Specifika fält",
+                             "fields":  {
+                                            "code":  {
+                                                         "title":  "Kod",
+                                                         "placeholder":  "Resurskod"
+                                                     },
+                                            "description":  {
+                                                                "title":  "Beskrivning",
+                                                                "placeholder":  "Resursbeskrivning"
+                                                            },
+                                            "status":  {
+                                                           "title":  "Status",
+                                                           "placeholder":  "Välj status",
+                                                           "options":  {
+                                                                           "available":  "Tillgänglig",
+                                                                           "maintenance":  "Underhåll",
+                                                                           "outOfService":  "Ur bruk"
+                                                                       }
+                                                       },
+                                            "qualifications":  {
+                                                                   "title":  "Krävda kvalifikationer",
+                                                                   "placeholder":  "Kvalifikationer som krävs"
+                                                               },
+                                            "setupTime":  {
+                                                              "title":  "Uppställningstid (min)",
+                                                              "placeholder":  "Uppställningstid"
+                                                          },
+                                            "servingDocks":  {
+                                                                 "title":  "Betjänade kajer",
+                                                                 "placeholder":  "Välj kajer"
+                                                             },
+                                            "liftingCapacity":  {
+                                                                    "title":  "Lyftkapacitet (kg)",
+                                                                    "placeholder":  "Lyftkapacitet"
+                                                                },
+                                            "containersPerHour":  {
+                                                                      "title":  "Containrar per timme",
+                                                                      "placeholder":  "Antal/timme"
+                                                                  },
+                                            "maxLoadCapacity":  {
+                                                                    "title":  "Max lastkapacitet (kg)",
+                                                                    "placeholder":  "Max lastkapacitet"
+                                                                },
+                                            "averageSpeed":  {
+                                                                 "title":  "Genomsnittsfart (km/h)",
+                                                                 "placeholder":  "Fart"
+                                                             },
+                                            "containersPerTrip":  {
+                                                                      "title":  "Containrar per resa",
+                                                                      "placeholder":  "Antal/resa"
+                                                                  },
+                                            "type":  {
+                                                         "title":  "Resurstyp",
+                                                         "options":  {
+                                                                         "stsCrane":  "STS-kran",
+                                                                         "yardGantry":  "Yard-portalkran",
+                                                                         "truck":  "Lastbil"
+                                                                     }
+                                                     }
+                                        },
+                             "actions":  {
+                                             "deactivate":  "Inaktivera resurs"
+                                         },
+                             "registeredPhysicalResources":  "Registered Physical Resources"
+                         },
+    "storageArea":  {
+                        "tabs":  {
+                                     "dashboard":  "Lagringspanel",
+                                     "view_dashboard":  "Visa lagringsområden",
+                                     "search":  "Sök lagringsområden",
+                                     "create":  "Skapa lagringsområde",
+                                     "view":  "Visa lagringsområde",
+                                     "edit":  "Redigera lagringsområde"
+                                 },
+                        "create":  {
+                                       "distance_meters":  "Avstånd (meter)"
+                                   },
+                        "infoTitle":  "Information om lagringsområde",
+                        "title":  "Lagringsområden",
+                        "subtitle":  {
+                                         "search":  "Hantera och visa alla lagringsområden",
+                                         "dashboard":  "Översikt över lagringskapacitet",
+                                         "view_dashboard":  "View Storage Areas",
+                                         "create":  "Registrera nytt lagringsområde",
+                                         "view":  "Visa detaljer",
+                                         "edit":  "Redigera lagringsområde"
+                                     },
+                        "printer":  {
+                                        "docks_serviced":  "betjänade kajer",
+                                        "capacity_usage":  "Kapacitetsutnyttjande",
+                                        "units":  "enheter",
+                                        "available":  "tillgänglig",
+                                        "no_registered_distances":  "Inga registrerade avstånd",
+                                        "no_docks_serviced":  "Inga kajer betjänas",
+                                        "all_docks_serviced":  "Alla kajer betjänas",
+                                        "serviced_docks_distance":  "Avstånd till betjänade kajer",
+                                        "no_registered_docks":  "Inga registrerade kajer"
+                                    },
+                        "fields":  {
+                                       "nameCode":  {
+                                                        "title":  "Namnkod",
+                                                        "placeholder":  "Kod för lagringsområde"
+                                                    },
+                                       "location":  {
+                                                        "title":  "Plats",
+                                                        "placeholder":  "Plats för lagringsområde"
+                                                    },
+                                       "type":  {
+                                                    "title":  "Typ",
+                                                    "placeholder":  "Välj typ",
+                                                    "options":  {
+                                                                    "yard":  "Yard",
+                                                                    "warehouse":  "Lager"
+                                                                }
+                                                },
+                                       "capacity":  {
+                                                        "title":  "Kapacitet",
+                                                        "placeholder":  "Max kapacitet"
+                                                    },
+                                       "occupancy":  {
+                                                         "title":  "Beläggning",
+                                                         "placeholder":  "Nuvarande beläggning"
+                                                     }
+                                   },
+                        "registeredStorageAreas":  "Registered Storage Areas"
+                    },
+    "notification":  {
+                         "id":  "Aviserings-ID",
+                         "hazardous":  "Farligt",
+                         "nonHazardous":  "Ej farligt",
+                         "arrival":  "Ankomst",
+                         "departure":  "Avgång",
+                         "specialRequirements":  "Särskilda krav",
+                         "none":  "Inga",
+                         "crew":  "Besättning",
+                         "captain":  "Kapten",
+                         "unknown":  "Okänt",
+                         "from":  "Från",
+                         "to":  "Till",
+                         "step":  "Step",
+                         "of":  "of",
+                         "tabs":  {
+                                      "dashboard":  "Aviseringspanel",
+                                      "search":  "Sök aviseringar",
+                                      "edit":  "Redigera avisering",
+                                      "create":  "Skapa avisering",
+                                      "update":  "Update Notification",
+                                      "makeDraft":  "Skapa utkast",
+                                      "myNotifications":  "Mina aviseringar",
+                                      "review":  "Granska aviseringar",
+                                      "general":  "Generisk lista",
+                                      "byDate":  "Kalenderlista",
+                                      "submit":  "Skicka avisering",
+                                      "delete":  "Radera avisering"
+                                  },
+                         "eventsOnDate":  "Händelser på valt datum",
+                         "noEventsOnDate":  "Inga händelser på valt datum",
+                         "title":  "Aviseringar för fartygsbesök",
+                         "subtitle":  {
+                                          "dashboard":  "Översikt över aviseringar",
+                                          "search":  "Hantera och visa alla aviseringar",
+                                          "create":  "Skapa ny avisering",
+                                          "update":  "Update an existing vessel visit notification",
+                                          "edit":  "Redigera avisering",
+                                          "review":  "Granska väntande aviseringar"
+                                      },
+                         "errors":  {
+                                        "noNotificationId":  "Inget avisering-ID angivet"
+                                    },
+                         "infoTitle":  "Aviseringsinformation",
+                         "cargoTitle":  "Lastinformation",
+                         "vesselTitle":  "Fartygsinformation",
+                         "manifestInfo":  "Manifestinformation",
+                         "fields":  {
+                                        "selectVessel":  "Select corresponding vessel",
+                                        "openLoadManifest":  "Öppna lastningsmanifest",
+                                        "openUnloadManifest":  "Öppna lossningsmanifest",
+                                        "expectedArrival":  "Beräknad ankomst",
+                                        "expectedDeparture":  "Beräknad avgång",
+                                        "isCargoHazardous":  "Lasten är farlig",
+                                        "specialRequirements":  "Särskilda krav",
+                                        "captain":  "Kapten",
+                                        "totalCrewMembers":  "Totalt antal besättningsmedlemmar",
+                                        "safetyOfficers":  "Säkerhetsansvariga",
+                                        "loadCargoManifest":  "Lastningsmanifest",
+                                        "unloadCargoManifest":  "Lossningsmanifest",
+                                        "position":  "Position",
+                                        "area":  "Område",
+                                        "container":  "Container",
+                                        "crewMembers":  "Besättningsmedlemmar",
+                                        "status":  "Status",
+                                        "isCargoHazardousQ":  "Is Cargo Hazardous?",
+                                        "cargoManifestInfo":  "About cargo manifest files"
+                                    },
+                         "timeline":  {
+                                          "pending":  "Väntande",
+                                          "inProgress":  "Pågår",
+                                          "completed":  "Slutförd",
+                                          "submitted":  "Inskickad",
+                                          "accepted":  "Godkänd",
+                                          "rejected":  "Avvisad"
+                                      },
+                         "filters":  {
+                                         "expectedArrivalFrom":  "Beräknad ankomst från",
+                                         "expectedArrivalTo":  "Beräknad ankomst till",
+                                         "withReason":  "Med anledning",
+                                         "withDockAssigned":  "Med tilldelad kaj"
+                                     },
+                         "decision":  {
+                                          "isFinal":  "Slutgiltig",
+                                          "assignedDock":  {
+                                                               "title":  "Tilldelad kaj",
+                                                               "placeholder":  "Välj kaj"
+                                                           },
+                                          "reason":  {
+                                                         "title":  "Anledning",
+                                                         "placeholder":  "Ange anledning"
+                                                     },
+                                          "status":  "Beslutsstatus"
+                                      },
+                         "sections":  {
+                                          "vesselDetails":  "Besöksinformation",
+                                          "crewDetails":  "Besättningsdetaljer",
+                                          "cargoRequirements":  "Lastkrav",
+                                          "cargoContent":  "Lastinnehåll"
+                                      },
+                         "about":  {
+                                       "text":  "Lastmanifestfiler måste (för närvarande) vara i ett europeiskt standard CSV-format. Varje rad i CSV-filen representerar en lastartikel med följande kolumner:",
+                                       "bay":  "Bay (nummer)",
+                                       "row":  "Rad (nummer)",
+                                       "tier":  "Nivå (nummer)",
+                                       "area":  "Områdeskod (varifrån/vart)",
+                                       "containerNumber":  "Containernummer (text)",
+                                       "conatinerType":  "Containertyp (nummer)",
+                                       "description":  "Beskrivning (text)",
+                                       "containerTypes":  {
+                                                              "refrigeratedGoods":  "Kylvaror",
+                                                              "generalConsumerProducts":  "Allmänna konsumentprodukter",
+                                                              "electronics":  "Elektronik",
+                                                              "hazmat":  "Farliga material",
+                                                              "oversizedIndustrialEquipment":  "Överstora industriell utrustning",
+                                                              "other":  "Övrigt"
+                                                          }
+                                   },
+                         "registeredVesselVisitNotifications":  "Registered Vessel Visit Notifications"
+                     },
+    "operationalWindow":  {
+                              "title":  "Operativt fönster",
+                              "printer":  {
+                                              "addShift":  "Lägg till skift",
+                                              "shifts":  "Skift:",
+                                              "noShifts":  "Inga skift",
+                                              "startTime":  "Starttid",
+                                              "endTime":  "Sluttid",
+                                              "weekDays":  "Veckodagar"
+                                          },
+                              "errors":  {
+                                             "shiftOverlap":  "Ogiltigt skift. Överlapp eller sluttid före start."
+                                         }
+                          },
+    "about":  {
+                  "title":  "Om applikationen",
+                  "privacy":  {
+                                  "title":  "Privacy Policy",
+                                  "lastUpdated":  "Last updated: {date}"
+                              }
+              },
+    "operationPlan":  {
+                          "title":  "Operationsplan",
+                          "dock":  "Dock",
+                          "docks":  "Docks",
+                          "operations":  "Operations",
+                          "cranes":  "Cranes",
+                          "createdBy":  "Created By",
+                          "createdAt":  "Created At",
+                          "totalSchedules":  "Total Schedules",
+                          "vesselCount":  "Vessels",
+                          "plansOnDate":  "Operation plans on selected date",
+                          "noPlansOnDate":  "No operation plans on selected date",
+                          "id":  "ID",
+                          "vvn":  "Vessel Visit Notification",
+                          "for":  "for",
+                          "details":  {
+                                          "title":  "Plandetaljer"
+                                      },
+                          "totalOperations":  "Total Operations",
+                          "algorithmUsed":  "Algorithm Used",
+                          "ganttChart":  "Gantt Chart",
+                          "startTime":  "Start Time",
+                          "endTime":  "End Time",
+                          "totalDuration":  "Total Duration",
+                          "operation":  "Operation",
+                          "duration":  "Duration",
+                          "resources":  "Resources",
+                          "operationDetails":  "Operation Details",
+                          "operationNumber":  "Operation #{number}",
+                          "notFound":  "Operation plan not found",
+                          "operationType":  {
+                                                "Unload":  "Unload",
+                                                "Load":  "Load"
+                                            },
+                          "tabs":  {
+                                       "unplannedVVNs":  "Unplanned VVNs",
+                                       "search":  "Search Plans",
+                                       "edit":  "Edit Plan",
+                                       "open":  "Start Execution"
+                                   },
+                          "subtitle":  {
+                                           "edit":  "Modify operation plan details and schedule"
+                                       },
+                          "unplannedVVNs":  {
+                                                "description":  "Vessel visit notifications that do not have an operation plan assigned yet",
+                                                "noUnplanned":  "All vessel visit notifications have operation plans assigned",
+                                                "foundMessage":  "Found {vvnCount} VVN(s) without plans across {dayCount} day(s)",
+                                                "regenerateAll":  "Regenerate All Missing Plans",
+                                                "regenerateDay":  "Regenerate Plans for This Day",
+                                                "regenerateModalTitle":  "Regenerate Plans for {date}",
+                                                "warning":  "Warning",
+                                                "warningMessage":  "Regenerating plans will overwrite any existing operation plans for this day. This action cannot be undone.",
+                                                "selectedDay":  "Selected Day",
+                                                "confirmRegeneration":  "Confirm Regeneration",
+                                                "affectedDays":  "Affected Days",
+                                                "queueInfo":  "Each regeneration request will be queued separately. You can review and accept/reject them individually from the Scheduling Queue.",
+                                                "continue":  "Continue",
+                                                "confirmRegenerationTitle":  "Confirm Regeneration",
+                                                "irreversibleAction":  "This action is irreversible",
+                                                "overwriteWarning":  "Regenerating operation plans will permanently overwrite any existing plans for the selected days. This action cannot be undone.",
+                                                "aboutToRegenerate":  "You are about to regenerate plans for",
+                                                "days":  "days",
+                                                "vesselVisitNotifications":  "Vessel Visit Notifications",
+                                                "using":  "Using",
+                                                "algorithm":  "algorithm",
+                                                "proceedQuestion":  "Do you want to proceed with this operation?",
+                                                "yesRegenerateAll":  "Yes, Regenerate All"
+                                            },
+                          "algorithm":  {
+                                            "optimal":  "Optimal",
+                                            "greedy":  "Greedy",
+                                            "genetic":  "Genetic",
+                                            "auto":  "Auto"
+                                        },
+                          "metrics":  {
+                                          "title":  "Metrics",
+                                          "strategy":  "Strategy",
+                                          "totalDelay":  "Total Delay",
+                                          "computationTime":  "Computation Time",
+                                          "autoSelection":  "Automatic Algorithm Selection"
+                                      },
+                          "infoTitle":  "Operation Plan Information",
+                          "fields":  {
+                                         "id":  {
+                                                    "title":  "Plan ID"
+                                                },
+                                         "relatedVVN":  {
+                                                            "title":  "Related VVN"
+                                                        },
+                                         "dock":  {
+                                                      "title":  "Dock"
+                                                  },
+                                         "operations":  {
+                                                            "title":  "Operations"
+                                                        }
+                                     },
+                          "filters":  {
+                                          "startDate":  "Start Date From",
+                                          "endDate":  "End Date To"
+                                      },
+                          "metadata":  {
+                                           "title":  "Metadata",
+                                           "createdBy":  "Created By",
+                                           "createdAt":  "Created At",
+                                           "algorithmUsed":  "Algorithm Used"
+                                       },
+                          "schedule":  {
+                                           "title":  "Operation Schedule",
+                                           "noOperations":  "No operations scheduled"
+                                       }
+                      },
+    "incidentType":  {
+                         "fields":  {
+                                        "name":  {
+                                                     "title":  "Name",
+                                                     "placeholder":  "Incident type name"
+                                                 },
+                                        "description":  {
+                                                            "title":  "Description",
+                                                            "placeholder":  "Detailed description of the incident type"
+                                                        },
+                                        "severity":  {
+                                                         "title":  "Severity",
+                                                         "placeholder":  "Select severity level"
+                                                     },
+                                        "subtypeOf":  {
+                                                          "title":  "Subtype Of",
+                                                          "placeholder":  "Select parent type"
+                                                      },
+                                        "subtypes":  {
+                                                         "title":  "Subtypes",
+                                                         "placeholder":  "Select child types"
+                                                     }
+                                    },
+                         "severity":  {
+                                          "Minor":  "Minor",
+                                          "Major":  "Major",
+                                          "Critical":  "Kritisk"
+                                      },
+                         "tabs":  {
+                                      "dashboard":  "Incident Types Dashboard",
+                                      "view_dashboard":  "View Incident Types",
+                                      "search":  "Search Incident Types",
+                                      "create":  "Create Incident Type",
+                                      "edit":  "Edit Incident Type"
+                                  },
+                         "generalFields":  "General fields",
+                         "classification":  "Classification",
+                         "title":  "Incidenttyp",
+                         "subtitle":  {
+                                          "dashboard":  "Overview of incident type statistics and activities",
+                                          "search":  "Manage and view all registered incident types",
+                                          "create":  "Register a new incident type into the system",
+                                          "edit":  "Modify an existing incident type in the system"
+                                      },
+                         "registeredIncidentTypes":  "Registered Incident Types",
+                         "incidentTypeInformation":  "Incident Type Information",
+                         "parentType":  "Parent Type",
+                         "confirmDelete":  "Confirm delete",
+                         "confirmDeleteMessage":  "Are you sure you want to delete this incident type?",
+                         "failedToDelete":  "Failed to delete incident type"
+                     },
+    "taskCategory":  {
+                         "fields":  {
+                                        "name":  {
+                                                     "title":  "Name",
+                                                     "placeholder":  "Task category name"
+                                                 },
+                                        "category":  {
+                                                         "title":  "Category",
+                                                         "placeholder":  "Category code"
+                                                     },
+                                        "description":  {
+                                                            "title":  "Description",
+                                                            "placeholder":  "Description of the task category"
+                                                        }
+                                    },
+                         "tabs":  {
+                                      "dashboard":  "Task Categories Dashboard",
+                                      "search":  "Search Task Categories",
+                                      "create":  "Create Task Category",
+                                      "edit":  "Edit Task Category",
+                                      "view_dashboard":  "View Task Categories"
+                                  },
+                         "generalFields":  "General fields",
+                         "title":  "Uppgiftskategori",
+                         "subtitle":  {
+                                          "dashboard":  "Overview of task category statistics and activities",
+                                          "search":  "Manage and view all registered task categories",
+                                          "create":  "Register a new task category in the system",
+                                          "edit":  "Modify an existing task category in the system"
+                                      },
+                         "taskCategoryInformation":  "Task Category Information",
+                         "registeredTaskCategories":  "Registered Task Categories"
+                     },
+    "execution":  {
+                      "title":  "Utförande",
+                      "subtitle":  {
+                                       "search":  "Manage and view all vessel visit executions",
+                                       "dashboard":  "Overview of vessel visit execution statistics and activities"
+                                   },
+                      "tabs":  {
+                                   "dashboard":  "Executions Dashboard",
+                                   "search":  "Search Executions",
+                                   "view_dashboard":  "View Executions",
+                                   "update":  "Update Execution",
+                                   "view":  "View Execution",
+                                   "table":  "Table View",
+                                   "cards":  "Card View"
+                               },
+                      "fields":  {
+                                     "code":  "Code",
+                                     "relatedVVN":  "Related To",
+                                     "status":  "Status",
+                                     "createdBy":  "Created By",
+                                     "dateOpen":  "Date Open",
+                                     "dateClosed":  "Date Closed",
+                                     "relatedVesselVisit":  "Related Vessel Visit",
+                                     "dock":  "Berth Dock",
+                                     "berthTime":  "Berth Time",
+                                     "operations":  "Operations"
+                                 },
+                      "filters":  {
+                                      "startDate":  "Start Date",
+                                      "endDate":  "End Date",
+                                      "relatedVVN":  "Vessel Visit Notification",
+                                      "status":  "Status"
+                                  },
+                      "metrics":  {
+                                      "totalOperations":  "Total Ops",
+                                      "completedOperations":  "Progress",
+                                      "turnaroundTime":  "Turnaround Time",
+                                      "berthOccupancy":  "Berth Occupancy"
+                                  },
+                      "status":  {
+                                     "pending":  "Väntande",
+                                     "started":  "Started",
+                                     "delayed":  "Delayed",
+                                     "completed":  "Slutförd"
+                                 },
+                      "view_resources":  "View Resources",
+                      "infoTitle":  "Execution Information",
+                      "operationsTitle":  "Operations",
+                      "noOperations":  "No operations available",
+                      "startOperation":  "Start Operation",
+                      "completeOperation":  "Complete Operation",
+                      "addOperation":  "Add Operation",
+                      "addOperationDescription":  "Add a new operation to the timeline",
+                      "confirmStartOperation":  "Are you sure you want to start this operation?",
+                      "confirmCompleteOperation":  "Are you sure you want to complete this operation?",
+                      "berthOperation":  {
+                                             "button":  "Edit berth data",
+                                             "title":  "Berth Operation",
+                                             "description":  "Edit the berth dock and time for this vessel visit execution.",
+                                             "dock":  "Berth Dock",
+                                             "dockPlaceholder":  "Select berth dock",
+                                             "berthTime":  "Berth Time",
+                                             "differentThanPlanned":  "The selected dock is different than the one planned."
+                                         }
+                  },
+    "incident":  {
+                     "tabs":  {
+                                  "dashboard":  "Incidents Dashboard",
+                                  "create":  "Create Incident",
+                                  "search":  "Search Incidents",
+                                  "active":  "Active Incidents",
+                                  "view":  "View Incident",
+                                  "edit":  "Edit Incident"
+                              },
+                     "subtitle":  {
+                                      "create":  "Report a new incident in the system",
+                                      "search":  "Search and filter existing incidents",
+                                      "active":  "View and manage active incidents"
+                                  },
+                     "generalFields":  "General Information",
+                     "classification":  "Classification",
+                     "fields":  {
+                                    "bid":  {
+                                                "title":  "Incident ID"
+                                            },
+                                    "type":  {
+                                                 "title":  "Incident Type",
+                                                 "placeholder":  "Select an incident type"
+                                             },
+                                    "startTime":  {
+                                                      "title":  "Start Time",
+                                                      "placeholder":  "When did the incident start?"
+                                                  },
+                                    "endTime":  {
+                                                    "title":  "End Time",
+                                                    "placeholder":  "When did the incident end?"
+                                                },
+                                    "severity":  {
+                                                     "title":  "Severity",
+                                                     "placeholder":  "Select severity level",
+                                                     "options":  {
+                                                                     "minor":  "Minor",
+                                                                     "major":  "Major",
+                                                                     "critical":  "Critical"
+                                                                 }
+                                                 },
+                                    "description":  {
+                                                        "title":  "Description",
+                                                        "placeholder":  "Describe the incident in detail"
+                                                    },
+                                    "createdBy":  {
+                                                      "title":  "Created By"
+                                                  },
+                                    "affectedVVECodes":  {
+                                                             "title":  "Affected VVEs",
+                                                             "placeholder":  "Enter affected VVEs"
+                                                         },
+                                    "vveCode":  {
+                                                    "title":  "VVE Code"
+                                                },
+                                    "status":  {
+                                                   "title":  "Status",
+                                                   "options":  {
+                                                                   "active":  "Active",
+                                                                   "resolved":  "Resolved"
+                                                               }
+                                               },
+                                    "filterStartTime":  {
+                                                            "title":  "Start Date From"
+                                                        },
+                                    "filterEndTime":  {
+                                                          "title":  "Start Date To"
+                                                      },
+                                    "duration":  {
+                                                     "title":  "Duration"
+                                                 }
+                                },
+                     "severity":  {
+                                      "Minor":  "Minor",
+                                      "Major":  "Major",
+                                      "Critical":  "Critical"
+                                  },
+                     "status":  {
+                                    "active":  "Active",
+                                    "resolved":  "Löst"
+                                },
+                     "ongoing":  "Ongoing",
+                     "filters":  {
+                                     "onlyActive":  "Only Active",
+                                     "onlyMine":  "Only Mine"
+                                 },
+                     "actions":  {
+                                     "view":  "View Details",
+                                     "edit":  "Edit Incident",
+                                     "resolve":  "Lös",
+                                     "delete":  "Delete Incident"
+                                 },
+                     "notifications":  {
+                                           "createSuccess":  "Incident created successfully",
+                                           "createFailed":  "Failed to create incident",
+                                           "updateSuccess":  "Incident updated successfully",
+                                           "updateFailed":  "Failed to update incident",
+                                           "resolveSuccess":  "Incident resolved successfully",
+                                           "resolveFailed":  "Failed to resolve incident",
+                                           "deleteSuccess":  "Incident deleted successfully",
+                                           "deleteFailed":  "Failed to delete incident"
+                                       },
+                     "table":  {
+                                   "empty":  "No incidents found"
+                               },
+                     "active":  {
+                                    "title":  "Active Incidents",
+                                    "subtitle":  "View and manage ongoing incidents"
+                                },
+                     "infoTitle":  "Incident details",
+                     "closeDialog":  {
+                                         "title":  "Resolve indicent",
+                                         "message":  "When did the incident get resolved",
+                                         "confirm":  "Yes, close this incident",
+                                         "cancel":  "Cancel"
+                                     }
+                 }
 }

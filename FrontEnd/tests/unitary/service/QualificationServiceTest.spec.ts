@@ -58,7 +58,7 @@ describe('QualificationService', () => {
 
       const result = await qualificationService.getQualifications();
 
-      expect(mockHttpService.get).toHaveBeenCalledWith('/Qualification/filter');
+      expect(mockHttpService.get).toHaveBeenCalledWith('/api/Qualification/filter');
       expect(result).toEqual(mockPage);
     });
 
@@ -81,7 +81,7 @@ describe('QualificationService', () => {
       const result = await qualificationService.getQualifications(filter);
 
       expect(mockHttpService.get).toHaveBeenCalledWith(
-        '/Qualification/filter?Code=Q001&QualificationName=Aid&PageNumber=1&PageSize=10'
+        '/api/Qualification/filter?Code=Q001&QualificationName=Aid&PageNumber=1&PageSize=10'
       );
       expect(result).toEqual(mockPage);
     });
@@ -106,7 +106,7 @@ describe('QualificationService', () => {
 
       const result = await qualificationService.getQualificationById('Q001');
 
-      expect(mockHttpService.get).toHaveBeenCalledWith('/Qualification/Q001');
+      expect(mockHttpService.get).toHaveBeenCalledWith('/api/Qualification/Q001');
       expect(result).toEqual(mockQualification);
     });
 
@@ -130,7 +130,7 @@ describe('QualificationService', () => {
 
       const result = await qualificationService.addQualification(mockQualificationWithToDto);
 
-      expect(mockHttpService.post).toHaveBeenCalledWith('/Qualification', mockQualificationDto);
+      expect(mockHttpService.post).toHaveBeenCalledWith('/api/Qualification', mockQualificationDto);
       expect(result).toEqual(mockQualification);
     });
 
@@ -169,7 +169,7 @@ describe('QualificationService', () => {
 
       const result = await qualificationService.updateQualification(mockQualificationWithToDto);
 
-      expect(mockHttpService.put).toHaveBeenCalledWith('/Qualification/Q001', mockQualificationDto);
+      expect(mockHttpService.put).toHaveBeenCalledWith('/api/Qualification/Q001', mockQualificationDto);
       expect(result).toEqual(mockQualification);
     });
 
@@ -208,7 +208,7 @@ describe('QualificationService', () => {
 
       const result = await qualificationService.getNumberOfQualifications();
 
-      expect(mockHttpService.get).toHaveBeenCalledWith('/Qualification/count');
+      expect(mockHttpService.get).toHaveBeenCalledWith('/api/Qualification/count');
       expect(result).toBe(12);
     });
 

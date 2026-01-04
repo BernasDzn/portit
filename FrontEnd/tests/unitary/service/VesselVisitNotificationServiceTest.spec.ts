@@ -108,7 +108,7 @@ describe('VesselVisitNotificationService', () => {
 
       const result = await service.count();
 
-      expect(mockHttpService.get).toHaveBeenCalledWith('/VesselVisitNotification/distribution');
+      expect(mockHttpService.get).toHaveBeenCalledWith('/api/VesselVisitNotification/distribution');
       expect(result).toEqual(mockDistribution);
     });
 
@@ -133,7 +133,7 @@ describe('VesselVisitNotificationService', () => {
         pageSize: 10,
       });
 
-      expect(mockHttpService.get).toHaveBeenCalledWith('/VesselVisitNotification/filterPa?PageNumber=1&PageSize=10');
+      expect(mockHttpService.get).toHaveBeenCalledWith('/api/VesselVisitNotification/filterPa?PageNumber=1&PageSize=10');
       expect(result).toEqual(mockPage);
     });
 
@@ -148,7 +148,7 @@ describe('VesselVisitNotificationService', () => {
         filter: {},
       } as any);
 
-      expect(mockHttpService.get).toHaveBeenCalledWith('/VesselVisitNotification/filterPa?');
+      expect(mockHttpService.get).toHaveBeenCalledWith('/api/VesselVisitNotification/filterPa?');
       expect(result).toEqual(mockPage);
     });
 
@@ -173,7 +173,7 @@ describe('VesselVisitNotificationService', () => {
         pageSize: 10,
       });
 
-      expect(mockHttpService.get).toHaveBeenCalledWith('/VesselVisitNotification/filterPa?OnlyPending=true');
+      expect(mockHttpService.get).toHaveBeenCalledWith('/api/VesselVisitNotification/filterPa?OnlyPending=true');
       expect(result).toEqual(mockPage);
     });
 
@@ -218,7 +218,7 @@ describe('VesselVisitNotificationService', () => {
 
       const result = await service.getVesselVisitNotificationsByRepresentative();
 
-      expect(mockHttpService.get).toHaveBeenCalledWith('/VesselVisitNotification/filter');
+      expect(mockHttpService.get).toHaveBeenCalledWith('/api/VesselVisitNotification/filter');
       expect(result).toEqual(mockPage);
     });
 
@@ -241,7 +241,7 @@ describe('VesselVisitNotificationService', () => {
 
       const result = await service.getVesselVisitNotificationById('NOT001');
 
-      expect(mockHttpService.get).toHaveBeenCalledWith('/VesselVisitNotification/NOT001');
+      expect(mockHttpService.get).toHaveBeenCalledWith('/api/VesselVisitNotification/NOT001');
       expect(result).toEqual(mockNotification);
     });
 
@@ -263,7 +263,7 @@ describe('VesselVisitNotificationService', () => {
 
       const result = await service.getNotificationDecisions('NOT001');
 
-      expect(mockHttpService.get).toHaveBeenCalledWith('/VesselVisitNotification/decisions?vesselVisitNotificationId=NOT001');
+      expect(mockHttpService.get).toHaveBeenCalledWith('/api/VesselVisitNotification/decisions?vesselVisitNotificationId=NOT001');
       expect(result).toEqual(decisions);
     });
 
@@ -284,7 +284,7 @@ describe('VesselVisitNotificationService', () => {
 
       const result = await service.createVesselVisitNotification(mockNotificationWithToDto);
 
-      expect(mockHttpService.post).toHaveBeenCalledWith('/VesselVisitNotification', mockNotificationDto);
+      expect(mockHttpService.post).toHaveBeenCalledWith('/api/VesselVisitNotification', mockNotificationDto);
       expect(result).toEqual(mockNotification);
     });
 
@@ -318,7 +318,7 @@ describe('VesselVisitNotificationService', () => {
       const result = await service.createNotificationDecision('NOT001', mockDecisionDto);
 
       expect(mockHttpService.post).toHaveBeenCalledWith(
-        '/VesselVisitNotification/decisions?vesselVisitNotificationId=NOT001',
+        '/api/VesselVisitNotification/decisions?vesselVisitNotificationId=NOT001',
         mockDecisionDto
       );
       expect(result).toEqual(mockDecision);
@@ -342,7 +342,7 @@ describe('VesselVisitNotificationService', () => {
       const result = await service.updateVesselVisitNotification(mockNotificationWithToDto);
 
       expect(mockHttpService.put).toHaveBeenCalledWith(
-        `/VesselVisitNotification/${mockNotificationDto.notificationId}`,
+        `/api/VesselVisitNotification/${mockNotificationDto.notificationId}`,
         mockNotificationDto
       );
       expect(result).toEqual(mockNotification);
@@ -377,7 +377,7 @@ describe('VesselVisitNotificationService', () => {
 
       await service.submitVesselVisitNotification('NOT001');
 
-      expect(mockHttpService.put).toHaveBeenCalledWith('/VesselVisitNotification/submit/NOT001', {});
+      expect(mockHttpService.put).toHaveBeenCalledWith('/api/VesselVisitNotification/submit/NOT001', {});
     });
 
     it('should throw error when submit fails', async () => {
@@ -397,7 +397,7 @@ describe('VesselVisitNotificationService', () => {
 
       await service.deleteDraft('NOT001');
 
-      expect(mockHttpService.delete).toHaveBeenCalledWith('/VesselVisitNotification?id=NOT001');
+      expect(mockHttpService.delete).toHaveBeenCalledWith('/api/VesselVisitNotification?id=NOT001');
     });
 
     it('should throw error when delete fails', async () => {
