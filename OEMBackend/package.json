@@ -10,6 +10,9 @@
     "build": "tsc",
     "start": "node dist/src/server.js",
     "test": "jest",
+    "test:application": "jest --testPathPatterns=application --forceExit",
+    "test:unit": "jest --testPathPatterns=unitary",
+    "test:integration": "jest --testPathPatterns=integration",
     "test:e2e": "cross-env DISABLE_AUTH=true npm run docgen && cross-env DISABLE_AUTH=true RUN_MODE=local SHOULD_BOOTSTRAP=true nodemon --exec ts-node src/server.ts"
   },
   "keywords": [],
