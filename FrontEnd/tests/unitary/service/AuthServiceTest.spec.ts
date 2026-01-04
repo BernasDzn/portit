@@ -59,7 +59,7 @@ describe('AuthService', () => {
         const result = await service.getAppJWTToken('myToken');
 
         expect(mockHttp.post).toHaveBeenCalledWith(
-            '/auth/login/google',
+            '/api/auth/login/google',
             JSON.stringify({ token: 'myToken' })
         );
         expect(result).toEqual(fakeResponse);
@@ -76,7 +76,7 @@ describe('AuthService', () => {
         await service.activateUser('mail@test.com', 'abc', 'raw_id_token');
 
         expect(mockHttp.post).toHaveBeenCalledWith(
-            '/SystemUser/activate-with-token?emailAddress=mail%40test.com&token=abc',
+            '/api/SystemUser/activate-with-token?emailAddress=mail%40test.com&token=abc',
             { idToken: 'raw_id_token' }
         );
     });
@@ -147,7 +147,7 @@ describe('AuthService', () => {
 
         await service.logout();
 
-        expect(mockHttp.post).toHaveBeenCalledWith('/auth/logout', {});
+        expect(mockHttp.post).toHaveBeenCalledWith('/api/auth/logout', {});
     });
 
 });

@@ -66,7 +66,7 @@ describe('VesselService', () => {
 
       const result = await vesselService.getVessels();
 
-      expect(mockHttpService.get).toHaveBeenCalledWith('/Vessel/filter');
+      expect(mockHttpService.get).toHaveBeenCalledWith('/api/Vessel/filter');
       expect(result).toEqual(mockPage);
     });
 
@@ -83,7 +83,7 @@ describe('VesselService', () => {
         pageSize: 10,
       });
 
-      expect(mockHttpService.get).toHaveBeenCalledWith('/Vessel/filter?Name=Test&PageNumber=1&PageSize=10');
+      expect(mockHttpService.get).toHaveBeenCalledWith('/api/Vessel/filter?Name=Test&PageNumber=1&PageSize=10');
       expect(result).toEqual(mockPage);
     });
 
@@ -104,7 +104,7 @@ describe('VesselService', () => {
 
       const result = await vesselService.getVesselByIMO('IMO1234567');
 
-      expect(mockHttpService.get).toHaveBeenCalledWith('/Vessel/IMO1234567');
+      expect(mockHttpService.get).toHaveBeenCalledWith('/api/Vessel/IMO1234567');
       expect(result).toEqual(mockVessel);
     });
 
@@ -126,7 +126,7 @@ describe('VesselService', () => {
 
       const result = await vesselService.getVesselByOwner('owner@example.com');
 
-      expect(mockHttpService.get).toHaveBeenCalledWith('/Vessel/owner/owner@example.com');
+      expect(mockHttpService.get).toHaveBeenCalledWith('/api/Vessel/owner/owner@example.com');
       expect(result).toEqual(vessels);
     });
 
@@ -147,7 +147,7 @@ describe('VesselService', () => {
 
       const result = await vesselService.createVessel(mockVesselWithToDto);
 
-      expect(mockHttpService.post).toHaveBeenCalledWith('/Vessel', mockVesselDto);
+      expect(mockHttpService.post).toHaveBeenCalledWith('/api/Vessel', mockVesselDto);
       expect(result).toEqual(mockVessel);
     });
 
@@ -186,7 +186,7 @@ describe('VesselService', () => {
 
       const result = await vesselService.updateVessel(mockVesselWithToDto);
 
-      expect(mockHttpService.put).toHaveBeenCalledWith(`/Vessel/${mockVesselDto.imoNumber}`, mockVesselDto);
+      expect(mockHttpService.put).toHaveBeenCalledWith(`/api/Vessel/${mockVesselDto.imoNumber}`, mockVesselDto);
       expect(result).toEqual(mockVessel);
     });
 
@@ -219,7 +219,7 @@ describe('VesselService', () => {
 
       const result = await vesselService.getNumberOfVessels();
 
-      expect(mockHttpService.get).toHaveBeenCalledWith('/Vessel/count');
+      expect(mockHttpService.get).toHaveBeenCalledWith('/api/Vessel/count');
       expect(result).toBe(42);
     });
 

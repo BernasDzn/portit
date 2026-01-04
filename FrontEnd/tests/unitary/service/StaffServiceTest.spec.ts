@@ -70,7 +70,7 @@ describe('StaffService', () => {
 
       const result = await staffService.getStaffs();
 
-      expect(mockHttpService.get).toHaveBeenCalledWith('/Staff/filter');
+      expect(mockHttpService.get).toHaveBeenCalledWith('/api/Staff/filter');
       expect(result).toEqual(mockPage);
     });
 
@@ -96,7 +96,7 @@ describe('StaffService', () => {
       const result = await staffService.getStaffs(filter);
 
       expect(mockHttpService.get).toHaveBeenCalledWith(
-        '/Staff/filter?MechanographicNumber=STF000001&Name=John&Email=john@example.com&Status=1&PhoneNumber=900000000&PageNumber=1&PageSize=10'
+        '/api/Staff/filter?MechanographicNumber=STF000001&Name=John&Email=john@example.com&Status=1&PhoneNumber=900000000&PageNumber=1&PageSize=10'
       );
       expect(result).toEqual(mockPage);
     });
@@ -118,7 +118,7 @@ describe('StaffService', () => {
 
       const result = await staffService.getStaffByMechanographicNumber('STF000001');
 
-      expect(mockHttpService.get).toHaveBeenCalledWith('/Staff/filter?MechanographicNumber=STF000001');
+      expect(mockHttpService.get).toHaveBeenCalledWith('/api/Staff/filter?MechanographicNumber=STF000001');
       expect(result).toEqual(mockStaff);
     });
 
@@ -139,7 +139,7 @@ describe('StaffService', () => {
 
       const result = await staffService.createStaff(mockStaffWithToDto);
 
-      expect(mockHttpService.post).toHaveBeenCalledWith('/Staff', mockStaffDto);
+      expect(mockHttpService.post).toHaveBeenCalledWith('/api/Staff', mockStaffDto);
       expect(result).toEqual(mockStaff);
     });
 
@@ -178,7 +178,7 @@ describe('StaffService', () => {
 
       await staffService.deactivateStaff('STF000001');
 
-      expect(mockHttpService.delete).toHaveBeenCalledWith('/Staff/STF000001');
+      expect(mockHttpService.delete).toHaveBeenCalledWith('/api/Staff/STF000001');
     });
 
     it('should throw error when staff not found during deactivation', async () => {
@@ -210,7 +210,7 @@ describe('StaffService', () => {
 
       const result = await staffService.updateStaff(mockStaffWithToDto);
 
-      expect(mockHttpService.put).toHaveBeenCalledWith('/Staff/STF000001', mockStaffDto);
+      expect(mockHttpService.put).toHaveBeenCalledWith('/api/Staff/STF000001', mockStaffDto);
       expect(result).toEqual(mockStaff);
     });
 
@@ -243,7 +243,7 @@ describe('StaffService', () => {
 
       const result = await staffService.getNumberOfStaffs();
 
-      expect(mockHttpService.get).toHaveBeenCalledWith('/Staff/count');
+      expect(mockHttpService.get).toHaveBeenCalledWith('/api/Staff/count');
       expect(result).toBe(42);
     });
 

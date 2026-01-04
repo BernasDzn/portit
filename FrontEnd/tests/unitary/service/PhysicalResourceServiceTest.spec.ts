@@ -116,7 +116,7 @@ describe('PhysicalResourceService', () => {
 
       const result = await service.getPhysicalResources();
 
-      expect(mockHttp.get).toHaveBeenCalledWith('/PhysicalResource/filter');
+      expect(mockHttp.get).toHaveBeenCalledWith('/api/PhysicalResource/filter');
       expect(result).toEqual(mockPage);
     });
 
@@ -141,7 +141,7 @@ describe('PhysicalResourceService', () => {
       const result = await service.getPhysicalResources(filter);
 
       expect(mockHttp.get).toHaveBeenCalledWith(
-        '/PhysicalResource/filter?Code=STS001&Description=Crane&Status=1&Type=0&PageNumber=1&PageSize=10'
+        '/api/PhysicalResource/filter?Code=STS001&Description=Crane&Status=1&Type=0&PageNumber=1&PageSize=10'
       );
       expect(result).toEqual(mockPage);
     });
@@ -166,7 +166,7 @@ describe('PhysicalResourceService', () => {
 
       const result = await service.getPhysicalResourceById('STS001');
 
-      expect(mockHttp.get).toHaveBeenCalledWith('/PhysicalResource/STS001');
+      expect(mockHttp.get).toHaveBeenCalledWith('/api/PhysicalResource/STS001');
       expect(result).toEqual(mockSTS);
     });
 
@@ -190,7 +190,7 @@ describe('PhysicalResourceService', () => {
 
       await service.deactivatePhysicalResource('STS001');
 
-      expect(mockHttp.delete).toHaveBeenCalledWith('/PhysicalResource/STS001');
+      expect(mockHttp.delete).toHaveBeenCalledWith('/api/PhysicalResource/STS001');
     });
 
     it('should throw on error', async () => {
@@ -214,7 +214,7 @@ describe('PhysicalResourceService', () => {
 
       const result = await service.addSTSCrane(mockSTSWithToDto);
 
-      expect(mockHttp.post).toHaveBeenCalledWith('/PhysicalResource/AddSTSCrane', mockSTSDto);
+      expect(mockHttp.post).toHaveBeenCalledWith('/api/PhysicalResource/AddSTSCrane', mockSTSDto);
       expect(result).toEqual(mockSTS);
     });
 
@@ -235,7 +235,7 @@ describe('PhysicalResourceService', () => {
 
       const result = await service.addYardCrane(mockYardWithToDto);
 
-      expect(mockHttp.post).toHaveBeenCalledWith('/PhysicalResource/AddYardCrane', mockYardDto);
+      expect(mockHttp.post).toHaveBeenCalledWith('/api/PhysicalResource/AddYardCrane', mockYardDto);
       expect(result).toEqual(mockYard);
     });
 
@@ -256,7 +256,7 @@ describe('PhysicalResourceService', () => {
 
       const result = await service.addTruck(mockTruckWithToDto);
 
-      expect(mockHttp.post).toHaveBeenCalledWith('/PhysicalResource/AddTruck', mockTruckDto);
+      expect(mockHttp.post).toHaveBeenCalledWith('/api/PhysicalResource/AddTruck', mockTruckDto);
       expect(result).toEqual(mockTruck);
     });
 
@@ -281,7 +281,7 @@ describe('PhysicalResourceService', () => {
       const result = await service.updateSTSCrane(mockSTSWithToDto);
 
       expect(mockHttp.put).toHaveBeenCalledWith(
-        `/PhysicalResource/UpdateSTSCrane/${mockSTSDto.code}`,
+        `/api/PhysicalResource/UpdateSTSCrane/${mockSTSDto.code}`,
         mockSTSDto
       );
       expect(result).toEqual(mockSTS);
@@ -305,7 +305,7 @@ describe('PhysicalResourceService', () => {
       const result = await service.updateYardCrane(mockYardWithToDto);
 
       expect(mockHttp.put).toHaveBeenCalledWith(
-        `/PhysicalResource/UpdateYardCrane/${mockYardDto.code}`,
+        `/api/PhysicalResource/UpdateYardCrane/${mockYardDto.code}`,
         mockYardDto
       );
       expect(result).toEqual(mockYard);
@@ -329,7 +329,7 @@ describe('PhysicalResourceService', () => {
       const result = await service.updateTruck(mockTruckWithToDto);
 
       expect(mockHttp.put).toHaveBeenCalledWith(
-        `/PhysicalResource/UpdateTruck/${mockTruckDto.code}`,
+        `/api/PhysicalResource/UpdateTruck/${mockTruckDto.code}`,
         mockTruckDto
       );
       expect(result).toEqual(mockTruck);
@@ -356,7 +356,7 @@ describe('PhysicalResourceService', () => {
 
       const result = await service.getNumberOfPhysicalResources();
 
-      expect(mockHttp.get).toHaveBeenCalledWith('/PhysicalResource/count');
+      expect(mockHttp.get).toHaveBeenCalledWith('/api/PhysicalResource/count');
       expect(result).toBe(99);
     });
 

@@ -64,7 +64,7 @@ describe('DockService', () => {
 
       const result = await dockService.getDocks();
 
-      expect(mockHttpService.get).toHaveBeenCalledWith('/Dock/filter');
+      expect(mockHttpService.get).toHaveBeenCalledWith('/api/Dock/filter');
       expect(result).toEqual(mockPage);
     });
 
@@ -81,7 +81,7 @@ describe('DockService', () => {
         pageSize: 10,
       });
 
-      expect(mockHttpService.get).toHaveBeenCalledWith('/Dock/filter?DockName=Main&PageNumber=1&PageSize=10');
+      expect(mockHttpService.get).toHaveBeenCalledWith('/api/Dock/filter?DockName=Main&PageNumber=1&PageSize=10');
       expect(result).toEqual(mockPage);
     });
 
@@ -102,7 +102,7 @@ describe('DockService', () => {
 
       const result = await dockService.getDockByCode('DOCK01');
 
-      expect(mockHttpService.get).toHaveBeenCalledWith('/Dock/DOCK01');
+      expect(mockHttpService.get).toHaveBeenCalledWith('/api/Dock/DOCK01');
       expect(result).toEqual(mockDock);
     });
 
@@ -123,7 +123,7 @@ describe('DockService', () => {
 
       const result = await dockService.createDock(mockDockWithToDto);
 
-      expect(mockHttpService.post).toHaveBeenCalledWith('/Dock', mockDockDto);
+      expect(mockHttpService.post).toHaveBeenCalledWith('/api/Dock', mockDockDto);
       expect(result).toEqual(mockDock);
     });
 
@@ -162,7 +162,7 @@ describe('DockService', () => {
 
       const result = await dockService.updateDock(mockDockWithToDto);
 
-      expect(mockHttpService.put).toHaveBeenCalledWith(`/Dock/${mockDockDto.code}`, mockDockDto);
+      expect(mockHttpService.put).toHaveBeenCalledWith(`/api/Dock/${mockDockDto.code}`, mockDockDto);
       expect(result).toEqual(mockDock);
     });
 
@@ -195,7 +195,7 @@ describe('DockService', () => {
 
       const result = await dockService.getNumberOfDocks();
 
-      expect(mockHttpService.get).toHaveBeenCalledWith('/Dock/count');
+      expect(mockHttpService.get).toHaveBeenCalledWith('/api/Dock/count');
       expect(result).toBe(15);
     });
 

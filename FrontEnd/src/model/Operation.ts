@@ -29,7 +29,7 @@ export class Operation {
         this._startTime = params.startTime;
         this._endTime = params.endTime;
         this._resources = params.resources;
-        this._payload = params.payload ?? null;
+        this._payload = params.payload;
     }
 
     get id(): string | undefined { return this._id; }
