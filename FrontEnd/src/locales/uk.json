@@ -15,7 +15,9 @@
             "friday": "П’ятниця",
             "saturday": "Субота"
         },
-        "number": "Номер"
+        "number": "Номер",
+        "actions": "Дії",
+        "none": "Немає"
     },
     "buttons": {
         "save": "Зберегти",
@@ -31,8 +33,6 @@
         "close": "Закрити",
         "add": "Додати",
         "review": "Переглянути",
-        "ok": "Гаразд",
-        "downloadSample": "Завантажити зразок",
         "filter": {
             "title": "Фільтри",
             "add": "Фільтрувати",
@@ -45,7 +45,9 @@
         "login": "Увійти",
         "goBackToLogin": "Повернутися до входу",
         "logout": "Вийти",
-        "seeMore": "Показати більше"
+        "seeMore": "Показати більше",
+        "ok": "Гаразд",
+        "downloadSample": "Завантажити зразок"
     },
     "search": {
         "languages": "Пошук мов..."
@@ -89,6 +91,39 @@
         "auditLogs": {
             "title": "Журнали аудиту",
             "subtitle": "Перегляд та моніторинг системної активності."
+        },
+        "pp": {
+            "title": "Політика конфіденційності",
+            "subtitle": "Визначення та управління політикою збору даних порту."
+        },
+        "notifications": {
+            "create": "Створити сповіщення",
+            "subtitleCreate": "Send important announcements to any or all users.",
+            "title": "Системні сповіщення",
+            "subtitle": "Створення та керування загальносистемними сповіщеннями.",
+            "broadcastToggle": "Broadcast to all users",
+            "sendEmailToggle": "Also send as email",
+            "fields": {
+                "title": {
+                    "title": "Title",
+                    "placeholder": "Введіть заголовок сповіщення"
+                },
+                "message": {
+                    "title": "Message",
+                    "placeholder": "Введіть повідомлення сповіщення"
+                },
+                "email": {
+                    "title": "User email",
+                    "placeholder": "Specify user email to send to"
+                },
+                "urgency": {
+                    "title": "Urgency",
+                    "options": {
+                        "normal": "Normal",
+                        "urgent": "Urgent"
+                    }
+                }
+            }
         }
     },
     "user": {
@@ -128,7 +163,9 @@
             "create": "Реєстрація нового користувача в системі",
             "view": "Перегляд та керування існуючими користувачами"
         },
-        "registeredUsers": "Зареєстровані користувачі"
+        "registeredUsers": "Зареєстровані користувачі",
+        "confirmDelete": "Підтвердіть видалення",
+        "confirmDeleteMessage": "Ви впевнені, що хочете видалити цього користувача?"
     },
     "representative": {
         "title": "Представник",
@@ -193,10 +230,6 @@
     },
     "vesselType": {
         "fields": {
-            "code": {
-                "title": "Код",
-                "placeholder": "Код типу судна"
-            },
             "name": {
                 "title": "Назва",
                 "placeholder": "Назва типу судна"
@@ -204,10 +237,31 @@
             "description": {
                 "title": "Опис",
                 "placeholder": "Опис типу судна"
+            },
+            "capacity": {
+                "title": "Capacity",
+                "placeholder": "Container capacity in TEU"
+            },
+            "containerCapacity": {
+                "title": "Container Capacity (TEU)",
+                "maxNumberOfRows": {
+                    "title": "Max Number of Rows",
+                    "placeholder": "Max Rows in TEU\u0027s"
+                },
+                "maxNumberOfBays": {
+                    "title": "Max Number of Bays",
+                    "placeholder": "Max Bays in TEU\u0027s"
+                },
+                "maxNumberOfTiers": {
+                    "title": "Max Number of Tiers",
+                    "placeholder": "Max Tiers in TEU\u0027s"
+                }
             }
         },
+        "generalFields": "General fields",
         "tabs": {
             "dashboard": "Панель типів суден",
+            "view_dashboard": "View Vessel Types",
             "search": "Пошук типів суден",
             "create": "Створити тип судна",
             "view": "Перегляд типу судна",
@@ -225,47 +279,36 @@
     },
     "vessel": {
         "fields": {
-            "imo": {
-                "title": "IMO",
-                "placeholder": "Міжнародний номер судна"
-            },
             "name": {
                 "title": "Назва",
                 "placeholder": "Назва судна"
             },
-            "callSign": {
-                "title": "Позивний",
-                "placeholder": "Позивний судна"
+            "imoNumber": {
+                "title": "IMO Number",
+                "placeholder": "Vessel IMO number"
             },
-            "mmsi": {
-                "title": "MMSI",
-                "placeholder": "Морський мобільний ідентифікаційний номер"
+            "owner": {
+                "title": "Owning organization",
+                "placeholder": "Select owning organization"
             },
-            "type": {
-                "title": "Тип судна",
-                "placeholder": "Виберіть тип судна"
+            "vesselType": {
+                "title": "Vessel Type",
+                "placeholder": "Select vessel type"
             },
-            "length": {
-                "title": "Довжина",
-                "placeholder": "Довжина судна (м)"
-            },
-            "width": {
-                "title": "Ширина",
-                "placeholder": "Ширина судна (м)"
-            },
-            "draft": {
-                "title": "Осадка",
-                "placeholder": "Осадка судна (м)"
+            "taxNumber": {
+                "title": "Tax Number"
             }
         },
+        "infoTitle": "Інформація про судно",
+        "physicalCharacteristicsTitle": "Physical Characteristics",
         "tabs": {
             "dashboard": "Панель суден",
+            "view_dashboard": "View Vessels",
             "search": "Пошук суден",
             "create": "Створити судно",
             "view": "Перегляд судна",
             "edit": "Редагувати судно"
         },
-        "infoTitle": "Інформація про судно",
         "title": "Судна",
         "subtitle": {
             "dashboard": "Статистика та рух флоту",
@@ -273,26 +316,50 @@
             "create": "Реєстрація нового судна",
             "edit": "Редагування існуючого судна"
         },
+        "ownedBy": "Owned by",
         "registeredVessels": "Зареєстровані судна"
     },
     "staff": {
-        "registeredStaffMembers": "Зареєстровані співробітники",
+        "deactivation": {
+            "title": "Deactivate Staff Member",
+            "message": "Are you sure you want to deactivate this staff member? You can activate them again later.",
+            "successMessage": "Staff member has been successfully deactivated.",
+            "errorMessage": "An error occurred while trying to deactivate the staff member. Please try again."
+        },
         "fields": {
+            "mechanographicNumber": {
+                "title": "Mechanographic Number",
+                "placeholder": "Mechanographic Number"
+            },
             "name": {
                 "title": "Ім’я",
                 "placeholder": "Ім’я співробітника"
             },
-            "role": {
-                "title": "Роль",
-                "placeholder": "Виберіть роль співробітника"
+            "email": {
+                "title": "Email",
+                "placeholder": "Email address"
             },
-            "license": {
-                "title": "Ліцензія",
-                "placeholder": "Номер ліцензії (якщо застосовується)"
-            }
+            "phoneNumber": {
+                "title": "Phone Number",
+                "placeholder": "Phone number"
+            },
+            "qualifications": {
+                "title": "Qualifications",
+                "placeholder": "Select qualifications"
+            },
+            "status": {
+                "title": "Status",
+                "options": {
+                    "available": "Available",
+                    "unavailable": "Unavailable",
+                    "temporarilyReassigned": "Temporarily reassigned"
+                }
+            },
+            "operationalWindow": "Operational Window"
         },
         "tabs": {
             "dashboard": "Панель персоналу",
+            "view_dashboard": "View Staff Members",
             "search": "Пошук персоналу",
             "create": "Додати співробітника",
             "view": "Перегляд співробітника",
@@ -301,167 +368,13 @@
         "infoTitle": "Інформація про співробітника",
         "title": "Персонал",
         "subtitle": {
-            "dashboard": "Огляд персоналу та їх функцій",
             "search": "Керування зареєстрованими співробітниками",
+            "dashboard": "Огляд персоналу та їх функцій",
             "create": "Реєстрація нового співробітника",
+            "view": "View staff details",
             "edit": "Редагування даних співробітника"
         },
-        "registeredStaff": "Зареєстрований персонал"
-    },
-    "operations": {
-        "fields": {
-            "operationType": {
-                "title": "Тип операції",
-                "placeholder": "Виберіть тип операції",
-                "options": {
-                    "arrival": "Прибуття",
-                    "departure": "Відбуття",
-                    "cargoHandling": "Обробка вантажу",
-                    "inspection": "Інспекція",
-                    "maintenance": "Технічне обслуговування"
-                }
-            },
-            "scheduledDate": {
-                "title": "Запланована дата",
-                "placeholder": "Виберіть дату"
-            },
-            "assignedStaff": {
-                "title": "Призначений персонал",
-                "placeholder": "Виберіть співробітників"
-            },
-            "remarks": {
-                "title": "Примітки",
-                "placeholder": "Додаткова інформація"
-            }
-        },
-        "tabs": {
-            "dashboard": "Панель операцій",
-            "search": "Пошук операцій",
-            "create": "Створити операцію",
-            "view": "Перегляд операції",
-            "edit": "Редагувати операцію"
-        },
-        "infoTitle": "Деталі операції",
-        "title": "Операції",
-        "subtitle": {
-            "dashboard": "Огляд запланованих та виконаних операцій",
-            "search": "Керування всіма операціями",
-            "create": "Створення нової операції",
-            "edit": "Редагування існуючої операції"
-        },
-        "registeredOperations": "Зареєстровані операції"
-    },
-    "cargo": {
-        "fields": {
-            "type": {
-                "title": "Тип вантажу",
-                "placeholder": "Виберіть тип вантажу"
-            },
-            "weight": {
-                "title": "Вага",
-                "placeholder": "Вага (тонн)"
-            },
-            "volume": {
-                "title": "Об’єм",
-                "placeholder": "Об’єм (м³)"
-            },
-            "hazardClass": {
-                "title": "Клас небезпеки",
-                "placeholder": "Виберіть клас (якщо застосовується)"
-            },
-            "description": {
-                "title": "Опис",
-                "placeholder": "Опис вантажу"
-            }
-        },
-        "tabs": {
-            "dashboard": "Панель вантажів",
-            "search": "Пошук вантажів",
-            "create": "Додати вантаж",
-            "view": "Перегляд вантажу",
-            "edit": "Редагувати вантаж"
-        },
-        "infoTitle": "Інформація про вантаж",
-        "title": "Вантажі",
-        "subtitle": {
-            "dashboard": "Огляд вантажних операцій",
-            "search": "Керування зареєстрованими вантажами",
-            "create": "Реєстрація нового вантажу",
-            "edit": "Редагування даних вантажу"
-        },
-        "registeredCargo": "Зареєстровані вантажі"
-    },
-    "crew": {
-        "fields": {
-            "name": {
-                "title": "Ім’я",
-                "placeholder": "Ім’я члена екіпажу"
-            },
-            "rank": {
-                "title": "Посада",
-                "placeholder": "Ранг або роль"
-            },
-            "nationality": {
-                "title": "Національність",
-                "placeholder": "Виберіть національність"
-            },
-            "passport": {
-                "title": "Номер паспорта",
-                "placeholder": "Номер документа"
-            }
-        },
-        "tabs": {
-            "dashboard": "Панель екіпажу",
-            "search": "Пошук екіпажу",
-            "create": "Додати члена екіпажу",
-            "view": "Перегляд члена екіпажу",
-            "edit": "Редагувати дані екіпажу"
-        },
-        "infoTitle": "Інформація про члена екіпажу",
-        "title": "Екіпаж",
-        "subtitle": {
-            "dashboard": "Огляд даних екіпажу суден",
-            "search": "Керування зареєстрованим екіпажем",
-            "create": "Реєстрація члена екіпажу",
-            "edit": "Редагування інформації"
-        },
-        "registeredCrew": "Зареєстровані члени екіпажу"
-    },
-    "documents": {
-        "fields": {
-            "name": {
-                "title": "Назва документа",
-                "placeholder": "Назва файла"
-            },
-            "type": {
-                "title": "Тип документа",
-                "placeholder": "Виберіть тип"
-            },
-            "file": {
-                "title": "Файл",
-                "placeholder": "Завантажте документ"
-            },
-            "expiresAt": {
-                "title": "Термін дії",
-                "placeholder": "Виберіть дату"
-            }
-        },
-        "tabs": {
-            "dashboard": "Панель документів",
-            "search": "Пошук документів",
-            "create": "Завантажити документ",
-            "view": "Перегляд документа",
-            "edit": "Редагувати документ"
-        },
-        "infoTitle": "Деталі документа",
-        "title": "Документи",
-        "subtitle": {
-            "dashboard": "Огляд усіх документів",
-            "search": "Керування зареєстрованими документами",
-            "create": "Завантаження нового документа",
-            "edit": "Редагування документа"
-        },
-        "registeredDocuments": "Зареєстровані документи"
+        "registeredStaffMembers": "Зареєстровані співробітники"
     },
     "qualification": {
         "tabs": {
@@ -514,6 +427,47 @@
         "aboutAlgorithmModal": {
             "title": "Про алгоритм",
             "content": "Поточний алгоритм враховує сповіщення про заходи суден, заплановані на вибрану дату та причал.\nПотім він перевіряє доступність кранів STS для зазначеного причалу та визначає тривалість кожного завдання на основі швидкості крана.\nВін також ігнорує візити, пов’язані з технічним обслуговуванням або іншою діяльністю, не пов’язаною із завантаженням/розвантаженням."
+        },
+        "results": {
+            "title": "Scheduling Results",
+            "subtitle": "Generated task schedule for the selected date"
+        },
+        "tabs": {
+            "dashboard": "Scheduling Dashboard",
+            "results": "Scheduling Results",
+            "schedule": "Request Task Schedule",
+            "view_dashboard": "View Scheduling",
+            "search": "List Operation Plans",
+            "create": "Create Scheduling",
+            "view": "View Scheduling",
+            "edit": "Edit Scheduling",
+            "queue": "Scheduling Queue"
+        },
+        "subtitles": {
+            "dashboard": "Overview of scheduling of berth operations and incidents",
+            "schedule": "Request a task schedule for a specific date",
+            "search": "List all operation plans for a given date",
+            "create": "Create a new scheduling into the system",
+            "edit": "Edit an existing scheduling in the system",
+            "queue": "View pending scheduling requests"
+        },
+        "queue": {
+            "title": "Scheduling Queue",
+            "subtitle": "Pending scheduling requests",
+            "onlyMine": "Show only my requests"
+        },
+        "rebalancing": {
+            "title": "Dock Rebalancing Required",
+            "warningMessage": "Before scheduling, the system recommends rebalancing dock assignments to optimize load distribution.",
+            "vesselsToReassign": "Vessels to Reassign",
+            "averageLoad": "Average Load",
+            "loadRange": "Load Range",
+            "proposedReassignments": "Proposed Reassignments",
+            "vesselImo": "Vessel IMO",
+            "currentDock": "Current Dock",
+            "proposedDock": "Proposed Dock",
+            "skipButton": "Skip \u0026 Continue with Current Assignments",
+            "applyButton": "Apply Rebalancing \u0026 Generate Schedule"
         }
     },
     "physicalResource": {
@@ -681,11 +635,14 @@
         "unknown": "Невідомо",
         "from": "Від",
         "to": "До",
+        "step": "Step",
+        "of": "of",
         "tabs": {
             "dashboard": "Панель сповіщень",
             "search": "Пошук сповіщень",
             "edit": "Редагувати сповіщення",
             "create": "Створити сповіщення",
+            "update": "Update Notification",
             "makeDraft": "Створити чернетку",
             "myNotifications": "Мої сповіщення",
             "review": "Перегляд сповіщень",
@@ -701,6 +658,7 @@
             "dashboard": "Огляд сповіщень про візити суден",
             "search": "Керування сповіщеннями",
             "create": "Створення нового сповіщення",
+            "update": "Update an existing vessel visit notification",
             "edit": "Редагування сповіщення",
             "review": "Перегляд сповіщень, що очікують на перевірку"
         },
@@ -712,6 +670,7 @@
         "vesselTitle": "Судно",
         "manifestInfo": "Інформація маніфесту",
         "fields": {
+            "selectVessel": "Select corresponding vessel",
             "openLoadManifest": "Відкрити маніфест завантаження",
             "openUnloadManifest": "Відкрити маніфест розвантаження",
             "expectedArrival": "Очікуване прибуття",
@@ -727,7 +686,9 @@
             "area": "Зона",
             "container": "Контейнер",
             "crewMembers": "Члени екіпажу",
-            "status": "Статус"
+            "status": "Статус",
+            "isCargoHazardousQ": "Is Cargo Hazardous?",
+            "cargoManifestInfo": "About cargo manifest files"
         },
         "timeline": {
             "pending": "В очікуванні",
@@ -755,6 +716,30 @@
             },
             "status": "Статус рішення"
         },
+        "sections": {
+            "vesselDetails": "Інформація про візит",
+            "crewDetails": "Деталі екіпажу",
+            "cargoRequirements": "Вимоги до вантажу",
+            "cargoContent": "Зміст вантажу"
+        },
+        "about": {
+            "text": "Файли маніфесту вантажу (наразі) повинні бути у європейському стандартному форматі CSV. Кожен рядок у файлі CSV представляє одиницю вантажу з наступними стовпцями:",
+            "bay": "Відсік (номер)",
+            "row": "Рядок (номер)",
+            "tier": "Рівень (номер)",
+            "area": "Код зони (звідки/куди)",
+            "containerNumber": "Номер контейнера (текст)",
+            "conatinerType": "Тип контейнера (номер)",
+            "description": "Опис (текст)",
+            "containerTypes": {
+                "refrigeratedGoods": "Холодильні товари",
+                "generalConsumerProducts": "Загальні споживчі товари",
+                "electronics": "Електроніка",
+                "hazmat": "Небезпечні матеріали",
+                "oversizedIndustrialEquipment": "Великогабаритне промислове обладнання",
+                "other": "Інше"
+            }
+        },
         "registeredVesselVisitNotifications": "Зареєстровані сповіщення про візити суден"
     },
     "operationalWindow": {
@@ -769,6 +754,388 @@
         },
         "errors": {
             "shiftOverlap": "Невірна зміна. Перекриття або час завершення раніше часу початку."
+        }
+    },
+    "about": {
+        "title": "Про PorTiT",
+        "privacy": {
+            "title": "Політика конфіденційності",
+            "lastUpdated": "Останнє оновлення: {date}"
+        }
+    },
+    "operationPlan": {
+        "title": "План операцій",
+        "dock": "Причал",
+        "docks": "Причали",
+        "operations": "Операції",
+        "cranes": "Крани",
+        "createdBy": "Створено",
+        "createdAt": "Дата створення",
+        "totalSchedules": "Загалом розкладів",
+        "vesselCount": "Судна",
+        "plansOnDate": "Плани операцій на обрану дату",
+        "noPlansOnDate": "Немає планів операцій на обрану дату",
+        "id": "ID",
+        "vvn": "Повідомлення про візит судна",
+        "for": "для",
+        "details": "Деталі",
+        "totalOperations": "Загалом операцій",
+        "algorithmUsed": "Використаний алгоритм",
+        "ganttChart": "Діаграма Ганта",
+        "startTime": "Час початку",
+        "endTime": "Час завершення",
+        "totalDuration": "Загальна тривалість",
+        "operation": "Операція",
+        "duration": "Тривалість",
+        "resources": "Ресурси",
+        "operationDetails": "Деталі операції",
+        "operationNumber": "Операція #{number}",
+        "notFound": "План операції не знайдено",
+        "operationType": {
+            "Unload": "Розвантаження",
+            "Load": "Завантаження"
+        },
+        "tabs": {
+            "unplannedVVNs": "Незаплановані VVN",
+            "search": "Пошук планів",
+            "edit": "Редагувати план",
+            "open": "Почати виконання"
+        },
+        "subtitle": {
+            "edit": "Змінити деталі плану операцій та розклад"
+        },
+        "unplannedVVNs": {
+            "description": "Повідомлення про візити суден, яким ще не призначено план операцій",
+            "noUnplanned": "Усім повідомленням про візити суден призначено плани операцій",
+            "foundMessage": "Знайдено {vvnCount} VVN без планів протягом {dayCount} дн.",
+            "regenerateAll": "Регенерувати всі відсутні плани",
+            "regenerateDay": "Регенерувати плани на цей день",
+            "regenerateModalTitle": "Регенерувати плани на {date}",
+            "warning": "Попередження",
+            "warningMessage": "Регенерація планів перезапише будь-які існуючі плани операцій на цей день. Цю дію не можна скасувати.",
+            "selectedDay": "Обраний день",
+            "confirmRegeneration": "Підтвердити регенерацію",
+            "affectedDays": "Затронуті дні",
+            "queueInfo": "Кожен запит на регенерацію буде поставлено в чергу окремо. Ви можете переглянути та прийняти/відхилити їх окремо з черги планування.",
+            "continue": "Продовжити",
+            "confirmRegenerationTitle": "Підтвердити регенерацію",
+            "irreversibleAction": "Ця дія незворотна",
+            "overwriteWarning": "Регенерація планів операцій назавжди перезапише будь-які існуючі плани на обрані дні. Цю дію не можна скасувати.",
+            "aboutToRegenerate": "Ви збираєтеся регенерувати плани на",
+            "days": "днів",
+            "vesselVisitNotifications": "Повідомлення про візити суден",
+            "using": "Використовуючи",
+            "algorithm": "алгоритм",
+            "proceedQuestion": "Ви хочете продовжити цю операцію?",
+            "yesRegenerateAll": "Так, регенерувати все"
+        },
+        "algorithm": {
+            "optimal": "Оптимальний",
+            "greedy": "Жадібний",
+            "genetic": "Генетичний",
+            "auto": "Авто"
+        },
+        "metrics": {
+            "title": "Метрики",
+            "strategy": "Стратегія",
+            "totalDelay": "Загальна затримка",
+            "computationTime": "Час обчислення",
+            "autoSelection": "Автоматичний вибір алгоритму"
+        },
+        "infoTitle": "Інформація про план операцій",
+        "fields": {
+            "id": {
+                "title": "ID плану"
+            },
+            "relatedVVN": {
+                "title": "Пов\u0027язане VVN"
+            },
+            "dock": {
+                "title": "Причал"
+            },
+            "operations": {
+                "title": "Операції"
+            }
+        },
+        "filters": {
+            "startDate": "Дата початку з",
+            "endDate": "Дата закінчення до"
+        },
+        "metadata": {
+            "title": "Метадані",
+            "createdBy": "Створено",
+            "createdAt": "Дата створення",
+            "algorithmUsed": "Використаний алгоритм"
+        },
+        "schedule": {
+            "title": "Розклад операцій",
+            "noOperations": "Немає запланованих операцій"
+        }
+    },
+    "incidentType": {
+        "fields": {
+            "name": {
+                "title": "Назва",
+                "placeholder": "Назва типу інциденту"
+            },
+            "description": {
+                "title": "Опис",
+                "placeholder": "Детальний опис типу інциденту"
+            },
+            "severity": {
+                "title": "Серйозність",
+                "placeholder": "Виберіть рівень серйозності"
+            },
+            "subtypeOf": {
+                "title": "Підтип",
+                "placeholder": "Виберіть батьківський тип"
+            },
+            "subtypes": {
+                "title": "Підтипи",
+                "placeholder": "Виберіть дочірні типи"
+            }
+        },
+        "severity": {
+            "Minor": "Незначний",
+            "Major": "Значний",
+            "Critical": "Критичний"
+        },
+        "tabs": {
+            "dashboard": "Панель типів інцидентів",
+            "view_dashboard": "Переглянути типи інцидентів",
+            "search": "Пошук типів інцидентів",
+            "create": "Створити тип інциденту",
+            "edit": "Редагувати тип інциденту"
+        },
+        "generalFields": "Загальні поля",
+        "classification": "Класифікація",
+        "title": "Інциденти",
+        "subtitle": {
+            "dashboard": "Огляд статистики та діяльності типів інцидентів",
+            "search": "Керувати та переглядати всі зареєстровані типи інцидентів",
+            "create": "Зареєструвати новий тип інциденту в системі",
+            "edit": "Змінити існуючий тип інциденту в системі"
+        },
+        "registeredIncidentTypes": "Зареєстровані типи інцидентів",
+        "incidentTypeInformation": "Інформація про тип інциденту",
+        "parentType": "Батьківський тип",
+        "confirmDelete": "Підтвердити видалення",
+        "confirmDeleteMessage": "Ви впевнені, що хочете видалити цей тип інциденту?",
+        "failedToDelete": "Не вдалося видалити тип інциденту"
+    },
+    "taskCategory": {
+        "fields": {
+            "name": {
+                "title": "Назва",
+                "placeholder": "Назва категорії завдання"
+            },
+            "category": {
+                "title": "Категорія",
+                "placeholder": "Код категорії"
+            },
+            "description": {
+                "title": "Опис",
+                "placeholder": "Опис категорії завдання"
+            }
+        },
+        "tabs": {
+            "dashboard": "Панель категорій завдань",
+            "search": "Пошук категорій завдань",
+            "create": "Створити категорію завдання",
+            "edit": "Редагувати категорію завдання",
+            "view_dashboard": "Переглянути категорії завдань"
+        },
+        "generalFields": "Загальні поля",
+        "title": "Завдання",
+        "subtitle": {
+            "dashboard": "Огляд статистики та діяльності категорій завдань",
+            "search": "Керувати та переглядати всі зареєстровані категорії завдань",
+            "create": "Зареєструвати нову категорію завдання в системі",
+            "edit": "Змінити існуючу категорію завдання в системі"
+        },
+        "taskCategoryInformation": "Інформація про категорію завдання",
+        "registeredTaskCategories": "Зареєстровані категорії завдань"
+    },
+    "execution": {
+        "title": "Виконання візитів суден",
+        "subtitle": {
+            "search": "Керувати та переглядати всі виконання візитів суден",
+            "dashboard": "Огляд статистики та діяльності виконання візитів суден"
+        },
+        "tabs": {
+            "dashboard": "Панель виконань",
+            "search": "Пошук виконань",
+            "view_dashboard": "Переглянути виконання",
+            "update": "Оновити виконання",
+            "view": "Переглянути виконання",
+            "table": "Табличний вигляд",
+            "cards": "Картковий вигляд"
+        },
+        "fields": {
+            "code": "Код",
+            "relatedVVN": "Пов\u0027язане з",
+            "status": "Статус",
+            "createdBy": "Створено",
+            "dateOpen": "Дата відкриття",
+            "dateClosed": "Дата закриття",
+            "relatedVesselVisit": "Пов\u0027язаний візит судна",
+            "dock": "Причал швартування",
+            "berthTime": "Час швартування",
+            "operations": "Операції"
+        },
+        "filters": {
+            "startDate": "Дата початку",
+            "endDate": "Дата закінчення",
+            "relatedVVN": "Повідомлення про візит судна",
+            "status": "Статус"
+        },
+        "metrics": {
+            "totalOperations": "Загалом операцій",
+            "completedOperations": "Прогрес",
+            "turnaroundTime": "Час обороту",
+            "berthOccupancy": "Зайнятість причалу"
+        },
+        "status": {
+            "pending": "Очікування",
+            "started": "Розпочато",
+            "delayed": "Затримано",
+            "completed": "Завершено"
+        },
+        "view_resources": "Переглянути ресурси",
+        "infoTitle": "Інформація про виконання",
+        "operationsTitle": "Операції",
+        "noOperations": "Немає доступних операцій",
+        "startOperation": "Почати операцію",
+        "completeOperation": "Завершити операцію",
+        "addOperation": "Додати операцію",
+        "addOperationDescription": "Додати нову операцію до часової шкали",
+        "confirmStartOperation": "Ви впевнені, що хочете почати цю операцію?",
+        "confirmCompleteOperation": "Ви впевнені, що хочете завершити цю операцію?",
+        "berthOperation": {
+            "button": "Редагувати дані швартування",
+            "title": "Операція швартування",
+            "description": "Редагувати причал швартування та час для цього виконання візиту судна.",
+            "dock": "Причал швартування",
+            "dockPlaceholder": "Виберіть причал швартування",
+            "berthTime": "Час швартування",
+            "differentThanPlanned": "Обраний причал відрізняється від запланованого."
+        }
+    },
+    "incident": {
+        "tabs": {
+            "dashboard": "Панель інцидентів",
+            "create": "Створити інцидент",
+            "search": "Пошук інцидентів",
+            "active": "Активні інциденти",
+            "view": "Переглянути інцидент",
+            "edit": "Редагувати інцидент"
+        },
+        "subtitle": {
+            "create": "Повідомити про новий інцидент у системі",
+            "search": "Шукати та фільтрувати існуючі інциденти",
+            "active": "Переглядати та керувати активними інцидентами"
+        },
+        "generalFields": "Загальна інформація",
+        "classification": "Класифікація",
+        "fields": {
+            "bid": {
+                "title": "ID інциденту"
+            },
+            "type": {
+                "title": "Тип інциденту",
+                "placeholder": "Виберіть тип інциденту"
+            },
+            "startTime": {
+                "title": "Час початку",
+                "placeholder": "Коли почався інцидент?"
+            },
+            "endTime": {
+                "title": "Час закінчення",
+                "placeholder": "Коли закінчився інцидент?"
+            },
+            "severity": {
+                "title": "Серйозність",
+                "placeholder": "Виберіть рівень серйозності",
+                "options": {
+                    "minor": "Незначний",
+                    "major": "Значний",
+                    "critical": "Критичний"
+                }
+            },
+            "description": {
+                "title": "Опис",
+                "placeholder": "Опишіть інцидент детально"
+            },
+            "createdBy": {
+                "title": "Створено"
+            },
+            "affectedVVECodes": {
+                "title": "Затронуті VVE",
+                "placeholder": "Введіть затронуті VVE"
+            },
+            "vveCode": {
+                "title": "Код VVE"
+            },
+            "status": {
+                "title": "Статус",
+                "options": {
+                    "active": "Активний",
+                    "resolved": "Вирішено"
+                }
+            },
+            "filterStartTime": {
+                "title": "Дата початку з"
+            },
+            "filterEndTime": {
+                "title": "Дата початку до"
+            },
+            "duration": {
+                "title": "Тривалість"
+            }
+        },
+        "severity": {
+            "Minor": "Незначний",
+            "Major": "Значний",
+            "Critical": "Критичний"
+        },
+        "status": {
+            "active": "Активний",
+            "resolved": "Вирішено"
+        },
+        "ongoing": "Триває",
+        "filters": {
+            "onlyActive": "Тільки активні",
+            "onlyMine": "Тільки мої"
+        },
+        "actions": {
+            "view": "Переглянути деталі",
+            "edit": "Редагувати інцидент",
+            "resolve": "Вирішити інцидент",
+            "delete": "Видалити інцидент"
+        },
+        "notifications": {
+            "createSuccess": "Інцидент успішно створено",
+            "createFailed": "Не вдалося створити інцидент",
+            "updateSuccess": "Інцидент успішно оновлено",
+            "updateFailed": "Не вдалося оновити інцидент",
+            "resolveSuccess": "Інцидент успішно вирішено",
+            "resolveFailed": "Не вдалося вирішити інцидент",
+            "deleteSuccess": "Інцидент успішно видалено",
+            "deleteFailed": "Не вдалося видалити інцидент"
+        },
+        "table": {
+            "empty": "Інцидентів не знайдено"
+        },
+        "active": {
+            "title": "Активні інциденти",
+            "subtitle": "Переглядати та керувати поточними інцидентами"
+        },
+        "infoTitle": "Деталі інциденту",
+        "closeDialog": {
+            "title": "Вирішити інцидент",
+            "message": "Коли було вирішено інцидент",
+            "confirm": "Так, закрити цей інцидент",
+            "cancel": "Скасувати"
         }
     }
 }

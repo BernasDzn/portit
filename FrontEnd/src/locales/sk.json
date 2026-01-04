@@ -15,7 +15,9 @@
                                 "friday":  "Piatok",
                                 "saturday":  "Sobota"
                             },
-                   "number":  "Číslo"
+                   "number":  "Číslo",
+                   "actions":  "Akcie",
+                   "none":  "Žiadne"
                },
     "buttons":  {
                     "save":  "Uložiť",
@@ -27,6 +29,10 @@
                     "select":  "Vybrať",
                     "activate":  "Aktivovať",
                     "deactivate":  "Deaktivovať",
+                    "generate":  "Generovať",
+                    "close":  "Zavrieť",
+                    "add":  "Pridať",
+                    "review":  "Preskúmať",
                     "filter":  {
                                    "title":  "Filtre",
                                    "add":  "Pridať filter",
@@ -39,37 +45,40 @@
                     "login":  "Prihlásiť sa",
                     "goBackToLogin":  "Späť na prihlásenie",
                     "logout":  "Odhlásiť",
-                    "generate":  "Generovať",
-                    "close":  "Zavrieť",
-                    "add":  "Pridať",
-                    "review":  "Preskúmať",
+                    "seeMore":  "Zobraziť viac",
                     "ok":  "OK",
-                    "downloadSample":  "Stiahnuť vzorku",
-                    "seeMore":  "Zobraziť viac"
+                    "downloadSample":  "Stiahnuť vzorku"
                 },
+    "search":  {
+                   "languages":  "Hľadať jazyky..."
+               },
     "unsavedChanges":  {
                            "title":  "Zrušiť zmeny?",
                            "message":  "Máte neuložené zmeny. Ste si istí, že chcete opustiť túto stránku a zahodiť svoje zmeny?",
                            "confirm":  "Zahodiť",
                            "cancel":  "Pokračovať v úpravách"
                        },
+    "expirationWarning":  {
+                              "messageOneMinute":  "Vaša relácia vyprší o 1 minútu.",
+                              "messageLessThanOneMinute":  "Vaša relácia čoskoro vyprší."
+                          },
     "dashboard":  {
+                      "welcome":  "Vitajte späť, [name]!",
                       "sidebarTitle":  "Panel",
                       "title":  "PortIT Panel",
                       "subtitle":  "Prehľad systému PortIT",
-                      "3DModel":  {
-                                      "title":  "3D vizualizácia prístavu",
-                                      "description":  "Zobrazte interaktívnu 3D reprezentáciu celého prístavného zariadenia. Monitorujte obsadenosť móla, polohy plavidiel, skladovacie oblasti a zdroje v reálnom čase.",
-                                      "open":  "Otvoriť 3D model"
-                                  },
-                      "welcome":  "Vitajte späť, [name]!",
                       "SAOR":  {
                                    "subtitle":  "Prehľad činností lodného agenta",
                                    "pendingNotifications":  "Čakajúce oznámenia",
                                    "recent":  "Nedávne oznámenia o návšteve plavidiel",
                                    "recentReview":  "Oznámenia vyžadujúce preskúmanie",
                                    "noRecent":  "Žiadne nedávne oznámenia"
-                               }
+                               },
+                      "3DModel":  {
+                                      "title":  "3D vizualizácia prístavu",
+                                      "description":  "Zobrazte interaktívnu 3D reprezentáciu celého prístavného zariadenia. Monitorujte obsadenosť móla, polohy plavidiel, skladovacie oblasti a zdroje v reálnom čase.",
+                                      "open":  "Otvoriť 3D model"
+                                  }
                   },
     "admin":  {
                   "sidebarTitle":  "Správca",
@@ -82,10 +91,42 @@
                   "auditLogs":  {
                                     "title":  "Audit logy",
                                     "subtitle":  "Zobraziť a monitorovať logy aktivít systému."
-                                }
+                                },
+                  "pp":  {
+                             "title":  "Zásady ochrany súkromia",
+                             "subtitle":  "Definovať a spravovať zásady zberu údajov portu."
+                         },
+                  "notifications":  {
+                                        "create":  "Vytvoriť oznámenie",
+                                        "subtitleCreate":  "Send important announcements to any or all users.",
+                                        "title":  "Systémové oznámenia",
+                                        "subtitle":  "Vytváranie a správa systémových oznámení.",
+                                        "broadcastToggle":  "Broadcast to all users",
+                                        "sendEmailToggle":  "Also send as email",
+                                        "fields":  {
+                                                       "title":  {
+                                                                     "title":  "Title",
+                                                                     "placeholder":  "Zadajte názov oznámenia"
+                                                                 },
+                                                       "message":  {
+                                                                       "title":  "Message",
+                                                                       "placeholder":  "Zadajte správu oznámenia"
+                                                                   },
+                                                       "email":  {
+                                                                     "title":  "User email",
+                                                                     "placeholder":  "Specify user email to send to"
+                                                                 },
+                                                       "urgency":  {
+                                                                       "title":  "Urgency",
+                                                                       "options":  {
+                                                                                       "normal":  "Normal",
+                                                                                       "urgent":  "Urgent"
+                                                                                   }
+                                                                   }
+                                                   }
+                                    }
               },
     "user":  {
-                 "registeredUsers":  "Registrovaní používatelia",
                  "fields":  {
                                 "email":  {
                                               "title":  "E-mail",
@@ -102,9 +143,9 @@
                                                          }
                                          },
                                 "isActive":  {
-                                                "title":  "Aktívny",
+                                                 "title":  "Aktívny",
                                                  "options":  {
-                                                                "active":  "Áno",
+                                                                 "active":  "Áno",
                                                                  "inactive":  "Nie"
                                                              }
                                              }
@@ -121,8 +162,15 @@
                                   "dashboard":  "Prehľad a správa používateľov",
                                   "create":  "Registrovať nového používateľa do systému",
                                   "view":  "Zobraziť a spravovať existujúcich používateľov"
-                              }
+                              },
+                 "registeredUsers":  "Registrovaní používatelia",
+                 "confirmDelete":  "Potvrďte odstránenie",
+                 "confirmDeleteMessage":  "Ste si istý, že chcete odstrániť tohto používateľa?"
              },
+    "representative":  {
+                           "title":  "Zástupca",
+                           "select":  "Vyberte zástupcu"
+                       },
     "physicalCharacteristics":  {
                                     "title":  "Fyzikálne charakteristiky (m)",
                                     "length":  {
@@ -272,7 +320,12 @@
                    "registeredVessels":  "Registrované plavidlá"
                },
     "staff":  {
-                  "registeredStaffMembers":  "Registrovaní členovia personálu",
+                  "deactivation":  {
+                                       "title":  "Deaktivovať člena personálu",
+                                       "message":  "Naozaj chcete deaktivovať tohto člena personálu? Akciu je možné obnoviť neskôr.",
+                                       "successMessage":  "Člen personálu bol úspešne deaktivovaný.",
+                                       "errorMessage":  "Pri pokuse o deaktiváciu člena personálu došlo k chybe. Skúste to znova."
+                                   },
                   "fields":  {
                                  "mechanographicNumber":  {
                                                               "title":  "Mechanografické číslo",
@@ -321,15 +374,9 @@
                                    "view":  "Zobraziť detaily personálu",
                                    "edit":  "Upraviť existujúceho člena personálu v systéme"
                                },
-                  "deactivation":  {
-                                       "title":  "Deaktivovať člena personálu",
-                                       "message":  "Naozaj chcete deaktivovať tohto člena personálu? Akciu je možné obnoviť neskôr.",
-                                       "successMessage":  "Člen personálu bol úspešne deaktivovaný.",
-                                       "errorMessage":  "Pri pokuse o deaktiváciu člena personálu došlo k chybe. Skúste to znova."
-                                   }
+                  "registeredStaffMembers":  "Registrovaní členovia personálu"
               },
     "qualification":  {
-                          "registeredQualifications":  "Registrované kvalifikácie",
                           "tabs":  {
                                        "dashboard":  "Panel kvalifikácií",
                                        "view_dashboard":  "Zobraziť kvalifikácie",
@@ -356,10 +403,80 @@
                                                                    "title":  "Názov kvalifikácie",
                                                                    "placeholder":  "Názov kvalifikácie"
                                                                }
-                                     }
+                                     },
+                          "registeredQualifications":  "Registrované kvalifikácie"
                       },
+    "scheduling":  {
+                       "title":  "Požiadať o denný rozvrh",
+                       "subtitle":  "Náš automatizovaný algoritmus naplánovania analyzuje úlohy naplánované na zvolený deň.",
+                       "noVisits":  "Pre vybraný dátum nie sú naplánované žiadne návštevy plavidiel.",
+                       "visitsOnSelectedDay":  "Návštevy plavidiel vo vybraný deň",
+                       "viewVisits":  "Generovať rozvrh úloh",
+                       "generateTasksButton":  "Generovať rozvrh úloh",
+                       "aboutAlgorithmButton":  "O algoritme",
+                       "fields":  {
+                                      "algorithm":  {
+                                                        "title":  "Algoritmus plánovania",
+                                                        "placeholder":  "Vyberte algoritmus plánovania"
+                                                    },
+                                      "relatedDocks":  "Vyberte súvisiace mólo"
+                                  },
+                       "generateTasksModal":  {
+                                                  "title":  "Ďalšia logistika"
+                                              },
+                       "aboutAlgorithmModal":  {
+                                                   "title":  "O algoritme",
+                                                   "content":  "Aktuálny algoritmus berie do úvahy oznámenia o návšteve plavidiel naplánované na vybraný dátum a mólo. \nNásledne skontroluje dostupnosť STS žeriavov pre dané mólo a rozhodne o trvaní jednotlivých úloh na základe rýchlosti žeriavu.\nIgnoruje návštevy určené na údržbu alebo iné ne-nakladacie/vykládacie aktivity."
+                                               },
+                       "results":  {
+                                       "title":  "Scheduling Results",
+                                       "subtitle":  "Generated task schedule for the selected date"
+                                   },
+                       "tabs":  {
+                                    "dashboard":  "Scheduling Dashboard",
+                                    "results":  "Scheduling Results",
+                                    "schedule":  "Request Task Schedule",
+                                    "view_dashboard":  "View Scheduling",
+                                    "search":  "List Operation Plans",
+                                    "create":  "Create Scheduling",
+                                    "view":  "View Scheduling",
+                                    "edit":  "Edit Scheduling",
+                                    "queue":  "Scheduling Queue"
+                                },
+                       "subtitles":  {
+                                         "dashboard":  "Overview of scheduling of berth operations and incidents",
+                                         "schedule":  "Request a task schedule for a specific date",
+                                         "search":  "List all operation plans for a given date",
+                                         "create":  "Create a new scheduling into the system",
+                                         "edit":  "Edit an existing scheduling in the system",
+                                         "queue":  "View pending scheduling requests"
+                                     },
+                       "queue":  {
+                                     "title":  "Scheduling Queue",
+                                     "subtitle":  "Pending scheduling requests",
+                                     "onlyMine":  "Show only my requests"
+                                 },
+                       "rebalancing":  {
+                                           "title":  "Dock Rebalancing Required",
+                                           "warningMessage":  "Before scheduling, the system recommends rebalancing dock assignments to optimize load distribution.",
+                                           "vesselsToReassign":  "Vessels to Reassign",
+                                           "averageLoad":  "Average Load",
+                                           "loadRange":  "Load Range",
+                                           "proposedReassignments":  "Proposed Reassignments",
+                                           "vesselImo":  "Vessel IMO",
+                                           "currentDock":  "Current Dock",
+                                           "proposedDock":  "Proposed Dock",
+                                           "skipButton":  "Skip \u0026 Continue with Current Assignments",
+                                           "applyButton":  "Apply Rebalancing \u0026 Generate Schedule"
+                                       }
+                   },
     "physicalResource":  {
-                             "registeredPhysicalResources":  "Registrované fyzické zdroje",
+                             "deactivation":  {
+                                                  "title":  "Deaktivácia fyzického zdroja",
+                                                  "message":  "Naozaj chcete deaktivovať tento fyzický zdroj? Akciu je možné obnoviť neskôr.",
+                                                  "successMessage":  "Fyzický zdroj bol úspešne deaktivovaný.",
+                                                  "errorMessage":  "Pri pokuse o deaktiváciu fyzického zdroja došlo k chybe. Skúste to znova."
+                                              },
                              "tabs":  {
                                           "dashboard":  "Panel fyzických zdrojov",
                                           "view_dashboard":  "Zobraziť fyzické zdroje",
@@ -442,15 +559,9 @@
                              "actions":  {
                                              "deactivate":  "Deaktivovať fyzický zdroj"
                                          },
-                             "deactivation":  {
-                                                  "title":  "Deaktivácia fyzického zdroja",
-                                                  "message":  "Naozaj chcete deaktivovať tento fyzický zdroj? Akciu je možné obnoviť neskôr.",
-                                                  "successMessage":  "Fyzický zdroj bol úspešne deaktivovaný.",
-                                                  "errorMessage":  "Pri pokuse o deaktiváciu fyzického zdroja došlo k chybe. Skúste to znova."
-                                              }
+                             "registeredPhysicalResources":  "Registrované fyzické zdroje"
                          },
     "storageArea":  {
-                        "registeredStorageAreas":  "Registrované skladovacie oblasti",
                         "tabs":  {
                                      "dashboard":  "Panel skladovacích oblastí",
                                      "view_dashboard":  "Zobraziť skladovacie oblasti",
@@ -459,6 +570,9 @@
                                      "view":  "Zobraziť skladovaciu oblasť",
                                      "edit":  "Upraviť skladovaciu oblasť"
                                  },
+                        "create":  {
+                                       "distance_meters":  "Vzdialenosť (metre)"
+                                   },
                         "infoTitle":  "Informácie o skladovacej oblasti",
                         "title":  "Skladovacie oblasti",
                         "subtitle":  {
@@ -480,9 +594,6 @@
                                         "serviced_docks_distance":  "Vzdialenosť obsluhovaných môl",
                                         "no_registered_docks":  "Nie sú zaregistrované žiadne móla"
                                     },
-                        "create":  {
-                                       "distance_meters":  "Vzdialenosť (metre)"
-                                   },
                         "fields":  {
                                        "nameCode":  {
                                                         "title":  "Kód názvu",
@@ -508,46 +619,10 @@
                                                          "title":  "Obsadenosť",
                                                          "placeholder":  "Aktuálna obsadenosť"
                                                      }
-                                   }
+                                   },
+                        "registeredStorageAreas":  "Registrované skladovacie oblasti"
                     },
-    "search":  {
-                   "languages":  "Hľadať jazyky..."
-               },
-    "expirationWarning":  {
-                              "messageOneMinute":  "Vaša relácia vyprší o 1 minútu.",
-                              "messageLessThanOneMinute":  "Vaša relácia čoskoro vyprší."
-                          },
-    "representative":  {
-                           "title":  "Zástupca",
-                           "select":  "Vyberte zástupcu"
-                       },
-    "scheduling":  {
-                       "title":  "Požiadať o denný rozvrh",
-                       "subtitle":  "Náš automatizovaný algoritmus naplánovania analyzuje úlohy naplánované na zvolený deň.",
-                       "noVisits":  "Pre vybraný dátum nie sú naplánované žiadne návštevy plavidiel.",
-                       "visitsOnSelectedDay":  "Návštevy plavidiel vo vybraný deň",
-                       "viewVisits":  "Generovať rozvrh úloh",
-                       "generateTasksButton":  "Generovať rozvrh úloh",
-                       "aboutAlgorithmButton":  "O algoritme",
-                       "fields":  {
-                                      "algorithm":  {
-                                                        "title":  "Algoritmus plánovania",
-                                                        "placeholder":  "Vyberte algoritmus plánovania"
-                                                    },
-                                      "relatedDocks":  "Vyberte súvisiace mólo"
-                                  },
-                       "generateTasksModal":  {
-                                                  "title":  "Ďalšia logistika"
-                                              },
-                       "aboutAlgorithmModal":  {
-                                                   "title":  "O algoritme",
-                                                   "content":  "Aktuálny algoritmus berie do úvahy oznámenia o návšteve plavidiel naplánované na vybraný dátum a mólo. \nNásledne skontroluje dostupnosť STS žeriavov pre dané mólo a rozhodne o trvaní jednotlivých úloh na základe rýchlosti žeriavu.\nIgnoruje návštevy určené na údržbu alebo iné ne-nakladacie/vykládacie aktivity."
-                                               }
-                   },
     "notification":  {
-                         "registeredVesselVisitNotifications":  "Registrované oznámenia o návštevách plavidiel",
-                         "step":  "Krok",
-                         "of":  "z",
                          "id":  "ID oznámenia",
                          "hazardous":  "Nebezpečný",
                          "nonHazardous":  "Nie je nebezpečný",
@@ -560,11 +635,14 @@
                          "unknown":  "Neznáme",
                          "from":  "Od",
                          "to":  "Do",
+                         "step":  "Krok",
+                         "of":  "z",
                          "tabs":  {
                                       "dashboard":  "Panel oznámení",
                                       "search":  "Hľadať oznámenia",
                                       "edit":  "Upraviť oznámenie",
                                       "create":  "Vytvoriť oznámenie",
+                                      "update":  "Update Notification",
                                       "makeDraft":  "Vytvoriť koncept oznámenia",
                                       "myNotifications":  "Moje oznámenia",
                                       "review":  "Preskúmať oznámenia",
@@ -580,6 +658,7 @@
                                           "dashboard":  "Prehľad oznámení o návšteve plavidiel",
                                           "search":  "Spravovať a zobraziť všetky oznámenia o návšteve plavidiel",
                                           "create":  "Vytvoriť nové oznámenie o návšteve plavidla",
+                                          "update":  "Update an existing vessel visit notification",
                                           "edit":  "Upraviť existujúce oznámenie o návšteve plavidla",
                                           "review":  "Preskúmať čakajúce oznámenia o návšteve plavidiel"
                                       },
@@ -591,6 +670,7 @@
                          "vesselTitle":  "Informácie o plavidle",
                          "manifestInfo":  "Informácie o manifeste",
                          "fields":  {
+                                        "selectVessel":  "Select corresponding vessel",
                                         "openLoadManifest":  "Otvoriť manifest nakládky",
                                         "openUnloadManifest":  "Otvoriť manifest vykládky",
                                         "expectedArrival":  "Očakávaný príchod",
@@ -606,7 +686,9 @@
                                         "area":  "Oblasť",
                                         "container":  "Kontajner",
                                         "crewMembers":  "Členovia posádky",
-                                        "status":  "Stav"
+                                        "status":  "Stav",
+                                        "isCargoHazardousQ":  "Is Cargo Hazardous?",
+                                        "cargoManifestInfo":  "About cargo manifest files"
                                     },
                          "timeline":  {
                                           "pending":  "Čaká sa",
@@ -633,7 +715,32 @@
                                                          "placeholder":  "Uveďte dôvod rozhodnutia"
                                                      },
                                           "status":  "Stav rozhodnutia"
-                                      }
+                                      },
+                         "sections":  {
+                                          "vesselDetails":  "Informácie o návšteve",
+                                          "crewDetails":  "Podrobnosti o posádke",
+                                          "cargoRequirements":  "Požiadavky na náklad",
+                                          "cargoContent":  "Obsah nákladu"
+                                      },
+                         "about":  {
+                                       "text":  "Súbory manifestu nákladu (momentálne) musia byť v európskom štandardnom formáte CSV. Každý riadok v CSV súbore predstavuje položku nákladu s nasledujúcimi stĺpcami:",
+                                       "bay":  "Bay (číslo)",
+                                       "row":  "Riadok (číslo)",
+                                       "tier":  "Úroveň (číslo)",
+                                       "area":  "Kód oblasti (odkiaľ/kam)",
+                                       "containerNumber":  "Číslo kontajnera (text)",
+                                       "conatinerType":  "Typ kontajnera (číslo)",
+                                       "description":  "Popis (text)",
+                                       "containerTypes":  {
+                                                              "refrigeratedGoods":  "Chladené tovary",
+                                                              "generalConsumerProducts":  "Všeobecné spotrebné produkty",
+                                                              "electronics":  "Elektronika",
+                                                              "hazmat":  "Nebezpečné materiály",
+                                                              "oversizedIndustrialEquipment":  "Nadrozmeré priemyselné zariadenie",
+                                                              "other":  "Iné"
+                                                          }
+                                   },
+                         "registeredVesselVisitNotifications":  "Registrované oznámenia o návštevách plavidiel"
                      },
     "operationalWindow":  {
                               "title":  "Prevádzkové okno",
@@ -649,194 +756,388 @@
                                              "shiftOverlap":  "Neplatná zmena. Prekryv alebo čas konca pred časom začiatku."
                                          }
                           },
-    "about": {
-        "title": "O aplikácii",
-        "description": "Tento modul poskytuje komplexné riešenie na správu flotily autonómnych vozidiel vrátane operácií plánovn, typov incidentov a vykonávania úloh.",
-        "version": "Verzia",
-        "features": {
-            "title": "Funkcie",
-            "fleet": "Správa flotily",
-            "planning": "Plánovanie operácií",
-            "incidents": "Sledovanie incidentov",
-            "tasks": "Vykonávanie úloh"
-        }
-    },
-    "operationPlan": {
-        "title": "Operačný plán",
-        "list": {
-            "title": "Plány operácií",
-            "empty": "Nenájdené žiadne operačné plány",
-            "search": "Hľadať plány..."
-        },
-        "details": {
-            "title": "Podrobnosti plánu",
-            "status": "Stav",
-            "startDate": "Dátum začiatku",
-            "endDate": "Dátum ukončenia",
-            "assignedVehicles": "Priradené vozidlá",
-            "tasks": "Úlohy"
-        },
-        "form": {
-            "create": "Vytvoriť plán",
-            "edit": "Upraviť plán",
-            "name": "Názov plánu",
-            "description": "Popis",
-            "selectVehicles": "Vybrať vozidlá"
-        },
-        "status": {
-            "draft": "Koncept",
-            "active": "Aktívny",
-            "completed": "Dokončený",
-            "cancelled": "Zrušený"
-        }
-    },
-    "incidentType": {
-        "title": "Typ incidentu",
-        "list": {
-            "title": "Typy incidentov",
-            "empty": "Nenájdené žiadne typy incidentov",
-            "search": "Hľadať typy..."
-        },
-        "details": {
-            "title": "Podrobnosti typu",
-            "code": "Kód",
-            "severity": "Závažnosť",
-            "responseTime": "Čas reakcie",
-            "procedures": "Postupy"
-        },
-        "form": {
-            "create": "Vytvoriť typ",
-            "edit": "Upraviť typ",
-            "name": "Názov typu",
-            "description": "Popis",
-            "selectSeverity": "Vybrať závažnosť"
-        },
-        "severity": {
-            "low": "Nízka",
-            "medium": "Stredná",
-            "high": "Vysoká",
-            "critical": "Kritická"
-        }
-    },
-    "taskCategory": {
-        "title": "Kategória úlohy",
-        "list": {
-            "title": "Kategórie úloh",
-            "empty": "Nenájdené žiadne kategórie úloh",
-            "search": "Hľadať kategórie..."
-        },
-        "details": {
-            "title": "Podrobnosti kategórie",
-            "code": "Kód",
-            "priority": "Priorita",
-            "estimatedDuration": "Odhadovaná doba trvania",
-            "requirements": "Požiadavky"
-        },
-        "form": {
-            "create": "Vytvoriť kategóriu",
-            "edit": "Upraviť kategóriu",
-            "name": "Názov kategórie",
-            "description": "Popis",
-            "selectPriority": "Vybrať prioritu"
-        },
-        "priority": {
-            "low": "Nízka",
-            "normal": "Normálna",
-            "high": "Vysoká",
-            "urgent": "Naliehavá"
-        }
-    },
-    "execution": {
-        "title": "Vykonávanie",
-        "status": {
-            "pending": "Čakajúce",
-            "inProgress": "Prebieha",
-            "completed": "Dokončené",
-            "failed": "Zlyhalo",
-            "cancelled": "Zrušené"
-        },
-        "details": {
-            "title": "Podrobnosti vykonávania",
-            "startTime": "Čas začiatku",
-            "endTime": "Čas ukončenia",
-            "duration": "Trvanie",
-            "assignedTo": "Priradené komu",
-            "progress": "Pokrok"
-        },
-        "actions": {
-            "start": "Začať vykonávanie",
-            "pause": "Pozastaviť",
-            "resume": "Obnoviť",
-            "complete": "Dokončiť",
-            "cancel": "Zrušiť"
-        },
-        "messages": {
-            "started": "Vykonávanie začalo",
-            "paused": "Vykonávanie pozastavené",
-            "resumed": "Vykonávanie obnovené",
-            "completed": "Vykonávanie dokončené",
-            "cancelled": "Vykonávanie zrušené",
-            "failed": "Vykonávanie zlyhalo"
-        }
-    },
-    "incident": {
-        "title": "Incident",
-        "list": {
-            "title": "Incidenty",
-            "empty": "Nenájdené žiadne incidenty",
-            "search": "Hľadať incidenty...",
-            "filter": {
-                "all": "Všetky",
-                "open": "Otvorené",
-                "inProgress": "Prebieha",
-                "resolved": "Vyriešené",
-                "closed": "Zatvorené"
-            }
-        },
-        "details": {
-            "title": "Podrobnosti incidentu",
-            "id": "ID incidentu",
-            "type": "Typ",
-            "status": "Stav",
-            "severity": "Závažnosť",
-            "reportedBy": "Nahlásil",
-            "reportedAt": "Nahlásené dňa",
-            "assignedTo": "Priradené komu",
-            "location": "Umiestnenie",
-            "vehicle": "Vozidlo",
-            "description": "Popis",
-            "resolution": "Riešenie",
-            "timeline": "Časová os"
-        },
-        "form": {
-            "create": "Nahlásiť incident",
-            "edit": "Upraviť incident",
-            "selectType": "Vybrať typ",
-            "selectSeverity": "Vybrať závažnosť",
-            "selectVehicle": "Vybrať vozidlo",
-            "descriptionPlaceholder": "Opíšte incident...",
-            "resolutionPlaceholder": "Opíšte riešenie..."
-        },
-        "status": {
-            "open": "Otvorený",
-            "inProgress": "Prebieha",
-            "resolved": "Vyriešený",
-            "closed": "Zatvorený"
-        },
-        "actions": {
-            "assign": "Priradiť",
-            "resolve": "Vyriešiť",
-            "close": "Zatvoriť",
-            "reopen": "Znovu otvoriť",
-            "addNote": "Pridať poznámku"
-        },
-        "messages": {
-            "created": "Incident vytvorený",
-            "updated": "Incident aktualizovaný",
-            "assigned": "Incident priradený",
-            "resolved": "Incident vyriešený",
-            "closed": "Incident zatvorený",
-            "reopened": "Incident znovu otvorený"
-        }
-    }
+    "about":  {
+                  "title":  "O aplikácii",
+                  "privacy":  {
+                                  "title":  "Privacy Policy",
+                                  "lastUpdated":  "Last updated: {date}"
+                              }
+              },
+    "operationPlan":  {
+                          "title":  "Operačný plán",
+                          "dock":  "Dock",
+                          "docks":  "Docks",
+                          "operations":  "Operations",
+                          "cranes":  "Cranes",
+                          "createdBy":  "Created By",
+                          "createdAt":  "Created At",
+                          "totalSchedules":  "Total Schedules",
+                          "vesselCount":  "Vessels",
+                          "plansOnDate":  "Operation plans on selected date",
+                          "noPlansOnDate":  "No operation plans on selected date",
+                          "id":  "ID",
+                          "vvn":  "Vessel Visit Notification",
+                          "for":  "for",
+                          "details":  {
+                                          "title":  "Podrobnosti plánu"
+                                      },
+                          "totalOperations":  "Total Operations",
+                          "algorithmUsed":  "Algorithm Used",
+                          "ganttChart":  "Gantt Chart",
+                          "startTime":  "Start Time",
+                          "endTime":  "End Time",
+                          "totalDuration":  "Total Duration",
+                          "operation":  "Operation",
+                          "duration":  "Duration",
+                          "resources":  "Resources",
+                          "operationDetails":  "Operation Details",
+                          "operationNumber":  "Operation #{number}",
+                          "notFound":  "Operation plan not found",
+                          "operationType":  {
+                                                "Unload":  "Unload",
+                                                "Load":  "Load"
+                                            },
+                          "tabs":  {
+                                       "unplannedVVNs":  "Unplanned VVNs",
+                                       "search":  "Search Plans",
+                                       "edit":  "Edit Plan",
+                                       "open":  "Start Execution"
+                                   },
+                          "subtitle":  {
+                                           "edit":  "Modify operation plan details and schedule"
+                                       },
+                          "unplannedVVNs":  {
+                                                "description":  "Vessel visit notifications that do not have an operation plan assigned yet",
+                                                "noUnplanned":  "All vessel visit notifications have operation plans assigned",
+                                                "foundMessage":  "Found {vvnCount} VVN(s) without plans across {dayCount} day(s)",
+                                                "regenerateAll":  "Regenerate All Missing Plans",
+                                                "regenerateDay":  "Regenerate Plans for This Day",
+                                                "regenerateModalTitle":  "Regenerate Plans for {date}",
+                                                "warning":  "Warning",
+                                                "warningMessage":  "Regenerating plans will overwrite any existing operation plans for this day. This action cannot be undone.",
+                                                "selectedDay":  "Selected Day",
+                                                "confirmRegeneration":  "Confirm Regeneration",
+                                                "affectedDays":  "Affected Days",
+                                                "queueInfo":  "Each regeneration request will be queued separately. You can review and accept/reject them individually from the Scheduling Queue.",
+                                                "continue":  "Continue",
+                                                "confirmRegenerationTitle":  "Confirm Regeneration",
+                                                "irreversibleAction":  "This action is irreversible",
+                                                "overwriteWarning":  "Regenerating operation plans will permanently overwrite any existing plans for the selected days. This action cannot be undone.",
+                                                "aboutToRegenerate":  "You are about to regenerate plans for",
+                                                "days":  "days",
+                                                "vesselVisitNotifications":  "Vessel Visit Notifications",
+                                                "using":  "Using",
+                                                "algorithm":  "algorithm",
+                                                "proceedQuestion":  "Do you want to proceed with this operation?",
+                                                "yesRegenerateAll":  "Yes, Regenerate All"
+                                            },
+                          "algorithm":  {
+                                            "optimal":  "Optimal",
+                                            "greedy":  "Greedy",
+                                            "genetic":  "Genetic",
+                                            "auto":  "Auto"
+                                        },
+                          "metrics":  {
+                                          "title":  "Metrics",
+                                          "strategy":  "Strategy",
+                                          "totalDelay":  "Total Delay",
+                                          "computationTime":  "Computation Time",
+                                          "autoSelection":  "Automatic Algorithm Selection"
+                                      },
+                          "infoTitle":  "Operation Plan Information",
+                          "fields":  {
+                                         "id":  {
+                                                    "title":  "Plan ID"
+                                                },
+                                         "relatedVVN":  {
+                                                            "title":  "Related VVN"
+                                                        },
+                                         "dock":  {
+                                                      "title":  "Dock"
+                                                  },
+                                         "operations":  {
+                                                            "title":  "Operations"
+                                                        }
+                                     },
+                          "filters":  {
+                                          "startDate":  "Start Date From",
+                                          "endDate":  "End Date To"
+                                      },
+                          "metadata":  {
+                                           "title":  "Metadata",
+                                           "createdBy":  "Created By",
+                                           "createdAt":  "Created At",
+                                           "algorithmUsed":  "Algorithm Used"
+                                       },
+                          "schedule":  {
+                                           "title":  "Operation Schedule",
+                                           "noOperations":  "No operations scheduled"
+                                       }
+                      },
+    "incidentType":  {
+                         "fields":  {
+                                        "name":  {
+                                                     "title":  "Name",
+                                                     "placeholder":  "Incident type name"
+                                                 },
+                                        "description":  {
+                                                            "title":  "Description",
+                                                            "placeholder":  "Detailed description of the incident type"
+                                                        },
+                                        "severity":  {
+                                                         "title":  "Severity",
+                                                         "placeholder":  "Select severity level"
+                                                     },
+                                        "subtypeOf":  {
+                                                          "title":  "Subtype Of",
+                                                          "placeholder":  "Select parent type"
+                                                      },
+                                        "subtypes":  {
+                                                         "title":  "Subtypes",
+                                                         "placeholder":  "Select child types"
+                                                     }
+                                    },
+                         "severity":  {
+                                          "Minor":  "Minor",
+                                          "Major":  "Major",
+                                          "Critical":  "Kritická"
+                                      },
+                         "tabs":  {
+                                      "dashboard":  "Incident Types Dashboard",
+                                      "view_dashboard":  "View Incident Types",
+                                      "search":  "Search Incident Types",
+                                      "create":  "Create Incident Type",
+                                      "edit":  "Edit Incident Type"
+                                  },
+                         "generalFields":  "General fields",
+                         "classification":  "Classification",
+                         "title":  "Typ incidentu",
+                         "subtitle":  {
+                                          "dashboard":  "Overview of incident type statistics and activities",
+                                          "search":  "Manage and view all registered incident types",
+                                          "create":  "Register a new incident type into the system",
+                                          "edit":  "Modify an existing incident type in the system"
+                                      },
+                         "registeredIncidentTypes":  "Registered Incident Types",
+                         "incidentTypeInformation":  "Incident Type Information",
+                         "parentType":  "Parent Type",
+                         "confirmDelete":  "Confirm delete",
+                         "confirmDeleteMessage":  "Are you sure you want to delete this incident type?",
+                         "failedToDelete":  "Failed to delete incident type"
+                     },
+    "taskCategory":  {
+                         "fields":  {
+                                        "name":  {
+                                                     "title":  "Name",
+                                                     "placeholder":  "Task category name"
+                                                 },
+                                        "category":  {
+                                                         "title":  "Category",
+                                                         "placeholder":  "Category code"
+                                                     },
+                                        "description":  {
+                                                            "title":  "Description",
+                                                            "placeholder":  "Description of the task category"
+                                                        }
+                                    },
+                         "tabs":  {
+                                      "dashboard":  "Task Categories Dashboard",
+                                      "search":  "Search Task Categories",
+                                      "create":  "Create Task Category",
+                                      "edit":  "Edit Task Category",
+                                      "view_dashboard":  "View Task Categories"
+                                  },
+                         "generalFields":  "General fields",
+                         "title":  "Kategória úlohy",
+                         "subtitle":  {
+                                          "dashboard":  "Overview of task category statistics and activities",
+                                          "search":  "Manage and view all registered task categories",
+                                          "create":  "Register a new task category in the system",
+                                          "edit":  "Modify an existing task category in the system"
+                                      },
+                         "taskCategoryInformation":  "Task Category Information",
+                         "registeredTaskCategories":  "Registered Task Categories"
+                     },
+    "execution":  {
+                      "title":  "Vykonávanie",
+                      "subtitle":  {
+                                       "search":  "Manage and view all vessel visit executions",
+                                       "dashboard":  "Overview of vessel visit execution statistics and activities"
+                                   },
+                      "tabs":  {
+                                   "dashboard":  "Executions Dashboard",
+                                   "search":  "Search Executions",
+                                   "view_dashboard":  "View Executions",
+                                   "update":  "Update Execution",
+                                   "view":  "View Execution",
+                                   "table":  "Table View",
+                                   "cards":  "Card View"
+                               },
+                      "fields":  {
+                                     "code":  "Code",
+                                     "relatedVVN":  "Related To",
+                                     "status":  "Status",
+                                     "createdBy":  "Created By",
+                                     "dateOpen":  "Date Open",
+                                     "dateClosed":  "Date Closed",
+                                     "relatedVesselVisit":  "Related Vessel Visit",
+                                     "dock":  "Berth Dock",
+                                     "berthTime":  "Berth Time",
+                                     "operations":  "Operations"
+                                 },
+                      "filters":  {
+                                      "startDate":  "Start Date",
+                                      "endDate":  "End Date",
+                                      "relatedVVN":  "Vessel Visit Notification",
+                                      "status":  "Status"
+                                  },
+                      "metrics":  {
+                                      "totalOperations":  "Total Ops",
+                                      "completedOperations":  "Progress",
+                                      "turnaroundTime":  "Turnaround Time",
+                                      "berthOccupancy":  "Berth Occupancy"
+                                  },
+                      "status":  {
+                                     "pending":  "Čakajúce",
+                                     "started":  "Started",
+                                     "delayed":  "Delayed",
+                                     "completed":  "Dokončené"
+                                 },
+                      "view_resources":  "View Resources",
+                      "infoTitle":  "Execution Information",
+                      "operationsTitle":  "Operations",
+                      "noOperations":  "No operations available",
+                      "startOperation":  "Start Operation",
+                      "completeOperation":  "Complete Operation",
+                      "addOperation":  "Add Operation",
+                      "addOperationDescription":  "Add a new operation to the timeline",
+                      "confirmStartOperation":  "Are you sure you want to start this operation?",
+                      "confirmCompleteOperation":  "Are you sure you want to complete this operation?",
+                      "berthOperation":  {
+                                             "button":  "Edit berth data",
+                                             "title":  "Berth Operation",
+                                             "description":  "Edit the berth dock and time for this vessel visit execution.",
+                                             "dock":  "Berth Dock",
+                                             "dockPlaceholder":  "Select berth dock",
+                                             "berthTime":  "Berth Time",
+                                             "differentThanPlanned":  "The selected dock is different than the one planned."
+                                         }
+                  },
+    "incident":  {
+                     "tabs":  {
+                                  "dashboard":  "Incidents Dashboard",
+                                  "create":  "Create Incident",
+                                  "search":  "Search Incidents",
+                                  "active":  "Active Incidents",
+                                  "view":  "View Incident",
+                                  "edit":  "Edit Incident"
+                              },
+                     "subtitle":  {
+                                      "create":  "Report a new incident in the system",
+                                      "search":  "Search and filter existing incidents",
+                                      "active":  "View and manage active incidents"
+                                  },
+                     "generalFields":  "General Information",
+                     "classification":  "Classification",
+                     "fields":  {
+                                    "bid":  {
+                                                "title":  "Incident ID"
+                                            },
+                                    "type":  {
+                                                 "title":  "Incident Type",
+                                                 "placeholder":  "Select an incident type"
+                                             },
+                                    "startTime":  {
+                                                      "title":  "Start Time",
+                                                      "placeholder":  "When did the incident start?"
+                                                  },
+                                    "endTime":  {
+                                                    "title":  "End Time",
+                                                    "placeholder":  "When did the incident end?"
+                                                },
+                                    "severity":  {
+                                                     "title":  "Severity",
+                                                     "placeholder":  "Select severity level",
+                                                     "options":  {
+                                                                     "minor":  "Minor",
+                                                                     "major":  "Major",
+                                                                     "critical":  "Critical"
+                                                                 }
+                                                 },
+                                    "description":  {
+                                                        "title":  "Description",
+                                                        "placeholder":  "Describe the incident in detail"
+                                                    },
+                                    "createdBy":  {
+                                                      "title":  "Created By"
+                                                  },
+                                    "affectedVVECodes":  {
+                                                             "title":  "Affected VVEs",
+                                                             "placeholder":  "Enter affected VVEs"
+                                                         },
+                                    "vveCode":  {
+                                                    "title":  "VVE Code"
+                                                },
+                                    "status":  {
+                                                   "title":  "Status",
+                                                   "options":  {
+                                                                   "active":  "Active",
+                                                                   "resolved":  "Resolved"
+                                                               }
+                                               },
+                                    "filterStartTime":  {
+                                                            "title":  "Start Date From"
+                                                        },
+                                    "filterEndTime":  {
+                                                          "title":  "Start Date To"
+                                                      },
+                                    "duration":  {
+                                                     "title":  "Duration"
+                                                 }
+                                },
+                     "severity":  {
+                                      "Minor":  "Minor",
+                                      "Major":  "Major",
+                                      "Critical":  "Critical"
+                                  },
+                     "status":  {
+                                    "active":  "Active",
+                                    "resolved":  "Vyriešený"
+                                },
+                     "ongoing":  "Ongoing",
+                     "filters":  {
+                                     "onlyActive":  "Only Active",
+                                     "onlyMine":  "Only Mine"
+                                 },
+                     "actions":  {
+                                     "view":  "View Details",
+                                     "edit":  "Edit Incident",
+                                     "resolve":  "Vyriešiť",
+                                     "delete":  "Delete Incident"
+                                 },
+                     "notifications":  {
+                                           "createSuccess":  "Incident created successfully",
+                                           "createFailed":  "Failed to create incident",
+                                           "updateSuccess":  "Incident updated successfully",
+                                           "updateFailed":  "Failed to update incident",
+                                           "resolveSuccess":  "Incident resolved successfully",
+                                           "resolveFailed":  "Failed to resolve incident",
+                                           "deleteSuccess":  "Incident deleted successfully",
+                                           "deleteFailed":  "Failed to delete incident"
+                                       },
+                     "table":  {
+                                   "empty":  "No incidents found"
+                               },
+                     "active":  {
+                                    "title":  "Active Incidents",
+                                    "subtitle":  "View and manage ongoing incidents"
+                                },
+                     "infoTitle":  "Incident details",
+                     "closeDialog":  {
+                                         "title":  "Resolve indicent",
+                                         "message":  "When did the incident get resolved",
+                                         "confirm":  "Yes, close this incident",
+                                         "cancel":  "Cancel"
+                                     }
+                 }
 }

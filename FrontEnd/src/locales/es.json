@@ -15,7 +15,9 @@
                                 "friday":  "Viernes",
                                 "saturday":  "Sábado"
                             },
-                   "number":  "Número"
+                   "number":  "Número",
+                   "actions":  "Actions",
+                   "none":  "None"
                },
     "buttons":  {
                     "save":  "Guardar",
@@ -31,8 +33,6 @@
                     "close":  "Cerrar",
                     "add":  "Agregar",
                     "review":  "Revisar",
-                    "ok":  "OK",
-                    "downloadSample":  "Descargar muestra",
                     "filter":  {
                                    "title":  "Filtros",
                                    "add":  "Filtrar",
@@ -45,7 +45,9 @@
                     "login":  "Iniciar sesión",
                     "goBackToLogin":  "Volver a iniciar sesión",
                     "logout":  "Cerrar sesión",
-                    "seeMore":  "Ver más"
+                    "seeMore":  "Ver más",
+                    "ok":  "OK",
+                    "downloadSample":  "Descargar muestra"
                 },
     "search":  {
                    "languages":  "Buscar idiomas..."
@@ -89,10 +91,42 @@
                   "auditLogs":  {
                                     "title":  "Registros de auditoría",
                                     "subtitle":  "Ver y monitorizar los registros de actividad del sistema."
-                                }
+                                },
+                  "pp":  {
+                             "title":  "Privacy Policies",
+                             "subtitle":  "Define and manage port data collection policies."
+                         },
+                  "notifications":  {
+                                        "create":  "Create Notification",
+                                        "subtitleCreate":  "Send important announcements to any or all users.",
+                                        "title":  "Notify users",
+                                        "subtitle":  "Send important announcements to any or all users.",
+                                        "broadcastToggle":  "Broadcast to all users",
+                                        "sendEmailToggle":  "Also send as email",
+                                        "fields":  {
+                                                       "title":  {
+                                                                     "title":  "Title",
+                                                                     "placeholder":  "Notification title"
+                                                                 },
+                                                       "message":  {
+                                                                       "title":  "Message",
+                                                                       "placeholder":  "Notification message"
+                                                                   },
+                                                       "email":  {
+                                                                     "title":  "User email",
+                                                                     "placeholder":  "Specify user email to send to"
+                                                                 },
+                                                       "urgency":  {
+                                                                       "title":  "Urgency",
+                                                                       "options":  {
+                                                                                       "normal":  "Normal",
+                                                                                       "urgent":  "Urgent"
+                                                                                   }
+                                                                   }
+                                                   }
+                                    }
               },
     "user":  {
-                 "registeredUsers":  "Usuarios registrados",
                  "fields":  {
                                 "email":  {
                                               "title":  "Email",
@@ -128,7 +162,10 @@
                                   "dashboard":  "Resumen y gestión de usuarios",
                                   "create":  "Registrar un nuevo usuario en el sistema",
                                   "view":  "Ver y gestionar usuarios existentes"
-                              }
+                              },
+                 "registeredUsers":  "Usuarios registrados",
+                 "confirmDelete":  "Confirmar eliminación",
+                 "confirmDeleteMessage":  "¿Está seguro de que desea eliminar este usuario?"
              },
     "representative":  {
                            "title":  "Representante",
@@ -283,7 +320,6 @@
                    "registeredVessels":  "Buques registrados"
                },
     "staff":  {
-                  "registeredStaffMembers":  "Miembros del personal registrados",
                   "deactivation":  {
                                        "title":  "Desactivar miembro del personal",
                                        "message":  "Â¿Está seguro de que desea desactivar a este miembro del personal? Esta acción no se puede deshacer.",
@@ -337,10 +373,10 @@
                                    "create":  "Registrar un nuevo miembro del personal en el sistema",
                                    "view":  "Ver detalles del personal",
                                    "edit":  "Editar un miembro del personal existente en el sistema"
-                               }
+                               },
+                  "registeredStaffMembers":  "Miembros del personal registrados"
               },
     "qualification":  {
-                          "registeredQualifications":  "Cualificaciones registradas",
                           "tabs":  {
                                        "dashboard":  "Panel de cualificaciones",
                                        "view_dashboard":  "Ver cualificaciones",
@@ -367,10 +403,80 @@
                                                                    "title":  "Nombre de la cualificación",
                                                                    "placeholder":  "Nombre de la cualificación"
                                                                }
-                                     }
+                                     },
+                          "registeredQualifications":  "Cualificaciones registradas"
                       },
+    "scheduling":  {
+                       "title":  "Solicitar horario diario",
+                       "subtitle":  "Utilice nuestro algoritmo de programación automatizado para analizar las tareas programadas para un día determinado.",
+                       "noVisits":  "No hay visitas de buques programadas para la fecha seleccionada.",
+                       "visitsOnSelectedDay":  "Visitas de buques en la fecha seleccionada",
+                       "viewVisits":  "Generar horario de tareas",
+                       "generateTasksButton":  "Generar horario de tareas",
+                       "aboutAlgorithmButton":  "Acerca del algoritmo",
+                       "fields":  {
+                                      "algorithm":  {
+                                                        "title":  "Algoritmo de programación",
+                                                        "placeholder":  "Seleccionar algoritmo de programación"
+                                                    },
+                                      "relatedDocks":  "Seleccionar muelle relacionado"
+                                  },
+                       "generateTasksModal":  {
+                                                  "title":  "Logística adicional"
+                                              },
+                       "aboutAlgorithmModal":  {
+                                                   "title":  "Acerca del algoritmo",
+                                                   "content":  "El algoritmo actual tiene en cuenta las notificaciones de visitas de buques programadas para la fecha y el muelle seleccionados. \nLuego verifica la disponibilidad de grúas STS para el muelle especificado y decide la duración de cada tarea según la velocidad de la grúa.\nTambién ignora las visitas que son para mantenimiento u otras actividades que no sean de carga/descarga."
+                                               },
+                       "results":  {
+                                       "title":  "Scheduling Results",
+                                       "subtitle":  "Generated task schedule for the selected date"
+                                   },
+                       "tabs":  {
+                                    "dashboard":  "Scheduling Dashboard",
+                                    "results":  "Scheduling Results",
+                                    "schedule":  "Request Task Schedule",
+                                    "view_dashboard":  "View Scheduling",
+                                    "search":  "List Operation Plans",
+                                    "create":  "Create Scheduling",
+                                    "view":  "View Scheduling",
+                                    "edit":  "Edit Scheduling",
+                                    "queue":  "Scheduling Queue"
+                                },
+                       "subtitles":  {
+                                         "dashboard":  "Overview of scheduling of berth operations and incidents",
+                                         "schedule":  "Request a task schedule for a specific date",
+                                         "search":  "List all operation plans for a given date",
+                                         "create":  "Create a new scheduling into the system",
+                                         "edit":  "Edit an existing scheduling in the system",
+                                         "queue":  "View pending scheduling requests"
+                                     },
+                       "queue":  {
+                                     "title":  "Scheduling Queue",
+                                     "subtitle":  "Pending scheduling requests",
+                                     "onlyMine":  "Show only my requests"
+                                 },
+                       "rebalancing":  {
+                                           "title":  "Dock Rebalancing Required",
+                                           "warningMessage":  "Before scheduling, the system recommends rebalancing dock assignments to optimize load distribution.",
+                                           "vesselsToReassign":  "Vessels to Reassign",
+                                           "averageLoad":  "Average Load",
+                                           "loadRange":  "Load Range",
+                                           "proposedReassignments":  "Proposed Reassignments",
+                                           "vesselImo":  "Vessel IMO",
+                                           "currentDock":  "Current Dock",
+                                           "proposedDock":  "Proposed Dock",
+                                           "skipButton":  "Skip \u0026 Continue with Current Assignments",
+                                           "applyButton":  "Apply Rebalancing \u0026 Generate Schedule"
+                                       }
+                   },
     "physicalResource":  {
-                             "registeredPhysicalResources":  "Recursos físicos registrados",
+                             "deactivation":  {
+                                                  "title":  "Desactivar recurso físico",
+                                                  "message":  "Â¿Está seguro de que desea desactivar este recurso físico? Esta acción no se puede deshacer.",
+                                                  "successMessage":  "El recurso físico se ha desactivado correctamente.",
+                                                  "errorMessage":  "Se produjo un error al intentar desactivar el recurso físico. Por favor, inténtelo de nuevo."
+                                              },
                              "tabs":  {
                                           "dashboard":  "Panel recursos físicos",
                                           "view_dashboard":  "Ver recursos físicos",
@@ -453,38 +559,9 @@
                              "actions":  {
                                              "deactivate":  "Desactivar recurso físico"
                                          },
-                             "deactivation":  {
-                                                  "title":  "Desactivar recurso físico",
-                                                  "message":  "Â¿Está seguro de que desea desactivar este recurso físico? Esta acción no se puede deshacer.",
-                                                  "successMessage":  "El recurso físico se ha desactivado correctamente.",
-                                                  "errorMessage":  "Se produjo un error al intentar desactivar el recurso físico. Por favor, inténtelo de nuevo."
-                                              }
+                             "registeredPhysicalResources":  "Recursos físicos registrados"
                          },
-    "scheduling":  {
-                       "title":  "Solicitar horario diario",
-                       "subtitle":  "Utilice nuestro algoritmo de programación automatizado para analizar las tareas programadas para un día determinado.",
-                       "noVisits":  "No hay visitas de buques programadas para la fecha seleccionada.",
-                       "visitsOnSelectedDay":  "Visitas de buques en la fecha seleccionada",
-                       "viewVisits":  "Generar horario de tareas",
-                       "generateTasksButton":  "Generar horario de tareas",
-                       "aboutAlgorithmButton":  "Acerca del algoritmo",
-                       "fields":  {
-                                      "algorithm":  {
-                                                        "title":  "Algoritmo de programación",
-                                                        "placeholder":  "Seleccionar algoritmo de programación"
-                                                    },
-                                      "relatedDocks":  "Seleccionar muelle relacionado"
-                                  },
-                       "generateTasksModal":  {
-                                                  "title":  "Logística adicional"
-                                              },
-                       "aboutAlgorithmModal":  {
-                                                   "title":  "Acerca del algoritmo",
-                                                   "content":  "El algoritmo actual tiene en cuenta las notificaciones de visitas de buques programadas para la fecha y el muelle seleccionados. \nLuego verifica la disponibilidad de grúas STS para el muelle especificado y decide la duración de cada tarea según la velocidad de la grúa.\nTambién ignora las visitas que son para mantenimiento u otras actividades que no sean de carga/descarga."
-                                               }
-                   },
     "storageArea":  {
-                        "registeredStorageAreas":  "Ãreas de almacenamiento registradas",
                         "tabs":  {
                                      "dashboard":  "Panel de áreas de almacenamiento",
                                      "view_dashboard":  "Ver áreas de almacenamiento",
@@ -493,6 +570,9 @@
                                      "view":  "Ver área de almacenamiento",
                                      "edit":  "Editar área de almacenamiento"
                                  },
+                        "create":  {
+                                       "distance_meters":  "Distancia (metros)"
+                                   },
                         "infoTitle":  "Información del área de almacenamiento",
                         "title":  "Ãreas de almacenamiento",
                         "subtitle":  {
@@ -503,9 +583,6 @@
                                          "view":  "Ver detalles del área de almacenamiento",
                                          "edit":  "Editar un área de almacenamiento existente en el sistema"
                                      },
-                        "create":  {
-                                       "distance_meters":  "Distancia (metros)"
-                                   },
                         "printer":  {
                                         "docks_serviced":  "muelles atendidos",
                                         "capacity_usage":  "Uso de capacidad",
@@ -542,12 +619,10 @@
                                                          "title":  "Ocupación",
                                                          "placeholder":  "Ocupación actual"
                                                      }
-                                   }
+                                   },
+                        "registeredStorageAreas":  "Ãreas de almacenamiento registradas"
                     },
     "notification":  {
-                         "registeredVesselVisitNotifications":  "Notificaciones de visita de buques registradas",
-                         "step":  "Paso",
-                         "of":  "de",
                          "id":  "ID de notificación",
                          "hazardous":  "Peligroso",
                          "nonHazardous":  "No peligroso",
@@ -560,19 +635,21 @@
                          "unknown":  "Desconocido",
                          "from":  "De",
                          "to":  "Para",
+                         "step":  "Paso",
+                         "of":  "de",
                          "tabs":  {
                                       "dashboard":  "Panel de notificaciones",
                                       "search":  "Buscar notificaciones",
                                       "edit":  "Editar notificación",
                                       "create":  "Crear notificación",
+                                      "update":  "Actualizar notificación",
                                       "makeDraft":  "Crear borrador de notificación",
                                       "myNotifications":  "Mis notificaciones",
                                       "review":  "Revisar notificaciones",
                                       "general":  "Listado genérico",
                                       "byDate":  "Listado de calendario",
                                       "submit":  "Enviar notificación",
-                                      "delete":  "Eliminar notificación",
-                                      "update":  "Actualizar notificación"
+                                      "delete":  "Eliminar notificación"
                                   },
                          "eventsOnDate":  "Eventos en la fecha seleccionada",
                          "noEventsOnDate":  "Sin eventos en la fecha seleccionada",
@@ -581,6 +658,7 @@
                                           "dashboard":  "Resumen de notificaciones de visitas de buques",
                                           "search":  "Gestionar y ver todas las notificaciones de visitas de buques",
                                           "create":  "Crear una nueva notificación de visita de buques",
+                                          "update":  "Update an existing vessel visit notification",
                                           "edit":  "Editar una notificación de visita de buques existente",
                                           "review":  "Revisar notificaciones de visitas de buques pendientes"
                                       },
@@ -592,13 +670,12 @@
                          "vesselTitle":  "Información del buque",
                          "manifestInfo":  "Información del manifiesto",
                          "fields":  {
+                                        "selectVessel":  "Select corresponding vessel",
                                         "openLoadManifest":  "Abrir manifiesto de carga",
                                         "openUnloadManifest":  "Abrir manifiesto de descarga",
                                         "expectedArrival":  "Llegada prevista",
                                         "expectedDeparture":  "Salida prevista",
                                         "isCargoHazardous":  "Carga peligrosa",
-                                        "isCargoHazardousQ":  "¿Es la carga peligrosa?",
-                                        "cargoManifestInfo":  "Acerca de los archivos de manifiesto de carga",
                                         "specialRequirements":  "Requisitos especiales",
                                         "captain":  "Capitán",
                                         "totalCrewMembers":  "Total de miembros de la tripulación",
@@ -609,7 +686,9 @@
                                         "area":  "Ãrea",
                                         "container":  "Contenedor",
                                         "crewMembers":  "Miembros de la tripulación",
-                                        "status":  "Estado"
+                                        "status":  "Estado",
+                                        "isCargoHazardousQ":  "¿Es la carga peligrosa?",
+                                        "cargoManifestInfo":  "Acerca de los archivos de manifiesto de carga"
                                     },
                          "timeline":  {
                                           "pending":  "Pendiente",
@@ -625,28 +704,6 @@
                                          "withReason":  "Con razón",
                                          "withDockAssigned":  "Con muelle asignado"
                                      },
-                         "sections":  {
-                                         "vesselDetails":  "Detalles del buque",
-                                         "crewDetails":  "Detalles de la tripulación",
-                                         "cargoRequirements":  "Requisitos de carga",
-                                         "cargoContent":  "Contenido de carga"
-                                     },
-                         "about":  {
-                                       "title":  "Acerca de los archivos de manifiesto de carga",
-                                       "intro":  "Los archivos de manifiesto de carga son archivos CSV que contienen información sobre contenedores para cargar o descargar. Consulte la documentación de muestra y el formato a continuación.",
-                                       "required":  "Un archivo de manifiesto de carga válido debe contener las siguientes columnas:",
-                                       "position":  "Posición: La posición del contenedor en el buque (p. ej., 1-2-3)",
-                                       "area":  "Ãrea: El área de almacenamiento donde se debe colocar el contenedor (p. ej., YA1)",
-                                       "container":  "Contenedor: El código del contenedor (p. ej., CONT001)",
-                                       "type":  "Tipo: El tipo de contenedor. Los tipos de contenedor disponibles son:",
-                                       "containerTypes":  {
-                                                             "dry":  "Seco - Contenedor de carga seca estándar",
-                                                             "reefer":  "Refrigerado - Contenedor con temperatura controlada",
-                                                             "openTop":  "Techo abierto - Contenedor sin techo para carga de gran altura",
-                                                             "flatRack":  "Plataforma plana - Contenedor sin paredes laterales para carga ancha",
-                                                             "tank":  "Tanque - Contenedor para líquidos"
-                                                         }
-                                   },
                          "decision":  {
                                           "isFinal":  "Es final",
                                           "assignedDock":  {
@@ -658,7 +715,32 @@
                                                          "placeholder":  "Proporcionar razón para la decisión"
                                                      },
                                           "status":  "Estado de la decisión"
-                                      }
+                                      },
+                         "sections":  {
+                                          "vesselDetails":  "Detalles del buque",
+                                          "crewDetails":  "Detalles de la tripulación",
+                                          "cargoRequirements":  "Requisitos de carga",
+                                          "cargoContent":  "Contenido de carga"
+                                      },
+                         "about":  {
+                                       "text":  "Los archivos de manifiesto de carga (actualmente) deben estar en formato CSV estándar europeo. Cada fila del archivo CSV representa un artículo de carga con las siguientes columnas:",
+                                       "bay":  "Bahía (número)",
+                                       "row":  "Fila (número)",
+                                       "tier":  "Nivel (número)",
+                                       "area":  "Código de área (desde/hacia dónde)",
+                                       "containerNumber":  "Número de contenedor (texto)",
+                                       "conatinerType":  "Tipo de contenedor (número)",
+                                       "description":  "Descripción (texto)",
+                                       "containerTypes":  {
+                                                              "refrigeratedGoods":  "Mercancías refrigeradas",
+                                                              "generalConsumerProducts":  "Productos de consumo general",
+                                                              "electronics":  "Electrónica",
+                                                              "hazmat":  "Materiales peligrosos",
+                                                              "oversizedIndustrialEquipment":  "Equipo industrial de gran tamaño",
+                                                              "other":  "Otro"
+                                                          }
+                                   },
+                         "registeredVesselVisitNotifications":  "Notificaciones de visita de buques registradas"
                      },
     "operationalWindow":  {
                               "title":  "Ventana operacional",
@@ -674,386 +756,386 @@
                                              "shiftOverlap":  "Turno inválido. Superposición o hora de fin antes de la hora de inicio."
                                          }
                           },
-    "about": {
-        "title": "Acerca de PorTiT",
-        "privacy": {
-            "title": "Política de Privacidad",
-            "lastUpdated": "Última actualización: {date}"
-        }
-    },
-    "operationPlan": {
-        "title": "Plan de Operaciones",
-        "dock": "Muelle",
-        "docks": "Muelles",
-        "operations": "Operaciones",
-        "cranes": "Grúas",
-        "createdBy": "Creado por",
-        "createdAt": "Creado en",
-        "totalSchedules": "Total de Horarios",
-        "vesselCount": "Buques",
-        "plansOnDate": "Planes de operación en la fecha seleccionada",
-        "noPlansOnDate": "No hay planes de operación en la fecha seleccionada",
-        "id": "ID",
-        "vvn": "Notificación de Visita de Buque",
-        "for": "para",
-        "details": "Detalles",
-        "totalOperations": "Total de Operaciones",
-        "algorithmUsed": "Algoritmo Utilizado",
-        "ganttChart": "Diagrama de Gantt",
-        "startTime": "Hora de Inicio",
-        "endTime": "Hora de Fin",
-        "totalDuration": "Duración Total",
-        "operation": "Operación",
-        "duration": "Duración",
-        "resources": "Recursos",
-        "operationDetails": "Detalles de la Operación",
-        "operationNumber": "Operación #{number}",
-        "notFound": "Plan de operaciones no encontrado",
-        "operationType": {
-            "Unload": "Descarga",
-            "Load": "Carga"
-        },
-        "tabs": {
-            "unplannedVVNs": "VVN no planificados",
-            "search": "Buscar Planes",
-            "edit": "Editar Plan",
-            "open": "Abrir Ejecución"
-        },
-        "subtitle": {
-            "edit": "Modificar detalles del plan de operaciones y horario"
-        },
-        "unplannedVVNs": {
-            "description": "Notificaciones de visita de buques que aún no tienen un plan de operaciones asignado",
-            "noUnplanned": "Todas las notificaciones de visita de buques tienen planes de operaciones asignados",
-            "foundMessage": "Encontrados {vvnCount} VVN sin planes en {dayCount} día(s)",
-            "regenerateAll": "Regenerar Todos los Planes Faltantes",
-            "regenerateDay": "Regenerar Planes para Este Día",
-            "regenerateModalTitle": "Regenerar planes para {date}",
-            "warning": "Advertencia",
-            "warningMessage": "Regenerar los planes reemplazará todos los planes de operaciones existentes para este día. Esta acción no se puede deshacer.",
-            "selectedDay": "Día Seleccionado",
-            "confirmRegeneration": "Confirmar Regeneración",
-            "affectedDays": "Días Afectados",
-            "queueInfo": "Cada solicitud de regeneración se pondrá en cola por separado. Puede revisarlas y aceptarlas/rechazarlas individualmente desde la cola de programación.",
-            "continue": "Continuar",
-            "confirmRegenerationTitle": "Confirmar Regeneración",
-            "irreversibleAction": "Esta acción es irreversible",
-            "overwriteWarning": "Regenerar los planes de operaciones sobrescribirá permanentemente todos los planes existentes para los días seleccionados. Esta acción no se puede deshacer.",
-            "aboutToRegenerate": "Está a punto de regenerar planes para",
-            "days": "días",
-            "vesselVisitNotifications": "Notificaciones de Visita de Buque",
-            "using": "Usando",
-            "algorithm": "algoritmo",
-            "proceedQuestion": "¿Desea continuar con esta operación?",
-            "yesRegenerateAll": "Sí, regenerar todo"
-        },
-        "algorithm": {
-            "optimal": "Óptimo",
-            "greedy": "Codicioso",
-            "genetic": "Genético",
-            "auto": "Automático"
-        },
-        "metrics": {
-            "title": "Métricas",
-            "strategy": "Estrategia",
-            "totalDelay": "Retraso Total",
-            "computationTime": "Tiempo de Cálculo",
-            "autoSelection": "Selección Automática de Algoritmo"
-        },
-        "infoTitle": "Información del Plan de Operaciones",
-        "fields": {
-            "id": {
-                "title": "ID del Plan"
-            },
-            "relatedVVN": {
-                "title": "VVN Relacionado"
-            },
-            "dock": {
-                "title": "Muelle"
-            },
-            "operations": {
-                "title": "Operaciones"
-            }
-        },
-        "filters": {
-            "startDate": "Fecha de Inicio Desde",
-            "endDate": "Fecha de Fin Hasta"
-        },
-        "metadata": {
-            "title": "Metadatos",
-            "createdBy": "Creado por",
-            "createdAt": "Creado en",
-            "algorithmUsed": "Algoritmo Utilizado"
-        },
-        "schedule": {
-            "title": "Horario de Operaciones",
-            "noOperations": "No hay operaciones programadas"
-        }
-    },
-    "incidentType": {
-        "fields": {
-            "name": {
-                "title": "Nombre",
-                "placeholder": "Nombre del tipo de incidente"
-            },
-            "description": {
-                "title": "Descripción",
-                "placeholder": "Descripción detallada del tipo de incidente"
-            },
-            "severity": {
-                "title": "Severidad",
-                "placeholder": "Seleccione nivel de severidad"
-            },
-            "subtypeOf": {
-                "title": "Subtipo de",
-                "placeholder": "Seleccione tipo padre"
-            },
-            "subtypes": {
-                "title": "Subtipos",
-                "placeholder": "Seleccione tipos hijos"
-            }
-        },
-        "severity": {
-            "Minor": "Menor",
-            "Major": "Mayor",
-            "Critical": "Crítico"
-        },
-        "tabs": {
-            "dashboard": "Panel de Tipos de Incidentes",
-            "view_dashboard": "Ver Tipos de Incidentes",
-            "search": "Buscar Tipos de Incidentes",
-            "create": "Crear Tipo de Incidente",
-            "edit": "Editar Tipo de Incidente"
-        },
-        "generalFields": "Campos Generales",
-        "classification": "Clasificación",
-        "title": "Incidentes",
-        "subtitle": {
-            "dashboard": "Resumen de estadísticas y actividades de tipos de incidentes",
-            "search": "Administrar y ver todos los tipos de incidentes registrados",
-            "create": "Registrar un nuevo tipo de incidente en el sistema",
-            "edit": "Modificar un tipo de incidente existente en el sistema"
-        },
-        "registeredIncidentTypes": "Tipos de Incidentes Registrados",
-        "incidentTypeInformation": "Información del Tipo de Incidente",
-        "parentType": "Tipo Padre",
-        "confirmDelete": "Confirmar eliminación",
-        "confirmDeleteMessage": "¿Está seguro de que desea eliminar este tipo de incidente?",
-        "failedToDelete": "Error al eliminar el tipo de incidente"
-    },
-    "taskCategory": {
-        "fields": {
-            "name": {
-                "title": "Nombre",
-                "placeholder": "Nombre de la categoría de tarea"
-            },
-            "category": {
-                "title": "Categoría",
-                "placeholder": "Código de categoría"
-            },
-            "description": {
-                "title": "Descripción",
-                "placeholder": "Descripción de la categoría de tarea"
-            }
-        },
-        "tabs": {
-            "dashboard": "Panel de Categorías de Tareas",
-            "search": "Buscar Categorías de Tareas",
-            "create": "Crear Categoría de Tarea",
-            "edit": "Editar Categoría de Tarea",
-            "view_dashboard": "Ver Categorías de Tareas"
-        },
-        "generalFields": "Campos Generales",
-        "title": "Tareas",
-        "subtitle": {
-            "dashboard": "Resumen de estadísticas y actividades de categorías de tareas",
-            "search": "Administrar y ver todas las categorías de tareas registradas",
-            "create": "Registrar una nueva categoría de tarea en el sistema",
-            "edit": "Modificar una categoría de tarea existente en el sistema"
-        },
-        "taskCategoryInformation": "Información de la Categoría de Tarea",
-        "registeredTaskCategories": "Categorías de Tareas Registradas"
-    },
-    "execution": {
-        "title": "Ejecuciones de Visitas de Buques",
-        "subtitle": {
-            "search": "Administrar y ver todas las ejecuciones de visitas de buques",
-            "dashboard": "Resumen de estadísticas y actividades de ejecuciones de visitas de buques"
-        },
-        "tabs": {
-            "dashboard": "Panel de Ejecuciones",
-            "search": "Buscar Ejecuciones",
-            "view_dashboard": "Ver Ejecuciones",
-            "update": "Actualizar Ejecución",
-            "view": "Ver Ejecución",
-            "table": "Ver Tabla",
-            "cards": "Ver Tarjetas"
-        },
-        "fields": {
-            "code": "Código",
-            "relatedVVN": "Relacionado con",
-            "status": "Estado",
-            "createdBy": "Creado por",
-            "dateOpen": "Fecha de Apertura",
-            "dateClosed": "Fecha de Cierre",
-            "relatedVesselVisit": "Visita de Buque Relacionada",
-            "dock": "Muelle de Atraque",
-            "berthTime": "Hora de Atraque",
-            "operations": "Operaciones"
-        },
-        "filters": {
-            "startDate": "Fecha de Inicio",
-            "endDate": "Fecha de Fin",
-            "relatedVVN": "Notificación de Visita de Buque",
-            "status": "Estado"
-        },
-        "metrics": {
-            "totalOperations": "Total de Operaciones",
-            "completedOperations": "Progreso",
-            "turnaroundTime": "Tiempo de Rotación",
-            "berthOccupancy": "Ocupación del Muelle"
-        },
-        "status": {
-            "pending": "Pendiente",
-            "started": "Iniciado",
-            "delayed": "Retrasado",
-            "completed": "Completado"
-        },
-        "view_resources": "Ver Recursos",
-        "infoTitle": "Información de Ejecución",
-        "operationsTitle": "Operaciones",
-        "noOperations": "No hay operaciones disponibles",
-        "startOperation": "Iniciar Operación",
-        "completeOperation": "Completar Operación",
-        "addOperation": "Agregar Operación",
-        "addOperationDescription": "Agregar una nueva operación a la línea de tiempo",
-        "confirmStartOperation": "¿Está seguro de que desea iniciar esta operación?",
-        "confirmCompleteOperation": "¿Está seguro de que desea completar esta operación?",
-        "berthOperation": {
-            "button": "Editar datos de atraque",
-            "title": "Operación de Atraque",
-            "description": "Edite el muelle y la hora para esta ejecución de visita de buque.",
-            "dock": "Muelle de Atraque",
-            "dockPlaceholder": "Seleccione muelle",
-            "berthTime": "Hora de Atraque",
-            "differentThanPlanned": "El muelle seleccionado es diferente al planificado."
-        }
-    },
-    "incident": {
-        "tabs": {
-            "dashboard": "Panel de Incidentes",
-            "create": "Crear Incidente",
-            "search": "Buscar Incidentes",
-            "active": "Incidentes Activos",
-            "view": "Ver Incidente",
-            "edit": "Editar Incidente"
-        },
-        "subtitle": {
-            "create": "Reportar un nuevo incidente en el sistema",
-            "search": "Buscar y filtrar incidentes existentes",
-            "active": "Ver y administrar incidentes activos"
-        },
-        "generalFields": "Información General",
-        "classification": "Clasificación",
-        "fields": {
-            "bid": {
-                "title": "ID de Incidente"
-            },
-            "type": {
-                "title": "Tipo de Incidente",
-                "placeholder": "Seleccione tipo de incidente"
-            },
-            "startTime": {
-                "title": "Hora de Inicio",
-                "placeholder": "¿Cuándo comenzó el incidente?"
-            },
-            "endTime": {
-                "title": "Hora de Fin",
-                "placeholder": "¿Cuándo terminó el incidente?"
-            },
-            "severity": {
-                "title": "Severidad",
-                "placeholder": "Seleccione nivel de severidad",
-                "options": {
-                    "minor": "Menor",
-                    "major": "Mayor",
-                    "critical": "Crítico"
-                }
-            },
-            "description": {
-                "title": "Descripción",
-                "placeholder": "Describa el incidente en detalle"
-            },
-            "createdBy": {
-                "title": "Creado por"
-            },
-            "affectedVVECodes": {
-                "title": "VVE Afectados",
-                "placeholder": "Ingrese VVE afectados"
-            },
-            "vveCode": {
-                "title": "Código VVE"
-            },
-            "status": {
-                "title": "Estado",
-                "options": {
-                    "active": "Activo",
-                    "resolved": "Resuelto"
-                }
-            },
-            "filterStartTime": {
-                "title": "Fecha de Inicio Desde"
-            },
-            "filterEndTime": {
-                "title": "Fecha de Inicio Hasta"
-            },
-            "duration": {
-                "title": "Duración"
-            }
-        },
-        "severity": {
-            "Minor": "Menor",
-            "Major": "Mayor",
-            "Critical": "Crítico"
-        },
-        "status": {
-            "active": "Activo",
-            "resolved": "Resuelto"
-        },
-        "ongoing": "En Curso",
-        "filters": {
-            "onlyActive": "Solo Activos",
-            "onlyMine": "Solo Míos"
-        },
-        "actions": {
-            "view": "Ver Detalles",
-            "edit": "Editar Incidente",
-            "resolve": "Resolver Incidente",
-            "delete": "Eliminar Incidente"
-        },
-        "notifications": {
-            "createSuccess": "Incidente creado con éxito",
-            "createFailed": "Error al crear incidente",
-            "updateSuccess": "Incidente actualizado con éxito",
-            "updateFailed": "Error al actualizar incidente",
-            "resolveSuccess": "Incidente resuelto con éxito",
-            "resolveFailed": "Error al resolver incidente",
-            "deleteSuccess": "Incidente eliminado con éxito",
-            "deleteFailed": "Error al eliminar incidente"
-        },
-        "table": {
-            "empty": "No se encontraron incidentes"
-        },
-        "active": {
-            "title": "Incidentes Activos",
-            "subtitle": "Ver y administrar incidentes en curso"
-        },
-        "infoTitle": "Detalles del Incidente",
-        "closeDialog": {
-            "title": "Resolver incidente",
-            "message": "¿Cuándo se resolvió el incidente?",
-            "confirm": "Sí, cerrar este incidente",
-            "cancel": "Cancelar"
-        }
-    }
+    "about":  {
+                  "title":  "Acerca de PorTiT",
+                  "privacy":  {
+                                  "title":  "Política de Privacidad",
+                                  "lastUpdated":  "Última actualización: {date}"
+                              }
+              },
+    "operationPlan":  {
+                          "title":  "Plan de Operaciones",
+                          "dock":  "Muelle",
+                          "docks":  "Muelles",
+                          "operations":  "Operaciones",
+                          "cranes":  "Grúas",
+                          "createdBy":  "Creado por",
+                          "createdAt":  "Creado en",
+                          "totalSchedules":  "Total de Horarios",
+                          "vesselCount":  "Buques",
+                          "plansOnDate":  "Planes de operación en la fecha seleccionada",
+                          "noPlansOnDate":  "No hay planes de operación en la fecha seleccionada",
+                          "id":  "ID",
+                          "vvn":  "Notificación de Visita de Buque",
+                          "for":  "para",
+                          "details":  "Detalles",
+                          "totalOperations":  "Total de Operaciones",
+                          "algorithmUsed":  "Algoritmo Utilizado",
+                          "ganttChart":  "Diagrama de Gantt",
+                          "startTime":  "Hora de Inicio",
+                          "endTime":  "Hora de Fin",
+                          "totalDuration":  "Duración Total",
+                          "operation":  "Operación",
+                          "duration":  "Duración",
+                          "resources":  "Recursos",
+                          "operationDetails":  "Detalles de la Operación",
+                          "operationNumber":  "Operación #{number}",
+                          "notFound":  "Plan de operaciones no encontrado",
+                          "operationType":  {
+                                                "Unload":  "Descarga",
+                                                "Load":  "Carga"
+                                            },
+                          "tabs":  {
+                                       "unplannedVVNs":  "VVN no planificados",
+                                       "search":  "Buscar Planes",
+                                       "edit":  "Editar Plan",
+                                       "open":  "Abrir Ejecución"
+                                   },
+                          "subtitle":  {
+                                           "edit":  "Modificar detalles del plan de operaciones y horario"
+                                       },
+                          "unplannedVVNs":  {
+                                                "description":  "Notificaciones de visita de buques que aún no tienen un plan de operaciones asignado",
+                                                "noUnplanned":  "Todas las notificaciones de visita de buques tienen planes de operaciones asignados",
+                                                "foundMessage":  "Encontrados {vvnCount} VVN sin planes en {dayCount} día(s)",
+                                                "regenerateAll":  "Regenerar Todos los Planes Faltantes",
+                                                "regenerateDay":  "Regenerar Planes para Este Día",
+                                                "regenerateModalTitle":  "Regenerar planes para {date}",
+                                                "warning":  "Advertencia",
+                                                "warningMessage":  "Regenerar los planes reemplazará todos los planes de operaciones existentes para este día. Esta acción no se puede deshacer.",
+                                                "selectedDay":  "Día Seleccionado",
+                                                "confirmRegeneration":  "Confirmar Regeneración",
+                                                "affectedDays":  "Días Afectados",
+                                                "queueInfo":  "Cada solicitud de regeneración se pondrá en cola por separado. Puede revisarlas y aceptarlas/rechazarlas individualmente desde la cola de programación.",
+                                                "continue":  "Continuar",
+                                                "confirmRegenerationTitle":  "Confirmar Regeneración",
+                                                "irreversibleAction":  "Esta acción es irreversible",
+                                                "overwriteWarning":  "Regenerar los planes de operaciones sobrescribirá permanentemente todos los planes existentes para los días seleccionados. Esta acción no se puede deshacer.",
+                                                "aboutToRegenerate":  "Está a punto de regenerar planes para",
+                                                "days":  "días",
+                                                "vesselVisitNotifications":  "Notificaciones de Visita de Buque",
+                                                "using":  "Usando",
+                                                "algorithm":  "algoritmo",
+                                                "proceedQuestion":  "¿Desea continuar con esta operación?",
+                                                "yesRegenerateAll":  "Sí, regenerar todo"
+                                            },
+                          "algorithm":  {
+                                            "optimal":  "Óptimo",
+                                            "greedy":  "Codicioso",
+                                            "genetic":  "Genético",
+                                            "auto":  "Automático"
+                                        },
+                          "metrics":  {
+                                          "title":  "Métricas",
+                                          "strategy":  "Estrategia",
+                                          "totalDelay":  "Retraso Total",
+                                          "computationTime":  "Tiempo de Cálculo",
+                                          "autoSelection":  "Selección Automática de Algoritmo"
+                                      },
+                          "infoTitle":  "Información del Plan de Operaciones",
+                          "fields":  {
+                                         "id":  {
+                                                    "title":  "ID del Plan"
+                                                },
+                                         "relatedVVN":  {
+                                                            "title":  "VVN Relacionado"
+                                                        },
+                                         "dock":  {
+                                                      "title":  "Muelle"
+                                                  },
+                                         "operations":  {
+                                                            "title":  "Operaciones"
+                                                        }
+                                     },
+                          "filters":  {
+                                          "startDate":  "Fecha de Inicio Desde",
+                                          "endDate":  "Fecha de Fin Hasta"
+                                      },
+                          "metadata":  {
+                                           "title":  "Metadatos",
+                                           "createdBy":  "Creado por",
+                                           "createdAt":  "Creado en",
+                                           "algorithmUsed":  "Algoritmo Utilizado"
+                                       },
+                          "schedule":  {
+                                           "title":  "Horario de Operaciones",
+                                           "noOperations":  "No hay operaciones programadas"
+                                       }
+                      },
+    "incidentType":  {
+                         "fields":  {
+                                        "name":  {
+                                                     "title":  "Nombre",
+                                                     "placeholder":  "Nombre del tipo de incidente"
+                                                 },
+                                        "description":  {
+                                                            "title":  "Descripción",
+                                                            "placeholder":  "Descripción detallada del tipo de incidente"
+                                                        },
+                                        "severity":  {
+                                                         "title":  "Severidad",
+                                                         "placeholder":  "Seleccione nivel de severidad"
+                                                     },
+                                        "subtypeOf":  {
+                                                          "title":  "Subtipo de",
+                                                          "placeholder":  "Seleccione tipo padre"
+                                                      },
+                                        "subtypes":  {
+                                                         "title":  "Subtipos",
+                                                         "placeholder":  "Seleccione tipos hijos"
+                                                     }
+                                    },
+                         "severity":  {
+                                          "Minor":  "Menor",
+                                          "Major":  "Mayor",
+                                          "Critical":  "Crítico"
+                                      },
+                         "tabs":  {
+                                      "dashboard":  "Panel de Tipos de Incidentes",
+                                      "view_dashboard":  "Ver Tipos de Incidentes",
+                                      "search":  "Buscar Tipos de Incidentes",
+                                      "create":  "Crear Tipo de Incidente",
+                                      "edit":  "Editar Tipo de Incidente"
+                                  },
+                         "generalFields":  "Campos Generales",
+                         "classification":  "Clasificación",
+                         "title":  "Incidentes",
+                         "subtitle":  {
+                                          "dashboard":  "Resumen de estadísticas y actividades de tipos de incidentes",
+                                          "search":  "Administrar y ver todos los tipos de incidentes registrados",
+                                          "create":  "Registrar un nuevo tipo de incidente en el sistema",
+                                          "edit":  "Modificar un tipo de incidente existente en el sistema"
+                                      },
+                         "registeredIncidentTypes":  "Tipos de Incidentes Registrados",
+                         "incidentTypeInformation":  "Información del Tipo de Incidente",
+                         "parentType":  "Tipo Padre",
+                         "confirmDelete":  "Confirmar eliminación",
+                         "confirmDeleteMessage":  "¿Está seguro de que desea eliminar este tipo de incidente?",
+                         "failedToDelete":  "Error al eliminar el tipo de incidente"
+                     },
+    "taskCategory":  {
+                         "fields":  {
+                                        "name":  {
+                                                     "title":  "Nombre",
+                                                     "placeholder":  "Nombre de la categoría de tarea"
+                                                 },
+                                        "category":  {
+                                                         "title":  "Categoría",
+                                                         "placeholder":  "Código de categoría"
+                                                     },
+                                        "description":  {
+                                                            "title":  "Descripción",
+                                                            "placeholder":  "Descripción de la categoría de tarea"
+                                                        }
+                                    },
+                         "tabs":  {
+                                      "dashboard":  "Panel de Categorías de Tareas",
+                                      "search":  "Buscar Categorías de Tareas",
+                                      "create":  "Crear Categoría de Tarea",
+                                      "edit":  "Editar Categoría de Tarea",
+                                      "view_dashboard":  "Ver Categorías de Tareas"
+                                  },
+                         "generalFields":  "Campos Generales",
+                         "title":  "Tareas",
+                         "subtitle":  {
+                                          "dashboard":  "Resumen de estadísticas y actividades de categorías de tareas",
+                                          "search":  "Administrar y ver todas las categorías de tareas registradas",
+                                          "create":  "Registrar una nueva categoría de tarea en el sistema",
+                                          "edit":  "Modificar una categoría de tarea existente en el sistema"
+                                      },
+                         "taskCategoryInformation":  "Información de la Categoría de Tarea",
+                         "registeredTaskCategories":  "Categorías de Tareas Registradas"
+                     },
+    "execution":  {
+                      "title":  "Ejecuciones de Visitas de Buques",
+                      "subtitle":  {
+                                       "search":  "Administrar y ver todas las ejecuciones de visitas de buques",
+                                       "dashboard":  "Resumen de estadísticas y actividades de ejecuciones de visitas de buques"
+                                   },
+                      "tabs":  {
+                                   "dashboard":  "Panel de Ejecuciones",
+                                   "search":  "Buscar Ejecuciones",
+                                   "view_dashboard":  "Ver Ejecuciones",
+                                   "update":  "Actualizar Ejecución",
+                                   "view":  "Ver Ejecución",
+                                   "table":  "Ver Tabla",
+                                   "cards":  "Ver Tarjetas"
+                               },
+                      "fields":  {
+                                     "code":  "Código",
+                                     "relatedVVN":  "Relacionado con",
+                                     "status":  "Estado",
+                                     "createdBy":  "Creado por",
+                                     "dateOpen":  "Fecha de Apertura",
+                                     "dateClosed":  "Fecha de Cierre",
+                                     "relatedVesselVisit":  "Visita de Buque Relacionada",
+                                     "dock":  "Muelle de Atraque",
+                                     "berthTime":  "Hora de Atraque",
+                                     "operations":  "Operaciones"
+                                 },
+                      "filters":  {
+                                      "startDate":  "Fecha de Inicio",
+                                      "endDate":  "Fecha de Fin",
+                                      "relatedVVN":  "Notificación de Visita de Buque",
+                                      "status":  "Estado"
+                                  },
+                      "metrics":  {
+                                      "totalOperations":  "Total de Operaciones",
+                                      "completedOperations":  "Progreso",
+                                      "turnaroundTime":  "Tiempo de Rotación",
+                                      "berthOccupancy":  "Ocupación del Muelle"
+                                  },
+                      "status":  {
+                                     "pending":  "Pendiente",
+                                     "started":  "Iniciado",
+                                     "delayed":  "Retrasado",
+                                     "completed":  "Completado"
+                                 },
+                      "view_resources":  "Ver Recursos",
+                      "infoTitle":  "Información de Ejecución",
+                      "operationsTitle":  "Operaciones",
+                      "noOperations":  "No hay operaciones disponibles",
+                      "startOperation":  "Iniciar Operación",
+                      "completeOperation":  "Completar Operación",
+                      "addOperation":  "Agregar Operación",
+                      "addOperationDescription":  "Agregar una nueva operación a la línea de tiempo",
+                      "confirmStartOperation":  "¿Está seguro de que desea iniciar esta operación?",
+                      "confirmCompleteOperation":  "¿Está seguro de que desea completar esta operación?",
+                      "berthOperation":  {
+                                             "button":  "Editar datos de atraque",
+                                             "title":  "Operación de Atraque",
+                                             "description":  "Edite el muelle y la hora para esta ejecución de visita de buque.",
+                                             "dock":  "Muelle de Atraque",
+                                             "dockPlaceholder":  "Seleccione muelle",
+                                             "berthTime":  "Hora de Atraque",
+                                             "differentThanPlanned":  "El muelle seleccionado es diferente al planificado."
+                                         }
+                  },
+    "incident":  {
+                     "tabs":  {
+                                  "dashboard":  "Panel de Incidentes",
+                                  "create":  "Crear Incidente",
+                                  "search":  "Buscar Incidentes",
+                                  "active":  "Incidentes Activos",
+                                  "view":  "Ver Incidente",
+                                  "edit":  "Editar Incidente"
+                              },
+                     "subtitle":  {
+                                      "create":  "Reportar un nuevo incidente en el sistema",
+                                      "search":  "Buscar y filtrar incidentes existentes",
+                                      "active":  "Ver y administrar incidentes activos"
+                                  },
+                     "generalFields":  "Información General",
+                     "classification":  "Clasificación",
+                     "fields":  {
+                                    "bid":  {
+                                                "title":  "ID de Incidente"
+                                            },
+                                    "type":  {
+                                                 "title":  "Tipo de Incidente",
+                                                 "placeholder":  "Seleccione tipo de incidente"
+                                             },
+                                    "startTime":  {
+                                                      "title":  "Hora de Inicio",
+                                                      "placeholder":  "¿Cuándo comenzó el incidente?"
+                                                  },
+                                    "endTime":  {
+                                                    "title":  "Hora de Fin",
+                                                    "placeholder":  "¿Cuándo terminó el incidente?"
+                                                },
+                                    "severity":  {
+                                                     "title":  "Severidad",
+                                                     "placeholder":  "Seleccione nivel de severidad",
+                                                     "options":  {
+                                                                     "minor":  "Menor",
+                                                                     "major":  "Mayor",
+                                                                     "critical":  "Crítico"
+                                                                 }
+                                                 },
+                                    "description":  {
+                                                        "title":  "Descripción",
+                                                        "placeholder":  "Describa el incidente en detalle"
+                                                    },
+                                    "createdBy":  {
+                                                      "title":  "Creado por"
+                                                  },
+                                    "affectedVVECodes":  {
+                                                             "title":  "VVE Afectados",
+                                                             "placeholder":  "Ingrese VVE afectados"
+                                                         },
+                                    "vveCode":  {
+                                                    "title":  "Código VVE"
+                                                },
+                                    "status":  {
+                                                   "title":  "Estado",
+                                                   "options":  {
+                                                                   "active":  "Activo",
+                                                                   "resolved":  "Resuelto"
+                                                               }
+                                               },
+                                    "filterStartTime":  {
+                                                            "title":  "Fecha de Inicio Desde"
+                                                        },
+                                    "filterEndTime":  {
+                                                          "title":  "Fecha de Inicio Hasta"
+                                                      },
+                                    "duration":  {
+                                                     "title":  "Duración"
+                                                 }
+                                },
+                     "severity":  {
+                                      "Minor":  "Menor",
+                                      "Major":  "Mayor",
+                                      "Critical":  "Crítico"
+                                  },
+                     "status":  {
+                                    "active":  "Activo",
+                                    "resolved":  "Resuelto"
+                                },
+                     "ongoing":  "En Curso",
+                     "filters":  {
+                                     "onlyActive":  "Solo Activos",
+                                     "onlyMine":  "Solo Míos"
+                                 },
+                     "actions":  {
+                                     "view":  "Ver Detalles",
+                                     "edit":  "Editar Incidente",
+                                     "resolve":  "Resolver Incidente",
+                                     "delete":  "Eliminar Incidente"
+                                 },
+                     "notifications":  {
+                                           "createSuccess":  "Incidente creado con éxito",
+                                           "createFailed":  "Error al crear incidente",
+                                           "updateSuccess":  "Incidente actualizado con éxito",
+                                           "updateFailed":  "Error al actualizar incidente",
+                                           "resolveSuccess":  "Incidente resuelto con éxito",
+                                           "resolveFailed":  "Error al resolver incidente",
+                                           "deleteSuccess":  "Incidente eliminado con éxito",
+                                           "deleteFailed":  "Error al eliminar incidente"
+                                       },
+                     "table":  {
+                                   "empty":  "No se encontraron incidentes"
+                               },
+                     "active":  {
+                                    "title":  "Incidentes Activos",
+                                    "subtitle":  "Ver y administrar incidentes en curso"
+                                },
+                     "infoTitle":  "Detalles del Incidente",
+                     "closeDialog":  {
+                                         "title":  "Resolver incidente",
+                                         "message":  "¿Cuándo se resolvió el incidente?",
+                                         "confirm":  "Sí, cerrar este incidente",
+                                         "cancel":  "Cancelar"
+                                     }
+                 }
 }

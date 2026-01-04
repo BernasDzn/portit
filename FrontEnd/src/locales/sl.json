@@ -15,7 +15,9 @@
             "friday": "Petek",
             "saturday": "Sobota"
         },
-        "number": "Številka"
+        "number": "Številka",
+        "actions": "Dejanja",
+        "none": "Brez"
     },
     "buttons": {
         "save": "Shrani",
@@ -27,6 +29,10 @@
         "select": "Izberi",
         "activate": "Aktiviraj",
         "deactivate": "Deaktiviraj",
+        "generate": "Generiraj",
+        "close": "Zapri",
+        "add": "Dodaj",
+        "review": "Preglej",
         "filter": {
             "title": "Filtri",
             "add": "Dodaj filter",
@@ -39,13 +45,12 @@
         "login": "Prijava",
         "goBackToLogin": "Nazaj na prijavo",
         "logout": "Odjava",
-        "generate": "Generiraj",
-        "close": "Zapri",
-        "add": "Dodaj",
-        "review": "Preglej",
+        "seeMore": "Poglej več",
         "ok": "V redu",
-        "downloadSample": "Prenesi vzorec",
-        "seeMore": "Poglej več"
+        "downloadSample": "Prenesi vzorec"
+    },
+    "search": {
+        "languages": "Išči jezike..."
     },
     "unsavedChanges": {
         "title": "Zavreči spremembe?",
@@ -53,22 +58,26 @@
         "confirm": "Zavrži",
         "cancel": "Nadaljuj z urejanjem"
     },
+    "expirationWarning": {
+        "messageOneMinute": "Vaša seja poteče čez 1 minuto.",
+        "messageLessThanOneMinute": "Vaša seja bo kmalu potekla."
+    },
     "dashboard": {
+        "welcome": "Dobrodošli nazaj, [name]!",
         "sidebarTitle": "Nadzorna plošča",
         "title": "PortIT Nadzorna plošča",
         "subtitle": "Pregled sistema PortIT",
-        "3DModel": {
-            "title": "3D vizualizacija pristanišča",
-            "description": "Ogled interaktivne 3D predstavitve celotnega pristanišča. Spremljajte zasedenost pomolov, položaje plovil, skladiščne površine in vire v realnem času.",
-            "open": "Odpri 3D model"
-        },
-        "welcome": "Dobrodošli nazaj, [name]!",
         "SAOR": {
             "subtitle": "Pregled delovanja ladijskega agenta",
             "pendingNotifications": "Čakajoča obvestila",
             "recent": "Nedavna obvestila o obisku plovil",
             "recentReview": "Obvestila, ki zahtevajo pregled",
             "noRecent": "Ni nedavnih obvestil"
+        },
+        "3DModel": {
+            "title": "3D vizualizacija pristanišča",
+            "description": "Ogled interaktivne 3D predstavitve celotnega pristanišča. Spremljajte zasedenost pomolov, položaje plovil, skladiščne površine in vire v realnem času.",
+            "open": "Odpri 3D model"
         }
     },
     "admin": {
@@ -82,10 +91,42 @@
         "auditLogs": {
             "title": "Revizijski zapisi",
             "subtitle": "Ogled in spremljanje dnevnikov dejavnosti sistema."
+        },
+        "pp": {
+            "title": "Pravila o zasebnosti",
+            "subtitle": "Doloite in upravljajte pravila o zbiranju podatkov pristaniša."
+        },
+        "notifications": {
+            "create": "Ustvari obvestilo",
+            "subtitleCreate": "Pošljite pomembna obvestila kateremukoli ali vsem uporabnikom.",
+            "title": "Sistemska obvestila",
+            "subtitle": "Ustvarjanje in upravljanje splošnih sistemskih obvestil.",
+            "broadcastToggle": "Oddaj vsem uporabnikom",
+            "sendEmailToggle": "Pošlji tudi kot e-pošto",
+            "fields": {
+                "title": {
+                    "title": "Naslov",
+                    "placeholder": "Vnesite naslov obvestila"
+                },
+                "message": {
+                    "title": "Sporočilo",
+                    "placeholder": "Vnesite sporočilo obvestila"
+                },
+                "email": {
+                    "title": "E-pošta uporabnika",
+                    "placeholder": "Določite e-pošto uporabnika za pošiljanje"
+                },
+                "urgency": {
+                    "title": "Nujnost",
+                    "options": {
+                        "normal": "Običajno",
+                        "urgent": "Nujno"
+                    }
+                }
+            }
         }
     },
     "user": {
-        "registeredUsers": "Registrirani uporabniki",
         "fields": {
             "email": {
                 "title": "Elektronska pošta",
@@ -121,7 +162,14 @@
             "dashboard": "Pregled in upravljanje uporabnikov",
             "create": "Registrirajte novega uporabnika v sistem",
             "view": "Prikaži in upravljaj obstoječe uporabnike"
-        }
+        },
+        "registeredUsers": "Registrirani uporabniki",
+        "confirmDelete": "Potrdi brisanje",
+        "confirmDeleteMessage": "Ali ste prepričani, da želite izbrisati tega uporabnika?"
+    },
+    "representative": {
+        "title": "Predstavnik",
+        "select": "Izberite predstavnika"
     },
     "physicalCharacteristics": {
         "title": "Fizične značilnosti (m)",
@@ -272,7 +320,12 @@
         "registeredVessels": "Registrirana plovila"
     },
     "staff": {
-        "registeredStaffMembers": "Registrirani člani osebja",
+        "deactivation": {
+            "title": "Deaktiviraj člana osebja",
+            "message": "Ste prepričani, da želite deaktivirati tega člana osebja? Tega dejanja ni mogoče razveljaviti.",
+            "successMessage": "Član osebja je bil uspešno deaktiviran.",
+            "errorMessage": "Pri poskusu deaktivacije člana osebja je prišlo do napake. Poskusite znova."
+        },
         "fields": {
             "mechanographicNumber": {
                 "title": "Mehanografska številka",
@@ -321,15 +374,9 @@
             "view": "Poglej podrobnosti osebja",
             "edit": "Uredi obstoječega člana osebja v sistemu"
         },
-        "deactivation": {
-            "title": "Deaktiviraj člana osebja",
-            "message": "Ste prepričani, da želite deaktivirati tega člana osebja? Tega dejanja ni mogoče razveljaviti.",
-            "successMessage": "Član osebja je bil uspešno deaktiviran.",
-            "errorMessage": "Pri poskusu deaktivacije člana osebja je prišlo do napake. Poskusite znova."
-        }
+        "registeredStaffMembers": "Registrirani člani osebja"
     },
     "qualification": {
-        "registeredQualifications": "Registrirane kvalifikacije",
         "tabs": {
             "dashboard": "Plošča kvalifikacij",
             "view_dashboard": "Poglej kvalifikacije",
@@ -356,10 +403,80 @@
                 "title": "Naziv kvalifikacije",
                 "placeholder": "Naziv kvalifikacije"
             }
+        },
+        "registeredQualifications": "Registrirane kvalifikacije"
+    },
+    "scheduling": {
+        "title": "Zahtevaj dnevni razpored",
+        "subtitle": "Uporabite naš avtomatiziran algoritem razporejanja za analizo nalog na izbrani dan.",
+        "noVisits": "Za izbrani datum ni načrtovanih obiskov plovil.",
+        "visitsOnSelectedDay": "Obiski plovil na izbrani datum",
+        "viewVisits": "Ustvari razpored nalog",
+        "generateTasksButton": "Ustvari razpored nalog",
+        "aboutAlgorithmButton": "O algoritmu",
+        "fields": {
+            "algorithm": {
+                "title": "Algoritem razporejanja",
+                "placeholder": "Izberite algoritem razporejanja"
+            },
+            "relatedDocks": "Izberite povezan pomol"
+        },
+        "generateTasksModal": {
+            "title": "Dodatna logistika"
+        },
+        "aboutAlgorithmModal": {
+            "title": "O algoritmu",
+            "content": "Trenutni algoritem upošteva obvestila o obisku plovil, načrtovana za izbrani datum in pomol. \nNato preveri razpoložljivost žerjavov STS za določen pomol in trajanje posamezne naloge določi glede na hitrost žerjava.\nPrav tako prezre obiske, namenjene vzdrževanju ali drugim ne-nalaganje/razkladanje dejavnostim."
+        },
+        "results": {
+            "title": "Rezultati razporejanja",
+            "subtitle": "Ustvarjen urnik nalog za izbrani datum"
+        },
+        "tabs": {
+            "dashboard": "Scheduling Dashboard",
+            "results": "Scheduling Results",
+            "schedule": "Request Task Schedule",
+            "view_dashboard": "View Scheduling",
+            "search": "List Operation Plans",
+            "create": "Create Scheduling",
+            "view": "View Scheduling",
+            "edit": "Edit Scheduling",
+            "queue": "Scheduling Queue"
+        },
+        "subtitles": {
+            "dashboard": "Pregled razporejanja operacij na pomolu in incidentov",
+            "schedule": "Request a task schedule for a specific date",
+            "search": "List all operation plans for a given date",
+            "create": "Create a new scheduling into the system",
+            "edit": "Edit an existing scheduling in the system",
+            "queue": "View pending scheduling requests"
+        },
+        "queue": {
+            "title": "Vrsta za razporejanje",
+            "subtitle": "Čakajoče zahteve za razporejanje",
+            "onlyMine": "Show only my requests"
+        },
+        "rebalancing": {
+            "title": "Potrebno ponovno uravnoteženje pomolov",
+            "warningMessage": "Pred razporejanjem sistem priporoča ponovno uravnoteženje dodelitev pomolov za optimizacijo porazdelitve obremenitve.",
+            "vesselsToReassign": "Vessels to Reassign",
+            "averageLoad": "Average Load",
+            "loadRange": "Load Range",
+            "proposedReassignments": "Proposed Reassignments",
+            "vesselImo": "Vessel IMO",
+            "currentDock": "Current Dock",
+            "proposedDock": "Proposed Dock",
+            "skipButton": "Skip \u0026 Continue with Current Assignments",
+            "applyButton": "Apply Rebalancing \u0026 Generate Schedule"
         }
     },
     "physicalResource": {
-        "registeredPhysicalResources": "Registrirani fizični viri",
+        "deactivation": {
+            "title": "Deaktivacija fizičnega vira",
+            "message": "Ste prepričani, da želite deaktivirati ta fizični vir? Tega dejanja ni mogoče razveljaviti.",
+            "successMessage": "Fizični vir je bil uspešno deaktiviran.",
+            "errorMessage": "Pri poskusu deaktivacije fizičnega vira je prišlo do napake. Poskusite znova."
+        },
         "tabs": {
             "dashboard": "Plošča fizičnih virov",
             "view_dashboard": "Poglej fizične vire",
@@ -442,15 +559,9 @@
         "actions": {
             "deactivate": "Deaktiviraj fizični vir"
         },
-        "deactivation": {
-            "title": "Deaktivacija fizičnega vira",
-            "message": "Ste prepričani, da želite deaktivirati ta fizični vir? Tega dejanja ni mogoče razveljaviti.",
-            "successMessage": "Fizični vir je bil uspešno deaktiviran.",
-            "errorMessage": "Pri poskusu deaktivacije fizičnega vira je prišlo do napake. Poskusite znova."
-        }
+        "registeredPhysicalResources": "Registrirani fizični viri"
     },
     "storageArea": {
-        "registeredStorageAreas": "Registrirana skladiščna območja",
         "tabs": {
             "dashboard": "Plošča skladiščnih območij",
             "view_dashboard": "Poglej skladiščna območja",
@@ -458,6 +569,9 @@
             "create": "Ustvari skladiščno območje",
             "view": "Poglej skladiščno območje",
             "edit": "Uredi skladiščno območje"
+        },
+        "create": {
+            "distance_meters": "Razdalja (metri)"
         },
         "infoTitle": "Informacije o skladiščnem območju",
         "title": "Skladiščna območja",
@@ -479,9 +593,6 @@
             "all_docks_serviced": "Vsi pomoli oskrbovani",
             "serviced_docks_distance": "Razdalja oskrbovanih pomolov",
             "no_registered_docks": "Ni registriranih pomolov"
-        },
-        "create": {
-            "distance_meters": "Razdalja (metri)"
         },
         "fields": {
             "nameCode": {
@@ -508,46 +619,10 @@
                 "title": "Zasedenost",
                 "placeholder": "Trenutna zasedenost"
             }
-        }
-    },
-    "search": {
-        "languages": "Išči jezike..."
-    },
-    "expirationWarning": {
-        "messageOneMinute": "Vaša seja poteče čez 1 minuto.",
-        "messageLessThanOneMinute": "Vaša seja bo kmalu potekla."
-    },
-    "representative": {
-        "title": "Predstavnik",
-        "select": "Izberite predstavnika"
-    },
-    "scheduling": {
-        "title": "Zahtevaj dnevni razpored",
-        "subtitle": "Uporabite naš avtomatiziran algoritem razporejanja za analizo nalog na izbrani dan.",
-        "noVisits": "Za izbrani datum ni načrtovanih obiskov plovil.",
-        "visitsOnSelectedDay": "Obiski plovil na izbrani datum",
-        "viewVisits": "Ustvari razpored nalog",
-        "generateTasksButton": "Ustvari razpored nalog",
-        "aboutAlgorithmButton": "O algoritmu",
-        "fields": {
-            "algorithm": {
-                "title": "Algoritem razporejanja",
-                "placeholder": "Izberite algoritem razporejanja"
-            },
-            "relatedDocks": "Izberite povezan pomol"
         },
-        "generateTasksModal": {
-            "title": "Dodatna logistika"
-        },
-        "aboutAlgorithmModal": {
-            "title": "O algoritmu",
-            "content": "Trenutni algoritem upošteva obvestila o obisku plovil, načrtovana za izbrani datum in pomol. \nNato preveri razpoložljivost žerjavov STS za določen pomol in trajanje posamezne naloge določi glede na hitrost žerjava.\nPrav tako prezre obiske, namenjene vzdrževanju ali drugim ne-nalaganje/razkladanje dejavnostim."
-        }
+        "registeredStorageAreas": "Registrirana skladiščna območja"
     },
     "notification": {
-        "registeredVesselVisitNotifications": "Registrirana obvestila o obisku plovil",
-        "step": "Korak",
-        "of": "od",
         "id": "ID obvestila",
         "hazardous": "Nevarno",
         "nonHazardous": "Ni nevarno",
@@ -560,11 +635,14 @@
         "unknown": "Neznano",
         "from": "Od",
         "to": "Do",
+        "step": "Korak",
+        "of": "od",
         "tabs": {
             "dashboard": "Nadzorna plošča obvestil",
             "search": "Išči obvestila",
             "edit": "Uredi obvestilo",
             "create": "Ustvari obvestilo",
+            "update": "Update Notification",
             "makeDraft": "Ustvari osnutek obvestila",
             "myNotifications": "Moja obvestila",
             "review": "Preglej obvestila",
@@ -580,6 +658,7 @@
             "dashboard": "Pregled obvestil o obisku plovil",
             "search": "Upravljaj in poglej vsa obvestila o obisku plovil",
             "create": "Ustvari novo obvestilo o obisku plovila",
+            "update": "Update an existing vessel visit notification",
             "edit": "Uredi obstoječe obvestilo o obisku plovila",
             "review": "Preglej čakajoča obvestila o obisku plovil"
         },
@@ -591,6 +670,7 @@
         "vesselTitle": "Informacije o plovilu",
         "manifestInfo": "Informacije o manifestu",
         "fields": {
+            "selectVessel": "Select corresponding vessel",
             "openLoadManifest": "Odpri manifest nakladanja",
             "openUnloadManifest": "Odpri manifest razkladanja",
             "expectedArrival": "Pričakovani prihod",
@@ -606,7 +686,9 @@
             "area": "Območje",
             "container": "Kontejner",
             "crewMembers": "Člani posadke",
-            "status": "Stanje"
+            "status": "Stanje",
+            "isCargoHazardousQ": "Is Cargo Hazardous?",
+            "cargoManifestInfo": "About cargo manifest files"
         },
         "timeline": {
             "pending": "V čakanju",
@@ -633,7 +715,32 @@
                 "placeholder": "Navedite razlog odločitve"
             },
             "status": "Stanje odločitve"
-        }
+        },
+        "sections": {
+            "vesselDetails": "Informacije o obisku",
+            "crewDetails": "Podrobnosti o posadki",
+            "cargoRequirements": "Zahteve za tovor",
+            "cargoContent": "Vsebina tovora"
+        },
+        "about": {
+            "text": "Datoteke manifesta tovora morajo (trenutno) biti v evropski standardni obliki CSV. Vsaka vrstica v datoteki CSV predstavlja artikel tovora z naslednjimi stolpci:",
+            "bay": "Bay (številka)",
+            "row": "Vrstica (številka)",
+            "tier": "Nivo (številka)",
+            "area": "Koda območja (od kod/kam)",
+            "containerNumber": "Številka kontejnerja (besedilo)",
+            "conatinerType": "Vrsta kontejnerja (številka)",
+            "description": "Opis (besedilo)",
+            "containerTypes": {
+                "refrigeratedGoods": "Hlajena blaga",
+                "generalConsumerProducts": "Splošni potrošniški izdelki",
+                "electronics": "Elektronika",
+                "hazmat": "Nevarne snovi",
+                "oversizedIndustrialEquipment": "Prevelika industrijska oprema",
+                "other": "Drugo"
+            }
+        },
+        "registeredVesselVisitNotifications": "Registrirana obvestila o obisku plovil"
     },
     "operationalWindow": {
         "title": "Obratovalno okno",
@@ -651,192 +758,386 @@
     },
     "about": {
         "title": "O aplikaciji",
-        "description": "Ta modul zagotavlja celovito rešitev za upravljanje flote avtonomnih vozil, vključno z operativnimi načrti, vrstami incidentov in izvajanjem nalog.",
-        "version": "Različica",
-        "features": {
-            "title": "Funkcije",
-            "fleet": "Upravljanje flote",
-            "planning": "Načrtovanje operacij",
-            "incidents": "Sledenje incidentov",
-            "tasks": "Izvajanje nalog"
+        "privacy": {
+            "title": "Pravilnik o zasebnosti",
+            "lastUpdated": "Zadnja posodobitev: {date}"
         }
     },
     "operationPlan": {
         "title": "Operativni načrt",
-        "list": {
-            "title": "Operativni načrti",
-            "empty": "Ni najdenih operativnih načrtov",
-            "search": "Išči načrte..."
-        },
+        "dock": "Pomol",
+        "docks": "Pomoli",
+        "operations": "Operacije",
+        "cranes": "Dvigala",
+        "createdBy": "Ustvaril",
+        "createdAt": "Ustvarjeno ob",
+        "totalSchedules": "Skupaj razporedov",
+        "vesselCount": "Plovila",
+        "plansOnDate": "Operativni načrti na izbran datum",
+        "noPlansOnDate": "Ni operativnih načrtov na izbran datum",
+        "id": "ID",
+        "vvn": "Obvestilo o obisku plovila",
+        "for": "za",
         "details": {
-            "title": "Podrobnosti načrta",
-            "status": "Stanje",
-            "startDate": "Datum začetka",
-            "endDate": "Datum konca",
-            "assignedVehicles": "Dodeljena vozila",
-            "tasks": "Naloge"
+            "title": "Podrobnosti načrta"
         },
-        "form": {
-            "create": "Ustvari načrt",
+        "totalOperations": "Skupaj operacij",
+        "algorithmUsed": "Uporabljen algoritem",
+        "ganttChart": "Ganttov diagram",
+        "startTime": "Čas začetka",
+        "endTime": "Čas konca",
+        "totalDuration": "Skupno trajanje",
+        "operation": "Operacija",
+        "duration": "Trajanje",
+        "resources": "Viri",
+        "operationDetails": "Podrobnosti operacije",
+        "operationNumber": "Operacija #{number}",
+        "notFound": "Operativni načrt ni najden",
+        "operationType": {
+            "Unload": "Raztovarjanje",
+            "Load": "Natovarjanje"
+        },
+        "tabs": {
+            "unplannedVVNs": "Nenačrtovana obvestila",
+            "search": "Iskanje načrtov",
             "edit": "Uredi načrt",
-            "name": "Ime načrta",
-            "description": "Opis",
-            "selectVehicles": "Izberi vozila"
+            "open": "Začni izvajanje"
         },
-        "status": {
-            "draft": "Osnutek",
-            "active": "Aktiven",
-            "completed": "Zaključen",
-            "cancelled": "Preklican"
+        "subtitle": {
+            "edit": "Spremenite podrobnosti in urnik operacijskega načrta"
+        },
+        "unplannedVVNs": {
+            "description": "Obvestila o obiskih plovil, ki še nimajo dodeljenega operativnega načrta",
+            "noUnplanned": "Vsa obvestila o obiskih plovil imajo dodeljene operativne načrte",
+            "foundMessage": "Najdenih {vvnCount} obvestil brez načrtov v {dayCount} dnevih",
+            "regenerateAll": "Regeneriraj vse manjkajoče načrte",
+            "regenerateDay": "Regeneriraj načrte za ta dan",
+            "regenerateModalTitle": "Regeneriraj načrte za {date}",
+            "warning": "Opozorilo",
+            "warningMessage": "Regeneriranje načrtov bo prepisalo vse obstoječe operativne načrte za ta dan. Tega dejanja ni mogoče razveljaviti.",
+            "selectedDay": "Izbran dan",
+            "confirmRegeneration": "Confirm Regeneration",
+            "affectedDays": "Prizadeti dnevi",
+            "queueInfo": "Vsaka zahteva za regeneracijo bo v čakalni vrsti ločeno. Lahko jih pregledate in sprejmete/zavrnete posamično iz čakalne vrste za razporejanje.",
+            "continue": "Nadaljuj",
+            "confirmRegenerationTitle": "Confirm Regeneration",
+            "irreversibleAction": "To dejanje je nepreklicno",
+            "overwriteWarning": "Regeneriranje operativnih načrtov bo trajno prepisalo vse obstoječe načrte za izbrane dneve. Tega dejanja ni mogoče razveljaviti.",
+            "aboutToRegenerate": "Regenerirali boste načrte za",
+            "days": "dni",
+            "vesselVisitNotifications": "Obvestila o obiskih plovil",
+            "using": "Z uporabo",
+            "algorithm": "algoritma",
+            "proceedQuestion": "Ali želite nadaljevati s to operacijo?",
+            "yesRegenerateAll": "Da, regeneriraj vse"
+        },
+        "algorithm": {
+            "optimal": "Optimalen",
+            "greedy": "Požrešen",
+            "genetic": "Genetski",
+            "auto": "Samodejno"
+        },
+        "metrics": {
+            "title": "Metrike",
+            "strategy": "Strategija",
+            "totalDelay": "Skupna zamuda",
+            "computationTime": "Čas izračuna",
+            "autoSelection": "Samodejni izbor algoritma"
+        },
+        "infoTitle": "Informacije o operacijskem načrtu",
+        "fields": {
+            "id": {
+                "title": "Plan ID"
+            },
+            "relatedVVN": {
+                "title": "Related VVN"
+            },
+            "dock": {
+                "title": "Dock"
+            },
+            "operations": {
+                "title": "Operations"
+            }
+        },
+        "filters": {
+            "startDate": "Datum začetka od",
+            "endDate": "Datum konca do"
+        },
+        "metadata": {
+            "title": "Metapodatki",
+            "createdBy": "Ustvaril",
+            "createdAt": "Ustvarjeno ob",
+            "algorithmUsed": "Uporabljen algoritem"
+        },
+        "schedule": {
+            "title": "Razpored operacij",
+            "noOperations": "Ni načrtovanih operacij"
         }
     },
     "incidentType": {
-        "title": "Vrsta incidenta",
-        "list": {
-            "title": "Vrste incidentov",
-            "empty": "Ni najdenih vrst incidentov",
-            "search": "Išči vrste..."
-        },
-        "details": {
-            "title": "Podrobnosti vrste",
-            "code": "Koda",
-            "severity": "Resnost",
-            "responseTime": "Čas odziva",
-            "procedures": "Postopki"
-        },
-        "form": {
-            "create": "Ustvari vrsto",
-            "edit": "Uredi vrsto",
-            "name": "Ime vrste",
-            "description": "Opis",
-            "selectSeverity": "Izberi resnost"
+        "fields": {
+            "name": {
+                "title": "Ime",
+                "placeholder": "Ime vrste incidenta"
+            },
+            "description": {
+                "title": "Opis",
+                "placeholder": "Podroben opis vrste incidenta"
+            },
+            "severity": {
+                "title": "Resnost",
+                "placeholder": "Izberite stopnjo resnosti"
+            },
+            "subtypeOf": {
+                "title": "Podtip od",
+                "placeholder": "Izberite nadrejeno vrsto"
+            },
+            "subtypes": {
+                "title": "Podtipi",
+                "placeholder": "Izberite podrejene vrste"
+            }
         },
         "severity": {
-            "low": "Nizka",
-            "medium": "Srednja",
-            "high": "Visoka",
-            "critical": "Kritična"
-        }
+            "Minor": "Manjša",
+            "Major": "Večja",
+            "Critical": "Kritična"
+        },
+        "tabs": {
+            "dashboard": "Nadzorna plošča vrst incidentov",
+            "view_dashboard": "Poglej vrste incidentov",
+            "search": "Išči vrste incidentov",
+            "create": "Ustvari vrsto incidenta",
+            "edit": "Uredi vrsto incidenta"
+        },
+        "generalFields": "Splošna polja",
+        "classification": "Klasifikacija",
+        "title": "Vrsta incidenta",
+        "subtitle": {
+            "dashboard": "Pregled statističnih podatkov in dejavnosti vrst incidentov",
+            "search": "Upravljajte in preglejte vse registrirane vrste incidentov",
+            "create": "Registrirajte novo vrsto incidenta v sistem",
+            "edit": "Spremenite obstoječo vrsto incidenta v sistemu"
+        },
+        "registeredIncidentTypes": "Registrirane vrste incidentov",
+        "incidentTypeInformation": "Informacije o vrsti incidenta",
+        "parentType": "Nadrejena vrsta",
+        "confirmDelete": "Potrdi brisanje",
+        "confirmDeleteMessage": "Ali ste prepričani, da želite izbrisati to vrsto incidenta?",
+        "failedToDelete": "Brisanje vrste incidenta ni uspelo"
     },
     "taskCategory": {
+        "fields": {
+            "name": {
+                "title": "Ime",
+                "placeholder": "Ime kategorije naloge"
+            },
+            "category": {
+                "title": "Kategorija",
+                "placeholder": "Koda kategorije"
+            },
+            "description": {
+                "title": "Opis",
+                "placeholder": "Opis kategorije naloge"
+            }
+        },
+        "tabs": {
+            "dashboard": "Nadzorna plošča kategorij nalog",
+            "search": "Išči kategorije nalog",
+            "create": "Ustvari kategorijo naloge",
+            "edit": "Uredi kategorijo naloge",
+            "view_dashboard": "Poglej kategorije nalog"
+        },
+        "generalFields": "Splošna polja",
         "title": "Kategorija naloge",
-        "list": {
-            "title": "Kategorije nalog",
-            "empty": "Ni najdenih kategorij nalog",
-            "search": "Išči kategorije..."
+        "subtitle": {
+            "dashboard": "Pregled statističnih podatkov in dejavnosti kategorij nalog",
+            "search": "Upravljajte in preglejte vse registrirane kategorije nalog",
+            "create": "Registrirajte novo kategorijo naloge v sistem",
+            "edit": "Spremenite obstoječo kategorijo naloge v sistemu"
         },
-        "details": {
-            "title": "Podrobnosti kategorije",
-            "code": "Koda",
-            "priority": "Prioriteta",
-            "estimatedDuration": "Ocenjen čas trajanja",
-            "requirements": "Zahteve"
-        },
-        "form": {
-            "create": "Ustvari kategorijo",
-            "edit": "Uredi kategorijo",
-            "name": "Ime kategorije",
-            "description": "Opis",
-            "selectPriority": "Izberi prioriteto"
-        },
-        "priority": {
-            "low": "Nizka",
-            "normal": "Normalna",
-            "high": "Visoka",
-            "urgent": "Nujna"
-        }
+        "taskCategoryInformation": "Informacije o kategoriji naloge",
+        "registeredTaskCategories": "Registrirane kategorije nalog"
     },
     "execution": {
         "title": "Izvajanje",
+        "subtitle": {
+            "search": "Upravljajte in preglejte vsa izvajanja obiskov plovil",
+            "dashboard": "Pregled statističnih podatkov in dejavnosti izvajanj obiskov plovil"
+        },
+        "tabs": {
+            "dashboard": "Nadzorna plošča izvajanj",
+            "search": "Išči izvajanja",
+            "view_dashboard": "Poglej izvajanja",
+            "update": "Posodobi izvajanje",
+            "view": "Poglej izvajanje",
+            "table": "Tabelarni pogled",
+            "cards": "Kartni pogled"
+        },
+        "fields": {
+            "code": "Koda",
+            "relatedVVN": "Povezano z",
+            "status": "Status",
+            "createdBy": "Ustvaril",
+            "dateOpen": "Datum odprtja",
+            "dateClosed": "Datum zaprtja",
+            "relatedVesselVisit": "Povezan obisk plovila",
+            "dock": "Pomol",
+            "berthTime": "Čas priveza",
+            "operations": "Operacije"
+        },
+        "filters": {
+            "startDate": "Datum začetka",
+            "endDate": "Datum konca",
+            "relatedVVN": "Obvestilo o obisku plovila",
+            "status": "Status"
+        },
+        "metrics": {
+            "totalOperations": "Skupaj operacij",
+            "completedOperations": "Napredek",
+            "turnaroundTime": "Čas obrnitve",
+            "berthOccupancy": "Zasedenost pomola"
+        },
         "status": {
             "pending": "Čakajoče",
-            "inProgress": "V teku",
-            "completed": "Zaključeno",
-            "failed": "Neuspešno",
-            "cancelled": "Preklicano"
+            "started": "Začeto",
+            "delayed": "Zamujeno",
+            "completed": "Zaključeno"
         },
-        "details": {
-            "title": "Podrobnosti izvajanja",
-            "startTime": "Čas začetka",
-            "endTime": "Čas konca",
-            "duration": "Trajanje",
-            "assignedTo": "Dodeljeno komu",
-            "progress": "Napredek"
-        },
-        "actions": {
-            "start": "Začni izvajanje",
-            "pause": "Premor",
-            "resume": "Nadaljuj",
-            "complete": "Zaključi",
-            "cancel": "Prekliči"
-        },
-        "messages": {
-            "started": "Izvajanje začeto",
-            "paused": "Izvajanje premor",
-            "resumed": "Izvajanje nadaljevanje",
-            "completed": "Izvajanje zaključeno",
-            "cancelled": "Izvajanje preklicano",
-            "failed": "Izvajanje neuspešno"
+        "view_resources": "Poglej vire",
+        "infoTitle": "Informacije o izvajanju",
+        "operationsTitle": "Operacije",
+        "noOperations": "Ni razpoložljivih operacij",
+        "startOperation": "Začni operacijo",
+        "completeOperation": "Zaključi operacijo",
+        "addOperation": "Dodaj operacijo",
+        "addOperationDescription": "Dodajte novo operacijo na časovnico",
+        "confirmStartOperation": "Ali ste prepričani, da želite začeti to operacijo?",
+        "confirmCompleteOperation": "Ali ste prepričani, da želite zaključiti to operacijo?",
+        "berthOperation": {
+            "button": "Uredi podatke pomola",
+            "title": "Operacija na pomolu",
+            "description": "Uredite pomol in čas za ta obisk plovila.",
+            "dock": "Pomol",
+            "dockPlaceholder": "Izberite pomol",
+            "berthTime": "Čas priveza",
+            "differentThanPlanned": "Izbran pomol je drugačen od načrtovanega."
         }
     },
     "incident": {
-        "title": "Incident",
-        "list": {
-            "title": "Incidenti",
-            "empty": "Ni najdenih incidentov",
-            "search": "Išči incidente...",
-            "filter": {
-                "all": "Vsi",
-                "open": "Odprti",
-                "inProgress": "V teku",
-                "resolved": "Rešeni",
-                "closed": "Zaprti"
+        "tabs": {
+            "dashboard": "Nadzorna plošča incidentov",
+            "create": "Ustvari incident",
+            "search": "Išči incidente",
+            "active": "Aktivni incidenti",
+            "view": "Poglej incident",
+            "edit": "Uredi incident"
+        },
+        "subtitle": {
+            "create": "Poročajte nov incident v sistem",
+            "search": "Iščite in filtrirajte obstoječe incidente",
+            "active": "Oglejte si in upravljajte aktivne incidente"
+        },
+        "generalFields": "Splošne informacije",
+        "classification": "Klasifikacija",
+        "fields": {
+            "bid": {
+                "title": "ID incidenta"
+            },
+            "type": {
+                "title": "Vrsta incidenta",
+                "placeholder": "Izberite vrsto incidenta"
+            },
+            "startTime": {
+                "title": "Čas začetka",
+                "placeholder": "Kdaj se je incident začel?"
+            },
+            "endTime": {
+                "title": "Čas konca",
+                "placeholder": "Kdaj se je incident končal?"
+            },
+            "severity": {
+                "title": "Resnost",
+                "placeholder": "Izberite stopnjo resnosti",
+                "options": {
+                    "minor": "Manjša",
+                    "major": "Večja",
+                    "critical": "Kritična"
+                }
+            },
+            "description": {
+                "title": "Opis",
+                "placeholder": "Podrobno opišite incident"
+            },
+            "createdBy": {
+                "title": "Ustvaril"
+            },
+            "affectedVVECodes": {
+                "title": "Prizadete izvršitve",
+                "placeholder": "Vnesite prizadete izvršitve"
+            },
+            "vveCode": {
+                "title": "Koda izvršitve"
+            },
+            "status": {
+                "title": "Status",
+                "options": {
+                    "active": "Aktiven",
+                    "resolved": "Rešen"
+                }
+            },
+            "filterStartTime": {
+                "title": "Datum začetka od"
+            },
+            "filterEndTime": {
+                "title": "Datum začetka do"
+            },
+            "duration": {
+                "title": "Trajanje"
             }
         },
-        "details": {
-            "title": "Podrobnosti incidenta",
-            "id": "ID incidenta",
-            "type": "Vrsta",
-            "status": "Stanje",
-            "severity": "Resnost",
-            "reportedBy": "Poročal",
-            "reportedAt": "Poročano dne",
-            "assignedTo": "Dodeljeno komu",
-            "location": "Lokacija",
-            "vehicle": "Vozilo",
-            "description": "Opis",
-            "resolution": "Rešitev",
-            "timeline": "Časovnica"
-        },
-        "form": {
-            "create": "Poročaj incident",
-            "edit": "Uredi incident",
-            "selectType": "Izberi vrsto",
-            "selectSeverity": "Izberi resnost",
-            "selectVehicle": "Izberi vozilo",
-            "descriptionPlaceholder": "Opiši incident...",
-            "resolutionPlaceholder": "Opiši rešitev..."
+        "severity": {
+            "Minor": "Manjša",
+            "Major": "Večja",
+            "Critical": "Kritična"
         },
         "status": {
-            "open": "Odprt",
-            "inProgress": "V teku",
-            "resolved": "Rešen",
-            "closed": "Zaprt"
+            "active": "Aktiven",
+            "resolved": "Rešen"
+        },
+        "ongoing": "V teku",
+        "filters": {
+            "onlyActive": "Samo aktivni",
+            "onlyMine": "Samo moji"
         },
         "actions": {
-            "assign": "Dodeli",
+            "view": "Poglej podrobnosti",
+            "edit": "Uredi incident",
             "resolve": "Reši",
-            "close": "Zapri",
-            "reopen": "Ponovno odpri",
-            "addNote": "Dodaj opombo"
+            "delete": "Izbriši incident"
         },
-        "messages": {
-            "created": "Incident ustvarjen",
-            "updated": "Incident posodobljen",
-            "assigned": "Incident dodeljen",
-            "resolved": "Incident rešen",
-            "closed": "Incident zaprt",
-            "reopened": "Incident ponovno odprt"
+        "notifications": {
+            "createSuccess": "Incident uspešno ustvarjen",
+            "createFailed": "Ustvarjanje incidenta ni uspelo",
+            "updateSuccess": "Incident uspešno posodobljen",
+            "updateFailed": "Posodabljanje incidenta ni uspelo",
+            "resolveSuccess": "Incident uspešno rešen",
+            "resolveFailed": "Reševanje incidenta ni uspelo",
+            "deleteSuccess": "Incident uspešno izbrisan",
+            "deleteFailed": "Brisanje incidenta ni uspelo"
+        },
+        "table": {
+            "empty": "Ni najdenih incidentov"
+        },
+        "active": {
+            "title": "Aktivni incidenti",
+            "subtitle": "Oglejte si in upravljajte tekoče incidente"
+        },
+        "infoTitle": "Podrobnosti incidenta",
+        "closeDialog": {
+            "title": "Reši incident",
+            "message": "Kdaj je bil incident rešen",
+            "confirm": "Da, zapri ta incident",
+            "cancel": "Prekliči"
         }
     }
 }

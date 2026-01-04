@@ -1,1034 +1,1141 @@
 ﻿{
-    "common": {
-        "loading": "Ielādē...",
-        "noData": "Nav datu",
-        "statistics": "Statistika",
-        "yes": "Jā",
-        "no": "Nē",
-        "weekDay": "Nedēļas diena",
-        "days": {
-            "sunday": "Svētdiena",
-            "monday": "Pirmdiena",
-            "tuesday": "Otrdiena",
-            "wednesday": "Trešdiena",
-            "thursday": "Ceturtdiena",
-            "friday": "Piektdiena",
-            "saturday": "Sestdiena"
-        },
-        "number": "Numurs"
-    },
-    "buttons": {
-        "save": "Saglabāt",
-        "cancel": "Atcelt",
-        "delete": "Dzēst",
-        "edit": "Rediģēt",
-        "create": "Izveidot",
-        "search": "Meklēt",
-        "select": "Izvēlēties",
-        "activate": "Aktivizēt",
-        "deactivate": "Deaktivizēt",
-        "filter": {
-            "title": "Filtri",
-            "add": "Pievienot filtru",
-            "clear": "Notīrīt filtrus"
-        },
-        "pagination": {
-            "previous": "Iepriekšējais",
-            "next": "Nākamais"
-        },
-        "login": "Pieteikties",
-        "goBackToLogin": "Atgriezties pie pieteikšanās",
-        "logout": "Iziet",
-        "generate": "Ģenerēt",
-        "close": "Aizvērt",
-        "add": "Pievienot",
-        "review": "Pārskatīt",
-        "ok": "Labi",
-        "downloadSample": "Lejupielādēt paraugu",
-        "seeMore": "Skatīt vairāk"
-    },
-    "unsavedChanges": {
-        "title": "Atcelt izmaiņas?",
-        "message": "Jums ir nesaglabātas izmaiņas. Vai tiešām vēlaties pamest šo lapu un atmest izmaiņas?",
-        "confirm": "Atcelt",
-        "cancel": "Turpināt rediģēšanu"
-    },
-    "dashboard": {
-        "sidebarTitle": "Panelis",
-        "title": "PortIT panelis",
-        "subtitle": "PortIT sistēmas pārskats",
-        "3DModel": {
-            "title": "3D ostas vizualizācija",
-            "description": "Skatiet interaktīvu 3D ostas modeli. Sekojiet piestātņu noslodzei, kuģu pozīcijām, noliktavu zonām un resursiem reālā laikā.",
-            "open": "Atvērt 3D modeli"
-        },
-        "welcome": "Laipni atgriezies, [name]!",
-        "SAOR": {
-            "subtitle": "Pārskats par kuģu aģenta darbībām",
-            "pendingNotifications": "Gaidāmie paziņojumi",
-            "recent": "Nesenie kuģu apmeklējumu paziņojumi",
-            "recentReview": "Kuģu apmeklējumu paziņojumi, kam nepieciešama pārskatīšana",
-            "noRecent": "Nav nesenu paziņojumu"
-        }
-    },
-    "admin": {
-        "sidebarTitle": "Administrācija",
-        "title": "Administrācijas panelis",
-        "subtitle": "Administratīvs pārskats un pārvaldība",
-        "userManagement": {
-            "title": "Lietotāju pārvaldība",
-            "subtitle": "Pārvaldiet sistēmas lietotājus, lomas un atļaujas."
-        },
-        "auditLogs": {
-            "title": "Revīzijas žurnāli",
-            "subtitle": "Sistēmas darbību žurnālu pārskatīšana un uzraudzība."
-        }
-    },
-    "user": {
-        "registeredUsers": "Reģistrētie lietotāji",
-        "fields": {
-            "email": {
-                "title": "E-pasts",
-                "placeholder": "email@mail.com"
-            },
-            "role": {
-                "title": "Loma",
-                "placeholder": "Izvēlieties lietotāja lomu",
-                "options": {
-                    "admin": "Administrators",
-                    "saoRep": "SAO pārstāvis",
-                    "pao": "Ostu pārvaldes darbinieks",
-                    "logisticsOperator": "Loģistikas operators"
-                }
-            },
-            "isActive": {
-                "title": "Aktīvs",
-                "options": {
-                    "active": "Jā",
-                    "inactive": "Nē"
-                }
-            }
-        },
-        "tabs": {
-            "dashboard": "Lietotāja panelis",
-            "create": "Izveidot lietotāju",
-            "view": "Skatīt lietotājus",
-            "search": "Meklēt lietotājus"
-        },
-        "infoTitle": "Lietotāja informācija",
-        "title": "Lietotāji",
-        "subtitle": {
-            "dashboard": "Lietotāju pārskats un pārvaldība",
-            "create": "Reģistrēt jaunu lietotāju sistēmā",
-            "view": "Pārvaldīt un skatīt esošos lietotājus"
-        }
-    },
-    "physicalCharacteristics": {
-        "title": "Fiziskās īpašības (m)",
-        "length": {
-            "title": "Garums",
-            "placeholder": "Garums metros"
-        },
-        "depth": {
-            "title": "Dziļums",
-            "placeholder": "Dziļums metros"
-        },
-        "draft": {
-            "title": "Iegrimšana",
-            "placeholder": "Iegrimšana metros"
-        }
-    },
-    "dock": {
-        "fields": {
-            "code": {
-                "title": "Kods",
-                "placeholder": "Piestātnes kods"
-            },
-            "name": {
-                "title": "Nosaukums",
-                "placeholder": "Piestātnes nosaukums"
-            },
-            "location": {
-                "title": "Atrašanās vieta",
-                "placeholder": "Piestātnes atrašanās vieta"
-            },
-            "supportedVesselTypes": {
-                "title": "Atbalstītie kuģu tipi",
-                "vesselTypes": {
-                    "title": "Kuģu tipi",
-                    "placeholder": "Izvēlieties kuģu tipus"
+    "common":  {
+                   "loading":  "Ielādē...",
+                   "noData":  "Nav datu",
+                   "statistics":  "Statistika",
+                   "yes":  "Jā",
+                   "no":  "Nē",
+                   "weekDay":  "Nedēļas diena",
+                   "days":  {
+                                "sunday":  "Svētdiena",
+                                "monday":  "Pirmdiena",
+                                "tuesday":  "Otrdiena",
+                                "wednesday":  "Trešdiena",
+                                "thursday":  "Ceturtdiena",
+                                "friday":  "Piektdiena",
+                                "saturday":  "Sestdiena"
+                            },
+                   "number":  "Numurs",
+                   "actions":  "Darbības",
+                   "none":  "Nav"
+               },
+    "buttons":  {
+                    "save":  "Saglabāt",
+                    "cancel":  "Atcelt",
+                    "delete":  "Dzēst",
+                    "edit":  "Rediģēt",
+                    "create":  "Izveidot",
+                    "search":  "Meklēt",
+                    "select":  "Izvēlēties",
+                    "activate":  "Aktivizēt",
+                    "deactivate":  "Deaktivizēt",
+                    "generate":  "Ģenerēt",
+                    "close":  "Aizvērt",
+                    "add":  "Pievienot",
+                    "review":  "Pārskatīt",
+                    "filter":  {
+                                   "title":  "Filtri",
+                                   "add":  "Pievienot filtru",
+                                   "clear":  "Notīrīt filtrus"
+                               },
+                    "pagination":  {
+                                       "previous":  "Iepriekšējais",
+                                       "next":  "Nākamais"
+                                   },
+                    "login":  "Pieteikties",
+                    "goBackToLogin":  "Atgriezties pie pieteikšanās",
+                    "logout":  "Iziet",
+                    "seeMore":  "Skatīt vairāk",
+                    "ok":  "Labi",
+                    "downloadSample":  "Lejupielādēt paraugu"
                 },
-                "vesselType": "Kuģa tips"
-            }
-        },
-        "tabs": {
-            "dashboard": "Piestātņu panelis",
-            "view_dashboard": "Skatīt piestātnes",
-            "search": "Meklēt piestātnes",
-            "create": "Izveidot piestātni",
-            "view": "Skatīt piestātni",
-            "edit": "Rediģēt piestātni"
-        },
-        "generalFields": "Vispārīgie lauki",
-        "infoTitle": "Piestātnes informācija",
-        "title": "Piestātnes",
-        "subtitle": {
-            "dashboard": "Piestātņu statistikas un darbību pārskats",
-            "search": "Pārvaldīt un skatīt visas reģistrētās piestātnes",
-            "create": "Reģistrēt jaunu piestātni sistēmā",
-            "edit": "Rediģēt esošu piestātni sistēmā"
-        },
-        "registeredDocks": "Reģistrētās piestātnes"
-    },
-    "vesselType": {
-        "fields": {
-            "name": {
-                "title": "Nosaukums",
-                "placeholder": "Kuģa tipa nosaukums"
-            },
-            "description": {
-                "title": "Apraksts",
-                "placeholder": "Kuģa tipa apraksts"
-            },
-            "capacity": {
-                "title": "Jauda",
-                "placeholder": "Konteineru ietilpība TEU"
-            },
-            "containerCapacity": {
-                "title": "Konteineru ietilpība (TEU)",
-                "maxNumberOfRows": {
-                    "title": "Maks. rindu skaits",
-                    "placeholder": "Maks. rindu TEU"
-                },
-                "maxNumberOfBays": {
-                    "title": "Maks. lauku skaits",
-                    "placeholder": "Maks. lauku TEU"
-                },
-                "maxNumberOfTiers": {
-                    "title": "Maks. līmeņu skaits",
-                    "placeholder": "Maks. līmeņu TEU"
-                }
-            }
-        },
-        "generalFields": "Vispārīgie lauki",
-        "tabs": {
-            "dashboard": "Kuģu tipu panelis",
-            "view_dashboard": "Skatīt kuģu tipus",
-            "search": "Meklēt kuģu tipus",
-            "create": "Izveidot kuģa tipu",
-            "view": "Skatīt kuģa tipu",
-            "edit": "Rediģēt kuģa tipu"
-        },
-        "infoTitle": "Kuģa tipa informācija",
-        "title": "Kuģu tipi",
-        "subtitle": {
-            "dashboard": "Kuģu tipu statistikas pārskats",
-            "search": "Pārvaldīt un skatīt visus reģistrētos kuģu tipus",
-            "create": "Reģistrēt jaunu kuģa tipu sistēmā",
-            "edit": "Rediģēt esošu kuģa tipu sistēmā"
-        },
-        "registeredVesselTypes": "Reģistrētie kuģu tipi"
-    },
-    "vessel": {
-        "fields": {
-            "name": {
-                "title": "Nosaukums",
-                "placeholder": "Kuģa nosaukums"
-            },
-            "imoNumber": {
-                "title": "IMO numurs",
-                "placeholder": "Kuģa IMO numurs"
-            },
-            "owner": {
-                "title": "Īpašnieks",
-                "placeholder": "Īpašnieka organizācija"
-            },
-            "vesselType": {
-                "title": "Kuģa tips",
-                "placeholder": "Izvēlieties kuģa tipu"
-            },
-            "taxNumber": {
-                "title": "Nodokļu numurs"
-            }
-        },
-        "infoTitle": "Kuģa informācija",
-        "physicalCharacteristicsTitle": "Fiziskās īpašības",
-        "tabs": {
-            "dashboard": "Kuģu panelis",
-            "view_dashboard": "Skatīt kuģus",
-            "search": "Meklēt kuģus",
-            "create": "Izveidot kuģi",
-            "view": "Skatīt kuģi",
-            "edit": "Rediģēt kuģi"
-        },
-        "title": "Kuģi",
-        "subtitle": {
-            "dashboard": "Kuģu statistikas un darbību pārskats",
-            "search": "Pārvaldīt un skatīt visus reģistrētos kuģus",
-            "create": "Reģistrēt jaunu kuģi sistēmā",
-            "edit": "Rediģēt esošu kuģi sistēmā"
-        },
-        "ownedBy": "Īpašnieks",
-        "registeredVessels": "Reģistrētie kuģi"
-    },
-    "staff": {
-        "registeredStaffMembers": "Reģistrētie darbinieki",
-        "fields": {
-            "mechanographicNumber": {
-                "title": "Mehanogrāfiskais numurs",
-                "placeholder": "Mehanogrāfiskais numurs"
-            },
-            "name": {
-                "title": "Vārds",
-                "placeholder": "Darbinieka vārds"
-            },
-            "email": {
-                "title": "E-pasts",
-                "placeholder": "E-pasta adrese"
-            },
-            "phoneNumber": {
-                "title": "Telefons",
-                "placeholder": "Telefona numurs"
-            },
-            "qualifications": {
-                "title": "Kvalifikācijas",
-                "placeholder": "Izvēlieties kvalifikācijas"
-            },
-            "status": {
-                "title": "Statuss",
-                "options": {
-                    "available": "Pieejams",
-                    "unavailable": "Nav pieejams",
-                    "temporarilyReassigned": "Pagaidām pārvietots"
-                }
-            },
-            "operationalWindow": "Darba logs"
-        },
-        "tabs": {
-            "dashboard": "Personāla panelis",
-            "view_dashboard": "Skatīt personālu",
-            "search": "Meklēt personālu",
-            "create": "Izveidot darbinieku",
-            "view": "Skatīt darbinieku",
-            "edit": "Rediģēt darbinieku"
-        },
-        "infoTitle": "Darbinieka informācija",
-        "title": "Personāls",
-        "subtitle": {
-            "search": "Pārvaldīt un skatīt visu reģistrēto personālu",
-            "dashboard": "Personāla statistikas pārskats",
-            "create": "Reģistrēt jaunu darbinieku sistēmā",
-            "view": "Skatīt darbinieka detaļas",
-            "edit": "Rediģēt esošu darbinieku sistēmā"
-        },
-        "deactivation": {
-            "title": "Deaktivizēt darbinieku",
-            "message": "Vai tiešām vēlaties deaktivizēt šo darbinieku? Vēlāk varēsiet to atkārtoti aktivizēt.",
-            "successMessage": "Darbinieks veiksmīgi deaktivizēts.",
-            "errorMessage": "Radās kļūda, mēģinot deaktivizēt darbinieku. Lūdzu, mēģiniet vēlreiz."
-        }
-    },
-    "qualification": {
-        "registeredQualifications": "Reģistrētās kvalifikācijas",
-        "tabs": {
-            "dashboard": "Kvalifikāciju panelis",
-            "view_dashboard": "Skatīt kvalifikācijas",
-            "search": "Meklēt kvalifikācijas",
-            "create": "Izveidot kvalifikāciju",
-            "view": "Skatīt kvalifikāciju",
-            "edit": "Rediģēt kvalifikāciju"
-        },
-        "infoTitle": "Kvalifikācijas informācija",
-        "title": "Kvalifikācijas",
-        "subtitle": {
-            "search": "Pārvaldīt un skatīt visas reģistrētās kvalifikācijas",
-            "dashboard": "Kvalifikāciju statistikas pārskats",
-            "create": "Reģistrēt jaunu kvalifikāciju sistēmā",
-            "edit": "Rediģēt esošu kvalifikāciju sistēmā",
-            "view": "Skatīt kvalifikācijas detaļas"
-        },
-        "fields": {
-            "idCode": {
-                "title": "Kvalifikācijas kods",
-                "placeholder": "Kvalifikācijas kods"
-            },
-            "qualificationName": {
-                "title": "Kvalifikācijas nosaukums",
-                "placeholder": "Kvalifikācijas nosaukums"
-            }
-        }
-    },
-    "physicalResource": {
-        "registeredPhysicalResources": "Reģistrētie fiziskie resursi",
-        "tabs": {
-            "dashboard": "Fizisko resursu panelis",
-            "view_dashboard": "Skatīt fiziskos resursus",
-            "search": "Meklēt fiziskos resursus",
-            "create": "Izveidot fizisko resursu",
-            "view": "Skatīt fizisko resursu",
-            "edit": "Rediģēt fizisko resursu"
-        },
-        "infoTitle": "Fiziskā resursa informācija",
-        "title": "Fiziskie resursi",
-        "subtitle": {
-            "search": "Pārvaldīt un skatīt visus reģistrētos fiziskos resursus",
-            "dashboard": "Fizisko resursu pārvaldības panelis",
-            "view_dashboard": "Skatīt fiziskos resursus",
-            "create": "Reģistrēt jaunu fizisko resursu sistēmā",
-            "view": "Skatīt fiziskā resursa detaļas",
-            "edit": "Rediģēt esošu fizisko resursu sistēmā"
-        },
-        "generalFields": "Vispārīgie lauki",
-        "specificFields": "Specifiski lauki",
-        "fields": {
-            "code": {
-                "title": "Kods",
-                "placeholder": "Resursa kods"
-            },
-            "description": {
-                "title": "Apraksts",
-                "placeholder": "Resursa apraksts"
-            },
-            "status": {
-                "title": "Statuss",
-                "placeholder": "Izvēlieties resursa statusu",
-                "options": {
-                    "available": "Pieejams",
-                    "maintenance": "Apkope",
-                    "outOfService": "Netiek lietots"
-                }
-            },
-            "qualifications": {
-                "title": "Nepieciešamās kvalifikācijas",
-                "placeholder": "Kvalifikācijas darbam ar šo resursu"
-            },
-            "setupTime": {
-                "title": "Uzstādīšanas laiks (min)",
-                "placeholder": "Uzstādīšanas laiks"
-            },
-            "servingDocks": {
-                "title": "Aptarnājamās piestātnes",
-                "placeholder": "Izvēlieties aptarnājamās piestātnes"
-            },
-            "liftingCapacity": {
-                "title": "Pacelšanas jauda (kg)",
-                "placeholder": "Pacelšanas jauda"
-            },
-            "containersPerHour": {
-                "title": "Konteineri stundā",
-                "placeholder": "Konteineri stundā"
-            },
-            "maxLoadCapacity": {
-                "title": "Maks. slodze (kg)",
-                "placeholder": "Maks. slodze"
-            },
-            "averageSpeed": {
-                "title": "Vidējais ātrums (km/h)",
-                "placeholder": "Vidējais ātrums"
-            },
-            "containersPerTrip": {
-                "title": "Konteineri uz reisu",
-                "placeholder": "Konteineri uz reisu"
-            },
-            "type": {
-                "title": "Resursa tips",
-                "options": {
-                    "stsCrane": "STS celtņi",
-                    "yardGantry": "Pagalma celtņi",
-                    "truck": "Kravas automašīna"
-                }
-            }
-        },
-        "actions": {
-            "deactivate": "Deaktivizēt fizisko resursu"
-        },
-        "deactivation": {
-            "title": "Deaktivizēt fizisko resursu",
-            "message": "Vai tiešām vēlaties deaktivizēt šo fizisko resursu? Vēlāk varēsiet to atkārtoti aktivizēt.",
-            "successMessage": "Fiziskais resurss veiksmīgi deaktivizēts.",
-            "errorMessage": "Radās kļūda, mēģinot deaktivizēt fizisko resursu. Lūdzu, mēģiniet vēlreiz."
-        }
-    },
-    "storageArea": {
-        "registeredStorageAreas": "Reģistrētās noliktavu zonas",
-        "tabs": {
-            "dashboard": "Noliktavu zonu panelis",
-            "view_dashboard": "Skatīt noliktavu zonas",
-            "search": "Meklēt noliktavu zonas",
-            "create": "Izveidot noliktavu zonu",
-            "view": "Skatīt noliktavu zonu",
-            "edit": "Rediģēt noliktavu zonu"
-        },
-        "infoTitle": "Noliktavu zonas informācija",
-        "title": "Noliktavu zonas",
-        "subtitle": {
-            "search": "Pārvaldīt un skatīt visas reģistrētās noliktavu zonas",
-            "dashboard": "Noliktavu zonu pārvaldības panelis",
-            "view_dashboard": "Skatīt noliktavu zonas",
-            "create": "Reģistrēt jaunu noliktavu zonu sistēmā",
-            "view": "Skatīt noliktavu zonas detaļas",
-            "edit": "Rediģēt esošu noliktavu zonu sistēmā"
-        },
-        "printer": {
-            "docks_serviced": "aptarnājamās piestātnes",
-            "capacity_usage": "Ietilpības izmantošana",
-            "units": "vienības",
-            "available": "pieejams",
-            "no_registered_distances": "Nav reģistrētu attālumu",
-            "no_docks_serviced": "Nav aptarnājamu piestātņu",
-            "all_docks_serviced": "Visas piestātnes aptarnātas",
-            "serviced_docks_distance": "Aptarnājamo piestātņu attālums",
-            "no_registered_docks": "Nav reģistrētu piestātņu"
-        },
-        "create": {
-            "distance_meters": "Attālums (metri)"
-        },
-        "fields": {
-            "nameCode": {
-                "title": "Nosaukuma kods",
-                "placeholder": "Noliktavu zonas nosaukuma kods"
-            },
-            "location": {
-                "title": "Atrašanās vieta",
-                "placeholder": "Noliktavu zonas atrašanās vieta"
-            },
-            "type": {
-                "title": "Tips",
-                "placeholder": "Izvēlieties noliktavu zonas tipu",
-                "options": {
-                    "yard": "Pagalms",
-                    "warehouse": "Noliktava"
-                }
-            },
-            "capacity": {
-                "title": "Ietilpība",
-                "placeholder": "Maksimālā ietilpība"
-            },
-            "occupancy": {
-                "title": "Noslodze",
-                "placeholder": "Pašreizējā noslodze"
-            }
-        }
-    },
-    "search": {
-        "languages": "Meklēt valodas..."
-    },
-    "expirationWarning": {
-        "title": "Sesija drīz beigsies",
-        "messageOneMinute": "Jūsu sesija beigsies pēc 1 minūtes.",
-        "messageLessThanOneMinute": "Jūsu sesija drīz beigsies.",
-        "extendSession": "Pagarināt sesiju"
-    },
-    "representative": {
-        "title": "Pārstāvis",
-        "select": "Izvēlieties pārstāvi"
-    },
-    "scheduling": {
-        "title": "Pieprasīt dienas grafiku",
-        "subtitle": "Izmantojiet mūsu automatizēto plānošanas algoritmu, lai analizētu uz konkrēto dienu plānotos uzdevumus.",
-        "noVisits": "Nav kuģu vizīšu, kas plānotas izvēlētajā datumā.",
-        "visitsOnSelectedDay": "Kuģu vizītes izvēlētajā datumā",
-        "viewVisits": "Ģenerēt uzdevumu grafiku",
-        "generateTasksButton": "Ģenerēt uzdevumu grafiku",
-        "aboutAlgorithmButton": "Par algoritmu",
-        "fields": {
-            "algorithm": {
-                "title": "Plānošanas algoritms",
-                "placeholder": "Izvēlieties plānošanas algoritmu"
-            },
-            "relatedDocks": "Izvēlieties atbilstošu piestātni"
-        },
-        "generateTasksModal": {
-            "title": "Papildu loģistika"
-        },
-        "aboutAlgorithmModal": {
-            "title": "Par algoritmu",
-            "content": "Pašreizējais algoritms ņem vērā izvēlētajam datumam un piestātnei ieplānotos kuģu vizīšu paziņojumus.\nTas pārbauda STS celtņu pieejamību un nosaka katra uzdevuma ilgumu, balstoties uz celtņa ātrumu.\nTas ignorē vizītes, kas saistītas ar apkopi vai citām darbībām, kas nav saistītas ar iekraušanu / izkraušanu."
-        }
-    },
-    "notification": {
-        "registeredVesselVisitNotifications": "Reģistrētie kuģu apmeklējumu paziņojumi",
-        "step": "Solis",
-        "of": "no",
-        "id": "Paziņojuma ID",
-        "hazardous": "Bīstams",
-        "nonHazardous": "Nebīstams",
-        "arrival": "Ierašanās",
-        "departure": "Izbraukšana",
-        "specialRequirements": "Īpašās prasības",
-        "none": "Nav",
-        "crew": "Apkalpe",
-        "captain": "Kapteinis",
-        "unknown": "Nezināms",
-        "from": "No",
-        "to": "Līdz",
-        "tabs": {
-            "dashboard": "Paziņojumu panelis",
-            "search": "Meklēt paziņojumus",
-            "edit": "Rediģēt paziņojumu",
-            "create": "Izveidot paziņojumu",
-            "makeDraft": "Izveidot melnrakstu",
-            "myNotifications": "Mani paziņojumi",
-            "review": "Pārskatīt paziņojumus",
-            "general": "Vispārīgs saraksts",
-            "byDate": "Kalendāra saraksts",
-            "submit": "Iesniegt paziņojumu",
-            "delete": "Dzēst paziņojumu"
-        },
-        "eventsOnDate": "Notikumi izvēlētajā datumā",
-        "noEventsOnDate": "Nav notikumu izvēlētajā datumā",
-        "title": "Kuģu vizīšu paziņojumi",
-        "subtitle": {
-            "dashboard": "Kuģu vizīšu paziņojumu pārskats",
-            "search": "Pārvaldīt un skatīt visus kuģu vizīšu paziņojumus",
-            "create": "Izveidot jaunu kuģa vizītes paziņojumu",
-            "edit": "Rediģēt esošu kuģa vizītes paziņojumu",
-            "review": "Pārskatīt gaidošos kuģu vizīšu paziņojumus"
-        },
-        "errors": {
-            "noNotificationId": "Nav norādīts paziņojuma identifikators"
-        },
-        "infoTitle": "Paziņojuma informācija",
-        "cargoTitle": "Kravas informācija",
-        "vesselTitle": "Kuģa informācija",
-        "manifestInfo": "Manifesta informācija",
-        "fields": {
-            "openLoadManifest": "Atvērt iekraušanas manifestu",
-            "openUnloadManifest": "Atvērt izkraušanas manifestu",
-            "expectedArrival": "Plānotā ierašanās",
-            "expectedDeparture": "Plānotā izbraukšana",
-            "isCargoHazardous": "Krava bīstama",
-            "specialRequirements": "Īpašās prasības",
-            "captain": "Kapteinis",
-            "totalCrewMembers": "Kopējais apkalpes locekļu skaits",
-            "safetyOfficers": "Drošības darbinieki",
-            "loadCargoManifest": "Iekraušanas manifests",
-            "unloadCargoManifest": "Izkraušanas manifests",
-            "position": "Pozīcija",
-            "area": "Zona",
-            "container": "Konteiners",
-            "crewMembers": "Apkalpes locekļi",
-            "status": "Statuss"
-        },
-        "timeline": {
-            "pending": "Gaidāms",
-            "inProgress": "Procesā",
-            "completed": "Pabeigts",
-            "submitted": "Iesniegts",
-            "accepted": "Pieņemts",
-            "rejected": "Noraidīts"
-        },
-        "filters": {
-            "expectedArrivalFrom": "Plānotā ierašanās no",
-            "expectedArrivalTo": "Plānotā ierašanās līdz",
-            "withReason": "Ar iemeslu",
-            "withDockAssigned": "Ar piešķirtu piestātni"
-        },
-        "decision": {
-            "isFinal": "Galīgs",
-            "assignedDock": {
-                "title": "Piešķirtā piestātne",
-                "placeholder": "Izvēlieties piešķirto piestātni"
-            },
-            "reason": {
-                "title": "Iemesls",
-                "placeholder": "Norādiet lēmuma iemeslu"
-            },
-            "status": "Lēmuma statuss"
-        }
-    },
-    "operationalWindow": {
-        "title": "Darba logs",
-        "printer": {
-            "addShift": "Pievienot maiņu",
-            "shifts": "Maiņas:",
-            "noShifts": "Nav maiņu.",
-            "startTime": "Sākuma laiks",
-            "endTime": "Beigu laiks",
-            "weekDays": "Nedēļas dienas"
-        },
-        "errors": {
-            "shiftOverlap": "Nederīga maiņa. Pārklājas vai beigu laiks pirms sākuma."
-        }    },
-    "about": {
-        "title": "Par PorTiT",
-        "privacy": {
-            "title": "Privātuma politika",
-            "lastUpdated": "Pēdējo reizi atjaunināts: {date}"
-        }
-    },
-    "operationPlan": {
-        "title": "Darbības plāns",
-        "dock": "Doks",
-        "docks": "Doki",
-        "operations": "Darbības",
-        "cranes": "Celtņi",
-        "createdBy": "Izveidoja",
-        "createdAt": "Izveidots",
-        "totalSchedules": "Kopā grafiku",
-        "vesselCount": "Kuģi",
-        "plansOnDate": "Darbības plāni izvēlētajā datumā",
-        "noPlansOnDate": "Nav darbības plānu izvēlētajā datumā",
-        "id": "ID",
-        "vvn": "Kuģa vizītes paziņojums",
-        "for": "priekš",
-        "details": "Detaļas",
-        "totalOperations": "Kopā darbību",
-        "algorithmUsed": "Izmantotais algoritms",
-        "ganttChart": "Ganta diagramma",
-        "startTime": "Sākuma laiks",
-        "endTime": "Beigu laiks",
-        "totalDuration": "Kopējais ilgums",
-        "operation": "Darbība",
-        "duration": "Ilgums",
-        "resources": "Resursi",
-        "operationDetails": "Darbības detaļas",
-        "operationNumber": "Darbība #{number}",
-        "notFound": "Darbības plāns nav atrasts",
-        "operationType": {
-            "Unload": "Izkraušana",
-            "Load": "Iekraušana"
-        },
-        "tabs": {
-            "unplannedVVNs": "Neplānoti VVN",
-            "search": "Meklēt plānus",
-            "edit": "Rediģēt plānu",
-            "open": "Atvērt izpildi"
-        },
-        "subtitle": {
-            "edit": "Mainīt darbības plāna detalizēto informāciju un grafiku"
-        },
-        "unplannedVVNs": {
-            "description": "Kuģa vizītes paziņojumi, kuriem vēl nav piešķirts darbības plāns",
-            "noUnplanned": "Visiem kuģa vizītes paziņojumiem ir piešķirti darbības plāni",
-            "foundMessage": "Atrasti {vvnCount} VVN bez plāniem {dayCount} dienā/-ās",
-            "regenerateAll": "Reģenerēt visus trūkstošos plānus",
-            "regenerateDay": "Reģenerēt šīs dienas plānus",
-            "regenerateModalTitle": "Reģenerēt plānus {date}",
-            "warning": "Brīdinājums",
-            "warningMessage": "Plānu reģenerēšana aizstās visus esošos šīs dienas darbības plānus. Šo darbību nevar atsaukt.",
-            "selectedDay": "Izvēlētā diena",
-            "confirmRegeneration": "Apstiprināt reģenerāciju",
-            "affectedDays": "Ietekmētās dienas",
-            "queueInfo": "Katrs reģenerācijas pieprasījums tiks ievietots rindā atsevišķi. Varat tos pārskatīt un pieņemt/noraidīt atsevišķi no plānošanas rindas.",
-            "continue": "Turpināt",
-            "confirmRegenerationTitle": "Apstiprināt reģenerāciju",
-            "irreversibleAction": "Šī darbība ir neatgriezeniska",
-            "overwriteWarning": "Darbības plānu reģenerēšana pastāvīgi pārrakstīs visus esošos izvēlēto dienu plānus. Šo darbību nevar atsaukt.",
-            "aboutToRegenerate": "Jūs gatavojaties reģenerēt plānus",
-            "days": "dienām",
-            "vesselVisitNotifications": "Kuģa vizītes paziņojumi",
-            "using": "Izmantojot",
-            "algorithm": "algoritmu",
-            "proceedQuestion": "Vai vēlaties turpināt šo darbību?",
-            "yesRegenerateAll": "Jā, reģenerēt visu"
-        },
-        "algorithm": {
-            "optimal": "Optimāls",
-            "greedy": "Alkatīgs",
-            "genetic": "Ģenētisks",
-            "auto": "Automātisks"
-        },
-        "metrics": {
-            "title": "Metrika",
-            "strategy": "Stratēģija",
-            "totalDelay": "Kopējais kavējums",
-            "computationTime": "Aprēķina laiks",
-            "autoSelection": "Automātiska algoritma izvēle"
-        },
-        "infoTitle": "Darbības plāna informācija",
-        "fields": {
-            "id": {
-                "title": "Plāna ID"
-            },
-            "relatedVVN": {
-                "title": "Saistītais VVN"
-            },
-            "dock": {
-                "title": "Doks"
-            },
-            "operations": {
-                "title": "Darbības"
-            }
-        },
-        "filters": {
-            "startDate": "Sākuma datums no",
-            "endDate": "Beigu datums līdz"
-        },
-        "metadata": {
-            "title": "Metadati",
-            "createdBy": "Izveidoja",
-            "createdAt": "Izveidots",
-            "algorithmUsed": "Izmantotais algoritms"
-        },
-        "schedule": {
-            "title": "Darbību grafiks",
-            "noOperations": "Nav ieplānotu darbību"
-        }
-    },
-    "incidentType": {
-        "fields": {
-            "name": {
-                "title": "Nosaukums",
-                "placeholder": "Incidenta tipa nosaukums"
-            },
-            "description": {
-                "title": "Apraksts",
-                "placeholder": "Detalizēts incidenta tipa apraksts"
-            },
-            "severity": {
-                "title": "Smagums",
-                "placeholder": "Izvēlieties smaguma līmeni"
-            },
-            "subtypeOf": {
-                "title": "Apakštips",
-                "placeholder": "Izvēlieties vecāka tipu"
-            },
-            "subtypes": {
-                "title": "Apakštipi",
-                "placeholder": "Izvēlieties bērnu tipus"
-            }
-        },
-        "severity": {
-            "Minor": "Neliels",
-            "Major": "Liels",
-            "Critical": "Kritisks"
-        },
-        "tabs": {
-            "dashboard": "Incidentu tipu panelis",
-            "view_dashboard": "Skatīt incidentu tipus",
-            "search": "Meklēt incidentu tipus",
-            "create": "Izveidot incidenta tipu",
-            "edit": "Rediģēt incidenta tipu"
-        },
-        "generalFields": "Vispārīgi lauki",
-        "classification": "Klasifikācija",
-        "title": "Incidenti",
-        "subtitle": {
-            "dashboard": "Incidentu tipu statistikas un darbību pārskats",
-            "search": "Pārvaldīt un skatīt visus reģistrētos incidentu tipus",
-            "create": "Reģistrēt jaunu incidenta tipu sistēmā",
-            "edit": "Mainīt esošu incidenta tipu sistēmā"
-        },
-        "registeredIncidentTypes": "Reģistrētie incidentu tipi",
-        "incidentTypeInformation": "Incidenta tipa informācija",
-        "parentType": "Vecāka tips",
-        "confirmDelete": "Apstiprināt dzēšanu",
-        "confirmDeleteMessage": "Vai tiešām vēlaties dzēst šo incidenta tipu?",
-        "failedToDelete": "Neizdevās dzēst incidenta tipu"
-    },
-    "taskCategory": {
-        "fields": {
-            "name": {
-                "title": "Nosaukums",
-                "placeholder": "Uzdevuma kategorijas nosaukums"
-            },
-            "category": {
-                "title": "Kategorija",
-                "placeholder": "Kategorijas kods"
-            },
-            "description": {
-                "title": "Apraksts",
-                "placeholder": "Uzdevuma kategorijas apraksts"
-            }
-        },
-        "tabs": {
-            "dashboard": "Uzdevumu kategoriju panelis",
-            "search": "Meklēt uzdevumu kategorijas",
-            "create": "Izveidot uzdevuma kategoriju",
-            "edit": "Rediģēt uzdevuma kategoriju",
-            "view_dashboard": "Skatīt uzdevumu kategorijas"
-        },
-        "generalFields": "Vispārīgi lauki",
-        "title": "Uzdevumi",
-        "subtitle": {
-            "dashboard": "Uzdevumu kategoriju statistikas un darbību pārskats",
-            "search": "Pārvaldīt un skatīt visas reģistrētās uzdevumu kategorijas",
-            "create": "Reģistrēt jaunu uzdevuma kategoriju sistēmā",
-            "edit": "Mainīt esošu uzdevuma kategoriju sistēmā"
-        },
-        "taskCategoryInformation": "Uzdevuma kategorijas informācija",
-        "registeredTaskCategories": "Reģistrētās uzdevumu kategorijas"
-    },
-    "execution": {
-        "title": "Kuģa vizītes izpildes",
-        "subtitle": {
-            "search": "Pārvaldīt un skatīt visas kuģa vizītes izpildes",
-            "dashboard": "Kuģa vizītes izpilžu statistikas un darbību pārskats"
-        },
-        "tabs": {
-            "dashboard": "Izpilžu panelis",
-            "search": "Meklēt izpildes",
-            "view_dashboard": "Skatīt izpildes",
-            "update": "Atjaunināt izpildi",
-            "view": "Skatīt izpildi",
-            "table": "Skatīt tabulu",
-            "cards": "Skatīt kartes"
-        },
-        "fields": {
-            "code": "Kods",
-            "relatedVVN": "Saistīts ar",
-            "status": "Statuss",
-            "createdBy": "Izveidoja",
-            "dateOpen": "Atvēršanas datums",
-            "dateClosed": "Aizvēršanas datums",
-            "relatedVesselVisit": "Saistītā kuģa vizīte",
-            "dock": "Piestātnes doks",
-            "berthTime": "Piestātnes laiks",
-            "operations": "Darbības"
-        },
-        "filters": {
-            "startDate": "Sākuma datums",
-            "endDate": "Beigu datums",
-            "relatedVVN": "Kuģa vizītes paziņojums",
-            "status": "Statuss"
-        },
-        "metrics": {
-            "totalOperations": "Kopā darbību",
-            "completedOperations": "Progress",
-            "turnaroundTime": "Apgrozījuma laiks",
-            "berthOccupancy": "Piestātnes aizņemtība"
-        },
-        "status": {
-            "pending": "Gaida",
-            "started": "Sākts",
-            "delayed": "Kavēts",
-            "completed": "Pabeigts"
-        },
-        "view_resources": "Skatīt resursus",
-        "infoTitle": "Izpildes informācija",
-        "operationsTitle": "Darbības",
-        "noOperations": "Nav pieejamu darbību",
-        "startOperation": "Sākt darbību",
-        "completeOperation": "Pabeigt darbību",
-        "addOperation": "Pievienot darbību",
-        "addOperationDescription": "Pievienot jaunu darbību laika līnijai",
-        "confirmStartOperation": "Vai tiešām vēlaties sākt šo darbību?",
-        "confirmCompleteOperation": "Vai tiešām vēlaties pabeigt šo darbību?",
-        "berthOperation": {
-            "button": "Rediģēt piestātnes datus",
-            "title": "Piestātnes darbība",
-            "description": "Rediģējiet doku un laiku šai kuģa vizītes izpildei.",
-            "dock": "Piestātnes doks",
-            "dockPlaceholder": "Izvēlieties doku",
-            "berthTime": "Piestātnes laiks",
-            "differentThanPlanned": "Izvēlētais doks atšķiras no plānotā."
-        }
-    },
-    "incident": {
-        "tabs": {
-            "dashboard": "Incidentu panelis",
-            "create": "Izveidot incidentu",
-            "search": "Meklēt incidentus",
-            "active": "Aktīvie incidenti",
-            "view": "Skatīt incidentu",
-            "edit": "Rediģēt incidentu"
-        },
-        "subtitle": {
-            "create": "Ziņot par jaunu incidentu sistēmā",
-            "search": "Meklēt un filtrēt esošos incidentus",
-            "active": "Skatīt un pārvaldīt aktīvos incidentus"
-        },
-        "generalFields": "Vispārīgā informācija",
-        "classification": "Klasifikācija",
-        "fields": {
-            "bid": {
-                "title": "Incidenta ID"
-            },
-            "type": {
-                "title": "Incidenta tips",
-                "placeholder": "Izvēlieties incidenta tipu"
-            },
-            "startTime": {
-                "title": "Sākuma laiks",
-                "placeholder": "Kad sākās incidents?"
-            },
-            "endTime": {
-                "title": "Beigu laiks",
-                "placeholder": "Kad beidzās incidents?"
-            },
-            "severity": {
-                "title": "Smagums",
-                "placeholder": "Izvēlieties smaguma līmeni",
-                "options": {
-                    "minor": "Neliels",
-                    "major": "Liels",
-                    "critical": "Kritisks"
-                }
-            },
-            "description": {
-                "title": "Apraksts",
-                "placeholder": "Aprakstiet incidentu detalizēti"
-            },
-            "createdBy": {
-                "title": "Izveidoja"
-            },
-            "affectedVVECodes": {
-                "title": "Ietekmētie VVE",
-                "placeholder": "Ievadiet ietekmētos VVE"
-            },
-            "vveCode": {
-                "title": "VVE kods"
-            },
-            "status": {
-                "title": "Statuss",
-                "options": {
-                    "active": "Aktīvs",
-                    "resolved": "Atrisināts"
-                }
-            },
-            "filterStartTime": {
-                "title": "Sākuma datums no"
-            },
-            "filterEndTime": {
-                "title": "Sākuma datums līdz"
-            },
-            "duration": {
-                "title": "Ilgums"
-            }
-        },
-        "severity": {
-            "Minor": "Neliels",
-            "Major": "Liels",
-            "Critical": "Kritisks"
-        },
-        "status": {
-            "active": "Aktīvs",
-            "resolved": "Atrisināts"
-        },
-        "ongoing": "Notiek",
-        "filters": {
-            "onlyActive": "Tikai aktīvie",
-            "onlyMine": "Tikai mani"
-        },
-        "actions": {
-            "view": "Skatīt detaļas",
-            "edit": "Rediģēt incidentu",
-            "resolve": "Atrisināt incidentu",
-            "delete": "Dzēst incidentu"
-        },
-        "notifications": {
-            "createSuccess": "Incidents veiksmīgi izveidots",
-            "createFailed": "Neizdevās izveidot incidentu",
-            "updateSuccess": "Incidents veiksmīgi atjaunināts",
-            "updateFailed": "Neizdevās atjaunināt incidentu",
-            "resolveSuccess": "Incidents veiksmīgi atrisināts",
-            "resolveFailed": "Neizdevās atrisināt incidentu",
-            "deleteSuccess": "Incidents veiksmīgi dzēsts",
-            "deleteFailed": "Neizdevās dzēst incidentu"
-        },
-        "table": {
-            "empty": "Incidenti nav atrasti"
-        },
-        "active": {
-            "title": "Aktīvie incidenti",
-            "subtitle": "Skatīt un pārvaldīt notiekošos incidentus"
-        },
-        "infoTitle": "Incidenta detaļas",
-        "closeDialog": {
-            "title": "Atrisināt incidentu",
-            "message": "Kad tika atrisināts incidents?",
-            "confirm": "Jā, aizvērt šo incidentu",
-            "cancel": "Atcelt"
-        }    }
+    "search":  {
+                   "languages":  "Meklēt valodas..."
+               },
+    "unsavedChanges":  {
+                           "title":  "Atcelt izmaiņas?",
+                           "message":  "Jums ir nesaglabātas izmaiņas. Vai tiešām vēlaties pamest šo lapu un atmest izmaiņas?",
+                           "confirm":  "Atcelt",
+                           "cancel":  "Turpināt rediģēšanu"
+                       },
+    "expirationWarning":  {
+                              "messageOneMinute":  "Jūsu sesija beigsies pēc 1 minūtes.",
+                              "messageLessThanOneMinute":  "Jūsu sesija drīz beigsies."
+                          },
+    "dashboard":  {
+                      "welcome":  "Laipni atgriezies, [name]!",
+                      "sidebarTitle":  "Panelis",
+                      "title":  "PortIT panelis",
+                      "subtitle":  "PortIT sistēmas pārskats",
+                      "SAOR":  {
+                                   "subtitle":  "Pārskats par kuģu aģenta darbībām",
+                                   "pendingNotifications":  "Gaidāmie paziņojumi",
+                                   "recent":  "Nesenie kuģu apmeklējumu paziņojumi",
+                                   "recentReview":  "Kuģu apmeklējumu paziņojumi, kam nepieciešama pārskatīšana",
+                                   "noRecent":  "Nav nesenu paziņojumu"
+                               },
+                      "3DModel":  {
+                                      "title":  "3D ostas vizualizācija",
+                                      "description":  "Skatiet interaktīvu 3D ostas modeli. Sekojiet piestātņu noslodzei, kuģu pozīcijām, noliktavu zonām un resursiem reālā laikā.",
+                                      "open":  "Atvērt 3D modeli"
+                                  }
+                  },
+    "admin":  {
+                  "sidebarTitle":  "Administrācija",
+                  "title":  "Administrācijas panelis",
+                  "subtitle":  "Administratīvs pārskats un pārvaldība",
+                  "userManagement":  {
+                                         "title":  "Lietotāju pārvaldība",
+                                         "subtitle":  "Pārvaldiet sistēmas lietotājus, lomas un atļaujas."
+                                     },
+                  "auditLogs":  {
+                                    "title":  "Revīzijas žurnāli",
+                                    "subtitle":  "Sistēmas darbību žurnālu pārskatīšana un uzraudzība."
+                                },
+                  "pp":  {
+                             "title":  "Konfidencialitātes politikas",
+                             "subtitle":  "Definējiet un pārvaldiet ostas konfidencialitātes politikas."
+                         },
+                  "notifications":  {
+                                        "create":  "Izveidot paziņojumu",
+                                        "subtitleCreate":  "Send important announcements to any or all users.",
+                                        "title":  "Sistēmas paziņojumi",
+                                        "subtitle":  "Izveidojiet un pārvaldiet vispārējus sistēmas paziņojumus.",
+                                        "broadcastToggle":  "Broadcast to all users",
+                                        "sendEmailToggle":  "Also send as email",
+                                        "fields":  {
+                                                       "title":  {
+                                                                     "title":  "Title",
+                                                                     "placeholder":  "Ievadiet paziņojuma nosaukumu"
+                                                                 },
+                                                       "message":  {
+                                                                       "title":  "Message",
+                                                                       "placeholder":  "Ievadiet paziņojuma ziņojumu"
+                                                                   },
+                                                       "email":  {
+                                                                     "title":  "User email",
+                                                                     "placeholder":  "Specify user email to send to"
+                                                                 },
+                                                       "urgency":  {
+                                                                       "title":  "Urgency",
+                                                                       "options":  {
+                                                                                       "normal":  "Normal",
+                                                                                       "urgent":  "Urgent"
+                                                                                   }
+                                                                   }
+                                                   }
+                                    }
+              },
+    "user":  {
+                 "fields":  {
+                                "email":  {
+                                              "title":  "E-pasts",
+                                              "placeholder":  "email@mail.com"
+                                          },
+                                "role":  {
+                                             "title":  "Loma",
+                                             "placeholder":  "Izvēlieties lietotāja lomu",
+                                             "options":  {
+                                                             "admin":  "Administrators",
+                                                             "saoRep":  "SAO pārstāvis",
+                                                             "pao":  "Ostu pārvaldes darbinieks",
+                                                             "logisticsOperator":  "Loģistikas operators"
+                                                         }
+                                         },
+                                "isActive":  {
+                                                 "title":  "Aktīvs",
+                                                 "options":  {
+                                                                 "active":  "Jā",
+                                                                 "inactive":  "Nē"
+                                                             }
+                                             }
+                            },
+                 "tabs":  {
+                              "dashboard":  "Lietotāja panelis",
+                              "create":  "Izveidot lietotāju",
+                              "view":  "Skatīt lietotājus",
+                              "search":  "Meklēt lietotājus"
+                          },
+                 "infoTitle":  "Lietotāja informācija",
+                 "title":  "Lietotāji",
+                 "subtitle":  {
+                                  "dashboard":  "Lietotāju pārskats un pārvaldība",
+                                  "create":  "Reģistrēt jaunu lietotāju sistēmā",
+                                  "view":  "Pārvaldīt un skatīt esošos lietotājus"
+                              },
+                 "registeredUsers":  "Reģistrētie lietotāji",
+                 "confirmDelete":  "Apstiprināt dzēšanu",
+                 "confirmDeleteMessage":  "Vai tiesām vēlaties dzēst šo lietotāju?"
+             },
+    "representative":  {
+                           "title":  "Pārstāvis",
+                           "select":  "Izvēlieties pārstāvi"
+                       },
+    "physicalCharacteristics":  {
+                                    "title":  "Fiziskās īpašības (m)",
+                                    "length":  {
+                                                   "title":  "Garums",
+                                                   "placeholder":  "Garums metros"
+                                               },
+                                    "depth":  {
+                                                  "title":  "Dziļums",
+                                                  "placeholder":  "Dziļums metros"
+                                              },
+                                    "draft":  {
+                                                  "title":  "Iegrimšana",
+                                                  "placeholder":  "Iegrimšana metros"
+                                              }
+                                },
+    "dock":  {
+                 "fields":  {
+                                "code":  {
+                                             "title":  "Kods",
+                                             "placeholder":  "Piestātnes kods"
+                                         },
+                                "name":  {
+                                             "title":  "Nosaukums",
+                                             "placeholder":  "Piestātnes nosaukums"
+                                         },
+                                "location":  {
+                                                 "title":  "Atrašanās vieta",
+                                                 "placeholder":  "Piestātnes atrašanās vieta"
+                                             },
+                                "supportedVesselTypes":  {
+                                                             "title":  "Atbalstītie kuģu tipi",
+                                                             "vesselTypes":  {
+                                                                                 "title":  "Kuģu tipi",
+                                                                                 "placeholder":  "Izvēlieties kuģu tipus"
+                                                                             },
+                                                             "vesselType":  "Kuģa tips"
+                                                         }
+                            },
+                 "tabs":  {
+                              "dashboard":  "Piestātņu panelis",
+                              "view_dashboard":  "Skatīt piestātnes",
+                              "search":  "Meklēt piestātnes",
+                              "create":  "Izveidot piestātni",
+                              "view":  "Skatīt piestātni",
+                              "edit":  "Rediģēt piestātni"
+                          },
+                 "generalFields":  "Vispārīgie lauki",
+                 "infoTitle":  "Piestātnes informācija",
+                 "title":  "Piestātnes",
+                 "subtitle":  {
+                                  "dashboard":  "Piestātņu statistikas un darbību pārskats",
+                                  "search":  "Pārvaldīt un skatīt visas reģistrētās piestātnes",
+                                  "create":  "Reģistrēt jaunu piestātni sistēmā",
+                                  "edit":  "Rediģēt esošu piestātni sistēmā"
+                              },
+                 "registeredDocks":  "Reģistrētās piestātnes"
+             },
+    "vesselType":  {
+                       "fields":  {
+                                      "name":  {
+                                                   "title":  "Nosaukums",
+                                                   "placeholder":  "Kuģa tipa nosaukums"
+                                               },
+                                      "description":  {
+                                                          "title":  "Apraksts",
+                                                          "placeholder":  "Kuģa tipa apraksts"
+                                                      },
+                                      "capacity":  {
+                                                       "title":  "Jauda",
+                                                       "placeholder":  "Konteineru ietilpība TEU"
+                                                   },
+                                      "containerCapacity":  {
+                                                                "title":  "Konteineru ietilpība (TEU)",
+                                                                "maxNumberOfRows":  {
+                                                                                        "title":  "Maks. rindu skaits",
+                                                                                        "placeholder":  "Maks. rindu TEU"
+                                                                                    },
+                                                                "maxNumberOfBays":  {
+                                                                                        "title":  "Maks. lauku skaits",
+                                                                                        "placeholder":  "Maks. lauku TEU"
+                                                                                    },
+                                                                "maxNumberOfTiers":  {
+                                                                                         "title":  "Maks. līmeņu skaits",
+                                                                                         "placeholder":  "Maks. līmeņu TEU"
+                                                                                     }
+                                                            }
+                                  },
+                       "generalFields":  "Vispārīgie lauki",
+                       "tabs":  {
+                                    "dashboard":  "Kuģu tipu panelis",
+                                    "view_dashboard":  "Skatīt kuģu tipus",
+                                    "search":  "Meklēt kuģu tipus",
+                                    "create":  "Izveidot kuģa tipu",
+                                    "view":  "Skatīt kuģa tipu",
+                                    "edit":  "Rediģēt kuģa tipu"
+                                },
+                       "infoTitle":  "Kuģa tipa informācija",
+                       "title":  "Kuģu tipi",
+                       "subtitle":  {
+                                        "dashboard":  "Kuģu tipu statistikas pārskats",
+                                        "search":  "Pārvaldīt un skatīt visus reģistrētos kuģu tipus",
+                                        "create":  "Reģistrēt jaunu kuģa tipu sistēmā",
+                                        "edit":  "Rediģēt esošu kuģa tipu sistēmā"
+                                    },
+                       "registeredVesselTypes":  "Reģistrētie kuģu tipi"
+                   },
+    "vessel":  {
+                   "fields":  {
+                                  "name":  {
+                                               "title":  "Nosaukums",
+                                               "placeholder":  "Kuģa nosaukums"
+                                           },
+                                  "imoNumber":  {
+                                                    "title":  "IMO numurs",
+                                                    "placeholder":  "Kuģa IMO numurs"
+                                                },
+                                  "owner":  {
+                                                "title":  "Īpašnieks",
+                                                "placeholder":  "Īpašnieka organizācija"
+                                            },
+                                  "vesselType":  {
+                                                     "title":  "Kuģa tips",
+                                                     "placeholder":  "Izvēlieties kuģa tipu"
+                                                 },
+                                  "taxNumber":  {
+                                                    "title":  "Nodokļu numurs"
+                                                }
+                              },
+                   "infoTitle":  "Kuģa informācija",
+                   "physicalCharacteristicsTitle":  "Fiziskās īpašības",
+                   "tabs":  {
+                                "dashboard":  "Kuģu panelis",
+                                "view_dashboard":  "Skatīt kuģus",
+                                "search":  "Meklēt kuģus",
+                                "create":  "Izveidot kuģi",
+                                "view":  "Skatīt kuģi",
+                                "edit":  "Rediģēt kuģi"
+                            },
+                   "title":  "Kuģi",
+                   "subtitle":  {
+                                    "dashboard":  "Kuģu statistikas un darbību pārskats",
+                                    "search":  "Pārvaldīt un skatīt visus reģistrētos kuģus",
+                                    "create":  "Reģistrēt jaunu kuģi sistēmā",
+                                    "edit":  "Rediģēt esošu kuģi sistēmā"
+                                },
+                   "ownedBy":  "Īpašnieks",
+                   "registeredVessels":  "Reģistrētie kuģi"
+               },
+    "staff":  {
+                  "deactivation":  {
+                                       "title":  "Deaktivizēt darbinieku",
+                                       "message":  "Vai tiešām vēlaties deaktivizēt šo darbinieku? Vēlāk varēsiet to atkārtoti aktivizēt.",
+                                       "successMessage":  "Darbinieks veiksmīgi deaktivizēts.",
+                                       "errorMessage":  "Radās kļūda, mēģinot deaktivizēt darbinieku. Lūdzu, mēģiniet vēlreiz."
+                                   },
+                  "fields":  {
+                                 "mechanographicNumber":  {
+                                                              "title":  "Mehanogrāfiskais numurs",
+                                                              "placeholder":  "Mehanogrāfiskais numurs"
+                                                          },
+                                 "name":  {
+                                              "title":  "Vārds",
+                                              "placeholder":  "Darbinieka vārds"
+                                          },
+                                 "email":  {
+                                               "title":  "E-pasts",
+                                               "placeholder":  "E-pasta adrese"
+                                           },
+                                 "phoneNumber":  {
+                                                     "title":  "Telefons",
+                                                     "placeholder":  "Telefona numurs"
+                                                 },
+                                 "qualifications":  {
+                                                        "title":  "Kvalifikācijas",
+                                                        "placeholder":  "Izvēlieties kvalifikācijas"
+                                                    },
+                                 "status":  {
+                                                "title":  "Statuss",
+                                                "options":  {
+                                                                "available":  "Pieejams",
+                                                                "unavailable":  "Nav pieejams",
+                                                                "temporarilyReassigned":  "Pagaidām pārvietots"
+                                                            }
+                                            },
+                                 "operationalWindow":  "Darba logs"
+                             },
+                  "tabs":  {
+                               "dashboard":  "Personāla panelis",
+                               "view_dashboard":  "Skatīt personālu",
+                               "search":  "Meklēt personālu",
+                               "create":  "Izveidot darbinieku",
+                               "view":  "Skatīt darbinieku",
+                               "edit":  "Rediģēt darbinieku"
+                           },
+                  "infoTitle":  "Darbinieka informācija",
+                  "title":  "Personāls",
+                  "subtitle":  {
+                                   "search":  "Pārvaldīt un skatīt visu reģistrēto personālu",
+                                   "dashboard":  "Personāla statistikas pārskats",
+                                   "create":  "Reģistrēt jaunu darbinieku sistēmā",
+                                   "view":  "Skatīt darbinieka detaļas",
+                                   "edit":  "Rediģēt esošu darbinieku sistēmā"
+                               },
+                  "registeredStaffMembers":  "Reģistrētie darbinieki"
+              },
+    "qualification":  {
+                          "tabs":  {
+                                       "dashboard":  "Kvalifikāciju panelis",
+                                       "view_dashboard":  "Skatīt kvalifikācijas",
+                                       "search":  "Meklēt kvalifikācijas",
+                                       "create":  "Izveidot kvalifikāciju",
+                                       "view":  "Skatīt kvalifikāciju",
+                                       "edit":  "Rediģēt kvalifikāciju"
+                                   },
+                          "infoTitle":  "Kvalifikācijas informācija",
+                          "title":  "Kvalifikācijas",
+                          "subtitle":  {
+                                           "search":  "Pārvaldīt un skatīt visas reģistrētās kvalifikācijas",
+                                           "dashboard":  "Kvalifikāciju statistikas pārskats",
+                                           "create":  "Reģistrēt jaunu kvalifikāciju sistēmā",
+                                           "edit":  "Rediģēt esošu kvalifikāciju sistēmā",
+                                           "view":  "Skatīt kvalifikācijas detaļas"
+                                       },
+                          "fields":  {
+                                         "idCode":  {
+                                                        "title":  "Kvalifikācijas kods",
+                                                        "placeholder":  "Kvalifikācijas kods"
+                                                    },
+                                         "qualificationName":  {
+                                                                   "title":  "Kvalifikācijas nosaukums",
+                                                                   "placeholder":  "Kvalifikācijas nosaukums"
+                                                               }
+                                     },
+                          "registeredQualifications":  "Reģistrētās kvalifikācijas"
+                      },
+    "scheduling":  {
+                       "title":  "Pieprasīt dienas grafiku",
+                       "subtitle":  "Izmantojiet mūsu automatizēto plānošanas algoritmu, lai analizētu uz konkrēto dienu plānotos uzdevumus.",
+                       "noVisits":  "Nav kuģu vizīšu, kas plānotas izvēlētajā datumā.",
+                       "visitsOnSelectedDay":  "Kuģu vizītes izvēlētajā datumā",
+                       "viewVisits":  "Ģenerēt uzdevumu grafiku",
+                       "generateTasksButton":  "Ģenerēt uzdevumu grafiku",
+                       "aboutAlgorithmButton":  "Par algoritmu",
+                       "fields":  {
+                                      "algorithm":  {
+                                                        "title":  "Plānošanas algoritms",
+                                                        "placeholder":  "Izvēlieties plānošanas algoritmu"
+                                                    },
+                                      "relatedDocks":  "Izvēlieties atbilstošu piestātni"
+                                  },
+                       "generateTasksModal":  {
+                                                  "title":  "Papildu loģistika"
+                                              },
+                       "aboutAlgorithmModal":  {
+                                                   "title":  "Par algoritmu",
+                                                   "content":  "Pašreizējais algoritms ņem vērā izvēlētajam datumam un piestātnei ieplānotos kuģu vizīšu paziņojumus.\nTas pārbauda STS celtņu pieejamību un nosaka katra uzdevuma ilgumu, balstoties uz celtņa ātrumu.\nTas ignorē vizītes, kas saistītas ar apkopi vai citām darbībām, kas nav saistītas ar iekraušanu / izkraušanu."
+                                               },
+                       "results":  {
+                                       "title":  "Scheduling Results",
+                                       "subtitle":  "Generated task schedule for the selected date"
+                                   },
+                       "tabs":  {
+                                    "dashboard":  "Scheduling Dashboard",
+                                    "results":  "Scheduling Results",
+                                    "schedule":  "Request Task Schedule",
+                                    "view_dashboard":  "View Scheduling",
+                                    "search":  "List Operation Plans",
+                                    "create":  "Create Scheduling",
+                                    "view":  "View Scheduling",
+                                    "edit":  "Edit Scheduling",
+                                    "queue":  "Scheduling Queue"
+                                },
+                       "subtitles":  {
+                                         "dashboard":  "Overview of scheduling of berth operations and incidents",
+                                         "schedule":  "Request a task schedule for a specific date",
+                                         "search":  "List all operation plans for a given date",
+                                         "create":  "Create a new scheduling into the system",
+                                         "edit":  "Edit an existing scheduling in the system",
+                                         "queue":  "View pending scheduling requests"
+                                     },
+                       "queue":  {
+                                     "title":  "Scheduling Queue",
+                                     "subtitle":  "Pending scheduling requests",
+                                     "onlyMine":  "Show only my requests"
+                                 },
+                       "rebalancing":  {
+                                           "title":  "Dock Rebalancing Required",
+                                           "warningMessage":  "Before scheduling, the system recommends rebalancing dock assignments to optimize load distribution.",
+                                           "vesselsToReassign":  "Vessels to Reassign",
+                                           "averageLoad":  "Average Load",
+                                           "loadRange":  "Load Range",
+                                           "proposedReassignments":  "Proposed Reassignments",
+                                           "vesselImo":  "Vessel IMO",
+                                           "currentDock":  "Current Dock",
+                                           "proposedDock":  "Proposed Dock",
+                                           "skipButton":  "Skip \u0026 Continue with Current Assignments",
+                                           "applyButton":  "Apply Rebalancing \u0026 Generate Schedule"
+                                       }
+                   },
+    "physicalResource":  {
+                             "deactivation":  {
+                                                  "title":  "Deaktivizēt fizisko resursu",
+                                                  "message":  "Vai tiešām vēlaties deaktivizēt šo fizisko resursu? Vēlāk varēsiet to atkārtoti aktivizēt.",
+                                                  "successMessage":  "Fiziskais resurss veiksmīgi deaktivizēts.",
+                                                  "errorMessage":  "Radās kļūda, mēģinot deaktivizēt fizisko resursu. Lūdzu, mēģiniet vēlreiz."
+                                              },
+                             "tabs":  {
+                                          "dashboard":  "Fizisko resursu panelis",
+                                          "view_dashboard":  "Skatīt fiziskos resursus",
+                                          "search":  "Meklēt fiziskos resursus",
+                                          "create":  "Izveidot fizisko resursu",
+                                          "view":  "Skatīt fizisko resursu",
+                                          "edit":  "Rediģēt fizisko resursu"
+                                      },
+                             "infoTitle":  "Fiziskā resursa informācija",
+                             "title":  "Fiziskie resursi",
+                             "subtitle":  {
+                                              "search":  "Pārvaldīt un skatīt visus reģistrētos fiziskos resursus",
+                                              "dashboard":  "Fizisko resursu pārvaldības panelis",
+                                              "view_dashboard":  "Skatīt fiziskos resursus",
+                                              "create":  "Reģistrēt jaunu fizisko resursu sistēmā",
+                                              "view":  "Skatīt fiziskā resursa detaļas",
+                                              "edit":  "Rediģēt esošu fizisko resursu sistēmā"
+                                          },
+                             "generalFields":  "Vispārīgie lauki",
+                             "specificFields":  "Specifiski lauki",
+                             "fields":  {
+                                            "code":  {
+                                                         "title":  "Kods",
+                                                         "placeholder":  "Resursa kods"
+                                                     },
+                                            "description":  {
+                                                                "title":  "Apraksts",
+                                                                "placeholder":  "Resursa apraksts"
+                                                            },
+                                            "status":  {
+                                                           "title":  "Statuss",
+                                                           "placeholder":  "Izvēlieties resursa statusu",
+                                                           "options":  {
+                                                                           "available":  "Pieejams",
+                                                                           "maintenance":  "Apkope",
+                                                                           "outOfService":  "Netiek lietots"
+                                                                       }
+                                                       },
+                                            "qualifications":  {
+                                                                   "title":  "Nepieciešamās kvalifikācijas",
+                                                                   "placeholder":  "Kvalifikācijas darbam ar šo resursu"
+                                                               },
+                                            "setupTime":  {
+                                                              "title":  "Uzstādīšanas laiks (min)",
+                                                              "placeholder":  "Uzstādīšanas laiks"
+                                                          },
+                                            "servingDocks":  {
+                                                                 "title":  "Aptarnājamās piestātnes",
+                                                                 "placeholder":  "Izvēlieties aptarnājamās piestātnes"
+                                                             },
+                                            "liftingCapacity":  {
+                                                                    "title":  "Pacelšanas jauda (kg)",
+                                                                    "placeholder":  "Pacelšanas jauda"
+                                                                },
+                                            "containersPerHour":  {
+                                                                      "title":  "Konteineri stundā",
+                                                                      "placeholder":  "Konteineri stundā"
+                                                                  },
+                                            "maxLoadCapacity":  {
+                                                                    "title":  "Maks. slodze (kg)",
+                                                                    "placeholder":  "Maks. slodze"
+                                                                },
+                                            "averageSpeed":  {
+                                                                 "title":  "Vidējais ātrums (km/h)",
+                                                                 "placeholder":  "Vidējais ātrums"
+                                                             },
+                                            "containersPerTrip":  {
+                                                                      "title":  "Konteineri uz reisu",
+                                                                      "placeholder":  "Konteineri uz reisu"
+                                                                  },
+                                            "type":  {
+                                                         "title":  "Resursa tips",
+                                                         "options":  {
+                                                                         "stsCrane":  "STS celtņi",
+                                                                         "yardGantry":  "Pagalma celtņi",
+                                                                         "truck":  "Kravas automašīna"
+                                                                     }
+                                                     }
+                                        },
+                             "actions":  {
+                                             "deactivate":  "Deaktivizēt fizisko resursu"
+                                         },
+                             "registeredPhysicalResources":  "Reģistrētie fiziskie resursi"
+                         },
+    "storageArea":  {
+                        "tabs":  {
+                                     "dashboard":  "Noliktavu zonu panelis",
+                                     "view_dashboard":  "Skatīt noliktavu zonas",
+                                     "search":  "Meklēt noliktavu zonas",
+                                     "create":  "Izveidot noliktavu zonu",
+                                     "view":  "Skatīt noliktavu zonu",
+                                     "edit":  "Rediģēt noliktavu zonu"
+                                 },
+                        "create":  {
+                                       "distance_meters":  "Attālums (metri)"
+                                   },
+                        "infoTitle":  "Noliktavu zonas informācija",
+                        "title":  "Noliktavu zonas",
+                        "subtitle":  {
+                                         "search":  "Pārvaldīt un skatīt visas reģistrētās noliktavu zonas",
+                                         "dashboard":  "Noliktavu zonu pārvaldības panelis",
+                                         "view_dashboard":  "Skatīt noliktavu zonas",
+                                         "create":  "Reģistrēt jaunu noliktavu zonu sistēmā",
+                                         "view":  "Skatīt noliktavu zonas detaļas",
+                                         "edit":  "Rediģēt esošu noliktavu zonu sistēmā"
+                                     },
+                        "printer":  {
+                                        "docks_serviced":  "aptarnājamās piestātnes",
+                                        "capacity_usage":  "Ietilpības izmantošana",
+                                        "units":  "vienības",
+                                        "available":  "pieejams",
+                                        "no_registered_distances":  "Nav reģistrētu attālumu",
+                                        "no_docks_serviced":  "Nav aptarnājamu piestātņu",
+                                        "all_docks_serviced":  "Visas piestātnes aptarnātas",
+                                        "serviced_docks_distance":  "Aptarnājamo piestātņu attālums",
+                                        "no_registered_docks":  "Nav reģistrētu piestātņu"
+                                    },
+                        "fields":  {
+                                       "nameCode":  {
+                                                        "title":  "Nosaukuma kods",
+                                                        "placeholder":  "Noliktavu zonas nosaukuma kods"
+                                                    },
+                                       "location":  {
+                                                        "title":  "Atrašanās vieta",
+                                                        "placeholder":  "Noliktavu zonas atrašanās vieta"
+                                                    },
+                                       "type":  {
+                                                    "title":  "Tips",
+                                                    "placeholder":  "Izvēlieties noliktavu zonas tipu",
+                                                    "options":  {
+                                                                    "yard":  "Pagalms",
+                                                                    "warehouse":  "Noliktava"
+                                                                }
+                                                },
+                                       "capacity":  {
+                                                        "title":  "Ietilpība",
+                                                        "placeholder":  "Maksimālā ietilpība"
+                                                    },
+                                       "occupancy":  {
+                                                         "title":  "Noslodze",
+                                                         "placeholder":  "Pašreizējā noslodze"
+                                                     }
+                                   },
+                        "registeredStorageAreas":  "Reģistrētās noliktavu zonas"
+                    },
+    "notification":  {
+                         "id":  "Paziņojuma ID",
+                         "hazardous":  "Bīstams",
+                         "nonHazardous":  "Nebīstams",
+                         "arrival":  "Ierašanās",
+                         "departure":  "Izbraukšana",
+                         "specialRequirements":  "Īpašās prasības",
+                         "none":  "Nav",
+                         "crew":  "Apkalpe",
+                         "captain":  "Kapteinis",
+                         "unknown":  "Nezināms",
+                         "from":  "No",
+                         "to":  "Līdz",
+                         "step":  "Solis",
+                         "of":  "no",
+                         "tabs":  {
+                                      "dashboard":  "Paziņojumu panelis",
+                                      "search":  "Meklēt paziņojumus",
+                                      "edit":  "Rediģēt paziņojumu",
+                                      "create":  "Izveidot paziņojumu",
+                                      "update":  "Update Notification",
+                                      "makeDraft":  "Izveidot melnrakstu",
+                                      "myNotifications":  "Mani paziņojumi",
+                                      "review":  "Pārskatīt paziņojumus",
+                                      "general":  "Vispārīgs saraksts",
+                                      "byDate":  "Kalendāra saraksts",
+                                      "submit":  "Iesniegt paziņojumu",
+                                      "delete":  "Dzēst paziņojumu"
+                                  },
+                         "eventsOnDate":  "Notikumi izvēlētajā datumā",
+                         "noEventsOnDate":  "Nav notikumu izvēlētajā datumā",
+                         "title":  "Kuģu vizīšu paziņojumi",
+                         "subtitle":  {
+                                          "dashboard":  "Kuģu vizīšu paziņojumu pārskats",
+                                          "search":  "Pārvaldīt un skatīt visus kuģu vizīšu paziņojumus",
+                                          "create":  "Izveidot jaunu kuģa vizītes paziņojumu",
+                                          "update":  "Update an existing vessel visit notification",
+                                          "edit":  "Rediģēt esošu kuģa vizītes paziņojumu",
+                                          "review":  "Pārskatīt gaidošos kuģu vizīšu paziņojumus"
+                                      },
+                         "errors":  {
+                                        "noNotificationId":  "Nav norādīts paziņojuma identifikators"
+                                    },
+                         "infoTitle":  "Paziņojuma informācija",
+                         "cargoTitle":  "Kravas informācija",
+                         "vesselTitle":  "Kuģa informācija",
+                         "manifestInfo":  "Manifesta informācija",
+                         "fields":  {
+                                        "selectVessel":  "Select corresponding vessel",
+                                        "openLoadManifest":  "Atvērt iekraušanas manifestu",
+                                        "openUnloadManifest":  "Atvērt izkraušanas manifestu",
+                                        "expectedArrival":  "Plānotā ierašanās",
+                                        "expectedDeparture":  "Plānotā izbraukšana",
+                                        "isCargoHazardous":  "Krava bīstama",
+                                        "specialRequirements":  "Īpašās prasības",
+                                        "captain":  "Kapteinis",
+                                        "totalCrewMembers":  "Kopējais apkalpes locekļu skaits",
+                                        "safetyOfficers":  "Drošības darbinieki",
+                                        "loadCargoManifest":  "Iekraušanas manifests",
+                                        "unloadCargoManifest":  "Izkraušanas manifests",
+                                        "position":  "Pozīcija",
+                                        "area":  "Zona",
+                                        "container":  "Konteiners",
+                                        "crewMembers":  "Apkalpes locekļi",
+                                        "status":  "Statuss",
+                                        "isCargoHazardousQ":  "Is Cargo Hazardous?",
+                                        "cargoManifestInfo":  "About cargo manifest files"
+                                    },
+                         "timeline":  {
+                                          "pending":  "Gaidāms",
+                                          "inProgress":  "Procesā",
+                                          "completed":  "Pabeigts",
+                                          "submitted":  "Iesniegts",
+                                          "accepted":  "Pieņemts",
+                                          "rejected":  "Noraidīts"
+                                      },
+                         "filters":  {
+                                         "expectedArrivalFrom":  "Plānotā ierašanās no",
+                                         "expectedArrivalTo":  "Plānotā ierašanās līdz",
+                                         "withReason":  "Ar iemeslu",
+                                         "withDockAssigned":  "Ar piešķirtu piestātni"
+                                     },
+                         "decision":  {
+                                          "isFinal":  "Galīgs",
+                                          "assignedDock":  {
+                                                               "title":  "Piešķirtā piestātne",
+                                                               "placeholder":  "Izvēlieties piešķirto piestātni"
+                                                           },
+                                          "reason":  {
+                                                         "title":  "Iemesls",
+                                                         "placeholder":  "Norādiet lēmuma iemeslu"
+                                                     },
+                                          "status":  "Lēmuma statuss"
+                                      },
+                         "sections":  {
+                                          "vesselDetails":  "Apmeklējuma informācija",
+                                          "crewDetails":  "Apkalpes detaļas",
+                                          "cargoRequirements":  "Kravās prasības",
+                                          "cargoContent":  "Kravās saturs"
+                                      },
+                         "about":  {
+                                       "text":  "Kravās manifesta failiem (pašlaik) jābūt Eiropas standarta CSV formātā. Katra rinda CSV failā pārstāv kravās vienību ar šādām kolocām:",
+                                       "bay":  "Nodalijums (skaitlis)",
+                                       "row":  "Rinda (skaitlis)",
+                                       "tier":  "Līmenis (skaitlis)",
+                                       "area":  "Zonas kods (no kurienes/uz kurieni)",
+                                       "containerNumber":  "Konteinera numurs (teksts)",
+                                       "conatinerType":  "Konteinera tips (skaitlis)",
+                                       "description":  "Apraksts (teksts)",
+                                       "containerTypes":  {
+                                                              "refrigeratedGoods":  "Dzēdētas preces",
+                                                              "generalConsumerProducts":  "Vispārīgi pateerētāju produkti",
+                                                              "electronics":  "Elektronika",
+                                                              "hazmat":  "Bīstamas vielas",
+                                                              "oversizedIndustrialEquipment":  "Pārmēra liela rūpniecības iekārta",
+                                                              "other":  "Cits"
+                                                          }
+                                   },
+                         "registeredVesselVisitNotifications":  "Reģistrētie kuģu apmeklējumu paziņojumi"
+                     },
+    "operationalWindow":  {
+                              "title":  "Darba logs",
+                              "printer":  {
+                                              "addShift":  "Pievienot maiņu",
+                                              "shifts":  "Maiņas:",
+                                              "noShifts":  "Nav maiņu.",
+                                              "startTime":  "Sākuma laiks",
+                                              "endTime":  "Beigu laiks",
+                                              "weekDays":  "Nedēļas dienas"
+                                          },
+                              "errors":  {
+                                             "shiftOverlap":  "Nederīga maiņa. Pārklājas vai beigu laiks pirms sākuma."
+                                         }
+                          },
+    "about":  {
+                  "title":  "Par PorTiT",
+                  "privacy":  {
+                                  "title":  "Privātuma politika",
+                                  "lastUpdated":  "Pēdējo reizi atjaunināts: {date}"
+                              }
+              },
+    "operationPlan":  {
+                          "title":  "Darbības plāns",
+                          "dock":  "Doks",
+                          "docks":  "Doki",
+                          "operations":  "Darbības",
+                          "cranes":  "Celtņi",
+                          "createdBy":  "Izveidoja",
+                          "createdAt":  "Izveidots",
+                          "totalSchedules":  "Kopā grafiku",
+                          "vesselCount":  "Kuģi",
+                          "plansOnDate":  "Darbības plāni izvēlētajā datumā",
+                          "noPlansOnDate":  "Nav darbības plānu izvēlētajā datumā",
+                          "id":  "ID",
+                          "vvn":  "Kuģa vizītes paziņojums",
+                          "for":  "priekš",
+                          "details":  "Detaļas",
+                          "totalOperations":  "Kopā darbību",
+                          "algorithmUsed":  "Izmantotais algoritms",
+                          "ganttChart":  "Ganta diagramma",
+                          "startTime":  "Sākuma laiks",
+                          "endTime":  "Beigu laiks",
+                          "totalDuration":  "Kopējais ilgums",
+                          "operation":  "Darbība",
+                          "duration":  "Ilgums",
+                          "resources":  "Resursi",
+                          "operationDetails":  "Darbības detaļas",
+                          "operationNumber":  "Darbība #{number}",
+                          "notFound":  "Darbības plāns nav atrasts",
+                          "operationType":  {
+                                                "Unload":  "Izkraušana",
+                                                "Load":  "Iekraušana"
+                                            },
+                          "tabs":  {
+                                       "unplannedVVNs":  "Neplānoti VVN",
+                                       "search":  "Meklēt plānus",
+                                       "edit":  "Rediģēt plānu",
+                                       "open":  "Atvērt izpildi"
+                                   },
+                          "subtitle":  {
+                                           "edit":  "Mainīt darbības plāna detalizēto informāciju un grafiku"
+                                       },
+                          "unplannedVVNs":  {
+                                                "description":  "Kuģa vizītes paziņojumi, kuriem vēl nav piešķirts darbības plāns",
+                                                "noUnplanned":  "Visiem kuģa vizītes paziņojumiem ir piešķirti darbības plāni",
+                                                "foundMessage":  "Atrasti {vvnCount} VVN bez plāniem {dayCount} dienā/-ās",
+                                                "regenerateAll":  "Reģenerēt visus trūkstošos plānus",
+                                                "regenerateDay":  "Reģenerēt šīs dienas plānus",
+                                                "regenerateModalTitle":  "Reģenerēt plānus {date}",
+                                                "warning":  "Brīdinājums",
+                                                "warningMessage":  "Plānu reģenerēšana aizstās visus esošos šīs dienas darbības plānus. Šo darbību nevar atsaukt.",
+                                                "selectedDay":  "Izvēlētā diena",
+                                                "confirmRegeneration":  "Apstiprināt reģenerāciju",
+                                                "affectedDays":  "Ietekmētās dienas",
+                                                "queueInfo":  "Katrs reģenerācijas pieprasījums tiks ievietots rindā atsevišķi. Varat tos pārskatīt un pieņemt/noraidīt atsevišķi no plānošanas rindas.",
+                                                "continue":  "Turpināt",
+                                                "confirmRegenerationTitle":  "Apstiprināt reģenerāciju",
+                                                "irreversibleAction":  "Šī darbība ir neatgriezeniska",
+                                                "overwriteWarning":  "Darbības plānu reģenerēšana pastāvīgi pārrakstīs visus esošos izvēlēto dienu plānus. Šo darbību nevar atsaukt.",
+                                                "aboutToRegenerate":  "Jūs gatavojaties reģenerēt plānus",
+                                                "days":  "dienām",
+                                                "vesselVisitNotifications":  "Kuģa vizītes paziņojumi",
+                                                "using":  "Izmantojot",
+                                                "algorithm":  "algoritmu",
+                                                "proceedQuestion":  "Vai vēlaties turpināt šo darbību?",
+                                                "yesRegenerateAll":  "Jā, reģenerēt visu"
+                                            },
+                          "algorithm":  {
+                                            "optimal":  "Optimāls",
+                                            "greedy":  "Alkatīgs",
+                                            "genetic":  "Ģenētisks",
+                                            "auto":  "Automātisks"
+                                        },
+                          "metrics":  {
+                                          "title":  "Metrika",
+                                          "strategy":  "Stratēģija",
+                                          "totalDelay":  "Kopējais kavējums",
+                                          "computationTime":  "Aprēķina laiks",
+                                          "autoSelection":  "Automātiska algoritma izvēle"
+                                      },
+                          "infoTitle":  "Darbības plāna informācija",
+                          "fields":  {
+                                         "id":  {
+                                                    "title":  "Plāna ID"
+                                                },
+                                         "relatedVVN":  {
+                                                            "title":  "Saistītais VVN"
+                                                        },
+                                         "dock":  {
+                                                      "title":  "Doks"
+                                                  },
+                                         "operations":  {
+                                                            "title":  "Darbības"
+                                                        }
+                                     },
+                          "filters":  {
+                                          "startDate":  "Sākuma datums no",
+                                          "endDate":  "Beigu datums līdz"
+                                      },
+                          "metadata":  {
+                                           "title":  "Metadati",
+                                           "createdBy":  "Izveidoja",
+                                           "createdAt":  "Izveidots",
+                                           "algorithmUsed":  "Izmantotais algoritms"
+                                       },
+                          "schedule":  {
+                                           "title":  "Darbību grafiks",
+                                           "noOperations":  "Nav ieplānotu darbību"
+                                       }
+                      },
+    "incidentType":  {
+                         "fields":  {
+                                        "name":  {
+                                                     "title":  "Nosaukums",
+                                                     "placeholder":  "Incidenta tipa nosaukums"
+                                                 },
+                                        "description":  {
+                                                            "title":  "Apraksts",
+                                                            "placeholder":  "Detalizēts incidenta tipa apraksts"
+                                                        },
+                                        "severity":  {
+                                                         "title":  "Smagums",
+                                                         "placeholder":  "Izvēlieties smaguma līmeni"
+                                                     },
+                                        "subtypeOf":  {
+                                                          "title":  "Apakštips",
+                                                          "placeholder":  "Izvēlieties vecāka tipu"
+                                                      },
+                                        "subtypes":  {
+                                                         "title":  "Apakštipi",
+                                                         "placeholder":  "Izvēlieties bērnu tipus"
+                                                     }
+                                    },
+                         "severity":  {
+                                          "Minor":  "Neliels",
+                                          "Major":  "Liels",
+                                          "Critical":  "Kritisks"
+                                      },
+                         "tabs":  {
+                                      "dashboard":  "Incidentu tipu panelis",
+                                      "view_dashboard":  "Skatīt incidentu tipus",
+                                      "search":  "Meklēt incidentu tipus",
+                                      "create":  "Izveidot incidenta tipu",
+                                      "edit":  "Rediģēt incidenta tipu"
+                                  },
+                         "generalFields":  "Vispārīgi lauki",
+                         "classification":  "Klasifikācija",
+                         "title":  "Incidenti",
+                         "subtitle":  {
+                                          "dashboard":  "Incidentu tipu statistikas un darbību pārskats",
+                                          "search":  "Pārvaldīt un skatīt visus reģistrētos incidentu tipus",
+                                          "create":  "Reģistrēt jaunu incidenta tipu sistēmā",
+                                          "edit":  "Mainīt esošu incidenta tipu sistēmā"
+                                      },
+                         "registeredIncidentTypes":  "Reģistrētie incidentu tipi",
+                         "incidentTypeInformation":  "Incidenta tipa informācija",
+                         "parentType":  "Vecāka tips",
+                         "confirmDelete":  "Apstiprināt dzēšanu",
+                         "confirmDeleteMessage":  "Vai tiešām vēlaties dzēst šo incidenta tipu?",
+                         "failedToDelete":  "Neizdevās dzēst incidenta tipu"
+                     },
+    "taskCategory":  {
+                         "fields":  {
+                                        "name":  {
+                                                     "title":  "Nosaukums",
+                                                     "placeholder":  "Uzdevuma kategorijas nosaukums"
+                                                 },
+                                        "category":  {
+                                                         "title":  "Kategorija",
+                                                         "placeholder":  "Kategorijas kods"
+                                                     },
+                                        "description":  {
+                                                            "title":  "Apraksts",
+                                                            "placeholder":  "Uzdevuma kategorijas apraksts"
+                                                        }
+                                    },
+                         "tabs":  {
+                                      "dashboard":  "Uzdevumu kategoriju panelis",
+                                      "search":  "Meklēt uzdevumu kategorijas",
+                                      "create":  "Izveidot uzdevuma kategoriju",
+                                      "edit":  "Rediģēt uzdevuma kategoriju",
+                                      "view_dashboard":  "Skatīt uzdevumu kategorijas"
+                                  },
+                         "generalFields":  "Vispārīgi lauki",
+                         "title":  "Uzdevumi",
+                         "subtitle":  {
+                                          "dashboard":  "Uzdevumu kategoriju statistikas un darbību pārskats",
+                                          "search":  "Pārvaldīt un skatīt visas reģistrētās uzdevumu kategorijas",
+                                          "create":  "Reģistrēt jaunu uzdevuma kategoriju sistēmā",
+                                          "edit":  "Mainīt esošu uzdevuma kategoriju sistēmā"
+                                      },
+                         "taskCategoryInformation":  "Uzdevuma kategorijas informācija",
+                         "registeredTaskCategories":  "Reģistrētās uzdevumu kategorijas"
+                     },
+    "execution":  {
+                      "title":  "Kuģa vizītes izpildes",
+                      "subtitle":  {
+                                       "search":  "Pārvaldīt un skatīt visas kuģa vizītes izpildes",
+                                       "dashboard":  "Kuģa vizītes izpilžu statistikas un darbību pārskats"
+                                   },
+                      "tabs":  {
+                                   "dashboard":  "Izpilžu panelis",
+                                   "search":  "Meklēt izpildes",
+                                   "view_dashboard":  "Skatīt izpildes",
+                                   "update":  "Atjaunināt izpildi",
+                                   "view":  "Skatīt izpildi",
+                                   "table":  "Skatīt tabulu",
+                                   "cards":  "Skatīt kartes"
+                               },
+                      "fields":  {
+                                     "code":  "Kods",
+                                     "relatedVVN":  "Saistīts ar",
+                                     "status":  "Statuss",
+                                     "createdBy":  "Izveidoja",
+                                     "dateOpen":  "Atvēršanas datums",
+                                     "dateClosed":  "Aizvēršanas datums",
+                                     "relatedVesselVisit":  "Saistītā kuģa vizīte",
+                                     "dock":  "Piestātnes doks",
+                                     "berthTime":  "Piestātnes laiks",
+                                     "operations":  "Darbības"
+                                 },
+                      "filters":  {
+                                      "startDate":  "Sākuma datums",
+                                      "endDate":  "Beigu datums",
+                                      "relatedVVN":  "Kuģa vizītes paziņojums",
+                                      "status":  "Statuss"
+                                  },
+                      "metrics":  {
+                                      "totalOperations":  "Kopā darbību",
+                                      "completedOperations":  "Progress",
+                                      "turnaroundTime":  "Apgrozījuma laiks",
+                                      "berthOccupancy":  "Piestātnes aizņemtība"
+                                  },
+                      "status":  {
+                                     "pending":  "Gaida",
+                                     "started":  "Sākts",
+                                     "delayed":  "Kavēts",
+                                     "completed":  "Pabeigts"
+                                 },
+                      "view_resources":  "Skatīt resursus",
+                      "infoTitle":  "Izpildes informācija",
+                      "operationsTitle":  "Darbības",
+                      "noOperations":  "Nav pieejamu darbību",
+                      "startOperation":  "Sākt darbību",
+                      "completeOperation":  "Pabeigt darbību",
+                      "addOperation":  "Pievienot darbību",
+                      "addOperationDescription":  "Pievienot jaunu darbību laika līnijai",
+                      "confirmStartOperation":  "Vai tiešām vēlaties sākt šo darbību?",
+                      "confirmCompleteOperation":  "Vai tiešām vēlaties pabeigt šo darbību?",
+                      "berthOperation":  {
+                                             "button":  "Rediģēt piestātnes datus",
+                                             "title":  "Piestātnes darbība",
+                                             "description":  "Rediģējiet doku un laiku šai kuģa vizītes izpildei.",
+                                             "dock":  "Piestātnes doks",
+                                             "dockPlaceholder":  "Izvēlieties doku",
+                                             "berthTime":  "Piestātnes laiks",
+                                             "differentThanPlanned":  "Izvēlētais doks atšķiras no plānotā."
+                                         }
+                  },
+    "incident":  {
+                     "tabs":  {
+                                  "dashboard":  "Incidentu panelis",
+                                  "create":  "Izveidot incidentu",
+                                  "search":  "Meklēt incidentus",
+                                  "active":  "Aktīvie incidenti",
+                                  "view":  "Skatīt incidentu",
+                                  "edit":  "Rediģēt incidentu"
+                              },
+                     "subtitle":  {
+                                      "create":  "Ziņot par jaunu incidentu sistēmā",
+                                      "search":  "Meklēt un filtrēt esošos incidentus",
+                                      "active":  "Skatīt un pārvaldīt aktīvos incidentus"
+                                  },
+                     "generalFields":  "Vispārīgā informācija",
+                     "classification":  "Klasifikācija",
+                     "fields":  {
+                                    "bid":  {
+                                                "title":  "Incidenta ID"
+                                            },
+                                    "type":  {
+                                                 "title":  "Incidenta tips",
+                                                 "placeholder":  "Izvēlieties incidenta tipu"
+                                             },
+                                    "startTime":  {
+                                                      "title":  "Sākuma laiks",
+                                                      "placeholder":  "Kad sākās incidents?"
+                                                  },
+                                    "endTime":  {
+                                                    "title":  "Beigu laiks",
+                                                    "placeholder":  "Kad beidzās incidents?"
+                                                },
+                                    "severity":  {
+                                                     "title":  "Smagums",
+                                                     "placeholder":  "Izvēlieties smaguma līmeni",
+                                                     "options":  {
+                                                                     "minor":  "Neliels",
+                                                                     "major":  "Liels",
+                                                                     "critical":  "Kritisks"
+                                                                 }
+                                                 },
+                                    "description":  {
+                                                        "title":  "Apraksts",
+                                                        "placeholder":  "Aprakstiet incidentu detalizēti"
+                                                    },
+                                    "createdBy":  {
+                                                      "title":  "Izveidoja"
+                                                  },
+                                    "affectedVVECodes":  {
+                                                             "title":  "Ietekmētie VVE",
+                                                             "placeholder":  "Ievadiet ietekmētos VVE"
+                                                         },
+                                    "vveCode":  {
+                                                    "title":  "VVE kods"
+                                                },
+                                    "status":  {
+                                                   "title":  "Statuss",
+                                                   "options":  {
+                                                                   "active":  "Aktīvs",
+                                                                   "resolved":  "Atrisināts"
+                                                               }
+                                               },
+                                    "filterStartTime":  {
+                                                            "title":  "Sākuma datums no"
+                                                        },
+                                    "filterEndTime":  {
+                                                          "title":  "Sākuma datums līdz"
+                                                      },
+                                    "duration":  {
+                                                     "title":  "Ilgums"
+                                                 }
+                                },
+                     "severity":  {
+                                      "Minor":  "Neliels",
+                                      "Major":  "Liels",
+                                      "Critical":  "Kritisks"
+                                  },
+                     "status":  {
+                                    "active":  "Aktīvs",
+                                    "resolved":  "Atrisināts"
+                                },
+                     "ongoing":  "Notiek",
+                     "filters":  {
+                                     "onlyActive":  "Tikai aktīvie",
+                                     "onlyMine":  "Tikai mani"
+                                 },
+                     "actions":  {
+                                     "view":  "Skatīt detaļas",
+                                     "edit":  "Rediģēt incidentu",
+                                     "resolve":  "Atrisināt incidentu",
+                                     "delete":  "Dzēst incidentu"
+                                 },
+                     "notifications":  {
+                                           "createSuccess":  "Incidents veiksmīgi izveidots",
+                                           "createFailed":  "Neizdevās izveidot incidentu",
+                                           "updateSuccess":  "Incidents veiksmīgi atjaunināts",
+                                           "updateFailed":  "Neizdevās atjaunināt incidentu",
+                                           "resolveSuccess":  "Incidents veiksmīgi atrisināts",
+                                           "resolveFailed":  "Neizdevās atrisināt incidentu",
+                                           "deleteSuccess":  "Incidents veiksmīgi dzēsts",
+                                           "deleteFailed":  "Neizdevās dzēst incidentu"
+                                       },
+                     "table":  {
+                                   "empty":  "Incidenti nav atrasti"
+                               },
+                     "active":  {
+                                    "title":  "Aktīvie incidenti",
+                                    "subtitle":  "Skatīt un pārvaldīt notiekošos incidentus"
+                                },
+                     "infoTitle":  "Incidenta detaļas",
+                     "closeDialog":  {
+                                         "title":  "Atrisināt incidentu",
+                                         "message":  "Kad tika atrisināts incidents?",
+                                         "confirm":  "Jā, aizvērt šo incidentu",
+                                         "cancel":  "Atcelt"
+                                     }
+                 }
 }

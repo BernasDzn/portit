@@ -1,831 +1,1148 @@
 ﻿{
-    "common": {
-        "loading": "加载中...",
-        "noData": "暂无数据",
-        "statistics": "统计",
-        "days": {
-            "sunday": "星期日",
-            "monday": "星期一",
-            "tuesday": "星期二",
-            "wednesday": "星期三",
-            "thursday": "星期四",
-            "friday": "星期五",
-            "saturday": "星期六"
-        },
-        "yes": "是",
-        "no": "否",
-        "weekDay": "工作日",
-        "number": "编号"
-    },
-    "buttons": {
-        "save": "保存",
-        "cancel": "取消",
-        "delete": "删除",
-        "edit": "编辑",
-        "create": "创建",
-        "search": "搜索",
-        "select": "选择",
-        "activate": "启用",
-        "deactivate": "停用",
-        "generate": "生成",
-        "close": "关闭",
-        "add": "添加",
-        "review": "审核",
-        "seeMore": "查看更多",
-        "filter": {
-            "title": "筛选",
-            "add": "添加筛选",
-            "clear": "清除筛选"
-        },
-        "pagination": {
-            "previous": "上一页",
-            "next": "下一页"
-        },
-        "login": "登录",
-        "goBackToLogin": "返回登录",
-        "logout": "退出"
-    },
-    "unsavedChanges": {
-        "title": "放弃更改?",
-        "message": "您有未保存的更改。确定要离开此页面并放弃它们吗?",
-        "confirm": "放弃",
-        "cancel": "继续编辑"
-    },
-    "expirationWarning": {
-        "messageOneMinute": "您的会话将在 1 分钟后过期。",
-        "messageLessThanOneMinute": "您的会话即将过期。"
-    },
-    "dashboard": {
-        "sidebarTitle": "仪表板",
-        "title": "PortIT 仪表板",
-        "subtitle": "PortIT 系统概览",
-        "welcome": "欢迎回来，[name]!",
-        "3DModel": {
-            "title": "港口 3D 可视化",
-            "description": "交互式 3D 港口模型。实时监控泊位占用、船舶位置、存储区域与资源。",
-            "open": "打开 3D 模型"
-        },
-        "SAOR": {
-            "subtitle": "代理运营概览",
-            "pendingNotifications": "待处理通知",
-            "recent": "最近船舶来访通知",
-            "recentReview": "需审核的来访通知",
-            "noRecent": "无最近通知"
-        }
-    },
-    "admin": {
-        "sidebarTitle": "管理",
-        "title": "管理面板",
-        "subtitle": "系统管理与控制",
-        "userManagement": {
-            "title": "用户管理",
-            "subtitle": "管理用户、角色与权限。"
-        },
-        "auditLogs": {
-            "title": "审计日志",
-            "subtitle": "查看并监控系统活动。"
-        }
-    },
-    "user": {
-        "fields": {
-            "email": {
-                "title": "邮箱",
-                "placeholder": "user@example.com"
-            },
-            "role": {
-                "title": "角色",
-                "placeholder": "选择角色",
-                "options": {
-                    "admin": "管理员",
-                    "saoRep": "SAO 代表",
-                    "pao": "港务人员",
-                    "logisticsOperator": "物流操作员"
-                }
-            },
-            "isActive": {
-                "title": "启用",
-                "options": {
-                    "active": "是",
-                    "inactive": "否"
-                }
-            }
-        },
-        "tabs": {
-            "dashboard": "用户概览",
-            "create": "创建用户",
-            "view": "查看用户",
-            "search": "搜索用户"
-        },
-        "infoTitle": "用户信息",
-        "title": "用户",
-        "subtitle": {
-            "dashboard": "概览与管理",
-            "create": "注册新用户",
-            "view": "管理现有用户"
-        }
-    },
-    "physicalCharacteristics": {
-        "title": "物理特性 (米)",
-        "length": {
-            "title": "长度",
-            "placeholder": "长度(米)"
-        },
-        "depth": {
-            "title": "深度",
-            "placeholder": "深度(米)"
-        },
-        "draft": {
-            "title": "吃水",
-            "placeholder": "吃水(米)"
-        }
-    },
-    "dock": {
-        "fields": {
-            "code": {
-                "title": "代码",
-                "placeholder": "泊位代码"
-            },
-            "name": {
-                "title": "名称",
-                "placeholder": "泊位名称"
-            },
-            "location": {
-                "title": "位置",
-                "placeholder": "泊位位置"
-            },
-            "supportedVesselTypes": {
-                "title": "支持船舶类型",
-                "vesselTypes": {
-                    "title": "船舶类型",
-                    "placeholder": "选择类型"
+    "common":  {
+                   "loading":  "加载中...",
+                   "noData":  "暂无数据",
+                   "statistics":  "统计",
+                   "yes":  "是",
+                   "no":  "否",
+                   "weekDay":  "工作日",
+                   "days":  {
+                                "sunday":  "星期日",
+                                "monday":  "星期一",
+                                "tuesday":  "星期二",
+                                "wednesday":  "星期三",
+                                "thursday":  "星期四",
+                                "friday":  "星期五",
+                                "saturday":  "星期六"
+                            },
+                   "number":  "编号",
+                   "actions":  "操作",
+                   "none":  "无"
+               },
+    "buttons":  {
+                    "save":  "保存",
+                    "cancel":  "取消",
+                    "delete":  "删除",
+                    "edit":  "编辑",
+                    "create":  "创建",
+                    "search":  "搜索",
+                    "select":  "选择",
+                    "activate":  "启用",
+                    "deactivate":  "停用",
+                    "generate":  "生成",
+                    "close":  "关闭",
+                    "add":  "添加",
+                    "review":  "审核",
+                    "filter":  {
+                                   "title":  "筛选",
+                                   "add":  "添加筛选",
+                                   "clear":  "清除筛选"
+                               },
+                    "pagination":  {
+                                       "previous":  "上一页",
+                                       "next":  "下一页"
+                                   },
+                    "login":  "登录",
+                    "goBackToLogin":  "返回登录",
+                    "logout":  "退出",
+                    "seeMore":  "查看更多",
+                    "ok":  "OK",
+                    "downloadSample":  "Download Sample"
                 },
-                "vesselType": "船舶类型"
-            }
-        },
-        "tabs": {
-            "dashboard": "泊位概览",
-            "view_dashboard": "查看泊位",
-            "search": "搜索泊位",
-            "create": "创建泊位",
-            "view": "查看泊位",
-            "edit": "编辑泊位"
-        },
-        "generalFields": "通用字段",
-        "infoTitle": "泊位信息",
-        "title": "泊位",
-        "subtitle": {
-            "dashboard": "统计与活动",
-            "search": "管理已登记泊位",
-            "create": "登记新泊位",
-            "edit": "编辑泊位"
-        },
-        "registeredDocks": "已登记泊位"
-    },
-    "vesselType": {
-        "fields": {
-            "name": {
-                "title": "名称",
-                "placeholder": "类型名称"
-            },
-            "description": {
-                "title": "描述",
-                "placeholder": "类型描述"
-            },
-            "capacity": {
-                "title": "容量",
-                "placeholder": "集装箱容量 (TEU)"
-            },
-            "containerCapacity": {
-                "title": "集装箱容量 (TEU)",
-                "maxNumberOfRows": {
-                    "title": "最大行数",
-                    "placeholder": "最大行"
-                },
-                "maxNumberOfBays": {
-                    "title": "最大舱位数",
-                    "placeholder": "最大舱位"
-                },
-                "maxNumberOfTiers": {
-                    "title": "最大层数",
-                    "placeholder": "最大层"
-                }
-            }
-        },
-        "generalFields": "通用字段",
-        "tabs": {
-            "dashboard": "类型概览",
-            "view_dashboard": "查看类型",
-            "search": "搜索类型",
-            "create": "创建类型",
-            "view": "查看类型",
-            "edit": "编辑类型"
-        },
-        "infoTitle": "类型信息",
-        "title": "船舶类型",
-        "subtitle": {
-            "dashboard": "统计与活动",
-            "search": "管理已登记类型",
-            "create": "登记新类型",
-            "edit": "编辑类型"
-        },
-        "registeredVesselTypes": "已登记类型"
-    },
-    "vessel": {
-        "fields": {
-            "name": {
-                "title": "名称",
-                "placeholder": "船名"
-            },
-            "imoNumber": {
-                "title": "IMO 号",
-                "placeholder": "IMO 号"
-            },
-            "owner": {
-                "title": "所有者",
-                "placeholder": "所有组织"
-            },
-            "vesselType": {
-                "title": "船舶类型",
-                "placeholder": "选择类型"
-            },
-            "taxNumber": {
-                "title": "税号"
-            }
-        },
-        "infoTitle": "船舶信息",
-        "physicalCharacteristicsTitle": "物理特性",
-        "tabs": {
-            "dashboard": "船舶概览",
-            "view_dashboard": "查看船舶",
-            "search": "搜索船舶",
-            "create": "创建船舶",
-            "view": "查看船舶",
-            "edit": "编辑船舶"
-        },
-        "title": "船舶",
-        "subtitle": {
-            "dashboard": "统计与活动",
-            "search": "管理已登记船舶",
-            "create": "登记新船舶",
-            "edit": "编辑船舶"
-        },
-        "ownedBy": "所有者",
-        "registeredVessels": "已登记船舶"
-    },
-    "staff": {
-        "fields": {
-            "mechanographicNumber": {
-                "title": "工号",
-                "placeholder": "工号"
-            },
-            "name": {
-                "title": "姓名",
-                "placeholder": "员工姓名"
-            },
-            "email": {
-                "title": "邮箱",
-                "placeholder": "邮箱地址"
-            },
-            "phoneNumber": {
-                "title": "电话",
-                "placeholder": "电话号码"
-            },
-            "qualifications": {
-                "title": "资质",
-                "placeholder": "选择资质"
-            },
-            "status": {
-                "title": "状态",
-                "options": {
-                    "available": "可用",
-                    "unavailable": "不可用",
-                    "temporarilyReassigned": "临时调岗"
-                }
-            },
-            "operationalWindow": "运营窗口"
-        },
-        "tabs": {
-            "dashboard": "员工概览",
-            "view_dashboard": "查看员工",
-            "search": "搜索员工",
-            "create": "创建员工",
-            "view": "查看员工",
-            "edit": "编辑员工"
-        },
-        "infoTitle": "员工信息",
-        "title": "员工",
-        "subtitle": {
-            "search": "管理已登记员工",
-            "dashboard": "统计与活动",
-            "create": "登记新员工",
-            "view": "查看详情",
-            "edit": "编辑员工"
-        },
-        "deactivation": {
-            "title": "停用员工",
-            "message": "确定要停用此员工？此操作无法撤销。",
-            "successMessage": "员工已停用。",
-            "errorMessage": "停用时出错，请重试。"
-        }
-    },
-    "qualification": {
-        "tabs": {
-            "dashboard": "资质概览",
-            "view_dashboard": "查看资质",
-            "search": "搜索资质",
-            "create": "创建资质",
-            "view": "查看资质",
-            "edit": "编辑资质"
-        },
-        "infoTitle": "资质信息",
-        "title": "资质",
-        "subtitle": {
-            "search": "管理已登记资质",
-            "dashboard": "统计与活动",
-            "create": "登记新资质",
-            "edit": "编辑资质"
-        },
-        "fields": {
-            "idCode": {
-                "title": "代码",
-                "placeholder": "代码"
-            },
-            "qualificationName": {
-                "title": "名称",
-                "placeholder": "名称"
-            }
-        }
-    },
-    "physicalResource": {
-        "tabs": {
-            "dashboard": "资源概览",
-            "view_dashboard": "查看资源",
-            "search": "搜索资源",
-            "create": "创建资源",
-            "view": "查看资源",
-            "edit": "编辑资源"
-        },
-        "infoTitle": "资源信息",
-        "title": "物理资源",
-        "subtitle": {
-            "search": "管理已登记资源",
-            "dashboard": "控制面板",
-            "view_dashboard": "查看资源",
-            "create": "登记新资源",
-            "view": "查看详情",
-            "edit": "编辑资源"
-        },
-        "generalFields": "通用字段",
-        "specificFields": "特定字段",
-        "fields": {
-            "code": {
-                "title": "代码",
-                "placeholder": "资源代码"
-            },
-            "description": {
-                "title": "描述",
-                "placeholder": "资源描述"
-            },
-            "status": {
-                "title": "状态",
-                "placeholder": "选择状态",
-                "options": {
-                    "available": "可用",
-                    "maintenance": "维护中",
-                    "outOfService": "停运"
-                }
-            },
-            "qualifications": {
-                "title": "所需资质",
-                "placeholder": "操作资质"
-            },
-            "setupTime": {
-                "title": "设置时间(分钟)",
-                "placeholder": "设置时间"
-            },
-            "servingDocks": {
-                "title": "服务泊位",
-                "placeholder": "选择泊位"
-            },
-            "liftingCapacity": {
-                "title": "起重能力(kg)",
-                "placeholder": "起重能力"
-            },
-            "containersPerHour": {
-                "title": "每小时集装箱数",
-                "placeholder": "每小时"
-            },
-            "maxLoadCapacity": {
-                "title": "最大载荷(kg)",
-                "placeholder": "最大载荷"
-            },
-            "averageSpeed": {
-                "title": "平均速度(km/h)",
-                "placeholder": "速度"
-            },
-            "containersPerTrip": {
-                "title": "每次行程箱数",
-                "placeholder": "每次"
-            },
-            "type": {
-                "title": "资源类型",
-                "options": {
-                    "stsCrane": "岸桥(STS)",
-                    "yardGantry": "场桥",
-                    "truck": "卡车"
-                }
-            }
-        },
-        "actions": {
-            "deactivate": "停用资源"
-        },
-        "deactivation": {
-            "title": "停用资源",
-            "message": "确定要停用此资源？此操作无法撤销。",
-            "successMessage": "资源已停用。",
-            "errorMessage": "停用时出错。"
-        }
-    },
-    "storageArea": {
-        "tabs": {
-            "dashboard": "存储区概览",
-            "view_dashboard": "查看存储区",
-            "search": "搜索存储区",
-            "create": "创建存储区",
-            "view": "查看存储区",
-            "edit": "编辑存储区"
-        },
-        "infoTitle": "存储区信息",
-        "title": "存储区",
-        "subtitle": {
-            "search": "管理已登记存储区",
-            "dashboard": "控制面板",
-            "view_dashboard": "查看存储区",
-            "create": "登记新存储区",
-            "view": "查看详情",
-            "edit": "编辑存储区"
-        },
-        "printer": {
-            "docks_serviced": "服务泊位",
-            "capacity_usage": "容量使用",
-            "units": "单位",
-            "available": "可用",
-            "no_registered_distances": "无登记距离",
-            "no_docks_serviced": "无服务泊位",
-            "all_docks_serviced": "全部服务泊位",
-            "serviced_docks_distance": "服务泊位距离",
-            "no_registered_docks": "无登记泊位"
-        },
-        "create": {
-            "distance_meters": "距离(米)"
-        },
-        "fields": {
-            "nameCode": {
-                "title": "名称代码",
-                "placeholder": "名称代码"
-            },
-            "location": {
-                "title": "位置",
-                "placeholder": "存储区位置"
-            },
-            "type": {
-                "title": "类型",
-                "placeholder": "选择类型",
-                "options": {
-                    "yard": "堆场",
-                    "warehouse": "仓库"
-                }
-            },
-            "capacity": {
-                "title": "容量",
-                "placeholder": "最大容量"
-            },
-            "occupancy": {
-                "title": "占用",
-                "placeholder": "当前占用"
-            }
-        }
-    },
-    "search": {
-        "languages": "搜索语言..."
-    },
-    "representative": {
-        "title": "代表",
-        "select": "选择代表"
-    },
-    "scheduling": {
-        "title": "日程计划",
-        "subtitle": "使用自动算法分析所选日期的计划任务。",
-        "noVisits": "所选日期无船舶来访。",
-        "visitsOnSelectedDay": "选定日期的来访",
-        "viewVisits": "查看任务计划",
-        "generateTasksButton": "生成任务",
-        "aboutAlgorithmButton": "算法说明",
-        "fields": {
-            "algorithm": {
-                "title": "调度算法",
-                "placeholder": "选择算法"
-            },
-            "relatedDocks": "选择关联泊位"
-        },
-        "generateTasksModal": {
-            "title": "附加物流"
-        },
-        "aboutAlgorithmModal": {
-            "title": "算法说明",
-            "content": "算法考虑选定日期与泊位的通知，检查岸桥可用性并依据速度估算任务时长；维护等非装卸访问被忽略。"
-        }
-    },
-    "notification": {
-        "id": "通知 ID",
-        "hazardous": "危险",
-        "nonHazardous": "非危险",
-        "arrival": "到港",
-        "departure": "离港",
-        "specialRequirements": "特殊要求",
-        "none": "无",
-        "crew": "船员",
-        "captain": "船长",
-        "unknown": "未知",
-        "from": "从",
-        "to": "到",
-        "tabs": {
-            "dashboard": "通知概览",
-            "search": "搜索通知",
-            "edit": "编辑通知",
-            "create": "创建通知",
-            "makeDraft": "创建草稿",
-            "myNotifications": "我的通知",
-            "review": "审核通知",
-            "general": "通用列表",
-            "byDate": "日历视图",
-            "submit": "提交通知",
-            "delete": "删除通知"
-        },
-        "eventsOnDate": "选定日期事件",
-        "noEventsOnDate": "选定日期无事件",
-        "title": "船舶来访通知",
-        "subtitle": {
-            "dashboard": "来访通知概览",
-            "search": "管理全部来访通知",
-            "create": "创建新来访通知",
-            "edit": "编辑来访通知",
-            "review": "审核待处理通知"
-        },
-        "errors": {
-            "noNotificationId": "未提供通知 ID"
-        },
-        "infoTitle": "通知信息",
-        "cargoTitle": "货物信息",
-        "vesselTitle": "船舶信息",
-        "manifestInfo": "舱单信息",
-        "fields": {
-            "openLoadManifest": "打开装货舱单",
-            "openUnloadManifest": "打开卸货舱单",
-            "expectedArrival": "预计到港",
-            "expectedDeparture": "预计离港",
-            "isCargoHazardous": "危险货物",
-            "specialRequirements": "特殊要求",
-            "captain": "船长",
-            "totalCrewMembers": "总船员数",
-            "safetyOfficers": "安全官员",
-            "loadCargoManifest": "装货舱单",
-            "unloadCargoManifest": "卸货舱单",
-            "position": "位置",
-            "area": "区域",
-            "container": "集装箱",
-            "crewMembers": "船员",
-            "status": "状态"
-        },
-        "timeline": {
-            "pending": "待处理",
-            "inProgress": "进行中",
-            "completed": "已完成",
-            "submitted": "已提交",
-            "accepted": "已接受",
-            "rejected": "已拒绝"
-        },
-        "filters": {
-            "expectedArrivalFrom": "到港自",
-            "expectedArrivalTo": "到港至",
-            "withReason": "有原因",
-            "withDockAssigned": "已分配泊位"
-        },
-        "decision": {
-            "isFinal": "最终",
-            "assignedDock": {
-                "title": "分配泊位",
-                "placeholder": "选择泊位"
-            },
-            "reason": {
-                "title": "原因",
-                "placeholder": "填写原因"
-            },
-            "status": "决策状态"
-        }
-    },
-    "operationalWindow": {
-        "title": "运营窗口",
-        "printer": {
-            "addShift": "添加班次",
-            "shifts": "班次:",
-            "noShifts": "暂无班次",
-            "startTime": "开始时间",
-            "endTime": "结束时间",
-            "weekDays": "工作日"
-        },
-        "errors": {
-            "shiftOverlap": "无效班次：时间重叠或结束早于开始。"
-        }
-    },
-    "about": {
-        "title": "关于应用",
-        "description": "此模块为自主车队管理提供全面解决方案，包括操作计划、事件类型和任务执行。",
-        "version": "版本",
-        "features": {
-            "title": "功能",
-            "fleet": "车队管理",
-            "planning": "操作规划",
-            "incidents": "事件跟踪",
-            "tasks": "任务执行"
-        }
-    },
-    "operationPlan": {
-        "title": "操作计划",
-        "list": {
-            "title": "操作计划",
-            "empty": "未找到操作计划",
-            "search": "搜索计划..."
-        },
-        "details": {
-            "title": "计划详情",
-            "status": "状态",
-            "startDate": "开始日期",
-            "endDate": "结束日期",
-            "assignedVehicles": "分配的车辆",
-            "tasks": "任务"
-        },
-        "form": {
-            "create": "创建计划",
-            "edit": "编辑计划",
-            "name": "计划名称",
-            "description": "描述",
-            "selectVehicles": "选择车辆"
-        },
-        "status": {
-            "draft": "草稿",
-            "active": "活动",
-            "completed": "已完成",
-            "cancelled": "已取消"
-        }
-    },
-    "incidentType": {
-        "title": "事件类型",
-        "list": {
-            "title": "事件类型",
-            "empty": "未找到事件类型",
-            "search": "搜索类型..."
-        },
-        "details": {
-            "title": "类型详情",
-            "code": "代码",
-            "severity": "严重程度",
-            "responseTime": "响应时间",
-            "procedures": "程序"
-        },
-        "form": {
-            "create": "创建类型",
-            "edit": "编辑类型",
-            "name": "类型名称",
-            "description": "描述",
-            "selectSeverity": "选择严重程度"
-        },
-        "severity": {
-            "low": "低",
-            "medium": "中",
-            "high": "高",
-            "critical": "严重"
-        }
-    },
-    "taskCategory": {
-        "title": "任务类别",
-        "list": {
-            "title": "任务类别",
-            "empty": "未找到任务类别",
-            "search": "搜索类别..."
-        },
-        "details": {
-            "title": "类别详情",
-            "code": "代码",
-            "priority": "优先级",
-            "estimatedDuration": "预计持续时间",
-            "requirements": "要求"
-        },
-        "form": {
-            "create": "创建类别",
-            "edit": "编辑类别",
-            "name": "类别名称",
-            "description": "描述",
-            "selectPriority": "选择优先级"
-        },
-        "priority": {
-            "low": "低",
-            "normal": "正常",
-            "high": "高",
-            "urgent": "紧急"
-        }
-    },
-    "execution": {
-        "title": "执行",
-        "status": {
-            "pending": "待处理",
-            "inProgress": "进行中",
-            "completed": "已完成",
-            "failed": "失败",
-            "cancelled": "已取消"
-        },
-        "details": {
-            "title": "执行详情",
-            "startTime": "开始时间",
-            "endTime": "结束时间",
-            "duration": "持续时间",
-            "assignedTo": "分配给",
-            "progress": "进度"
-        },
-        "actions": {
-            "start": "开始执行",
-            "pause": "暂停",
-            "resume": "恢复",
-            "complete": "完成",
-            "cancel": "取消"
-        },
-        "messages": {
-            "started": "执行已开始",
-            "paused": "执行已暂停",
-            "resumed": "执行已恢复",
-            "completed": "执行已完成",
-            "cancelled": "执行已取消",
-            "failed": "执行失败"
-        }
-    },
-    "incident": {
-        "title": "事件",
-        "list": {
-            "title": "事件",
-            "empty": "未找到事件",
-            "search": "搜索事件...",
-            "filter": {
-                "all": "全部",
-                "open": "开放",
-                "inProgress": "进行中",
-                "resolved": "已解决",
-                "closed": "已关闭"
-            }
-        },
-        "details": {
-            "title": "事件详情",
-            "id": "事件ID",
-            "type": "类型",
-            "status": "状态",
-            "severity": "严重程度",
-            "reportedBy": "报告者",
-            "reportedAt": "报告日期",
-            "assignedTo": "分配给",
-            "location": "位置",
-            "vehicle": "车辆",
-            "description": "描述",
-            "resolution": "解决方案",
-            "timeline": "时间线"
-        },
-        "form": {
-            "create": "报告事件",
-            "edit": "编辑事件",
-            "selectType": "选择类型",
-            "selectSeverity": "选择严重程度",
-            "selectVehicle": "选择车辆",
-            "descriptionPlaceholder": "描述事件...",
-            "resolutionPlaceholder": "描述解决方案..."
-        },
-        "status": {
-            "open": "开放",
-            "inProgress": "进行中",
-            "resolved": "已解决",
-            "closed": "已关闭"
-        },
-        "actions": {
-            "assign": "分配",
-            "resolve": "解决",
-            "close": "关闭",
-            "reopen": "重新打开",
-            "addNote": "添加备注"
-        },
-        "messages": {
-            "created": "事件已创建",
-            "updated": "事件已更新",
-            "assigned": "事件已分配",
-            "resolved": "事件已解决",
-            "closed": "事件已关闭",
-            "reopened": "事件已重新打开"
-        }
-    }
+    "search":  {
+                   "languages":  "搜索语言..."
+               },
+    "unsavedChanges":  {
+                           "title":  "放弃更改?",
+                           "message":  "您有未保存的更改。确定要离开此页面并放弃它们吗?",
+                           "confirm":  "放弃",
+                           "cancel":  "继续编辑"
+                       },
+    "expirationWarning":  {
+                              "messageOneMinute":  "您的会话将在 1 分钟后过期。",
+                              "messageLessThanOneMinute":  "您的会话即将过期。"
+                          },
+    "dashboard":  {
+                      "welcome":  "欢迎回来，[name]!",
+                      "sidebarTitle":  "仪表板",
+                      "title":  "PortIT 仪表板",
+                      "subtitle":  "PortIT 系统概览",
+                      "SAOR":  {
+                                   "subtitle":  "代理运营概览",
+                                   "pendingNotifications":  "待处理通知",
+                                   "recent":  "最近船舶来访通知",
+                                   "recentReview":  "需审核的来访通知",
+                                   "noRecent":  "无最近通知"
+                               },
+                      "3DModel":  {
+                                      "title":  "港口 3D 可视化",
+                                      "description":  "交互式 3D 港口模型。实时监控泊位占用、船舶位置、存储区域与资源。",
+                                      "open":  "打开 3D 模型"
+                                  }
+                  },
+    "admin":  {
+                  "sidebarTitle":  "管理",
+                  "title":  "管理面板",
+                  "subtitle":  "系统管理与控制",
+                  "userManagement":  {
+                                         "title":  "用户管理",
+                                         "subtitle":  "管理用户、角色与权限。"
+                                     },
+                  "auditLogs":  {
+                                    "title":  "审计日志",
+                                    "subtitle":  "查看并监控系统活动。"
+                                },
+                  "pp":  {
+                             "title":  "隐私政策",
+                             "subtitle":  "定义和管理港口数据收集政策。"
+                         },
+                  "notifications":  {
+                                        "create":  "创建通知",
+                                        "subtitleCreate":  "Send important announcements to any or all users.",
+                                        "title":  "系统通知",
+                                        "subtitle":  "创建和管理全局系统通知。",
+                                        "broadcastToggle":  "Broadcast to all users",
+                                        "sendEmailToggle":  "Also send as email",
+                                        "fields":  {
+                                                       "title":  {
+                                                                     "title":  "Title",
+                                                                     "placeholder":  "输入通知标题"
+                                                                 },
+                                                       "message":  {
+                                                                       "title":  "Message",
+                                                                       "placeholder":  "输入通知消息"
+                                                                   },
+                                                       "email":  {
+                                                                     "title":  "User email",
+                                                                     "placeholder":  "Specify user email to send to"
+                                                                 },
+                                                       "urgency":  {
+                                                                       "title":  "Urgency",
+                                                                       "options":  {
+                                                                                       "normal":  "Normal",
+                                                                                       "urgent":  "Urgent"
+                                                                                   }
+                                                                   }
+                                                   }
+                                    }
+              },
+    "user":  {
+                 "fields":  {
+                                "email":  {
+                                              "title":  "邮箱",
+                                              "placeholder":  "user@example.com"
+                                          },
+                                "role":  {
+                                             "title":  "角色",
+                                             "placeholder":  "选择角色",
+                                             "options":  {
+                                                             "admin":  "管理员",
+                                                             "saoRep":  "SAO 代表",
+                                                             "pao":  "港务人员",
+                                                             "logisticsOperator":  "物流操作员"
+                                                         }
+                                         },
+                                "isActive":  {
+                                                 "title":  "启用",
+                                                 "options":  {
+                                                                 "active":  "是",
+                                                                 "inactive":  "否"
+                                                             }
+                                             }
+                            },
+                 "tabs":  {
+                              "dashboard":  "用户概览",
+                              "create":  "创建用户",
+                              "view":  "查看用户",
+                              "search":  "搜索用户"
+                          },
+                 "infoTitle":  "用户信息",
+                 "title":  "用户",
+                 "subtitle":  {
+                                  "dashboard":  "概览与管理",
+                                  "create":  "注册新用户",
+                                  "view":  "管理现有用户"
+                              },
+                 "registeredUsers":  "注册用户",
+                 "confirmDelete":  "确认删除",
+                 "confirmDeleteMessage":  "您确定要删除这个用户吗？"
+             },
+    "representative":  {
+                           "title":  "代表",
+                           "select":  "选择代表"
+                       },
+    "physicalCharacteristics":  {
+                                    "title":  "物理特性 (米)",
+                                    "length":  {
+                                                   "title":  "长度",
+                                                   "placeholder":  "长度(米)"
+                                               },
+                                    "depth":  {
+                                                  "title":  "深度",
+                                                  "placeholder":  "深度(米)"
+                                              },
+                                    "draft":  {
+                                                  "title":  "吃水",
+                                                  "placeholder":  "吃水(米)"
+                                              }
+                                },
+    "dock":  {
+                 "fields":  {
+                                "code":  {
+                                             "title":  "代码",
+                                             "placeholder":  "泊位代码"
+                                         },
+                                "name":  {
+                                             "title":  "名称",
+                                             "placeholder":  "泊位名称"
+                                         },
+                                "location":  {
+                                                 "title":  "位置",
+                                                 "placeholder":  "泊位位置"
+                                             },
+                                "supportedVesselTypes":  {
+                                                             "title":  "支持船舶类型",
+                                                             "vesselTypes":  {
+                                                                                 "title":  "船舶类型",
+                                                                                 "placeholder":  "选择类型"
+                                                                             },
+                                                             "vesselType":  "船舶类型"
+                                                         }
+                            },
+                 "tabs":  {
+                              "dashboard":  "泊位概览",
+                              "view_dashboard":  "查看泊位",
+                              "search":  "搜索泊位",
+                              "create":  "创建泊位",
+                              "view":  "查看泊位",
+                              "edit":  "编辑泊位"
+                          },
+                 "generalFields":  "通用字段",
+                 "infoTitle":  "泊位信息",
+                 "title":  "泊位",
+                 "subtitle":  {
+                                  "dashboard":  "统计与活动",
+                                  "search":  "管理已登记泊位",
+                                  "create":  "登记新泊位",
+                                  "edit":  "编辑泊位"
+                              },
+                 "registeredDocks":  "已登记泊位"
+             },
+    "vesselType":  {
+                       "fields":  {
+                                      "name":  {
+                                                   "title":  "名称",
+                                                   "placeholder":  "类型名称"
+                                               },
+                                      "description":  {
+                                                          "title":  "描述",
+                                                          "placeholder":  "类型描述"
+                                                      },
+                                      "capacity":  {
+                                                       "title":  "容量",
+                                                       "placeholder":  "集装箱容量 (TEU)"
+                                                   },
+                                      "containerCapacity":  {
+                                                                "title":  "集装箱容量 (TEU)",
+                                                                "maxNumberOfRows":  {
+                                                                                        "title":  "最大行数",
+                                                                                        "placeholder":  "最大行"
+                                                                                    },
+                                                                "maxNumberOfBays":  {
+                                                                                        "title":  "最大舱位数",
+                                                                                        "placeholder":  "最大舱位"
+                                                                                    },
+                                                                "maxNumberOfTiers":  {
+                                                                                         "title":  "最大层数",
+                                                                                         "placeholder":  "最大层"
+                                                                                     }
+                                                            }
+                                  },
+                       "generalFields":  "通用字段",
+                       "tabs":  {
+                                    "dashboard":  "类型概览",
+                                    "view_dashboard":  "查看类型",
+                                    "search":  "搜索类型",
+                                    "create":  "创建类型",
+                                    "view":  "查看类型",
+                                    "edit":  "编辑类型"
+                                },
+                       "infoTitle":  "类型信息",
+                       "title":  "船舶类型",
+                       "subtitle":  {
+                                        "dashboard":  "统计与活动",
+                                        "search":  "管理已登记类型",
+                                        "create":  "登记新类型",
+                                        "edit":  "编辑类型"
+                                    },
+                       "registeredVesselTypes":  "已登记类型"
+                   },
+    "vessel":  {
+                   "fields":  {
+                                  "name":  {
+                                               "title":  "名称",
+                                               "placeholder":  "船名"
+                                           },
+                                  "imoNumber":  {
+                                                    "title":  "IMO 号",
+                                                    "placeholder":  "IMO 号"
+                                                },
+                                  "owner":  {
+                                                "title":  "所有者",
+                                                "placeholder":  "所有组织"
+                                            },
+                                  "vesselType":  {
+                                                     "title":  "船舶类型",
+                                                     "placeholder":  "选择类型"
+                                                 },
+                                  "taxNumber":  {
+                                                    "title":  "税号"
+                                                }
+                              },
+                   "infoTitle":  "船舶信息",
+                   "physicalCharacteristicsTitle":  "物理特性",
+                   "tabs":  {
+                                "dashboard":  "船舶概览",
+                                "view_dashboard":  "查看船舶",
+                                "search":  "搜索船舶",
+                                "create":  "创建船舶",
+                                "view":  "查看船舶",
+                                "edit":  "编辑船舶"
+                            },
+                   "title":  "船舶",
+                   "subtitle":  {
+                                    "dashboard":  "统计与活动",
+                                    "search":  "管理已登记船舶",
+                                    "create":  "登记新船舶",
+                                    "edit":  "编辑船舶"
+                                },
+                   "ownedBy":  "所有者",
+                   "registeredVessels":  "已登记船舶"
+               },
+    "staff":  {
+                  "deactivation":  {
+                                       "title":  "停用员工",
+                                       "message":  "确定要停用此员工？此操作无法撤销。",
+                                       "successMessage":  "员工已停用。",
+                                       "errorMessage":  "停用时出错，请重试。"
+                                   },
+                  "fields":  {
+                                 "mechanographicNumber":  {
+                                                              "title":  "工号",
+                                                              "placeholder":  "工号"
+                                                          },
+                                 "name":  {
+                                              "title":  "姓名",
+                                              "placeholder":  "员工姓名"
+                                          },
+                                 "email":  {
+                                               "title":  "邮箱",
+                                               "placeholder":  "邮箱地址"
+                                           },
+                                 "phoneNumber":  {
+                                                     "title":  "电话",
+                                                     "placeholder":  "电话号码"
+                                                 },
+                                 "qualifications":  {
+                                                        "title":  "资质",
+                                                        "placeholder":  "选择资质"
+                                                    },
+                                 "status":  {
+                                                "title":  "状态",
+                                                "options":  {
+                                                                "available":  "可用",
+                                                                "unavailable":  "不可用",
+                                                                "temporarilyReassigned":  "临时调岗"
+                                                            }
+                                            },
+                                 "operationalWindow":  "运营窗口"
+                             },
+                  "tabs":  {
+                               "dashboard":  "员工概览",
+                               "view_dashboard":  "查看员工",
+                               "search":  "搜索员工",
+                               "create":  "创建员工",
+                               "view":  "查看员工",
+                               "edit":  "编辑员工"
+                           },
+                  "infoTitle":  "员工信息",
+                  "title":  "员工",
+                  "subtitle":  {
+                                   "search":  "管理已登记员工",
+                                   "dashboard":  "统计与活动",
+                                   "create":  "登记新员工",
+                                   "view":  "查看详情",
+                                   "edit":  "编辑员工"
+                               },
+                  "registeredStaffMembers":  "Registered Staff Members"
+              },
+    "qualification":  {
+                          "tabs":  {
+                                       "dashboard":  "资质概览",
+                                       "view_dashboard":  "查看资质",
+                                       "search":  "搜索资质",
+                                       "create":  "创建资质",
+                                       "view":  "查看资质",
+                                       "edit":  "编辑资质"
+                                   },
+                          "infoTitle":  "资质信息",
+                          "title":  "资质",
+                          "subtitle":  {
+                                           "search":  "管理已登记资质",
+                                           "dashboard":  "统计与活动",
+                                           "create":  "登记新资质",
+                                           "edit":  "编辑资质",
+                                           "view":  "View qualification details"
+                                       },
+                          "fields":  {
+                                         "idCode":  {
+                                                        "title":  "代码",
+                                                        "placeholder":  "代码"
+                                                    },
+                                         "qualificationName":  {
+                                                                   "title":  "名称",
+                                                                   "placeholder":  "名称"
+                                                               }
+                                     },
+                          "registeredQualifications":  "Registered Qualifications"
+                      },
+    "scheduling":  {
+                       "title":  "日程计划",
+                       "subtitle":  "使用自动算法分析所选日期的计划任务。",
+                       "noVisits":  "所选日期无船舶来访。",
+                       "visitsOnSelectedDay":  "选定日期的来访",
+                       "viewVisits":  "查看任务计划",
+                       "generateTasksButton":  "生成任务",
+                       "aboutAlgorithmButton":  "算法说明",
+                       "fields":  {
+                                      "algorithm":  {
+                                                        "title":  "调度算法",
+                                                        "placeholder":  "选择算法"
+                                                    },
+                                      "relatedDocks":  "选择关联泊位"
+                                  },
+                       "generateTasksModal":  {
+                                                  "title":  "附加物流"
+                                              },
+                       "aboutAlgorithmModal":  {
+                                                   "title":  "算法说明",
+                                                   "content":  "算法考虑选定日期与泊位的通知，检查岸桥可用性并依据速度估算任务时长；维护等非装卸访问被忽略。"
+                                               },
+                       "results":  {
+                                       "title":  "Scheduling Results",
+                                       "subtitle":  "Generated task schedule for the selected date"
+                                   },
+                       "tabs":  {
+                                    "dashboard":  "Scheduling Dashboard",
+                                    "results":  "Scheduling Results",
+                                    "schedule":  "Request Task Schedule",
+                                    "view_dashboard":  "View Scheduling",
+                                    "search":  "List Operation Plans",
+                                    "create":  "Create Scheduling",
+                                    "view":  "View Scheduling",
+                                    "edit":  "Edit Scheduling",
+                                    "queue":  "Scheduling Queue"
+                                },
+                       "subtitles":  {
+                                         "dashboard":  "Overview of scheduling of berth operations and incidents",
+                                         "schedule":  "Request a task schedule for a specific date",
+                                         "search":  "List all operation plans for a given date",
+                                         "create":  "Create a new scheduling into the system",
+                                         "edit":  "Edit an existing scheduling in the system",
+                                         "queue":  "View pending scheduling requests"
+                                     },
+                       "queue":  {
+                                     "title":  "Scheduling Queue",
+                                     "subtitle":  "Pending scheduling requests",
+                                     "onlyMine":  "Show only my requests"
+                                 },
+                       "rebalancing":  {
+                                           "title":  "Dock Rebalancing Required",
+                                           "warningMessage":  "Before scheduling, the system recommends rebalancing dock assignments to optimize load distribution.",
+                                           "vesselsToReassign":  "Vessels to Reassign",
+                                           "averageLoad":  "Average Load",
+                                           "loadRange":  "Load Range",
+                                           "proposedReassignments":  "Proposed Reassignments",
+                                           "vesselImo":  "Vessel IMO",
+                                           "currentDock":  "Current Dock",
+                                           "proposedDock":  "Proposed Dock",
+                                           "skipButton":  "Skip \u0026 Continue with Current Assignments",
+                                           "applyButton":  "Apply Rebalancing \u0026 Generate Schedule"
+                                       }
+                   },
+    "physicalResource":  {
+                             "deactivation":  {
+                                                  "title":  "停用资源",
+                                                  "message":  "确定要停用此资源？此操作无法撤销。",
+                                                  "successMessage":  "资源已停用。",
+                                                  "errorMessage":  "停用时出错。"
+                                              },
+                             "tabs":  {
+                                          "dashboard":  "资源概览",
+                                          "view_dashboard":  "查看资源",
+                                          "search":  "搜索资源",
+                                          "create":  "创建资源",
+                                          "view":  "查看资源",
+                                          "edit":  "编辑资源"
+                                      },
+                             "infoTitle":  "资源信息",
+                             "title":  "物理资源",
+                             "subtitle":  {
+                                              "search":  "管理已登记资源",
+                                              "dashboard":  "控制面板",
+                                              "view_dashboard":  "查看资源",
+                                              "create":  "登记新资源",
+                                              "view":  "查看详情",
+                                              "edit":  "编辑资源"
+                                          },
+                             "generalFields":  "通用字段",
+                             "specificFields":  "特定字段",
+                             "fields":  {
+                                            "code":  {
+                                                         "title":  "代码",
+                                                         "placeholder":  "资源代码"
+                                                     },
+                                            "description":  {
+                                                                "title":  "描述",
+                                                                "placeholder":  "资源描述"
+                                                            },
+                                            "status":  {
+                                                           "title":  "状态",
+                                                           "placeholder":  "选择状态",
+                                                           "options":  {
+                                                                           "available":  "可用",
+                                                                           "maintenance":  "维护中",
+                                                                           "outOfService":  "停运"
+                                                                       }
+                                                       },
+                                            "qualifications":  {
+                                                                   "title":  "所需资质",
+                                                                   "placeholder":  "操作资质"
+                                                               },
+                                            "setupTime":  {
+                                                              "title":  "设置时间(分钟)",
+                                                              "placeholder":  "设置时间"
+                                                          },
+                                            "servingDocks":  {
+                                                                 "title":  "服务泊位",
+                                                                 "placeholder":  "选择泊位"
+                                                             },
+                                            "liftingCapacity":  {
+                                                                    "title":  "起重能力(kg)",
+                                                                    "placeholder":  "起重能力"
+                                                                },
+                                            "containersPerHour":  {
+                                                                      "title":  "每小时集装箱数",
+                                                                      "placeholder":  "每小时"
+                                                                  },
+                                            "maxLoadCapacity":  {
+                                                                    "title":  "最大载荷(kg)",
+                                                                    "placeholder":  "最大载荷"
+                                                                },
+                                            "averageSpeed":  {
+                                                                 "title":  "平均速度(km/h)",
+                                                                 "placeholder":  "速度"
+                                                             },
+                                            "containersPerTrip":  {
+                                                                      "title":  "每次行程箱数",
+                                                                      "placeholder":  "每次"
+                                                                  },
+                                            "type":  {
+                                                         "title":  "资源类型",
+                                                         "options":  {
+                                                                         "stsCrane":  "岸桥(STS)",
+                                                                         "yardGantry":  "场桥",
+                                                                         "truck":  "卡车"
+                                                                     }
+                                                     }
+                                        },
+                             "actions":  {
+                                             "deactivate":  "停用资源"
+                                         },
+                             "registeredPhysicalResources":  "Registered Physical Resources"
+                         },
+    "storageArea":  {
+                        "tabs":  {
+                                     "dashboard":  "存储区概览",
+                                     "view_dashboard":  "查看存储区",
+                                     "search":  "搜索存储区",
+                                     "create":  "创建存储区",
+                                     "view":  "查看存储区",
+                                     "edit":  "编辑存储区"
+                                 },
+                        "create":  {
+                                       "distance_meters":  "距离(米)"
+                                   },
+                        "infoTitle":  "存储区信息",
+                        "title":  "存储区",
+                        "subtitle":  {
+                                         "search":  "管理已登记存储区",
+                                         "dashboard":  "控制面板",
+                                         "view_dashboard":  "查看存储区",
+                                         "create":  "登记新存储区",
+                                         "view":  "查看详情",
+                                         "edit":  "编辑存储区"
+                                     },
+                        "printer":  {
+                                        "docks_serviced":  "服务泊位",
+                                        "capacity_usage":  "容量使用",
+                                        "units":  "单位",
+                                        "available":  "可用",
+                                        "no_registered_distances":  "无登记距离",
+                                        "no_docks_serviced":  "无服务泊位",
+                                        "all_docks_serviced":  "全部服务泊位",
+                                        "serviced_docks_distance":  "服务泊位距离",
+                                        "no_registered_docks":  "无登记泊位"
+                                    },
+                        "fields":  {
+                                       "nameCode":  {
+                                                        "title":  "名称代码",
+                                                        "placeholder":  "名称代码"
+                                                    },
+                                       "location":  {
+                                                        "title":  "位置",
+                                                        "placeholder":  "存储区位置"
+                                                    },
+                                       "type":  {
+                                                    "title":  "类型",
+                                                    "placeholder":  "选择类型",
+                                                    "options":  {
+                                                                    "yard":  "堆场",
+                                                                    "warehouse":  "仓库"
+                                                                }
+                                                },
+                                       "capacity":  {
+                                                        "title":  "容量",
+                                                        "placeholder":  "最大容量"
+                                                    },
+                                       "occupancy":  {
+                                                         "title":  "占用",
+                                                         "placeholder":  "当前占用"
+                                                     }
+                                   },
+                        "registeredStorageAreas":  "Registered Storage Areas"
+                    },
+    "notification":  {
+                         "id":  "通知 ID",
+                         "hazardous":  "危险",
+                         "nonHazardous":  "非危险",
+                         "arrival":  "到港",
+                         "departure":  "离港",
+                         "specialRequirements":  "特殊要求",
+                         "none":  "无",
+                         "crew":  "船员",
+                         "captain":  "船长",
+                         "unknown":  "未知",
+                         "from":  "从",
+                         "to":  "到",
+                         "step":  "Step",
+                         "of":  "of",
+                         "tabs":  {
+                                      "dashboard":  "通知概览",
+                                      "search":  "搜索通知",
+                                      "edit":  "编辑通知",
+                                      "create":  "创建通知",
+                                      "update":  "Update Notification",
+                                      "makeDraft":  "创建草稿",
+                                      "myNotifications":  "我的通知",
+                                      "review":  "审核通知",
+                                      "general":  "通用列表",
+                                      "byDate":  "日历视图",
+                                      "submit":  "提交通知",
+                                      "delete":  "删除通知"
+                                  },
+                         "eventsOnDate":  "选定日期事件",
+                         "noEventsOnDate":  "选定日期无事件",
+                         "title":  "船舶来访通知",
+                         "subtitle":  {
+                                          "dashboard":  "来访通知概览",
+                                          "search":  "管理全部来访通知",
+                                          "create":  "创建新来访通知",
+                                          "update":  "Update an existing vessel visit notification",
+                                          "edit":  "编辑来访通知",
+                                          "review":  "审核待处理通知"
+                                      },
+                         "errors":  {
+                                        "noNotificationId":  "未提供通知 ID"
+                                    },
+                         "infoTitle":  "通知信息",
+                         "cargoTitle":  "货物信息",
+                         "vesselTitle":  "船舶信息",
+                         "manifestInfo":  "舱单信息",
+                         "fields":  {
+                                        "selectVessel":  "Select corresponding vessel",
+                                        "openLoadManifest":  "打开装货舱单",
+                                        "openUnloadManifest":  "打开卸货舱单",
+                                        "expectedArrival":  "预计到港",
+                                        "expectedDeparture":  "预计离港",
+                                        "isCargoHazardous":  "危险货物",
+                                        "specialRequirements":  "特殊要求",
+                                        "captain":  "船长",
+                                        "totalCrewMembers":  "总船员数",
+                                        "safetyOfficers":  "安全官员",
+                                        "loadCargoManifest":  "装货舱单",
+                                        "unloadCargoManifest":  "卸货舱单",
+                                        "position":  "位置",
+                                        "area":  "区域",
+                                        "container":  "集装箱",
+                                        "crewMembers":  "船员",
+                                        "status":  "状态",
+                                        "isCargoHazardousQ":  "Is Cargo Hazardous?",
+                                        "cargoManifestInfo":  "About cargo manifest files"
+                                    },
+                         "timeline":  {
+                                          "pending":  "待处理",
+                                          "inProgress":  "进行中",
+                                          "completed":  "已完成",
+                                          "submitted":  "已提交",
+                                          "accepted":  "已接受",
+                                          "rejected":  "已拒绝"
+                                      },
+                         "filters":  {
+                                         "expectedArrivalFrom":  "到港自",
+                                         "expectedArrivalTo":  "到港至",
+                                         "withReason":  "有原因",
+                                         "withDockAssigned":  "已分配泊位"
+                                     },
+                         "decision":  {
+                                          "isFinal":  "最终",
+                                          "assignedDock":  {
+                                                               "title":  "分配泊位",
+                                                               "placeholder":  "选择泊位"
+                                                           },
+                                          "reason":  {
+                                                         "title":  "原因",
+                                                         "placeholder":  "填写原因"
+                                                     },
+                                          "status":  "决策状态"
+                                      },
+                         "sections":  {
+                                          "vesselDetails":  "访问信息",
+                                          "crewDetails":  "船员详情",
+                                          "cargoRequirements":  "货物要求",
+                                          "cargoContent":  "货物内容"
+                                      },
+                         "about":  {
+                                       "text":  "货物清单文件（当前）必须采用欧洲标准CSV格式。CSV文件中的每一行代表一个货物项，具有以下列：",
+                                       "bay":  "舱（数字）",
+                                       "row":  "行（数字）",
+                                       "tier":  "层（数字）",
+                                       "area":  "区域代码（从哪里/到哪里）",
+                                       "containerNumber":  "集装箱号（文本）",
+                                       "conatinerType":  "集装箱类型（数字）",
+                                       "description":  "描述（文本）",
+                                       "containerTypes":  {
+                                                              "refrigeratedGoods":  "冷藏货物",
+                                                              "generalConsumerProducts":  "一般消费品",
+                                                              "electronics":  "电子产品",
+                                                              "hazmat":  "危险物质",
+                                                              "oversizedIndustrialEquipment":  "超大型工业设备",
+                                                              "other":  "其他"
+                                                          }
+                                   },
+                         "registeredVesselVisitNotifications":  "Registered Vessel Visit Notifications"
+                     },
+    "operationalWindow":  {
+                              "title":  "运营窗口",
+                              "printer":  {
+                                              "addShift":  "添加班次",
+                                              "shifts":  "班次:",
+                                              "noShifts":  "暂无班次",
+                                              "startTime":  "开始时间",
+                                              "endTime":  "结束时间",
+                                              "weekDays":  "工作日"
+                                          },
+                              "errors":  {
+                                             "shiftOverlap":  "无效班次：时间重叠或结束早于开始。"
+                                         }
+                          },
+    "about":  {
+                  "title":  "关于应用",
+                  "privacy":  {
+                                  "title":  "Privacy Policy",
+                                  "lastUpdated":  "Last updated: {date}"
+                              }
+              },
+    "operationPlan":  {
+                          "title":  "操作计划",
+                          "dock":  "Dock",
+                          "docks":  "Docks",
+                          "operations":  "Operations",
+                          "cranes":  "Cranes",
+                          "createdBy":  "Created By",
+                          "createdAt":  "Created At",
+                          "totalSchedules":  "Total Schedules",
+                          "vesselCount":  "Vessels",
+                          "plansOnDate":  "Operation plans on selected date",
+                          "noPlansOnDate":  "No operation plans on selected date",
+                          "id":  "ID",
+                          "vvn":  "Vessel Visit Notification",
+                          "for":  "for",
+                          "details":  {
+                                          "title":  "计划详情",
+                                          "status":  "状态",
+                                          "startDate":  "开始日期",
+                                          "endDate":  "结束日期",
+                                          "assignedVehicles":  "分配的车辆",
+                                          "tasks":  "任务"
+                                      },
+                          "totalOperations":  "Total Operations",
+                          "algorithmUsed":  "Algorithm Used",
+                          "ganttChart":  "Gantt Chart",
+                          "startTime":  "Start Time",
+                          "endTime":  "End Time",
+                          "totalDuration":  "Total Duration",
+                          "operation":  "Operation",
+                          "duration":  "Duration",
+                          "resources":  "Resources",
+                          "operationDetails":  "Operation Details",
+                          "operationNumber":  "Operation #{number}",
+                          "notFound":  "Operation plan not found",
+                          "operationType":  {
+                                                "Unload":  "Unload",
+                                                "Load":  "Load"
+                                            },
+                          "tabs":  {
+                                       "unplannedVVNs":  "Unplanned VVNs",
+                                       "search":  "Search Plans",
+                                       "edit":  "Edit Plan",
+                                       "open":  "Start Execution"
+                                   },
+                          "subtitle":  {
+                                           "edit":  "Modify operation plan details and schedule"
+                                       },
+                          "unplannedVVNs":  {
+                                                "description":  "Vessel visit notifications that do not have an operation plan assigned yet",
+                                                "noUnplanned":  "All vessel visit notifications have operation plans assigned",
+                                                "foundMessage":  "Found {vvnCount} VVN(s) without plans across {dayCount} day(s)",
+                                                "regenerateAll":  "Regenerate All Missing Plans",
+                                                "regenerateDay":  "Regenerate Plans for This Day",
+                                                "regenerateModalTitle":  "Regenerate Plans for {date}",
+                                                "warning":  "Warning",
+                                                "warningMessage":  "Regenerating plans will overwrite any existing operation plans for this day. This action cannot be undone.",
+                                                "selectedDay":  "Selected Day",
+                                                "confirmRegeneration":  "Confirm Regeneration",
+                                                "affectedDays":  "Affected Days",
+                                                "queueInfo":  "Each regeneration request will be queued separately. You can review and accept/reject them individually from the Scheduling Queue.",
+                                                "continue":  "Continue",
+                                                "confirmRegenerationTitle":  "Confirm Regeneration",
+                                                "irreversibleAction":  "This action is irreversible",
+                                                "overwriteWarning":  "Regenerating operation plans will permanently overwrite any existing plans for the selected days. This action cannot be undone.",
+                                                "aboutToRegenerate":  "You are about to regenerate plans for",
+                                                "days":  "days",
+                                                "vesselVisitNotifications":  "Vessel Visit Notifications",
+                                                "using":  "Using",
+                                                "algorithm":  "algorithm",
+                                                "proceedQuestion":  "Do you want to proceed with this operation?",
+                                                "yesRegenerateAll":  "Yes, Regenerate All"
+                                            },
+                          "algorithm":  {
+                                            "optimal":  "Optimal",
+                                            "greedy":  "Greedy",
+                                            "genetic":  "Genetic",
+                                            "auto":  "Auto"
+                                        },
+                          "metrics":  {
+                                          "title":  "Metrics",
+                                          "strategy":  "Strategy",
+                                          "totalDelay":  "Total Delay",
+                                          "computationTime":  "Computation Time",
+                                          "autoSelection":  "Automatic Algorithm Selection"
+                                      },
+                          "infoTitle":  "Operation Plan Information",
+                          "fields":  {
+                                         "id":  {
+                                                    "title":  "Plan ID"
+                                                },
+                                         "relatedVVN":  {
+                                                            "title":  "Related VVN"
+                                                        },
+                                         "dock":  {
+                                                      "title":  "Dock"
+                                                  },
+                                         "operations":  {
+                                                            "title":  "Operations"
+                                                        }
+                                     },
+                          "filters":  {
+                                          "startDate":  "Start Date From",
+                                          "endDate":  "End Date To"
+                                      },
+                          "metadata":  {
+                                           "title":  "Metadata",
+                                           "createdBy":  "Created By",
+                                           "createdAt":  "Created At",
+                                           "algorithmUsed":  "Algorithm Used"
+                                       },
+                          "schedule":  {
+                                           "title":  "Operation Schedule",
+                                           "noOperations":  "No operations scheduled"
+                                       }
+                      },
+    "incidentType":  {
+                         "fields":  {
+                                        "name":  {
+                                                     "title":  "Name",
+                                                     "placeholder":  "Incident type name"
+                                                 },
+                                        "description":  {
+                                                            "title":  "Description",
+                                                            "placeholder":  "Detailed description of the incident type"
+                                                        },
+                                        "severity":  {
+                                                         "title":  "Severity",
+                                                         "placeholder":  "Select severity level"
+                                                     },
+                                        "subtypeOf":  {
+                                                          "title":  "Subtype Of",
+                                                          "placeholder":  "Select parent type"
+                                                      },
+                                        "subtypes":  {
+                                                         "title":  "Subtypes",
+                                                         "placeholder":  "Select child types"
+                                                     }
+                                    },
+                         "severity":  {
+                                          "Minor":  "Minor",
+                                          "Major":  "Major",
+                                          "Critical":  "严重"
+                                      },
+                         "tabs":  {
+                                      "dashboard":  "Incident Types Dashboard",
+                                      "view_dashboard":  "View Incident Types",
+                                      "search":  "Search Incident Types",
+                                      "create":  "Create Incident Type",
+                                      "edit":  "Edit Incident Type"
+                                  },
+                         "generalFields":  "General fields",
+                         "classification":  "Classification",
+                         "title":  "事件类型",
+                         "subtitle":  {
+                                          "dashboard":  "Overview of incident type statistics and activities",
+                                          "search":  "Manage and view all registered incident types",
+                                          "create":  "Register a new incident type into the system",
+                                          "edit":  "Modify an existing incident type in the system"
+                                      },
+                         "registeredIncidentTypes":  "Registered Incident Types",
+                         "incidentTypeInformation":  "Incident Type Information",
+                         "parentType":  "Parent Type",
+                         "confirmDelete":  "Confirm delete",
+                         "confirmDeleteMessage":  "Are you sure you want to delete this incident type?",
+                         "failedToDelete":  "Failed to delete incident type"
+                     },
+    "taskCategory":  {
+                         "fields":  {
+                                        "name":  {
+                                                     "title":  "Name",
+                                                     "placeholder":  "Task category name"
+                                                 },
+                                        "category":  {
+                                                         "title":  "Category",
+                                                         "placeholder":  "Category code"
+                                                     },
+                                        "description":  {
+                                                            "title":  "Description",
+                                                            "placeholder":  "Description of the task category"
+                                                        }
+                                    },
+                         "tabs":  {
+                                      "dashboard":  "Task Categories Dashboard",
+                                      "search":  "Search Task Categories",
+                                      "create":  "Create Task Category",
+                                      "edit":  "Edit Task Category",
+                                      "view_dashboard":  "View Task Categories"
+                                  },
+                         "generalFields":  "General fields",
+                         "title":  "任务类别",
+                         "subtitle":  {
+                                          "dashboard":  "Overview of task category statistics and activities",
+                                          "search":  "Manage and view all registered task categories",
+                                          "create":  "Register a new task category in the system",
+                                          "edit":  "Modify an existing task category in the system"
+                                      },
+                         "taskCategoryInformation":  "Task Category Information",
+                         "registeredTaskCategories":  "Registered Task Categories"
+                     },
+    "execution":  {
+                      "title":  "执行",
+                      "subtitle":  {
+                                       "search":  "Manage and view all vessel visit executions",
+                                       "dashboard":  "Overview of vessel visit execution statistics and activities"
+                                   },
+                      "tabs":  {
+                                   "dashboard":  "Executions Dashboard",
+                                   "search":  "Search Executions",
+                                   "view_dashboard":  "View Executions",
+                                   "update":  "Update Execution",
+                                   "view":  "View Execution",
+                                   "table":  "Table View",
+                                   "cards":  "Card View"
+                               },
+                      "fields":  {
+                                     "code":  "Code",
+                                     "relatedVVN":  "Related To",
+                                     "status":  "Status",
+                                     "createdBy":  "Created By",
+                                     "dateOpen":  "Date Open",
+                                     "dateClosed":  "Date Closed",
+                                     "relatedVesselVisit":  "Related Vessel Visit",
+                                     "dock":  "Berth Dock",
+                                     "berthTime":  "Berth Time",
+                                     "operations":  "Operations"
+                                 },
+                      "filters":  {
+                                      "startDate":  "Start Date",
+                                      "endDate":  "End Date",
+                                      "relatedVVN":  "Vessel Visit Notification",
+                                      "status":  "Status"
+                                  },
+                      "metrics":  {
+                                      "totalOperations":  "Total Ops",
+                                      "completedOperations":  "Progress",
+                                      "turnaroundTime":  "Turnaround Time",
+                                      "berthOccupancy":  "Berth Occupancy"
+                                  },
+                      "status":  {
+                                     "pending":  "待处理",
+                                     "started":  "Started",
+                                     "delayed":  "Delayed",
+                                     "completed":  "已完成"
+                                 },
+                      "view_resources":  "View Resources",
+                      "infoTitle":  "Execution Information",
+                      "operationsTitle":  "Operations",
+                      "noOperations":  "No operations available",
+                      "startOperation":  "Start Operation",
+                      "completeOperation":  "Complete Operation",
+                      "addOperation":  "Add Operation",
+                      "addOperationDescription":  "Add a new operation to the timeline",
+                      "confirmStartOperation":  "Are you sure you want to start this operation?",
+                      "confirmCompleteOperation":  "Are you sure you want to complete this operation?",
+                      "berthOperation":  {
+                                             "button":  "Edit berth data",
+                                             "title":  "Berth Operation",
+                                             "description":  "Edit the berth dock and time for this vessel visit execution.",
+                                             "dock":  "Berth Dock",
+                                             "dockPlaceholder":  "Select berth dock",
+                                             "berthTime":  "Berth Time",
+                                             "differentThanPlanned":  "The selected dock is different than the one planned."
+                                         }
+                  },
+    "incident":  {
+                     "tabs":  {
+                                  "dashboard":  "Incidents Dashboard",
+                                  "create":  "Create Incident",
+                                  "search":  "Search Incidents",
+                                  "active":  "Active Incidents",
+                                  "view":  "View Incident",
+                                  "edit":  "Edit Incident"
+                              },
+                     "subtitle":  {
+                                      "create":  "Report a new incident in the system",
+                                      "search":  "Search and filter existing incidents",
+                                      "active":  "View and manage active incidents"
+                                  },
+                     "generalFields":  "General Information",
+                     "classification":  "Classification",
+                     "fields":  {
+                                    "bid":  {
+                                                "title":  "Incident ID"
+                                            },
+                                    "type":  {
+                                                 "title":  "Incident Type",
+                                                 "placeholder":  "Select an incident type"
+                                             },
+                                    "startTime":  {
+                                                      "title":  "Start Time",
+                                                      "placeholder":  "When did the incident start?"
+                                                  },
+                                    "endTime":  {
+                                                    "title":  "End Time",
+                                                    "placeholder":  "When did the incident end?"
+                                                },
+                                    "severity":  {
+                                                     "title":  "Severity",
+                                                     "placeholder":  "Select severity level",
+                                                     "options":  {
+                                                                     "minor":  "Minor",
+                                                                     "major":  "Major",
+                                                                     "critical":  "Critical"
+                                                                 }
+                                                 },
+                                    "description":  {
+                                                        "title":  "Description",
+                                                        "placeholder":  "Describe the incident in detail"
+                                                    },
+                                    "createdBy":  {
+                                                      "title":  "Created By"
+                                                  },
+                                    "affectedVVECodes":  {
+                                                             "title":  "Affected VVEs",
+                                                             "placeholder":  "Enter affected VVEs"
+                                                         },
+                                    "vveCode":  {
+                                                    "title":  "VVE Code"
+                                                },
+                                    "status":  {
+                                                   "title":  "Status",
+                                                   "options":  {
+                                                                   "active":  "Active",
+                                                                   "resolved":  "Resolved"
+                                                               }
+                                               },
+                                    "filterStartTime":  {
+                                                            "title":  "Start Date From"
+                                                        },
+                                    "filterEndTime":  {
+                                                          "title":  "Start Date To"
+                                                      },
+                                    "duration":  {
+                                                     "title":  "Duration"
+                                                 }
+                                },
+                     "severity":  {
+                                      "Minor":  "Minor",
+                                      "Major":  "Major",
+                                      "Critical":  "Critical"
+                                  },
+                     "status":  {
+                                    "active":  "Active",
+                                    "resolved":  "已解决"
+                                },
+                     "ongoing":  "Ongoing",
+                     "filters":  {
+                                     "onlyActive":  "Only Active",
+                                     "onlyMine":  "Only Mine"
+                                 },
+                     "actions":  {
+                                     "view":  "View Details",
+                                     "edit":  "Edit Incident",
+                                     "resolve":  "解决",
+                                     "delete":  "Delete Incident"
+                                 },
+                     "notifications":  {
+                                           "createSuccess":  "Incident created successfully",
+                                           "createFailed":  "Failed to create incident",
+                                           "updateSuccess":  "Incident updated successfully",
+                                           "updateFailed":  "Failed to update incident",
+                                           "resolveSuccess":  "Incident resolved successfully",
+                                           "resolveFailed":  "Failed to resolve incident",
+                                           "deleteSuccess":  "Incident deleted successfully",
+                                           "deleteFailed":  "Failed to delete incident"
+                                       },
+                     "table":  {
+                                   "empty":  "No incidents found"
+                               },
+                     "active":  {
+                                    "title":  "Active Incidents",
+                                    "subtitle":  "View and manage ongoing incidents"
+                                },
+                     "infoTitle":  "Incident details",
+                     "closeDialog":  {
+                                         "title":  "Resolve indicent",
+                                         "message":  "When did the incident get resolved",
+                                         "confirm":  "Yes, close this incident",
+                                         "cancel":  "Cancel"
+                                     }
+                 }
 }
