@@ -93,23 +93,23 @@ public class PhysicalResourceApplicationTest : BaseApplicationTest
     [Fact]
     public async Task Filter_PhysicalResources_WithStatusFilter_ReturnsFilteredResult()
     {
-        var response = await _client.GetAsync("/PhysicalResource/filter?status=1&pageNumber=1&pageSize=5");
+        var response = await _client.GetAsync("/PhysicalResource/filter?status=0&pageNumber=1&pageSize=5");
 
         response.EnsureSuccessStatusCode();
         var pagedResult = await response.Content.ReadFromJsonAsync<Page<object>>();
         Assert.NotNull(pagedResult);
-        Assert.Equal(2, pagedResult.Items.Count());
+        Assert.Equal(4, pagedResult.Items.Count());
     }
 
     [Fact]
     public async Task Filter_PhysicalResources_WithMultipleFilters_ReturnsFilteredResult()
     {
-        var response = await _client.GetAsync("/PhysicalResource/filter?Code=s&Description=s&Status=1&Type=0");
+        var response = await _client.GetAsync("/PhysicalResource/filter?Code=s&Description=s&Status=0&Type=0");
 
         response.EnsureSuccessStatusCode();
         var pagedResult = await response.Content.ReadFromJsonAsync<Page<object>>();
         Assert.NotNull(pagedResult);
-        Assert.Single(pagedResult.Items);
+        Assert.Equal(2, pagedResult.Items.Count());
     }
 
     [Fact]
